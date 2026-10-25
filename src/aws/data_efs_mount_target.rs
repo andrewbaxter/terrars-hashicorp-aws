@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEfsMountTargetData {
+struct DataEfsMountTargetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,12 +26,14 @@ struct DataEfsMountTargetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mount_target_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataEfsMountTarget_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEfsMountTargetData>,
+    data: std::cell::RefCell<DataEfsMountTargetData_>,
 }
 
 #[derive(Clone)]
@@ -98,6 +102,13 @@ impl DataEfsMountTarget {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `access_point_id` after provisioning.\n"]
     pub fn access_point_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_point_id", self.extract_ref()))
@@ -138,6 +149,16 @@ impl DataEfsMountTarget {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_address` after provisioning.\n"]
+    pub fn ipv6_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_address", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `mount_target_dns_name` after provisioning.\n"]
     pub fn mount_target_dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mount_target_dns_name", self.extract_ref()))
@@ -156,6 +177,12 @@ impl DataEfsMountTarget {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
@@ -209,7 +236,7 @@ impl BuildDataEfsMountTarget {
         let out = DataEfsMountTarget(std::rc::Rc::new(DataEfsMountTarget_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEfsMountTargetData {
+            data: std::cell::RefCell::new(DataEfsMountTargetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -218,6 +245,7 @@ impl BuildDataEfsMountTarget {
                 file_system_id: core::default::Default::default(),
                 id: core::default::Default::default(),
                 mount_target_id: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -288,6 +316,16 @@ impl DataEfsMountTargetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_address` after provisioning.\n"]
+    pub fn ipv6_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_address", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `mount_target_dns_name` after provisioning.\n"]
     pub fn mount_target_dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mount_target_dns_name", self.extract_ref()))
@@ -306,6 +344,12 @@ impl DataEfsMountTargetRef {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]

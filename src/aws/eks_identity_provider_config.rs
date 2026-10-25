@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EksIdentityProviderConfigData {
+struct EksIdentityProviderConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,20 +24,22 @@ struct EksIdentityProviderConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    oidc: std::option::Option<std::vec::Vec<EksIdentityProviderConfigOidcEl>>,
+    oidc: std::option::Option<std::vec::Vec<EksIdentityProviderConfig_Oidc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EksIdentityProviderConfigTimeoutsEl>,
+    timeouts: std::option::Option<EksIdentityProviderConfig_Timeouts>,
     dynamic: EksIdentityProviderConfigDynamic,
 }
 
 struct EksIdentityProviderConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EksIdentityProviderConfigData>,
+    data: std::cell::RefCell<EksIdentityProviderConfigData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl EksIdentityProviderConfig {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -160,10 +171,7 @@ impl EksIdentityProviderConfig {
     }
 
     #[doc = "Set the field `oidc`.\n"]
-    pub fn set_oidc(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EksIdentityProviderConfigOidcEl>>,
-    ) -> Self {
+    pub fn set_oidc(self, v: impl std::convert::Into<terrars::BlockAssignable<EksIdentityProviderConfig_Oidc>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().oidc = std::option::Option::Some(v);
@@ -176,7 +184,7 @@ impl EksIdentityProviderConfig {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EksIdentityProviderConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EksIdentityProviderConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -196,6 +204,20 @@ impl EksIdentityProviderConfig {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `identity_provider_config_name` after provisioning.\n"]
+    pub fn identity_provider_config_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.identity_provider_config_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -212,16 +234,13 @@ impl EksIdentityProviderConfig {
     }
 
     #[doc = "Get a reference to the value of field `oidc` after provisioning.\n"]
-    pub fn oidc(&self) -> terrars::ListRef<EksIdentityProviderConfigOidcElRef> {
+    pub fn oidc(&self) -> terrars::ListRef<EksIdentityProviderConfig_OidcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oidc", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EksIdentityProviderConfigTimeoutsElRef {
-        EksIdentityProviderConfigTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> EksIdentityProviderConfig_TimeoutsRef {
+        EksIdentityProviderConfig_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -267,7 +286,7 @@ impl BuildEksIdentityProviderConfig {
         let out = EksIdentityProviderConfig(std::rc::Rc::new(EksIdentityProviderConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EksIdentityProviderConfigData {
+            data: std::cell::RefCell::new(EksIdentityProviderConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -275,6 +294,7 @@ impl BuildEksIdentityProviderConfig {
                 provisioner: core::default::Default::default(),
                 cluster_name: self.cluster_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 oidc: core::default::Default::default(),
@@ -325,6 +345,20 @@ impl EksIdentityProviderConfigRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `identity_provider_config_name` after provisioning.\n"]
+    pub fn identity_provider_config_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.identity_provider_config_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -341,21 +375,23 @@ impl EksIdentityProviderConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `oidc` after provisioning.\n"]
-    pub fn oidc(&self) -> terrars::ListRef<EksIdentityProviderConfigOidcElRef> {
+    pub fn oidc(&self) -> terrars::ListRef<EksIdentityProviderConfig_OidcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oidc", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EksIdentityProviderConfigTimeoutsElRef {
-        EksIdentityProviderConfigTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> EksIdentityProviderConfig_TimeoutsRef {
+        EksIdentityProviderConfig_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EksIdentityProviderConfigDynamic {
+    oidc: std::option::Option<terrars::DynamicBlock<EksIdentityProviderConfig_Oidc>>,
+}
+
 #[derive(Serialize)]
-pub struct EksIdentityProviderConfigOidcEl {
+pub struct EksIdentityProviderConfig_Oidc {
     client_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     groups_claim: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -371,7 +407,7 @@ pub struct EksIdentityProviderConfigOidcEl {
     username_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EksIdentityProviderConfigOidcEl {
+impl EksIdentityProviderConfig_Oidc {
     #[doc = "Set the field `groups_claim`.\n"]
     pub fn set_groups_claim(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.groups_claim = std::option::Option::Some(v.into());
@@ -406,8 +442,8 @@ impl EksIdentityProviderConfigOidcEl {
     }
 }
 
-impl terrars::ToListMappable for EksIdentityProviderConfigOidcEl {
-    type O = terrars::BlockAssignable<EksIdentityProviderConfigOidcEl>;
+impl terrars::ToListMappable for EksIdentityProviderConfig_Oidc {
+    type O = terrars::BlockAssignable<EksIdentityProviderConfig_Oidc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -418,7 +454,7 @@ impl terrars::ToListMappable for EksIdentityProviderConfigOidcEl {
     }
 }
 
-pub struct BuildEksIdentityProviderConfigOidcEl {
+pub struct BuildEksIdentityProviderConfig_Oidc {
     #[doc = ""]
     pub client_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -427,9 +463,9 @@ pub struct BuildEksIdentityProviderConfigOidcEl {
     pub issuer_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEksIdentityProviderConfigOidcEl {
-    pub fn build(self) -> EksIdentityProviderConfigOidcEl {
-        EksIdentityProviderConfigOidcEl {
+impl BuildEksIdentityProviderConfig_Oidc {
+    pub fn build(self) -> EksIdentityProviderConfig_Oidc {
+        EksIdentityProviderConfig_Oidc {
             client_id: self.client_id,
             groups_claim: core::default::Default::default(),
             groups_prefix: core::default::Default::default(),
@@ -442,21 +478,23 @@ impl BuildEksIdentityProviderConfigOidcEl {
     }
 }
 
-pub struct EksIdentityProviderConfigOidcElRef {
+#[allow(dead_code)]
+pub struct EksIdentityProviderConfig_OidcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EksIdentityProviderConfigOidcElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EksIdentityProviderConfigOidcElRef {
-        EksIdentityProviderConfigOidcElRef {
+impl terrars::Ref for EksIdentityProviderConfig_OidcRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksIdentityProviderConfig_OidcRef {
+        EksIdentityProviderConfig_OidcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EksIdentityProviderConfigOidcElRef {
+impl EksIdentityProviderConfig_OidcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -503,14 +541,14 @@ impl EksIdentityProviderConfigOidcElRef {
 }
 
 #[derive(Serialize)]
-pub struct EksIdentityProviderConfigTimeoutsEl {
+pub struct EksIdentityProviderConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EksIdentityProviderConfigTimeoutsEl {
+impl EksIdentityProviderConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -524,8 +562,8 @@ impl EksIdentityProviderConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EksIdentityProviderConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<EksIdentityProviderConfigTimeoutsEl>;
+impl terrars::ToListMappable for EksIdentityProviderConfig_Timeouts {
+    type O = terrars::BlockAssignable<EksIdentityProviderConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -536,32 +574,34 @@ impl terrars::ToListMappable for EksIdentityProviderConfigTimeoutsEl {
     }
 }
 
-pub struct BuildEksIdentityProviderConfigTimeoutsEl {}
+pub struct BuildEksIdentityProviderConfig_Timeouts {}
 
-impl BuildEksIdentityProviderConfigTimeoutsEl {
-    pub fn build(self) -> EksIdentityProviderConfigTimeoutsEl {
-        EksIdentityProviderConfigTimeoutsEl {
+impl BuildEksIdentityProviderConfig_Timeouts {
+    pub fn build(self) -> EksIdentityProviderConfig_Timeouts {
+        EksIdentityProviderConfig_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct EksIdentityProviderConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EksIdentityProviderConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EksIdentityProviderConfigTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EksIdentityProviderConfigTimeoutsElRef {
-        EksIdentityProviderConfigTimeoutsElRef {
+impl terrars::Ref for EksIdentityProviderConfig_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksIdentityProviderConfig_TimeoutsRef {
+        EksIdentityProviderConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EksIdentityProviderConfigTimeoutsElRef {
+impl EksIdentityProviderConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -575,9 +615,4 @@ impl EksIdentityProviderConfigTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EksIdentityProviderConfigDynamic {
-    oidc: std::option::Option<terrars::DynamicBlock<EksIdentityProviderConfigOidcEl>>,
 }

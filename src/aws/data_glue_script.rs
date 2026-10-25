@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataGlueScriptData {
+struct DataGlueScriptData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,16 +23,18 @@ struct DataGlueScriptData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     language: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dag_edge: std::option::Option<std::vec::Vec<DataGlueScriptDagEdgeEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dag_node: std::option::Option<std::vec::Vec<DataGlueScriptDagNodeEl>>,
+    dag_edge: std::option::Option<std::vec::Vec<DataGlueScript_DagEdge>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dag_node: std::option::Option<std::vec::Vec<DataGlueScript_DagNode>>,
     dynamic: DataGlueScriptDynamic,
 }
 
 struct DataGlueScript_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataGlueScriptData>,
+    data: std::cell::RefCell<DataGlueScriptData_>,
 }
 
 #[derive(Clone)]
@@ -87,8 +91,15 @@ impl DataGlueScript {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `dag_edge`.\n"]
-    pub fn set_dag_edge(self, v: impl std::convert::Into<terrars::BlockAssignable<DataGlueScriptDagEdgeEl>>) -> Self {
+    pub fn set_dag_edge(self, v: impl std::convert::Into<terrars::BlockAssignable<DataGlueScript_DagEdge>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().dag_edge = std::option::Option::Some(v);
@@ -101,7 +112,7 @@ impl DataGlueScript {
     }
 
     #[doc = "Set the field `dag_node`.\n"]
-    pub fn set_dag_node(self, v: impl std::convert::Into<terrars::BlockAssignable<DataGlueScriptDagNodeEl>>) -> Self {
+    pub fn set_dag_node(self, v: impl std::convert::Into<terrars::BlockAssignable<DataGlueScript_DagNode>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().dag_node = std::option::Option::Some(v);
@@ -128,18 +139,24 @@ impl DataGlueScript {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.python_script", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `scala_code` after provisioning.\n"]
     pub fn scala_code(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scala_code", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dag_edge` after provisioning.\n"]
-    pub fn dag_edge(&self) -> terrars::ListRef<DataGlueScriptDagEdgeElRef> {
+    pub fn dag_edge(&self) -> terrars::ListRef<DataGlueScript_DagEdgeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dag_edge", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dag_node` after provisioning.\n"]
-    pub fn dag_node(&self) -> terrars::ListRef<DataGlueScriptDagNodeElRef> {
+    pub fn dag_node(&self) -> terrars::ListRef<DataGlueScript_DagNodeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dag_node", self.extract_ref()))
     }
 }
@@ -184,13 +201,14 @@ impl BuildDataGlueScript {
         let out = DataGlueScript(std::rc::Rc::new(DataGlueScript_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataGlueScriptData {
+            data: std::cell::RefCell::new(DataGlueScriptData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 language: core::default::Default::default(),
+                region: core::default::Default::default(),
                 dag_edge: core::default::Default::default(),
                 dag_node: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -239,31 +257,43 @@ impl DataGlueScriptRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.python_script", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `scala_code` after provisioning.\n"]
     pub fn scala_code(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scala_code", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dag_edge` after provisioning.\n"]
-    pub fn dag_edge(&self) -> terrars::ListRef<DataGlueScriptDagEdgeElRef> {
+    pub fn dag_edge(&self) -> terrars::ListRef<DataGlueScript_DagEdgeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dag_edge", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dag_node` after provisioning.\n"]
-    pub fn dag_node(&self) -> terrars::ListRef<DataGlueScriptDagNodeElRef> {
+    pub fn dag_node(&self) -> terrars::ListRef<DataGlueScript_DagNodeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dag_node", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataGlueScriptDynamic {
+    dag_edge: std::option::Option<terrars::DynamicBlock<DataGlueScript_DagEdge>>,
+    dag_node: std::option::Option<terrars::DynamicBlock<DataGlueScript_DagNode>>,
+}
+
 #[derive(Serialize)]
-pub struct DataGlueScriptDagEdgeEl {
+pub struct DataGlueScript_DagEdge {
     source: terrars::PrimField<std::string::String>,
     target: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_parameter: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataGlueScriptDagEdgeEl {
+impl DataGlueScript_DagEdge {
     #[doc = "Set the field `target_parameter`.\n"]
     pub fn set_target_parameter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.target_parameter = std::option::Option::Some(v.into());
@@ -271,8 +301,8 @@ impl DataGlueScriptDagEdgeEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueScriptDagEdgeEl {
-    type O = terrars::BlockAssignable<DataGlueScriptDagEdgeEl>;
+impl terrars::ToListMappable for DataGlueScript_DagEdge {
+    type O = terrars::BlockAssignable<DataGlueScript_DagEdge>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -283,16 +313,16 @@ impl terrars::ToListMappable for DataGlueScriptDagEdgeEl {
     }
 }
 
-pub struct BuildDataGlueScriptDagEdgeEl {
+pub struct BuildDataGlueScript_DagEdge {
     #[doc = ""]
     pub source: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub target: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataGlueScriptDagEdgeEl {
-    pub fn build(self) -> DataGlueScriptDagEdgeEl {
-        DataGlueScriptDagEdgeEl {
+impl BuildDataGlueScript_DagEdge {
+    pub fn build(self) -> DataGlueScript_DagEdge {
+        DataGlueScript_DagEdge {
             source: self.source,
             target: self.target,
             target_parameter: core::default::Default::default(),
@@ -300,21 +330,23 @@ impl BuildDataGlueScriptDagEdgeEl {
     }
 }
 
-pub struct DataGlueScriptDagEdgeElRef {
+#[allow(dead_code)]
+pub struct DataGlueScript_DagEdgeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueScriptDagEdgeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueScriptDagEdgeElRef {
-        DataGlueScriptDagEdgeElRef {
+impl terrars::Ref for DataGlueScript_DagEdgeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueScript_DagEdgeRef {
+        DataGlueScript_DagEdgeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueScriptDagEdgeElRef {
+impl DataGlueScript_DagEdgeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -336,14 +368,14 @@ impl DataGlueScriptDagEdgeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueScriptDagNodeElArgsEl {
+pub struct DataGlueScript_DagNode_Args {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     param: std::option::Option<terrars::PrimField<bool>>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl DataGlueScriptDagNodeElArgsEl {
+impl DataGlueScript_DagNode_Args {
     #[doc = "Set the field `param`.\n"]
     pub fn set_param(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.param = std::option::Option::Some(v.into());
@@ -351,8 +383,8 @@ impl DataGlueScriptDagNodeElArgsEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueScriptDagNodeElArgsEl {
-    type O = terrars::BlockAssignable<DataGlueScriptDagNodeElArgsEl>;
+impl terrars::ToListMappable for DataGlueScript_DagNode_Args {
+    type O = terrars::BlockAssignable<DataGlueScript_DagNode_Args>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -363,16 +395,16 @@ impl terrars::ToListMappable for DataGlueScriptDagNodeElArgsEl {
     }
 }
 
-pub struct BuildDataGlueScriptDagNodeElArgsEl {
+pub struct BuildDataGlueScript_DagNode_Args {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataGlueScriptDagNodeElArgsEl {
-    pub fn build(self) -> DataGlueScriptDagNodeElArgsEl {
-        DataGlueScriptDagNodeElArgsEl {
+impl BuildDataGlueScript_DagNode_Args {
+    pub fn build(self) -> DataGlueScript_DagNode_Args {
+        DataGlueScript_DagNode_Args {
             name: self.name,
             param: core::default::Default::default(),
             value: self.value,
@@ -380,21 +412,23 @@ impl BuildDataGlueScriptDagNodeElArgsEl {
     }
 }
 
-pub struct DataGlueScriptDagNodeElArgsElRef {
+#[allow(dead_code)]
+pub struct DataGlueScript_DagNode_ArgsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueScriptDagNodeElArgsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueScriptDagNodeElArgsElRef {
-        DataGlueScriptDagNodeElArgsElRef {
+impl terrars::Ref for DataGlueScript_DagNode_ArgsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueScript_DagNode_ArgsRef {
+        DataGlueScript_DagNode_ArgsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueScriptDagNodeElArgsElRef {
+impl DataGlueScript_DagNode_ArgsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -416,22 +450,22 @@ impl DataGlueScriptDagNodeElArgsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataGlueScriptDagNodeElDynamic {
-    args: std::option::Option<terrars::DynamicBlock<DataGlueScriptDagNodeElArgsEl>>,
+struct DataGlueScript_DagNodeDynamic {
+    args: std::option::Option<terrars::DynamicBlock<DataGlueScript_DagNode_Args>>,
 }
 
 #[derive(Serialize)]
-pub struct DataGlueScriptDagNodeEl {
+pub struct DataGlueScript_DagNode {
     id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     line_number: std::option::Option<terrars::PrimField<f64>>,
     node_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    args: std::option::Option<std::vec::Vec<DataGlueScriptDagNodeElArgsEl>>,
-    dynamic: DataGlueScriptDagNodeElDynamic,
+    args: std::option::Option<std::vec::Vec<DataGlueScript_DagNode_Args>>,
+    dynamic: DataGlueScript_DagNodeDynamic,
 }
 
-impl DataGlueScriptDagNodeEl {
+impl DataGlueScript_DagNode {
     #[doc = "Set the field `line_number`.\n"]
     pub fn set_line_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.line_number = std::option::Option::Some(v.into());
@@ -441,7 +475,7 @@ impl DataGlueScriptDagNodeEl {
     #[doc = "Set the field `args`.\n"]
     pub fn set_args(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataGlueScriptDagNodeElArgsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataGlueScript_DagNode_Args>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -455,8 +489,8 @@ impl DataGlueScriptDagNodeEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueScriptDagNodeEl {
-    type O = terrars::BlockAssignable<DataGlueScriptDagNodeEl>;
+impl terrars::ToListMappable for DataGlueScript_DagNode {
+    type O = terrars::BlockAssignable<DataGlueScript_DagNode>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -467,16 +501,16 @@ impl terrars::ToListMappable for DataGlueScriptDagNodeEl {
     }
 }
 
-pub struct BuildDataGlueScriptDagNodeEl {
+pub struct BuildDataGlueScript_DagNode {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub node_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataGlueScriptDagNodeEl {
-    pub fn build(self) -> DataGlueScriptDagNodeEl {
-        DataGlueScriptDagNodeEl {
+impl BuildDataGlueScript_DagNode {
+    pub fn build(self) -> DataGlueScript_DagNode {
+        DataGlueScript_DagNode {
             id: self.id,
             line_number: core::default::Default::default(),
             node_type: self.node_type,
@@ -486,21 +520,23 @@ impl BuildDataGlueScriptDagNodeEl {
     }
 }
 
-pub struct DataGlueScriptDagNodeElRef {
+#[allow(dead_code)]
+pub struct DataGlueScript_DagNodeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueScriptDagNodeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueScriptDagNodeElRef {
-        DataGlueScriptDagNodeElRef {
+impl terrars::Ref for DataGlueScript_DagNodeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueScript_DagNodeRef {
+        DataGlueScript_DagNodeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueScriptDagNodeElRef {
+impl DataGlueScript_DagNodeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -521,13 +557,7 @@ impl DataGlueScriptDagNodeElRef {
     }
 
     #[doc = "Get a reference to the value of field `args` after provisioning.\n"]
-    pub fn args(&self) -> terrars::ListRef<DataGlueScriptDagNodeElArgsElRef> {
+    pub fn args(&self) -> terrars::ListRef<DataGlueScript_DagNode_ArgsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.args", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataGlueScriptDynamic {
-    dag_edge: std::option::Option<terrars::DynamicBlock<DataGlueScriptDagEdgeEl>>,
-    dag_node: std::option::Option<terrars::DynamicBlock<DataGlueScriptDagNodeEl>>,
 }

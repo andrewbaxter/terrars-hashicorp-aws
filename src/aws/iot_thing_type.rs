@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IotThingTypeData {
+struct IotThingTypeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct IotThingTypeData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    properties: std::option::Option<std::vec::Vec<IotThingTypePropertiesEl>>,
+    properties: std::option::Option<std::vec::Vec<IotThingType_Properties>>,
     dynamic: IotThingTypeDynamic,
 }
 
 struct IotThingType_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IotThingTypeData>,
+    data: std::cell::RefCell<IotThingTypeData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl IotThingType {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -166,7 +177,7 @@ impl IotThingType {
     }
 
     #[doc = "Set the field `properties`.\n"]
-    pub fn set_properties(self, v: impl std::convert::Into<terrars::BlockAssignable<IotThingTypePropertiesEl>>) -> Self {
+    pub fn set_properties(self, v: impl std::convert::Into<terrars::BlockAssignable<IotThingType_Properties>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().properties = std::option::Option::Some(v);
@@ -198,6 +209,12 @@ impl IotThingType {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -209,7 +226,7 @@ impl IotThingType {
     }
 
     #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
-    pub fn properties(&self) -> terrars::ListRef<IotThingTypePropertiesElRef> {
+    pub fn properties(&self) -> terrars::ListRef<IotThingType_PropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
     }
 }
@@ -256,7 +273,7 @@ impl BuildIotThingType {
         let out = IotThingType(std::rc::Rc::new(IotThingType_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IotThingTypeData {
+            data: std::cell::RefCell::new(IotThingTypeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -265,6 +282,7 @@ impl BuildIotThingType {
                 deprecated: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 properties: core::default::Default::default(),
@@ -319,6 +337,12 @@ impl IotThingTypeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -330,20 +354,25 @@ impl IotThingTypeRef {
     }
 
     #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
-    pub fn properties(&self) -> terrars::ListRef<IotThingTypePropertiesElRef> {
+    pub fn properties(&self) -> terrars::ListRef<IotThingType_PropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IotThingTypeDynamic {
+    properties: std::option::Option<terrars::DynamicBlock<IotThingType_Properties>>,
+}
+
 #[derive(Serialize)]
-pub struct IotThingTypePropertiesEl {
+pub struct IotThingType_Properties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     searchable_attributes: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl IotThingTypePropertiesEl {
+impl IotThingType_Properties {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -360,8 +389,8 @@ impl IotThingTypePropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for IotThingTypePropertiesEl {
-    type O = terrars::BlockAssignable<IotThingTypePropertiesEl>;
+impl terrars::ToListMappable for IotThingType_Properties {
+    type O = terrars::BlockAssignable<IotThingType_Properties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -372,32 +401,34 @@ impl terrars::ToListMappable for IotThingTypePropertiesEl {
     }
 }
 
-pub struct BuildIotThingTypePropertiesEl {}
+pub struct BuildIotThingType_Properties {}
 
-impl BuildIotThingTypePropertiesEl {
-    pub fn build(self) -> IotThingTypePropertiesEl {
-        IotThingTypePropertiesEl {
+impl BuildIotThingType_Properties {
+    pub fn build(self) -> IotThingType_Properties {
+        IotThingType_Properties {
             description: core::default::Default::default(),
             searchable_attributes: core::default::Default::default(),
         }
     }
 }
 
-pub struct IotThingTypePropertiesElRef {
+#[allow(dead_code)]
+pub struct IotThingType_PropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotThingTypePropertiesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IotThingTypePropertiesElRef {
-        IotThingTypePropertiesElRef {
+impl terrars::Ref for IotThingType_PropertiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotThingType_PropertiesRef {
+        IotThingType_PropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotThingTypePropertiesElRef {
+impl IotThingType_PropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -411,9 +442,4 @@ impl IotThingTypePropertiesElRef {
     pub fn searchable_attributes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.searchable_attributes", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IotThingTypeDynamic {
-    properties: std::option::Option<terrars::DynamicBlock<IotThingTypePropertiesEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppmeshVirtualRouterData {
+struct AppmeshVirtualRouterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,18 +27,20 @@ struct AppmeshVirtualRouterData {
     mesh_owner: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spec: std::option::Option<std::vec::Vec<AppmeshVirtualRouterSpecEl>>,
+    spec: std::option::Option<std::vec::Vec<AppmeshVirtualRouter_Spec>>,
     dynamic: AppmeshVirtualRouterDynamic,
 }
 
 struct AppmeshVirtualRouter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppmeshVirtualRouterData>,
+    data: std::cell::RefCell<AppmeshVirtualRouterData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl AppmeshVirtualRouter {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -167,7 +178,7 @@ impl AppmeshVirtualRouter {
     }
 
     #[doc = "Set the field `spec`.\n"]
-    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualRouterSpecEl>>) -> Self {
+    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualRouter_Spec>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().spec = std::option::Option::Some(v);
@@ -214,6 +225,12 @@ impl AppmeshVirtualRouter {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -230,7 +247,7 @@ impl AppmeshVirtualRouter {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualRouterSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualRouter_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
@@ -279,7 +296,7 @@ impl BuildAppmeshVirtualRouter {
         let out = AppmeshVirtualRouter(std::rc::Rc::new(AppmeshVirtualRouter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppmeshVirtualRouterData {
+            data: std::cell::RefCell::new(AppmeshVirtualRouterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -289,6 +306,7 @@ impl BuildAppmeshVirtualRouter {
                 mesh_name: self.mesh_name,
                 mesh_owner: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 spec: core::default::Default::default(),
@@ -358,6 +376,12 @@ impl AppmeshVirtualRouterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -374,21 +398,26 @@ impl AppmeshVirtualRouterRef {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualRouterSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualRouter_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppmeshVirtualRouterDynamic {
+    spec: std::option::Option<terrars::DynamicBlock<AppmeshVirtualRouter_Spec>>,
+}
+
 #[derive(Serialize)]
-pub struct AppmeshVirtualRouterSpecElListenerElPortMappingEl {
+pub struct AppmeshVirtualRouter_Spec_Listener_PortMapping {
     port: terrars::PrimField<f64>,
     protocol: terrars::PrimField<std::string::String>,
 }
 
-impl AppmeshVirtualRouterSpecElListenerElPortMappingEl { }
+impl AppmeshVirtualRouter_Spec_Listener_PortMapping { }
 
-impl terrars::ToListMappable for AppmeshVirtualRouterSpecElListenerElPortMappingEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualRouterSpecElListenerElPortMappingEl>;
+impl terrars::ToListMappable for AppmeshVirtualRouter_Spec_Listener_PortMapping {
+    type O = terrars::BlockAssignable<AppmeshVirtualRouter_Spec_Listener_PortMapping>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -399,40 +428,42 @@ impl terrars::ToListMappable for AppmeshVirtualRouterSpecElListenerElPortMapping
     }
 }
 
-pub struct BuildAppmeshVirtualRouterSpecElListenerElPortMappingEl {
+pub struct BuildAppmeshVirtualRouter_Spec_Listener_PortMapping {
     #[doc = ""]
     pub port: terrars::PrimField<f64>,
     #[doc = ""]
     pub protocol: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualRouterSpecElListenerElPortMappingEl {
-    pub fn build(self) -> AppmeshVirtualRouterSpecElListenerElPortMappingEl {
-        AppmeshVirtualRouterSpecElListenerElPortMappingEl {
+impl BuildAppmeshVirtualRouter_Spec_Listener_PortMapping {
+    pub fn build(self) -> AppmeshVirtualRouter_Spec_Listener_PortMapping {
+        AppmeshVirtualRouter_Spec_Listener_PortMapping {
             port: self.port,
             protocol: self.protocol,
         }
     }
 }
 
-pub struct AppmeshVirtualRouterSpecElListenerElPortMappingElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualRouter_Spec_Listener_PortMappingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualRouterSpecElListenerElPortMappingElRef {
+impl terrars::Ref for AppmeshVirtualRouter_Spec_Listener_PortMappingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualRouterSpecElListenerElPortMappingElRef {
-        AppmeshVirtualRouterSpecElListenerElPortMappingElRef {
+    ) -> AppmeshVirtualRouter_Spec_Listener_PortMappingRef {
+        AppmeshVirtualRouter_Spec_Listener_PortMappingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualRouterSpecElListenerElPortMappingElRef {
+impl AppmeshVirtualRouter_Spec_Listener_PortMappingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -449,22 +480,22 @@ impl AppmeshVirtualRouterSpecElListenerElPortMappingElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualRouterSpecElListenerElDynamic {
-    port_mapping: std::option::Option<terrars::DynamicBlock<AppmeshVirtualRouterSpecElListenerElPortMappingEl>>,
+struct AppmeshVirtualRouter_Spec_ListenerDynamic {
+    port_mapping: std::option::Option<terrars::DynamicBlock<AppmeshVirtualRouter_Spec_Listener_PortMapping>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualRouterSpecElListenerEl {
+pub struct AppmeshVirtualRouter_Spec_Listener {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_mapping: std::option::Option<std::vec::Vec<AppmeshVirtualRouterSpecElListenerElPortMappingEl>>,
-    dynamic: AppmeshVirtualRouterSpecElListenerElDynamic,
+    port_mapping: std::option::Option<std::vec::Vec<AppmeshVirtualRouter_Spec_Listener_PortMapping>>,
+    dynamic: AppmeshVirtualRouter_Spec_ListenerDynamic,
 }
 
-impl AppmeshVirtualRouterSpecElListenerEl {
+impl AppmeshVirtualRouter_Spec_Listener {
     #[doc = "Set the field `port_mapping`.\n"]
     pub fn set_port_mapping(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualRouterSpecElListenerElPortMappingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualRouter_Spec_Listener_PortMapping>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -478,8 +509,8 @@ impl AppmeshVirtualRouterSpecElListenerEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualRouterSpecElListenerEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualRouterSpecElListenerEl>;
+impl terrars::ToListMappable for AppmeshVirtualRouter_Spec_Listener {
+    type O = terrars::BlockAssignable<AppmeshVirtualRouter_Spec_Listener>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,59 +521,61 @@ impl terrars::ToListMappable for AppmeshVirtualRouterSpecElListenerEl {
     }
 }
 
-pub struct BuildAppmeshVirtualRouterSpecElListenerEl {}
+pub struct BuildAppmeshVirtualRouter_Spec_Listener {}
 
-impl BuildAppmeshVirtualRouterSpecElListenerEl {
-    pub fn build(self) -> AppmeshVirtualRouterSpecElListenerEl {
-        AppmeshVirtualRouterSpecElListenerEl {
+impl BuildAppmeshVirtualRouter_Spec_Listener {
+    pub fn build(self) -> AppmeshVirtualRouter_Spec_Listener {
+        AppmeshVirtualRouter_Spec_Listener {
             port_mapping: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshVirtualRouterSpecElListenerElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualRouter_Spec_ListenerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualRouterSpecElListenerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualRouterSpecElListenerElRef {
-        AppmeshVirtualRouterSpecElListenerElRef {
+impl terrars::Ref for AppmeshVirtualRouter_Spec_ListenerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualRouter_Spec_ListenerRef {
+        AppmeshVirtualRouter_Spec_ListenerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualRouterSpecElListenerElRef {
+impl AppmeshVirtualRouter_Spec_ListenerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `port_mapping` after provisioning.\n"]
-    pub fn port_mapping(&self) -> terrars::ListRef<AppmeshVirtualRouterSpecElListenerElPortMappingElRef> {
+    pub fn port_mapping(&self) -> terrars::ListRef<AppmeshVirtualRouter_Spec_Listener_PortMappingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.port_mapping", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualRouterSpecElDynamic {
-    listener: std::option::Option<terrars::DynamicBlock<AppmeshVirtualRouterSpecElListenerEl>>,
+struct AppmeshVirtualRouter_SpecDynamic {
+    listener: std::option::Option<terrars::DynamicBlock<AppmeshVirtualRouter_Spec_Listener>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualRouterSpecEl {
+pub struct AppmeshVirtualRouter_Spec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    listener: std::option::Option<std::vec::Vec<AppmeshVirtualRouterSpecElListenerEl>>,
-    dynamic: AppmeshVirtualRouterSpecElDynamic,
+    listener: std::option::Option<std::vec::Vec<AppmeshVirtualRouter_Spec_Listener>>,
+    dynamic: AppmeshVirtualRouter_SpecDynamic,
 }
 
-impl AppmeshVirtualRouterSpecEl {
+impl AppmeshVirtualRouter_Spec {
     #[doc = "Set the field `listener`.\n"]
     pub fn set_listener(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualRouterSpecElListenerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualRouter_Spec_Listener>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -556,8 +589,8 @@ impl AppmeshVirtualRouterSpecEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualRouterSpecEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualRouterSpecEl>;
+impl terrars::ToListMappable for AppmeshVirtualRouter_Spec {
+    type O = terrars::BlockAssignable<AppmeshVirtualRouter_Spec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -568,43 +601,40 @@ impl terrars::ToListMappable for AppmeshVirtualRouterSpecEl {
     }
 }
 
-pub struct BuildAppmeshVirtualRouterSpecEl {}
+pub struct BuildAppmeshVirtualRouter_Spec {}
 
-impl BuildAppmeshVirtualRouterSpecEl {
-    pub fn build(self) -> AppmeshVirtualRouterSpecEl {
-        AppmeshVirtualRouterSpecEl {
+impl BuildAppmeshVirtualRouter_Spec {
+    pub fn build(self) -> AppmeshVirtualRouter_Spec {
+        AppmeshVirtualRouter_Spec {
             listener: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshVirtualRouterSpecElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualRouter_SpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualRouterSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualRouterSpecElRef {
-        AppmeshVirtualRouterSpecElRef {
+impl terrars::Ref for AppmeshVirtualRouter_SpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualRouter_SpecRef {
+        AppmeshVirtualRouter_SpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualRouterSpecElRef {
+impl AppmeshVirtualRouter_SpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `listener` after provisioning.\n"]
-    pub fn listener(&self) -> terrars::ListRef<AppmeshVirtualRouterSpecElListenerElRef> {
+    pub fn listener(&self) -> terrars::ListRef<AppmeshVirtualRouter_Spec_ListenerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.listener", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshVirtualRouterDynamic {
-    spec: std::option::Option<terrars::DynamicBlock<AppmeshVirtualRouterSpecEl>>,
 }

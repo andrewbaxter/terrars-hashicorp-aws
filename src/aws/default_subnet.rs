@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DefaultSubnetData {
+struct DefaultSubnetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -44,17 +46,19 @@ struct DefaultSubnetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_dns_hostname_type_on_launch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DefaultSubnetTimeoutsEl>,
+    timeouts: std::option::Option<DefaultSubnet_Timeouts>,
 }
 
 struct DefaultSubnet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DefaultSubnetData>,
+    data: std::cell::RefCell<DefaultSubnetData_>,
 }
 
 #[derive(Clone)]
@@ -239,6 +243,13 @@ impl DefaultSubnet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -258,7 +269,7 @@ impl DefaultSubnet {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DefaultSubnetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DefaultSubnet_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -299,6 +310,11 @@ impl DefaultSubnet {
     #[doc = "Get a reference to the value of field `enable_dns64` after provisioning.\n"]
     pub fn enable_dns64(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_dns64", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_lni_at_device_index` after provisioning.\n"]
+    pub fn enable_lni_at_device_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_lni_at_device_index", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enable_resource_name_dns_a_record_on_launch` after provisioning.\n"]
@@ -382,6 +398,12 @@ impl DefaultSubnet {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -398,8 +420,8 @@ impl DefaultSubnet {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DefaultSubnetTimeoutsElRef {
-        DefaultSubnetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DefaultSubnet_TimeoutsRef {
+        DefaultSubnet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -445,7 +467,7 @@ impl BuildDefaultSubnet {
         let out = DefaultSubnet(std::rc::Rc::new(DefaultSubnet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DefaultSubnetData {
+            data: std::cell::RefCell::new(DefaultSubnetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -464,6 +486,7 @@ impl BuildDefaultSubnet {
                 map_customer_owned_ip_on_launch: core::default::Default::default(),
                 map_public_ip_on_launch: core::default::Default::default(),
                 private_dns_hostname_type_on_launch: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -535,6 +558,11 @@ impl DefaultSubnetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_dns64", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_lni_at_device_index` after provisioning.\n"]
+    pub fn enable_lni_at_device_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_lni_at_device_index", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `enable_resource_name_dns_a_record_on_launch` after provisioning.\n"]
     pub fn enable_resource_name_dns_a_record_on_launch(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
@@ -616,6 +644,12 @@ impl DefaultSubnetRef {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -632,20 +666,20 @@ impl DefaultSubnetRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DefaultSubnetTimeoutsElRef {
-        DefaultSubnetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DefaultSubnet_TimeoutsRef {
+        DefaultSubnet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DefaultSubnetTimeoutsEl {
+pub struct DefaultSubnet_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DefaultSubnetTimeoutsEl {
+impl DefaultSubnet_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -659,8 +693,8 @@ impl DefaultSubnetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DefaultSubnetTimeoutsEl {
-    type O = terrars::BlockAssignable<DefaultSubnetTimeoutsEl>;
+impl terrars::ToListMappable for DefaultSubnet_Timeouts {
+    type O = terrars::BlockAssignable<DefaultSubnet_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -671,32 +705,34 @@ impl terrars::ToListMappable for DefaultSubnetTimeoutsEl {
     }
 }
 
-pub struct BuildDefaultSubnetTimeoutsEl {}
+pub struct BuildDefaultSubnet_Timeouts {}
 
-impl BuildDefaultSubnetTimeoutsEl {
-    pub fn build(self) -> DefaultSubnetTimeoutsEl {
-        DefaultSubnetTimeoutsEl {
+impl BuildDefaultSubnet_Timeouts {
+    pub fn build(self) -> DefaultSubnet_Timeouts {
+        DefaultSubnet_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct DefaultSubnetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DefaultSubnet_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DefaultSubnetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultSubnetTimeoutsElRef {
-        DefaultSubnetTimeoutsElRef {
+impl terrars::Ref for DefaultSubnet_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultSubnet_TimeoutsRef {
+        DefaultSubnet_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DefaultSubnetTimeoutsElRef {
+impl DefaultSubnet_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

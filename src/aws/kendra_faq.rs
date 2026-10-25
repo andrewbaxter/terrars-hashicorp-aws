@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KendraFaqData {
+struct KendraFaqData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,22 +30,24 @@ struct KendraFaqData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     language_code: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_path: std::option::Option<std::vec::Vec<KendraFaqS3PathEl>>,
+    s3_path: std::option::Option<std::vec::Vec<KendraFaq_S3Path>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KendraFaqTimeoutsEl>,
+    timeouts: std::option::Option<KendraFaq_Timeouts>,
     dynamic: KendraFaqDynamic,
 }
 
 struct KendraFaq_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KendraFaqData>,
+    data: std::cell::RefCell<KendraFaqData_>,
 }
 
 #[derive(Clone)]
@@ -167,6 +171,13 @@ impl KendraFaq {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -186,7 +197,7 @@ impl KendraFaq {
     }
 
     #[doc = "Set the field `s3_path`.\n"]
-    pub fn set_s3_path(self, v: impl std::convert::Into<terrars::BlockAssignable<KendraFaqS3PathEl>>) -> Self {
+    pub fn set_s3_path(self, v: impl std::convert::Into<terrars::BlockAssignable<KendraFaq_S3Path>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().s3_path = std::option::Option::Some(v);
@@ -199,7 +210,7 @@ impl KendraFaq {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KendraFaqTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KendraFaq_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -254,6 +265,12 @@ impl KendraFaq {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -280,13 +297,13 @@ impl KendraFaq {
     }
 
     #[doc = "Get a reference to the value of field `s3_path` after provisioning.\n"]
-    pub fn s3_path(&self) -> terrars::ListRef<KendraFaqS3PathElRef> {
+    pub fn s3_path(&self) -> terrars::ListRef<KendraFaq_S3PathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_path", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KendraFaqTimeoutsElRef {
-        KendraFaqTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KendraFaq_TimeoutsRef {
+        KendraFaq_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -336,7 +353,7 @@ impl BuildKendraFaq {
         let out = KendraFaq(std::rc::Rc::new(KendraFaq_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KendraFaqData {
+            data: std::cell::RefCell::new(KendraFaqData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -348,6 +365,7 @@ impl BuildKendraFaq {
                 index_id: self.index_id,
                 language_code: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -434,6 +452,12 @@ impl KendraFaqRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -460,26 +484,31 @@ impl KendraFaqRef {
     }
 
     #[doc = "Get a reference to the value of field `s3_path` after provisioning.\n"]
-    pub fn s3_path(&self) -> terrars::ListRef<KendraFaqS3PathElRef> {
+    pub fn s3_path(&self) -> terrars::ListRef<KendraFaq_S3PathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_path", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KendraFaqTimeoutsElRef {
-        KendraFaqTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KendraFaq_TimeoutsRef {
+        KendraFaq_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct KendraFaqDynamic {
+    s3_path: std::option::Option<terrars::DynamicBlock<KendraFaq_S3Path>>,
+}
+
 #[derive(Serialize)]
-pub struct KendraFaqS3PathEl {
+pub struct KendraFaq_S3Path {
     bucket: terrars::PrimField<std::string::String>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl KendraFaqS3PathEl { }
+impl KendraFaq_S3Path { }
 
-impl terrars::ToListMappable for KendraFaqS3PathEl {
-    type O = terrars::BlockAssignable<KendraFaqS3PathEl>;
+impl terrars::ToListMappable for KendraFaq_S3Path {
+    type O = terrars::BlockAssignable<KendraFaq_S3Path>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,37 +519,39 @@ impl terrars::ToListMappable for KendraFaqS3PathEl {
     }
 }
 
-pub struct BuildKendraFaqS3PathEl {
+pub struct BuildKendraFaq_S3Path {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraFaqS3PathEl {
-    pub fn build(self) -> KendraFaqS3PathEl {
-        KendraFaqS3PathEl {
+impl BuildKendraFaq_S3Path {
+    pub fn build(self) -> KendraFaq_S3Path {
+        KendraFaq_S3Path {
             bucket: self.bucket,
             key: self.key,
         }
     }
 }
 
-pub struct KendraFaqS3PathElRef {
+#[allow(dead_code)]
+pub struct KendraFaq_S3PathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraFaqS3PathElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraFaqS3PathElRef {
-        KendraFaqS3PathElRef {
+impl terrars::Ref for KendraFaq_S3PathRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraFaq_S3PathRef {
+        KendraFaq_S3PathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraFaqS3PathElRef {
+impl KendraFaq_S3PathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -537,14 +568,14 @@ impl KendraFaqS3PathElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraFaqTimeoutsEl {
+pub struct KendraFaq_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraFaqTimeoutsEl {
+impl KendraFaq_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -558,8 +589,8 @@ impl KendraFaqTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KendraFaqTimeoutsEl {
-    type O = terrars::BlockAssignable<KendraFaqTimeoutsEl>;
+impl terrars::ToListMappable for KendraFaq_Timeouts {
+    type O = terrars::BlockAssignable<KendraFaq_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -570,32 +601,34 @@ impl terrars::ToListMappable for KendraFaqTimeoutsEl {
     }
 }
 
-pub struct BuildKendraFaqTimeoutsEl {}
+pub struct BuildKendraFaq_Timeouts {}
 
-impl BuildKendraFaqTimeoutsEl {
-    pub fn build(self) -> KendraFaqTimeoutsEl {
-        KendraFaqTimeoutsEl {
+impl BuildKendraFaq_Timeouts {
+    pub fn build(self) -> KendraFaq_Timeouts {
+        KendraFaq_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraFaqTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KendraFaq_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraFaqTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraFaqTimeoutsElRef {
-        KendraFaqTimeoutsElRef {
+impl terrars::Ref for KendraFaq_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraFaq_TimeoutsRef {
+        KendraFaq_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraFaqTimeoutsElRef {
+impl KendraFaq_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -609,9 +642,4 @@ impl KendraFaqTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KendraFaqDynamic {
-    s3_path: std::option::Option<terrars::DynamicBlock<KendraFaqS3PathEl>>,
 }

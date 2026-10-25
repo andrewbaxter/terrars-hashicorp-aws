@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IotTopicRuleDestinationData {
+struct IotTopicRuleDestinationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,16 +25,18 @@ struct IotTopicRuleDestinationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IotTopicRuleDestinationTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_configuration: std::option::Option<std::vec::Vec<IotTopicRuleDestinationVpcConfigurationEl>>,
+    timeouts: std::option::Option<IotTopicRuleDestination_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_configuration: std::option::Option<std::vec::Vec<IotTopicRuleDestination_VpcConfiguration>>,
     dynamic: IotTopicRuleDestinationDynamic,
 }
 
 struct IotTopicRuleDestination_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IotTopicRuleDestinationData>,
+    data: std::cell::RefCell<IotTopicRuleDestinationData_>,
 }
 
 #[derive(Clone)]
@@ -144,8 +148,15 @@ impl IotTopicRuleDestination {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IotTopicRuleDestinationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IotTopicRuleDestination_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -153,7 +164,7 @@ impl IotTopicRuleDestination {
     #[doc = "Set the field `vpc_configuration`.\n"]
     pub fn set_vpc_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleDestinationVpcConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotTopicRuleDestination_VpcConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,13 +192,19 @@ impl IotTopicRuleDestination {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IotTopicRuleDestinationTimeoutsElRef {
-        IotTopicRuleDestinationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IotTopicRuleDestination_TimeoutsRef {
+        IotTopicRuleDestination_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
-    pub fn vpc_configuration(&self) -> terrars::ListRef<IotTopicRuleDestinationVpcConfigurationElRef> {
+    pub fn vpc_configuration(&self) -> terrars::ListRef<IotTopicRuleDestination_VpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.extract_ref()))
     }
 }
@@ -232,7 +249,7 @@ impl BuildIotTopicRuleDestination {
         let out = IotTopicRuleDestination(std::rc::Rc::new(IotTopicRuleDestination_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IotTopicRuleDestinationData {
+            data: std::cell::RefCell::new(IotTopicRuleDestinationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -240,6 +257,7 @@ impl BuildIotTopicRuleDestination {
                 provisioner: core::default::Default::default(),
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 vpc_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -288,19 +306,30 @@ impl IotTopicRuleDestinationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IotTopicRuleDestinationTimeoutsElRef {
-        IotTopicRuleDestinationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IotTopicRuleDestination_TimeoutsRef {
+        IotTopicRuleDestination_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
-    pub fn vpc_configuration(&self) -> terrars::ListRef<IotTopicRuleDestinationVpcConfigurationElRef> {
+    pub fn vpc_configuration(&self) -> terrars::ListRef<IotTopicRuleDestination_VpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IotTopicRuleDestinationDynamic {
+    vpc_configuration: std::option::Option<terrars::DynamicBlock<IotTopicRuleDestination_VpcConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct IotTopicRuleDestinationTimeoutsEl {
+pub struct IotTopicRuleDestination_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -309,7 +338,7 @@ pub struct IotTopicRuleDestinationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IotTopicRuleDestinationTimeoutsEl {
+impl IotTopicRuleDestination_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -329,8 +358,8 @@ impl IotTopicRuleDestinationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IotTopicRuleDestinationTimeoutsEl {
-    type O = terrars::BlockAssignable<IotTopicRuleDestinationTimeoutsEl>;
+impl terrars::ToListMappable for IotTopicRuleDestination_Timeouts {
+    type O = terrars::BlockAssignable<IotTopicRuleDestination_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -341,11 +370,11 @@ impl terrars::ToListMappable for IotTopicRuleDestinationTimeoutsEl {
     }
 }
 
-pub struct BuildIotTopicRuleDestinationTimeoutsEl {}
+pub struct BuildIotTopicRuleDestination_Timeouts {}
 
-impl BuildIotTopicRuleDestinationTimeoutsEl {
-    pub fn build(self) -> IotTopicRuleDestinationTimeoutsEl {
-        IotTopicRuleDestinationTimeoutsEl {
+impl BuildIotTopicRuleDestination_Timeouts {
+    pub fn build(self) -> IotTopicRuleDestination_Timeouts {
+        IotTopicRuleDestination_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -353,21 +382,23 @@ impl BuildIotTopicRuleDestinationTimeoutsEl {
     }
 }
 
-pub struct IotTopicRuleDestinationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IotTopicRuleDestination_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotTopicRuleDestinationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleDestinationTimeoutsElRef {
-        IotTopicRuleDestinationTimeoutsElRef {
+impl terrars::Ref for IotTopicRuleDestination_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleDestination_TimeoutsRef {
+        IotTopicRuleDestination_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotTopicRuleDestinationTimeoutsElRef {
+impl IotTopicRuleDestination_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -389,7 +420,7 @@ impl IotTopicRuleDestinationTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct IotTopicRuleDestinationVpcConfigurationEl {
+pub struct IotTopicRuleDestination_VpcConfiguration {
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -397,7 +428,7 @@ pub struct IotTopicRuleDestinationVpcConfigurationEl {
     vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl IotTopicRuleDestinationVpcConfigurationEl {
+impl IotTopicRuleDestination_VpcConfiguration {
     #[doc = "Set the field `security_groups`.\n"]
     pub fn set_security_groups(
         mut self,
@@ -408,8 +439,8 @@ impl IotTopicRuleDestinationVpcConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for IotTopicRuleDestinationVpcConfigurationEl {
-    type O = terrars::BlockAssignable<IotTopicRuleDestinationVpcConfigurationEl>;
+impl terrars::ToListMappable for IotTopicRuleDestination_VpcConfiguration {
+    type O = terrars::BlockAssignable<IotTopicRuleDestination_VpcConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -420,7 +451,7 @@ impl terrars::ToListMappable for IotTopicRuleDestinationVpcConfigurationEl {
     }
 }
 
-pub struct BuildIotTopicRuleDestinationVpcConfigurationEl {
+pub struct BuildIotTopicRuleDestination_VpcConfiguration {
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -429,9 +460,9 @@ pub struct BuildIotTopicRuleDestinationVpcConfigurationEl {
     pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIotTopicRuleDestinationVpcConfigurationEl {
-    pub fn build(self) -> IotTopicRuleDestinationVpcConfigurationEl {
-        IotTopicRuleDestinationVpcConfigurationEl {
+impl BuildIotTopicRuleDestination_VpcConfiguration {
+    pub fn build(self) -> IotTopicRuleDestination_VpcConfiguration {
+        IotTopicRuleDestination_VpcConfiguration {
             role_arn: self.role_arn,
             security_groups: core::default::Default::default(),
             subnet_ids: self.subnet_ids,
@@ -440,21 +471,23 @@ impl BuildIotTopicRuleDestinationVpcConfigurationEl {
     }
 }
 
-pub struct IotTopicRuleDestinationVpcConfigurationElRef {
+#[allow(dead_code)]
+pub struct IotTopicRuleDestination_VpcConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotTopicRuleDestinationVpcConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleDestinationVpcConfigurationElRef {
-        IotTopicRuleDestinationVpcConfigurationElRef {
+impl terrars::Ref for IotTopicRuleDestination_VpcConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotTopicRuleDestination_VpcConfigurationRef {
+        IotTopicRuleDestination_VpcConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotTopicRuleDestinationVpcConfigurationElRef {
+impl IotTopicRuleDestination_VpcConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -478,9 +511,4 @@ impl IotTopicRuleDestinationVpcConfigurationElRef {
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IotTopicRuleDestinationDynamic {
-    vpc_configuration: std::option::Option<terrars::DynamicBlock<IotTopicRuleDestinationVpcConfigurationEl>>,
 }

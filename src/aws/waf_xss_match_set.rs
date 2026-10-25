@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafXssMatchSetData {
+struct WafXssMatchSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,14 @@ struct WafXssMatchSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    xss_match_tuples: std::option::Option<std::vec::Vec<WafXssMatchSetXssMatchTuplesEl>>,
+    xss_match_tuples: std::option::Option<std::vec::Vec<WafXssMatchSet_XssMatchTuples>>,
     dynamic: WafXssMatchSetDynamic,
 }
 
 struct WafXssMatchSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafXssMatchSetData>,
+    data: std::cell::RefCell<WafXssMatchSetData_>,
 }
 
 #[derive(Clone)]
@@ -138,7 +140,7 @@ impl WafXssMatchSet {
     #[doc = "Set the field `xss_match_tuples`.\n"]
     pub fn set_xss_match_tuples(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafXssMatchSetXssMatchTuplesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafXssMatchSet_XssMatchTuples>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,7 +211,7 @@ impl BuildWafXssMatchSet {
         let out = WafXssMatchSet(std::rc::Rc::new(WafXssMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafXssMatchSetData {
+            data: std::cell::RefCell::new(WafXssMatchSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -265,15 +267,20 @@ impl WafXssMatchSetRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafXssMatchSetDynamic {
+    xss_match_tuples: std::option::Option<terrars::DynamicBlock<WafXssMatchSet_XssMatchTuples>>,
+}
+
 #[derive(Serialize)]
-pub struct WafXssMatchSetXssMatchTuplesElFieldToMatchEl {
+pub struct WafXssMatchSet_XssMatchTuples_FieldToMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafXssMatchSetXssMatchTuplesElFieldToMatchEl {
+impl WafXssMatchSet_XssMatchTuples_FieldToMatch {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -281,8 +288,8 @@ impl WafXssMatchSetXssMatchTuplesElFieldToMatchEl {
     }
 }
 
-impl terrars::ToListMappable for WafXssMatchSetXssMatchTuplesElFieldToMatchEl {
-    type O = terrars::BlockAssignable<WafXssMatchSetXssMatchTuplesElFieldToMatchEl>;
+impl terrars::ToListMappable for WafXssMatchSet_XssMatchTuples_FieldToMatch {
+    type O = terrars::BlockAssignable<WafXssMatchSet_XssMatchTuples_FieldToMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -293,38 +300,37 @@ impl terrars::ToListMappable for WafXssMatchSetXssMatchTuplesElFieldToMatchEl {
     }
 }
 
-pub struct BuildWafXssMatchSetXssMatchTuplesElFieldToMatchEl {
+pub struct BuildWafXssMatchSet_XssMatchTuples_FieldToMatch {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafXssMatchSetXssMatchTuplesElFieldToMatchEl {
-    pub fn build(self) -> WafXssMatchSetXssMatchTuplesElFieldToMatchEl {
-        WafXssMatchSetXssMatchTuplesElFieldToMatchEl {
+impl BuildWafXssMatchSet_XssMatchTuples_FieldToMatch {
+    pub fn build(self) -> WafXssMatchSet_XssMatchTuples_FieldToMatch {
+        WafXssMatchSet_XssMatchTuples_FieldToMatch {
             data: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct WafXssMatchSetXssMatchTuplesElFieldToMatchElRef {
+#[allow(dead_code)]
+pub struct WafXssMatchSet_XssMatchTuples_FieldToMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafXssMatchSetXssMatchTuplesElFieldToMatchElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> WafXssMatchSetXssMatchTuplesElFieldToMatchElRef {
-        WafXssMatchSetXssMatchTuplesElFieldToMatchElRef {
+impl terrars::Ref for WafXssMatchSet_XssMatchTuples_FieldToMatchRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafXssMatchSet_XssMatchTuples_FieldToMatchRef {
+        WafXssMatchSet_XssMatchTuples_FieldToMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafXssMatchSetXssMatchTuplesElFieldToMatchElRef {
+impl WafXssMatchSet_XssMatchTuples_FieldToMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -341,23 +347,23 @@ impl WafXssMatchSetXssMatchTuplesElFieldToMatchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafXssMatchSetXssMatchTuplesElDynamic {
-    field_to_match: std::option::Option<terrars::DynamicBlock<WafXssMatchSetXssMatchTuplesElFieldToMatchEl>>,
+struct WafXssMatchSet_XssMatchTuplesDynamic {
+    field_to_match: std::option::Option<terrars::DynamicBlock<WafXssMatchSet_XssMatchTuples_FieldToMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct WafXssMatchSetXssMatchTuplesEl {
+pub struct WafXssMatchSet_XssMatchTuples {
     text_transformation: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_to_match: std::option::Option<std::vec::Vec<WafXssMatchSetXssMatchTuplesElFieldToMatchEl>>,
-    dynamic: WafXssMatchSetXssMatchTuplesElDynamic,
+    field_to_match: std::option::Option<std::vec::Vec<WafXssMatchSet_XssMatchTuples_FieldToMatch>>,
+    dynamic: WafXssMatchSet_XssMatchTuplesDynamic,
 }
 
-impl WafXssMatchSetXssMatchTuplesEl {
+impl WafXssMatchSet_XssMatchTuples {
     #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafXssMatchSetXssMatchTuplesElFieldToMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafXssMatchSet_XssMatchTuples_FieldToMatch>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -371,8 +377,8 @@ impl WafXssMatchSetXssMatchTuplesEl {
     }
 }
 
-impl terrars::ToListMappable for WafXssMatchSetXssMatchTuplesEl {
-    type O = terrars::BlockAssignable<WafXssMatchSetXssMatchTuplesEl>;
+impl terrars::ToListMappable for WafXssMatchSet_XssMatchTuples {
+    type O = terrars::BlockAssignable<WafXssMatchSet_XssMatchTuples>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -383,14 +389,14 @@ impl terrars::ToListMappable for WafXssMatchSetXssMatchTuplesEl {
     }
 }
 
-pub struct BuildWafXssMatchSetXssMatchTuplesEl {
+pub struct BuildWafXssMatchSet_XssMatchTuples {
     #[doc = ""]
     pub text_transformation: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafXssMatchSetXssMatchTuplesEl {
-    pub fn build(self) -> WafXssMatchSetXssMatchTuplesEl {
-        WafXssMatchSetXssMatchTuplesEl {
+impl BuildWafXssMatchSet_XssMatchTuples {
+    pub fn build(self) -> WafXssMatchSet_XssMatchTuples {
+        WafXssMatchSet_XssMatchTuples {
             text_transformation: self.text_transformation,
             field_to_match: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -398,21 +404,23 @@ impl BuildWafXssMatchSetXssMatchTuplesEl {
     }
 }
 
-pub struct WafXssMatchSetXssMatchTuplesElRef {
+#[allow(dead_code)]
+pub struct WafXssMatchSet_XssMatchTuplesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafXssMatchSetXssMatchTuplesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafXssMatchSetXssMatchTuplesElRef {
-        WafXssMatchSetXssMatchTuplesElRef {
+impl terrars::Ref for WafXssMatchSet_XssMatchTuplesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafXssMatchSet_XssMatchTuplesRef {
+        WafXssMatchSet_XssMatchTuplesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafXssMatchSetXssMatchTuplesElRef {
+impl WafXssMatchSet_XssMatchTuplesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -423,12 +431,7 @@ impl WafXssMatchSetXssMatchTuplesElRef {
     }
 
     #[doc = "Get a reference to the value of field `field_to_match` after provisioning.\n"]
-    pub fn field_to_match(&self) -> terrars::ListRef<WafXssMatchSetXssMatchTuplesElFieldToMatchElRef> {
+    pub fn field_to_match(&self) -> terrars::ListRef<WafXssMatchSet_XssMatchTuples_FieldToMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafXssMatchSetDynamic {
-    xss_match_tuples: std::option::Option<terrars::DynamicBlock<WafXssMatchSetXssMatchTuplesEl>>,
 }

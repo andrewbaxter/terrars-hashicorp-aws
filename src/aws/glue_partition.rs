@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GluePartitionData {
+struct GluePartitionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,16 +28,18 @@ struct GluePartitionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     partition_values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     table_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage_descriptor: std::option::Option<std::vec::Vec<GluePartitionStorageDescriptorEl>>,
+    storage_descriptor: std::option::Option<std::vec::Vec<GluePartition_StorageDescriptor>>,
     dynamic: GluePartitionDynamic,
 }
 
 struct GluePartition_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GluePartitionData>,
+    data: std::cell::RefCell<GluePartitionData_>,
 }
 
 #[derive(Clone)]
@@ -156,10 +160,17 @@ impl GluePartition {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `storage_descriptor`.\n"]
     pub fn set_storage_descriptor(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GluePartitionStorageDescriptorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GluePartition_StorageDescriptor>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -212,13 +223,19 @@ impl GluePartition {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_values", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
     pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_descriptor` after provisioning.\n"]
-    pub fn storage_descriptor(&self) -> terrars::ListRef<GluePartitionStorageDescriptorElRef> {
+    pub fn storage_descriptor(&self) -> terrars::ListRef<GluePartition_StorageDescriptorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_descriptor", self.extract_ref()))
     }
 }
@@ -269,7 +286,7 @@ impl BuildGluePartition {
         let out = GluePartition(std::rc::Rc::new(GluePartition_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GluePartitionData {
+            data: std::cell::RefCell::new(GluePartitionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -280,6 +297,7 @@ impl BuildGluePartition {
                 id: core::default::Default::default(),
                 parameters: core::default::Default::default(),
                 partition_values: self.partition_values,
+                region: core::default::Default::default(),
                 table_name: self.table_name,
                 storage_descriptor: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -353,19 +371,30 @@ impl GluePartitionRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_values", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
     pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_descriptor` after provisioning.\n"]
-    pub fn storage_descriptor(&self) -> terrars::ListRef<GluePartitionStorageDescriptorElRef> {
+    pub fn storage_descriptor(&self) -> terrars::ListRef<GluePartition_StorageDescriptorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_descriptor", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GluePartitionDynamic {
+    storage_descriptor: std::option::Option<terrars::DynamicBlock<GluePartition_StorageDescriptor>>,
+}
+
 #[derive(Serialize)]
-pub struct GluePartitionStorageDescriptorElColumnsEl {
+pub struct GluePartition_StorageDescriptor_Columns {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     comment: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
@@ -373,7 +402,7 @@ pub struct GluePartitionStorageDescriptorElColumnsEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GluePartitionStorageDescriptorElColumnsEl {
+impl GluePartition_StorageDescriptor_Columns {
     #[doc = "Set the field `comment`.\n"]
     pub fn set_comment(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.comment = std::option::Option::Some(v.into());
@@ -387,8 +416,8 @@ impl GluePartitionStorageDescriptorElColumnsEl {
     }
 }
 
-impl terrars::ToListMappable for GluePartitionStorageDescriptorElColumnsEl {
-    type O = terrars::BlockAssignable<GluePartitionStorageDescriptorElColumnsEl>;
+impl terrars::ToListMappable for GluePartition_StorageDescriptor_Columns {
+    type O = terrars::BlockAssignable<GluePartition_StorageDescriptor_Columns>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -399,14 +428,14 @@ impl terrars::ToListMappable for GluePartitionStorageDescriptorElColumnsEl {
     }
 }
 
-pub struct BuildGluePartitionStorageDescriptorElColumnsEl {
+pub struct BuildGluePartition_StorageDescriptor_Columns {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGluePartitionStorageDescriptorElColumnsEl {
-    pub fn build(self) -> GluePartitionStorageDescriptorElColumnsEl {
-        GluePartitionStorageDescriptorElColumnsEl {
+impl BuildGluePartition_StorageDescriptor_Columns {
+    pub fn build(self) -> GluePartition_StorageDescriptor_Columns {
+        GluePartition_StorageDescriptor_Columns {
             comment: core::default::Default::default(),
             name: self.name,
             type_: core::default::Default::default(),
@@ -414,21 +443,23 @@ impl BuildGluePartitionStorageDescriptorElColumnsEl {
     }
 }
 
-pub struct GluePartitionStorageDescriptorElColumnsElRef {
+#[allow(dead_code)]
+pub struct GluePartition_StorageDescriptor_ColumnsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GluePartitionStorageDescriptorElColumnsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GluePartitionStorageDescriptorElColumnsElRef {
-        GluePartitionStorageDescriptorElColumnsElRef {
+impl terrars::Ref for GluePartition_StorageDescriptor_ColumnsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GluePartition_StorageDescriptor_ColumnsRef {
+        GluePartition_StorageDescriptor_ColumnsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GluePartitionStorageDescriptorElColumnsElRef {
+impl GluePartition_StorageDescriptor_ColumnsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -450,7 +481,7 @@ impl GluePartitionStorageDescriptorElColumnsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GluePartitionStorageDescriptorElSerDeInfoEl {
+pub struct GluePartition_StorageDescriptor_SerDeInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -459,7 +490,7 @@ pub struct GluePartitionStorageDescriptorElSerDeInfoEl {
     serialization_library: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GluePartitionStorageDescriptorElSerDeInfoEl {
+impl GluePartition_StorageDescriptor_SerDeInfo {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -485,8 +516,8 @@ impl GluePartitionStorageDescriptorElSerDeInfoEl {
     }
 }
 
-impl terrars::ToListMappable for GluePartitionStorageDescriptorElSerDeInfoEl {
-    type O = terrars::BlockAssignable<GluePartitionStorageDescriptorElSerDeInfoEl>;
+impl terrars::ToListMappable for GluePartition_StorageDescriptor_SerDeInfo {
+    type O = terrars::BlockAssignable<GluePartition_StorageDescriptor_SerDeInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -497,11 +528,11 @@ impl terrars::ToListMappable for GluePartitionStorageDescriptorElSerDeInfoEl {
     }
 }
 
-pub struct BuildGluePartitionStorageDescriptorElSerDeInfoEl {}
+pub struct BuildGluePartition_StorageDescriptor_SerDeInfo {}
 
-impl BuildGluePartitionStorageDescriptorElSerDeInfoEl {
-    pub fn build(self) -> GluePartitionStorageDescriptorElSerDeInfoEl {
-        GluePartitionStorageDescriptorElSerDeInfoEl {
+impl BuildGluePartition_StorageDescriptor_SerDeInfo {
+    pub fn build(self) -> GluePartition_StorageDescriptor_SerDeInfo {
+        GluePartition_StorageDescriptor_SerDeInfo {
             name: core::default::Default::default(),
             parameters: core::default::Default::default(),
             serialization_library: core::default::Default::default(),
@@ -509,24 +540,23 @@ impl BuildGluePartitionStorageDescriptorElSerDeInfoEl {
     }
 }
 
-pub struct GluePartitionStorageDescriptorElSerDeInfoElRef {
+#[allow(dead_code)]
+pub struct GluePartition_StorageDescriptor_SerDeInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GluePartitionStorageDescriptorElSerDeInfoElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> GluePartitionStorageDescriptorElSerDeInfoElRef {
-        GluePartitionStorageDescriptorElSerDeInfoElRef {
+impl terrars::Ref for GluePartition_StorageDescriptor_SerDeInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GluePartition_StorageDescriptor_SerDeInfoRef {
+        GluePartition_StorageDescriptor_SerDeInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GluePartitionStorageDescriptorElSerDeInfoElRef {
+impl GluePartition_StorageDescriptor_SerDeInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -548,7 +578,7 @@ impl GluePartitionStorageDescriptorElSerDeInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct GluePartitionStorageDescriptorElSkewedInfoEl {
+pub struct GluePartition_StorageDescriptor_SkewedInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skewed_column_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -557,7 +587,7 @@ pub struct GluePartitionStorageDescriptorElSkewedInfoEl {
     skewed_column_values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl GluePartitionStorageDescriptorElSkewedInfoEl {
+impl GluePartition_StorageDescriptor_SkewedInfo {
     #[doc = "Set the field `skewed_column_names`.\n"]
     pub fn set_skewed_column_names(
         mut self,
@@ -586,8 +616,8 @@ impl GluePartitionStorageDescriptorElSkewedInfoEl {
     }
 }
 
-impl terrars::ToListMappable for GluePartitionStorageDescriptorElSkewedInfoEl {
-    type O = terrars::BlockAssignable<GluePartitionStorageDescriptorElSkewedInfoEl>;
+impl terrars::ToListMappable for GluePartition_StorageDescriptor_SkewedInfo {
+    type O = terrars::BlockAssignable<GluePartition_StorageDescriptor_SkewedInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -598,11 +628,11 @@ impl terrars::ToListMappable for GluePartitionStorageDescriptorElSkewedInfoEl {
     }
 }
 
-pub struct BuildGluePartitionStorageDescriptorElSkewedInfoEl {}
+pub struct BuildGluePartition_StorageDescriptor_SkewedInfo {}
 
-impl BuildGluePartitionStorageDescriptorElSkewedInfoEl {
-    pub fn build(self) -> GluePartitionStorageDescriptorElSkewedInfoEl {
-        GluePartitionStorageDescriptorElSkewedInfoEl {
+impl BuildGluePartition_StorageDescriptor_SkewedInfo {
+    pub fn build(self) -> GluePartition_StorageDescriptor_SkewedInfo {
+        GluePartition_StorageDescriptor_SkewedInfo {
             skewed_column_names: core::default::Default::default(),
             skewed_column_value_location_maps: core::default::Default::default(),
             skewed_column_values: core::default::Default::default(),
@@ -610,24 +640,23 @@ impl BuildGluePartitionStorageDescriptorElSkewedInfoEl {
     }
 }
 
-pub struct GluePartitionStorageDescriptorElSkewedInfoElRef {
+#[allow(dead_code)]
+pub struct GluePartition_StorageDescriptor_SkewedInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GluePartitionStorageDescriptorElSkewedInfoElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> GluePartitionStorageDescriptorElSkewedInfoElRef {
-        GluePartitionStorageDescriptorElSkewedInfoElRef {
+impl terrars::Ref for GluePartition_StorageDescriptor_SkewedInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GluePartition_StorageDescriptor_SkewedInfoRef {
+        GluePartition_StorageDescriptor_SkewedInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GluePartitionStorageDescriptorElSkewedInfoElRef {
+impl GluePartition_StorageDescriptor_SkewedInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -649,15 +678,15 @@ impl GluePartitionStorageDescriptorElSkewedInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct GluePartitionStorageDescriptorElSortColumnsEl {
+pub struct GluePartition_StorageDescriptor_SortColumns {
     column: terrars::PrimField<std::string::String>,
     sort_order: terrars::PrimField<f64>,
 }
 
-impl GluePartitionStorageDescriptorElSortColumnsEl { }
+impl GluePartition_StorageDescriptor_SortColumns { }
 
-impl terrars::ToListMappable for GluePartitionStorageDescriptorElSortColumnsEl {
-    type O = terrars::BlockAssignable<GluePartitionStorageDescriptorElSortColumnsEl>;
+impl terrars::ToListMappable for GluePartition_StorageDescriptor_SortColumns {
+    type O = terrars::BlockAssignable<GluePartition_StorageDescriptor_SortColumns>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -668,40 +697,42 @@ impl terrars::ToListMappable for GluePartitionStorageDescriptorElSortColumnsEl {
     }
 }
 
-pub struct BuildGluePartitionStorageDescriptorElSortColumnsEl {
+pub struct BuildGluePartition_StorageDescriptor_SortColumns {
     #[doc = ""]
     pub column: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub sort_order: terrars::PrimField<f64>,
 }
 
-impl BuildGluePartitionStorageDescriptorElSortColumnsEl {
-    pub fn build(self) -> GluePartitionStorageDescriptorElSortColumnsEl {
-        GluePartitionStorageDescriptorElSortColumnsEl {
+impl BuildGluePartition_StorageDescriptor_SortColumns {
+    pub fn build(self) -> GluePartition_StorageDescriptor_SortColumns {
+        GluePartition_StorageDescriptor_SortColumns {
             column: self.column,
             sort_order: self.sort_order,
         }
     }
 }
 
-pub struct GluePartitionStorageDescriptorElSortColumnsElRef {
+#[allow(dead_code)]
+pub struct GluePartition_StorageDescriptor_SortColumnsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GluePartitionStorageDescriptorElSortColumnsElRef {
+impl terrars::Ref for GluePartition_StorageDescriptor_SortColumnsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GluePartitionStorageDescriptorElSortColumnsElRef {
-        GluePartitionStorageDescriptorElSortColumnsElRef {
+    ) -> GluePartition_StorageDescriptor_SortColumnsRef {
+        GluePartition_StorageDescriptor_SortColumnsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GluePartitionStorageDescriptorElSortColumnsElRef {
+impl GluePartition_StorageDescriptor_SortColumnsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -718,15 +749,17 @@ impl GluePartitionStorageDescriptorElSortColumnsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GluePartitionStorageDescriptorElDynamic {
-    columns: std::option::Option<terrars::DynamicBlock<GluePartitionStorageDescriptorElColumnsEl>>,
-    ser_de_info: std::option::Option<terrars::DynamicBlock<GluePartitionStorageDescriptorElSerDeInfoEl>>,
-    skewed_info: std::option::Option<terrars::DynamicBlock<GluePartitionStorageDescriptorElSkewedInfoEl>>,
-    sort_columns: std::option::Option<terrars::DynamicBlock<GluePartitionStorageDescriptorElSortColumnsEl>>,
+struct GluePartition_StorageDescriptorDynamic {
+    columns: std::option::Option<terrars::DynamicBlock<GluePartition_StorageDescriptor_Columns>>,
+    ser_de_info: std::option::Option<terrars::DynamicBlock<GluePartition_StorageDescriptor_SerDeInfo>>,
+    skewed_info: std::option::Option<terrars::DynamicBlock<GluePartition_StorageDescriptor_SkewedInfo>>,
+    sort_columns: std::option::Option<terrars::DynamicBlock<GluePartition_StorageDescriptor_SortColumns>>,
 }
 
 #[derive(Serialize)]
-pub struct GluePartitionStorageDescriptorEl {
+pub struct GluePartition_StorageDescriptor {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    additional_locations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_columns: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -744,17 +777,26 @@ pub struct GluePartitionStorageDescriptorEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stored_as_sub_directories: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    columns: std::option::Option<std::vec::Vec<GluePartitionStorageDescriptorElColumnsEl>>,
+    columns: std::option::Option<std::vec::Vec<GluePartition_StorageDescriptor_Columns>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ser_de_info: std::option::Option<std::vec::Vec<GluePartitionStorageDescriptorElSerDeInfoEl>>,
+    ser_de_info: std::option::Option<std::vec::Vec<GluePartition_StorageDescriptor_SerDeInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    skewed_info: std::option::Option<std::vec::Vec<GluePartitionStorageDescriptorElSkewedInfoEl>>,
+    skewed_info: std::option::Option<std::vec::Vec<GluePartition_StorageDescriptor_SkewedInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort_columns: std::option::Option<std::vec::Vec<GluePartitionStorageDescriptorElSortColumnsEl>>,
-    dynamic: GluePartitionStorageDescriptorElDynamic,
+    sort_columns: std::option::Option<std::vec::Vec<GluePartition_StorageDescriptor_SortColumns>>,
+    dynamic: GluePartition_StorageDescriptorDynamic,
 }
 
-impl GluePartitionStorageDescriptorEl {
+impl GluePartition_StorageDescriptor {
+    #[doc = "Set the field `additional_locations`.\n"]
+    pub fn set_additional_locations(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.additional_locations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `bucket_columns`.\n"]
     pub fn set_bucket_columns(
         mut self,
@@ -812,7 +854,7 @@ impl GluePartitionStorageDescriptorEl {
     #[doc = "Set the field `columns`.\n"]
     pub fn set_columns(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GluePartitionStorageDescriptorElColumnsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GluePartition_StorageDescriptor_Columns>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -828,7 +870,7 @@ impl GluePartitionStorageDescriptorEl {
     #[doc = "Set the field `ser_de_info`.\n"]
     pub fn set_ser_de_info(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GluePartitionStorageDescriptorElSerDeInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GluePartition_StorageDescriptor_SerDeInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -844,7 +886,7 @@ impl GluePartitionStorageDescriptorEl {
     #[doc = "Set the field `skewed_info`.\n"]
     pub fn set_skewed_info(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GluePartitionStorageDescriptorElSkewedInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GluePartition_StorageDescriptor_SkewedInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -860,7 +902,7 @@ impl GluePartitionStorageDescriptorEl {
     #[doc = "Set the field `sort_columns`.\n"]
     pub fn set_sort_columns(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GluePartitionStorageDescriptorElSortColumnsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GluePartition_StorageDescriptor_SortColumns>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -874,8 +916,8 @@ impl GluePartitionStorageDescriptorEl {
     }
 }
 
-impl terrars::ToListMappable for GluePartitionStorageDescriptorEl {
-    type O = terrars::BlockAssignable<GluePartitionStorageDescriptorEl>;
+impl terrars::ToListMappable for GluePartition_StorageDescriptor {
+    type O = terrars::BlockAssignable<GluePartition_StorageDescriptor>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -886,11 +928,12 @@ impl terrars::ToListMappable for GluePartitionStorageDescriptorEl {
     }
 }
 
-pub struct BuildGluePartitionStorageDescriptorEl {}
+pub struct BuildGluePartition_StorageDescriptor {}
 
-impl BuildGluePartitionStorageDescriptorEl {
-    pub fn build(self) -> GluePartitionStorageDescriptorEl {
-        GluePartitionStorageDescriptorEl {
+impl BuildGluePartition_StorageDescriptor {
+    pub fn build(self) -> GluePartition_StorageDescriptor {
+        GluePartition_StorageDescriptor {
+            additional_locations: core::default::Default::default(),
             bucket_columns: core::default::Default::default(),
             compressed: core::default::Default::default(),
             input_format: core::default::Default::default(),
@@ -908,23 +951,30 @@ impl BuildGluePartitionStorageDescriptorEl {
     }
 }
 
-pub struct GluePartitionStorageDescriptorElRef {
+#[allow(dead_code)]
+pub struct GluePartition_StorageDescriptorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GluePartitionStorageDescriptorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GluePartitionStorageDescriptorElRef {
-        GluePartitionStorageDescriptorElRef {
+impl terrars::Ref for GluePartition_StorageDescriptorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GluePartition_StorageDescriptorRef {
+        GluePartition_StorageDescriptorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GluePartitionStorageDescriptorElRef {
+impl GluePartition_StorageDescriptorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `additional_locations` after provisioning.\n"]
+    pub fn additional_locations(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.additional_locations", self.base))
     }
 
     #[doc = "Get a reference to the value of field `bucket_columns` after provisioning.\n"]
@@ -968,27 +1018,22 @@ impl GluePartitionStorageDescriptorElRef {
     }
 
     #[doc = "Get a reference to the value of field `columns` after provisioning.\n"]
-    pub fn columns(&self) -> terrars::ListRef<GluePartitionStorageDescriptorElColumnsElRef> {
+    pub fn columns(&self) -> terrars::ListRef<GluePartition_StorageDescriptor_ColumnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.columns", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ser_de_info` after provisioning.\n"]
-    pub fn ser_de_info(&self) -> terrars::ListRef<GluePartitionStorageDescriptorElSerDeInfoElRef> {
+    pub fn ser_de_info(&self) -> terrars::ListRef<GluePartition_StorageDescriptor_SerDeInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ser_de_info", self.base))
     }
 
     #[doc = "Get a reference to the value of field `skewed_info` after provisioning.\n"]
-    pub fn skewed_info(&self) -> terrars::ListRef<GluePartitionStorageDescriptorElSkewedInfoElRef> {
+    pub fn skewed_info(&self) -> terrars::ListRef<GluePartition_StorageDescriptor_SkewedInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.skewed_info", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sort_columns` after provisioning.\n"]
-    pub fn sort_columns(&self) -> terrars::ListRef<GluePartitionStorageDescriptorElSortColumnsElRef> {
+    pub fn sort_columns(&self) -> terrars::ListRef<GluePartition_StorageDescriptor_SortColumnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort_columns", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GluePartitionDynamic {
-    storage_descriptor: std::option::Option<terrars::DynamicBlock<GluePartitionStorageDescriptorEl>>,
 }

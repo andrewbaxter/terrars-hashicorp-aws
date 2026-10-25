@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DxHostedConnectionData {
+struct DxHostedConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,7 +32,7 @@ struct DxHostedConnectionData {
 struct DxHostedConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DxHostedConnectionData>,
+    data: std::cell::RefCell<DxHostedConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +153,11 @@ impl DxHostedConnection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `connection_region` after provisioning.\n"]
+    pub fn connection_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `has_logical_redundancy` after provisioning.\n"]
     pub fn has_logical_redundancy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_logical_redundancy", self.extract_ref()))
@@ -267,7 +274,7 @@ impl BuildDxHostedConnection {
         let out = DxHostedConnection(std::rc::Rc::new(DxHostedConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DxHostedConnectionData {
+            data: std::cell::RefCell::new(DxHostedConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -322,6 +329,11 @@ impl DxHostedConnectionRef {
     #[doc = "Get a reference to the value of field `connection_id` after provisioning.\n"]
     pub fn connection_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `connection_region` after provisioning.\n"]
+    pub fn connection_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `has_logical_redundancy` after provisioning.\n"]

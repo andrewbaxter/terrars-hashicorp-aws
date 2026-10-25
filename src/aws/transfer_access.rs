@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct TransferAccessData {
+struct TransferAccessData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,19 +30,21 @@ struct TransferAccessData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role: std::option::Option<terrars::PrimField<std::string::String>>,
     server_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    home_directory_mappings: std::option::Option<std::vec::Vec<TransferAccessHomeDirectoryMappingsEl>>,
+    home_directory_mappings: std::option::Option<std::vec::Vec<TransferAccess_HomeDirectoryMappings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    posix_profile: std::option::Option<std::vec::Vec<TransferAccessPosixProfileEl>>,
+    posix_profile: std::option::Option<std::vec::Vec<TransferAccess_PosixProfile>>,
     dynamic: TransferAccessDynamic,
 }
 
 struct TransferAccess_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<TransferAccessData>,
+    data: std::cell::RefCell<TransferAccessData_>,
 }
 
 #[derive(Clone)]
@@ -164,6 +168,13 @@ impl TransferAccess {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `role`.\n"]
     pub fn set_role(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().role = std::option::Option::Some(v.into());
@@ -173,7 +184,7 @@ impl TransferAccess {
     #[doc = "Set the field `home_directory_mappings`.\n"]
     pub fn set_home_directory_mappings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<TransferAccessHomeDirectoryMappingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferAccess_HomeDirectoryMappings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -189,7 +200,7 @@ impl TransferAccess {
     #[doc = "Set the field `posix_profile`.\n"]
     pub fn set_posix_profile(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<TransferAccessPosixProfileEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferAccess_PosixProfile>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -227,6 +238,12 @@ impl TransferAccess {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
     pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
@@ -238,12 +255,12 @@ impl TransferAccess {
     }
 
     #[doc = "Get a reference to the value of field `home_directory_mappings` after provisioning.\n"]
-    pub fn home_directory_mappings(&self) -> terrars::ListRef<TransferAccessHomeDirectoryMappingsElRef> {
+    pub fn home_directory_mappings(&self) -> terrars::ListRef<TransferAccess_HomeDirectoryMappingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.home_directory_mappings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `posix_profile` after provisioning.\n"]
-    pub fn posix_profile(&self) -> terrars::ListRef<TransferAccessPosixProfileElRef> {
+    pub fn posix_profile(&self) -> terrars::ListRef<TransferAccess_PosixProfileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.posix_profile", self.extract_ref()))
     }
 }
@@ -292,7 +309,7 @@ impl BuildTransferAccess {
         let out = TransferAccess(std::rc::Rc::new(TransferAccess_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(TransferAccessData {
+            data: std::cell::RefCell::new(TransferAccessData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -303,6 +320,7 @@ impl BuildTransferAccess {
                 home_directory_type: core::default::Default::default(),
                 id: core::default::Default::default(),
                 policy: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role: core::default::Default::default(),
                 server_id: self.server_id,
                 home_directory_mappings: core::default::Default::default(),
@@ -363,6 +381,12 @@ impl TransferAccessRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
     pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
@@ -374,26 +398,32 @@ impl TransferAccessRef {
     }
 
     #[doc = "Get a reference to the value of field `home_directory_mappings` after provisioning.\n"]
-    pub fn home_directory_mappings(&self) -> terrars::ListRef<TransferAccessHomeDirectoryMappingsElRef> {
+    pub fn home_directory_mappings(&self) -> terrars::ListRef<TransferAccess_HomeDirectoryMappingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.home_directory_mappings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `posix_profile` after provisioning.\n"]
-    pub fn posix_profile(&self) -> terrars::ListRef<TransferAccessPosixProfileElRef> {
+    pub fn posix_profile(&self) -> terrars::ListRef<TransferAccess_PosixProfileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.posix_profile", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct TransferAccessDynamic {
+    home_directory_mappings: std::option::Option<terrars::DynamicBlock<TransferAccess_HomeDirectoryMappings>>,
+    posix_profile: std::option::Option<terrars::DynamicBlock<TransferAccess_PosixProfile>>,
+}
+
 #[derive(Serialize)]
-pub struct TransferAccessHomeDirectoryMappingsEl {
+pub struct TransferAccess_HomeDirectoryMappings {
     entry: terrars::PrimField<std::string::String>,
     target: terrars::PrimField<std::string::String>,
 }
 
-impl TransferAccessHomeDirectoryMappingsEl { }
+impl TransferAccess_HomeDirectoryMappings { }
 
-impl terrars::ToListMappable for TransferAccessHomeDirectoryMappingsEl {
-    type O = terrars::BlockAssignable<TransferAccessHomeDirectoryMappingsEl>;
+impl terrars::ToListMappable for TransferAccess_HomeDirectoryMappings {
+    type O = terrars::BlockAssignable<TransferAccess_HomeDirectoryMappings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -404,37 +434,39 @@ impl terrars::ToListMappable for TransferAccessHomeDirectoryMappingsEl {
     }
 }
 
-pub struct BuildTransferAccessHomeDirectoryMappingsEl {
+pub struct BuildTransferAccess_HomeDirectoryMappings {
     #[doc = ""]
     pub entry: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub target: terrars::PrimField<std::string::String>,
 }
 
-impl BuildTransferAccessHomeDirectoryMappingsEl {
-    pub fn build(self) -> TransferAccessHomeDirectoryMappingsEl {
-        TransferAccessHomeDirectoryMappingsEl {
+impl BuildTransferAccess_HomeDirectoryMappings {
+    pub fn build(self) -> TransferAccess_HomeDirectoryMappings {
+        TransferAccess_HomeDirectoryMappings {
             entry: self.entry,
             target: self.target,
         }
     }
 }
 
-pub struct TransferAccessHomeDirectoryMappingsElRef {
+#[allow(dead_code)]
+pub struct TransferAccess_HomeDirectoryMappingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TransferAccessHomeDirectoryMappingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferAccessHomeDirectoryMappingsElRef {
-        TransferAccessHomeDirectoryMappingsElRef {
+impl terrars::Ref for TransferAccess_HomeDirectoryMappingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferAccess_HomeDirectoryMappingsRef {
+        TransferAccess_HomeDirectoryMappingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TransferAccessHomeDirectoryMappingsElRef {
+impl TransferAccess_HomeDirectoryMappingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -451,14 +483,14 @@ impl TransferAccessHomeDirectoryMappingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct TransferAccessPosixProfileEl {
+pub struct TransferAccess_PosixProfile {
     gid: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secondary_gids: std::option::Option<terrars::SetField<terrars::PrimField<f64>>>,
     uid: terrars::PrimField<f64>,
 }
 
-impl TransferAccessPosixProfileEl {
+impl TransferAccess_PosixProfile {
     #[doc = "Set the field `secondary_gids`.\n"]
     pub fn set_secondary_gids(
         mut self,
@@ -469,8 +501,8 @@ impl TransferAccessPosixProfileEl {
     }
 }
 
-impl terrars::ToListMappable for TransferAccessPosixProfileEl {
-    type O = terrars::BlockAssignable<TransferAccessPosixProfileEl>;
+impl terrars::ToListMappable for TransferAccess_PosixProfile {
+    type O = terrars::BlockAssignable<TransferAccess_PosixProfile>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -481,16 +513,16 @@ impl terrars::ToListMappable for TransferAccessPosixProfileEl {
     }
 }
 
-pub struct BuildTransferAccessPosixProfileEl {
+pub struct BuildTransferAccess_PosixProfile {
     #[doc = ""]
     pub gid: terrars::PrimField<f64>,
     #[doc = ""]
     pub uid: terrars::PrimField<f64>,
 }
 
-impl BuildTransferAccessPosixProfileEl {
-    pub fn build(self) -> TransferAccessPosixProfileEl {
-        TransferAccessPosixProfileEl {
+impl BuildTransferAccess_PosixProfile {
+    pub fn build(self) -> TransferAccess_PosixProfile {
+        TransferAccess_PosixProfile {
             gid: self.gid,
             secondary_gids: core::default::Default::default(),
             uid: self.uid,
@@ -498,21 +530,23 @@ impl BuildTransferAccessPosixProfileEl {
     }
 }
 
-pub struct TransferAccessPosixProfileElRef {
+#[allow(dead_code)]
+pub struct TransferAccess_PosixProfileRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TransferAccessPosixProfileElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferAccessPosixProfileElRef {
-        TransferAccessPosixProfileElRef {
+impl terrars::Ref for TransferAccess_PosixProfileRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferAccess_PosixProfileRef {
+        TransferAccess_PosixProfileRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TransferAccessPosixProfileElRef {
+impl TransferAccess_PosixProfileRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -531,10 +565,4 @@ impl TransferAccessPosixProfileElRef {
     pub fn uid(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.uid", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct TransferAccessDynamic {
-    home_directory_mappings: std::option::Option<terrars::DynamicBlock<TransferAccessHomeDirectoryMappingsEl>>,
-    posix_profile: std::option::Option<terrars::DynamicBlock<TransferAccessPosixProfileEl>>,
 }

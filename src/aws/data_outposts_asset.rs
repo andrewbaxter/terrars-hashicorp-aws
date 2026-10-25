@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataOutpostsAssetData {
+struct DataOutpostsAssetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,12 +22,14 @@ struct DataOutpostsAssetData {
     asset_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataOutpostsAsset_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataOutpostsAssetData>,
+    data: std::cell::RefCell<DataOutpostsAssetData_>,
 }
 
 #[derive(Clone)]
@@ -76,6 +80,13 @@ impl DataOutpostsAsset {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -101,6 +112,11 @@ impl DataOutpostsAsset {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `instance_families` after provisioning.\n"]
+    pub fn instance_families(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_families", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rack_elevation` after provisioning.\n"]
     pub fn rack_elevation(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rack_elevation", self.extract_ref()))
@@ -109,6 +125,12 @@ impl DataOutpostsAsset {
     #[doc = "Get a reference to the value of field `rack_id` after provisioning.\n"]
     pub fn rack_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rack_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -156,7 +178,7 @@ impl BuildDataOutpostsAsset {
         let out = DataOutpostsAsset(std::rc::Rc::new(DataOutpostsAsset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataOutpostsAssetData {
+            data: std::cell::RefCell::new(DataOutpostsAssetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -164,6 +186,7 @@ impl BuildDataOutpostsAsset {
                 arn: self.arn,
                 asset_id: self.asset_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -219,6 +242,11 @@ impl DataOutpostsAssetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `instance_families` after provisioning.\n"]
+    pub fn instance_families(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_families", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rack_elevation` after provisioning.\n"]
     pub fn rack_elevation(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rack_elevation", self.extract_ref()))
@@ -227,5 +255,11 @@ impl DataOutpostsAssetRef {
     #[doc = "Get a reference to the value of field `rack_id` after provisioning.\n"]
     pub fn rack_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rack_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }

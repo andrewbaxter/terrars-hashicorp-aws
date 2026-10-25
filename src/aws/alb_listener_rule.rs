@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AlbListenerRuleData {
+struct AlbListenerRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,24 @@ struct AlbListenerRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     priority: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<std::vec::Vec<AlbListenerRuleActionEl>>,
+    action: std::option::Option<std::vec::Vec<AlbListenerRule_Action>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<AlbListenerRuleConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<AlbListenerRule_Condition>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transform: std::option::Option<std::vec::Vec<AlbListenerRule_Transform>>,
     dynamic: AlbListenerRuleDynamic,
 }
 
 struct AlbListenerRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AlbListenerRuleData>,
+    data: std::cell::RefCell<AlbListenerRuleData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +155,13 @@ impl AlbListenerRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +181,7 @@ impl AlbListenerRule {
     }
 
     #[doc = "Set the field `action`.\n"]
-    pub fn set_action(self, v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleActionEl>>) -> Self {
+    pub fn set_action(self, v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().action = std::option::Option::Some(v);
@@ -181,16 +194,26 @@ impl AlbListenerRule {
     }
 
     #[doc = "Set the field `condition`.\n"]
-    pub fn set_condition(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleConditionEl>>,
-    ) -> Self {
+    pub fn set_condition(self, v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Condition>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().condition = std::option::Option::Some(v);
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.condition = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `transform`.\n"]
+    pub fn set_transform(self, v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Transform>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().transform = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.transform = std::option::Option::Some(d);
             },
         }
         self
@@ -216,6 +239,12 @@ impl AlbListenerRule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -227,7 +256,7 @@ impl AlbListenerRule {
     }
 
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::ListRef<AlbListenerRuleActionElRef> {
+    pub fn action(&self) -> terrars::ListRef<AlbListenerRule_ActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
     }
 }
@@ -274,7 +303,7 @@ impl BuildAlbListenerRule {
         let out = AlbListenerRule(std::rc::Rc::new(AlbListenerRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AlbListenerRuleData {
+            data: std::cell::RefCell::new(AlbListenerRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -283,10 +312,12 @@ impl BuildAlbListenerRule {
                 id: core::default::Default::default(),
                 listener_arn: self.listener_arn,
                 priority: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 action: core::default::Default::default(),
                 condition: core::default::Default::default(),
+                transform: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -338,6 +369,12 @@ impl AlbListenerRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -349,13 +386,20 @@ impl AlbListenerRuleRef {
     }
 
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::ListRef<AlbListenerRuleActionElRef> {
+    pub fn action(&self) -> terrars::ListRef<AlbListenerRule_ActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AlbListenerRuleDynamic {
+    action: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Action>>,
+    condition: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Condition>>,
+    transform: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Transform>>,
+}
+
 #[derive(Serialize)]
-pub struct AlbListenerRuleActionElAuthenticateCognitoEl {
+pub struct AlbListenerRule_Action_AuthenticateCognito {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authentication_request_extra_params: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -371,7 +415,7 @@ pub struct AlbListenerRuleActionElAuthenticateCognitoEl {
     user_pool_domain: terrars::PrimField<std::string::String>,
 }
 
-impl AlbListenerRuleActionElAuthenticateCognitoEl {
+impl AlbListenerRule_Action_AuthenticateCognito {
     #[doc = "Set the field `authentication_request_extra_params`.\n"]
     pub fn set_authentication_request_extra_params(
         mut self,
@@ -412,8 +456,8 @@ impl AlbListenerRuleActionElAuthenticateCognitoEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleActionElAuthenticateCognitoEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleActionElAuthenticateCognitoEl>;
+impl terrars::ToListMappable for AlbListenerRule_Action_AuthenticateCognito {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action_AuthenticateCognito>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -424,7 +468,7 @@ impl terrars::ToListMappable for AlbListenerRuleActionElAuthenticateCognitoEl {
     }
 }
 
-pub struct BuildAlbListenerRuleActionElAuthenticateCognitoEl {
+pub struct BuildAlbListenerRule_Action_AuthenticateCognito {
     #[doc = ""]
     pub user_pool_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -433,9 +477,9 @@ pub struct BuildAlbListenerRuleActionElAuthenticateCognitoEl {
     pub user_pool_domain: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAlbListenerRuleActionElAuthenticateCognitoEl {
-    pub fn build(self) -> AlbListenerRuleActionElAuthenticateCognitoEl {
-        AlbListenerRuleActionElAuthenticateCognitoEl {
+impl BuildAlbListenerRule_Action_AuthenticateCognito {
+    pub fn build(self) -> AlbListenerRule_Action_AuthenticateCognito {
+        AlbListenerRule_Action_AuthenticateCognito {
             authentication_request_extra_params: core::default::Default::default(),
             on_unauthenticated_request: core::default::Default::default(),
             scope: core::default::Default::default(),
@@ -448,24 +492,23 @@ impl BuildAlbListenerRuleActionElAuthenticateCognitoEl {
     }
 }
 
-pub struct AlbListenerRuleActionElAuthenticateCognitoElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Action_AuthenticateCognitoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleActionElAuthenticateCognitoElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AlbListenerRuleActionElAuthenticateCognitoElRef {
-        AlbListenerRuleActionElAuthenticateCognitoElRef {
+impl terrars::Ref for AlbListenerRule_Action_AuthenticateCognitoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Action_AuthenticateCognitoRef {
+        AlbListenerRule_Action_AuthenticateCognitoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleActionElAuthenticateCognitoElRef {
+impl AlbListenerRule_Action_AuthenticateCognitoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -512,7 +555,7 @@ impl AlbListenerRuleActionElAuthenticateCognitoElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleActionElAuthenticateOidcEl {
+pub struct AlbListenerRule_Action_AuthenticateOidc {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authentication_request_extra_params: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     authorization_endpoint: terrars::PrimField<std::string::String>,
@@ -531,7 +574,7 @@ pub struct AlbListenerRuleActionElAuthenticateOidcEl {
     user_info_endpoint: terrars::PrimField<std::string::String>,
 }
 
-impl AlbListenerRuleActionElAuthenticateOidcEl {
+impl AlbListenerRule_Action_AuthenticateOidc {
     #[doc = "Set the field `authentication_request_extra_params`.\n"]
     pub fn set_authentication_request_extra_params(
         mut self,
@@ -572,8 +615,8 @@ impl AlbListenerRuleActionElAuthenticateOidcEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleActionElAuthenticateOidcEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleActionElAuthenticateOidcEl>;
+impl terrars::ToListMappable for AlbListenerRule_Action_AuthenticateOidc {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action_AuthenticateOidc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -584,7 +627,7 @@ impl terrars::ToListMappable for AlbListenerRuleActionElAuthenticateOidcEl {
     }
 }
 
-pub struct BuildAlbListenerRuleActionElAuthenticateOidcEl {
+pub struct BuildAlbListenerRule_Action_AuthenticateOidc {
     #[doc = ""]
     pub authorization_endpoint: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -599,9 +642,9 @@ pub struct BuildAlbListenerRuleActionElAuthenticateOidcEl {
     pub user_info_endpoint: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAlbListenerRuleActionElAuthenticateOidcEl {
-    pub fn build(self) -> AlbListenerRuleActionElAuthenticateOidcEl {
-        AlbListenerRuleActionElAuthenticateOidcEl {
+impl BuildAlbListenerRule_Action_AuthenticateOidc {
+    pub fn build(self) -> AlbListenerRule_Action_AuthenticateOidc {
+        AlbListenerRule_Action_AuthenticateOidc {
             authentication_request_extra_params: core::default::Default::default(),
             authorization_endpoint: self.authorization_endpoint,
             client_id: self.client_id,
@@ -617,21 +660,23 @@ impl BuildAlbListenerRuleActionElAuthenticateOidcEl {
     }
 }
 
-pub struct AlbListenerRuleActionElAuthenticateOidcElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Action_AuthenticateOidcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleActionElAuthenticateOidcElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleActionElAuthenticateOidcElRef {
-        AlbListenerRuleActionElAuthenticateOidcElRef {
+impl terrars::Ref for AlbListenerRule_Action_AuthenticateOidcRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Action_AuthenticateOidcRef {
+        AlbListenerRule_Action_AuthenticateOidcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleActionElAuthenticateOidcElRef {
+impl AlbListenerRule_Action_AuthenticateOidcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -693,7 +738,7 @@ impl AlbListenerRuleActionElAuthenticateOidcElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleActionElFixedResponseEl {
+pub struct AlbListenerRule_Action_FixedResponse {
     content_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     message_body: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -701,7 +746,7 @@ pub struct AlbListenerRuleActionElFixedResponseEl {
     status_code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AlbListenerRuleActionElFixedResponseEl {
+impl AlbListenerRule_Action_FixedResponse {
     #[doc = "Set the field `message_body`.\n"]
     pub fn set_message_body(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.message_body = std::option::Option::Some(v.into());
@@ -715,8 +760,8 @@ impl AlbListenerRuleActionElFixedResponseEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleActionElFixedResponseEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleActionElFixedResponseEl>;
+impl terrars::ToListMappable for AlbListenerRule_Action_FixedResponse {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action_FixedResponse>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -727,14 +772,14 @@ impl terrars::ToListMappable for AlbListenerRuleActionElFixedResponseEl {
     }
 }
 
-pub struct BuildAlbListenerRuleActionElFixedResponseEl {
+pub struct BuildAlbListenerRule_Action_FixedResponse {
     #[doc = ""]
     pub content_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAlbListenerRuleActionElFixedResponseEl {
-    pub fn build(self) -> AlbListenerRuleActionElFixedResponseEl {
-        AlbListenerRuleActionElFixedResponseEl {
+impl BuildAlbListenerRule_Action_FixedResponse {
+    pub fn build(self) -> AlbListenerRule_Action_FixedResponse {
+        AlbListenerRule_Action_FixedResponse {
             content_type: self.content_type,
             message_body: core::default::Default::default(),
             status_code: core::default::Default::default(),
@@ -742,21 +787,23 @@ impl BuildAlbListenerRuleActionElFixedResponseEl {
     }
 }
 
-pub struct AlbListenerRuleActionElFixedResponseElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Action_FixedResponseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleActionElFixedResponseElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleActionElFixedResponseElRef {
-        AlbListenerRuleActionElFixedResponseElRef {
+impl terrars::Ref for AlbListenerRule_Action_FixedResponseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Action_FixedResponseRef {
+        AlbListenerRule_Action_FixedResponseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleActionElFixedResponseElRef {
+impl AlbListenerRule_Action_FixedResponseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -778,13 +825,13 @@ impl AlbListenerRuleActionElFixedResponseElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleActionElForwardElStickinessEl {
+pub struct AlbListenerRule_Action_Forward_Stickiness {
     duration: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl AlbListenerRuleActionElForwardElStickinessEl {
+impl AlbListenerRule_Action_Forward_Stickiness {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -792,8 +839,8 @@ impl AlbListenerRuleActionElForwardElStickinessEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleActionElForwardElStickinessEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleActionElForwardElStickinessEl>;
+impl terrars::ToListMappable for AlbListenerRule_Action_Forward_Stickiness {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action_Forward_Stickiness>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -804,38 +851,37 @@ impl terrars::ToListMappable for AlbListenerRuleActionElForwardElStickinessEl {
     }
 }
 
-pub struct BuildAlbListenerRuleActionElForwardElStickinessEl {
+pub struct BuildAlbListenerRule_Action_Forward_Stickiness {
     #[doc = ""]
     pub duration: terrars::PrimField<f64>,
 }
 
-impl BuildAlbListenerRuleActionElForwardElStickinessEl {
-    pub fn build(self) -> AlbListenerRuleActionElForwardElStickinessEl {
-        AlbListenerRuleActionElForwardElStickinessEl {
+impl BuildAlbListenerRule_Action_Forward_Stickiness {
+    pub fn build(self) -> AlbListenerRule_Action_Forward_Stickiness {
+        AlbListenerRule_Action_Forward_Stickiness {
             duration: self.duration,
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct AlbListenerRuleActionElForwardElStickinessElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Action_Forward_StickinessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleActionElForwardElStickinessElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AlbListenerRuleActionElForwardElStickinessElRef {
-        AlbListenerRuleActionElForwardElStickinessElRef {
+impl terrars::Ref for AlbListenerRule_Action_Forward_StickinessRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Action_Forward_StickinessRef {
+        AlbListenerRule_Action_Forward_StickinessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleActionElForwardElStickinessElRef {
+impl AlbListenerRule_Action_Forward_StickinessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -852,13 +898,13 @@ impl AlbListenerRuleActionElForwardElStickinessElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleActionElForwardElTargetGroupEl {
+pub struct AlbListenerRule_Action_Forward_TargetGroup {
     arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weight: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AlbListenerRuleActionElForwardElTargetGroupEl {
+impl AlbListenerRule_Action_Forward_TargetGroup {
     #[doc = "Set the field `weight`.\n"]
     pub fn set_weight(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.weight = std::option::Option::Some(v.into());
@@ -866,8 +912,8 @@ impl AlbListenerRuleActionElForwardElTargetGroupEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleActionElForwardElTargetGroupEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleActionElForwardElTargetGroupEl>;
+impl terrars::ToListMappable for AlbListenerRule_Action_Forward_TargetGroup {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action_Forward_TargetGroup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -878,38 +924,37 @@ impl terrars::ToListMappable for AlbListenerRuleActionElForwardElTargetGroupEl {
     }
 }
 
-pub struct BuildAlbListenerRuleActionElForwardElTargetGroupEl {
+pub struct BuildAlbListenerRule_Action_Forward_TargetGroup {
     #[doc = ""]
     pub arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAlbListenerRuleActionElForwardElTargetGroupEl {
-    pub fn build(self) -> AlbListenerRuleActionElForwardElTargetGroupEl {
-        AlbListenerRuleActionElForwardElTargetGroupEl {
+impl BuildAlbListenerRule_Action_Forward_TargetGroup {
+    pub fn build(self) -> AlbListenerRule_Action_Forward_TargetGroup {
+        AlbListenerRule_Action_Forward_TargetGroup {
             arn: self.arn,
             weight: core::default::Default::default(),
         }
     }
 }
 
-pub struct AlbListenerRuleActionElForwardElTargetGroupElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Action_Forward_TargetGroupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleActionElForwardElTargetGroupElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AlbListenerRuleActionElForwardElTargetGroupElRef {
-        AlbListenerRuleActionElForwardElTargetGroupElRef {
+impl terrars::Ref for AlbListenerRule_Action_Forward_TargetGroupRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Action_Forward_TargetGroupRef {
+        AlbListenerRule_Action_Forward_TargetGroupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleActionElForwardElTargetGroupElRef {
+impl AlbListenerRule_Action_Forward_TargetGroupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -926,25 +971,25 @@ impl AlbListenerRuleActionElForwardElTargetGroupElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AlbListenerRuleActionElForwardElDynamic {
-    stickiness: std::option::Option<terrars::DynamicBlock<AlbListenerRuleActionElForwardElStickinessEl>>,
-    target_group: std::option::Option<terrars::DynamicBlock<AlbListenerRuleActionElForwardElTargetGroupEl>>,
+struct AlbListenerRule_Action_ForwardDynamic {
+    stickiness: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Action_Forward_Stickiness>>,
+    target_group: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Action_Forward_TargetGroup>>,
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleActionElForwardEl {
+pub struct AlbListenerRule_Action_Forward {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stickiness: std::option::Option<std::vec::Vec<AlbListenerRuleActionElForwardElStickinessEl>>,
+    stickiness: std::option::Option<std::vec::Vec<AlbListenerRule_Action_Forward_Stickiness>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_group: std::option::Option<std::vec::Vec<AlbListenerRuleActionElForwardElTargetGroupEl>>,
-    dynamic: AlbListenerRuleActionElForwardElDynamic,
+    target_group: std::option::Option<std::vec::Vec<AlbListenerRule_Action_Forward_TargetGroup>>,
+    dynamic: AlbListenerRule_Action_ForwardDynamic,
 }
 
-impl AlbListenerRuleActionElForwardEl {
+impl AlbListenerRule_Action_Forward {
     #[doc = "Set the field `stickiness`.\n"]
     pub fn set_stickiness(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleActionElForwardElStickinessEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action_Forward_Stickiness>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -960,7 +1005,7 @@ impl AlbListenerRuleActionElForwardEl {
     #[doc = "Set the field `target_group`.\n"]
     pub fn set_target_group(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleActionElForwardElTargetGroupEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action_Forward_TargetGroup>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -974,8 +1019,8 @@ impl AlbListenerRuleActionElForwardEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleActionElForwardEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleActionElForwardEl>;
+impl terrars::ToListMappable for AlbListenerRule_Action_Forward {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action_Forward>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -986,11 +1031,11 @@ impl terrars::ToListMappable for AlbListenerRuleActionElForwardEl {
     }
 }
 
-pub struct BuildAlbListenerRuleActionElForwardEl {}
+pub struct BuildAlbListenerRule_Action_Forward {}
 
-impl BuildAlbListenerRuleActionElForwardEl {
-    pub fn build(self) -> AlbListenerRuleActionElForwardEl {
-        AlbListenerRuleActionElForwardEl {
+impl BuildAlbListenerRule_Action_Forward {
+    pub fn build(self) -> AlbListenerRule_Action_Forward {
+        AlbListenerRule_Action_Forward {
             stickiness: core::default::Default::default(),
             target_group: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -998,33 +1043,211 @@ impl BuildAlbListenerRuleActionElForwardEl {
     }
 }
 
-pub struct AlbListenerRuleActionElForwardElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Action_ForwardRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleActionElForwardElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleActionElForwardElRef {
-        AlbListenerRuleActionElForwardElRef {
+impl terrars::Ref for AlbListenerRule_Action_ForwardRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Action_ForwardRef {
+        AlbListenerRule_Action_ForwardRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleActionElForwardElRef {
+impl AlbListenerRule_Action_ForwardRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `stickiness` after provisioning.\n"]
-    pub fn stickiness(&self) -> terrars::ListRef<AlbListenerRuleActionElForwardElStickinessElRef> {
+    pub fn stickiness(&self) -> terrars::ListRef<AlbListenerRule_Action_Forward_StickinessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stickiness", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleActionElRedirectEl {
+pub struct AlbListenerRule_Action_JwtValidation_AdditionalClaim {
+    format: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl AlbListenerRule_Action_JwtValidation_AdditionalClaim { }
+
+impl terrars::ToListMappable for AlbListenerRule_Action_JwtValidation_AdditionalClaim {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action_JwtValidation_AdditionalClaim>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAlbListenerRule_Action_JwtValidation_AdditionalClaim {
+    #[doc = ""]
+    pub format: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildAlbListenerRule_Action_JwtValidation_AdditionalClaim {
+    pub fn build(self) -> AlbListenerRule_Action_JwtValidation_AdditionalClaim {
+        AlbListenerRule_Action_JwtValidation_AdditionalClaim {
+            format: self.format,
+            name: self.name,
+            values: self.values,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AlbListenerRule_Action_JwtValidation_AdditionalClaimRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AlbListenerRule_Action_JwtValidation_AdditionalClaimRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AlbListenerRule_Action_JwtValidation_AdditionalClaimRef {
+        AlbListenerRule_Action_JwtValidation_AdditionalClaimRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AlbListenerRule_Action_JwtValidation_AdditionalClaimRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `format` after provisioning.\n"]
+    pub fn format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.format", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AlbListenerRule_Action_JwtValidationDynamic {
+    additional_claim: std
+    ::option
+    ::Option<terrars::DynamicBlock<AlbListenerRule_Action_JwtValidation_AdditionalClaim>>,
+}
+
+#[derive(Serialize)]
+pub struct AlbListenerRule_Action_JwtValidation {
+    issuer: terrars::PrimField<std::string::String>,
+    jwks_endpoint: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    additional_claim: std::option::Option<std::vec::Vec<AlbListenerRule_Action_JwtValidation_AdditionalClaim>>,
+    dynamic: AlbListenerRule_Action_JwtValidationDynamic,
+}
+
+impl AlbListenerRule_Action_JwtValidation {
+    #[doc = "Set the field `additional_claim`.\n"]
+    pub fn set_additional_claim(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action_JwtValidation_AdditionalClaim>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.additional_claim = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.additional_claim = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AlbListenerRule_Action_JwtValidation {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action_JwtValidation>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAlbListenerRule_Action_JwtValidation {
+    #[doc = ""]
+    pub issuer: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub jwks_endpoint: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAlbListenerRule_Action_JwtValidation {
+    pub fn build(self) -> AlbListenerRule_Action_JwtValidation {
+        AlbListenerRule_Action_JwtValidation {
+            issuer: self.issuer,
+            jwks_endpoint: self.jwks_endpoint,
+            additional_claim: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AlbListenerRule_Action_JwtValidationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AlbListenerRule_Action_JwtValidationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Action_JwtValidationRef {
+        AlbListenerRule_Action_JwtValidationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AlbListenerRule_Action_JwtValidationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `issuer` after provisioning.\n"]
+    pub fn issuer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `jwks_endpoint` after provisioning.\n"]
+    pub fn jwks_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.jwks_endpoint", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AlbListenerRule_Action_Redirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1038,7 +1261,7 @@ pub struct AlbListenerRuleActionElRedirectEl {
     status_code: terrars::PrimField<std::string::String>,
 }
 
-impl AlbListenerRuleActionElRedirectEl {
+impl AlbListenerRule_Action_Redirect {
     #[doc = "Set the field `host`.\n"]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host = std::option::Option::Some(v.into());
@@ -1070,8 +1293,8 @@ impl AlbListenerRuleActionElRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleActionElRedirectEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleActionElRedirectEl>;
+impl terrars::ToListMappable for AlbListenerRule_Action_Redirect {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action_Redirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1082,14 +1305,14 @@ impl terrars::ToListMappable for AlbListenerRuleActionElRedirectEl {
     }
 }
 
-pub struct BuildAlbListenerRuleActionElRedirectEl {
+pub struct BuildAlbListenerRule_Action_Redirect {
     #[doc = ""]
     pub status_code: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAlbListenerRuleActionElRedirectEl {
-    pub fn build(self) -> AlbListenerRuleActionElRedirectEl {
-        AlbListenerRuleActionElRedirectEl {
+impl BuildAlbListenerRule_Action_Redirect {
+    pub fn build(self) -> AlbListenerRule_Action_Redirect {
+        AlbListenerRule_Action_Redirect {
             host: core::default::Default::default(),
             path: core::default::Default::default(),
             port: core::default::Default::default(),
@@ -1100,21 +1323,23 @@ impl BuildAlbListenerRuleActionElRedirectEl {
     }
 }
 
-pub struct AlbListenerRuleActionElRedirectElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Action_RedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleActionElRedirectElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleActionElRedirectElRef {
-        AlbListenerRuleActionElRedirectElRef {
+impl terrars::Ref for AlbListenerRule_Action_RedirectRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Action_RedirectRef {
+        AlbListenerRule_Action_RedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleActionElRedirectElRef {
+impl AlbListenerRule_Action_RedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1151,16 +1376,17 @@ impl AlbListenerRuleActionElRedirectElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AlbListenerRuleActionElDynamic {
-    authenticate_cognito: std::option::Option<terrars::DynamicBlock<AlbListenerRuleActionElAuthenticateCognitoEl>>,
-    authenticate_oidc: std::option::Option<terrars::DynamicBlock<AlbListenerRuleActionElAuthenticateOidcEl>>,
-    fixed_response: std::option::Option<terrars::DynamicBlock<AlbListenerRuleActionElFixedResponseEl>>,
-    forward: std::option::Option<terrars::DynamicBlock<AlbListenerRuleActionElForwardEl>>,
-    redirect: std::option::Option<terrars::DynamicBlock<AlbListenerRuleActionElRedirectEl>>,
+struct AlbListenerRule_ActionDynamic {
+    authenticate_cognito: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Action_AuthenticateCognito>>,
+    authenticate_oidc: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Action_AuthenticateOidc>>,
+    fixed_response: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Action_FixedResponse>>,
+    forward: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Action_Forward>>,
+    jwt_validation: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Action_JwtValidation>>,
+    redirect: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Action_Redirect>>,
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleActionEl {
+pub struct AlbListenerRule_Action {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     order: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1168,19 +1394,21 @@ pub struct AlbListenerRuleActionEl {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authenticate_cognito: std::option::Option<std::vec::Vec<AlbListenerRuleActionElAuthenticateCognitoEl>>,
+    authenticate_cognito: std::option::Option<std::vec::Vec<AlbListenerRule_Action_AuthenticateCognito>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authenticate_oidc: std::option::Option<std::vec::Vec<AlbListenerRuleActionElAuthenticateOidcEl>>,
+    authenticate_oidc: std::option::Option<std::vec::Vec<AlbListenerRule_Action_AuthenticateOidc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fixed_response: std::option::Option<std::vec::Vec<AlbListenerRuleActionElFixedResponseEl>>,
+    fixed_response: std::option::Option<std::vec::Vec<AlbListenerRule_Action_FixedResponse>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    forward: std::option::Option<std::vec::Vec<AlbListenerRuleActionElForwardEl>>,
+    forward: std::option::Option<std::vec::Vec<AlbListenerRule_Action_Forward>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect: std::option::Option<std::vec::Vec<AlbListenerRuleActionElRedirectEl>>,
-    dynamic: AlbListenerRuleActionElDynamic,
+    jwt_validation: std::option::Option<std::vec::Vec<AlbListenerRule_Action_JwtValidation>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    redirect: std::option::Option<std::vec::Vec<AlbListenerRule_Action_Redirect>>,
+    dynamic: AlbListenerRule_ActionDynamic,
 }
 
-impl AlbListenerRuleActionEl {
+impl AlbListenerRule_Action {
     #[doc = "Set the field `order`.\n"]
     pub fn set_order(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.order = std::option::Option::Some(v.into());
@@ -1196,7 +1424,7 @@ impl AlbListenerRuleActionEl {
     #[doc = "Set the field `authenticate_cognito`.\n"]
     pub fn set_authenticate_cognito(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleActionElAuthenticateCognitoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action_AuthenticateCognito>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1212,7 +1440,7 @@ impl AlbListenerRuleActionEl {
     #[doc = "Set the field `authenticate_oidc`.\n"]
     pub fn set_authenticate_oidc(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleActionElAuthenticateOidcEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action_AuthenticateOidc>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1228,7 +1456,7 @@ impl AlbListenerRuleActionEl {
     #[doc = "Set the field `fixed_response`.\n"]
     pub fn set_fixed_response(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleActionElFixedResponseEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action_FixedResponse>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1244,7 +1472,7 @@ impl AlbListenerRuleActionEl {
     #[doc = "Set the field `forward`.\n"]
     pub fn set_forward(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleActionElForwardEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action_Forward>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1257,10 +1485,26 @@ impl AlbListenerRuleActionEl {
         self
     }
 
+    #[doc = "Set the field `jwt_validation`.\n"]
+    pub fn set_jwt_validation(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action_JwtValidation>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.jwt_validation = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.jwt_validation = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `redirect`.\n"]
     pub fn set_redirect(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleActionElRedirectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Action_Redirect>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1274,8 +1518,8 @@ impl AlbListenerRuleActionEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleActionEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleActionEl>;
+impl terrars::ToListMappable for AlbListenerRule_Action {
+    type O = terrars::BlockAssignable<AlbListenerRule_Action>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1286,14 +1530,14 @@ impl terrars::ToListMappable for AlbListenerRuleActionEl {
     }
 }
 
-pub struct BuildAlbListenerRuleActionEl {
+pub struct BuildAlbListenerRule_Action {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAlbListenerRuleActionEl {
-    pub fn build(self) -> AlbListenerRuleActionEl {
-        AlbListenerRuleActionEl {
+impl BuildAlbListenerRule_Action {
+    pub fn build(self) -> AlbListenerRule_Action {
+        AlbListenerRule_Action {
             order: core::default::Default::default(),
             target_group_arn: core::default::Default::default(),
             type_: self.type_,
@@ -1301,27 +1545,30 @@ impl BuildAlbListenerRuleActionEl {
             authenticate_oidc: core::default::Default::default(),
             fixed_response: core::default::Default::default(),
             forward: core::default::Default::default(),
+            jwt_validation: core::default::Default::default(),
             redirect: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AlbListenerRuleActionElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_ActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleActionElRef {
-        AlbListenerRuleActionElRef {
+impl terrars::Ref for AlbListenerRule_ActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_ActionRef {
+        AlbListenerRule_ActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleActionElRef {
+impl AlbListenerRule_ActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1342,40 +1589,66 @@ impl AlbListenerRuleActionElRef {
     }
 
     #[doc = "Get a reference to the value of field `authenticate_cognito` after provisioning.\n"]
-    pub fn authenticate_cognito(&self) -> terrars::ListRef<AlbListenerRuleActionElAuthenticateCognitoElRef> {
+    pub fn authenticate_cognito(&self) -> terrars::ListRef<AlbListenerRule_Action_AuthenticateCognitoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authenticate_cognito", self.base))
     }
 
     #[doc = "Get a reference to the value of field `authenticate_oidc` after provisioning.\n"]
-    pub fn authenticate_oidc(&self) -> terrars::ListRef<AlbListenerRuleActionElAuthenticateOidcElRef> {
+    pub fn authenticate_oidc(&self) -> terrars::ListRef<AlbListenerRule_Action_AuthenticateOidcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authenticate_oidc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `fixed_response` after provisioning.\n"]
-    pub fn fixed_response(&self) -> terrars::ListRef<AlbListenerRuleActionElFixedResponseElRef> {
+    pub fn fixed_response(&self) -> terrars::ListRef<AlbListenerRule_Action_FixedResponseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fixed_response", self.base))
     }
 
     #[doc = "Get a reference to the value of field `forward` after provisioning.\n"]
-    pub fn forward(&self) -> terrars::ListRef<AlbListenerRuleActionElForwardElRef> {
+    pub fn forward(&self) -> terrars::ListRef<AlbListenerRule_Action_ForwardRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.forward", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `jwt_validation` after provisioning.\n"]
+    pub fn jwt_validation(&self) -> terrars::ListRef<AlbListenerRule_Action_JwtValidationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.jwt_validation", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `redirect` after provisioning.\n"]
-    pub fn redirect(&self) -> terrars::ListRef<AlbListenerRuleActionElRedirectElRef> {
+    pub fn redirect(&self) -> terrars::ListRef<AlbListenerRule_Action_RedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redirect", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleConditionElHostHeaderEl {
-    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+pub struct AlbListenerRule_Condition_HostHeader {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regex_values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AlbListenerRuleConditionElHostHeaderEl { }
+impl AlbListenerRule_Condition_HostHeader {
+    #[doc = "Set the field `regex_values`.\n"]
+    pub fn set_regex_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.regex_values = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for AlbListenerRuleConditionElHostHeaderEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleConditionElHostHeaderEl>;
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AlbListenerRule_Condition_HostHeader {
+    type O = terrars::BlockAssignable<AlbListenerRule_Condition_HostHeader>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1386,34 +1659,41 @@ impl terrars::ToListMappable for AlbListenerRuleConditionElHostHeaderEl {
     }
 }
 
-pub struct BuildAlbListenerRuleConditionElHostHeaderEl {
-    #[doc = ""]
-    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
-}
+pub struct BuildAlbListenerRule_Condition_HostHeader {}
 
-impl BuildAlbListenerRuleConditionElHostHeaderEl {
-    pub fn build(self) -> AlbListenerRuleConditionElHostHeaderEl {
-        AlbListenerRuleConditionElHostHeaderEl { values: self.values }
+impl BuildAlbListenerRule_Condition_HostHeader {
+    pub fn build(self) -> AlbListenerRule_Condition_HostHeader {
+        AlbListenerRule_Condition_HostHeader {
+            regex_values: core::default::Default::default(),
+            values: core::default::Default::default(),
+        }
     }
 }
 
-pub struct AlbListenerRuleConditionElHostHeaderElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Condition_HostHeaderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleConditionElHostHeaderElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleConditionElHostHeaderElRef {
-        AlbListenerRuleConditionElHostHeaderElRef {
+impl terrars::Ref for AlbListenerRule_Condition_HostHeaderRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Condition_HostHeaderRef {
+        AlbListenerRule_Condition_HostHeaderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleConditionElHostHeaderElRef {
+impl AlbListenerRule_Condition_HostHeaderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `regex_values` after provisioning.\n"]
+    pub fn regex_values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.regex_values", self.base))
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
@@ -1423,15 +1703,36 @@ impl AlbListenerRuleConditionElHostHeaderElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleConditionElHttpHeaderEl {
+pub struct AlbListenerRule_Condition_HttpHeader {
     http_header_name: terrars::PrimField<std::string::String>,
-    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regex_values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AlbListenerRuleConditionElHttpHeaderEl { }
+impl AlbListenerRule_Condition_HttpHeader {
+    #[doc = "Set the field `regex_values`.\n"]
+    pub fn set_regex_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.regex_values = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for AlbListenerRuleConditionElHttpHeaderEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleConditionElHttpHeaderEl>;
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AlbListenerRule_Condition_HttpHeader {
+    type O = terrars::BlockAssignable<AlbListenerRule_Condition_HttpHeader>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1442,37 +1743,38 @@ impl terrars::ToListMappable for AlbListenerRuleConditionElHttpHeaderEl {
     }
 }
 
-pub struct BuildAlbListenerRuleConditionElHttpHeaderEl {
+pub struct BuildAlbListenerRule_Condition_HttpHeader {
     #[doc = ""]
     pub http_header_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildAlbListenerRuleConditionElHttpHeaderEl {
-    pub fn build(self) -> AlbListenerRuleConditionElHttpHeaderEl {
-        AlbListenerRuleConditionElHttpHeaderEl {
+impl BuildAlbListenerRule_Condition_HttpHeader {
+    pub fn build(self) -> AlbListenerRule_Condition_HttpHeader {
+        AlbListenerRule_Condition_HttpHeader {
             http_header_name: self.http_header_name,
-            values: self.values,
+            regex_values: core::default::Default::default(),
+            values: core::default::Default::default(),
         }
     }
 }
 
-pub struct AlbListenerRuleConditionElHttpHeaderElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Condition_HttpHeaderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleConditionElHttpHeaderElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleConditionElHttpHeaderElRef {
-        AlbListenerRuleConditionElHttpHeaderElRef {
+impl terrars::Ref for AlbListenerRule_Condition_HttpHeaderRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Condition_HttpHeaderRef {
+        AlbListenerRule_Condition_HttpHeaderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleConditionElHttpHeaderElRef {
+impl AlbListenerRule_Condition_HttpHeaderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1482,6 +1784,11 @@ impl AlbListenerRuleConditionElHttpHeaderElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.http_header_name", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `regex_values` after provisioning.\n"]
+    pub fn regex_values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.regex_values", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
     pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
@@ -1489,14 +1796,14 @@ impl AlbListenerRuleConditionElHttpHeaderElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleConditionElHttpRequestMethodEl {
+pub struct AlbListenerRule_Condition_HttpRequestMethod {
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl AlbListenerRuleConditionElHttpRequestMethodEl { }
+impl AlbListenerRule_Condition_HttpRequestMethod { }
 
-impl terrars::ToListMappable for AlbListenerRuleConditionElHttpRequestMethodEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleConditionElHttpRequestMethodEl>;
+impl terrars::ToListMappable for AlbListenerRule_Condition_HttpRequestMethod {
+    type O = terrars::BlockAssignable<AlbListenerRule_Condition_HttpRequestMethod>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1507,35 +1814,37 @@ impl terrars::ToListMappable for AlbListenerRuleConditionElHttpRequestMethodEl {
     }
 }
 
-pub struct BuildAlbListenerRuleConditionElHttpRequestMethodEl {
+pub struct BuildAlbListenerRule_Condition_HttpRequestMethod {
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildAlbListenerRuleConditionElHttpRequestMethodEl {
-    pub fn build(self) -> AlbListenerRuleConditionElHttpRequestMethodEl {
-        AlbListenerRuleConditionElHttpRequestMethodEl { values: self.values }
+impl BuildAlbListenerRule_Condition_HttpRequestMethod {
+    pub fn build(self) -> AlbListenerRule_Condition_HttpRequestMethod {
+        AlbListenerRule_Condition_HttpRequestMethod { values: self.values }
     }
 }
 
-pub struct AlbListenerRuleConditionElHttpRequestMethodElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Condition_HttpRequestMethodRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleConditionElHttpRequestMethodElRef {
+impl terrars::Ref for AlbListenerRule_Condition_HttpRequestMethodRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AlbListenerRuleConditionElHttpRequestMethodElRef {
-        AlbListenerRuleConditionElHttpRequestMethodElRef {
+    ) -> AlbListenerRule_Condition_HttpRequestMethodRef {
+        AlbListenerRule_Condition_HttpRequestMethodRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleConditionElHttpRequestMethodElRef {
+impl AlbListenerRule_Condition_HttpRequestMethodRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1547,14 +1856,35 @@ impl AlbListenerRuleConditionElHttpRequestMethodElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleConditionElPathPatternEl {
-    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+pub struct AlbListenerRule_Condition_PathPattern {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regex_values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AlbListenerRuleConditionElPathPatternEl { }
+impl AlbListenerRule_Condition_PathPattern {
+    #[doc = "Set the field `regex_values`.\n"]
+    pub fn set_regex_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.regex_values = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for AlbListenerRuleConditionElPathPatternEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleConditionElPathPatternEl>;
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AlbListenerRule_Condition_PathPattern {
+    type O = terrars::BlockAssignable<AlbListenerRule_Condition_PathPattern>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1565,34 +1895,41 @@ impl terrars::ToListMappable for AlbListenerRuleConditionElPathPatternEl {
     }
 }
 
-pub struct BuildAlbListenerRuleConditionElPathPatternEl {
-    #[doc = ""]
-    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
-}
+pub struct BuildAlbListenerRule_Condition_PathPattern {}
 
-impl BuildAlbListenerRuleConditionElPathPatternEl {
-    pub fn build(self) -> AlbListenerRuleConditionElPathPatternEl {
-        AlbListenerRuleConditionElPathPatternEl { values: self.values }
+impl BuildAlbListenerRule_Condition_PathPattern {
+    pub fn build(self) -> AlbListenerRule_Condition_PathPattern {
+        AlbListenerRule_Condition_PathPattern {
+            regex_values: core::default::Default::default(),
+            values: core::default::Default::default(),
+        }
     }
 }
 
-pub struct AlbListenerRuleConditionElPathPatternElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Condition_PathPatternRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleConditionElPathPatternElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleConditionElPathPatternElRef {
-        AlbListenerRuleConditionElPathPatternElRef {
+impl terrars::Ref for AlbListenerRule_Condition_PathPatternRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Condition_PathPatternRef {
+        AlbListenerRule_Condition_PathPatternRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleConditionElPathPatternElRef {
+impl AlbListenerRule_Condition_PathPatternRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `regex_values` after provisioning.\n"]
+    pub fn regex_values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.regex_values", self.base))
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
@@ -1602,13 +1939,13 @@ impl AlbListenerRuleConditionElPathPatternElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleConditionElQueryStringEl {
+pub struct AlbListenerRule_Condition_QueryString {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl AlbListenerRuleConditionElQueryStringEl {
+impl AlbListenerRule_Condition_QueryString {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -1616,8 +1953,8 @@ impl AlbListenerRuleConditionElQueryStringEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleConditionElQueryStringEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleConditionElQueryStringEl>;
+impl terrars::ToListMappable for AlbListenerRule_Condition_QueryString {
+    type O = terrars::BlockAssignable<AlbListenerRule_Condition_QueryString>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1628,35 +1965,37 @@ impl terrars::ToListMappable for AlbListenerRuleConditionElQueryStringEl {
     }
 }
 
-pub struct BuildAlbListenerRuleConditionElQueryStringEl {
+pub struct BuildAlbListenerRule_Condition_QueryString {
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAlbListenerRuleConditionElQueryStringEl {
-    pub fn build(self) -> AlbListenerRuleConditionElQueryStringEl {
-        AlbListenerRuleConditionElQueryStringEl {
+impl BuildAlbListenerRule_Condition_QueryString {
+    pub fn build(self) -> AlbListenerRule_Condition_QueryString {
+        AlbListenerRule_Condition_QueryString {
             key: core::default::Default::default(),
             value: self.value,
         }
     }
 }
 
-pub struct AlbListenerRuleConditionElQueryStringElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Condition_QueryStringRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleConditionElQueryStringElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleConditionElQueryStringElRef {
-        AlbListenerRuleConditionElQueryStringElRef {
+impl terrars::Ref for AlbListenerRule_Condition_QueryStringRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Condition_QueryStringRef {
+        AlbListenerRule_Condition_QueryStringRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleConditionElQueryStringElRef {
+impl AlbListenerRule_Condition_QueryStringRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1673,14 +2012,32 @@ impl AlbListenerRuleConditionElQueryStringElRef {
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleConditionElSourceIpEl {
-    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+pub struct AlbListenerRule_Condition_SourceIp {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AlbListenerRuleConditionElSourceIpEl { }
+impl AlbListenerRule_Condition_SourceIp {
+    #[doc = "Set the field `ip_address_type`.\n"]
+    pub fn set_ip_address_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address_type = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for AlbListenerRuleConditionElSourceIpEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleConditionElSourceIpEl>;
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AlbListenerRule_Condition_SourceIp {
+    type O = terrars::BlockAssignable<AlbListenerRule_Condition_SourceIp>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1691,34 +2048,41 @@ impl terrars::ToListMappable for AlbListenerRuleConditionElSourceIpEl {
     }
 }
 
-pub struct BuildAlbListenerRuleConditionElSourceIpEl {
-    #[doc = ""]
-    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
-}
+pub struct BuildAlbListenerRule_Condition_SourceIp {}
 
-impl BuildAlbListenerRuleConditionElSourceIpEl {
-    pub fn build(self) -> AlbListenerRuleConditionElSourceIpEl {
-        AlbListenerRuleConditionElSourceIpEl { values: self.values }
+impl BuildAlbListenerRule_Condition_SourceIp {
+    pub fn build(self) -> AlbListenerRule_Condition_SourceIp {
+        AlbListenerRule_Condition_SourceIp {
+            ip_address_type: core::default::Default::default(),
+            values: core::default::Default::default(),
+        }
     }
 }
 
-pub struct AlbListenerRuleConditionElSourceIpElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_Condition_SourceIpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleConditionElSourceIpElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleConditionElSourceIpElRef {
-        AlbListenerRuleConditionElSourceIpElRef {
+impl terrars::Ref for AlbListenerRule_Condition_SourceIpRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Condition_SourceIpRef {
+        AlbListenerRule_Condition_SourceIpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleConditionElSourceIpElRef {
+impl AlbListenerRule_Condition_SourceIpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
@@ -1728,37 +2092,37 @@ impl AlbListenerRuleConditionElSourceIpElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AlbListenerRuleConditionElDynamic {
-    host_header: std::option::Option<terrars::DynamicBlock<AlbListenerRuleConditionElHostHeaderEl>>,
-    http_header: std::option::Option<terrars::DynamicBlock<AlbListenerRuleConditionElHttpHeaderEl>>,
-    http_request_method: std::option::Option<terrars::DynamicBlock<AlbListenerRuleConditionElHttpRequestMethodEl>>,
-    path_pattern: std::option::Option<terrars::DynamicBlock<AlbListenerRuleConditionElPathPatternEl>>,
-    query_string: std::option::Option<terrars::DynamicBlock<AlbListenerRuleConditionElQueryStringEl>>,
-    source_ip: std::option::Option<terrars::DynamicBlock<AlbListenerRuleConditionElSourceIpEl>>,
+struct AlbListenerRule_ConditionDynamic {
+    host_header: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Condition_HostHeader>>,
+    http_header: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Condition_HttpHeader>>,
+    http_request_method: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Condition_HttpRequestMethod>>,
+    path_pattern: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Condition_PathPattern>>,
+    query_string: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Condition_QueryString>>,
+    source_ip: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Condition_SourceIp>>,
 }
 
 #[derive(Serialize)]
-pub struct AlbListenerRuleConditionEl {
+pub struct AlbListenerRule_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    host_header: std::option::Option<std::vec::Vec<AlbListenerRuleConditionElHostHeaderEl>>,
+    host_header: std::option::Option<std::vec::Vec<AlbListenerRule_Condition_HostHeader>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http_header: std::option::Option<std::vec::Vec<AlbListenerRuleConditionElHttpHeaderEl>>,
+    http_header: std::option::Option<std::vec::Vec<AlbListenerRule_Condition_HttpHeader>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http_request_method: std::option::Option<std::vec::Vec<AlbListenerRuleConditionElHttpRequestMethodEl>>,
+    http_request_method: std::option::Option<std::vec::Vec<AlbListenerRule_Condition_HttpRequestMethod>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    path_pattern: std::option::Option<std::vec::Vec<AlbListenerRuleConditionElPathPatternEl>>,
+    path_pattern: std::option::Option<std::vec::Vec<AlbListenerRule_Condition_PathPattern>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query_string: std::option::Option<std::vec::Vec<AlbListenerRuleConditionElQueryStringEl>>,
+    query_string: std::option::Option<std::vec::Vec<AlbListenerRule_Condition_QueryString>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_ip: std::option::Option<std::vec::Vec<AlbListenerRuleConditionElSourceIpEl>>,
-    dynamic: AlbListenerRuleConditionElDynamic,
+    source_ip: std::option::Option<std::vec::Vec<AlbListenerRule_Condition_SourceIp>>,
+    dynamic: AlbListenerRule_ConditionDynamic,
 }
 
-impl AlbListenerRuleConditionEl {
+impl AlbListenerRule_Condition {
     #[doc = "Set the field `host_header`.\n"]
     pub fn set_host_header(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleConditionElHostHeaderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Condition_HostHeader>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1774,7 +2138,7 @@ impl AlbListenerRuleConditionEl {
     #[doc = "Set the field `http_header`.\n"]
     pub fn set_http_header(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleConditionElHttpHeaderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Condition_HttpHeader>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1790,7 +2154,7 @@ impl AlbListenerRuleConditionEl {
     #[doc = "Set the field `http_request_method`.\n"]
     pub fn set_http_request_method(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleConditionElHttpRequestMethodEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Condition_HttpRequestMethod>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1806,7 +2170,7 @@ impl AlbListenerRuleConditionEl {
     #[doc = "Set the field `path_pattern`.\n"]
     pub fn set_path_pattern(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleConditionElPathPatternEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Condition_PathPattern>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1822,7 +2186,7 @@ impl AlbListenerRuleConditionEl {
     #[doc = "Set the field `query_string`.\n"]
     pub fn set_query_string(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleConditionElQueryStringEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Condition_QueryString>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1838,7 +2202,7 @@ impl AlbListenerRuleConditionEl {
     #[doc = "Set the field `source_ip`.\n"]
     pub fn set_source_ip(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRuleConditionElSourceIpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Condition_SourceIp>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1852,8 +2216,8 @@ impl AlbListenerRuleConditionEl {
     }
 }
 
-impl terrars::ToListMappable for AlbListenerRuleConditionEl {
-    type O = terrars::BlockAssignable<AlbListenerRuleConditionEl>;
+impl terrars::ToListMappable for AlbListenerRule_Condition {
+    type O = terrars::BlockAssignable<AlbListenerRule_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1864,11 +2228,11 @@ impl terrars::ToListMappable for AlbListenerRuleConditionEl {
     }
 }
 
-pub struct BuildAlbListenerRuleConditionEl {}
+pub struct BuildAlbListenerRule_Condition {}
 
-impl BuildAlbListenerRuleConditionEl {
-    pub fn build(self) -> AlbListenerRuleConditionEl {
-        AlbListenerRuleConditionEl {
+impl BuildAlbListenerRule_Condition {
+    pub fn build(self) -> AlbListenerRule_Condition {
+        AlbListenerRule_Condition {
             host_header: core::default::Default::default(),
             http_header: core::default::Default::default(),
             http_request_method: core::default::Default::default(),
@@ -1880,53 +2244,401 @@ impl BuildAlbListenerRuleConditionEl {
     }
 }
 
-pub struct AlbListenerRuleConditionElRef {
+#[allow(dead_code)]
+pub struct AlbListenerRule_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AlbListenerRuleConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRuleConditionElRef {
-        AlbListenerRuleConditionElRef {
+impl terrars::Ref for AlbListenerRule_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_ConditionRef {
+        AlbListenerRule_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AlbListenerRuleConditionElRef {
+impl AlbListenerRule_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `host_header` after provisioning.\n"]
-    pub fn host_header(&self) -> terrars::ListRef<AlbListenerRuleConditionElHostHeaderElRef> {
+    pub fn host_header(&self) -> terrars::ListRef<AlbListenerRule_Condition_HostHeaderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.host_header", self.base))
     }
 
     #[doc = "Get a reference to the value of field `http_header` after provisioning.\n"]
-    pub fn http_header(&self) -> terrars::ListRef<AlbListenerRuleConditionElHttpHeaderElRef> {
+    pub fn http_header(&self) -> terrars::ListRef<AlbListenerRule_Condition_HttpHeaderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_header", self.base))
     }
 
     #[doc = "Get a reference to the value of field `http_request_method` after provisioning.\n"]
-    pub fn http_request_method(&self) -> terrars::ListRef<AlbListenerRuleConditionElHttpRequestMethodElRef> {
+    pub fn http_request_method(&self) -> terrars::ListRef<AlbListenerRule_Condition_HttpRequestMethodRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_request_method", self.base))
     }
 
     #[doc = "Get a reference to the value of field `path_pattern` after provisioning.\n"]
-    pub fn path_pattern(&self) -> terrars::ListRef<AlbListenerRuleConditionElPathPatternElRef> {
+    pub fn path_pattern(&self) -> terrars::ListRef<AlbListenerRule_Condition_PathPatternRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.path_pattern", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source_ip` after provisioning.\n"]
-    pub fn source_ip(&self) -> terrars::ListRef<AlbListenerRuleConditionElSourceIpElRef> {
+    pub fn source_ip(&self) -> terrars::ListRef<AlbListenerRule_Condition_SourceIpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_ip", self.base))
     }
 }
 
+#[derive(Serialize)]
+pub struct AlbListenerRule_Transform_UrlRewriteConfig_Rewrite {
+    regex: terrars::PrimField<std::string::String>,
+    replace: terrars::PrimField<std::string::String>,
+}
+
+impl AlbListenerRule_Transform_UrlRewriteConfig_Rewrite { }
+
+impl terrars::ToListMappable for AlbListenerRule_Transform_UrlRewriteConfig_Rewrite {
+    type O = terrars::BlockAssignable<AlbListenerRule_Transform_UrlRewriteConfig_Rewrite>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAlbListenerRule_Transform_UrlRewriteConfig_Rewrite {
+    #[doc = ""]
+    pub regex: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub replace: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAlbListenerRule_Transform_UrlRewriteConfig_Rewrite {
+    pub fn build(self) -> AlbListenerRule_Transform_UrlRewriteConfig_Rewrite {
+        AlbListenerRule_Transform_UrlRewriteConfig_Rewrite {
+            regex: self.regex,
+            replace: self.replace,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AlbListenerRule_Transform_UrlRewriteConfig_RewriteRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AlbListenerRule_Transform_UrlRewriteConfig_RewriteRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AlbListenerRule_Transform_UrlRewriteConfig_RewriteRef {
+        AlbListenerRule_Transform_UrlRewriteConfig_RewriteRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AlbListenerRule_Transform_UrlRewriteConfig_RewriteRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
+    pub fn regex(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.regex", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `replace` after provisioning.\n"]
+    pub fn replace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replace", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct AlbListenerRuleDynamic {
-    action: std::option::Option<terrars::DynamicBlock<AlbListenerRuleActionEl>>,
-    condition: std::option::Option<terrars::DynamicBlock<AlbListenerRuleConditionEl>>,
+struct AlbListenerRule_Transform_HostHeaderRewriteConfigDynamic {
+    rewrite: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Transform_UrlRewriteConfig_Rewrite>>,
+}
+
+#[derive(Serialize)]
+pub struct AlbListenerRule_Transform_HostHeaderRewriteConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rewrite: std::option::Option<std::vec::Vec<AlbListenerRule_Transform_UrlRewriteConfig_Rewrite>>,
+    dynamic: AlbListenerRule_Transform_HostHeaderRewriteConfigDynamic,
+}
+
+impl AlbListenerRule_Transform_HostHeaderRewriteConfig {
+    #[doc = "Set the field `rewrite`.\n"]
+    pub fn set_rewrite(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Transform_UrlRewriteConfig_Rewrite>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.rewrite = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.rewrite = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AlbListenerRule_Transform_HostHeaderRewriteConfig {
+    type O = terrars::BlockAssignable<AlbListenerRule_Transform_HostHeaderRewriteConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAlbListenerRule_Transform_HostHeaderRewriteConfig {}
+
+impl BuildAlbListenerRule_Transform_HostHeaderRewriteConfig {
+    pub fn build(self) -> AlbListenerRule_Transform_HostHeaderRewriteConfig {
+        AlbListenerRule_Transform_HostHeaderRewriteConfig {
+            rewrite: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AlbListenerRule_Transform_HostHeaderRewriteConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AlbListenerRule_Transform_HostHeaderRewriteConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AlbListenerRule_Transform_HostHeaderRewriteConfigRef {
+        AlbListenerRule_Transform_HostHeaderRewriteConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AlbListenerRule_Transform_HostHeaderRewriteConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `rewrite` after provisioning.\n"]
+    pub fn rewrite(&self) -> terrars::ListRef<AlbListenerRule_Transform_UrlRewriteConfig_RewriteRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rewrite", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AlbListenerRule_Transform_UrlRewriteConfigDynamic {
+    rewrite: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Transform_UrlRewriteConfig_Rewrite>>,
+}
+
+#[derive(Serialize)]
+pub struct AlbListenerRule_Transform_UrlRewriteConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rewrite: std::option::Option<std::vec::Vec<AlbListenerRule_Transform_UrlRewriteConfig_Rewrite>>,
+    dynamic: AlbListenerRule_Transform_UrlRewriteConfigDynamic,
+}
+
+impl AlbListenerRule_Transform_UrlRewriteConfig {
+    #[doc = "Set the field `rewrite`.\n"]
+    pub fn set_rewrite(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Transform_UrlRewriteConfig_Rewrite>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.rewrite = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.rewrite = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AlbListenerRule_Transform_UrlRewriteConfig {
+    type O = terrars::BlockAssignable<AlbListenerRule_Transform_UrlRewriteConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAlbListenerRule_Transform_UrlRewriteConfig {}
+
+impl BuildAlbListenerRule_Transform_UrlRewriteConfig {
+    pub fn build(self) -> AlbListenerRule_Transform_UrlRewriteConfig {
+        AlbListenerRule_Transform_UrlRewriteConfig {
+            rewrite: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AlbListenerRule_Transform_UrlRewriteConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AlbListenerRule_Transform_UrlRewriteConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_Transform_UrlRewriteConfigRef {
+        AlbListenerRule_Transform_UrlRewriteConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AlbListenerRule_Transform_UrlRewriteConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `rewrite` after provisioning.\n"]
+    pub fn rewrite(&self) -> terrars::ListRef<AlbListenerRule_Transform_UrlRewriteConfig_RewriteRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rewrite", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AlbListenerRule_TransformDynamic {
+    host_header_rewrite_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<AlbListenerRule_Transform_HostHeaderRewriteConfig>>,
+    url_rewrite_config: std::option::Option<terrars::DynamicBlock<AlbListenerRule_Transform_UrlRewriteConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct AlbListenerRule_Transform {
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    host_header_rewrite_config: std::option::Option<std::vec::Vec<AlbListenerRule_Transform_HostHeaderRewriteConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    url_rewrite_config: std::option::Option<std::vec::Vec<AlbListenerRule_Transform_UrlRewriteConfig>>,
+    dynamic: AlbListenerRule_TransformDynamic,
+}
+
+impl AlbListenerRule_Transform {
+    #[doc = "Set the field `host_header_rewrite_config`.\n"]
+    pub fn set_host_header_rewrite_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Transform_HostHeaderRewriteConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.host_header_rewrite_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.host_header_rewrite_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `url_rewrite_config`.\n"]
+    pub fn set_url_rewrite_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AlbListenerRule_Transform_UrlRewriteConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.url_rewrite_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.url_rewrite_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AlbListenerRule_Transform {
+    type O = terrars::BlockAssignable<AlbListenerRule_Transform>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAlbListenerRule_Transform {
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAlbListenerRule_Transform {
+    pub fn build(self) -> AlbListenerRule_Transform {
+        AlbListenerRule_Transform {
+            type_: self.type_,
+            host_header_rewrite_config: core::default::Default::default(),
+            url_rewrite_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AlbListenerRule_TransformRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AlbListenerRule_TransformRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AlbListenerRule_TransformRef {
+        AlbListenerRule_TransformRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AlbListenerRule_TransformRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `host_header_rewrite_config` after provisioning.\n"]
+    pub fn host_header_rewrite_config(&self) -> terrars::ListRef<AlbListenerRule_Transform_HostHeaderRewriteConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.host_header_rewrite_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `url_rewrite_config` after provisioning.\n"]
+    pub fn url_rewrite_config(&self) -> terrars::ListRef<AlbListenerRule_Transform_UrlRewriteConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.url_rewrite_config", self.base))
+    }
 }

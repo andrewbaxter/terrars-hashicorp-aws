@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DmsS3EndpointData {
+struct DmsS3EndpointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -62,6 +64,8 @@ struct DmsS3EndpointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     date_partition_timezone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    detach_target_on_lob_lookup_failure_parquet: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dict_page_size_limit: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_statistics: std::option::Option<terrars::PrimField<bool>>,
@@ -75,6 +79,8 @@ struct DmsS3EndpointData {
     expected_bucket_owner: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     external_table_definition: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    glue_catalog_generation: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -91,6 +97,8 @@ struct DmsS3EndpointData {
     parquet_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preserve_transactions: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rfc_4180: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -111,13 +119,13 @@ struct DmsS3EndpointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_task_start_time_for_full_load_timestamp: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DmsS3EndpointTimeoutsEl>,
+    timeouts: std::option::Option<DmsS3Endpoint_Timeouts>,
 }
 
 struct DmsS3Endpoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DmsS3EndpointData>,
+    data: std::cell::RefCell<DmsS3EndpointData_>,
 }
 
 #[derive(Clone)]
@@ -355,6 +363,15 @@ impl DmsS3Endpoint {
         self
     }
 
+    #[doc = "Set the field `detach_target_on_lob_lookup_failure_parquet`.\n"]
+    pub fn set_detach_target_on_lob_lookup_failure_parquet(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.0.data.borrow_mut().detach_target_on_lob_lookup_failure_parquet = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `dict_page_size_limit`.\n"]
     pub fn set_dict_page_size_limit(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().dict_page_size_limit = std::option::Option::Some(v.into());
@@ -391,6 +408,12 @@ impl DmsS3Endpoint {
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().external_table_definition = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `glue_catalog_generation`.\n"]
+    pub fn set_glue_catalog_generation(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().glue_catalog_generation = std::option::Option::Some(v.into());
         self
     }
 
@@ -439,6 +462,13 @@ impl DmsS3Endpoint {
     #[doc = "Set the field `preserve_transactions`.\n"]
     pub fn set_preserve_transactions(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().preserve_transactions = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -509,7 +539,7 @@ impl DmsS3Endpoint {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DmsS3EndpointTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DmsS3Endpoint_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -627,6 +657,14 @@ impl DmsS3Endpoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.date_partition_timezone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `detach_target_on_lob_lookup_failure_parquet` after provisioning.\n"]
+    pub fn detach_target_on_lob_lookup_failure_parquet(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.detach_target_on_lob_lookup_failure_parquet", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `dict_page_size_limit` after provisioning.\n"]
     pub fn dict_page_size_limit(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dict_page_size_limit", self.extract_ref()))
@@ -682,6 +720,11 @@ impl DmsS3Endpoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.external_table_definition", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `glue_catalog_generation` after provisioning.\n"]
+    pub fn glue_catalog_generation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.glue_catalog_generation", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -723,6 +766,12 @@ impl DmsS3Endpoint {
     #[doc = "Get a reference to the value of field `preserve_transactions` after provisioning.\n"]
     pub fn preserve_transactions(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve_transactions", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rfc_4180` after provisioning.\n"]
@@ -787,8 +836,8 @@ impl DmsS3Endpoint {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DmsS3EndpointTimeoutsElRef {
-        DmsS3EndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DmsS3Endpoint_TimeoutsRef {
+        DmsS3Endpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -840,7 +889,7 @@ impl BuildDmsS3Endpoint {
         let out = DmsS3Endpoint(std::rc::Rc::new(DmsS3Endpoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DmsS3EndpointData {
+            data: std::cell::RefCell::new(DmsS3EndpointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -868,6 +917,7 @@ impl BuildDmsS3Endpoint {
                 date_partition_enabled: core::default::Default::default(),
                 date_partition_sequence: core::default::Default::default(),
                 date_partition_timezone: core::default::Default::default(),
+                detach_target_on_lob_lookup_failure_parquet: core::default::Default::default(),
                 dict_page_size_limit: core::default::Default::default(),
                 enable_statistics: core::default::Default::default(),
                 encoding_type: core::default::Default::default(),
@@ -876,6 +926,7 @@ impl BuildDmsS3Endpoint {
                 endpoint_type: self.endpoint_type,
                 expected_bucket_owner: core::default::Default::default(),
                 external_table_definition: core::default::Default::default(),
+                glue_catalog_generation: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ignore_header_rows: core::default::Default::default(),
                 include_op_for_full_load: core::default::Default::default(),
@@ -884,6 +935,7 @@ impl BuildDmsS3Endpoint {
                 parquet_timestamp_in_millisecond: core::default::Default::default(),
                 parquet_version: core::default::Default::default(),
                 preserve_transactions: core::default::Default::default(),
+                region: core::default::Default::default(),
                 rfc_4180: core::default::Default::default(),
                 row_group_length: core::default::Default::default(),
                 server_side_encryption_kms_key_id: core::default::Default::default(),
@@ -1038,6 +1090,14 @@ impl DmsS3EndpointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.date_partition_timezone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `detach_target_on_lob_lookup_failure_parquet` after provisioning.\n"]
+    pub fn detach_target_on_lob_lookup_failure_parquet(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.detach_target_on_lob_lookup_failure_parquet", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `dict_page_size_limit` after provisioning.\n"]
     pub fn dict_page_size_limit(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dict_page_size_limit", self.extract_ref()))
@@ -1093,6 +1153,11 @@ impl DmsS3EndpointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.external_table_definition", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `glue_catalog_generation` after provisioning.\n"]
+    pub fn glue_catalog_generation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.glue_catalog_generation", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -1134,6 +1199,12 @@ impl DmsS3EndpointRef {
     #[doc = "Get a reference to the value of field `preserve_transactions` after provisioning.\n"]
     pub fn preserve_transactions(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve_transactions", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rfc_4180` after provisioning.\n"]
@@ -1198,20 +1269,20 @@ impl DmsS3EndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DmsS3EndpointTimeoutsElRef {
-        DmsS3EndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DmsS3Endpoint_TimeoutsRef {
+        DmsS3Endpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DmsS3EndpointTimeoutsEl {
+pub struct DmsS3Endpoint_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DmsS3EndpointTimeoutsEl {
+impl DmsS3Endpoint_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1225,8 +1296,8 @@ impl DmsS3EndpointTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DmsS3EndpointTimeoutsEl {
-    type O = terrars::BlockAssignable<DmsS3EndpointTimeoutsEl>;
+impl terrars::ToListMappable for DmsS3Endpoint_Timeouts {
+    type O = terrars::BlockAssignable<DmsS3Endpoint_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1237,32 +1308,34 @@ impl terrars::ToListMappable for DmsS3EndpointTimeoutsEl {
     }
 }
 
-pub struct BuildDmsS3EndpointTimeoutsEl {}
+pub struct BuildDmsS3Endpoint_Timeouts {}
 
-impl BuildDmsS3EndpointTimeoutsEl {
-    pub fn build(self) -> DmsS3EndpointTimeoutsEl {
-        DmsS3EndpointTimeoutsEl {
+impl BuildDmsS3Endpoint_Timeouts {
+    pub fn build(self) -> DmsS3Endpoint_Timeouts {
+        DmsS3Endpoint_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct DmsS3EndpointTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DmsS3Endpoint_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DmsS3EndpointTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DmsS3EndpointTimeoutsElRef {
-        DmsS3EndpointTimeoutsElRef {
+impl terrars::Ref for DmsS3Endpoint_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DmsS3Endpoint_TimeoutsRef {
+        DmsS3Endpoint_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DmsS3EndpointTimeoutsElRef {
+impl DmsS3Endpoint_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

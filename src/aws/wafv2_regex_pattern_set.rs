@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Wafv2RegexPatternSetData {
+struct Wafv2RegexPatternSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,21 +24,26 @@ struct Wafv2RegexPatternSetData {
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
-    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     scope: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    regular_expression: std::option::Option<std::vec::Vec<Wafv2RegexPatternSetRegularExpressionEl>>,
+    regular_expression: std::option::Option<std::vec::Vec<Wafv2RegexPatternSet_RegularExpression>>,
     dynamic: Wafv2RegexPatternSetDynamic,
 }
 
 struct Wafv2RegexPatternSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Wafv2RegexPatternSetData>,
+    data: std::cell::RefCell<Wafv2RegexPatternSetData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +155,25 @@ impl Wafv2RegexPatternSet {
         self
     }
 
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name_prefix`.\n"]
+    pub fn set_name_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -169,7 +195,7 @@ impl Wafv2RegexPatternSet {
     #[doc = "Set the field `regular_expression`.\n"]
     pub fn set_regular_expression(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2RegexPatternSetRegularExpressionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2RegexPatternSet_RegularExpression>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,6 +231,17 @@ impl Wafv2RegexPatternSet {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name_prefix` after provisioning.\n"]
+    pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
@@ -257,8 +294,6 @@ impl terrars::Resource_ for Wafv2RegexPatternSet_ {
 pub struct BuildWafv2RegexPatternSet {
     pub tf_id: std::string::String,
     #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
     pub scope: terrars::PrimField<std::string::String>,
 }
 
@@ -267,7 +302,7 @@ impl BuildWafv2RegexPatternSet {
         let out = Wafv2RegexPatternSet(std::rc::Rc::new(Wafv2RegexPatternSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Wafv2RegexPatternSetData {
+            data: std::cell::RefCell::new(Wafv2RegexPatternSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -275,7 +310,9 @@ impl BuildWafv2RegexPatternSet {
                 provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
-                name: self.name,
+                name: core::default::Default::default(),
+                name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 scope: self.scope,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -336,6 +373,17 @@ impl Wafv2RegexPatternSetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `name_prefix` after provisioning.\n"]
+    pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
     pub fn scope(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
@@ -352,15 +400,20 @@ impl Wafv2RegexPatternSetRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct Wafv2RegexPatternSetDynamic {
+    regular_expression: std::option::Option<terrars::DynamicBlock<Wafv2RegexPatternSet_RegularExpression>>,
+}
+
 #[derive(Serialize)]
-pub struct Wafv2RegexPatternSetRegularExpressionEl {
+pub struct Wafv2RegexPatternSet_RegularExpression {
     regex_string: terrars::PrimField<std::string::String>,
 }
 
-impl Wafv2RegexPatternSetRegularExpressionEl { }
+impl Wafv2RegexPatternSet_RegularExpression { }
 
-impl terrars::ToListMappable for Wafv2RegexPatternSetRegularExpressionEl {
-    type O = terrars::BlockAssignable<Wafv2RegexPatternSetRegularExpressionEl>;
+impl terrars::ToListMappable for Wafv2RegexPatternSet_RegularExpression {
+    type O = terrars::BlockAssignable<Wafv2RegexPatternSet_RegularExpression>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -371,32 +424,34 @@ impl terrars::ToListMappable for Wafv2RegexPatternSetRegularExpressionEl {
     }
 }
 
-pub struct BuildWafv2RegexPatternSetRegularExpressionEl {
+pub struct BuildWafv2RegexPatternSet_RegularExpression {
     #[doc = ""]
     pub regex_string: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafv2RegexPatternSetRegularExpressionEl {
-    pub fn build(self) -> Wafv2RegexPatternSetRegularExpressionEl {
-        Wafv2RegexPatternSetRegularExpressionEl { regex_string: self.regex_string }
+impl BuildWafv2RegexPatternSet_RegularExpression {
+    pub fn build(self) -> Wafv2RegexPatternSet_RegularExpression {
+        Wafv2RegexPatternSet_RegularExpression { regex_string: self.regex_string }
     }
 }
 
-pub struct Wafv2RegexPatternSetRegularExpressionElRef {
+#[allow(dead_code)]
+pub struct Wafv2RegexPatternSet_RegularExpressionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2RegexPatternSetRegularExpressionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Wafv2RegexPatternSetRegularExpressionElRef {
-        Wafv2RegexPatternSetRegularExpressionElRef {
+impl terrars::Ref for Wafv2RegexPatternSet_RegularExpressionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Wafv2RegexPatternSet_RegularExpressionRef {
+        Wafv2RegexPatternSet_RegularExpressionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2RegexPatternSetRegularExpressionElRef {
+impl Wafv2RegexPatternSet_RegularExpressionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -405,9 +460,4 @@ impl Wafv2RegexPatternSetRegularExpressionElRef {
     pub fn regex_string(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.regex_string", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Wafv2RegexPatternSetDynamic {
-    regular_expression: std::option::Option<terrars::DynamicBlock<Wafv2RegexPatternSetRegularExpressionEl>>,
 }

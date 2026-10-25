@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataConnectRoutingProfileData {
+struct DataConnectRoutingProfileData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -22,6 +24,8 @@ struct DataConnectRoutingProfileData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     routing_profile_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -30,7 +34,7 @@ struct DataConnectRoutingProfileData {
 struct DataConnectRoutingProfile_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataConnectRoutingProfileData>,
+    data: std::cell::RefCell<DataConnectRoutingProfileData_>,
 }
 
 #[derive(Clone)]
@@ -87,6 +91,13 @@ impl DataConnectRoutingProfile {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `routing_profile_id`.\n"]
     pub fn set_routing_profile_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().routing_profile_id = std::option::Option::Some(v.into());
@@ -128,7 +139,7 @@ impl DataConnectRoutingProfile {
     }
 
     #[doc = "Get a reference to the value of field `media_concurrencies` after provisioning.\n"]
-    pub fn media_concurrencies(&self) -> terrars::SetRef<DataConnectRoutingProfileMediaConcurrenciesElRef> {
+    pub fn media_concurrencies(&self) -> terrars::SetRef<DataConnectRoutingProfile_MediaConcurrenciesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.media_concurrencies", self.extract_ref()))
     }
 
@@ -138,8 +149,14 @@ impl DataConnectRoutingProfile {
     }
 
     #[doc = "Get a reference to the value of field `queue_configs` after provisioning.\n"]
-    pub fn queue_configs(&self) -> terrars::SetRef<DataConnectRoutingProfileQueueConfigsElRef> {
+    pub fn queue_configs(&self) -> terrars::SetRef<DataConnectRoutingProfile_QueueConfigsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.queue_configs", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `routing_profile_id` after provisioning.\n"]
@@ -195,7 +212,7 @@ impl BuildDataConnectRoutingProfile {
         let out = DataConnectRoutingProfile(std::rc::Rc::new(DataConnectRoutingProfile_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataConnectRoutingProfileData {
+            data: std::cell::RefCell::new(DataConnectRoutingProfileData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -203,6 +220,7 @@ impl BuildDataConnectRoutingProfile {
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 routing_profile_id: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
@@ -261,7 +279,7 @@ impl DataConnectRoutingProfileRef {
     }
 
     #[doc = "Get a reference to the value of field `media_concurrencies` after provisioning.\n"]
-    pub fn media_concurrencies(&self) -> terrars::SetRef<DataConnectRoutingProfileMediaConcurrenciesElRef> {
+    pub fn media_concurrencies(&self) -> terrars::SetRef<DataConnectRoutingProfile_MediaConcurrenciesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.media_concurrencies", self.extract_ref()))
     }
 
@@ -271,8 +289,14 @@ impl DataConnectRoutingProfileRef {
     }
 
     #[doc = "Get a reference to the value of field `queue_configs` after provisioning.\n"]
-    pub fn queue_configs(&self) -> terrars::SetRef<DataConnectRoutingProfileQueueConfigsElRef> {
+    pub fn queue_configs(&self) -> terrars::SetRef<DataConnectRoutingProfile_QueueConfigsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.queue_configs", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `routing_profile_id` after provisioning.\n"]
@@ -287,14 +311,84 @@ impl DataConnectRoutingProfileRef {
 }
 
 #[derive(Serialize)]
-pub struct DataConnectRoutingProfileMediaConcurrenciesEl {
+pub struct DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    behavior_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior {
+    #[doc = "Set the field `behavior_type`.\n"]
+    pub fn set_behavior_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.behavior_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior {
+    type O = terrars::BlockAssignable<DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior {}
+
+impl BuildDataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior {
+    pub fn build(self) -> DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior {
+        DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior {
+            behavior_type: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehaviorRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehaviorRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehaviorRef {
+        DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehaviorRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehaviorRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `behavior_type` after provisioning.\n"]
+    pub fn behavior_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.behavior_type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataConnectRoutingProfile_MediaConcurrencies {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     channel: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     concurrency: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cross_channel_behavior: std
+    ::option
+    ::Option<terrars::ListField<DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior>>,
 }
 
-impl DataConnectRoutingProfileMediaConcurrenciesEl {
+impl DataConnectRoutingProfile_MediaConcurrencies {
     #[doc = "Set the field `channel`.\n"]
     pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.channel = std::option::Option::Some(v.into());
@@ -306,10 +400,24 @@ impl DataConnectRoutingProfileMediaConcurrenciesEl {
         self.concurrency = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `cross_channel_behavior`.\n"]
+    pub fn set_cross_channel_behavior(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::ListField<DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehavior>>,
+    ) -> Self {
+        self.cross_channel_behavior = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataConnectRoutingProfileMediaConcurrenciesEl {
-    type O = terrars::BlockAssignable<DataConnectRoutingProfileMediaConcurrenciesEl>;
+impl terrars::ToListMappable for DataConnectRoutingProfile_MediaConcurrencies {
+    type O = terrars::BlockAssignable<DataConnectRoutingProfile_MediaConcurrencies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -320,35 +428,38 @@ impl terrars::ToListMappable for DataConnectRoutingProfileMediaConcurrenciesEl {
     }
 }
 
-pub struct BuildDataConnectRoutingProfileMediaConcurrenciesEl {}
+pub struct BuildDataConnectRoutingProfile_MediaConcurrencies {}
 
-impl BuildDataConnectRoutingProfileMediaConcurrenciesEl {
-    pub fn build(self) -> DataConnectRoutingProfileMediaConcurrenciesEl {
-        DataConnectRoutingProfileMediaConcurrenciesEl {
+impl BuildDataConnectRoutingProfile_MediaConcurrencies {
+    pub fn build(self) -> DataConnectRoutingProfile_MediaConcurrencies {
+        DataConnectRoutingProfile_MediaConcurrencies {
             channel: core::default::Default::default(),
             concurrency: core::default::Default::default(),
+            cross_channel_behavior: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataConnectRoutingProfileMediaConcurrenciesElRef {
+#[allow(dead_code)]
+pub struct DataConnectRoutingProfile_MediaConcurrenciesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectRoutingProfileMediaConcurrenciesElRef {
+impl terrars::Ref for DataConnectRoutingProfile_MediaConcurrenciesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataConnectRoutingProfileMediaConcurrenciesElRef {
-        DataConnectRoutingProfileMediaConcurrenciesElRef {
+    ) -> DataConnectRoutingProfile_MediaConcurrenciesRef {
+        DataConnectRoutingProfile_MediaConcurrenciesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectRoutingProfileMediaConcurrenciesElRef {
+impl DataConnectRoutingProfile_MediaConcurrenciesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -362,10 +473,17 @@ impl DataConnectRoutingProfileMediaConcurrenciesElRef {
     pub fn concurrency(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.concurrency", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `cross_channel_behavior` after provisioning.\n"]
+    pub fn cross_channel_behavior(
+        &self,
+    ) -> terrars::ListRef<DataConnectRoutingProfile_MediaConcurrencies_CrossChannelBehaviorRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cross_channel_behavior", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataConnectRoutingProfileQueueConfigsEl {
+pub struct DataConnectRoutingProfile_QueueConfigs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     channel: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -380,7 +498,7 @@ pub struct DataConnectRoutingProfileQueueConfigsEl {
     queue_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataConnectRoutingProfileQueueConfigsEl {
+impl DataConnectRoutingProfile_QueueConfigs {
     #[doc = "Set the field `channel`.\n"]
     pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.channel = std::option::Option::Some(v.into());
@@ -418,8 +536,8 @@ impl DataConnectRoutingProfileQueueConfigsEl {
     }
 }
 
-impl terrars::ToListMappable for DataConnectRoutingProfileQueueConfigsEl {
-    type O = terrars::BlockAssignable<DataConnectRoutingProfileQueueConfigsEl>;
+impl terrars::ToListMappable for DataConnectRoutingProfile_QueueConfigs {
+    type O = terrars::BlockAssignable<DataConnectRoutingProfile_QueueConfigs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -430,11 +548,11 @@ impl terrars::ToListMappable for DataConnectRoutingProfileQueueConfigsEl {
     }
 }
 
-pub struct BuildDataConnectRoutingProfileQueueConfigsEl {}
+pub struct BuildDataConnectRoutingProfile_QueueConfigs {}
 
-impl BuildDataConnectRoutingProfileQueueConfigsEl {
-    pub fn build(self) -> DataConnectRoutingProfileQueueConfigsEl {
-        DataConnectRoutingProfileQueueConfigsEl {
+impl BuildDataConnectRoutingProfile_QueueConfigs {
+    pub fn build(self) -> DataConnectRoutingProfile_QueueConfigs {
+        DataConnectRoutingProfile_QueueConfigs {
             channel: core::default::Default::default(),
             delay: core::default::Default::default(),
             priority: core::default::Default::default(),
@@ -445,21 +563,23 @@ impl BuildDataConnectRoutingProfileQueueConfigsEl {
     }
 }
 
-pub struct DataConnectRoutingProfileQueueConfigsElRef {
+#[allow(dead_code)]
+pub struct DataConnectRoutingProfile_QueueConfigsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectRoutingProfileQueueConfigsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataConnectRoutingProfileQueueConfigsElRef {
-        DataConnectRoutingProfileQueueConfigsElRef {
+impl terrars::Ref for DataConnectRoutingProfile_QueueConfigsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataConnectRoutingProfile_QueueConfigsRef {
+        DataConnectRoutingProfile_QueueConfigsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectRoutingProfileQueueConfigsElRef {
+impl DataConnectRoutingProfile_QueueConfigsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

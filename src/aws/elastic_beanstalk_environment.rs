@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ElasticBeanstalkEnvironmentData {
+struct ElasticBeanstalkEnvironmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,6 +33,8 @@ struct ElasticBeanstalkEnvironmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     poll_interval: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     solution_stack_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -45,14 +49,14 @@ struct ElasticBeanstalkEnvironmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_for_ready_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    setting: std::option::Option<std::vec::Vec<ElasticBeanstalkEnvironmentSettingEl>>,
+    setting: std::option::Option<std::vec::Vec<ElasticBeanstalkEnvironment_Setting>>,
     dynamic: ElasticBeanstalkEnvironmentDynamic,
 }
 
 struct ElasticBeanstalkEnvironment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ElasticBeanstalkEnvironmentData>,
+    data: std::cell::RefCell<ElasticBeanstalkEnvironmentData_>,
 }
 
 #[derive(Clone)]
@@ -182,6 +186,13 @@ impl ElasticBeanstalkEnvironment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `solution_stack_name`.\n"]
     pub fn set_solution_stack_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().solution_stack_name = std::option::Option::Some(v.into());
@@ -236,7 +247,7 @@ impl ElasticBeanstalkEnvironment {
     #[doc = "Set the field `setting`.\n"]
     pub fn set_setting(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElasticBeanstalkEnvironmentSettingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElasticBeanstalkEnvironment_Setting>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -250,7 +261,7 @@ impl ElasticBeanstalkEnvironment {
     }
 
     #[doc = "Get a reference to the value of field `all_settings` after provisioning.\n"]
-    pub fn all_settings(&self) -> terrars::SetRef<ElasticBeanstalkEnvironmentAllSettingsElRef> {
+    pub fn all_settings(&self) -> terrars::SetRef<ElasticBeanstalkEnvironment_AllSettingsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.all_settings", self.extract_ref()))
     }
 
@@ -327,6 +338,12 @@ impl ElasticBeanstalkEnvironment {
     #[doc = "Get a reference to the value of field `queues` after provisioning.\n"]
     pub fn queues(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.queues", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `solution_stack_name` after provisioning.\n"]
@@ -414,7 +431,7 @@ impl BuildElasticBeanstalkEnvironment {
         let out = ElasticBeanstalkEnvironment(std::rc::Rc::new(ElasticBeanstalkEnvironment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ElasticBeanstalkEnvironmentData {
+            data: std::cell::RefCell::new(ElasticBeanstalkEnvironmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -427,6 +444,7 @@ impl BuildElasticBeanstalkEnvironment {
                 name: self.name,
                 platform_arn: core::default::Default::default(),
                 poll_interval: core::default::Default::default(),
+                region: core::default::Default::default(),
                 solution_stack_name: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -467,7 +485,7 @@ impl ElasticBeanstalkEnvironmentRef {
     }
 
     #[doc = "Get a reference to the value of field `all_settings` after provisioning.\n"]
-    pub fn all_settings(&self) -> terrars::SetRef<ElasticBeanstalkEnvironmentAllSettingsElRef> {
+    pub fn all_settings(&self) -> terrars::SetRef<ElasticBeanstalkEnvironment_AllSettingsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.all_settings", self.extract_ref()))
     }
 
@@ -546,6 +564,12 @@ impl ElasticBeanstalkEnvironmentRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.queues", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `solution_stack_name` after provisioning.\n"]
     pub fn solution_stack_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.solution_stack_name", self.extract_ref()))
@@ -587,8 +611,13 @@ impl ElasticBeanstalkEnvironmentRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct ElasticBeanstalkEnvironmentDynamic {
+    setting: std::option::Option<terrars::DynamicBlock<ElasticBeanstalkEnvironment_Setting>>,
+}
+
 #[derive(Serialize)]
-pub struct ElasticBeanstalkEnvironmentAllSettingsEl {
+pub struct ElasticBeanstalkEnvironment_AllSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -599,7 +628,7 @@ pub struct ElasticBeanstalkEnvironmentAllSettingsEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElasticBeanstalkEnvironmentAllSettingsEl {
+impl ElasticBeanstalkEnvironment_AllSettings {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -625,8 +654,8 @@ impl ElasticBeanstalkEnvironmentAllSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for ElasticBeanstalkEnvironmentAllSettingsEl {
-    type O = terrars::BlockAssignable<ElasticBeanstalkEnvironmentAllSettingsEl>;
+impl terrars::ToListMappable for ElasticBeanstalkEnvironment_AllSettings {
+    type O = terrars::BlockAssignable<ElasticBeanstalkEnvironment_AllSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -637,11 +666,11 @@ impl terrars::ToListMappable for ElasticBeanstalkEnvironmentAllSettingsEl {
     }
 }
 
-pub struct BuildElasticBeanstalkEnvironmentAllSettingsEl {}
+pub struct BuildElasticBeanstalkEnvironment_AllSettings {}
 
-impl BuildElasticBeanstalkEnvironmentAllSettingsEl {
-    pub fn build(self) -> ElasticBeanstalkEnvironmentAllSettingsEl {
-        ElasticBeanstalkEnvironmentAllSettingsEl {
+impl BuildElasticBeanstalkEnvironment_AllSettings {
+    pub fn build(self) -> ElasticBeanstalkEnvironment_AllSettings {
+        ElasticBeanstalkEnvironment_AllSettings {
             name: core::default::Default::default(),
             namespace: core::default::Default::default(),
             resource: core::default::Default::default(),
@@ -650,21 +679,23 @@ impl BuildElasticBeanstalkEnvironmentAllSettingsEl {
     }
 }
 
-pub struct ElasticBeanstalkEnvironmentAllSettingsElRef {
+#[allow(dead_code)]
+pub struct ElasticBeanstalkEnvironment_AllSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElasticBeanstalkEnvironmentAllSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticBeanstalkEnvironmentAllSettingsElRef {
-        ElasticBeanstalkEnvironmentAllSettingsElRef {
+impl terrars::Ref for ElasticBeanstalkEnvironment_AllSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticBeanstalkEnvironment_AllSettingsRef {
+        ElasticBeanstalkEnvironment_AllSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElasticBeanstalkEnvironmentAllSettingsElRef {
+impl ElasticBeanstalkEnvironment_AllSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -691,7 +722,7 @@ impl ElasticBeanstalkEnvironmentAllSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElasticBeanstalkEnvironmentSettingEl {
+pub struct ElasticBeanstalkEnvironment_Setting {
     name: terrars::PrimField<std::string::String>,
     namespace: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -699,7 +730,7 @@ pub struct ElasticBeanstalkEnvironmentSettingEl {
     value: terrars::PrimField<std::string::String>,
 }
 
-impl ElasticBeanstalkEnvironmentSettingEl {
+impl ElasticBeanstalkEnvironment_Setting {
     #[doc = "Set the field `resource`.\n"]
     pub fn set_resource(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.resource = std::option::Option::Some(v.into());
@@ -707,8 +738,8 @@ impl ElasticBeanstalkEnvironmentSettingEl {
     }
 }
 
-impl terrars::ToListMappable for ElasticBeanstalkEnvironmentSettingEl {
-    type O = terrars::BlockAssignable<ElasticBeanstalkEnvironmentSettingEl>;
+impl terrars::ToListMappable for ElasticBeanstalkEnvironment_Setting {
+    type O = terrars::BlockAssignable<ElasticBeanstalkEnvironment_Setting>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -719,7 +750,7 @@ impl terrars::ToListMappable for ElasticBeanstalkEnvironmentSettingEl {
     }
 }
 
-pub struct BuildElasticBeanstalkEnvironmentSettingEl {
+pub struct BuildElasticBeanstalkEnvironment_Setting {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -728,9 +759,9 @@ pub struct BuildElasticBeanstalkEnvironmentSettingEl {
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildElasticBeanstalkEnvironmentSettingEl {
-    pub fn build(self) -> ElasticBeanstalkEnvironmentSettingEl {
-        ElasticBeanstalkEnvironmentSettingEl {
+impl BuildElasticBeanstalkEnvironment_Setting {
+    pub fn build(self) -> ElasticBeanstalkEnvironment_Setting {
+        ElasticBeanstalkEnvironment_Setting {
             name: self.name,
             namespace: self.namespace,
             resource: core::default::Default::default(),
@@ -739,21 +770,23 @@ impl BuildElasticBeanstalkEnvironmentSettingEl {
     }
 }
 
-pub struct ElasticBeanstalkEnvironmentSettingElRef {
+#[allow(dead_code)]
+pub struct ElasticBeanstalkEnvironment_SettingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElasticBeanstalkEnvironmentSettingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticBeanstalkEnvironmentSettingElRef {
-        ElasticBeanstalkEnvironmentSettingElRef {
+impl terrars::Ref for ElasticBeanstalkEnvironment_SettingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticBeanstalkEnvironment_SettingRef {
+        ElasticBeanstalkEnvironment_SettingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElasticBeanstalkEnvironmentSettingElRef {
+impl ElasticBeanstalkEnvironment_SettingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -777,9 +810,4 @@ impl ElasticBeanstalkEnvironmentSettingElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ElasticBeanstalkEnvironmentDynamic {
-    setting: std::option::Option<terrars::DynamicBlock<ElasticBeanstalkEnvironmentSettingEl>>,
 }

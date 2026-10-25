@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEbsEncryptionByDefaultData {
+struct DataEbsEncryptionByDefaultData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,13 +21,15 @@ struct DataEbsEncryptionByDefaultData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEbsEncryptionByDefaultTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataEbsEncryptionByDefault_Timeouts>,
 }
 
 struct DataEbsEncryptionByDefault_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEbsEncryptionByDefaultData>,
+    data: std::cell::RefCell<DataEbsEncryptionByDefaultData_>,
 }
 
 #[derive(Clone)]
@@ -76,8 +80,15 @@ impl DataEbsEncryptionByDefault {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEbsEncryptionByDefaultTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEbsEncryptionByDefault_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -92,9 +103,15 @@ impl DataEbsEncryptionByDefault {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEbsEncryptionByDefaultTimeoutsElRef {
-        DataEbsEncryptionByDefaultTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEbsEncryptionByDefault_TimeoutsRef {
+        DataEbsEncryptionByDefault_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -141,12 +158,13 @@ impl BuildDataEbsEncryptionByDefault {
         let out = DataEbsEncryptionByDefault(std::rc::Rc::new(DataEbsEncryptionByDefault_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEbsEncryptionByDefaultData {
+            data: std::cell::RefCell::new(DataEbsEncryptionByDefaultData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -188,9 +206,15 @@ impl DataEbsEncryptionByDefaultRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEbsEncryptionByDefaultTimeoutsElRef {
-        DataEbsEncryptionByDefaultTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEbsEncryptionByDefault_TimeoutsRef {
+        DataEbsEncryptionByDefault_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -198,12 +222,12 @@ impl DataEbsEncryptionByDefaultRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEbsEncryptionByDefaultTimeoutsEl {
+pub struct DataEbsEncryptionByDefault_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEbsEncryptionByDefaultTimeoutsEl {
+impl DataEbsEncryptionByDefault_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -211,8 +235,8 @@ impl DataEbsEncryptionByDefaultTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEbsEncryptionByDefaultTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEbsEncryptionByDefaultTimeoutsEl>;
+impl terrars::ToListMappable for DataEbsEncryptionByDefault_Timeouts {
+    type O = terrars::BlockAssignable<DataEbsEncryptionByDefault_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -223,29 +247,31 @@ impl terrars::ToListMappable for DataEbsEncryptionByDefaultTimeoutsEl {
     }
 }
 
-pub struct BuildDataEbsEncryptionByDefaultTimeoutsEl {}
+pub struct BuildDataEbsEncryptionByDefault_Timeouts {}
 
-impl BuildDataEbsEncryptionByDefaultTimeoutsEl {
-    pub fn build(self) -> DataEbsEncryptionByDefaultTimeoutsEl {
-        DataEbsEncryptionByDefaultTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEbsEncryptionByDefault_Timeouts {
+    pub fn build(self) -> DataEbsEncryptionByDefault_Timeouts {
+        DataEbsEncryptionByDefault_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEbsEncryptionByDefaultTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEbsEncryptionByDefault_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEbsEncryptionByDefaultTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsEncryptionByDefaultTimeoutsElRef {
-        DataEbsEncryptionByDefaultTimeoutsElRef {
+impl terrars::Ref for DataEbsEncryptionByDefault_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsEncryptionByDefault_TimeoutsRef {
+        DataEbsEncryptionByDefault_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEbsEncryptionByDefaultTimeoutsElRef {
+impl DataEbsEncryptionByDefault_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

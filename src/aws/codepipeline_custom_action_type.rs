@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodepipelineCustomActionTypeData {
+struct CodepipelineCustomActionTypeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,25 +25,27 @@ struct CodepipelineCustomActionTypeData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     provider_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     version: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    configuration_property: std::option::Option<std::vec::Vec<CodepipelineCustomActionTypeConfigurationPropertyEl>>,
+    configuration_property: std::option::Option<std::vec::Vec<CodepipelineCustomActionType_ConfigurationProperty>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input_artifact_details: std::option::Option<std::vec::Vec<CodepipelineCustomActionTypeInputArtifactDetailsEl>>,
+    input_artifact_details: std::option::Option<std::vec::Vec<CodepipelineCustomActionType_InputArtifactDetails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    output_artifact_details: std::option::Option<std::vec::Vec<CodepipelineCustomActionTypeOutputArtifactDetailsEl>>,
+    output_artifact_details: std::option::Option<std::vec::Vec<CodepipelineCustomActionType_OutputArtifactDetails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    settings: std::option::Option<std::vec::Vec<CodepipelineCustomActionTypeSettingsEl>>,
+    settings: std::option::Option<std::vec::Vec<CodepipelineCustomActionType_Settings>>,
     dynamic: CodepipelineCustomActionTypeDynamic,
 }
 
 struct CodepipelineCustomActionType_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodepipelineCustomActionTypeData>,
+    data: std::cell::RefCell<CodepipelineCustomActionTypeData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl CodepipelineCustomActionType {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl CodepipelineCustomActionType {
     #[doc = "Set the field `configuration_property`.\n"]
     pub fn set_configuration_property(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineCustomActionTypeConfigurationPropertyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineCustomActionType_ConfigurationProperty>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +195,7 @@ impl CodepipelineCustomActionType {
     #[doc = "Set the field `input_artifact_details`.\n"]
     pub fn set_input_artifact_details(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineCustomActionTypeInputArtifactDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineCustomActionType_InputArtifactDetails>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,7 +211,7 @@ impl CodepipelineCustomActionType {
     #[doc = "Set the field `output_artifact_details`.\n"]
     pub fn set_output_artifact_details(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineCustomActionTypeOutputArtifactDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineCustomActionType_OutputArtifactDetails>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,7 +227,7 @@ impl CodepipelineCustomActionType {
     #[doc = "Set the field `settings`.\n"]
     pub fn set_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineCustomActionTypeSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineCustomActionType_Settings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -254,6 +265,12 @@ impl CodepipelineCustomActionType {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -270,22 +287,22 @@ impl CodepipelineCustomActionType {
     }
 
     #[doc = "Get a reference to the value of field `configuration_property` after provisioning.\n"]
-    pub fn configuration_property(&self) -> terrars::ListRef<CodepipelineCustomActionTypeConfigurationPropertyElRef> {
+    pub fn configuration_property(&self) -> terrars::ListRef<CodepipelineCustomActionType_ConfigurationPropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration_property", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `input_artifact_details` after provisioning.\n"]
-    pub fn input_artifact_details(&self) -> terrars::ListRef<CodepipelineCustomActionTypeInputArtifactDetailsElRef> {
+    pub fn input_artifact_details(&self) -> terrars::ListRef<CodepipelineCustomActionType_InputArtifactDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_artifact_details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `output_artifact_details` after provisioning.\n"]
-    pub fn output_artifact_details(&self) -> terrars::ListRef<CodepipelineCustomActionTypeOutputArtifactDetailsElRef> {
+    pub fn output_artifact_details(&self) -> terrars::ListRef<CodepipelineCustomActionType_OutputArtifactDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_artifact_details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `settings` after provisioning.\n"]
-    pub fn settings(&self) -> terrars::ListRef<CodepipelineCustomActionTypeSettingsElRef> {
+    pub fn settings(&self) -> terrars::ListRef<CodepipelineCustomActionType_SettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.settings", self.extract_ref()))
     }
 }
@@ -336,7 +353,7 @@ impl BuildCodepipelineCustomActionType {
         let out = CodepipelineCustomActionType(std::rc::Rc::new(CodepipelineCustomActionType_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodepipelineCustomActionTypeData {
+            data: std::cell::RefCell::new(CodepipelineCustomActionTypeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -345,6 +362,7 @@ impl BuildCodepipelineCustomActionType {
                 category: self.category,
                 id: core::default::Default::default(),
                 provider_name: self.provider_name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 version: self.version,
@@ -408,6 +426,12 @@ impl CodepipelineCustomActionTypeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -424,28 +448,42 @@ impl CodepipelineCustomActionTypeRef {
     }
 
     #[doc = "Get a reference to the value of field `configuration_property` after provisioning.\n"]
-    pub fn configuration_property(&self) -> terrars::ListRef<CodepipelineCustomActionTypeConfigurationPropertyElRef> {
+    pub fn configuration_property(&self) -> terrars::ListRef<CodepipelineCustomActionType_ConfigurationPropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration_property", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `input_artifact_details` after provisioning.\n"]
-    pub fn input_artifact_details(&self) -> terrars::ListRef<CodepipelineCustomActionTypeInputArtifactDetailsElRef> {
+    pub fn input_artifact_details(&self) -> terrars::ListRef<CodepipelineCustomActionType_InputArtifactDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_artifact_details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `output_artifact_details` after provisioning.\n"]
-    pub fn output_artifact_details(&self) -> terrars::ListRef<CodepipelineCustomActionTypeOutputArtifactDetailsElRef> {
+    pub fn output_artifact_details(&self) -> terrars::ListRef<CodepipelineCustomActionType_OutputArtifactDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_artifact_details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `settings` after provisioning.\n"]
-    pub fn settings(&self) -> terrars::ListRef<CodepipelineCustomActionTypeSettingsElRef> {
+    pub fn settings(&self) -> terrars::ListRef<CodepipelineCustomActionType_SettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CodepipelineCustomActionTypeDynamic {
+    configuration_property: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodepipelineCustomActionType_ConfigurationProperty>>,
+    input_artifact_details: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodepipelineCustomActionType_InputArtifactDetails>>,
+    output_artifact_details: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodepipelineCustomActionType_OutputArtifactDetails>>,
+    settings: std::option::Option<terrars::DynamicBlock<CodepipelineCustomActionType_Settings>>,
+}
+
 #[derive(Serialize)]
-pub struct CodepipelineCustomActionTypeConfigurationPropertyEl {
+pub struct CodepipelineCustomActionType_ConfigurationProperty {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<bool>,
@@ -458,7 +496,7 @@ pub struct CodepipelineCustomActionTypeConfigurationPropertyEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodepipelineCustomActionTypeConfigurationPropertyEl {
+impl CodepipelineCustomActionType_ConfigurationProperty {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -478,8 +516,8 @@ impl CodepipelineCustomActionTypeConfigurationPropertyEl {
     }
 }
 
-impl terrars::ToListMappable for CodepipelineCustomActionTypeConfigurationPropertyEl {
-    type O = terrars::BlockAssignable<CodepipelineCustomActionTypeConfigurationPropertyEl>;
+impl terrars::ToListMappable for CodepipelineCustomActionType_ConfigurationProperty {
+    type O = terrars::BlockAssignable<CodepipelineCustomActionType_ConfigurationProperty>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,7 +528,7 @@ impl terrars::ToListMappable for CodepipelineCustomActionTypeConfigurationProper
     }
 }
 
-pub struct BuildCodepipelineCustomActionTypeConfigurationPropertyEl {
+pub struct BuildCodepipelineCustomActionType_ConfigurationProperty {
     #[doc = ""]
     pub key: terrars::PrimField<bool>,
     #[doc = ""]
@@ -501,9 +539,9 @@ pub struct BuildCodepipelineCustomActionTypeConfigurationPropertyEl {
     pub secret: terrars::PrimField<bool>,
 }
 
-impl BuildCodepipelineCustomActionTypeConfigurationPropertyEl {
-    pub fn build(self) -> CodepipelineCustomActionTypeConfigurationPropertyEl {
-        CodepipelineCustomActionTypeConfigurationPropertyEl {
+impl BuildCodepipelineCustomActionType_ConfigurationProperty {
+    pub fn build(self) -> CodepipelineCustomActionType_ConfigurationProperty {
+        CodepipelineCustomActionType_ConfigurationProperty {
             description: core::default::Default::default(),
             key: self.key,
             name: self.name,
@@ -515,24 +553,26 @@ impl BuildCodepipelineCustomActionTypeConfigurationPropertyEl {
     }
 }
 
-pub struct CodepipelineCustomActionTypeConfigurationPropertyElRef {
+#[allow(dead_code)]
+pub struct CodepipelineCustomActionType_ConfigurationPropertyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodepipelineCustomActionTypeConfigurationPropertyElRef {
+impl terrars::Ref for CodepipelineCustomActionType_ConfigurationPropertyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodepipelineCustomActionTypeConfigurationPropertyElRef {
-        CodepipelineCustomActionTypeConfigurationPropertyElRef {
+    ) -> CodepipelineCustomActionType_ConfigurationPropertyRef {
+        CodepipelineCustomActionType_ConfigurationPropertyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodepipelineCustomActionTypeConfigurationPropertyElRef {
+impl CodepipelineCustomActionType_ConfigurationPropertyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -574,15 +614,15 @@ impl CodepipelineCustomActionTypeConfigurationPropertyElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodepipelineCustomActionTypeInputArtifactDetailsEl {
+pub struct CodepipelineCustomActionType_InputArtifactDetails {
     maximum_count: terrars::PrimField<f64>,
     minimum_count: terrars::PrimField<f64>,
 }
 
-impl CodepipelineCustomActionTypeInputArtifactDetailsEl { }
+impl CodepipelineCustomActionType_InputArtifactDetails { }
 
-impl terrars::ToListMappable for CodepipelineCustomActionTypeInputArtifactDetailsEl {
-    type O = terrars::BlockAssignable<CodepipelineCustomActionTypeInputArtifactDetailsEl>;
+impl terrars::ToListMappable for CodepipelineCustomActionType_InputArtifactDetails {
+    type O = terrars::BlockAssignable<CodepipelineCustomActionType_InputArtifactDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -593,40 +633,42 @@ impl terrars::ToListMappable for CodepipelineCustomActionTypeInputArtifactDetail
     }
 }
 
-pub struct BuildCodepipelineCustomActionTypeInputArtifactDetailsEl {
+pub struct BuildCodepipelineCustomActionType_InputArtifactDetails {
     #[doc = ""]
     pub maximum_count: terrars::PrimField<f64>,
     #[doc = ""]
     pub minimum_count: terrars::PrimField<f64>,
 }
 
-impl BuildCodepipelineCustomActionTypeInputArtifactDetailsEl {
-    pub fn build(self) -> CodepipelineCustomActionTypeInputArtifactDetailsEl {
-        CodepipelineCustomActionTypeInputArtifactDetailsEl {
+impl BuildCodepipelineCustomActionType_InputArtifactDetails {
+    pub fn build(self) -> CodepipelineCustomActionType_InputArtifactDetails {
+        CodepipelineCustomActionType_InputArtifactDetails {
             maximum_count: self.maximum_count,
             minimum_count: self.minimum_count,
         }
     }
 }
 
-pub struct CodepipelineCustomActionTypeInputArtifactDetailsElRef {
+#[allow(dead_code)]
+pub struct CodepipelineCustomActionType_InputArtifactDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodepipelineCustomActionTypeInputArtifactDetailsElRef {
+impl terrars::Ref for CodepipelineCustomActionType_InputArtifactDetailsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodepipelineCustomActionTypeInputArtifactDetailsElRef {
-        CodepipelineCustomActionTypeInputArtifactDetailsElRef {
+    ) -> CodepipelineCustomActionType_InputArtifactDetailsRef {
+        CodepipelineCustomActionType_InputArtifactDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodepipelineCustomActionTypeInputArtifactDetailsElRef {
+impl CodepipelineCustomActionType_InputArtifactDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -643,15 +685,15 @@ impl CodepipelineCustomActionTypeInputArtifactDetailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodepipelineCustomActionTypeOutputArtifactDetailsEl {
+pub struct CodepipelineCustomActionType_OutputArtifactDetails {
     maximum_count: terrars::PrimField<f64>,
     minimum_count: terrars::PrimField<f64>,
 }
 
-impl CodepipelineCustomActionTypeOutputArtifactDetailsEl { }
+impl CodepipelineCustomActionType_OutputArtifactDetails { }
 
-impl terrars::ToListMappable for CodepipelineCustomActionTypeOutputArtifactDetailsEl {
-    type O = terrars::BlockAssignable<CodepipelineCustomActionTypeOutputArtifactDetailsEl>;
+impl terrars::ToListMappable for CodepipelineCustomActionType_OutputArtifactDetails {
+    type O = terrars::BlockAssignable<CodepipelineCustomActionType_OutputArtifactDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -662,40 +704,42 @@ impl terrars::ToListMappable for CodepipelineCustomActionTypeOutputArtifactDetai
     }
 }
 
-pub struct BuildCodepipelineCustomActionTypeOutputArtifactDetailsEl {
+pub struct BuildCodepipelineCustomActionType_OutputArtifactDetails {
     #[doc = ""]
     pub maximum_count: terrars::PrimField<f64>,
     #[doc = ""]
     pub minimum_count: terrars::PrimField<f64>,
 }
 
-impl BuildCodepipelineCustomActionTypeOutputArtifactDetailsEl {
-    pub fn build(self) -> CodepipelineCustomActionTypeOutputArtifactDetailsEl {
-        CodepipelineCustomActionTypeOutputArtifactDetailsEl {
+impl BuildCodepipelineCustomActionType_OutputArtifactDetails {
+    pub fn build(self) -> CodepipelineCustomActionType_OutputArtifactDetails {
+        CodepipelineCustomActionType_OutputArtifactDetails {
             maximum_count: self.maximum_count,
             minimum_count: self.minimum_count,
         }
     }
 }
 
-pub struct CodepipelineCustomActionTypeOutputArtifactDetailsElRef {
+#[allow(dead_code)]
+pub struct CodepipelineCustomActionType_OutputArtifactDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodepipelineCustomActionTypeOutputArtifactDetailsElRef {
+impl terrars::Ref for CodepipelineCustomActionType_OutputArtifactDetailsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodepipelineCustomActionTypeOutputArtifactDetailsElRef {
-        CodepipelineCustomActionTypeOutputArtifactDetailsElRef {
+    ) -> CodepipelineCustomActionType_OutputArtifactDetailsRef {
+        CodepipelineCustomActionType_OutputArtifactDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodepipelineCustomActionTypeOutputArtifactDetailsElRef {
+impl CodepipelineCustomActionType_OutputArtifactDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -712,7 +756,7 @@ impl CodepipelineCustomActionTypeOutputArtifactDetailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodepipelineCustomActionTypeSettingsEl {
+pub struct CodepipelineCustomActionType_Settings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     entity_url_template: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -723,7 +767,7 @@ pub struct CodepipelineCustomActionTypeSettingsEl {
     third_party_configuration_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodepipelineCustomActionTypeSettingsEl {
+impl CodepipelineCustomActionType_Settings {
     #[doc = "Set the field `entity_url_template`.\n"]
     pub fn set_entity_url_template(
         mut self,
@@ -761,8 +805,8 @@ impl CodepipelineCustomActionTypeSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for CodepipelineCustomActionTypeSettingsEl {
-    type O = terrars::BlockAssignable<CodepipelineCustomActionTypeSettingsEl>;
+impl terrars::ToListMappable for CodepipelineCustomActionType_Settings {
+    type O = terrars::BlockAssignable<CodepipelineCustomActionType_Settings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -773,11 +817,11 @@ impl terrars::ToListMappable for CodepipelineCustomActionTypeSettingsEl {
     }
 }
 
-pub struct BuildCodepipelineCustomActionTypeSettingsEl {}
+pub struct BuildCodepipelineCustomActionType_Settings {}
 
-impl BuildCodepipelineCustomActionTypeSettingsEl {
-    pub fn build(self) -> CodepipelineCustomActionTypeSettingsEl {
-        CodepipelineCustomActionTypeSettingsEl {
+impl BuildCodepipelineCustomActionType_Settings {
+    pub fn build(self) -> CodepipelineCustomActionType_Settings {
+        CodepipelineCustomActionType_Settings {
             entity_url_template: core::default::Default::default(),
             execution_url_template: core::default::Default::default(),
             revision_url_template: core::default::Default::default(),
@@ -786,21 +830,23 @@ impl BuildCodepipelineCustomActionTypeSettingsEl {
     }
 }
 
-pub struct CodepipelineCustomActionTypeSettingsElRef {
+#[allow(dead_code)]
+pub struct CodepipelineCustomActionType_SettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodepipelineCustomActionTypeSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodepipelineCustomActionTypeSettingsElRef {
-        CodepipelineCustomActionTypeSettingsElRef {
+impl terrars::Ref for CodepipelineCustomActionType_SettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodepipelineCustomActionType_SettingsRef {
+        CodepipelineCustomActionType_SettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodepipelineCustomActionTypeSettingsElRef {
+impl CodepipelineCustomActionType_SettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -824,18 +870,4 @@ impl CodepipelineCustomActionTypeSettingsElRef {
     pub fn third_party_configuration_url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.third_party_configuration_url", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CodepipelineCustomActionTypeDynamic {
-    configuration_property: std
-    ::option
-    ::Option<terrars::DynamicBlock<CodepipelineCustomActionTypeConfigurationPropertyEl>>,
-    input_artifact_details: std
-    ::option
-    ::Option<terrars::DynamicBlock<CodepipelineCustomActionTypeInputArtifactDetailsEl>>,
-    output_artifact_details: std
-    ::option
-    ::Option<terrars::DynamicBlock<CodepipelineCustomActionTypeOutputArtifactDetailsEl>>,
-    settings: std::option::Option<terrars::DynamicBlock<CodepipelineCustomActionTypeSettingsEl>>,
 }

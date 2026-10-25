@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerConnectAttachmentData {
+struct NetworkmanagerConnectAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,21 +25,23 @@ struct NetworkmanagerConnectAttachmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_policy_label: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     transport_attachment_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    options: std::option::Option<std::vec::Vec<NetworkmanagerConnectAttachmentOptionsEl>>,
+    options: std::option::Option<std::vec::Vec<NetworkmanagerConnectAttachment_Options>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerConnectAttachmentTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerConnectAttachment_Timeouts>,
     dynamic: NetworkmanagerConnectAttachmentDynamic,
 }
 
 struct NetworkmanagerConnectAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerConnectAttachmentData>,
+    data: std::cell::RefCell<NetworkmanagerConnectAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,12 @@ impl NetworkmanagerConnectAttachment {
         self
     }
 
+    #[doc = "Set the field `routing_policy_label`.\n"]
+    pub fn set_routing_policy_label(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().routing_policy_label = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -164,7 +174,7 @@ impl NetworkmanagerConnectAttachment {
     #[doc = "Set the field `options`.\n"]
     pub fn set_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerConnectAttachmentOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerConnectAttachment_Options>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -178,7 +188,7 @@ impl NetworkmanagerConnectAttachment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerConnectAttachmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerConnectAttachment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -236,6 +246,11 @@ impl NetworkmanagerConnectAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_policy_label` after provisioning.\n"]
+    pub fn routing_policy_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_policy_label", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `segment_name` after provisioning.\n"]
     pub fn segment_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_name", self.extract_ref()))
@@ -262,13 +277,13 @@ impl NetworkmanagerConnectAttachment {
     }
 
     #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
-    pub fn options(&self) -> terrars::ListRef<NetworkmanagerConnectAttachmentOptionsElRef> {
+    pub fn options(&self) -> terrars::ListRef<NetworkmanagerConnectAttachment_OptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerConnectAttachmentTimeoutsElRef {
-        NetworkmanagerConnectAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerConnectAttachment_TimeoutsRef {
+        NetworkmanagerConnectAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -321,7 +336,7 @@ impl BuildNetworkmanagerConnectAttachment {
         let out = NetworkmanagerConnectAttachment(std::rc::Rc::new(NetworkmanagerConnectAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkmanagerConnectAttachmentData {
+            data: std::cell::RefCell::new(NetworkmanagerConnectAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -330,6 +345,7 @@ impl BuildNetworkmanagerConnectAttachment {
                 core_network_id: self.core_network_id,
                 edge_location: self.edge_location,
                 id: core::default::Default::default(),
+                routing_policy_label: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 transport_attachment_id: self.transport_attachment_id,
@@ -419,6 +435,11 @@ impl NetworkmanagerConnectAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_policy_label` after provisioning.\n"]
+    pub fn routing_policy_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_policy_label", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `segment_name` after provisioning.\n"]
     pub fn segment_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_name", self.extract_ref()))
@@ -445,26 +466,31 @@ impl NetworkmanagerConnectAttachmentRef {
     }
 
     #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
-    pub fn options(&self) -> terrars::ListRef<NetworkmanagerConnectAttachmentOptionsElRef> {
+    pub fn options(&self) -> terrars::ListRef<NetworkmanagerConnectAttachment_OptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerConnectAttachmentTimeoutsElRef {
-        NetworkmanagerConnectAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerConnectAttachment_TimeoutsRef {
+        NetworkmanagerConnectAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkmanagerConnectAttachmentDynamic {
+    options: std::option::Option<terrars::DynamicBlock<NetworkmanagerConnectAttachment_Options>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkmanagerConnectAttachmentOptionsEl {
+pub struct NetworkmanagerConnectAttachment_Options {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocol: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerConnectAttachmentOptionsEl {
+impl NetworkmanagerConnectAttachment_Options {
     #[doc = "Set the field `protocol`.\n"]
     pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.protocol = std::option::Option::Some(v.into());
@@ -472,8 +498,8 @@ impl NetworkmanagerConnectAttachmentOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerConnectAttachmentOptionsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerConnectAttachmentOptionsEl>;
+impl terrars::ToListMappable for NetworkmanagerConnectAttachment_Options {
+    type O = terrars::BlockAssignable<NetworkmanagerConnectAttachment_Options>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -484,29 +510,31 @@ impl terrars::ToListMappable for NetworkmanagerConnectAttachmentOptionsEl {
     }
 }
 
-pub struct BuildNetworkmanagerConnectAttachmentOptionsEl {}
+pub struct BuildNetworkmanagerConnectAttachment_Options {}
 
-impl BuildNetworkmanagerConnectAttachmentOptionsEl {
-    pub fn build(self) -> NetworkmanagerConnectAttachmentOptionsEl {
-        NetworkmanagerConnectAttachmentOptionsEl { protocol: core::default::Default::default() }
+impl BuildNetworkmanagerConnectAttachment_Options {
+    pub fn build(self) -> NetworkmanagerConnectAttachment_Options {
+        NetworkmanagerConnectAttachment_Options { protocol: core::default::Default::default() }
     }
 }
 
-pub struct NetworkmanagerConnectAttachmentOptionsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerConnectAttachment_OptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerConnectAttachmentOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerConnectAttachmentOptionsElRef {
-        NetworkmanagerConnectAttachmentOptionsElRef {
+impl terrars::Ref for NetworkmanagerConnectAttachment_OptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerConnectAttachment_OptionsRef {
+        NetworkmanagerConnectAttachment_OptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerConnectAttachmentOptionsElRef {
+impl NetworkmanagerConnectAttachment_OptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -518,14 +546,14 @@ impl NetworkmanagerConnectAttachmentOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerConnectAttachmentTimeoutsEl {
+pub struct NetworkmanagerConnectAttachment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerConnectAttachmentTimeoutsEl {
+impl NetworkmanagerConnectAttachment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -539,8 +567,8 @@ impl NetworkmanagerConnectAttachmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerConnectAttachmentTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerConnectAttachmentTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerConnectAttachment_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerConnectAttachment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -551,32 +579,34 @@ impl terrars::ToListMappable for NetworkmanagerConnectAttachmentTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkmanagerConnectAttachmentTimeoutsEl {}
+pub struct BuildNetworkmanagerConnectAttachment_Timeouts {}
 
-impl BuildNetworkmanagerConnectAttachmentTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerConnectAttachmentTimeoutsEl {
-        NetworkmanagerConnectAttachmentTimeoutsEl {
+impl BuildNetworkmanagerConnectAttachment_Timeouts {
+    pub fn build(self) -> NetworkmanagerConnectAttachment_Timeouts {
+        NetworkmanagerConnectAttachment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkmanagerConnectAttachmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerConnectAttachment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerConnectAttachmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerConnectAttachmentTimeoutsElRef {
-        NetworkmanagerConnectAttachmentTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerConnectAttachment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerConnectAttachment_TimeoutsRef {
+        NetworkmanagerConnectAttachment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerConnectAttachmentTimeoutsElRef {
+impl NetworkmanagerConnectAttachment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -590,9 +620,4 @@ impl NetworkmanagerConnectAttachmentTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkmanagerConnectAttachmentDynamic {
-    options: std::option::Option<terrars::DynamicBlock<NetworkmanagerConnectAttachmentOptionsEl>>,
 }

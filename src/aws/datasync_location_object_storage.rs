@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DatasyncLocationObjectStorageData {
+struct DatasyncLocationObjectStorageData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,10 +22,13 @@ struct DatasyncLocationObjectStorageData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_key: std::option::Option<terrars::PrimField<std::string::String>>,
-    agent_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    agent_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -44,7 +49,7 @@ struct DatasyncLocationObjectStorageData {
 struct DatasyncLocationObjectStorage_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatasyncLocationObjectStorageData>,
+    data: std::cell::RefCell<DatasyncLocationObjectStorageData_>,
 }
 
 #[derive(Clone)]
@@ -150,9 +155,25 @@ impl DatasyncLocationObjectStorage {
         self
     }
 
+    #[doc = "Set the field `agent_arns`.\n"]
+    pub fn set_agent_arns(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().agent_arns = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -227,6 +248,12 @@ impl DatasyncLocationObjectStorage {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret_key` after provisioning.\n"]
@@ -309,8 +336,6 @@ impl terrars::Resource_ for DatasyncLocationObjectStorage_ {
 pub struct BuildDatasyncLocationObjectStorage {
     pub tf_id: std::string::String,
     #[doc = ""]
-    pub agent_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
-    #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub server_hostname: terrars::PrimField<std::string::String>,
@@ -321,16 +346,17 @@ impl BuildDatasyncLocationObjectStorage {
         let out = DatasyncLocationObjectStorage(std::rc::Rc::new(DatasyncLocationObjectStorage_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatasyncLocationObjectStorageData {
+            data: std::cell::RefCell::new(DatasyncLocationObjectStorageData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 access_key: core::default::Default::default(),
-                agent_arns: self.agent_arns,
+                agent_arns: core::default::Default::default(),
                 bucket_name: self.bucket_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 secret_key: core::default::Default::default(),
                 server_certificate: core::default::Default::default(),
                 server_hostname: self.server_hostname,
@@ -392,6 +418,12 @@ impl DatasyncLocationObjectStorageRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret_key` after provisioning.\n"]

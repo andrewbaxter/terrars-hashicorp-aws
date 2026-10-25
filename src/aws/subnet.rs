@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SubnetData {
+struct SubnetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,15 +33,25 @@ struct SubnetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_dns64: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_lni_at_device_index: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_resource_name_dns_a_record_on_launch: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_resource_name_dns_aaaa_record_on_launch: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv4_ipam_pool_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv4_netmask_length: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_ipam_pool_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv6_native: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_netmask_length: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     map_customer_owned_ip_on_launch: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -49,18 +61,20 @@ struct SubnetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_dns_hostname_type_on_launch: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     vpc_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SubnetTimeoutsEl>,
+    timeouts: std::option::Option<Subnet_Timeouts>,
 }
 
 struct Subnet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SubnetData>,
+    data: std::cell::RefCell<SubnetData_>,
 }
 
 #[derive(Clone)]
@@ -199,6 +213,12 @@ impl Subnet {
         self
     }
 
+    #[doc = "Set the field `enable_lni_at_device_index`.\n"]
+    pub fn set_enable_lni_at_device_index(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().enable_lni_at_device_index = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enable_resource_name_dns_a_record_on_launch`.\n"]
     pub fn set_enable_resource_name_dns_a_record_on_launch(
         self,
@@ -224,15 +244,39 @@ impl Subnet {
         self
     }
 
+    #[doc = "Set the field `ipv4_ipam_pool_id`.\n"]
+    pub fn set_ipv4_ipam_pool_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ipv4_ipam_pool_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv4_netmask_length`.\n"]
+    pub fn set_ipv4_netmask_length(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().ipv4_netmask_length = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `ipv6_cidr_block`.\n"]
     pub fn set_ipv6_cidr_block(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().ipv6_cidr_block = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `ipv6_ipam_pool_id`.\n"]
+    pub fn set_ipv6_ipam_pool_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ipv6_ipam_pool_id = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `ipv6_native`.\n"]
     pub fn set_ipv6_native(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().ipv6_native = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv6_netmask_length`.\n"]
+    pub fn set_ipv6_netmask_length(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().ipv6_netmask_length = std::option::Option::Some(v.into());
         self
     }
 
@@ -263,6 +307,13 @@ impl Subnet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -282,7 +333,7 @@ impl Subnet {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SubnetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Subnet_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -325,6 +376,11 @@ impl Subnet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_dns64", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_lni_at_device_index` after provisioning.\n"]
+    pub fn enable_lni_at_device_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_lni_at_device_index", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `enable_resource_name_dns_a_record_on_launch` after provisioning.\n"]
     pub fn enable_resource_name_dns_a_record_on_launch(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
@@ -347,6 +403,16 @@ impl Subnet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipv4_ipam_pool_id` after provisioning.\n"]
+    pub fn ipv4_ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_ipam_pool_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv4_netmask_length` after provisioning.\n"]
+    pub fn ipv4_netmask_length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_netmask_length", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
     pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.extract_ref()))
@@ -360,9 +426,19 @@ impl Subnet {
         )
     }
 
+    #[doc = "Get a reference to the value of field `ipv6_ipam_pool_id` after provisioning.\n"]
+    pub fn ipv6_ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_ipam_pool_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ipv6_native` after provisioning.\n"]
     pub fn ipv6_native(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_native", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_netmask_length` after provisioning.\n"]
+    pub fn ipv6_netmask_length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_netmask_length", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `map_customer_owned_ip_on_launch` after provisioning.\n"]
@@ -396,6 +472,12 @@ impl Subnet {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -412,8 +494,8 @@ impl Subnet {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SubnetTimeoutsElRef {
-        SubnetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Subnet_TimeoutsRef {
+        Subnet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -459,7 +541,7 @@ impl BuildSubnet {
         let out = Subnet(std::rc::Rc::new(Subnet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SubnetData {
+            data: std::cell::RefCell::new(SubnetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -471,15 +553,21 @@ impl BuildSubnet {
                 cidr_block: core::default::Default::default(),
                 customer_owned_ipv4_pool: core::default::Default::default(),
                 enable_dns64: core::default::Default::default(),
+                enable_lni_at_device_index: core::default::Default::default(),
                 enable_resource_name_dns_a_record_on_launch: core::default::Default::default(),
                 enable_resource_name_dns_aaaa_record_on_launch: core::default::Default::default(),
                 id: core::default::Default::default(),
+                ipv4_ipam_pool_id: core::default::Default::default(),
+                ipv4_netmask_length: core::default::Default::default(),
                 ipv6_cidr_block: core::default::Default::default(),
+                ipv6_ipam_pool_id: core::default::Default::default(),
                 ipv6_native: core::default::Default::default(),
+                ipv6_netmask_length: core::default::Default::default(),
                 map_customer_owned_ip_on_launch: core::default::Default::default(),
                 map_public_ip_on_launch: core::default::Default::default(),
                 outpost_arn: core::default::Default::default(),
                 private_dns_hostname_type_on_launch: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 vpc_id: self.vpc_id,
@@ -552,6 +640,11 @@ impl SubnetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_dns64", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_lni_at_device_index` after provisioning.\n"]
+    pub fn enable_lni_at_device_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_lni_at_device_index", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `enable_resource_name_dns_a_record_on_launch` after provisioning.\n"]
     pub fn enable_resource_name_dns_a_record_on_launch(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
@@ -574,6 +667,16 @@ impl SubnetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipv4_ipam_pool_id` after provisioning.\n"]
+    pub fn ipv4_ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_ipam_pool_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv4_netmask_length` after provisioning.\n"]
+    pub fn ipv4_netmask_length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_netmask_length", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
     pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.extract_ref()))
@@ -587,9 +690,19 @@ impl SubnetRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `ipv6_ipam_pool_id` after provisioning.\n"]
+    pub fn ipv6_ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_ipam_pool_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ipv6_native` after provisioning.\n"]
     pub fn ipv6_native(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_native", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_netmask_length` after provisioning.\n"]
+    pub fn ipv6_netmask_length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_netmask_length", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `map_customer_owned_ip_on_launch` after provisioning.\n"]
@@ -623,6 +736,12 @@ impl SubnetRef {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -639,20 +758,20 @@ impl SubnetRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SubnetTimeoutsElRef {
-        SubnetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Subnet_TimeoutsRef {
+        Subnet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct SubnetTimeoutsEl {
+pub struct Subnet_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SubnetTimeoutsEl {
+impl Subnet_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -666,8 +785,8 @@ impl SubnetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SubnetTimeoutsEl {
-    type O = terrars::BlockAssignable<SubnetTimeoutsEl>;
+impl terrars::ToListMappable for Subnet_Timeouts {
+    type O = terrars::BlockAssignable<Subnet_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -678,32 +797,34 @@ impl terrars::ToListMappable for SubnetTimeoutsEl {
     }
 }
 
-pub struct BuildSubnetTimeoutsEl {}
+pub struct BuildSubnet_Timeouts {}
 
-impl BuildSubnetTimeoutsEl {
-    pub fn build(self) -> SubnetTimeoutsEl {
-        SubnetTimeoutsEl {
+impl BuildSubnet_Timeouts {
+    pub fn build(self) -> Subnet_Timeouts {
+        Subnet_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct SubnetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Subnet_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SubnetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SubnetTimeoutsElRef {
-        SubnetTimeoutsElRef {
+impl terrars::Ref for Subnet_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Subnet_TimeoutsRef {
+        Subnet_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SubnetTimeoutsElRef {
+impl Subnet_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

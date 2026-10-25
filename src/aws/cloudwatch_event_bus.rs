@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudwatchEventBusData {
+struct CloudwatchEventBusData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,20 +21,31 @@ struct CloudwatchEventBusData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event_source_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dead_letter_config: std::option::Option<std::vec::Vec<CloudwatchEventBus_DeadLetterConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    log_config: std::option::Option<std::vec::Vec<CloudwatchEventBus_LogConfig>>,
+    dynamic: CloudwatchEventBusDynamic,
 }
 
 struct CloudwatchEventBus_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudwatchEventBusData>,
+    data: std::cell::RefCell<CloudwatchEventBusData_>,
 }
 
 #[derive(Clone)]
@@ -132,6 +145,12 @@ impl CloudwatchEventBus {
         self
     }
 
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `event_source_name`.\n"]
     pub fn set_event_source_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().event_source_name = std::option::Option::Some(v.into());
@@ -141,6 +160,19 @@ impl CloudwatchEventBus {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kms_key_identifier`.\n"]
+    pub fn set_kms_key_identifier(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key_identifier = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -162,9 +194,46 @@ impl CloudwatchEventBus {
         self
     }
 
+    #[doc = "Set the field `dead_letter_config`.\n"]
+    pub fn set_dead_letter_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventBus_DeadLetterConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().dead_letter_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.dead_letter_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `log_config`.\n"]
+    pub fn set_log_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventBus_LogConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().log_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.log_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `event_source_name` after provisioning.\n"]
@@ -177,9 +246,20 @@ impl CloudwatchEventBus {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_identifier` after provisioning.\n"]
+    pub fn kms_key_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_identifier", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -190,6 +270,16 @@ impl CloudwatchEventBus {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dead_letter_config` after provisioning.\n"]
+    pub fn dead_letter_config(&self) -> terrars::ListRef<CloudwatchEventBus_DeadLetterConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dead_letter_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
+    pub fn log_config(&self) -> terrars::ListRef<CloudwatchEventBus_LogConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 }
 
@@ -235,17 +325,23 @@ impl BuildCloudwatchEventBus {
         let out = CloudwatchEventBus(std::rc::Rc::new(CloudwatchEventBus_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudwatchEventBusData {
+            data: std::cell::RefCell::new(CloudwatchEventBusData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                description: core::default::Default::default(),
                 event_source_name: core::default::Default::default(),
                 id: core::default::Default::default(),
+                kms_key_identifier: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                dead_letter_config: core::default::Default::default(),
+                log_config: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -281,6 +377,11 @@ impl CloudwatchEventBusRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `event_source_name` after provisioning.\n"]
     pub fn event_source_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_source_name", self.extract_ref()))
@@ -291,9 +392,20 @@ impl CloudwatchEventBusRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_identifier` after provisioning.\n"]
+    pub fn kms_key_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_identifier", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -304,5 +416,159 @@ impl CloudwatchEventBusRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dead_letter_config` after provisioning.\n"]
+    pub fn dead_letter_config(&self) -> terrars::ListRef<CloudwatchEventBus_DeadLetterConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dead_letter_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
+    pub fn log_config(&self) -> terrars::ListRef<CloudwatchEventBus_LogConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CloudwatchEventBusDynamic {
+    dead_letter_config: std::option::Option<terrars::DynamicBlock<CloudwatchEventBus_DeadLetterConfig>>,
+    log_config: std::option::Option<terrars::DynamicBlock<CloudwatchEventBus_LogConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchEventBus_DeadLetterConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    arn: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl CloudwatchEventBus_DeadLetterConfig {
+    #[doc = "Set the field `arn`.\n"]
+    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.arn = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchEventBus_DeadLetterConfig {
+    type O = terrars::BlockAssignable<CloudwatchEventBus_DeadLetterConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchEventBus_DeadLetterConfig {}
+
+impl BuildCloudwatchEventBus_DeadLetterConfig {
+    pub fn build(self) -> CloudwatchEventBus_DeadLetterConfig {
+        CloudwatchEventBus_DeadLetterConfig { arn: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchEventBus_DeadLetterConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchEventBus_DeadLetterConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventBus_DeadLetterConfigRef {
+        CloudwatchEventBus_DeadLetterConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchEventBus_DeadLetterConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchEventBus_LogConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_detail: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    level: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl CloudwatchEventBus_LogConfig {
+    #[doc = "Set the field `include_detail`.\n"]
+    pub fn set_include_detail(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.include_detail = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `level`.\n"]
+    pub fn set_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.level = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchEventBus_LogConfig {
+    type O = terrars::BlockAssignable<CloudwatchEventBus_LogConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchEventBus_LogConfig {}
+
+impl BuildCloudwatchEventBus_LogConfig {
+    pub fn build(self) -> CloudwatchEventBus_LogConfig {
+        CloudwatchEventBus_LogConfig {
+            include_detail: core::default::Default::default(),
+            level: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchEventBus_LogConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchEventBus_LogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventBus_LogConfigRef {
+        CloudwatchEventBus_LogConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchEventBus_LogConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `include_detail` after provisioning.\n"]
+    pub fn include_detail(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_detail", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `level` after provisioning.\n"]
+    pub fn level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.level", self.base))
     }
 }

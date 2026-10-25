@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FsxOntapStorageVirtualMachineData {
+struct FsxOntapStorageVirtualMachineData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct FsxOntapStorageVirtualMachineData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     root_volume_security_style: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     svm_admin_password: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -33,16 +37,16 @@ struct FsxOntapStorageVirtualMachineData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     active_directory_configuration: std
     ::option
-    ::Option<std::vec::Vec<FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl>>,
+    ::Option<std::vec::Vec<FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FsxOntapStorageVirtualMachineTimeoutsEl>,
+    timeouts: std::option::Option<FsxOntapStorageVirtualMachine_Timeouts>,
     dynamic: FsxOntapStorageVirtualMachineDynamic,
 }
 
 struct FsxOntapStorageVirtualMachine_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FsxOntapStorageVirtualMachineData>,
+    data: std::cell::RefCell<FsxOntapStorageVirtualMachineData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl FsxOntapStorageVirtualMachine {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `root_volume_security_style`.\n"]
     pub fn set_root_volume_security_style(
         self,
@@ -189,7 +200,7 @@ impl FsxOntapStorageVirtualMachine {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,7 +214,7 @@ impl FsxOntapStorageVirtualMachine {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FsxOntapStorageVirtualMachineTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FsxOntapStorageVirtualMachine_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -214,7 +225,7 @@ impl FsxOntapStorageVirtualMachine {
     }
 
     #[doc = "Get a reference to the value of field `endpoints` after provisioning.\n"]
-    pub fn endpoints(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachineEndpointsElRef> {
+    pub fn endpoints(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachine_EndpointsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoints", self.extract_ref()))
     }
 
@@ -231,6 +242,12 @@ impl FsxOntapStorageVirtualMachine {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_volume_security_style` after provisioning.\n"]
@@ -266,7 +283,7 @@ impl FsxOntapStorageVirtualMachine {
     #[doc = "Get a reference to the value of field `active_directory_configuration` after provisioning.\n"]
     pub fn active_directory_configuration(
         &self,
-    ) -> terrars::ListRef<FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElRef> {
+    ) -> terrars::ListRef<FsxOntapStorageVirtualMachine_ActiveDirectoryConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.active_directory_configuration", self.extract_ref()),
@@ -274,8 +291,8 @@ impl FsxOntapStorageVirtualMachine {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxOntapStorageVirtualMachineTimeoutsElRef {
-        FsxOntapStorageVirtualMachineTimeoutsElRef::new(
+    pub fn timeouts(&self) -> FsxOntapStorageVirtualMachine_TimeoutsRef {
+        FsxOntapStorageVirtualMachine_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -326,7 +343,7 @@ impl BuildFsxOntapStorageVirtualMachine {
         let out = FsxOntapStorageVirtualMachine(std::rc::Rc::new(FsxOntapStorageVirtualMachine_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FsxOntapStorageVirtualMachineData {
+            data: std::cell::RefCell::new(FsxOntapStorageVirtualMachineData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -335,6 +352,7 @@ impl BuildFsxOntapStorageVirtualMachine {
                 file_system_id: self.file_system_id,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 root_volume_security_style: core::default::Default::default(),
                 svm_admin_password: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -378,7 +396,7 @@ impl FsxOntapStorageVirtualMachineRef {
     }
 
     #[doc = "Get a reference to the value of field `endpoints` after provisioning.\n"]
-    pub fn endpoints(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachineEndpointsElRef> {
+    pub fn endpoints(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachine_EndpointsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoints", self.extract_ref()))
     }
 
@@ -395,6 +413,12 @@ impl FsxOntapStorageVirtualMachineRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_volume_security_style` after provisioning.\n"]
@@ -430,7 +454,7 @@ impl FsxOntapStorageVirtualMachineRef {
     #[doc = "Get a reference to the value of field `active_directory_configuration` after provisioning.\n"]
     pub fn active_directory_configuration(
         &self,
-    ) -> terrars::ListRef<FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElRef> {
+    ) -> terrars::ListRef<FsxOntapStorageVirtualMachine_ActiveDirectoryConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.active_directory_configuration", self.extract_ref()),
@@ -438,23 +462,30 @@ impl FsxOntapStorageVirtualMachineRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxOntapStorageVirtualMachineTimeoutsElRef {
-        FsxOntapStorageVirtualMachineTimeoutsElRef::new(
+    pub fn timeouts(&self) -> FsxOntapStorageVirtualMachine_TimeoutsRef {
+        FsxOntapStorageVirtualMachine_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct FsxOntapStorageVirtualMachineDynamic {
+    active_directory_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct FsxOntapStorageVirtualMachineEndpointsElIscsiEl {
+pub struct FsxOntapStorageVirtualMachine_Endpoints_Iscsi {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_addresses: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsElIscsiEl {
+impl FsxOntapStorageVirtualMachine_Endpoints_Iscsi {
     #[doc = "Set the field `dns_name`.\n"]
     pub fn set_dns_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dns_name = std::option::Option::Some(v.into());
@@ -471,8 +502,8 @@ impl FsxOntapStorageVirtualMachineEndpointsElIscsiEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsElIscsiEl {
-    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachineEndpointsElIscsiEl>;
+impl terrars::ToListMappable for FsxOntapStorageVirtualMachine_Endpoints_Iscsi {
+    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachine_Endpoints_Iscsi>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -483,35 +514,37 @@ impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsElIscsiEl
     }
 }
 
-pub struct BuildFsxOntapStorageVirtualMachineEndpointsElIscsiEl {}
+pub struct BuildFsxOntapStorageVirtualMachine_Endpoints_Iscsi {}
 
-impl BuildFsxOntapStorageVirtualMachineEndpointsElIscsiEl {
-    pub fn build(self) -> FsxOntapStorageVirtualMachineEndpointsElIscsiEl {
-        FsxOntapStorageVirtualMachineEndpointsElIscsiEl {
+impl BuildFsxOntapStorageVirtualMachine_Endpoints_Iscsi {
+    pub fn build(self) -> FsxOntapStorageVirtualMachine_Endpoints_Iscsi {
+        FsxOntapStorageVirtualMachine_Endpoints_Iscsi {
             dns_name: core::default::Default::default(),
             ip_addresses: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOntapStorageVirtualMachineEndpointsElIscsiElRef {
+#[allow(dead_code)]
+pub struct FsxOntapStorageVirtualMachine_Endpoints_IscsiRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapStorageVirtualMachineEndpointsElIscsiElRef {
+impl terrars::Ref for FsxOntapStorageVirtualMachine_Endpoints_IscsiRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOntapStorageVirtualMachineEndpointsElIscsiElRef {
-        FsxOntapStorageVirtualMachineEndpointsElIscsiElRef {
+    ) -> FsxOntapStorageVirtualMachine_Endpoints_IscsiRef {
+        FsxOntapStorageVirtualMachine_Endpoints_IscsiRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsElIscsiElRef {
+impl FsxOntapStorageVirtualMachine_Endpoints_IscsiRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -528,14 +561,14 @@ impl FsxOntapStorageVirtualMachineEndpointsElIscsiElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapStorageVirtualMachineEndpointsElManagementEl {
+pub struct FsxOntapStorageVirtualMachine_Endpoints_Management {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_addresses: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsElManagementEl {
+impl FsxOntapStorageVirtualMachine_Endpoints_Management {
     #[doc = "Set the field `dns_name`.\n"]
     pub fn set_dns_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dns_name = std::option::Option::Some(v.into());
@@ -552,8 +585,8 @@ impl FsxOntapStorageVirtualMachineEndpointsElManagementEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsElManagementEl {
-    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachineEndpointsElManagementEl>;
+impl terrars::ToListMappable for FsxOntapStorageVirtualMachine_Endpoints_Management {
+    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachine_Endpoints_Management>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -564,35 +597,37 @@ impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsElManagem
     }
 }
 
-pub struct BuildFsxOntapStorageVirtualMachineEndpointsElManagementEl {}
+pub struct BuildFsxOntapStorageVirtualMachine_Endpoints_Management {}
 
-impl BuildFsxOntapStorageVirtualMachineEndpointsElManagementEl {
-    pub fn build(self) -> FsxOntapStorageVirtualMachineEndpointsElManagementEl {
-        FsxOntapStorageVirtualMachineEndpointsElManagementEl {
+impl BuildFsxOntapStorageVirtualMachine_Endpoints_Management {
+    pub fn build(self) -> FsxOntapStorageVirtualMachine_Endpoints_Management {
+        FsxOntapStorageVirtualMachine_Endpoints_Management {
             dns_name: core::default::Default::default(),
             ip_addresses: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOntapStorageVirtualMachineEndpointsElManagementElRef {
+#[allow(dead_code)]
+pub struct FsxOntapStorageVirtualMachine_Endpoints_ManagementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapStorageVirtualMachineEndpointsElManagementElRef {
+impl terrars::Ref for FsxOntapStorageVirtualMachine_Endpoints_ManagementRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOntapStorageVirtualMachineEndpointsElManagementElRef {
-        FsxOntapStorageVirtualMachineEndpointsElManagementElRef {
+    ) -> FsxOntapStorageVirtualMachine_Endpoints_ManagementRef {
+        FsxOntapStorageVirtualMachine_Endpoints_ManagementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsElManagementElRef {
+impl FsxOntapStorageVirtualMachine_Endpoints_ManagementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -609,14 +644,14 @@ impl FsxOntapStorageVirtualMachineEndpointsElManagementElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapStorageVirtualMachineEndpointsElNfsEl {
+pub struct FsxOntapStorageVirtualMachine_Endpoints_Nfs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_addresses: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsElNfsEl {
+impl FsxOntapStorageVirtualMachine_Endpoints_Nfs {
     #[doc = "Set the field `dns_name`.\n"]
     pub fn set_dns_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dns_name = std::option::Option::Some(v.into());
@@ -633,8 +668,8 @@ impl FsxOntapStorageVirtualMachineEndpointsElNfsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsElNfsEl {
-    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachineEndpointsElNfsEl>;
+impl terrars::ToListMappable for FsxOntapStorageVirtualMachine_Endpoints_Nfs {
+    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachine_Endpoints_Nfs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -645,35 +680,37 @@ impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsElNfsEl {
     }
 }
 
-pub struct BuildFsxOntapStorageVirtualMachineEndpointsElNfsEl {}
+pub struct BuildFsxOntapStorageVirtualMachine_Endpoints_Nfs {}
 
-impl BuildFsxOntapStorageVirtualMachineEndpointsElNfsEl {
-    pub fn build(self) -> FsxOntapStorageVirtualMachineEndpointsElNfsEl {
-        FsxOntapStorageVirtualMachineEndpointsElNfsEl {
+impl BuildFsxOntapStorageVirtualMachine_Endpoints_Nfs {
+    pub fn build(self) -> FsxOntapStorageVirtualMachine_Endpoints_Nfs {
+        FsxOntapStorageVirtualMachine_Endpoints_Nfs {
             dns_name: core::default::Default::default(),
             ip_addresses: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOntapStorageVirtualMachineEndpointsElNfsElRef {
+#[allow(dead_code)]
+pub struct FsxOntapStorageVirtualMachine_Endpoints_NfsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapStorageVirtualMachineEndpointsElNfsElRef {
+impl terrars::Ref for FsxOntapStorageVirtualMachine_Endpoints_NfsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOntapStorageVirtualMachineEndpointsElNfsElRef {
-        FsxOntapStorageVirtualMachineEndpointsElNfsElRef {
+    ) -> FsxOntapStorageVirtualMachine_Endpoints_NfsRef {
+        FsxOntapStorageVirtualMachine_Endpoints_NfsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsElNfsElRef {
+impl FsxOntapStorageVirtualMachine_Endpoints_NfsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -690,14 +727,14 @@ impl FsxOntapStorageVirtualMachineEndpointsElNfsElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapStorageVirtualMachineEndpointsElSmbEl {
+pub struct FsxOntapStorageVirtualMachine_Endpoints_Smb {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_addresses: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsElSmbEl {
+impl FsxOntapStorageVirtualMachine_Endpoints_Smb {
     #[doc = "Set the field `dns_name`.\n"]
     pub fn set_dns_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dns_name = std::option::Option::Some(v.into());
@@ -714,8 +751,8 @@ impl FsxOntapStorageVirtualMachineEndpointsElSmbEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsElSmbEl {
-    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachineEndpointsElSmbEl>;
+impl terrars::ToListMappable for FsxOntapStorageVirtualMachine_Endpoints_Smb {
+    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachine_Endpoints_Smb>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -726,35 +763,37 @@ impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsElSmbEl {
     }
 }
 
-pub struct BuildFsxOntapStorageVirtualMachineEndpointsElSmbEl {}
+pub struct BuildFsxOntapStorageVirtualMachine_Endpoints_Smb {}
 
-impl BuildFsxOntapStorageVirtualMachineEndpointsElSmbEl {
-    pub fn build(self) -> FsxOntapStorageVirtualMachineEndpointsElSmbEl {
-        FsxOntapStorageVirtualMachineEndpointsElSmbEl {
+impl BuildFsxOntapStorageVirtualMachine_Endpoints_Smb {
+    pub fn build(self) -> FsxOntapStorageVirtualMachine_Endpoints_Smb {
+        FsxOntapStorageVirtualMachine_Endpoints_Smb {
             dns_name: core::default::Default::default(),
             ip_addresses: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOntapStorageVirtualMachineEndpointsElSmbElRef {
+#[allow(dead_code)]
+pub struct FsxOntapStorageVirtualMachine_Endpoints_SmbRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapStorageVirtualMachineEndpointsElSmbElRef {
+impl terrars::Ref for FsxOntapStorageVirtualMachine_Endpoints_SmbRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOntapStorageVirtualMachineEndpointsElSmbElRef {
-        FsxOntapStorageVirtualMachineEndpointsElSmbElRef {
+    ) -> FsxOntapStorageVirtualMachine_Endpoints_SmbRef {
+        FsxOntapStorageVirtualMachine_Endpoints_SmbRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsElSmbElRef {
+impl FsxOntapStorageVirtualMachine_Endpoints_SmbRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -771,22 +810,22 @@ impl FsxOntapStorageVirtualMachineEndpointsElSmbElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapStorageVirtualMachineEndpointsEl {
+pub struct FsxOntapStorageVirtualMachine_Endpoints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    iscsi: std::option::Option<terrars::ListField<FsxOntapStorageVirtualMachineEndpointsElIscsiEl>>,
+    iscsi: std::option::Option<terrars::ListField<FsxOntapStorageVirtualMachine_Endpoints_Iscsi>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    management: std::option::Option<terrars::ListField<FsxOntapStorageVirtualMachineEndpointsElManagementEl>>,
+    management: std::option::Option<terrars::ListField<FsxOntapStorageVirtualMachine_Endpoints_Management>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nfs: std::option::Option<terrars::ListField<FsxOntapStorageVirtualMachineEndpointsElNfsEl>>,
+    nfs: std::option::Option<terrars::ListField<FsxOntapStorageVirtualMachine_Endpoints_Nfs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    smb: std::option::Option<terrars::ListField<FsxOntapStorageVirtualMachineEndpointsElSmbEl>>,
+    smb: std::option::Option<terrars::ListField<FsxOntapStorageVirtualMachine_Endpoints_Smb>>,
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsEl {
+impl FsxOntapStorageVirtualMachine_Endpoints {
     #[doc = "Set the field `iscsi`.\n"]
     pub fn set_iscsi(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<FsxOntapStorageVirtualMachineEndpointsElIscsiEl>>,
+        v: impl std::convert::Into<terrars::ListField<FsxOntapStorageVirtualMachine_Endpoints_Iscsi>>,
     ) -> Self {
         self.iscsi = std::option::Option::Some(v.into());
         self
@@ -795,7 +834,7 @@ impl FsxOntapStorageVirtualMachineEndpointsEl {
     #[doc = "Set the field `management`.\n"]
     pub fn set_management(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<FsxOntapStorageVirtualMachineEndpointsElManagementEl>>,
+        v: impl std::convert::Into<terrars::ListField<FsxOntapStorageVirtualMachine_Endpoints_Management>>,
     ) -> Self {
         self.management = std::option::Option::Some(v.into());
         self
@@ -804,7 +843,7 @@ impl FsxOntapStorageVirtualMachineEndpointsEl {
     #[doc = "Set the field `nfs`.\n"]
     pub fn set_nfs(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<FsxOntapStorageVirtualMachineEndpointsElNfsEl>>,
+        v: impl std::convert::Into<terrars::ListField<FsxOntapStorageVirtualMachine_Endpoints_Nfs>>,
     ) -> Self {
         self.nfs = std::option::Option::Some(v.into());
         self
@@ -813,15 +852,15 @@ impl FsxOntapStorageVirtualMachineEndpointsEl {
     #[doc = "Set the field `smb`.\n"]
     pub fn set_smb(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<FsxOntapStorageVirtualMachineEndpointsElSmbEl>>,
+        v: impl std::convert::Into<terrars::ListField<FsxOntapStorageVirtualMachine_Endpoints_Smb>>,
     ) -> Self {
         self.smb = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsEl {
-    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachineEndpointsEl>;
+impl terrars::ToListMappable for FsxOntapStorageVirtualMachine_Endpoints {
+    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachine_Endpoints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -832,11 +871,11 @@ impl terrars::ToListMappable for FsxOntapStorageVirtualMachineEndpointsEl {
     }
 }
 
-pub struct BuildFsxOntapStorageVirtualMachineEndpointsEl {}
+pub struct BuildFsxOntapStorageVirtualMachine_Endpoints {}
 
-impl BuildFsxOntapStorageVirtualMachineEndpointsEl {
-    pub fn build(self) -> FsxOntapStorageVirtualMachineEndpointsEl {
-        FsxOntapStorageVirtualMachineEndpointsEl {
+impl BuildFsxOntapStorageVirtualMachine_Endpoints {
+    pub fn build(self) -> FsxOntapStorageVirtualMachine_Endpoints {
+        FsxOntapStorageVirtualMachine_Endpoints {
             iscsi: core::default::Default::default(),
             management: core::default::Default::default(),
             nfs: core::default::Default::default(),
@@ -845,48 +884,50 @@ impl BuildFsxOntapStorageVirtualMachineEndpointsEl {
     }
 }
 
-pub struct FsxOntapStorageVirtualMachineEndpointsElRef {
+#[allow(dead_code)]
+pub struct FsxOntapStorageVirtualMachine_EndpointsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapStorageVirtualMachineEndpointsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapStorageVirtualMachineEndpointsElRef {
-        FsxOntapStorageVirtualMachineEndpointsElRef {
+impl terrars::Ref for FsxOntapStorageVirtualMachine_EndpointsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapStorageVirtualMachine_EndpointsRef {
+        FsxOntapStorageVirtualMachine_EndpointsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapStorageVirtualMachineEndpointsElRef {
+impl FsxOntapStorageVirtualMachine_EndpointsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `iscsi` after provisioning.\n"]
-    pub fn iscsi(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachineEndpointsElIscsiElRef> {
+    pub fn iscsi(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachine_Endpoints_IscsiRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.iscsi", self.base))
     }
 
     #[doc = "Get a reference to the value of field `management` after provisioning.\n"]
-    pub fn management(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachineEndpointsElManagementElRef> {
+    pub fn management(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachine_Endpoints_ManagementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.management", self.base))
     }
 
     #[doc = "Get a reference to the value of field `nfs` after provisioning.\n"]
-    pub fn nfs(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachineEndpointsElNfsElRef> {
+    pub fn nfs(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachine_Endpoints_NfsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nfs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `smb` after provisioning.\n"]
-    pub fn smb(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachineEndpointsElSmbElRef> {
+    pub fn smb(&self) -> terrars::ListRef<FsxOntapStorageVirtualMachine_Endpoints_SmbRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.smb", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl {
+pub struct FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration {
     dns_ips: terrars::SetField<terrars::PrimField<std::string::String>>,
     domain_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -897,7 +938,7 @@ pub struct FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManage
     username: terrars::PrimField<std::string::String>,
 }
 
-impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl {
+impl FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration {
     #[doc = "Set the field `file_system_administrators_group`.\n"]
     pub fn set_file_system_administrators_group(
         mut self,
@@ -918,11 +959,11 @@ impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiv
 }
 
 impl terrars
-::ToListMappable for FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl {
+::ToListMappable for FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration {
     type O =
         terrars
         ::BlockAssignable<
-            FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl,
+            FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -934,7 +975,7 @@ impl terrars
     }
 }
 
-pub struct BuildFsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl {
+pub struct BuildFsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration {
     #[doc = ""]
     pub dns_ips: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
@@ -945,11 +986,11 @@ pub struct BuildFsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfM
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl {
+impl BuildFsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration {
     pub fn build(
         self,
-    ) -> FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl {
-        FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl {
+    ) -> FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration {
+        FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration {
             dns_ips: self.dns_ips,
             domain_name: self.domain_name,
             file_system_administrators_group: core::default::Default::default(),
@@ -960,25 +1001,27 @@ impl BuildFsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManaged
     }
 }
 
-pub struct FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationElRef {
+::Ref for FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationElRef {
-        FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationElRef {
+    ) -> FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfigurationRef {
+        FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationElRef {
+impl FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1018,19 +1061,19 @@ impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiv
 }
 
 #[derive(Serialize, Default)]
-struct FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElDynamic {
+struct FsxOntapStorageVirtualMachine_ActiveDirectoryConfigurationDynamic {
     self_managed_active_directory_configuration: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl,
+            FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
+pub struct FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     netbios_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1039,12 +1082,12 @@ pub struct FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
     ::Option<
         std
         ::vec
-        ::Vec<FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl>,
+        ::Vec<FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration>,
     >,
-    dynamic: FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElDynamic,
+    dynamic: FsxOntapStorageVirtualMachine_ActiveDirectoryConfigurationDynamic,
 }
 
-impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
+impl FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration {
     #[doc = "Set the field `netbios_name`.\n"]
     pub fn set_netbios_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.netbios_name = std::option::Option::Some(v.into());
@@ -1062,7 +1105,7 @@ impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationEl,
+                            FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -1078,8 +1121,8 @@ impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
-    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl>;
+impl terrars::ToListMappable for FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration {
+    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1090,11 +1133,11 @@ impl terrars::ToListMappable for FsxOntapStorageVirtualMachineActiveDirectoryCon
     }
 }
 
-pub struct BuildFsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {}
+pub struct BuildFsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration {}
 
-impl BuildFsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
-    pub fn build(self) -> FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
-        FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
+impl BuildFsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration {
+    pub fn build(self) -> FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration {
+        FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration {
             netbios_name: core::default::Default::default(),
             self_managed_active_directory_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1102,24 +1145,26 @@ impl BuildFsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl {
     }
 }
 
-pub struct FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxOntapStorageVirtualMachine_ActiveDirectoryConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElRef {
+impl terrars::Ref for FsxOntapStorageVirtualMachine_ActiveDirectoryConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElRef {
-        FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElRef {
+    ) -> FsxOntapStorageVirtualMachine_ActiveDirectoryConfigurationRef {
+        FsxOntapStorageVirtualMachine_ActiveDirectoryConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElRef {
+impl FsxOntapStorageVirtualMachine_ActiveDirectoryConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1133,9 +1178,7 @@ impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElRef {
     pub fn self_managed_active_directory_configuration(
         &self,
     ) -> terrars
-    ::ListRef<
-        FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElSelfManagedActiveDirectoryConfigurationElRef,
-    > {
+    ::ListRef<FsxOntapStorageVirtualMachine_ActiveDirectoryConfiguration_SelfManagedActiveDirectoryConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.self_managed_active_directory_configuration", self.base),
@@ -1144,7 +1187,7 @@ impl FsxOntapStorageVirtualMachineActiveDirectoryConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapStorageVirtualMachineTimeoutsEl {
+pub struct FsxOntapStorageVirtualMachine_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1153,7 +1196,7 @@ pub struct FsxOntapStorageVirtualMachineTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxOntapStorageVirtualMachineTimeoutsEl {
+impl FsxOntapStorageVirtualMachine_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1173,8 +1216,8 @@ impl FsxOntapStorageVirtualMachineTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapStorageVirtualMachineTimeoutsEl {
-    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachineTimeoutsEl>;
+impl terrars::ToListMappable for FsxOntapStorageVirtualMachine_Timeouts {
+    type O = terrars::BlockAssignable<FsxOntapStorageVirtualMachine_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1185,11 +1228,11 @@ impl terrars::ToListMappable for FsxOntapStorageVirtualMachineTimeoutsEl {
     }
 }
 
-pub struct BuildFsxOntapStorageVirtualMachineTimeoutsEl {}
+pub struct BuildFsxOntapStorageVirtualMachine_Timeouts {}
 
-impl BuildFsxOntapStorageVirtualMachineTimeoutsEl {
-    pub fn build(self) -> FsxOntapStorageVirtualMachineTimeoutsEl {
-        FsxOntapStorageVirtualMachineTimeoutsEl {
+impl BuildFsxOntapStorageVirtualMachine_Timeouts {
+    pub fn build(self) -> FsxOntapStorageVirtualMachine_Timeouts {
+        FsxOntapStorageVirtualMachine_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1197,21 +1240,23 @@ impl BuildFsxOntapStorageVirtualMachineTimeoutsEl {
     }
 }
 
-pub struct FsxOntapStorageVirtualMachineTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FsxOntapStorageVirtualMachine_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapStorageVirtualMachineTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapStorageVirtualMachineTimeoutsElRef {
-        FsxOntapStorageVirtualMachineTimeoutsElRef {
+impl terrars::Ref for FsxOntapStorageVirtualMachine_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapStorageVirtualMachine_TimeoutsRef {
+        FsxOntapStorageVirtualMachine_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapStorageVirtualMachineTimeoutsElRef {
+impl FsxOntapStorageVirtualMachine_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1230,11 +1275,4 @@ impl FsxOntapStorageVirtualMachineTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FsxOntapStorageVirtualMachineDynamic {
-    active_directory_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<FsxOntapStorageVirtualMachineActiveDirectoryConfigurationEl>>,
 }

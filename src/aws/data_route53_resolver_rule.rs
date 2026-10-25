@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataRoute53ResolverRuleData {
+struct DataRoute53ResolverRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,6 +25,8 @@ struct DataRoute53ResolverRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resolver_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resolver_rule_id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -35,7 +39,7 @@ struct DataRoute53ResolverRuleData {
 struct DataRoute53ResolverRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRoute53ResolverRuleData>,
+    data: std::cell::RefCell<DataRoute53ResolverRuleData_>,
 }
 
 #[derive(Clone)]
@@ -98,6 +102,13 @@ impl DataRoute53ResolverRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resolver_endpoint_id`.\n"]
     pub fn set_resolver_endpoint_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().resolver_endpoint_id = std::option::Option::Some(v.into());
@@ -150,6 +161,12 @@ impl DataRoute53ResolverRule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resolver_endpoint_id` after provisioning.\n"]
     pub fn resolver_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolver_endpoint_id", self.extract_ref()))
@@ -173,6 +190,11 @@ impl DataRoute53ResolverRule {
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_ips` after provisioning.\n"]
+    pub fn target_ips(&self) -> terrars::SetRef<DataRoute53ResolverRule_TargetIpsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.target_ips", self.extract_ref()))
     }
 }
 
@@ -216,7 +238,7 @@ impl BuildDataRoute53ResolverRule {
         let out = DataRoute53ResolverRule(std::rc::Rc::new(DataRoute53ResolverRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRoute53ResolverRuleData {
+            data: std::cell::RefCell::new(DataRoute53ResolverRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -224,6 +246,7 @@ impl BuildDataRoute53ResolverRule {
                 domain_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resolver_endpoint_id: core::default::Default::default(),
                 resolver_rule_id: core::default::Default::default(),
                 rule_type: core::default::Default::default(),
@@ -283,6 +306,12 @@ impl DataRoute53ResolverRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resolver_endpoint_id` after provisioning.\n"]
     pub fn resolver_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolver_endpoint_id", self.extract_ref()))
@@ -306,5 +335,115 @@ impl DataRoute53ResolverRuleRef {
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_ips` after provisioning.\n"]
+    pub fn target_ips(&self) -> terrars::SetRef<DataRoute53ResolverRule_TargetIpsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.target_ips", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataRoute53ResolverRule_TargetIps {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataRoute53ResolverRule_TargetIps {
+    #[doc = "Set the field `ip`.\n"]
+    pub fn set_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv6`.\n"]
+    pub fn set_ipv6(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6 = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `port`.\n"]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `protocol`.\n"]
+    pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.protocol = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataRoute53ResolverRule_TargetIps {
+    type O = terrars::BlockAssignable<DataRoute53ResolverRule_TargetIps>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataRoute53ResolverRule_TargetIps {}
+
+impl BuildDataRoute53ResolverRule_TargetIps {
+    pub fn build(self) -> DataRoute53ResolverRule_TargetIps {
+        DataRoute53ResolverRule_TargetIps {
+            ip: core::default::Default::default(),
+            ipv6: core::default::Default::default(),
+            port: core::default::Default::default(),
+            protocol: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataRoute53ResolverRule_TargetIpsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataRoute53ResolverRule_TargetIpsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRoute53ResolverRule_TargetIpsRef {
+        DataRoute53ResolverRule_TargetIpsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataRoute53ResolverRule_TargetIpsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ip` after provisioning.\n"]
+    pub fn ip(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6` after provisioning.\n"]
+    pub fn ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
+    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
     }
 }

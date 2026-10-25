@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DocdbClusterInstanceData {
+struct DocdbClusterInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,7 +28,11 @@ struct DocdbClusterInstanceData {
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ca_cert_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    certificate_rotation_restart: std::option::Option<terrars::PrimField<std::string::String>>,
     cluster_identifier: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    copy_tags_to_snapshot: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_performance_insights: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -45,17 +51,19 @@ struct DocdbClusterInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     promotion_tier: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DocdbClusterInstanceTimeoutsEl>,
+    timeouts: std::option::Option<DocdbClusterInstance_Timeouts>,
 }
 
 struct DocdbClusterInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DocdbClusterInstanceData>,
+    data: std::cell::RefCell<DocdbClusterInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -179,6 +187,21 @@ impl DocdbClusterInstance {
         self
     }
 
+    #[doc = "Set the field `certificate_rotation_restart`.\n"]
+    pub fn set_certificate_rotation_restart(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().certificate_rotation_restart = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `copy_tags_to_snapshot`.\n"]
+    pub fn set_copy_tags_to_snapshot(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().copy_tags_to_snapshot = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enable_performance_insights`.\n"]
     pub fn set_enable_performance_insights(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enable_performance_insights = std::option::Option::Some(v.into());
@@ -233,6 +256,13 @@ impl DocdbClusterInstance {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -252,7 +282,7 @@ impl DocdbClusterInstance {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DocdbClusterInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DocdbClusterInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -282,9 +312,19 @@ impl DocdbClusterInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_cert_identifier", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `certificate_rotation_restart` after provisioning.\n"]
+    pub fn certificate_rotation_restart(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_rotation_restart", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cluster_identifier` after provisioning.\n"]
     pub fn cluster_identifier(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_identifier", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `copy_tags_to_snapshot` after provisioning.\n"]
+    pub fn copy_tags_to_snapshot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.copy_tags_to_snapshot", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `db_subnet_group_name` after provisioning.\n"]
@@ -375,6 +415,12 @@ impl DocdbClusterInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `storage_encrypted` after provisioning.\n"]
     pub fn storage_encrypted(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_encrypted", self.extract_ref()))
@@ -396,8 +442,8 @@ impl DocdbClusterInstance {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DocdbClusterInstanceTimeoutsElRef {
-        DocdbClusterInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DocdbClusterInstance_TimeoutsRef {
+        DocdbClusterInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -445,7 +491,7 @@ impl BuildDocdbClusterInstance {
         let out = DocdbClusterInstance(std::rc::Rc::new(DocdbClusterInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DocdbClusterInstanceData {
+            data: std::cell::RefCell::new(DocdbClusterInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -455,7 +501,9 @@ impl BuildDocdbClusterInstance {
                 auto_minor_version_upgrade: core::default::Default::default(),
                 availability_zone: core::default::Default::default(),
                 ca_cert_identifier: core::default::Default::default(),
+                certificate_rotation_restart: core::default::Default::default(),
                 cluster_identifier: self.cluster_identifier,
+                copy_tags_to_snapshot: core::default::Default::default(),
                 enable_performance_insights: core::default::Default::default(),
                 engine: core::default::Default::default(),
                 id: core::default::Default::default(),
@@ -465,6 +513,7 @@ impl BuildDocdbClusterInstance {
                 performance_insights_kms_key_id: core::default::Default::default(),
                 preferred_maintenance_window: core::default::Default::default(),
                 promotion_tier: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -523,9 +572,19 @@ impl DocdbClusterInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_cert_identifier", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `certificate_rotation_restart` after provisioning.\n"]
+    pub fn certificate_rotation_restart(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_rotation_restart", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cluster_identifier` after provisioning.\n"]
     pub fn cluster_identifier(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_identifier", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `copy_tags_to_snapshot` after provisioning.\n"]
+    pub fn copy_tags_to_snapshot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.copy_tags_to_snapshot", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `db_subnet_group_name` after provisioning.\n"]
@@ -616,6 +675,12 @@ impl DocdbClusterInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `storage_encrypted` after provisioning.\n"]
     pub fn storage_encrypted(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_encrypted", self.extract_ref()))
@@ -637,13 +702,13 @@ impl DocdbClusterInstanceRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DocdbClusterInstanceTimeoutsElRef {
-        DocdbClusterInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DocdbClusterInstance_TimeoutsRef {
+        DocdbClusterInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DocdbClusterInstanceTimeoutsEl {
+pub struct DocdbClusterInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -652,7 +717,7 @@ pub struct DocdbClusterInstanceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DocdbClusterInstanceTimeoutsEl {
+impl DocdbClusterInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -672,8 +737,8 @@ impl DocdbClusterInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DocdbClusterInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<DocdbClusterInstanceTimeoutsEl>;
+impl terrars::ToListMappable for DocdbClusterInstance_Timeouts {
+    type O = terrars::BlockAssignable<DocdbClusterInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -684,11 +749,11 @@ impl terrars::ToListMappable for DocdbClusterInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildDocdbClusterInstanceTimeoutsEl {}
+pub struct BuildDocdbClusterInstance_Timeouts {}
 
-impl BuildDocdbClusterInstanceTimeoutsEl {
-    pub fn build(self) -> DocdbClusterInstanceTimeoutsEl {
-        DocdbClusterInstanceTimeoutsEl {
+impl BuildDocdbClusterInstance_Timeouts {
+    pub fn build(self) -> DocdbClusterInstance_Timeouts {
+        DocdbClusterInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -696,21 +761,23 @@ impl BuildDocdbClusterInstanceTimeoutsEl {
     }
 }
 
-pub struct DocdbClusterInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DocdbClusterInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DocdbClusterInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DocdbClusterInstanceTimeoutsElRef {
-        DocdbClusterInstanceTimeoutsElRef {
+impl terrars::Ref for DocdbClusterInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DocdbClusterInstance_TimeoutsRef {
+        DocdbClusterInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DocdbClusterInstanceTimeoutsElRef {
+impl DocdbClusterInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

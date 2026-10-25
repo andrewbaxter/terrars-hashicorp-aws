@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ChimeVoiceConnectorTerminationData {
+struct ChimeVoiceConnectorTerminationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,13 +30,15 @@ struct ChimeVoiceConnectorTerminationData {
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     voice_connector_id: terrars::PrimField<std::string::String>,
 }
 
 struct ChimeVoiceConnectorTermination_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ChimeVoiceConnectorTerminationData>,
+    data: std::cell::RefCell<ChimeVoiceConnectorTerminationData_>,
 }
 
 #[derive(Clone)]
@@ -158,6 +162,13 @@ impl ChimeVoiceConnectorTermination {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `calling_regions` after provisioning.\n"]
     pub fn calling_regions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.calling_regions", self.extract_ref()))
@@ -186,6 +197,12 @@ impl ChimeVoiceConnectorTermination {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `voice_connector_id` after provisioning.\n"]
@@ -240,7 +257,7 @@ impl BuildChimeVoiceConnectorTermination {
         let out = ChimeVoiceConnectorTermination(std::rc::Rc::new(ChimeVoiceConnectorTermination_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ChimeVoiceConnectorTerminationData {
+            data: std::cell::RefCell::new(ChimeVoiceConnectorTerminationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -252,6 +269,7 @@ impl BuildChimeVoiceConnectorTermination {
                 default_phone_number: core::default::Default::default(),
                 disabled: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 voice_connector_id: self.voice_connector_id,
             }),
         }));
@@ -311,6 +329,12 @@ impl ChimeVoiceConnectorTerminationRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `voice_connector_id` after provisioning.\n"]

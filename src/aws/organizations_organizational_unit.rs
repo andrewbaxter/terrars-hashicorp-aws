@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct OrganizationsOrganizationalUnitData {
+struct OrganizationsOrganizationalUnitData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,7 +33,7 @@ struct OrganizationsOrganizationalUnitData {
 struct OrganizationsOrganizationalUnit_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<OrganizationsOrganizationalUnitData>,
+    data: std::cell::RefCell<OrganizationsOrganizationalUnitData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl OrganizationsOrganizationalUnit {
     }
 
     #[doc = "Get a reference to the value of field `accounts` after provisioning.\n"]
-    pub fn accounts(&self) -> terrars::ListRef<OrganizationsOrganizationalUnitAccountsElRef> {
+    pub fn accounts(&self) -> terrars::ListRef<OrganizationsOrganizationalUnit_AccountsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accounts", self.extract_ref()))
     }
 
@@ -235,7 +237,7 @@ impl BuildOrganizationsOrganizationalUnit {
         let out = OrganizationsOrganizationalUnit(std::rc::Rc::new(OrganizationsOrganizationalUnit_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(OrganizationsOrganizationalUnitData {
+            data: std::cell::RefCell::new(OrganizationsOrganizationalUnitData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -277,7 +279,7 @@ impl OrganizationsOrganizationalUnitRef {
     }
 
     #[doc = "Get a reference to the value of field `accounts` after provisioning.\n"]
-    pub fn accounts(&self) -> terrars::ListRef<OrganizationsOrganizationalUnitAccountsElRef> {
+    pub fn accounts(&self) -> terrars::ListRef<OrganizationsOrganizationalUnit_AccountsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accounts", self.extract_ref()))
     }
 
@@ -313,7 +315,7 @@ impl OrganizationsOrganizationalUnitRef {
 }
 
 #[derive(Serialize)]
-pub struct OrganizationsOrganizationalUnitAccountsEl {
+pub struct OrganizationsOrganizationalUnit_Accounts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -324,7 +326,7 @@ pub struct OrganizationsOrganizationalUnitAccountsEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OrganizationsOrganizationalUnitAccountsEl {
+impl OrganizationsOrganizationalUnit_Accounts {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -350,8 +352,8 @@ impl OrganizationsOrganizationalUnitAccountsEl {
     }
 }
 
-impl terrars::ToListMappable for OrganizationsOrganizationalUnitAccountsEl {
-    type O = terrars::BlockAssignable<OrganizationsOrganizationalUnitAccountsEl>;
+impl terrars::ToListMappable for OrganizationsOrganizationalUnit_Accounts {
+    type O = terrars::BlockAssignable<OrganizationsOrganizationalUnit_Accounts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -362,11 +364,11 @@ impl terrars::ToListMappable for OrganizationsOrganizationalUnitAccountsEl {
     }
 }
 
-pub struct BuildOrganizationsOrganizationalUnitAccountsEl {}
+pub struct BuildOrganizationsOrganizationalUnit_Accounts {}
 
-impl BuildOrganizationsOrganizationalUnitAccountsEl {
-    pub fn build(self) -> OrganizationsOrganizationalUnitAccountsEl {
-        OrganizationsOrganizationalUnitAccountsEl {
+impl BuildOrganizationsOrganizationalUnit_Accounts {
+    pub fn build(self) -> OrganizationsOrganizationalUnit_Accounts {
+        OrganizationsOrganizationalUnit_Accounts {
             arn: core::default::Default::default(),
             email: core::default::Default::default(),
             id: core::default::Default::default(),
@@ -375,21 +377,23 @@ impl BuildOrganizationsOrganizationalUnitAccountsEl {
     }
 }
 
-pub struct OrganizationsOrganizationalUnitAccountsElRef {
+#[allow(dead_code)]
+pub struct OrganizationsOrganizationalUnit_AccountsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OrganizationsOrganizationalUnitAccountsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OrganizationsOrganizationalUnitAccountsElRef {
-        OrganizationsOrganizationalUnitAccountsElRef {
+impl terrars::Ref for OrganizationsOrganizationalUnit_AccountsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OrganizationsOrganizationalUnit_AccountsRef {
+        OrganizationsOrganizationalUnit_AccountsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OrganizationsOrganizationalUnitAccountsElRef {
+impl OrganizationsOrganizationalUnit_AccountsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

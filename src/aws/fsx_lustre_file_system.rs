@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FsxLustreFileSystemData {
+struct FsxLustreFileSystemData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,9 +37,13 @@ struct FsxLustreFileSystemData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     drive_cache_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    efa_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     export_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_system_type_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    final_backup_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -49,7 +55,11 @@ struct FsxLustreFileSystemData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     per_unit_storage_throughput: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_final_backup: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_capacity: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -60,18 +70,26 @@ struct FsxLustreFileSystemData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    throughput_capacity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weekly_maintenance_start_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_configuration: std::option::Option<std::vec::Vec<FsxLustreFileSystemLogConfigurationEl>>,
+    data_read_cache_configuration: std::option::Option<std::vec::Vec<FsxLustreFileSystem_DataReadCacheConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FsxLustreFileSystemTimeoutsEl>,
+    log_configuration: std::option::Option<std::vec::Vec<FsxLustreFileSystem_LogConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metadata_configuration: std::option::Option<std::vec::Vec<FsxLustreFileSystem_MetadataConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    root_squash_configuration: std::option::Option<std::vec::Vec<FsxLustreFileSystem_RootSquashConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<FsxLustreFileSystem_Timeouts>,
     dynamic: FsxLustreFileSystemDynamic,
 }
 
 struct FsxLustreFileSystem_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FsxLustreFileSystemData>,
+    data: std::cell::RefCell<FsxLustreFileSystemData_>,
 }
 
 #[derive(Clone)]
@@ -222,6 +240,12 @@ impl FsxLustreFileSystem {
         self
     }
 
+    #[doc = "Set the field `efa_enabled`.\n"]
+    pub fn set_efa_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().efa_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `export_path`.\n"]
     pub fn set_export_path(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().export_path = std::option::Option::Some(v.into());
@@ -234,6 +258,15 @@ impl FsxLustreFileSystem {
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().file_system_type_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `final_backup_tags`.\n"]
+    pub fn set_final_backup_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().final_backup_tags = std::option::Option::Some(v.into());
         self
     }
 
@@ -267,12 +300,25 @@ impl FsxLustreFileSystem {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().security_group_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `skip_final_backup`.\n"]
+    pub fn set_skip_final_backup(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_final_backup = std::option::Option::Some(v.into());
         self
     }
 
@@ -306,6 +352,12 @@ impl FsxLustreFileSystem {
         self
     }
 
+    #[doc = "Set the field `throughput_capacity`.\n"]
+    pub fn set_throughput_capacity(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().throughput_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `weekly_maintenance_start_time`.\n"]
     pub fn set_weekly_maintenance_start_time(
         self,
@@ -315,10 +367,26 @@ impl FsxLustreFileSystem {
         self
     }
 
+    #[doc = "Set the field `data_read_cache_configuration`.\n"]
+    pub fn set_data_read_cache_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxLustreFileSystem_DataReadCacheConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().data_read_cache_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.data_read_cache_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `log_configuration`.\n"]
     pub fn set_log_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxLustreFileSystemLogConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxLustreFileSystem_LogConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -331,8 +399,40 @@ impl FsxLustreFileSystem {
         self
     }
 
+    #[doc = "Set the field `metadata_configuration`.\n"]
+    pub fn set_metadata_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxLustreFileSystem_MetadataConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().metadata_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.metadata_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `root_squash_configuration`.\n"]
+    pub fn set_root_squash_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxLustreFileSystem_RootSquashConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().root_squash_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.root_squash_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FsxLustreFileSystemTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FsxLustreFileSystem_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -393,6 +493,11 @@ impl FsxLustreFileSystem {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.drive_cache_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `efa_enabled` after provisioning.\n"]
+    pub fn efa_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.efa_enabled", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `export_path` after provisioning.\n"]
     pub fn export_path(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.export_path", self.extract_ref()))
@@ -401,6 +506,11 @@ impl FsxLustreFileSystem {
     #[doc = "Get a reference to the value of field `file_system_type_version` after provisioning.\n"]
     pub fn file_system_type_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_system_type_version", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `final_backup_tags` after provisioning.\n"]
+    pub fn final_backup_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.final_backup_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -443,9 +553,20 @@ impl FsxLustreFileSystem {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.per_unit_storage_throughput", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_final_backup` after provisioning.\n"]
+    pub fn skip_final_backup(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_final_backup", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_capacity` after provisioning.\n"]
@@ -473,6 +594,11 @@ impl FsxLustreFileSystem {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `throughput_capacity` after provisioning.\n"]
+    pub fn throughput_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.throughput_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
@@ -486,14 +612,29 @@ impl FsxLustreFileSystem {
         )
     }
 
+    #[doc = "Get a reference to the value of field `data_read_cache_configuration` after provisioning.\n"]
+    pub fn data_read_cache_configuration(&self) -> terrars::ListRef<FsxLustreFileSystem_DataReadCacheConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_read_cache_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `log_configuration` after provisioning.\n"]
-    pub fn log_configuration(&self) -> terrars::ListRef<FsxLustreFileSystemLogConfigurationElRef> {
+    pub fn log_configuration(&self) -> terrars::ListRef<FsxLustreFileSystem_LogConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `metadata_configuration` after provisioning.\n"]
+    pub fn metadata_configuration(&self) -> terrars::ListRef<FsxLustreFileSystem_MetadataConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `root_squash_configuration` after provisioning.\n"]
+    pub fn root_squash_configuration(&self) -> terrars::ListRef<FsxLustreFileSystem_RootSquashConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.root_squash_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxLustreFileSystemTimeoutsElRef {
-        FsxLustreFileSystemTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxLustreFileSystem_TimeoutsRef {
+        FsxLustreFileSystem_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -539,7 +680,7 @@ impl BuildFsxLustreFileSystem {
         let out = FsxLustreFileSystem(std::rc::Rc::new(FsxLustreFileSystem_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FsxLustreFileSystemData {
+            data: std::cell::RefCell::new(FsxLustreFileSystemData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -553,21 +694,29 @@ impl BuildFsxLustreFileSystem {
                 data_compression_type: core::default::Default::default(),
                 deployment_type: core::default::Default::default(),
                 drive_cache_type: core::default::Default::default(),
+                efa_enabled: core::default::Default::default(),
                 export_path: core::default::Default::default(),
                 file_system_type_version: core::default::Default::default(),
+                final_backup_tags: core::default::Default::default(),
                 id: core::default::Default::default(),
                 import_path: core::default::Default::default(),
                 imported_file_chunk_size: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
                 per_unit_storage_throughput: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_group_ids: core::default::Default::default(),
+                skip_final_backup: core::default::Default::default(),
                 storage_capacity: core::default::Default::default(),
                 storage_type: core::default::Default::default(),
                 subnet_ids: self.subnet_ids,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                throughput_capacity: core::default::Default::default(),
                 weekly_maintenance_start_time: core::default::Default::default(),
+                data_read_cache_configuration: core::default::Default::default(),
                 log_configuration: core::default::Default::default(),
+                metadata_configuration: core::default::Default::default(),
+                root_squash_configuration: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -656,6 +805,11 @@ impl FsxLustreFileSystemRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.drive_cache_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `efa_enabled` after provisioning.\n"]
+    pub fn efa_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.efa_enabled", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `export_path` after provisioning.\n"]
     pub fn export_path(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.export_path", self.extract_ref()))
@@ -664,6 +818,11 @@ impl FsxLustreFileSystemRef {
     #[doc = "Get a reference to the value of field `file_system_type_version` after provisioning.\n"]
     pub fn file_system_type_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_system_type_version", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `final_backup_tags` after provisioning.\n"]
+    pub fn final_backup_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.final_backup_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -706,9 +865,20 @@ impl FsxLustreFileSystemRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.per_unit_storage_throughput", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_final_backup` after provisioning.\n"]
+    pub fn skip_final_backup(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_final_backup", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_capacity` after provisioning.\n"]
@@ -736,6 +906,11 @@ impl FsxLustreFileSystemRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `throughput_capacity` after provisioning.\n"]
+    pub fn throughput_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.throughput_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
@@ -749,26 +924,129 @@ impl FsxLustreFileSystemRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `data_read_cache_configuration` after provisioning.\n"]
+    pub fn data_read_cache_configuration(&self) -> terrars::ListRef<FsxLustreFileSystem_DataReadCacheConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_read_cache_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `log_configuration` after provisioning.\n"]
-    pub fn log_configuration(&self) -> terrars::ListRef<FsxLustreFileSystemLogConfigurationElRef> {
+    pub fn log_configuration(&self) -> terrars::ListRef<FsxLustreFileSystem_LogConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `metadata_configuration` after provisioning.\n"]
+    pub fn metadata_configuration(&self) -> terrars::ListRef<FsxLustreFileSystem_MetadataConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `root_squash_configuration` after provisioning.\n"]
+    pub fn root_squash_configuration(&self) -> terrars::ListRef<FsxLustreFileSystem_RootSquashConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.root_squash_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxLustreFileSystemTimeoutsElRef {
-        FsxLustreFileSystemTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxLustreFileSystem_TimeoutsRef {
+        FsxLustreFileSystem_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct FsxLustreFileSystemDynamic {
+    data_read_cache_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<FsxLustreFileSystem_DataReadCacheConfiguration>>,
+    log_configuration: std::option::Option<terrars::DynamicBlock<FsxLustreFileSystem_LogConfiguration>>,
+    metadata_configuration: std::option::Option<terrars::DynamicBlock<FsxLustreFileSystem_MetadataConfiguration>>,
+    root_squash_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<FsxLustreFileSystem_RootSquashConfiguration>>,
+}
+
+#[derive(Serialize)]
+pub struct FsxLustreFileSystem_DataReadCacheConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    size: std::option::Option<terrars::PrimField<f64>>,
+    sizing_mode: terrars::PrimField<std::string::String>,
+}
+
+impl FsxLustreFileSystem_DataReadCacheConfiguration {
+    #[doc = "Set the field `size`.\n"]
+    pub fn set_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.size = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for FsxLustreFileSystem_DataReadCacheConfiguration {
+    type O = terrars::BlockAssignable<FsxLustreFileSystem_DataReadCacheConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFsxLustreFileSystem_DataReadCacheConfiguration {
+    #[doc = ""]
+    pub sizing_mode: terrars::PrimField<std::string::String>,
+}
+
+impl BuildFsxLustreFileSystem_DataReadCacheConfiguration {
+    pub fn build(self) -> FsxLustreFileSystem_DataReadCacheConfiguration {
+        FsxLustreFileSystem_DataReadCacheConfiguration {
+            size: core::default::Default::default(),
+            sizing_mode: self.sizing_mode,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FsxLustreFileSystem_DataReadCacheConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FsxLustreFileSystem_DataReadCacheConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> FsxLustreFileSystem_DataReadCacheConfigurationRef {
+        FsxLustreFileSystem_DataReadCacheConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FsxLustreFileSystem_DataReadCacheConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `size` after provisioning.\n"]
+    pub fn size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `sizing_mode` after provisioning.\n"]
+    pub fn sizing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sizing_mode", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct FsxLustreFileSystemLogConfigurationEl {
+pub struct FsxLustreFileSystem_LogConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxLustreFileSystemLogConfigurationEl {
+impl FsxLustreFileSystem_LogConfiguration {
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.destination = std::option::Option::Some(v.into());
@@ -782,8 +1060,8 @@ impl FsxLustreFileSystemLogConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for FsxLustreFileSystemLogConfigurationEl {
-    type O = terrars::BlockAssignable<FsxLustreFileSystemLogConfigurationEl>;
+impl terrars::ToListMappable for FsxLustreFileSystem_LogConfiguration {
+    type O = terrars::BlockAssignable<FsxLustreFileSystem_LogConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -794,32 +1072,34 @@ impl terrars::ToListMappable for FsxLustreFileSystemLogConfigurationEl {
     }
 }
 
-pub struct BuildFsxLustreFileSystemLogConfigurationEl {}
+pub struct BuildFsxLustreFileSystem_LogConfiguration {}
 
-impl BuildFsxLustreFileSystemLogConfigurationEl {
-    pub fn build(self) -> FsxLustreFileSystemLogConfigurationEl {
-        FsxLustreFileSystemLogConfigurationEl {
+impl BuildFsxLustreFileSystem_LogConfiguration {
+    pub fn build(self) -> FsxLustreFileSystem_LogConfiguration {
+        FsxLustreFileSystem_LogConfiguration {
             destination: core::default::Default::default(),
             level: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxLustreFileSystemLogConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxLustreFileSystem_LogConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxLustreFileSystemLogConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxLustreFileSystemLogConfigurationElRef {
-        FsxLustreFileSystemLogConfigurationElRef {
+impl terrars::Ref for FsxLustreFileSystem_LogConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxLustreFileSystem_LogConfigurationRef {
+        FsxLustreFileSystem_LogConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxLustreFileSystemLogConfigurationElRef {
+impl FsxLustreFileSystem_LogConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -836,7 +1116,167 @@ impl FsxLustreFileSystemLogConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxLustreFileSystemTimeoutsEl {
+pub struct FsxLustreFileSystem_MetadataConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iops: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl FsxLustreFileSystem_MetadataConfiguration {
+    #[doc = "Set the field `iops`.\n"]
+    pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.iops = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for FsxLustreFileSystem_MetadataConfiguration {
+    type O = terrars::BlockAssignable<FsxLustreFileSystem_MetadataConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFsxLustreFileSystem_MetadataConfiguration {}
+
+impl BuildFsxLustreFileSystem_MetadataConfiguration {
+    pub fn build(self) -> FsxLustreFileSystem_MetadataConfiguration {
+        FsxLustreFileSystem_MetadataConfiguration {
+            iops: core::default::Default::default(),
+            mode: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FsxLustreFileSystem_MetadataConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FsxLustreFileSystem_MetadataConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxLustreFileSystem_MetadataConfigurationRef {
+        FsxLustreFileSystem_MetadataConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FsxLustreFileSystem_MetadataConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `iops` after provisioning.\n"]
+    pub fn iops(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.iops", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct FsxLustreFileSystem_RootSquashConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    no_squash_nids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    root_squash: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl FsxLustreFileSystem_RootSquashConfiguration {
+    #[doc = "Set the field `no_squash_nids`.\n"]
+    pub fn set_no_squash_nids(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.no_squash_nids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `root_squash`.\n"]
+    pub fn set_root_squash(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.root_squash = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for FsxLustreFileSystem_RootSquashConfiguration {
+    type O = terrars::BlockAssignable<FsxLustreFileSystem_RootSquashConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFsxLustreFileSystem_RootSquashConfiguration {}
+
+impl BuildFsxLustreFileSystem_RootSquashConfiguration {
+    pub fn build(self) -> FsxLustreFileSystem_RootSquashConfiguration {
+        FsxLustreFileSystem_RootSquashConfiguration {
+            no_squash_nids: core::default::Default::default(),
+            root_squash: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FsxLustreFileSystem_RootSquashConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FsxLustreFileSystem_RootSquashConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> FsxLustreFileSystem_RootSquashConfigurationRef {
+        FsxLustreFileSystem_RootSquashConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FsxLustreFileSystem_RootSquashConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `no_squash_nids` after provisioning.\n"]
+    pub fn no_squash_nids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.no_squash_nids", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `root_squash` after provisioning.\n"]
+    pub fn root_squash(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_squash", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct FsxLustreFileSystem_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -845,7 +1285,7 @@ pub struct FsxLustreFileSystemTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxLustreFileSystemTimeoutsEl {
+impl FsxLustreFileSystem_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -865,8 +1305,8 @@ impl FsxLustreFileSystemTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxLustreFileSystemTimeoutsEl {
-    type O = terrars::BlockAssignable<FsxLustreFileSystemTimeoutsEl>;
+impl terrars::ToListMappable for FsxLustreFileSystem_Timeouts {
+    type O = terrars::BlockAssignable<FsxLustreFileSystem_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -877,11 +1317,11 @@ impl terrars::ToListMappable for FsxLustreFileSystemTimeoutsEl {
     }
 }
 
-pub struct BuildFsxLustreFileSystemTimeoutsEl {}
+pub struct BuildFsxLustreFileSystem_Timeouts {}
 
-impl BuildFsxLustreFileSystemTimeoutsEl {
-    pub fn build(self) -> FsxLustreFileSystemTimeoutsEl {
-        FsxLustreFileSystemTimeoutsEl {
+impl BuildFsxLustreFileSystem_Timeouts {
+    pub fn build(self) -> FsxLustreFileSystem_Timeouts {
+        FsxLustreFileSystem_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -889,21 +1329,23 @@ impl BuildFsxLustreFileSystemTimeoutsEl {
     }
 }
 
-pub struct FsxLustreFileSystemTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FsxLustreFileSystem_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxLustreFileSystemTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxLustreFileSystemTimeoutsElRef {
-        FsxLustreFileSystemTimeoutsElRef {
+impl terrars::Ref for FsxLustreFileSystem_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxLustreFileSystem_TimeoutsRef {
+        FsxLustreFileSystem_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxLustreFileSystemTimeoutsElRef {
+impl FsxLustreFileSystem_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -922,9 +1364,4 @@ impl FsxLustreFileSystemTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FsxLustreFileSystemDynamic {
-    log_configuration: std::option::Option<terrars::DynamicBlock<FsxLustreFileSystemLogConfigurationEl>>,
 }

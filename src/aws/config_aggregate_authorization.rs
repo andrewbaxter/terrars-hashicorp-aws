@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConfigAggregateAuthorizationData {
+struct ConfigAggregateAuthorizationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,8 +22,11 @@ struct ConfigAggregateAuthorizationData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     account_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authorized_aws_region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
-    region: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,7 +36,7 @@ struct ConfigAggregateAuthorizationData {
 struct ConfigAggregateAuthorization_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConfigAggregateAuthorizationData>,
+    data: std::cell::RefCell<ConfigAggregateAuthorizationData_>,
 }
 
 #[derive(Clone)]
@@ -131,9 +136,21 @@ impl ConfigAggregateAuthorization {
         self
     }
 
+    #[doc = "Set the field `authorized_aws_region`.\n"]
+    pub fn set_authorized_aws_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().authorized_aws_region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `region`.\n"]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -163,6 +180,11 @@ impl ConfigAggregateAuthorization {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `authorized_aws_region` after provisioning.\n"]
+    pub fn authorized_aws_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorized_aws_region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -221,8 +243,6 @@ pub struct BuildConfigAggregateAuthorization {
     pub tf_id: std::string::String,
     #[doc = ""]
     pub account_id: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub region: terrars::PrimField<std::string::String>,
 }
 
 impl BuildConfigAggregateAuthorization {
@@ -230,15 +250,16 @@ impl BuildConfigAggregateAuthorization {
         let out = ConfigAggregateAuthorization(std::rc::Rc::new(ConfigAggregateAuthorization_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConfigAggregateAuthorizationData {
+            data: std::cell::RefCell::new(ConfigAggregateAuthorizationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 account_id: self.account_id,
+                authorized_aws_region: core::default::Default::default(),
                 id: core::default::Default::default(),
-                region: self.region,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
             }),
@@ -279,6 +300,11 @@ impl ConfigAggregateAuthorizationRef {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `authorized_aws_region` after provisioning.\n"]
+    pub fn authorized_aws_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorized_aws_region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]

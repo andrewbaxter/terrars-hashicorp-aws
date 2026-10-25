@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerCoreNetworkData {
+struct NetworkmanagerCoreNetworkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,24 +21,28 @@ struct NetworkmanagerCoreNetworkData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    base_policy_document: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    base_policy_regions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_base_policy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     global_network_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    policy_document: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerCoreNetworkTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerCoreNetwork_Timeouts>,
 }
 
 struct NetworkmanagerCoreNetwork_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerCoreNetworkData>,
+    data: std::cell::RefCell<NetworkmanagerCoreNetworkData_>,
 }
 
 #[derive(Clone)]
@@ -136,6 +142,27 @@ impl NetworkmanagerCoreNetwork {
         self
     }
 
+    #[doc = "Set the field `base_policy_document`.\n"]
+    pub fn set_base_policy_document(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().base_policy_document = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `base_policy_regions`.\n"]
+    pub fn set_base_policy_regions(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().base_policy_regions = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `create_base_policy`.\n"]
+    pub fn set_create_base_policy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().create_base_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -145,12 +172,6 @@ impl NetworkmanagerCoreNetwork {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `policy_document`.\n"]
-    pub fn set_policy_document(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().policy_document = std::option::Option::Some(v.into());
         self
     }
 
@@ -173,7 +194,7 @@ impl NetworkmanagerCoreNetwork {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerCoreNetworkTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerCoreNetwork_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -181,6 +202,21 @@ impl NetworkmanagerCoreNetwork {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `base_policy_document` after provisioning.\n"]
+    pub fn base_policy_document(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.base_policy_document", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `base_policy_regions` after provisioning.\n"]
+    pub fn base_policy_regions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.base_policy_regions", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `create_base_policy` after provisioning.\n"]
+    pub fn create_base_policy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_base_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `created_at` after provisioning.\n"]
@@ -194,7 +230,7 @@ impl NetworkmanagerCoreNetwork {
     }
 
     #[doc = "Get a reference to the value of field `edges` after provisioning.\n"]
-    pub fn edges(&self) -> terrars::ListRef<NetworkmanagerCoreNetworkEdgesElRef> {
+    pub fn edges(&self) -> terrars::ListRef<NetworkmanagerCoreNetwork_EdgesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.edges", self.extract_ref()))
     }
 
@@ -208,13 +244,8 @@ impl NetworkmanagerCoreNetwork {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `policy_document` after provisioning.\n"]
-    pub fn policy_document(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_document", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `segments` after provisioning.\n"]
-    pub fn segments(&self) -> terrars::ListRef<NetworkmanagerCoreNetworkSegmentsElRef> {
+    pub fn segments(&self) -> terrars::ListRef<NetworkmanagerCoreNetwork_SegmentsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.segments", self.extract_ref()))
     }
 
@@ -234,11 +265,8 @@ impl NetworkmanagerCoreNetwork {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerCoreNetworkTimeoutsElRef {
-        NetworkmanagerCoreNetworkTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> NetworkmanagerCoreNetwork_TimeoutsRef {
+        NetworkmanagerCoreNetwork_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -284,16 +312,18 @@ impl BuildNetworkmanagerCoreNetwork {
         let out = NetworkmanagerCoreNetwork(std::rc::Rc::new(NetworkmanagerCoreNetwork_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkmanagerCoreNetworkData {
+            data: std::cell::RefCell::new(NetworkmanagerCoreNetworkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                base_policy_document: core::default::Default::default(),
+                base_policy_regions: core::default::Default::default(),
+                create_base_policy: core::default::Default::default(),
                 description: core::default::Default::default(),
                 global_network_id: self.global_network_id,
                 id: core::default::Default::default(),
-                policy_document: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -332,6 +362,21 @@ impl NetworkmanagerCoreNetworkRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `base_policy_document` after provisioning.\n"]
+    pub fn base_policy_document(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.base_policy_document", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `base_policy_regions` after provisioning.\n"]
+    pub fn base_policy_regions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.base_policy_regions", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `create_base_policy` after provisioning.\n"]
+    pub fn create_base_policy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_base_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `created_at` after provisioning.\n"]
     pub fn created_at(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_at", self.extract_ref()))
@@ -343,7 +388,7 @@ impl NetworkmanagerCoreNetworkRef {
     }
 
     #[doc = "Get a reference to the value of field `edges` after provisioning.\n"]
-    pub fn edges(&self) -> terrars::ListRef<NetworkmanagerCoreNetworkEdgesElRef> {
+    pub fn edges(&self) -> terrars::ListRef<NetworkmanagerCoreNetwork_EdgesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.edges", self.extract_ref()))
     }
 
@@ -357,13 +402,8 @@ impl NetworkmanagerCoreNetworkRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `policy_document` after provisioning.\n"]
-    pub fn policy_document(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_document", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `segments` after provisioning.\n"]
-    pub fn segments(&self) -> terrars::ListRef<NetworkmanagerCoreNetworkSegmentsElRef> {
+    pub fn segments(&self) -> terrars::ListRef<NetworkmanagerCoreNetwork_SegmentsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.segments", self.extract_ref()))
     }
 
@@ -383,16 +423,13 @@ impl NetworkmanagerCoreNetworkRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerCoreNetworkTimeoutsElRef {
-        NetworkmanagerCoreNetworkTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> NetworkmanagerCoreNetwork_TimeoutsRef {
+        NetworkmanagerCoreNetwork_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerCoreNetworkEdgesEl {
+pub struct NetworkmanagerCoreNetwork_Edges {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     asn: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -401,7 +438,7 @@ pub struct NetworkmanagerCoreNetworkEdgesEl {
     inside_cidr_blocks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl NetworkmanagerCoreNetworkEdgesEl {
+impl NetworkmanagerCoreNetwork_Edges {
     #[doc = "Set the field `asn`.\n"]
     pub fn set_asn(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.asn = std::option::Option::Some(v.into());
@@ -424,8 +461,8 @@ impl NetworkmanagerCoreNetworkEdgesEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerCoreNetworkEdgesEl {
-    type O = terrars::BlockAssignable<NetworkmanagerCoreNetworkEdgesEl>;
+impl terrars::ToListMappable for NetworkmanagerCoreNetwork_Edges {
+    type O = terrars::BlockAssignable<NetworkmanagerCoreNetwork_Edges>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -436,11 +473,11 @@ impl terrars::ToListMappable for NetworkmanagerCoreNetworkEdgesEl {
     }
 }
 
-pub struct BuildNetworkmanagerCoreNetworkEdgesEl {}
+pub struct BuildNetworkmanagerCoreNetwork_Edges {}
 
-impl BuildNetworkmanagerCoreNetworkEdgesEl {
-    pub fn build(self) -> NetworkmanagerCoreNetworkEdgesEl {
-        NetworkmanagerCoreNetworkEdgesEl {
+impl BuildNetworkmanagerCoreNetwork_Edges {
+    pub fn build(self) -> NetworkmanagerCoreNetwork_Edges {
+        NetworkmanagerCoreNetwork_Edges {
             asn: core::default::Default::default(),
             edge_location: core::default::Default::default(),
             inside_cidr_blocks: core::default::Default::default(),
@@ -448,21 +485,23 @@ impl BuildNetworkmanagerCoreNetworkEdgesEl {
     }
 }
 
-pub struct NetworkmanagerCoreNetworkEdgesElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerCoreNetwork_EdgesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerCoreNetworkEdgesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerCoreNetworkEdgesElRef {
-        NetworkmanagerCoreNetworkEdgesElRef {
+impl terrars::Ref for NetworkmanagerCoreNetwork_EdgesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerCoreNetwork_EdgesRef {
+        NetworkmanagerCoreNetwork_EdgesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerCoreNetworkEdgesElRef {
+impl NetworkmanagerCoreNetwork_EdgesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -484,7 +523,7 @@ impl NetworkmanagerCoreNetworkEdgesElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerCoreNetworkSegmentsEl {
+pub struct NetworkmanagerCoreNetwork_Segments {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     edge_locations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -493,7 +532,7 @@ pub struct NetworkmanagerCoreNetworkSegmentsEl {
     shared_segments: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl NetworkmanagerCoreNetworkSegmentsEl {
+impl NetworkmanagerCoreNetwork_Segments {
     #[doc = "Set the field `edge_locations`.\n"]
     pub fn set_edge_locations(
         mut self,
@@ -519,8 +558,8 @@ impl NetworkmanagerCoreNetworkSegmentsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerCoreNetworkSegmentsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerCoreNetworkSegmentsEl>;
+impl terrars::ToListMappable for NetworkmanagerCoreNetwork_Segments {
+    type O = terrars::BlockAssignable<NetworkmanagerCoreNetwork_Segments>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -531,11 +570,11 @@ impl terrars::ToListMappable for NetworkmanagerCoreNetworkSegmentsEl {
     }
 }
 
-pub struct BuildNetworkmanagerCoreNetworkSegmentsEl {}
+pub struct BuildNetworkmanagerCoreNetwork_Segments {}
 
-impl BuildNetworkmanagerCoreNetworkSegmentsEl {
-    pub fn build(self) -> NetworkmanagerCoreNetworkSegmentsEl {
-        NetworkmanagerCoreNetworkSegmentsEl {
+impl BuildNetworkmanagerCoreNetwork_Segments {
+    pub fn build(self) -> NetworkmanagerCoreNetwork_Segments {
+        NetworkmanagerCoreNetwork_Segments {
             edge_locations: core::default::Default::default(),
             name: core::default::Default::default(),
             shared_segments: core::default::Default::default(),
@@ -543,21 +582,23 @@ impl BuildNetworkmanagerCoreNetworkSegmentsEl {
     }
 }
 
-pub struct NetworkmanagerCoreNetworkSegmentsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerCoreNetwork_SegmentsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerCoreNetworkSegmentsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerCoreNetworkSegmentsElRef {
-        NetworkmanagerCoreNetworkSegmentsElRef {
+impl terrars::Ref for NetworkmanagerCoreNetwork_SegmentsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerCoreNetwork_SegmentsRef {
+        NetworkmanagerCoreNetwork_SegmentsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerCoreNetworkSegmentsElRef {
+impl NetworkmanagerCoreNetwork_SegmentsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -579,7 +620,7 @@ impl NetworkmanagerCoreNetworkSegmentsElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerCoreNetworkTimeoutsEl {
+pub struct NetworkmanagerCoreNetwork_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -588,7 +629,7 @@ pub struct NetworkmanagerCoreNetworkTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerCoreNetworkTimeoutsEl {
+impl NetworkmanagerCoreNetwork_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -608,8 +649,8 @@ impl NetworkmanagerCoreNetworkTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerCoreNetworkTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerCoreNetworkTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerCoreNetwork_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerCoreNetwork_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -620,11 +661,11 @@ impl terrars::ToListMappable for NetworkmanagerCoreNetworkTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkmanagerCoreNetworkTimeoutsEl {}
+pub struct BuildNetworkmanagerCoreNetwork_Timeouts {}
 
-impl BuildNetworkmanagerCoreNetworkTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerCoreNetworkTimeoutsEl {
-        NetworkmanagerCoreNetworkTimeoutsEl {
+impl BuildNetworkmanagerCoreNetwork_Timeouts {
+    pub fn build(self) -> NetworkmanagerCoreNetwork_Timeouts {
+        NetworkmanagerCoreNetwork_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -632,21 +673,23 @@ impl BuildNetworkmanagerCoreNetworkTimeoutsEl {
     }
 }
 
-pub struct NetworkmanagerCoreNetworkTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerCoreNetwork_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerCoreNetworkTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerCoreNetworkTimeoutsElRef {
-        NetworkmanagerCoreNetworkTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerCoreNetwork_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerCoreNetwork_TimeoutsRef {
+        NetworkmanagerCoreNetwork_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerCoreNetworkTimeoutsElRef {
+impl NetworkmanagerCoreNetwork_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

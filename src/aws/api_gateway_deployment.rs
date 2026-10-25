@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApiGatewayDeploymentData {
+struct ApiGatewayDeploymentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,11 +24,9 @@ struct ApiGatewayDeploymentData {
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     rest_api_id: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stage_description: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stage_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     triggers: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,7 +36,7 @@ struct ApiGatewayDeploymentData {
 struct ApiGatewayDeployment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApiGatewayDeploymentData>,
+    data: std::cell::RefCell<ApiGatewayDeploymentData_>,
 }
 
 #[derive(Clone)]
@@ -148,15 +148,10 @@ impl ApiGatewayDeployment {
         self
     }
 
-    #[doc = "Set the field `stage_description`.\n"]
-    pub fn set_stage_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().stage_description = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `stage_name`.\n"]
-    pub fn set_stage_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().stage_name = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -188,34 +183,20 @@ impl ApiGatewayDeployment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `execution_arn` after provisioning.\n"]
-    pub fn execution_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_arn", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `invoke_url` after provisioning.\n"]
-    pub fn invoke_url(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invoke_url", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]
     pub fn rest_api_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rest_api_id", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `stage_description` after provisioning.\n"]
-    pub fn stage_description(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stage_description", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `stage_name` after provisioning.\n"]
-    pub fn stage_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stage_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `triggers` after provisioning.\n"]
@@ -271,7 +252,7 @@ impl BuildApiGatewayDeployment {
         let out = ApiGatewayDeployment(std::rc::Rc::new(ApiGatewayDeployment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApiGatewayDeploymentData {
+            data: std::cell::RefCell::new(ApiGatewayDeploymentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -279,9 +260,8 @@ impl BuildApiGatewayDeployment {
                 provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 rest_api_id: self.rest_api_id,
-                stage_description: core::default::Default::default(),
-                stage_name: core::default::Default::default(),
                 triggers: core::default::Default::default(),
                 variables: core::default::Default::default(),
             }),
@@ -324,34 +304,20 @@ impl ApiGatewayDeploymentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `execution_arn` after provisioning.\n"]
-    pub fn execution_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_arn", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `invoke_url` after provisioning.\n"]
-    pub fn invoke_url(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invoke_url", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]
     pub fn rest_api_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rest_api_id", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `stage_description` after provisioning.\n"]
-    pub fn stage_description(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stage_description", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `stage_name` after provisioning.\n"]
-    pub fn stage_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stage_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `triggers` after provisioning.\n"]

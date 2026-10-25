@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SecurityGroupRuleData {
+struct SecurityGroupRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,6 +32,8 @@ struct SecurityGroupRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix_list_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     protocol: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     security_group_id: terrars::PrimField<std::string::String>,
     #[serde(rename = "self", skip_serializing_if = "std::option::Option::is_none")]
     self_: std::option::Option<terrars::PrimField<bool>>,
@@ -39,13 +43,13 @@ struct SecurityGroupRuleData {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SecurityGroupRuleTimeoutsEl>,
+    timeouts: std::option::Option<SecurityGroupRule_Timeouts>,
 }
 
 struct SecurityGroupRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SecurityGroupRuleData>,
+    data: std::cell::RefCell<SecurityGroupRuleData_>,
 }
 
 #[derive(Clone)]
@@ -184,6 +188,13 @@ impl SecurityGroupRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `self_`.\n"]
     pub fn set_self(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().self_ = std::option::Option::Some(v.into());
@@ -200,7 +211,7 @@ impl SecurityGroupRule {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SecurityGroupRuleTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SecurityGroupRule_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -240,6 +251,12 @@ impl SecurityGroupRule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
     pub fn security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.extract_ref()))
@@ -271,8 +288,8 @@ impl SecurityGroupRule {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SecurityGroupRuleTimeoutsElRef {
-        SecurityGroupRuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SecurityGroupRule_TimeoutsRef {
+        SecurityGroupRule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -326,7 +343,7 @@ impl BuildSecurityGroupRule {
         let out = SecurityGroupRule(std::rc::Rc::new(SecurityGroupRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SecurityGroupRuleData {
+            data: std::cell::RefCell::new(SecurityGroupRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -339,6 +356,7 @@ impl BuildSecurityGroupRule {
                 ipv6_cidr_blocks: core::default::Default::default(),
                 prefix_list_ids: core::default::Default::default(),
                 protocol: self.protocol,
+                region: core::default::Default::default(),
                 security_group_id: self.security_group_id,
                 self_: core::default::Default::default(),
                 source_security_group_id: core::default::Default::default(),
@@ -410,6 +428,12 @@ impl SecurityGroupRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
     pub fn security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.extract_ref()))
@@ -441,18 +465,18 @@ impl SecurityGroupRuleRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SecurityGroupRuleTimeoutsElRef {
-        SecurityGroupRuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SecurityGroupRule_TimeoutsRef {
+        SecurityGroupRule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct SecurityGroupRuleTimeoutsEl {
+pub struct SecurityGroupRule_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SecurityGroupRuleTimeoutsEl {
+impl SecurityGroupRule_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -460,8 +484,8 @@ impl SecurityGroupRuleTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SecurityGroupRuleTimeoutsEl {
-    type O = terrars::BlockAssignable<SecurityGroupRuleTimeoutsEl>;
+impl terrars::ToListMappable for SecurityGroupRule_Timeouts {
+    type O = terrars::BlockAssignable<SecurityGroupRule_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -472,29 +496,31 @@ impl terrars::ToListMappable for SecurityGroupRuleTimeoutsEl {
     }
 }
 
-pub struct BuildSecurityGroupRuleTimeoutsEl {}
+pub struct BuildSecurityGroupRule_Timeouts {}
 
-impl BuildSecurityGroupRuleTimeoutsEl {
-    pub fn build(self) -> SecurityGroupRuleTimeoutsEl {
-        SecurityGroupRuleTimeoutsEl { create: core::default::Default::default() }
+impl BuildSecurityGroupRule_Timeouts {
+    pub fn build(self) -> SecurityGroupRule_Timeouts {
+        SecurityGroupRule_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct SecurityGroupRuleTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SecurityGroupRule_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SecurityGroupRuleTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityGroupRuleTimeoutsElRef {
-        SecurityGroupRuleTimeoutsElRef {
+impl terrars::Ref for SecurityGroupRule_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityGroupRule_TimeoutsRef {
+        SecurityGroupRule_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SecurityGroupRuleTimeoutsElRef {
+impl SecurityGroupRule_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

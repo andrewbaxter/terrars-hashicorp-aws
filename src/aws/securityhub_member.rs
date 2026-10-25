@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SecurityhubMemberData {
+struct SecurityhubMemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,17 +21,20 @@ struct SecurityhubMemberData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     account_id: terrars::PrimField<std::string::String>,
-    email: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    email: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     invite: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct SecurityhubMember_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SecurityhubMemberData>,
+    data: std::cell::RefCell<SecurityhubMemberData_>,
 }
 
 #[derive(Clone)]
@@ -129,6 +134,12 @@ impl SecurityhubMember {
         self
     }
 
+    #[doc = "Set the field `email`.\n"]
+    pub fn set_email(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().email = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -138,6 +149,13 @@ impl SecurityhubMember {
     #[doc = "Set the field `invite`.\n"]
     pub fn set_invite(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().invite = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -169,6 +187,12 @@ impl SecurityhubMember {
     #[doc = "Get a reference to the value of field `member_status` after provisioning.\n"]
     pub fn member_status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.member_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -207,8 +231,6 @@ pub struct BuildSecurityhubMember {
     pub tf_id: std::string::String,
     #[doc = ""]
     pub account_id: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub email: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSecurityhubMember {
@@ -216,16 +238,17 @@ impl BuildSecurityhubMember {
         let out = SecurityhubMember(std::rc::Rc::new(SecurityhubMember_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SecurityhubMemberData {
+            data: std::cell::RefCell::new(SecurityhubMemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 account_id: self.account_id,
-                email: self.email,
+                email: core::default::Default::default(),
                 id: core::default::Default::default(),
                 invite: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -284,5 +307,11 @@ impl SecurityhubMemberRef {
     #[doc = "Get a reference to the value of field `member_status` after provisioning.\n"]
     pub fn member_status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.member_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }

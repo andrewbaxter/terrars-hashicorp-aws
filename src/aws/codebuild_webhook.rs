@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodebuildWebhookData {
+struct CodebuildWebhookData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,16 +26,24 @@ struct CodebuildWebhookData {
     build_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    manual_creation: std::option::Option<terrars::PrimField<bool>>,
     project_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter_group: std::option::Option<std::vec::Vec<CodebuildWebhookFilterGroupEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter_group: std::option::Option<std::vec::Vec<CodebuildWebhook_FilterGroup>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pull_request_build_policy: std::option::Option<std::vec::Vec<CodebuildWebhook_PullRequestBuildPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scope_configuration: std::option::Option<std::vec::Vec<CodebuildWebhook_ScopeConfiguration>>,
     dynamic: CodebuildWebhookDynamic,
 }
 
 struct CodebuildWebhook_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodebuildWebhookData>,
+    data: std::cell::RefCell<CodebuildWebhookData_>,
 }
 
 #[derive(Clone)]
@@ -151,10 +161,23 @@ impl CodebuildWebhook {
         self
     }
 
+    #[doc = "Set the field `manual_creation`.\n"]
+    pub fn set_manual_creation(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().manual_creation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `filter_group`.\n"]
     pub fn set_filter_group(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildWebhookFilterGroupEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildWebhook_FilterGroup>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -162,6 +185,38 @@ impl CodebuildWebhook {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.filter_group = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `pull_request_build_policy`.\n"]
+    pub fn set_pull_request_build_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildWebhook_PullRequestBuildPolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().pull_request_build_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.pull_request_build_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `scope_configuration`.\n"]
+    pub fn set_scope_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildWebhook_ScopeConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().scope_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.scope_configuration = std::option::Option::Some(d);
             },
         }
         self
@@ -182,6 +237,11 @@ impl CodebuildWebhook {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `manual_creation` after provisioning.\n"]
+    pub fn manual_creation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manual_creation", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `payload_url` after provisioning.\n"]
     pub fn payload_url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload_url", self.extract_ref()))
@@ -192,6 +252,12 @@ impl CodebuildWebhook {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `secret` after provisioning.\n"]
     pub fn secret(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret", self.extract_ref()))
@@ -200,6 +266,16 @@ impl CodebuildWebhook {
     #[doc = "Get a reference to the value of field `url` after provisioning.\n"]
     pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `pull_request_build_policy` after provisioning.\n"]
+    pub fn pull_request_build_policy(&self) -> terrars::ListRef<CodebuildWebhook_PullRequestBuildPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pull_request_build_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `scope_configuration` after provisioning.\n"]
+    pub fn scope_configuration(&self) -> terrars::ListRef<CodebuildWebhook_ScopeConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.scope_configuration", self.extract_ref()))
     }
 }
 
@@ -245,7 +321,7 @@ impl BuildCodebuildWebhook {
         let out = CodebuildWebhook(std::rc::Rc::new(CodebuildWebhook_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodebuildWebhookData {
+            data: std::cell::RefCell::new(CodebuildWebhookData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -254,8 +330,12 @@ impl BuildCodebuildWebhook {
                 branch_filter: core::default::Default::default(),
                 build_type: core::default::Default::default(),
                 id: core::default::Default::default(),
+                manual_creation: core::default::Default::default(),
                 project_name: self.project_name,
+                region: core::default::Default::default(),
                 filter_group: core::default::Default::default(),
+                pull_request_build_policy: core::default::Default::default(),
+                scope_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -302,6 +382,11 @@ impl CodebuildWebhookRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `manual_creation` after provisioning.\n"]
+    pub fn manual_creation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manual_creation", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `payload_url` after provisioning.\n"]
     pub fn payload_url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload_url", self.extract_ref()))
@@ -310,6 +395,12 @@ impl CodebuildWebhookRef {
     #[doc = "Get a reference to the value of field `project_name` after provisioning.\n"]
     pub fn project_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret` after provisioning.\n"]
@@ -321,10 +412,27 @@ impl CodebuildWebhookRef {
     pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `pull_request_build_policy` after provisioning.\n"]
+    pub fn pull_request_build_policy(&self) -> terrars::ListRef<CodebuildWebhook_PullRequestBuildPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pull_request_build_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `scope_configuration` after provisioning.\n"]
+    pub fn scope_configuration(&self) -> terrars::ListRef<CodebuildWebhook_ScopeConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.scope_configuration", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CodebuildWebhookDynamic {
+    filter_group: std::option::Option<terrars::DynamicBlock<CodebuildWebhook_FilterGroup>>,
+    pull_request_build_policy: std::option::Option<terrars::DynamicBlock<CodebuildWebhook_PullRequestBuildPolicy>>,
+    scope_configuration: std::option::Option<terrars::DynamicBlock<CodebuildWebhook_ScopeConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct CodebuildWebhookFilterGroupElFilterEl {
+pub struct CodebuildWebhook_FilterGroup_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclude_matched_pattern: std::option::Option<terrars::PrimField<bool>>,
     pattern: terrars::PrimField<std::string::String>,
@@ -332,7 +440,7 @@ pub struct CodebuildWebhookFilterGroupElFilterEl {
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl CodebuildWebhookFilterGroupElFilterEl {
+impl CodebuildWebhook_FilterGroup_Filter {
     #[doc = "Set the field `exclude_matched_pattern`.\n"]
     pub fn set_exclude_matched_pattern(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.exclude_matched_pattern = std::option::Option::Some(v.into());
@@ -340,8 +448,8 @@ impl CodebuildWebhookFilterGroupElFilterEl {
     }
 }
 
-impl terrars::ToListMappable for CodebuildWebhookFilterGroupElFilterEl {
-    type O = terrars::BlockAssignable<CodebuildWebhookFilterGroupElFilterEl>;
+impl terrars::ToListMappable for CodebuildWebhook_FilterGroup_Filter {
+    type O = terrars::BlockAssignable<CodebuildWebhook_FilterGroup_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -352,16 +460,16 @@ impl terrars::ToListMappable for CodebuildWebhookFilterGroupElFilterEl {
     }
 }
 
-pub struct BuildCodebuildWebhookFilterGroupElFilterEl {
+pub struct BuildCodebuildWebhook_FilterGroup_Filter {
     #[doc = ""]
     pub pattern: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodebuildWebhookFilterGroupElFilterEl {
-    pub fn build(self) -> CodebuildWebhookFilterGroupElFilterEl {
-        CodebuildWebhookFilterGroupElFilterEl {
+impl BuildCodebuildWebhook_FilterGroup_Filter {
+    pub fn build(self) -> CodebuildWebhook_FilterGroup_Filter {
+        CodebuildWebhook_FilterGroup_Filter {
             exclude_matched_pattern: core::default::Default::default(),
             pattern: self.pattern,
             type_: self.type_,
@@ -369,21 +477,23 @@ impl BuildCodebuildWebhookFilterGroupElFilterEl {
     }
 }
 
-pub struct CodebuildWebhookFilterGroupElFilterElRef {
+#[allow(dead_code)]
+pub struct CodebuildWebhook_FilterGroup_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodebuildWebhookFilterGroupElFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildWebhookFilterGroupElFilterElRef {
-        CodebuildWebhookFilterGroupElFilterElRef {
+impl terrars::Ref for CodebuildWebhook_FilterGroup_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildWebhook_FilterGroup_FilterRef {
+        CodebuildWebhook_FilterGroup_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodebuildWebhookFilterGroupElFilterElRef {
+impl CodebuildWebhook_FilterGroup_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -405,22 +515,22 @@ impl CodebuildWebhookFilterGroupElFilterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CodebuildWebhookFilterGroupElDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<CodebuildWebhookFilterGroupElFilterEl>>,
+struct CodebuildWebhook_FilterGroupDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<CodebuildWebhook_FilterGroup_Filter>>,
 }
 
 #[derive(Serialize)]
-pub struct CodebuildWebhookFilterGroupEl {
+pub struct CodebuildWebhook_FilterGroup {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<CodebuildWebhookFilterGroupElFilterEl>>,
-    dynamic: CodebuildWebhookFilterGroupElDynamic,
+    filter: std::option::Option<std::vec::Vec<CodebuildWebhook_FilterGroup_Filter>>,
+    dynamic: CodebuildWebhook_FilterGroupDynamic,
 }
 
-impl CodebuildWebhookFilterGroupEl {
+impl CodebuildWebhook_FilterGroup {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildWebhookFilterGroupElFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildWebhook_FilterGroup_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -434,8 +544,8 @@ impl CodebuildWebhookFilterGroupEl {
     }
 }
 
-impl terrars::ToListMappable for CodebuildWebhookFilterGroupEl {
-    type O = terrars::BlockAssignable<CodebuildWebhookFilterGroupEl>;
+impl terrars::ToListMappable for CodebuildWebhook_FilterGroup {
+    type O = terrars::BlockAssignable<CodebuildWebhook_FilterGroup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -446,43 +556,198 @@ impl terrars::ToListMappable for CodebuildWebhookFilterGroupEl {
     }
 }
 
-pub struct BuildCodebuildWebhookFilterGroupEl {}
+pub struct BuildCodebuildWebhook_FilterGroup {}
 
-impl BuildCodebuildWebhookFilterGroupEl {
-    pub fn build(self) -> CodebuildWebhookFilterGroupEl {
-        CodebuildWebhookFilterGroupEl {
+impl BuildCodebuildWebhook_FilterGroup {
+    pub fn build(self) -> CodebuildWebhook_FilterGroup {
+        CodebuildWebhook_FilterGroup {
             filter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CodebuildWebhookFilterGroupElRef {
+#[allow(dead_code)]
+pub struct CodebuildWebhook_FilterGroupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodebuildWebhookFilterGroupElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildWebhookFilterGroupElRef {
-        CodebuildWebhookFilterGroupElRef {
+impl terrars::Ref for CodebuildWebhook_FilterGroupRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildWebhook_FilterGroupRef {
+        CodebuildWebhook_FilterGroupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodebuildWebhookFilterGroupElRef {
+impl CodebuildWebhook_FilterGroupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<CodebuildWebhookFilterGroupElFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<CodebuildWebhook_FilterGroup_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
     }
 }
 
-#[derive(Serialize, Default)]
-struct CodebuildWebhookDynamic {
-    filter_group: std::option::Option<terrars::DynamicBlock<CodebuildWebhookFilterGroupEl>>,
+#[derive(Serialize)]
+pub struct CodebuildWebhook_PullRequestBuildPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    approver_roles: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    requires_comment_approval: terrars::PrimField<std::string::String>,
+}
+
+impl CodebuildWebhook_PullRequestBuildPolicy {
+    #[doc = "Set the field `approver_roles`.\n"]
+    pub fn set_approver_roles(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.approver_roles = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CodebuildWebhook_PullRequestBuildPolicy {
+    type O = terrars::BlockAssignable<CodebuildWebhook_PullRequestBuildPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCodebuildWebhook_PullRequestBuildPolicy {
+    #[doc = ""]
+    pub requires_comment_approval: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCodebuildWebhook_PullRequestBuildPolicy {
+    pub fn build(self) -> CodebuildWebhook_PullRequestBuildPolicy {
+        CodebuildWebhook_PullRequestBuildPolicy {
+            approver_roles: core::default::Default::default(),
+            requires_comment_approval: self.requires_comment_approval,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CodebuildWebhook_PullRequestBuildPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CodebuildWebhook_PullRequestBuildPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildWebhook_PullRequestBuildPolicyRef {
+        CodebuildWebhook_PullRequestBuildPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CodebuildWebhook_PullRequestBuildPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `approver_roles` after provisioning.\n"]
+    pub fn approver_roles(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.approver_roles", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `requires_comment_approval` after provisioning.\n"]
+    pub fn requires_comment_approval(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.requires_comment_approval", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CodebuildWebhook_ScopeConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    scope: terrars::PrimField<std::string::String>,
+}
+
+impl CodebuildWebhook_ScopeConfiguration {
+    #[doc = "Set the field `domain`.\n"]
+    pub fn set_domain(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.domain = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CodebuildWebhook_ScopeConfiguration {
+    type O = terrars::BlockAssignable<CodebuildWebhook_ScopeConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCodebuildWebhook_ScopeConfiguration {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub scope: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCodebuildWebhook_ScopeConfiguration {
+    pub fn build(self) -> CodebuildWebhook_ScopeConfiguration {
+        CodebuildWebhook_ScopeConfiguration {
+            domain: core::default::Default::default(),
+            name: self.name,
+            scope: self.scope,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CodebuildWebhook_ScopeConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CodebuildWebhook_ScopeConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildWebhook_ScopeConfigurationRef {
+        CodebuildWebhook_ScopeConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CodebuildWebhook_ScopeConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `domain` after provisioning.\n"]
+    pub fn domain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
+    pub fn scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scope", self.base))
+    }
 }

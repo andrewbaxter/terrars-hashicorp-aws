@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsmParameterData {
+struct SsmParameterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,6 +38,8 @@ struct SsmParameterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     overwrite: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -45,12 +49,16 @@ struct SsmParameterData {
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value_wo_version: std::option::Option<terrars::PrimField<f64>>,
 }
 
 struct SsmParameter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsmParameterData>,
+    data: std::cell::RefCell<SsmParameterData_>,
 }
 
 #[derive(Clone)]
@@ -198,6 +206,13 @@ impl SsmParameter {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -228,6 +243,18 @@ impl SsmParameter {
         self
     }
 
+    #[doc = "Set the field `value_wo`.\n"]
+    pub fn set_value_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().value_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `value_wo_version`.\n"]
+    pub fn set_value_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().value_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `allowed_pattern` after provisioning.\n"]
     pub fn allowed_pattern(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.allowed_pattern", self.extract_ref()))
@@ -246,6 +273,11 @@ impl SsmParameter {
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `has_value_wo` after provisioning.\n"]
+    pub fn has_value_wo(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_value_wo", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -273,6 +305,12 @@ impl SsmParameter {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.overwrite", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -296,6 +334,16 @@ impl SsmParameter {
     #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `value_wo` after provisioning.\n"]
+    pub fn value_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `value_wo_version` after provisioning.\n"]
+    pub fn value_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value_wo_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
@@ -348,7 +396,7 @@ impl BuildSsmParameter {
         let out = SsmParameter(std::rc::Rc::new(SsmParameter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsmParameterData {
+            data: std::cell::RefCell::new(SsmParameterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -363,11 +411,14 @@ impl BuildSsmParameter {
                 key_id: core::default::Default::default(),
                 name: self.name,
                 overwrite: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 tier: core::default::Default::default(),
                 type_: self.type_,
                 value: core::default::Default::default(),
+                value_wo: core::default::Default::default(),
+                value_wo_version: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -418,6 +469,11 @@ impl SsmParameterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `has_value_wo` after provisioning.\n"]
+    pub fn has_value_wo(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_value_wo", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -443,6 +499,12 @@ impl SsmParameterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.overwrite", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -466,6 +528,16 @@ impl SsmParameterRef {
     #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `value_wo` after provisioning.\n"]
+    pub fn value_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `value_wo_version` after provisioning.\n"]
+    pub fn value_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value_wo_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]

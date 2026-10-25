@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct QldbStreamData {
+struct QldbStreamData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct QldbStreamData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     inclusive_start_time: terrars::PrimField<std::string::String>,
     ledger_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     stream_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,14 +35,16 @@ struct QldbStreamData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kinesis_configuration: std::option::Option<std::vec::Vec<QldbStreamKinesisConfigurationEl>>,
+    kinesis_configuration: std::option::Option<std::vec::Vec<QldbStream_KinesisConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<QldbStream_Timeouts>,
     dynamic: QldbStreamDynamic,
 }
 
 struct QldbStream_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<QldbStreamData>,
+    data: std::cell::RefCell<QldbStreamData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +156,13 @@ impl QldbStream {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -171,7 +184,7 @@ impl QldbStream {
     #[doc = "Set the field `kinesis_configuration`.\n"]
     pub fn set_kinesis_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<QldbStreamKinesisConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<QldbStream_KinesisConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,6 +194,12 @@ impl QldbStream {
                 self.0.data.borrow_mut().dynamic.kinesis_configuration = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<QldbStream_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -209,6 +228,12 @@ impl QldbStream {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ledger_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -230,8 +255,13 @@ impl QldbStream {
     }
 
     #[doc = "Get a reference to the value of field `kinesis_configuration` after provisioning.\n"]
-    pub fn kinesis_configuration(&self) -> terrars::ListRef<QldbStreamKinesisConfigurationElRef> {
+    pub fn kinesis_configuration(&self) -> terrars::ListRef<QldbStream_KinesisConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> QldbStream_TimeoutsRef {
+        QldbStream_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -283,7 +313,7 @@ impl BuildQldbStream {
         let out = QldbStream(std::rc::Rc::new(QldbStream_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(QldbStreamData {
+            data: std::cell::RefCell::new(QldbStreamData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -293,11 +323,13 @@ impl BuildQldbStream {
                 id: core::default::Default::default(),
                 inclusive_start_time: self.inclusive_start_time,
                 ledger_name: self.ledger_name,
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 stream_name: self.stream_name,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 kinesis_configuration: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -354,6 +386,12 @@ impl QldbStreamRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ledger_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -375,19 +413,29 @@ impl QldbStreamRef {
     }
 
     #[doc = "Get a reference to the value of field `kinesis_configuration` after provisioning.\n"]
-    pub fn kinesis_configuration(&self) -> terrars::ListRef<QldbStreamKinesisConfigurationElRef> {
+    pub fn kinesis_configuration(&self) -> terrars::ListRef<QldbStream_KinesisConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> QldbStream_TimeoutsRef {
+        QldbStream_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct QldbStreamDynamic {
+    kinesis_configuration: std::option::Option<terrars::DynamicBlock<QldbStream_KinesisConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct QldbStreamKinesisConfigurationEl {
+pub struct QldbStream_KinesisConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aggregation_enabled: std::option::Option<terrars::PrimField<bool>>,
     stream_arn: terrars::PrimField<std::string::String>,
 }
 
-impl QldbStreamKinesisConfigurationEl {
+impl QldbStream_KinesisConfiguration {
     #[doc = "Set the field `aggregation_enabled`.\n"]
     pub fn set_aggregation_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.aggregation_enabled = std::option::Option::Some(v.into());
@@ -395,8 +443,8 @@ impl QldbStreamKinesisConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for QldbStreamKinesisConfigurationEl {
-    type O = terrars::BlockAssignable<QldbStreamKinesisConfigurationEl>;
+impl terrars::ToListMappable for QldbStream_KinesisConfiguration {
+    type O = terrars::BlockAssignable<QldbStream_KinesisConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -407,35 +455,37 @@ impl terrars::ToListMappable for QldbStreamKinesisConfigurationEl {
     }
 }
 
-pub struct BuildQldbStreamKinesisConfigurationEl {
+pub struct BuildQldbStream_KinesisConfiguration {
     #[doc = ""]
     pub stream_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildQldbStreamKinesisConfigurationEl {
-    pub fn build(self) -> QldbStreamKinesisConfigurationEl {
-        QldbStreamKinesisConfigurationEl {
+impl BuildQldbStream_KinesisConfiguration {
+    pub fn build(self) -> QldbStream_KinesisConfiguration {
+        QldbStream_KinesisConfiguration {
             aggregation_enabled: core::default::Default::default(),
             stream_arn: self.stream_arn,
         }
     }
 }
 
-pub struct QldbStreamKinesisConfigurationElRef {
+#[allow(dead_code)]
+pub struct QldbStream_KinesisConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for QldbStreamKinesisConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> QldbStreamKinesisConfigurationElRef {
-        QldbStreamKinesisConfigurationElRef {
+impl terrars::Ref for QldbStream_KinesisConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> QldbStream_KinesisConfigurationRef {
+        QldbStream_KinesisConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl QldbStreamKinesisConfigurationElRef {
+impl QldbStream_KinesisConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -451,7 +501,79 @@ impl QldbStreamKinesisConfigurationElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct QldbStreamDynamic {
-    kinesis_configuration: std::option::Option<terrars::DynamicBlock<QldbStreamKinesisConfigurationEl>>,
+#[derive(Serialize)]
+pub struct QldbStream_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl QldbStream_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for QldbStream_Timeouts {
+    type O = terrars::BlockAssignable<QldbStream_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildQldbStream_Timeouts {}
+
+impl BuildQldbStream_Timeouts {
+    pub fn build(self) -> QldbStream_Timeouts {
+        QldbStream_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct QldbStream_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for QldbStream_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> QldbStream_TimeoutsRef {
+        QldbStream_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl QldbStream_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlueTriggerData {
+struct GlueTriggerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,6 +28,8 @@ struct GlueTriggerData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schedule: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_on_creation: std::option::Option<terrars::PrimField<bool>>,
@@ -38,20 +42,20 @@ struct GlueTriggerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     workflow_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    actions: std::option::Option<std::vec::Vec<GlueTriggerActionsEl>>,
+    actions: std::option::Option<std::vec::Vec<GlueTrigger_Actions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    event_batching_condition: std::option::Option<std::vec::Vec<GlueTriggerEventBatchingConditionEl>>,
+    event_batching_condition: std::option::Option<std::vec::Vec<GlueTrigger_EventBatchingCondition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    predicate: std::option::Option<std::vec::Vec<GlueTriggerPredicateEl>>,
+    predicate: std::option::Option<std::vec::Vec<GlueTrigger_Predicate>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GlueTriggerTimeoutsEl>,
+    timeouts: std::option::Option<GlueTrigger_Timeouts>,
     dynamic: GlueTriggerDynamic,
 }
 
 struct GlueTrigger_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlueTriggerData>,
+    data: std::cell::RefCell<GlueTriggerData_>,
 }
 
 #[derive(Clone)]
@@ -169,6 +173,13 @@ impl GlueTrigger {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `schedule`.\n"]
     pub fn set_schedule(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().schedule = std::option::Option::Some(v.into());
@@ -206,7 +217,7 @@ impl GlueTrigger {
     }
 
     #[doc = "Set the field `actions`.\n"]
-    pub fn set_actions(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueTriggerActionsEl>>) -> Self {
+    pub fn set_actions(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueTrigger_Actions>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().actions = std::option::Option::Some(v);
@@ -221,7 +232,7 @@ impl GlueTrigger {
     #[doc = "Set the field `event_batching_condition`.\n"]
     pub fn set_event_batching_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueTriggerEventBatchingConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueTrigger_EventBatchingCondition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -235,7 +246,7 @@ impl GlueTrigger {
     }
 
     #[doc = "Set the field `predicate`.\n"]
-    pub fn set_predicate(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueTriggerPredicateEl>>) -> Self {
+    pub fn set_predicate(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueTrigger_Predicate>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().predicate = std::option::Option::Some(v);
@@ -248,7 +259,7 @@ impl GlueTrigger {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GlueTriggerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GlueTrigger_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -276,6 +287,12 @@ impl GlueTrigger {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
@@ -314,23 +331,23 @@ impl GlueTrigger {
     }
 
     #[doc = "Get a reference to the value of field `actions` after provisioning.\n"]
-    pub fn actions(&self) -> terrars::ListRef<GlueTriggerActionsElRef> {
+    pub fn actions(&self) -> terrars::ListRef<GlueTrigger_ActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.actions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `event_batching_condition` after provisioning.\n"]
-    pub fn event_batching_condition(&self) -> terrars::ListRef<GlueTriggerEventBatchingConditionElRef> {
+    pub fn event_batching_condition(&self) -> terrars::ListRef<GlueTrigger_EventBatchingConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_batching_condition", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `predicate` after provisioning.\n"]
-    pub fn predicate(&self) -> terrars::ListRef<GlueTriggerPredicateElRef> {
+    pub fn predicate(&self) -> terrars::ListRef<GlueTrigger_PredicateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.predicate", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GlueTriggerTimeoutsElRef {
-        GlueTriggerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GlueTrigger_TimeoutsRef {
+        GlueTrigger_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -378,7 +395,7 @@ impl BuildGlueTrigger {
         let out = GlueTrigger(std::rc::Rc::new(GlueTrigger_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlueTriggerData {
+            data: std::cell::RefCell::new(GlueTriggerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -388,6 +405,7 @@ impl BuildGlueTrigger {
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 schedule: core::default::Default::default(),
                 start_on_creation: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -454,6 +472,12 @@ impl GlueTriggerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
     pub fn schedule(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
@@ -490,33 +514,40 @@ impl GlueTriggerRef {
     }
 
     #[doc = "Get a reference to the value of field `actions` after provisioning.\n"]
-    pub fn actions(&self) -> terrars::ListRef<GlueTriggerActionsElRef> {
+    pub fn actions(&self) -> terrars::ListRef<GlueTrigger_ActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.actions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `event_batching_condition` after provisioning.\n"]
-    pub fn event_batching_condition(&self) -> terrars::ListRef<GlueTriggerEventBatchingConditionElRef> {
+    pub fn event_batching_condition(&self) -> terrars::ListRef<GlueTrigger_EventBatchingConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_batching_condition", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `predicate` after provisioning.\n"]
-    pub fn predicate(&self) -> terrars::ListRef<GlueTriggerPredicateElRef> {
+    pub fn predicate(&self) -> terrars::ListRef<GlueTrigger_PredicateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.predicate", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GlueTriggerTimeoutsElRef {
-        GlueTriggerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GlueTrigger_TimeoutsRef {
+        GlueTrigger_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlueTriggerDynamic {
+    actions: std::option::Option<terrars::DynamicBlock<GlueTrigger_Actions>>,
+    event_batching_condition: std::option::Option<terrars::DynamicBlock<GlueTrigger_EventBatchingCondition>>,
+    predicate: std::option::Option<terrars::DynamicBlock<GlueTrigger_Predicate>>,
+}
+
 #[derive(Serialize)]
-pub struct GlueTriggerActionsElNotificationPropertyEl {
+pub struct GlueTrigger_Actions_NotificationProperty {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notify_delay_after: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GlueTriggerActionsElNotificationPropertyEl {
+impl GlueTrigger_Actions_NotificationProperty {
     #[doc = "Set the field `notify_delay_after`.\n"]
     pub fn set_notify_delay_after(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.notify_delay_after = std::option::Option::Some(v.into());
@@ -524,8 +555,8 @@ impl GlueTriggerActionsElNotificationPropertyEl {
     }
 }
 
-impl terrars::ToListMappable for GlueTriggerActionsElNotificationPropertyEl {
-    type O = terrars::BlockAssignable<GlueTriggerActionsElNotificationPropertyEl>;
+impl terrars::ToListMappable for GlueTrigger_Actions_NotificationProperty {
+    type O = terrars::BlockAssignable<GlueTrigger_Actions_NotificationProperty>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -536,29 +567,31 @@ impl terrars::ToListMappable for GlueTriggerActionsElNotificationPropertyEl {
     }
 }
 
-pub struct BuildGlueTriggerActionsElNotificationPropertyEl {}
+pub struct BuildGlueTrigger_Actions_NotificationProperty {}
 
-impl BuildGlueTriggerActionsElNotificationPropertyEl {
-    pub fn build(self) -> GlueTriggerActionsElNotificationPropertyEl {
-        GlueTriggerActionsElNotificationPropertyEl { notify_delay_after: core::default::Default::default() }
+impl BuildGlueTrigger_Actions_NotificationProperty {
+    pub fn build(self) -> GlueTrigger_Actions_NotificationProperty {
+        GlueTrigger_Actions_NotificationProperty { notify_delay_after: core::default::Default::default() }
     }
 }
 
-pub struct GlueTriggerActionsElNotificationPropertyElRef {
+#[allow(dead_code)]
+pub struct GlueTrigger_Actions_NotificationPropertyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueTriggerActionsElNotificationPropertyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTriggerActionsElNotificationPropertyElRef {
-        GlueTriggerActionsElNotificationPropertyElRef {
+impl terrars::Ref for GlueTrigger_Actions_NotificationPropertyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTrigger_Actions_NotificationPropertyRef {
+        GlueTrigger_Actions_NotificationPropertyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueTriggerActionsElNotificationPropertyElRef {
+impl GlueTrigger_Actions_NotificationPropertyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -570,12 +603,12 @@ impl GlueTriggerActionsElNotificationPropertyElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GlueTriggerActionsElDynamic {
-    notification_property: std::option::Option<terrars::DynamicBlock<GlueTriggerActionsElNotificationPropertyEl>>,
+struct GlueTrigger_ActionsDynamic {
+    notification_property: std::option::Option<terrars::DynamicBlock<GlueTrigger_Actions_NotificationProperty>>,
 }
 
 #[derive(Serialize)]
-pub struct GlueTriggerActionsEl {
+pub struct GlueTrigger_Actions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arguments: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -587,11 +620,11 @@ pub struct GlueTriggerActionsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timeout: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notification_property: std::option::Option<std::vec::Vec<GlueTriggerActionsElNotificationPropertyEl>>,
-    dynamic: GlueTriggerActionsElDynamic,
+    notification_property: std::option::Option<std::vec::Vec<GlueTrigger_Actions_NotificationProperty>>,
+    dynamic: GlueTrigger_ActionsDynamic,
 }
 
-impl GlueTriggerActionsEl {
+impl GlueTrigger_Actions {
     #[doc = "Set the field `arguments`.\n"]
     pub fn set_arguments(
         mut self,
@@ -631,7 +664,7 @@ impl GlueTriggerActionsEl {
     #[doc = "Set the field `notification_property`.\n"]
     pub fn set_notification_property(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueTriggerActionsElNotificationPropertyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueTrigger_Actions_NotificationProperty>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -645,8 +678,8 @@ impl GlueTriggerActionsEl {
     }
 }
 
-impl terrars::ToListMappable for GlueTriggerActionsEl {
-    type O = terrars::BlockAssignable<GlueTriggerActionsEl>;
+impl terrars::ToListMappable for GlueTrigger_Actions {
+    type O = terrars::BlockAssignable<GlueTrigger_Actions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -657,11 +690,11 @@ impl terrars::ToListMappable for GlueTriggerActionsEl {
     }
 }
 
-pub struct BuildGlueTriggerActionsEl {}
+pub struct BuildGlueTrigger_Actions {}
 
-impl BuildGlueTriggerActionsEl {
-    pub fn build(self) -> GlueTriggerActionsEl {
-        GlueTriggerActionsEl {
+impl BuildGlueTrigger_Actions {
+    pub fn build(self) -> GlueTrigger_Actions {
+        GlueTrigger_Actions {
             arguments: core::default::Default::default(),
             crawler_name: core::default::Default::default(),
             job_name: core::default::Default::default(),
@@ -673,21 +706,23 @@ impl BuildGlueTriggerActionsEl {
     }
 }
 
-pub struct GlueTriggerActionsElRef {
+#[allow(dead_code)]
+pub struct GlueTrigger_ActionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueTriggerActionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTriggerActionsElRef {
-        GlueTriggerActionsElRef {
+impl terrars::Ref for GlueTrigger_ActionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTrigger_ActionsRef {
+        GlueTrigger_ActionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueTriggerActionsElRef {
+impl GlueTrigger_ActionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -718,19 +753,19 @@ impl GlueTriggerActionsElRef {
     }
 
     #[doc = "Get a reference to the value of field `notification_property` after provisioning.\n"]
-    pub fn notification_property(&self) -> terrars::ListRef<GlueTriggerActionsElNotificationPropertyElRef> {
+    pub fn notification_property(&self) -> terrars::ListRef<GlueTrigger_Actions_NotificationPropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_property", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GlueTriggerEventBatchingConditionEl {
+pub struct GlueTrigger_EventBatchingCondition {
     batch_size: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     batch_window: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GlueTriggerEventBatchingConditionEl {
+impl GlueTrigger_EventBatchingCondition {
     #[doc = "Set the field `batch_window`.\n"]
     pub fn set_batch_window(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.batch_window = std::option::Option::Some(v.into());
@@ -738,8 +773,8 @@ impl GlueTriggerEventBatchingConditionEl {
     }
 }
 
-impl terrars::ToListMappable for GlueTriggerEventBatchingConditionEl {
-    type O = terrars::BlockAssignable<GlueTriggerEventBatchingConditionEl>;
+impl terrars::ToListMappable for GlueTrigger_EventBatchingCondition {
+    type O = terrars::BlockAssignable<GlueTrigger_EventBatchingCondition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -750,35 +785,37 @@ impl terrars::ToListMappable for GlueTriggerEventBatchingConditionEl {
     }
 }
 
-pub struct BuildGlueTriggerEventBatchingConditionEl {
+pub struct BuildGlueTrigger_EventBatchingCondition {
     #[doc = ""]
     pub batch_size: terrars::PrimField<f64>,
 }
 
-impl BuildGlueTriggerEventBatchingConditionEl {
-    pub fn build(self) -> GlueTriggerEventBatchingConditionEl {
-        GlueTriggerEventBatchingConditionEl {
+impl BuildGlueTrigger_EventBatchingCondition {
+    pub fn build(self) -> GlueTrigger_EventBatchingCondition {
+        GlueTrigger_EventBatchingCondition {
             batch_size: self.batch_size,
             batch_window: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlueTriggerEventBatchingConditionElRef {
+#[allow(dead_code)]
+pub struct GlueTrigger_EventBatchingConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueTriggerEventBatchingConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTriggerEventBatchingConditionElRef {
-        GlueTriggerEventBatchingConditionElRef {
+impl terrars::Ref for GlueTrigger_EventBatchingConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTrigger_EventBatchingConditionRef {
+        GlueTrigger_EventBatchingConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueTriggerEventBatchingConditionElRef {
+impl GlueTrigger_EventBatchingConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -795,7 +832,7 @@ impl GlueTriggerEventBatchingConditionElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueTriggerPredicateElConditionsEl {
+pub struct GlueTrigger_Predicate_Conditions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     crawl_state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -808,7 +845,7 @@ pub struct GlueTriggerPredicateElConditionsEl {
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueTriggerPredicateElConditionsEl {
+impl GlueTrigger_Predicate_Conditions {
     #[doc = "Set the field `crawl_state`.\n"]
     pub fn set_crawl_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.crawl_state = std::option::Option::Some(v.into());
@@ -840,8 +877,8 @@ impl GlueTriggerPredicateElConditionsEl {
     }
 }
 
-impl terrars::ToListMappable for GlueTriggerPredicateElConditionsEl {
-    type O = terrars::BlockAssignable<GlueTriggerPredicateElConditionsEl>;
+impl terrars::ToListMappable for GlueTrigger_Predicate_Conditions {
+    type O = terrars::BlockAssignable<GlueTrigger_Predicate_Conditions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -852,11 +889,11 @@ impl terrars::ToListMappable for GlueTriggerPredicateElConditionsEl {
     }
 }
 
-pub struct BuildGlueTriggerPredicateElConditionsEl {}
+pub struct BuildGlueTrigger_Predicate_Conditions {}
 
-impl BuildGlueTriggerPredicateElConditionsEl {
-    pub fn build(self) -> GlueTriggerPredicateElConditionsEl {
-        GlueTriggerPredicateElConditionsEl {
+impl BuildGlueTrigger_Predicate_Conditions {
+    pub fn build(self) -> GlueTrigger_Predicate_Conditions {
+        GlueTrigger_Predicate_Conditions {
             crawl_state: core::default::Default::default(),
             crawler_name: core::default::Default::default(),
             job_name: core::default::Default::default(),
@@ -866,21 +903,23 @@ impl BuildGlueTriggerPredicateElConditionsEl {
     }
 }
 
-pub struct GlueTriggerPredicateElConditionsElRef {
+#[allow(dead_code)]
+pub struct GlueTrigger_Predicate_ConditionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueTriggerPredicateElConditionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTriggerPredicateElConditionsElRef {
-        GlueTriggerPredicateElConditionsElRef {
+impl terrars::Ref for GlueTrigger_Predicate_ConditionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTrigger_Predicate_ConditionsRef {
+        GlueTrigger_Predicate_ConditionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueTriggerPredicateElConditionsElRef {
+impl GlueTrigger_Predicate_ConditionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -912,20 +951,20 @@ impl GlueTriggerPredicateElConditionsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GlueTriggerPredicateElDynamic {
-    conditions: std::option::Option<terrars::DynamicBlock<GlueTriggerPredicateElConditionsEl>>,
+struct GlueTrigger_PredicateDynamic {
+    conditions: std::option::Option<terrars::DynamicBlock<GlueTrigger_Predicate_Conditions>>,
 }
 
 #[derive(Serialize)]
-pub struct GlueTriggerPredicateEl {
+pub struct GlueTrigger_Predicate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     logical: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conditions: std::option::Option<std::vec::Vec<GlueTriggerPredicateElConditionsEl>>,
-    dynamic: GlueTriggerPredicateElDynamic,
+    conditions: std::option::Option<std::vec::Vec<GlueTrigger_Predicate_Conditions>>,
+    dynamic: GlueTrigger_PredicateDynamic,
 }
 
-impl GlueTriggerPredicateEl {
+impl GlueTrigger_Predicate {
     #[doc = "Set the field `logical`.\n"]
     pub fn set_logical(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.logical = std::option::Option::Some(v.into());
@@ -935,7 +974,7 @@ impl GlueTriggerPredicateEl {
     #[doc = "Set the field `conditions`.\n"]
     pub fn set_conditions(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueTriggerPredicateElConditionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueTrigger_Predicate_Conditions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -949,8 +988,8 @@ impl GlueTriggerPredicateEl {
     }
 }
 
-impl terrars::ToListMappable for GlueTriggerPredicateEl {
-    type O = terrars::BlockAssignable<GlueTriggerPredicateEl>;
+impl terrars::ToListMappable for GlueTrigger_Predicate {
+    type O = terrars::BlockAssignable<GlueTrigger_Predicate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -961,11 +1000,11 @@ impl terrars::ToListMappable for GlueTriggerPredicateEl {
     }
 }
 
-pub struct BuildGlueTriggerPredicateEl {}
+pub struct BuildGlueTrigger_Predicate {}
 
-impl BuildGlueTriggerPredicateEl {
-    pub fn build(self) -> GlueTriggerPredicateEl {
-        GlueTriggerPredicateEl {
+impl BuildGlueTrigger_Predicate {
+    pub fn build(self) -> GlueTrigger_Predicate {
+        GlueTrigger_Predicate {
             logical: core::default::Default::default(),
             conditions: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -973,21 +1012,23 @@ impl BuildGlueTriggerPredicateEl {
     }
 }
 
-pub struct GlueTriggerPredicateElRef {
+#[allow(dead_code)]
+pub struct GlueTrigger_PredicateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueTriggerPredicateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTriggerPredicateElRef {
-        GlueTriggerPredicateElRef {
+impl terrars::Ref for GlueTrigger_PredicateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTrigger_PredicateRef {
+        GlueTrigger_PredicateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueTriggerPredicateElRef {
+impl GlueTrigger_PredicateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -998,20 +1039,22 @@ impl GlueTriggerPredicateElRef {
     }
 
     #[doc = "Get a reference to the value of field `conditions` after provisioning.\n"]
-    pub fn conditions(&self) -> terrars::ListRef<GlueTriggerPredicateElConditionsElRef> {
+    pub fn conditions(&self) -> terrars::ListRef<GlueTrigger_Predicate_ConditionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conditions", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GlueTriggerTimeoutsEl {
+pub struct GlueTrigger_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueTriggerTimeoutsEl {
+impl GlueTrigger_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1023,10 +1066,16 @@ impl GlueTriggerTimeoutsEl {
         self.delete = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for GlueTriggerTimeoutsEl {
-    type O = terrars::BlockAssignable<GlueTriggerTimeoutsEl>;
+impl terrars::ToListMappable for GlueTrigger_Timeouts {
+    type O = terrars::BlockAssignable<GlueTrigger_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1037,32 +1086,35 @@ impl terrars::ToListMappable for GlueTriggerTimeoutsEl {
     }
 }
 
-pub struct BuildGlueTriggerTimeoutsEl {}
+pub struct BuildGlueTrigger_Timeouts {}
 
-impl BuildGlueTriggerTimeoutsEl {
-    pub fn build(self) -> GlueTriggerTimeoutsEl {
-        GlueTriggerTimeoutsEl {
+impl BuildGlueTrigger_Timeouts {
+    pub fn build(self) -> GlueTrigger_Timeouts {
+        GlueTrigger_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlueTriggerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GlueTrigger_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueTriggerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTriggerTimeoutsElRef {
-        GlueTriggerTimeoutsElRef {
+impl terrars::Ref for GlueTrigger_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueTrigger_TimeoutsRef {
+        GlueTrigger_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueTriggerTimeoutsElRef {
+impl GlueTrigger_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1076,11 +1128,9 @@ impl GlueTriggerTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct GlueTriggerDynamic {
-    actions: std::option::Option<terrars::DynamicBlock<GlueTriggerActionsEl>>,
-    event_batching_condition: std::option::Option<terrars::DynamicBlock<GlueTriggerEventBatchingConditionEl>>,
-    predicate: std::option::Option<terrars::DynamicBlock<GlueTriggerPredicateEl>>,
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MedialiveInputSecurityGroupData {
+struct MedialiveInputSecurityGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,20 +23,22 @@ struct MedialiveInputSecurityGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MedialiveInputSecurityGroupTimeoutsEl>,
+    timeouts: std::option::Option<MedialiveInputSecurityGroup_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    whitelist_rules: std::option::Option<std::vec::Vec<MedialiveInputSecurityGroupWhitelistRulesEl>>,
+    whitelist_rules: std::option::Option<std::vec::Vec<MedialiveInputSecurityGroup_WhitelistRules>>,
     dynamic: MedialiveInputSecurityGroupDynamic,
 }
 
 struct MedialiveInputSecurityGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MedialiveInputSecurityGroupData>,
+    data: std::cell::RefCell<MedialiveInputSecurityGroupData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl MedialiveInputSecurityGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -159,7 +170,7 @@ impl MedialiveInputSecurityGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MedialiveInputSecurityGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MedialiveInputSecurityGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -167,7 +178,7 @@ impl MedialiveInputSecurityGroup {
     #[doc = "Set the field `whitelist_rules`.\n"]
     pub fn set_whitelist_rules(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInputSecurityGroupWhitelistRulesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInputSecurityGroup_WhitelistRules>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -195,6 +206,12 @@ impl MedialiveInputSecurityGroup {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inputs", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -206,8 +223,8 @@ impl MedialiveInputSecurityGroup {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MedialiveInputSecurityGroupTimeoutsElRef {
-        MedialiveInputSecurityGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> MedialiveInputSecurityGroup_TimeoutsRef {
+        MedialiveInputSecurityGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -254,13 +271,14 @@ impl BuildMedialiveInputSecurityGroup {
         let out = MedialiveInputSecurityGroup(std::rc::Rc::new(MedialiveInputSecurityGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MedialiveInputSecurityGroupData {
+            data: std::cell::RefCell::new(MedialiveInputSecurityGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -311,6 +329,12 @@ impl MedialiveInputSecurityGroupRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inputs", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -322,16 +346,21 @@ impl MedialiveInputSecurityGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MedialiveInputSecurityGroupTimeoutsElRef {
-        MedialiveInputSecurityGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> MedialiveInputSecurityGroup_TimeoutsRef {
+        MedialiveInputSecurityGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct MedialiveInputSecurityGroupDynamic {
+    whitelist_rules: std::option::Option<terrars::DynamicBlock<MedialiveInputSecurityGroup_WhitelistRules>>,
+}
+
 #[derive(Serialize)]
-pub struct MedialiveInputSecurityGroupTimeoutsEl {
+pub struct MedialiveInputSecurityGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -340,7 +369,7 @@ pub struct MedialiveInputSecurityGroupTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MedialiveInputSecurityGroupTimeoutsEl {
+impl MedialiveInputSecurityGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -360,8 +389,8 @@ impl MedialiveInputSecurityGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MedialiveInputSecurityGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<MedialiveInputSecurityGroupTimeoutsEl>;
+impl terrars::ToListMappable for MedialiveInputSecurityGroup_Timeouts {
+    type O = terrars::BlockAssignable<MedialiveInputSecurityGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -372,11 +401,11 @@ impl terrars::ToListMappable for MedialiveInputSecurityGroupTimeoutsEl {
     }
 }
 
-pub struct BuildMedialiveInputSecurityGroupTimeoutsEl {}
+pub struct BuildMedialiveInputSecurityGroup_Timeouts {}
 
-impl BuildMedialiveInputSecurityGroupTimeoutsEl {
-    pub fn build(self) -> MedialiveInputSecurityGroupTimeoutsEl {
-        MedialiveInputSecurityGroupTimeoutsEl {
+impl BuildMedialiveInputSecurityGroup_Timeouts {
+    pub fn build(self) -> MedialiveInputSecurityGroup_Timeouts {
+        MedialiveInputSecurityGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -384,21 +413,23 @@ impl BuildMedialiveInputSecurityGroupTimeoutsEl {
     }
 }
 
-pub struct MedialiveInputSecurityGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MedialiveInputSecurityGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveInputSecurityGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInputSecurityGroupTimeoutsElRef {
-        MedialiveInputSecurityGroupTimeoutsElRef {
+impl terrars::Ref for MedialiveInputSecurityGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInputSecurityGroup_TimeoutsRef {
+        MedialiveInputSecurityGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveInputSecurityGroupTimeoutsElRef {
+impl MedialiveInputSecurityGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -420,14 +451,14 @@ impl MedialiveInputSecurityGroupTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MedialiveInputSecurityGroupWhitelistRulesEl {
+pub struct MedialiveInputSecurityGroup_WhitelistRules {
     cidr: terrars::PrimField<std::string::String>,
 }
 
-impl MedialiveInputSecurityGroupWhitelistRulesEl { }
+impl MedialiveInputSecurityGroup_WhitelistRules { }
 
-impl terrars::ToListMappable for MedialiveInputSecurityGroupWhitelistRulesEl {
-    type O = terrars::BlockAssignable<MedialiveInputSecurityGroupWhitelistRulesEl>;
+impl terrars::ToListMappable for MedialiveInputSecurityGroup_WhitelistRules {
+    type O = terrars::BlockAssignable<MedialiveInputSecurityGroup_WhitelistRules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -438,35 +469,34 @@ impl terrars::ToListMappable for MedialiveInputSecurityGroupWhitelistRulesEl {
     }
 }
 
-pub struct BuildMedialiveInputSecurityGroupWhitelistRulesEl {
+pub struct BuildMedialiveInputSecurityGroup_WhitelistRules {
     #[doc = ""]
     pub cidr: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMedialiveInputSecurityGroupWhitelistRulesEl {
-    pub fn build(self) -> MedialiveInputSecurityGroupWhitelistRulesEl {
-        MedialiveInputSecurityGroupWhitelistRulesEl { cidr: self.cidr }
+impl BuildMedialiveInputSecurityGroup_WhitelistRules {
+    pub fn build(self) -> MedialiveInputSecurityGroup_WhitelistRules {
+        MedialiveInputSecurityGroup_WhitelistRules { cidr: self.cidr }
     }
 }
 
-pub struct MedialiveInputSecurityGroupWhitelistRulesElRef {
+#[allow(dead_code)]
+pub struct MedialiveInputSecurityGroup_WhitelistRulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveInputSecurityGroupWhitelistRulesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> MedialiveInputSecurityGroupWhitelistRulesElRef {
-        MedialiveInputSecurityGroupWhitelistRulesElRef {
+impl terrars::Ref for MedialiveInputSecurityGroup_WhitelistRulesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInputSecurityGroup_WhitelistRulesRef {
+        MedialiveInputSecurityGroup_WhitelistRulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveInputSecurityGroupWhitelistRulesElRef {
+impl MedialiveInputSecurityGroup_WhitelistRulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -475,9 +505,4 @@ impl MedialiveInputSecurityGroupWhitelistRulesElRef {
     pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MedialiveInputSecurityGroupDynamic {
-    whitelist_rules: std::option::Option<terrars::DynamicBlock<MedialiveInputSecurityGroupWhitelistRulesEl>>,
 }

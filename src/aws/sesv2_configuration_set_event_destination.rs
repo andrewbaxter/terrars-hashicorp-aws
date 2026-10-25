@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Sesv2ConfigurationSetEventDestinationData {
+struct Sesv2ConfigurationSetEventDestinationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,14 +25,16 @@ struct Sesv2ConfigurationSetEventDestinationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    event_destination: std::option::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestinationEventDestinationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    event_destination: std::option::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestination_EventDestination>>,
     dynamic: Sesv2ConfigurationSetEventDestinationDynamic,
 }
 
 struct Sesv2ConfigurationSetEventDestination_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Sesv2ConfigurationSetEventDestinationData>,
+    data: std::cell::RefCell<Sesv2ConfigurationSetEventDestinationData_>,
 }
 
 #[derive(Clone)]
@@ -136,15 +140,17 @@ impl Sesv2ConfigurationSetEventDestination {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `event_destination`.\n"]
     pub fn set_event_destination(
         self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<Sesv2ConfigurationSetEventDestinationEventDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSetEventDestination_EventDestination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -172,8 +178,14 @@ impl Sesv2ConfigurationSetEventDestination {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `event_destination` after provisioning.\n"]
-    pub fn event_destination(&self) -> terrars::ListRef<Sesv2ConfigurationSetEventDestinationEventDestinationElRef> {
+    pub fn event_destination(&self) -> terrars::ListRef<Sesv2ConfigurationSetEventDestination_EventDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_destination", self.extract_ref()))
     }
 }
@@ -222,7 +234,7 @@ impl BuildSesv2ConfigurationSetEventDestination {
         let out = Sesv2ConfigurationSetEventDestination(std::rc::Rc::new(Sesv2ConfigurationSetEventDestination_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Sesv2ConfigurationSetEventDestinationData {
+            data: std::cell::RefCell::new(Sesv2ConfigurationSetEventDestinationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -231,6 +243,7 @@ impl BuildSesv2ConfigurationSetEventDestination {
                 configuration_set_name: self.configuration_set_name,
                 event_destination_name: self.event_destination_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 event_destination: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -278,27 +291,40 @@ impl Sesv2ConfigurationSetEventDestinationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `event_destination` after provisioning.\n"]
-    pub fn event_destination(&self) -> terrars::ListRef<Sesv2ConfigurationSetEventDestinationEventDestinationElRef> {
+    pub fn event_destination(&self) -> terrars::ListRef<Sesv2ConfigurationSetEventDestination_EventDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_destination", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Sesv2ConfigurationSetEventDestinationDynamic {
+    event_destination: std
+    ::option
+    ::Option<terrars::DynamicBlock<Sesv2ConfigurationSetEventDestination_EventDestination>>,
+}
+
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl {
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration {
     default_dimension_value: terrars::PrimField<std::string::String>,
     dimension_name: terrars::PrimField<std::string::String>,
     dimension_value_source: terrars::PrimField<std::string::String>,
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl { }
+impl Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration { }
 
 impl terrars
-::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl {
+::ToListMappable for Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration {
     type O =
         terrars
         ::BlockAssignable<
-            Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl,
+            Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -310,7 +336,7 @@ impl terrars
     }
 }
 
-pub struct BuildSesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl {
+pub struct BuildSesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration {
     #[doc = ""]
     pub default_dimension_value: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -319,11 +345,11 @@ pub struct BuildSesv2ConfigurationSetEventDestinationEventDestinationElCloudWatc
     pub dimension_value_source: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl {
+impl BuildSesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration {
     pub fn build(
         self,
-    ) -> Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl {
+    ) -> Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration {
+        Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration {
             default_dimension_value: self.default_dimension_value,
             dimension_name: self.dimension_name,
             dimension_value_source: self.dimension_value_source,
@@ -331,25 +357,27 @@ impl BuildSesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDesti
     }
 }
 
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationElRef {
+::Ref for Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationElRef {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationElRef {
+    ) -> Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfigurationRef {
+        Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationElRef {
+impl Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -371,31 +399,31 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinatio
 }
 
 #[derive(Serialize, Default)]
-struct Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDynamic {
+struct Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestinationDynamic {
     dimension_configuration: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl,
+            Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl {
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dimension_configuration: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl>,
+        ::Vec<Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration>,
     >,
-    dynamic: Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDynamic,
+    dynamic: Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestinationDynamic,
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl {
+impl Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination {
     #[doc = "Set the field `dimension_configuration`.\n"]
     pub fn set_dimension_configuration(
         mut self,
@@ -407,7 +435,7 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinatio
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationEl,
+                            Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -423,9 +451,8 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinatio
     }
 }
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl {
-    type O =
-        terrars::BlockAssignable<Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -436,35 +463,37 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDesti
     }
 }
 
-pub struct BuildSesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl {}
+pub struct BuildSesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination {}
 
-impl BuildSesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl {
-    pub fn build(self) -> Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl {
+impl BuildSesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination {
+    pub fn build(self) -> Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination {
+        Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination {
             dimension_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElRef {
+impl terrars::Ref for Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElRef {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElRef {
+    ) -> Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestinationRef {
+        Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElRef {
+impl Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -473,25 +502,20 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinatio
     pub fn dimension_configuration(
         &self,
     ) -> terrars
-    ::ListRef<
-        Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElDimensionConfigurationElRef,
-    > {
+    ::ListRef<Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination_DimensionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dimension_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl {
-    delivery_stream_arn: terrars::PrimField<std::string::String>,
-    iam_role_arn: terrars::PrimField<std::string::String>,
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination {
+    event_bus_arn: terrars::PrimField<std::string::String>,
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl { }
+impl Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination { }
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl {
-    type O =
-        terrars
-        ::BlockAssignable<Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -502,40 +526,106 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDesti
     }
 }
 
-pub struct BuildSesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl {
+pub struct BuildSesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination {
     #[doc = ""]
-    pub delivery_stream_arn: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub iam_role_arn: terrars::PrimField<std::string::String>,
+    pub event_bus_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl {
-    pub fn build(self) -> Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl {
-            delivery_stream_arn: self.delivery_stream_arn,
-            iam_role_arn: self.iam_role_arn,
+impl BuildSesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination {
+    pub fn build(self) -> Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination {
+        Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination {
+            event_bus_arn: self.event_bus_arn,
         }
     }
 }
 
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationElRef {
+impl terrars::Ref for Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationElRef {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationElRef {
+    ) -> Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestinationRef {
+        Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationElRef {
+impl Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestinationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `event_bus_arn` after provisioning.\n"]
+    pub fn event_bus_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_bus_arn", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination {
+    delivery_stream_arn: terrars::PrimField<std::string::String>,
+    iam_role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination { }
+
+impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination {
+    type O =
+        terrars::BlockAssignable<Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination {
+    #[doc = ""]
+    pub delivery_stream_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub iam_role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildSesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination {
+    pub fn build(self) -> Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination {
+        Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination {
+            delivery_stream_arn: self.delivery_stream_arn,
+            iam_role_arn: self.iam_role_arn,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestinationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestinationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestinationRef {
+        Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestinationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -552,14 +642,14 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDesti
 }
 
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl {
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination {
     application_arn: terrars::PrimField<std::string::String>,
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl { }
+impl Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination { }
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl {
-    type O = terrars::BlockAssignable<Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -570,37 +660,39 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDesti
     }
 }
 
-pub struct BuildSesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl {
+pub struct BuildSesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination {
     #[doc = ""]
     pub application_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl {
-    pub fn build(self) -> Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl {
+impl BuildSesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination {
+    pub fn build(self) -> Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination {
+        Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination {
             application_arn: self.application_arn,
         }
     }
 }
 
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationElRef {
+impl terrars::Ref for Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationElRef {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationElRef {
+    ) -> Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestinationRef {
+        Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationElRef {
+impl Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -612,14 +704,14 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationE
 }
 
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl {
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestination {
     topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl { }
+impl Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestination { }
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl {
-    type O = terrars::BlockAssignable<Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestination {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -630,35 +722,37 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDesti
     }
 }
 
-pub struct BuildSesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl {
+pub struct BuildSesv2ConfigurationSetEventDestination_EventDestination_SnsDestination {
     #[doc = ""]
     pub topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl {
-    pub fn build(self) -> Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl { topic_arn: self.topic_arn }
+impl BuildSesv2ConfigurationSetEventDestination_EventDestination_SnsDestination {
+    pub fn build(self) -> Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestination {
+        Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestination { topic_arn: self.topic_arn }
     }
 }
 
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationElRef {
+impl terrars::Ref for Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationElRef {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationElRef {
+    ) -> Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestinationRef {
+        Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationElRef {
+impl Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -670,48 +764,55 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationElRef 
 }
 
 #[derive(Serialize, Default)]
-struct Sesv2ConfigurationSetEventDestinationEventDestinationElDynamic {
+struct Sesv2ConfigurationSetEventDestination_EventDestinationDynamic {
     cloud_watch_destination: std
     ::option
-    ::Option<terrars::DynamicBlock<Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl>>,
+    ::Option<terrars::DynamicBlock<Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination>>,
+    event_bridge_destination: std
+    ::option
+    ::Option<terrars::DynamicBlock<Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination>>,
     kinesis_firehose_destination: std
     ::option
     ::Option<
-        terrars::DynamicBlock<Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl>,
+        terrars::DynamicBlock<Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination>,
     >,
     pinpoint_destination: std
     ::option
-    ::Option<terrars::DynamicBlock<Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl>>,
+    ::Option<terrars::DynamicBlock<Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination>>,
     sns_destination: std
     ::option
-    ::Option<terrars::DynamicBlock<Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl>>,
+    ::Option<terrars::DynamicBlock<Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestination>>,
 }
 
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationEl {
+pub struct Sesv2ConfigurationSetEventDestination_EventDestination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
-    matching_event_types: terrars::ListField<terrars::PrimField<std::string::String>>,
+    matching_event_types: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloud_watch_destination: std
     ::option
-    ::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl>>,
+    ::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    event_bridge_destination: std
+    ::option
+    ::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kinesis_firehose_destination: std
     ::option
-    ::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl>>,
+    ::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pinpoint_destination: std
     ::option
-    ::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl>>,
+    ::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sns_destination: std
     ::option
-    ::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl>>,
-    dynamic: Sesv2ConfigurationSetEventDestinationEventDestinationElDynamic,
+    ::Option<std::vec::Vec<Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestination>>,
+    dynamic: Sesv2ConfigurationSetEventDestination_EventDestinationDynamic,
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationEl {
+impl Sesv2ConfigurationSetEventDestination_EventDestination {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -729,7 +830,7 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationEl,
+                            Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestination,
                         >,
                     >,
     ) -> Self {
@@ -739,6 +840,32 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.cloud_watch_destination = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `event_bridge_destination`.\n"]
+    pub fn set_event_bridge_destination(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestination,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.event_bridge_destination = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.event_bridge_destination = std::option::Option::Some(d);
             },
         }
         self
@@ -755,7 +882,7 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationEl,
+                            Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestination,
                         >,
                     >,
     ) -> Self {
@@ -780,9 +907,7 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationEl,
-                        >,
+                        ::BlockAssignable<Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestination>,
                     >,
     ) -> Self {
         match v.into() {
@@ -806,7 +931,7 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationEl>,
+                        ::BlockAssignable<Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestination>,
                     >,
     ) -> Self {
         match v.into() {
@@ -821,8 +946,8 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationEl {
     }
 }
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDestinationEl {
-    type O = terrars::BlockAssignable<Sesv2ConfigurationSetEventDestinationEventDestinationEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestination_EventDestination {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSetEventDestination_EventDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -833,17 +958,18 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetEventDestinationEventDesti
     }
 }
 
-pub struct BuildSesv2ConfigurationSetEventDestinationEventDestinationEl {
+pub struct BuildSesv2ConfigurationSetEventDestination_EventDestination {
     #[doc = ""]
-    pub matching_event_types: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub matching_event_types: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSesv2ConfigurationSetEventDestinationEventDestinationEl {
-    pub fn build(self) -> Sesv2ConfigurationSetEventDestinationEventDestinationEl {
-        Sesv2ConfigurationSetEventDestinationEventDestinationEl {
+impl BuildSesv2ConfigurationSetEventDestination_EventDestination {
+    pub fn build(self) -> Sesv2ConfigurationSetEventDestination_EventDestination {
+        Sesv2ConfigurationSetEventDestination_EventDestination {
             enabled: core::default::Default::default(),
             matching_event_types: self.matching_event_types,
             cloud_watch_destination: core::default::Default::default(),
+            event_bridge_destination: core::default::Default::default(),
             kinesis_firehose_destination: core::default::Default::default(),
             pinpoint_destination: core::default::Default::default(),
             sns_destination: core::default::Default::default(),
@@ -852,24 +978,26 @@ impl BuildSesv2ConfigurationSetEventDestinationEventDestinationEl {
     }
 }
 
-pub struct Sesv2ConfigurationSetEventDestinationEventDestinationElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSetEventDestination_EventDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetEventDestinationEventDestinationElRef {
+impl terrars::Ref for Sesv2ConfigurationSetEventDestination_EventDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Sesv2ConfigurationSetEventDestinationEventDestinationElRef {
-        Sesv2ConfigurationSetEventDestinationEventDestinationElRef {
+    ) -> Sesv2ConfigurationSetEventDestination_EventDestinationRef {
+        Sesv2ConfigurationSetEventDestination_EventDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetEventDestinationEventDestinationElRef {
+impl Sesv2ConfigurationSetEventDestination_EventDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -880,42 +1008,42 @@ impl Sesv2ConfigurationSetEventDestinationEventDestinationElRef {
     }
 
     #[doc = "Get a reference to the value of field `matching_event_types` after provisioning.\n"]
-    pub fn matching_event_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.matching_event_types", self.base))
+    pub fn matching_event_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.matching_event_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `cloud_watch_destination` after provisioning.\n"]
     pub fn cloud_watch_destination(
         &self,
-    ) -> terrars::ListRef<Sesv2ConfigurationSetEventDestinationEventDestinationElCloudWatchDestinationElRef> {
+    ) -> terrars::ListRef<Sesv2ConfigurationSetEventDestination_EventDestination_CloudWatchDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_watch_destination", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `event_bridge_destination` after provisioning.\n"]
+    pub fn event_bridge_destination(
+        &self,
+    ) -> terrars::ListRef<Sesv2ConfigurationSetEventDestination_EventDestination_EventBridgeDestinationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.event_bridge_destination", self.base))
     }
 
     #[doc = "Get a reference to the value of field `kinesis_firehose_destination` after provisioning.\n"]
     pub fn kinesis_firehose_destination(
         &self,
-    ) -> terrars::ListRef<Sesv2ConfigurationSetEventDestinationEventDestinationElKinesisFirehoseDestinationElRef> {
+    ) -> terrars::ListRef<Sesv2ConfigurationSetEventDestination_EventDestination_KinesisFirehoseDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_firehose_destination", self.base))
     }
 
     #[doc = "Get a reference to the value of field `pinpoint_destination` after provisioning.\n"]
     pub fn pinpoint_destination(
         &self,
-    ) -> terrars::ListRef<Sesv2ConfigurationSetEventDestinationEventDestinationElPinpointDestinationElRef> {
+    ) -> terrars::ListRef<Sesv2ConfigurationSetEventDestination_EventDestination_PinpointDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pinpoint_destination", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sns_destination` after provisioning.\n"]
     pub fn sns_destination(
         &self,
-    ) -> terrars::ListRef<Sesv2ConfigurationSetEventDestinationEventDestinationElSnsDestinationElRef> {
+    ) -> terrars::ListRef<Sesv2ConfigurationSetEventDestination_EventDestination_SnsDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sns_destination", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Sesv2ConfigurationSetEventDestinationDynamic {
-    event_destination: std
-    ::option
-    ::Option<terrars::DynamicBlock<Sesv2ConfigurationSetEventDestinationEventDestinationEl>>,
 }

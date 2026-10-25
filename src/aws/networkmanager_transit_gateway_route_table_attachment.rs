@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerTransitGatewayRouteTableAttachmentData {
+struct NetworkmanagerTransitGatewayRouteTableAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,20 @@ struct NetworkmanagerTransitGatewayRouteTableAttachmentData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     peering_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_policy_label: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     transit_gateway_route_table_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerTransitGatewayRouteTableAttachment_Timeouts>,
 }
 
 struct NetworkmanagerTransitGatewayRouteTableAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerTransitGatewayRouteTableAttachmentData>,
+    data: std::cell::RefCell<NetworkmanagerTransitGatewayRouteTableAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,12 @@ impl NetworkmanagerTransitGatewayRouteTableAttachment {
         self
     }
 
+    #[doc = "Set the field `routing_policy_label`.\n"]
+    pub fn set_routing_policy_label(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().routing_policy_label = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -162,7 +172,7 @@ impl NetworkmanagerTransitGatewayRouteTableAttachment {
     #[doc = "Set the field `timeouts`.\n"]
     pub fn set_timeouts(
         self,
-        v: impl std::convert::Into<NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl>,
+        v: impl std::convert::Into<NetworkmanagerTransitGatewayRouteTableAttachment_Timeouts>,
     ) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
@@ -221,6 +231,11 @@ impl NetworkmanagerTransitGatewayRouteTableAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_policy_label` after provisioning.\n"]
+    pub fn routing_policy_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_policy_label", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `segment_name` after provisioning.\n"]
     pub fn segment_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_name", self.extract_ref()))
@@ -250,8 +265,8 @@ impl NetworkmanagerTransitGatewayRouteTableAttachment {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsElRef {
-        NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayRouteTableAttachment_TimeoutsRef {
+        NetworkmanagerTransitGatewayRouteTableAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -304,7 +319,7 @@ impl BuildNetworkmanagerTransitGatewayRouteTableAttachment {
                 std::rc::Rc::new(NetworkmanagerTransitGatewayRouteTableAttachment_ {
                     shared: stack.shared.clone(),
                     tf_id: self.tf_id,
-                    data: std::cell::RefCell::new(NetworkmanagerTransitGatewayRouteTableAttachmentData {
+                    data: std::cell::RefCell::new(NetworkmanagerTransitGatewayRouteTableAttachmentData_ {
                         depends_on: core::default::Default::default(),
                         provider: std::option::Option::None,
                         lifecycle: core::default::Default::default(),
@@ -312,6 +327,7 @@ impl BuildNetworkmanagerTransitGatewayRouteTableAttachment {
                         provisioner: core::default::Default::default(),
                         id: core::default::Default::default(),
                         peering_id: self.peering_id,
+                        routing_policy_label: core::default::Default::default(),
                         tags: core::default::Default::default(),
                         tags_all: core::default::Default::default(),
                         transit_gateway_route_table_arn: self.transit_gateway_route_table_arn,
@@ -400,6 +416,11 @@ impl NetworkmanagerTransitGatewayRouteTableAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_policy_label` after provisioning.\n"]
+    pub fn routing_policy_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_policy_label", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `segment_name` after provisioning.\n"]
     pub fn segment_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_name", self.extract_ref()))
@@ -429,8 +450,8 @@ impl NetworkmanagerTransitGatewayRouteTableAttachmentRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsElRef {
-        NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayRouteTableAttachment_TimeoutsRef {
+        NetworkmanagerTransitGatewayRouteTableAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -438,14 +459,14 @@ impl NetworkmanagerTransitGatewayRouteTableAttachmentRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl {
+pub struct NetworkmanagerTransitGatewayRouteTableAttachment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl {
+impl NetworkmanagerTransitGatewayRouteTableAttachment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -459,8 +480,8 @@ impl NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerTransitGatewayRouteTableAttachment_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerTransitGatewayRouteTableAttachment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -471,35 +492,37 @@ impl terrars::ToListMappable for NetworkmanagerTransitGatewayRouteTableAttachmen
     }
 }
 
-pub struct BuildNetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl {}
+pub struct BuildNetworkmanagerTransitGatewayRouteTableAttachment_Timeouts {}
 
-impl BuildNetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl {
-        NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsEl {
+impl BuildNetworkmanagerTransitGatewayRouteTableAttachment_Timeouts {
+    pub fn build(self) -> NetworkmanagerTransitGatewayRouteTableAttachment_Timeouts {
+        NetworkmanagerTransitGatewayRouteTableAttachment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerTransitGatewayRouteTableAttachment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerTransitGatewayRouteTableAttachment_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsElRef {
-        NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsElRef {
+    ) -> NetworkmanagerTransitGatewayRouteTableAttachment_TimeoutsRef {
+        NetworkmanagerTransitGatewayRouteTableAttachment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerTransitGatewayRouteTableAttachmentTimeoutsElRef {
+impl NetworkmanagerTransitGatewayRouteTableAttachment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

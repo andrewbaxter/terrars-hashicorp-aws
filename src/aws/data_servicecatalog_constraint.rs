@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataServicecatalogConstraintData {
+struct DataServicecatalogConstraintData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -22,13 +24,15 @@ struct DataServicecatalogConstraintData {
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataServicecatalogConstraintTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataServicecatalogConstraint_Timeouts>,
 }
 
 struct DataServicecatalogConstraint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataServicecatalogConstraintData>,
+    data: std::cell::RefCell<DataServicecatalogConstraintData_>,
 }
 
 #[derive(Clone)]
@@ -85,8 +89,15 @@ impl DataServicecatalogConstraint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataServicecatalogConstraintTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataServicecatalogConstraint_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -126,6 +137,12 @@ impl DataServicecatalogConstraint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -137,8 +154,8 @@ impl DataServicecatalogConstraint {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataServicecatalogConstraintTimeoutsElRef {
-        DataServicecatalogConstraintTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataServicecatalogConstraint_TimeoutsRef {
+        DataServicecatalogConstraint_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -187,7 +204,7 @@ impl BuildDataServicecatalogConstraint {
         let out = DataServicecatalogConstraint(std::rc::Rc::new(DataServicecatalogConstraint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataServicecatalogConstraintData {
+            data: std::cell::RefCell::new(DataServicecatalogConstraintData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -195,6 +212,7 @@ impl BuildDataServicecatalogConstraint {
                 accept_language: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: self.id,
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -261,6 +279,12 @@ impl DataServicecatalogConstraintRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -272,8 +296,8 @@ impl DataServicecatalogConstraintRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataServicecatalogConstraintTimeoutsElRef {
-        DataServicecatalogConstraintTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataServicecatalogConstraint_TimeoutsRef {
+        DataServicecatalogConstraint_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -281,12 +305,12 @@ impl DataServicecatalogConstraintRef {
 }
 
 #[derive(Serialize)]
-pub struct DataServicecatalogConstraintTimeoutsEl {
+pub struct DataServicecatalogConstraint_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataServicecatalogConstraintTimeoutsEl {
+impl DataServicecatalogConstraint_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -294,8 +318,8 @@ impl DataServicecatalogConstraintTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataServicecatalogConstraintTimeoutsEl {
-    type O = terrars::BlockAssignable<DataServicecatalogConstraintTimeoutsEl>;
+impl terrars::ToListMappable for DataServicecatalogConstraint_Timeouts {
+    type O = terrars::BlockAssignable<DataServicecatalogConstraint_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -306,29 +330,31 @@ impl terrars::ToListMappable for DataServicecatalogConstraintTimeoutsEl {
     }
 }
 
-pub struct BuildDataServicecatalogConstraintTimeoutsEl {}
+pub struct BuildDataServicecatalogConstraint_Timeouts {}
 
-impl BuildDataServicecatalogConstraintTimeoutsEl {
-    pub fn build(self) -> DataServicecatalogConstraintTimeoutsEl {
-        DataServicecatalogConstraintTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataServicecatalogConstraint_Timeouts {
+    pub fn build(self) -> DataServicecatalogConstraint_Timeouts {
+        DataServicecatalogConstraint_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataServicecatalogConstraintTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataServicecatalogConstraint_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataServicecatalogConstraintTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataServicecatalogConstraintTimeoutsElRef {
-        DataServicecatalogConstraintTimeoutsElRef {
+impl terrars::Ref for DataServicecatalogConstraint_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataServicecatalogConstraint_TimeoutsRef {
+        DataServicecatalogConstraint_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataServicecatalogConstraintTimeoutsElRef {
+impl DataServicecatalogConstraint_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

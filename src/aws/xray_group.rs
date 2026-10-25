@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct XrayGroupData {
+struct XrayGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,18 +25,20 @@ struct XrayGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    insights_configuration: std::option::Option<std::vec::Vec<XrayGroupInsightsConfigurationEl>>,
+    insights_configuration: std::option::Option<std::vec::Vec<XrayGroup_InsightsConfiguration>>,
     dynamic: XrayGroupDynamic,
 }
 
 struct XrayGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<XrayGroupData>,
+    data: std::cell::RefCell<XrayGroupData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl XrayGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -161,7 +172,7 @@ impl XrayGroup {
     #[doc = "Set the field `insights_configuration`.\n"]
     pub fn set_insights_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<XrayGroupInsightsConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<XrayGroup_InsightsConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -194,6 +205,12 @@ impl XrayGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -205,7 +222,7 @@ impl XrayGroup {
     }
 
     #[doc = "Get a reference to the value of field `insights_configuration` after provisioning.\n"]
-    pub fn insights_configuration(&self) -> terrars::ListRef<XrayGroupInsightsConfigurationElRef> {
+    pub fn insights_configuration(&self) -> terrars::ListRef<XrayGroup_InsightsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.insights_configuration", self.extract_ref()))
     }
 }
@@ -254,7 +271,7 @@ impl BuildXrayGroup {
         let out = XrayGroup(std::rc::Rc::new(XrayGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(XrayGroupData {
+            data: std::cell::RefCell::new(XrayGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -263,6 +280,7 @@ impl BuildXrayGroup {
                 filter_expression: self.filter_expression,
                 group_name: self.group_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 insights_configuration: core::default::Default::default(),
@@ -317,6 +335,12 @@ impl XrayGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -328,19 +352,24 @@ impl XrayGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `insights_configuration` after provisioning.\n"]
-    pub fn insights_configuration(&self) -> terrars::ListRef<XrayGroupInsightsConfigurationElRef> {
+    pub fn insights_configuration(&self) -> terrars::ListRef<XrayGroup_InsightsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.insights_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct XrayGroupDynamic {
+    insights_configuration: std::option::Option<terrars::DynamicBlock<XrayGroup_InsightsConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct XrayGroupInsightsConfigurationEl {
+pub struct XrayGroup_InsightsConfiguration {
     insights_enabled: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notifications_enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl XrayGroupInsightsConfigurationEl {
+impl XrayGroup_InsightsConfiguration {
     #[doc = "Set the field `notifications_enabled`.\n"]
     pub fn set_notifications_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.notifications_enabled = std::option::Option::Some(v.into());
@@ -348,8 +377,8 @@ impl XrayGroupInsightsConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for XrayGroupInsightsConfigurationEl {
-    type O = terrars::BlockAssignable<XrayGroupInsightsConfigurationEl>;
+impl terrars::ToListMappable for XrayGroup_InsightsConfiguration {
+    type O = terrars::BlockAssignable<XrayGroup_InsightsConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -360,35 +389,37 @@ impl terrars::ToListMappable for XrayGroupInsightsConfigurationEl {
     }
 }
 
-pub struct BuildXrayGroupInsightsConfigurationEl {
+pub struct BuildXrayGroup_InsightsConfiguration {
     #[doc = ""]
     pub insights_enabled: terrars::PrimField<bool>,
 }
 
-impl BuildXrayGroupInsightsConfigurationEl {
-    pub fn build(self) -> XrayGroupInsightsConfigurationEl {
-        XrayGroupInsightsConfigurationEl {
+impl BuildXrayGroup_InsightsConfiguration {
+    pub fn build(self) -> XrayGroup_InsightsConfiguration {
+        XrayGroup_InsightsConfiguration {
             insights_enabled: self.insights_enabled,
             notifications_enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct XrayGroupInsightsConfigurationElRef {
+#[allow(dead_code)]
+pub struct XrayGroup_InsightsConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for XrayGroupInsightsConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> XrayGroupInsightsConfigurationElRef {
-        XrayGroupInsightsConfigurationElRef {
+impl terrars::Ref for XrayGroup_InsightsConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> XrayGroup_InsightsConfigurationRef {
+        XrayGroup_InsightsConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl XrayGroupInsightsConfigurationElRef {
+impl XrayGroup_InsightsConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -402,9 +433,4 @@ impl XrayGroupInsightsConfigurationElRef {
     pub fn notifications_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.notifications_enabled", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct XrayGroupDynamic {
-    insights_configuration: std::option::Option<terrars::DynamicBlock<XrayGroupInsightsConfigurationEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApprunnerServiceData {
+struct ApprunnerServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,30 +24,32 @@ struct ApprunnerServiceData {
     auto_scaling_configuration_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     service_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_configuration: std::option::Option<std::vec::Vec<ApprunnerServiceEncryptionConfigurationEl>>,
+    encryption_configuration: std::option::Option<std::vec::Vec<ApprunnerService_EncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    health_check_configuration: std::option::Option<std::vec::Vec<ApprunnerServiceHealthCheckConfigurationEl>>,
+    health_check_configuration: std::option::Option<std::vec::Vec<ApprunnerService_HealthCheckConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_configuration: std::option::Option<std::vec::Vec<ApprunnerServiceInstanceConfigurationEl>>,
+    instance_configuration: std::option::Option<std::vec::Vec<ApprunnerService_InstanceConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_configuration: std::option::Option<std::vec::Vec<ApprunnerServiceNetworkConfigurationEl>>,
+    network_configuration: std::option::Option<std::vec::Vec<ApprunnerService_NetworkConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    observability_configuration: std::option::Option<std::vec::Vec<ApprunnerServiceObservabilityConfigurationEl>>,
+    observability_configuration: std::option::Option<std::vec::Vec<ApprunnerService_ObservabilityConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_configuration: std::option::Option<std::vec::Vec<ApprunnerServiceSourceConfigurationEl>>,
+    source_configuration: std::option::Option<std::vec::Vec<ApprunnerService_SourceConfiguration>>,
     dynamic: ApprunnerServiceDynamic,
 }
 
 struct ApprunnerService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApprunnerServiceData>,
+    data: std::cell::RefCell<ApprunnerServiceData_>,
 }
 
 #[derive(Clone)]
@@ -160,6 +164,13 @@ impl ApprunnerService {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -181,7 +192,7 @@ impl ApprunnerService {
     #[doc = "Set the field `encryption_configuration`.\n"]
     pub fn set_encryption_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerServiceEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerService_EncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -197,7 +208,7 @@ impl ApprunnerService {
     #[doc = "Set the field `health_check_configuration`.\n"]
     pub fn set_health_check_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerServiceHealthCheckConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerService_HealthCheckConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -213,7 +224,7 @@ impl ApprunnerService {
     #[doc = "Set the field `instance_configuration`.\n"]
     pub fn set_instance_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerServiceInstanceConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerService_InstanceConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -229,7 +240,7 @@ impl ApprunnerService {
     #[doc = "Set the field `network_configuration`.\n"]
     pub fn set_network_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerServiceNetworkConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerService_NetworkConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -245,7 +256,7 @@ impl ApprunnerService {
     #[doc = "Set the field `observability_configuration`.\n"]
     pub fn set_observability_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerServiceObservabilityConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerService_ObservabilityConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -261,7 +272,7 @@ impl ApprunnerService {
     #[doc = "Set the field `source_configuration`.\n"]
     pub fn set_source_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerServiceSourceConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerService_SourceConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -290,6 +301,12 @@ impl ApprunnerService {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_id` after provisioning.\n"]
@@ -323,32 +340,32 @@ impl ApprunnerService {
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::ListRef<ApprunnerServiceEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<ApprunnerService_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `health_check_configuration` after provisioning.\n"]
-    pub fn health_check_configuration(&self) -> terrars::ListRef<ApprunnerServiceHealthCheckConfigurationElRef> {
+    pub fn health_check_configuration(&self) -> terrars::ListRef<ApprunnerService_HealthCheckConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_configuration` after provisioning.\n"]
-    pub fn instance_configuration(&self) -> terrars::ListRef<ApprunnerServiceInstanceConfigurationElRef> {
+    pub fn instance_configuration(&self) -> terrars::ListRef<ApprunnerService_InstanceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_configuration` after provisioning.\n"]
-    pub fn network_configuration(&self) -> terrars::ListRef<ApprunnerServiceNetworkConfigurationElRef> {
+    pub fn network_configuration(&self) -> terrars::ListRef<ApprunnerService_NetworkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `observability_configuration` after provisioning.\n"]
-    pub fn observability_configuration(&self) -> terrars::ListRef<ApprunnerServiceObservabilityConfigurationElRef> {
+    pub fn observability_configuration(&self) -> terrars::ListRef<ApprunnerService_ObservabilityConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.observability_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_configuration` after provisioning.\n"]
-    pub fn source_configuration(&self) -> terrars::ListRef<ApprunnerServiceSourceConfigurationElRef> {
+    pub fn source_configuration(&self) -> terrars::ListRef<ApprunnerService_SourceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_configuration", self.extract_ref()))
     }
 }
@@ -395,7 +412,7 @@ impl BuildApprunnerService {
         let out = ApprunnerService(std::rc::Rc::new(ApprunnerService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApprunnerServiceData {
+            data: std::cell::RefCell::new(ApprunnerServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -403,6 +420,7 @@ impl BuildApprunnerService {
                 provisioner: core::default::Default::default(),
                 auto_scaling_configuration_arn: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 service_name: self.service_name,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -461,6 +479,12 @@ impl ApprunnerServiceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_id` after provisioning.\n"]
     pub fn service_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_id", self.extract_ref()))
@@ -492,45 +516,59 @@ impl ApprunnerServiceRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::ListRef<ApprunnerServiceEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<ApprunnerService_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `health_check_configuration` after provisioning.\n"]
-    pub fn health_check_configuration(&self) -> terrars::ListRef<ApprunnerServiceHealthCheckConfigurationElRef> {
+    pub fn health_check_configuration(&self) -> terrars::ListRef<ApprunnerService_HealthCheckConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_configuration` after provisioning.\n"]
-    pub fn instance_configuration(&self) -> terrars::ListRef<ApprunnerServiceInstanceConfigurationElRef> {
+    pub fn instance_configuration(&self) -> terrars::ListRef<ApprunnerService_InstanceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_configuration` after provisioning.\n"]
-    pub fn network_configuration(&self) -> terrars::ListRef<ApprunnerServiceNetworkConfigurationElRef> {
+    pub fn network_configuration(&self) -> terrars::ListRef<ApprunnerService_NetworkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `observability_configuration` after provisioning.\n"]
-    pub fn observability_configuration(&self) -> terrars::ListRef<ApprunnerServiceObservabilityConfigurationElRef> {
+    pub fn observability_configuration(&self) -> terrars::ListRef<ApprunnerService_ObservabilityConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.observability_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_configuration` after provisioning.\n"]
-    pub fn source_configuration(&self) -> terrars::ListRef<ApprunnerServiceSourceConfigurationElRef> {
+    pub fn source_configuration(&self) -> terrars::ListRef<ApprunnerService_SourceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApprunnerServiceDynamic {
+    encryption_configuration: std::option::Option<terrars::DynamicBlock<ApprunnerService_EncryptionConfiguration>>,
+    health_check_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ApprunnerService_HealthCheckConfiguration>>,
+    instance_configuration: std::option::Option<terrars::DynamicBlock<ApprunnerService_InstanceConfiguration>>,
+    network_configuration: std::option::Option<terrars::DynamicBlock<ApprunnerService_NetworkConfiguration>>,
+    observability_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ApprunnerService_ObservabilityConfiguration>>,
+    source_configuration: std::option::Option<terrars::DynamicBlock<ApprunnerService_SourceConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct ApprunnerServiceEncryptionConfigurationEl {
+pub struct ApprunnerService_EncryptionConfiguration {
     kms_key: terrars::PrimField<std::string::String>,
 }
 
-impl ApprunnerServiceEncryptionConfigurationEl { }
+impl ApprunnerService_EncryptionConfiguration { }
 
-impl terrars::ToListMappable for ApprunnerServiceEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceEncryptionConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_EncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -541,32 +579,34 @@ impl terrars::ToListMappable for ApprunnerServiceEncryptionConfigurationEl {
     }
 }
 
-pub struct BuildApprunnerServiceEncryptionConfigurationEl {
+pub struct BuildApprunnerService_EncryptionConfiguration {
     #[doc = ""]
     pub kms_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApprunnerServiceEncryptionConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceEncryptionConfigurationEl {
-        ApprunnerServiceEncryptionConfigurationEl { kms_key: self.kms_key }
+impl BuildApprunnerService_EncryptionConfiguration {
+    pub fn build(self) -> ApprunnerService_EncryptionConfiguration {
+        ApprunnerService_EncryptionConfiguration { kms_key: self.kms_key }
     }
 }
 
-pub struct ApprunnerServiceEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_EncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceEncryptionConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerServiceEncryptionConfigurationElRef {
-        ApprunnerServiceEncryptionConfigurationElRef {
+impl terrars::Ref for ApprunnerService_EncryptionConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerService_EncryptionConfigurationRef {
+        ApprunnerService_EncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceEncryptionConfigurationElRef {
+impl ApprunnerService_EncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -578,7 +618,7 @@ impl ApprunnerServiceEncryptionConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceHealthCheckConfigurationEl {
+pub struct ApprunnerService_HealthCheckConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     healthy_threshold: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -593,7 +633,7 @@ pub struct ApprunnerServiceHealthCheckConfigurationEl {
     unhealthy_threshold: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ApprunnerServiceHealthCheckConfigurationEl {
+impl ApprunnerService_HealthCheckConfiguration {
     #[doc = "Set the field `healthy_threshold`.\n"]
     pub fn set_healthy_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.healthy_threshold = std::option::Option::Some(v.into());
@@ -631,8 +671,8 @@ impl ApprunnerServiceHealthCheckConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceHealthCheckConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceHealthCheckConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_HealthCheckConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_HealthCheckConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -643,11 +683,11 @@ impl terrars::ToListMappable for ApprunnerServiceHealthCheckConfigurationEl {
     }
 }
 
-pub struct BuildApprunnerServiceHealthCheckConfigurationEl {}
+pub struct BuildApprunnerService_HealthCheckConfiguration {}
 
-impl BuildApprunnerServiceHealthCheckConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceHealthCheckConfigurationEl {
-        ApprunnerServiceHealthCheckConfigurationEl {
+impl BuildApprunnerService_HealthCheckConfiguration {
+    pub fn build(self) -> ApprunnerService_HealthCheckConfiguration {
+        ApprunnerService_HealthCheckConfiguration {
             healthy_threshold: core::default::Default::default(),
             interval: core::default::Default::default(),
             path: core::default::Default::default(),
@@ -658,21 +698,23 @@ impl BuildApprunnerServiceHealthCheckConfigurationEl {
     }
 }
 
-pub struct ApprunnerServiceHealthCheckConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_HealthCheckConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceHealthCheckConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerServiceHealthCheckConfigurationElRef {
-        ApprunnerServiceHealthCheckConfigurationElRef {
+impl terrars::Ref for ApprunnerService_HealthCheckConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerService_HealthCheckConfigurationRef {
+        ApprunnerService_HealthCheckConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceHealthCheckConfigurationElRef {
+impl ApprunnerService_HealthCheckConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -709,7 +751,7 @@ impl ApprunnerServiceHealthCheckConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceInstanceConfigurationEl {
+pub struct ApprunnerService_InstanceConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cpu: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -718,7 +760,7 @@ pub struct ApprunnerServiceInstanceConfigurationEl {
     memory: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApprunnerServiceInstanceConfigurationEl {
+impl ApprunnerService_InstanceConfiguration {
     #[doc = "Set the field `cpu`.\n"]
     pub fn set_cpu(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cpu = std::option::Option::Some(v.into());
@@ -738,8 +780,8 @@ impl ApprunnerServiceInstanceConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceInstanceConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceInstanceConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_InstanceConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_InstanceConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -750,11 +792,11 @@ impl terrars::ToListMappable for ApprunnerServiceInstanceConfigurationEl {
     }
 }
 
-pub struct BuildApprunnerServiceInstanceConfigurationEl {}
+pub struct BuildApprunnerService_InstanceConfiguration {}
 
-impl BuildApprunnerServiceInstanceConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceInstanceConfigurationEl {
-        ApprunnerServiceInstanceConfigurationEl {
+impl BuildApprunnerService_InstanceConfiguration {
+    pub fn build(self) -> ApprunnerService_InstanceConfiguration {
+        ApprunnerService_InstanceConfiguration {
             cpu: core::default::Default::default(),
             instance_role_arn: core::default::Default::default(),
             memory: core::default::Default::default(),
@@ -762,21 +804,23 @@ impl BuildApprunnerServiceInstanceConfigurationEl {
     }
 }
 
-pub struct ApprunnerServiceInstanceConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_InstanceConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceInstanceConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerServiceInstanceConfigurationElRef {
-        ApprunnerServiceInstanceConfigurationElRef {
+impl terrars::Ref for ApprunnerService_InstanceConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerService_InstanceConfigurationRef {
+        ApprunnerService_InstanceConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceInstanceConfigurationElRef {
+impl ApprunnerService_InstanceConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -798,14 +842,14 @@ impl ApprunnerServiceInstanceConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceNetworkConfigurationElEgressConfigurationEl {
+pub struct ApprunnerService_NetworkConfiguration_EgressConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_connector_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApprunnerServiceNetworkConfigurationElEgressConfigurationEl {
+impl ApprunnerService_NetworkConfiguration_EgressConfiguration {
     #[doc = "Set the field `egress_type`.\n"]
     pub fn set_egress_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.egress_type = std::option::Option::Some(v.into());
@@ -819,8 +863,8 @@ impl ApprunnerServiceNetworkConfigurationElEgressConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceNetworkConfigurationElEgressConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceNetworkConfigurationElEgressConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_NetworkConfiguration_EgressConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_NetworkConfiguration_EgressConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -831,35 +875,37 @@ impl terrars::ToListMappable for ApprunnerServiceNetworkConfigurationElEgressCon
     }
 }
 
-pub struct BuildApprunnerServiceNetworkConfigurationElEgressConfigurationEl {}
+pub struct BuildApprunnerService_NetworkConfiguration_EgressConfiguration {}
 
-impl BuildApprunnerServiceNetworkConfigurationElEgressConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceNetworkConfigurationElEgressConfigurationEl {
-        ApprunnerServiceNetworkConfigurationElEgressConfigurationEl {
+impl BuildApprunnerService_NetworkConfiguration_EgressConfiguration {
+    pub fn build(self) -> ApprunnerService_NetworkConfiguration_EgressConfiguration {
+        ApprunnerService_NetworkConfiguration_EgressConfiguration {
             egress_type: core::default::Default::default(),
             vpc_connector_arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApprunnerServiceNetworkConfigurationElEgressConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_NetworkConfiguration_EgressConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceNetworkConfigurationElEgressConfigurationElRef {
+impl terrars::Ref for ApprunnerService_NetworkConfiguration_EgressConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceNetworkConfigurationElEgressConfigurationElRef {
-        ApprunnerServiceNetworkConfigurationElEgressConfigurationElRef {
+    ) -> ApprunnerService_NetworkConfiguration_EgressConfigurationRef {
+        ApprunnerService_NetworkConfiguration_EgressConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceNetworkConfigurationElEgressConfigurationElRef {
+impl ApprunnerService_NetworkConfiguration_EgressConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -876,12 +922,12 @@ impl ApprunnerServiceNetworkConfigurationElEgressConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceNetworkConfigurationElIngressConfigurationEl {
+pub struct ApprunnerService_NetworkConfiguration_IngressConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_publicly_accessible: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ApprunnerServiceNetworkConfigurationElIngressConfigurationEl {
+impl ApprunnerService_NetworkConfiguration_IngressConfiguration {
     #[doc = "Set the field `is_publicly_accessible`.\n"]
     pub fn set_is_publicly_accessible(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.is_publicly_accessible = std::option::Option::Some(v.into());
@@ -889,8 +935,8 @@ impl ApprunnerServiceNetworkConfigurationElIngressConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceNetworkConfigurationElIngressConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceNetworkConfigurationElIngressConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_NetworkConfiguration_IngressConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_NetworkConfiguration_IngressConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -901,34 +947,36 @@ impl terrars::ToListMappable for ApprunnerServiceNetworkConfigurationElIngressCo
     }
 }
 
-pub struct BuildApprunnerServiceNetworkConfigurationElIngressConfigurationEl {}
+pub struct BuildApprunnerService_NetworkConfiguration_IngressConfiguration {}
 
-impl BuildApprunnerServiceNetworkConfigurationElIngressConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceNetworkConfigurationElIngressConfigurationEl {
-        ApprunnerServiceNetworkConfigurationElIngressConfigurationEl {
+impl BuildApprunnerService_NetworkConfiguration_IngressConfiguration {
+    pub fn build(self) -> ApprunnerService_NetworkConfiguration_IngressConfiguration {
+        ApprunnerService_NetworkConfiguration_IngressConfiguration {
             is_publicly_accessible: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApprunnerServiceNetworkConfigurationElIngressConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_NetworkConfiguration_IngressConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceNetworkConfigurationElIngressConfigurationElRef {
+impl terrars::Ref for ApprunnerService_NetworkConfiguration_IngressConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceNetworkConfigurationElIngressConfigurationElRef {
-        ApprunnerServiceNetworkConfigurationElIngressConfigurationElRef {
+    ) -> ApprunnerService_NetworkConfiguration_IngressConfigurationRef {
+        ApprunnerService_NetworkConfiguration_IngressConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceNetworkConfigurationElIngressConfigurationElRef {
+impl ApprunnerService_NetworkConfiguration_IngressConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -940,27 +988,33 @@ impl ApprunnerServiceNetworkConfigurationElIngressConfigurationElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ApprunnerServiceNetworkConfigurationElDynamic {
+struct ApprunnerService_NetworkConfigurationDynamic {
     egress_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceNetworkConfigurationElEgressConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<ApprunnerService_NetworkConfiguration_EgressConfiguration>>,
     ingress_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceNetworkConfigurationElIngressConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<ApprunnerService_NetworkConfiguration_IngressConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceNetworkConfigurationEl {
+pub struct ApprunnerService_NetworkConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress_configuration: std::option::Option<std::vec::Vec<ApprunnerServiceNetworkConfigurationElEgressConfigurationEl>>,
+    ip_address_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress_configuration: std
-    ::option
-    ::Option<std::vec::Vec<ApprunnerServiceNetworkConfigurationElIngressConfigurationEl>>,
-    dynamic: ApprunnerServiceNetworkConfigurationElDynamic,
+    egress_configuration: std::option::Option<std::vec::Vec<ApprunnerService_NetworkConfiguration_EgressConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ingress_configuration: std::option::Option<std::vec::Vec<ApprunnerService_NetworkConfiguration_IngressConfiguration>>,
+    dynamic: ApprunnerService_NetworkConfigurationDynamic,
 }
 
-impl ApprunnerServiceNetworkConfigurationEl {
+impl ApprunnerService_NetworkConfiguration {
+    #[doc = "Set the field `ip_address_type`.\n"]
+    pub fn set_ip_address_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `egress_configuration`.\n"]
     pub fn set_egress_configuration(
         mut self,
@@ -969,7 +1023,7 @@ impl ApprunnerServiceNetworkConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ApprunnerServiceNetworkConfigurationElEgressConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<ApprunnerService_NetworkConfiguration_EgressConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -990,7 +1044,7 @@ impl ApprunnerServiceNetworkConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ApprunnerServiceNetworkConfigurationElIngressConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<ApprunnerService_NetworkConfiguration_IngressConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1004,8 +1058,8 @@ impl ApprunnerServiceNetworkConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceNetworkConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceNetworkConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_NetworkConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_NetworkConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1016,11 +1070,12 @@ impl terrars::ToListMappable for ApprunnerServiceNetworkConfigurationEl {
     }
 }
 
-pub struct BuildApprunnerServiceNetworkConfigurationEl {}
+pub struct BuildApprunnerService_NetworkConfiguration {}
 
-impl BuildApprunnerServiceNetworkConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceNetworkConfigurationEl {
-        ApprunnerServiceNetworkConfigurationEl {
+impl BuildApprunnerService_NetworkConfiguration {
+    pub fn build(self) -> ApprunnerService_NetworkConfiguration {
+        ApprunnerService_NetworkConfiguration {
+            ip_address_type: core::default::Default::default(),
             egress_configuration: core::default::Default::default(),
             ingress_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1028,48 +1083,53 @@ impl BuildApprunnerServiceNetworkConfigurationEl {
     }
 }
 
-pub struct ApprunnerServiceNetworkConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_NetworkConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceNetworkConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerServiceNetworkConfigurationElRef {
-        ApprunnerServiceNetworkConfigurationElRef {
+impl terrars::Ref for ApprunnerService_NetworkConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerService_NetworkConfigurationRef {
+        ApprunnerService_NetworkConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceNetworkConfigurationElRef {
+impl ApprunnerService_NetworkConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `egress_configuration` after provisioning.\n"]
-    pub fn egress_configuration(
-        &self,
-    ) -> terrars::ListRef<ApprunnerServiceNetworkConfigurationElEgressConfigurationElRef> {
+    pub fn egress_configuration(&self) -> terrars::ListRef<ApprunnerService_NetworkConfiguration_EgressConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.egress_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ingress_configuration` after provisioning.\n"]
     pub fn ingress_configuration(
         &self,
-    ) -> terrars::ListRef<ApprunnerServiceNetworkConfigurationElIngressConfigurationElRef> {
+    ) -> terrars::ListRef<ApprunnerService_NetworkConfiguration_IngressConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingress_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceObservabilityConfigurationEl {
+pub struct ApprunnerService_ObservabilityConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     observability_configuration_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     observability_enabled: terrars::PrimField<bool>,
 }
 
-impl ApprunnerServiceObservabilityConfigurationEl {
+impl ApprunnerService_ObservabilityConfiguration {
     #[doc = "Set the field `observability_configuration_arn`.\n"]
     pub fn set_observability_configuration_arn(
         mut self,
@@ -1080,8 +1140,8 @@ impl ApprunnerServiceObservabilityConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceObservabilityConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceObservabilityConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_ObservabilityConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_ObservabilityConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1092,38 +1152,40 @@ impl terrars::ToListMappable for ApprunnerServiceObservabilityConfigurationEl {
     }
 }
 
-pub struct BuildApprunnerServiceObservabilityConfigurationEl {
+pub struct BuildApprunnerService_ObservabilityConfiguration {
     #[doc = ""]
     pub observability_enabled: terrars::PrimField<bool>,
 }
 
-impl BuildApprunnerServiceObservabilityConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceObservabilityConfigurationEl {
-        ApprunnerServiceObservabilityConfigurationEl {
+impl BuildApprunnerService_ObservabilityConfiguration {
+    pub fn build(self) -> ApprunnerService_ObservabilityConfiguration {
+        ApprunnerService_ObservabilityConfiguration {
             observability_configuration_arn: core::default::Default::default(),
             observability_enabled: self.observability_enabled,
         }
     }
 }
 
-pub struct ApprunnerServiceObservabilityConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_ObservabilityConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceObservabilityConfigurationElRef {
+impl terrars::Ref for ApprunnerService_ObservabilityConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceObservabilityConfigurationElRef {
-        ApprunnerServiceObservabilityConfigurationElRef {
+    ) -> ApprunnerService_ObservabilityConfigurationRef {
+        ApprunnerService_ObservabilityConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceObservabilityConfigurationElRef {
+impl ApprunnerService_ObservabilityConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1140,14 +1202,14 @@ impl ApprunnerServiceObservabilityConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl {
+pub struct ApprunnerService_SourceConfiguration_AuthenticationConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connection_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl {
+impl ApprunnerService_SourceConfiguration_AuthenticationConfiguration {
     #[doc = "Set the field `access_role_arn`.\n"]
     pub fn set_access_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_role_arn = std::option::Option::Some(v.into());
@@ -1161,8 +1223,8 @@ impl ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_SourceConfiguration_AuthenticationConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_SourceConfiguration_AuthenticationConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1173,35 +1235,37 @@ impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElAuthentica
     }
 }
 
-pub struct BuildApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl {}
+pub struct BuildApprunnerService_SourceConfiguration_AuthenticationConfiguration {}
 
-impl BuildApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl {
-        ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl {
+impl BuildApprunnerService_SourceConfiguration_AuthenticationConfiguration {
+    pub fn build(self) -> ApprunnerService_SourceConfiguration_AuthenticationConfiguration {
+        ApprunnerService_SourceConfiguration_AuthenticationConfiguration {
             access_role_arn: core::default::Default::default(),
             connection_arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApprunnerServiceSourceConfigurationElAuthenticationConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_SourceConfiguration_AuthenticationConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceSourceConfigurationElAuthenticationConfigurationElRef {
+impl terrars::Ref for ApprunnerService_SourceConfiguration_AuthenticationConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceSourceConfigurationElAuthenticationConfigurationElRef {
-        ApprunnerServiceSourceConfigurationElAuthenticationConfigurationElRef {
+    ) -> ApprunnerService_SourceConfiguration_AuthenticationConfigurationRef {
+        ApprunnerService_SourceConfiguration_AuthenticationConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceSourceConfigurationElAuthenticationConfigurationElRef {
+impl ApprunnerService_SourceConfiguration_AuthenticationConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1218,7 +1282,7 @@ impl ApprunnerServiceSourceConfigurationElAuthenticationConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl {
+pub struct ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     build_command: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1232,7 +1296,7 @@ pub struct ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfiguratio
     start_command: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl {
+impl ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues {
     #[doc = "Set the field `build_command`.\n"]
     pub fn set_build_command(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.build_command = std::option::Option::Some(v.into());
@@ -1271,11 +1335,11 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCod
 }
 
 impl terrars
-::ToListMappable for ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl {
+::ToListMappable for ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues {
     type O =
         terrars
         ::BlockAssignable<
-            ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl,
+            ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1287,16 +1351,16 @@ impl terrars
     }
 }
 
-pub struct BuildApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl {
+pub struct BuildApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues {
     #[doc = ""]
     pub runtime: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl {
+impl BuildApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues {
     pub fn build(
         self,
-    ) -> ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl {
-        ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl {
+    ) -> ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues {
+        ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues {
             build_command: core::default::Default::default(),
             port: core::default::Default::default(),
             runtime: self.runtime,
@@ -1307,25 +1371,27 @@ impl BuildApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfiguration
     }
 }
 
-pub struct ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValuesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesElRef {
+::Ref for ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValuesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesElRef {
-        ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesElRef {
+    ) -> ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValuesRef {
+        ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValuesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesElRef {
+impl ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValuesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1362,32 +1428,28 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCod
 }
 
 #[derive(Serialize, Default)]
-struct ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElDynamic {
+struct ApprunnerService_SourceConfiguration_CodeRepository_CodeConfigurationDynamic {
     code_configuration_values: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl,
-        >,
+        ::DynamicBlock<ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl {
+pub struct ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration {
     configuration_source: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code_configuration_values: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl>,
+        std::vec::Vec<ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues>,
     >,
-    dynamic: ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElDynamic,
+    dynamic: ApprunnerService_SourceConfiguration_CodeRepository_CodeConfigurationDynamic,
 }
 
-impl ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl {
+impl ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration {
     #[doc = "Set the field `code_configuration_values`.\n"]
     pub fn set_code_configuration_values(
         mut self,
@@ -1399,7 +1461,7 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesEl,
+                            ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValues,
                         >,
                     >,
     ) -> Self {
@@ -1415,8 +1477,8 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1427,14 +1489,14 @@ impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElCodeReposi
     }
 }
 
-pub struct BuildApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl {
+pub struct BuildApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration {
     #[doc = ""]
     pub configuration_source: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl {
-        ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl {
+impl BuildApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration {
+    pub fn build(self) -> ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration {
+        ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration {
             configuration_source: self.configuration_source,
             code_configuration_values: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1442,24 +1504,26 @@ impl BuildApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfiguration
     }
 }
 
-pub struct ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_SourceConfiguration_CodeRepository_CodeConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElRef {
+impl terrars::Ref for ApprunnerService_SourceConfiguration_CodeRepository_CodeConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElRef {
-        ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElRef {
+    ) -> ApprunnerService_SourceConfiguration_CodeRepository_CodeConfigurationRef {
+        ApprunnerService_SourceConfiguration_CodeRepository_CodeConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElRef {
+impl ApprunnerService_SourceConfiguration_CodeRepository_CodeConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1473,22 +1537,22 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElRef
     pub fn code_configuration_values(
         &self,
     ) -> terrars
-    ::ListRef<ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElCodeConfigurationValuesElRef> {
+    ::ListRef<ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration_CodeConfigurationValuesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.code_configuration_values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl {
+pub struct ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl { }
+impl ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion { }
 
-impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl>;
+impl terrars::ToListMappable for ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion {
+    type O = terrars::BlockAssignable<ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1499,40 +1563,42 @@ impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElCodeReposi
     }
 }
 
-pub struct BuildApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl {
+pub struct BuildApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl {
-    pub fn build(self) -> ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl {
-        ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl {
+impl BuildApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion {
+    pub fn build(self) -> ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion {
+        ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionElRef {
+impl terrars::Ref for ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionElRef {
-        ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionElRef {
+    ) -> ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersionRef {
+        ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionElRef {
+impl ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1549,30 +1615,38 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionElRef
 }
 
 #[derive(Serialize, Default)]
-struct ApprunnerServiceSourceConfigurationElCodeRepositoryElDynamic {
+struct ApprunnerService_SourceConfiguration_CodeRepositoryDynamic {
     code_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration>>,
     source_code_version: std
     ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl>>,
+    ::Option<terrars::DynamicBlock<ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion>>,
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceSourceConfigurationElCodeRepositoryEl {
+pub struct ApprunnerService_SourceConfiguration_CodeRepository {
     repository_url: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_directory: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     code_configuration: std
     ::option
-    ::Option<std::vec::Vec<ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl>>,
+    ::Option<std::vec::Vec<ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_code_version: std
     ::option
-    ::Option<std::vec::Vec<ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl>>,
-    dynamic: ApprunnerServiceSourceConfigurationElCodeRepositoryElDynamic,
+    ::Option<std::vec::Vec<ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion>>,
+    dynamic: ApprunnerService_SourceConfiguration_CodeRepositoryDynamic,
 }
 
-impl ApprunnerServiceSourceConfigurationElCodeRepositoryEl {
+impl ApprunnerService_SourceConfiguration_CodeRepository {
+    #[doc = "Set the field `source_directory`.\n"]
+    pub fn set_source_directory(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.source_directory = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `code_configuration`.\n"]
     pub fn set_code_configuration(
         mut self,
@@ -1583,7 +1657,7 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationEl>,
+                        ::BlockAssignable<ApprunnerService_SourceConfiguration_CodeRepository_CodeConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1607,7 +1681,7 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionEl>,
+                        ::BlockAssignable<ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersion>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1622,8 +1696,8 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElCodeRepositoryEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceSourceConfigurationElCodeRepositoryEl>;
+impl terrars::ToListMappable for ApprunnerService_SourceConfiguration_CodeRepository {
+    type O = terrars::BlockAssignable<ApprunnerService_SourceConfiguration_CodeRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1634,15 +1708,16 @@ impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElCodeReposi
     }
 }
 
-pub struct BuildApprunnerServiceSourceConfigurationElCodeRepositoryEl {
+pub struct BuildApprunnerService_SourceConfiguration_CodeRepository {
     #[doc = ""]
     pub repository_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApprunnerServiceSourceConfigurationElCodeRepositoryEl {
-    pub fn build(self) -> ApprunnerServiceSourceConfigurationElCodeRepositoryEl {
-        ApprunnerServiceSourceConfigurationElCodeRepositoryEl {
+impl BuildApprunnerService_SourceConfiguration_CodeRepository {
+    pub fn build(self) -> ApprunnerService_SourceConfiguration_CodeRepository {
+        ApprunnerService_SourceConfiguration_CodeRepository {
             repository_url: self.repository_url,
+            source_directory: core::default::Default::default(),
             code_configuration: core::default::Default::default(),
             source_code_version: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1650,24 +1725,26 @@ impl BuildApprunnerServiceSourceConfigurationElCodeRepositoryEl {
     }
 }
 
-pub struct ApprunnerServiceSourceConfigurationElCodeRepositoryElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_SourceConfiguration_CodeRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceSourceConfigurationElCodeRepositoryElRef {
+impl terrars::Ref for ApprunnerService_SourceConfiguration_CodeRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceSourceConfigurationElCodeRepositoryElRef {
-        ApprunnerServiceSourceConfigurationElCodeRepositoryElRef {
+    ) -> ApprunnerService_SourceConfiguration_CodeRepositoryRef {
+        ApprunnerService_SourceConfiguration_CodeRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceSourceConfigurationElCodeRepositoryElRef {
+impl ApprunnerService_SourceConfiguration_CodeRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1677,23 +1754,28 @@ impl ApprunnerServiceSourceConfigurationElCodeRepositoryElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository_url", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `source_directory` after provisioning.\n"]
+    pub fn source_directory(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_directory", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `code_configuration` after provisioning.\n"]
     pub fn code_configuration(
         &self,
-    ) -> terrars::ListRef<ApprunnerServiceSourceConfigurationElCodeRepositoryElCodeConfigurationElRef> {
+    ) -> terrars::ListRef<ApprunnerService_SourceConfiguration_CodeRepository_CodeConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.code_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source_code_version` after provisioning.\n"]
     pub fn source_code_version(
         &self,
-    ) -> terrars::ListRef<ApprunnerServiceSourceConfigurationElCodeRepositoryElSourceCodeVersionElRef> {
+    ) -> terrars::ListRef<ApprunnerService_SourceConfiguration_CodeRepository_SourceCodeVersionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_code_version", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl {
+pub struct ApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1704,7 +1786,7 @@ pub struct ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurat
     start_command: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl {
+impl ApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration {
     #[doc = "Set the field `port`.\n"]
     pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.port = std::option::Option::Some(v.into());
@@ -1736,8 +1818,8 @@ impl ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl 
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1748,11 +1830,11 @@ impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElImageRepos
     }
 }
 
-pub struct BuildApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl {}
+pub struct BuildApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration {}
 
-impl BuildApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl {
-        ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl {
+impl BuildApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration {
+    pub fn build(self) -> ApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration {
+        ApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration {
             port: core::default::Default::default(),
             runtime_environment_secrets: core::default::Default::default(),
             runtime_environment_variables: core::default::Default::default(),
@@ -1761,24 +1843,26 @@ impl BuildApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurati
     }
 }
 
-pub struct ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_SourceConfiguration_ImageRepository_ImageConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationElRef {
+impl terrars::Ref for ApprunnerService_SourceConfiguration_ImageRepository_ImageConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationElRef {
-        ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationElRef {
+    ) -> ApprunnerService_SourceConfiguration_ImageRepository_ImageConfigurationRef {
+        ApprunnerService_SourceConfiguration_ImageRepository_ImageConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationElRef {
+impl ApprunnerService_SourceConfiguration_ImageRepository_ImageConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1805,24 +1889,24 @@ impl ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationElR
 }
 
 #[derive(Serialize, Default)]
-struct ApprunnerServiceSourceConfigurationElImageRepositoryElDynamic {
+struct ApprunnerService_SourceConfiguration_ImageRepositoryDynamic {
     image_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<ApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceSourceConfigurationElImageRepositoryEl {
+pub struct ApprunnerService_SourceConfiguration_ImageRepository {
     image_identifier: terrars::PrimField<std::string::String>,
     image_repository_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image_configuration: std
     ::option
-    ::Option<std::vec::Vec<ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl>>,
-    dynamic: ApprunnerServiceSourceConfigurationElImageRepositoryElDynamic,
+    ::Option<std::vec::Vec<ApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration>>,
+    dynamic: ApprunnerService_SourceConfiguration_ImageRepositoryDynamic,
 }
 
-impl ApprunnerServiceSourceConfigurationElImageRepositoryEl {
+impl ApprunnerService_SourceConfiguration_ImageRepository {
     #[doc = "Set the field `image_configuration`.\n"]
     pub fn set_image_configuration(
         mut self,
@@ -1833,7 +1917,7 @@ impl ApprunnerServiceSourceConfigurationElImageRepositoryEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationEl>,
+                        ::BlockAssignable<ApprunnerService_SourceConfiguration_ImageRepository_ImageConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1848,8 +1932,8 @@ impl ApprunnerServiceSourceConfigurationElImageRepositoryEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElImageRepositoryEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceSourceConfigurationElImageRepositoryEl>;
+impl terrars::ToListMappable for ApprunnerService_SourceConfiguration_ImageRepository {
+    type O = terrars::BlockAssignable<ApprunnerService_SourceConfiguration_ImageRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1860,16 +1944,16 @@ impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationElImageRepos
     }
 }
 
-pub struct BuildApprunnerServiceSourceConfigurationElImageRepositoryEl {
+pub struct BuildApprunnerService_SourceConfiguration_ImageRepository {
     #[doc = ""]
     pub image_identifier: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub image_repository_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApprunnerServiceSourceConfigurationElImageRepositoryEl {
-    pub fn build(self) -> ApprunnerServiceSourceConfigurationElImageRepositoryEl {
-        ApprunnerServiceSourceConfigurationElImageRepositoryEl {
+impl BuildApprunnerService_SourceConfiguration_ImageRepository {
+    pub fn build(self) -> ApprunnerService_SourceConfiguration_ImageRepository {
+        ApprunnerService_SourceConfiguration_ImageRepository {
             image_identifier: self.image_identifier,
             image_repository_type: self.image_repository_type,
             image_configuration: core::default::Default::default(),
@@ -1878,24 +1962,26 @@ impl BuildApprunnerServiceSourceConfigurationElImageRepositoryEl {
     }
 }
 
-pub struct ApprunnerServiceSourceConfigurationElImageRepositoryElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_SourceConfiguration_ImageRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceSourceConfigurationElImageRepositoryElRef {
+impl terrars::Ref for ApprunnerService_SourceConfiguration_ImageRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerServiceSourceConfigurationElImageRepositoryElRef {
-        ApprunnerServiceSourceConfigurationElImageRepositoryElRef {
+    ) -> ApprunnerService_SourceConfiguration_ImageRepositoryRef {
+        ApprunnerService_SourceConfiguration_ImageRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceSourceConfigurationElImageRepositoryElRef {
+impl ApprunnerService_SourceConfiguration_ImageRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1913,40 +1999,38 @@ impl ApprunnerServiceSourceConfigurationElImageRepositoryElRef {
     #[doc = "Get a reference to the value of field `image_configuration` after provisioning.\n"]
     pub fn image_configuration(
         &self,
-    ) -> terrars::ListRef<ApprunnerServiceSourceConfigurationElImageRepositoryElImageConfigurationElRef> {
+    ) -> terrars::ListRef<ApprunnerService_SourceConfiguration_ImageRepository_ImageConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_configuration", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct ApprunnerServiceSourceConfigurationElDynamic {
+struct ApprunnerService_SourceConfigurationDynamic {
     authentication_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl>>,
-    code_repository: std
-    ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceSourceConfigurationElCodeRepositoryEl>>,
+    ::Option<terrars::DynamicBlock<ApprunnerService_SourceConfiguration_AuthenticationConfiguration>>,
+    code_repository: std::option::Option<terrars::DynamicBlock<ApprunnerService_SourceConfiguration_CodeRepository>>,
     image_repository: std
     ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceSourceConfigurationElImageRepositoryEl>>,
+    ::Option<terrars::DynamicBlock<ApprunnerService_SourceConfiguration_ImageRepository>>,
 }
 
 #[derive(Serialize)]
-pub struct ApprunnerServiceSourceConfigurationEl {
+pub struct ApprunnerService_SourceConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_deployments_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authentication_configuration: std
     ::option
-    ::Option<std::vec::Vec<ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl>>,
+    ::Option<std::vec::Vec<ApprunnerService_SourceConfiguration_AuthenticationConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    code_repository: std::option::Option<std::vec::Vec<ApprunnerServiceSourceConfigurationElCodeRepositoryEl>>,
+    code_repository: std::option::Option<std::vec::Vec<ApprunnerService_SourceConfiguration_CodeRepository>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    image_repository: std::option::Option<std::vec::Vec<ApprunnerServiceSourceConfigurationElImageRepositoryEl>>,
-    dynamic: ApprunnerServiceSourceConfigurationElDynamic,
+    image_repository: std::option::Option<std::vec::Vec<ApprunnerService_SourceConfiguration_ImageRepository>>,
+    dynamic: ApprunnerService_SourceConfigurationDynamic,
 }
 
-impl ApprunnerServiceSourceConfigurationEl {
+impl ApprunnerService_SourceConfiguration {
     #[doc = "Set the field `auto_deployments_enabled`.\n"]
     pub fn set_auto_deployments_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.auto_deployments_enabled = std::option::Option::Some(v.into());
@@ -1962,7 +2046,7 @@ impl ApprunnerServiceSourceConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<ApprunnerServiceSourceConfigurationElAuthenticationConfigurationEl>,
+                        terrars::BlockAssignable<ApprunnerService_SourceConfiguration_AuthenticationConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1979,7 +2063,7 @@ impl ApprunnerServiceSourceConfigurationEl {
     #[doc = "Set the field `code_repository`.\n"]
     pub fn set_code_repository(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerServiceSourceConfigurationElCodeRepositoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerService_SourceConfiguration_CodeRepository>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1995,7 +2079,7 @@ impl ApprunnerServiceSourceConfigurationEl {
     #[doc = "Set the field `image_repository`.\n"]
     pub fn set_image_repository(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerServiceSourceConfigurationElImageRepositoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerService_SourceConfiguration_ImageRepository>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2009,8 +2093,8 @@ impl ApprunnerServiceSourceConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerServiceSourceConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerService_SourceConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerService_SourceConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2021,11 +2105,11 @@ impl terrars::ToListMappable for ApprunnerServiceSourceConfigurationEl {
     }
 }
 
-pub struct BuildApprunnerServiceSourceConfigurationEl {}
+pub struct BuildApprunnerService_SourceConfiguration {}
 
-impl BuildApprunnerServiceSourceConfigurationEl {
-    pub fn build(self) -> ApprunnerServiceSourceConfigurationEl {
-        ApprunnerServiceSourceConfigurationEl {
+impl BuildApprunnerService_SourceConfiguration {
+    pub fn build(self) -> ApprunnerService_SourceConfiguration {
+        ApprunnerService_SourceConfiguration {
             auto_deployments_enabled: core::default::Default::default(),
             authentication_configuration: core::default::Default::default(),
             code_repository: core::default::Default::default(),
@@ -2035,21 +2119,23 @@ impl BuildApprunnerServiceSourceConfigurationEl {
     }
 }
 
-pub struct ApprunnerServiceSourceConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerService_SourceConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerServiceSourceConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerServiceSourceConfigurationElRef {
-        ApprunnerServiceSourceConfigurationElRef {
+impl terrars::Ref for ApprunnerService_SourceConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApprunnerService_SourceConfigurationRef {
+        ApprunnerService_SourceConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerServiceSourceConfigurationElRef {
+impl ApprunnerService_SourceConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2062,31 +2148,17 @@ impl ApprunnerServiceSourceConfigurationElRef {
     #[doc = "Get a reference to the value of field `authentication_configuration` after provisioning.\n"]
     pub fn authentication_configuration(
         &self,
-    ) -> terrars::ListRef<ApprunnerServiceSourceConfigurationElAuthenticationConfigurationElRef> {
+    ) -> terrars::ListRef<ApprunnerService_SourceConfiguration_AuthenticationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `code_repository` after provisioning.\n"]
-    pub fn code_repository(&self) -> terrars::ListRef<ApprunnerServiceSourceConfigurationElCodeRepositoryElRef> {
+    pub fn code_repository(&self) -> terrars::ListRef<ApprunnerService_SourceConfiguration_CodeRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.code_repository", self.base))
     }
 
     #[doc = "Get a reference to the value of field `image_repository` after provisioning.\n"]
-    pub fn image_repository(&self) -> terrars::ListRef<ApprunnerServiceSourceConfigurationElImageRepositoryElRef> {
+    pub fn image_repository(&self) -> terrars::ListRef<ApprunnerService_SourceConfiguration_ImageRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_repository", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApprunnerServiceDynamic {
-    encryption_configuration: std::option::Option<terrars::DynamicBlock<ApprunnerServiceEncryptionConfigurationEl>>,
-    health_check_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceHealthCheckConfigurationEl>>,
-    instance_configuration: std::option::Option<terrars::DynamicBlock<ApprunnerServiceInstanceConfigurationEl>>,
-    network_configuration: std::option::Option<terrars::DynamicBlock<ApprunnerServiceNetworkConfigurationEl>>,
-    observability_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<ApprunnerServiceObservabilityConfigurationEl>>,
-    source_configuration: std::option::Option<terrars::DynamicBlock<ApprunnerServiceSourceConfigurationEl>>,
 }

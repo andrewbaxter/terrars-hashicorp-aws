@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SecurityhubAccountData {
+struct SecurityhubAccountData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,13 +21,21 @@ struct SecurityhubAccountData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_enable_controls: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    control_finding_generator: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_default_standards: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct SecurityhubAccount_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SecurityhubAccountData>,
+    data: std::cell::RefCell<SecurityhubAccountData_>,
 }
 
 #[derive(Clone)]
@@ -125,15 +135,69 @@ impl SecurityhubAccount {
         self
     }
 
+    #[doc = "Set the field `auto_enable_controls`.\n"]
+    pub fn set_auto_enable_controls(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().auto_enable_controls = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `control_finding_generator`.\n"]
+    pub fn set_control_finding_generator(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().control_finding_generator = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_default_standards`.\n"]
+    pub fn set_enable_default_standards(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_default_standards = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `auto_enable_controls` after provisioning.\n"]
+    pub fn auto_enable_controls(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_enable_controls", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `control_finding_generator` after provisioning.\n"]
+    pub fn control_finding_generator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.control_finding_generator", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_default_standards` after provisioning.\n"]
+    pub fn enable_default_standards(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_default_standards", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -177,13 +241,17 @@ impl BuildSecurityhubAccount {
         let out = SecurityhubAccount(std::rc::Rc::new(SecurityhubAccount_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SecurityhubAccountData {
+            data: std::cell::RefCell::new(SecurityhubAccountData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                auto_enable_controls: core::default::Default::default(),
+                control_finding_generator: core::default::Default::default(),
+                enable_default_standards: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -214,8 +282,34 @@ impl SecurityhubAccountRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `auto_enable_controls` after provisioning.\n"]
+    pub fn auto_enable_controls(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_enable_controls", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `control_finding_generator` after provisioning.\n"]
+    pub fn control_finding_generator(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.control_finding_generator", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_default_standards` after provisioning.\n"]
+    pub fn enable_default_standards(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_default_standards", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }

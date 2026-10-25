@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct VpcPeeringConnectionOptionsData {
+struct VpcPeeringConnectionOptionsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,18 +22,20 @@ struct VpcPeeringConnectionOptionsData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     vpc_peering_connection_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accepter: std::option::Option<std::vec::Vec<VpcPeeringConnectionOptionsAccepterEl>>,
+    accepter: std::option::Option<std::vec::Vec<VpcPeeringConnectionOptions_Accepter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    requester: std::option::Option<std::vec::Vec<VpcPeeringConnectionOptionsRequesterEl>>,
+    requester: std::option::Option<std::vec::Vec<VpcPeeringConnectionOptions_Requester>>,
     dynamic: VpcPeeringConnectionOptionsDynamic,
 }
 
 struct VpcPeeringConnectionOptions_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpcPeeringConnectionOptionsData>,
+    data: std::cell::RefCell<VpcPeeringConnectionOptionsData_>,
 }
 
 #[derive(Clone)]
@@ -137,10 +141,17 @@ impl VpcPeeringConnectionOptions {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `accepter`.\n"]
     pub fn set_accepter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VpcPeeringConnectionOptionsAccepterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VpcPeeringConnectionOptions_Accepter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -156,7 +167,7 @@ impl VpcPeeringConnectionOptions {
     #[doc = "Set the field `requester`.\n"]
     pub fn set_requester(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VpcPeeringConnectionOptionsRequesterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VpcPeeringConnectionOptions_Requester>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -174,18 +185,24 @@ impl VpcPeeringConnectionOptions {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_peering_connection_id` after provisioning.\n"]
     pub fn vpc_peering_connection_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_peering_connection_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `accepter` after provisioning.\n"]
-    pub fn accepter(&self) -> terrars::ListRef<VpcPeeringConnectionOptionsAccepterElRef> {
+    pub fn accepter(&self) -> terrars::ListRef<VpcPeeringConnectionOptions_AccepterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accepter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `requester` after provisioning.\n"]
-    pub fn requester(&self) -> terrars::ListRef<VpcPeeringConnectionOptionsRequesterElRef> {
+    pub fn requester(&self) -> terrars::ListRef<VpcPeeringConnectionOptions_RequesterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.requester", self.extract_ref()))
     }
 }
@@ -232,13 +249,14 @@ impl BuildVpcPeeringConnectionOptions {
         let out = VpcPeeringConnectionOptions(std::rc::Rc::new(VpcPeeringConnectionOptions_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpcPeeringConnectionOptionsData {
+            data: std::cell::RefCell::new(VpcPeeringConnectionOptionsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 vpc_peering_connection_id: self.vpc_peering_connection_id,
                 accepter: core::default::Default::default(),
                 requester: core::default::Default::default(),
@@ -278,202 +296,152 @@ impl VpcPeeringConnectionOptionsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_peering_connection_id` after provisioning.\n"]
     pub fn vpc_peering_connection_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_peering_connection_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `accepter` after provisioning.\n"]
-    pub fn accepter(&self) -> terrars::ListRef<VpcPeeringConnectionOptionsAccepterElRef> {
+    pub fn accepter(&self) -> terrars::ListRef<VpcPeeringConnectionOptions_AccepterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accepter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `requester` after provisioning.\n"]
-    pub fn requester(&self) -> terrars::ListRef<VpcPeeringConnectionOptionsRequesterElRef> {
+    pub fn requester(&self) -> terrars::ListRef<VpcPeeringConnectionOptions_RequesterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.requester", self.extract_ref()))
-    }
-}
-
-#[derive(Serialize)]
-pub struct VpcPeeringConnectionOptionsAccepterEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_classic_link_to_remote_vpc: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_remote_vpc_dns_resolution: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_vpc_to_remote_classic_link: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl VpcPeeringConnectionOptionsAccepterEl {
-    #[doc = "Set the field `allow_classic_link_to_remote_vpc`.\n"]
-    pub fn set_allow_classic_link_to_remote_vpc(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_classic_link_to_remote_vpc = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `allow_remote_vpc_dns_resolution`.\n"]
-    pub fn set_allow_remote_vpc_dns_resolution(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_remote_vpc_dns_resolution = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `allow_vpc_to_remote_classic_link`.\n"]
-    pub fn set_allow_vpc_to_remote_classic_link(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_vpc_to_remote_classic_link = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for VpcPeeringConnectionOptionsAccepterEl {
-    type O = terrars::BlockAssignable<VpcPeeringConnectionOptionsAccepterEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildVpcPeeringConnectionOptionsAccepterEl {}
-
-impl BuildVpcPeeringConnectionOptionsAccepterEl {
-    pub fn build(self) -> VpcPeeringConnectionOptionsAccepterEl {
-        VpcPeeringConnectionOptionsAccepterEl {
-            allow_classic_link_to_remote_vpc: core::default::Default::default(),
-            allow_remote_vpc_dns_resolution: core::default::Default::default(),
-            allow_vpc_to_remote_classic_link: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct VpcPeeringConnectionOptionsAccepterElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for VpcPeeringConnectionOptionsAccepterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcPeeringConnectionOptionsAccepterElRef {
-        VpcPeeringConnectionOptionsAccepterElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl VpcPeeringConnectionOptionsAccepterElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `allow_classic_link_to_remote_vpc` after provisioning.\n"]
-    pub fn allow_classic_link_to_remote_vpc(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_classic_link_to_remote_vpc", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `allow_remote_vpc_dns_resolution` after provisioning.\n"]
-    pub fn allow_remote_vpc_dns_resolution(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_remote_vpc_dns_resolution", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `allow_vpc_to_remote_classic_link` after provisioning.\n"]
-    pub fn allow_vpc_to_remote_classic_link(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_vpc_to_remote_classic_link", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct VpcPeeringConnectionOptionsRequesterEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_classic_link_to_remote_vpc: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_remote_vpc_dns_resolution: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allow_vpc_to_remote_classic_link: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl VpcPeeringConnectionOptionsRequesterEl {
-    #[doc = "Set the field `allow_classic_link_to_remote_vpc`.\n"]
-    pub fn set_allow_classic_link_to_remote_vpc(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_classic_link_to_remote_vpc = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `allow_remote_vpc_dns_resolution`.\n"]
-    pub fn set_allow_remote_vpc_dns_resolution(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_remote_vpc_dns_resolution = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `allow_vpc_to_remote_classic_link`.\n"]
-    pub fn set_allow_vpc_to_remote_classic_link(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.allow_vpc_to_remote_classic_link = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for VpcPeeringConnectionOptionsRequesterEl {
-    type O = terrars::BlockAssignable<VpcPeeringConnectionOptionsRequesterEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildVpcPeeringConnectionOptionsRequesterEl {}
-
-impl BuildVpcPeeringConnectionOptionsRequesterEl {
-    pub fn build(self) -> VpcPeeringConnectionOptionsRequesterEl {
-        VpcPeeringConnectionOptionsRequesterEl {
-            allow_classic_link_to_remote_vpc: core::default::Default::default(),
-            allow_remote_vpc_dns_resolution: core::default::Default::default(),
-            allow_vpc_to_remote_classic_link: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct VpcPeeringConnectionOptionsRequesterElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for VpcPeeringConnectionOptionsRequesterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcPeeringConnectionOptionsRequesterElRef {
-        VpcPeeringConnectionOptionsRequesterElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl VpcPeeringConnectionOptionsRequesterElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `allow_classic_link_to_remote_vpc` after provisioning.\n"]
-    pub fn allow_classic_link_to_remote_vpc(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_classic_link_to_remote_vpc", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `allow_remote_vpc_dns_resolution` after provisioning.\n"]
-    pub fn allow_remote_vpc_dns_resolution(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_remote_vpc_dns_resolution", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `allow_vpc_to_remote_classic_link` after provisioning.\n"]
-    pub fn allow_vpc_to_remote_classic_link(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_vpc_to_remote_classic_link", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
 struct VpcPeeringConnectionOptionsDynamic {
-    accepter: std::option::Option<terrars::DynamicBlock<VpcPeeringConnectionOptionsAccepterEl>>,
-    requester: std::option::Option<terrars::DynamicBlock<VpcPeeringConnectionOptionsRequesterEl>>,
+    accepter: std::option::Option<terrars::DynamicBlock<VpcPeeringConnectionOptions_Accepter>>,
+    requester: std::option::Option<terrars::DynamicBlock<VpcPeeringConnectionOptions_Requester>>,
+}
+
+#[derive(Serialize)]
+pub struct VpcPeeringConnectionOptions_Accepter {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_remote_vpc_dns_resolution: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl VpcPeeringConnectionOptions_Accepter {
+    #[doc = "Set the field `allow_remote_vpc_dns_resolution`.\n"]
+    pub fn set_allow_remote_vpc_dns_resolution(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.allow_remote_vpc_dns_resolution = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for VpcPeeringConnectionOptions_Accepter {
+    type O = terrars::BlockAssignable<VpcPeeringConnectionOptions_Accepter>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildVpcPeeringConnectionOptions_Accepter {}
+
+impl BuildVpcPeeringConnectionOptions_Accepter {
+    pub fn build(self) -> VpcPeeringConnectionOptions_Accepter {
+        VpcPeeringConnectionOptions_Accepter { allow_remote_vpc_dns_resolution: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct VpcPeeringConnectionOptions_AccepterRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for VpcPeeringConnectionOptions_AccepterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcPeeringConnectionOptions_AccepterRef {
+        VpcPeeringConnectionOptions_AccepterRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl VpcPeeringConnectionOptions_AccepterRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `allow_remote_vpc_dns_resolution` after provisioning.\n"]
+    pub fn allow_remote_vpc_dns_resolution(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_remote_vpc_dns_resolution", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct VpcPeeringConnectionOptions_Requester {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_remote_vpc_dns_resolution: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl VpcPeeringConnectionOptions_Requester {
+    #[doc = "Set the field `allow_remote_vpc_dns_resolution`.\n"]
+    pub fn set_allow_remote_vpc_dns_resolution(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.allow_remote_vpc_dns_resolution = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for VpcPeeringConnectionOptions_Requester {
+    type O = terrars::BlockAssignable<VpcPeeringConnectionOptions_Requester>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildVpcPeeringConnectionOptions_Requester {}
+
+impl BuildVpcPeeringConnectionOptions_Requester {
+    pub fn build(self) -> VpcPeeringConnectionOptions_Requester {
+        VpcPeeringConnectionOptions_Requester { allow_remote_vpc_dns_resolution: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct VpcPeeringConnectionOptions_RequesterRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for VpcPeeringConnectionOptions_RequesterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcPeeringConnectionOptions_RequesterRef {
+        VpcPeeringConnectionOptions_RequesterRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl VpcPeeringConnectionOptions_RequesterRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `allow_remote_vpc_dns_resolution` after provisioning.\n"]
+    pub fn allow_remote_vpc_dns_resolution(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_remote_vpc_dns_resolution", self.base))
+    }
 }

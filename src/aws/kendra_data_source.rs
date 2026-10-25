@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KendraDataSourceData {
+struct KendraDataSourceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,6 +29,8 @@ struct KendraDataSourceData {
     language_code: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schedule: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -37,20 +41,20 @@ struct KendraDataSourceData {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    configuration: std::option::Option<std::vec::Vec<KendraDataSourceConfigurationEl>>,
+    configuration: std::option::Option<std::vec::Vec<KendraDataSource_Configuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_document_enrichment_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>>,
+    ::Option<std::vec::Vec<KendraDataSource_CustomDocumentEnrichmentConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KendraDataSourceTimeoutsEl>,
+    timeouts: std::option::Option<KendraDataSource_Timeouts>,
     dynamic: KendraDataSourceDynamic,
 }
 
 struct KendraDataSource_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KendraDataSourceData>,
+    data: std::cell::RefCell<KendraDataSourceData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +172,13 @@ impl KendraDataSource {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `role_arn`.\n"]
     pub fn set_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().role_arn = std::option::Option::Some(v.into());
@@ -201,7 +212,7 @@ impl KendraDataSource {
     #[doc = "Set the field `configuration`.\n"]
     pub fn set_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KendraDataSourceConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraDataSource_Configuration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,12 +228,7 @@ impl KendraDataSource {
     #[doc = "Set the field `custom_document_enrichment_configuration`.\n"]
     pub fn set_custom_document_enrichment_configuration(
         self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraDataSource_CustomDocumentEnrichmentConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -237,7 +243,7 @@ impl KendraDataSource {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KendraDataSourceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KendraDataSource_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -287,6 +293,12 @@ impl KendraDataSource {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -323,14 +335,14 @@ impl KendraDataSource {
     }
 
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<KendraDataSourceConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<KendraDataSource_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `custom_document_enrichment_configuration` after provisioning.\n"]
     pub fn custom_document_enrichment_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_CustomDocumentEnrichmentConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.custom_document_enrichment_configuration", self.extract_ref()),
@@ -338,8 +350,8 @@ impl KendraDataSource {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KendraDataSourceTimeoutsElRef {
-        KendraDataSourceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KendraDataSource_TimeoutsRef {
+        KendraDataSource_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -389,7 +401,7 @@ impl BuildKendraDataSource {
         let out = KendraDataSource(std::rc::Rc::new(KendraDataSource_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KendraDataSourceData {
+            data: std::cell::RefCell::new(KendraDataSourceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -400,6 +412,7 @@ impl BuildKendraDataSource {
                 index_id: self.index_id,
                 language_code: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 role_arn: core::default::Default::default(),
                 schedule: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -484,6 +497,12 @@ impl KendraDataSourceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -520,14 +539,14 @@ impl KendraDataSourceRef {
     }
 
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<KendraDataSourceConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<KendraDataSource_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `custom_document_enrichment_configuration` after provisioning.\n"]
     pub fn custom_document_enrichment_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_CustomDocumentEnrichmentConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.custom_document_enrichment_configuration", self.extract_ref()),
@@ -535,18 +554,26 @@ impl KendraDataSourceRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KendraDataSourceTimeoutsElRef {
-        KendraDataSourceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KendraDataSource_TimeoutsRef {
+        KendraDataSource_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct KendraDataSourceDynamic {
+    configuration: std::option::Option<terrars::DynamicBlock<KendraDataSource_Configuration>>,
+    custom_document_enrichment_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraDataSource_CustomDocumentEnrichmentConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
+pub struct KendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
+impl KendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration {
     #[doc = "Set the field `key_path`.\n"]
     pub fn set_key_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key_path = std::option::Option::Some(v.into());
@@ -554,9 +581,8 @@ impl KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurat
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
-    type O =
-        terrars::BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration {
+    type O = terrars::BlockAssignable<KendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -567,34 +593,36 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationElS3ConfigurationE
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {}
+pub struct BuildKendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration {}
 
-impl BuildKendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
-    pub fn build(self) -> KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
-        KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl {
+impl BuildKendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration {
+    pub fn build(self) -> KendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration {
+        KendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration {
             key_path: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_S3Configuration_AccessControlListConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
+impl terrars::Ref for KendraDataSource_Configuration_S3Configuration_AccessControlListConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
-        KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
+    ) -> KendraDataSource_Configuration_S3Configuration_AccessControlListConfigurationRef {
+        KendraDataSource_Configuration_S3Configuration_AccessControlListConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef {
+impl KendraDataSource_Configuration_S3Configuration_AccessControlListConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -606,12 +634,12 @@ impl KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurat
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
+pub struct KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
+impl KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration {
     #[doc = "Set the field `s3_prefix`.\n"]
     pub fn set_s3_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.s3_prefix = std::option::Option::Some(v.into());
@@ -619,9 +647,8 @@ impl KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurat
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
-    type O =
-        terrars::BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration {
+    type O = terrars::BlockAssignable<KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -632,34 +659,36 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationElS3ConfigurationE
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {}
+pub struct BuildKendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration {}
 
-impl BuildKendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
-    pub fn build(self) -> KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
-        KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl {
+impl BuildKendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration {
+    pub fn build(self) -> KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration {
+        KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration {
             s3_prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
+impl terrars::Ref for KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
-        KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
+    ) -> KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfigurationRef {
+        KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef {
+impl KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -671,19 +700,17 @@ impl KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurat
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceConfigurationElS3ConfigurationElDynamic {
+struct KendraDataSource_Configuration_S3ConfigurationDynamic {
     access_control_list_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<KendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration>>,
     documents_metadata_configuration: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl>,
-    >,
+    ::Option<terrars::DynamicBlock<KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElS3ConfigurationEl {
+pub struct KendraDataSource_Configuration_S3Configuration {
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclusion_patterns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -694,15 +721,15 @@ pub struct KendraDataSourceConfigurationElS3ConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_control_list_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl>>,
+    ::Option<std::vec::Vec<KendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     documents_metadata_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl>>,
-    dynamic: KendraDataSourceConfigurationElS3ConfigurationElDynamic,
+    ::Option<std::vec::Vec<KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration>>,
+    dynamic: KendraDataSource_Configuration_S3ConfigurationDynamic,
 }
 
-impl KendraDataSourceConfigurationElS3ConfigurationEl {
+impl KendraDataSource_Configuration_S3Configuration {
     #[doc = "Set the field `exclusion_patterns`.\n"]
     pub fn set_exclusion_patterns(
         mut self,
@@ -741,7 +768,7 @@ impl KendraDataSourceConfigurationElS3ConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationEl,
+                            KendraDataSource_Configuration_S3Configuration_AccessControlListConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -767,7 +794,7 @@ impl KendraDataSourceConfigurationElS3ConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationEl,
+                            KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -783,8 +810,8 @@ impl KendraDataSourceConfigurationElS3ConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationElS3ConfigurationEl {
-    type O = terrars::BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSource_Configuration_S3Configuration {
+    type O = terrars::BlockAssignable<KendraDataSource_Configuration_S3Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -795,14 +822,14 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationElS3ConfigurationE
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElS3ConfigurationEl {
+pub struct BuildKendraDataSource_Configuration_S3Configuration {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraDataSourceConfigurationElS3ConfigurationEl {
-    pub fn build(self) -> KendraDataSourceConfigurationElS3ConfigurationEl {
-        KendraDataSourceConfigurationElS3ConfigurationEl {
+impl BuildKendraDataSource_Configuration_S3Configuration {
+    pub fn build(self) -> KendraDataSource_Configuration_S3Configuration {
+        KendraDataSource_Configuration_S3Configuration {
             bucket_name: self.bucket_name,
             exclusion_patterns: core::default::Default::default(),
             inclusion_patterns: core::default::Default::default(),
@@ -814,24 +841,26 @@ impl BuildKendraDataSourceConfigurationElS3ConfigurationEl {
     }
 }
 
-pub struct KendraDataSourceConfigurationElS3ConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_S3ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElS3ConfigurationElRef {
+impl terrars::Ref for KendraDataSource_Configuration_S3ConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElS3ConfigurationElRef {
-        KendraDataSourceConfigurationElS3ConfigurationElRef {
+    ) -> KendraDataSource_Configuration_S3ConfigurationRef {
+        KendraDataSource_Configuration_S3ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElS3ConfigurationElRef {
+impl KendraDataSource_Configuration_S3ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -859,33 +888,93 @@ impl KendraDataSourceConfigurationElS3ConfigurationElRef {
     #[doc = "Get a reference to the value of field `access_control_list_configuration` after provisioning.\n"]
     pub fn access_control_list_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceConfigurationElS3ConfigurationElAccessControlListConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_Configuration_S3Configuration_AccessControlListConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_control_list_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `documents_metadata_configuration` after provisioning.\n"]
     pub fn documents_metadata_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceConfigurationElS3ConfigurationElDocumentsMetadataConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_Configuration_S3Configuration_DocumentsMetadataConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.documents_metadata_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
+pub struct KendraDataSource_Configuration_TemplateConfiguration {
+    template: terrars::PrimField<std::string::String>,
+}
+
+impl KendraDataSource_Configuration_TemplateConfiguration { }
+
+impl terrars::ToListMappable for KendraDataSource_Configuration_TemplateConfiguration {
+    type O = terrars::BlockAssignable<KendraDataSource_Configuration_TemplateConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKendraDataSource_Configuration_TemplateConfiguration {
+    #[doc = ""]
+    pub template: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKendraDataSource_Configuration_TemplateConfiguration {
+    pub fn build(self) -> KendraDataSource_Configuration_TemplateConfiguration {
+        KendraDataSource_Configuration_TemplateConfiguration { template: self.template }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_TemplateConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KendraDataSource_Configuration_TemplateConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KendraDataSource_Configuration_TemplateConfigurationRef {
+        KendraDataSource_Configuration_TemplateConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KendraDataSource_Configuration_TemplateConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `template` after provisioning.\n"]
+    pub fn template(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.template", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication {
     credentials: terrars::PrimField<std::string::String>,
     host: terrars::PrimField<std::string::String>,
     port: terrars::PrimField<f64>,
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl { }
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication { }
 
 impl terrars
-::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
+::ToListMappable for KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication {
     type O =
         terrars
         ::BlockAssignable<
-            KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl,
+            KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -897,7 +986,7 @@ impl terrars
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
+pub struct BuildKendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication {
     #[doc = ""]
     pub credentials: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -906,11 +995,11 @@ pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenti
     pub port: terrars::PrimField<f64>,
 }
 
-impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
+impl BuildKendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication {
     pub fn build(
         self,
-    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl {
+    ) -> KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication {
             credentials: self.credentials,
             host: self.host,
             port: self.port,
@@ -918,25 +1007,27 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthentication
     }
 }
 
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthenticationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
+::Ref for KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthenticationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
+    ) -> KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthenticationRef {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthenticationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationElRef {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthenticationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -958,33 +1049,31 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfi
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElDynamic {
+struct KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfigurationDynamic {
     basic_authentication: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl,
+            KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     basic_authentication: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<
-            KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl,
-        >,
+        ::Vec<KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication>,
     >,
-    dynamic: KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElDynamic,
+    dynamic: KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfigurationDynamic,
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration {
     #[doc = "Set the field `basic_authentication`.\n"]
     pub fn set_basic_authentication(
         mut self,
@@ -996,7 +1085,7 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfi
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElBasicAuthenticationEl,
+                            KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration_BasicAuthentication,
                         >,
                     >,
     ) -> Self {
@@ -1012,10 +1101,9 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfi
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
+impl terrars::ToListMappable for KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration {
     type O =
-        terrars
-        ::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl>;
+        terrars::BlockAssignable<KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1026,49 +1114,51 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfig
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {}
+pub struct BuildKendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration {}
 
-impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
-    pub fn build(self) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl {
+impl BuildKendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration {
+    pub fn build(self) -> KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration {
             basic_authentication: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
+impl terrars::Ref for KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
+    ) -> KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfigurationRef {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     credentials: std::option::Option<terrars::PrimField<std::string::String>>,
     host: terrars::PrimField<std::string::String>,
     port: terrars::PrimField<f64>,
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration {
     #[doc = "Set the field `credentials`.\n"]
     pub fn set_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.credentials = std::option::Option::Some(v.into());
@@ -1076,8 +1166,8 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationE
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
-    type O = terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration {
+    type O = terrars::BlockAssignable<KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1088,16 +1178,16 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfig
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
+pub struct BuildKendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration {
     #[doc = ""]
     pub host: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub port: terrars::PrimField<f64>,
 }
 
-impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
-    pub fn build(self) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl {
+impl BuildKendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration {
+    pub fn build(self) -> KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration {
             credentials: core::default::Default::default(),
             host: self.host,
             port: self.port,
@@ -1105,24 +1195,26 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigura
     }
 }
 
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
+impl terrars::Ref for KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
+    ) -> KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfigurationRef {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1144,13 +1236,13 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationE
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration {
     seed_urls: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     web_crawler_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration {
     #[doc = "Set the field `web_crawler_mode`.\n"]
     pub fn set_web_crawler_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.web_crawler_mode = std::option::Option::Some(v.into());
@@ -1158,10 +1250,9 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfig
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
+impl terrars::ToListMappable for KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration {
     type O =
-        terrars
-        ::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl>;
+        terrars::BlockAssignable<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1172,38 +1263,40 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfig
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
+pub struct BuildKendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration {
     #[doc = ""]
     pub seed_urls: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
-    pub fn build(self) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl {
+impl BuildKendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration {
+    pub fn build(self) -> KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration {
             seed_urls: self.seed_urls,
             web_crawler_mode: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
+impl terrars::Ref for KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
+    ) -> KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfigurationRef {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1220,16 +1313,15 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfig
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration {
     site_maps: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl { }
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration { }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
+impl terrars::ToListMappable for KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration {
     type O =
-        terrars
-        ::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl>;
+        terrars::BlockAssignable<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1240,37 +1332,39 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfig
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
+pub struct BuildKendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration {
     #[doc = ""]
     pub site_maps: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
-    pub fn build(self) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl {
+impl BuildKendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration {
+    pub fn build(self) -> KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration {
             site_maps: self.site_maps,
         }
     }
 }
 
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
+impl terrars::Ref for KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
+    ) -> KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfigurationRef {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1282,33 +1376,31 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfi
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElDynamic {
+struct KendraDataSource_Configuration_WebCrawlerConfiguration_UrlsDynamic {
     seed_url_configuration: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl>,
-    >,
+    ::Option<terrars::DynamicBlock<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration>>,
     site_maps_configuration: std
     ::option
     ::Option<
-        terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl>,
+        terrars::DynamicBlock<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_Urls {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     seed_url_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl>>,
+    ::Option<std::vec::Vec<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     site_maps_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl>>,
-    dynamic: KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElDynamic,
+    ::Option<std::vec::Vec<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration>>,
+    dynamic: KendraDataSource_Configuration_WebCrawlerConfiguration_UrlsDynamic,
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_Urls {
     #[doc = "Set the field `seed_url_configuration`.\n"]
     pub fn set_seed_url_configuration(
         mut self,
@@ -1320,7 +1412,7 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationEl,
+                            KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -1346,7 +1438,7 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationEl,
+                            KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -1362,8 +1454,8 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
-    type O = terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>;
+impl terrars::ToListMappable for KendraDataSource_Configuration_WebCrawlerConfiguration_Urls {
+    type O = terrars::BlockAssignable<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1374,11 +1466,11 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfig
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {}
+pub struct BuildKendraDataSource_Configuration_WebCrawlerConfiguration_Urls {}
 
-impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
-    pub fn build(self) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
+impl BuildKendraDataSource_Configuration_WebCrawlerConfiguration_Urls {
+    pub fn build(self) -> KendraDataSource_Configuration_WebCrawlerConfiguration_Urls {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_Urls {
             seed_url_configuration: core::default::Default::default(),
             site_maps_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1386,24 +1478,26 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl {
     }
 }
 
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration_UrlsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
+impl terrars::Ref for KendraDataSource_Configuration_WebCrawlerConfiguration_UrlsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
+    ) -> KendraDataSource_Configuration_WebCrawlerConfiguration_UrlsRef {
+        KendraDataSource_Configuration_WebCrawlerConfiguration_UrlsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration_UrlsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1411,35 +1505,33 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef {
     #[doc = "Get a reference to the value of field `seed_url_configuration` after provisioning.\n"]
     pub fn seed_url_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSeedUrlConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SeedUrlConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.seed_url_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `site_maps_configuration` after provisioning.\n"]
     pub fn site_maps_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElSiteMapsConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls_SiteMapsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.site_maps_configuration", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceConfigurationElWebCrawlerConfigurationElDynamic {
+struct KendraDataSource_Configuration_WebCrawlerConfigurationDynamic {
     authentication_configuration: std
     ::option
     ::Option<
-        terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl>,
+        terrars::DynamicBlock<KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration>,
     >,
     proxy_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>>,
-    urls: std
-    ::option
-    ::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>>,
+    ::Option<terrars::DynamicBlock<KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration>>,
+    urls: std::option::Option<terrars::DynamicBlock<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls>>,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
+pub struct KendraDataSource_Configuration_WebCrawlerConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     crawl_depth: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1455,17 +1547,17 @@ pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authentication_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl>>,
+    ::Option<std::vec::Vec<KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     proxy_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl>>,
+    ::Option<std::vec::Vec<KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    urls: std::option::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>>,
-    dynamic: KendraDataSourceConfigurationElWebCrawlerConfigurationElDynamic,
+    urls: std::option::Option<std::vec::Vec<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls>>,
+    dynamic: KendraDataSource_Configuration_WebCrawlerConfigurationDynamic,
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
+impl KendraDataSource_Configuration_WebCrawlerConfiguration {
     #[doc = "Set the field `crawl_depth`.\n"]
     pub fn set_crawl_depth(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.crawl_depth = std::option::Option::Some(v.into());
@@ -1522,7 +1614,7 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationEl,
+                            KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -1547,9 +1639,7 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationEl,
-                        >,
+                        ::BlockAssignable<KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1571,7 +1661,7 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsEl>>,
+                    ::Into<terrars::BlockAssignable<KendraDataSource_Configuration_WebCrawlerConfiguration_Urls>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1585,8 +1675,8 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
-    type O = terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSource_Configuration_WebCrawlerConfiguration {
+    type O = terrars::BlockAssignable<KendraDataSource_Configuration_WebCrawlerConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1597,11 +1687,11 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationElWebCrawlerConfig
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationElWebCrawlerConfigurationEl {}
+pub struct BuildKendraDataSource_Configuration_WebCrawlerConfiguration {}
 
-impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationEl {
-    pub fn build(self) -> KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationEl {
+impl BuildKendraDataSource_Configuration_WebCrawlerConfiguration {
+    pub fn build(self) -> KendraDataSource_Configuration_WebCrawlerConfiguration {
+        KendraDataSource_Configuration_WebCrawlerConfiguration {
             crawl_depth: core::default::Default::default(),
             max_content_size_per_page_in_mega_bytes: core::default::Default::default(),
             max_links_per_page: core::default::Default::default(),
@@ -1616,24 +1706,26 @@ impl BuildKendraDataSourceConfigurationElWebCrawlerConfigurationEl {
     }
 }
 
-pub struct KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_Configuration_WebCrawlerConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
+impl terrars::Ref for KendraDataSource_Configuration_WebCrawlerConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
-        KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
+    ) -> KendraDataSource_Configuration_WebCrawlerConfigurationRef {
+        KendraDataSource_Configuration_WebCrawlerConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
+impl KendraDataSource_Configuration_WebCrawlerConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1674,47 +1766,50 @@ impl KendraDataSourceConfigurationElWebCrawlerConfigurationElRef {
     #[doc = "Get a reference to the value of field `authentication_configuration` after provisioning.\n"]
     pub fn authentication_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElAuthenticationConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_Configuration_WebCrawlerConfiguration_AuthenticationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `proxy_configuration` after provisioning.\n"]
     pub fn proxy_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElProxyConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_Configuration_WebCrawlerConfiguration_ProxyConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `urls` after provisioning.\n"]
-    pub fn urls(&self) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElUrlsElRef> {
+    pub fn urls(&self) -> terrars::ListRef<KendraDataSource_Configuration_WebCrawlerConfiguration_UrlsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.urls", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceConfigurationElDynamic {
-    s3_configuration: std::option::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElS3ConfigurationEl>>,
+struct KendraDataSource_ConfigurationDynamic {
+    s3_configuration: std::option::Option<terrars::DynamicBlock<KendraDataSource_Configuration_S3Configuration>>,
+    template_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraDataSource_Configuration_TemplateConfiguration>>,
     web_crawler_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<KendraDataSource_Configuration_WebCrawlerConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceConfigurationEl {
+pub struct KendraDataSource_Configuration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_configuration: std::option::Option<std::vec::Vec<KendraDataSourceConfigurationElS3ConfigurationEl>>,
+    s3_configuration: std::option::Option<std::vec::Vec<KendraDataSource_Configuration_S3Configuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    web_crawler_configuration: std
-    ::option
-    ::Option<std::vec::Vec<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>>,
-    dynamic: KendraDataSourceConfigurationElDynamic,
+    template_configuration: std::option::Option<std::vec::Vec<KendraDataSource_Configuration_TemplateConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    web_crawler_configuration: std::option::Option<std::vec::Vec<KendraDataSource_Configuration_WebCrawlerConfiguration>>,
+    dynamic: KendraDataSource_ConfigurationDynamic,
 }
 
-impl KendraDataSourceConfigurationEl {
+impl KendraDataSource_Configuration {
     #[doc = "Set the field `s3_configuration`.\n"]
     pub fn set_s3_configuration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KendraDataSourceConfigurationElS3ConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraDataSource_Configuration_S3Configuration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1727,15 +1822,26 @@ impl KendraDataSourceConfigurationEl {
         self
     }
 
+    #[doc = "Set the field `template_configuration`.\n"]
+    pub fn set_template_configuration(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraDataSource_Configuration_TemplateConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.template_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.template_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `web_crawler_configuration`.\n"]
     pub fn set_web_crawler_configuration(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<KendraDataSourceConfigurationElWebCrawlerConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraDataSource_Configuration_WebCrawlerConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1749,8 +1855,8 @@ impl KendraDataSourceConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceConfigurationEl {
-    type O = terrars::BlockAssignable<KendraDataSourceConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSource_Configuration {
+    type O = terrars::BlockAssignable<KendraDataSource_Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1761,52 +1867,60 @@ impl terrars::ToListMappable for KendraDataSourceConfigurationEl {
     }
 }
 
-pub struct BuildKendraDataSourceConfigurationEl {}
+pub struct BuildKendraDataSource_Configuration {}
 
-impl BuildKendraDataSourceConfigurationEl {
-    pub fn build(self) -> KendraDataSourceConfigurationEl {
-        KendraDataSourceConfigurationEl {
+impl BuildKendraDataSource_Configuration {
+    pub fn build(self) -> KendraDataSource_Configuration {
+        KendraDataSource_Configuration {
             s3_configuration: core::default::Default::default(),
+            template_configuration: core::default::Default::default(),
             web_crawler_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraDataSourceConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraDataSourceConfigurationElRef {
-        KendraDataSourceConfigurationElRef {
+impl terrars::Ref for KendraDataSource_ConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraDataSource_ConfigurationRef {
+        KendraDataSource_ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceConfigurationElRef {
+impl KendraDataSource_ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
-    pub fn s3_configuration(&self) -> terrars::ListRef<KendraDataSourceConfigurationElS3ConfigurationElRef> {
+    pub fn s3_configuration(&self) -> terrars::ListRef<KendraDataSource_Configuration_S3ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `template_configuration` after provisioning.\n"]
+    pub fn template_configuration(&self) -> terrars::ListRef<KendraDataSource_Configuration_TemplateConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.template_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `web_crawler_configuration` after provisioning.\n"]
     pub fn web_crawler_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceConfigurationElWebCrawlerConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_Configuration_WebCrawlerConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.web_crawler_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     date_value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1817,7 +1931,7 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigur
     string_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue {
     #[doc = "Set the field `date_value`.\n"]
     pub fn set_date_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.date_value = std::option::Option::Some(v.into());
@@ -1847,11 +1961,11 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
 }
 
 impl terrars
-::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
+::ToListMappable for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue {
     type O =
         terrars
         ::BlockAssignable<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1863,13 +1977,13 @@ impl terrars
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {}
+pub struct BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue {}
 
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
+impl BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue {
     pub fn build(
         self,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue {
             date_value: core::default::Default::default(),
             long_value: core::default::Default::default(),
             string_list_value: core::default::Default::default(),
@@ -1878,25 +1992,27 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
     }
 }
 
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
+::Ref for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValueRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValueRef {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1923,19 +2039,19 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElDynamic {
+struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_ConditionDynamic {
     condition_on_value: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition {
     condition_document_attribute_key: terrars::PrimField<std::string::String>,
     operator: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1944,14 +2060,12 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigur
     ::Option<
         std
         ::vec
-        ::Vec<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl,
-        >,
+        ::Vec<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue>,
     >,
-    dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElDynamic,
+    dynamic: KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_ConditionDynamic,
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition {
     #[doc = "Set the field `condition_on_value`.\n"]
     pub fn set_condition_on_value(
         mut self,
@@ -1963,7 +2077,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueEl,
+                            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue,
                         >,
                     >,
     ) -> Self {
@@ -1980,10 +2094,10 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
 }
 
 impl terrars
-::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
+::ToListMappable for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition {
     type O =
         terrars
-        ::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl>;
+        ::BlockAssignable<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1994,16 +2108,16 @@ impl terrars
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
+pub struct BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition {
     #[doc = ""]
     pub condition_document_attribute_key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub operator: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
-    pub fn build(self) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl {
+impl BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition {
+    pub fn build(self) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition {
             condition_document_attribute_key: self.condition_document_attribute_key,
             operator: self.operator,
             condition_on_value: core::default::Default::default(),
@@ -2012,24 +2126,26 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
     }
 }
 
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
+impl terrars::Ref for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_ConditionRef {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2049,14 +2165,14 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
         &self,
     ) -> terrars
     ::ListRef<
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElConditionOnValueElRef,
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValueRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition_on_value", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     date_value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2067,7 +2183,7 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigur
     string_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue {
     #[doc = "Set the field `date_value`.\n"]
     pub fn set_date_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.date_value = std::option::Option::Some(v.into());
@@ -2097,11 +2213,11 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
 }
 
 impl terrars
-::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
+::ToListMappable for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue {
     type O =
         terrars
         ::BlockAssignable<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2113,13 +2229,13 @@ impl terrars
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {}
+pub struct BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue {}
 
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
+impl BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue {
     pub fn build(
         self,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue {
             date_value: core::default::Default::default(),
             long_value: core::default::Default::default(),
             string_list_value: core::default::Default::default(),
@@ -2128,25 +2244,27 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
     }
 }
 
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
+::Ref for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValueRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValueRef {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2173,19 +2291,19 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElDynamic {
+struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_TargetDynamic {
     target_document_attribute_value: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_document_attribute_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2197,13 +2315,13 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigur
         std
         ::vec
         ::Vec<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue,
         >,
     >,
-    dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElDynamic,
+    dynamic: KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_TargetDynamic,
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target {
     #[doc = "Set the field `target_document_attribute_key`.\n"]
     pub fn set_target_document_attribute_key(
         mut self,
@@ -2233,7 +2351,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueEl,
+                            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValue,
                         >,
                     >,
     ) -> Self {
@@ -2249,10 +2367,9 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
+impl terrars::ToListMappable for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target {
     type O =
-        terrars
-        ::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl>;
+        terrars::BlockAssignable<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2263,11 +2380,11 @@ impl terrars::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigu
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {}
+pub struct BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target {}
 
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
-    pub fn build(self) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl {
+impl BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target {
+    pub fn build(self) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target {
             target_document_attribute_key: core::default::Default::default(),
             target_document_attribute_value_deletion: core::default::Default::default(),
             target_document_attribute_value: core::default::Default::default(),
@@ -2276,24 +2393,26 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
     }
 }
 
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_TargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
+impl terrars::Ref for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_TargetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_TargetRef {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_TargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_TargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2316,43 +2435,42 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
         &self,
     ) -> terrars
     ::ListRef<
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElTargetDocumentAttributeValueElRef,
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target_TargetDocumentAttributeValueRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_document_attribute_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElDynamic {
+struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurationsDynamic {
     condition: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl>,
+        terrars::DynamicBlock<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition>,
     >,
     target: std
     ::option
     ::Option<
-        terrars::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl>,
+        terrars::DynamicBlock<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     document_content_deletion: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     condition: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl>>,
+    ::Option<std::vec::Vec<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl>>,
-    dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElDynamic,
+    ::Option<std::vec::Vec<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target>>,
+    dynamic: KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurationsDynamic,
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations {
     #[doc = "Set the field `document_content_deletion`.\n"]
     pub fn set_document_content_deletion(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.document_content_deletion = std::option::Option::Some(v.into());
@@ -2370,7 +2488,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionEl,
+                            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition,
                         >,
                     >,
     ) -> Self {
@@ -2396,7 +2514,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetEl,
+                            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Target,
                         >,
                     >,
     ) -> Self {
@@ -2412,8 +2530,8 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
-    type O = terrars::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>;
+impl terrars::ToListMappable for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations {
+    type O = terrars::BlockAssignable<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2424,11 +2542,11 @@ impl terrars::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigu
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {}
+pub struct BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations {}
 
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
-    pub fn build(self) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl {
+impl BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations {
+    pub fn build(self) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations {
             document_content_deletion: core::default::Default::default(),
             condition: core::default::Default::default(),
             target: core::default::Default::default(),
@@ -2437,24 +2555,26 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigura
     }
 }
 
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
+impl terrars::Ref for KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurationsRef {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElRef {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2467,150 +2587,32 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurations
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
     pub fn condition(
         &self,
-    ) -> terrars
-    ::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElConditionElRef> {
+    ) -> terrars::ListRef<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.base))
     }
 
     #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
     pub fn target(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsElTargetElRef> {
+    ) -> terrars::ListRef<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    date_value: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    long_value: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_list_value: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    #[doc = "Set the field `date_value`.\n"]
-    pub fn set_date_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.date_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `long_value`.\n"]
-    pub fn set_long_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.long_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `string_list_value`.\n"]
-    pub fn set_string_list_value(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.string_list_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `string_value`.\n"]
-    pub fn set_string_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.string_value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {}
-
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    pub fn build(
-        self,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-            date_value: core::default::Default::default(),
-            long_value: core::default::Default::default(),
-            string_list_value: core::default::Default::default(),
-            string_value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `date_value` after provisioning.\n"]
-    pub fn date_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `long_value` after provisioning.\n"]
-    pub fn long_value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `string_list_value` after provisioning.\n"]
-    pub fn string_list_value(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `string_value` after provisioning.\n"]
-    pub fn string_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElDynamic {
+struct KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationConditionDynamic {
     condition_on_value: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition {
     condition_document_attribute_key: terrars::PrimField<std::string::String>,
     operator: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2619,14 +2621,12 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtraction
     ::Option<
         std
         ::vec
-        ::Vec<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
-        >,
+        ::Vec<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue>,
     >,
-    dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElDynamic,
+    dynamic: KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationConditionDynamic,
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition {
     #[doc = "Set the field `condition_on_value`.\n"]
     pub fn set_condition_on_value(
         mut self,
@@ -2638,7 +2638,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookCo
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
+                            KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValue,
                         >,
                     >,
     ) -> Self {
@@ -2655,11 +2655,11 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookCo
 }
 
 impl terrars
-::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
+::ToListMappable for KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition {
     type O =
         terrars
         ::BlockAssignable<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2671,18 +2671,18 @@ impl terrars
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
+pub struct BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition {
     #[doc = ""]
     pub condition_document_attribute_key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub operator: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
+impl BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition {
     pub fn build(
         self,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition {
             condition_document_attribute_key: self.condition_document_attribute_key,
             operator: self.operator,
             condition_on_value: core::default::Default::default(),
@@ -2691,25 +2691,27 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionH
     }
 }
 
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
+::Ref for KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationConditionRef {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2729,26 +2731,26 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookCo
         &self,
     ) -> terrars
     ::ListRef<
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef,
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations_Condition_ConditionOnValueRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition_on_value", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElDynamic {
+struct KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfigurationDynamic {
     invocation_condition: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration {
     lambda_arn: terrars::PrimField<std::string::String>,
     s3_bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2758,13 +2760,13 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtraction
         std
         ::vec
         ::Vec<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition,
         >,
     >,
-    dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElDynamic,
+    dynamic: KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfigurationDynamic,
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration {
     #[doc = "Set the field `invocation_condition`.\n"]
     pub fn set_invocation_condition(
         mut self,
@@ -2776,7 +2778,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookCo
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionEl,
+                            KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition,
                         >,
                     >,
     ) -> Self {
@@ -2793,10 +2795,10 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookCo
 }
 
 impl terrars
-::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
+::ToListMappable for KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration {
     type O =
         terrars
-        ::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl>;
+        ::BlockAssignable<KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2807,16 +2809,16 @@ impl terrars
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
+pub struct BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration {
     #[doc = ""]
     pub lambda_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub s3_bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
-    pub fn build(self) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl {
+impl BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration {
+    pub fn build(self) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration {
             lambda_arn: self.lambda_arn,
             s3_bucket: self.s3_bucket,
             invocation_condition: core::default::Default::default(),
@@ -2825,24 +2827,26 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionH
     }
 }
 
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
+impl terrars::Ref for KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfigurationRef {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2862,281 +2866,26 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookCo
         &self,
     ) -> terrars
     ::ListRef<
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElInvocationConditionElRef,
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationConditionRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.invocation_condition", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    date_value: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    long_value: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_list_value: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    #[doc = "Set the field `date_value`.\n"]
-    pub fn set_date_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.date_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `long_value`.\n"]
-    pub fn set_long_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.long_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `string_list_value`.\n"]
-    pub fn set_string_list_value(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.string_list_value = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `string_value`.\n"]
-    pub fn set_string_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.string_value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {}
-
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-    pub fn build(
-        self,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl {
-            date_value: core::default::Default::default(),
-            long_value: core::default::Default::default(),
-            string_list_value: core::default::Default::default(),
-            string_value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `date_value` after provisioning.\n"]
-    pub fn date_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.date_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `long_value` after provisioning.\n"]
-    pub fn long_value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.long_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `string_list_value` after provisioning.\n"]
-    pub fn string_list_value(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.string_list_value", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `string_value` after provisioning.\n"]
-    pub fn string_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElDynamic {
-    condition_on_value: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-    condition_document_attribute_key: terrars::PrimField<std::string::String>,
-    operator: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition_on_value: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
-        >,
-    >,
-    dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElDynamic,
-}
-
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-    #[doc = "Set the field `condition_on_value`.\n"]
-    pub fn set_condition_on_value(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.condition_on_value = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.condition_on_value = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-    #[doc = ""]
-    pub condition_document_attribute_key: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub operator: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-    pub fn build(
-        self,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl {
-            condition_document_attribute_key: self.condition_document_attribute_key,
-            operator: self.operator,
-            condition_on_value: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `condition_document_attribute_key` after provisioning.\n"]
-    pub fn condition_document_attribute_key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.condition_document_attribute_key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `operator` after provisioning.\n"]
-    pub fn operator(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operator", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `condition_on_value` after provisioning.\n"]
-    pub fn condition_on_value(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElConditionOnValueElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.condition_on_value", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElDynamic {
+struct KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfigurationDynamic {
     invocation_condition: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration {
     lambda_arn: terrars::PrimField<std::string::String>,
     s3_bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3146,13 +2895,13 @@ pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionH
         std
         ::vec
         ::Vec<
-            KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl,
+            KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition,
         >,
     >,
-    dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElDynamic,
+    dynamic: KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfigurationDynamic,
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration {
     #[doc = "Set the field `invocation_condition`.\n"]
     pub fn set_invocation_condition(
         mut self,
@@ -3164,7 +2913,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookCon
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionEl,
+                            KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationCondition,
                         >,
                     >,
     ) -> Self {
@@ -3181,10 +2930,10 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookCon
 }
 
 impl terrars
-::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
+::ToListMappable for KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration {
     type O =
         terrars
-        ::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl>;
+        ::BlockAssignable<KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3195,16 +2944,16 @@ impl terrars
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
+pub struct BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration {
     #[doc = ""]
     pub lambda_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub s3_bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
-    pub fn build(self) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl {
+impl BuildKendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration {
+    pub fn build(self) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration {
             lambda_arn: self.lambda_arn,
             s3_bucket: self.s3_bucket,
             invocation_condition: core::default::Default::default(),
@@ -3213,24 +2962,26 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHo
     }
 }
 
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
+impl terrars::Ref for KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfigurationRef {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3250,50 +3001,49 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookCon
         &self,
     ) -> terrars
     ::ListRef<
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElInvocationConditionElRef,
+        KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration_InvocationConditionRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.invocation_condition", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KendraDataSourceCustomDocumentEnrichmentConfigurationElDynamic {
+struct KendraDataSource_CustomDocumentEnrichmentConfigurationDynamic {
     inline_configurations: std
     ::option
-    ::Option<terrars::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>>,
+    ::Option<terrars::DynamicBlock<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations>>,
     post_extraction_hook_configuration: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl>,
+        terrars::DynamicBlock<KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration>,
     >,
     pre_extraction_hook_configuration: std
     ::option
     ::Option<
-        terrars::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl>,
+        terrars::DynamicBlock<KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
+pub struct KendraDataSource_CustomDocumentEnrichmentConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     inline_configurations: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl>>,
+    ::Option<std::vec::Vec<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     post_extraction_hook_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl>>,
+    ::Option<std::vec::Vec<KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pre_extraction_hook_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl>>,
-    dynamic: KendraDataSourceCustomDocumentEnrichmentConfigurationElDynamic,
+    ::Option<std::vec::Vec<KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration>>,
+    dynamic: KendraDataSource_CustomDocumentEnrichmentConfigurationDynamic,
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
+impl KendraDataSource_CustomDocumentEnrichmentConfiguration {
     #[doc = "Set the field `role_arn`.\n"]
     pub fn set_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.role_arn = std::option::Option::Some(v.into());
@@ -3310,9 +3060,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElInlineConfigurationsEl,
-                        >,
+                        ::BlockAssignable<KendraDataSource_CustomDocumentEnrichmentConfiguration_InlineConfigurations>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3337,7 +3085,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationEl,
+                            KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -3363,7 +3111,7 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationEl,
+                            KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -3379,8 +3127,8 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
-    type O = terrars::BlockAssignable<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>;
+impl terrars::ToListMappable for KendraDataSource_CustomDocumentEnrichmentConfiguration {
+    type O = terrars::BlockAssignable<KendraDataSource_CustomDocumentEnrichmentConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3391,11 +3139,11 @@ impl terrars::ToListMappable for KendraDataSourceCustomDocumentEnrichmentConfigu
     }
 }
 
-pub struct BuildKendraDataSourceCustomDocumentEnrichmentConfigurationEl {}
+pub struct BuildKendraDataSource_CustomDocumentEnrichmentConfiguration {}
 
-impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationEl {
-    pub fn build(self) -> KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationEl {
+impl BuildKendraDataSource_CustomDocumentEnrichmentConfiguration {
+    pub fn build(self) -> KendraDataSource_CustomDocumentEnrichmentConfiguration {
+        KendraDataSource_CustomDocumentEnrichmentConfiguration {
             role_arn: core::default::Default::default(),
             inline_configurations: core::default::Default::default(),
             post_extraction_hook_configuration: core::default::Default::default(),
@@ -3405,24 +3153,26 @@ impl BuildKendraDataSourceCustomDocumentEnrichmentConfigurationEl {
     }
 }
 
-pub struct KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_CustomDocumentEnrichmentConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
+impl terrars::Ref for KendraDataSource_CustomDocumentEnrichmentConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
-        KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
+    ) -> KendraDataSource_CustomDocumentEnrichmentConfigurationRef {
+        KendraDataSource_CustomDocumentEnrichmentConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
+impl KendraDataSource_CustomDocumentEnrichmentConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3435,21 +3185,20 @@ impl KendraDataSourceCustomDocumentEnrichmentConfigurationElRef {
     #[doc = "Get a reference to the value of field `post_extraction_hook_configuration` after provisioning.\n"]
     pub fn post_extraction_hook_configuration(
         &self,
-    ) -> terrars
-    ::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElPostExtractionHookConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_CustomDocumentEnrichmentConfiguration_PostExtractionHookConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.post_extraction_hook_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `pre_extraction_hook_configuration` after provisioning.\n"]
     pub fn pre_extraction_hook_configuration(
         &self,
-    ) -> terrars::ListRef<KendraDataSourceCustomDocumentEnrichmentConfigurationElPreExtractionHookConfigurationElRef> {
+    ) -> terrars::ListRef<KendraDataSource_CustomDocumentEnrichmentConfiguration_PreExtractionHookConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pre_extraction_hook_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KendraDataSourceTimeoutsEl {
+pub struct KendraDataSource_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3458,7 +3207,7 @@ pub struct KendraDataSourceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraDataSourceTimeoutsEl {
+impl KendraDataSource_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3478,8 +3227,8 @@ impl KendraDataSourceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KendraDataSourceTimeoutsEl {
-    type O = terrars::BlockAssignable<KendraDataSourceTimeoutsEl>;
+impl terrars::ToListMappable for KendraDataSource_Timeouts {
+    type O = terrars::BlockAssignable<KendraDataSource_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3490,11 +3239,11 @@ impl terrars::ToListMappable for KendraDataSourceTimeoutsEl {
     }
 }
 
-pub struct BuildKendraDataSourceTimeoutsEl {}
+pub struct BuildKendraDataSource_Timeouts {}
 
-impl BuildKendraDataSourceTimeoutsEl {
-    pub fn build(self) -> KendraDataSourceTimeoutsEl {
-        KendraDataSourceTimeoutsEl {
+impl BuildKendraDataSource_Timeouts {
+    pub fn build(self) -> KendraDataSource_Timeouts {
+        KendraDataSource_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -3502,21 +3251,23 @@ impl BuildKendraDataSourceTimeoutsEl {
     }
 }
 
-pub struct KendraDataSourceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KendraDataSource_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraDataSourceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraDataSourceTimeoutsElRef {
-        KendraDataSourceTimeoutsElRef {
+impl terrars::Ref for KendraDataSource_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraDataSource_TimeoutsRef {
+        KendraDataSource_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraDataSourceTimeoutsElRef {
+impl KendraDataSource_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3535,12 +3286,4 @@ impl KendraDataSourceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KendraDataSourceDynamic {
-    configuration: std::option::Option<terrars::DynamicBlock<KendraDataSourceConfigurationEl>>,
-    custom_document_enrichment_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<KendraDataSourceCustomDocumentEnrichmentConfigurationEl>>,
 }

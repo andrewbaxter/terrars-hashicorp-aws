@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SecretsmanagerSecretData {
+struct SecretsmanagerSecretData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,22 +37,22 @@ struct SecretsmanagerSecretData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     recovery_window_in_days: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rotation_lambda_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replica: std::option::Option<std::vec::Vec<SecretsmanagerSecretReplicaEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rotation_rules: std::option::Option<std::vec::Vec<SecretsmanagerSecretRotationRulesEl>>,
+    replica: std::option::Option<std::vec::Vec<SecretsmanagerSecret_Replica>>,
     dynamic: SecretsmanagerSecretDynamic,
 }
 
 struct SecretsmanagerSecret_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SecretsmanagerSecretData>,
+    data: std::cell::RefCell<SecretsmanagerSecretData_>,
 }
 
 #[derive(Clone)]
@@ -198,9 +200,10 @@ impl SecretsmanagerSecret {
         self
     }
 
-    #[doc = "Set the field `rotation_lambda_arn`.\n"]
-    pub fn set_rotation_lambda_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().rotation_lambda_arn = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -222,10 +225,16 @@ impl SecretsmanagerSecret {
         self
     }
 
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().type_ = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `replica`.\n"]
     pub fn set_replica(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SecretsmanagerSecretReplicaEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SecretsmanagerSecret_Replica>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -233,22 +242,6 @@ impl SecretsmanagerSecret {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.replica = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `rotation_rules`.\n"]
-    pub fn set_rotation_rules(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SecretsmanagerSecretRotationRulesEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().rotation_rules = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.rotation_rules = std::option::Option::Some(d);
             },
         }
         self
@@ -302,14 +295,10 @@ impl SecretsmanagerSecret {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.recovery_window_in_days", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `rotation_enabled` after provisioning.\n"]
-    pub fn rotation_enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rotation_enabled", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `rotation_lambda_arn` after provisioning.\n"]
-    pub fn rotation_lambda_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rotation_lambda_arn", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -322,9 +311,9 @@ impl SecretsmanagerSecret {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `rotation_rules` after provisioning.\n"]
-    pub fn rotation_rules(&self) -> terrars::ListRef<SecretsmanagerSecretRotationRulesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.rotation_rules", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 }
 
@@ -368,7 +357,7 @@ impl BuildSecretsmanagerSecret {
         let out = SecretsmanagerSecret(std::rc::Rc::new(SecretsmanagerSecret_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SecretsmanagerSecretData {
+            data: std::cell::RefCell::new(SecretsmanagerSecretData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -382,11 +371,11 @@ impl BuildSecretsmanagerSecret {
                 name_prefix: core::default::Default::default(),
                 policy: core::default::Default::default(),
                 recovery_window_in_days: core::default::Default::default(),
-                rotation_lambda_arn: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                type_: core::default::Default::default(),
                 replica: core::default::Default::default(),
-                rotation_rules: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -466,14 +455,10 @@ impl SecretsmanagerSecretRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.recovery_window_in_days", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `rotation_enabled` after provisioning.\n"]
-    pub fn rotation_enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rotation_enabled", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `rotation_lambda_arn` after provisioning.\n"]
-    pub fn rotation_lambda_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rotation_lambda_arn", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -486,20 +471,25 @@ impl SecretsmanagerSecretRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `rotation_rules` after provisioning.\n"]
-    pub fn rotation_rules(&self) -> terrars::ListRef<SecretsmanagerSecretRotationRulesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.rotation_rules", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SecretsmanagerSecretDynamic {
+    replica: std::option::Option<terrars::DynamicBlock<SecretsmanagerSecret_Replica>>,
+}
+
 #[derive(Serialize)]
-pub struct SecretsmanagerSecretReplicaEl {
+pub struct SecretsmanagerSecret_Replica {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     region: terrars::PrimField<std::string::String>,
 }
 
-impl SecretsmanagerSecretReplicaEl {
+impl SecretsmanagerSecret_Replica {
     #[doc = "Set the field `kms_key_id`.\n"]
     pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_id = std::option::Option::Some(v.into());
@@ -507,8 +497,8 @@ impl SecretsmanagerSecretReplicaEl {
     }
 }
 
-impl terrars::ToListMappable for SecretsmanagerSecretReplicaEl {
-    type O = terrars::BlockAssignable<SecretsmanagerSecretReplicaEl>;
+impl terrars::ToListMappable for SecretsmanagerSecret_Replica {
+    type O = terrars::BlockAssignable<SecretsmanagerSecret_Replica>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -519,35 +509,37 @@ impl terrars::ToListMappable for SecretsmanagerSecretReplicaEl {
     }
 }
 
-pub struct BuildSecretsmanagerSecretReplicaEl {
+pub struct BuildSecretsmanagerSecret_Replica {
     #[doc = ""]
     pub region: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSecretsmanagerSecretReplicaEl {
-    pub fn build(self) -> SecretsmanagerSecretReplicaEl {
-        SecretsmanagerSecretReplicaEl {
+impl BuildSecretsmanagerSecret_Replica {
+    pub fn build(self) -> SecretsmanagerSecret_Replica {
+        SecretsmanagerSecret_Replica {
             kms_key_id: core::default::Default::default(),
             region: self.region,
         }
     }
 }
 
-pub struct SecretsmanagerSecretReplicaElRef {
+#[allow(dead_code)]
+pub struct SecretsmanagerSecret_ReplicaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SecretsmanagerSecretReplicaElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SecretsmanagerSecretReplicaElRef {
-        SecretsmanagerSecretReplicaElRef {
+impl terrars::Ref for SecretsmanagerSecret_ReplicaRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecretsmanagerSecret_ReplicaRef {
+        SecretsmanagerSecret_ReplicaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SecretsmanagerSecretReplicaElRef {
+impl SecretsmanagerSecret_ReplicaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -576,65 +568,4 @@ impl SecretsmanagerSecretReplicaElRef {
     pub fn status_message(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status_message", self.base))
     }
-}
-
-#[derive(Serialize)]
-pub struct SecretsmanagerSecretRotationRulesEl {
-    automatically_after_days: terrars::PrimField<f64>,
-}
-
-impl SecretsmanagerSecretRotationRulesEl { }
-
-impl terrars::ToListMappable for SecretsmanagerSecretRotationRulesEl {
-    type O = terrars::BlockAssignable<SecretsmanagerSecretRotationRulesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildSecretsmanagerSecretRotationRulesEl {
-    #[doc = ""]
-    pub automatically_after_days: terrars::PrimField<f64>,
-}
-
-impl BuildSecretsmanagerSecretRotationRulesEl {
-    pub fn build(self) -> SecretsmanagerSecretRotationRulesEl {
-        SecretsmanagerSecretRotationRulesEl { automatically_after_days: self.automatically_after_days }
-    }
-}
-
-pub struct SecretsmanagerSecretRotationRulesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for SecretsmanagerSecretRotationRulesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SecretsmanagerSecretRotationRulesElRef {
-        SecretsmanagerSecretRotationRulesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl SecretsmanagerSecretRotationRulesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `automatically_after_days` after provisioning.\n"]
-    pub fn automatically_after_days(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.automatically_after_days", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct SecretsmanagerSecretDynamic {
-    replica: std::option::Option<terrars::DynamicBlock<SecretsmanagerSecretReplicaEl>>,
-    rotation_rules: std::option::Option<terrars::DynamicBlock<SecretsmanagerSecretRotationRulesEl>>,
 }

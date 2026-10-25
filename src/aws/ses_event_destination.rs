@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SesEventDestinationData {
+struct SesEventDestinationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,18 +28,20 @@ struct SesEventDestinationData {
     matching_types: terrars::SetField<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloudwatch_destination: std::option::Option<std::vec::Vec<SesEventDestinationCloudwatchDestinationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kinesis_destination: std::option::Option<std::vec::Vec<SesEventDestinationKinesisDestinationEl>>,
+    cloudwatch_destination: std::option::Option<std::vec::Vec<SesEventDestination_CloudwatchDestination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sns_destination: std::option::Option<std::vec::Vec<SesEventDestinationSnsDestinationEl>>,
+    kinesis_destination: std::option::Option<std::vec::Vec<SesEventDestination_KinesisDestination>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sns_destination: std::option::Option<std::vec::Vec<SesEventDestination_SnsDestination>>,
     dynamic: SesEventDestinationDynamic,
 }
 
 struct SesEventDestination_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SesEventDestinationData>,
+    data: std::cell::RefCell<SesEventDestinationData_>,
 }
 
 #[derive(Clone)]
@@ -149,10 +153,17 @@ impl SesEventDestination {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `cloudwatch_destination`.\n"]
     pub fn set_cloudwatch_destination(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesEventDestinationCloudwatchDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesEventDestination_CloudwatchDestination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -168,7 +179,7 @@ impl SesEventDestination {
     #[doc = "Set the field `kinesis_destination`.\n"]
     pub fn set_kinesis_destination(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesEventDestinationKinesisDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesEventDestination_KinesisDestination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +195,7 @@ impl SesEventDestination {
     #[doc = "Set the field `sns_destination`.\n"]
     pub fn set_sns_destination(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesEventDestinationSnsDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesEventDestination_SnsDestination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -227,13 +238,19 @@ impl SesEventDestination {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `kinesis_destination` after provisioning.\n"]
-    pub fn kinesis_destination(&self) -> terrars::ListRef<SesEventDestinationKinesisDestinationElRef> {
+    pub fn kinesis_destination(&self) -> terrars::ListRef<SesEventDestination_KinesisDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_destination", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sns_destination` after provisioning.\n"]
-    pub fn sns_destination(&self) -> terrars::ListRef<SesEventDestinationSnsDestinationElRef> {
+    pub fn sns_destination(&self) -> terrars::ListRef<SesEventDestination_SnsDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sns_destination", self.extract_ref()))
     }
 }
@@ -284,7 +301,7 @@ impl BuildSesEventDestination {
         let out = SesEventDestination(std::rc::Rc::new(SesEventDestination_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SesEventDestinationData {
+            data: std::cell::RefCell::new(SesEventDestinationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -295,6 +312,7 @@ impl BuildSesEventDestination {
                 id: core::default::Default::default(),
                 matching_types: self.matching_types,
                 name: self.name,
+                region: core::default::Default::default(),
                 cloudwatch_destination: core::default::Default::default(),
                 kinesis_destination: core::default::Default::default(),
                 sns_destination: core::default::Default::default(),
@@ -359,28 +377,41 @@ impl SesEventDestinationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `kinesis_destination` after provisioning.\n"]
-    pub fn kinesis_destination(&self) -> terrars::ListRef<SesEventDestinationKinesisDestinationElRef> {
+    pub fn kinesis_destination(&self) -> terrars::ListRef<SesEventDestination_KinesisDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_destination", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sns_destination` after provisioning.\n"]
-    pub fn sns_destination(&self) -> terrars::ListRef<SesEventDestinationSnsDestinationElRef> {
+    pub fn sns_destination(&self) -> terrars::ListRef<SesEventDestination_SnsDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sns_destination", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SesEventDestinationDynamic {
+    cloudwatch_destination: std::option::Option<terrars::DynamicBlock<SesEventDestination_CloudwatchDestination>>,
+    kinesis_destination: std::option::Option<terrars::DynamicBlock<SesEventDestination_KinesisDestination>>,
+    sns_destination: std::option::Option<terrars::DynamicBlock<SesEventDestination_SnsDestination>>,
+}
+
 #[derive(Serialize)]
-pub struct SesEventDestinationCloudwatchDestinationEl {
+pub struct SesEventDestination_CloudwatchDestination {
     default_value: terrars::PrimField<std::string::String>,
     dimension_name: terrars::PrimField<std::string::String>,
     value_source: terrars::PrimField<std::string::String>,
 }
 
-impl SesEventDestinationCloudwatchDestinationEl { }
+impl SesEventDestination_CloudwatchDestination { }
 
-impl terrars::ToListMappable for SesEventDestinationCloudwatchDestinationEl {
-    type O = terrars::BlockAssignable<SesEventDestinationCloudwatchDestinationEl>;
+impl terrars::ToListMappable for SesEventDestination_CloudwatchDestination {
+    type O = terrars::BlockAssignable<SesEventDestination_CloudwatchDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -391,7 +422,7 @@ impl terrars::ToListMappable for SesEventDestinationCloudwatchDestinationEl {
     }
 }
 
-pub struct BuildSesEventDestinationCloudwatchDestinationEl {
+pub struct BuildSesEventDestination_CloudwatchDestination {
     #[doc = ""]
     pub default_value: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -400,9 +431,9 @@ pub struct BuildSesEventDestinationCloudwatchDestinationEl {
     pub value_source: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesEventDestinationCloudwatchDestinationEl {
-    pub fn build(self) -> SesEventDestinationCloudwatchDestinationEl {
-        SesEventDestinationCloudwatchDestinationEl {
+impl BuildSesEventDestination_CloudwatchDestination {
+    pub fn build(self) -> SesEventDestination_CloudwatchDestination {
+        SesEventDestination_CloudwatchDestination {
             default_value: self.default_value,
             dimension_name: self.dimension_name,
             value_source: self.value_source,
@@ -410,21 +441,23 @@ impl BuildSesEventDestinationCloudwatchDestinationEl {
     }
 }
 
-pub struct SesEventDestinationCloudwatchDestinationElRef {
+#[allow(dead_code)]
+pub struct SesEventDestination_CloudwatchDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesEventDestinationCloudwatchDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesEventDestinationCloudwatchDestinationElRef {
-        SesEventDestinationCloudwatchDestinationElRef {
+impl terrars::Ref for SesEventDestination_CloudwatchDestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesEventDestination_CloudwatchDestinationRef {
+        SesEventDestination_CloudwatchDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesEventDestinationCloudwatchDestinationElRef {
+impl SesEventDestination_CloudwatchDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -446,15 +479,15 @@ impl SesEventDestinationCloudwatchDestinationElRef {
 }
 
 #[derive(Serialize)]
-pub struct SesEventDestinationKinesisDestinationEl {
+pub struct SesEventDestination_KinesisDestination {
     role_arn: terrars::PrimField<std::string::String>,
     stream_arn: terrars::PrimField<std::string::String>,
 }
 
-impl SesEventDestinationKinesisDestinationEl { }
+impl SesEventDestination_KinesisDestination { }
 
-impl terrars::ToListMappable for SesEventDestinationKinesisDestinationEl {
-    type O = terrars::BlockAssignable<SesEventDestinationKinesisDestinationEl>;
+impl terrars::ToListMappable for SesEventDestination_KinesisDestination {
+    type O = terrars::BlockAssignable<SesEventDestination_KinesisDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -465,37 +498,39 @@ impl terrars::ToListMappable for SesEventDestinationKinesisDestinationEl {
     }
 }
 
-pub struct BuildSesEventDestinationKinesisDestinationEl {
+pub struct BuildSesEventDestination_KinesisDestination {
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub stream_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesEventDestinationKinesisDestinationEl {
-    pub fn build(self) -> SesEventDestinationKinesisDestinationEl {
-        SesEventDestinationKinesisDestinationEl {
+impl BuildSesEventDestination_KinesisDestination {
+    pub fn build(self) -> SesEventDestination_KinesisDestination {
+        SesEventDestination_KinesisDestination {
             role_arn: self.role_arn,
             stream_arn: self.stream_arn,
         }
     }
 }
 
-pub struct SesEventDestinationKinesisDestinationElRef {
+#[allow(dead_code)]
+pub struct SesEventDestination_KinesisDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesEventDestinationKinesisDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesEventDestinationKinesisDestinationElRef {
-        SesEventDestinationKinesisDestinationElRef {
+impl terrars::Ref for SesEventDestination_KinesisDestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesEventDestination_KinesisDestinationRef {
+        SesEventDestination_KinesisDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesEventDestinationKinesisDestinationElRef {
+impl SesEventDestination_KinesisDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -512,14 +547,14 @@ impl SesEventDestinationKinesisDestinationElRef {
 }
 
 #[derive(Serialize)]
-pub struct SesEventDestinationSnsDestinationEl {
+pub struct SesEventDestination_SnsDestination {
     topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl SesEventDestinationSnsDestinationEl { }
+impl SesEventDestination_SnsDestination { }
 
-impl terrars::ToListMappable for SesEventDestinationSnsDestinationEl {
-    type O = terrars::BlockAssignable<SesEventDestinationSnsDestinationEl>;
+impl terrars::ToListMappable for SesEventDestination_SnsDestination {
+    type O = terrars::BlockAssignable<SesEventDestination_SnsDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -530,32 +565,34 @@ impl terrars::ToListMappable for SesEventDestinationSnsDestinationEl {
     }
 }
 
-pub struct BuildSesEventDestinationSnsDestinationEl {
+pub struct BuildSesEventDestination_SnsDestination {
     #[doc = ""]
     pub topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesEventDestinationSnsDestinationEl {
-    pub fn build(self) -> SesEventDestinationSnsDestinationEl {
-        SesEventDestinationSnsDestinationEl { topic_arn: self.topic_arn }
+impl BuildSesEventDestination_SnsDestination {
+    pub fn build(self) -> SesEventDestination_SnsDestination {
+        SesEventDestination_SnsDestination { topic_arn: self.topic_arn }
     }
 }
 
-pub struct SesEventDestinationSnsDestinationElRef {
+#[allow(dead_code)]
+pub struct SesEventDestination_SnsDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesEventDestinationSnsDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesEventDestinationSnsDestinationElRef {
-        SesEventDestinationSnsDestinationElRef {
+impl terrars::Ref for SesEventDestination_SnsDestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesEventDestination_SnsDestinationRef {
+        SesEventDestination_SnsDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesEventDestinationSnsDestinationElRef {
+impl SesEventDestination_SnsDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -564,11 +601,4 @@ impl SesEventDestinationSnsDestinationElRef {
     pub fn topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SesEventDestinationDynamic {
-    cloudwatch_destination: std::option::Option<terrars::DynamicBlock<SesEventDestinationCloudwatchDestinationEl>>,
-    kinesis_destination: std::option::Option<terrars::DynamicBlock<SesEventDestinationKinesisDestinationEl>>,
-    sns_destination: std::option::Option<terrars::DynamicBlock<SesEventDestinationSnsDestinationEl>>,
 }

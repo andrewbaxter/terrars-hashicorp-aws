@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEcrImageData {
+struct DataEcrImageData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,6 +25,10 @@ struct DataEcrImageData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image_tag: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    most_recent: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registry_id: std::option::Option<terrars::PrimField<std::string::String>>,
     repository_name: terrars::PrimField<std::string::String>,
 }
@@ -30,7 +36,7 @@ struct DataEcrImageData {
 struct DataEcrImage_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEcrImageData>,
+    data: std::cell::RefCell<DataEcrImageData_>,
 }
 
 #[derive(Clone)]
@@ -93,6 +99,19 @@ impl DataEcrImage {
         self
     }
 
+    #[doc = "Set the field `most_recent`.\n"]
+    pub fn set_most_recent(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().most_recent = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `registry_id`.\n"]
     pub fn set_registry_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().registry_id = std::option::Option::Some(v.into());
@@ -127,6 +146,22 @@ impl DataEcrImage {
     #[doc = "Get a reference to the value of field `image_tags` after provisioning.\n"]
     pub fn image_tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `image_uri` after provisioning.\n"]
+    pub fn image_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_uri", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `most_recent` after provisioning.\n"]
+    pub fn most_recent(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.most_recent", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
@@ -182,7 +217,7 @@ impl BuildDataEcrImage {
         let out = DataEcrImage(std::rc::Rc::new(DataEcrImage_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEcrImageData {
+            data: std::cell::RefCell::new(DataEcrImageData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -190,6 +225,8 @@ impl BuildDataEcrImage {
                 id: core::default::Default::default(),
                 image_digest: core::default::Default::default(),
                 image_tag: core::default::Default::default(),
+                most_recent: core::default::Default::default(),
+                region: core::default::Default::default(),
                 registry_id: core::default::Default::default(),
                 repository_name: self.repository_name,
             }),
@@ -250,6 +287,22 @@ impl DataEcrImageRef {
     #[doc = "Get a reference to the value of field `image_tags` after provisioning.\n"]
     pub fn image_tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `image_uri` after provisioning.\n"]
+    pub fn image_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_uri", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `most_recent` after provisioning.\n"]
+    pub fn most_recent(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.most_recent", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]

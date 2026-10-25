@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Kinesisanalyticsv2ApplicationSnapshotData {
+struct Kinesisanalyticsv2ApplicationSnapshotData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,15 +23,17 @@ struct Kinesisanalyticsv2ApplicationSnapshotData {
     application_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     snapshot_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl>,
+    timeouts: std::option::Option<Kinesisanalyticsv2ApplicationSnapshot_Timeouts>,
 }
 
 struct Kinesisanalyticsv2ApplicationSnapshot_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Kinesisanalyticsv2ApplicationSnapshotData>,
+    data: std::cell::RefCell<Kinesisanalyticsv2ApplicationSnapshotData_>,
 }
 
 #[derive(Clone)]
@@ -135,8 +139,15 @@ impl Kinesisanalyticsv2ApplicationSnapshot {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Kinesisanalyticsv2ApplicationSnapshot_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -156,6 +167,12 @@ impl Kinesisanalyticsv2ApplicationSnapshot {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_creation_timestamp` after provisioning.\n"]
     pub fn snapshot_creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_creation_timestamp", self.extract_ref()))
@@ -167,8 +184,8 @@ impl Kinesisanalyticsv2ApplicationSnapshot {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Kinesisanalyticsv2ApplicationSnapshotTimeoutsElRef {
-        Kinesisanalyticsv2ApplicationSnapshotTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Kinesisanalyticsv2ApplicationSnapshot_TimeoutsRef {
+        Kinesisanalyticsv2ApplicationSnapshot_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -219,7 +236,7 @@ impl BuildKinesisanalyticsv2ApplicationSnapshot {
         let out = Kinesisanalyticsv2ApplicationSnapshot(std::rc::Rc::new(Kinesisanalyticsv2ApplicationSnapshot_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Kinesisanalyticsv2ApplicationSnapshotData {
+            data: std::cell::RefCell::new(Kinesisanalyticsv2ApplicationSnapshotData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -227,6 +244,7 @@ impl BuildKinesisanalyticsv2ApplicationSnapshot {
                 provisioner: core::default::Default::default(),
                 application_name: self.application_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 snapshot_name: self.snapshot_name,
                 timeouts: core::default::Default::default(),
             }),
@@ -274,6 +292,12 @@ impl Kinesisanalyticsv2ApplicationSnapshotRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_creation_timestamp` after provisioning.\n"]
     pub fn snapshot_creation_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_creation_timestamp", self.extract_ref()))
@@ -285,8 +309,8 @@ impl Kinesisanalyticsv2ApplicationSnapshotRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Kinesisanalyticsv2ApplicationSnapshotTimeoutsElRef {
-        Kinesisanalyticsv2ApplicationSnapshotTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Kinesisanalyticsv2ApplicationSnapshot_TimeoutsRef {
+        Kinesisanalyticsv2ApplicationSnapshot_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -294,14 +318,14 @@ impl Kinesisanalyticsv2ApplicationSnapshotRef {
 }
 
 #[derive(Serialize)]
-pub struct Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl {
+pub struct Kinesisanalyticsv2ApplicationSnapshot_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl {
+impl Kinesisanalyticsv2ApplicationSnapshot_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -315,8 +339,8 @@ impl Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl {
-    type O = terrars::BlockAssignable<Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl>;
+impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationSnapshot_Timeouts {
+    type O = terrars::BlockAssignable<Kinesisanalyticsv2ApplicationSnapshot_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -327,35 +351,37 @@ impl terrars::ToListMappable for Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl
     }
 }
 
-pub struct BuildKinesisanalyticsv2ApplicationSnapshotTimeoutsEl {}
+pub struct BuildKinesisanalyticsv2ApplicationSnapshot_Timeouts {}
 
-impl BuildKinesisanalyticsv2ApplicationSnapshotTimeoutsEl {
-    pub fn build(self) -> Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl {
-        Kinesisanalyticsv2ApplicationSnapshotTimeoutsEl {
+impl BuildKinesisanalyticsv2ApplicationSnapshot_Timeouts {
+    pub fn build(self) -> Kinesisanalyticsv2ApplicationSnapshot_Timeouts {
+        Kinesisanalyticsv2ApplicationSnapshot_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct Kinesisanalyticsv2ApplicationSnapshotTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Kinesisanalyticsv2ApplicationSnapshot_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Kinesisanalyticsv2ApplicationSnapshotTimeoutsElRef {
+impl terrars::Ref for Kinesisanalyticsv2ApplicationSnapshot_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Kinesisanalyticsv2ApplicationSnapshotTimeoutsElRef {
-        Kinesisanalyticsv2ApplicationSnapshotTimeoutsElRef {
+    ) -> Kinesisanalyticsv2ApplicationSnapshot_TimeoutsRef {
+        Kinesisanalyticsv2ApplicationSnapshot_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Kinesisanalyticsv2ApplicationSnapshotTimeoutsElRef {
+impl Kinesisanalyticsv2ApplicationSnapshot_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

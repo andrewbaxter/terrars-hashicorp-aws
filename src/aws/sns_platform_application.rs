@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SnsPlatformApplicationData {
+struct SnsPlatformApplicationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -40,6 +42,8 @@ struct SnsPlatformApplicationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     platform_principal: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     success_feedback_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     success_feedback_sample_rate: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -48,7 +52,7 @@ struct SnsPlatformApplicationData {
 struct SnsPlatformApplication_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SnsPlatformApplicationData>,
+    data: std::cell::RefCell<SnsPlatformApplicationData_>,
 }
 
 #[derive(Clone)]
@@ -223,6 +227,13 @@ impl SnsPlatformApplication {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `success_feedback_role_arn`.\n"]
     pub fn set_success_feedback_role_arn(
         self,
@@ -318,6 +329,12 @@ impl SnsPlatformApplication {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_principal", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `success_feedback_role_arn` after provisioning.\n"]
     pub fn success_feedback_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.success_feedback_role_arn", self.extract_ref()))
@@ -375,7 +392,7 @@ impl BuildSnsPlatformApplication {
         let out = SnsPlatformApplication(std::rc::Rc::new(SnsPlatformApplication_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SnsPlatformApplicationData {
+            data: std::cell::RefCell::new(SnsPlatformApplicationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -393,6 +410,7 @@ impl BuildSnsPlatformApplication {
                 platform: self.platform,
                 platform_credential: self.platform_credential,
                 platform_principal: core::default::Default::default(),
+                region: core::default::Default::default(),
                 success_feedback_role_arn: core::default::Default::default(),
                 success_feedback_sample_rate: core::default::Default::default(),
             }),
@@ -500,6 +518,12 @@ impl SnsPlatformApplicationRef {
     #[doc = "Get a reference to the value of field `platform_principal` after provisioning.\n"]
     pub fn platform_principal(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_principal", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `success_feedback_role_arn` after provisioning.\n"]

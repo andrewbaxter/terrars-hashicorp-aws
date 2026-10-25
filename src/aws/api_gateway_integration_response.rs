@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApiGatewayIntegrationResponseData {
+struct ApiGatewayIntegrationResponseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct ApiGatewayIntegrationResponseData {
     http_method: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     resource_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -37,7 +41,7 @@ struct ApiGatewayIntegrationResponseData {
 struct ApiGatewayIntegrationResponse_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApiGatewayIntegrationResponseData>,
+    data: std::cell::RefCell<ApiGatewayIntegrationResponseData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl ApiGatewayIntegrationResponse {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `response_parameters`.\n"]
     pub fn set_response_parameters(
         self,
@@ -186,6 +197,12 @@ impl ApiGatewayIntegrationResponse {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
@@ -267,7 +284,7 @@ impl BuildApiGatewayIntegrationResponse {
         let out = ApiGatewayIntegrationResponse(std::rc::Rc::new(ApiGatewayIntegrationResponse_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApiGatewayIntegrationResponseData {
+            data: std::cell::RefCell::new(ApiGatewayIntegrationResponseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -276,6 +293,7 @@ impl BuildApiGatewayIntegrationResponse {
                 content_handling: core::default::Default::default(),
                 http_method: self.http_method,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resource_id: self.resource_id,
                 response_parameters: core::default::Default::default(),
                 response_templates: core::default::Default::default(),
@@ -325,6 +343,12 @@ impl ApiGatewayIntegrationResponseRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]

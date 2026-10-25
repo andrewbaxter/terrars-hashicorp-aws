@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GrafanaRoleAssociationData {
+struct GrafanaRoleAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,20 @@ struct GrafanaRoleAssociationData {
     group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     workspace_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GrafanaRoleAssociationTimeoutsEl>,
+    timeouts: std::option::Option<GrafanaRoleAssociation_Timeouts>,
 }
 
 struct GrafanaRoleAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GrafanaRoleAssociationData>,
+    data: std::cell::RefCell<GrafanaRoleAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl GrafanaRoleAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `user_ids`.\n"]
     pub fn set_user_ids(
         self,
@@ -158,7 +169,7 @@ impl GrafanaRoleAssociation {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GrafanaRoleAssociationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GrafanaRoleAssociation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -171,6 +182,12 @@ impl GrafanaRoleAssociation {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
@@ -189,8 +206,8 @@ impl GrafanaRoleAssociation {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GrafanaRoleAssociationTimeoutsElRef {
-        GrafanaRoleAssociationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GrafanaRoleAssociation_TimeoutsRef {
+        GrafanaRoleAssociation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -238,7 +255,7 @@ impl BuildGrafanaRoleAssociation {
         let out = GrafanaRoleAssociation(std::rc::Rc::new(GrafanaRoleAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GrafanaRoleAssociationData {
+            data: std::cell::RefCell::new(GrafanaRoleAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -246,6 +263,7 @@ impl BuildGrafanaRoleAssociation {
                 provisioner: core::default::Default::default(),
                 group_ids: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role: self.role,
                 user_ids: core::default::Default::default(),
                 workspace_id: self.workspace_id,
@@ -290,6 +308,12 @@ impl GrafanaRoleAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
     pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
@@ -306,20 +330,20 @@ impl GrafanaRoleAssociationRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GrafanaRoleAssociationTimeoutsElRef {
-        GrafanaRoleAssociationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GrafanaRoleAssociation_TimeoutsRef {
+        GrafanaRoleAssociation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct GrafanaRoleAssociationTimeoutsEl {
+pub struct GrafanaRoleAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GrafanaRoleAssociationTimeoutsEl {
+impl GrafanaRoleAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -333,8 +357,8 @@ impl GrafanaRoleAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GrafanaRoleAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<GrafanaRoleAssociationTimeoutsEl>;
+impl terrars::ToListMappable for GrafanaRoleAssociation_Timeouts {
+    type O = terrars::BlockAssignable<GrafanaRoleAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -345,32 +369,34 @@ impl terrars::ToListMappable for GrafanaRoleAssociationTimeoutsEl {
     }
 }
 
-pub struct BuildGrafanaRoleAssociationTimeoutsEl {}
+pub struct BuildGrafanaRoleAssociation_Timeouts {}
 
-impl BuildGrafanaRoleAssociationTimeoutsEl {
-    pub fn build(self) -> GrafanaRoleAssociationTimeoutsEl {
-        GrafanaRoleAssociationTimeoutsEl {
+impl BuildGrafanaRoleAssociation_Timeouts {
+    pub fn build(self) -> GrafanaRoleAssociation_Timeouts {
+        GrafanaRoleAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct GrafanaRoleAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GrafanaRoleAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GrafanaRoleAssociationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GrafanaRoleAssociationTimeoutsElRef {
-        GrafanaRoleAssociationTimeoutsElRef {
+impl terrars::Ref for GrafanaRoleAssociation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GrafanaRoleAssociation_TimeoutsRef {
+        GrafanaRoleAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GrafanaRoleAssociationTimeoutsElRef {
+impl GrafanaRoleAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

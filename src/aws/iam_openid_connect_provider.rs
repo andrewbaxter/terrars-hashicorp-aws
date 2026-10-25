@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IamOpenidConnectProviderData {
+struct IamOpenidConnectProviderData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,21 +20,22 @@ struct IamOpenidConnectProviderData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
-    client_id_list: terrars::ListField<terrars::PrimField<std::string::String>>,
+    client_id_list: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    thumbprint_list: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    thumbprint_list: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     url: terrars::PrimField<std::string::String>,
 }
 
 struct IamOpenidConnectProvider_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamOpenidConnectProviderData>,
+    data: std::cell::RefCell<IamOpenidConnectProviderData_>,
 }
 
 #[derive(Clone)]
@@ -156,14 +159,23 @@ impl IamOpenidConnectProvider {
         self
     }
 
+    #[doc = "Set the field `thumbprint_list`.\n"]
+    pub fn set_thumbprint_list(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().thumbprint_list = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `client_id_list` after provisioning.\n"]
-    pub fn client_id_list(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.client_id_list", self.extract_ref()))
+    pub fn client_id_list(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.client_id_list", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -226,9 +238,7 @@ impl terrars::Resource_ for IamOpenidConnectProvider_ {
 pub struct BuildIamOpenidConnectProvider {
     pub tf_id: std::string::String,
     #[doc = ""]
-    pub client_id_list: terrars::ListField<terrars::PrimField<std::string::String>>,
-    #[doc = ""]
-    pub thumbprint_list: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub client_id_list: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub url: terrars::PrimField<std::string::String>,
 }
@@ -238,7 +248,7 @@ impl BuildIamOpenidConnectProvider {
         let out = IamOpenidConnectProvider(std::rc::Rc::new(IamOpenidConnectProvider_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamOpenidConnectProviderData {
+            data: std::cell::RefCell::new(IamOpenidConnectProviderData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -248,7 +258,7 @@ impl BuildIamOpenidConnectProvider {
                 id: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
-                thumbprint_list: self.thumbprint_list,
+                thumbprint_list: core::default::Default::default(),
                 url: self.url,
             }),
         }));
@@ -286,8 +296,8 @@ impl IamOpenidConnectProviderRef {
     }
 
     #[doc = "Get a reference to the value of field `client_id_list` after provisioning.\n"]
-    pub fn client_id_list(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.client_id_list", self.extract_ref()))
+    pub fn client_id_list(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.client_id_list", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]

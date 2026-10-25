@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RolesanywhereTrustAnchorData {
+struct RolesanywhereTrustAnchorData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,16 @@ struct RolesanywhereTrustAnchorData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source: std::option::Option<std::vec::Vec<RolesanywhereTrustAnchorSourceEl>>,
+    notification_settings: std::option::Option<std::vec::Vec<RolesanywhereTrustAnchor_NotificationSettings>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source: std::option::Option<std::vec::Vec<RolesanywhereTrustAnchor_Source>>,
     dynamic: RolesanywhereTrustAnchorDynamic,
 }
 
 struct RolesanywhereTrustAnchor_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RolesanywhereTrustAnchorData>,
+    data: std::cell::RefCell<RolesanywhereTrustAnchorData_>,
 }
 
 #[derive(Clone)]
@@ -165,10 +169,26 @@ impl RolesanywhereTrustAnchor {
         self
     }
 
+    #[doc = "Set the field `notification_settings`.\n"]
+    pub fn set_notification_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<RolesanywhereTrustAnchor_NotificationSettings>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().notification_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.notification_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `source`.\n"]
     pub fn set_source(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RolesanywhereTrustAnchorSourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RolesanywhereTrustAnchor_Source>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -212,7 +232,7 @@ impl RolesanywhereTrustAnchor {
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<RolesanywhereTrustAnchorSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<RolesanywhereTrustAnchor_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
@@ -259,7 +279,7 @@ impl BuildRolesanywhereTrustAnchor {
         let out = RolesanywhereTrustAnchor(std::rc::Rc::new(RolesanywhereTrustAnchor_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RolesanywhereTrustAnchorData {
+            data: std::cell::RefCell::new(RolesanywhereTrustAnchorData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -270,6 +290,7 @@ impl BuildRolesanywhereTrustAnchor {
                 name: self.name,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                notification_settings: core::default::Default::default(),
                 source: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -333,20 +354,139 @@ impl RolesanywhereTrustAnchorRef {
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<RolesanywhereTrustAnchorSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<RolesanywhereTrustAnchor_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct RolesanywhereTrustAnchorDynamic {
+    notification_settings: std::option::Option<terrars::DynamicBlock<RolesanywhereTrustAnchor_NotificationSettings>>,
+    source: std::option::Option<terrars::DynamicBlock<RolesanywhereTrustAnchor_Source>>,
+}
+
 #[derive(Serialize)]
-pub struct RolesanywhereTrustAnchorSourceElSourceDataEl {
+pub struct RolesanywhereTrustAnchor_NotificationSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    channel: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    event: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    threshold: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl RolesanywhereTrustAnchor_NotificationSettings {
+    #[doc = "Set the field `channel`.\n"]
+    pub fn set_channel(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.channel = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `event`.\n"]
+    pub fn set_event(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.event = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `threshold`.\n"]
+    pub fn set_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.threshold = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for RolesanywhereTrustAnchor_NotificationSettings {
+    type O = terrars::BlockAssignable<RolesanywhereTrustAnchor_NotificationSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRolesanywhereTrustAnchor_NotificationSettings {}
+
+impl BuildRolesanywhereTrustAnchor_NotificationSettings {
+    pub fn build(self) -> RolesanywhereTrustAnchor_NotificationSettings {
+        RolesanywhereTrustAnchor_NotificationSettings {
+            channel: core::default::Default::default(),
+            enabled: core::default::Default::default(),
+            event: core::default::Default::default(),
+            threshold: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct RolesanywhereTrustAnchor_NotificationSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for RolesanywhereTrustAnchor_NotificationSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> RolesanywhereTrustAnchor_NotificationSettingsRef {
+        RolesanywhereTrustAnchor_NotificationSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl RolesanywhereTrustAnchor_NotificationSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `channel` after provisioning.\n"]
+    pub fn channel(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.channel", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `configured_by` after provisioning.\n"]
+    pub fn configured_by(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.configured_by", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `event` after provisioning.\n"]
+    pub fn event(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `threshold` after provisioning.\n"]
+    pub fn threshold(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.threshold", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct RolesanywhereTrustAnchor_Source_SourceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     acm_pca_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     x509_certificate_data: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RolesanywhereTrustAnchorSourceElSourceDataEl {
+impl RolesanywhereTrustAnchor_Source_SourceData {
     #[doc = "Set the field `acm_pca_arn`.\n"]
     pub fn set_acm_pca_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.acm_pca_arn = std::option::Option::Some(v.into());
@@ -363,8 +503,8 @@ impl RolesanywhereTrustAnchorSourceElSourceDataEl {
     }
 }
 
-impl terrars::ToListMappable for RolesanywhereTrustAnchorSourceElSourceDataEl {
-    type O = terrars::BlockAssignable<RolesanywhereTrustAnchorSourceElSourceDataEl>;
+impl terrars::ToListMappable for RolesanywhereTrustAnchor_Source_SourceData {
+    type O = terrars::BlockAssignable<RolesanywhereTrustAnchor_Source_SourceData>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -375,35 +515,34 @@ impl terrars::ToListMappable for RolesanywhereTrustAnchorSourceElSourceDataEl {
     }
 }
 
-pub struct BuildRolesanywhereTrustAnchorSourceElSourceDataEl {}
+pub struct BuildRolesanywhereTrustAnchor_Source_SourceData {}
 
-impl BuildRolesanywhereTrustAnchorSourceElSourceDataEl {
-    pub fn build(self) -> RolesanywhereTrustAnchorSourceElSourceDataEl {
-        RolesanywhereTrustAnchorSourceElSourceDataEl {
+impl BuildRolesanywhereTrustAnchor_Source_SourceData {
+    pub fn build(self) -> RolesanywhereTrustAnchor_Source_SourceData {
+        RolesanywhereTrustAnchor_Source_SourceData {
             acm_pca_arn: core::default::Default::default(),
             x509_certificate_data: core::default::Default::default(),
         }
     }
 }
 
-pub struct RolesanywhereTrustAnchorSourceElSourceDataElRef {
+#[allow(dead_code)]
+pub struct RolesanywhereTrustAnchor_Source_SourceDataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RolesanywhereTrustAnchorSourceElSourceDataElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> RolesanywhereTrustAnchorSourceElSourceDataElRef {
-        RolesanywhereTrustAnchorSourceElSourceDataElRef {
+impl terrars::Ref for RolesanywhereTrustAnchor_Source_SourceDataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RolesanywhereTrustAnchor_Source_SourceDataRef {
+        RolesanywhereTrustAnchor_Source_SourceDataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RolesanywhereTrustAnchorSourceElSourceDataElRef {
+impl RolesanywhereTrustAnchor_Source_SourceDataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -420,23 +559,23 @@ impl RolesanywhereTrustAnchorSourceElSourceDataElRef {
 }
 
 #[derive(Serialize, Default)]
-struct RolesanywhereTrustAnchorSourceElDynamic {
-    source_data: std::option::Option<terrars::DynamicBlock<RolesanywhereTrustAnchorSourceElSourceDataEl>>,
+struct RolesanywhereTrustAnchor_SourceDynamic {
+    source_data: std::option::Option<terrars::DynamicBlock<RolesanywhereTrustAnchor_Source_SourceData>>,
 }
 
 #[derive(Serialize)]
-pub struct RolesanywhereTrustAnchorSourceEl {
+pub struct RolesanywhereTrustAnchor_Source {
     source_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_data: std::option::Option<std::vec::Vec<RolesanywhereTrustAnchorSourceElSourceDataEl>>,
-    dynamic: RolesanywhereTrustAnchorSourceElDynamic,
+    source_data: std::option::Option<std::vec::Vec<RolesanywhereTrustAnchor_Source_SourceData>>,
+    dynamic: RolesanywhereTrustAnchor_SourceDynamic,
 }
 
-impl RolesanywhereTrustAnchorSourceEl {
+impl RolesanywhereTrustAnchor_Source {
     #[doc = "Set the field `source_data`.\n"]
     pub fn set_source_data(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RolesanywhereTrustAnchorSourceElSourceDataEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RolesanywhereTrustAnchor_Source_SourceData>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -450,8 +589,8 @@ impl RolesanywhereTrustAnchorSourceEl {
     }
 }
 
-impl terrars::ToListMappable for RolesanywhereTrustAnchorSourceEl {
-    type O = terrars::BlockAssignable<RolesanywhereTrustAnchorSourceEl>;
+impl terrars::ToListMappable for RolesanywhereTrustAnchor_Source {
+    type O = terrars::BlockAssignable<RolesanywhereTrustAnchor_Source>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -462,14 +601,14 @@ impl terrars::ToListMappable for RolesanywhereTrustAnchorSourceEl {
     }
 }
 
-pub struct BuildRolesanywhereTrustAnchorSourceEl {
+pub struct BuildRolesanywhereTrustAnchor_Source {
     #[doc = ""]
     pub source_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRolesanywhereTrustAnchorSourceEl {
-    pub fn build(self) -> RolesanywhereTrustAnchorSourceEl {
-        RolesanywhereTrustAnchorSourceEl {
+impl BuildRolesanywhereTrustAnchor_Source {
+    pub fn build(self) -> RolesanywhereTrustAnchor_Source {
+        RolesanywhereTrustAnchor_Source {
             source_type: self.source_type,
             source_data: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -477,21 +616,23 @@ impl BuildRolesanywhereTrustAnchorSourceEl {
     }
 }
 
-pub struct RolesanywhereTrustAnchorSourceElRef {
+#[allow(dead_code)]
+pub struct RolesanywhereTrustAnchor_SourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RolesanywhereTrustAnchorSourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RolesanywhereTrustAnchorSourceElRef {
-        RolesanywhereTrustAnchorSourceElRef {
+impl terrars::Ref for RolesanywhereTrustAnchor_SourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RolesanywhereTrustAnchor_SourceRef {
+        RolesanywhereTrustAnchor_SourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RolesanywhereTrustAnchorSourceElRef {
+impl RolesanywhereTrustAnchor_SourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -502,12 +643,7 @@ impl RolesanywhereTrustAnchorSourceElRef {
     }
 
     #[doc = "Get a reference to the value of field `source_data` after provisioning.\n"]
-    pub fn source_data(&self) -> terrars::ListRef<RolesanywhereTrustAnchorSourceElSourceDataElRef> {
+    pub fn source_data(&self) -> terrars::ListRef<RolesanywhereTrustAnchor_Source_SourceDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_data", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct RolesanywhereTrustAnchorDynamic {
-    source: std::option::Option<terrars::DynamicBlock<RolesanywhereTrustAnchorSourceEl>>,
 }

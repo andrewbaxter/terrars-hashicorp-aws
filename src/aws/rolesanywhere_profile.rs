@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RolesanywhereProfileData {
+struct RolesanywhereProfileData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct RolesanywhereProfileData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    accept_role_session_name: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     duration_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
@@ -29,7 +33,8 @@ struct RolesanywhereProfileData {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     require_instance_properties: std::option::Option<terrars::PrimField<bool>>,
-    role_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    role_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     session_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -41,7 +46,7 @@ struct RolesanywhereProfileData {
 struct RolesanywhereProfile_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RolesanywhereProfileData>,
+    data: std::cell::RefCell<RolesanywhereProfileData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +146,12 @@ impl RolesanywhereProfile {
         self
     }
 
+    #[doc = "Set the field `accept_role_session_name`.\n"]
+    pub fn set_accept_role_session_name(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().accept_role_session_name = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `duration_seconds`.\n"]
     pub fn set_duration_seconds(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().duration_seconds = std::option::Option::Some(v.into());
@@ -174,6 +185,15 @@ impl RolesanywhereProfile {
         self
     }
 
+    #[doc = "Set the field `role_arns`.\n"]
+    pub fn set_role_arns(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().role_arns = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `session_policy`.\n"]
     pub fn set_session_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().session_policy = std::option::Option::Some(v.into());
@@ -196,6 +216,11 @@ impl RolesanywhereProfile {
     ) -> Self {
         self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Get a reference to the value of field `accept_role_session_name` after provisioning.\n"]
+    pub fn accept_role_session_name(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accept_role_session_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -289,8 +314,6 @@ pub struct BuildRolesanywhereProfile {
     pub tf_id: std::string::String,
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub role_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildRolesanywhereProfile {
@@ -298,19 +321,20 @@ impl BuildRolesanywhereProfile {
         let out = RolesanywhereProfile(std::rc::Rc::new(RolesanywhereProfile_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RolesanywhereProfileData {
+            data: std::cell::RefCell::new(RolesanywhereProfileData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                accept_role_session_name: core::default::Default::default(),
                 duration_seconds: core::default::Default::default(),
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
                 managed_policy_arns: core::default::Default::default(),
                 name: self.name,
                 require_instance_properties: core::default::Default::default(),
-                role_arns: self.role_arns,
+                role_arns: core::default::Default::default(),
                 session_policy: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -342,6 +366,11 @@ impl RolesanywhereProfileRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `accept_role_session_name` after provisioning.\n"]
+    pub fn accept_role_session_name(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accept_role_session_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]

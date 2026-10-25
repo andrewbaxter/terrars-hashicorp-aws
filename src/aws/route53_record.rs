@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53RecordData {
+struct Route53RecordData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,22 +39,28 @@ struct Route53RecordData {
     type_: terrars::PrimField<std::string::String>,
     zone_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alias: std::option::Option<std::vec::Vec<Route53RecordAliasEl>>,
+    alias: std::option::Option<std::vec::Vec<Route53Record_Alias>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    failover_routing_policy: std::option::Option<std::vec::Vec<Route53RecordFailoverRoutingPolicyEl>>,
+    cidr_routing_policy: std::option::Option<std::vec::Vec<Route53Record_CidrRoutingPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    geolocation_routing_policy: std::option::Option<std::vec::Vec<Route53RecordGeolocationRoutingPolicyEl>>,
+    failover_routing_policy: std::option::Option<std::vec::Vec<Route53Record_FailoverRoutingPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    latency_routing_policy: std::option::Option<std::vec::Vec<Route53RecordLatencyRoutingPolicyEl>>,
+    geolocation_routing_policy: std::option::Option<std::vec::Vec<Route53Record_GeolocationRoutingPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    weighted_routing_policy: std::option::Option<std::vec::Vec<Route53RecordWeightedRoutingPolicyEl>>,
+    geoproximity_routing_policy: std::option::Option<std::vec::Vec<Route53Record_GeoproximityRoutingPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    latency_routing_policy: std::option::Option<std::vec::Vec<Route53Record_LatencyRoutingPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Route53Record_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    weighted_routing_policy: std::option::Option<std::vec::Vec<Route53Record_WeightedRoutingPolicy>>,
     dynamic: Route53RecordDynamic,
 }
 
 struct Route53Record_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53RecordData>,
+    data: std::cell::RefCell<Route53RecordData_>,
 }
 
 #[derive(Clone)]
@@ -198,7 +206,7 @@ impl Route53Record {
     }
 
     #[doc = "Set the field `alias`.\n"]
-    pub fn set_alias(self, v: impl std::convert::Into<terrars::BlockAssignable<Route53RecordAliasEl>>) -> Self {
+    pub fn set_alias(self, v: impl std::convert::Into<terrars::BlockAssignable<Route53Record_Alias>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().alias = std::option::Option::Some(v);
@@ -210,10 +218,26 @@ impl Route53Record {
         self
     }
 
+    #[doc = "Set the field `cidr_routing_policy`.\n"]
+    pub fn set_cidr_routing_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53Record_CidrRoutingPolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cidr_routing_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cidr_routing_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `failover_routing_policy`.\n"]
     pub fn set_failover_routing_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53RecordFailoverRoutingPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53Record_FailoverRoutingPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -229,7 +253,7 @@ impl Route53Record {
     #[doc = "Set the field `geolocation_routing_policy`.\n"]
     pub fn set_geolocation_routing_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53RecordGeolocationRoutingPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53Record_GeolocationRoutingPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -242,10 +266,26 @@ impl Route53Record {
         self
     }
 
+    #[doc = "Set the field `geoproximity_routing_policy`.\n"]
+    pub fn set_geoproximity_routing_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53Record_GeoproximityRoutingPolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().geoproximity_routing_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.geoproximity_routing_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `latency_routing_policy`.\n"]
     pub fn set_latency_routing_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53RecordLatencyRoutingPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53Record_LatencyRoutingPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -258,10 +298,16 @@ impl Route53Record {
         self
     }
 
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<Route53Record_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `weighted_routing_policy`.\n"]
     pub fn set_weighted_routing_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53RecordWeightedRoutingPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53Record_WeightedRoutingPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -333,27 +379,42 @@ impl Route53Record {
     }
 
     #[doc = "Get a reference to the value of field `alias` after provisioning.\n"]
-    pub fn alias(&self) -> terrars::ListRef<Route53RecordAliasElRef> {
+    pub fn alias(&self) -> terrars::ListRef<Route53Record_AliasRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alias", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cidr_routing_policy` after provisioning.\n"]
+    pub fn cidr_routing_policy(&self) -> terrars::ListRef<Route53Record_CidrRoutingPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cidr_routing_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `failover_routing_policy` after provisioning.\n"]
-    pub fn failover_routing_policy(&self) -> terrars::ListRef<Route53RecordFailoverRoutingPolicyElRef> {
+    pub fn failover_routing_policy(&self) -> terrars::ListRef<Route53Record_FailoverRoutingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.failover_routing_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `geolocation_routing_policy` after provisioning.\n"]
-    pub fn geolocation_routing_policy(&self) -> terrars::ListRef<Route53RecordGeolocationRoutingPolicyElRef> {
+    pub fn geolocation_routing_policy(&self) -> terrars::ListRef<Route53Record_GeolocationRoutingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.geolocation_routing_policy", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `geoproximity_routing_policy` after provisioning.\n"]
+    pub fn geoproximity_routing_policy(&self) -> terrars::ListRef<Route53Record_GeoproximityRoutingPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.geoproximity_routing_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `latency_routing_policy` after provisioning.\n"]
-    pub fn latency_routing_policy(&self) -> terrars::ListRef<Route53RecordLatencyRoutingPolicyElRef> {
+    pub fn latency_routing_policy(&self) -> terrars::ListRef<Route53Record_LatencyRoutingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.latency_routing_policy", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Route53Record_TimeoutsRef {
+        Route53Record_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `weighted_routing_policy` after provisioning.\n"]
-    pub fn weighted_routing_policy(&self) -> terrars::ListRef<Route53RecordWeightedRoutingPolicyElRef> {
+    pub fn weighted_routing_policy(&self) -> terrars::ListRef<Route53Record_WeightedRoutingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weighted_routing_policy", self.extract_ref()))
     }
 }
@@ -404,7 +465,7 @@ impl BuildRoute53Record {
         let out = Route53Record(std::rc::Rc::new(Route53Record_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53RecordData {
+            data: std::cell::RefCell::new(Route53RecordData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -421,9 +482,12 @@ impl BuildRoute53Record {
                 type_: self.type_,
                 zone_id: self.zone_id,
                 alias: core::default::Default::default(),
+                cidr_routing_policy: core::default::Default::default(),
                 failover_routing_policy: core::default::Default::default(),
                 geolocation_routing_policy: core::default::Default::default(),
+                geoproximity_routing_policy: core::default::Default::default(),
                 latency_routing_policy: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 weighted_routing_policy: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -515,42 +579,68 @@ impl Route53RecordRef {
     }
 
     #[doc = "Get a reference to the value of field `alias` after provisioning.\n"]
-    pub fn alias(&self) -> terrars::ListRef<Route53RecordAliasElRef> {
+    pub fn alias(&self) -> terrars::ListRef<Route53Record_AliasRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alias", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cidr_routing_policy` after provisioning.\n"]
+    pub fn cidr_routing_policy(&self) -> terrars::ListRef<Route53Record_CidrRoutingPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cidr_routing_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `failover_routing_policy` after provisioning.\n"]
-    pub fn failover_routing_policy(&self) -> terrars::ListRef<Route53RecordFailoverRoutingPolicyElRef> {
+    pub fn failover_routing_policy(&self) -> terrars::ListRef<Route53Record_FailoverRoutingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.failover_routing_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `geolocation_routing_policy` after provisioning.\n"]
-    pub fn geolocation_routing_policy(&self) -> terrars::ListRef<Route53RecordGeolocationRoutingPolicyElRef> {
+    pub fn geolocation_routing_policy(&self) -> terrars::ListRef<Route53Record_GeolocationRoutingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.geolocation_routing_policy", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `geoproximity_routing_policy` after provisioning.\n"]
+    pub fn geoproximity_routing_policy(&self) -> terrars::ListRef<Route53Record_GeoproximityRoutingPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.geoproximity_routing_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `latency_routing_policy` after provisioning.\n"]
-    pub fn latency_routing_policy(&self) -> terrars::ListRef<Route53RecordLatencyRoutingPolicyElRef> {
+    pub fn latency_routing_policy(&self) -> terrars::ListRef<Route53Record_LatencyRoutingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.latency_routing_policy", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Route53Record_TimeoutsRef {
+        Route53Record_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `weighted_routing_policy` after provisioning.\n"]
-    pub fn weighted_routing_policy(&self) -> terrars::ListRef<Route53RecordWeightedRoutingPolicyElRef> {
+    pub fn weighted_routing_policy(&self) -> terrars::ListRef<Route53Record_WeightedRoutingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.weighted_routing_policy", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Route53RecordDynamic {
+    alias: std::option::Option<terrars::DynamicBlock<Route53Record_Alias>>,
+    cidr_routing_policy: std::option::Option<terrars::DynamicBlock<Route53Record_CidrRoutingPolicy>>,
+    failover_routing_policy: std::option::Option<terrars::DynamicBlock<Route53Record_FailoverRoutingPolicy>>,
+    geolocation_routing_policy: std::option::Option<terrars::DynamicBlock<Route53Record_GeolocationRoutingPolicy>>,
+    geoproximity_routing_policy: std::option::Option<terrars::DynamicBlock<Route53Record_GeoproximityRoutingPolicy>>,
+    latency_routing_policy: std::option::Option<terrars::DynamicBlock<Route53Record_LatencyRoutingPolicy>>,
+    weighted_routing_policy: std::option::Option<terrars::DynamicBlock<Route53Record_WeightedRoutingPolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct Route53RecordAliasEl {
+pub struct Route53Record_Alias {
     evaluate_target_health: terrars::PrimField<bool>,
     name: terrars::PrimField<std::string::String>,
     zone_id: terrars::PrimField<std::string::String>,
 }
 
-impl Route53RecordAliasEl { }
+impl Route53Record_Alias { }
 
-impl terrars::ToListMappable for Route53RecordAliasEl {
-    type O = terrars::BlockAssignable<Route53RecordAliasEl>;
+impl terrars::ToListMappable for Route53Record_Alias {
+    type O = terrars::BlockAssignable<Route53Record_Alias>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -561,7 +651,7 @@ impl terrars::ToListMappable for Route53RecordAliasEl {
     }
 }
 
-pub struct BuildRoute53RecordAliasEl {
+pub struct BuildRoute53Record_Alias {
     #[doc = ""]
     pub evaluate_target_health: terrars::PrimField<bool>,
     #[doc = ""]
@@ -570,9 +660,9 @@ pub struct BuildRoute53RecordAliasEl {
     pub zone_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRoute53RecordAliasEl {
-    pub fn build(self) -> Route53RecordAliasEl {
-        Route53RecordAliasEl {
+impl BuildRoute53Record_Alias {
+    pub fn build(self) -> Route53Record_Alias {
+        Route53Record_Alias {
             evaluate_target_health: self.evaluate_target_health,
             name: self.name,
             zone_id: self.zone_id,
@@ -580,21 +670,23 @@ impl BuildRoute53RecordAliasEl {
     }
 }
 
-pub struct Route53RecordAliasElRef {
+#[allow(dead_code)]
+pub struct Route53Record_AliasRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53RecordAliasElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53RecordAliasElRef {
-        Route53RecordAliasElRef {
+impl terrars::Ref for Route53Record_AliasRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Record_AliasRef {
+        Route53Record_AliasRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53RecordAliasElRef {
+impl Route53Record_AliasRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -616,15 +708,15 @@ impl Route53RecordAliasElRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53RecordFailoverRoutingPolicyEl {
-    #[serde(rename = "type")]
-    type_: terrars::PrimField<std::string::String>,
+pub struct Route53Record_CidrRoutingPolicy {
+    collection_id: terrars::PrimField<std::string::String>,
+    location_name: terrars::PrimField<std::string::String>,
 }
 
-impl Route53RecordFailoverRoutingPolicyEl { }
+impl Route53Record_CidrRoutingPolicy { }
 
-impl terrars::ToListMappable for Route53RecordFailoverRoutingPolicyEl {
-    type O = terrars::BlockAssignable<Route53RecordFailoverRoutingPolicyEl>;
+impl terrars::ToListMappable for Route53Record_CidrRoutingPolicy {
+    type O = terrars::BlockAssignable<Route53Record_CidrRoutingPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -635,32 +727,102 @@ impl terrars::ToListMappable for Route53RecordFailoverRoutingPolicyEl {
     }
 }
 
-pub struct BuildRoute53RecordFailoverRoutingPolicyEl {
+pub struct BuildRoute53Record_CidrRoutingPolicy {
     #[doc = ""]
-    pub type_: terrars::PrimField<std::string::String>,
+    pub collection_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub location_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRoute53RecordFailoverRoutingPolicyEl {
-    pub fn build(self) -> Route53RecordFailoverRoutingPolicyEl {
-        Route53RecordFailoverRoutingPolicyEl { type_: self.type_ }
+impl BuildRoute53Record_CidrRoutingPolicy {
+    pub fn build(self) -> Route53Record_CidrRoutingPolicy {
+        Route53Record_CidrRoutingPolicy {
+            collection_id: self.collection_id,
+            location_name: self.location_name,
+        }
     }
 }
 
-pub struct Route53RecordFailoverRoutingPolicyElRef {
+#[allow(dead_code)]
+pub struct Route53Record_CidrRoutingPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53RecordFailoverRoutingPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53RecordFailoverRoutingPolicyElRef {
-        Route53RecordFailoverRoutingPolicyElRef {
+impl terrars::Ref for Route53Record_CidrRoutingPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Record_CidrRoutingPolicyRef {
+        Route53Record_CidrRoutingPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53RecordFailoverRoutingPolicyElRef {
+impl Route53Record_CidrRoutingPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `collection_id` after provisioning.\n"]
+    pub fn collection_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.collection_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `location_name` after provisioning.\n"]
+    pub fn location_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.location_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Route53Record_FailoverRoutingPolicy {
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
+}
+
+impl Route53Record_FailoverRoutingPolicy { }
+
+impl terrars::ToListMappable for Route53Record_FailoverRoutingPolicy {
+    type O = terrars::BlockAssignable<Route53Record_FailoverRoutingPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRoute53Record_FailoverRoutingPolicy {
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
+}
+
+impl BuildRoute53Record_FailoverRoutingPolicy {
+    pub fn build(self) -> Route53Record_FailoverRoutingPolicy {
+        Route53Record_FailoverRoutingPolicy { type_: self.type_ }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Route53Record_FailoverRoutingPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Route53Record_FailoverRoutingPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Record_FailoverRoutingPolicyRef {
+        Route53Record_FailoverRoutingPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Route53Record_FailoverRoutingPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -672,7 +834,7 @@ impl Route53RecordFailoverRoutingPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53RecordGeolocationRoutingPolicyEl {
+pub struct Route53Record_GeolocationRoutingPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     continent: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -681,7 +843,7 @@ pub struct Route53RecordGeolocationRoutingPolicyEl {
     subdivision: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53RecordGeolocationRoutingPolicyEl {
+impl Route53Record_GeolocationRoutingPolicy {
     #[doc = "Set the field `continent`.\n"]
     pub fn set_continent(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.continent = std::option::Option::Some(v.into());
@@ -701,8 +863,8 @@ impl Route53RecordGeolocationRoutingPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for Route53RecordGeolocationRoutingPolicyEl {
-    type O = terrars::BlockAssignable<Route53RecordGeolocationRoutingPolicyEl>;
+impl terrars::ToListMappable for Route53Record_GeolocationRoutingPolicy {
+    type O = terrars::BlockAssignable<Route53Record_GeolocationRoutingPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -713,11 +875,11 @@ impl terrars::ToListMappable for Route53RecordGeolocationRoutingPolicyEl {
     }
 }
 
-pub struct BuildRoute53RecordGeolocationRoutingPolicyEl {}
+pub struct BuildRoute53Record_GeolocationRoutingPolicy {}
 
-impl BuildRoute53RecordGeolocationRoutingPolicyEl {
-    pub fn build(self) -> Route53RecordGeolocationRoutingPolicyEl {
-        Route53RecordGeolocationRoutingPolicyEl {
+impl BuildRoute53Record_GeolocationRoutingPolicy {
+    pub fn build(self) -> Route53Record_GeolocationRoutingPolicy {
+        Route53Record_GeolocationRoutingPolicy {
             continent: core::default::Default::default(),
             country: core::default::Default::default(),
             subdivision: core::default::Default::default(),
@@ -725,21 +887,23 @@ impl BuildRoute53RecordGeolocationRoutingPolicyEl {
     }
 }
 
-pub struct Route53RecordGeolocationRoutingPolicyElRef {
+#[allow(dead_code)]
+pub struct Route53Record_GeolocationRoutingPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53RecordGeolocationRoutingPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53RecordGeolocationRoutingPolicyElRef {
-        Route53RecordGeolocationRoutingPolicyElRef {
+impl terrars::Ref for Route53Record_GeolocationRoutingPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Record_GeolocationRoutingPolicyRef {
+        Route53Record_GeolocationRoutingPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53RecordGeolocationRoutingPolicyElRef {
+impl Route53Record_GeolocationRoutingPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -761,14 +925,15 @@ impl Route53RecordGeolocationRoutingPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53RecordLatencyRoutingPolicyEl {
-    region: terrars::PrimField<std::string::String>,
+pub struct Route53Record_GeoproximityRoutingPolicy_Coordinates {
+    latitude: terrars::PrimField<std::string::String>,
+    longitude: terrars::PrimField<std::string::String>,
 }
 
-impl Route53RecordLatencyRoutingPolicyEl { }
+impl Route53Record_GeoproximityRoutingPolicy_Coordinates { }
 
-impl terrars::ToListMappable for Route53RecordLatencyRoutingPolicyEl {
-    type O = terrars::BlockAssignable<Route53RecordLatencyRoutingPolicyEl>;
+impl terrars::ToListMappable for Route53Record_GeoproximityRoutingPolicy_Coordinates {
+    type O = terrars::BlockAssignable<Route53Record_GeoproximityRoutingPolicy_Coordinates>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -779,32 +944,221 @@ impl terrars::ToListMappable for Route53RecordLatencyRoutingPolicyEl {
     }
 }
 
-pub struct BuildRoute53RecordLatencyRoutingPolicyEl {
+pub struct BuildRoute53Record_GeoproximityRoutingPolicy_Coordinates {
     #[doc = ""]
-    pub region: terrars::PrimField<std::string::String>,
+    pub latitude: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub longitude: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRoute53RecordLatencyRoutingPolicyEl {
-    pub fn build(self) -> Route53RecordLatencyRoutingPolicyEl {
-        Route53RecordLatencyRoutingPolicyEl { region: self.region }
+impl BuildRoute53Record_GeoproximityRoutingPolicy_Coordinates {
+    pub fn build(self) -> Route53Record_GeoproximityRoutingPolicy_Coordinates {
+        Route53Record_GeoproximityRoutingPolicy_Coordinates {
+            latitude: self.latitude,
+            longitude: self.longitude,
+        }
     }
 }
 
-pub struct Route53RecordLatencyRoutingPolicyElRef {
+#[allow(dead_code)]
+pub struct Route53Record_GeoproximityRoutingPolicy_CoordinatesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53RecordLatencyRoutingPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53RecordLatencyRoutingPolicyElRef {
-        Route53RecordLatencyRoutingPolicyElRef {
+impl terrars::Ref for Route53Record_GeoproximityRoutingPolicy_CoordinatesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Route53Record_GeoproximityRoutingPolicy_CoordinatesRef {
+        Route53Record_GeoproximityRoutingPolicy_CoordinatesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53RecordLatencyRoutingPolicyElRef {
+impl Route53Record_GeoproximityRoutingPolicy_CoordinatesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `latitude` after provisioning.\n"]
+    pub fn latitude(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.latitude", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `longitude` after provisioning.\n"]
+    pub fn longitude(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.longitude", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct Route53Record_GeoproximityRoutingPolicyDynamic {
+    coordinates: std::option::Option<terrars::DynamicBlock<Route53Record_GeoproximityRoutingPolicy_Coordinates>>,
+}
+
+#[derive(Serialize)]
+pub struct Route53Record_GeoproximityRoutingPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    aws_region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bias: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    local_zone_group: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    coordinates: std::option::Option<std::vec::Vec<Route53Record_GeoproximityRoutingPolicy_Coordinates>>,
+    dynamic: Route53Record_GeoproximityRoutingPolicyDynamic,
+}
+
+impl Route53Record_GeoproximityRoutingPolicy {
+    #[doc = "Set the field `aws_region`.\n"]
+    pub fn set_aws_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.aws_region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bias`.\n"]
+    pub fn set_bias(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.bias = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `local_zone_group`.\n"]
+    pub fn set_local_zone_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.local_zone_group = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `coordinates`.\n"]
+    pub fn set_coordinates(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53Record_GeoproximityRoutingPolicy_Coordinates>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.coordinates = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.coordinates = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for Route53Record_GeoproximityRoutingPolicy {
+    type O = terrars::BlockAssignable<Route53Record_GeoproximityRoutingPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRoute53Record_GeoproximityRoutingPolicy {}
+
+impl BuildRoute53Record_GeoproximityRoutingPolicy {
+    pub fn build(self) -> Route53Record_GeoproximityRoutingPolicy {
+        Route53Record_GeoproximityRoutingPolicy {
+            aws_region: core::default::Default::default(),
+            bias: core::default::Default::default(),
+            local_zone_group: core::default::Default::default(),
+            coordinates: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Route53Record_GeoproximityRoutingPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Route53Record_GeoproximityRoutingPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Record_GeoproximityRoutingPolicyRef {
+        Route53Record_GeoproximityRoutingPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Route53Record_GeoproximityRoutingPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `aws_region` after provisioning.\n"]
+    pub fn aws_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.aws_region", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `bias` after provisioning.\n"]
+    pub fn bias(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bias", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `local_zone_group` after provisioning.\n"]
+    pub fn local_zone_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.local_zone_group", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Route53Record_LatencyRoutingPolicy {
+    region: terrars::PrimField<std::string::String>,
+}
+
+impl Route53Record_LatencyRoutingPolicy { }
+
+impl terrars::ToListMappable for Route53Record_LatencyRoutingPolicy {
+    type O = terrars::BlockAssignable<Route53Record_LatencyRoutingPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRoute53Record_LatencyRoutingPolicy {
+    #[doc = ""]
+    pub region: terrars::PrimField<std::string::String>,
+}
+
+impl BuildRoute53Record_LatencyRoutingPolicy {
+    pub fn build(self) -> Route53Record_LatencyRoutingPolicy {
+        Route53Record_LatencyRoutingPolicy { region: self.region }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Route53Record_LatencyRoutingPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Route53Record_LatencyRoutingPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Record_LatencyRoutingPolicyRef {
+        Route53Record_LatencyRoutingPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Route53Record_LatencyRoutingPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -816,14 +1170,37 @@ impl Route53RecordLatencyRoutingPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53RecordWeightedRoutingPolicyEl {
-    weight: terrars::PrimField<f64>,
+pub struct Route53Record_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53RecordWeightedRoutingPolicyEl { }
+impl Route53Record_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for Route53RecordWeightedRoutingPolicyEl {
-    type O = terrars::BlockAssignable<Route53RecordWeightedRoutingPolicyEl>;
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Route53Record_Timeouts {
+    type O = terrars::BlockAssignable<Route53Record_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -834,32 +1211,102 @@ impl terrars::ToListMappable for Route53RecordWeightedRoutingPolicyEl {
     }
 }
 
-pub struct BuildRoute53RecordWeightedRoutingPolicyEl {
-    #[doc = ""]
-    pub weight: terrars::PrimField<f64>,
-}
+pub struct BuildRoute53Record_Timeouts {}
 
-impl BuildRoute53RecordWeightedRoutingPolicyEl {
-    pub fn build(self) -> Route53RecordWeightedRoutingPolicyEl {
-        Route53RecordWeightedRoutingPolicyEl { weight: self.weight }
+impl BuildRoute53Record_Timeouts {
+    pub fn build(self) -> Route53Record_Timeouts {
+        Route53Record_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
     }
 }
 
-pub struct Route53RecordWeightedRoutingPolicyElRef {
+#[allow(dead_code)]
+pub struct Route53Record_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53RecordWeightedRoutingPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53RecordWeightedRoutingPolicyElRef {
-        Route53RecordWeightedRoutingPolicyElRef {
+impl terrars::Ref for Route53Record_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Record_TimeoutsRef {
+        Route53Record_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53RecordWeightedRoutingPolicyElRef {
+impl Route53Record_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Route53Record_WeightedRoutingPolicy {
+    weight: terrars::PrimField<f64>,
+}
+
+impl Route53Record_WeightedRoutingPolicy { }
+
+impl terrars::ToListMappable for Route53Record_WeightedRoutingPolicy {
+    type O = terrars::BlockAssignable<Route53Record_WeightedRoutingPolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRoute53Record_WeightedRoutingPolicy {
+    #[doc = ""]
+    pub weight: terrars::PrimField<f64>,
+}
+
+impl BuildRoute53Record_WeightedRoutingPolicy {
+    pub fn build(self) -> Route53Record_WeightedRoutingPolicy {
+        Route53Record_WeightedRoutingPolicy { weight: self.weight }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Route53Record_WeightedRoutingPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Route53Record_WeightedRoutingPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Record_WeightedRoutingPolicyRef {
+        Route53Record_WeightedRoutingPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Route53Record_WeightedRoutingPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -868,13 +1315,4 @@ impl Route53RecordWeightedRoutingPolicyElRef {
     pub fn weight(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Route53RecordDynamic {
-    alias: std::option::Option<terrars::DynamicBlock<Route53RecordAliasEl>>,
-    failover_routing_policy: std::option::Option<terrars::DynamicBlock<Route53RecordFailoverRoutingPolicyEl>>,
-    geolocation_routing_policy: std::option::Option<terrars::DynamicBlock<Route53RecordGeolocationRoutingPolicyEl>>,
-    latency_routing_policy: std::option::Option<terrars::DynamicBlock<Route53RecordLatencyRoutingPolicyEl>>,
-    weighted_routing_policy: std::option::Option<terrars::DynamicBlock<Route53RecordWeightedRoutingPolicyEl>>,
 }

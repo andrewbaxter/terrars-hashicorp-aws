@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataLakeformationPermissionsData {
+struct DataLakeformationPermissionsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,24 +26,28 @@ struct DataLakeformationPermissionsData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     principal: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_location: std::option::Option<std::vec::Vec<DataLakeformationPermissionsDataLocationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    database: std::option::Option<std::vec::Vec<DataLakeformationPermissionsDatabaseEl>>,
+    data_cells_filter: std::option::Option<std::vec::Vec<DataLakeformationPermissions_DataCellsFilter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lf_tag: std::option::Option<std::vec::Vec<DataLakeformationPermissionsLfTagEl>>,
+    data_location: std::option::Option<std::vec::Vec<DataLakeformationPermissions_DataLocation>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lf_tag_policy: std::option::Option<std::vec::Vec<DataLakeformationPermissionsLfTagPolicyEl>>,
+    database: std::option::Option<std::vec::Vec<DataLakeformationPermissions_Database>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    table: std::option::Option<std::vec::Vec<DataLakeformationPermissionsTableEl>>,
+    lf_tag: std::option::Option<std::vec::Vec<DataLakeformationPermissions_LfTag>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    table_with_columns: std::option::Option<std::vec::Vec<DataLakeformationPermissionsTableWithColumnsEl>>,
+    lf_tag_policy: std::option::Option<std::vec::Vec<DataLakeformationPermissions_LfTagPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    table: std::option::Option<std::vec::Vec<DataLakeformationPermissions_Table>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    table_with_columns: std::option::Option<std::vec::Vec<DataLakeformationPermissions_TableWithColumns>>,
     dynamic: DataLakeformationPermissionsDynamic,
 }
 
 struct DataLakeformationPermissions_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLakeformationPermissionsData>,
+    data: std::cell::RefCell<DataLakeformationPermissionsData_>,
 }
 
 #[derive(Clone)]
@@ -104,10 +110,33 @@ impl DataLakeformationPermissions {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `data_cells_filter`.\n"]
+    pub fn set_data_cells_filter(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissions_DataCellsFilter>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().data_cells_filter = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.data_cells_filter = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `data_location`.\n"]
     pub fn set_data_location(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissionsDataLocationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissions_DataLocation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -123,7 +152,7 @@ impl DataLakeformationPermissions {
     #[doc = "Set the field `database`.\n"]
     pub fn set_database(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissionsDatabaseEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissions_Database>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -139,7 +168,7 @@ impl DataLakeformationPermissions {
     #[doc = "Set the field `lf_tag`.\n"]
     pub fn set_lf_tag(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissionsLfTagEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissions_LfTag>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -155,7 +184,7 @@ impl DataLakeformationPermissions {
     #[doc = "Set the field `lf_tag_policy`.\n"]
     pub fn set_lf_tag_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissionsLfTagPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissions_LfTagPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -171,7 +200,7 @@ impl DataLakeformationPermissions {
     #[doc = "Set the field `table`.\n"]
     pub fn set_table(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissionsTableEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissions_Table>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -187,7 +216,7 @@ impl DataLakeformationPermissions {
     #[doc = "Set the field `table_with_columns`.\n"]
     pub fn set_table_with_columns(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissionsTableWithColumnsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissions_TableWithColumns>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -230,33 +259,44 @@ impl DataLakeformationPermissions {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `data_cells_filter` after provisioning.\n"]
+    pub fn data_cells_filter(&self) -> terrars::ListRef<DataLakeformationPermissions_DataCellsFilterRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_cells_filter", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `data_location` after provisioning.\n"]
-    pub fn data_location(&self) -> terrars::ListRef<DataLakeformationPermissionsDataLocationElRef> {
+    pub fn data_location(&self) -> terrars::ListRef<DataLakeformationPermissions_DataLocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_location", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `database` after provisioning.\n"]
-    pub fn database(&self) -> terrars::ListRef<DataLakeformationPermissionsDatabaseElRef> {
+    pub fn database(&self) -> terrars::ListRef<DataLakeformationPermissions_DatabaseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lf_tag` after provisioning.\n"]
-    pub fn lf_tag(&self) -> terrars::ListRef<DataLakeformationPermissionsLfTagElRef> {
+    pub fn lf_tag(&self) -> terrars::ListRef<DataLakeformationPermissions_LfTagRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lf_tag", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lf_tag_policy` after provisioning.\n"]
-    pub fn lf_tag_policy(&self) -> terrars::ListRef<DataLakeformationPermissionsLfTagPolicyElRef> {
+    pub fn lf_tag_policy(&self) -> terrars::ListRef<DataLakeformationPermissions_LfTagPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lf_tag_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table` after provisioning.\n"]
-    pub fn table(&self) -> terrars::ListRef<DataLakeformationPermissionsTableElRef> {
+    pub fn table(&self) -> terrars::ListRef<DataLakeformationPermissions_TableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table_with_columns` after provisioning.\n"]
-    pub fn table_with_columns(&self) -> terrars::ListRef<DataLakeformationPermissionsTableWithColumnsElRef> {
+    pub fn table_with_columns(&self) -> terrars::ListRef<DataLakeformationPermissions_TableWithColumnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table_with_columns", self.extract_ref()))
     }
 }
@@ -303,7 +343,7 @@ impl BuildDataLakeformationPermissions {
         let out = DataLakeformationPermissions(std::rc::Rc::new(DataLakeformationPermissions_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLakeformationPermissionsData {
+            data: std::cell::RefCell::new(DataLakeformationPermissionsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -312,6 +352,8 @@ impl BuildDataLakeformationPermissions {
                 catalog_resource: core::default::Default::default(),
                 id: core::default::Default::default(),
                 principal: self.principal,
+                region: core::default::Default::default(),
+                data_cells_filter: core::default::Default::default(),
                 data_location: core::default::Default::default(),
                 database: core::default::Default::default(),
                 lf_tag: core::default::Default::default(),
@@ -379,54 +421,71 @@ impl DataLakeformationPermissionsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `data_cells_filter` after provisioning.\n"]
+    pub fn data_cells_filter(&self) -> terrars::ListRef<DataLakeformationPermissions_DataCellsFilterRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_cells_filter", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `data_location` after provisioning.\n"]
-    pub fn data_location(&self) -> terrars::ListRef<DataLakeformationPermissionsDataLocationElRef> {
+    pub fn data_location(&self) -> terrars::ListRef<DataLakeformationPermissions_DataLocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_location", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `database` after provisioning.\n"]
-    pub fn database(&self) -> terrars::ListRef<DataLakeformationPermissionsDatabaseElRef> {
+    pub fn database(&self) -> terrars::ListRef<DataLakeformationPermissions_DatabaseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lf_tag` after provisioning.\n"]
-    pub fn lf_tag(&self) -> terrars::ListRef<DataLakeformationPermissionsLfTagElRef> {
+    pub fn lf_tag(&self) -> terrars::ListRef<DataLakeformationPermissions_LfTagRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lf_tag", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lf_tag_policy` after provisioning.\n"]
-    pub fn lf_tag_policy(&self) -> terrars::ListRef<DataLakeformationPermissionsLfTagPolicyElRef> {
+    pub fn lf_tag_policy(&self) -> terrars::ListRef<DataLakeformationPermissions_LfTagPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lf_tag_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table` after provisioning.\n"]
-    pub fn table(&self) -> terrars::ListRef<DataLakeformationPermissionsTableElRef> {
+    pub fn table(&self) -> terrars::ListRef<DataLakeformationPermissions_TableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table_with_columns` after provisioning.\n"]
-    pub fn table_with_columns(&self) -> terrars::ListRef<DataLakeformationPermissionsTableWithColumnsElRef> {
+    pub fn table_with_columns(&self) -> terrars::ListRef<DataLakeformationPermissions_TableWithColumnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table_with_columns", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataLakeformationPermissionsDynamic {
+    data_cells_filter: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissions_DataCellsFilter>>,
+    data_location: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissions_DataLocation>>,
+    database: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissions_Database>>,
+    lf_tag: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissions_LfTag>>,
+    lf_tag_policy: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissions_LfTagPolicy>>,
+    table: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissions_Table>>,
+    table_with_columns: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissions_TableWithColumns>>,
+}
+
 #[derive(Serialize)]
-pub struct DataLakeformationPermissionsDataLocationEl {
-    arn: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct DataLakeformationPermissions_DataCellsFilter {
+    database_name: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    table_catalog_id: terrars::PrimField<std::string::String>,
+    table_name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLakeformationPermissionsDataLocationEl {
-    #[doc = "Set the field `catalog_id`.\n"]
-    pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.catalog_id = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl DataLakeformationPermissions_DataCellsFilter { }
 
-impl terrars::ToListMappable for DataLakeformationPermissionsDataLocationEl {
-    type O = terrars::BlockAssignable<DataLakeformationPermissionsDataLocationEl>;
+impl terrars::ToListMappable for DataLakeformationPermissions_DataCellsFilter {
+    type O = terrars::BlockAssignable<DataLakeformationPermissions_DataCellsFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -437,35 +496,131 @@ impl terrars::ToListMappable for DataLakeformationPermissionsDataLocationEl {
     }
 }
 
-pub struct BuildDataLakeformationPermissionsDataLocationEl {
+pub struct BuildDataLakeformationPermissions_DataCellsFilter {
     #[doc = ""]
-    pub arn: terrars::PrimField<std::string::String>,
+    pub database_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub table_catalog_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLakeformationPermissionsDataLocationEl {
-    pub fn build(self) -> DataLakeformationPermissionsDataLocationEl {
-        DataLakeformationPermissionsDataLocationEl {
-            arn: self.arn,
-            catalog_id: core::default::Default::default(),
+impl BuildDataLakeformationPermissions_DataCellsFilter {
+    pub fn build(self) -> DataLakeformationPermissions_DataCellsFilter {
+        DataLakeformationPermissions_DataCellsFilter {
+            database_name: self.database_name,
+            name: self.name,
+            table_catalog_id: self.table_catalog_id,
+            table_name: self.table_name,
         }
     }
 }
 
-pub struct DataLakeformationPermissionsDataLocationElRef {
+#[allow(dead_code)]
+pub struct DataLakeformationPermissions_DataCellsFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLakeformationPermissionsDataLocationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissionsDataLocationElRef {
-        DataLakeformationPermissionsDataLocationElRef {
+impl terrars::Ref for DataLakeformationPermissions_DataCellsFilterRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLakeformationPermissions_DataCellsFilterRef {
+        DataLakeformationPermissions_DataCellsFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLakeformationPermissionsDataLocationElRef {
+impl DataLakeformationPermissions_DataCellsFilterRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `table_catalog_id` after provisioning.\n"]
+    pub fn table_catalog_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_catalog_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataLakeformationPermissions_DataLocation {
+    arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataLakeformationPermissions_DataLocation {
+    #[doc = "Set the field `catalog_id`.\n"]
+    pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.catalog_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataLakeformationPermissions_DataLocation {
+    type O = terrars::BlockAssignable<DataLakeformationPermissions_DataLocation>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataLakeformationPermissions_DataLocation {
+    #[doc = ""]
+    pub arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDataLakeformationPermissions_DataLocation {
+    pub fn build(self) -> DataLakeformationPermissions_DataLocation {
+        DataLakeformationPermissions_DataLocation {
+            arn: self.arn,
+            catalog_id: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataLakeformationPermissions_DataLocationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataLakeformationPermissions_DataLocationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissions_DataLocationRef {
+        DataLakeformationPermissions_DataLocationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataLakeformationPermissions_DataLocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -482,13 +637,13 @@ impl DataLakeformationPermissionsDataLocationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLakeformationPermissionsDatabaseEl {
+pub struct DataLakeformationPermissions_Database {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataLakeformationPermissionsDatabaseEl {
+impl DataLakeformationPermissions_Database {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -496,8 +651,8 @@ impl DataLakeformationPermissionsDatabaseEl {
     }
 }
 
-impl terrars::ToListMappable for DataLakeformationPermissionsDatabaseEl {
-    type O = terrars::BlockAssignable<DataLakeformationPermissionsDatabaseEl>;
+impl terrars::ToListMappable for DataLakeformationPermissions_Database {
+    type O = terrars::BlockAssignable<DataLakeformationPermissions_Database>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -508,35 +663,37 @@ impl terrars::ToListMappable for DataLakeformationPermissionsDatabaseEl {
     }
 }
 
-pub struct BuildDataLakeformationPermissionsDatabaseEl {
+pub struct BuildDataLakeformationPermissions_Database {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLakeformationPermissionsDatabaseEl {
-    pub fn build(self) -> DataLakeformationPermissionsDatabaseEl {
-        DataLakeformationPermissionsDatabaseEl {
+impl BuildDataLakeformationPermissions_Database {
+    pub fn build(self) -> DataLakeformationPermissions_Database {
+        DataLakeformationPermissions_Database {
             catalog_id: core::default::Default::default(),
             name: self.name,
         }
     }
 }
 
-pub struct DataLakeformationPermissionsDatabaseElRef {
+#[allow(dead_code)]
+pub struct DataLakeformationPermissions_DatabaseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLakeformationPermissionsDatabaseElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissionsDatabaseElRef {
-        DataLakeformationPermissionsDatabaseElRef {
+impl terrars::Ref for DataLakeformationPermissions_DatabaseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissions_DatabaseRef {
+        DataLakeformationPermissions_DatabaseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLakeformationPermissionsDatabaseElRef {
+impl DataLakeformationPermissions_DatabaseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -553,14 +710,14 @@ impl DataLakeformationPermissionsDatabaseElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLakeformationPermissionsLfTagEl {
+pub struct DataLakeformationPermissions_LfTag {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLakeformationPermissionsLfTagEl {
+impl DataLakeformationPermissions_LfTag {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -568,8 +725,8 @@ impl DataLakeformationPermissionsLfTagEl {
     }
 }
 
-impl terrars::ToListMappable for DataLakeformationPermissionsLfTagEl {
-    type O = terrars::BlockAssignable<DataLakeformationPermissionsLfTagEl>;
+impl terrars::ToListMappable for DataLakeformationPermissions_LfTag {
+    type O = terrars::BlockAssignable<DataLakeformationPermissions_LfTag>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -580,16 +737,16 @@ impl terrars::ToListMappable for DataLakeformationPermissionsLfTagEl {
     }
 }
 
-pub struct BuildDataLakeformationPermissionsLfTagEl {
+pub struct BuildDataLakeformationPermissions_LfTag {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataLakeformationPermissionsLfTagEl {
-    pub fn build(self) -> DataLakeformationPermissionsLfTagEl {
-        DataLakeformationPermissionsLfTagEl {
+impl BuildDataLakeformationPermissions_LfTag {
+    pub fn build(self) -> DataLakeformationPermissions_LfTag {
+        DataLakeformationPermissions_LfTag {
             catalog_id: core::default::Default::default(),
             key: self.key,
             values: self.values,
@@ -597,21 +754,23 @@ impl BuildDataLakeformationPermissionsLfTagEl {
     }
 }
 
-pub struct DataLakeformationPermissionsLfTagElRef {
+#[allow(dead_code)]
+pub struct DataLakeformationPermissions_LfTagRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLakeformationPermissionsLfTagElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissionsLfTagElRef {
-        DataLakeformationPermissionsLfTagElRef {
+impl terrars::Ref for DataLakeformationPermissions_LfTagRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissions_LfTagRef {
+        DataLakeformationPermissions_LfTagRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLakeformationPermissionsLfTagElRef {
+impl DataLakeformationPermissions_LfTagRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -633,15 +792,15 @@ impl DataLakeformationPermissionsLfTagElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLakeformationPermissionsLfTagPolicyElExpressionEl {
+pub struct DataLakeformationPermissions_LfTagPolicy_Expression {
     key: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLakeformationPermissionsLfTagPolicyElExpressionEl { }
+impl DataLakeformationPermissions_LfTagPolicy_Expression { }
 
-impl terrars::ToListMappable for DataLakeformationPermissionsLfTagPolicyElExpressionEl {
-    type O = terrars::BlockAssignable<DataLakeformationPermissionsLfTagPolicyElExpressionEl>;
+impl terrars::ToListMappable for DataLakeformationPermissions_LfTagPolicy_Expression {
+    type O = terrars::BlockAssignable<DataLakeformationPermissions_LfTagPolicy_Expression>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -652,40 +811,42 @@ impl terrars::ToListMappable for DataLakeformationPermissionsLfTagPolicyElExpres
     }
 }
 
-pub struct BuildDataLakeformationPermissionsLfTagPolicyElExpressionEl {
+pub struct BuildDataLakeformationPermissions_LfTagPolicy_Expression {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataLakeformationPermissionsLfTagPolicyElExpressionEl {
-    pub fn build(self) -> DataLakeformationPermissionsLfTagPolicyElExpressionEl {
-        DataLakeformationPermissionsLfTagPolicyElExpressionEl {
+impl BuildDataLakeformationPermissions_LfTagPolicy_Expression {
+    pub fn build(self) -> DataLakeformationPermissions_LfTagPolicy_Expression {
+        DataLakeformationPermissions_LfTagPolicy_Expression {
             key: self.key,
             values: self.values,
         }
     }
 }
 
-pub struct DataLakeformationPermissionsLfTagPolicyElExpressionElRef {
+#[allow(dead_code)]
+pub struct DataLakeformationPermissions_LfTagPolicy_ExpressionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLakeformationPermissionsLfTagPolicyElExpressionElRef {
+impl terrars::Ref for DataLakeformationPermissions_LfTagPolicy_ExpressionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLakeformationPermissionsLfTagPolicyElExpressionElRef {
-        DataLakeformationPermissionsLfTagPolicyElExpressionElRef {
+    ) -> DataLakeformationPermissions_LfTagPolicy_ExpressionRef {
+        DataLakeformationPermissions_LfTagPolicy_ExpressionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLakeformationPermissionsLfTagPolicyElExpressionElRef {
+impl DataLakeformationPermissions_LfTagPolicy_ExpressionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -702,21 +863,21 @@ impl DataLakeformationPermissionsLfTagPolicyElExpressionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataLakeformationPermissionsLfTagPolicyElDynamic {
-    expression: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissionsLfTagPolicyElExpressionEl>>,
+struct DataLakeformationPermissions_LfTagPolicyDynamic {
+    expression: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissions_LfTagPolicy_Expression>>,
 }
 
 #[derive(Serialize)]
-pub struct DataLakeformationPermissionsLfTagPolicyEl {
+pub struct DataLakeformationPermissions_LfTagPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     resource_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    expression: std::option::Option<std::vec::Vec<DataLakeformationPermissionsLfTagPolicyElExpressionEl>>,
-    dynamic: DataLakeformationPermissionsLfTagPolicyElDynamic,
+    expression: std::option::Option<std::vec::Vec<DataLakeformationPermissions_LfTagPolicy_Expression>>,
+    dynamic: DataLakeformationPermissions_LfTagPolicyDynamic,
 }
 
-impl DataLakeformationPermissionsLfTagPolicyEl {
+impl DataLakeformationPermissions_LfTagPolicy {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -726,7 +887,7 @@ impl DataLakeformationPermissionsLfTagPolicyEl {
     #[doc = "Set the field `expression`.\n"]
     pub fn set_expression(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissionsLfTagPolicyElExpressionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataLakeformationPermissions_LfTagPolicy_Expression>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -740,8 +901,8 @@ impl DataLakeformationPermissionsLfTagPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for DataLakeformationPermissionsLfTagPolicyEl {
-    type O = terrars::BlockAssignable<DataLakeformationPermissionsLfTagPolicyEl>;
+impl terrars::ToListMappable for DataLakeformationPermissions_LfTagPolicy {
+    type O = terrars::BlockAssignable<DataLakeformationPermissions_LfTagPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -752,14 +913,14 @@ impl terrars::ToListMappable for DataLakeformationPermissionsLfTagPolicyEl {
     }
 }
 
-pub struct BuildDataLakeformationPermissionsLfTagPolicyEl {
+pub struct BuildDataLakeformationPermissions_LfTagPolicy {
     #[doc = ""]
     pub resource_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLakeformationPermissionsLfTagPolicyEl {
-    pub fn build(self) -> DataLakeformationPermissionsLfTagPolicyEl {
-        DataLakeformationPermissionsLfTagPolicyEl {
+impl BuildDataLakeformationPermissions_LfTagPolicy {
+    pub fn build(self) -> DataLakeformationPermissions_LfTagPolicy {
+        DataLakeformationPermissions_LfTagPolicy {
             catalog_id: core::default::Default::default(),
             resource_type: self.resource_type,
             expression: core::default::Default::default(),
@@ -768,21 +929,23 @@ impl BuildDataLakeformationPermissionsLfTagPolicyEl {
     }
 }
 
-pub struct DataLakeformationPermissionsLfTagPolicyElRef {
+#[allow(dead_code)]
+pub struct DataLakeformationPermissions_LfTagPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLakeformationPermissionsLfTagPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissionsLfTagPolicyElRef {
-        DataLakeformationPermissionsLfTagPolicyElRef {
+impl terrars::Ref for DataLakeformationPermissions_LfTagPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissions_LfTagPolicyRef {
+        DataLakeformationPermissions_LfTagPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLakeformationPermissionsLfTagPolicyElRef {
+impl DataLakeformationPermissions_LfTagPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -796,15 +959,10 @@ impl DataLakeformationPermissionsLfTagPolicyElRef {
     pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.base))
     }
-
-    #[doc = "Get a reference to the value of field `expression` after provisioning.\n"]
-    pub fn expression(&self) -> terrars::ListRef<DataLakeformationPermissionsLfTagPolicyElExpressionElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.expression", self.base))
-    }
 }
 
 #[derive(Serialize)]
-pub struct DataLakeformationPermissionsTableEl {
+pub struct DataLakeformationPermissions_Table {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     database_name: terrars::PrimField<std::string::String>,
@@ -814,7 +972,7 @@ pub struct DataLakeformationPermissionsTableEl {
     wildcard: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataLakeformationPermissionsTableEl {
+impl DataLakeformationPermissions_Table {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -834,8 +992,8 @@ impl DataLakeformationPermissionsTableEl {
     }
 }
 
-impl terrars::ToListMappable for DataLakeformationPermissionsTableEl {
-    type O = terrars::BlockAssignable<DataLakeformationPermissionsTableEl>;
+impl terrars::ToListMappable for DataLakeformationPermissions_Table {
+    type O = terrars::BlockAssignable<DataLakeformationPermissions_Table>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -846,14 +1004,14 @@ impl terrars::ToListMappable for DataLakeformationPermissionsTableEl {
     }
 }
 
-pub struct BuildDataLakeformationPermissionsTableEl {
+pub struct BuildDataLakeformationPermissions_Table {
     #[doc = ""]
     pub database_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLakeformationPermissionsTableEl {
-    pub fn build(self) -> DataLakeformationPermissionsTableEl {
-        DataLakeformationPermissionsTableEl {
+impl BuildDataLakeformationPermissions_Table {
+    pub fn build(self) -> DataLakeformationPermissions_Table {
+        DataLakeformationPermissions_Table {
             catalog_id: core::default::Default::default(),
             database_name: self.database_name,
             name: core::default::Default::default(),
@@ -862,21 +1020,23 @@ impl BuildDataLakeformationPermissionsTableEl {
     }
 }
 
-pub struct DataLakeformationPermissionsTableElRef {
+#[allow(dead_code)]
+pub struct DataLakeformationPermissions_TableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLakeformationPermissionsTableElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissionsTableElRef {
-        DataLakeformationPermissionsTableElRef {
+impl terrars::Ref for DataLakeformationPermissions_TableRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLakeformationPermissions_TableRef {
+        DataLakeformationPermissions_TableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLakeformationPermissionsTableElRef {
+impl DataLakeformationPermissions_TableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -903,7 +1063,7 @@ impl DataLakeformationPermissionsTableElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLakeformationPermissionsTableWithColumnsEl {
+pub struct DataLakeformationPermissions_TableWithColumns {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -916,7 +1076,7 @@ pub struct DataLakeformationPermissionsTableWithColumnsEl {
     wildcard: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataLakeformationPermissionsTableWithColumnsEl {
+impl DataLakeformationPermissions_TableWithColumns {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -948,8 +1108,8 @@ impl DataLakeformationPermissionsTableWithColumnsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLakeformationPermissionsTableWithColumnsEl {
-    type O = terrars::BlockAssignable<DataLakeformationPermissionsTableWithColumnsEl>;
+impl terrars::ToListMappable for DataLakeformationPermissions_TableWithColumns {
+    type O = terrars::BlockAssignable<DataLakeformationPermissions_TableWithColumns>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -960,16 +1120,16 @@ impl terrars::ToListMappable for DataLakeformationPermissionsTableWithColumnsEl 
     }
 }
 
-pub struct BuildDataLakeformationPermissionsTableWithColumnsEl {
+pub struct BuildDataLakeformationPermissions_TableWithColumns {
     #[doc = ""]
     pub database_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataLakeformationPermissionsTableWithColumnsEl {
-    pub fn build(self) -> DataLakeformationPermissionsTableWithColumnsEl {
-        DataLakeformationPermissionsTableWithColumnsEl {
+impl BuildDataLakeformationPermissions_TableWithColumns {
+    pub fn build(self) -> DataLakeformationPermissions_TableWithColumns {
+        DataLakeformationPermissions_TableWithColumns {
             catalog_id: core::default::Default::default(),
             column_names: core::default::Default::default(),
             database_name: self.database_name,
@@ -980,24 +1140,26 @@ impl BuildDataLakeformationPermissionsTableWithColumnsEl {
     }
 }
 
-pub struct DataLakeformationPermissionsTableWithColumnsElRef {
+#[allow(dead_code)]
+pub struct DataLakeformationPermissions_TableWithColumnsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLakeformationPermissionsTableWithColumnsElRef {
+impl terrars::Ref for DataLakeformationPermissions_TableWithColumnsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLakeformationPermissionsTableWithColumnsElRef {
-        DataLakeformationPermissionsTableWithColumnsElRef {
+    ) -> DataLakeformationPermissions_TableWithColumnsRef {
+        DataLakeformationPermissions_TableWithColumnsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLakeformationPermissionsTableWithColumnsElRef {
+impl DataLakeformationPermissions_TableWithColumnsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1031,14 +1193,4 @@ impl DataLakeformationPermissionsTableWithColumnsElRef {
     pub fn wildcard(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.wildcard", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataLakeformationPermissionsDynamic {
-    data_location: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissionsDataLocationEl>>,
-    database: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissionsDatabaseEl>>,
-    lf_tag: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissionsLfTagEl>>,
-    lf_tag_policy: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissionsLfTagPolicyEl>>,
-    table: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissionsTableEl>>,
-    table_with_columns: std::option::Option<terrars::DynamicBlock<DataLakeformationPermissionsTableWithColumnsEl>>,
 }

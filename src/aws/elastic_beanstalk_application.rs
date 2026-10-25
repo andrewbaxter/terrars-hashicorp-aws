@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ElasticBeanstalkApplicationData {
+struct ElasticBeanstalkApplicationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct ElasticBeanstalkApplicationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    appversion_lifecycle: std::option::Option<std::vec::Vec<ElasticBeanstalkApplicationAppversionLifecycleEl>>,
+    appversion_lifecycle: std::option::Option<std::vec::Vec<ElasticBeanstalkApplication_AppversionLifecycle>>,
     dynamic: ElasticBeanstalkApplicationDynamic,
 }
 
 struct ElasticBeanstalkApplication_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ElasticBeanstalkApplicationData>,
+    data: std::cell::RefCell<ElasticBeanstalkApplicationData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl ElasticBeanstalkApplication {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl ElasticBeanstalkApplication {
     #[doc = "Set the field `appversion_lifecycle`.\n"]
     pub fn set_appversion_lifecycle(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElasticBeanstalkApplicationAppversionLifecycleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElasticBeanstalkApplication_AppversionLifecycle>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -201,6 +212,12 @@ impl ElasticBeanstalkApplication {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -212,7 +229,7 @@ impl ElasticBeanstalkApplication {
     }
 
     #[doc = "Get a reference to the value of field `appversion_lifecycle` after provisioning.\n"]
-    pub fn appversion_lifecycle(&self) -> terrars::ListRef<ElasticBeanstalkApplicationAppversionLifecycleElRef> {
+    pub fn appversion_lifecycle(&self) -> terrars::ListRef<ElasticBeanstalkApplication_AppversionLifecycleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.appversion_lifecycle", self.extract_ref()))
     }
 }
@@ -259,7 +276,7 @@ impl BuildElasticBeanstalkApplication {
         let out = ElasticBeanstalkApplication(std::rc::Rc::new(ElasticBeanstalkApplication_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ElasticBeanstalkApplicationData {
+            data: std::cell::RefCell::new(ElasticBeanstalkApplicationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -268,6 +285,7 @@ impl BuildElasticBeanstalkApplication {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 appversion_lifecycle: core::default::Default::default(),
@@ -322,6 +340,12 @@ impl ElasticBeanstalkApplicationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -333,13 +357,20 @@ impl ElasticBeanstalkApplicationRef {
     }
 
     #[doc = "Get a reference to the value of field `appversion_lifecycle` after provisioning.\n"]
-    pub fn appversion_lifecycle(&self) -> terrars::ListRef<ElasticBeanstalkApplicationAppversionLifecycleElRef> {
+    pub fn appversion_lifecycle(&self) -> terrars::ListRef<ElasticBeanstalkApplication_AppversionLifecycleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.appversion_lifecycle", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ElasticBeanstalkApplicationDynamic {
+    appversion_lifecycle: std
+    ::option
+    ::Option<terrars::DynamicBlock<ElasticBeanstalkApplication_AppversionLifecycle>>,
+}
+
 #[derive(Serialize)]
-pub struct ElasticBeanstalkApplicationAppversionLifecycleEl {
+pub struct ElasticBeanstalkApplication_AppversionLifecycle {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_source_from_s3: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -349,7 +380,7 @@ pub struct ElasticBeanstalkApplicationAppversionLifecycleEl {
     service_role: terrars::PrimField<std::string::String>,
 }
 
-impl ElasticBeanstalkApplicationAppversionLifecycleEl {
+impl ElasticBeanstalkApplication_AppversionLifecycle {
     #[doc = "Set the field `delete_source_from_s3`.\n"]
     pub fn set_delete_source_from_s3(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.delete_source_from_s3 = std::option::Option::Some(v.into());
@@ -369,8 +400,8 @@ impl ElasticBeanstalkApplicationAppversionLifecycleEl {
     }
 }
 
-impl terrars::ToListMappable for ElasticBeanstalkApplicationAppversionLifecycleEl {
-    type O = terrars::BlockAssignable<ElasticBeanstalkApplicationAppversionLifecycleEl>;
+impl terrars::ToListMappable for ElasticBeanstalkApplication_AppversionLifecycle {
+    type O = terrars::BlockAssignable<ElasticBeanstalkApplication_AppversionLifecycle>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,14 +412,14 @@ impl terrars::ToListMappable for ElasticBeanstalkApplicationAppversionLifecycleE
     }
 }
 
-pub struct BuildElasticBeanstalkApplicationAppversionLifecycleEl {
+pub struct BuildElasticBeanstalkApplication_AppversionLifecycle {
     #[doc = ""]
     pub service_role: terrars::PrimField<std::string::String>,
 }
 
-impl BuildElasticBeanstalkApplicationAppversionLifecycleEl {
-    pub fn build(self) -> ElasticBeanstalkApplicationAppversionLifecycleEl {
-        ElasticBeanstalkApplicationAppversionLifecycleEl {
+impl BuildElasticBeanstalkApplication_AppversionLifecycle {
+    pub fn build(self) -> ElasticBeanstalkApplication_AppversionLifecycle {
+        ElasticBeanstalkApplication_AppversionLifecycle {
             delete_source_from_s3: core::default::Default::default(),
             max_age_in_days: core::default::Default::default(),
             max_count: core::default::Default::default(),
@@ -397,24 +428,26 @@ impl BuildElasticBeanstalkApplicationAppversionLifecycleEl {
     }
 }
 
-pub struct ElasticBeanstalkApplicationAppversionLifecycleElRef {
+#[allow(dead_code)]
+pub struct ElasticBeanstalkApplication_AppversionLifecycleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElasticBeanstalkApplicationAppversionLifecycleElRef {
+impl terrars::Ref for ElasticBeanstalkApplication_AppversionLifecycleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ElasticBeanstalkApplicationAppversionLifecycleElRef {
-        ElasticBeanstalkApplicationAppversionLifecycleElRef {
+    ) -> ElasticBeanstalkApplication_AppversionLifecycleRef {
+        ElasticBeanstalkApplication_AppversionLifecycleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElasticBeanstalkApplicationAppversionLifecycleElRef {
+impl ElasticBeanstalkApplication_AppversionLifecycleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -438,11 +471,4 @@ impl ElasticBeanstalkApplicationAppversionLifecycleElRef {
     pub fn service_role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ElasticBeanstalkApplicationDynamic {
-    appversion_lifecycle: std
-    ::option
-    ::Option<terrars::DynamicBlock<ElasticBeanstalkApplicationAppversionLifecycleEl>>,
 }

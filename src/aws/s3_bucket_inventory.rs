@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketInventoryData {
+struct S3BucketInventoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,18 +30,20 @@ struct S3BucketInventoryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     optional_fields: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination: std::option::Option<std::vec::Vec<S3BucketInventoryDestinationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<S3BucketInventoryFilterEl>>,
+    destination: std::option::Option<std::vec::Vec<S3BucketInventory_Destination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schedule: std::option::Option<std::vec::Vec<S3BucketInventoryScheduleEl>>,
+    filter: std::option::Option<std::vec::Vec<S3BucketInventory_Filter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schedule: std::option::Option<std::vec::Vec<S3BucketInventory_Schedule>>,
     dynamic: S3BucketInventoryDynamic,
 }
 
 struct S3BucketInventory_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketInventoryData>,
+    data: std::cell::RefCell<S3BucketInventoryData_>,
 }
 
 #[derive(Clone)]
@@ -160,10 +164,17 @@ impl S3BucketInventory {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventoryDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventory_Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -177,7 +188,7 @@ impl S3BucketInventory {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventoryFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventory_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -190,10 +201,7 @@ impl S3BucketInventory {
     }
 
     #[doc = "Set the field `schedule`.\n"]
-    pub fn set_schedule(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventoryScheduleEl>>,
-    ) -> Self {
+    pub fn set_schedule(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventory_Schedule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().schedule = std::option::Option::Some(v);
@@ -235,18 +243,24 @@ impl S3BucketInventory {
         terrars::SetRef::new(self.shared().clone(), format!("{}.optional_fields", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<S3BucketInventoryDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<S3BucketInventory_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<S3BucketInventoryFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<S3BucketInventory_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<S3BucketInventoryScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<S3BucketInventory_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 }
@@ -297,7 +311,7 @@ impl BuildS3BucketInventory {
         let out = S3BucketInventory(std::rc::Rc::new(S3BucketInventory_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketInventoryData {
+            data: std::cell::RefCell::new(S3BucketInventoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -309,6 +323,7 @@ impl BuildS3BucketInventory {
                 included_object_versions: self.included_object_versions,
                 name: self.name,
                 optional_fields: core::default::Default::default(),
+                region: core::default::Default::default(),
                 destination: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 schedule: core::default::Default::default(),
@@ -373,31 +388,44 @@ impl S3BucketInventoryRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.optional_fields", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<S3BucketInventoryDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<S3BucketInventory_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<S3BucketInventoryFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<S3BucketInventory_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<S3BucketInventoryScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<S3BucketInventory_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketInventoryDynamic {
+    destination: std::option::Option<terrars::DynamicBlock<S3BucketInventory_Destination>>,
+    filter: std::option::Option<terrars::DynamicBlock<S3BucketInventory_Filter>>,
+    schedule: std::option::Option<terrars::DynamicBlock<S3BucketInventory_Schedule>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl {
+pub struct S3BucketInventory_Destination_Bucket_Encryption_SseKms {
     key_id: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl { }
+impl S3BucketInventory_Destination_Bucket_Encryption_SseKms { }
 
-impl terrars::ToListMappable for S3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl {
-    type O = terrars::BlockAssignable<S3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl>;
+impl terrars::ToListMappable for S3BucketInventory_Destination_Bucket_Encryption_SseKms {
+    type O = terrars::BlockAssignable<S3BucketInventory_Destination_Bucket_Encryption_SseKms>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -408,35 +436,37 @@ impl terrars::ToListMappable for S3BucketInventoryDestinationElBucketElEncryptio
     }
 }
 
-pub struct BuildS3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl {
+pub struct BuildS3BucketInventory_Destination_Bucket_Encryption_SseKms {
     #[doc = ""]
     pub key_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl {
-    pub fn build(self) -> S3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl {
-        S3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl { key_id: self.key_id }
+impl BuildS3BucketInventory_Destination_Bucket_Encryption_SseKms {
+    pub fn build(self) -> S3BucketInventory_Destination_Bucket_Encryption_SseKms {
+        S3BucketInventory_Destination_Bucket_Encryption_SseKms { key_id: self.key_id }
     }
 }
 
-pub struct S3BucketInventoryDestinationElBucketElEncryptionElSseKmsElRef {
+#[allow(dead_code)]
+pub struct S3BucketInventory_Destination_Bucket_Encryption_SseKmsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketInventoryDestinationElBucketElEncryptionElSseKmsElRef {
+impl terrars::Ref for S3BucketInventory_Destination_Bucket_Encryption_SseKmsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketInventoryDestinationElBucketElEncryptionElSseKmsElRef {
-        S3BucketInventoryDestinationElBucketElEncryptionElSseKmsElRef {
+    ) -> S3BucketInventory_Destination_Bucket_Encryption_SseKmsRef {
+        S3BucketInventory_Destination_Bucket_Encryption_SseKmsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketInventoryDestinationElBucketElEncryptionElSseKmsElRef {
+impl S3BucketInventory_Destination_Bucket_Encryption_SseKmsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -448,12 +478,12 @@ impl S3BucketInventoryDestinationElBucketElEncryptionElSseKmsElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketInventoryDestinationElBucketElEncryptionElSseS3El {}
+pub struct S3BucketInventory_Destination_Bucket_Encryption_SseS3 {}
 
-impl S3BucketInventoryDestinationElBucketElEncryptionElSseS3El { }
+impl S3BucketInventory_Destination_Bucket_Encryption_SseS3 { }
 
-impl terrars::ToListMappable for S3BucketInventoryDestinationElBucketElEncryptionElSseS3El {
-    type O = terrars::BlockAssignable<S3BucketInventoryDestinationElBucketElEncryptionElSseS3El>;
+impl terrars::ToListMappable for S3BucketInventory_Destination_Bucket_Encryption_SseS3 {
+    type O = terrars::BlockAssignable<S3BucketInventory_Destination_Bucket_Encryption_SseS3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -464,62 +494,59 @@ impl terrars::ToListMappable for S3BucketInventoryDestinationElBucketElEncryptio
     }
 }
 
-pub struct BuildS3BucketInventoryDestinationElBucketElEncryptionElSseS3El {}
+pub struct BuildS3BucketInventory_Destination_Bucket_Encryption_SseS3 {}
 
-impl BuildS3BucketInventoryDestinationElBucketElEncryptionElSseS3El {
-    pub fn build(self) -> S3BucketInventoryDestinationElBucketElEncryptionElSseS3El {
-        S3BucketInventoryDestinationElBucketElEncryptionElSseS3El {}
+impl BuildS3BucketInventory_Destination_Bucket_Encryption_SseS3 {
+    pub fn build(self) -> S3BucketInventory_Destination_Bucket_Encryption_SseS3 {
+        S3BucketInventory_Destination_Bucket_Encryption_SseS3 {}
     }
 }
 
-pub struct S3BucketInventoryDestinationElBucketElEncryptionElSseS3ElRef {
+#[allow(dead_code)]
+pub struct S3BucketInventory_Destination_Bucket_Encryption_SseS3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketInventoryDestinationElBucketElEncryptionElSseS3ElRef {
+impl terrars::Ref for S3BucketInventory_Destination_Bucket_Encryption_SseS3Ref {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketInventoryDestinationElBucketElEncryptionElSseS3ElRef {
-        S3BucketInventoryDestinationElBucketElEncryptionElSseS3ElRef {
+    ) -> S3BucketInventory_Destination_Bucket_Encryption_SseS3Ref {
+        S3BucketInventory_Destination_Bucket_Encryption_SseS3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketInventoryDestinationElBucketElEncryptionElSseS3ElRef {
+impl S3BucketInventory_Destination_Bucket_Encryption_SseS3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketInventoryDestinationElBucketElEncryptionElDynamic {
-    sse_kms: std::option::Option<terrars::DynamicBlock<S3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl>>,
-    sse_s3: std::option::Option<terrars::DynamicBlock<S3BucketInventoryDestinationElBucketElEncryptionElSseS3El>>,
+struct S3BucketInventory_Destination_Bucket_EncryptionDynamic {
+    sse_kms: std::option::Option<terrars::DynamicBlock<S3BucketInventory_Destination_Bucket_Encryption_SseKms>>,
+    sse_s3: std::option::Option<terrars::DynamicBlock<S3BucketInventory_Destination_Bucket_Encryption_SseS3>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketInventoryDestinationElBucketElEncryptionEl {
+pub struct S3BucketInventory_Destination_Bucket_Encryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sse_kms: std::option::Option<std::vec::Vec<S3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl>>,
+    sse_kms: std::option::Option<std::vec::Vec<S3BucketInventory_Destination_Bucket_Encryption_SseKms>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sse_s3: std::option::Option<std::vec::Vec<S3BucketInventoryDestinationElBucketElEncryptionElSseS3El>>,
-    dynamic: S3BucketInventoryDestinationElBucketElEncryptionElDynamic,
+    sse_s3: std::option::Option<std::vec::Vec<S3BucketInventory_Destination_Bucket_Encryption_SseS3>>,
+    dynamic: S3BucketInventory_Destination_Bucket_EncryptionDynamic,
 }
 
-impl S3BucketInventoryDestinationElBucketElEncryptionEl {
+impl S3BucketInventory_Destination_Bucket_Encryption {
     #[doc = "Set the field `sse_kms`.\n"]
     pub fn set_sse_kms(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<S3BucketInventoryDestinationElBucketElEncryptionElSseKmsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventory_Destination_Bucket_Encryption_SseKms>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -535,12 +562,7 @@ impl S3BucketInventoryDestinationElBucketElEncryptionEl {
     #[doc = "Set the field `sse_s3`.\n"]
     pub fn set_sse_s3(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<S3BucketInventoryDestinationElBucketElEncryptionElSseS3El>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventory_Destination_Bucket_Encryption_SseS3>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -554,8 +576,8 @@ impl S3BucketInventoryDestinationElBucketElEncryptionEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketInventoryDestinationElBucketElEncryptionEl {
-    type O = terrars::BlockAssignable<S3BucketInventoryDestinationElBucketElEncryptionEl>;
+impl terrars::ToListMappable for S3BucketInventory_Destination_Bucket_Encryption {
+    type O = terrars::BlockAssignable<S3BucketInventory_Destination_Bucket_Encryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -566,11 +588,11 @@ impl terrars::ToListMappable for S3BucketInventoryDestinationElBucketElEncryptio
     }
 }
 
-pub struct BuildS3BucketInventoryDestinationElBucketElEncryptionEl {}
+pub struct BuildS3BucketInventory_Destination_Bucket_Encryption {}
 
-impl BuildS3BucketInventoryDestinationElBucketElEncryptionEl {
-    pub fn build(self) -> S3BucketInventoryDestinationElBucketElEncryptionEl {
-        S3BucketInventoryDestinationElBucketElEncryptionEl {
+impl BuildS3BucketInventory_Destination_Bucket_Encryption {
+    pub fn build(self) -> S3BucketInventory_Destination_Bucket_Encryption {
+        S3BucketInventory_Destination_Bucket_Encryption {
             sse_kms: core::default::Default::default(),
             sse_s3: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -578,46 +600,48 @@ impl BuildS3BucketInventoryDestinationElBucketElEncryptionEl {
     }
 }
 
-pub struct S3BucketInventoryDestinationElBucketElEncryptionElRef {
+#[allow(dead_code)]
+pub struct S3BucketInventory_Destination_Bucket_EncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketInventoryDestinationElBucketElEncryptionElRef {
+impl terrars::Ref for S3BucketInventory_Destination_Bucket_EncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketInventoryDestinationElBucketElEncryptionElRef {
-        S3BucketInventoryDestinationElBucketElEncryptionElRef {
+    ) -> S3BucketInventory_Destination_Bucket_EncryptionRef {
+        S3BucketInventory_Destination_Bucket_EncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketInventoryDestinationElBucketElEncryptionElRef {
+impl S3BucketInventory_Destination_Bucket_EncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `sse_kms` after provisioning.\n"]
-    pub fn sse_kms(&self) -> terrars::ListRef<S3BucketInventoryDestinationElBucketElEncryptionElSseKmsElRef> {
+    pub fn sse_kms(&self) -> terrars::ListRef<S3BucketInventory_Destination_Bucket_Encryption_SseKmsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sse_kms", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sse_s3` after provisioning.\n"]
-    pub fn sse_s3(&self) -> terrars::ListRef<S3BucketInventoryDestinationElBucketElEncryptionElSseS3ElRef> {
+    pub fn sse_s3(&self) -> terrars::ListRef<S3BucketInventory_Destination_Bucket_Encryption_SseS3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sse_s3", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketInventoryDestinationElBucketElDynamic {
-    encryption: std::option::Option<terrars::DynamicBlock<S3BucketInventoryDestinationElBucketElEncryptionEl>>,
+struct S3BucketInventory_Destination_BucketDynamic {
+    encryption: std::option::Option<terrars::DynamicBlock<S3BucketInventory_Destination_Bucket_Encryption>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketInventoryDestinationElBucketEl {
+pub struct S3BucketInventory_Destination_Bucket {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account_id: std::option::Option<terrars::PrimField<std::string::String>>,
     bucket_arn: terrars::PrimField<std::string::String>,
@@ -625,11 +649,11 @@ pub struct S3BucketInventoryDestinationElBucketEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption: std::option::Option<std::vec::Vec<S3BucketInventoryDestinationElBucketElEncryptionEl>>,
-    dynamic: S3BucketInventoryDestinationElBucketElDynamic,
+    encryption: std::option::Option<std::vec::Vec<S3BucketInventory_Destination_Bucket_Encryption>>,
+    dynamic: S3BucketInventory_Destination_BucketDynamic,
 }
 
-impl S3BucketInventoryDestinationElBucketEl {
+impl S3BucketInventory_Destination_Bucket {
     #[doc = "Set the field `account_id`.\n"]
     pub fn set_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.account_id = std::option::Option::Some(v.into());
@@ -645,7 +669,7 @@ impl S3BucketInventoryDestinationElBucketEl {
     #[doc = "Set the field `encryption`.\n"]
     pub fn set_encryption(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventoryDestinationElBucketElEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventory_Destination_Bucket_Encryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -659,8 +683,8 @@ impl S3BucketInventoryDestinationElBucketEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketInventoryDestinationElBucketEl {
-    type O = terrars::BlockAssignable<S3BucketInventoryDestinationElBucketEl>;
+impl terrars::ToListMappable for S3BucketInventory_Destination_Bucket {
+    type O = terrars::BlockAssignable<S3BucketInventory_Destination_Bucket>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -671,16 +695,16 @@ impl terrars::ToListMappable for S3BucketInventoryDestinationElBucketEl {
     }
 }
 
-pub struct BuildS3BucketInventoryDestinationElBucketEl {
+pub struct BuildS3BucketInventory_Destination_Bucket {
     #[doc = ""]
     pub bucket_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub format: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketInventoryDestinationElBucketEl {
-    pub fn build(self) -> S3BucketInventoryDestinationElBucketEl {
-        S3BucketInventoryDestinationElBucketEl {
+impl BuildS3BucketInventory_Destination_Bucket {
+    pub fn build(self) -> S3BucketInventory_Destination_Bucket {
+        S3BucketInventory_Destination_Bucket {
             account_id: core::default::Default::default(),
             bucket_arn: self.bucket_arn,
             format: self.format,
@@ -691,21 +715,23 @@ impl BuildS3BucketInventoryDestinationElBucketEl {
     }
 }
 
-pub struct S3BucketInventoryDestinationElBucketElRef {
+#[allow(dead_code)]
+pub struct S3BucketInventory_Destination_BucketRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketInventoryDestinationElBucketElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketInventoryDestinationElBucketElRef {
-        S3BucketInventoryDestinationElBucketElRef {
+impl terrars::Ref for S3BucketInventory_Destination_BucketRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketInventory_Destination_BucketRef {
+        S3BucketInventory_Destination_BucketRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketInventoryDestinationElBucketElRef {
+impl S3BucketInventory_Destination_BucketRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -731,28 +757,28 @@ impl S3BucketInventoryDestinationElBucketElRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption` after provisioning.\n"]
-    pub fn encryption(&self) -> terrars::ListRef<S3BucketInventoryDestinationElBucketElEncryptionElRef> {
+    pub fn encryption(&self) -> terrars::ListRef<S3BucketInventory_Destination_Bucket_EncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketInventoryDestinationElDynamic {
-    bucket: std::option::Option<terrars::DynamicBlock<S3BucketInventoryDestinationElBucketEl>>,
+struct S3BucketInventory_DestinationDynamic {
+    bucket: std::option::Option<terrars::DynamicBlock<S3BucketInventory_Destination_Bucket>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketInventoryDestinationEl {
+pub struct S3BucketInventory_Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket: std::option::Option<std::vec::Vec<S3BucketInventoryDestinationElBucketEl>>,
-    dynamic: S3BucketInventoryDestinationElDynamic,
+    bucket: std::option::Option<std::vec::Vec<S3BucketInventory_Destination_Bucket>>,
+    dynamic: S3BucketInventory_DestinationDynamic,
 }
 
-impl S3BucketInventoryDestinationEl {
+impl S3BucketInventory_Destination {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventoryDestinationElBucketEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketInventory_Destination_Bucket>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -766,8 +792,8 @@ impl S3BucketInventoryDestinationEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketInventoryDestinationEl {
-    type O = terrars::BlockAssignable<S3BucketInventoryDestinationEl>;
+impl terrars::ToListMappable for S3BucketInventory_Destination {
+    type O = terrars::BlockAssignable<S3BucketInventory_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -778,49 +804,51 @@ impl terrars::ToListMappable for S3BucketInventoryDestinationEl {
     }
 }
 
-pub struct BuildS3BucketInventoryDestinationEl {}
+pub struct BuildS3BucketInventory_Destination {}
 
-impl BuildS3BucketInventoryDestinationEl {
-    pub fn build(self) -> S3BucketInventoryDestinationEl {
-        S3BucketInventoryDestinationEl {
+impl BuildS3BucketInventory_Destination {
+    pub fn build(self) -> S3BucketInventory_Destination {
+        S3BucketInventory_Destination {
             bucket: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketInventoryDestinationElRef {
+#[allow(dead_code)]
+pub struct S3BucketInventory_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketInventoryDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketInventoryDestinationElRef {
-        S3BucketInventoryDestinationElRef {
+impl terrars::Ref for S3BucketInventory_DestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketInventory_DestinationRef {
+        S3BucketInventory_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketInventoryDestinationElRef {
+impl S3BucketInventory_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
-    pub fn bucket(&self) -> terrars::ListRef<S3BucketInventoryDestinationElBucketElRef> {
+    pub fn bucket(&self) -> terrars::ListRef<S3BucketInventory_Destination_BucketRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3BucketInventoryFilterEl {
+pub struct S3BucketInventory_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketInventoryFilterEl {
+impl S3BucketInventory_Filter {
     #[doc = "Set the field `prefix`.\n"]
     pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix = std::option::Option::Some(v.into());
@@ -828,8 +856,8 @@ impl S3BucketInventoryFilterEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketInventoryFilterEl {
-    type O = terrars::BlockAssignable<S3BucketInventoryFilterEl>;
+impl terrars::ToListMappable for S3BucketInventory_Filter {
+    type O = terrars::BlockAssignable<S3BucketInventory_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -840,29 +868,31 @@ impl terrars::ToListMappable for S3BucketInventoryFilterEl {
     }
 }
 
-pub struct BuildS3BucketInventoryFilterEl {}
+pub struct BuildS3BucketInventory_Filter {}
 
-impl BuildS3BucketInventoryFilterEl {
-    pub fn build(self) -> S3BucketInventoryFilterEl {
-        S3BucketInventoryFilterEl { prefix: core::default::Default::default() }
+impl BuildS3BucketInventory_Filter {
+    pub fn build(self) -> S3BucketInventory_Filter {
+        S3BucketInventory_Filter { prefix: core::default::Default::default() }
     }
 }
 
-pub struct S3BucketInventoryFilterElRef {
+#[allow(dead_code)]
+pub struct S3BucketInventory_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketInventoryFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketInventoryFilterElRef {
-        S3BucketInventoryFilterElRef {
+impl terrars::Ref for S3BucketInventory_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketInventory_FilterRef {
+        S3BucketInventory_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketInventoryFilterElRef {
+impl S3BucketInventory_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -874,14 +904,14 @@ impl S3BucketInventoryFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketInventoryScheduleEl {
+pub struct S3BucketInventory_Schedule {
     frequency: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketInventoryScheduleEl { }
+impl S3BucketInventory_Schedule { }
 
-impl terrars::ToListMappable for S3BucketInventoryScheduleEl {
-    type O = terrars::BlockAssignable<S3BucketInventoryScheduleEl>;
+impl terrars::ToListMappable for S3BucketInventory_Schedule {
+    type O = terrars::BlockAssignable<S3BucketInventory_Schedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -892,32 +922,34 @@ impl terrars::ToListMappable for S3BucketInventoryScheduleEl {
     }
 }
 
-pub struct BuildS3BucketInventoryScheduleEl {
+pub struct BuildS3BucketInventory_Schedule {
     #[doc = ""]
     pub frequency: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketInventoryScheduleEl {
-    pub fn build(self) -> S3BucketInventoryScheduleEl {
-        S3BucketInventoryScheduleEl { frequency: self.frequency }
+impl BuildS3BucketInventory_Schedule {
+    pub fn build(self) -> S3BucketInventory_Schedule {
+        S3BucketInventory_Schedule { frequency: self.frequency }
     }
 }
 
-pub struct S3BucketInventoryScheduleElRef {
+#[allow(dead_code)]
+pub struct S3BucketInventory_ScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketInventoryScheduleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketInventoryScheduleElRef {
-        S3BucketInventoryScheduleElRef {
+impl terrars::Ref for S3BucketInventory_ScheduleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketInventory_ScheduleRef {
+        S3BucketInventory_ScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketInventoryScheduleElRef {
+impl S3BucketInventory_ScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -926,11 +958,4 @@ impl S3BucketInventoryScheduleElRef {
     pub fn frequency(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.frequency", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketInventoryDynamic {
-    destination: std::option::Option<terrars::DynamicBlock<S3BucketInventoryDestinationEl>>,
-    filter: std::option::Option<terrars::DynamicBlock<S3BucketInventoryFilterEl>>,
-    schedule: std::option::Option<terrars::DynamicBlock<S3BucketInventoryScheduleEl>>,
 }

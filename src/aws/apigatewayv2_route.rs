@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Apigatewayv2RouteData {
+struct Apigatewayv2RouteData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,6 +36,8 @@ struct Apigatewayv2RouteData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     operation_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_models: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     route_key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -41,14 +45,14 @@ struct Apigatewayv2RouteData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    request_parameter: std::option::Option<std::vec::Vec<Apigatewayv2RouteRequestParameterEl>>,
+    request_parameter: std::option::Option<std::vec::Vec<Apigatewayv2Route_RequestParameter>>,
     dynamic: Apigatewayv2RouteDynamic,
 }
 
 struct Apigatewayv2Route_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Apigatewayv2RouteData>,
+    data: std::cell::RefCell<Apigatewayv2RouteData_>,
 }
 
 #[derive(Clone)]
@@ -196,6 +200,13 @@ impl Apigatewayv2Route {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `request_models`.\n"]
     pub fn set_request_models(
         self,
@@ -223,7 +234,7 @@ impl Apigatewayv2Route {
     #[doc = "Set the field `request_parameter`.\n"]
     pub fn set_request_parameter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2RouteRequestParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2Route_RequestParameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -274,6 +285,12 @@ impl Apigatewayv2Route {
     #[doc = "Get a reference to the value of field `operation_name` after provisioning.\n"]
     pub fn operation_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.operation_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `request_models` after provisioning.\n"]
@@ -344,7 +361,7 @@ impl BuildApigatewayv2Route {
         let out = Apigatewayv2Route(std::rc::Rc::new(Apigatewayv2Route_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Apigatewayv2RouteData {
+            data: std::cell::RefCell::new(Apigatewayv2RouteData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -358,6 +375,7 @@ impl BuildApigatewayv2Route {
                 id: core::default::Default::default(),
                 model_selection_expression: core::default::Default::default(),
                 operation_name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 request_models: core::default::Default::default(),
                 route_key: self.route_key,
                 route_response_selection_expression: core::default::Default::default(),
@@ -434,6 +452,12 @@ impl Apigatewayv2RouteRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.operation_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `request_models` after provisioning.\n"]
     pub fn request_models(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.request_models", self.extract_ref()))
@@ -458,16 +482,21 @@ impl Apigatewayv2RouteRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct Apigatewayv2RouteDynamic {
+    request_parameter: std::option::Option<terrars::DynamicBlock<Apigatewayv2Route_RequestParameter>>,
+}
+
 #[derive(Serialize)]
-pub struct Apigatewayv2RouteRequestParameterEl {
+pub struct Apigatewayv2Route_RequestParameter {
     request_parameter_key: terrars::PrimField<std::string::String>,
     required: terrars::PrimField<bool>,
 }
 
-impl Apigatewayv2RouteRequestParameterEl { }
+impl Apigatewayv2Route_RequestParameter { }
 
-impl terrars::ToListMappable for Apigatewayv2RouteRequestParameterEl {
-    type O = terrars::BlockAssignable<Apigatewayv2RouteRequestParameterEl>;
+impl terrars::ToListMappable for Apigatewayv2Route_RequestParameter {
+    type O = terrars::BlockAssignable<Apigatewayv2Route_RequestParameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -478,37 +507,39 @@ impl terrars::ToListMappable for Apigatewayv2RouteRequestParameterEl {
     }
 }
 
-pub struct BuildApigatewayv2RouteRequestParameterEl {
+pub struct BuildApigatewayv2Route_RequestParameter {
     #[doc = ""]
     pub request_parameter_key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub required: terrars::PrimField<bool>,
 }
 
-impl BuildApigatewayv2RouteRequestParameterEl {
-    pub fn build(self) -> Apigatewayv2RouteRequestParameterEl {
-        Apigatewayv2RouteRequestParameterEl {
+impl BuildApigatewayv2Route_RequestParameter {
+    pub fn build(self) -> Apigatewayv2Route_RequestParameter {
+        Apigatewayv2Route_RequestParameter {
             request_parameter_key: self.request_parameter_key,
             required: self.required,
         }
     }
 }
 
-pub struct Apigatewayv2RouteRequestParameterElRef {
+#[allow(dead_code)]
+pub struct Apigatewayv2Route_RequestParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Apigatewayv2RouteRequestParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2RouteRequestParameterElRef {
-        Apigatewayv2RouteRequestParameterElRef {
+impl terrars::Ref for Apigatewayv2Route_RequestParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2Route_RequestParameterRef {
+        Apigatewayv2Route_RequestParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Apigatewayv2RouteRequestParameterElRef {
+impl Apigatewayv2Route_RequestParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -522,9 +553,4 @@ impl Apigatewayv2RouteRequestParameterElRef {
     pub fn required(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.required", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Apigatewayv2RouteDynamic {
-    request_parameter: std::option::Option<terrars::DynamicBlock<Apigatewayv2RouteRequestParameterEl>>,
 }

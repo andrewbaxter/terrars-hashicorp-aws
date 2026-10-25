@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppmeshRouteData {
+struct AppmeshRouteData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,19 +27,21 @@ struct AppmeshRouteData {
     mesh_owner: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     virtual_router_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spec: std::option::Option<std::vec::Vec<AppmeshRouteSpecEl>>,
+    spec: std::option::Option<std::vec::Vec<AppmeshRoute_Spec>>,
     dynamic: AppmeshRouteDynamic,
 }
 
 struct AppmeshRoute_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppmeshRouteData>,
+    data: std::cell::RefCell<AppmeshRouteData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl AppmeshRoute {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl AppmeshRoute {
     }
 
     #[doc = "Set the field `spec`.\n"]
-    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecEl>>) -> Self {
+    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().spec = std::option::Option::Some(v);
@@ -215,6 +226,12 @@ impl AppmeshRoute {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -236,7 +253,7 @@ impl AppmeshRoute {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshRouteSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshRoute_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
@@ -287,7 +304,7 @@ impl BuildAppmeshRoute {
         let out = AppmeshRoute(std::rc::Rc::new(AppmeshRoute_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppmeshRouteData {
+            data: std::cell::RefCell::new(AppmeshRouteData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -297,6 +314,7 @@ impl BuildAppmeshRoute {
                 mesh_name: self.mesh_name,
                 mesh_owner: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 virtual_router_name: self.virtual_router_name,
@@ -367,6 +385,12 @@ impl AppmeshRouteRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -388,20 +412,25 @@ impl AppmeshRouteRef {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshRouteSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshRoute_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppmeshRouteDynamic {
+    spec: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec>>,
+}
+
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl {
+pub struct AppmeshRoute_Spec_TcpRoute_Action_WeightedTarget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     virtual_node: terrars::PrimField<std::string::String>,
     weight: terrars::PrimField<f64>,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl {
+impl AppmeshRoute_Spec_TcpRoute_Action_WeightedTarget {
     #[doc = "Set the field `port`.\n"]
     pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.port = std::option::Option::Some(v.into());
@@ -409,8 +438,8 @@ impl AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_TcpRoute_Action_WeightedTarget {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Action_WeightedTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -421,16 +450,16 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElActionElWeightedTa
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl {
+pub struct BuildAppmeshRoute_Spec_TcpRoute_Action_WeightedTarget {
     #[doc = ""]
     pub virtual_node: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub weight: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl {
-        AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl {
+impl BuildAppmeshRoute_Spec_TcpRoute_Action_WeightedTarget {
+    pub fn build(self) -> AppmeshRoute_Spec_TcpRoute_Action_WeightedTarget {
+        AppmeshRoute_Spec_TcpRoute_Action_WeightedTarget {
             port: core::default::Default::default(),
             virtual_node: self.virtual_node,
             weight: self.weight,
@@ -438,24 +467,26 @@ impl BuildAppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl {
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_TcpRoute_Action_WeightedTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetElRef {
+impl terrars::Ref for AppmeshRoute_Spec_TcpRoute_Action_WeightedTargetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetElRef {
-        AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetElRef {
+    ) -> AppmeshRoute_Spec_TcpRoute_Action_WeightedTargetRef {
+        AppmeshRoute_Spec_TcpRoute_Action_WeightedTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetElRef {
+impl AppmeshRoute_Spec_TcpRoute_Action_WeightedTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -477,24 +508,22 @@ impl AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElGrpcRouteElActionElDynamic {
-    weighted_target: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl>>,
+struct AppmeshRoute_Spec_TcpRoute_ActionDynamic {
+    weighted_target: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute_Action_WeightedTarget>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElActionEl {
+pub struct AppmeshRoute_Spec_TcpRoute_Action {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    weighted_target: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl>>,
-    dynamic: AppmeshRouteSpecElGrpcRouteElActionElDynamic,
+    weighted_target: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute_Action_WeightedTarget>>,
+    dynamic: AppmeshRoute_Spec_TcpRoute_ActionDynamic,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElActionEl {
+impl AppmeshRoute_Spec_TcpRoute_Action {
     #[doc = "Set the field `weighted_target`.\n"]
     pub fn set_weighted_target(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElActionElWeightedTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Action_WeightedTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -508,8 +537,8 @@ impl AppmeshRouteSpecElGrpcRouteElActionEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElActionEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElActionEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_TcpRoute_Action {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Action>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -520,47 +549,49 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElActionEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElActionEl {}
+pub struct BuildAppmeshRoute_Spec_TcpRoute_Action {}
 
-impl BuildAppmeshRouteSpecElGrpcRouteElActionEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElActionEl {
-        AppmeshRouteSpecElGrpcRouteElActionEl {
+impl BuildAppmeshRoute_Spec_TcpRoute_Action {
+    pub fn build(self) -> AppmeshRoute_Spec_TcpRoute_Action {
+        AppmeshRoute_Spec_TcpRoute_Action {
             weighted_target: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElActionElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_TcpRoute_ActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElGrpcRouteElActionElRef {
-        AppmeshRouteSpecElGrpcRouteElActionElRef {
+impl terrars::Ref for AppmeshRoute_Spec_TcpRoute_ActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_TcpRoute_ActionRef {
+        AppmeshRoute_Spec_TcpRoute_ActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElActionElRef {
+impl AppmeshRoute_Spec_TcpRoute_ActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl {
+pub struct AppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range {
     end: terrars::PrimField<f64>,
     start: terrars::PrimField<f64>,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl { }
+impl AppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range { }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -571,40 +602,42 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElMatchElMetadataElM
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl {
+pub struct BuildAppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range {
     #[doc = ""]
     pub end: terrars::PrimField<f64>,
     #[doc = ""]
     pub start: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl {
-        AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl {
+impl BuildAppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range {
+    pub fn build(self) -> AppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range {
+        AppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range {
             end: self.end,
             start: self.start,
         }
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_HttpRoute_Match_Header_Match_RangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeElRef {
+impl terrars::Ref for AppmeshRoute_Spec_HttpRoute_Match_Header_Match_RangeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeElRef {
-        AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeElRef {
+    ) -> AppmeshRoute_Spec_HttpRoute_Match_Header_Match_RangeRef {
+        AppmeshRoute_Spec_HttpRoute_Match_Header_Match_RangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeElRef {
+impl AppmeshRoute_Spec_HttpRoute_Match_Header_Match_RangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -621,12 +654,12 @@ impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElDynamic {
-    range: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl>>,
+struct AppmeshRoute_Spec_HttpRoute_Match_Header_MatchDynamic {
+    range: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
+pub struct AppmeshRoute_Spec_HttpRoute_Match_Header_Match {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exact: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -636,11 +669,11 @@ pub struct AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     suffix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    range: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl>>,
-    dynamic: AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElDynamic,
+    range: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range>>,
+    dynamic: AppmeshRoute_Spec_HttpRoute_Match_Header_MatchDynamic,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
+impl AppmeshRoute_Spec_HttpRoute_Match_Header_Match {
     #[doc = "Set the field `exact`.\n"]
     pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.exact = std::option::Option::Some(v.into());
@@ -668,12 +701,7 @@ impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
     #[doc = "Set the field `range`.\n"]
     pub fn set_range(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_Header_Match_Range>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -687,8 +715,8 @@ impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_HttpRoute_Match_Header_Match {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_Header_Match>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -699,11 +727,11 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElMatchElMetadataElM
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {}
+pub struct BuildAppmeshRoute_Spec_HttpRoute_Match_Header_Match {}
 
-impl BuildAppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
-        AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
+impl BuildAppmeshRoute_Spec_HttpRoute_Match_Header_Match {
+    pub fn build(self) -> AppmeshRoute_Spec_HttpRoute_Match_Header_Match {
+        AppmeshRoute_Spec_HttpRoute_Match_Header_Match {
             exact: core::default::Default::default(),
             prefix: core::default::Default::default(),
             regex: core::default::Default::default(),
@@ -714,24 +742,26 @@ impl BuildAppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl {
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_HttpRoute_Match_Header_MatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRef {
+impl terrars::Ref for AppmeshRoute_Spec_HttpRoute_Match_Header_MatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRef {
-        AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRef {
+    ) -> AppmeshRoute_Spec_HttpRoute_Match_Header_MatchRef {
+        AppmeshRoute_Spec_HttpRoute_Match_Header_MatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRef {
+impl AppmeshRoute_Spec_HttpRoute_Match_Header_MatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -757,27 +787,27 @@ impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRef {
     }
 
     #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRangeElRef> {
+    pub fn range(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRoute_Match_Header_Match_RangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElGrpcRouteElMatchElMetadataElDynamic {
-    match_: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl>>,
+struct AppmeshRoute_Spec_GrpcRoute_Match_MetadataDynamic {
+    match_: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_Match_Header_Match>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
+pub struct AppmeshRoute_Spec_GrpcRoute_Match_Metadata {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     invert: std::option::Option<terrars::PrimField<bool>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl>>,
-    dynamic: AppmeshRouteSpecElGrpcRouteElMatchElMetadataElDynamic,
+    match_: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_Match_Header_Match>>,
+    dynamic: AppmeshRoute_Spec_GrpcRoute_Match_MetadataDynamic,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
+impl AppmeshRoute_Spec_GrpcRoute_Match_Metadata {
     #[doc = "Set the field `invert`.\n"]
     pub fn set_invert(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.invert = std::option::Option::Some(v.into());
@@ -787,7 +817,7 @@ impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
     #[doc = "Set the field `match_`.\n"]
     pub fn set_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_Header_Match>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -801,8 +831,8 @@ impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_GrpcRoute_Match_Metadata {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Match_Metadata>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -813,14 +843,14 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl 
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
+pub struct BuildAppmeshRoute_Spec_GrpcRoute_Match_Metadata {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
-        AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
+impl BuildAppmeshRoute_Spec_GrpcRoute_Match_Metadata {
+    pub fn build(self) -> AppmeshRoute_Spec_GrpcRoute_Match_Metadata {
+        AppmeshRoute_Spec_GrpcRoute_Match_Metadata {
             invert: core::default::Default::default(),
             name: self.name,
             match_: core::default::Default::default(),
@@ -829,24 +859,23 @@ impl BuildAppmeshRouteSpecElGrpcRouteElMatchElMetadataEl {
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElMatchElMetadataElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_GrpcRoute_Match_MetadataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElMatchElMetadataElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElGrpcRouteElMatchElMetadataElRef {
-        AppmeshRouteSpecElGrpcRouteElMatchElMetadataElRef {
+impl terrars::Ref for AppmeshRoute_Spec_GrpcRoute_Match_MetadataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_GrpcRoute_Match_MetadataRef {
+        AppmeshRoute_Spec_GrpcRoute_Match_MetadataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElRef {
+impl AppmeshRoute_Spec_GrpcRoute_Match_MetadataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -862,18 +891,18 @@ impl AppmeshRouteSpecElGrpcRouteElMatchElMetadataElRef {
     }
 
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElMatchElMetadataElMatchElRef> {
+    pub fn match_(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRoute_Match_Header_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElGrpcRouteElMatchElDynamic {
-    metadata: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl>>,
+struct AppmeshRoute_Spec_GrpcRoute_MatchDynamic {
+    metadata: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute_Match_Metadata>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElMatchEl {
+pub struct AppmeshRoute_Spec_GrpcRoute_Match {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     method_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -883,11 +912,11 @@ pub struct AppmeshRouteSpecElGrpcRouteElMatchEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl>>,
-    dynamic: AppmeshRouteSpecElGrpcRouteElMatchElDynamic,
+    metadata: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute_Match_Metadata>>,
+    dynamic: AppmeshRoute_Spec_GrpcRoute_MatchDynamic,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElMatchEl {
+impl AppmeshRoute_Spec_GrpcRoute_Match {
     #[doc = "Set the field `method_name`.\n"]
     pub fn set_method_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.method_name = std::option::Option::Some(v.into());
@@ -915,7 +944,7 @@ impl AppmeshRouteSpecElGrpcRouteElMatchEl {
     #[doc = "Set the field `metadata`.\n"]
     pub fn set_metadata(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElMatchElMetadataEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Match_Metadata>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -929,8 +958,8 @@ impl AppmeshRouteSpecElGrpcRouteElMatchEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElMatchEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElMatchEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_GrpcRoute_Match {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Match>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -941,11 +970,11 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElMatchEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElMatchEl {}
+pub struct BuildAppmeshRoute_Spec_GrpcRoute_Match {}
 
-impl BuildAppmeshRouteSpecElGrpcRouteElMatchEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElMatchEl {
-        AppmeshRouteSpecElGrpcRouteElMatchEl {
+impl BuildAppmeshRoute_Spec_GrpcRoute_Match {
+    pub fn build(self) -> AppmeshRoute_Spec_GrpcRoute_Match {
+        AppmeshRoute_Spec_GrpcRoute_Match {
             method_name: core::default::Default::default(),
             port: core::default::Default::default(),
             prefix: core::default::Default::default(),
@@ -956,21 +985,23 @@ impl BuildAppmeshRouteSpecElGrpcRouteElMatchEl {
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElMatchElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_GrpcRoute_MatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElMatchElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElGrpcRouteElMatchElRef {
-        AppmeshRouteSpecElGrpcRouteElMatchElRef {
+impl terrars::Ref for AppmeshRoute_Spec_GrpcRoute_MatchRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_GrpcRoute_MatchRef {
+        AppmeshRoute_Spec_GrpcRoute_MatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElMatchElRef {
+impl AppmeshRoute_Spec_GrpcRoute_MatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -997,15 +1028,15 @@ impl AppmeshRouteSpecElGrpcRouteElMatchElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl {
+pub struct AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout {
     unit: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<f64>,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl { }
+impl AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout { }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1016,40 +1047,42 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRe
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl {
+pub struct BuildAppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout {
     #[doc = ""]
     pub unit: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl {
-        AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl {
+impl BuildAppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout {
+    pub fn build(self) -> AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout {
+        AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout {
             unit: self.unit,
             value: self.value,
         }
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeoutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutElRef {
+impl terrars::Ref for AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeoutRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutElRef {
-        AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutElRef {
+    ) -> AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeoutRef {
+        AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeoutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutElRef {
+impl AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeoutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1066,14 +1099,14 @@ impl AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElGrpcRouteElRetryPolicyElDynamic {
+struct AppmeshRoute_Spec_GrpcRoute_RetryPolicyDynamic {
     per_retry_timeout: std
     ::option
-    ::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl>>,
+    ::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
+pub struct AppmeshRoute_Spec_GrpcRoute_RetryPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     grpc_retry_events: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1082,11 +1115,11 @@ pub struct AppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tcp_retry_events: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    per_retry_timeout: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl>>,
-    dynamic: AppmeshRouteSpecElGrpcRouteElRetryPolicyElDynamic,
+    per_retry_timeout: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout>>,
+    dynamic: AppmeshRoute_Spec_GrpcRoute_RetryPolicyDynamic,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
+impl AppmeshRoute_Spec_GrpcRoute_RetryPolicy {
     #[doc = "Set the field `grpc_retry_events`.\n"]
     pub fn set_grpc_retry_events(
         mut self,
@@ -1122,7 +1155,7 @@ impl AppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1136,8 +1169,8 @@ impl AppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElRetryPolicyEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_GrpcRoute_RetryPolicy {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_RetryPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1148,14 +1181,14 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
+pub struct BuildAppmeshRoute_Spec_GrpcRoute_RetryPolicy {
     #[doc = ""]
     pub max_retries: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
-        AppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
+impl BuildAppmeshRoute_Spec_GrpcRoute_RetryPolicy {
+    pub fn build(self) -> AppmeshRoute_Spec_GrpcRoute_RetryPolicy {
+        AppmeshRoute_Spec_GrpcRoute_RetryPolicy {
             grpc_retry_events: core::default::Default::default(),
             http_retry_events: core::default::Default::default(),
             max_retries: self.max_retries,
@@ -1166,21 +1199,23 @@ impl BuildAppmeshRouteSpecElGrpcRouteElRetryPolicyEl {
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElRetryPolicyElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_GrpcRoute_RetryPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElRetryPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElGrpcRouteElRetryPolicyElRef {
-        AppmeshRouteSpecElGrpcRouteElRetryPolicyElRef {
+impl terrars::Ref for AppmeshRoute_Spec_GrpcRoute_RetryPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_GrpcRoute_RetryPolicyRef {
+        AppmeshRoute_Spec_GrpcRoute_RetryPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElRetryPolicyElRef {
+impl AppmeshRoute_Spec_GrpcRoute_RetryPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1206,21 +1241,21 @@ impl AppmeshRouteSpecElGrpcRouteElRetryPolicyElRef {
     }
 
     #[doc = "Get a reference to the value of field `per_retry_timeout` after provisioning.\n"]
-    pub fn per_retry_timeout(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElRetryPolicyElPerRetryTimeoutElRef> {
+    pub fn per_retry_timeout(&self) -> terrars::ListRef<AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.per_retry_timeout", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl {
+pub struct AppmeshRoute_Spec_TcpRoute_Timeout_Idle {
     unit: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<f64>,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl { }
+impl AppmeshRoute_Spec_TcpRoute_Timeout_Idle { }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_TcpRoute_Timeout_Idle {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Timeout_Idle>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1231,40 +1266,39 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl {
+pub struct BuildAppmeshRoute_Spec_TcpRoute_Timeout_Idle {
     #[doc = ""]
     pub unit: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl {
-        AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl {
+impl BuildAppmeshRoute_Spec_TcpRoute_Timeout_Idle {
+    pub fn build(self) -> AppmeshRoute_Spec_TcpRoute_Timeout_Idle {
+        AppmeshRoute_Spec_TcpRoute_Timeout_Idle {
             unit: self.unit,
             value: self.value,
         }
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElTimeoutElIdleElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_TcpRoute_Timeout_IdleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElTimeoutElIdleElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElGrpcRouteElTimeoutElIdleElRef {
-        AppmeshRouteSpecElGrpcRouteElTimeoutElIdleElRef {
+impl terrars::Ref for AppmeshRoute_Spec_TcpRoute_Timeout_IdleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_TcpRoute_Timeout_IdleRef {
+        AppmeshRoute_Spec_TcpRoute_Timeout_IdleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElTimeoutElIdleElRef {
+impl AppmeshRoute_Spec_TcpRoute_Timeout_IdleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1281,15 +1315,15 @@ impl AppmeshRouteSpecElGrpcRouteElTimeoutElIdleElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl {
+pub struct AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest {
     unit: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<f64>,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl { }
+impl AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest { }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1300,40 +1334,42 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElTimeoutElPerReques
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl {
+pub struct BuildAppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest {
     #[doc = ""]
     pub unit: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl {
-        AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl {
+impl BuildAppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest {
+    pub fn build(self) -> AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest {
+        AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest {
             unit: self.unit,
             value: self.value,
         }
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequestRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestElRef {
+impl terrars::Ref for AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequestRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestElRef {
-        AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestElRef {
+    ) -> AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequestRef {
+        AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequestRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestElRef {
+impl AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequestRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1350,25 +1386,25 @@ impl AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElGrpcRouteElTimeoutElDynamic {
-    idle: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl>>,
-    per_request: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl>>,
+struct AppmeshRoute_Spec_GrpcRoute_TimeoutDynamic {
+    idle: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute_Timeout_Idle>>,
+    per_request: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteElTimeoutEl {
+pub struct AppmeshRoute_Spec_GrpcRoute_Timeout {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    idle: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl>>,
+    idle: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute_Timeout_Idle>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    per_request: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl>>,
-    dynamic: AppmeshRouteSpecElGrpcRouteElTimeoutElDynamic,
+    per_request: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest>>,
+    dynamic: AppmeshRoute_Spec_GrpcRoute_TimeoutDynamic,
 }
 
-impl AppmeshRouteSpecElGrpcRouteElTimeoutEl {
+impl AppmeshRoute_Spec_GrpcRoute_Timeout {
     #[doc = "Set the field `idle`.\n"]
     pub fn set_idle(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElTimeoutElIdleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Timeout_Idle>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1384,7 +1420,7 @@ impl AppmeshRouteSpecElGrpcRouteElTimeoutEl {
     #[doc = "Set the field `per_request`.\n"]
     pub fn set_per_request(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequest>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1398,8 +1434,8 @@ impl AppmeshRouteSpecElGrpcRouteElTimeoutEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElTimeoutEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElTimeoutEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_GrpcRoute_Timeout {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Timeout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1410,11 +1446,11 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteElTimeoutEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteElTimeoutEl {}
+pub struct BuildAppmeshRoute_Spec_GrpcRoute_Timeout {}
 
-impl BuildAppmeshRouteSpecElGrpcRouteElTimeoutEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteElTimeoutEl {
-        AppmeshRouteSpecElGrpcRouteElTimeoutEl {
+impl BuildAppmeshRoute_Spec_GrpcRoute_Timeout {
+    pub fn build(self) -> AppmeshRoute_Spec_GrpcRoute_Timeout {
+        AppmeshRoute_Spec_GrpcRoute_Timeout {
             idle: core::default::Default::default(),
             per_request: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1422,62 +1458,64 @@ impl BuildAppmeshRouteSpecElGrpcRouteElTimeoutEl {
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElTimeoutElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_GrpcRoute_TimeoutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElTimeoutElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElGrpcRouteElTimeoutElRef {
-        AppmeshRouteSpecElGrpcRouteElTimeoutElRef {
+impl terrars::Ref for AppmeshRoute_Spec_GrpcRoute_TimeoutRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_GrpcRoute_TimeoutRef {
+        AppmeshRoute_Spec_GrpcRoute_TimeoutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElTimeoutElRef {
+impl AppmeshRoute_Spec_GrpcRoute_TimeoutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `idle` after provisioning.\n"]
-    pub fn idle(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElTimeoutElIdleElRef> {
+    pub fn idle(&self) -> terrars::ListRef<AppmeshRoute_Spec_TcpRoute_Timeout_IdleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.idle", self.base))
     }
 
     #[doc = "Get a reference to the value of field `per_request` after provisioning.\n"]
-    pub fn per_request(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElTimeoutElPerRequestElRef> {
+    pub fn per_request(&self) -> terrars::ListRef<AppmeshRoute_Spec_GrpcRoute_Timeout_PerRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.per_request", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElGrpcRouteElDynamic {
-    action: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElActionEl>>,
-    match_: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElMatchEl>>,
-    retry_policy: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElRetryPolicyEl>>,
-    timeout: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteElTimeoutEl>>,
+struct AppmeshRoute_Spec_GrpcRouteDynamic {
+    action: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute_Action>>,
+    match_: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute_Match>>,
+    retry_policy: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute_RetryPolicy>>,
+    timeout: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute_Timeout>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElGrpcRouteEl {
+pub struct AppmeshRoute_Spec_GrpcRoute {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElActionEl>>,
+    action: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute_Action>>,
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElMatchEl>>,
+    match_: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute_Match>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_policy: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElRetryPolicyEl>>,
+    retry_policy: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute_RetryPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeout: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteElTimeoutEl>>,
-    dynamic: AppmeshRouteSpecElGrpcRouteElDynamic,
+    timeout: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute_Timeout>>,
+    dynamic: AppmeshRoute_Spec_GrpcRouteDynamic,
 }
 
-impl AppmeshRouteSpecElGrpcRouteEl {
+impl AppmeshRoute_Spec_GrpcRoute {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Action>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1493,7 +1531,7 @@ impl AppmeshRouteSpecElGrpcRouteEl {
     #[doc = "Set the field `match_`.\n"]
     pub fn set_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Match>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1509,7 +1547,7 @@ impl AppmeshRouteSpecElGrpcRouteEl {
     #[doc = "Set the field `retry_policy`.\n"]
     pub fn set_retry_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElRetryPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_RetryPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1525,7 +1563,7 @@ impl AppmeshRouteSpecElGrpcRouteEl {
     #[doc = "Set the field `timeout`.\n"]
     pub fn set_timeout(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteElTimeoutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Timeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1539,8 +1577,8 @@ impl AppmeshRouteSpecElGrpcRouteEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_GrpcRoute {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1551,11 +1589,11 @@ impl terrars::ToListMappable for AppmeshRouteSpecElGrpcRouteEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElGrpcRouteEl {}
+pub struct BuildAppmeshRoute_Spec_GrpcRoute {}
 
-impl BuildAppmeshRouteSpecElGrpcRouteEl {
-    pub fn build(self) -> AppmeshRouteSpecElGrpcRouteEl {
-        AppmeshRouteSpecElGrpcRouteEl {
+impl BuildAppmeshRoute_Spec_GrpcRoute {
+    pub fn build(self) -> AppmeshRoute_Spec_GrpcRoute {
+        AppmeshRoute_Spec_GrpcRoute {
             action: core::default::Default::default(),
             match_: core::default::Default::default(),
             retry_policy: core::default::Default::default(),
@@ -1565,431 +1603,64 @@ impl BuildAppmeshRouteSpecElGrpcRouteEl {
     }
 }
 
-pub struct AppmeshRouteSpecElGrpcRouteElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_GrpcRouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElGrpcRouteElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElGrpcRouteElRef {
-        AppmeshRouteSpecElGrpcRouteElRef {
+impl terrars::Ref for AppmeshRoute_Spec_GrpcRouteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_GrpcRouteRef {
+        AppmeshRoute_Spec_GrpcRouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElGrpcRouteElRef {
+impl AppmeshRoute_Spec_GrpcRouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElActionElRef> {
+    pub fn action(&self) -> terrars::ListRef<AppmeshRoute_Spec_TcpRoute_ActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElMatchElRef> {
+    pub fn match_(&self) -> terrars::ListRef<AppmeshRoute_Spec_GrpcRoute_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
     }
 
     #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElRetryPolicyElRef> {
+    pub fn retry_policy(&self) -> terrars::ListRef<AppmeshRoute_Spec_GrpcRoute_RetryPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElTimeoutElRef> {
+    pub fn timeout(&self) -> terrars::ListRef<AppmeshRoute_Spec_GrpcRoute_TimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port: std::option::Option<terrars::PrimField<f64>>,
-    virtual_node: terrars::PrimField<std::string::String>,
-    weight: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl {
-    #[doc = "Set the field `port`.\n"]
-    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.port = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl {
-    #[doc = ""]
-    pub virtual_node: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub weight: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl {
-        AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl {
-            port: core::default::Default::default(),
-            virtual_node: self.virtual_node,
-            weight: self.weight,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetElRef {
-        AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `virtual_node` after provisioning.\n"]
-    pub fn virtual_node(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.virtual_node", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `weight` after provisioning.\n"]
-    pub fn weight(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttp2RouteElActionElDynamic {
-    weighted_target: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl>>,
+struct AppmeshRoute_Spec_HttpRoute_Match_HeaderDynamic {
+    match_: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_Match_Header_Match>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElActionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    weighted_target: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl>>,
-    dynamic: AppmeshRouteSpecElHttp2RouteElActionElDynamic,
-}
-
-impl AppmeshRouteSpecElHttp2RouteElActionEl {
-    #[doc = "Set the field `weighted_target`.\n"]
-    pub fn set_weighted_target(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElActionElWeightedTargetEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.weighted_target = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.weighted_target = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElActionEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElActionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttp2RouteElActionEl {}
-
-impl BuildAppmeshRouteSpecElHttp2RouteElActionEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElActionEl {
-        AppmeshRouteSpecElHttp2RouteElActionEl {
-            weighted_target: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttp2RouteElActionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElHttp2RouteElActionElRef {
-        AppmeshRouteSpecElHttp2RouteElActionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttp2RouteElActionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl {
-    end: terrars::PrimField<f64>,
-    start: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl { }
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl {
-    #[doc = ""]
-    pub end: terrars::PrimField<f64>,
-    #[doc = ""]
-    pub start: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl {
-        AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl {
-            end: self.end,
-            start: self.start,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeElRef {
-        AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElDynamic {
-    range: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exact: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    regex: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    suffix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    range: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl>>,
-    dynamic: AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElDynamic,
-}
-
-impl AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl {
-    #[doc = "Set the field `exact`.\n"]
-    pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.exact = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `regex`.\n"]
-    pub fn set_regex(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.regex = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `suffix`.\n"]
-    pub fn set_suffix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.suffix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `range`.\n"]
-    pub fn set_range(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.range = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.range = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl {}
-
-impl BuildAppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl {
-        AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl {
-            exact: core::default::Default::default(),
-            prefix: core::default::Default::default(),
-            regex: core::default::Default::default(),
-            suffix: core::default::Default::default(),
-            range: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRef {
-        AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `exact` after provisioning.\n"]
-    pub fn exact(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exact", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
-    pub fn regex(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.regex", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `suffix` after provisioning.\n"]
-    pub fn suffix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.suffix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRangeElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttp2RouteElMatchElHeaderElDynamic {
-    match_: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
+pub struct AppmeshRoute_Spec_HttpRoute_Match_Header {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     invert: std::option::Option<terrars::PrimField<bool>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl>>,
-    dynamic: AppmeshRouteSpecElHttp2RouteElMatchElHeaderElDynamic,
+    match_: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_Match_Header_Match>>,
+    dynamic: AppmeshRoute_Spec_HttpRoute_Match_HeaderDynamic,
 }
 
-impl AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
+impl AppmeshRoute_Spec_HttpRoute_Match_Header {
     #[doc = "Set the field `invert`.\n"]
     pub fn set_invert(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.invert = std::option::Option::Some(v.into());
@@ -1999,7 +1670,7 @@ impl AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
     #[doc = "Set the field `match_`.\n"]
     pub fn set_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_Header_Match>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2013,8 +1684,8 @@ impl AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_HttpRoute_Match_Header {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_Header>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2025,14 +1696,14 @@ impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
+pub struct BuildAppmeshRoute_Spec_HttpRoute_Match_Header {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
-        AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
+impl BuildAppmeshRoute_Spec_HttpRoute_Match_Header {
+    pub fn build(self) -> AppmeshRoute_Spec_HttpRoute_Match_Header {
+        AppmeshRoute_Spec_HttpRoute_Match_Header {
             invert: core::default::Default::default(),
             name: self.name,
             match_: core::default::Default::default(),
@@ -2041,24 +1712,23 @@ impl BuildAppmeshRouteSpecElHttp2RouteElMatchElHeaderEl {
     }
 }
 
-pub struct AppmeshRouteSpecElHttp2RouteElMatchElHeaderElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_HttpRoute_Match_HeaderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElMatchElHeaderElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttp2RouteElMatchElHeaderElRef {
-        AppmeshRouteSpecElHttp2RouteElMatchElHeaderElRef {
+impl terrars::Ref for AppmeshRoute_Spec_HttpRoute_Match_HeaderRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_HttpRoute_Match_HeaderRef {
+        AppmeshRoute_Spec_HttpRoute_Match_HeaderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElHttp2RouteElMatchElHeaderElRef {
+impl AppmeshRoute_Spec_HttpRoute_Match_HeaderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2074,31 +1744,272 @@ impl AppmeshRouteSpecElHttp2RouteElMatchElHeaderElRef {
     }
 
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElMatchElHeaderElMatchElRef> {
+    pub fn match_(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRoute_Match_Header_MatchRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppmeshRoute_Spec_HttpRoute_Match_Path {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exact: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regex: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AppmeshRoute_Spec_HttpRoute_Match_Path {
+    #[doc = "Set the field `exact`.\n"]
+    pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.exact = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `regex`.\n"]
+    pub fn set_regex(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.regex = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppmeshRoute_Spec_HttpRoute_Match_Path {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_Path>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppmeshRoute_Spec_HttpRoute_Match_Path {}
+
+impl BuildAppmeshRoute_Spec_HttpRoute_Match_Path {
+    pub fn build(self) -> AppmeshRoute_Spec_HttpRoute_Match_Path {
+        AppmeshRoute_Spec_HttpRoute_Match_Path {
+            exact: core::default::Default::default(),
+            regex: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_HttpRoute_Match_PathRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppmeshRoute_Spec_HttpRoute_Match_PathRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_HttpRoute_Match_PathRef {
+        AppmeshRoute_Spec_HttpRoute_Match_PathRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppmeshRoute_Spec_HttpRoute_Match_PathRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `exact` after provisioning.\n"]
+    pub fn exact(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exact", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
+    pub fn regex(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.regex", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exact: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match {
+    #[doc = "Set the field `exact`.\n"]
+    pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.exact = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match {}
+
+impl BuildAppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match {
+    pub fn build(self) -> AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match {
+        AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match { exact: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_MatchRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_MatchRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_MatchRef {
+        AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_MatchRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_MatchRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `exact` after provisioning.\n"]
+    pub fn exact(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exact", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppmeshRoute_Spec_HttpRoute_Match_QueryParameterDynamic {
+    match_: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match>>,
+}
+
+#[derive(Serialize)]
+pub struct AppmeshRoute_Spec_HttpRoute_Match_QueryParameter {
+    name: terrars::PrimField<std::string::String>,
+    #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
+    match_: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match>>,
+    dynamic: AppmeshRoute_Spec_HttpRoute_Match_QueryParameterDynamic,
+}
+
+impl AppmeshRoute_Spec_HttpRoute_Match_QueryParameter {
+    #[doc = "Set the field `match_`.\n"]
+    pub fn set_match(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_Match>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.match_ = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.match_ = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppmeshRoute_Spec_HttpRoute_Match_QueryParameter {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_QueryParameter>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppmeshRoute_Spec_HttpRoute_Match_QueryParameter {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppmeshRoute_Spec_HttpRoute_Match_QueryParameter {
+    pub fn build(self) -> AppmeshRoute_Spec_HttpRoute_Match_QueryParameter {
+        AppmeshRoute_Spec_HttpRoute_Match_QueryParameter {
+            name: self.name,
+            match_: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_HttpRoute_Match_QueryParameterRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppmeshRoute_Spec_HttpRoute_Match_QueryParameterRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppmeshRoute_Spec_HttpRoute_Match_QueryParameterRef {
+        AppmeshRoute_Spec_HttpRoute_Match_QueryParameterRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppmeshRoute_Spec_HttpRoute_Match_QueryParameterRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
+    pub fn match_(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRoute_Match_QueryParameter_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttp2RouteElMatchElDynamic {
-    header: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl>>,
+struct AppmeshRoute_Spec_HttpRoute_MatchDynamic {
+    header: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_Match_Header>>,
+    path: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_Match_Path>>,
+    query_parameter: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_Match_QueryParameter>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElMatchEl {
+pub struct AppmeshRoute_Spec_HttpRoute_Match {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     method: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
-    prefix: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scheme: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl>>,
-    dynamic: AppmeshRouteSpecElHttp2RouteElMatchElDynamic,
+    header: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_Match_Header>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    path: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_Match_Path>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    query_parameter: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_Match_QueryParameter>>,
+    dynamic: AppmeshRoute_Spec_HttpRoute_MatchDynamic,
 }
 
-impl AppmeshRouteSpecElHttp2RouteElMatchEl {
+impl AppmeshRoute_Spec_HttpRoute_Match {
     #[doc = "Set the field `method`.\n"]
     pub fn set_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.method = std::option::Option::Some(v.into());
@@ -2111,6 +2022,12 @@ impl AppmeshRouteSpecElHttp2RouteElMatchEl {
         self
     }
 
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `scheme`.\n"]
     pub fn set_scheme(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.scheme = std::option::Option::Some(v.into());
@@ -2120,7 +2037,7 @@ impl AppmeshRouteSpecElHttp2RouteElMatchEl {
     #[doc = "Set the field `header`.\n"]
     pub fn set_header(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElMatchElHeaderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_Header>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2132,10 +2049,42 @@ impl AppmeshRouteSpecElHttp2RouteElMatchEl {
         }
         self
     }
+
+    #[doc = "Set the field `path`.\n"]
+    pub fn set_path(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_Path>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.path = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.path = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `query_parameter`.\n"]
+    pub fn set_query_parameter(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match_QueryParameter>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.query_parameter = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.query_parameter = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElMatchEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElMatchEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_HttpRoute_Match {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2146,39 +2095,40 @@ impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElMatchEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElHttp2RouteElMatchEl {
-    #[doc = ""]
-    pub prefix: terrars::PrimField<std::string::String>,
-}
+pub struct BuildAppmeshRoute_Spec_HttpRoute_Match {}
 
-impl BuildAppmeshRouteSpecElHttp2RouteElMatchEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElMatchEl {
-        AppmeshRouteSpecElHttp2RouteElMatchEl {
+impl BuildAppmeshRoute_Spec_HttpRoute_Match {
+    pub fn build(self) -> AppmeshRoute_Spec_HttpRoute_Match {
+        AppmeshRoute_Spec_HttpRoute_Match {
             method: core::default::Default::default(),
             port: core::default::Default::default(),
-            prefix: self.prefix,
+            prefix: core::default::Default::default(),
             scheme: core::default::Default::default(),
             header: core::default::Default::default(),
+            path: core::default::Default::default(),
+            query_parameter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshRouteSpecElHttp2RouteElMatchElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_HttpRoute_MatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElMatchElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElHttp2RouteElMatchElRef {
-        AppmeshRouteSpecElHttp2RouteElMatchElRef {
+impl terrars::Ref for AppmeshRoute_Spec_HttpRoute_MatchRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_HttpRoute_MatchRef {
+        AppmeshRoute_Spec_HttpRoute_MatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElHttp2RouteElMatchElRef {
+impl AppmeshRoute_Spec_HttpRoute_MatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2202,97 +2152,33 @@ impl AppmeshRouteSpecElHttp2RouteElMatchElRef {
     pub fn scheme(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scheme", self.base))
     }
-}
 
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl {
-    unit: terrars::PrimField<std::string::String>,
-    value: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl { }
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl {
-    #[doc = ""]
-    pub unit: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub value: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl {
-        AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl {
-            unit: self.unit,
-            value: self.value,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutElRef {
-        AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    #[doc = "Get a reference to the value of field `path` after provisioning.\n"]
+    pub fn path(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRoute_Match_PathRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.path", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttp2RouteElRetryPolicyElDynamic {
+struct AppmeshRoute_Spec_HttpRoute_RetryPolicyDynamic {
     per_retry_timeout: std
     ::option
-    ::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl>>,
+    ::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
+pub struct AppmeshRoute_Spec_HttpRoute_RetryPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_retry_events: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     max_retries: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tcp_retry_events: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    per_retry_timeout: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl>>,
-    dynamic: AppmeshRouteSpecElHttp2RouteElRetryPolicyElDynamic,
+    per_retry_timeout: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout>>,
+    dynamic: AppmeshRoute_Spec_HttpRoute_RetryPolicyDynamic,
 }
 
-impl AppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
+impl AppmeshRoute_Spec_HttpRoute_RetryPolicy {
     #[doc = "Set the field `http_retry_events`.\n"]
     pub fn set_http_retry_events(
         mut self,
@@ -2319,7 +2205,7 @@ impl AppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2333,8 +2219,8 @@ impl AppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElRetryPolicyEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_HttpRoute_RetryPolicy {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_RetryPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2345,14 +2231,14 @@ impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
+pub struct BuildAppmeshRoute_Spec_HttpRoute_RetryPolicy {
     #[doc = ""]
     pub max_retries: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
-        AppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
+impl BuildAppmeshRoute_Spec_HttpRoute_RetryPolicy {
+    pub fn build(self) -> AppmeshRoute_Spec_HttpRoute_RetryPolicy {
+        AppmeshRoute_Spec_HttpRoute_RetryPolicy {
             http_retry_events: core::default::Default::default(),
             max_retries: self.max_retries,
             tcp_retry_events: core::default::Default::default(),
@@ -2362,24 +2248,23 @@ impl BuildAppmeshRouteSpecElHttp2RouteElRetryPolicyEl {
     }
 }
 
-pub struct AppmeshRouteSpecElHttp2RouteElRetryPolicyElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_HttpRoute_RetryPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElRetryPolicyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttp2RouteElRetryPolicyElRef {
-        AppmeshRouteSpecElHttp2RouteElRetryPolicyElRef {
+impl terrars::Ref for AppmeshRoute_Spec_HttpRoute_RetryPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_HttpRoute_RetryPolicyRef {
+        AppmeshRoute_Spec_HttpRoute_RetryPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElHttp2RouteElRetryPolicyElRef {
+impl AppmeshRoute_Spec_HttpRoute_RetryPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2400,278 +2285,37 @@ impl AppmeshRouteSpecElHttp2RouteElRetryPolicyElRef {
     }
 
     #[doc = "Get a reference to the value of field `per_retry_timeout` after provisioning.\n"]
-    pub fn per_retry_timeout(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElRetryPolicyElPerRetryTimeoutElRef> {
+    pub fn per_retry_timeout(&self) -> terrars::ListRef<AppmeshRoute_Spec_GrpcRoute_RetryPolicy_PerRetryTimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.per_retry_timeout", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl {
-    unit: terrars::PrimField<std::string::String>,
-    value: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl { }
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl {
-    #[doc = ""]
-    pub unit: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub value: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl {
-        AppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl {
-            unit: self.unit,
-            value: self.value,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttp2RouteElTimeoutElIdleElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElTimeoutElIdleElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttp2RouteElTimeoutElIdleElRef {
-        AppmeshRouteSpecElHttp2RouteElTimeoutElIdleElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttp2RouteElTimeoutElIdleElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl {
-    unit: terrars::PrimField<std::string::String>,
-    value: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl { }
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl {
-    #[doc = ""]
-    pub unit: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub value: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl {
-        AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl {
-            unit: self.unit,
-            value: self.value,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestElRef {
-        AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttp2RouteElTimeoutElDynamic {
-    idle: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl>>,
-    per_request: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl>>,
+struct AppmeshRoute_Spec_Http2RouteDynamic {
+    action: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute_Action>>,
+    match_: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_Match>>,
+    retry_policy: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_RetryPolicy>>,
+    timeout: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute_Timeout>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteElTimeoutEl {
+pub struct AppmeshRoute_Spec_Http2Route {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    idle: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    per_request: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl>>,
-    dynamic: AppmeshRouteSpecElHttp2RouteElTimeoutElDynamic,
-}
-
-impl AppmeshRouteSpecElHttp2RouteElTimeoutEl {
-    #[doc = "Set the field `idle`.\n"]
-    pub fn set_idle(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElTimeoutElIdleEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.idle = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.idle = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `per_request`.\n"]
-    pub fn set_per_request(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.per_request = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.per_request = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteElTimeoutEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElTimeoutEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttp2RouteElTimeoutEl {}
-
-impl BuildAppmeshRouteSpecElHttp2RouteElTimeoutEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteElTimeoutEl {
-        AppmeshRouteSpecElHttp2RouteElTimeoutEl {
-            idle: core::default::Default::default(),
-            per_request: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttp2RouteElTimeoutElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElTimeoutElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElHttp2RouteElTimeoutElRef {
-        AppmeshRouteSpecElHttp2RouteElTimeoutElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttp2RouteElTimeoutElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `idle` after provisioning.\n"]
-    pub fn idle(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElTimeoutElIdleElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.idle", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `per_request` after provisioning.\n"]
-    pub fn per_request(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElTimeoutElPerRequestElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.per_request", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttp2RouteElDynamic {
-    action: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElActionEl>>,
-    match_: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElMatchEl>>,
-    retry_policy: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElRetryPolicyEl>>,
-    timeout: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteElTimeoutEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttp2RouteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElActionEl>>,
+    action: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute_Action>>,
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElMatchEl>>,
+    match_: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_Match>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_policy: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElRetryPolicyEl>>,
+    retry_policy: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_RetryPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeout: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteElTimeoutEl>>,
-    dynamic: AppmeshRouteSpecElHttp2RouteElDynamic,
+    timeout: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute_Timeout>>,
+    dynamic: AppmeshRoute_Spec_Http2RouteDynamic,
 }
 
-impl AppmeshRouteSpecElHttp2RouteEl {
+impl AppmeshRoute_Spec_Http2Route {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Action>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2687,7 +2331,7 @@ impl AppmeshRouteSpecElHttp2RouteEl {
     #[doc = "Set the field `match_`.\n"]
     pub fn set_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2703,7 +2347,7 @@ impl AppmeshRouteSpecElHttp2RouteEl {
     #[doc = "Set the field `retry_policy`.\n"]
     pub fn set_retry_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElRetryPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_RetryPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2719,7 +2363,7 @@ impl AppmeshRouteSpecElHttp2RouteEl {
     #[doc = "Set the field `timeout`.\n"]
     pub fn set_timeout(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteElTimeoutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Timeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2733,8 +2377,8 @@ impl AppmeshRouteSpecElHttp2RouteEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_Http2Route {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_Http2Route>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2745,11 +2389,11 @@ impl terrars::ToListMappable for AppmeshRouteSpecElHttp2RouteEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElHttp2RouteEl {}
+pub struct BuildAppmeshRoute_Spec_Http2Route {}
 
-impl BuildAppmeshRouteSpecElHttp2RouteEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttp2RouteEl {
-        AppmeshRouteSpecElHttp2RouteEl {
+impl BuildAppmeshRoute_Spec_Http2Route {
+    pub fn build(self) -> AppmeshRoute_Spec_Http2Route {
+        AppmeshRoute_Spec_Http2Route {
             action: core::default::Default::default(),
             match_: core::default::Default::default(),
             retry_policy: core::default::Default::default(),
@@ -2759,1110 +2403,74 @@ impl BuildAppmeshRouteSpecElHttp2RouteEl {
     }
 }
 
-pub struct AppmeshRouteSpecElHttp2RouteElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_Http2RouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElHttp2RouteElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElHttp2RouteElRef {
-        AppmeshRouteSpecElHttp2RouteElRef {
+impl terrars::Ref for AppmeshRoute_Spec_Http2RouteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_Http2RouteRef {
+        AppmeshRoute_Spec_Http2RouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElHttp2RouteElRef {
+impl AppmeshRoute_Spec_Http2RouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElActionElRef> {
+    pub fn action(&self) -> terrars::ListRef<AppmeshRoute_Spec_TcpRoute_ActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElMatchElRef> {
+    pub fn match_(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRoute_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
     }
 
     #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElRetryPolicyElRef> {
+    pub fn retry_policy(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRoute_RetryPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElTimeoutElRef> {
+    pub fn timeout(&self) -> terrars::ListRef<AppmeshRoute_Spec_GrpcRoute_TimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port: std::option::Option<terrars::PrimField<f64>>,
-    virtual_node: terrars::PrimField<std::string::String>,
-    weight: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl {
-    #[doc = "Set the field `port`.\n"]
-    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.port = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl {
-    #[doc = ""]
-    pub virtual_node: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub weight: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl {
-        AppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl {
-            port: core::default::Default::default(),
-            virtual_node: self.virtual_node,
-            weight: self.weight,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElActionElWeightedTargetElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElActionElWeightedTargetElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttpRouteElActionElWeightedTargetElRef {
-        AppmeshRouteSpecElHttpRouteElActionElWeightedTargetElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElActionElWeightedTargetElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `virtual_node` after provisioning.\n"]
-    pub fn virtual_node(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.virtual_node", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `weight` after provisioning.\n"]
-    pub fn weight(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttpRouteElActionElDynamic {
-    weighted_target: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl>>,
+struct AppmeshRoute_Spec_HttpRouteDynamic {
+    action: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute_Action>>,
+    match_: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_Match>>,
+    retry_policy: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute_RetryPolicy>>,
+    timeout: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute_Timeout>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElActionEl {
+pub struct AppmeshRoute_Spec_HttpRoute {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    weighted_target: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl>>,
-    dynamic: AppmeshRouteSpecElHttpRouteElActionElDynamic,
-}
-
-impl AppmeshRouteSpecElHttpRouteElActionEl {
-    #[doc = "Set the field `weighted_target`.\n"]
-    pub fn set_weighted_target(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElActionElWeightedTargetEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.weighted_target = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.weighted_target = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElActionEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElActionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElActionEl {}
-
-impl BuildAppmeshRouteSpecElHttpRouteElActionEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElActionEl {
-        AppmeshRouteSpecElHttpRouteElActionEl {
-            weighted_target: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElActionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElHttpRouteElActionElRef {
-        AppmeshRouteSpecElHttpRouteElActionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElActionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl {
-    end: terrars::PrimField<f64>,
-    start: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl { }
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl {
-    #[doc = ""]
-    pub end: terrars::PrimField<f64>,
-    #[doc = ""]
-    pub start: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl {
-        AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl {
-            end: self.end,
-            start: self.start,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeElRef {
-        AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `end` after provisioning.\n"]
-    pub fn end(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.end", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `start` after provisioning.\n"]
-    pub fn start(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElDynamic {
-    range: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exact: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    regex: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    suffix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    range: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl>>,
-    dynamic: AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElDynamic,
-}
-
-impl AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl {
-    #[doc = "Set the field `exact`.\n"]
-    pub fn set_exact(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.exact = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `regex`.\n"]
-    pub fn set_regex(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.regex = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `suffix`.\n"]
-    pub fn set_suffix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.suffix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `range`.\n"]
-    pub fn set_range(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.range = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.range = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl {}
-
-impl BuildAppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl {
-        AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl {
-            exact: core::default::Default::default(),
-            prefix: core::default::Default::default(),
-            regex: core::default::Default::default(),
-            suffix: core::default::Default::default(),
-            range: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRef {
-        AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `exact` after provisioning.\n"]
-    pub fn exact(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.exact", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
-    pub fn regex(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.regex", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `suffix` after provisioning.\n"]
-    pub fn suffix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.suffix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
-    pub fn range(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRangeElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.range", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttpRouteElMatchElHeaderElDynamic {
-    match_: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElMatchElHeaderEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    invert: std::option::Option<terrars::PrimField<bool>>,
-    name: terrars::PrimField<std::string::String>,
+    action: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute_Action>>,
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl>>,
-    dynamic: AppmeshRouteSpecElHttpRouteElMatchElHeaderElDynamic,
-}
-
-impl AppmeshRouteSpecElHttpRouteElMatchElHeaderEl {
-    #[doc = "Set the field `invert`.\n"]
-    pub fn set_invert(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.invert = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_`.\n"]
-    pub fn set_match(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.match_ = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.match_ = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElMatchElHeaderEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElMatchElHeaderEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElMatchElHeaderEl {
-    #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
-}
-
-impl BuildAppmeshRouteSpecElHttpRouteElMatchElHeaderEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElMatchElHeaderEl {
-        AppmeshRouteSpecElHttpRouteElMatchElHeaderEl {
-            invert: core::default::Default::default(),
-            name: self.name,
-            match_: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElMatchElHeaderElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElMatchElHeaderElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttpRouteElMatchElHeaderElRef {
-        AppmeshRouteSpecElHttpRouteElMatchElHeaderElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElMatchElHeaderElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `invert` after provisioning.\n"]
-    pub fn invert(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invert", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElMatchElHeaderElMatchElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttpRouteElMatchElDynamic {
-    header: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElMatchElHeaderEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElMatchEl {
+    match_: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_Match>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    method: std::option::Option<terrars::PrimField<std::string::String>>,
+    retry_policy: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute_RetryPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port: std::option::Option<terrars::PrimField<f64>>,
-    prefix: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scheme: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    header: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElMatchElHeaderEl>>,
-    dynamic: AppmeshRouteSpecElHttpRouteElMatchElDynamic,
+    timeout: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute_Timeout>>,
+    dynamic: AppmeshRoute_Spec_HttpRouteDynamic,
 }
 
-impl AppmeshRouteSpecElHttpRouteElMatchEl {
-    #[doc = "Set the field `method`.\n"]
-    pub fn set_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.method = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `port`.\n"]
-    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.port = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `scheme`.\n"]
-    pub fn set_scheme(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.scheme = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `header`.\n"]
-    pub fn set_header(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElMatchElHeaderEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.header = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.header = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElMatchEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElMatchEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElMatchEl {
-    #[doc = ""]
-    pub prefix: terrars::PrimField<std::string::String>,
-}
-
-impl BuildAppmeshRouteSpecElHttpRouteElMatchEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElMatchEl {
-        AppmeshRouteSpecElHttpRouteElMatchEl {
-            method: core::default::Default::default(),
-            port: core::default::Default::default(),
-            prefix: self.prefix,
-            scheme: core::default::Default::default(),
-            header: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElMatchElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElMatchElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElHttpRouteElMatchElRef {
-        AppmeshRouteSpecElHttpRouteElMatchElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElMatchElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `method` after provisioning.\n"]
-    pub fn method(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.method", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `scheme` after provisioning.\n"]
-    pub fn scheme(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scheme", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl {
-    unit: terrars::PrimField<std::string::String>,
-    value: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl { }
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl {
-    #[doc = ""]
-    pub unit: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub value: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl {
-        AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl {
-            unit: self.unit,
-            value: self.value,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutElRef {
-        AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttpRouteElRetryPolicyElDynamic {
-    per_retry_timeout: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElRetryPolicyEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http_retry_events: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    max_retries: terrars::PrimField<f64>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tcp_retry_events: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    per_retry_timeout: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl>>,
-    dynamic: AppmeshRouteSpecElHttpRouteElRetryPolicyElDynamic,
-}
-
-impl AppmeshRouteSpecElHttpRouteElRetryPolicyEl {
-    #[doc = "Set the field `http_retry_events`.\n"]
-    pub fn set_http_retry_events(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.http_retry_events = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tcp_retry_events`.\n"]
-    pub fn set_tcp_retry_events(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.tcp_retry_events = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `per_retry_timeout`.\n"]
-    pub fn set_per_retry_timeout(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.per_retry_timeout = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.per_retry_timeout = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElRetryPolicyEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElRetryPolicyEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElRetryPolicyEl {
-    #[doc = ""]
-    pub max_retries: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttpRouteElRetryPolicyEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElRetryPolicyEl {
-        AppmeshRouteSpecElHttpRouteElRetryPolicyEl {
-            http_retry_events: core::default::Default::default(),
-            max_retries: self.max_retries,
-            tcp_retry_events: core::default::Default::default(),
-            per_retry_timeout: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElRetryPolicyElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElRetryPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElHttpRouteElRetryPolicyElRef {
-        AppmeshRouteSpecElHttpRouteElRetryPolicyElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElRetryPolicyElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `http_retry_events` after provisioning.\n"]
-    pub fn http_retry_events(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.http_retry_events", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `max_retries` after provisioning.\n"]
-    pub fn max_retries(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_retries", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `tcp_retry_events` after provisioning.\n"]
-    pub fn tcp_retry_events(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.tcp_retry_events", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `per_retry_timeout` after provisioning.\n"]
-    pub fn per_retry_timeout(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElRetryPolicyElPerRetryTimeoutElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.per_retry_timeout", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElTimeoutElIdleEl {
-    unit: terrars::PrimField<std::string::String>,
-    value: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttpRouteElTimeoutElIdleEl { }
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElTimeoutElIdleEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElTimeoutElIdleEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElTimeoutElIdleEl {
-    #[doc = ""]
-    pub unit: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub value: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttpRouteElTimeoutElIdleEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElTimeoutElIdleEl {
-        AppmeshRouteSpecElHttpRouteElTimeoutElIdleEl {
-            unit: self.unit,
-            value: self.value,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElTimeoutElIdleElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElTimeoutElIdleElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttpRouteElTimeoutElIdleElRef {
-        AppmeshRouteSpecElHttpRouteElTimeoutElIdleElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElTimeoutElIdleElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl {
-    unit: terrars::PrimField<std::string::String>,
-    value: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl { }
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl {
-    #[doc = ""]
-    pub unit: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub value: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl {
-        AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl {
-            unit: self.unit,
-            value: self.value,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestElRef {
-        AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttpRouteElTimeoutElDynamic {
-    idle: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElTimeoutElIdleEl>>,
-    per_request: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteElTimeoutEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    idle: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElTimeoutElIdleEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    per_request: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl>>,
-    dynamic: AppmeshRouteSpecElHttpRouteElTimeoutElDynamic,
-}
-
-impl AppmeshRouteSpecElHttpRouteElTimeoutEl {
-    #[doc = "Set the field `idle`.\n"]
-    pub fn set_idle(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElTimeoutElIdleEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.idle = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.idle = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `per_request`.\n"]
-    pub fn set_per_request(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.per_request = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.per_request = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteElTimeoutEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElTimeoutEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElHttpRouteElTimeoutEl {}
-
-impl BuildAppmeshRouteSpecElHttpRouteElTimeoutEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteElTimeoutEl {
-        AppmeshRouteSpecElHttpRouteElTimeoutEl {
-            idle: core::default::Default::default(),
-            per_request: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElHttpRouteElTimeoutElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElTimeoutElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElHttpRouteElTimeoutElRef {
-        AppmeshRouteSpecElHttpRouteElTimeoutElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElHttpRouteElTimeoutElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `idle` after provisioning.\n"]
-    pub fn idle(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElTimeoutElIdleElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.idle", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `per_request` after provisioning.\n"]
-    pub fn per_request(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElTimeoutElPerRequestElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.per_request", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElHttpRouteElDynamic {
-    action: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElActionEl>>,
-    match_: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElMatchEl>>,
-    retry_policy: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElRetryPolicyEl>>,
-    timeout: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteElTimeoutEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElHttpRouteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElActionEl>>,
-    #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElMatchEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_policy: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElRetryPolicyEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeout: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteElTimeoutEl>>,
-    dynamic: AppmeshRouteSpecElHttpRouteElDynamic,
-}
-
-impl AppmeshRouteSpecElHttpRouteEl {
+impl AppmeshRoute_Spec_HttpRoute {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Action>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3878,7 +2486,7 @@ impl AppmeshRouteSpecElHttpRouteEl {
     #[doc = "Set the field `match_`.\n"]
     pub fn set_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_Match>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3894,7 +2502,7 @@ impl AppmeshRouteSpecElHttpRouteEl {
     #[doc = "Set the field `retry_policy`.\n"]
     pub fn set_retry_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElRetryPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute_RetryPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3910,7 +2518,7 @@ impl AppmeshRouteSpecElHttpRouteEl {
     #[doc = "Set the field `timeout`.\n"]
     pub fn set_timeout(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteElTimeoutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute_Timeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3924,8 +2532,8 @@ impl AppmeshRouteSpecElHttpRouteEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_HttpRoute {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3936,11 +2544,11 @@ impl terrars::ToListMappable for AppmeshRouteSpecElHttpRouteEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElHttpRouteEl {}
+pub struct BuildAppmeshRoute_Spec_HttpRoute {}
 
-impl BuildAppmeshRouteSpecElHttpRouteEl {
-    pub fn build(self) -> AppmeshRouteSpecElHttpRouteEl {
-        AppmeshRouteSpecElHttpRouteEl {
+impl BuildAppmeshRoute_Spec_HttpRoute {
+    pub fn build(self) -> AppmeshRoute_Spec_HttpRoute {
+        AppmeshRoute_Spec_HttpRoute {
             action: core::default::Default::default(),
             match_: core::default::Default::default(),
             retry_policy: core::default::Default::default(),
@@ -3950,55 +2558,55 @@ impl BuildAppmeshRouteSpecElHttpRouteEl {
     }
 }
 
-pub struct AppmeshRouteSpecElHttpRouteElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_HttpRouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElHttpRouteElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElHttpRouteElRef {
-        AppmeshRouteSpecElHttpRouteElRef {
+impl terrars::Ref for AppmeshRoute_Spec_HttpRouteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_HttpRouteRef {
+        AppmeshRoute_Spec_HttpRouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElHttpRouteElRef {
+impl AppmeshRoute_Spec_HttpRouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElActionElRef> {
+    pub fn action(&self) -> terrars::ListRef<AppmeshRoute_Spec_TcpRoute_ActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElMatchElRef> {
+    pub fn match_(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRoute_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
     }
 
     #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElRetryPolicyElRef> {
+    pub fn retry_policy(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRoute_RetryPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElTimeoutElRef> {
+    pub fn timeout(&self) -> terrars::ListRef<AppmeshRoute_Spec_GrpcRoute_TimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl {
+pub struct AppmeshRoute_Spec_TcpRoute_Match {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
-    virtual_node: terrars::PrimField<std::string::String>,
-    weight: terrars::PrimField<f64>,
 }
 
-impl AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl {
+impl AppmeshRoute_Spec_TcpRoute_Match {
     #[doc = "Set the field `port`.\n"]
     pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.port = std::option::Option::Some(v.into());
@@ -4006,8 +2614,8 @@ impl AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_TcpRoute_Match {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Match>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4018,185 +2626,31 @@ impl terrars::ToListMappable for AppmeshRouteSpecElTcpRouteElActionElWeightedTar
     }
 }
 
-pub struct BuildAppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl {
-    #[doc = ""]
-    pub virtual_node: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub weight: terrars::PrimField<f64>,
-}
+pub struct BuildAppmeshRoute_Spec_TcpRoute_Match {}
 
-impl BuildAppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl {
-    pub fn build(self) -> AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl {
-        AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl {
-            port: core::default::Default::default(),
-            virtual_node: self.virtual_node,
-            weight: self.weight,
-        }
+impl BuildAppmeshRoute_Spec_TcpRoute_Match {
+    pub fn build(self) -> AppmeshRoute_Spec_TcpRoute_Match {
+        AppmeshRoute_Spec_TcpRoute_Match { port: core::default::Default::default() }
     }
 }
 
-pub struct AppmeshRouteSpecElTcpRouteElActionElWeightedTargetElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_TcpRoute_MatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElTcpRouteElActionElWeightedTargetElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElTcpRouteElActionElWeightedTargetElRef {
-        AppmeshRouteSpecElTcpRouteElActionElWeightedTargetElRef {
+impl terrars::Ref for AppmeshRoute_Spec_TcpRoute_MatchRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_TcpRoute_MatchRef {
+        AppmeshRoute_Spec_TcpRoute_MatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElTcpRouteElActionElWeightedTargetElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
-    pub fn port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `virtual_node` after provisioning.\n"]
-    pub fn virtual_node(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.virtual_node", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `weight` after provisioning.\n"]
-    pub fn weight(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteSpecElTcpRouteElActionElDynamic {
-    weighted_target: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElTcpRouteElActionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    weighted_target: std::option::Option<std::vec::Vec<AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl>>,
-    dynamic: AppmeshRouteSpecElTcpRouteElActionElDynamic,
-}
-
-impl AppmeshRouteSpecElTcpRouteElActionEl {
-    #[doc = "Set the field `weighted_target`.\n"]
-    pub fn set_weighted_target(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElActionElWeightedTargetEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.weighted_target = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.weighted_target = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElTcpRouteElActionEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElActionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElTcpRouteElActionEl {}
-
-impl BuildAppmeshRouteSpecElTcpRouteElActionEl {
-    pub fn build(self) -> AppmeshRouteSpecElTcpRouteElActionEl {
-        AppmeshRouteSpecElTcpRouteElActionEl {
-            weighted_target: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElTcpRouteElActionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElTcpRouteElActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElTcpRouteElActionElRef {
-        AppmeshRouteSpecElTcpRouteElActionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElTcpRouteElActionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElTcpRouteElMatchEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl AppmeshRouteSpecElTcpRouteElMatchEl {
-    #[doc = "Set the field `port`.\n"]
-    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.port = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshRouteSpecElTcpRouteElMatchEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElMatchEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElTcpRouteElMatchEl {}
-
-impl BuildAppmeshRouteSpecElTcpRouteElMatchEl {
-    pub fn build(self) -> AppmeshRouteSpecElTcpRouteElMatchEl {
-        AppmeshRouteSpecElTcpRouteElMatchEl { port: core::default::Default::default() }
-    }
-}
-
-pub struct AppmeshRouteSpecElTcpRouteElMatchElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElTcpRouteElMatchElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElTcpRouteElMatchElRef {
-        AppmeshRouteSpecElTcpRouteElMatchElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElTcpRouteElMatchElRef {
+impl AppmeshRoute_Spec_TcpRoute_MatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4207,92 +2661,23 @@ impl AppmeshRouteSpecElTcpRouteElMatchElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct AppmeshRouteSpecElTcpRouteElTimeoutElIdleEl {
-    unit: terrars::PrimField<std::string::String>,
-    value: terrars::PrimField<f64>,
-}
-
-impl AppmeshRouteSpecElTcpRouteElTimeoutElIdleEl { }
-
-impl terrars::ToListMappable for AppmeshRouteSpecElTcpRouteElTimeoutElIdleEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElTimeoutElIdleEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshRouteSpecElTcpRouteElTimeoutElIdleEl {
-    #[doc = ""]
-    pub unit: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub value: terrars::PrimField<f64>,
-}
-
-impl BuildAppmeshRouteSpecElTcpRouteElTimeoutElIdleEl {
-    pub fn build(self) -> AppmeshRouteSpecElTcpRouteElTimeoutElIdleEl {
-        AppmeshRouteSpecElTcpRouteElTimeoutElIdleEl {
-            unit: self.unit,
-            value: self.value,
-        }
-    }
-}
-
-pub struct AppmeshRouteSpecElTcpRouteElTimeoutElIdleElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshRouteSpecElTcpRouteElTimeoutElIdleElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshRouteSpecElTcpRouteElTimeoutElIdleElRef {
-        AppmeshRouteSpecElTcpRouteElTimeoutElIdleElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshRouteSpecElTcpRouteElTimeoutElIdleElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
-    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElTcpRouteElTimeoutElDynamic {
-    idle: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElTcpRouteElTimeoutElIdleEl>>,
+struct AppmeshRoute_Spec_TcpRoute_TimeoutDynamic {
+    idle: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute_Timeout_Idle>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElTcpRouteElTimeoutEl {
+pub struct AppmeshRoute_Spec_TcpRoute_Timeout {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    idle: std::option::Option<std::vec::Vec<AppmeshRouteSpecElTcpRouteElTimeoutElIdleEl>>,
-    dynamic: AppmeshRouteSpecElTcpRouteElTimeoutElDynamic,
+    idle: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute_Timeout_Idle>>,
+    dynamic: AppmeshRoute_Spec_TcpRoute_TimeoutDynamic,
 }
 
-impl AppmeshRouteSpecElTcpRouteElTimeoutEl {
+impl AppmeshRoute_Spec_TcpRoute_Timeout {
     #[doc = "Set the field `idle`.\n"]
     pub fn set_idle(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElTimeoutElIdleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Timeout_Idle>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4306,8 +2691,8 @@ impl AppmeshRouteSpecElTcpRouteElTimeoutEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElTcpRouteElTimeoutEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElTimeoutEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_TcpRoute_Timeout {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Timeout>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4318,65 +2703,67 @@ impl terrars::ToListMappable for AppmeshRouteSpecElTcpRouteElTimeoutEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElTcpRouteElTimeoutEl {}
+pub struct BuildAppmeshRoute_Spec_TcpRoute_Timeout {}
 
-impl BuildAppmeshRouteSpecElTcpRouteElTimeoutEl {
-    pub fn build(self) -> AppmeshRouteSpecElTcpRouteElTimeoutEl {
-        AppmeshRouteSpecElTcpRouteElTimeoutEl {
+impl BuildAppmeshRoute_Spec_TcpRoute_Timeout {
+    pub fn build(self) -> AppmeshRoute_Spec_TcpRoute_Timeout {
+        AppmeshRoute_Spec_TcpRoute_Timeout {
             idle: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshRouteSpecElTcpRouteElTimeoutElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_TcpRoute_TimeoutRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElTcpRouteElTimeoutElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElTcpRouteElTimeoutElRef {
-        AppmeshRouteSpecElTcpRouteElTimeoutElRef {
+impl terrars::Ref for AppmeshRoute_Spec_TcpRoute_TimeoutRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_TcpRoute_TimeoutRef {
+        AppmeshRoute_Spec_TcpRoute_TimeoutRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElTcpRouteElTimeoutElRef {
+impl AppmeshRoute_Spec_TcpRoute_TimeoutRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `idle` after provisioning.\n"]
-    pub fn idle(&self) -> terrars::ListRef<AppmeshRouteSpecElTcpRouteElTimeoutElIdleElRef> {
+    pub fn idle(&self) -> terrars::ListRef<AppmeshRoute_Spec_TcpRoute_Timeout_IdleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.idle", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElTcpRouteElDynamic {
-    action: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElTcpRouteElActionEl>>,
-    match_: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElTcpRouteElMatchEl>>,
-    timeout: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElTcpRouteElTimeoutEl>>,
+struct AppmeshRoute_Spec_TcpRouteDynamic {
+    action: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute_Action>>,
+    match_: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute_Match>>,
+    timeout: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute_Timeout>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecElTcpRouteEl {
+pub struct AppmeshRoute_Spec_TcpRoute {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<std::vec::Vec<AppmeshRouteSpecElTcpRouteElActionEl>>,
+    action: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute_Action>>,
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std::option::Option<std::vec::Vec<AppmeshRouteSpecElTcpRouteElMatchEl>>,
+    match_: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute_Match>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeout: std::option::Option<std::vec::Vec<AppmeshRouteSpecElTcpRouteElTimeoutEl>>,
-    dynamic: AppmeshRouteSpecElTcpRouteElDynamic,
+    timeout: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute_Timeout>>,
+    dynamic: AppmeshRoute_Spec_TcpRouteDynamic,
 }
 
-impl AppmeshRouteSpecElTcpRouteEl {
+impl AppmeshRoute_Spec_TcpRoute {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Action>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4392,7 +2779,7 @@ impl AppmeshRouteSpecElTcpRouteEl {
     #[doc = "Set the field `match_`.\n"]
     pub fn set_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Match>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4408,7 +2795,7 @@ impl AppmeshRouteSpecElTcpRouteEl {
     #[doc = "Set the field `timeout`.\n"]
     pub fn set_timeout(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteElTimeoutEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute_Timeout>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4422,8 +2809,8 @@ impl AppmeshRouteSpecElTcpRouteEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecElTcpRouteEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec_TcpRoute {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4434,11 +2821,11 @@ impl terrars::ToListMappable for AppmeshRouteSpecElTcpRouteEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecElTcpRouteEl {}
+pub struct BuildAppmeshRoute_Spec_TcpRoute {}
 
-impl BuildAppmeshRouteSpecElTcpRouteEl {
-    pub fn build(self) -> AppmeshRouteSpecElTcpRouteEl {
-        AppmeshRouteSpecElTcpRouteEl {
+impl BuildAppmeshRoute_Spec_TcpRoute {
+    pub fn build(self) -> AppmeshRoute_Spec_TcpRoute {
+        AppmeshRoute_Spec_TcpRoute {
             action: core::default::Default::default(),
             match_: core::default::Default::default(),
             timeout: core::default::Default::default(),
@@ -4447,65 +2834,67 @@ impl BuildAppmeshRouteSpecElTcpRouteEl {
     }
 }
 
-pub struct AppmeshRouteSpecElTcpRouteElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_Spec_TcpRouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElTcpRouteElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElTcpRouteElRef {
-        AppmeshRouteSpecElTcpRouteElRef {
+impl terrars::Ref for AppmeshRoute_Spec_TcpRouteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_Spec_TcpRouteRef {
+        AppmeshRoute_Spec_TcpRouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElTcpRouteElRef {
+impl AppmeshRoute_Spec_TcpRouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::ListRef<AppmeshRouteSpecElTcpRouteElActionElRef> {
+    pub fn action(&self) -> terrars::ListRef<AppmeshRoute_Spec_TcpRoute_ActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(&self) -> terrars::ListRef<AppmeshRouteSpecElTcpRouteElMatchElRef> {
+    pub fn match_(&self) -> terrars::ListRef<AppmeshRoute_Spec_TcpRoute_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
     }
 
     #[doc = "Get a reference to the value of field `timeout` after provisioning.\n"]
-    pub fn timeout(&self) -> terrars::ListRef<AppmeshRouteSpecElTcpRouteElTimeoutElRef> {
+    pub fn timeout(&self) -> terrars::ListRef<AppmeshRoute_Spec_TcpRoute_TimeoutRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeout", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshRouteSpecElDynamic {
-    grpc_route: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElGrpcRouteEl>>,
-    http2_route: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttp2RouteEl>>,
-    http_route: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElHttpRouteEl>>,
-    tcp_route: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecElTcpRouteEl>>,
+struct AppmeshRoute_SpecDynamic {
+    grpc_route: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_GrpcRoute>>,
+    http2_route: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_Http2Route>>,
+    http_route: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_HttpRoute>>,
+    tcp_route: std::option::Option<terrars::DynamicBlock<AppmeshRoute_Spec_TcpRoute>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshRouteSpecEl {
+pub struct AppmeshRoute_Spec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     priority: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    grpc_route: std::option::Option<std::vec::Vec<AppmeshRouteSpecElGrpcRouteEl>>,
+    grpc_route: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_GrpcRoute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http2_route: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttp2RouteEl>>,
+    http2_route: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_Http2Route>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http_route: std::option::Option<std::vec::Vec<AppmeshRouteSpecElHttpRouteEl>>,
+    http_route: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_HttpRoute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tcp_route: std::option::Option<std::vec::Vec<AppmeshRouteSpecElTcpRouteEl>>,
-    dynamic: AppmeshRouteSpecElDynamic,
+    tcp_route: std::option::Option<std::vec::Vec<AppmeshRoute_Spec_TcpRoute>>,
+    dynamic: AppmeshRoute_SpecDynamic,
 }
 
-impl AppmeshRouteSpecEl {
+impl AppmeshRoute_Spec {
     #[doc = "Set the field `priority`.\n"]
     pub fn set_priority(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.priority = std::option::Option::Some(v.into());
@@ -4515,7 +2904,7 @@ impl AppmeshRouteSpecEl {
     #[doc = "Set the field `grpc_route`.\n"]
     pub fn set_grpc_route(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElGrpcRouteEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_GrpcRoute>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4531,7 +2920,7 @@ impl AppmeshRouteSpecEl {
     #[doc = "Set the field `http2_route`.\n"]
     pub fn set_http2_route(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttp2RouteEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_Http2Route>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4547,7 +2936,7 @@ impl AppmeshRouteSpecEl {
     #[doc = "Set the field `http_route`.\n"]
     pub fn set_http_route(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElHttpRouteEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_HttpRoute>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4563,7 +2952,7 @@ impl AppmeshRouteSpecEl {
     #[doc = "Set the field `tcp_route`.\n"]
     pub fn set_tcp_route(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRouteSpecElTcpRouteEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshRoute_Spec_TcpRoute>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -4577,8 +2966,8 @@ impl AppmeshRouteSpecEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshRouteSpecEl {
-    type O = terrars::BlockAssignable<AppmeshRouteSpecEl>;
+impl terrars::ToListMappable for AppmeshRoute_Spec {
+    type O = terrars::BlockAssignable<AppmeshRoute_Spec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4589,11 +2978,11 @@ impl terrars::ToListMappable for AppmeshRouteSpecEl {
     }
 }
 
-pub struct BuildAppmeshRouteSpecEl {}
+pub struct BuildAppmeshRoute_Spec {}
 
-impl BuildAppmeshRouteSpecEl {
-    pub fn build(self) -> AppmeshRouteSpecEl {
-        AppmeshRouteSpecEl {
+impl BuildAppmeshRoute_Spec {
+    pub fn build(self) -> AppmeshRoute_Spec {
+        AppmeshRoute_Spec {
             priority: core::default::Default::default(),
             grpc_route: core::default::Default::default(),
             http2_route: core::default::Default::default(),
@@ -4604,21 +2993,23 @@ impl BuildAppmeshRouteSpecEl {
     }
 }
 
-pub struct AppmeshRouteSpecElRef {
+#[allow(dead_code)]
+pub struct AppmeshRoute_SpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshRouteSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRouteSpecElRef {
-        AppmeshRouteSpecElRef {
+impl terrars::Ref for AppmeshRoute_SpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshRoute_SpecRef {
+        AppmeshRoute_SpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshRouteSpecElRef {
+impl AppmeshRoute_SpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4629,27 +3020,22 @@ impl AppmeshRouteSpecElRef {
     }
 
     #[doc = "Get a reference to the value of field `grpc_route` after provisioning.\n"]
-    pub fn grpc_route(&self) -> terrars::ListRef<AppmeshRouteSpecElGrpcRouteElRef> {
+    pub fn grpc_route(&self) -> terrars::ListRef<AppmeshRoute_Spec_GrpcRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `http2_route` after provisioning.\n"]
-    pub fn http2_route(&self) -> terrars::ListRef<AppmeshRouteSpecElHttp2RouteElRef> {
+    pub fn http2_route(&self) -> terrars::ListRef<AppmeshRoute_Spec_Http2RouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http2_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `http_route` after provisioning.\n"]
-    pub fn http_route(&self) -> terrars::ListRef<AppmeshRouteSpecElHttpRouteElRef> {
+    pub fn http_route(&self) -> terrars::ListRef<AppmeshRoute_Spec_HttpRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tcp_route` after provisioning.\n"]
-    pub fn tcp_route(&self) -> terrars::ListRef<AppmeshRouteSpecElTcpRouteElRef> {
+    pub fn tcp_route(&self) -> terrars::ListRef<AppmeshRoute_Spec_TcpRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tcp_route", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshRouteDynamic {
-    spec: std::option::Option<terrars::DynamicBlock<AppmeshRouteSpecEl>>,
 }

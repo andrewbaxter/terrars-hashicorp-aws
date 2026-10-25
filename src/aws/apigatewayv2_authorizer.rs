@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Apigatewayv2AuthorizerData {
+struct Apigatewayv2AuthorizerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,14 +38,18 @@ struct Apigatewayv2AuthorizerData {
     identity_sources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    jwt_configuration: std::option::Option<std::vec::Vec<Apigatewayv2AuthorizerJwtConfigurationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    jwt_configuration: std::option::Option<std::vec::Vec<Apigatewayv2Authorizer_JwtConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Apigatewayv2Authorizer_Timeouts>,
     dynamic: Apigatewayv2AuthorizerDynamic,
 }
 
 struct Apigatewayv2Authorizer_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Apigatewayv2AuthorizerData>,
+    data: std::cell::RefCell<Apigatewayv2AuthorizerData_>,
 }
 
 #[derive(Clone)]
@@ -194,10 +200,17 @@ impl Apigatewayv2Authorizer {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `jwt_configuration`.\n"]
     pub fn set_jwt_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2AuthorizerJwtConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2Authorizer_JwtConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -207,6 +220,12 @@ impl Apigatewayv2Authorizer {
                 self.0.data.borrow_mut().dynamic.jwt_configuration = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<Apigatewayv2Authorizer_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -266,9 +285,20 @@ impl Apigatewayv2Authorizer {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `jwt_configuration` after provisioning.\n"]
-    pub fn jwt_configuration(&self) -> terrars::ListRef<Apigatewayv2AuthorizerJwtConfigurationElRef> {
+    pub fn jwt_configuration(&self) -> terrars::ListRef<Apigatewayv2Authorizer_JwtConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.jwt_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Apigatewayv2Authorizer_TimeoutsRef {
+        Apigatewayv2Authorizer_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -318,7 +348,7 @@ impl BuildApigatewayv2Authorizer {
         let out = Apigatewayv2Authorizer(std::rc::Rc::new(Apigatewayv2Authorizer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Apigatewayv2AuthorizerData {
+            data: std::cell::RefCell::new(Apigatewayv2AuthorizerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -334,7 +364,9 @@ impl BuildApigatewayv2Authorizer {
                 id: core::default::Default::default(),
                 identity_sources: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 jwt_configuration: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -422,21 +454,37 @@ impl Apigatewayv2AuthorizerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `jwt_configuration` after provisioning.\n"]
-    pub fn jwt_configuration(&self) -> terrars::ListRef<Apigatewayv2AuthorizerJwtConfigurationElRef> {
+    pub fn jwt_configuration(&self) -> terrars::ListRef<Apigatewayv2Authorizer_JwtConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.jwt_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Apigatewayv2Authorizer_TimeoutsRef {
+        Apigatewayv2Authorizer_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Apigatewayv2AuthorizerDynamic {
+    jwt_configuration: std::option::Option<terrars::DynamicBlock<Apigatewayv2Authorizer_JwtConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct Apigatewayv2AuthorizerJwtConfigurationEl {
+pub struct Apigatewayv2Authorizer_JwtConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     audience: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     issuer: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Apigatewayv2AuthorizerJwtConfigurationEl {
+impl Apigatewayv2Authorizer_JwtConfiguration {
     #[doc = "Set the field `audience`.\n"]
     pub fn set_audience(
         mut self,
@@ -453,8 +501,8 @@ impl Apigatewayv2AuthorizerJwtConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for Apigatewayv2AuthorizerJwtConfigurationEl {
-    type O = terrars::BlockAssignable<Apigatewayv2AuthorizerJwtConfigurationEl>;
+impl terrars::ToListMappable for Apigatewayv2Authorizer_JwtConfiguration {
+    type O = terrars::BlockAssignable<Apigatewayv2Authorizer_JwtConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -465,32 +513,34 @@ impl terrars::ToListMappable for Apigatewayv2AuthorizerJwtConfigurationEl {
     }
 }
 
-pub struct BuildApigatewayv2AuthorizerJwtConfigurationEl {}
+pub struct BuildApigatewayv2Authorizer_JwtConfiguration {}
 
-impl BuildApigatewayv2AuthorizerJwtConfigurationEl {
-    pub fn build(self) -> Apigatewayv2AuthorizerJwtConfigurationEl {
-        Apigatewayv2AuthorizerJwtConfigurationEl {
+impl BuildApigatewayv2Authorizer_JwtConfiguration {
+    pub fn build(self) -> Apigatewayv2Authorizer_JwtConfiguration {
+        Apigatewayv2Authorizer_JwtConfiguration {
             audience: core::default::Default::default(),
             issuer: core::default::Default::default(),
         }
     }
 }
 
-pub struct Apigatewayv2AuthorizerJwtConfigurationElRef {
+#[allow(dead_code)]
+pub struct Apigatewayv2Authorizer_JwtConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Apigatewayv2AuthorizerJwtConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2AuthorizerJwtConfigurationElRef {
-        Apigatewayv2AuthorizerJwtConfigurationElRef {
+impl terrars::Ref for Apigatewayv2Authorizer_JwtConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2Authorizer_JwtConfigurationRef {
+        Apigatewayv2Authorizer_JwtConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Apigatewayv2AuthorizerJwtConfigurationElRef {
+impl Apigatewayv2Authorizer_JwtConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -506,7 +556,63 @@ impl Apigatewayv2AuthorizerJwtConfigurationElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct Apigatewayv2AuthorizerDynamic {
-    jwt_configuration: std::option::Option<terrars::DynamicBlock<Apigatewayv2AuthorizerJwtConfigurationEl>>,
+#[derive(Serialize)]
+pub struct Apigatewayv2Authorizer_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Apigatewayv2Authorizer_Timeouts {
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Apigatewayv2Authorizer_Timeouts {
+    type O = terrars::BlockAssignable<Apigatewayv2Authorizer_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildApigatewayv2Authorizer_Timeouts {}
+
+impl BuildApigatewayv2Authorizer_Timeouts {
+    pub fn build(self) -> Apigatewayv2Authorizer_Timeouts {
+        Apigatewayv2Authorizer_Timeouts { delete: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Apigatewayv2Authorizer_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Apigatewayv2Authorizer_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2Authorizer_TimeoutsRef {
+        Apigatewayv2Authorizer_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Apigatewayv2Authorizer_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
 }

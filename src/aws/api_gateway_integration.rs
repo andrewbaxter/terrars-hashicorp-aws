@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApiGatewayIntegrationData {
+struct ApiGatewayIntegrationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,12 +38,18 @@ struct ApiGatewayIntegrationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     integration_http_method: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    integration_target: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     passthrough_behavior: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_templates: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     resource_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    response_transfer_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     rest_api_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timeout_milliseconds: std::option::Option<terrars::PrimField<f64>>,
@@ -50,14 +58,14 @@ struct ApiGatewayIntegrationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tls_config: std::option::Option<std::vec::Vec<ApiGatewayIntegrationTlsConfigEl>>,
+    tls_config: std::option::Option<std::vec::Vec<ApiGatewayIntegration_TlsConfig>>,
     dynamic: ApiGatewayIntegrationDynamic,
 }
 
 struct ApiGatewayIntegration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApiGatewayIntegrationData>,
+    data: std::cell::RefCell<ApiGatewayIntegrationData_>,
 }
 
 #[derive(Clone)]
@@ -211,9 +219,22 @@ impl ApiGatewayIntegration {
         self
     }
 
+    #[doc = "Set the field `integration_target`.\n"]
+    pub fn set_integration_target(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().integration_target = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `passthrough_behavior`.\n"]
     pub fn set_passthrough_behavior(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().passthrough_behavior = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -235,6 +256,15 @@ impl ApiGatewayIntegration {
         self
     }
 
+    #[doc = "Set the field `response_transfer_mode`.\n"]
+    pub fn set_response_transfer_mode(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().response_transfer_mode = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeout_milliseconds`.\n"]
     pub fn set_timeout_milliseconds(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().timeout_milliseconds = std::option::Option::Some(v.into());
@@ -250,7 +280,7 @@ impl ApiGatewayIntegration {
     #[doc = "Set the field `tls_config`.\n"]
     pub fn set_tls_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayIntegrationTlsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayIntegration_TlsConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -308,9 +338,20 @@ impl ApiGatewayIntegration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.integration_http_method", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `integration_target` after provisioning.\n"]
+    pub fn integration_target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.integration_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `passthrough_behavior` after provisioning.\n"]
     pub fn passthrough_behavior(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.passthrough_behavior", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `request_parameters` after provisioning.\n"]
@@ -326,6 +367,11 @@ impl ApiGatewayIntegration {
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
     pub fn resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `response_transfer_mode` after provisioning.\n"]
+    pub fn response_transfer_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_transfer_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]
@@ -349,7 +395,7 @@ impl ApiGatewayIntegration {
     }
 
     #[doc = "Get a reference to the value of field `tls_config` after provisioning.\n"]
-    pub fn tls_config(&self) -> terrars::ListRef<ApiGatewayIntegrationTlsConfigElRef> {
+    pub fn tls_config(&self) -> terrars::ListRef<ApiGatewayIntegration_TlsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tls_config", self.extract_ref()))
     }
 }
@@ -402,7 +448,7 @@ impl BuildApiGatewayIntegration {
         let out = ApiGatewayIntegration(std::rc::Rc::new(ApiGatewayIntegration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApiGatewayIntegrationData {
+            data: std::cell::RefCell::new(ApiGatewayIntegrationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -417,10 +463,13 @@ impl BuildApiGatewayIntegration {
                 http_method: self.http_method,
                 id: core::default::Default::default(),
                 integration_http_method: core::default::Default::default(),
+                integration_target: core::default::Default::default(),
                 passthrough_behavior: core::default::Default::default(),
+                region: core::default::Default::default(),
                 request_parameters: core::default::Default::default(),
                 request_templates: core::default::Default::default(),
                 resource_id: self.resource_id,
+                response_transfer_mode: core::default::Default::default(),
                 rest_api_id: self.rest_api_id,
                 timeout_milliseconds: core::default::Default::default(),
                 type_: self.type_,
@@ -502,9 +551,20 @@ impl ApiGatewayIntegrationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.integration_http_method", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `integration_target` after provisioning.\n"]
+    pub fn integration_target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.integration_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `passthrough_behavior` after provisioning.\n"]
     pub fn passthrough_behavior(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.passthrough_behavior", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `request_parameters` after provisioning.\n"]
@@ -520,6 +580,11 @@ impl ApiGatewayIntegrationRef {
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
     pub fn resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `response_transfer_mode` after provisioning.\n"]
+    pub fn response_transfer_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_transfer_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]
@@ -543,18 +608,23 @@ impl ApiGatewayIntegrationRef {
     }
 
     #[doc = "Get a reference to the value of field `tls_config` after provisioning.\n"]
-    pub fn tls_config(&self) -> terrars::ListRef<ApiGatewayIntegrationTlsConfigElRef> {
+    pub fn tls_config(&self) -> terrars::ListRef<ApiGatewayIntegration_TlsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tls_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApiGatewayIntegrationDynamic {
+    tls_config: std::option::Option<terrars::DynamicBlock<ApiGatewayIntegration_TlsConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct ApiGatewayIntegrationTlsConfigEl {
+pub struct ApiGatewayIntegration_TlsConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     insecure_skip_verification: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ApiGatewayIntegrationTlsConfigEl {
+impl ApiGatewayIntegration_TlsConfig {
     #[doc = "Set the field `insecure_skip_verification`.\n"]
     pub fn set_insecure_skip_verification(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.insecure_skip_verification = std::option::Option::Some(v.into());
@@ -562,8 +632,8 @@ impl ApiGatewayIntegrationTlsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayIntegrationTlsConfigEl {
-    type O = terrars::BlockAssignable<ApiGatewayIntegrationTlsConfigEl>;
+impl terrars::ToListMappable for ApiGatewayIntegration_TlsConfig {
+    type O = terrars::BlockAssignable<ApiGatewayIntegration_TlsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -574,29 +644,31 @@ impl terrars::ToListMappable for ApiGatewayIntegrationTlsConfigEl {
     }
 }
 
-pub struct BuildApiGatewayIntegrationTlsConfigEl {}
+pub struct BuildApiGatewayIntegration_TlsConfig {}
 
-impl BuildApiGatewayIntegrationTlsConfigEl {
-    pub fn build(self) -> ApiGatewayIntegrationTlsConfigEl {
-        ApiGatewayIntegrationTlsConfigEl { insecure_skip_verification: core::default::Default::default() }
+impl BuildApiGatewayIntegration_TlsConfig {
+    pub fn build(self) -> ApiGatewayIntegration_TlsConfig {
+        ApiGatewayIntegration_TlsConfig { insecure_skip_verification: core::default::Default::default() }
     }
 }
 
-pub struct ApiGatewayIntegrationTlsConfigElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayIntegration_TlsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayIntegrationTlsConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayIntegrationTlsConfigElRef {
-        ApiGatewayIntegrationTlsConfigElRef {
+impl terrars::Ref for ApiGatewayIntegration_TlsConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayIntegration_TlsConfigRef {
+        ApiGatewayIntegration_TlsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayIntegrationTlsConfigElRef {
+impl ApiGatewayIntegration_TlsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -605,9 +677,4 @@ impl ApiGatewayIntegrationTlsConfigElRef {
     pub fn insecure_skip_verification(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.insecure_skip_verification", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApiGatewayIntegrationDynamic {
-    tls_config: std::option::Option<terrars::DynamicBlock<ApiGatewayIntegrationTlsConfigEl>>,
 }

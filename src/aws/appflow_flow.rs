@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppflowFlowData {
+struct AppflowFlowData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,24 +28,28 @@ struct AppflowFlowData {
     kms_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_flow_config: std::option::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigEl>>,
+    destination_flow_config: std::option::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_flow_config: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigEl>>,
+    metadata_catalog_config: std::option::Option<std::vec::Vec<AppflowFlow_MetadataCatalogConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    task: std::option::Option<std::vec::Vec<AppflowFlowTaskEl>>,
+    source_flow_config: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trigger_config: std::option::Option<std::vec::Vec<AppflowFlowTriggerConfigEl>>,
+    task: std::option::Option<std::vec::Vec<AppflowFlow_Task>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trigger_config: std::option::Option<std::vec::Vec<AppflowFlow_TriggerConfig>>,
     dynamic: AppflowFlowDynamic,
 }
 
 struct AppflowFlow_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppflowFlowData>,
+    data: std::cell::RefCell<AppflowFlowData_>,
 }
 
 #[derive(Clone)]
@@ -161,6 +167,13 @@ impl AppflowFlow {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -182,7 +195,7 @@ impl AppflowFlow {
     #[doc = "Set the field `destination_flow_config`.\n"]
     pub fn set_destination_flow_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlowDestinationFlowConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -195,10 +208,26 @@ impl AppflowFlow {
         self
     }
 
+    #[doc = "Set the field `metadata_catalog_config`.\n"]
+    pub fn set_metadata_catalog_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_MetadataCatalogConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().metadata_catalog_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.metadata_catalog_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `source_flow_config`.\n"]
     pub fn set_source_flow_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlowSourceFlowConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -212,7 +241,7 @@ impl AppflowFlow {
     }
 
     #[doc = "Set the field `task`.\n"]
-    pub fn set_task(self, v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlowTaskEl>>) -> Self {
+    pub fn set_task(self, v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_Task>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().task = std::option::Option::Some(v);
@@ -227,7 +256,7 @@ impl AppflowFlow {
     #[doc = "Set the field `trigger_config`.\n"]
     pub fn set_trigger_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlowTriggerConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_TriggerConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -250,6 +279,11 @@ impl AppflowFlow {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `flow_status` after provisioning.\n"]
+    pub fn flow_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.flow_status", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -265,6 +299,12 @@ impl AppflowFlow {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -275,13 +315,23 @@ impl AppflowFlow {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `destination_flow_config` after provisioning.\n"]
+    pub fn destination_flow_config(&self) -> terrars::ListRef<AppflowFlow_DestinationFlowConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_flow_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `metadata_catalog_config` after provisioning.\n"]
+    pub fn metadata_catalog_config(&self) -> terrars::ListRef<AppflowFlow_MetadataCatalogConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_catalog_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_flow_config` after provisioning.\n"]
-    pub fn source_flow_config(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElRef> {
+    pub fn source_flow_config(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_flow_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `trigger_config` after provisioning.\n"]
-    pub fn trigger_config(&self) -> terrars::ListRef<AppflowFlowTriggerConfigElRef> {
+    pub fn trigger_config(&self) -> terrars::ListRef<AppflowFlow_TriggerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_config", self.extract_ref()))
     }
 }
@@ -328,7 +378,7 @@ impl BuildAppflowFlow {
         let out = AppflowFlow(std::rc::Rc::new(AppflowFlow_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppflowFlowData {
+            data: std::cell::RefCell::new(AppflowFlowData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -338,9 +388,11 @@ impl BuildAppflowFlow {
                 id: core::default::Default::default(),
                 kms_arn: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 destination_flow_config: core::default::Default::default(),
+                metadata_catalog_config: core::default::Default::default(),
                 source_flow_config: core::default::Default::default(),
                 task: core::default::Default::default(),
                 trigger_config: core::default::Default::default(),
@@ -385,6 +437,11 @@ impl AppflowFlowRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `flow_status` after provisioning.\n"]
+    pub fn flow_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.flow_status", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -400,6 +457,12 @@ impl AppflowFlowRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -410,19 +473,38 @@ impl AppflowFlowRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `destination_flow_config` after provisioning.\n"]
+    pub fn destination_flow_config(&self) -> terrars::ListRef<AppflowFlow_DestinationFlowConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_flow_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `metadata_catalog_config` after provisioning.\n"]
+    pub fn metadata_catalog_config(&self) -> terrars::ListRef<AppflowFlow_MetadataCatalogConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_catalog_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_flow_config` after provisioning.\n"]
-    pub fn source_flow_config(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElRef> {
+    pub fn source_flow_config(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_flow_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `trigger_config` after provisioning.\n"]
-    pub fn trigger_config(&self) -> terrars::ListRef<AppflowFlowTriggerConfigElRef> {
+    pub fn trigger_config(&self) -> terrars::ListRef<AppflowFlow_TriggerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppflowFlowDynamic {
+    destination_flow_config: std::option::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig>>,
+    metadata_catalog_config: std::option::Option<terrars::DynamicBlock<AppflowFlow_MetadataCatalogConfig>>,
+    source_flow_config: std::option::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig>>,
+    task: std::option::Option<terrars::DynamicBlock<AppflowFlow_Task>>,
+    trigger_config: std::option::Option<terrars::DynamicBlock<AppflowFlow_TriggerConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -431,7 +513,7 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCus
     fail_on_first_destination_error: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig {
     #[doc = "Set the field `bucket_name`.\n"]
     pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_name = std::option::Option::Some(v.into());
@@ -452,11 +534,11 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomCon
 }
 
 impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {
+::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -468,13 +550,13 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {}
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig {}
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig {
     pub fn build(
         self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig {
             bucket_name: core::default::Default::default(),
             bucket_prefix: core::default::Default::default(),
             fail_on_first_destination_error: core::default::Default::default(),
@@ -482,25 +564,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCust
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -522,19 +605,17 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomCon
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnectorDynamic {
     error_handling_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     entity_name: terrars::PrimField<std::string::String>,
@@ -546,16 +627,12 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCus
     error_handling_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl,
-        >,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnectorDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector {
     #[doc = "Set the field `custom_properties`.\n"]
     pub fn set_custom_properties(
         mut self,
@@ -594,7 +671,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomCon
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -610,10 +687,9 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomCon
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl {
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector {
     type O =
-        terrars
-        ::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl>;
+        terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -624,14 +700,14 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector {
     #[doc = ""]
     pub entity_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector {
             custom_properties: core::default::Default::default(),
             entity_name: self.entity_name,
             id_field_names: core::default::Default::default(),
@@ -642,24 +718,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCust
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnectorRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -688,21 +766,19 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomCon
     pub fn error_handling_config(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElErrorHandlingConfigElRef,
-    > {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_handling_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles {
     domain_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_type_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles {
     #[doc = "Set the field `object_type_name`.\n"]
     pub fn set_object_type_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.object_type_name = std::option::Option::Some(v.into());
@@ -710,10 +786,9 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerP
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl {
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles {
     type O =
-        terrars
-        ::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl>;
+        terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -724,38 +799,40 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles {
     #[doc = ""]
     pub domain_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles {
             domain_name: self.domain_name,
             object_type_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfilesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfilesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfilesRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfilesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfilesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -771,133 +848,29 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerP
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fail_on_first_destination_error: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl {
-    #[doc = "Set the field `bucket_name`.\n"]
-    pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `bucket_prefix`.\n"]
-    pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `fail_on_first_destination_error`.\n"]
-    pub fn set_fail_on_first_destination_error(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.fail_on_first_destination_error = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl {}
-
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl {
-    pub fn build(
-        self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl {
-            bucket_name: core::default::Default::default(),
-            bucket_prefix: core::default::Default::default(),
-            fail_on_first_destination_error: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
-    pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `fail_on_first_destination_error` after provisioning.\n"]
-    pub fn fail_on_first_destination_error(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_first_destination_error", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridgeDynamic {
     error_handling_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge {
     object: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_handling_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl>,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridgeDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge {
     #[doc = "Set the field `error_handling_config`.\n"]
     pub fn set_error_handling_config(
         mut self,
@@ -909,7 +882,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBrid
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -925,9 +898,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBrid
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl {
-    type O =
-        terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -938,14 +910,14 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge {
             object: self.object,
             error_handling_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -953,24 +925,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEven
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridgeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridgeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridgeRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridgeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridgeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -984,140 +958,34 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBrid
     pub fn error_handling_config(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElErrorHandlingConfigElRef,
-    > {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_handling_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fail_on_first_destination_error: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl {
-    #[doc = "Set the field `bucket_name`.\n"]
-    pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `bucket_prefix`.\n"]
-    pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `fail_on_first_destination_error`.\n"]
-    pub fn set_fail_on_first_destination_error(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.fail_on_first_destination_error = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl {}
-
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl {
-    pub fn build(
-        self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl {
-            bucket_name: core::default::Default::default(),
-            bucket_prefix: core::default::Default::default(),
-            fail_on_first_destination_error: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
-    pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `fail_on_first_destination_error` after provisioning.\n"]
-    pub fn fail_on_first_destination_error(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_first_destination_error", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_HoneycodeDynamic {
     error_handling_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode {
     object: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_handling_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl>,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_HoneycodeDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode {
     #[doc = "Set the field `error_handling_config`.\n"]
     pub fn set_error_handling_config(
         mut self,
@@ -1129,7 +997,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycode
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -1145,8 +1013,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycode
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1157,14 +1025,14 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode {
             object: self.object,
             error_handling_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1172,24 +1040,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHone
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_HoneycodeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_HoneycodeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_HoneycodeRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_HoneycodeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_HoneycodeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1203,19 +1073,19 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycode
     pub fn error_handling_config(
         &self,
     ) -> terrars
-    ::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElErrorHandlingConfigElRef> {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_handling_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl {}
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics {}
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl { }
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics { }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl {
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics {
     type O =
-        terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl>;
+        terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1226,164 +1096,62 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl {}
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics {}
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl {}
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics {}
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetricsRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fail_on_first_destination_error: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl {
-    #[doc = "Set the field `bucket_name`.\n"]
-    pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `bucket_prefix`.\n"]
-    pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `fail_on_first_destination_error`.\n"]
-    pub fn set_fail_on_first_destination_error(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.fail_on_first_destination_error = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl {}
-
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl {
-    pub fn build(
-        self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl {
-            bucket_name: core::default::Default::default(),
-            bucket_prefix: core::default::Default::default(),
-            fail_on_first_destination_error: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
-    pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `fail_on_first_destination_error` after provisioning.\n"]
-    pub fn fail_on_first_destination_error(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_first_destination_error", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_MarketoDynamic {
     error_handling_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo {
     object: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_handling_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl>,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_MarketoDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo {
     #[doc = "Set the field `error_handling_config`.\n"]
     pub fn set_error_handling_config(
         mut self,
@@ -1395,7 +1163,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -1411,8 +1179,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1423,14 +1191,14 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo {
             object: self.object,
             error_handling_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1438,24 +1206,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMark
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_MarketoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_MarketoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_MarketoRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_MarketoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_MarketoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1469,125 +1239,23 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl
     pub fn error_handling_config(
         &self,
     ) -> terrars
-    ::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElErrorHandlingConfigElRef> {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_handling_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fail_on_first_destination_error: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl {
-    #[doc = "Set the field `bucket_name`.\n"]
-    pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `bucket_prefix`.\n"]
-    pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `fail_on_first_destination_error`.\n"]
-    pub fn set_fail_on_first_destination_error(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.fail_on_first_destination_error = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl {}
-
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl {
-    pub fn build(
-        self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl {
-            bucket_name: core::default::Default::default(),
-            bucket_prefix: core::default::Default::default(),
-            fail_on_first_destination_error: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
-    pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `fail_on_first_destination_error` after provisioning.\n"]
-    pub fn fail_on_first_destination_error(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_first_destination_error", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_RedshiftDynamic {
     error_handling_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     intermediate_bucket_name: terrars::PrimField<std::string::String>,
@@ -1596,14 +1264,12 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRed
     error_handling_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl>,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_RedshiftDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift {
     #[doc = "Set the field `bucket_prefix`.\n"]
     pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_prefix = std::option::Option::Some(v.into());
@@ -1621,7 +1287,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -1637,8 +1303,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftE
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1649,16 +1315,16 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift {
     #[doc = ""]
     pub intermediate_bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift {
             bucket_prefix: core::default::Default::default(),
             intermediate_bucket_name: self.intermediate_bucket_name,
             object: self.object,
@@ -1668,24 +1334,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElReds
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_RedshiftRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_RedshiftRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_RedshiftRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_RedshiftRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_RedshiftRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1709,31 +1377,39 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftE
     pub fn error_handling_config(
         &self,
     ) -> terrars
-    ::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElErrorHandlingConfigElRef> {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_handling_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aggregation_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_file_size: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig {
     #[doc = "Set the field `aggregation_type`.\n"]
     pub fn set_aggregation_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.aggregation_type = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `target_file_size`.\n"]
+    pub fn set_target_file_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.target_file_size = std::option::Option::Some(v.into());
+        self
+    }
 }
 
 impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {
+::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1745,37 +1421,40 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {}
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig {}
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig {
     pub fn build(
         self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig {
             aggregation_type: core::default::Default::default(),
+            target_file_size: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigElRef {
+::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfigRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1784,20 +1463,36 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3Out
     pub fn aggregation_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.aggregation_type", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `target_file_size` after provisioning.\n"]
+    pub fn target_file_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_file_size", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix_format: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix_hierarchy: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig {
     #[doc = "Set the field `prefix_format`.\n"]
     pub fn set_prefix_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix_format = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `prefix_hierarchy`.\n"]
+    pub fn set_prefix_hierarchy(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.prefix_hierarchy = std::option::Option::Some(v.into());
         self
     }
 
@@ -1809,11 +1504,11 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3Out
 }
 
 impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {
+::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1825,38 +1520,41 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {}
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig {}
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig {
     pub fn build(
         self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig {
             prefix_format: core::default::Default::default(),
+            prefix_hierarchy: core::default::Default::default(),
             prefix_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigElRef {
+::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfigRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1866,6 +1564,11 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3Out
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_format", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `prefix_hierarchy` after provisioning.\n"]
+    pub fn prefix_hierarchy(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.prefix_hierarchy", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `prefix_type` after provisioning.\n"]
     pub fn prefix_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_type", self.base))
@@ -1873,13 +1576,13 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3Out
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfigDynamic {
     aggregation_config: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig,
         >,
     >,
     prefix_config: std
@@ -1887,15 +1590,17 @@ struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3O
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preserve_source_data_typing: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aggregation_config: std
     ::option
@@ -1903,7 +1608,7 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3E
         std
         ::vec
         ::Vec<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1912,17 +1617,21 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3E
     ::Option<
         std
         ::vec
-        ::Vec<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl,
-        >,
+        ::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfigDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig {
     #[doc = "Set the field `file_type`.\n"]
     pub fn set_file_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.file_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `preserve_source_data_typing`.\n"]
+    pub fn set_preserve_source_data_typing(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.preserve_source_data_typing = std::option::Option::Some(v.into());
         self
     }
 
@@ -1937,7 +1646,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3Out
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfig,
                         >,
                     >,
     ) -> Self {
@@ -1963,7 +1672,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3Out
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfig,
                         >,
                     >,
     ) -> Self {
@@ -1980,12 +1689,10 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3Out
 }
 
 impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl {
+::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig {
     type O =
         terrars
-        ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl,
-        >;
+        ::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1996,14 +1703,13 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl {}
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig {}
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl {
-    pub fn build(
-        self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig {
             file_type: core::default::Default::default(),
+            preserve_source_data_typing: core::default::Default::default(),
             aggregation_config: core::default::Default::default(),
             prefix_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2011,24 +1717,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfigRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2038,12 +1746,17 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3Out
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_type", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `preserve_source_data_typing` after provisioning.\n"]
+    pub fn preserve_source_data_typing(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve_source_data_typing", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `aggregation_config` after provisioning.\n"]
     pub fn aggregation_config(
         &self,
     ) -> terrars
     ::ListRef<
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElAggregationConfigElRef,
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_AggregationConfigRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aggregation_config", self.base))
     }
@@ -2053,37 +1766,35 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3Out
         &self,
     ) -> terrars
     ::ListRef<
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElPrefixConfigElRef,
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig_PrefixConfigRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.prefix_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3Dynamic {
     s3_output_format_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl>,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3 {
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_output_format_config: std
     ::option
-    ::Option<
-        std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl>,
-    >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElDynamic,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig>>,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3Dynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3 {
     #[doc = "Set the field `bucket_prefix`.\n"]
     pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_prefix = std::option::Option::Some(v.into());
@@ -2101,7 +1812,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfig,
                         >,
                     >,
     ) -> Self {
@@ -2117,8 +1828,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3 {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2129,14 +1840,14 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3 {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3 {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3 {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3 {
             bucket_name: self.bucket_name,
             bucket_prefix: core::default::Default::default(),
             s3_output_format_config: core::default::Default::default(),
@@ -2145,24 +1856,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3Ref {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3Ref {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2181,125 +1894,25 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElRef {
     pub fn s3_output_format_config(
         &self,
     ) -> terrars
-    ::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElS3OutputFormatConfigElRef> {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3_S3OutputFormatConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_output_format_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fail_on_first_destination_error: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl {
-    #[doc = "Set the field `bucket_name`.\n"]
-    pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `bucket_prefix`.\n"]
-    pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `fail_on_first_destination_error`.\n"]
-    pub fn set_fail_on_first_destination_error(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.fail_on_first_destination_error = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl {}
-
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl {
-    pub fn build(
-        self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl {
-            bucket_name: core::default::Default::default(),
-            bucket_prefix: core::default::Default::default(),
-            fail_on_first_destination_error: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
-    pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `fail_on_first_destination_error` after provisioning.\n"]
-    pub fn fail_on_first_destination_error(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_first_destination_error", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SalesforceDynamic {
     error_handling_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_transfer_api: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id_field_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     object: terrars::PrimField<std::string::String>,
@@ -2309,14 +1922,18 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSal
     error_handling_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl>,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SalesforceDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce {
+    #[doc = "Set the field `data_transfer_api`.\n"]
+    pub fn set_data_transfer_api(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_transfer_api = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id_field_names`.\n"]
     pub fn set_id_field_names(
         mut self,
@@ -2346,7 +1963,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforc
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -2362,9 +1979,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforc
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl {
-    type O =
-        terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2375,14 +1991,15 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce {
+            data_transfer_api: core::default::Default::default(),
             id_field_names: core::default::Default::default(),
             object: self.object,
             write_operation_type: core::default::Default::default(),
@@ -2392,26 +2009,33 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSale
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SalesforceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SalesforceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SalesforceRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SalesforceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SalesforceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `data_transfer_api` after provisioning.\n"]
+    pub fn data_transfer_api(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_transfer_api", self.base))
     }
 
     #[doc = "Get a reference to the value of field `id_field_names` after provisioning.\n"]
@@ -2433,120 +2057,20 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforc
     pub fn error_handling_config(
         &self,
     ) -> terrars
-    ::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElErrorHandlingConfigElRef> {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_handling_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fail_on_first_destination_error: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl {
-    #[doc = "Set the field `bucket_name`.\n"]
-    pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `bucket_prefix`.\n"]
-    pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `fail_on_first_destination_error`.\n"]
-    pub fn set_fail_on_first_destination_error(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.fail_on_first_destination_error = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl {}
-
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl {
-    pub fn build(
-        self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl {
-            bucket_name: core::default::Default::default(),
-            bucket_prefix: core::default::Default::default(),
-            fail_on_first_destination_error: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
-    pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `fail_on_first_destination_error` after provisioning.\n"]
-    pub fn fail_on_first_destination_error(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_first_destination_error", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig {
     #[doc = "Set the field `bucket_name`.\n"]
     pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_name = std::option::Option::Some(v.into());
@@ -2561,11 +2085,11 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataE
 }
 
 impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {
+::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2577,38 +2101,40 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {}
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig {}
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig {
     pub fn build(
         self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig {
             bucket_name: core::default::Default::default(),
             bucket_prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigElRef {
+::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfigRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2625,27 +2151,25 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataE
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoDataDynamic {
     error_handling_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
     success_response_handling_config: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id_field_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     object_path: terrars::PrimField<std::string::String>,
@@ -2655,9 +2179,7 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSap
     error_handling_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl>,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     success_response_handling_config: std
@@ -2665,14 +2187,12 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSap
     ::Option<
         std
         ::vec
-        ::Vec<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl,
-        >,
+        ::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoDataDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData {
     #[doc = "Set the field `id_field_names`.\n"]
     pub fn set_id_field_names(
         mut self,
@@ -2702,7 +2222,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -2728,7 +2248,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -2744,8 +2264,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataE
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2756,14 +2276,14 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData {
     #[doc = ""]
     pub object_path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData {
             id_field_names: core::default::Default::default(),
             object_path: self.object_path,
             write_operation_type: core::default::Default::default(),
@@ -2774,24 +2294,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapo
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoDataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoDataRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoDataRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoDataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoDataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2815,7 +2337,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataE
     pub fn error_handling_config(
         &self,
     ) -> terrars
-    ::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElErrorHandlingConfigElRef> {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_handling_config", self.base))
     }
 
@@ -2824,126 +2346,24 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataE
         &self,
     ) -> terrars
     ::ListRef<
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElSuccessResponseHandlingConfigElRef,
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData_SuccessResponseHandlingConfigRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.success_response_handling_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fail_on_first_destination_error: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl {
-    #[doc = "Set the field `bucket_name`.\n"]
-    pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `bucket_prefix`.\n"]
-    pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `fail_on_first_destination_error`.\n"]
-    pub fn set_fail_on_first_destination_error(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.fail_on_first_destination_error = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl {}
-
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl {
-    pub fn build(
-        self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl {
-            bucket_name: core::default::Default::default(),
-            bucket_prefix: core::default::Default::default(),
-            fail_on_first_destination_error: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
-    pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `fail_on_first_destination_error` after provisioning.\n"]
-    pub fn fail_on_first_destination_error(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_first_destination_error", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SnowflakeDynamic {
     error_handling_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     intermediate_bucket_name: terrars::PrimField<std::string::String>,
@@ -2952,14 +2372,12 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSno
     error_handling_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl>,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SnowflakeDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake {
     #[doc = "Set the field `bucket_prefix`.\n"]
     pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_prefix = std::option::Option::Some(v.into());
@@ -2977,7 +2395,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflake
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -2993,8 +2411,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflake
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3005,16 +2423,16 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake {
     #[doc = ""]
     pub intermediate_bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake {
             bucket_prefix: core::default::Default::default(),
             intermediate_bucket_name: self.intermediate_bucket_name,
             object: self.object,
@@ -3024,24 +2442,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnow
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SnowflakeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SnowflakeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SnowflakeRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SnowflakeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SnowflakeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3065,18 +2485,18 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflake
     pub fn error_handling_config(
         &self,
     ) -> terrars
-    ::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElErrorHandlingConfigElRef> {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_handling_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aggregation_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig {
     #[doc = "Set the field `aggregation_type`.\n"]
     pub fn set_aggregation_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.aggregation_type = std::option::Option::Some(v.into());
@@ -3085,11 +2505,11 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
 }
 
 impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {
+::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -3101,37 +2521,39 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {}
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig {}
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig {
     pub fn build(
         self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig {
             aggregation_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigElRef {
+::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfigRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3143,26 +2565,37 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix_format: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix_hierarchy: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     prefix_type: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig {
     #[doc = "Set the field `prefix_format`.\n"]
     pub fn set_prefix_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix_format = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `prefix_hierarchy`.\n"]
+    pub fn set_prefix_hierarchy(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.prefix_hierarchy = std::option::Option::Some(v.into());
+        self
+    }
 }
 
 impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl {
+::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -3174,41 +2607,44 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig {
     #[doc = ""]
     pub prefix_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig {
     pub fn build(
         self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig {
             prefix_format: core::default::Default::default(),
+            prefix_hierarchy: core::default::Default::default(),
             prefix_type: self.prefix_type,
         }
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigElRef {
+::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfigRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3218,6 +2654,11 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_format", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `prefix_hierarchy` after provisioning.\n"]
+    pub fn prefix_hierarchy(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.prefix_hierarchy", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `prefix_type` after provisioning.\n"]
     pub fn prefix_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_type", self.base))
@@ -3225,13 +2666,13 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfigDynamic {
     aggregation_config: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig,
         >,
     >,
     prefix_config: std
@@ -3239,13 +2680,13 @@ struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolve
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3255,7 +2696,7 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUps
         std
         ::vec
         ::Vec<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3265,13 +2706,13 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUps
         std
         ::vec
         ::Vec<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig,
         >,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfigDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig {
     #[doc = "Set the field `file_type`.\n"]
     pub fn set_file_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.file_type = std::option::Option::Some(v.into());
@@ -3289,7 +2730,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfig,
                         >,
                     >,
     ) -> Self {
@@ -3315,7 +2756,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfig,
                         >,
                     >,
     ) -> Self {
@@ -3332,11 +2773,11 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
 }
 
 impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl {
+::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl,
+            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -3348,13 +2789,13 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl {}
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig {}
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig {
     pub fn build(
         self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig {
             file_type: core::default::Default::default(),
             aggregation_config: core::default::Default::default(),
             prefix_config: core::default::Default::default(),
@@ -3363,25 +2804,27 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpso
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElRef {
+::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfigRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3396,7 +2839,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
         &self,
     ) -> terrars
     ::ListRef<
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElAggregationConfigElRef,
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_AggregationConfigRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aggregation_config", self.base))
     }
@@ -3406,26 +2849,24 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
         &self,
     ) -> terrars
     ::ListRef<
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElPrefixConfigElRef,
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig_PrefixConfigRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.prefix_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_UpsolverDynamic {
     s3_output_format_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver {
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -3433,14 +2874,12 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUps
     s3_output_format_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl>,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_UpsolverDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver {
     #[doc = "Set the field `bucket_prefix`.\n"]
     pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_prefix = std::option::Option::Some(v.into());
@@ -3458,7 +2897,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfig,
                         >,
                     >,
     ) -> Self {
@@ -3474,8 +2913,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3486,14 +2925,14 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver {
             bucket_name: self.bucket_name,
             bucket_prefix: core::default::Default::default(),
             s3_output_format_config: core::default::Default::default(),
@@ -3502,24 +2941,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpso
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_UpsolverRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_UpsolverRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_UpsolverRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_UpsolverRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_UpsolverRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3538,125 +2979,23 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverE
     pub fn s3_output_format_config(
         &self,
     ) -> terrars
-    ::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElS3OutputFormatConfigElRef> {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver_S3OutputFormatConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_output_format_config", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fail_on_first_destination_error: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl {
-    #[doc = "Set the field `bucket_name`.\n"]
-    pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `bucket_prefix`.\n"]
-    pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `fail_on_first_destination_error`.\n"]
-    pub fn set_fail_on_first_destination_error(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.fail_on_first_destination_error = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl {}
-
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl {
-    pub fn build(
-        self,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl {
-            bucket_name: core::default::Default::default(),
-            bucket_prefix: core::default::Default::default(),
-            fail_on_first_destination_error: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
-    pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `fail_on_first_destination_error` after provisioning.\n"]
-    pub fn fail_on_first_destination_error(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_first_destination_error", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_ZendeskDynamic {
     error_handling_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl,
-        >,
+        ::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id_field_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     object: terrars::PrimField<std::string::String>,
@@ -3666,14 +3005,12 @@ pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZen
     error_handling_config: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl>,
+        std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig>,
     >,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElDynamic,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_ZendeskDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk {
     #[doc = "Set the field `id_field_names`.\n"]
     pub fn set_id_field_names(
         mut self,
@@ -3703,7 +3040,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfig,
                         >,
                     >,
     ) -> Self {
@@ -3719,8 +3056,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3731,14 +3068,14 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk {
             id_field_names: core::default::Default::default(),
             object: self.object,
             write_operation_type: core::default::Default::default(),
@@ -3748,24 +3085,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZend
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_ZendeskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_ZendeskRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_ZendeskRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_ZendeskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_ZendeskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3789,116 +3128,108 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl
     pub fn error_handling_config(
         &self,
     ) -> terrars
-    ::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElErrorHandlingConfigElRef> {
+    ::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo_ErrorHandlingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_handling_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElDynamic {
+struct AppflowFlow_DestinationFlowConfig_DestinationConnectorPropertiesDynamic {
     custom_connector: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector>>,
     customer_profiles: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl>,
+        terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles>,
     >,
     event_bridge: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge>>,
     honeycode: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode>>,
     lookout_metrics: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics>>,
     marketo: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo>>,
     redshift: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift>>,
     s3: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3>>,
     salesforce: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce>>,
     sapo_data: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData>>,
     snowflake: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake>>,
     upsolver: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver>>,
     zendesk: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk>>,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_connector: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customer_profiles: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event_bridge: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     honeycode: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lookout_metrics: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    marketo: std
-    ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl>>,
+    marketo: std::option::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     redshift: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3: std::option::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El>>,
+    s3: std::option::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     salesforce: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sapo_data: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snowflake: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     upsolver: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    zendesk: std
-    ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl>>,
-    dynamic: AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElDynamic,
+    zendesk: std::option::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk>>,
+    dynamic: AppflowFlow_DestinationFlowConfig_DestinationConnectorPropertiesDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties {
     #[doc = "Set the field `custom_connector`.\n"]
     pub fn set_custom_connector(
         mut self,
@@ -3910,7 +3241,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnector,
                         >,
                     >,
     ) -> Self {
@@ -3936,7 +3267,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfiles,
                         >,
                     >,
     ) -> Self {
@@ -3962,7 +3293,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridge,
                         >,
                     >,
     ) -> Self {
@@ -3987,9 +3318,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeEl,
-                        >,
+                        ::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Honeycode>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4014,7 +3343,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsEl,
+                            AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetrics,
                         >,
                     >,
     ) -> Self {
@@ -4039,7 +3368,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoEl>,
+                        ::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Marketo>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4063,9 +3392,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftEl,
-                        >,
+                        ::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Redshift>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4088,8 +3415,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3El>,
+                        terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4113,9 +3439,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceEl,
-                        >,
+                        ::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Salesforce>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4139,9 +3463,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataEl,
-                        >,
+                        ::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoData>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4165,9 +3487,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeEl,
-                        >,
+                        ::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Snowflake>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4191,9 +3511,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverEl,
-                        >,
+                        ::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Upsolver>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4217,7 +3535,7 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskEl>,
+                        ::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_Zendesk>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4232,8 +3550,8 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4244,11 +3562,11 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigElDestinationCo
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {}
+pub struct BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties {}
 
-impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
+impl BuildAppflowFlow_DestinationFlowConfig_DestinationConnectorProperties {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties {
             custom_connector: core::default::Default::default(),
             customer_profiles: core::default::Default::default(),
             event_bridge: core::default::Default::default(),
@@ -4267,24 +3585,26 @@ impl BuildAppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl {
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfig_DestinationConnectorPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfig_DestinationConnectorPropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRef {
-        AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRef {
+    ) -> AppflowFlow_DestinationFlowConfig_DestinationConnectorPropertiesRef {
+        AppflowFlow_DestinationFlowConfig_DestinationConnectorPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRef {
+impl AppflowFlow_DestinationFlowConfig_DestinationConnectorPropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4292,102 +3612,102 @@ impl AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRef {
     #[doc = "Get a reference to the value of field `custom_connector` after provisioning.\n"]
     pub fn custom_connector(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomConnectorElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomConnectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_connector", self.base))
     }
 
     #[doc = "Get a reference to the value of field `customer_profiles` after provisioning.\n"]
     pub fn customer_profiles(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElCustomerProfilesElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_CustomerProfilesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.customer_profiles", self.base))
     }
 
     #[doc = "Get a reference to the value of field `event_bridge` after provisioning.\n"]
     pub fn event_bridge(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElEventBridgeElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_EventBridgeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_bridge", self.base))
     }
 
     #[doc = "Get a reference to the value of field `honeycode` after provisioning.\n"]
     pub fn honeycode(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElHoneycodeElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_HoneycodeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.honeycode", self.base))
     }
 
     #[doc = "Get a reference to the value of field `lookout_metrics` after provisioning.\n"]
     pub fn lookout_metrics(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElLookoutMetricsElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_LookoutMetricsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lookout_metrics", self.base))
     }
 
     #[doc = "Get a reference to the value of field `marketo` after provisioning.\n"]
     pub fn marketo(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElMarketoElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_MarketoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.marketo", self.base))
     }
 
     #[doc = "Get a reference to the value of field `redshift` after provisioning.\n"]
     pub fn redshift(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRedshiftElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_RedshiftRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redshift", self.base))
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 
     #[doc = "Get a reference to the value of field `salesforce` after provisioning.\n"]
     pub fn salesforce(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSalesforceElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SalesforceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.salesforce", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sapo_data` after provisioning.\n"]
     pub fn sapo_data(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSapoDataElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SapoDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sapo_data", self.base))
     }
 
     #[doc = "Get a reference to the value of field `snowflake` after provisioning.\n"]
     pub fn snowflake(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElSnowflakeElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_SnowflakeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snowflake", self.base))
     }
 
     #[doc = "Get a reference to the value of field `upsolver` after provisioning.\n"]
     pub fn upsolver(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElUpsolverElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_UpsolverRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.upsolver", self.base))
     }
 
     #[doc = "Get a reference to the value of field `zendesk` after provisioning.\n"]
     pub fn zendesk(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElZendeskElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties_ZendeskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zendesk", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowDestinationFlowConfigElDynamic {
+struct AppflowFlow_DestinationFlowConfigDynamic {
     destination_connector_properties: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties>>,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowDestinationFlowConfigEl {
+pub struct AppflowFlow_DestinationFlowConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4396,11 +3716,11 @@ pub struct AppflowFlowDestinationFlowConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_connector_properties: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl>>,
-    dynamic: AppflowFlowDestinationFlowConfigElDynamic,
+    ::Option<std::vec::Vec<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties>>,
+    dynamic: AppflowFlow_DestinationFlowConfigDynamic,
 }
 
-impl AppflowFlowDestinationFlowConfigEl {
+impl AppflowFlow_DestinationFlowConfig {
     #[doc = "Set the field `api_version`.\n"]
     pub fn set_api_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.api_version = std::option::Option::Some(v.into());
@@ -4425,7 +3745,7 @@ impl AppflowFlowDestinationFlowConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesEl>,
+                        terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig_DestinationConnectorProperties>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4440,8 +3760,8 @@ impl AppflowFlowDestinationFlowConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigEl {
-    type O = terrars::BlockAssignable<AppflowFlowDestinationFlowConfigEl>;
+impl terrars::ToListMappable for AppflowFlow_DestinationFlowConfig {
+    type O = terrars::BlockAssignable<AppflowFlow_DestinationFlowConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4452,14 +3772,14 @@ impl terrars::ToListMappable for AppflowFlowDestinationFlowConfigEl {
     }
 }
 
-pub struct BuildAppflowFlowDestinationFlowConfigEl {
+pub struct BuildAppflowFlow_DestinationFlowConfig {
     #[doc = ""]
     pub connector_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowDestinationFlowConfigEl {
-    pub fn build(self) -> AppflowFlowDestinationFlowConfigEl {
-        AppflowFlowDestinationFlowConfigEl {
+impl BuildAppflowFlow_DestinationFlowConfig {
+    pub fn build(self) -> AppflowFlow_DestinationFlowConfig {
+        AppflowFlow_DestinationFlowConfig {
             api_version: core::default::Default::default(),
             connector_profile_name: core::default::Default::default(),
             connector_type: self.connector_type,
@@ -4469,21 +3789,23 @@ impl BuildAppflowFlowDestinationFlowConfigEl {
     }
 }
 
-pub struct AppflowFlowDestinationFlowConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_DestinationFlowConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowDestinationFlowConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlowDestinationFlowConfigElRef {
-        AppflowFlowDestinationFlowConfigElRef {
+impl terrars::Ref for AppflowFlow_DestinationFlowConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlow_DestinationFlowConfigRef {
+        AppflowFlow_DestinationFlowConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowDestinationFlowConfigElRef {
+impl AppflowFlow_DestinationFlowConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4506,30 +3828,22 @@ impl AppflowFlowDestinationFlowConfigElRef {
     #[doc = "Get a reference to the value of field `destination_connector_properties` after provisioning.\n"]
     pub fn destination_connector_properties(
         &self,
-    ) -> terrars::ListRef<AppflowFlowDestinationFlowConfigElDestinationConnectorPropertiesElRef> {
+    ) -> terrars::ListRef<AppflowFlow_DestinationFlowConfig_DestinationConnectorPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_connector_properties", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElIncrementalPullConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    datetime_type_field_name: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct AppflowFlow_MetadataCatalogConfig_GlueDataCatalog {
+    database_name: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+    table_prefix: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElIncrementalPullConfigEl {
-    #[doc = "Set the field `datetime_type_field_name`.\n"]
-    pub fn set_datetime_type_field_name(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.datetime_type_field_name = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl AppflowFlow_MetadataCatalogConfig_GlueDataCatalog { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElIncrementalPullConfigEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElIncrementalPullConfigEl>;
+impl terrars::ToListMappable for AppflowFlow_MetadataCatalogConfig_GlueDataCatalog {
+    type O = terrars::BlockAssignable<AppflowFlow_MetadataCatalogConfig_GlueDataCatalog>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4540,34 +3854,204 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElIncrementalPullCon
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElIncrementalPullConfigEl {}
+pub struct BuildAppflowFlow_MetadataCatalogConfig_GlueDataCatalog {
+    #[doc = ""]
+    pub database_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub table_prefix: terrars::PrimField<std::string::String>,
+}
 
-impl BuildAppflowFlowSourceFlowConfigElIncrementalPullConfigEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElIncrementalPullConfigEl {
-        AppflowFlowSourceFlowConfigElIncrementalPullConfigEl {
-            datetime_type_field_name: core::default::Default::default(),
+impl BuildAppflowFlow_MetadataCatalogConfig_GlueDataCatalog {
+    pub fn build(self) -> AppflowFlow_MetadataCatalogConfig_GlueDataCatalog {
+        AppflowFlow_MetadataCatalogConfig_GlueDataCatalog {
+            database_name: self.database_name,
+            role_arn: self.role_arn,
+            table_prefix: self.table_prefix,
         }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElIncrementalPullConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_MetadataCatalogConfig_GlueDataCatalogRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElIncrementalPullConfigElRef {
+impl terrars::Ref for AppflowFlow_MetadataCatalogConfig_GlueDataCatalogRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElIncrementalPullConfigElRef {
-        AppflowFlowSourceFlowConfigElIncrementalPullConfigElRef {
+    ) -> AppflowFlow_MetadataCatalogConfig_GlueDataCatalogRef {
+        AppflowFlow_MetadataCatalogConfig_GlueDataCatalogRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElIncrementalPullConfigElRef {
+impl AppflowFlow_MetadataCatalogConfig_GlueDataCatalogRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `table_prefix` after provisioning.\n"]
+    pub fn table_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_prefix", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppflowFlow_MetadataCatalogConfigDynamic {
+    glue_data_catalog: std::option::Option<terrars::DynamicBlock<AppflowFlow_MetadataCatalogConfig_GlueDataCatalog>>,
+}
+
+#[derive(Serialize)]
+pub struct AppflowFlow_MetadataCatalogConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    glue_data_catalog: std::option::Option<std::vec::Vec<AppflowFlow_MetadataCatalogConfig_GlueDataCatalog>>,
+    dynamic: AppflowFlow_MetadataCatalogConfigDynamic,
+}
+
+impl AppflowFlow_MetadataCatalogConfig {
+    #[doc = "Set the field `glue_data_catalog`.\n"]
+    pub fn set_glue_data_catalog(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_MetadataCatalogConfig_GlueDataCatalog>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.glue_data_catalog = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.glue_data_catalog = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppflowFlow_MetadataCatalogConfig {
+    type O = terrars::BlockAssignable<AppflowFlow_MetadataCatalogConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppflowFlow_MetadataCatalogConfig {}
+
+impl BuildAppflowFlow_MetadataCatalogConfig {
+    pub fn build(self) -> AppflowFlow_MetadataCatalogConfig {
+        AppflowFlow_MetadataCatalogConfig {
+            glue_data_catalog: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppflowFlow_MetadataCatalogConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppflowFlow_MetadataCatalogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlow_MetadataCatalogConfigRef {
+        AppflowFlow_MetadataCatalogConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppflowFlow_MetadataCatalogConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `glue_data_catalog` after provisioning.\n"]
+    pub fn glue_data_catalog(&self) -> terrars::ListRef<AppflowFlow_MetadataCatalogConfig_GlueDataCatalogRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.glue_data_catalog", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppflowFlow_SourceFlowConfig_IncrementalPullConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    datetime_type_field_name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AppflowFlow_SourceFlowConfig_IncrementalPullConfig {
+    #[doc = "Set the field `datetime_type_field_name`.\n"]
+    pub fn set_datetime_type_field_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.datetime_type_field_name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_IncrementalPullConfig {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_IncrementalPullConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppflowFlow_SourceFlowConfig_IncrementalPullConfig {}
+
+impl BuildAppflowFlow_SourceFlowConfig_IncrementalPullConfig {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_IncrementalPullConfig {
+        AppflowFlow_SourceFlowConfig_IncrementalPullConfig {
+            datetime_type_field_name: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_IncrementalPullConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_IncrementalPullConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppflowFlow_SourceFlowConfig_IncrementalPullConfigRef {
+        AppflowFlow_SourceFlowConfig_IncrementalPullConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppflowFlow_SourceFlowConfig_IncrementalPullConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4579,14 +4063,14 @@ impl AppflowFlowSourceFlowConfigElIncrementalPullConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4597,35 +4081,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_AmplitudeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_AmplitudeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_AmplitudeRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_AmplitudeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_AmplitudeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4637,13 +4123,13 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     entity_name: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector {
     #[doc = "Set the field `custom_properties`.\n"]
     pub fn set_custom_properties(
         mut self,
@@ -4654,8 +4140,8 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4666,38 +4152,40 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector {
     #[doc = ""]
     pub entity_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl {
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector {
             custom_properties: core::default::Default::default(),
             entity_name: self.entity_name,
         }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnectorRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4714,14 +4202,14 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorElRe
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4732,35 +4220,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DatadogRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DatadogRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DatadogRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DatadogRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DatadogRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4772,14 +4262,14 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4790,35 +4280,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DynatraceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DynatraceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DynatraceRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DynatraceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DynatraceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4830,14 +4322,14 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4848,35 +4340,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalyticsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalyticsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalyticsRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalyticsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalyticsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4888,14 +4382,14 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsElRe
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4906,35 +4400,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexusRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexusRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4946,14 +4442,14 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4964,35 +4460,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_MarketoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_MarketoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_MarketoRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_MarketoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_MarketoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5004,12 +4502,12 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_input_file_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig {
     #[doc = "Set the field `s3_input_file_type`.\n"]
     pub fn set_s3_input_file_type(
         mut self,
@@ -5020,9 +4518,8 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatCo
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl {
-    type O =
-        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5033,34 +4530,36 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl {}
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig {}
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl {
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig {
             s3_input_file_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfigRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5072,33 +4571,24 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatCo
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElDynamic {
+struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3Dynamic {
     s3_input_format_config: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3 {
     bucket_name: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    bucket_prefix: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_input_format_config: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl>>,
-    dynamic: AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElDynamic,
+    ::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig>>,
+    dynamic: AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3Dynamic,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El {
-    #[doc = "Set the field `bucket_prefix`.\n"]
-    pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3 {
     #[doc = "Set the field `s3_input_format_config`.\n"]
     pub fn set_s3_input_format_config(
         mut self,
@@ -5110,7 +4600,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigEl,
+                            AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfig,
                         >,
                     >,
     ) -> Self {
@@ -5126,8 +4616,8 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3 {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5138,40 +4628,44 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3 {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub bucket_prefix: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El {
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3 {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3 {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3 {
             bucket_name: self.bucket_name,
-            bucket_prefix: core::default::Default::default(),
+            bucket_prefix: self.bucket_prefix,
             s3_input_format_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3Ref {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3Ref {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5189,13 +4683,15 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElRef {
     #[doc = "Get a reference to the value of field `s3_input_format_config` after provisioning.\n"]
     pub fn s3_input_format_config(
         &self,
-    ) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElS3InputFormatConfigElRef> {
+    ) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3_S3InputFormatConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_input_format_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_transfer_api: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_dynamic_field_update: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5203,7 +4699,13 @@ pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl 
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce {
+    #[doc = "Set the field `data_transfer_api`.\n"]
+    pub fn set_data_transfer_api(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_transfer_api = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enable_dynamic_field_update`.\n"]
     pub fn set_enable_dynamic_field_update(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_dynamic_field_update = std::option::Option::Some(v.into());
@@ -5217,8 +4719,8 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5229,14 +4731,15 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl {
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce {
+            data_transfer_api: core::default::Default::default(),
             enable_dynamic_field_update: core::default::Default::default(),
             include_deleted_records: core::default::Default::default(),
             object: self.object,
@@ -5244,26 +4747,33 @@ impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl {
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SalesforceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SalesforceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SalesforceRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SalesforceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SalesforceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `data_transfer_api` after provisioning.\n"]
+    pub fn data_transfer_api(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_transfer_api", self.base))
     }
 
     #[doc = "Get a reference to the value of field `enable_dynamic_field_update` after provisioning.\n"]
@@ -5283,14 +4793,15 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl {
-    object: terrars::PrimField<std::string::String>,
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig {
+    max_page_size: terrars::PrimField<f64>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig {
+    type O =
+        terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5301,35 +4812,314 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig {
     #[doc = ""]
-    pub object: terrars::PrimField<std::string::String>,
+    pub max_page_size: terrars::PrimField<f64>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig {
+            max_page_size: self.max_page_size,
+        }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfigRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_page_size` after provisioning.\n"]
+    pub fn max_page_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_page_size", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig {
+    max_page_size: terrars::PrimField<f64>,
+}
+
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig { }
+
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig {
+    type O =
+        terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig {
+    #[doc = ""]
+    pub max_page_size: terrars::PrimField<f64>,
+}
+
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig {
+            max_page_size: self.max_page_size,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfigRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_page_size` after provisioning.\n"]
+    pub fn max_page_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_page_size", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoDataDynamic {
+    pagination_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig>>,
+    parallelism_config: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData {
+    object_path: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pagination_config: std
+    ::option
+    ::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parallelism_config: std
+    ::option
+    ::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig>>,
+    dynamic: AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoDataDynamic,
+}
+
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData {
+    #[doc = "Set the field `pagination_config`.\n"]
+    pub fn set_pagination_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.pagination_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.pagination_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `parallelism_config`.\n"]
+    pub fn set_parallelism_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfig,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.parallelism_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.parallelism_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData {
+    #[doc = ""]
+    pub object_path: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData {
+            object_path: self.object_path,
+            pagination_config: core::default::Default::default(),
+            parallelism_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoDataRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoDataRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoDataRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoDataRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoDataRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `object_path` after provisioning.\n"]
+    pub fn object_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_path", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `pagination_config` after provisioning.\n"]
+    pub fn pagination_config(
+        &self,
+    ) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_PaginationConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pagination_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `parallelism_config` after provisioning.\n"]
+    pub fn parallelism_config(
+        &self,
+    ) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData_ParallelismConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.parallelism_config", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow {
+    object: terrars::PrimField<std::string::String>,
+}
+
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow { }
+
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow {
+    #[doc = ""]
+    pub object: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow { object: self.object }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNowRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNowRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNowRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNowRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5341,14 +5131,14 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5359,35 +5149,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SingularRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SingularRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SingularRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SingularRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SingularRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5399,14 +5191,14 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5417,35 +5209,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SlackRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SlackRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SlackRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SlackRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SlackRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5457,14 +5251,14 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5475,35 +5269,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_TrendmicroRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_TrendmicroRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_TrendmicroRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_TrendmicroRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_TrendmicroRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5515,65 +5311,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl {
-    object: terrars::PrimField<std::string::String>,
-}
-
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl { }
-
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl {
-    #[doc = ""]
-    pub object: terrars::PrimField<std::string::String>,
-}
-
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl { object: self.object }
-    }
-}
-
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `object` after provisioning.\n"]
-    pub fn object(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     document_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -5585,7 +5323,7 @@ pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva {
     #[doc = "Set the field `document_type`.\n"]
     pub fn set_document_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.document_type = std::option::Option::Some(v.into());
@@ -5611,8 +5349,8 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5623,14 +5361,14 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva {
             document_type: core::default::Default::default(),
             include_all_versions: core::default::Default::default(),
             include_renditions: core::default::Default::default(),
@@ -5640,24 +5378,26 @@ impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl {
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_VeevaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_VeevaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_VeevaRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_VeevaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_VeevaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5689,14 +5429,14 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk {
     object: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl { }
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk { }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5707,35 +5447,37 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl {
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk {
     #[doc = ""]
     pub object: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl { object: self.object }
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk { object: self.object }
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ZendeskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ZendeskRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ZendeskRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ZendeskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ZendeskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5747,97 +5489,93 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynamic {
+struct AppflowFlow_SourceFlowConfig_SourceConnectorPropertiesDynamic {
     amplitude: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude>>,
     custom_connector: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector>>,
     datadog: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog>>,
     dynatrace: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace>>,
     google_analytics: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics>>,
     infor_nexus: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus>>,
     marketo: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl>>,
-    s3: std::option::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo>>,
+    s3: std::option::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3>>,
     salesforce: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce>>,
     sapo_data: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData>>,
     service_now: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow>>,
     singular: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl>>,
-    slack: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular>>,
+    slack: std::option::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack>>,
     trendmicro: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl>>,
-    veeva: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro>>,
+    veeva: std::option::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva>>,
     zendesk: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk>>,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    amplitude: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl>>,
+    amplitude: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_connector: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    datadog: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl>>,
+    datadog: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dynatrace: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl>>,
+    dynatrace: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     google_analytics: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl>>,
+    ::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    infor_nexus: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl>>,
+    infor_nexus: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    marketo: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl>>,
+    marketo: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El>>,
+    s3: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    salesforce: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl>>,
+    salesforce: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sapo_data: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl>>,
+    sapo_data: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    service_now: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl>>,
+    service_now: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    singular: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl>>,
+    singular: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    slack: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl>>,
+    slack: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trendmicro: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl>>,
+    trendmicro: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    veeva: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl>>,
+    veeva: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    zendesk: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl>>,
-    dynamic: AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynamic,
+    zendesk: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk>>,
+    dynamic: AppflowFlow_SourceFlowConfig_SourceConnectorPropertiesDynamic,
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorProperties {
     #[doc = "Set the field `amplitude`.\n"]
     pub fn set_amplitude(
         mut self,
@@ -5847,7 +5585,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeEl>,
+                        terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Amplitude>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5871,7 +5609,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorEl>,
+                        ::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnector>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5893,9 +5631,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Datadog>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -5917,7 +5653,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceEl>,
+                        terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Dynatrace>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5941,7 +5677,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsEl>,
+                        ::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalytics>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5964,7 +5700,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusEl>,
+                        terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexus>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5986,9 +5722,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Marketo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6009,7 +5743,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3El>>,
+                    ::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6031,7 +5765,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceEl>,
+                        terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Salesforce>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6053,9 +5787,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoData>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6077,7 +5809,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowEl>,
+                        terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNow>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6099,9 +5831,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Singular>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6122,7 +5852,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackEl>>,
+                    ::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Slack>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6144,7 +5874,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroEl>,
+                        terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Trendmicro>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6166,7 +5896,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaEl>>,
+                    ::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Veeva>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6187,9 +5917,7 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_Zendesk>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6203,8 +5931,8 @@ impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig_SourceConnectorProperties {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6215,11 +5943,11 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigElSourceConnectorPro
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {}
+pub struct BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties {}
 
-impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
+impl BuildAppflowFlow_SourceFlowConfig_SourceConnectorProperties {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig_SourceConnectorProperties {
+        AppflowFlow_SourceFlowConfig_SourceConnectorProperties {
             amplitude: core::default::Default::default(),
             custom_connector: core::default::Default::default(),
             datadog: core::default::Default::default(),
@@ -6241,148 +5969,142 @@ impl BuildAppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl {
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfig_SourceConnectorPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfig_SourceConnectorPropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElRef {
-        AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElRef {
+    ) -> AppflowFlow_SourceFlowConfig_SourceConnectorPropertiesRef {
+        AppflowFlow_SourceFlowConfig_SourceConnectorPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElRef {
+impl AppflowFlow_SourceFlowConfig_SourceConnectorPropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `amplitude` after provisioning.\n"]
-    pub fn amplitude(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElAmplitudeElRef> {
+    pub fn amplitude(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_AmplitudeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.amplitude", self.base))
     }
 
     #[doc = "Get a reference to the value of field `custom_connector` after provisioning.\n"]
     pub fn custom_connector(
         &self,
-    ) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElCustomConnectorElRef> {
+    ) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_CustomConnectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_connector", self.base))
     }
 
     #[doc = "Get a reference to the value of field `datadog` after provisioning.\n"]
-    pub fn datadog(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDatadogElRef> {
+    pub fn datadog(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DatadogRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datadog", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dynatrace` after provisioning.\n"]
-    pub fn dynatrace(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElDynatraceElRef> {
+    pub fn dynatrace(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_DynatraceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dynatrace", self.base))
     }
 
     #[doc = "Get a reference to the value of field `google_analytics` after provisioning.\n"]
     pub fn google_analytics(
         &self,
-    ) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElGoogleAnalyticsElRef> {
+    ) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_GoogleAnalyticsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.google_analytics", self.base))
     }
 
     #[doc = "Get a reference to the value of field `infor_nexus` after provisioning.\n"]
-    pub fn infor_nexus(
-        &self,
-    ) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElInforNexusElRef> {
+    pub fn infor_nexus(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_InforNexusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.infor_nexus", self.base))
     }
 
     #[doc = "Get a reference to the value of field `marketo` after provisioning.\n"]
-    pub fn marketo(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElMarketoElRef> {
+    pub fn marketo(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_MarketoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.marketo", self.base))
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 
     #[doc = "Get a reference to the value of field `salesforce` after provisioning.\n"]
-    pub fn salesforce(
-        &self,
-    ) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSalesforceElRef> {
+    pub fn salesforce(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SalesforceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.salesforce", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sapo_data` after provisioning.\n"]
-    pub fn sapo_data(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSapoDataElRef> {
+    pub fn sapo_data(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SapoDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sapo_data", self.base))
     }
 
     #[doc = "Get a reference to the value of field `service_now` after provisioning.\n"]
-    pub fn service_now(
-        &self,
-    ) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElServiceNowElRef> {
+    pub fn service_now(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ServiceNowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_now", self.base))
     }
 
     #[doc = "Get a reference to the value of field `singular` after provisioning.\n"]
-    pub fn singular(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSingularElRef> {
+    pub fn singular(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SingularRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.singular", self.base))
     }
 
     #[doc = "Get a reference to the value of field `slack` after provisioning.\n"]
-    pub fn slack(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElSlackElRef> {
+    pub fn slack(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_SlackRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.slack", self.base))
     }
 
     #[doc = "Get a reference to the value of field `trendmicro` after provisioning.\n"]
-    pub fn trendmicro(
-        &self,
-    ) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElTrendmicroElRef> {
+    pub fn trendmicro(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_TrendmicroRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trendmicro", self.base))
     }
 
     #[doc = "Get a reference to the value of field `veeva` after provisioning.\n"]
-    pub fn veeva(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElVeevaElRef> {
+    pub fn veeva(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_VeevaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.veeva", self.base))
     }
 
     #[doc = "Get a reference to the value of field `zendesk` after provisioning.\n"]
-    pub fn zendesk(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElZendeskElRef> {
+    pub fn zendesk(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorProperties_ZendeskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zendesk", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowSourceFlowConfigElDynamic {
+struct AppflowFlow_SourceFlowConfigDynamic {
     incremental_pull_config: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElIncrementalPullConfigEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_IncrementalPullConfig>>,
     source_connector_properties: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl>>,
+    ::Option<terrars::DynamicBlock<AppflowFlow_SourceFlowConfig_SourceConnectorProperties>>,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowSourceFlowConfigEl {
+pub struct AppflowFlow_SourceFlowConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connector_profile_name: std::option::Option<terrars::PrimField<std::string::String>>,
     connector_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    incremental_pull_config: std::option::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElIncrementalPullConfigEl>>,
+    incremental_pull_config: std::option::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_IncrementalPullConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_connector_properties: std
     ::option
-    ::Option<std::vec::Vec<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl>>,
-    dynamic: AppflowFlowSourceFlowConfigElDynamic,
+    ::Option<std::vec::Vec<AppflowFlow_SourceFlowConfig_SourceConnectorProperties>>,
+    dynamic: AppflowFlow_SourceFlowConfigDynamic,
 }
 
-impl AppflowFlowSourceFlowConfigEl {
+impl AppflowFlow_SourceFlowConfig {
     #[doc = "Set the field `api_version`.\n"]
     pub fn set_api_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.api_version = std::option::Option::Some(v.into());
@@ -6401,7 +6123,7 @@ impl AppflowFlowSourceFlowConfigEl {
     #[doc = "Set the field `incremental_pull_config`.\n"]
     pub fn set_incremental_pull_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlowSourceFlowConfigElIncrementalPullConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_IncrementalPullConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6417,12 +6139,7 @@ impl AppflowFlowSourceFlowConfigEl {
     #[doc = "Set the field `source_connector_properties`.\n"]
     pub fn set_source_connector_properties(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_SourceFlowConfig_SourceConnectorProperties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6436,8 +6153,8 @@ impl AppflowFlowSourceFlowConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowSourceFlowConfigEl {
-    type O = terrars::BlockAssignable<AppflowFlowSourceFlowConfigEl>;
+impl terrars::ToListMappable for AppflowFlow_SourceFlowConfig {
+    type O = terrars::BlockAssignable<AppflowFlow_SourceFlowConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6448,14 +6165,14 @@ impl terrars::ToListMappable for AppflowFlowSourceFlowConfigEl {
     }
 }
 
-pub struct BuildAppflowFlowSourceFlowConfigEl {
+pub struct BuildAppflowFlow_SourceFlowConfig {
     #[doc = ""]
     pub connector_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowSourceFlowConfigEl {
-    pub fn build(self) -> AppflowFlowSourceFlowConfigEl {
-        AppflowFlowSourceFlowConfigEl {
+impl BuildAppflowFlow_SourceFlowConfig {
+    pub fn build(self) -> AppflowFlow_SourceFlowConfig {
+        AppflowFlow_SourceFlowConfig {
             api_version: core::default::Default::default(),
             connector_profile_name: core::default::Default::default(),
             connector_type: self.connector_type,
@@ -6466,21 +6183,23 @@ impl BuildAppflowFlowSourceFlowConfigEl {
     }
 }
 
-pub struct AppflowFlowSourceFlowConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_SourceFlowConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowSourceFlowConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlowSourceFlowConfigElRef {
-        AppflowFlowSourceFlowConfigElRef {
+impl terrars::Ref for AppflowFlow_SourceFlowConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlow_SourceFlowConfigRef {
+        AppflowFlow_SourceFlowConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowSourceFlowConfigElRef {
+impl AppflowFlow_SourceFlowConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6501,20 +6220,20 @@ impl AppflowFlowSourceFlowConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `incremental_pull_config` after provisioning.\n"]
-    pub fn incremental_pull_config(&self) -> terrars::ListRef<AppflowFlowSourceFlowConfigElIncrementalPullConfigElRef> {
+    pub fn incremental_pull_config(&self) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_IncrementalPullConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.incremental_pull_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source_connector_properties` after provisioning.\n"]
     pub fn source_connector_properties(
         &self,
-    ) -> terrars::ListRef<AppflowFlowSourceFlowConfigElSourceConnectorPropertiesElRef> {
+    ) -> terrars::ListRef<AppflowFlow_SourceFlowConfig_SourceConnectorPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_connector_properties", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowTaskElConnectorOperatorEl {
+pub struct AppflowFlow_Task_ConnectorOperator {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     amplitude: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6549,7 +6268,7 @@ pub struct AppflowFlowTaskElConnectorOperatorEl {
     zendesk: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppflowFlowTaskElConnectorOperatorEl {
+impl AppflowFlow_Task_ConnectorOperator {
     #[doc = "Set the field `amplitude`.\n"]
     pub fn set_amplitude(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.amplitude = std::option::Option::Some(v.into());
@@ -6647,8 +6366,8 @@ impl AppflowFlowTaskElConnectorOperatorEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowTaskElConnectorOperatorEl {
-    type O = terrars::BlockAssignable<AppflowFlowTaskElConnectorOperatorEl>;
+impl terrars::ToListMappable for AppflowFlow_Task_ConnectorOperator {
+    type O = terrars::BlockAssignable<AppflowFlow_Task_ConnectorOperator>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6659,11 +6378,11 @@ impl terrars::ToListMappable for AppflowFlowTaskElConnectorOperatorEl {
     }
 }
 
-pub struct BuildAppflowFlowTaskElConnectorOperatorEl {}
+pub struct BuildAppflowFlow_Task_ConnectorOperator {}
 
-impl BuildAppflowFlowTaskElConnectorOperatorEl {
-    pub fn build(self) -> AppflowFlowTaskElConnectorOperatorEl {
-        AppflowFlowTaskElConnectorOperatorEl {
+impl BuildAppflowFlow_Task_ConnectorOperator {
+    pub fn build(self) -> AppflowFlow_Task_ConnectorOperator {
+        AppflowFlow_Task_ConnectorOperator {
             amplitude: core::default::Default::default(),
             custom_connector: core::default::Default::default(),
             datadog: core::default::Default::default(),
@@ -6684,21 +6403,23 @@ impl BuildAppflowFlowTaskElConnectorOperatorEl {
     }
 }
 
-pub struct AppflowFlowTaskElConnectorOperatorElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_Task_ConnectorOperatorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowTaskElConnectorOperatorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlowTaskElConnectorOperatorElRef {
-        AppflowFlowTaskElConnectorOperatorElRef {
+impl terrars::Ref for AppflowFlow_Task_ConnectorOperatorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlow_Task_ConnectorOperatorRef {
+        AppflowFlow_Task_ConnectorOperatorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowTaskElConnectorOperatorElRef {
+impl AppflowFlow_Task_ConnectorOperatorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6785,27 +6506,37 @@ impl AppflowFlowTaskElConnectorOperatorElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowTaskElDynamic {
-    connector_operator: std::option::Option<terrars::DynamicBlock<AppflowFlowTaskElConnectorOperatorEl>>,
+struct AppflowFlow_TaskDynamic {
+    connector_operator: std::option::Option<terrars::DynamicBlock<AppflowFlow_Task_ConnectorOperator>>,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowTaskEl {
+pub struct AppflowFlow_Task {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_field: std::option::Option<terrars::PrimField<std::string::String>>,
-    source_fields: terrars::ListField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_fields: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     task_properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     task_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    connector_operator: std::option::Option<std::vec::Vec<AppflowFlowTaskElConnectorOperatorEl>>,
-    dynamic: AppflowFlowTaskElDynamic,
+    connector_operator: std::option::Option<std::vec::Vec<AppflowFlow_Task_ConnectorOperator>>,
+    dynamic: AppflowFlow_TaskDynamic,
 }
 
-impl AppflowFlowTaskEl {
+impl AppflowFlow_Task {
     #[doc = "Set the field `destination_field`.\n"]
     pub fn set_destination_field(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.destination_field = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `source_fields`.\n"]
+    pub fn set_source_fields(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.source_fields = std::option::Option::Some(v.into());
         self
     }
 
@@ -6821,7 +6552,7 @@ impl AppflowFlowTaskEl {
     #[doc = "Set the field `connector_operator`.\n"]
     pub fn set_connector_operator(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlowTaskElConnectorOperatorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_Task_ConnectorOperator>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -6835,8 +6566,8 @@ impl AppflowFlowTaskEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowTaskEl {
-    type O = terrars::BlockAssignable<AppflowFlowTaskEl>;
+impl terrars::ToListMappable for AppflowFlow_Task {
+    type O = terrars::BlockAssignable<AppflowFlow_Task>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6847,18 +6578,16 @@ impl terrars::ToListMappable for AppflowFlowTaskEl {
     }
 }
 
-pub struct BuildAppflowFlowTaskEl {
-    #[doc = ""]
-    pub source_fields: terrars::ListField<terrars::PrimField<std::string::String>>,
+pub struct BuildAppflowFlow_Task {
     #[doc = ""]
     pub task_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowTaskEl {
-    pub fn build(self) -> AppflowFlowTaskEl {
-        AppflowFlowTaskEl {
+impl BuildAppflowFlow_Task {
+    pub fn build(self) -> AppflowFlow_Task {
+        AppflowFlow_Task {
             destination_field: core::default::Default::default(),
-            source_fields: self.source_fields,
+            source_fields: core::default::Default::default(),
             task_properties: core::default::Default::default(),
             task_type: self.task_type,
             connector_operator: core::default::Default::default(),
@@ -6867,21 +6596,23 @@ impl BuildAppflowFlowTaskEl {
     }
 }
 
-pub struct AppflowFlowTaskElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_TaskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowTaskElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlowTaskElRef {
-        AppflowFlowTaskElRef {
+impl terrars::Ref for AppflowFlow_TaskRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlow_TaskRef {
+        AppflowFlow_TaskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowTaskElRef {
+impl AppflowFlow_TaskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6907,13 +6638,13 @@ impl AppflowFlowTaskElRef {
     }
 
     #[doc = "Get a reference to the value of field `connector_operator` after provisioning.\n"]
-    pub fn connector_operator(&self) -> terrars::ListRef<AppflowFlowTaskElConnectorOperatorElRef> {
+    pub fn connector_operator(&self) -> terrars::ListRef<AppflowFlow_Task_ConnectorOperatorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connector_operator", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
+pub struct AppflowFlow_TriggerConfig_TriggerProperties_Scheduled {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_pull_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6929,7 +6660,7 @@ pub struct AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
     timezone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
+impl AppflowFlow_TriggerConfig_TriggerProperties_Scheduled {
     #[doc = "Set the field `data_pull_mode`.\n"]
     pub fn set_data_pull_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data_pull_mode = std::option::Option::Some(v.into());
@@ -6973,8 +6704,8 @@ impl AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
-    type O = terrars::BlockAssignable<AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl>;
+impl terrars::ToListMappable for AppflowFlow_TriggerConfig_TriggerProperties_Scheduled {
+    type O = terrars::BlockAssignable<AppflowFlow_TriggerConfig_TriggerProperties_Scheduled>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6985,14 +6716,14 @@ impl terrars::ToListMappable for AppflowFlowTriggerConfigElTriggerPropertiesElSc
     }
 }
 
-pub struct BuildAppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
+pub struct BuildAppflowFlow_TriggerConfig_TriggerProperties_Scheduled {
     #[doc = ""]
     pub schedule_expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
-    pub fn build(self) -> AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
-        AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
+impl BuildAppflowFlow_TriggerConfig_TriggerProperties_Scheduled {
+    pub fn build(self) -> AppflowFlow_TriggerConfig_TriggerProperties_Scheduled {
+        AppflowFlow_TriggerConfig_TriggerProperties_Scheduled {
             data_pull_mode: core::default::Default::default(),
             first_execution_from: core::default::Default::default(),
             schedule_end_time: core::default::Default::default(),
@@ -7004,24 +6735,26 @@ impl BuildAppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl {
     }
 }
 
-pub struct AppflowFlowTriggerConfigElTriggerPropertiesElScheduledElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_TriggerConfig_TriggerProperties_ScheduledRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowTriggerConfigElTriggerPropertiesElScheduledElRef {
+impl terrars::Ref for AppflowFlow_TriggerConfig_TriggerProperties_ScheduledRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowTriggerConfigElTriggerPropertiesElScheduledElRef {
-        AppflowFlowTriggerConfigElTriggerPropertiesElScheduledElRef {
+    ) -> AppflowFlow_TriggerConfig_TriggerProperties_ScheduledRef {
+        AppflowFlow_TriggerConfig_TriggerProperties_ScheduledRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowTriggerConfigElTriggerPropertiesElScheduledElRef {
+impl AppflowFlow_TriggerConfig_TriggerProperties_ScheduledRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7063,27 +6796,22 @@ impl AppflowFlowTriggerConfigElTriggerPropertiesElScheduledElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowTriggerConfigElTriggerPropertiesElDynamic {
-    scheduled: std::option::Option<terrars::DynamicBlock<AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl>>,
+struct AppflowFlow_TriggerConfig_TriggerPropertiesDynamic {
+    scheduled: std::option::Option<terrars::DynamicBlock<AppflowFlow_TriggerConfig_TriggerProperties_Scheduled>>,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowTriggerConfigElTriggerPropertiesEl {
+pub struct AppflowFlow_TriggerConfig_TriggerProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scheduled: std::option::Option<std::vec::Vec<AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl>>,
-    dynamic: AppflowFlowTriggerConfigElTriggerPropertiesElDynamic,
+    scheduled: std::option::Option<std::vec::Vec<AppflowFlow_TriggerConfig_TriggerProperties_Scheduled>>,
+    dynamic: AppflowFlow_TriggerConfig_TriggerPropertiesDynamic,
 }
 
-impl AppflowFlowTriggerConfigElTriggerPropertiesEl {
+impl AppflowFlow_TriggerConfig_TriggerProperties {
     #[doc = "Set the field `scheduled`.\n"]
     pub fn set_scheduled(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<AppflowFlowTriggerConfigElTriggerPropertiesElScheduledEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_TriggerConfig_TriggerProperties_Scheduled>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7097,8 +6825,8 @@ impl AppflowFlowTriggerConfigElTriggerPropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowTriggerConfigElTriggerPropertiesEl {
-    type O = terrars::BlockAssignable<AppflowFlowTriggerConfigElTriggerPropertiesEl>;
+impl terrars::ToListMappable for AppflowFlow_TriggerConfig_TriggerProperties {
+    type O = terrars::BlockAssignable<AppflowFlow_TriggerConfig_TriggerProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7109,63 +6837,65 @@ impl terrars::ToListMappable for AppflowFlowTriggerConfigElTriggerPropertiesEl {
     }
 }
 
-pub struct BuildAppflowFlowTriggerConfigElTriggerPropertiesEl {}
+pub struct BuildAppflowFlow_TriggerConfig_TriggerProperties {}
 
-impl BuildAppflowFlowTriggerConfigElTriggerPropertiesEl {
-    pub fn build(self) -> AppflowFlowTriggerConfigElTriggerPropertiesEl {
-        AppflowFlowTriggerConfigElTriggerPropertiesEl {
+impl BuildAppflowFlow_TriggerConfig_TriggerProperties {
+    pub fn build(self) -> AppflowFlow_TriggerConfig_TriggerProperties {
+        AppflowFlow_TriggerConfig_TriggerProperties {
             scheduled: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowFlowTriggerConfigElTriggerPropertiesElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_TriggerConfig_TriggerPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowTriggerConfigElTriggerPropertiesElRef {
+impl terrars::Ref for AppflowFlow_TriggerConfig_TriggerPropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowFlowTriggerConfigElTriggerPropertiesElRef {
-        AppflowFlowTriggerConfigElTriggerPropertiesElRef {
+    ) -> AppflowFlow_TriggerConfig_TriggerPropertiesRef {
+        AppflowFlow_TriggerConfig_TriggerPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowTriggerConfigElTriggerPropertiesElRef {
+impl AppflowFlow_TriggerConfig_TriggerPropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `scheduled` after provisioning.\n"]
-    pub fn scheduled(&self) -> terrars::ListRef<AppflowFlowTriggerConfigElTriggerPropertiesElScheduledElRef> {
+    pub fn scheduled(&self) -> terrars::ListRef<AppflowFlow_TriggerConfig_TriggerProperties_ScheduledRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scheduled", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowFlowTriggerConfigElDynamic {
-    trigger_properties: std::option::Option<terrars::DynamicBlock<AppflowFlowTriggerConfigElTriggerPropertiesEl>>,
+struct AppflowFlow_TriggerConfigDynamic {
+    trigger_properties: std::option::Option<terrars::DynamicBlock<AppflowFlow_TriggerConfig_TriggerProperties>>,
 }
 
 #[derive(Serialize)]
-pub struct AppflowFlowTriggerConfigEl {
+pub struct AppflowFlow_TriggerConfig {
     trigger_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trigger_properties: std::option::Option<std::vec::Vec<AppflowFlowTriggerConfigElTriggerPropertiesEl>>,
-    dynamic: AppflowFlowTriggerConfigElDynamic,
+    trigger_properties: std::option::Option<std::vec::Vec<AppflowFlow_TriggerConfig_TriggerProperties>>,
+    dynamic: AppflowFlow_TriggerConfigDynamic,
 }
 
-impl AppflowFlowTriggerConfigEl {
+impl AppflowFlow_TriggerConfig {
     #[doc = "Set the field `trigger_properties`.\n"]
     pub fn set_trigger_properties(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlowTriggerConfigElTriggerPropertiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowFlow_TriggerConfig_TriggerProperties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -7179,8 +6909,8 @@ impl AppflowFlowTriggerConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowFlowTriggerConfigEl {
-    type O = terrars::BlockAssignable<AppflowFlowTriggerConfigEl>;
+impl terrars::ToListMappable for AppflowFlow_TriggerConfig {
+    type O = terrars::BlockAssignable<AppflowFlow_TriggerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7191,14 +6921,14 @@ impl terrars::ToListMappable for AppflowFlowTriggerConfigEl {
     }
 }
 
-pub struct BuildAppflowFlowTriggerConfigEl {
+pub struct BuildAppflowFlow_TriggerConfig {
     #[doc = ""]
     pub trigger_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowFlowTriggerConfigEl {
-    pub fn build(self) -> AppflowFlowTriggerConfigEl {
-        AppflowFlowTriggerConfigEl {
+impl BuildAppflowFlow_TriggerConfig {
+    pub fn build(self) -> AppflowFlow_TriggerConfig {
+        AppflowFlow_TriggerConfig {
             trigger_type: self.trigger_type,
             trigger_properties: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -7206,21 +6936,23 @@ impl BuildAppflowFlowTriggerConfigEl {
     }
 }
 
-pub struct AppflowFlowTriggerConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowFlow_TriggerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowFlowTriggerConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlowTriggerConfigElRef {
-        AppflowFlowTriggerConfigElRef {
+impl terrars::Ref for AppflowFlow_TriggerConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppflowFlow_TriggerConfigRef {
+        AppflowFlow_TriggerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowFlowTriggerConfigElRef {
+impl AppflowFlow_TriggerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7231,15 +6963,7 @@ impl AppflowFlowTriggerConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `trigger_properties` after provisioning.\n"]
-    pub fn trigger_properties(&self) -> terrars::ListRef<AppflowFlowTriggerConfigElTriggerPropertiesElRef> {
+    pub fn trigger_properties(&self) -> terrars::ListRef<AppflowFlow_TriggerConfig_TriggerPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trigger_properties", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppflowFlowDynamic {
-    destination_flow_config: std::option::Option<terrars::DynamicBlock<AppflowFlowDestinationFlowConfigEl>>,
-    source_flow_config: std::option::Option<terrars::DynamicBlock<AppflowFlowSourceFlowConfigEl>>,
-    task: std::option::Option<terrars::DynamicBlock<AppflowFlowTaskEl>>,
-    trigger_config: std::option::Option<terrars::DynamicBlock<AppflowFlowTriggerConfigEl>>,
 }

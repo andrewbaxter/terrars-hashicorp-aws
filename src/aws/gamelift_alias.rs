@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GameliftAliasData {
+struct GameliftAliasData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct GameliftAliasData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    routing_strategy: std::option::Option<std::vec::Vec<GameliftAliasRoutingStrategyEl>>,
+    routing_strategy: std::option::Option<std::vec::Vec<GameliftAlias_RoutingStrategy>>,
     dynamic: GameliftAliasDynamic,
 }
 
 struct GameliftAlias_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GameliftAliasData>,
+    data: std::cell::RefCell<GameliftAliasData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl GameliftAlias {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl GameliftAlias {
     #[doc = "Set the field `routing_strategy`.\n"]
     pub fn set_routing_strategy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftAliasRoutingStrategyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftAlias_RoutingStrategy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -201,6 +212,12 @@ impl GameliftAlias {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -212,7 +229,7 @@ impl GameliftAlias {
     }
 
     #[doc = "Get a reference to the value of field `routing_strategy` after provisioning.\n"]
-    pub fn routing_strategy(&self) -> terrars::ListRef<GameliftAliasRoutingStrategyElRef> {
+    pub fn routing_strategy(&self) -> terrars::ListRef<GameliftAlias_RoutingStrategyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routing_strategy", self.extract_ref()))
     }
 }
@@ -259,7 +276,7 @@ impl BuildGameliftAlias {
         let out = GameliftAlias(std::rc::Rc::new(GameliftAlias_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GameliftAliasData {
+            data: std::cell::RefCell::new(GameliftAliasData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -268,6 +285,7 @@ impl BuildGameliftAlias {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 routing_strategy: core::default::Default::default(),
@@ -322,6 +340,12 @@ impl GameliftAliasRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -333,13 +357,18 @@ impl GameliftAliasRef {
     }
 
     #[doc = "Get a reference to the value of field `routing_strategy` after provisioning.\n"]
-    pub fn routing_strategy(&self) -> terrars::ListRef<GameliftAliasRoutingStrategyElRef> {
+    pub fn routing_strategy(&self) -> terrars::ListRef<GameliftAlias_RoutingStrategyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routing_strategy", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GameliftAliasDynamic {
+    routing_strategy: std::option::Option<terrars::DynamicBlock<GameliftAlias_RoutingStrategy>>,
+}
+
 #[derive(Serialize)]
-pub struct GameliftAliasRoutingStrategyEl {
+pub struct GameliftAlias_RoutingStrategy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fleet_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -348,7 +377,7 @@ pub struct GameliftAliasRoutingStrategyEl {
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl GameliftAliasRoutingStrategyEl {
+impl GameliftAlias_RoutingStrategy {
     #[doc = "Set the field `fleet_id`.\n"]
     pub fn set_fleet_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.fleet_id = std::option::Option::Some(v.into());
@@ -362,8 +391,8 @@ impl GameliftAliasRoutingStrategyEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftAliasRoutingStrategyEl {
-    type O = terrars::BlockAssignable<GameliftAliasRoutingStrategyEl>;
+impl terrars::ToListMappable for GameliftAlias_RoutingStrategy {
+    type O = terrars::BlockAssignable<GameliftAlias_RoutingStrategy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -374,14 +403,14 @@ impl terrars::ToListMappable for GameliftAliasRoutingStrategyEl {
     }
 }
 
-pub struct BuildGameliftAliasRoutingStrategyEl {
+pub struct BuildGameliftAlias_RoutingStrategy {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGameliftAliasRoutingStrategyEl {
-    pub fn build(self) -> GameliftAliasRoutingStrategyEl {
-        GameliftAliasRoutingStrategyEl {
+impl BuildGameliftAlias_RoutingStrategy {
+    pub fn build(self) -> GameliftAlias_RoutingStrategy {
+        GameliftAlias_RoutingStrategy {
             fleet_id: core::default::Default::default(),
             message: core::default::Default::default(),
             type_: self.type_,
@@ -389,21 +418,23 @@ impl BuildGameliftAliasRoutingStrategyEl {
     }
 }
 
-pub struct GameliftAliasRoutingStrategyElRef {
+#[allow(dead_code)]
+pub struct GameliftAlias_RoutingStrategyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftAliasRoutingStrategyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftAliasRoutingStrategyElRef {
-        GameliftAliasRoutingStrategyElRef {
+impl terrars::Ref for GameliftAlias_RoutingStrategyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftAlias_RoutingStrategyRef {
+        GameliftAlias_RoutingStrategyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftAliasRoutingStrategyElRef {
+impl GameliftAlias_RoutingStrategyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +453,4 @@ impl GameliftAliasRoutingStrategyElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GameliftAliasDynamic {
-    routing_strategy: std::option::Option<terrars::DynamicBlock<GameliftAliasRoutingStrategyEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataCloudcontrolapiResourceData {
+struct DataCloudcontrolapiResourceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,6 +22,8 @@ struct DataCloudcontrolapiResourceData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     identifier: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     type_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,7 +33,7 @@ struct DataCloudcontrolapiResourceData {
 struct DataCloudcontrolapiResource_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudcontrolapiResourceData>,
+    data: std::cell::RefCell<DataCloudcontrolapiResourceData_>,
 }
 
 #[derive(Clone)]
@@ -80,6 +84,13 @@ impl DataCloudcontrolapiResource {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `role_arn`.\n"]
     pub fn set_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().role_arn = std::option::Option::Some(v.into());
@@ -105,6 +116,12 @@ impl DataCloudcontrolapiResource {
     #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
     pub fn properties(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -167,13 +184,14 @@ impl BuildDataCloudcontrolapiResource {
         let out = DataCloudcontrolapiResource(std::rc::Rc::new(DataCloudcontrolapiResource_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudcontrolapiResourceData {
+            data: std::cell::RefCell::new(DataCloudcontrolapiResourceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 identifier: self.identifier,
+                region: core::default::Default::default(),
                 role_arn: core::default::Default::default(),
                 type_name: self.type_name,
                 type_version_id: core::default::Default::default(),
@@ -220,6 +238,12 @@ impl DataCloudcontrolapiResourceRef {
     #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
     pub fn properties(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]

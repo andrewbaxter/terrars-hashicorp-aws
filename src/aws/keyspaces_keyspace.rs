@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KeyspacesKeyspaceData {
+struct KeyspacesKeyspaceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,17 +24,22 @@ struct KeyspacesKeyspaceData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KeyspacesKeyspaceTimeoutsEl>,
+    replication_specification: std::option::Option<std::vec::Vec<KeyspacesKeyspace_ReplicationSpecification>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<KeyspacesKeyspace_Timeouts>,
+    dynamic: KeyspacesKeyspaceDynamic,
 }
 
 struct KeyspacesKeyspace_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KeyspacesKeyspaceData>,
+    data: std::cell::RefCell<KeyspacesKeyspaceData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +145,13 @@ impl KeyspacesKeyspace {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -156,8 +170,24 @@ impl KeyspacesKeyspace {
         self
     }
 
+    #[doc = "Set the field `replication_specification`.\n"]
+    pub fn set_replication_specification(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesKeyspace_ReplicationSpecification>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().replication_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.replication_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KeyspacesKeyspaceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KeyspacesKeyspace_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -177,6 +207,12 @@ impl KeyspacesKeyspace {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -187,9 +223,14 @@ impl KeyspacesKeyspace {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `replication_specification` after provisioning.\n"]
+    pub fn replication_specification(&self) -> terrars::ListRef<KeyspacesKeyspace_ReplicationSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.replication_specification", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KeyspacesKeyspaceTimeoutsElRef {
-        KeyspacesKeyspaceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KeyspacesKeyspace_TimeoutsRef {
+        KeyspacesKeyspace_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -235,7 +276,7 @@ impl BuildKeyspacesKeyspace {
         let out = KeyspacesKeyspace(std::rc::Rc::new(KeyspacesKeyspace_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KeyspacesKeyspaceData {
+            data: std::cell::RefCell::new(KeyspacesKeyspaceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -243,9 +284,12 @@ impl BuildKeyspacesKeyspace {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                replication_specification: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -291,6 +335,12 @@ impl KeyspacesKeyspaceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -301,21 +351,116 @@ impl KeyspacesKeyspaceRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `replication_specification` after provisioning.\n"]
+    pub fn replication_specification(&self) -> terrars::ListRef<KeyspacesKeyspace_ReplicationSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.replication_specification", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KeyspacesKeyspaceTimeoutsElRef {
-        KeyspacesKeyspaceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KeyspacesKeyspace_TimeoutsRef {
+        KeyspacesKeyspace_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct KeyspacesKeyspaceDynamic {
+    replication_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<KeyspacesKeyspace_ReplicationSpecification>>,
+}
+
+#[derive(Serialize)]
+pub struct KeyspacesKeyspace_ReplicationSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region_list: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replication_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl KeyspacesKeyspace_ReplicationSpecification {
+    #[doc = "Set the field `region_list`.\n"]
+    pub fn set_region_list(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.region_list = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `replication_strategy`.\n"]
+    pub fn set_replication_strategy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.replication_strategy = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for KeyspacesKeyspace_ReplicationSpecification {
+    type O = terrars::BlockAssignable<KeyspacesKeyspace_ReplicationSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKeyspacesKeyspace_ReplicationSpecification {}
+
+impl BuildKeyspacesKeyspace_ReplicationSpecification {
+    pub fn build(self) -> KeyspacesKeyspace_ReplicationSpecification {
+        KeyspacesKeyspace_ReplicationSpecification {
+            region_list: core::default::Default::default(),
+            replication_strategy: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KeyspacesKeyspace_ReplicationSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KeyspacesKeyspace_ReplicationSpecificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesKeyspace_ReplicationSpecificationRef {
+        KeyspacesKeyspace_ReplicationSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KeyspacesKeyspace_ReplicationSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `region_list` after provisioning.\n"]
+    pub fn region_list(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.region_list", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `replication_strategy` after provisioning.\n"]
+    pub fn replication_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_strategy", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesKeyspaceTimeoutsEl {
+pub struct KeyspacesKeyspace_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KeyspacesKeyspaceTimeoutsEl {
+impl KeyspacesKeyspace_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -329,8 +474,8 @@ impl KeyspacesKeyspaceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KeyspacesKeyspaceTimeoutsEl {
-    type O = terrars::BlockAssignable<KeyspacesKeyspaceTimeoutsEl>;
+impl terrars::ToListMappable for KeyspacesKeyspace_Timeouts {
+    type O = terrars::BlockAssignable<KeyspacesKeyspace_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -341,32 +486,34 @@ impl terrars::ToListMappable for KeyspacesKeyspaceTimeoutsEl {
     }
 }
 
-pub struct BuildKeyspacesKeyspaceTimeoutsEl {}
+pub struct BuildKeyspacesKeyspace_Timeouts {}
 
-impl BuildKeyspacesKeyspaceTimeoutsEl {
-    pub fn build(self) -> KeyspacesKeyspaceTimeoutsEl {
-        KeyspacesKeyspaceTimeoutsEl {
+impl BuildKeyspacesKeyspace_Timeouts {
+    pub fn build(self) -> KeyspacesKeyspace_Timeouts {
+        KeyspacesKeyspace_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct KeyspacesKeyspaceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KeyspacesKeyspace_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesKeyspaceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesKeyspaceTimeoutsElRef {
-        KeyspacesKeyspaceTimeoutsElRef {
+impl terrars::Ref for KeyspacesKeyspace_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesKeyspace_TimeoutsRef {
+        KeyspacesKeyspace_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesKeyspaceTimeoutsElRef {
+impl KeyspacesKeyspace_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

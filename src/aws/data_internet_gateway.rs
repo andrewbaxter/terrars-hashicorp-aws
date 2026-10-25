@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataInternetGatewayData {
+struct DataInternetGatewayData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,18 +23,20 @@ struct DataInternetGatewayData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     internet_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataInternetGatewayFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataInternetGateway_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataInternetGatewayTimeoutsEl>,
+    timeouts: std::option::Option<DataInternetGateway_Timeouts>,
     dynamic: DataInternetGatewayDynamic,
 }
 
 struct DataInternetGateway_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataInternetGatewayData>,
+    data: std::cell::RefCell<DataInternetGatewayData_>,
 }
 
 #[derive(Clone)]
@@ -89,6 +93,13 @@ impl DataInternetGateway {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -99,7 +110,7 @@ impl DataInternetGateway {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataInternetGatewayFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataInternetGateway_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -112,7 +123,7 @@ impl DataInternetGateway {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataInternetGatewayTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataInternetGateway_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -123,7 +134,7 @@ impl DataInternetGateway {
     }
 
     #[doc = "Get a reference to the value of field `attachments` after provisioning.\n"]
-    pub fn attachments(&self) -> terrars::ListRef<DataInternetGatewayAttachmentsElRef> {
+    pub fn attachments(&self) -> terrars::ListRef<DataInternetGateway_AttachmentsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attachments", self.extract_ref()))
     }
 
@@ -142,14 +153,20 @@ impl DataInternetGateway {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataInternetGatewayTimeoutsElRef {
-        DataInternetGatewayTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataInternetGateway_TimeoutsRef {
+        DataInternetGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -193,13 +210,14 @@ impl BuildDataInternetGateway {
         let out = DataInternetGateway(std::rc::Rc::new(DataInternetGateway_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataInternetGatewayData {
+            data: std::cell::RefCell::new(DataInternetGatewayData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 internet_gateway_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -240,7 +258,7 @@ impl DataInternetGatewayRef {
     }
 
     #[doc = "Get a reference to the value of field `attachments` after provisioning.\n"]
-    pub fn attachments(&self) -> terrars::ListRef<DataInternetGatewayAttachmentsElRef> {
+    pub fn attachments(&self) -> terrars::ListRef<DataInternetGateway_AttachmentsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attachments", self.extract_ref()))
     }
 
@@ -259,26 +277,37 @@ impl DataInternetGatewayRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataInternetGatewayTimeoutsElRef {
-        DataInternetGatewayTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataInternetGateway_TimeoutsRef {
+        DataInternetGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataInternetGatewayDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataInternetGateway_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataInternetGatewayAttachmentsEl {
+pub struct DataInternetGateway_Attachments {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataInternetGatewayAttachmentsEl {
+impl DataInternetGateway_Attachments {
     #[doc = "Set the field `state`.\n"]
     pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.state = std::option::Option::Some(v.into());
@@ -292,8 +321,8 @@ impl DataInternetGatewayAttachmentsEl {
     }
 }
 
-impl terrars::ToListMappable for DataInternetGatewayAttachmentsEl {
-    type O = terrars::BlockAssignable<DataInternetGatewayAttachmentsEl>;
+impl terrars::ToListMappable for DataInternetGateway_Attachments {
+    type O = terrars::BlockAssignable<DataInternetGateway_Attachments>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -304,32 +333,34 @@ impl terrars::ToListMappable for DataInternetGatewayAttachmentsEl {
     }
 }
 
-pub struct BuildDataInternetGatewayAttachmentsEl {}
+pub struct BuildDataInternetGateway_Attachments {}
 
-impl BuildDataInternetGatewayAttachmentsEl {
-    pub fn build(self) -> DataInternetGatewayAttachmentsEl {
-        DataInternetGatewayAttachmentsEl {
+impl BuildDataInternetGateway_Attachments {
+    pub fn build(self) -> DataInternetGateway_Attachments {
+        DataInternetGateway_Attachments {
             state: core::default::Default::default(),
             vpc_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataInternetGatewayAttachmentsElRef {
+#[allow(dead_code)]
+pub struct DataInternetGateway_AttachmentsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataInternetGatewayAttachmentsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInternetGatewayAttachmentsElRef {
-        DataInternetGatewayAttachmentsElRef {
+impl terrars::Ref for DataInternetGateway_AttachmentsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInternetGateway_AttachmentsRef {
+        DataInternetGateway_AttachmentsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataInternetGatewayAttachmentsElRef {
+impl DataInternetGateway_AttachmentsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -346,15 +377,15 @@ impl DataInternetGatewayAttachmentsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataInternetGatewayFilterEl {
+pub struct DataInternetGateway_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataInternetGatewayFilterEl { }
+impl DataInternetGateway_Filter { }
 
-impl terrars::ToListMappable for DataInternetGatewayFilterEl {
-    type O = terrars::BlockAssignable<DataInternetGatewayFilterEl>;
+impl terrars::ToListMappable for DataInternetGateway_Filter {
+    type O = terrars::BlockAssignable<DataInternetGateway_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -365,37 +396,39 @@ impl terrars::ToListMappable for DataInternetGatewayFilterEl {
     }
 }
 
-pub struct BuildDataInternetGatewayFilterEl {
+pub struct BuildDataInternetGateway_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataInternetGatewayFilterEl {
-    pub fn build(self) -> DataInternetGatewayFilterEl {
-        DataInternetGatewayFilterEl {
+impl BuildDataInternetGateway_Filter {
+    pub fn build(self) -> DataInternetGateway_Filter {
+        DataInternetGateway_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataInternetGatewayFilterElRef {
+#[allow(dead_code)]
+pub struct DataInternetGateway_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataInternetGatewayFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInternetGatewayFilterElRef {
-        DataInternetGatewayFilterElRef {
+impl terrars::Ref for DataInternetGateway_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInternetGateway_FilterRef {
+        DataInternetGateway_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataInternetGatewayFilterElRef {
+impl DataInternetGateway_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -412,12 +445,12 @@ impl DataInternetGatewayFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataInternetGatewayTimeoutsEl {
+pub struct DataInternetGateway_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataInternetGatewayTimeoutsEl {
+impl DataInternetGateway_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -425,8 +458,8 @@ impl DataInternetGatewayTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataInternetGatewayTimeoutsEl {
-    type O = terrars::BlockAssignable<DataInternetGatewayTimeoutsEl>;
+impl terrars::ToListMappable for DataInternetGateway_Timeouts {
+    type O = terrars::BlockAssignable<DataInternetGateway_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -437,29 +470,31 @@ impl terrars::ToListMappable for DataInternetGatewayTimeoutsEl {
     }
 }
 
-pub struct BuildDataInternetGatewayTimeoutsEl {}
+pub struct BuildDataInternetGateway_Timeouts {}
 
-impl BuildDataInternetGatewayTimeoutsEl {
-    pub fn build(self) -> DataInternetGatewayTimeoutsEl {
-        DataInternetGatewayTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataInternetGateway_Timeouts {
+    pub fn build(self) -> DataInternetGateway_Timeouts {
+        DataInternetGateway_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataInternetGatewayTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataInternetGateway_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataInternetGatewayTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInternetGatewayTimeoutsElRef {
-        DataInternetGatewayTimeoutsElRef {
+impl terrars::Ref for DataInternetGateway_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInternetGateway_TimeoutsRef {
+        DataInternetGateway_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataInternetGatewayTimeoutsElRef {
+impl DataInternetGateway_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -468,9 +503,4 @@ impl DataInternetGatewayTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataInternetGatewayDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataInternetGatewayFilterEl>>,
 }

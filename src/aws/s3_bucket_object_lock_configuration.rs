@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketObjectLockConfigurationData {
+struct S3BucketObjectLockConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,16 +28,18 @@ struct S3BucketObjectLockConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_lock_enabled: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<S3BucketObjectLockConfigurationRuleEl>>,
+    rule: std::option::Option<std::vec::Vec<S3BucketObjectLockConfiguration_Rule>>,
     dynamic: S3BucketObjectLockConfigurationDynamic,
 }
 
 struct S3BucketObjectLockConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketObjectLockConfigurationData>,
+    data: std::cell::RefCell<S3BucketObjectLockConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -153,6 +157,13 @@ impl S3BucketObjectLockConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `token`.\n"]
     pub fn set_token(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().token = std::option::Option::Some(v.into());
@@ -162,7 +173,7 @@ impl S3BucketObjectLockConfiguration {
     #[doc = "Set the field `rule`.\n"]
     pub fn set_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketObjectLockConfigurationRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketObjectLockConfiguration_Rule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -195,13 +206,19 @@ impl S3BucketObjectLockConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_lock_enabled", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `token` after provisioning.\n"]
     pub fn token(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.token", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<S3BucketObjectLockConfigurationRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<S3BucketObjectLockConfiguration_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
     }
 }
@@ -248,7 +265,7 @@ impl BuildS3BucketObjectLockConfiguration {
         let out = S3BucketObjectLockConfiguration(std::rc::Rc::new(S3BucketObjectLockConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketObjectLockConfigurationData {
+            data: std::cell::RefCell::new(S3BucketObjectLockConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -258,6 +275,7 @@ impl BuildS3BucketObjectLockConfiguration {
                 expected_bucket_owner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 object_lock_enabled: core::default::Default::default(),
+                region: core::default::Default::default(),
                 token: core::default::Default::default(),
                 rule: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -311,19 +329,30 @@ impl S3BucketObjectLockConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_lock_enabled", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `token` after provisioning.\n"]
     pub fn token(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.token", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<S3BucketObjectLockConfigurationRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<S3BucketObjectLockConfiguration_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketObjectLockConfigurationDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<S3BucketObjectLockConfiguration_Rule>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketObjectLockConfigurationRuleElDefaultRetentionEl {
+pub struct S3BucketObjectLockConfiguration_Rule_DefaultRetention {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     days: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -332,7 +361,7 @@ pub struct S3BucketObjectLockConfigurationRuleElDefaultRetentionEl {
     years: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl S3BucketObjectLockConfigurationRuleElDefaultRetentionEl {
+impl S3BucketObjectLockConfiguration_Rule_DefaultRetention {
     #[doc = "Set the field `days`.\n"]
     pub fn set_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.days = std::option::Option::Some(v.into());
@@ -352,8 +381,8 @@ impl S3BucketObjectLockConfigurationRuleElDefaultRetentionEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketObjectLockConfigurationRuleElDefaultRetentionEl {
-    type O = terrars::BlockAssignable<S3BucketObjectLockConfigurationRuleElDefaultRetentionEl>;
+impl terrars::ToListMappable for S3BucketObjectLockConfiguration_Rule_DefaultRetention {
+    type O = terrars::BlockAssignable<S3BucketObjectLockConfiguration_Rule_DefaultRetention>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -364,11 +393,11 @@ impl terrars::ToListMappable for S3BucketObjectLockConfigurationRuleElDefaultRet
     }
 }
 
-pub struct BuildS3BucketObjectLockConfigurationRuleElDefaultRetentionEl {}
+pub struct BuildS3BucketObjectLockConfiguration_Rule_DefaultRetention {}
 
-impl BuildS3BucketObjectLockConfigurationRuleElDefaultRetentionEl {
-    pub fn build(self) -> S3BucketObjectLockConfigurationRuleElDefaultRetentionEl {
-        S3BucketObjectLockConfigurationRuleElDefaultRetentionEl {
+impl BuildS3BucketObjectLockConfiguration_Rule_DefaultRetention {
+    pub fn build(self) -> S3BucketObjectLockConfiguration_Rule_DefaultRetention {
+        S3BucketObjectLockConfiguration_Rule_DefaultRetention {
             days: core::default::Default::default(),
             mode: core::default::Default::default(),
             years: core::default::Default::default(),
@@ -376,24 +405,26 @@ impl BuildS3BucketObjectLockConfigurationRuleElDefaultRetentionEl {
     }
 }
 
-pub struct S3BucketObjectLockConfigurationRuleElDefaultRetentionElRef {
+#[allow(dead_code)]
+pub struct S3BucketObjectLockConfiguration_Rule_DefaultRetentionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketObjectLockConfigurationRuleElDefaultRetentionElRef {
+impl terrars::Ref for S3BucketObjectLockConfiguration_Rule_DefaultRetentionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketObjectLockConfigurationRuleElDefaultRetentionElRef {
-        S3BucketObjectLockConfigurationRuleElDefaultRetentionElRef {
+    ) -> S3BucketObjectLockConfiguration_Rule_DefaultRetentionRef {
+        S3BucketObjectLockConfiguration_Rule_DefaultRetentionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketObjectLockConfigurationRuleElDefaultRetentionElRef {
+impl S3BucketObjectLockConfiguration_Rule_DefaultRetentionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -415,29 +446,24 @@ impl S3BucketObjectLockConfigurationRuleElDefaultRetentionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketObjectLockConfigurationRuleElDynamic {
+struct S3BucketObjectLockConfiguration_RuleDynamic {
     default_retention: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketObjectLockConfigurationRuleElDefaultRetentionEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketObjectLockConfiguration_Rule_DefaultRetention>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketObjectLockConfigurationRuleEl {
+pub struct S3BucketObjectLockConfiguration_Rule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_retention: std::option::Option<std::vec::Vec<S3BucketObjectLockConfigurationRuleElDefaultRetentionEl>>,
-    dynamic: S3BucketObjectLockConfigurationRuleElDynamic,
+    default_retention: std::option::Option<std::vec::Vec<S3BucketObjectLockConfiguration_Rule_DefaultRetention>>,
+    dynamic: S3BucketObjectLockConfiguration_RuleDynamic,
 }
 
-impl S3BucketObjectLockConfigurationRuleEl {
+impl S3BucketObjectLockConfiguration_Rule {
     #[doc = "Set the field `default_retention`.\n"]
     pub fn set_default_retention(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<S3BucketObjectLockConfigurationRuleElDefaultRetentionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketObjectLockConfiguration_Rule_DefaultRetention>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -451,8 +477,8 @@ impl S3BucketObjectLockConfigurationRuleEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketObjectLockConfigurationRuleEl {
-    type O = terrars::BlockAssignable<S3BucketObjectLockConfigurationRuleEl>;
+impl terrars::ToListMappable for S3BucketObjectLockConfiguration_Rule {
+    type O = terrars::BlockAssignable<S3BucketObjectLockConfiguration_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -463,43 +489,40 @@ impl terrars::ToListMappable for S3BucketObjectLockConfigurationRuleEl {
     }
 }
 
-pub struct BuildS3BucketObjectLockConfigurationRuleEl {}
+pub struct BuildS3BucketObjectLockConfiguration_Rule {}
 
-impl BuildS3BucketObjectLockConfigurationRuleEl {
-    pub fn build(self) -> S3BucketObjectLockConfigurationRuleEl {
-        S3BucketObjectLockConfigurationRuleEl {
+impl BuildS3BucketObjectLockConfiguration_Rule {
+    pub fn build(self) -> S3BucketObjectLockConfiguration_Rule {
+        S3BucketObjectLockConfiguration_Rule {
             default_retention: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketObjectLockConfigurationRuleElRef {
+#[allow(dead_code)]
+pub struct S3BucketObjectLockConfiguration_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketObjectLockConfigurationRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketObjectLockConfigurationRuleElRef {
-        S3BucketObjectLockConfigurationRuleElRef {
+impl terrars::Ref for S3BucketObjectLockConfiguration_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketObjectLockConfiguration_RuleRef {
+        S3BucketObjectLockConfiguration_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketObjectLockConfigurationRuleElRef {
+impl S3BucketObjectLockConfiguration_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `default_retention` after provisioning.\n"]
-    pub fn default_retention(&self) -> terrars::ListRef<S3BucketObjectLockConfigurationRuleElDefaultRetentionElRef> {
+    pub fn default_retention(&self) -> terrars::ListRef<S3BucketObjectLockConfiguration_Rule_DefaultRetentionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_retention", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketObjectLockConfigurationDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<S3BucketObjectLockConfigurationRuleEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafSqlInjectionMatchSetData {
+struct WafSqlInjectionMatchSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,14 @@ struct WafSqlInjectionMatchSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sql_injection_match_tuples: std::option::Option<std::vec::Vec<WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl>>,
+    sql_injection_match_tuples: std::option::Option<std::vec::Vec<WafSqlInjectionMatchSet_SqlInjectionMatchTuples>>,
     dynamic: WafSqlInjectionMatchSetDynamic,
 }
 
 struct WafSqlInjectionMatchSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafSqlInjectionMatchSetData>,
+    data: std::cell::RefCell<WafSqlInjectionMatchSetData_>,
 }
 
 #[derive(Clone)]
@@ -138,7 +140,7 @@ impl WafSqlInjectionMatchSet {
     #[doc = "Set the field `sql_injection_match_tuples`.\n"]
     pub fn set_sql_injection_match_tuples(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafSqlInjectionMatchSet_SqlInjectionMatchTuples>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -149,6 +151,11 @@ impl WafSqlInjectionMatchSet {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -204,7 +211,7 @@ impl BuildWafSqlInjectionMatchSet {
         let out = WafSqlInjectionMatchSet(std::rc::Rc::new(WafSqlInjectionMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafSqlInjectionMatchSetData {
+            data: std::cell::RefCell::new(WafSqlInjectionMatchSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -244,6 +251,11 @@ impl WafSqlInjectionMatchSetRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -255,15 +267,22 @@ impl WafSqlInjectionMatchSetRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafSqlInjectionMatchSetDynamic {
+    sql_injection_match_tuples: std
+    ::option
+    ::Option<terrars::DynamicBlock<WafSqlInjectionMatchSet_SqlInjectionMatchTuples>>,
+}
+
 #[derive(Serialize)]
-pub struct WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl {
+pub struct WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl {
+impl WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -271,8 +290,8 @@ impl WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl {
     }
 }
 
-impl terrars::ToListMappable for WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl {
-    type O = terrars::BlockAssignable<WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl>;
+impl terrars::ToListMappable for WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch {
+    type O = terrars::BlockAssignable<WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -283,38 +302,40 @@ impl terrars::ToListMappable for WafSqlInjectionMatchSetSqlInjectionMatchTuplesE
     }
 }
 
-pub struct BuildWafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl {
+pub struct BuildWafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl {
-    pub fn build(self) -> WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl {
-        WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl {
+impl BuildWafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch {
+    pub fn build(self) -> WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch {
+        WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch {
             data: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchElRef {
+#[allow(dead_code)]
+pub struct WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchElRef {
+impl terrars::Ref for WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchElRef {
-        WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchElRef {
+    ) -> WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatchRef {
+        WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchElRef {
+impl WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -331,21 +352,21 @@ impl WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafSqlInjectionMatchSetSqlInjectionMatchTuplesElDynamic {
+struct WafSqlInjectionMatchSet_SqlInjectionMatchTuplesDynamic {
     field_to_match: std
     ::option
-    ::Option<terrars::DynamicBlock<WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl>>,
+    ::Option<terrars::DynamicBlock<WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
+pub struct WafSqlInjectionMatchSet_SqlInjectionMatchTuples {
     text_transformation: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_to_match: std::option::Option<std::vec::Vec<WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl>>,
-    dynamic: WafSqlInjectionMatchSetSqlInjectionMatchTuplesElDynamic,
+    field_to_match: std::option::Option<std::vec::Vec<WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch>>,
+    dynamic: WafSqlInjectionMatchSet_SqlInjectionMatchTuplesDynamic,
 }
 
-impl WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
+impl WafSqlInjectionMatchSet_SqlInjectionMatchTuples {
     #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
@@ -354,7 +375,7 @@ impl WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchEl>>,
+                    ::Into<terrars::BlockAssignable<WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatch>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -368,8 +389,8 @@ impl WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
     }
 }
 
-impl terrars::ToListMappable for WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
-    type O = terrars::BlockAssignable<WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl>;
+impl terrars::ToListMappable for WafSqlInjectionMatchSet_SqlInjectionMatchTuples {
+    type O = terrars::BlockAssignable<WafSqlInjectionMatchSet_SqlInjectionMatchTuples>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -380,14 +401,14 @@ impl terrars::ToListMappable for WafSqlInjectionMatchSetSqlInjectionMatchTuplesE
     }
 }
 
-pub struct BuildWafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
+pub struct BuildWafSqlInjectionMatchSet_SqlInjectionMatchTuples {
     #[doc = ""]
     pub text_transformation: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
-    pub fn build(self) -> WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
-        WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
+impl BuildWafSqlInjectionMatchSet_SqlInjectionMatchTuples {
+    pub fn build(self) -> WafSqlInjectionMatchSet_SqlInjectionMatchTuples {
+        WafSqlInjectionMatchSet_SqlInjectionMatchTuples {
             text_transformation: self.text_transformation,
             field_to_match: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -395,24 +416,26 @@ impl BuildWafSqlInjectionMatchSetSqlInjectionMatchTuplesEl {
     }
 }
 
-pub struct WafSqlInjectionMatchSetSqlInjectionMatchTuplesElRef {
+#[allow(dead_code)]
+pub struct WafSqlInjectionMatchSet_SqlInjectionMatchTuplesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafSqlInjectionMatchSetSqlInjectionMatchTuplesElRef {
+impl terrars::Ref for WafSqlInjectionMatchSet_SqlInjectionMatchTuplesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafSqlInjectionMatchSetSqlInjectionMatchTuplesElRef {
-        WafSqlInjectionMatchSetSqlInjectionMatchTuplesElRef {
+    ) -> WafSqlInjectionMatchSet_SqlInjectionMatchTuplesRef {
+        WafSqlInjectionMatchSet_SqlInjectionMatchTuplesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafSqlInjectionMatchSetSqlInjectionMatchTuplesElRef {
+impl WafSqlInjectionMatchSet_SqlInjectionMatchTuplesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -423,14 +446,7 @@ impl WafSqlInjectionMatchSetSqlInjectionMatchTuplesElRef {
     }
 
     #[doc = "Get a reference to the value of field `field_to_match` after provisioning.\n"]
-    pub fn field_to_match(&self) -> terrars::ListRef<WafSqlInjectionMatchSetSqlInjectionMatchTuplesElFieldToMatchElRef> {
+    pub fn field_to_match(&self) -> terrars::ListRef<WafSqlInjectionMatchSet_SqlInjectionMatchTuples_FieldToMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafSqlInjectionMatchSetDynamic {
-    sql_injection_match_tuples: std
-    ::option
-    ::Option<terrars::DynamicBlock<WafSqlInjectionMatchSetSqlInjectionMatchTuplesEl>>,
 }

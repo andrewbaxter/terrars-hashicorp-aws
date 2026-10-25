@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataMskBrokerNodesData {
+struct DataMskBrokerNodesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,12 +21,14 @@ struct DataMskBrokerNodesData {
     cluster_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataMskBrokerNodes_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMskBrokerNodesData>,
+    data: std::cell::RefCell<DataMskBrokerNodesData_>,
 }
 
 #[derive(Clone)]
@@ -75,6 +79,13 @@ impl DataMskBrokerNodes {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `cluster_arn` after provisioning.\n"]
     pub fn cluster_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_arn", self.extract_ref()))
@@ -86,8 +97,14 @@ impl DataMskBrokerNodes {
     }
 
     #[doc = "Get a reference to the value of field `node_info_list` after provisioning.\n"]
-    pub fn node_info_list(&self) -> terrars::ListRef<DataMskBrokerNodesNodeInfoListElRef> {
+    pub fn node_info_list(&self) -> terrars::ListRef<DataMskBrokerNodes_NodeInfoListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_info_list", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -133,13 +150,14 @@ impl BuildDataMskBrokerNodes {
         let out = DataMskBrokerNodes(std::rc::Rc::new(DataMskBrokerNodes_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMskBrokerNodesData {
+            data: std::cell::RefCell::new(DataMskBrokerNodesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 cluster_arn: self.cluster_arn,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -181,13 +199,19 @@ impl DataMskBrokerNodesRef {
     }
 
     #[doc = "Get a reference to the value of field `node_info_list` after provisioning.\n"]
-    pub fn node_info_list(&self) -> terrars::ListRef<DataMskBrokerNodesNodeInfoListElRef> {
+    pub fn node_info_list(&self) -> terrars::ListRef<DataMskBrokerNodes_NodeInfoListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_info_list", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataMskBrokerNodesNodeInfoListEl {
+pub struct DataMskBrokerNodes_NodeInfoList {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     attached_eni_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -202,7 +226,7 @@ pub struct DataMskBrokerNodesNodeInfoListEl {
     node_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMskBrokerNodesNodeInfoListEl {
+impl DataMskBrokerNodes_NodeInfoList {
     #[doc = "Set the field `attached_eni_id`.\n"]
     pub fn set_attached_eni_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.attached_eni_id = std::option::Option::Some(v.into());
@@ -246,8 +270,8 @@ impl DataMskBrokerNodesNodeInfoListEl {
     }
 }
 
-impl terrars::ToListMappable for DataMskBrokerNodesNodeInfoListEl {
-    type O = terrars::BlockAssignable<DataMskBrokerNodesNodeInfoListEl>;
+impl terrars::ToListMappable for DataMskBrokerNodes_NodeInfoList {
+    type O = terrars::BlockAssignable<DataMskBrokerNodes_NodeInfoList>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -258,11 +282,11 @@ impl terrars::ToListMappable for DataMskBrokerNodesNodeInfoListEl {
     }
 }
 
-pub struct BuildDataMskBrokerNodesNodeInfoListEl {}
+pub struct BuildDataMskBrokerNodes_NodeInfoList {}
 
-impl BuildDataMskBrokerNodesNodeInfoListEl {
-    pub fn build(self) -> DataMskBrokerNodesNodeInfoListEl {
-        DataMskBrokerNodesNodeInfoListEl {
+impl BuildDataMskBrokerNodes_NodeInfoList {
+    pub fn build(self) -> DataMskBrokerNodes_NodeInfoList {
+        DataMskBrokerNodes_NodeInfoList {
             attached_eni_id: core::default::Default::default(),
             broker_id: core::default::Default::default(),
             client_subnet: core::default::Default::default(),
@@ -273,21 +297,23 @@ impl BuildDataMskBrokerNodesNodeInfoListEl {
     }
 }
 
-pub struct DataMskBrokerNodesNodeInfoListElRef {
+#[allow(dead_code)]
+pub struct DataMskBrokerNodes_NodeInfoListRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMskBrokerNodesNodeInfoListElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMskBrokerNodesNodeInfoListElRef {
-        DataMskBrokerNodesNodeInfoListElRef {
+impl terrars::Ref for DataMskBrokerNodes_NodeInfoListRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMskBrokerNodes_NodeInfoListRef {
+        DataMskBrokerNodes_NodeInfoListRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMskBrokerNodesNodeInfoListElRef {
+impl DataMskBrokerNodes_NodeInfoListRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

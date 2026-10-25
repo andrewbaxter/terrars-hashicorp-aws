@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketReplicationConfigurationData {
+struct S3BucketReplicationConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,18 +23,20 @@ struct S3BucketReplicationConfigurationData {
     bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleEl>>,
+    rule: std::option::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule>>,
     dynamic: S3BucketReplicationConfigurationDynamic,
 }
 
 struct S3BucketReplicationConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketReplicationConfigurationData>,
+    data: std::cell::RefCell<S3BucketReplicationConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +142,13 @@ impl S3BucketReplicationConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `token`.\n"]
     pub fn set_token(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().token = std::option::Option::Some(v.into());
@@ -147,7 +158,7 @@ impl S3BucketReplicationConfiguration {
     #[doc = "Set the field `rule`.\n"]
     pub fn set_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -170,6 +181,12 @@ impl S3BucketReplicationConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
     pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
@@ -181,7 +198,7 @@ impl S3BucketReplicationConfiguration {
     }
 
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<S3BucketReplicationConfiguration_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
     }
 }
@@ -230,7 +247,7 @@ impl BuildS3BucketReplicationConfiguration {
         let out = S3BucketReplicationConfiguration(std::rc::Rc::new(S3BucketReplicationConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketReplicationConfigurationData {
+            data: std::cell::RefCell::new(S3BucketReplicationConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -238,6 +255,7 @@ impl BuildS3BucketReplicationConfiguration {
                 provisioner: core::default::Default::default(),
                 bucket: self.bucket,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role: self.role,
                 token: core::default::Default::default(),
                 rule: core::default::Default::default(),
@@ -282,6 +300,12 @@ impl S3BucketReplicationConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
     pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
@@ -293,20 +317,25 @@ impl S3BucketReplicationConfigurationRef {
     }
 
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<S3BucketReplicationConfiguration_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketReplicationConfigurationDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl {
+pub struct S3BucketReplicationConfiguration_Rule_DeleteMarkerReplication {
     status: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl { }
+impl S3BucketReplicationConfiguration_Rule_DeleteMarkerReplication { }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_DeleteMarkerReplication {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_DeleteMarkerReplication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -317,35 +346,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDeleteMar
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_DeleteMarkerReplication {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl {
-        S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl { status: self.status }
+impl BuildS3BucketReplicationConfiguration_Rule_DeleteMarkerReplication {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_DeleteMarkerReplication {
+        S3BucketReplicationConfiguration_Rule_DeleteMarkerReplication { status: self.status }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_DeleteMarkerReplicationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_DeleteMarkerReplicationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationElRef {
-        S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_DeleteMarkerReplicationRef {
+        S3BucketReplicationConfiguration_Rule_DeleteMarkerReplicationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationElRef {
+impl S3BucketReplicationConfiguration_Rule_DeleteMarkerReplicationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -357,14 +388,14 @@ impl S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl {
+pub struct S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation {
     owner: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl { }
+impl S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation { }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -375,35 +406,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinati
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation {
     #[doc = ""]
     pub owner: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl {
-        S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl { owner: self.owner }
+impl BuildS3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation {
+        S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation { owner: self.owner }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationElRef {
-        S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslationRef {
+        S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationElRef {
+impl S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -415,14 +448,14 @@ impl S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslation
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl {
+pub struct S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration {
     replica_kms_key_id: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl { }
+impl S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration { }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -433,37 +466,39 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinati
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration {
     #[doc = ""]
     pub replica_kms_key_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl {
-        S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl {
+impl BuildS3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration {
+        S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration {
             replica_kms_key_id: self.replica_kms_key_id,
         }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationElRef {
-        S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfigurationRef {
+        S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationElRef {
+impl S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -475,14 +510,14 @@ impl S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationE
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl {
+pub struct S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold {
     minutes: terrars::PrimField<f64>,
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl { }
+impl S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold { }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -493,35 +528,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinati
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold {
     #[doc = ""]
     pub minutes: terrars::PrimField<f64>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl {
-        S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl { minutes: self.minutes }
+impl BuildS3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold {
+        S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold { minutes: self.minutes }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThresholdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThresholdRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdElRef {
-        S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThresholdRef {
+        S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThresholdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdElRef {
+impl S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThresholdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -533,23 +570,23 @@ impl S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdE
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationRuleElDestinationElMetricsElDynamic {
+struct S3BucketReplicationConfiguration_Rule_Destination_MetricsDynamic {
     event_threshold: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
+pub struct S3BucketReplicationConfiguration_Rule_Destination_Metrics {
     status: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event_threshold: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl>>,
-    dynamic: S3BucketReplicationConfigurationRuleElDestinationElMetricsElDynamic,
+    ::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold>>,
+    dynamic: S3BucketReplicationConfiguration_Rule_Destination_MetricsDynamic,
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
+impl S3BucketReplicationConfiguration_Rule_Destination_Metrics {
     #[doc = "Set the field `event_threshold`.\n"]
     pub fn set_event_threshold(
         mut self,
@@ -560,9 +597,7 @@ impl S3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdEl,
-                        >,
+                        ::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThreshold>,
                     >,
     ) -> Self {
         match v.into() {
@@ -577,8 +612,8 @@ impl S3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationElMetricsEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Destination_Metrics {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_Metrics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -589,14 +624,14 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinati
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_Destination_Metrics {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
-        S3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
+impl BuildS3BucketReplicationConfiguration_Rule_Destination_Metrics {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Destination_Metrics {
+        S3BucketReplicationConfiguration_Rule_Destination_Metrics {
             status: self.status,
             event_threshold: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -604,24 +639,26 @@ impl BuildS3BucketReplicationConfigurationRuleElDestinationElMetricsEl {
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElDestinationElMetricsElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_Destination_MetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElDestinationElMetricsElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_Destination_MetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElDestinationElMetricsElRef {
-        S3BucketReplicationConfigurationRuleElDestinationElMetricsElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_Destination_MetricsRef {
+        S3BucketReplicationConfiguration_Rule_Destination_MetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElMetricsElRef {
+impl S3BucketReplicationConfiguration_Rule_Destination_MetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -634,20 +671,20 @@ impl S3BucketReplicationConfigurationRuleElDestinationElMetricsElRef {
     #[doc = "Get a reference to the value of field `event_threshold` after provisioning.\n"]
     pub fn event_threshold(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElDestinationElMetricsElEventThresholdElRef> {
+    ) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_Destination_Metrics_EventThresholdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_threshold", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl {
+pub struct S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time {
     minutes: terrars::PrimField<f64>,
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl { }
+impl S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time { }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -658,35 +695,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinati
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time {
     #[doc = ""]
     pub minutes: terrars::PrimField<f64>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl {
-        S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl { minutes: self.minutes }
+impl BuildS3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time {
+        S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time { minutes: self.minutes }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_TimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_TimeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeElRef {
-        S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_TimeRef {
+        S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_TimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeElRef {
+impl S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_TimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -698,21 +737,21 @@ impl S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeElR
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElDynamic {
+struct S3BucketReplicationConfiguration_Rule_Destination_ReplicationTimeDynamic {
     time: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
+pub struct S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime {
     status: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    time: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl>>,
-    dynamic: S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElDynamic,
+    time: std::option::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time>>,
+    dynamic: S3BucketReplicationConfiguration_Rule_Destination_ReplicationTimeDynamic,
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
+impl S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime {
     #[doc = "Set the field `time`.\n"]
     pub fn set_time(
         mut self,
@@ -723,7 +762,7 @@ impl S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeEl>,
+                        ::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_Time>,
                     >,
     ) -> Self {
         match v.into() {
@@ -738,8 +777,8 @@ impl S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -750,14 +789,14 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinati
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_Destination_ReplicationTime {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
-        S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
+impl BuildS3BucketReplicationConfiguration_Rule_Destination_ReplicationTime {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime {
+        S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime {
             status: self.status,
             time: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -765,24 +804,26 @@ impl BuildS3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl {
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_Destination_ReplicationTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_Destination_ReplicationTimeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElRef {
-        S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_Destination_ReplicationTimeRef {
+        S3BucketReplicationConfiguration_Rule_Destination_ReplicationTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElRef {
+impl S3BucketReplicationConfiguration_Rule_Destination_ReplicationTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -793,31 +834,27 @@ impl S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElRef {
     }
 
     #[doc = "Get a reference to the value of field `time` after provisioning.\n"]
-    pub fn time(
-        &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElTimeElRef> {
+    pub fn time(&self) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime_TimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.time", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationRuleElDestinationElDynamic {
+struct S3BucketReplicationConfiguration_Rule_DestinationDynamic {
     access_control_translation: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation>>,
     encryption_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl>>,
-    metrics: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElDestinationElMetricsEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration>>,
+    metrics: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Destination_Metrics>>,
     replication_time: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElDestinationEl {
+pub struct S3BucketReplicationConfiguration_Rule_Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account: std::option::Option<terrars::PrimField<std::string::String>>,
     bucket: terrars::PrimField<std::string::String>,
@@ -826,21 +863,21 @@ pub struct S3BucketReplicationConfigurationRuleElDestinationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_control_translation: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl>>,
+    ::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_configuration: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl>>,
+    ::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metrics: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElDestinationElMetricsEl>>,
+    metrics: std::option::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Destination_Metrics>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replication_time: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl>>,
-    dynamic: S3BucketReplicationConfigurationRuleElDestinationElDynamic,
+    ::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime>>,
+    dynamic: S3BucketReplicationConfiguration_Rule_DestinationDynamic,
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationEl {
+impl S3BucketReplicationConfiguration_Rule_Destination {
     #[doc = "Set the field `account`.\n"]
     pub fn set_account(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.account = std::option::Option::Some(v.into());
@@ -863,9 +900,7 @@ impl S3BucketReplicationConfigurationRuleElDestinationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationEl,
-                        >,
+                        ::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslation>,
                     >,
     ) -> Self {
         match v.into() {
@@ -889,9 +924,7 @@ impl S3BucketReplicationConfigurationRuleElDestinationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationEl,
-                        >,
+                        ::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -913,7 +946,7 @@ impl S3BucketReplicationConfigurationRuleElDestinationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationElMetricsEl>>,
+                    ::Into<terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_Metrics>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -935,7 +968,7 @@ impl S3BucketReplicationConfigurationRuleElDestinationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeEl>,
+                        terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTime>,
                     >,
     ) -> Self {
         match v.into() {
@@ -950,8 +983,8 @@ impl S3BucketReplicationConfigurationRuleElDestinationEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinationEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Destination {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -962,14 +995,14 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElDestinati
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElDestinationEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_Destination {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElDestinationEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElDestinationEl {
-        S3BucketReplicationConfigurationRuleElDestinationEl {
+impl BuildS3BucketReplicationConfiguration_Rule_Destination {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Destination {
+        S3BucketReplicationConfiguration_Rule_Destination {
             account: core::default::Default::default(),
             bucket: self.bucket,
             storage_class: core::default::Default::default(),
@@ -982,24 +1015,26 @@ impl BuildS3BucketReplicationConfigurationRuleElDestinationEl {
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElDestinationElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElDestinationElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElDestinationElRef {
-        S3BucketReplicationConfigurationRuleElDestinationElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_DestinationRef {
+        S3BucketReplicationConfiguration_Rule_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElDestinationElRef {
+impl S3BucketReplicationConfiguration_Rule_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1022,39 +1057,39 @@ impl S3BucketReplicationConfigurationRuleElDestinationElRef {
     #[doc = "Get a reference to the value of field `access_control_translation` after provisioning.\n"]
     pub fn access_control_translation(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElDestinationElAccessControlTranslationElRef> {
+    ) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_Destination_AccessControlTranslationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_control_translation", self.base))
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
     pub fn encryption_configuration(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElDestinationElEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_Destination_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `metrics` after provisioning.\n"]
-    pub fn metrics(&self) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElDestinationElMetricsElRef> {
+    pub fn metrics(&self) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_Destination_MetricsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metrics", self.base))
     }
 
     #[doc = "Get a reference to the value of field `replication_time` after provisioning.\n"]
     pub fn replication_time(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElDestinationElReplicationTimeElRef> {
+    ) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_Destination_ReplicationTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replication_time", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElExistingObjectReplicationEl {
+pub struct S3BucketReplicationConfiguration_Rule_ExistingObjectReplication {
     status: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketReplicationConfigurationRuleElExistingObjectReplicationEl { }
+impl S3BucketReplicationConfiguration_Rule_ExistingObjectReplication { }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElExistingObjectReplicationEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElExistingObjectReplicationEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_ExistingObjectReplication {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_ExistingObjectReplication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1065,35 +1100,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElExistingO
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElExistingObjectReplicationEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_ExistingObjectReplication {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElExistingObjectReplicationEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElExistingObjectReplicationEl {
-        S3BucketReplicationConfigurationRuleElExistingObjectReplicationEl { status: self.status }
+impl BuildS3BucketReplicationConfiguration_Rule_ExistingObjectReplication {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_ExistingObjectReplication {
+        S3BucketReplicationConfiguration_Rule_ExistingObjectReplication { status: self.status }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElExistingObjectReplicationElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_ExistingObjectReplicationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElExistingObjectReplicationElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_ExistingObjectReplicationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElExistingObjectReplicationElRef {
-        S3BucketReplicationConfigurationRuleElExistingObjectReplicationElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_ExistingObjectReplicationRef {
+        S3BucketReplicationConfiguration_Rule_ExistingObjectReplicationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElExistingObjectReplicationElRef {
+impl S3BucketReplicationConfiguration_Rule_ExistingObjectReplicationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1105,14 +1142,14 @@ impl S3BucketReplicationConfigurationRuleElExistingObjectReplicationElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElFilterElAndEl {
+pub struct S3BucketReplicationConfiguration_Rule_Filter_And {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl S3BucketReplicationConfigurationRuleElFilterElAndEl {
+impl S3BucketReplicationConfiguration_Rule_Filter_And {
     #[doc = "Set the field `prefix`.\n"]
     pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix = std::option::Option::Some(v.into());
@@ -1129,8 +1166,8 @@ impl S3BucketReplicationConfigurationRuleElFilterElAndEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElFilterElAndEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElFilterElAndEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Filter_And {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Filter_And>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1141,35 +1178,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElFilterElA
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElFilterElAndEl {}
+pub struct BuildS3BucketReplicationConfiguration_Rule_Filter_And {}
 
-impl BuildS3BucketReplicationConfigurationRuleElFilterElAndEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElFilterElAndEl {
-        S3BucketReplicationConfigurationRuleElFilterElAndEl {
+impl BuildS3BucketReplicationConfiguration_Rule_Filter_And {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Filter_And {
+        S3BucketReplicationConfiguration_Rule_Filter_And {
             prefix: core::default::Default::default(),
             tags: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElFilterElAndElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_Filter_AndRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElFilterElAndElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_Filter_AndRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElFilterElAndElRef {
-        S3BucketReplicationConfigurationRuleElFilterElAndElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_Filter_AndRef {
+        S3BucketReplicationConfiguration_Rule_Filter_AndRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElFilterElAndElRef {
+impl S3BucketReplicationConfiguration_Rule_Filter_AndRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1186,15 +1225,15 @@ impl S3BucketReplicationConfigurationRuleElFilterElAndElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElFilterElTagEl {
+pub struct S3BucketReplicationConfiguration_Rule_Filter_Tag {
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketReplicationConfigurationRuleElFilterElTagEl { }
+impl S3BucketReplicationConfiguration_Rule_Filter_Tag { }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElFilterElTagEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElFilterElTagEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Filter_Tag {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Filter_Tag>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1205,40 +1244,42 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElFilterElT
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElFilterElTagEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_Filter_Tag {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElFilterElTagEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElFilterElTagEl {
-        S3BucketReplicationConfigurationRuleElFilterElTagEl {
+impl BuildS3BucketReplicationConfiguration_Rule_Filter_Tag {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Filter_Tag {
+        S3BucketReplicationConfiguration_Rule_Filter_Tag {
             key: self.key,
             value: self.value,
         }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElFilterElTagElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_Filter_TagRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElFilterElTagElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_Filter_TagRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElFilterElTagElRef {
-        S3BucketReplicationConfigurationRuleElFilterElTagElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_Filter_TagRef {
+        S3BucketReplicationConfiguration_Rule_Filter_TagRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElFilterElTagElRef {
+impl S3BucketReplicationConfiguration_Rule_Filter_TagRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1255,23 +1296,23 @@ impl S3BucketReplicationConfigurationRuleElFilterElTagElRef {
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationRuleElFilterElDynamic {
-    and: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElFilterElAndEl>>,
-    tag: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElFilterElTagEl>>,
+struct S3BucketReplicationConfiguration_Rule_FilterDynamic {
+    and: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Filter_And>>,
+    tag: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Filter_Tag>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElFilterEl {
+pub struct S3BucketReplicationConfiguration_Rule_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    and: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElFilterElAndEl>>,
+    and: std::option::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Filter_And>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElFilterElTagEl>>,
-    dynamic: S3BucketReplicationConfigurationRuleElFilterElDynamic,
+    tag: std::option::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Filter_Tag>>,
+    dynamic: S3BucketReplicationConfiguration_Rule_FilterDynamic,
 }
 
-impl S3BucketReplicationConfigurationRuleElFilterEl {
+impl S3BucketReplicationConfiguration_Rule_Filter {
     #[doc = "Set the field `prefix`.\n"]
     pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix = std::option::Option::Some(v.into());
@@ -1281,7 +1322,7 @@ impl S3BucketReplicationConfigurationRuleElFilterEl {
     #[doc = "Set the field `and`.\n"]
     pub fn set_and(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElFilterElAndEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Filter_And>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1297,7 +1338,7 @@ impl S3BucketReplicationConfigurationRuleElFilterEl {
     #[doc = "Set the field `tag`.\n"]
     pub fn set_tag(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElFilterElTagEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Filter_Tag>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1311,8 +1352,8 @@ impl S3BucketReplicationConfigurationRuleElFilterEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElFilterEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElFilterEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_Filter {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1323,11 +1364,11 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElFilterEl 
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElFilterEl {}
+pub struct BuildS3BucketReplicationConfiguration_Rule_Filter {}
 
-impl BuildS3BucketReplicationConfigurationRuleElFilterEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElFilterEl {
-        S3BucketReplicationConfigurationRuleElFilterEl {
+impl BuildS3BucketReplicationConfiguration_Rule_Filter {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_Filter {
+        S3BucketReplicationConfiguration_Rule_Filter {
             prefix: core::default::Default::default(),
             and: core::default::Default::default(),
             tag: core::default::Default::default(),
@@ -1336,24 +1377,26 @@ impl BuildS3BucketReplicationConfigurationRuleElFilterEl {
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElFilterElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElFilterElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_FilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElFilterElRef {
-        S3BucketReplicationConfigurationRuleElFilterElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_FilterRef {
+        S3BucketReplicationConfiguration_Rule_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElFilterElRef {
+impl S3BucketReplicationConfiguration_Rule_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1364,27 +1407,26 @@ impl S3BucketReplicationConfigurationRuleElFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `and` after provisioning.\n"]
-    pub fn and(&self) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElFilterElAndElRef> {
+    pub fn and(&self) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_Filter_AndRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.and", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tag` after provisioning.\n"]
-    pub fn tag(&self) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElFilterElTagElRef> {
+    pub fn tag(&self) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_Filter_TagRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl {
+pub struct S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications {
     status: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl { }
+impl S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications { }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl {
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications {
     type O =
-        terrars
-        ::BlockAssignable<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl>;
+        terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1395,35 +1437,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElSourceSel
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl {
-        S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl { status: self.status }
+impl BuildS3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications {
+        S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications { status: self.status }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModificationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModificationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsElRef {
-        S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModificationsRef {
+        S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModificationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsElRef {
+impl S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModificationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1435,17 +1479,16 @@ impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModif
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
+pub struct S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects {
     status: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl { }
+impl S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects { }
 
-impl terrars
-::ToListMappable for S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects {
     type O =
         terrars
-        ::BlockAssignable<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl>;
+        ::BlockAssignable<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1456,37 +1499,37 @@ impl terrars
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
-        S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
-            status: self.status,
-        }
+impl BuildS3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects {
+        S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects { status: self.status }
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
-        S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
+        S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
+impl S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1498,33 +1541,33 @@ impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryp
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElDynamic {
+struct S3BucketReplicationConfiguration_Rule_SourceSelectionCriteriaDynamic {
     replica_modifications: std
     ::option
     ::Option<
-        terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl>,
+        terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications>,
     >,
     sse_kms_encrypted_objects: std
     ::option
     ::Option<
-        terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl>,
+        terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
+pub struct S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replica_modifications: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl>>,
+    ::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sse_kms_encrypted_objects: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl>>,
-    dynamic: S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElDynamic,
+    ::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects>>,
+    dynamic: S3BucketReplicationConfiguration_Rule_SourceSelectionCriteriaDynamic,
 }
 
-impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
+impl S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria {
     #[doc = "Set the field `replica_modifications`.\n"]
     pub fn set_replica_modifications(
         mut self,
@@ -1536,7 +1579,7 @@ impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsEl,
+                            S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModifications,
                         >,
                     >,
     ) -> Self {
@@ -1562,7 +1605,7 @@ impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl,
+                            S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjects,
                         >,
                     >,
     ) -> Self {
@@ -1578,8 +1621,8 @@ impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1590,11 +1633,11 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleElSourceSel
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {}
+pub struct BuildS3BucketReplicationConfiguration_Rule_SourceSelectionCriteria {}
 
-impl BuildS3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
-        S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
+impl BuildS3BucketReplicationConfiguration_Rule_SourceSelectionCriteria {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria {
+        S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria {
             replica_modifications: core::default::Default::default(),
             sse_kms_encrypted_objects: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1602,24 +1645,26 @@ impl BuildS3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl {
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_Rule_SourceSelectionCriteriaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_Rule_SourceSelectionCriteriaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElRef {
-        S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElRef {
+    ) -> S3BucketReplicationConfiguration_Rule_SourceSelectionCriteriaRef {
+        S3BucketReplicationConfiguration_Rule_SourceSelectionCriteriaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElRef {
+impl S3BucketReplicationConfiguration_Rule_SourceSelectionCriteriaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1627,35 +1672,35 @@ impl S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElRef {
     #[doc = "Get a reference to the value of field `replica_modifications` after provisioning.\n"]
     pub fn replica_modifications(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElReplicaModificationsElRef> {
+    ) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_ReplicaModificationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replica_modifications", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sse_kms_encrypted_objects` after provisioning.\n"]
     pub fn sse_kms_encrypted_objects(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef> {
+    ) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria_SseKmsEncryptedObjectsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sse_kms_encrypted_objects", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationRuleElDynamic {
+struct S3BucketReplicationConfiguration_RuleDynamic {
     delete_marker_replication: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl>>,
-    destination: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElDestinationEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_DeleteMarkerReplication>>,
+    destination: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Destination>>,
     existing_object_replication: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElExistingObjectReplicationEl>>,
-    filter: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElFilterEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_ExistingObjectReplication>>,
+    filter: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_Filter>>,
     source_selection_criteria: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationRuleEl {
+pub struct S3BucketReplicationConfiguration_Rule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1666,23 +1711,23 @@ pub struct S3BucketReplicationConfigurationRuleEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_marker_replication: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl>>,
+    ::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_DeleteMarkerReplication>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElDestinationEl>>,
+    destination: std::option::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Destination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     existing_object_replication: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElExistingObjectReplicationEl>>,
+    ::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_ExistingObjectReplication>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_selection_criteria: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl>>,
-    dynamic: S3BucketReplicationConfigurationRuleElDynamic,
+    ::Option<std::vec::Vec<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria>>,
+    dynamic: S3BucketReplicationConfiguration_RuleDynamic,
 }
 
-impl S3BucketReplicationConfigurationRuleEl {
+impl S3BucketReplicationConfiguration_Rule {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -1709,7 +1754,7 @@ impl S3BucketReplicationConfigurationRuleEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationEl>>,
+                    ::Into<terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_DeleteMarkerReplication>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1725,7 +1770,7 @@ impl S3BucketReplicationConfigurationRuleEl {
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1746,9 +1791,7 @@ impl S3BucketReplicationConfigurationRuleEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElExistingObjectReplicationEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_ExistingObjectReplication>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1764,7 +1807,7 @@ impl S3BucketReplicationConfigurationRuleEl {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1785,7 +1828,7 @@ impl S3BucketReplicationConfigurationRuleEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaEl>>,
+                    ::Into<terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteria>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1799,8 +1842,8 @@ impl S3BucketReplicationConfigurationRuleEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationRuleEl>;
+impl terrars::ToListMappable for S3BucketReplicationConfiguration_Rule {
+    type O = terrars::BlockAssignable<S3BucketReplicationConfiguration_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1811,14 +1854,14 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationRuleEl {
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationRuleEl {
+pub struct BuildS3BucketReplicationConfiguration_Rule {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationRuleEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationRuleEl {
-        S3BucketReplicationConfigurationRuleEl {
+impl BuildS3BucketReplicationConfiguration_Rule {
+    pub fn build(self) -> S3BucketReplicationConfiguration_Rule {
+        S3BucketReplicationConfiguration_Rule {
             id: core::default::Default::default(),
             prefix: core::default::Default::default(),
             priority: core::default::Default::default(),
@@ -1833,21 +1876,23 @@ impl BuildS3BucketReplicationConfigurationRuleEl {
     }
 }
 
-pub struct S3BucketReplicationConfigurationRuleElRef {
+#[allow(dead_code)]
+pub struct S3BucketReplicationConfiguration_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketReplicationConfigurationRuleElRef {
-        S3BucketReplicationConfigurationRuleElRef {
+impl terrars::Ref for S3BucketReplicationConfiguration_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketReplicationConfiguration_RuleRef {
+        S3BucketReplicationConfiguration_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationRuleElRef {
+impl S3BucketReplicationConfiguration_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1875,36 +1920,31 @@ impl S3BucketReplicationConfigurationRuleElRef {
     #[doc = "Get a reference to the value of field `delete_marker_replication` after provisioning.\n"]
     pub fn delete_marker_replication(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElDeleteMarkerReplicationElRef> {
+    ) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_DeleteMarkerReplicationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delete_marker_replication", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.base))
     }
 
     #[doc = "Get a reference to the value of field `existing_object_replication` after provisioning.\n"]
     pub fn existing_object_replication(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElExistingObjectReplicationElRef> {
+    ) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_ExistingObjectReplicationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.existing_object_replication", self.base))
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source_selection_criteria` after provisioning.\n"]
     pub fn source_selection_criteria(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationRuleElSourceSelectionCriteriaElRef> {
+    ) -> terrars::ListRef<S3BucketReplicationConfiguration_Rule_SourceSelectionCriteriaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_selection_criteria", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationRuleEl>>,
 }

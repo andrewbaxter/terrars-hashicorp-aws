@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53ResolverRuleData {
+struct Route53ResolverRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct Route53ResolverRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resolver_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
     rule_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,16 +35,16 @@ struct Route53ResolverRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_ip: std::option::Option<std::vec::Vec<Route53ResolverRuleTargetIpEl>>,
+    target_ip: std::option::Option<std::vec::Vec<Route53ResolverRule_TargetIp>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Route53ResolverRuleTimeoutsEl>,
+    timeouts: std::option::Option<Route53ResolverRule_Timeouts>,
     dynamic: Route53ResolverRuleDynamic,
 }
 
 struct Route53ResolverRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53ResolverRuleData>,
+    data: std::cell::RefCell<Route53ResolverRuleData_>,
 }
 
 #[derive(Clone)]
@@ -152,6 +156,13 @@ impl Route53ResolverRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resolver_endpoint_id`.\n"]
     pub fn set_resolver_endpoint_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().resolver_endpoint_id = std::option::Option::Some(v.into());
@@ -179,7 +190,7 @@ impl Route53ResolverRule {
     #[doc = "Set the field `target_ip`.\n"]
     pub fn set_target_ip(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53ResolverRuleTargetIpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53ResolverRule_TargetIp>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -193,7 +204,7 @@ impl Route53ResolverRule {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Route53ResolverRuleTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Route53ResolverRule_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -223,6 +234,12 @@ impl Route53ResolverRule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resolver_endpoint_id` after provisioning.\n"]
     pub fn resolver_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolver_endpoint_id", self.extract_ref()))
@@ -249,8 +266,8 @@ impl Route53ResolverRule {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53ResolverRuleTimeoutsElRef {
-        Route53ResolverRuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Route53ResolverRule_TimeoutsRef {
+        Route53ResolverRule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -298,7 +315,7 @@ impl BuildRoute53ResolverRule {
         let out = Route53ResolverRule(std::rc::Rc::new(Route53ResolverRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53ResolverRuleData {
+            data: std::cell::RefCell::new(Route53ResolverRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -307,6 +324,7 @@ impl BuildRoute53ResolverRule {
                 domain_name: self.domain_name,
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resolver_endpoint_id: core::default::Default::default(),
                 rule_type: self.rule_type,
                 tags: core::default::Default::default(),
@@ -369,6 +387,12 @@ impl Route53ResolverRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resolver_endpoint_id` after provisioning.\n"]
     pub fn resolver_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolver_endpoint_id", self.extract_ref()))
@@ -395,28 +419,56 @@ impl Route53ResolverRuleRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53ResolverRuleTimeoutsElRef {
-        Route53ResolverRuleTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Route53ResolverRule_TimeoutsRef {
+        Route53ResolverRule_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct Route53ResolverRuleTargetIpEl {
-    ip: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port: std::option::Option<terrars::PrimField<f64>>,
+#[derive(Serialize, Default)]
+struct Route53ResolverRuleDynamic {
+    target_ip: std::option::Option<terrars::DynamicBlock<Route53ResolverRule_TargetIp>>,
 }
 
-impl Route53ResolverRuleTargetIpEl {
+#[derive(Serialize)]
+pub struct Route53ResolverRule_TargetIp {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Route53ResolverRule_TargetIp {
+    #[doc = "Set the field `ip`.\n"]
+    pub fn set_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv6`.\n"]
+    pub fn set_ipv6(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6 = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `port`.\n"]
     pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.port = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `protocol`.\n"]
+    pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.protocol = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for Route53ResolverRuleTargetIpEl {
-    type O = terrars::BlockAssignable<Route53ResolverRuleTargetIpEl>;
+impl terrars::ToListMappable for Route53ResolverRule_TargetIp {
+    type O = terrars::BlockAssignable<Route53ResolverRule_TargetIp>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -427,35 +479,36 @@ impl terrars::ToListMappable for Route53ResolverRuleTargetIpEl {
     }
 }
 
-pub struct BuildRoute53ResolverRuleTargetIpEl {
-    #[doc = ""]
-    pub ip: terrars::PrimField<std::string::String>,
-}
+pub struct BuildRoute53ResolverRule_TargetIp {}
 
-impl BuildRoute53ResolverRuleTargetIpEl {
-    pub fn build(self) -> Route53ResolverRuleTargetIpEl {
-        Route53ResolverRuleTargetIpEl {
-            ip: self.ip,
+impl BuildRoute53ResolverRule_TargetIp {
+    pub fn build(self) -> Route53ResolverRule_TargetIp {
+        Route53ResolverRule_TargetIp {
+            ip: core::default::Default::default(),
+            ipv6: core::default::Default::default(),
             port: core::default::Default::default(),
+            protocol: core::default::Default::default(),
         }
     }
 }
 
-pub struct Route53ResolverRuleTargetIpElRef {
+#[allow(dead_code)]
+pub struct Route53ResolverRule_TargetIpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53ResolverRuleTargetIpElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53ResolverRuleTargetIpElRef {
-        Route53ResolverRuleTargetIpElRef {
+impl terrars::Ref for Route53ResolverRule_TargetIpRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53ResolverRule_TargetIpRef {
+        Route53ResolverRule_TargetIpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53ResolverRuleTargetIpElRef {
+impl Route53ResolverRule_TargetIpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -465,14 +518,24 @@ impl Route53ResolverRuleTargetIpElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `ipv6` after provisioning.\n"]
+    pub fn ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
     pub fn port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
+    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct Route53ResolverRuleTimeoutsEl {
+pub struct Route53ResolverRule_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -481,7 +544,7 @@ pub struct Route53ResolverRuleTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53ResolverRuleTimeoutsEl {
+impl Route53ResolverRule_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -501,8 +564,8 @@ impl Route53ResolverRuleTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Route53ResolverRuleTimeoutsEl {
-    type O = terrars::BlockAssignable<Route53ResolverRuleTimeoutsEl>;
+impl terrars::ToListMappable for Route53ResolverRule_Timeouts {
+    type O = terrars::BlockAssignable<Route53ResolverRule_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -513,11 +576,11 @@ impl terrars::ToListMappable for Route53ResolverRuleTimeoutsEl {
     }
 }
 
-pub struct BuildRoute53ResolverRuleTimeoutsEl {}
+pub struct BuildRoute53ResolverRule_Timeouts {}
 
-impl BuildRoute53ResolverRuleTimeoutsEl {
-    pub fn build(self) -> Route53ResolverRuleTimeoutsEl {
-        Route53ResolverRuleTimeoutsEl {
+impl BuildRoute53ResolverRule_Timeouts {
+    pub fn build(self) -> Route53ResolverRule_Timeouts {
+        Route53ResolverRule_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -525,21 +588,23 @@ impl BuildRoute53ResolverRuleTimeoutsEl {
     }
 }
 
-pub struct Route53ResolverRuleTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Route53ResolverRule_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53ResolverRuleTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53ResolverRuleTimeoutsElRef {
-        Route53ResolverRuleTimeoutsElRef {
+impl terrars::Ref for Route53ResolverRule_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53ResolverRule_TimeoutsRef {
+        Route53ResolverRule_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53ResolverRuleTimeoutsElRef {
+impl Route53ResolverRule_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -558,9 +623,4 @@ impl Route53ResolverRuleTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Route53ResolverRuleDynamic {
-    target_ip: std::option::Option<terrars::DynamicBlock<Route53ResolverRuleTargetIpEl>>,
 }

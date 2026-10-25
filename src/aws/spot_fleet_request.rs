@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SpotFleetRequestData {
+struct SpotFleetRequestData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct SpotFleetRequestData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allocation_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    context: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     excess_capacity_termination_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,6 +43,8 @@ struct SpotFleetRequestData {
     on_demand_max_total_price: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     on_demand_target_capacity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replace_unhealthy_instances: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -63,20 +69,20 @@ struct SpotFleetRequestData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_for_fulfillment: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    launch_specification: std::option::Option<std::vec::Vec<SpotFleetRequestLaunchSpecificationEl>>,
+    launch_specification: std::option::Option<std::vec::Vec<SpotFleetRequest_LaunchSpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    launch_template_config: std::option::Option<std::vec::Vec<SpotFleetRequestLaunchTemplateConfigEl>>,
+    launch_template_config: std::option::Option<std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spot_maintenance_strategies: std::option::Option<std::vec::Vec<SpotFleetRequestSpotMaintenanceStrategiesEl>>,
+    spot_maintenance_strategies: std::option::Option<std::vec::Vec<SpotFleetRequest_SpotMaintenanceStrategies>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SpotFleetRequestTimeoutsEl>,
+    timeouts: std::option::Option<SpotFleetRequest_Timeouts>,
     dynamic: SpotFleetRequestDynamic,
 }
 
 struct SpotFleetRequest_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SpotFleetRequestData>,
+    data: std::cell::RefCell<SpotFleetRequestData_>,
 }
 
 #[derive(Clone)]
@@ -182,6 +188,12 @@ impl SpotFleetRequest {
         self
     }
 
+    #[doc = "Set the field `context`.\n"]
+    pub fn set_context(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().context = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `excess_capacity_termination_policy`.\n"]
     pub fn set_excess_capacity_termination_policy(
         self,
@@ -248,6 +260,13 @@ impl SpotFleetRequest {
     #[doc = "Set the field `on_demand_target_capacity`.\n"]
     pub fn set_on_demand_target_capacity(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().on_demand_target_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -335,7 +354,7 @@ impl SpotFleetRequest {
     #[doc = "Set the field `launch_specification`.\n"]
     pub fn set_launch_specification(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequestLaunchSpecificationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequest_LaunchSpecification>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -351,7 +370,7 @@ impl SpotFleetRequest {
     #[doc = "Set the field `launch_template_config`.\n"]
     pub fn set_launch_template_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequestLaunchTemplateConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -367,7 +386,7 @@ impl SpotFleetRequest {
     #[doc = "Set the field `spot_maintenance_strategies`.\n"]
     pub fn set_spot_maintenance_strategies(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequestSpotMaintenanceStrategiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequest_SpotMaintenanceStrategies>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -381,7 +400,7 @@ impl SpotFleetRequest {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SpotFleetRequestTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SpotFleetRequest_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -394,6 +413,11 @@ impl SpotFleetRequest {
     #[doc = "Get a reference to the value of field `client_token` after provisioning.\n"]
     pub fn client_token(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_token", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `context` after provisioning.\n"]
+    pub fn context(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.context", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `excess_capacity_termination_policy` after provisioning.\n"]
@@ -453,6 +477,12 @@ impl SpotFleetRequest {
     #[doc = "Get a reference to the value of field `on_demand_target_capacity` after provisioning.\n"]
     pub fn on_demand_target_capacity(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.on_demand_target_capacity", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replace_unhealthy_instances` after provisioning.\n"]
@@ -527,13 +557,13 @@ impl SpotFleetRequest {
     }
 
     #[doc = "Get a reference to the value of field `spot_maintenance_strategies` after provisioning.\n"]
-    pub fn spot_maintenance_strategies(&self) -> terrars::ListRef<SpotFleetRequestSpotMaintenanceStrategiesElRef> {
+    pub fn spot_maintenance_strategies(&self) -> terrars::ListRef<SpotFleetRequest_SpotMaintenanceStrategiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spot_maintenance_strategies", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SpotFleetRequestTimeoutsElRef {
-        SpotFleetRequestTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SpotFleetRequest_TimeoutsRef {
+        SpotFleetRequest_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -581,13 +611,14 @@ impl BuildSpotFleetRequest {
         let out = SpotFleetRequest(std::rc::Rc::new(SpotFleetRequest_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SpotFleetRequestData {
+            data: std::cell::RefCell::new(SpotFleetRequestData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 allocation_strategy: core::default::Default::default(),
+                context: core::default::Default::default(),
                 excess_capacity_termination_policy: core::default::Default::default(),
                 fleet_type: core::default::Default::default(),
                 iam_fleet_role: self.iam_fleet_role,
@@ -598,6 +629,7 @@ impl BuildSpotFleetRequest {
                 on_demand_allocation_strategy: core::default::Default::default(),
                 on_demand_max_total_price: core::default::Default::default(),
                 on_demand_target_capacity: core::default::Default::default(),
+                region: core::default::Default::default(),
                 replace_unhealthy_instances: core::default::Default::default(),
                 spot_price: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -655,6 +687,11 @@ impl SpotFleetRequestRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_token", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `context` after provisioning.\n"]
+    pub fn context(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.context", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `excess_capacity_termination_policy` after provisioning.\n"]
     pub fn excess_capacity_termination_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
@@ -712,6 +749,12 @@ impl SpotFleetRequestRef {
     #[doc = "Get a reference to the value of field `on_demand_target_capacity` after provisioning.\n"]
     pub fn on_demand_target_capacity(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.on_demand_target_capacity", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replace_unhealthy_instances` after provisioning.\n"]
@@ -786,18 +829,27 @@ impl SpotFleetRequestRef {
     }
 
     #[doc = "Get a reference to the value of field `spot_maintenance_strategies` after provisioning.\n"]
-    pub fn spot_maintenance_strategies(&self) -> terrars::ListRef<SpotFleetRequestSpotMaintenanceStrategiesElRef> {
+    pub fn spot_maintenance_strategies(&self) -> terrars::ListRef<SpotFleetRequest_SpotMaintenanceStrategiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spot_maintenance_strategies", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SpotFleetRequestTimeoutsElRef {
-        SpotFleetRequestTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SpotFleetRequest_TimeoutsRef {
+        SpotFleetRequest_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SpotFleetRequestDynamic {
+    launch_specification: std::option::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchSpecification>>,
+    launch_template_config: std::option::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig>>,
+    spot_maintenance_strategies: std
+    ::option
+    ::Option<terrars::DynamicBlock<SpotFleetRequest_SpotMaintenanceStrategies>>,
+}
+
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
+pub struct SpotFleetRequest_LaunchSpecification_EbsBlockDevice {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_on_termination: std::option::Option<terrars::PrimField<bool>>,
     device_name: terrars::PrimField<std::string::String>,
@@ -817,7 +869,7 @@ pub struct SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
+impl SpotFleetRequest_LaunchSpecification_EbsBlockDevice {
     #[doc = "Set the field `delete_on_termination`.\n"]
     pub fn set_delete_on_termination(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.delete_on_termination = std::option::Option::Some(v.into());
@@ -867,8 +919,8 @@ impl SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl>;
+impl terrars::ToListMappable for SpotFleetRequest_LaunchSpecification_EbsBlockDevice {
+    type O = terrars::BlockAssignable<SpotFleetRequest_LaunchSpecification_EbsBlockDevice>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -879,14 +931,14 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchSpecificationElEbsBlockDe
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
+pub struct BuildSpotFleetRequest_LaunchSpecification_EbsBlockDevice {
     #[doc = ""]
     pub device_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
-    pub fn build(self) -> SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
-        SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
+impl BuildSpotFleetRequest_LaunchSpecification_EbsBlockDevice {
+    pub fn build(self) -> SpotFleetRequest_LaunchSpecification_EbsBlockDevice {
+        SpotFleetRequest_LaunchSpecification_EbsBlockDevice {
             delete_on_termination: core::default::Default::default(),
             device_name: self.device_name,
             encrypted: core::default::Default::default(),
@@ -900,24 +952,26 @@ impl BuildSpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl {
     }
 }
 
-pub struct SpotFleetRequestLaunchSpecificationElEbsBlockDeviceElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchSpecification_EbsBlockDeviceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchSpecificationElEbsBlockDeviceElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchSpecification_EbsBlockDeviceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchSpecificationElEbsBlockDeviceElRef {
-        SpotFleetRequestLaunchSpecificationElEbsBlockDeviceElRef {
+    ) -> SpotFleetRequest_LaunchSpecification_EbsBlockDeviceRef {
+        SpotFleetRequest_LaunchSpecification_EbsBlockDeviceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchSpecificationElEbsBlockDeviceElRef {
+impl SpotFleetRequest_LaunchSpecification_EbsBlockDeviceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -969,15 +1023,15 @@ impl SpotFleetRequestLaunchSpecificationElEbsBlockDeviceElRef {
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl {
+pub struct SpotFleetRequest_LaunchSpecification_EphemeralBlockDevice {
     device_name: terrars::PrimField<std::string::String>,
     virtual_name: terrars::PrimField<std::string::String>,
 }
 
-impl SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl { }
+impl SpotFleetRequest_LaunchSpecification_EphemeralBlockDevice { }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl>;
+impl terrars::ToListMappable for SpotFleetRequest_LaunchSpecification_EphemeralBlockDevice {
+    type O = terrars::BlockAssignable<SpotFleetRequest_LaunchSpecification_EphemeralBlockDevice>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -988,40 +1042,42 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchSpecificationElEphemeralB
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl {
+pub struct BuildSpotFleetRequest_LaunchSpecification_EphemeralBlockDevice {
     #[doc = ""]
     pub device_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub virtual_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl {
-    pub fn build(self) -> SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl {
-        SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl {
+impl BuildSpotFleetRequest_LaunchSpecification_EphemeralBlockDevice {
+    pub fn build(self) -> SpotFleetRequest_LaunchSpecification_EphemeralBlockDevice {
+        SpotFleetRequest_LaunchSpecification_EphemeralBlockDevice {
             device_name: self.device_name,
             virtual_name: self.virtual_name,
         }
     }
 }
 
-pub struct SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchSpecification_EphemeralBlockDeviceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchSpecification_EphemeralBlockDeviceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceElRef {
-        SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceElRef {
+    ) -> SpotFleetRequest_LaunchSpecification_EphemeralBlockDeviceRef {
+        SpotFleetRequest_LaunchSpecification_EphemeralBlockDeviceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceElRef {
+impl SpotFleetRequest_LaunchSpecification_EphemeralBlockDeviceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1038,7 +1094,7 @@ impl SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceElRef {
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {
+pub struct SpotFleetRequest_LaunchSpecification_RootBlockDevice {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_on_termination: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1055,7 +1111,7 @@ pub struct SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {
+impl SpotFleetRequest_LaunchSpecification_RootBlockDevice {
     #[doc = "Set the field `delete_on_termination`.\n"]
     pub fn set_delete_on_termination(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.delete_on_termination = std::option::Option::Some(v.into());
@@ -1099,8 +1155,8 @@ impl SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl>;
+impl terrars::ToListMappable for SpotFleetRequest_LaunchSpecification_RootBlockDevice {
+    type O = terrars::BlockAssignable<SpotFleetRequest_LaunchSpecification_RootBlockDevice>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1111,11 +1167,11 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchSpecificationElRootBlockD
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {}
+pub struct BuildSpotFleetRequest_LaunchSpecification_RootBlockDevice {}
 
-impl BuildSpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {
-    pub fn build(self) -> SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {
-        SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {
+impl BuildSpotFleetRequest_LaunchSpecification_RootBlockDevice {
+    pub fn build(self) -> SpotFleetRequest_LaunchSpecification_RootBlockDevice {
+        SpotFleetRequest_LaunchSpecification_RootBlockDevice {
             delete_on_termination: core::default::Default::default(),
             encrypted: core::default::Default::default(),
             iops: core::default::Default::default(),
@@ -1127,24 +1183,26 @@ impl BuildSpotFleetRequestLaunchSpecificationElRootBlockDeviceEl {
     }
 }
 
-pub struct SpotFleetRequestLaunchSpecificationElRootBlockDeviceElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchSpecification_RootBlockDeviceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchSpecificationElRootBlockDeviceElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchSpecification_RootBlockDeviceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchSpecificationElRootBlockDeviceElRef {
-        SpotFleetRequestLaunchSpecificationElRootBlockDeviceElRef {
+    ) -> SpotFleetRequest_LaunchSpecification_RootBlockDeviceRef {
+        SpotFleetRequest_LaunchSpecification_RootBlockDeviceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchSpecificationElRootBlockDeviceElRef {
+impl SpotFleetRequest_LaunchSpecification_RootBlockDeviceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1186,20 +1244,18 @@ impl SpotFleetRequestLaunchSpecificationElRootBlockDeviceElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SpotFleetRequestLaunchSpecificationElDynamic {
-    ebs_block_device: std
-    ::option
-    ::Option<terrars::DynamicBlock<SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl>>,
+struct SpotFleetRequest_LaunchSpecificationDynamic {
+    ebs_block_device: std::option::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchSpecification_EbsBlockDevice>>,
     ephemeral_block_device: std
     ::option
-    ::Option<terrars::DynamicBlock<SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl>>,
+    ::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchSpecification_EphemeralBlockDevice>>,
     root_block_device: std
     ::option
-    ::Option<terrars::DynamicBlock<SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl>>,
+    ::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchSpecification_RootBlockDevice>>,
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchSpecificationEl {
+pub struct SpotFleetRequest_LaunchSpecification {
     ami: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     associate_public_ip_address: std::option::Option<terrars::PrimField<bool>>,
@@ -1233,17 +1289,15 @@ pub struct SpotFleetRequestLaunchSpecificationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weighted_capacity: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ebs_block_device: std::option::Option<std::vec::Vec<SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl>>,
+    ebs_block_device: std::option::Option<std::vec::Vec<SpotFleetRequest_LaunchSpecification_EbsBlockDevice>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ephemeral_block_device: std
-    ::option
-    ::Option<std::vec::Vec<SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl>>,
+    ephemeral_block_device: std::option::Option<std::vec::Vec<SpotFleetRequest_LaunchSpecification_EphemeralBlockDevice>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    root_block_device: std::option::Option<std::vec::Vec<SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl>>,
-    dynamic: SpotFleetRequestLaunchSpecificationElDynamic,
+    root_block_device: std::option::Option<std::vec::Vec<SpotFleetRequest_LaunchSpecification_RootBlockDevice>>,
+    dynamic: SpotFleetRequest_LaunchSpecificationDynamic,
 }
 
-impl SpotFleetRequestLaunchSpecificationEl {
+impl SpotFleetRequest_LaunchSpecification {
     #[doc = "Set the field `associate_public_ip_address`.\n"]
     pub fn set_associate_public_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.associate_public_ip_address = std::option::Option::Some(v.into());
@@ -1349,7 +1403,7 @@ impl SpotFleetRequestLaunchSpecificationEl {
     #[doc = "Set the field `ebs_block_device`.\n"]
     pub fn set_ebs_block_device(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequestLaunchSpecificationElEbsBlockDeviceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequest_LaunchSpecification_EbsBlockDevice>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1370,7 +1424,7 @@ impl SpotFleetRequestLaunchSpecificationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SpotFleetRequestLaunchSpecificationElEphemeralBlockDeviceEl>>,
+                    ::Into<terrars::BlockAssignable<SpotFleetRequest_LaunchSpecification_EphemeralBlockDevice>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1386,7 +1440,7 @@ impl SpotFleetRequestLaunchSpecificationEl {
     #[doc = "Set the field `root_block_device`.\n"]
     pub fn set_root_block_device(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequestLaunchSpecificationElRootBlockDeviceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequest_LaunchSpecification_RootBlockDevice>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1400,8 +1454,8 @@ impl SpotFleetRequestLaunchSpecificationEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchSpecificationEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestLaunchSpecificationEl>;
+impl terrars::ToListMappable for SpotFleetRequest_LaunchSpecification {
+    type O = terrars::BlockAssignable<SpotFleetRequest_LaunchSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1412,16 +1466,16 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchSpecificationEl {
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchSpecificationEl {
+pub struct BuildSpotFleetRequest_LaunchSpecification {
     #[doc = ""]
     pub ami: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub instance_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSpotFleetRequestLaunchSpecificationEl {
-    pub fn build(self) -> SpotFleetRequestLaunchSpecificationEl {
-        SpotFleetRequestLaunchSpecificationEl {
+impl BuildSpotFleetRequest_LaunchSpecification {
+    pub fn build(self) -> SpotFleetRequest_LaunchSpecification {
+        SpotFleetRequest_LaunchSpecification {
             ami: self.ami,
             associate_public_ip_address: core::default::Default::default(),
             availability_zone: core::default::Default::default(),
@@ -1447,21 +1501,23 @@ impl BuildSpotFleetRequestLaunchSpecificationEl {
     }
 }
 
-pub struct SpotFleetRequestLaunchSpecificationElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchSpecificationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpotFleetRequestLaunchSpecificationElRef {
-        SpotFleetRequestLaunchSpecificationElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchSpecificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpotFleetRequest_LaunchSpecificationRef {
+        SpotFleetRequest_LaunchSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchSpecificationElRef {
+impl SpotFleetRequest_LaunchSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1553,7 +1609,7 @@ impl SpotFleetRequestLaunchSpecificationElRef {
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1562,7 +1618,7 @@ pub struct SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {
+impl SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -1582,8 +1638,8 @@ impl SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl>;
+impl terrars::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification {
+    type O = terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1594,11 +1650,11 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElLaunchTem
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {
-    pub fn build(self) -> SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {
-        SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification {
+        SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification {
             id: core::default::Default::default(),
             name: core::default::Default::default(),
             version: core::default::Default::default(),
@@ -1606,24 +1662,26 @@ impl BuildSpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl {
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
-        SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
+        SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1645,14 +1703,14 @@ impl SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1667,10 +1725,10 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcce
 }
 
 impl terrars
-::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl {
+::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount {
     type O =
         terrars
-        ::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl>;
+        ::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1681,35 +1739,37 @@ impl terrars
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl {
-    pub fn build(self) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCountRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1726,14 +1786,14 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcce
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1748,11 +1808,11 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcce
 }
 
 impl terrars
-::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib {
     type O =
         terrars
         ::BlockAssignable<
-            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl,
+            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1764,38 +1824,40 @@ impl terrars
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib {
     pub fn build(
         self,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMibRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMibRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMibRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMibRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMibRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1812,14 +1874,14 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcce
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1834,11 +1896,11 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBase
 }
 
 impl terrars
-::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps {
     type O =
         terrars
         ::BlockAssignable<
-            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl,
+            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1850,38 +1912,40 @@ impl terrars
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps {
     pub fn build(
         self,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1898,14 +1962,14 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBase
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1920,10 +1984,10 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemo
 }
 
 impl terrars
-::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl {
+::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu {
     type O =
         terrars
-        ::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl>;
+        ::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1934,35 +1998,37 @@ impl terrars
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl {
-    pub fn build(self) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpuRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpuRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpuRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpuRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpuRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1979,14 +2045,14 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemo
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2000,9 +2066,9 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemo
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl {
+impl terrars::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib {
     type O =
-        terrars::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl>;
+        terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2013,35 +2079,37 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverrides
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl {
-    pub fn build(self) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMibRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMibRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMibRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMibRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMibRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2058,14 +2126,14 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemo
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2080,12 +2148,10 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetw
 }
 
 impl terrars
-::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl {
+::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps {
     type O =
         terrars
-        ::BlockAssignable<
-            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl,
-        >;
+        ::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2096,38 +2162,37 @@ impl terrars
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl {
-    pub fn build(
-        self,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbpsRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2144,14 +2209,14 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetw
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2166,12 +2231,10 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTota
 }
 
 impl terrars
-::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl {
+::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount {
     type O =
         terrars
-        ::BlockAssignable<
-            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl,
-        >;
+        ::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2182,37 +2245,37 @@ impl terrars
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl {
-    pub fn build(
-        self,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCountRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2229,14 +2292,14 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTota
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2250,9 +2313,11 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpu
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl {
+impl terrars
+::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb {
     type O =
-        terrars::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl>;
+        terrars
+        ::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2263,35 +2328,118 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverrides
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl {
-    pub fn build(self) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGbRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGbRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGbRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGbRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGbRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max` after provisioning.\n"]
+    pub fn max(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min` after provisioning.\n"]
+    pub fn min(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount {
+    #[doc = "Set the field `max`.\n"]
+    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min`.\n"]
+    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount {
+    type O =
+        terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount {}
+
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount {
+            max: core::default::Default::default(),
+            min: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCountRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCountRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCountRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCountRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2308,67 +2456,65 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpu
 }
 
 #[derive(Serialize, Default)]
-struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElDynamic {
+struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirementsDynamic {
     accelerator_count: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl>,
+        terrars::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount>,
     >,
     accelerator_total_memory_mib: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl,
-        >,
+        ::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib>,
     >,
     baseline_ebs_bandwidth_mbps: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl,
-        >,
+        ::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps>,
     >,
     memory_gib_per_vcpu: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl>,
+        terrars::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu>,
     >,
     memory_mib: std
     ::option
+    ::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib>>,
+    network_bandwidth_gbps: std
+    ::option
     ::Option<
-        terrars::DynamicBlock<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl>,
+        terrars
+        ::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps>,
     >,
     network_interface_count: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl>,
+        ::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount>,
     >,
     total_local_storage_gb: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl>,
+        ::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb>,
     >,
     vcpu_count: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl>,
-    >,
+    ::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount>>,
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_manufacturers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_instance_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bare_metal: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2392,55 +2538,51 @@ pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirements
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_count: std
     ::option
-    ::Option<
-        std::vec::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl>,
-    >,
+    ::Option<std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_total_memory_mib: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl>,
+        std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     baseline_ebs_bandwidth_mbps: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl>,
+        std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     memory_gib_per_vcpu: std
     ::option
-    ::Option<
-        std::vec::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl>,
-    >,
+    ::Option<std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     memory_mib: std
     ::option
-    ::Option<std::vec::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl>>,
+    ::Option<std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_bandwidth_gbps: std
+    ::option
+    ::Option<
+        std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps>,
+    >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface_count: std
     ::option
     ::Option<
-        std::vec::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl>,
+        std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     total_local_storage_gb: std
     ::option
-    ::Option<
-        std::vec::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl>,
-    >,
+    ::Option<std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vcpu_count: std
     ::option
-    ::Option<std::vec::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl>>,
-    dynamic: SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElDynamic,
+    ::Option<std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount>>,
+    dynamic: SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirementsDynamic,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements {
     #[doc = "Set the field `accelerator_manufacturers`.\n"]
     pub fn set_accelerator_manufacturers(
         mut self,
@@ -2465,6 +2607,15 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.accelerator_types = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `allowed_instance_types`.\n"]
+    pub fn set_allowed_instance_types(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_instance_types = std::option::Option::Some(v.into());
         self
     }
 
@@ -2560,7 +2711,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountEl,
+                            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCount,
                         >,
                     >,
     ) -> Self {
@@ -2586,7 +2737,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibEl,
+                            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMib,
                         >,
                     >,
     ) -> Self {
@@ -2612,7 +2763,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsEl,
+                            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbps,
                         >,
                     >,
     ) -> Self {
@@ -2638,7 +2789,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuEl,
+                            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpu,
                         >,
                     >,
     ) -> Self {
@@ -2664,7 +2815,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibEl,
+                            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMib,
                         >,
                     >,
     ) -> Self {
@@ -2674,6 +2825,32 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.memory_mib = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `network_bandwidth_gbps`.\n"]
+    pub fn set_network_bandwidth_gbps(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbps,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_bandwidth_gbps = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_bandwidth_gbps = std::option::Option::Some(d);
             },
         }
         self
@@ -2690,7 +2867,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountEl,
+                            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCount,
                         >,
                     >,
     ) -> Self {
@@ -2716,7 +2893,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbEl,
+                            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGb,
                         >,
                     >,
     ) -> Self {
@@ -2742,7 +2919,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountEl,
+                            SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCount,
                         >,
                     >,
     ) -> Self {
@@ -2758,8 +2935,8 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl>;
+impl terrars::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements {
+    type O = terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2770,14 +2947,15 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverrides
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
-    pub fn build(self) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements {
             accelerator_manufacturers: core::default::Default::default(),
             accelerator_names: core::default::Default::default(),
             accelerator_types: core::default::Default::default(),
+            allowed_instance_types: core::default::Default::default(),
             bare_metal: core::default::Default::default(),
             burstable_performance: core::default::Default::default(),
             cpu_manufacturers: core::default::Default::default(),
@@ -2793,6 +2971,7 @@ impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsE
             baseline_ebs_bandwidth_mbps: core::default::Default::default(),
             memory_gib_per_vcpu: core::default::Default::default(),
             memory_mib: core::default::Default::default(),
+            network_bandwidth_gbps: core::default::Default::default(),
             network_interface_count: core::default::Default::default(),
             total_local_storage_gb: core::default::Default::default(),
             vcpu_count: core::default::Default::default(),
@@ -2801,24 +2980,26 @@ impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsE
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirementsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirementsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirementsRef {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirementsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirementsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2836,6 +3017,11 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef 
     #[doc = "Get a reference to the value of field `accelerator_types` after provisioning.\n"]
     pub fn accelerator_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.accelerator_types", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `allowed_instance_types` after provisioning.\n"]
+    pub fn allowed_instance_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_instance_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `bare_metal` after provisioning.\n"]
@@ -2898,8 +3084,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef 
     #[doc = "Get a reference to the value of field `accelerator_count` after provisioning.\n"]
     pub fn accelerator_count(
         &self,
-    ) -> terrars
-    ::ListRef<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorCountElRef> {
+    ) -> terrars::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerator_count", self.base))
     }
 
@@ -2907,7 +3092,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef 
     pub fn accelerator_total_memory_mib(
         &self,
     ) -> terrars
-    ::ListRef<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElAcceleratorTotalMemoryMibElRef> {
+    ::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_AcceleratorTotalMemoryMibRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerator_total_memory_mib", self.base))
     }
 
@@ -2915,30 +3100,37 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef 
     pub fn baseline_ebs_bandwidth_mbps(
         &self,
     ) -> terrars
-    ::ListRef<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef> {
+    ::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_BaselineEbsBandwidthMbpsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.baseline_ebs_bandwidth_mbps", self.base))
     }
 
     #[doc = "Get a reference to the value of field `memory_gib_per_vcpu` after provisioning.\n"]
     pub fn memory_gib_per_vcpu(
         &self,
-    ) -> terrars
-    ::ListRef<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryGibPerVcpuElRef> {
+    ) -> terrars::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryGibPerVcpuRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memory_gib_per_vcpu", self.base))
     }
 
     #[doc = "Get a reference to the value of field `memory_mib` after provisioning.\n"]
     pub fn memory_mib(
         &self,
-    ) -> terrars::ListRef<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElMemoryMibElRef> {
+    ) -> terrars::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_MemoryMibRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memory_mib", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `network_bandwidth_gbps` after provisioning.\n"]
+    pub fn network_bandwidth_gbps(
+        &self,
+    ) -> terrars
+    ::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkBandwidthGbpsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_bandwidth_gbps", self.base))
     }
 
     #[doc = "Get a reference to the value of field `network_interface_count` after provisioning.\n"]
     pub fn network_interface_count(
         &self,
     ) -> terrars
-    ::ListRef<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElNetworkInterfaceCountElRef> {
+    ::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_NetworkInterfaceCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface_count", self.base))
     }
 
@@ -2946,27 +3138,27 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef 
     pub fn total_local_storage_gb(
         &self,
     ) -> terrars
-    ::ListRef<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElTotalLocalStorageGbElRef> {
+    ::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_TotalLocalStorageGbRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.total_local_storage_gb", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vcpu_count` after provisioning.\n"]
     pub fn vcpu_count(
         &self,
-    ) -> terrars::ListRef<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElVcpuCountElRef> {
+    ) -> terrars::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements_VcpuCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vcpu_count", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct SpotFleetRequestLaunchTemplateConfigElOverridesElDynamic {
+struct SpotFleetRequest_LaunchTemplateConfig_OverridesDynamic {
     instance_requirements: std
     ::option
-    ::Option<terrars::DynamicBlock<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl>>,
+    ::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements>>,
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig_Overrides {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2982,11 +3174,11 @@ pub struct SpotFleetRequestLaunchTemplateConfigElOverridesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_requirements: std
     ::option
-    ::Option<std::vec::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl>>,
-    dynamic: SpotFleetRequestLaunchTemplateConfigElOverridesElDynamic,
+    ::Option<std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements>>,
+    dynamic: SpotFleetRequest_LaunchTemplateConfig_OverridesDynamic,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesEl {
+impl SpotFleetRequest_LaunchTemplateConfig_Overrides {
     #[doc = "Set the field `availability_zone`.\n"]
     pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.availability_zone = std::option::Option::Some(v.into());
@@ -3032,8 +3224,7 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsEl>,
+                        terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirements>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3048,8 +3239,8 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverridesEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElOverridesEl>;
+impl terrars::ToListMappable for SpotFleetRequest_LaunchTemplateConfig_Overrides {
+    type O = terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3060,11 +3251,11 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigElOverrides
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigElOverridesEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig_Overrides {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesEl {
-    pub fn build(self) -> SpotFleetRequestLaunchTemplateConfigElOverridesEl {
-        SpotFleetRequestLaunchTemplateConfigElOverridesEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig_Overrides {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig_Overrides {
+        SpotFleetRequest_LaunchTemplateConfig_Overrides {
             availability_zone: core::default::Default::default(),
             instance_type: core::default::Default::default(),
             priority: core::default::Default::default(),
@@ -3077,24 +3268,26 @@ impl BuildSpotFleetRequestLaunchTemplateConfigElOverridesEl {
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElOverridesElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfig_OverridesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchTemplateConfigElOverridesElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfig_OverridesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestLaunchTemplateConfigElOverridesElRef {
-        SpotFleetRequestLaunchTemplateConfigElOverridesElRef {
+    ) -> SpotFleetRequest_LaunchTemplateConfig_OverridesRef {
+        SpotFleetRequest_LaunchTemplateConfig_OverridesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElOverridesElRef {
+impl SpotFleetRequest_LaunchTemplateConfig_OverridesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3132,31 +3325,31 @@ impl SpotFleetRequestLaunchTemplateConfigElOverridesElRef {
     #[doc = "Get a reference to the value of field `instance_requirements` after provisioning.\n"]
     pub fn instance_requirements(
         &self,
-    ) -> terrars::ListRef<SpotFleetRequestLaunchTemplateConfigElOverridesElInstanceRequirementsElRef> {
+    ) -> terrars::ListRef<SpotFleetRequest_LaunchTemplateConfig_Overrides_InstanceRequirementsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_requirements", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct SpotFleetRequestLaunchTemplateConfigElDynamic {
+struct SpotFleetRequest_LaunchTemplateConfigDynamic {
     launch_template_specification: std
     ::option
-    ::Option<terrars::DynamicBlock<SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl>>,
-    overrides: std::option::Option<terrars::DynamicBlock<SpotFleetRequestLaunchTemplateConfigElOverridesEl>>,
+    ::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification>>,
+    overrides: std::option::Option<terrars::DynamicBlock<SpotFleetRequest_LaunchTemplateConfig_Overrides>>,
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestLaunchTemplateConfigEl {
+pub struct SpotFleetRequest_LaunchTemplateConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_template_specification: std
     ::option
-    ::Option<std::vec::Vec<SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl>>,
+    ::Option<std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    overrides: std::option::Option<std::vec::Vec<SpotFleetRequestLaunchTemplateConfigElOverridesEl>>,
-    dynamic: SpotFleetRequestLaunchTemplateConfigElDynamic,
+    overrides: std::option::Option<std::vec::Vec<SpotFleetRequest_LaunchTemplateConfig_Overrides>>,
+    dynamic: SpotFleetRequest_LaunchTemplateConfigDynamic,
 }
 
-impl SpotFleetRequestLaunchTemplateConfigEl {
+impl SpotFleetRequest_LaunchTemplateConfig {
     #[doc = "Set the field `launch_template_specification`.\n"]
     pub fn set_launch_template_specification(
         mut self,
@@ -3166,7 +3359,7 @@ impl SpotFleetRequestLaunchTemplateConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationEl>,
+                        terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecification>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3183,7 +3376,7 @@ impl SpotFleetRequestLaunchTemplateConfigEl {
     #[doc = "Set the field `overrides`.\n"]
     pub fn set_overrides(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequestLaunchTemplateConfigElOverridesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig_Overrides>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3197,8 +3390,8 @@ impl SpotFleetRequestLaunchTemplateConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestLaunchTemplateConfigEl>;
+impl terrars::ToListMappable for SpotFleetRequest_LaunchTemplateConfig {
+    type O = terrars::BlockAssignable<SpotFleetRequest_LaunchTemplateConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3209,11 +3402,11 @@ impl terrars::ToListMappable for SpotFleetRequestLaunchTemplateConfigEl {
     }
 }
 
-pub struct BuildSpotFleetRequestLaunchTemplateConfigEl {}
+pub struct BuildSpotFleetRequest_LaunchTemplateConfig {}
 
-impl BuildSpotFleetRequestLaunchTemplateConfigEl {
-    pub fn build(self) -> SpotFleetRequestLaunchTemplateConfigEl {
-        SpotFleetRequestLaunchTemplateConfigEl {
+impl BuildSpotFleetRequest_LaunchTemplateConfig {
+    pub fn build(self) -> SpotFleetRequest_LaunchTemplateConfig {
+        SpotFleetRequest_LaunchTemplateConfig {
             launch_template_specification: core::default::Default::default(),
             overrides: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3221,21 +3414,23 @@ impl BuildSpotFleetRequestLaunchTemplateConfigEl {
     }
 }
 
-pub struct SpotFleetRequestLaunchTemplateConfigElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_LaunchTemplateConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestLaunchTemplateConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpotFleetRequestLaunchTemplateConfigElRef {
-        SpotFleetRequestLaunchTemplateConfigElRef {
+impl terrars::Ref for SpotFleetRequest_LaunchTemplateConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpotFleetRequest_LaunchTemplateConfigRef {
+        SpotFleetRequest_LaunchTemplateConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestLaunchTemplateConfigElRef {
+impl SpotFleetRequest_LaunchTemplateConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3243,18 +3438,18 @@ impl SpotFleetRequestLaunchTemplateConfigElRef {
     #[doc = "Get a reference to the value of field `launch_template_specification` after provisioning.\n"]
     pub fn launch_template_specification(
         &self,
-    ) -> terrars::ListRef<SpotFleetRequestLaunchTemplateConfigElLaunchTemplateSpecificationElRef> {
+    ) -> terrars::ListRef<SpotFleetRequest_LaunchTemplateConfig_LaunchTemplateSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template_specification", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl {
+pub struct SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replacement_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl {
+impl SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance {
     #[doc = "Set the field `replacement_strategy`.\n"]
     pub fn set_replacement_strategy(
         mut self,
@@ -3265,8 +3460,8 @@ impl SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl>;
+impl terrars::ToListMappable for SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance {
+    type O = terrars::BlockAssignable<SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3277,34 +3472,36 @@ impl terrars::ToListMappable for SpotFleetRequestSpotMaintenanceStrategiesElCapa
     }
 }
 
-pub struct BuildSpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl {}
+pub struct BuildSpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance {}
 
-impl BuildSpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl {
-    pub fn build(self) -> SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl {
-        SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl {
+impl BuildSpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance {
+    pub fn build(self) -> SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance {
+        SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance {
             replacement_strategy: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalanceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceElRef {
+impl terrars::Ref for SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalanceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceElRef {
-        SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceElRef {
+    ) -> SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalanceRef {
+        SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalanceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceElRef {
+impl SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalanceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3316,22 +3513,20 @@ impl SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SpotFleetRequestSpotMaintenanceStrategiesElDynamic {
+struct SpotFleetRequest_SpotMaintenanceStrategiesDynamic {
     capacity_rebalance: std
     ::option
-    ::Option<terrars::DynamicBlock<SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl>>,
+    ::Option<terrars::DynamicBlock<SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance>>,
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestSpotMaintenanceStrategiesEl {
+pub struct SpotFleetRequest_SpotMaintenanceStrategies {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    capacity_rebalance: std
-    ::option
-    ::Option<std::vec::Vec<SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl>>,
-    dynamic: SpotFleetRequestSpotMaintenanceStrategiesElDynamic,
+    capacity_rebalance: std::option::Option<std::vec::Vec<SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance>>,
+    dynamic: SpotFleetRequest_SpotMaintenanceStrategiesDynamic,
 }
 
-impl SpotFleetRequestSpotMaintenanceStrategiesEl {
+impl SpotFleetRequest_SpotMaintenanceStrategies {
     #[doc = "Set the field `capacity_rebalance`.\n"]
     pub fn set_capacity_rebalance(
         mut self,
@@ -3340,7 +3535,7 @@ impl SpotFleetRequestSpotMaintenanceStrategiesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceEl>>,
+                    ::Into<terrars::BlockAssignable<SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalance>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3354,8 +3549,8 @@ impl SpotFleetRequestSpotMaintenanceStrategiesEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestSpotMaintenanceStrategiesEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestSpotMaintenanceStrategiesEl>;
+impl terrars::ToListMappable for SpotFleetRequest_SpotMaintenanceStrategies {
+    type O = terrars::BlockAssignable<SpotFleetRequest_SpotMaintenanceStrategies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3366,35 +3561,34 @@ impl terrars::ToListMappable for SpotFleetRequestSpotMaintenanceStrategiesEl {
     }
 }
 
-pub struct BuildSpotFleetRequestSpotMaintenanceStrategiesEl {}
+pub struct BuildSpotFleetRequest_SpotMaintenanceStrategies {}
 
-impl BuildSpotFleetRequestSpotMaintenanceStrategiesEl {
-    pub fn build(self) -> SpotFleetRequestSpotMaintenanceStrategiesEl {
-        SpotFleetRequestSpotMaintenanceStrategiesEl {
+impl BuildSpotFleetRequest_SpotMaintenanceStrategies {
+    pub fn build(self) -> SpotFleetRequest_SpotMaintenanceStrategies {
+        SpotFleetRequest_SpotMaintenanceStrategies {
             capacity_rebalance: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SpotFleetRequestSpotMaintenanceStrategiesElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_SpotMaintenanceStrategiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestSpotMaintenanceStrategiesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> SpotFleetRequestSpotMaintenanceStrategiesElRef {
-        SpotFleetRequestSpotMaintenanceStrategiesElRef {
+impl terrars::Ref for SpotFleetRequest_SpotMaintenanceStrategiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpotFleetRequest_SpotMaintenanceStrategiesRef {
+        SpotFleetRequest_SpotMaintenanceStrategiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestSpotMaintenanceStrategiesElRef {
+impl SpotFleetRequest_SpotMaintenanceStrategiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3402,13 +3596,13 @@ impl SpotFleetRequestSpotMaintenanceStrategiesElRef {
     #[doc = "Get a reference to the value of field `capacity_rebalance` after provisioning.\n"]
     pub fn capacity_rebalance(
         &self,
-    ) -> terrars::ListRef<SpotFleetRequestSpotMaintenanceStrategiesElCapacityRebalanceElRef> {
+    ) -> terrars::ListRef<SpotFleetRequest_SpotMaintenanceStrategies_CapacityRebalanceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_rebalance", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SpotFleetRequestTimeoutsEl {
+pub struct SpotFleetRequest_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3417,7 +3611,7 @@ pub struct SpotFleetRequestTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SpotFleetRequestTimeoutsEl {
+impl SpotFleetRequest_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3437,8 +3631,8 @@ impl SpotFleetRequestTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SpotFleetRequestTimeoutsEl {
-    type O = terrars::BlockAssignable<SpotFleetRequestTimeoutsEl>;
+impl terrars::ToListMappable for SpotFleetRequest_Timeouts {
+    type O = terrars::BlockAssignable<SpotFleetRequest_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3449,11 +3643,11 @@ impl terrars::ToListMappable for SpotFleetRequestTimeoutsEl {
     }
 }
 
-pub struct BuildSpotFleetRequestTimeoutsEl {}
+pub struct BuildSpotFleetRequest_Timeouts {}
 
-impl BuildSpotFleetRequestTimeoutsEl {
-    pub fn build(self) -> SpotFleetRequestTimeoutsEl {
-        SpotFleetRequestTimeoutsEl {
+impl BuildSpotFleetRequest_Timeouts {
+    pub fn build(self) -> SpotFleetRequest_Timeouts {
+        SpotFleetRequest_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -3461,21 +3655,23 @@ impl BuildSpotFleetRequestTimeoutsEl {
     }
 }
 
-pub struct SpotFleetRequestTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SpotFleetRequest_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SpotFleetRequestTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SpotFleetRequestTimeoutsElRef {
-        SpotFleetRequestTimeoutsElRef {
+impl terrars::Ref for SpotFleetRequest_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SpotFleetRequest_TimeoutsRef {
+        SpotFleetRequest_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SpotFleetRequestTimeoutsElRef {
+impl SpotFleetRequest_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3494,13 +3690,4 @@ impl SpotFleetRequestTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SpotFleetRequestDynamic {
-    launch_specification: std::option::Option<terrars::DynamicBlock<SpotFleetRequestLaunchSpecificationEl>>,
-    launch_template_config: std::option::Option<terrars::DynamicBlock<SpotFleetRequestLaunchTemplateConfigEl>>,
-    spot_maintenance_strategies: std
-    ::option
-    ::Option<terrars::DynamicBlock<SpotFleetRequestSpotMaintenanceStrategiesEl>>,
 }

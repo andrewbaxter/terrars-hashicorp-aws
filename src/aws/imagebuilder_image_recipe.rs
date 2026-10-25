@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ImagebuilderImageRecipeData {
+struct ImagebuilderImageRecipeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,11 +21,15 @@ struct ImagebuilderImageRecipeData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ami_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     parent_image: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,18 +40,18 @@ struct ImagebuilderImageRecipeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     working_directory: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    block_device_mapping: std::option::Option<std::vec::Vec<ImagebuilderImageRecipeBlockDeviceMappingEl>>,
+    block_device_mapping: std::option::Option<std::vec::Vec<ImagebuilderImageRecipe_BlockDeviceMapping>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    component: std::option::Option<std::vec::Vec<ImagebuilderImageRecipeComponentEl>>,
+    component: std::option::Option<std::vec::Vec<ImagebuilderImageRecipe_Component>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    systems_manager_agent: std::option::Option<std::vec::Vec<ImagebuilderImageRecipeSystemsManagerAgentEl>>,
+    systems_manager_agent: std::option::Option<std::vec::Vec<ImagebuilderImageRecipe_SystemsManagerAgent>>,
     dynamic: ImagebuilderImageRecipeDynamic,
 }
 
 struct ImagebuilderImageRecipe_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ImagebuilderImageRecipeData>,
+    data: std::cell::RefCell<ImagebuilderImageRecipeData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +151,15 @@ impl ImagebuilderImageRecipe {
         self
     }
 
+    #[doc = "Set the field `ami_tags`.\n"]
+    pub fn set_ami_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().ami_tags = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -154,6 +169,13 @@ impl ImagebuilderImageRecipe {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -190,7 +212,7 @@ impl ImagebuilderImageRecipe {
     #[doc = "Set the field `block_device_mapping`.\n"]
     pub fn set_block_device_mapping(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipeBlockDeviceMappingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipe_BlockDeviceMapping>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -206,7 +228,7 @@ impl ImagebuilderImageRecipe {
     #[doc = "Set the field `component`.\n"]
     pub fn set_component(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipeComponentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipe_Component>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -222,7 +244,7 @@ impl ImagebuilderImageRecipe {
     #[doc = "Set the field `systems_manager_agent`.\n"]
     pub fn set_systems_manager_agent(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipeSystemsManagerAgentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipe_SystemsManagerAgent>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -233,6 +255,11 @@ impl ImagebuilderImageRecipe {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `ami_tags` after provisioning.\n"]
+    pub fn ami_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.ami_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -275,6 +302,12 @@ impl ImagebuilderImageRecipe {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -301,12 +334,12 @@ impl ImagebuilderImageRecipe {
     }
 
     #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(&self) -> terrars::ListRef<ImagebuilderImageRecipeComponentElRef> {
+    pub fn component(&self) -> terrars::ListRef<ImagebuilderImageRecipe_ComponentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `systems_manager_agent` after provisioning.\n"]
-    pub fn systems_manager_agent(&self) -> terrars::ListRef<ImagebuilderImageRecipeSystemsManagerAgentElRef> {
+    pub fn systems_manager_agent(&self) -> terrars::ListRef<ImagebuilderImageRecipe_SystemsManagerAgentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.systems_manager_agent", self.extract_ref()))
     }
 }
@@ -357,16 +390,18 @@ impl BuildImagebuilderImageRecipe {
         let out = ImagebuilderImageRecipe(std::rc::Rc::new(ImagebuilderImageRecipe_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ImagebuilderImageRecipeData {
+            data: std::cell::RefCell::new(ImagebuilderImageRecipeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                ami_tags: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 parent_image: self.parent_image,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 user_data_base64: core::default::Default::default(),
@@ -404,6 +439,11 @@ impl ImagebuilderImageRecipeRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ami_tags` after provisioning.\n"]
+    pub fn ami_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.ami_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -446,6 +486,12 @@ impl ImagebuilderImageRecipeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -472,18 +518,25 @@ impl ImagebuilderImageRecipeRef {
     }
 
     #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(&self) -> terrars::ListRef<ImagebuilderImageRecipeComponentElRef> {
+    pub fn component(&self) -> terrars::ListRef<ImagebuilderImageRecipe_ComponentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `systems_manager_agent` after provisioning.\n"]
-    pub fn systems_manager_agent(&self) -> terrars::ListRef<ImagebuilderImageRecipeSystemsManagerAgentElRef> {
+    pub fn systems_manager_agent(&self) -> terrars::ListRef<ImagebuilderImageRecipe_SystemsManagerAgentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.systems_manager_agent", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ImagebuilderImageRecipeDynamic {
+    block_device_mapping: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipe_BlockDeviceMapping>>,
+    component: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipe_Component>>,
+    systems_manager_agent: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipe_SystemsManagerAgent>>,
+}
+
 #[derive(Serialize)]
-pub struct ImagebuilderImageRecipeBlockDeviceMappingElEbsEl {
+pub struct ImagebuilderImageRecipe_BlockDeviceMapping_Ebs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_on_termination: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -502,7 +555,7 @@ pub struct ImagebuilderImageRecipeBlockDeviceMappingElEbsEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ImagebuilderImageRecipeBlockDeviceMappingElEbsEl {
+impl ImagebuilderImageRecipe_BlockDeviceMapping_Ebs {
     #[doc = "Set the field `delete_on_termination`.\n"]
     pub fn set_delete_on_termination(
         mut self,
@@ -555,8 +608,8 @@ impl ImagebuilderImageRecipeBlockDeviceMappingElEbsEl {
     }
 }
 
-impl terrars::ToListMappable for ImagebuilderImageRecipeBlockDeviceMappingElEbsEl {
-    type O = terrars::BlockAssignable<ImagebuilderImageRecipeBlockDeviceMappingElEbsEl>;
+impl terrars::ToListMappable for ImagebuilderImageRecipe_BlockDeviceMapping_Ebs {
+    type O = terrars::BlockAssignable<ImagebuilderImageRecipe_BlockDeviceMapping_Ebs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -567,11 +620,11 @@ impl terrars::ToListMappable for ImagebuilderImageRecipeBlockDeviceMappingElEbsE
     }
 }
 
-pub struct BuildImagebuilderImageRecipeBlockDeviceMappingElEbsEl {}
+pub struct BuildImagebuilderImageRecipe_BlockDeviceMapping_Ebs {}
 
-impl BuildImagebuilderImageRecipeBlockDeviceMappingElEbsEl {
-    pub fn build(self) -> ImagebuilderImageRecipeBlockDeviceMappingElEbsEl {
-        ImagebuilderImageRecipeBlockDeviceMappingElEbsEl {
+impl BuildImagebuilderImageRecipe_BlockDeviceMapping_Ebs {
+    pub fn build(self) -> ImagebuilderImageRecipe_BlockDeviceMapping_Ebs {
+        ImagebuilderImageRecipe_BlockDeviceMapping_Ebs {
             delete_on_termination: core::default::Default::default(),
             encrypted: core::default::Default::default(),
             iops: core::default::Default::default(),
@@ -584,24 +637,26 @@ impl BuildImagebuilderImageRecipeBlockDeviceMappingElEbsEl {
     }
 }
 
-pub struct ImagebuilderImageRecipeBlockDeviceMappingElEbsElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderImageRecipe_BlockDeviceMapping_EbsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderImageRecipeBlockDeviceMappingElEbsElRef {
+impl terrars::Ref for ImagebuilderImageRecipe_BlockDeviceMapping_EbsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderImageRecipeBlockDeviceMappingElEbsElRef {
-        ImagebuilderImageRecipeBlockDeviceMappingElEbsElRef {
+    ) -> ImagebuilderImageRecipe_BlockDeviceMapping_EbsRef {
+        ImagebuilderImageRecipe_BlockDeviceMapping_EbsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderImageRecipeBlockDeviceMappingElEbsElRef {
+impl ImagebuilderImageRecipe_BlockDeviceMapping_EbsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -648,12 +703,12 @@ impl ImagebuilderImageRecipeBlockDeviceMappingElEbsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ImagebuilderImageRecipeBlockDeviceMappingElDynamic {
-    ebs: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipeBlockDeviceMappingElEbsEl>>,
+struct ImagebuilderImageRecipe_BlockDeviceMappingDynamic {
+    ebs: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipe_BlockDeviceMapping_Ebs>>,
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderImageRecipeBlockDeviceMappingEl {
+pub struct ImagebuilderImageRecipe_BlockDeviceMapping {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -661,11 +716,11 @@ pub struct ImagebuilderImageRecipeBlockDeviceMappingEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     virtual_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ebs: std::option::Option<std::vec::Vec<ImagebuilderImageRecipeBlockDeviceMappingElEbsEl>>,
-    dynamic: ImagebuilderImageRecipeBlockDeviceMappingElDynamic,
+    ebs: std::option::Option<std::vec::Vec<ImagebuilderImageRecipe_BlockDeviceMapping_Ebs>>,
+    dynamic: ImagebuilderImageRecipe_BlockDeviceMappingDynamic,
 }
 
-impl ImagebuilderImageRecipeBlockDeviceMappingEl {
+impl ImagebuilderImageRecipe_BlockDeviceMapping {
     #[doc = "Set the field `device_name`.\n"]
     pub fn set_device_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.device_name = std::option::Option::Some(v.into());
@@ -687,7 +742,7 @@ impl ImagebuilderImageRecipeBlockDeviceMappingEl {
     #[doc = "Set the field `ebs`.\n"]
     pub fn set_ebs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipeBlockDeviceMappingElEbsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipe_BlockDeviceMapping_Ebs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -701,8 +756,8 @@ impl ImagebuilderImageRecipeBlockDeviceMappingEl {
     }
 }
 
-impl terrars::ToListMappable for ImagebuilderImageRecipeBlockDeviceMappingEl {
-    type O = terrars::BlockAssignable<ImagebuilderImageRecipeBlockDeviceMappingEl>;
+impl terrars::ToListMappable for ImagebuilderImageRecipe_BlockDeviceMapping {
+    type O = terrars::BlockAssignable<ImagebuilderImageRecipe_BlockDeviceMapping>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -713,11 +768,11 @@ impl terrars::ToListMappable for ImagebuilderImageRecipeBlockDeviceMappingEl {
     }
 }
 
-pub struct BuildImagebuilderImageRecipeBlockDeviceMappingEl {}
+pub struct BuildImagebuilderImageRecipe_BlockDeviceMapping {}
 
-impl BuildImagebuilderImageRecipeBlockDeviceMappingEl {
-    pub fn build(self) -> ImagebuilderImageRecipeBlockDeviceMappingEl {
-        ImagebuilderImageRecipeBlockDeviceMappingEl {
+impl BuildImagebuilderImageRecipe_BlockDeviceMapping {
+    pub fn build(self) -> ImagebuilderImageRecipe_BlockDeviceMapping {
+        ImagebuilderImageRecipe_BlockDeviceMapping {
             device_name: core::default::Default::default(),
             no_device: core::default::Default::default(),
             virtual_name: core::default::Default::default(),
@@ -727,24 +782,23 @@ impl BuildImagebuilderImageRecipeBlockDeviceMappingEl {
     }
 }
 
-pub struct ImagebuilderImageRecipeBlockDeviceMappingElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderImageRecipe_BlockDeviceMappingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderImageRecipeBlockDeviceMappingElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ImagebuilderImageRecipeBlockDeviceMappingElRef {
-        ImagebuilderImageRecipeBlockDeviceMappingElRef {
+impl terrars::Ref for ImagebuilderImageRecipe_BlockDeviceMappingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ImagebuilderImageRecipe_BlockDeviceMappingRef {
+        ImagebuilderImageRecipe_BlockDeviceMappingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderImageRecipeBlockDeviceMappingElRef {
+impl ImagebuilderImageRecipe_BlockDeviceMappingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -765,21 +819,21 @@ impl ImagebuilderImageRecipeBlockDeviceMappingElRef {
     }
 
     #[doc = "Get a reference to the value of field `ebs` after provisioning.\n"]
-    pub fn ebs(&self) -> terrars::ListRef<ImagebuilderImageRecipeBlockDeviceMappingElEbsElRef> {
+    pub fn ebs(&self) -> terrars::ListRef<ImagebuilderImageRecipe_BlockDeviceMapping_EbsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ebs", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderImageRecipeComponentElParameterEl {
+pub struct ImagebuilderImageRecipe_Component_Parameter {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl ImagebuilderImageRecipeComponentElParameterEl { }
+impl ImagebuilderImageRecipe_Component_Parameter { }
 
-impl terrars::ToListMappable for ImagebuilderImageRecipeComponentElParameterEl {
-    type O = terrars::BlockAssignable<ImagebuilderImageRecipeComponentElParameterEl>;
+impl terrars::ToListMappable for ImagebuilderImageRecipe_Component_Parameter {
+    type O = terrars::BlockAssignable<ImagebuilderImageRecipe_Component_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -790,40 +844,42 @@ impl terrars::ToListMappable for ImagebuilderImageRecipeComponentElParameterEl {
     }
 }
 
-pub struct BuildImagebuilderImageRecipeComponentElParameterEl {
+pub struct BuildImagebuilderImageRecipe_Component_Parameter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildImagebuilderImageRecipeComponentElParameterEl {
-    pub fn build(self) -> ImagebuilderImageRecipeComponentElParameterEl {
-        ImagebuilderImageRecipeComponentElParameterEl {
+impl BuildImagebuilderImageRecipe_Component_Parameter {
+    pub fn build(self) -> ImagebuilderImageRecipe_Component_Parameter {
+        ImagebuilderImageRecipe_Component_Parameter {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct ImagebuilderImageRecipeComponentElParameterElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderImageRecipe_Component_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderImageRecipeComponentElParameterElRef {
+impl terrars::Ref for ImagebuilderImageRecipe_Component_ParameterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderImageRecipeComponentElParameterElRef {
-        ImagebuilderImageRecipeComponentElParameterElRef {
+    ) -> ImagebuilderImageRecipe_Component_ParameterRef {
+        ImagebuilderImageRecipe_Component_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderImageRecipeComponentElParameterElRef {
+impl ImagebuilderImageRecipe_Component_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -840,23 +896,23 @@ impl ImagebuilderImageRecipeComponentElParameterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ImagebuilderImageRecipeComponentElDynamic {
-    parameter: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipeComponentElParameterEl>>,
+struct ImagebuilderImageRecipe_ComponentDynamic {
+    parameter: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipe_Component_Parameter>>,
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderImageRecipeComponentEl {
+pub struct ImagebuilderImageRecipe_Component {
     component_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<std::vec::Vec<ImagebuilderImageRecipeComponentElParameterEl>>,
-    dynamic: ImagebuilderImageRecipeComponentElDynamic,
+    parameter: std::option::Option<std::vec::Vec<ImagebuilderImageRecipe_Component_Parameter>>,
+    dynamic: ImagebuilderImageRecipe_ComponentDynamic,
 }
 
-impl ImagebuilderImageRecipeComponentEl {
+impl ImagebuilderImageRecipe_Component {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipeComponentElParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderImageRecipe_Component_Parameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -870,8 +926,8 @@ impl ImagebuilderImageRecipeComponentEl {
     }
 }
 
-impl terrars::ToListMappable for ImagebuilderImageRecipeComponentEl {
-    type O = terrars::BlockAssignable<ImagebuilderImageRecipeComponentEl>;
+impl terrars::ToListMappable for ImagebuilderImageRecipe_Component {
+    type O = terrars::BlockAssignable<ImagebuilderImageRecipe_Component>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -882,14 +938,14 @@ impl terrars::ToListMappable for ImagebuilderImageRecipeComponentEl {
     }
 }
 
-pub struct BuildImagebuilderImageRecipeComponentEl {
+pub struct BuildImagebuilderImageRecipe_Component {
     #[doc = ""]
     pub component_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildImagebuilderImageRecipeComponentEl {
-    pub fn build(self) -> ImagebuilderImageRecipeComponentEl {
-        ImagebuilderImageRecipeComponentEl {
+impl BuildImagebuilderImageRecipe_Component {
+    pub fn build(self) -> ImagebuilderImageRecipe_Component {
+        ImagebuilderImageRecipe_Component {
             component_arn: self.component_arn,
             parameter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -897,21 +953,23 @@ impl BuildImagebuilderImageRecipeComponentEl {
     }
 }
 
-pub struct ImagebuilderImageRecipeComponentElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderImageRecipe_ComponentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderImageRecipeComponentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ImagebuilderImageRecipeComponentElRef {
-        ImagebuilderImageRecipeComponentElRef {
+impl terrars::Ref for ImagebuilderImageRecipe_ComponentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ImagebuilderImageRecipe_ComponentRef {
+        ImagebuilderImageRecipe_ComponentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderImageRecipeComponentElRef {
+impl ImagebuilderImageRecipe_ComponentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -923,14 +981,14 @@ impl ImagebuilderImageRecipeComponentElRef {
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderImageRecipeSystemsManagerAgentEl {
+pub struct ImagebuilderImageRecipe_SystemsManagerAgent {
     uninstall_after_build: terrars::PrimField<bool>,
 }
 
-impl ImagebuilderImageRecipeSystemsManagerAgentEl { }
+impl ImagebuilderImageRecipe_SystemsManagerAgent { }
 
-impl terrars::ToListMappable for ImagebuilderImageRecipeSystemsManagerAgentEl {
-    type O = terrars::BlockAssignable<ImagebuilderImageRecipeSystemsManagerAgentEl>;
+impl terrars::ToListMappable for ImagebuilderImageRecipe_SystemsManagerAgent {
+    type O = terrars::BlockAssignable<ImagebuilderImageRecipe_SystemsManagerAgent>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -941,35 +999,37 @@ impl terrars::ToListMappable for ImagebuilderImageRecipeSystemsManagerAgentEl {
     }
 }
 
-pub struct BuildImagebuilderImageRecipeSystemsManagerAgentEl {
+pub struct BuildImagebuilderImageRecipe_SystemsManagerAgent {
     #[doc = ""]
     pub uninstall_after_build: terrars::PrimField<bool>,
 }
 
-impl BuildImagebuilderImageRecipeSystemsManagerAgentEl {
-    pub fn build(self) -> ImagebuilderImageRecipeSystemsManagerAgentEl {
-        ImagebuilderImageRecipeSystemsManagerAgentEl { uninstall_after_build: self.uninstall_after_build }
+impl BuildImagebuilderImageRecipe_SystemsManagerAgent {
+    pub fn build(self) -> ImagebuilderImageRecipe_SystemsManagerAgent {
+        ImagebuilderImageRecipe_SystemsManagerAgent { uninstall_after_build: self.uninstall_after_build }
     }
 }
 
-pub struct ImagebuilderImageRecipeSystemsManagerAgentElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderImageRecipe_SystemsManagerAgentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderImageRecipeSystemsManagerAgentElRef {
+impl terrars::Ref for ImagebuilderImageRecipe_SystemsManagerAgentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderImageRecipeSystemsManagerAgentElRef {
-        ImagebuilderImageRecipeSystemsManagerAgentElRef {
+    ) -> ImagebuilderImageRecipe_SystemsManagerAgentRef {
+        ImagebuilderImageRecipe_SystemsManagerAgentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderImageRecipeSystemsManagerAgentElRef {
+impl ImagebuilderImageRecipe_SystemsManagerAgentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -978,11 +1038,4 @@ impl ImagebuilderImageRecipeSystemsManagerAgentElRef {
     pub fn uninstall_after_build(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.uninstall_after_build", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ImagebuilderImageRecipeDynamic {
-    block_device_mapping: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipeBlockDeviceMappingEl>>,
-    component: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipeComponentEl>>,
-    systems_manager_agent: std::option::Option<terrars::DynamicBlock<ImagebuilderImageRecipeSystemsManagerAgentEl>>,
 }

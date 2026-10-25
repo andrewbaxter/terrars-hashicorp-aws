@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2InstanceTypesData {
+struct DataEc2InstanceTypesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,16 +21,18 @@ struct DataEc2InstanceTypesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2InstanceTypesFilterEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEc2InstanceTypesTimeoutsEl>,
+    filter: std::option::Option<std::vec::Vec<DataEc2InstanceTypes_Filter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataEc2InstanceTypes_Timeouts>,
     dynamic: DataEc2InstanceTypesDynamic,
 }
 
 struct DataEc2InstanceTypes_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2InstanceTypesData>,
+    data: std::cell::RefCell<DataEc2InstanceTypesData_>,
 }
 
 #[derive(Clone)]
@@ -79,8 +83,15 @@ impl DataEc2InstanceTypes {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEc2InstanceTypesFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEc2InstanceTypes_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -93,7 +104,7 @@ impl DataEc2InstanceTypes {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2InstanceTypesTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2InstanceTypes_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -108,9 +119,15 @@ impl DataEc2InstanceTypes {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_types", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2InstanceTypesTimeoutsElRef {
-        DataEc2InstanceTypesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEc2InstanceTypes_TimeoutsRef {
+        DataEc2InstanceTypes_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -154,12 +171,13 @@ impl BuildDataEc2InstanceTypes {
         let out = DataEc2InstanceTypes(std::rc::Rc::new(DataEc2InstanceTypes_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2InstanceTypesData {
+            data: std::cell::RefCell::new(DataEc2InstanceTypesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -203,22 +221,33 @@ impl DataEc2InstanceTypesRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_types", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2InstanceTypesTimeoutsElRef {
-        DataEc2InstanceTypesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEc2InstanceTypes_TimeoutsRef {
+        DataEc2InstanceTypes_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataEc2InstanceTypesFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct DataEc2InstanceTypesDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2InstanceTypes_Filter>>,
 }
 
-impl DataEc2InstanceTypesFilterEl { }
+#[derive(Serialize)]
+pub struct DataEc2InstanceTypes_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for DataEc2InstanceTypesFilterEl {
-    type O = terrars::BlockAssignable<DataEc2InstanceTypesFilterEl>;
+impl DataEc2InstanceTypes_Filter { }
+
+impl terrars::ToListMappable for DataEc2InstanceTypes_Filter {
+    type O = terrars::BlockAssignable<DataEc2InstanceTypes_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -229,37 +258,39 @@ impl terrars::ToListMappable for DataEc2InstanceTypesFilterEl {
     }
 }
 
-pub struct BuildDataEc2InstanceTypesFilterEl {
+pub struct BuildDataEc2InstanceTypes_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEc2InstanceTypesFilterEl {
-    pub fn build(self) -> DataEc2InstanceTypesFilterEl {
-        DataEc2InstanceTypesFilterEl {
+impl BuildDataEc2InstanceTypes_Filter {
+    pub fn build(self) -> DataEc2InstanceTypes_Filter {
+        DataEc2InstanceTypes_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEc2InstanceTypesFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2InstanceTypes_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2InstanceTypesFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2InstanceTypesFilterElRef {
-        DataEc2InstanceTypesFilterElRef {
+impl terrars::Ref for DataEc2InstanceTypes_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2InstanceTypes_FilterRef {
+        DataEc2InstanceTypes_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2InstanceTypesFilterElRef {
+impl DataEc2InstanceTypes_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -270,18 +301,18 @@ impl DataEc2InstanceTypesFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2InstanceTypesTimeoutsEl {
+pub struct DataEc2InstanceTypes_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2InstanceTypesTimeoutsEl {
+impl DataEc2InstanceTypes_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -289,8 +320,8 @@ impl DataEc2InstanceTypesTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2InstanceTypesTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEc2InstanceTypesTimeoutsEl>;
+impl terrars::ToListMappable for DataEc2InstanceTypes_Timeouts {
+    type O = terrars::BlockAssignable<DataEc2InstanceTypes_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -301,29 +332,31 @@ impl terrars::ToListMappable for DataEc2InstanceTypesTimeoutsEl {
     }
 }
 
-pub struct BuildDataEc2InstanceTypesTimeoutsEl {}
+pub struct BuildDataEc2InstanceTypes_Timeouts {}
 
-impl BuildDataEc2InstanceTypesTimeoutsEl {
-    pub fn build(self) -> DataEc2InstanceTypesTimeoutsEl {
-        DataEc2InstanceTypesTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEc2InstanceTypes_Timeouts {
+    pub fn build(self) -> DataEc2InstanceTypes_Timeouts {
+        DataEc2InstanceTypes_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEc2InstanceTypesTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEc2InstanceTypes_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2InstanceTypesTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2InstanceTypesTimeoutsElRef {
-        DataEc2InstanceTypesTimeoutsElRef {
+impl terrars::Ref for DataEc2InstanceTypes_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2InstanceTypes_TimeoutsRef {
+        DataEc2InstanceTypes_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2InstanceTypesTimeoutsElRef {
+impl DataEc2InstanceTypes_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -332,9 +365,4 @@ impl DataEc2InstanceTypesTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2InstanceTypesDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2InstanceTypesFilterEl>>,
 }

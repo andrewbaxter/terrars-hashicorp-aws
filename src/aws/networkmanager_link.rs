@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerLinkData {
+struct NetworkmanagerLinkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,16 +35,16 @@ struct NetworkmanagerLinkData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bandwidth: std::option::Option<std::vec::Vec<NetworkmanagerLinkBandwidthEl>>,
+    bandwidth: std::option::Option<std::vec::Vec<NetworkmanagerLink_Bandwidth>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerLinkTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerLink_Timeouts>,
     dynamic: NetworkmanagerLinkDynamic,
 }
 
 struct NetworkmanagerLink_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerLinkData>,
+    data: std::cell::RefCell<NetworkmanagerLinkData_>,
 }
 
 #[derive(Clone)]
@@ -187,7 +189,7 @@ impl NetworkmanagerLink {
     #[doc = "Set the field `bandwidth`.\n"]
     pub fn set_bandwidth(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerLinkBandwidthEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerLink_Bandwidth>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -201,7 +203,7 @@ impl NetworkmanagerLink {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerLinkTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerLink_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -252,13 +254,13 @@ impl NetworkmanagerLink {
     }
 
     #[doc = "Get a reference to the value of field `bandwidth` after provisioning.\n"]
-    pub fn bandwidth(&self) -> terrars::ListRef<NetworkmanagerLinkBandwidthElRef> {
+    pub fn bandwidth(&self) -> terrars::ListRef<NetworkmanagerLink_BandwidthRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bandwidth", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerLinkTimeoutsElRef {
-        NetworkmanagerLinkTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NetworkmanagerLink_TimeoutsRef {
+        NetworkmanagerLink_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -306,7 +308,7 @@ impl BuildNetworkmanagerLink {
         let out = NetworkmanagerLink(std::rc::Rc::new(NetworkmanagerLink_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkmanagerLinkData {
+            data: std::cell::RefCell::new(NetworkmanagerLinkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -399,25 +401,30 @@ impl NetworkmanagerLinkRef {
     }
 
     #[doc = "Get a reference to the value of field `bandwidth` after provisioning.\n"]
-    pub fn bandwidth(&self) -> terrars::ListRef<NetworkmanagerLinkBandwidthElRef> {
+    pub fn bandwidth(&self) -> terrars::ListRef<NetworkmanagerLink_BandwidthRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bandwidth", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerLinkTimeoutsElRef {
-        NetworkmanagerLinkTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NetworkmanagerLink_TimeoutsRef {
+        NetworkmanagerLink_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkmanagerLinkDynamic {
+    bandwidth: std::option::Option<terrars::DynamicBlock<NetworkmanagerLink_Bandwidth>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkmanagerLinkBandwidthEl {
+pub struct NetworkmanagerLink_Bandwidth {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     download_speed: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     upload_speed: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl NetworkmanagerLinkBandwidthEl {
+impl NetworkmanagerLink_Bandwidth {
     #[doc = "Set the field `download_speed`.\n"]
     pub fn set_download_speed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.download_speed = std::option::Option::Some(v.into());
@@ -431,8 +438,8 @@ impl NetworkmanagerLinkBandwidthEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerLinkBandwidthEl {
-    type O = terrars::BlockAssignable<NetworkmanagerLinkBandwidthEl>;
+impl terrars::ToListMappable for NetworkmanagerLink_Bandwidth {
+    type O = terrars::BlockAssignable<NetworkmanagerLink_Bandwidth>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -443,32 +450,34 @@ impl terrars::ToListMappable for NetworkmanagerLinkBandwidthEl {
     }
 }
 
-pub struct BuildNetworkmanagerLinkBandwidthEl {}
+pub struct BuildNetworkmanagerLink_Bandwidth {}
 
-impl BuildNetworkmanagerLinkBandwidthEl {
-    pub fn build(self) -> NetworkmanagerLinkBandwidthEl {
-        NetworkmanagerLinkBandwidthEl {
+impl BuildNetworkmanagerLink_Bandwidth {
+    pub fn build(self) -> NetworkmanagerLink_Bandwidth {
+        NetworkmanagerLink_Bandwidth {
             download_speed: core::default::Default::default(),
             upload_speed: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkmanagerLinkBandwidthElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerLink_BandwidthRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerLinkBandwidthElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerLinkBandwidthElRef {
-        NetworkmanagerLinkBandwidthElRef {
+impl terrars::Ref for NetworkmanagerLink_BandwidthRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerLink_BandwidthRef {
+        NetworkmanagerLink_BandwidthRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerLinkBandwidthElRef {
+impl NetworkmanagerLink_BandwidthRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -485,7 +494,7 @@ impl NetworkmanagerLinkBandwidthElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerLinkTimeoutsEl {
+pub struct NetworkmanagerLink_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -494,7 +503,7 @@ pub struct NetworkmanagerLinkTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerLinkTimeoutsEl {
+impl NetworkmanagerLink_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -514,8 +523,8 @@ impl NetworkmanagerLinkTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerLinkTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerLinkTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerLink_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerLink_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -526,11 +535,11 @@ impl terrars::ToListMappable for NetworkmanagerLinkTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkmanagerLinkTimeoutsEl {}
+pub struct BuildNetworkmanagerLink_Timeouts {}
 
-impl BuildNetworkmanagerLinkTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerLinkTimeoutsEl {
-        NetworkmanagerLinkTimeoutsEl {
+impl BuildNetworkmanagerLink_Timeouts {
+    pub fn build(self) -> NetworkmanagerLink_Timeouts {
+        NetworkmanagerLink_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -538,21 +547,23 @@ impl BuildNetworkmanagerLinkTimeoutsEl {
     }
 }
 
-pub struct NetworkmanagerLinkTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerLink_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerLinkTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerLinkTimeoutsElRef {
-        NetworkmanagerLinkTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerLink_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerLink_TimeoutsRef {
+        NetworkmanagerLink_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerLinkTimeoutsElRef {
+impl NetworkmanagerLink_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -571,9 +582,4 @@ impl NetworkmanagerLinkTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkmanagerLinkDynamic {
-    bandwidth: std::option::Option<terrars::DynamicBlock<NetworkmanagerLinkBandwidthEl>>,
 }

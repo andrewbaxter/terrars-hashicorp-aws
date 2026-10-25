@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataSecretsmanagerRandomPasswordData {
+struct DataSecretsmanagerRandomPasswordData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -33,7 +35,7 @@ struct DataSecretsmanagerRandomPasswordData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password_length: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    random_password: std::option::Option<terrars::PrimField<std::string::String>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     require_each_included_type: std::option::Option<terrars::PrimField<bool>>,
 }
@@ -41,7 +43,7 @@ struct DataSecretsmanagerRandomPasswordData {
 struct DataSecretsmanagerRandomPassword_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSecretsmanagerRandomPasswordData>,
+    data: std::cell::RefCell<DataSecretsmanagerRandomPasswordData_>,
 }
 
 #[derive(Clone)]
@@ -134,9 +136,10 @@ impl DataSecretsmanagerRandomPassword {
         self
     }
 
-    #[doc = "Set the field `random_password`.\n"]
-    pub fn set_random_password(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().random_password = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -191,6 +194,12 @@ impl DataSecretsmanagerRandomPassword {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.random_password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `require_each_included_type` after provisioning.\n"]
     pub fn require_each_included_type(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.require_each_included_type", self.extract_ref()))
@@ -237,7 +246,7 @@ impl BuildDataSecretsmanagerRandomPassword {
         let out = DataSecretsmanagerRandomPassword(std::rc::Rc::new(DataSecretsmanagerRandomPassword_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSecretsmanagerRandomPasswordData {
+            data: std::cell::RefCell::new(DataSecretsmanagerRandomPasswordData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -250,7 +259,7 @@ impl BuildDataSecretsmanagerRandomPassword {
                 id: core::default::Default::default(),
                 include_space: core::default::Default::default(),
                 password_length: core::default::Default::default(),
-                random_password: core::default::Default::default(),
+                region: core::default::Default::default(),
                 require_each_included_type: core::default::Default::default(),
             }),
         }));
@@ -325,6 +334,12 @@ impl DataSecretsmanagerRandomPasswordRef {
     #[doc = "Get a reference to the value of field `random_password` after provisioning.\n"]
     pub fn random_password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.random_password", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `require_each_included_type` after provisioning.\n"]

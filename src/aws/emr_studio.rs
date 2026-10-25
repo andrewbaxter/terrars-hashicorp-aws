@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EmrStudioData {
+struct EmrStudioData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct EmrStudioData {
     default_s3_location: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     engine_security_group_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -30,6 +34,8 @@ struct EmrStudioData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     idp_relay_state_parameter_name: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     service_role: terrars::PrimField<std::string::String>,
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -45,7 +51,7 @@ struct EmrStudioData {
 struct EmrStudio_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EmrStudioData>,
+    data: std::cell::RefCell<EmrStudioData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +157,12 @@ impl EmrStudio {
         self
     }
 
+    #[doc = "Set the field `encryption_key_arn`.\n"]
+    pub fn set_encryption_key_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().encryption_key_arn = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -169,6 +181,13 @@ impl EmrStudio {
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().idp_relay_state_parameter_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -216,6 +235,11 @@ impl EmrStudio {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_key_arn` after provisioning.\n"]
+    pub fn encryption_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_key_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `engine_security_group_id` after provisioning.\n"]
     pub fn engine_security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_security_group_id", self.extract_ref()))
@@ -242,6 +266,12 @@ impl EmrStudio {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
@@ -341,7 +371,7 @@ impl BuildEmrStudio {
         let out = EmrStudio(std::rc::Rc::new(EmrStudio_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EmrStudioData {
+            data: std::cell::RefCell::new(EmrStudioData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -350,11 +380,13 @@ impl BuildEmrStudio {
                 auth_mode: self.auth_mode,
                 default_s3_location: self.default_s3_location,
                 description: core::default::Default::default(),
+                encryption_key_arn: core::default::Default::default(),
                 engine_security_group_id: self.engine_security_group_id,
                 id: core::default::Default::default(),
                 idp_auth_url: core::default::Default::default(),
                 idp_relay_state_parameter_name: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 service_role: self.service_role,
                 subnet_ids: self.subnet_ids,
                 tags: core::default::Default::default(),
@@ -412,6 +444,11 @@ impl EmrStudioRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_key_arn` after provisioning.\n"]
+    pub fn encryption_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_key_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `engine_security_group_id` after provisioning.\n"]
     pub fn engine_security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_security_group_id", self.extract_ref()))
@@ -438,6 +475,12 @@ impl EmrStudioRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]

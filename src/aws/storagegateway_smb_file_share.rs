@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct StoragegatewaySmbFileShareData {
+struct StoragegatewaySmbFileShareData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -55,6 +57,8 @@ struct StoragegatewaySmbFileShareData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read_only: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     requester_pays: std::option::Option<terrars::PrimField<bool>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -68,16 +72,16 @@ struct StoragegatewaySmbFileShareData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_dns_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cache_attributes: std::option::Option<std::vec::Vec<StoragegatewaySmbFileShareCacheAttributesEl>>,
+    cache_attributes: std::option::Option<std::vec::Vec<StoragegatewaySmbFileShare_CacheAttributes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<StoragegatewaySmbFileShareTimeoutsEl>,
+    timeouts: std::option::Option<StoragegatewaySmbFileShare_Timeouts>,
     dynamic: StoragegatewaySmbFileShareDynamic,
 }
 
 struct StoragegatewaySmbFileShare_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<StoragegatewaySmbFileShareData>,
+    data: std::cell::RefCell<StoragegatewaySmbFileShareData_>,
 }
 
 #[derive(Clone)]
@@ -285,6 +289,13 @@ impl StoragegatewaySmbFileShare {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `requester_pays`.\n"]
     pub fn set_requester_pays(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().requester_pays = std::option::Option::Some(v.into());
@@ -333,7 +344,7 @@ impl StoragegatewaySmbFileShare {
     #[doc = "Set the field `cache_attributes`.\n"]
     pub fn set_cache_attributes(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<StoragegatewaySmbFileShareCacheAttributesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<StoragegatewaySmbFileShare_CacheAttributes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -347,7 +358,7 @@ impl StoragegatewaySmbFileShare {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<StoragegatewaySmbFileShareTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<StoragegatewaySmbFileShare_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -462,6 +473,12 @@ impl StoragegatewaySmbFileShare {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read_only", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `requester_pays` after provisioning.\n"]
     pub fn requester_pays(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.requester_pays", self.extract_ref()))
@@ -498,13 +515,13 @@ impl StoragegatewaySmbFileShare {
     }
 
     #[doc = "Get a reference to the value of field `cache_attributes` after provisioning.\n"]
-    pub fn cache_attributes(&self) -> terrars::ListRef<StoragegatewaySmbFileShareCacheAttributesElRef> {
+    pub fn cache_attributes(&self) -> terrars::ListRef<StoragegatewaySmbFileShare_CacheAttributesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cache_attributes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> StoragegatewaySmbFileShareTimeoutsElRef {
-        StoragegatewaySmbFileShareTimeoutsElRef::new(
+    pub fn timeouts(&self) -> StoragegatewaySmbFileShare_TimeoutsRef {
+        StoragegatewaySmbFileShare_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -557,7 +574,7 @@ impl BuildStoragegatewaySmbFileShare {
         let out = StoragegatewaySmbFileShare(std::rc::Rc::new(StoragegatewaySmbFileShare_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(StoragegatewaySmbFileShareData {
+            data: std::cell::RefCell::new(StoragegatewaySmbFileShareData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -582,6 +599,7 @@ impl BuildStoragegatewaySmbFileShare {
                 object_acl: core::default::Default::default(),
                 oplocks_enabled: core::default::Default::default(),
                 read_only: core::default::Default::default(),
+                region: core::default::Default::default(),
                 requester_pays: core::default::Default::default(),
                 role_arn: self.role_arn,
                 smb_acl_enabled: core::default::Default::default(),
@@ -732,6 +750,12 @@ impl StoragegatewaySmbFileShareRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read_only", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `requester_pays` after provisioning.\n"]
     pub fn requester_pays(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.requester_pays", self.extract_ref()))
@@ -768,26 +792,31 @@ impl StoragegatewaySmbFileShareRef {
     }
 
     #[doc = "Get a reference to the value of field `cache_attributes` after provisioning.\n"]
-    pub fn cache_attributes(&self) -> terrars::ListRef<StoragegatewaySmbFileShareCacheAttributesElRef> {
+    pub fn cache_attributes(&self) -> terrars::ListRef<StoragegatewaySmbFileShare_CacheAttributesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cache_attributes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> StoragegatewaySmbFileShareTimeoutsElRef {
-        StoragegatewaySmbFileShareTimeoutsElRef::new(
+    pub fn timeouts(&self) -> StoragegatewaySmbFileShare_TimeoutsRef {
+        StoragegatewaySmbFileShare_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct StoragegatewaySmbFileShareDynamic {
+    cache_attributes: std::option::Option<terrars::DynamicBlock<StoragegatewaySmbFileShare_CacheAttributes>>,
+}
+
 #[derive(Serialize)]
-pub struct StoragegatewaySmbFileShareCacheAttributesEl {
+pub struct StoragegatewaySmbFileShare_CacheAttributes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_stale_timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl StoragegatewaySmbFileShareCacheAttributesEl {
+impl StoragegatewaySmbFileShare_CacheAttributes {
     #[doc = "Set the field `cache_stale_timeout_in_seconds`.\n"]
     pub fn set_cache_stale_timeout_in_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.cache_stale_timeout_in_seconds = std::option::Option::Some(v.into());
@@ -795,8 +824,8 @@ impl StoragegatewaySmbFileShareCacheAttributesEl {
     }
 }
 
-impl terrars::ToListMappable for StoragegatewaySmbFileShareCacheAttributesEl {
-    type O = terrars::BlockAssignable<StoragegatewaySmbFileShareCacheAttributesEl>;
+impl terrars::ToListMappable for StoragegatewaySmbFileShare_CacheAttributes {
+    type O = terrars::BlockAssignable<StoragegatewaySmbFileShare_CacheAttributes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -807,34 +836,33 @@ impl terrars::ToListMappable for StoragegatewaySmbFileShareCacheAttributesEl {
     }
 }
 
-pub struct BuildStoragegatewaySmbFileShareCacheAttributesEl {}
+pub struct BuildStoragegatewaySmbFileShare_CacheAttributes {}
 
-impl BuildStoragegatewaySmbFileShareCacheAttributesEl {
-    pub fn build(self) -> StoragegatewaySmbFileShareCacheAttributesEl {
-        StoragegatewaySmbFileShareCacheAttributesEl {
+impl BuildStoragegatewaySmbFileShare_CacheAttributes {
+    pub fn build(self) -> StoragegatewaySmbFileShare_CacheAttributes {
+        StoragegatewaySmbFileShare_CacheAttributes {
             cache_stale_timeout_in_seconds: core::default::Default::default(),
         }
     }
 }
 
-pub struct StoragegatewaySmbFileShareCacheAttributesElRef {
+#[allow(dead_code)]
+pub struct StoragegatewaySmbFileShare_CacheAttributesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StoragegatewaySmbFileShareCacheAttributesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> StoragegatewaySmbFileShareCacheAttributesElRef {
-        StoragegatewaySmbFileShareCacheAttributesElRef {
+impl terrars::Ref for StoragegatewaySmbFileShare_CacheAttributesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StoragegatewaySmbFileShare_CacheAttributesRef {
+        StoragegatewaySmbFileShare_CacheAttributesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StoragegatewaySmbFileShareCacheAttributesElRef {
+impl StoragegatewaySmbFileShare_CacheAttributesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -846,7 +874,7 @@ impl StoragegatewaySmbFileShareCacheAttributesElRef {
 }
 
 #[derive(Serialize)]
-pub struct StoragegatewaySmbFileShareTimeoutsEl {
+pub struct StoragegatewaySmbFileShare_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -855,7 +883,7 @@ pub struct StoragegatewaySmbFileShareTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl StoragegatewaySmbFileShareTimeoutsEl {
+impl StoragegatewaySmbFileShare_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -875,8 +903,8 @@ impl StoragegatewaySmbFileShareTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for StoragegatewaySmbFileShareTimeoutsEl {
-    type O = terrars::BlockAssignable<StoragegatewaySmbFileShareTimeoutsEl>;
+impl terrars::ToListMappable for StoragegatewaySmbFileShare_Timeouts {
+    type O = terrars::BlockAssignable<StoragegatewaySmbFileShare_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -887,11 +915,11 @@ impl terrars::ToListMappable for StoragegatewaySmbFileShareTimeoutsEl {
     }
 }
 
-pub struct BuildStoragegatewaySmbFileShareTimeoutsEl {}
+pub struct BuildStoragegatewaySmbFileShare_Timeouts {}
 
-impl BuildStoragegatewaySmbFileShareTimeoutsEl {
-    pub fn build(self) -> StoragegatewaySmbFileShareTimeoutsEl {
-        StoragegatewaySmbFileShareTimeoutsEl {
+impl BuildStoragegatewaySmbFileShare_Timeouts {
+    pub fn build(self) -> StoragegatewaySmbFileShare_Timeouts {
+        StoragegatewaySmbFileShare_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -899,21 +927,23 @@ impl BuildStoragegatewaySmbFileShareTimeoutsEl {
     }
 }
 
-pub struct StoragegatewaySmbFileShareTimeoutsElRef {
+#[allow(dead_code)]
+pub struct StoragegatewaySmbFileShare_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StoragegatewaySmbFileShareTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> StoragegatewaySmbFileShareTimeoutsElRef {
-        StoragegatewaySmbFileShareTimeoutsElRef {
+impl terrars::Ref for StoragegatewaySmbFileShare_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StoragegatewaySmbFileShare_TimeoutsRef {
+        StoragegatewaySmbFileShare_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StoragegatewaySmbFileShareTimeoutsElRef {
+impl StoragegatewaySmbFileShare_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -932,9 +962,4 @@ impl StoragegatewaySmbFileShareTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct StoragegatewaySmbFileShareDynamic {
-    cache_attributes: std::option::Option<terrars::DynamicBlock<StoragegatewaySmbFileShareCacheAttributesEl>>,
 }

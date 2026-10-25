@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3AccessPointData {
+struct S3AccessPointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,16 +31,22 @@ struct S3AccessPointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    public_access_block_configuration: std::option::Option<std::vec::Vec<S3AccessPointPublicAccessBlockConfigurationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_configuration: std::option::Option<std::vec::Vec<S3AccessPointVpcConfigurationEl>>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    public_access_block_configuration: std::option::Option<std::vec::Vec<S3AccessPoint_PublicAccessBlockConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_configuration: std::option::Option<std::vec::Vec<S3AccessPoint_VpcConfiguration>>,
     dynamic: S3AccessPointDynamic,
 }
 
 struct S3AccessPoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3AccessPointData>,
+    data: std::cell::RefCell<S3AccessPointData_>,
 }
 
 #[derive(Clone)]
@@ -162,10 +170,35 @@ impl S3AccessPoint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `public_access_block_configuration`.\n"]
     pub fn set_public_access_block_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3AccessPointPublicAccessBlockConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3AccessPoint_PublicAccessBlockConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,7 +214,7 @@ impl S3AccessPoint {
     #[doc = "Set the field `vpc_configuration`.\n"]
     pub fn set_vpc_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3AccessPointVpcConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3AccessPoint_VpcConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -254,10 +287,24 @@ impl S3AccessPoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `public_access_block_configuration` after provisioning.\n"]
-    pub fn public_access_block_configuration(
-        &self,
-    ) -> terrars::ListRef<S3AccessPointPublicAccessBlockConfigurationElRef> {
+    pub fn public_access_block_configuration(&self) -> terrars::ListRef<S3AccessPoint_PublicAccessBlockConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.public_access_block_configuration", self.extract_ref()),
@@ -265,7 +312,7 @@ impl S3AccessPoint {
     }
 
     #[doc = "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
-    pub fn vpc_configuration(&self) -> terrars::ListRef<S3AccessPointVpcConfigurationElRef> {
+    pub fn vpc_configuration(&self) -> terrars::ListRef<S3AccessPoint_VpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.extract_ref()))
     }
 }
@@ -314,7 +361,7 @@ impl BuildS3AccessPoint {
         let out = S3AccessPoint(std::rc::Rc::new(S3AccessPoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3AccessPointData {
+            data: std::cell::RefCell::new(S3AccessPointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -326,6 +373,9 @@ impl BuildS3AccessPoint {
                 id: core::default::Default::default(),
                 name: self.name,
                 policy: core::default::Default::default(),
+                region: core::default::Default::default(),
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
                 public_access_block_configuration: core::default::Default::default(),
                 vpc_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -419,10 +469,24 @@ impl S3AccessPointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `public_access_block_configuration` after provisioning.\n"]
-    pub fn public_access_block_configuration(
-        &self,
-    ) -> terrars::ListRef<S3AccessPointPublicAccessBlockConfigurationElRef> {
+    pub fn public_access_block_configuration(&self) -> terrars::ListRef<S3AccessPoint_PublicAccessBlockConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.public_access_block_configuration", self.extract_ref()),
@@ -430,13 +494,21 @@ impl S3AccessPointRef {
     }
 
     #[doc = "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
-    pub fn vpc_configuration(&self) -> terrars::ListRef<S3AccessPointVpcConfigurationElRef> {
+    pub fn vpc_configuration(&self) -> terrars::ListRef<S3AccessPoint_VpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3AccessPointDynamic {
+    public_access_block_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3AccessPoint_PublicAccessBlockConfiguration>>,
+    vpc_configuration: std::option::Option<terrars::DynamicBlock<S3AccessPoint_VpcConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct S3AccessPointPublicAccessBlockConfigurationEl {
+pub struct S3AccessPoint_PublicAccessBlockConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     block_public_acls: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -447,7 +519,7 @@ pub struct S3AccessPointPublicAccessBlockConfigurationEl {
     restrict_public_buckets: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3AccessPointPublicAccessBlockConfigurationEl {
+impl S3AccessPoint_PublicAccessBlockConfiguration {
     #[doc = "Set the field `block_public_acls`.\n"]
     pub fn set_block_public_acls(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.block_public_acls = std::option::Option::Some(v.into());
@@ -473,8 +545,8 @@ impl S3AccessPointPublicAccessBlockConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for S3AccessPointPublicAccessBlockConfigurationEl {
-    type O = terrars::BlockAssignable<S3AccessPointPublicAccessBlockConfigurationEl>;
+impl terrars::ToListMappable for S3AccessPoint_PublicAccessBlockConfiguration {
+    type O = terrars::BlockAssignable<S3AccessPoint_PublicAccessBlockConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -485,11 +557,11 @@ impl terrars::ToListMappable for S3AccessPointPublicAccessBlockConfigurationEl {
     }
 }
 
-pub struct BuildS3AccessPointPublicAccessBlockConfigurationEl {}
+pub struct BuildS3AccessPoint_PublicAccessBlockConfiguration {}
 
-impl BuildS3AccessPointPublicAccessBlockConfigurationEl {
-    pub fn build(self) -> S3AccessPointPublicAccessBlockConfigurationEl {
-        S3AccessPointPublicAccessBlockConfigurationEl {
+impl BuildS3AccessPoint_PublicAccessBlockConfiguration {
+    pub fn build(self) -> S3AccessPoint_PublicAccessBlockConfiguration {
+        S3AccessPoint_PublicAccessBlockConfiguration {
             block_public_acls: core::default::Default::default(),
             block_public_policy: core::default::Default::default(),
             ignore_public_acls: core::default::Default::default(),
@@ -498,24 +570,26 @@ impl BuildS3AccessPointPublicAccessBlockConfigurationEl {
     }
 }
 
-pub struct S3AccessPointPublicAccessBlockConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3AccessPoint_PublicAccessBlockConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3AccessPointPublicAccessBlockConfigurationElRef {
+impl terrars::Ref for S3AccessPoint_PublicAccessBlockConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3AccessPointPublicAccessBlockConfigurationElRef {
-        S3AccessPointPublicAccessBlockConfigurationElRef {
+    ) -> S3AccessPoint_PublicAccessBlockConfigurationRef {
+        S3AccessPoint_PublicAccessBlockConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3AccessPointPublicAccessBlockConfigurationElRef {
+impl S3AccessPoint_PublicAccessBlockConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -542,14 +616,14 @@ impl S3AccessPointPublicAccessBlockConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3AccessPointVpcConfigurationEl {
+pub struct S3AccessPoint_VpcConfiguration {
     vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl S3AccessPointVpcConfigurationEl { }
+impl S3AccessPoint_VpcConfiguration { }
 
-impl terrars::ToListMappable for S3AccessPointVpcConfigurationEl {
-    type O = terrars::BlockAssignable<S3AccessPointVpcConfigurationEl>;
+impl terrars::ToListMappable for S3AccessPoint_VpcConfiguration {
+    type O = terrars::BlockAssignable<S3AccessPoint_VpcConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -560,32 +634,34 @@ impl terrars::ToListMappable for S3AccessPointVpcConfigurationEl {
     }
 }
 
-pub struct BuildS3AccessPointVpcConfigurationEl {
+pub struct BuildS3AccessPoint_VpcConfiguration {
     #[doc = ""]
     pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3AccessPointVpcConfigurationEl {
-    pub fn build(self) -> S3AccessPointVpcConfigurationEl {
-        S3AccessPointVpcConfigurationEl { vpc_id: self.vpc_id }
+impl BuildS3AccessPoint_VpcConfiguration {
+    pub fn build(self) -> S3AccessPoint_VpcConfiguration {
+        S3AccessPoint_VpcConfiguration { vpc_id: self.vpc_id }
     }
 }
 
-pub struct S3AccessPointVpcConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3AccessPoint_VpcConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3AccessPointVpcConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3AccessPointVpcConfigurationElRef {
-        S3AccessPointVpcConfigurationElRef {
+impl terrars::Ref for S3AccessPoint_VpcConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3AccessPoint_VpcConfigurationRef {
+        S3AccessPoint_VpcConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3AccessPointVpcConfigurationElRef {
+impl S3AccessPoint_VpcConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -594,12 +670,4 @@ impl S3AccessPointVpcConfigurationElRef {
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3AccessPointDynamic {
-    public_access_block_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3AccessPointPublicAccessBlockConfigurationEl>>,
-    vpc_configuration: std::option::Option<terrars::DynamicBlock<S3AccessPointVpcConfigurationEl>>,
 }

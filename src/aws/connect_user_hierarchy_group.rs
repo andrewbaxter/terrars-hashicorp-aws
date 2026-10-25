@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConnectUserHierarchyGroupData {
+struct ConnectUserHierarchyGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct ConnectUserHierarchyGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parent_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -33,7 +37,7 @@ struct ConnectUserHierarchyGroupData {
 struct ConnectUserHierarchyGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConnectUserHierarchyGroupData>,
+    data: std::cell::RefCell<ConnectUserHierarchyGroupData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +149,13 @@ impl ConnectUserHierarchyGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -174,7 +185,7 @@ impl ConnectUserHierarchyGroup {
     }
 
     #[doc = "Get a reference to the value of field `hierarchy_path` after provisioning.\n"]
-    pub fn hierarchy_path(&self) -> terrars::ListRef<ConnectUserHierarchyGroupHierarchyPathElRef> {
+    pub fn hierarchy_path(&self) -> terrars::ListRef<ConnectUserHierarchyGroup_HierarchyPathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hierarchy_path", self.extract_ref()))
     }
 
@@ -201,6 +212,12 @@ impl ConnectUserHierarchyGroup {
     #[doc = "Get a reference to the value of field `parent_group_id` after provisioning.\n"]
     pub fn parent_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent_group_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -258,7 +275,7 @@ impl BuildConnectUserHierarchyGroup {
         let out = ConnectUserHierarchyGroup(std::rc::Rc::new(ConnectUserHierarchyGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConnectUserHierarchyGroupData {
+            data: std::cell::RefCell::new(ConnectUserHierarchyGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -268,6 +285,7 @@ impl BuildConnectUserHierarchyGroup {
                 instance_id: self.instance_id,
                 name: self.name,
                 parent_group_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
             }),
@@ -311,7 +329,7 @@ impl ConnectUserHierarchyGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `hierarchy_path` after provisioning.\n"]
-    pub fn hierarchy_path(&self) -> terrars::ListRef<ConnectUserHierarchyGroupHierarchyPathElRef> {
+    pub fn hierarchy_path(&self) -> terrars::ListRef<ConnectUserHierarchyGroup_HierarchyPathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hierarchy_path", self.extract_ref()))
     }
 
@@ -340,6 +358,12 @@ impl ConnectUserHierarchyGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent_group_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -352,7 +376,7 @@ impl ConnectUserHierarchyGroupRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelFive {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -361,7 +385,7 @@ pub struct ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelFive {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -381,8 +405,8 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyGroup_HierarchyPath_LevelFive {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyGroup_HierarchyPath_LevelFive>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -393,11 +417,11 @@ impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelFi
     }
 }
 
-pub struct BuildConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {}
+pub struct BuildConnectUserHierarchyGroup_HierarchyPath_LevelFive {}
 
-impl BuildConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {
-    pub fn build(self) -> ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {
-        ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {
+impl BuildConnectUserHierarchyGroup_HierarchyPath_LevelFive {
+    pub fn build(self) -> ConnectUserHierarchyGroup_HierarchyPath_LevelFive {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelFive {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -405,24 +429,26 @@ impl BuildConnectUserHierarchyGroupHierarchyPathElLevelFiveEl {
     }
 }
 
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelFiveElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelFiveRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyGroupHierarchyPathElLevelFiveElRef {
+impl terrars::Ref for ConnectUserHierarchyGroup_HierarchyPath_LevelFiveRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyGroupHierarchyPathElLevelFiveElRef {
-        ConnectUserHierarchyGroupHierarchyPathElLevelFiveElRef {
+    ) -> ConnectUserHierarchyGroup_HierarchyPath_LevelFiveRef {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelFiveRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelFiveElRef {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelFiveRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -444,7 +470,7 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelFiveElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelFourEl {
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelFour {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -453,7 +479,7 @@ pub struct ConnectUserHierarchyGroupHierarchyPathElLevelFourEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelFourEl {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelFour {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -473,8 +499,8 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelFourEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelFourEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyGroupHierarchyPathElLevelFourEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyGroup_HierarchyPath_LevelFour {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyGroup_HierarchyPath_LevelFour>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -485,11 +511,11 @@ impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelFo
     }
 }
 
-pub struct BuildConnectUserHierarchyGroupHierarchyPathElLevelFourEl {}
+pub struct BuildConnectUserHierarchyGroup_HierarchyPath_LevelFour {}
 
-impl BuildConnectUserHierarchyGroupHierarchyPathElLevelFourEl {
-    pub fn build(self) -> ConnectUserHierarchyGroupHierarchyPathElLevelFourEl {
-        ConnectUserHierarchyGroupHierarchyPathElLevelFourEl {
+impl BuildConnectUserHierarchyGroup_HierarchyPath_LevelFour {
+    pub fn build(self) -> ConnectUserHierarchyGroup_HierarchyPath_LevelFour {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelFour {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -497,24 +523,26 @@ impl BuildConnectUserHierarchyGroupHierarchyPathElLevelFourEl {
     }
 }
 
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelFourElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelFourRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyGroupHierarchyPathElLevelFourElRef {
+impl terrars::Ref for ConnectUserHierarchyGroup_HierarchyPath_LevelFourRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyGroupHierarchyPathElLevelFourElRef {
-        ConnectUserHierarchyGroupHierarchyPathElLevelFourElRef {
+    ) -> ConnectUserHierarchyGroup_HierarchyPath_LevelFourRef {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelFourRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelFourElRef {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelFourRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -536,7 +564,7 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelFourElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelOneEl {
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelOne {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -545,7 +573,7 @@ pub struct ConnectUserHierarchyGroupHierarchyPathElLevelOneEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelOneEl {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelOne {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -565,8 +593,8 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelOneEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelOneEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyGroupHierarchyPathElLevelOneEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyGroup_HierarchyPath_LevelOne {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyGroup_HierarchyPath_LevelOne>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -577,11 +605,11 @@ impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelOn
     }
 }
 
-pub struct BuildConnectUserHierarchyGroupHierarchyPathElLevelOneEl {}
+pub struct BuildConnectUserHierarchyGroup_HierarchyPath_LevelOne {}
 
-impl BuildConnectUserHierarchyGroupHierarchyPathElLevelOneEl {
-    pub fn build(self) -> ConnectUserHierarchyGroupHierarchyPathElLevelOneEl {
-        ConnectUserHierarchyGroupHierarchyPathElLevelOneEl {
+impl BuildConnectUserHierarchyGroup_HierarchyPath_LevelOne {
+    pub fn build(self) -> ConnectUserHierarchyGroup_HierarchyPath_LevelOne {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelOne {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -589,24 +617,26 @@ impl BuildConnectUserHierarchyGroupHierarchyPathElLevelOneEl {
     }
 }
 
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelOneElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelOneRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyGroupHierarchyPathElLevelOneElRef {
+impl terrars::Ref for ConnectUserHierarchyGroup_HierarchyPath_LevelOneRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyGroupHierarchyPathElLevelOneElRef {
-        ConnectUserHierarchyGroupHierarchyPathElLevelOneElRef {
+    ) -> ConnectUserHierarchyGroup_HierarchyPath_LevelOneRef {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelOneRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelOneElRef {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelOneRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -628,7 +658,7 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelOneElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelThree {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -637,7 +667,7 @@ pub struct ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelThree {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -657,8 +687,8 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyGroup_HierarchyPath_LevelThree {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyGroup_HierarchyPath_LevelThree>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -669,11 +699,11 @@ impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelTh
     }
 }
 
-pub struct BuildConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {}
+pub struct BuildConnectUserHierarchyGroup_HierarchyPath_LevelThree {}
 
-impl BuildConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {
-    pub fn build(self) -> ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {
-        ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {
+impl BuildConnectUserHierarchyGroup_HierarchyPath_LevelThree {
+    pub fn build(self) -> ConnectUserHierarchyGroup_HierarchyPath_LevelThree {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelThree {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -681,24 +711,26 @@ impl BuildConnectUserHierarchyGroupHierarchyPathElLevelThreeEl {
     }
 }
 
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelThreeElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelThreeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyGroupHierarchyPathElLevelThreeElRef {
+impl terrars::Ref for ConnectUserHierarchyGroup_HierarchyPath_LevelThreeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyGroupHierarchyPathElLevelThreeElRef {
-        ConnectUserHierarchyGroupHierarchyPathElLevelThreeElRef {
+    ) -> ConnectUserHierarchyGroup_HierarchyPath_LevelThreeRef {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelThreeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelThreeElRef {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelThreeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -720,7 +752,7 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelThreeElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelTwo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -729,7 +761,7 @@ pub struct ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelTwo {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -749,8 +781,8 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyGroup_HierarchyPath_LevelTwo {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyGroup_HierarchyPath_LevelTwo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -761,11 +793,11 @@ impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathElLevelTw
     }
 }
 
-pub struct BuildConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {}
+pub struct BuildConnectUserHierarchyGroup_HierarchyPath_LevelTwo {}
 
-impl BuildConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {
-    pub fn build(self) -> ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {
-        ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {
+impl BuildConnectUserHierarchyGroup_HierarchyPath_LevelTwo {
+    pub fn build(self) -> ConnectUserHierarchyGroup_HierarchyPath_LevelTwo {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelTwo {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -773,24 +805,26 @@ impl BuildConnectUserHierarchyGroupHierarchyPathElLevelTwoEl {
     }
 }
 
-pub struct ConnectUserHierarchyGroupHierarchyPathElLevelTwoElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyGroup_HierarchyPath_LevelTwoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyGroupHierarchyPathElLevelTwoElRef {
+impl terrars::Ref for ConnectUserHierarchyGroup_HierarchyPath_LevelTwoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyGroupHierarchyPathElLevelTwoElRef {
-        ConnectUserHierarchyGroupHierarchyPathElLevelTwoElRef {
+    ) -> ConnectUserHierarchyGroup_HierarchyPath_LevelTwoRef {
+        ConnectUserHierarchyGroup_HierarchyPath_LevelTwoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElLevelTwoElRef {
+impl ConnectUserHierarchyGroup_HierarchyPath_LevelTwoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -812,24 +846,24 @@ impl ConnectUserHierarchyGroupHierarchyPathElLevelTwoElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyGroupHierarchyPathEl {
+pub struct ConnectUserHierarchyGroup_HierarchyPath {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_five: std::option::Option<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl>>,
+    level_five: std::option::Option<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelFive>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_four: std::option::Option<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelFourEl>>,
+    level_four: std::option::Option<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelFour>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_one: std::option::Option<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelOneEl>>,
+    level_one: std::option::Option<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelOne>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_three: std::option::Option<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl>>,
+    level_three: std::option::Option<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelThree>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_two: std::option::Option<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl>>,
+    level_two: std::option::Option<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelTwo>>,
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathEl {
+impl ConnectUserHierarchyGroup_HierarchyPath {
     #[doc = "Set the field `level_five`.\n"]
     pub fn set_level_five(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelFiveEl>>,
+        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelFive>>,
     ) -> Self {
         self.level_five = std::option::Option::Some(v.into());
         self
@@ -838,7 +872,7 @@ impl ConnectUserHierarchyGroupHierarchyPathEl {
     #[doc = "Set the field `level_four`.\n"]
     pub fn set_level_four(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelFourEl>>,
+        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelFour>>,
     ) -> Self {
         self.level_four = std::option::Option::Some(v.into());
         self
@@ -847,7 +881,7 @@ impl ConnectUserHierarchyGroupHierarchyPathEl {
     #[doc = "Set the field `level_one`.\n"]
     pub fn set_level_one(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelOneEl>>,
+        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelOne>>,
     ) -> Self {
         self.level_one = std::option::Option::Some(v.into());
         self
@@ -856,7 +890,7 @@ impl ConnectUserHierarchyGroupHierarchyPathEl {
     #[doc = "Set the field `level_three`.\n"]
     pub fn set_level_three(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelThreeEl>>,
+        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelThree>>,
     ) -> Self {
         self.level_three = std::option::Option::Some(v.into());
         self
@@ -865,15 +899,15 @@ impl ConnectUserHierarchyGroupHierarchyPathEl {
     #[doc = "Set the field `level_two`.\n"]
     pub fn set_level_two(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroupHierarchyPathElLevelTwoEl>>,
+        v: impl std::convert::Into<terrars::ListField<ConnectUserHierarchyGroup_HierarchyPath_LevelTwo>>,
     ) -> Self {
         self.level_two = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyGroupHierarchyPathEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyGroup_HierarchyPath {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyGroup_HierarchyPath>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -884,11 +918,11 @@ impl terrars::ToListMappable for ConnectUserHierarchyGroupHierarchyPathEl {
     }
 }
 
-pub struct BuildConnectUserHierarchyGroupHierarchyPathEl {}
+pub struct BuildConnectUserHierarchyGroup_HierarchyPath {}
 
-impl BuildConnectUserHierarchyGroupHierarchyPathEl {
-    pub fn build(self) -> ConnectUserHierarchyGroupHierarchyPathEl {
-        ConnectUserHierarchyGroupHierarchyPathEl {
+impl BuildConnectUserHierarchyGroup_HierarchyPath {
+    pub fn build(self) -> ConnectUserHierarchyGroup_HierarchyPath {
+        ConnectUserHierarchyGroup_HierarchyPath {
             level_five: core::default::Default::default(),
             level_four: core::default::Default::default(),
             level_one: core::default::Default::default(),
@@ -898,47 +932,49 @@ impl BuildConnectUserHierarchyGroupHierarchyPathEl {
     }
 }
 
-pub struct ConnectUserHierarchyGroupHierarchyPathElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyGroup_HierarchyPathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyGroupHierarchyPathElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectUserHierarchyGroupHierarchyPathElRef {
-        ConnectUserHierarchyGroupHierarchyPathElRef {
+impl terrars::Ref for ConnectUserHierarchyGroup_HierarchyPathRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectUserHierarchyGroup_HierarchyPathRef {
+        ConnectUserHierarchyGroup_HierarchyPathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyGroupHierarchyPathElRef {
+impl ConnectUserHierarchyGroup_HierarchyPathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `level_five` after provisioning.\n"]
-    pub fn level_five(&self) -> terrars::ListRef<ConnectUserHierarchyGroupHierarchyPathElLevelFiveElRef> {
+    pub fn level_five(&self) -> terrars::ListRef<ConnectUserHierarchyGroup_HierarchyPath_LevelFiveRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_five", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_four` after provisioning.\n"]
-    pub fn level_four(&self) -> terrars::ListRef<ConnectUserHierarchyGroupHierarchyPathElLevelFourElRef> {
+    pub fn level_four(&self) -> terrars::ListRef<ConnectUserHierarchyGroup_HierarchyPath_LevelFourRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_four", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_one` after provisioning.\n"]
-    pub fn level_one(&self) -> terrars::ListRef<ConnectUserHierarchyGroupHierarchyPathElLevelOneElRef> {
+    pub fn level_one(&self) -> terrars::ListRef<ConnectUserHierarchyGroup_HierarchyPath_LevelOneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_one", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_three` after provisioning.\n"]
-    pub fn level_three(&self) -> terrars::ListRef<ConnectUserHierarchyGroupHierarchyPathElLevelThreeElRef> {
+    pub fn level_three(&self) -> terrars::ListRef<ConnectUserHierarchyGroup_HierarchyPath_LevelThreeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_three", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_two` after provisioning.\n"]
-    pub fn level_two(&self) -> terrars::ListRef<ConnectUserHierarchyGroupHierarchyPathElLevelTwoElRef> {
+    pub fn level_two(&self) -> terrars::ListRef<ConnectUserHierarchyGroup_HierarchyPath_LevelTwoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_two", self.base))
     }
 }

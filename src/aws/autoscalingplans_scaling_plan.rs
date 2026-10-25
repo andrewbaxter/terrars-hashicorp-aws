@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AutoscalingplansScalingPlanData {
+struct AutoscalingplansScalingPlanData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,16 +24,18 @@ struct AutoscalingplansScalingPlanData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    application_source: std::option::Option<std::vec::Vec<AutoscalingplansScalingPlanApplicationSourceEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scaling_instruction: std::option::Option<std::vec::Vec<AutoscalingplansScalingPlanScalingInstructionEl>>,
+    application_source: std::option::Option<std::vec::Vec<AutoscalingplansScalingPlan_ApplicationSource>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scaling_instruction: std::option::Option<std::vec::Vec<AutoscalingplansScalingPlan_ScalingInstruction>>,
     dynamic: AutoscalingplansScalingPlanDynamic,
 }
 
 struct AutoscalingplansScalingPlan_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AutoscalingplansScalingPlanData>,
+    data: std::cell::RefCell<AutoscalingplansScalingPlanData_>,
 }
 
 #[derive(Clone)]
@@ -137,10 +141,17 @@ impl AutoscalingplansScalingPlan {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `application_source`.\n"]
     pub fn set_application_source(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingplansScalingPlanApplicationSourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingplansScalingPlan_ApplicationSource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -156,7 +167,7 @@ impl AutoscalingplansScalingPlan {
     #[doc = "Set the field `scaling_instruction`.\n"]
     pub fn set_scaling_instruction(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingplansScalingPlanScalingInstructionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingplansScalingPlan_ScalingInstruction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,13 +190,19 @@ impl AutoscalingplansScalingPlan {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `scaling_plan_version` after provisioning.\n"]
     pub fn scaling_plan_version(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_plan_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `application_source` after provisioning.\n"]
-    pub fn application_source(&self) -> terrars::ListRef<AutoscalingplansScalingPlanApplicationSourceElRef> {
+    pub fn application_source(&self) -> terrars::ListRef<AutoscalingplansScalingPlan_ApplicationSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.application_source", self.extract_ref()))
     }
 }
@@ -232,7 +249,7 @@ impl BuildAutoscalingplansScalingPlan {
         let out = AutoscalingplansScalingPlan(std::rc::Rc::new(AutoscalingplansScalingPlan_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AutoscalingplansScalingPlanData {
+            data: std::cell::RefCell::new(AutoscalingplansScalingPlanData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -240,6 +257,7 @@ impl BuildAutoscalingplansScalingPlan {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 application_source: core::default::Default::default(),
                 scaling_instruction: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -283,25 +301,37 @@ impl AutoscalingplansScalingPlanRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `scaling_plan_version` after provisioning.\n"]
     pub fn scaling_plan_version(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_plan_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `application_source` after provisioning.\n"]
-    pub fn application_source(&self) -> terrars::ListRef<AutoscalingplansScalingPlanApplicationSourceElRef> {
+    pub fn application_source(&self) -> terrars::ListRef<AutoscalingplansScalingPlan_ApplicationSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.application_source", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AutoscalingplansScalingPlanDynamic {
+    application_source: std::option::Option<terrars::DynamicBlock<AutoscalingplansScalingPlan_ApplicationSource>>,
+    scaling_instruction: std::option::Option<terrars::DynamicBlock<AutoscalingplansScalingPlan_ScalingInstruction>>,
+}
+
 #[derive(Serialize)]
-pub struct AutoscalingplansScalingPlanApplicationSourceElTagFilterEl {
+pub struct AutoscalingplansScalingPlan_ApplicationSource_TagFilter {
     key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AutoscalingplansScalingPlanApplicationSourceElTagFilterEl {
+impl AutoscalingplansScalingPlan_ApplicationSource_TagFilter {
     #[doc = "Set the field `values`.\n"]
     pub fn set_values(
         mut self,
@@ -312,8 +342,8 @@ impl AutoscalingplansScalingPlanApplicationSourceElTagFilterEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingplansScalingPlanApplicationSourceElTagFilterEl {
-    type O = terrars::BlockAssignable<AutoscalingplansScalingPlanApplicationSourceElTagFilterEl>;
+impl terrars::ToListMappable for AutoscalingplansScalingPlan_ApplicationSource_TagFilter {
+    type O = terrars::BlockAssignable<AutoscalingplansScalingPlan_ApplicationSource_TagFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -324,38 +354,40 @@ impl terrars::ToListMappable for AutoscalingplansScalingPlanApplicationSourceElT
     }
 }
 
-pub struct BuildAutoscalingplansScalingPlanApplicationSourceElTagFilterEl {
+pub struct BuildAutoscalingplansScalingPlan_ApplicationSource_TagFilter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingplansScalingPlanApplicationSourceElTagFilterEl {
-    pub fn build(self) -> AutoscalingplansScalingPlanApplicationSourceElTagFilterEl {
-        AutoscalingplansScalingPlanApplicationSourceElTagFilterEl {
+impl BuildAutoscalingplansScalingPlan_ApplicationSource_TagFilter {
+    pub fn build(self) -> AutoscalingplansScalingPlan_ApplicationSource_TagFilter {
+        AutoscalingplansScalingPlan_ApplicationSource_TagFilter {
             key: self.key,
             values: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingplansScalingPlanApplicationSourceElTagFilterElRef {
+#[allow(dead_code)]
+pub struct AutoscalingplansScalingPlan_ApplicationSource_TagFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingplansScalingPlanApplicationSourceElTagFilterElRef {
+impl terrars::Ref for AutoscalingplansScalingPlan_ApplicationSource_TagFilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingplansScalingPlanApplicationSourceElTagFilterElRef {
-        AutoscalingplansScalingPlanApplicationSourceElTagFilterElRef {
+    ) -> AutoscalingplansScalingPlan_ApplicationSource_TagFilterRef {
+        AutoscalingplansScalingPlan_ApplicationSource_TagFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingplansScalingPlanApplicationSourceElTagFilterElRef {
+impl AutoscalingplansScalingPlan_ApplicationSource_TagFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -372,22 +404,20 @@ impl AutoscalingplansScalingPlanApplicationSourceElTagFilterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AutoscalingplansScalingPlanApplicationSourceElDynamic {
-    tag_filter: std
-    ::option
-    ::Option<terrars::DynamicBlock<AutoscalingplansScalingPlanApplicationSourceElTagFilterEl>>,
+struct AutoscalingplansScalingPlan_ApplicationSourceDynamic {
+    tag_filter: std::option::Option<terrars::DynamicBlock<AutoscalingplansScalingPlan_ApplicationSource_TagFilter>>,
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingplansScalingPlanApplicationSourceEl {
+pub struct AutoscalingplansScalingPlan_ApplicationSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudformation_stack_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag_filter: std::option::Option<std::vec::Vec<AutoscalingplansScalingPlanApplicationSourceElTagFilterEl>>,
-    dynamic: AutoscalingplansScalingPlanApplicationSourceElDynamic,
+    tag_filter: std::option::Option<std::vec::Vec<AutoscalingplansScalingPlan_ApplicationSource_TagFilter>>,
+    dynamic: AutoscalingplansScalingPlan_ApplicationSourceDynamic,
 }
 
-impl AutoscalingplansScalingPlanApplicationSourceEl {
+impl AutoscalingplansScalingPlan_ApplicationSource {
     #[doc = "Set the field `cloudformation_stack_arn`.\n"]
     pub fn set_cloudformation_stack_arn(
         mut self,
@@ -405,7 +435,7 @@ impl AutoscalingplansScalingPlanApplicationSourceEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AutoscalingplansScalingPlanApplicationSourceElTagFilterEl>>,
+                    ::Into<terrars::BlockAssignable<AutoscalingplansScalingPlan_ApplicationSource_TagFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -419,8 +449,8 @@ impl AutoscalingplansScalingPlanApplicationSourceEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingplansScalingPlanApplicationSourceEl {
-    type O = terrars::BlockAssignable<AutoscalingplansScalingPlanApplicationSourceEl>;
+impl terrars::ToListMappable for AutoscalingplansScalingPlan_ApplicationSource {
+    type O = terrars::BlockAssignable<AutoscalingplansScalingPlan_ApplicationSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -431,11 +461,11 @@ impl terrars::ToListMappable for AutoscalingplansScalingPlanApplicationSourceEl 
     }
 }
 
-pub struct BuildAutoscalingplansScalingPlanApplicationSourceEl {}
+pub struct BuildAutoscalingplansScalingPlan_ApplicationSource {}
 
-impl BuildAutoscalingplansScalingPlanApplicationSourceEl {
-    pub fn build(self) -> AutoscalingplansScalingPlanApplicationSourceEl {
-        AutoscalingplansScalingPlanApplicationSourceEl {
+impl BuildAutoscalingplansScalingPlan_ApplicationSource {
+    pub fn build(self) -> AutoscalingplansScalingPlan_ApplicationSource {
+        AutoscalingplansScalingPlan_ApplicationSource {
             cloudformation_stack_arn: core::default::Default::default(),
             tag_filter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -443,24 +473,26 @@ impl BuildAutoscalingplansScalingPlanApplicationSourceEl {
     }
 }
 
-pub struct AutoscalingplansScalingPlanApplicationSourceElRef {
+#[allow(dead_code)]
+pub struct AutoscalingplansScalingPlan_ApplicationSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingplansScalingPlanApplicationSourceElRef {
+impl terrars::Ref for AutoscalingplansScalingPlan_ApplicationSourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingplansScalingPlanApplicationSourceElRef {
-        AutoscalingplansScalingPlanApplicationSourceElRef {
+    ) -> AutoscalingplansScalingPlan_ApplicationSourceRef {
+        AutoscalingplansScalingPlan_ApplicationSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingplansScalingPlanApplicationSourceElRef {
+impl AutoscalingplansScalingPlan_ApplicationSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -472,7 +504,7 @@ impl AutoscalingplansScalingPlanApplicationSourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl {
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dimensions: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     metric_name: terrars::PrimField<std::string::String>,
@@ -482,7 +514,7 @@ pub struct AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSp
     unit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl {
+impl AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification {
     #[doc = "Set the field `dimensions`.\n"]
     pub fn set_dimensions(
         mut self,
@@ -499,9 +531,9 @@ impl AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecific
     }
 }
 
-impl terrars::ToListMappable for AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl {
+impl terrars::ToListMappable for AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification {
     type O =
-        terrars::BlockAssignable<AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl>;
+        terrars::BlockAssignable<AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -512,7 +544,7 @@ impl terrars::ToListMappable for AutoscalingplansScalingPlanScalingInstructionEl
     }
 }
 
-pub struct BuildAutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl {
+pub struct BuildAutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification {
     #[doc = ""]
     pub metric_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -521,9 +553,9 @@ pub struct BuildAutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMet
     pub statistic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl {
-    pub fn build(self) -> AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl {
-        AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl {
+impl BuildAutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification {
+    pub fn build(self) -> AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification {
+        AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification {
             dimensions: core::default::Default::default(),
             metric_name: self.metric_name,
             namespace: self.namespace,
@@ -533,24 +565,26 @@ impl BuildAutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpe
     }
 }
 
-pub struct AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationElRef {
+#[allow(dead_code)]
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationElRef {
+impl terrars::Ref for AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationElRef {
-        AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationElRef {
+    ) -> AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecificationRef {
+        AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationElRef {
+impl AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -582,13 +616,13 @@ impl AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecific
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl {
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification {
     predefined_load_metric_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_label: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl {
+impl AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification {
     #[doc = "Set the field `resource_label`.\n"]
     pub fn set_resource_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.resource_label = std::option::Option::Some(v.into());
@@ -596,9 +630,9 @@ impl AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecific
     }
 }
 
-impl terrars::ToListMappable for AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl {
+impl terrars::ToListMappable for AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification {
     type O =
-        terrars::BlockAssignable<AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl>;
+        terrars::BlockAssignable<AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -609,38 +643,40 @@ impl terrars::ToListMappable for AutoscalingplansScalingPlanScalingInstructionEl
     }
 }
 
-pub struct BuildAutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl {
+pub struct BuildAutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification {
     #[doc = ""]
     pub predefined_load_metric_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl {
-    pub fn build(self) -> AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl {
-        AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl {
+impl BuildAutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification {
+    pub fn build(self) -> AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification {
+        AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification {
             predefined_load_metric_type: self.predefined_load_metric_type,
             resource_label: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationElRef {
+#[allow(dead_code)]
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationElRef {
+impl terrars::Ref for AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationElRef {
-        AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationElRef {
+    ) -> AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecificationRef {
+        AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationElRef {
+impl AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -657,7 +693,7 @@ impl AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecific
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl {
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dimensions: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     metric_name: terrars::PrimField<std::string::String>,
@@ -667,7 +703,7 @@ pub struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigur
     unit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl {
+impl AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification {
     #[doc = "Set the field `dimensions`.\n"]
     pub fn set_dimensions(
         mut self,
@@ -685,11 +721,11 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
 }
 
 impl terrars
-::ToListMappable for AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl {
+::ToListMappable for AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl,
+            AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -701,7 +737,7 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl {
+pub struct BuildAutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification {
     #[doc = ""]
     pub metric_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -710,11 +746,11 @@ pub struct BuildAutoscalingplansScalingPlanScalingInstructionElTargetTrackingCon
     pub statistic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl {
+impl BuildAutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification {
     pub fn build(
         self,
-    ) -> AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl {
-        AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl {
+    ) -> AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification {
+        AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification {
             dimensions: core::default::Default::default(),
             metric_name: self.metric_name,
             namespace: self.namespace,
@@ -724,25 +760,27 @@ impl BuildAutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigura
     }
 }
 
-pub struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationElRef {
+#[allow(dead_code)]
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationElRef {
+::Ref for AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationElRef {
-        AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationElRef {
+    ) -> AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecificationRef {
+        AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationElRef {
+impl AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -774,13 +812,13 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl {
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification {
     predefined_scaling_metric_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_label: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl {
+impl AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification {
     #[doc = "Set the field `resource_label`.\n"]
     pub fn set_resource_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.resource_label = std::option::Option::Some(v.into());
@@ -789,11 +827,11 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
 }
 
 impl terrars
-::ToListMappable for AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl {
+::ToListMappable for AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl,
+            AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -805,41 +843,43 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl {
+pub struct BuildAutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification {
     #[doc = ""]
     pub predefined_scaling_metric_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl {
+impl BuildAutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification {
     pub fn build(
         self,
-    ) -> AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl {
-        AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl {
+    ) -> AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification {
+        AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification {
             predefined_scaling_metric_type: self.predefined_scaling_metric_type,
             resource_label: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationElRef {
+#[allow(dead_code)]
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationElRef {
+::Ref for AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationElRef {
-        AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationElRef {
+    ) -> AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecificationRef {
+        AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationElRef {
+impl AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -856,13 +896,13 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
 }
 
 #[derive(Serialize, Default)]
-struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElDynamic {
+struct AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfigurationDynamic {
     customized_scaling_metric_specification: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl,
+            AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification,
         >,
     >,
     predefined_scaling_metric_specification: std
@@ -870,13 +910,13 @@ struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfiguratio
     ::Option<
         terrars
         ::DynamicBlock<
-            AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl,
+            AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl {
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_scale_in: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -893,7 +933,7 @@ pub struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigur
         std
         ::vec
         ::Vec<
-            AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl,
+            AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -903,13 +943,13 @@ pub struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigur
         std
         ::vec
         ::Vec<
-            AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl,
+            AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification,
         >,
     >,
-    dynamic: AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElDynamic,
+    dynamic: AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfigurationDynamic,
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl {
+impl AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration {
     #[doc = "Set the field `disable_scale_in`.\n"]
     pub fn set_disable_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disable_scale_in = std::option::Option::Some(v.into());
@@ -945,7 +985,7 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationEl,
+                            AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecification,
                         >,
                     >,
     ) -> Self {
@@ -971,7 +1011,7 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationEl,
+                            AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecification,
                         >,
                     >,
     ) -> Self {
@@ -987,8 +1027,8 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
     }
 }
 
-impl terrars::ToListMappable for AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl {
-    type O = terrars::BlockAssignable<AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl>;
+impl terrars::ToListMappable for AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration {
+    type O = terrars::BlockAssignable<AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -999,14 +1039,14 @@ impl terrars::ToListMappable for AutoscalingplansScalingPlanScalingInstructionEl
     }
 }
 
-pub struct BuildAutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl {
+pub struct BuildAutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration {
     #[doc = ""]
     pub target_value: terrars::PrimField<f64>,
 }
 
-impl BuildAutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl {
-    pub fn build(self) -> AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl {
-        AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl {
+impl BuildAutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration {
+    pub fn build(self) -> AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration {
+        AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration {
             disable_scale_in: core::default::Default::default(),
             estimated_instance_warmup: core::default::Default::default(),
             scale_in_cooldown: core::default::Default::default(),
@@ -1019,24 +1059,26 @@ impl BuildAutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigura
     }
 }
 
-pub struct AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElRef {
+#[allow(dead_code)]
+pub struct AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElRef {
+impl terrars::Ref for AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElRef {
-        AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElRef {
+    ) -> AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfigurationRef {
+        AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElRef {
+impl AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1071,7 +1113,7 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
         &self,
     ) -> terrars
     ::ListRef<
-        AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElCustomizedScalingMetricSpecificationElRef,
+        AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_CustomizedScalingMetricSpecificationRef,
     > {
         terrars::ListRef::new(
             self.shared().clone(),
@@ -1084,7 +1126,7 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
         &self,
     ) -> terrars
     ::ListRef<
-        AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationElPredefinedScalingMetricSpecificationElRef,
+        AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration_PredefinedScalingMetricSpecificationRef,
     > {
         terrars::ListRef::new(
             self.shared().clone(),
@@ -1094,24 +1136,20 @@ impl AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationE
 }
 
 #[derive(Serialize, Default)]
-struct AutoscalingplansScalingPlanScalingInstructionElDynamic {
+struct AutoscalingplansScalingPlan_ScalingInstructionDynamic {
     customized_load_metric_specification: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification>>,
     predefined_load_metric_specification: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification>>,
     target_tracking_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingplansScalingPlanScalingInstructionEl {
+pub struct AutoscalingplansScalingPlan_ScalingInstruction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_dynamic_scaling: std::option::Option<terrars::PrimField<bool>>,
     max_capacity: terrars::PrimField<f64>,
@@ -1132,19 +1170,19 @@ pub struct AutoscalingplansScalingPlanScalingInstructionEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customized_load_metric_specification: std
     ::option
-    ::Option<std::vec::Vec<AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl>>,
+    ::Option<std::vec::Vec<AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     predefined_load_metric_specification: std
     ::option
-    ::Option<std::vec::Vec<AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl>>,
+    ::Option<std::vec::Vec<AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_tracking_configuration: std
     ::option
-    ::Option<std::vec::Vec<AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl>>,
-    dynamic: AutoscalingplansScalingPlanScalingInstructionElDynamic,
+    ::Option<std::vec::Vec<AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration>>,
+    dynamic: AutoscalingplansScalingPlan_ScalingInstructionDynamic,
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionEl {
+impl AutoscalingplansScalingPlan_ScalingInstruction {
     #[doc = "Set the field `disable_dynamic_scaling`.\n"]
     pub fn set_disable_dynamic_scaling(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disable_dynamic_scaling = std::option::Option::Some(v.into());
@@ -1204,7 +1242,7 @@ impl AutoscalingplansScalingPlanScalingInstructionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationEl,
+                            AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecification,
                         >,
                     >,
     ) -> Self {
@@ -1230,7 +1268,7 @@ impl AutoscalingplansScalingPlanScalingInstructionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationEl,
+                            AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecification,
                         >,
                     >,
     ) -> Self {
@@ -1255,9 +1293,7 @@ impl AutoscalingplansScalingPlanScalingInstructionEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AutoscalingplansScalingPlanScalingInstructionElTargetTrackingConfigurationEl,
-                        >,
+                        ::BlockAssignable<AutoscalingplansScalingPlan_ScalingInstruction_TargetTrackingConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1272,8 +1308,8 @@ impl AutoscalingplansScalingPlanScalingInstructionEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingplansScalingPlanScalingInstructionEl {
-    type O = terrars::BlockAssignable<AutoscalingplansScalingPlanScalingInstructionEl>;
+impl terrars::ToListMappable for AutoscalingplansScalingPlan_ScalingInstruction {
+    type O = terrars::BlockAssignable<AutoscalingplansScalingPlan_ScalingInstruction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1284,7 +1320,7 @@ impl terrars::ToListMappable for AutoscalingplansScalingPlanScalingInstructionEl
     }
 }
 
-pub struct BuildAutoscalingplansScalingPlanScalingInstructionEl {
+pub struct BuildAutoscalingplansScalingPlan_ScalingInstruction {
     #[doc = ""]
     pub max_capacity: terrars::PrimField<f64>,
     #[doc = ""]
@@ -1297,9 +1333,9 @@ pub struct BuildAutoscalingplansScalingPlanScalingInstructionEl {
     pub service_namespace: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingplansScalingPlanScalingInstructionEl {
-    pub fn build(self) -> AutoscalingplansScalingPlanScalingInstructionEl {
-        AutoscalingplansScalingPlanScalingInstructionEl {
+impl BuildAutoscalingplansScalingPlan_ScalingInstruction {
+    pub fn build(self) -> AutoscalingplansScalingPlan_ScalingInstruction {
+        AutoscalingplansScalingPlan_ScalingInstruction {
             disable_dynamic_scaling: core::default::Default::default(),
             max_capacity: self.max_capacity,
             min_capacity: self.min_capacity,
@@ -1319,24 +1355,26 @@ impl BuildAutoscalingplansScalingPlanScalingInstructionEl {
     }
 }
 
-pub struct AutoscalingplansScalingPlanScalingInstructionElRef {
+#[allow(dead_code)]
+pub struct AutoscalingplansScalingPlan_ScalingInstructionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingplansScalingPlanScalingInstructionElRef {
+impl terrars::Ref for AutoscalingplansScalingPlan_ScalingInstructionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingplansScalingPlanScalingInstructionElRef {
-        AutoscalingplansScalingPlanScalingInstructionElRef {
+    ) -> AutoscalingplansScalingPlan_ScalingInstructionRef {
+        AutoscalingplansScalingPlan_ScalingInstructionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingplansScalingPlanScalingInstructionElRef {
+impl AutoscalingplansScalingPlan_ScalingInstructionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1405,22 +1443,14 @@ impl AutoscalingplansScalingPlanScalingInstructionElRef {
     #[doc = "Get a reference to the value of field `customized_load_metric_specification` after provisioning.\n"]
     pub fn customized_load_metric_specification(
         &self,
-    ) -> terrars::ListRef<AutoscalingplansScalingPlanScalingInstructionElCustomizedLoadMetricSpecificationElRef> {
+    ) -> terrars::ListRef<AutoscalingplansScalingPlan_ScalingInstruction_CustomizedLoadMetricSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.customized_load_metric_specification", self.base))
     }
 
     #[doc = "Get a reference to the value of field `predefined_load_metric_specification` after provisioning.\n"]
     pub fn predefined_load_metric_specification(
         &self,
-    ) -> terrars::ListRef<AutoscalingplansScalingPlanScalingInstructionElPredefinedLoadMetricSpecificationElRef> {
+    ) -> terrars::ListRef<AutoscalingplansScalingPlan_ScalingInstruction_PredefinedLoadMetricSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.predefined_load_metric_specification", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AutoscalingplansScalingPlanDynamic {
-    application_source: std::option::Option<terrars::DynamicBlock<AutoscalingplansScalingPlanApplicationSourceEl>>,
-    scaling_instruction: std
-    ::option
-    ::Option<terrars::DynamicBlock<AutoscalingplansScalingPlanScalingInstructionEl>>,
 }

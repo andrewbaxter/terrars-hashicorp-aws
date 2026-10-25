@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApprunnerVpcIngressConnectionData {
+struct ApprunnerVpcIngressConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,20 +23,22 @@ struct ApprunnerVpcIngressConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     service_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress_vpc_configuration: std::option::Option<std::vec::Vec<ApprunnerVpcIngressConnectionIngressVpcConfigurationEl>>,
+    ingress_vpc_configuration: std::option::Option<std::vec::Vec<ApprunnerVpcIngressConnection_IngressVpcConfiguration>>,
     dynamic: ApprunnerVpcIngressConnectionDynamic,
 }
 
 struct ApprunnerVpcIngressConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApprunnerVpcIngressConnectionData>,
+    data: std::cell::RefCell<ApprunnerVpcIngressConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl ApprunnerVpcIngressConnection {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -161,7 +172,7 @@ impl ApprunnerVpcIngressConnection {
     #[doc = "Set the field `ingress_vpc_configuration`.\n"]
     pub fn set_ingress_vpc_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerVpcIngressConnectionIngressVpcConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerVpcIngressConnection_IngressVpcConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -194,6 +205,12 @@ impl ApprunnerVpcIngressConnection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_arn` after provisioning.\n"]
     pub fn service_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_arn", self.extract_ref()))
@@ -217,7 +234,7 @@ impl ApprunnerVpcIngressConnection {
     #[doc = "Get a reference to the value of field `ingress_vpc_configuration` after provisioning.\n"]
     pub fn ingress_vpc_configuration(
         &self,
-    ) -> terrars::ListRef<ApprunnerVpcIngressConnectionIngressVpcConfigurationElRef> {
+    ) -> terrars::ListRef<ApprunnerVpcIngressConnection_IngressVpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingress_vpc_configuration", self.extract_ref()))
     }
 }
@@ -266,7 +283,7 @@ impl BuildApprunnerVpcIngressConnection {
         let out = ApprunnerVpcIngressConnection(std::rc::Rc::new(ApprunnerVpcIngressConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApprunnerVpcIngressConnectionData {
+            data: std::cell::RefCell::new(ApprunnerVpcIngressConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -274,6 +291,7 @@ impl BuildApprunnerVpcIngressConnection {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 service_arn: self.service_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -329,6 +347,12 @@ impl ApprunnerVpcIngressConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_arn` after provisioning.\n"]
     pub fn service_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_arn", self.extract_ref()))
@@ -352,20 +376,27 @@ impl ApprunnerVpcIngressConnectionRef {
     #[doc = "Get a reference to the value of field `ingress_vpc_configuration` after provisioning.\n"]
     pub fn ingress_vpc_configuration(
         &self,
-    ) -> terrars::ListRef<ApprunnerVpcIngressConnectionIngressVpcConfigurationElRef> {
+    ) -> terrars::ListRef<ApprunnerVpcIngressConnection_IngressVpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingress_vpc_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApprunnerVpcIngressConnectionDynamic {
+    ingress_vpc_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ApprunnerVpcIngressConnection_IngressVpcConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct ApprunnerVpcIngressConnectionIngressVpcConfigurationEl {
+pub struct ApprunnerVpcIngressConnection_IngressVpcConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApprunnerVpcIngressConnectionIngressVpcConfigurationEl {
+impl ApprunnerVpcIngressConnection_IngressVpcConfiguration {
     #[doc = "Set the field `vpc_endpoint_id`.\n"]
     pub fn set_vpc_endpoint_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.vpc_endpoint_id = std::option::Option::Some(v.into());
@@ -379,8 +410,8 @@ impl ApprunnerVpcIngressConnectionIngressVpcConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerVpcIngressConnectionIngressVpcConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerVpcIngressConnectionIngressVpcConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerVpcIngressConnection_IngressVpcConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerVpcIngressConnection_IngressVpcConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -391,35 +422,37 @@ impl terrars::ToListMappable for ApprunnerVpcIngressConnectionIngressVpcConfigur
     }
 }
 
-pub struct BuildApprunnerVpcIngressConnectionIngressVpcConfigurationEl {}
+pub struct BuildApprunnerVpcIngressConnection_IngressVpcConfiguration {}
 
-impl BuildApprunnerVpcIngressConnectionIngressVpcConfigurationEl {
-    pub fn build(self) -> ApprunnerVpcIngressConnectionIngressVpcConfigurationEl {
-        ApprunnerVpcIngressConnectionIngressVpcConfigurationEl {
+impl BuildApprunnerVpcIngressConnection_IngressVpcConfiguration {
+    pub fn build(self) -> ApprunnerVpcIngressConnection_IngressVpcConfiguration {
+        ApprunnerVpcIngressConnection_IngressVpcConfiguration {
             vpc_endpoint_id: core::default::Default::default(),
             vpc_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApprunnerVpcIngressConnectionIngressVpcConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerVpcIngressConnection_IngressVpcConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerVpcIngressConnectionIngressVpcConfigurationElRef {
+impl terrars::Ref for ApprunnerVpcIngressConnection_IngressVpcConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerVpcIngressConnectionIngressVpcConfigurationElRef {
-        ApprunnerVpcIngressConnectionIngressVpcConfigurationElRef {
+    ) -> ApprunnerVpcIngressConnection_IngressVpcConfigurationRef {
+        ApprunnerVpcIngressConnection_IngressVpcConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerVpcIngressConnectionIngressVpcConfigurationElRef {
+impl ApprunnerVpcIngressConnection_IngressVpcConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -433,11 +466,4 @@ impl ApprunnerVpcIngressConnectionIngressVpcConfigurationElRef {
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApprunnerVpcIngressConnectionDynamic {
-    ingress_vpc_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<ApprunnerVpcIngressConnectionIngressVpcConfigurationEl>>,
 }

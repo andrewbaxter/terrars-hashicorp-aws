@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafRuleData {
+struct WafRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,14 +29,14 @@ struct WafRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    predicates: std::option::Option<std::vec::Vec<WafRulePredicatesEl>>,
+    predicates: std::option::Option<std::vec::Vec<WafRule_Predicates>>,
     dynamic: WafRuleDynamic,
 }
 
 struct WafRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafRuleData>,
+    data: std::cell::RefCell<WafRuleData_>,
 }
 
 #[derive(Clone)]
@@ -159,7 +161,7 @@ impl WafRule {
     }
 
     #[doc = "Set the field `predicates`.\n"]
-    pub fn set_predicates(self, v: impl std::convert::Into<terrars::BlockAssignable<WafRulePredicatesEl>>) -> Self {
+    pub fn set_predicates(self, v: impl std::convert::Into<terrars::BlockAssignable<WafRule_Predicates>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().predicates = std::option::Option::Some(v);
@@ -246,7 +248,7 @@ impl BuildWafRule {
         let out = WafRule(std::rc::Rc::new(WafRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafRuleData {
+            data: std::cell::RefCell::new(WafRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -320,18 +322,23 @@ impl WafRuleRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafRuleDynamic {
+    predicates: std::option::Option<terrars::DynamicBlock<WafRule_Predicates>>,
+}
+
 #[derive(Serialize)]
-pub struct WafRulePredicatesEl {
+pub struct WafRule_Predicates {
     data_id: terrars::PrimField<std::string::String>,
     negated: terrars::PrimField<bool>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafRulePredicatesEl { }
+impl WafRule_Predicates { }
 
-impl terrars::ToListMappable for WafRulePredicatesEl {
-    type O = terrars::BlockAssignable<WafRulePredicatesEl>;
+impl terrars::ToListMappable for WafRule_Predicates {
+    type O = terrars::BlockAssignable<WafRule_Predicates>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -342,7 +349,7 @@ impl terrars::ToListMappable for WafRulePredicatesEl {
     }
 }
 
-pub struct BuildWafRulePredicatesEl {
+pub struct BuildWafRule_Predicates {
     #[doc = ""]
     pub data_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -351,9 +358,9 @@ pub struct BuildWafRulePredicatesEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafRulePredicatesEl {
-    pub fn build(self) -> WafRulePredicatesEl {
-        WafRulePredicatesEl {
+impl BuildWafRule_Predicates {
+    pub fn build(self) -> WafRule_Predicates {
+        WafRule_Predicates {
             data_id: self.data_id,
             negated: self.negated,
             type_: self.type_,
@@ -361,21 +368,23 @@ impl BuildWafRulePredicatesEl {
     }
 }
 
-pub struct WafRulePredicatesElRef {
+#[allow(dead_code)]
+pub struct WafRule_PredicatesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafRulePredicatesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafRulePredicatesElRef {
-        WafRulePredicatesElRef {
+impl terrars::Ref for WafRule_PredicatesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafRule_PredicatesRef {
+        WafRule_PredicatesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafRulePredicatesElRef {
+impl WafRule_PredicatesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -394,9 +403,4 @@ impl WafRulePredicatesElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafRuleDynamic {
-    predicates: std::option::Option<terrars::DynamicBlock<WafRulePredicatesEl>>,
 }

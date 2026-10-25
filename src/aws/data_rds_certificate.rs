@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataRdsCertificateData {
+struct DataRdsCertificateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -17,15 +19,19 @@ struct DataRdsCertificateData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_for_new_launches: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     latest_valid_till: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataRdsCertificate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRdsCertificateData>,
+    data: std::cell::RefCell<DataRdsCertificateData_>,
 }
 
 #[derive(Clone)]
@@ -70,6 +76,12 @@ impl DataRdsCertificate {
         self
     }
 
+    #[doc = "Set the field `default_for_new_launches`.\n"]
+    pub fn set_default_for_new_launches(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().default_for_new_launches = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -79,6 +91,13 @@ impl DataRdsCertificate {
     #[doc = "Set the field `latest_valid_till`.\n"]
     pub fn set_latest_valid_till(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().latest_valid_till = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -102,6 +121,11 @@ impl DataRdsCertificate {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_override_valid_till", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_for_new_launches` after provisioning.\n"]
+    pub fn default_for_new_launches(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_for_new_launches", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -110,6 +134,12 @@ impl DataRdsCertificate {
     #[doc = "Get a reference to the value of field `latest_valid_till` after provisioning.\n"]
     pub fn latest_valid_till(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest_valid_till", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `thumbprint` after provisioning.\n"]
@@ -168,13 +198,15 @@ impl BuildDataRdsCertificate {
         let out = DataRdsCertificate(std::rc::Rc::new(DataRdsCertificate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRdsCertificateData {
+            data: std::cell::RefCell::new(DataRdsCertificateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
+                default_for_new_launches: core::default::Default::default(),
                 id: core::default::Default::default(),
                 latest_valid_till: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -225,6 +257,11 @@ impl DataRdsCertificateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_override_valid_till", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_for_new_launches` after provisioning.\n"]
+    pub fn default_for_new_launches(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_for_new_launches", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -233,6 +270,12 @@ impl DataRdsCertificateRef {
     #[doc = "Get a reference to the value of field `latest_valid_till` after provisioning.\n"]
     pub fn latest_valid_till(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest_valid_till", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `thumbprint` after provisioning.\n"]

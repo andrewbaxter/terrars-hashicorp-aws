@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DynamodbContributorInsightsData {
+struct DynamodbContributorInsightsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,15 +24,19 @@ struct DynamodbContributorInsightsData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     index_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     table_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DynamodbContributorInsightsTimeoutsEl>,
+    timeouts: std::option::Option<DynamodbContributorInsights_Timeouts>,
 }
 
 struct DynamodbContributorInsights_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DynamodbContributorInsightsData>,
+    data: std::cell::RefCell<DynamodbContributorInsightsData_>,
 }
 
 #[derive(Clone)]
@@ -142,8 +148,21 @@ impl DynamodbContributorInsights {
         self
     }
 
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DynamodbContributorInsightsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DynamodbContributorInsights_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -158,14 +177,25 @@ impl DynamodbContributorInsights {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
     pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DynamodbContributorInsightsTimeoutsElRef {
-        DynamodbContributorInsightsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DynamodbContributorInsights_TimeoutsRef {
+        DynamodbContributorInsights_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -214,7 +244,7 @@ impl BuildDynamodbContributorInsights {
         let out = DynamodbContributorInsights(std::rc::Rc::new(DynamodbContributorInsights_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DynamodbContributorInsightsData {
+            data: std::cell::RefCell::new(DynamodbContributorInsightsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -222,6 +252,8 @@ impl BuildDynamodbContributorInsights {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 index_name: core::default::Default::default(),
+                mode: core::default::Default::default(),
+                region: core::default::Default::default(),
                 table_name: self.table_name,
                 timeouts: core::default::Default::default(),
             }),
@@ -264,14 +296,25 @@ impl DynamodbContributorInsightsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
     pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DynamodbContributorInsightsTimeoutsElRef {
-        DynamodbContributorInsightsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DynamodbContributorInsights_TimeoutsRef {
+        DynamodbContributorInsights_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -279,14 +322,14 @@ impl DynamodbContributorInsightsRef {
 }
 
 #[derive(Serialize)]
-pub struct DynamodbContributorInsightsTimeoutsEl {
+pub struct DynamodbContributorInsights_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DynamodbContributorInsightsTimeoutsEl {
+impl DynamodbContributorInsights_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -300,8 +343,8 @@ impl DynamodbContributorInsightsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DynamodbContributorInsightsTimeoutsEl {
-    type O = terrars::BlockAssignable<DynamodbContributorInsightsTimeoutsEl>;
+impl terrars::ToListMappable for DynamodbContributorInsights_Timeouts {
+    type O = terrars::BlockAssignable<DynamodbContributorInsights_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -312,32 +355,34 @@ impl terrars::ToListMappable for DynamodbContributorInsightsTimeoutsEl {
     }
 }
 
-pub struct BuildDynamodbContributorInsightsTimeoutsEl {}
+pub struct BuildDynamodbContributorInsights_Timeouts {}
 
-impl BuildDynamodbContributorInsightsTimeoutsEl {
-    pub fn build(self) -> DynamodbContributorInsightsTimeoutsEl {
-        DynamodbContributorInsightsTimeoutsEl {
+impl BuildDynamodbContributorInsights_Timeouts {
+    pub fn build(self) -> DynamodbContributorInsights_Timeouts {
+        DynamodbContributorInsights_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct DynamodbContributorInsightsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DynamodbContributorInsights_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DynamodbContributorInsightsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DynamodbContributorInsightsTimeoutsElRef {
-        DynamodbContributorInsightsTimeoutsElRef {
+impl terrars::Ref for DynamodbContributorInsights_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DynamodbContributorInsights_TimeoutsRef {
+        DynamodbContributorInsights_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DynamodbContributorInsightsTimeoutsElRef {
+impl DynamodbContributorInsights_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

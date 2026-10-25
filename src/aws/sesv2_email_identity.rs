@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Sesv2EmailIdentityData {
+struct Sesv2EmailIdentityData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct Sesv2EmailIdentityData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dkim_signing_attributes: std::option::Option<std::vec::Vec<Sesv2EmailIdentityDkimSigningAttributesEl>>,
+    dkim_signing_attributes: std::option::Option<std::vec::Vec<Sesv2EmailIdentity_DkimSigningAttributes>>,
     dynamic: Sesv2EmailIdentityDynamic,
 }
 
 struct Sesv2EmailIdentity_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Sesv2EmailIdentityData>,
+    data: std::cell::RefCell<Sesv2EmailIdentityData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl Sesv2EmailIdentity {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -171,7 +182,7 @@ impl Sesv2EmailIdentity {
     #[doc = "Set the field `dkim_signing_attributes`.\n"]
     pub fn set_dkim_signing_attributes(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2EmailIdentityDkimSigningAttributesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2EmailIdentity_DkimSigningAttributes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,6 +220,12 @@ impl Sesv2EmailIdentity {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -219,13 +236,18 @@ impl Sesv2EmailIdentity {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `verification_status` after provisioning.\n"]
+    pub fn verification_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.verification_status", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `verified_for_sending_status` after provisioning.\n"]
     pub fn verified_for_sending_status(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.verified_for_sending_status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dkim_signing_attributes` after provisioning.\n"]
-    pub fn dkim_signing_attributes(&self) -> terrars::ListRef<Sesv2EmailIdentityDkimSigningAttributesElRef> {
+    pub fn dkim_signing_attributes(&self) -> terrars::ListRef<Sesv2EmailIdentity_DkimSigningAttributesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dkim_signing_attributes", self.extract_ref()))
     }
 }
@@ -272,7 +294,7 @@ impl BuildSesv2EmailIdentity {
         let out = Sesv2EmailIdentity(std::rc::Rc::new(Sesv2EmailIdentity_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Sesv2EmailIdentityData {
+            data: std::cell::RefCell::new(Sesv2EmailIdentityData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -281,6 +303,7 @@ impl BuildSesv2EmailIdentity {
                 configuration_set_name: core::default::Default::default(),
                 email_identity: self.email_identity,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 dkim_signing_attributes: core::default::Default::default(),
@@ -340,6 +363,12 @@ impl Sesv2EmailIdentityRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -350,19 +379,29 @@ impl Sesv2EmailIdentityRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `verification_status` after provisioning.\n"]
+    pub fn verification_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.verification_status", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `verified_for_sending_status` after provisioning.\n"]
     pub fn verified_for_sending_status(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.verified_for_sending_status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dkim_signing_attributes` after provisioning.\n"]
-    pub fn dkim_signing_attributes(&self) -> terrars::ListRef<Sesv2EmailIdentityDkimSigningAttributesElRef> {
+    pub fn dkim_signing_attributes(&self) -> terrars::ListRef<Sesv2EmailIdentity_DkimSigningAttributesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dkim_signing_attributes", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Sesv2EmailIdentityDynamic {
+    dkim_signing_attributes: std::option::Option<terrars::DynamicBlock<Sesv2EmailIdentity_DkimSigningAttributes>>,
+}
+
 #[derive(Serialize)]
-pub struct Sesv2EmailIdentityDkimSigningAttributesEl {
+pub struct Sesv2EmailIdentity_DkimSigningAttributes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain_signing_private_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -371,7 +410,7 @@ pub struct Sesv2EmailIdentityDkimSigningAttributesEl {
     next_signing_key_length: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Sesv2EmailIdentityDkimSigningAttributesEl {
+impl Sesv2EmailIdentity_DkimSigningAttributes {
     #[doc = "Set the field `domain_signing_private_key`.\n"]
     pub fn set_domain_signing_private_key(
         mut self,
@@ -400,8 +439,8 @@ impl Sesv2EmailIdentityDkimSigningAttributesEl {
     }
 }
 
-impl terrars::ToListMappable for Sesv2EmailIdentityDkimSigningAttributesEl {
-    type O = terrars::BlockAssignable<Sesv2EmailIdentityDkimSigningAttributesEl>;
+impl terrars::ToListMappable for Sesv2EmailIdentity_DkimSigningAttributes {
+    type O = terrars::BlockAssignable<Sesv2EmailIdentity_DkimSigningAttributes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -412,11 +451,11 @@ impl terrars::ToListMappable for Sesv2EmailIdentityDkimSigningAttributesEl {
     }
 }
 
-pub struct BuildSesv2EmailIdentityDkimSigningAttributesEl {}
+pub struct BuildSesv2EmailIdentity_DkimSigningAttributes {}
 
-impl BuildSesv2EmailIdentityDkimSigningAttributesEl {
-    pub fn build(self) -> Sesv2EmailIdentityDkimSigningAttributesEl {
-        Sesv2EmailIdentityDkimSigningAttributesEl {
+impl BuildSesv2EmailIdentity_DkimSigningAttributes {
+    pub fn build(self) -> Sesv2EmailIdentity_DkimSigningAttributes {
+        Sesv2EmailIdentity_DkimSigningAttributes {
             domain_signing_private_key: core::default::Default::default(),
             domain_signing_selector: core::default::Default::default(),
             next_signing_key_length: core::default::Default::default(),
@@ -424,21 +463,23 @@ impl BuildSesv2EmailIdentityDkimSigningAttributesEl {
     }
 }
 
-pub struct Sesv2EmailIdentityDkimSigningAttributesElRef {
+#[allow(dead_code)]
+pub struct Sesv2EmailIdentity_DkimSigningAttributesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2EmailIdentityDkimSigningAttributesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2EmailIdentityDkimSigningAttributesElRef {
-        Sesv2EmailIdentityDkimSigningAttributesElRef {
+impl terrars::Ref for Sesv2EmailIdentity_DkimSigningAttributesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2EmailIdentity_DkimSigningAttributesRef {
+        Sesv2EmailIdentity_DkimSigningAttributesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2EmailIdentityDkimSigningAttributesElRef {
+impl Sesv2EmailIdentity_DkimSigningAttributesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -482,9 +523,4 @@ impl Sesv2EmailIdentityDkimSigningAttributesElRef {
     pub fn tokens(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tokens", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Sesv2EmailIdentityDynamic {
-    dkim_signing_attributes: std::option::Option<terrars::DynamicBlock<Sesv2EmailIdentityDkimSigningAttributesEl>>,
 }

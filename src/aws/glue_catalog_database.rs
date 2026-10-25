@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlueCatalogDatabaseData {
+struct GlueCatalogDatabaseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,18 +32,24 @@ struct GlueCatalogDatabaseData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    create_table_default_permission: std
-    ::option
-    ::Option<std::vec::Vec<GlueCatalogDatabaseCreateTableDefaultPermissionEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_database: std::option::Option<std::vec::Vec<GlueCatalogDatabaseTargetDatabaseEl>>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_table_default_permission: std::option::Option<std::vec::Vec<GlueCatalogDatabase_CreateTableDefaultPermission>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    federated_database: std::option::Option<std::vec::Vec<GlueCatalogDatabase_FederatedDatabase>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_database: std::option::Option<std::vec::Vec<GlueCatalogDatabase_TargetDatabase>>,
     dynamic: GlueCatalogDatabaseDynamic,
 }
 
 struct GlueCatalogDatabase_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlueCatalogDatabaseData>,
+    data: std::cell::RefCell<GlueCatalogDatabaseData_>,
 }
 
 #[derive(Clone)]
@@ -174,10 +182,35 @@ impl GlueCatalogDatabase {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `create_table_default_permission`.\n"]
     pub fn set_create_table_default_permission(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCatalogDatabaseCreateTableDefaultPermissionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCatalogDatabase_CreateTableDefaultPermission>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,10 +223,26 @@ impl GlueCatalogDatabase {
         self
     }
 
+    #[doc = "Set the field `federated_database`.\n"]
+    pub fn set_federated_database(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCatalogDatabase_FederatedDatabase>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().federated_database = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.federated_database = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `target_database`.\n"]
     pub fn set_target_database(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCatalogDatabaseTargetDatabaseEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCatalogDatabase_TargetDatabase>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -241,18 +290,39 @@ impl GlueCatalogDatabase {
         terrars::RecRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `create_table_default_permission` after provisioning.\n"]
     pub fn create_table_default_permission(
         &self,
-    ) -> terrars::ListRef<GlueCatalogDatabaseCreateTableDefaultPermissionElRef> {
+    ) -> terrars::ListRef<GlueCatalogDatabase_CreateTableDefaultPermissionRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.create_table_default_permission", self.extract_ref()),
         )
     }
 
+    #[doc = "Get a reference to the value of field `federated_database` after provisioning.\n"]
+    pub fn federated_database(&self) -> terrars::ListRef<GlueCatalogDatabase_FederatedDatabaseRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.federated_database", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_database` after provisioning.\n"]
-    pub fn target_database(&self) -> terrars::ListRef<GlueCatalogDatabaseTargetDatabaseElRef> {
+    pub fn target_database(&self) -> terrars::ListRef<GlueCatalogDatabase_TargetDatabaseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_database", self.extract_ref()))
     }
 }
@@ -299,7 +369,7 @@ impl BuildGlueCatalogDatabase {
         let out = GlueCatalogDatabase(std::rc::Rc::new(GlueCatalogDatabase_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlueCatalogDatabaseData {
+            data: std::cell::RefCell::new(GlueCatalogDatabaseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -311,7 +381,11 @@ impl BuildGlueCatalogDatabase {
                 location_uri: core::default::Default::default(),
                 name: self.name,
                 parameters: core::default::Default::default(),
+                region: core::default::Default::default(),
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
                 create_table_default_permission: core::default::Default::default(),
+                federated_database: core::default::Default::default(),
                 target_database: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -379,29 +453,59 @@ impl GlueCatalogDatabaseRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `create_table_default_permission` after provisioning.\n"]
     pub fn create_table_default_permission(
         &self,
-    ) -> terrars::ListRef<GlueCatalogDatabaseCreateTableDefaultPermissionElRef> {
+    ) -> terrars::ListRef<GlueCatalogDatabase_CreateTableDefaultPermissionRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.create_table_default_permission", self.extract_ref()),
         )
     }
 
+    #[doc = "Get a reference to the value of field `federated_database` after provisioning.\n"]
+    pub fn federated_database(&self) -> terrars::ListRef<GlueCatalogDatabase_FederatedDatabaseRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.federated_database", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_database` after provisioning.\n"]
-    pub fn target_database(&self) -> terrars::ListRef<GlueCatalogDatabaseTargetDatabaseElRef> {
+    pub fn target_database(&self) -> terrars::ListRef<GlueCatalogDatabase_TargetDatabaseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_database", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlueCatalogDatabaseDynamic {
+    create_table_default_permission: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueCatalogDatabase_CreateTableDefaultPermission>>,
+    federated_database: std::option::Option<terrars::DynamicBlock<GlueCatalogDatabase_FederatedDatabase>>,
+    target_database: std::option::Option<terrars::DynamicBlock<GlueCatalogDatabase_TargetDatabase>>,
+}
+
 #[derive(Serialize)]
-pub struct GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl {
+pub struct GlueCatalogDatabase_CreateTableDefaultPermission_Principal {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_lake_principal_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl {
+impl GlueCatalogDatabase_CreateTableDefaultPermission_Principal {
     #[doc = "Set the field `data_lake_principal_identifier`.\n"]
     pub fn set_data_lake_principal_identifier(
         mut self,
@@ -412,8 +516,8 @@ impl GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl {
-    type O = terrars::BlockAssignable<GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl>;
+impl terrars::ToListMappable for GlueCatalogDatabase_CreateTableDefaultPermission_Principal {
+    type O = terrars::BlockAssignable<GlueCatalogDatabase_CreateTableDefaultPermission_Principal>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -424,34 +528,36 @@ impl terrars::ToListMappable for GlueCatalogDatabaseCreateTableDefaultPermission
     }
 }
 
-pub struct BuildGlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl {}
+pub struct BuildGlueCatalogDatabase_CreateTableDefaultPermission_Principal {}
 
-impl BuildGlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl {
-    pub fn build(self) -> GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl {
-        GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl {
+impl BuildGlueCatalogDatabase_CreateTableDefaultPermission_Principal {
+    pub fn build(self) -> GlueCatalogDatabase_CreateTableDefaultPermission_Principal {
+        GlueCatalogDatabase_CreateTableDefaultPermission_Principal {
             data_lake_principal_identifier: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalElRef {
+#[allow(dead_code)]
+pub struct GlueCatalogDatabase_CreateTableDefaultPermission_PrincipalRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalElRef {
+impl terrars::Ref for GlueCatalogDatabase_CreateTableDefaultPermission_PrincipalRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalElRef {
-        GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalElRef {
+    ) -> GlueCatalogDatabase_CreateTableDefaultPermission_PrincipalRef {
+        GlueCatalogDatabase_CreateTableDefaultPermission_PrincipalRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalElRef {
+impl GlueCatalogDatabase_CreateTableDefaultPermission_PrincipalRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -463,22 +569,22 @@ impl GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GlueCatalogDatabaseCreateTableDefaultPermissionElDynamic {
+struct GlueCatalogDatabase_CreateTableDefaultPermissionDynamic {
     principal: std
     ::option
-    ::Option<terrars::DynamicBlock<GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl>>,
+    ::Option<terrars::DynamicBlock<GlueCatalogDatabase_CreateTableDefaultPermission_Principal>>,
 }
 
 #[derive(Serialize)]
-pub struct GlueCatalogDatabaseCreateTableDefaultPermissionEl {
+pub struct GlueCatalogDatabase_CreateTableDefaultPermission {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     permissions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    principal: std::option::Option<std::vec::Vec<GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl>>,
-    dynamic: GlueCatalogDatabaseCreateTableDefaultPermissionElDynamic,
+    principal: std::option::Option<std::vec::Vec<GlueCatalogDatabase_CreateTableDefaultPermission_Principal>>,
+    dynamic: GlueCatalogDatabase_CreateTableDefaultPermissionDynamic,
 }
 
-impl GlueCatalogDatabaseCreateTableDefaultPermissionEl {
+impl GlueCatalogDatabase_CreateTableDefaultPermission {
     #[doc = "Set the field `permissions`.\n"]
     pub fn set_permissions(
         mut self,
@@ -496,7 +602,7 @@ impl GlueCatalogDatabaseCreateTableDefaultPermissionEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalEl>>,
+                    ::Into<terrars::BlockAssignable<GlueCatalogDatabase_CreateTableDefaultPermission_Principal>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -510,8 +616,8 @@ impl GlueCatalogDatabaseCreateTableDefaultPermissionEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCatalogDatabaseCreateTableDefaultPermissionEl {
-    type O = terrars::BlockAssignable<GlueCatalogDatabaseCreateTableDefaultPermissionEl>;
+impl terrars::ToListMappable for GlueCatalogDatabase_CreateTableDefaultPermission {
+    type O = terrars::BlockAssignable<GlueCatalogDatabase_CreateTableDefaultPermission>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -522,11 +628,11 @@ impl terrars::ToListMappable for GlueCatalogDatabaseCreateTableDefaultPermission
     }
 }
 
-pub struct BuildGlueCatalogDatabaseCreateTableDefaultPermissionEl {}
+pub struct BuildGlueCatalogDatabase_CreateTableDefaultPermission {}
 
-impl BuildGlueCatalogDatabaseCreateTableDefaultPermissionEl {
-    pub fn build(self) -> GlueCatalogDatabaseCreateTableDefaultPermissionEl {
-        GlueCatalogDatabaseCreateTableDefaultPermissionEl {
+impl BuildGlueCatalogDatabase_CreateTableDefaultPermission {
+    pub fn build(self) -> GlueCatalogDatabase_CreateTableDefaultPermission {
+        GlueCatalogDatabase_CreateTableDefaultPermission {
             permissions: core::default::Default::default(),
             principal: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -534,24 +640,26 @@ impl BuildGlueCatalogDatabaseCreateTableDefaultPermissionEl {
     }
 }
 
-pub struct GlueCatalogDatabaseCreateTableDefaultPermissionElRef {
+#[allow(dead_code)]
+pub struct GlueCatalogDatabase_CreateTableDefaultPermissionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCatalogDatabaseCreateTableDefaultPermissionElRef {
+impl terrars::Ref for GlueCatalogDatabase_CreateTableDefaultPermissionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GlueCatalogDatabaseCreateTableDefaultPermissionElRef {
-        GlueCatalogDatabaseCreateTableDefaultPermissionElRef {
+    ) -> GlueCatalogDatabase_CreateTableDefaultPermissionRef {
+        GlueCatalogDatabase_CreateTableDefaultPermissionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCatalogDatabaseCreateTableDefaultPermissionElRef {
+impl GlueCatalogDatabase_CreateTableDefaultPermissionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -562,21 +670,35 @@ impl GlueCatalogDatabaseCreateTableDefaultPermissionElRef {
     }
 
     #[doc = "Get a reference to the value of field `principal` after provisioning.\n"]
-    pub fn principal(&self) -> terrars::ListRef<GlueCatalogDatabaseCreateTableDefaultPermissionElPrincipalElRef> {
+    pub fn principal(&self) -> terrars::ListRef<GlueCatalogDatabase_CreateTableDefaultPermission_PrincipalRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.principal", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GlueCatalogDatabaseTargetDatabaseEl {
-    catalog_id: terrars::PrimField<std::string::String>,
-    database_name: terrars::PrimField<std::string::String>,
+pub struct GlueCatalogDatabase_FederatedDatabase {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    identifier: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueCatalogDatabaseTargetDatabaseEl { }
+impl GlueCatalogDatabase_FederatedDatabase {
+    #[doc = "Set the field `connection_name`.\n"]
+    pub fn set_connection_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.connection_name = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for GlueCatalogDatabaseTargetDatabaseEl {
-    type O = terrars::BlockAssignable<GlueCatalogDatabaseTargetDatabaseEl>;
+    #[doc = "Set the field `identifier`.\n"]
+    pub fn set_identifier(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.identifier = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GlueCatalogDatabase_FederatedDatabase {
+    type O = terrars::BlockAssignable<GlueCatalogDatabase_FederatedDatabase>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -587,37 +709,111 @@ impl terrars::ToListMappable for GlueCatalogDatabaseTargetDatabaseEl {
     }
 }
 
-pub struct BuildGlueCatalogDatabaseTargetDatabaseEl {
-    #[doc = ""]
-    pub catalog_id: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub database_name: terrars::PrimField<std::string::String>,
-}
+pub struct BuildGlueCatalogDatabase_FederatedDatabase {}
 
-impl BuildGlueCatalogDatabaseTargetDatabaseEl {
-    pub fn build(self) -> GlueCatalogDatabaseTargetDatabaseEl {
-        GlueCatalogDatabaseTargetDatabaseEl {
-            catalog_id: self.catalog_id,
-            database_name: self.database_name,
+impl BuildGlueCatalogDatabase_FederatedDatabase {
+    pub fn build(self) -> GlueCatalogDatabase_FederatedDatabase {
+        GlueCatalogDatabase_FederatedDatabase {
+            connection_name: core::default::Default::default(),
+            identifier: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlueCatalogDatabaseTargetDatabaseElRef {
+#[allow(dead_code)]
+pub struct GlueCatalogDatabase_FederatedDatabaseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCatalogDatabaseTargetDatabaseElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCatalogDatabaseTargetDatabaseElRef {
-        GlueCatalogDatabaseTargetDatabaseElRef {
+impl terrars::Ref for GlueCatalogDatabase_FederatedDatabaseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCatalogDatabase_FederatedDatabaseRef {
+        GlueCatalogDatabase_FederatedDatabaseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCatalogDatabaseTargetDatabaseElRef {
+impl GlueCatalogDatabase_FederatedDatabaseRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `connection_name` after provisioning.\n"]
+    pub fn connection_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `identifier` after provisioning.\n"]
+    pub fn identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identifier", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GlueCatalogDatabase_TargetDatabase {
+    catalog_id: terrars::PrimField<std::string::String>,
+    database_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GlueCatalogDatabase_TargetDatabase {
+    #[doc = "Set the field `region`.\n"]
+    pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.region = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GlueCatalogDatabase_TargetDatabase {
+    type O = terrars::BlockAssignable<GlueCatalogDatabase_TargetDatabase>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueCatalogDatabase_TargetDatabase {
+    #[doc = ""]
+    pub catalog_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub database_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildGlueCatalogDatabase_TargetDatabase {
+    pub fn build(self) -> GlueCatalogDatabase_TargetDatabase {
+        GlueCatalogDatabase_TargetDatabase {
+            catalog_id: self.catalog_id,
+            database_name: self.database_name,
+            region: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueCatalogDatabase_TargetDatabaseRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueCatalogDatabase_TargetDatabaseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCatalogDatabase_TargetDatabaseRef {
+        GlueCatalogDatabase_TargetDatabaseRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueCatalogDatabase_TargetDatabaseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -631,12 +827,9 @@ impl GlueCatalogDatabaseTargetDatabaseElRef {
     pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct GlueCatalogDatabaseDynamic {
-    create_table_default_permission: std
-    ::option
-    ::Option<terrars::DynamicBlock<GlueCatalogDatabaseCreateTableDefaultPermissionEl>>,
-    target_database: std::option::Option<terrars::DynamicBlock<GlueCatalogDatabaseTargetDatabaseEl>>,
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    }
 }

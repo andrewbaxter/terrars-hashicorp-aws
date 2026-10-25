@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EfsReplicationConfigurationData {
+struct EfsReplicationConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,18 +22,20 @@ struct EfsReplicationConfigurationData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     source_file_system_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination: std::option::Option<std::vec::Vec<EfsReplicationConfigurationDestinationEl>>,
+    destination: std::option::Option<std::vec::Vec<EfsReplicationConfiguration_Destination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EfsReplicationConfigurationTimeoutsEl>,
+    timeouts: std::option::Option<EfsReplicationConfiguration_Timeouts>,
     dynamic: EfsReplicationConfigurationDynamic,
 }
 
 struct EfsReplicationConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EfsReplicationConfigurationData>,
+    data: std::cell::RefCell<EfsReplicationConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -137,10 +141,17 @@ impl EfsReplicationConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EfsReplicationConfigurationDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EfsReplicationConfiguration_Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -154,7 +165,7 @@ impl EfsReplicationConfiguration {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EfsReplicationConfigurationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EfsReplicationConfiguration_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -177,6 +188,12 @@ impl EfsReplicationConfiguration {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_file_system_arn` after provisioning.\n"]
     pub fn source_file_system_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_system_arn", self.extract_ref()))
@@ -193,13 +210,13 @@ impl EfsReplicationConfiguration {
     }
 
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<EfsReplicationConfigurationDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<EfsReplicationConfiguration_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EfsReplicationConfigurationTimeoutsElRef {
-        EfsReplicationConfigurationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> EfsReplicationConfiguration_TimeoutsRef {
+        EfsReplicationConfiguration_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -248,13 +265,14 @@ impl BuildEfsReplicationConfiguration {
         let out = EfsReplicationConfiguration(std::rc::Rc::new(EfsReplicationConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EfsReplicationConfigurationData {
+            data: std::cell::RefCell::new(EfsReplicationConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 source_file_system_id: self.source_file_system_id,
                 destination: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -307,6 +325,12 @@ impl EfsReplicationConfigurationRef {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_file_system_arn` after provisioning.\n"]
     pub fn source_file_system_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_file_system_arn", self.extract_ref()))
@@ -323,36 +347,49 @@ impl EfsReplicationConfigurationRef {
     }
 
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<EfsReplicationConfigurationDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<EfsReplicationConfiguration_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EfsReplicationConfigurationTimeoutsElRef {
-        EfsReplicationConfigurationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> EfsReplicationConfiguration_TimeoutsRef {
+        EfsReplicationConfiguration_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct EfsReplicationConfigurationDynamic {
+    destination: std::option::Option<terrars::DynamicBlock<EfsReplicationConfiguration_Destination>>,
+}
+
 #[derive(Serialize)]
-pub struct EfsReplicationConfigurationDestinationEl {
+pub struct EfsReplicationConfiguration_Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_system_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EfsReplicationConfigurationDestinationEl {
+impl EfsReplicationConfiguration_Destination {
     #[doc = "Set the field `availability_zone_name`.\n"]
     pub fn set_availability_zone_name(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.availability_zone_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `file_system_id`.\n"]
+    pub fn set_file_system_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.file_system_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -369,8 +406,8 @@ impl EfsReplicationConfigurationDestinationEl {
     }
 }
 
-impl terrars::ToListMappable for EfsReplicationConfigurationDestinationEl {
-    type O = terrars::BlockAssignable<EfsReplicationConfigurationDestinationEl>;
+impl terrars::ToListMappable for EfsReplicationConfiguration_Destination {
+    type O = terrars::BlockAssignable<EfsReplicationConfiguration_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,33 +418,36 @@ impl terrars::ToListMappable for EfsReplicationConfigurationDestinationEl {
     }
 }
 
-pub struct BuildEfsReplicationConfigurationDestinationEl {}
+pub struct BuildEfsReplicationConfiguration_Destination {}
 
-impl BuildEfsReplicationConfigurationDestinationEl {
-    pub fn build(self) -> EfsReplicationConfigurationDestinationEl {
-        EfsReplicationConfigurationDestinationEl {
+impl BuildEfsReplicationConfiguration_Destination {
+    pub fn build(self) -> EfsReplicationConfiguration_Destination {
+        EfsReplicationConfiguration_Destination {
             availability_zone_name: core::default::Default::default(),
+            file_system_id: core::default::Default::default(),
             kms_key_id: core::default::Default::default(),
             region: core::default::Default::default(),
         }
     }
 }
 
-pub struct EfsReplicationConfigurationDestinationElRef {
+#[allow(dead_code)]
+pub struct EfsReplicationConfiguration_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EfsReplicationConfigurationDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsReplicationConfigurationDestinationElRef {
-        EfsReplicationConfigurationDestinationElRef {
+impl terrars::Ref for EfsReplicationConfiguration_DestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsReplicationConfiguration_DestinationRef {
+        EfsReplicationConfiguration_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EfsReplicationConfigurationDestinationElRef {
+impl EfsReplicationConfiguration_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -439,14 +479,14 @@ impl EfsReplicationConfigurationDestinationElRef {
 }
 
 #[derive(Serialize)]
-pub struct EfsReplicationConfigurationTimeoutsEl {
+pub struct EfsReplicationConfiguration_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EfsReplicationConfigurationTimeoutsEl {
+impl EfsReplicationConfiguration_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -460,8 +500,8 @@ impl EfsReplicationConfigurationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EfsReplicationConfigurationTimeoutsEl {
-    type O = terrars::BlockAssignable<EfsReplicationConfigurationTimeoutsEl>;
+impl terrars::ToListMappable for EfsReplicationConfiguration_Timeouts {
+    type O = terrars::BlockAssignable<EfsReplicationConfiguration_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -472,32 +512,34 @@ impl terrars::ToListMappable for EfsReplicationConfigurationTimeoutsEl {
     }
 }
 
-pub struct BuildEfsReplicationConfigurationTimeoutsEl {}
+pub struct BuildEfsReplicationConfiguration_Timeouts {}
 
-impl BuildEfsReplicationConfigurationTimeoutsEl {
-    pub fn build(self) -> EfsReplicationConfigurationTimeoutsEl {
-        EfsReplicationConfigurationTimeoutsEl {
+impl BuildEfsReplicationConfiguration_Timeouts {
+    pub fn build(self) -> EfsReplicationConfiguration_Timeouts {
+        EfsReplicationConfiguration_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct EfsReplicationConfigurationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EfsReplicationConfiguration_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EfsReplicationConfigurationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsReplicationConfigurationTimeoutsElRef {
-        EfsReplicationConfigurationTimeoutsElRef {
+impl terrars::Ref for EfsReplicationConfiguration_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsReplicationConfiguration_TimeoutsRef {
+        EfsReplicationConfiguration_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EfsReplicationConfigurationTimeoutsElRef {
+impl EfsReplicationConfiguration_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -511,9 +553,4 @@ impl EfsReplicationConfigurationTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EfsReplicationConfigurationDynamic {
-    destination: std::option::Option<terrars::DynamicBlock<EfsReplicationConfigurationDestinationEl>>,
 }

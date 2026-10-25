@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataGlueCatalogTableData {
+struct DataGlueCatalogTableData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,13 +27,15 @@ struct DataGlueCatalogTableData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_as_of_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transaction_id: std::option::Option<terrars::PrimField<f64>>,
 }
 
 struct DataGlueCatalogTable_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataGlueCatalogTableData>,
+    data: std::cell::RefCell<DataGlueCatalogTableData_>,
 }
 
 #[derive(Clone)]
@@ -94,6 +98,13 @@ impl DataGlueCatalogTable {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `transaction_id`.\n"]
     pub fn set_transaction_id(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().transaction_id = std::option::Option::Some(v.into());
@@ -141,12 +152,12 @@ impl DataGlueCatalogTable {
     }
 
     #[doc = "Get a reference to the value of field `partition_index` after provisioning.\n"]
-    pub fn partition_index(&self) -> terrars::ListRef<DataGlueCatalogTablePartitionIndexElRef> {
+    pub fn partition_index(&self) -> terrars::ListRef<DataGlueCatalogTable_PartitionIndexRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_index", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `partition_keys` after provisioning.\n"]
-    pub fn partition_keys(&self) -> terrars::ListRef<DataGlueCatalogTablePartitionKeysElRef> {
+    pub fn partition_keys(&self) -> terrars::ListRef<DataGlueCatalogTable_PartitionKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_keys", self.extract_ref()))
     }
 
@@ -155,13 +166,19 @@ impl DataGlueCatalogTable {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.query_as_of_time", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `retention` after provisioning.\n"]
     pub fn retention(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_descriptor` after provisioning.\n"]
-    pub fn storage_descriptor(&self) -> terrars::ListRef<DataGlueCatalogTableStorageDescriptorElRef> {
+    pub fn storage_descriptor(&self) -> terrars::ListRef<DataGlueCatalogTable_StorageDescriptorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_descriptor", self.extract_ref()))
     }
 
@@ -171,7 +188,7 @@ impl DataGlueCatalogTable {
     }
 
     #[doc = "Get a reference to the value of field `target_table` after provisioning.\n"]
-    pub fn target_table(&self) -> terrars::ListRef<DataGlueCatalogTableTargetTableElRef> {
+    pub fn target_table(&self) -> terrars::ListRef<DataGlueCatalogTable_TargetTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_table", self.extract_ref()))
     }
 
@@ -235,7 +252,7 @@ impl BuildDataGlueCatalogTable {
         let out = DataGlueCatalogTable(std::rc::Rc::new(DataGlueCatalogTable_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataGlueCatalogTableData {
+            data: std::cell::RefCell::new(DataGlueCatalogTableData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -245,6 +262,7 @@ impl BuildDataGlueCatalogTable {
                 id: core::default::Default::default(),
                 name: self.name,
                 query_as_of_time: core::default::Default::default(),
+                region: core::default::Default::default(),
                 transaction_id: core::default::Default::default(),
             }),
         }));
@@ -317,12 +335,12 @@ impl DataGlueCatalogTableRef {
     }
 
     #[doc = "Get a reference to the value of field `partition_index` after provisioning.\n"]
-    pub fn partition_index(&self) -> terrars::ListRef<DataGlueCatalogTablePartitionIndexElRef> {
+    pub fn partition_index(&self) -> terrars::ListRef<DataGlueCatalogTable_PartitionIndexRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_index", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `partition_keys` after provisioning.\n"]
-    pub fn partition_keys(&self) -> terrars::ListRef<DataGlueCatalogTablePartitionKeysElRef> {
+    pub fn partition_keys(&self) -> terrars::ListRef<DataGlueCatalogTable_PartitionKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_keys", self.extract_ref()))
     }
 
@@ -331,13 +349,19 @@ impl DataGlueCatalogTableRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.query_as_of_time", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `retention` after provisioning.\n"]
     pub fn retention(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_descriptor` after provisioning.\n"]
-    pub fn storage_descriptor(&self) -> terrars::ListRef<DataGlueCatalogTableStorageDescriptorElRef> {
+    pub fn storage_descriptor(&self) -> terrars::ListRef<DataGlueCatalogTable_StorageDescriptorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_descriptor", self.extract_ref()))
     }
 
@@ -347,7 +371,7 @@ impl DataGlueCatalogTableRef {
     }
 
     #[doc = "Get a reference to the value of field `target_table` after provisioning.\n"]
-    pub fn target_table(&self) -> terrars::ListRef<DataGlueCatalogTableTargetTableElRef> {
+    pub fn target_table(&self) -> terrars::ListRef<DataGlueCatalogTable_TargetTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_table", self.extract_ref()))
     }
 
@@ -368,7 +392,7 @@ impl DataGlueCatalogTableRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueCatalogTablePartitionIndexEl {
+pub struct DataGlueCatalogTable_PartitionIndex {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     index_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -377,7 +401,7 @@ pub struct DataGlueCatalogTablePartitionIndexEl {
     keys: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataGlueCatalogTablePartitionIndexEl {
+impl DataGlueCatalogTable_PartitionIndex {
     #[doc = "Set the field `index_name`.\n"]
     pub fn set_index_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.index_name = std::option::Option::Some(v.into());
@@ -400,8 +424,8 @@ impl DataGlueCatalogTablePartitionIndexEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueCatalogTablePartitionIndexEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTablePartitionIndexEl>;
+impl terrars::ToListMappable for DataGlueCatalogTable_PartitionIndex {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_PartitionIndex>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -412,11 +436,11 @@ impl terrars::ToListMappable for DataGlueCatalogTablePartitionIndexEl {
     }
 }
 
-pub struct BuildDataGlueCatalogTablePartitionIndexEl {}
+pub struct BuildDataGlueCatalogTable_PartitionIndex {}
 
-impl BuildDataGlueCatalogTablePartitionIndexEl {
-    pub fn build(self) -> DataGlueCatalogTablePartitionIndexEl {
-        DataGlueCatalogTablePartitionIndexEl {
+impl BuildDataGlueCatalogTable_PartitionIndex {
+    pub fn build(self) -> DataGlueCatalogTable_PartitionIndex {
+        DataGlueCatalogTable_PartitionIndex {
             index_name: core::default::Default::default(),
             index_status: core::default::Default::default(),
             keys: core::default::Default::default(),
@@ -424,21 +448,23 @@ impl BuildDataGlueCatalogTablePartitionIndexEl {
     }
 }
 
-pub struct DataGlueCatalogTablePartitionIndexElRef {
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_PartitionIndexRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueCatalogTablePartitionIndexElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueCatalogTablePartitionIndexElRef {
-        DataGlueCatalogTablePartitionIndexElRef {
+impl terrars::Ref for DataGlueCatalogTable_PartitionIndexRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueCatalogTable_PartitionIndexRef {
+        DataGlueCatalogTable_PartitionIndexRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueCatalogTablePartitionIndexElRef {
+impl DataGlueCatalogTable_PartitionIndexRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -460,96 +486,7 @@ impl DataGlueCatalogTablePartitionIndexElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueCatalogTablePartitionKeysEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    comment: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
-    type_: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataGlueCatalogTablePartitionKeysEl {
-    #[doc = "Set the field `comment`.\n"]
-    pub fn set_comment(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.comment = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.type_ = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataGlueCatalogTablePartitionKeysEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTablePartitionKeysEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataGlueCatalogTablePartitionKeysEl {}
-
-impl BuildDataGlueCatalogTablePartitionKeysEl {
-    pub fn build(self) -> DataGlueCatalogTablePartitionKeysEl {
-        DataGlueCatalogTablePartitionKeysEl {
-            comment: core::default::Default::default(),
-            name: core::default::Default::default(),
-            type_: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataGlueCatalogTablePartitionKeysElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataGlueCatalogTablePartitionKeysElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueCatalogTablePartitionKeysElRef {
-        DataGlueCatalogTablePartitionKeysElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataGlueCatalogTablePartitionKeysElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
-    pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataGlueCatalogTableStorageDescriptorElColumnsEl {
+pub struct DataGlueCatalogTable_PartitionKeys {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     comment: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -560,7 +497,7 @@ pub struct DataGlueCatalogTableStorageDescriptorElColumnsEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataGlueCatalogTableStorageDescriptorElColumnsEl {
+impl DataGlueCatalogTable_PartitionKeys {
     #[doc = "Set the field `comment`.\n"]
     pub fn set_comment(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.comment = std::option::Option::Some(v.into());
@@ -589,8 +526,8 @@ impl DataGlueCatalogTableStorageDescriptorElColumnsEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElColumnsEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTableStorageDescriptorElColumnsEl>;
+impl terrars::ToListMappable for DataGlueCatalogTable_PartitionKeys {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_PartitionKeys>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -601,11 +538,11 @@ impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElColumnsE
     }
 }
 
-pub struct BuildDataGlueCatalogTableStorageDescriptorElColumnsEl {}
+pub struct BuildDataGlueCatalogTable_PartitionKeys {}
 
-impl BuildDataGlueCatalogTableStorageDescriptorElColumnsEl {
-    pub fn build(self) -> DataGlueCatalogTableStorageDescriptorElColumnsEl {
-        DataGlueCatalogTableStorageDescriptorElColumnsEl {
+impl BuildDataGlueCatalogTable_PartitionKeys {
+    pub fn build(self) -> DataGlueCatalogTable_PartitionKeys {
+        DataGlueCatalogTable_PartitionKeys {
             comment: core::default::Default::default(),
             name: core::default::Default::default(),
             parameters: core::default::Default::default(),
@@ -614,24 +551,23 @@ impl BuildDataGlueCatalogTableStorageDescriptorElColumnsEl {
     }
 }
 
-pub struct DataGlueCatalogTableStorageDescriptorElColumnsElRef {
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_PartitionKeysRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueCatalogTableStorageDescriptorElColumnsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataGlueCatalogTableStorageDescriptorElColumnsElRef {
-        DataGlueCatalogTableStorageDescriptorElColumnsElRef {
+impl terrars::Ref for DataGlueCatalogTable_PartitionKeysRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueCatalogTable_PartitionKeysRef {
+        DataGlueCatalogTable_PartitionKeysRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueCatalogTableStorageDescriptorElColumnsElRef {
+impl DataGlueCatalogTable_PartitionKeysRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -658,7 +594,118 @@ impl DataGlueCatalogTableStorageDescriptorElColumnsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {
+pub struct DataGlueCatalogTable_StorageDescriptor_Columns {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    comment: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataGlueCatalogTable_StorageDescriptor_Columns {
+    #[doc = "Set the field `comment`.\n"]
+    pub fn set_comment(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.comment = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `parameters`.\n"]
+    pub fn set_parameters(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.parameters = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataGlueCatalogTable_StorageDescriptor_Columns {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_StorageDescriptor_Columns>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataGlueCatalogTable_StorageDescriptor_Columns {}
+
+impl BuildDataGlueCatalogTable_StorageDescriptor_Columns {
+    pub fn build(self) -> DataGlueCatalogTable_StorageDescriptor_Columns {
+        DataGlueCatalogTable_StorageDescriptor_Columns {
+            comment: core::default::Default::default(),
+            name: core::default::Default::default(),
+            parameters: core::default::Default::default(),
+            type_: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_StorageDescriptor_ColumnsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataGlueCatalogTable_StorageDescriptor_ColumnsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataGlueCatalogTable_StorageDescriptor_ColumnsRef {
+        DataGlueCatalogTable_StorageDescriptor_ColumnsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataGlueCatalogTable_StorageDescriptor_ColumnsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
+    pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
+    pub fn parameters(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.parameters", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registry_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -667,7 +714,7 @@ pub struct DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {
     schema_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {
+impl DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId {
     #[doc = "Set the field `registry_name`.\n"]
     pub fn set_registry_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.registry_name = std::option::Option::Some(v.into());
@@ -687,8 +734,8 @@ impl DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl>;
+impl terrars::ToListMappable for DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -699,11 +746,11 @@ impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSchemaRe
     }
 }
 
-pub struct BuildDataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {}
+pub struct BuildDataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId {}
 
-impl BuildDataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {
-    pub fn build(self) -> DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {
-        DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {
+impl BuildDataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId {
+    pub fn build(self) -> DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId {
+        DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId {
             registry_name: core::default::Default::default(),
             schema_arn: core::default::Default::default(),
             schema_name: core::default::Default::default(),
@@ -711,24 +758,26 @@ impl BuildDataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl {
     }
 }
 
-pub struct DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdElRef {
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaIdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdElRef {
+impl terrars::Ref for DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaIdRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdElRef {
-        DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdElRef {
+    ) -> DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaIdRef {
+        DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaIdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdElRef {
+impl DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaIdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -750,18 +799,16 @@ impl DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {
+pub struct DataGlueCatalogTable_StorageDescriptor_SchemaReference {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schema_id: std
-    ::option
-    ::Option<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl>>,
+    schema_id: std::option::Option<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schema_version_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schema_version_number: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {
+impl DataGlueCatalogTable_StorageDescriptor_SchemaReference {
     #[doc = "Set the field `schema_id`.\n"]
     pub fn set_schema_id(
         mut self,
@@ -770,7 +817,7 @@ impl DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdEl>>,
+                    ::Into<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaId>>,
     ) -> Self {
         self.schema_id = std::option::Option::Some(v.into());
         self
@@ -789,8 +836,8 @@ impl DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl>;
+impl terrars::ToListMappable for DataGlueCatalogTable_StorageDescriptor_SchemaReference {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_StorageDescriptor_SchemaReference>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -801,11 +848,11 @@ impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSchemaRe
     }
 }
 
-pub struct BuildDataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {}
+pub struct BuildDataGlueCatalogTable_StorageDescriptor_SchemaReference {}
 
-impl BuildDataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {
-    pub fn build(self) -> DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {
-        DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {
+impl BuildDataGlueCatalogTable_StorageDescriptor_SchemaReference {
+    pub fn build(self) -> DataGlueCatalogTable_StorageDescriptor_SchemaReference {
+        DataGlueCatalogTable_StorageDescriptor_SchemaReference {
             schema_id: core::default::Default::default(),
             schema_version_id: core::default::Default::default(),
             schema_version_number: core::default::Default::default(),
@@ -813,30 +860,32 @@ impl BuildDataGlueCatalogTableStorageDescriptorElSchemaReferenceEl {
     }
 }
 
-pub struct DataGlueCatalogTableStorageDescriptorElSchemaReferenceElRef {
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_StorageDescriptor_SchemaReferenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueCatalogTableStorageDescriptorElSchemaReferenceElRef {
+impl terrars::Ref for DataGlueCatalogTable_StorageDescriptor_SchemaReferenceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataGlueCatalogTableStorageDescriptorElSchemaReferenceElRef {
-        DataGlueCatalogTableStorageDescriptorElSchemaReferenceElRef {
+    ) -> DataGlueCatalogTable_StorageDescriptor_SchemaReferenceRef {
+        DataGlueCatalogTable_StorageDescriptor_SchemaReferenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSchemaReferenceElRef {
+impl DataGlueCatalogTable_StorageDescriptor_SchemaReferenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `schema_id` after provisioning.\n"]
-    pub fn schema_id(&self) -> terrars::ListRef<DataGlueCatalogTableStorageDescriptorElSchemaReferenceElSchemaIdElRef> {
+    pub fn schema_id(&self) -> terrars::ListRef<DataGlueCatalogTable_StorageDescriptor_SchemaReference_SchemaIdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_id", self.base))
     }
 
@@ -852,7 +901,7 @@ impl DataGlueCatalogTableStorageDescriptorElSchemaReferenceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueCatalogTableStorageDescriptorElSerDeInfoEl {
+pub struct DataGlueCatalogTable_StorageDescriptor_SerDeInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -861,7 +910,7 @@ pub struct DataGlueCatalogTableStorageDescriptorElSerDeInfoEl {
     serialization_library: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSerDeInfoEl {
+impl DataGlueCatalogTable_StorageDescriptor_SerDeInfo {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -887,8 +936,8 @@ impl DataGlueCatalogTableStorageDescriptorElSerDeInfoEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSerDeInfoEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTableStorageDescriptorElSerDeInfoEl>;
+impl terrars::ToListMappable for DataGlueCatalogTable_StorageDescriptor_SerDeInfo {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_StorageDescriptor_SerDeInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -899,11 +948,11 @@ impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSerDeInf
     }
 }
 
-pub struct BuildDataGlueCatalogTableStorageDescriptorElSerDeInfoEl {}
+pub struct BuildDataGlueCatalogTable_StorageDescriptor_SerDeInfo {}
 
-impl BuildDataGlueCatalogTableStorageDescriptorElSerDeInfoEl {
-    pub fn build(self) -> DataGlueCatalogTableStorageDescriptorElSerDeInfoEl {
-        DataGlueCatalogTableStorageDescriptorElSerDeInfoEl {
+impl BuildDataGlueCatalogTable_StorageDescriptor_SerDeInfo {
+    pub fn build(self) -> DataGlueCatalogTable_StorageDescriptor_SerDeInfo {
+        DataGlueCatalogTable_StorageDescriptor_SerDeInfo {
             name: core::default::Default::default(),
             parameters: core::default::Default::default(),
             serialization_library: core::default::Default::default(),
@@ -911,24 +960,26 @@ impl BuildDataGlueCatalogTableStorageDescriptorElSerDeInfoEl {
     }
 }
 
-pub struct DataGlueCatalogTableStorageDescriptorElSerDeInfoElRef {
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_StorageDescriptor_SerDeInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueCatalogTableStorageDescriptorElSerDeInfoElRef {
+impl terrars::Ref for DataGlueCatalogTable_StorageDescriptor_SerDeInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataGlueCatalogTableStorageDescriptorElSerDeInfoElRef {
-        DataGlueCatalogTableStorageDescriptorElSerDeInfoElRef {
+    ) -> DataGlueCatalogTable_StorageDescriptor_SerDeInfoRef {
+        DataGlueCatalogTable_StorageDescriptor_SerDeInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSerDeInfoElRef {
+impl DataGlueCatalogTable_StorageDescriptor_SerDeInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -950,7 +1001,7 @@ impl DataGlueCatalogTableStorageDescriptorElSerDeInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueCatalogTableStorageDescriptorElSkewedInfoEl {
+pub struct DataGlueCatalogTable_StorageDescriptor_SkewedInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skewed_column_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -959,7 +1010,7 @@ pub struct DataGlueCatalogTableStorageDescriptorElSkewedInfoEl {
     skewed_column_values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSkewedInfoEl {
+impl DataGlueCatalogTable_StorageDescriptor_SkewedInfo {
     #[doc = "Set the field `skewed_column_names`.\n"]
     pub fn set_skewed_column_names(
         mut self,
@@ -988,8 +1039,8 @@ impl DataGlueCatalogTableStorageDescriptorElSkewedInfoEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSkewedInfoEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTableStorageDescriptorElSkewedInfoEl>;
+impl terrars::ToListMappable for DataGlueCatalogTable_StorageDescriptor_SkewedInfo {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_StorageDescriptor_SkewedInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1000,11 +1051,11 @@ impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSkewedIn
     }
 }
 
-pub struct BuildDataGlueCatalogTableStorageDescriptorElSkewedInfoEl {}
+pub struct BuildDataGlueCatalogTable_StorageDescriptor_SkewedInfo {}
 
-impl BuildDataGlueCatalogTableStorageDescriptorElSkewedInfoEl {
-    pub fn build(self) -> DataGlueCatalogTableStorageDescriptorElSkewedInfoEl {
-        DataGlueCatalogTableStorageDescriptorElSkewedInfoEl {
+impl BuildDataGlueCatalogTable_StorageDescriptor_SkewedInfo {
+    pub fn build(self) -> DataGlueCatalogTable_StorageDescriptor_SkewedInfo {
+        DataGlueCatalogTable_StorageDescriptor_SkewedInfo {
             skewed_column_names: core::default::Default::default(),
             skewed_column_value_location_maps: core::default::Default::default(),
             skewed_column_values: core::default::Default::default(),
@@ -1012,24 +1063,26 @@ impl BuildDataGlueCatalogTableStorageDescriptorElSkewedInfoEl {
     }
 }
 
-pub struct DataGlueCatalogTableStorageDescriptorElSkewedInfoElRef {
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_StorageDescriptor_SkewedInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueCatalogTableStorageDescriptorElSkewedInfoElRef {
+impl terrars::Ref for DataGlueCatalogTable_StorageDescriptor_SkewedInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataGlueCatalogTableStorageDescriptorElSkewedInfoElRef {
-        DataGlueCatalogTableStorageDescriptorElSkewedInfoElRef {
+    ) -> DataGlueCatalogTable_StorageDescriptor_SkewedInfoRef {
+        DataGlueCatalogTable_StorageDescriptor_SkewedInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSkewedInfoElRef {
+impl DataGlueCatalogTable_StorageDescriptor_SkewedInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1051,14 +1104,14 @@ impl DataGlueCatalogTableStorageDescriptorElSkewedInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueCatalogTableStorageDescriptorElSortColumnsEl {
+pub struct DataGlueCatalogTable_StorageDescriptor_SortColumns {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     column: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sort_order: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSortColumnsEl {
+impl DataGlueCatalogTable_StorageDescriptor_SortColumns {
     #[doc = "Set the field `column`.\n"]
     pub fn set_column(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.column = std::option::Option::Some(v.into());
@@ -1072,8 +1125,8 @@ impl DataGlueCatalogTableStorageDescriptorElSortColumnsEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSortColumnsEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTableStorageDescriptorElSortColumnsEl>;
+impl terrars::ToListMappable for DataGlueCatalogTable_StorageDescriptor_SortColumns {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_StorageDescriptor_SortColumns>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1084,35 +1137,37 @@ impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorElSortColu
     }
 }
 
-pub struct BuildDataGlueCatalogTableStorageDescriptorElSortColumnsEl {}
+pub struct BuildDataGlueCatalogTable_StorageDescriptor_SortColumns {}
 
-impl BuildDataGlueCatalogTableStorageDescriptorElSortColumnsEl {
-    pub fn build(self) -> DataGlueCatalogTableStorageDescriptorElSortColumnsEl {
-        DataGlueCatalogTableStorageDescriptorElSortColumnsEl {
+impl BuildDataGlueCatalogTable_StorageDescriptor_SortColumns {
+    pub fn build(self) -> DataGlueCatalogTable_StorageDescriptor_SortColumns {
+        DataGlueCatalogTable_StorageDescriptor_SortColumns {
             column: core::default::Default::default(),
             sort_order: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataGlueCatalogTableStorageDescriptorElSortColumnsElRef {
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_StorageDescriptor_SortColumnsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueCatalogTableStorageDescriptorElSortColumnsElRef {
+impl terrars::Ref for DataGlueCatalogTable_StorageDescriptor_SortColumnsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataGlueCatalogTableStorageDescriptorElSortColumnsElRef {
-        DataGlueCatalogTableStorageDescriptorElSortColumnsElRef {
+    ) -> DataGlueCatalogTable_StorageDescriptor_SortColumnsRef {
+        DataGlueCatalogTable_StorageDescriptor_SortColumnsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueCatalogTableStorageDescriptorElSortColumnsElRef {
+impl DataGlueCatalogTable_StorageDescriptor_SortColumnsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1129,11 +1184,13 @@ impl DataGlueCatalogTableStorageDescriptorElSortColumnsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueCatalogTableStorageDescriptorEl {
+pub struct DataGlueCatalogTable_StorageDescriptor {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    additional_locations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_columns: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    columns: std::option::Option<terrars::ListField<DataGlueCatalogTableStorageDescriptorElColumnsEl>>,
+    columns: std::option::Option<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_Columns>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compressed: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1147,18 +1204,27 @@ pub struct DataGlueCatalogTableStorageDescriptorEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schema_reference: std::option::Option<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl>>,
+    schema_reference: std::option::Option<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SchemaReference>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ser_de_info: std::option::Option<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSerDeInfoEl>>,
+    ser_de_info: std::option::Option<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SerDeInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    skewed_info: std::option::Option<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSkewedInfoEl>>,
+    skewed_info: std::option::Option<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SkewedInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort_columns: std::option::Option<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSortColumnsEl>>,
+    sort_columns: std::option::Option<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SortColumns>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stored_as_sub_directories: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataGlueCatalogTableStorageDescriptorEl {
+impl DataGlueCatalogTable_StorageDescriptor {
+    #[doc = "Set the field `additional_locations`.\n"]
+    pub fn set_additional_locations(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.additional_locations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `bucket_columns`.\n"]
     pub fn set_bucket_columns(
         mut self,
@@ -1171,7 +1237,7 @@ impl DataGlueCatalogTableStorageDescriptorEl {
     #[doc = "Set the field `columns`.\n"]
     pub fn set_columns(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTableStorageDescriptorElColumnsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_Columns>>,
     ) -> Self {
         self.columns = std::option::Option::Some(v.into());
         self
@@ -1219,7 +1285,7 @@ impl DataGlueCatalogTableStorageDescriptorEl {
     #[doc = "Set the field `schema_reference`.\n"]
     pub fn set_schema_reference(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSchemaReferenceEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SchemaReference>>,
     ) -> Self {
         self.schema_reference = std::option::Option::Some(v.into());
         self
@@ -1228,7 +1294,7 @@ impl DataGlueCatalogTableStorageDescriptorEl {
     #[doc = "Set the field `ser_de_info`.\n"]
     pub fn set_ser_de_info(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSerDeInfoEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SerDeInfo>>,
     ) -> Self {
         self.ser_de_info = std::option::Option::Some(v.into());
         self
@@ -1237,7 +1303,7 @@ impl DataGlueCatalogTableStorageDescriptorEl {
     #[doc = "Set the field `skewed_info`.\n"]
     pub fn set_skewed_info(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSkewedInfoEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SkewedInfo>>,
     ) -> Self {
         self.skewed_info = std::option::Option::Some(v.into());
         self
@@ -1246,7 +1312,7 @@ impl DataGlueCatalogTableStorageDescriptorEl {
     #[doc = "Set the field `sort_columns`.\n"]
     pub fn set_sort_columns(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTableStorageDescriptorElSortColumnsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataGlueCatalogTable_StorageDescriptor_SortColumns>>,
     ) -> Self {
         self.sort_columns = std::option::Option::Some(v.into());
         self
@@ -1259,8 +1325,8 @@ impl DataGlueCatalogTableStorageDescriptorEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTableStorageDescriptorEl>;
+impl terrars::ToListMappable for DataGlueCatalogTable_StorageDescriptor {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_StorageDescriptor>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1271,11 +1337,12 @@ impl terrars::ToListMappable for DataGlueCatalogTableStorageDescriptorEl {
     }
 }
 
-pub struct BuildDataGlueCatalogTableStorageDescriptorEl {}
+pub struct BuildDataGlueCatalogTable_StorageDescriptor {}
 
-impl BuildDataGlueCatalogTableStorageDescriptorEl {
-    pub fn build(self) -> DataGlueCatalogTableStorageDescriptorEl {
-        DataGlueCatalogTableStorageDescriptorEl {
+impl BuildDataGlueCatalogTable_StorageDescriptor {
+    pub fn build(self) -> DataGlueCatalogTable_StorageDescriptor {
+        DataGlueCatalogTable_StorageDescriptor {
+            additional_locations: core::default::Default::default(),
             bucket_columns: core::default::Default::default(),
             columns: core::default::Default::default(),
             compressed: core::default::Default::default(),
@@ -1293,23 +1360,30 @@ impl BuildDataGlueCatalogTableStorageDescriptorEl {
     }
 }
 
-pub struct DataGlueCatalogTableStorageDescriptorElRef {
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_StorageDescriptorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueCatalogTableStorageDescriptorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueCatalogTableStorageDescriptorElRef {
-        DataGlueCatalogTableStorageDescriptorElRef {
+impl terrars::Ref for DataGlueCatalogTable_StorageDescriptorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueCatalogTable_StorageDescriptorRef {
+        DataGlueCatalogTable_StorageDescriptorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueCatalogTableStorageDescriptorElRef {
+impl DataGlueCatalogTable_StorageDescriptorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `additional_locations` after provisioning.\n"]
+    pub fn additional_locations(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.additional_locations", self.base))
     }
 
     #[doc = "Get a reference to the value of field `bucket_columns` after provisioning.\n"]
@@ -1318,7 +1392,7 @@ impl DataGlueCatalogTableStorageDescriptorElRef {
     }
 
     #[doc = "Get a reference to the value of field `columns` after provisioning.\n"]
-    pub fn columns(&self) -> terrars::ListRef<DataGlueCatalogTableStorageDescriptorElColumnsElRef> {
+    pub fn columns(&self) -> terrars::ListRef<DataGlueCatalogTable_StorageDescriptor_ColumnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.columns", self.base))
     }
 
@@ -1353,22 +1427,22 @@ impl DataGlueCatalogTableStorageDescriptorElRef {
     }
 
     #[doc = "Get a reference to the value of field `schema_reference` after provisioning.\n"]
-    pub fn schema_reference(&self) -> terrars::ListRef<DataGlueCatalogTableStorageDescriptorElSchemaReferenceElRef> {
+    pub fn schema_reference(&self) -> terrars::ListRef<DataGlueCatalogTable_StorageDescriptor_SchemaReferenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_reference", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ser_de_info` after provisioning.\n"]
-    pub fn ser_de_info(&self) -> terrars::ListRef<DataGlueCatalogTableStorageDescriptorElSerDeInfoElRef> {
+    pub fn ser_de_info(&self) -> terrars::ListRef<DataGlueCatalogTable_StorageDescriptor_SerDeInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ser_de_info", self.base))
     }
 
     #[doc = "Get a reference to the value of field `skewed_info` after provisioning.\n"]
-    pub fn skewed_info(&self) -> terrars::ListRef<DataGlueCatalogTableStorageDescriptorElSkewedInfoElRef> {
+    pub fn skewed_info(&self) -> terrars::ListRef<DataGlueCatalogTable_StorageDescriptor_SkewedInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.skewed_info", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sort_columns` after provisioning.\n"]
-    pub fn sort_columns(&self) -> terrars::ListRef<DataGlueCatalogTableStorageDescriptorElSortColumnsElRef> {
+    pub fn sort_columns(&self) -> terrars::ListRef<DataGlueCatalogTable_StorageDescriptor_SortColumnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort_columns", self.base))
     }
 
@@ -1379,16 +1453,18 @@ impl DataGlueCatalogTableStorageDescriptorElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataGlueCatalogTableTargetTableEl {
+pub struct DataGlueCatalogTable_TargetTable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     database_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataGlueCatalogTableTargetTableEl {
+impl DataGlueCatalogTable_TargetTable {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -1406,10 +1482,16 @@ impl DataGlueCatalogTableTargetTableEl {
         self.name = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `region`.\n"]
+    pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.region = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataGlueCatalogTableTargetTableEl {
-    type O = terrars::BlockAssignable<DataGlueCatalogTableTargetTableEl>;
+impl terrars::ToListMappable for DataGlueCatalogTable_TargetTable {
+    type O = terrars::BlockAssignable<DataGlueCatalogTable_TargetTable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1420,33 +1502,36 @@ impl terrars::ToListMappable for DataGlueCatalogTableTargetTableEl {
     }
 }
 
-pub struct BuildDataGlueCatalogTableTargetTableEl {}
+pub struct BuildDataGlueCatalogTable_TargetTable {}
 
-impl BuildDataGlueCatalogTableTargetTableEl {
-    pub fn build(self) -> DataGlueCatalogTableTargetTableEl {
-        DataGlueCatalogTableTargetTableEl {
+impl BuildDataGlueCatalogTable_TargetTable {
+    pub fn build(self) -> DataGlueCatalogTable_TargetTable {
+        DataGlueCatalogTable_TargetTable {
             catalog_id: core::default::Default::default(),
             database_name: core::default::Default::default(),
             name: core::default::Default::default(),
+            region: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataGlueCatalogTableTargetTableElRef {
+#[allow(dead_code)]
+pub struct DataGlueCatalogTable_TargetTableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueCatalogTableTargetTableElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueCatalogTableTargetTableElRef {
-        DataGlueCatalogTableTargetTableElRef {
+impl terrars::Ref for DataGlueCatalogTable_TargetTableRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataGlueCatalogTable_TargetTableRef {
+        DataGlueCatalogTable_TargetTableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueCatalogTableTargetTableElRef {
+impl DataGlueCatalogTable_TargetTableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1464,5 +1549,10 @@ impl DataGlueCatalogTableTargetTableElRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
     }
 }

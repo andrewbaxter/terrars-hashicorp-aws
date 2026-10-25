@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DatasyncAgentData {
+struct DatasyncAgentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,6 +31,8 @@ struct DatasyncAgentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_link_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -39,13 +43,13 @@ struct DatasyncAgentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DatasyncAgentTimeoutsEl>,
+    timeouts: std::option::Option<DatasyncAgent_Timeouts>,
 }
 
 struct DatasyncAgent_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatasyncAgentData>,
+    data: std::cell::RefCell<DatasyncAgentData_>,
 }
 
 #[derive(Clone)]
@@ -175,6 +179,13 @@ impl DatasyncAgent {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_group_arns`.\n"]
     pub fn set_security_group_arns(
         self,
@@ -218,7 +229,7 @@ impl DatasyncAgent {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DatasyncAgentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DatasyncAgent_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -253,6 +264,12 @@ impl DatasyncAgent {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_link_endpoint", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_arns` after provisioning.\n"]
     pub fn security_group_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_arns", self.extract_ref()))
@@ -279,8 +296,8 @@ impl DatasyncAgent {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DatasyncAgentTimeoutsElRef {
-        DatasyncAgentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DatasyncAgent_TimeoutsRef {
+        DatasyncAgent_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -324,7 +341,7 @@ impl BuildDatasyncAgent {
         let out = DatasyncAgent(std::rc::Rc::new(DatasyncAgent_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatasyncAgentData {
+            data: std::cell::RefCell::new(DatasyncAgentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -335,6 +352,7 @@ impl BuildDatasyncAgent {
                 ip_address: core::default::Default::default(),
                 name: core::default::Default::default(),
                 private_link_endpoint: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_group_arns: core::default::Default::default(),
                 subnet_arns: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -401,6 +419,12 @@ impl DatasyncAgentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_link_endpoint", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_arns` after provisioning.\n"]
     pub fn security_group_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_arns", self.extract_ref()))
@@ -427,18 +451,18 @@ impl DatasyncAgentRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DatasyncAgentTimeoutsElRef {
-        DatasyncAgentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DatasyncAgent_TimeoutsRef {
+        DatasyncAgent_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DatasyncAgentTimeoutsEl {
+pub struct DatasyncAgent_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncAgentTimeoutsEl {
+impl DatasyncAgent_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -446,8 +470,8 @@ impl DatasyncAgentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncAgentTimeoutsEl {
-    type O = terrars::BlockAssignable<DatasyncAgentTimeoutsEl>;
+impl terrars::ToListMappable for DatasyncAgent_Timeouts {
+    type O = terrars::BlockAssignable<DatasyncAgent_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -458,29 +482,31 @@ impl terrars::ToListMappable for DatasyncAgentTimeoutsEl {
     }
 }
 
-pub struct BuildDatasyncAgentTimeoutsEl {}
+pub struct BuildDatasyncAgent_Timeouts {}
 
-impl BuildDatasyncAgentTimeoutsEl {
-    pub fn build(self) -> DatasyncAgentTimeoutsEl {
-        DatasyncAgentTimeoutsEl { create: core::default::Default::default() }
+impl BuildDatasyncAgent_Timeouts {
+    pub fn build(self) -> DatasyncAgent_Timeouts {
+        DatasyncAgent_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct DatasyncAgentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DatasyncAgent_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncAgentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncAgentTimeoutsElRef {
-        DatasyncAgentTimeoutsElRef {
+impl terrars::Ref for DatasyncAgent_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncAgent_TimeoutsRef {
+        DatasyncAgent_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncAgentTimeoutsElRef {
+impl DatasyncAgent_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

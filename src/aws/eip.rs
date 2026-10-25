@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EipData {
+struct EipData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,9 +27,13 @@ struct EipData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customer_owned_ipv4_pool: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipam_pool_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_border_group: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,19 +41,19 @@ struct EipData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     public_ipv4_pool: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EipTimeoutsEl>,
+    timeouts: std::option::Option<Eip_Timeouts>,
 }
 
 struct Eip_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EipData>,
+    data: std::cell::RefCell<EipData_>,
 }
 
 #[derive(Clone)]
@@ -171,6 +177,12 @@ impl Eip {
         self
     }
 
+    #[doc = "Set the field `domain`.\n"]
+    pub fn set_domain(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().domain = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -180,6 +192,12 @@ impl Eip {
     #[doc = "Set the field `instance`.\n"]
     pub fn set_instance(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().instance = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipam_pool_id`.\n"]
+    pub fn set_ipam_pool_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ipam_pool_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -201,6 +219,13 @@ impl Eip {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -219,14 +244,8 @@ impl Eip {
         self
     }
 
-    #[doc = "Set the field `vpc`.\n"]
-    pub fn set_vpc(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().vpc = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EipTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Eip_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -239,6 +258,11 @@ impl Eip {
     #[doc = "Get a reference to the value of field `allocation_id` after provisioning.\n"]
     pub fn allocation_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.allocation_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `associate_with_private_ip` after provisioning.\n"]
@@ -281,6 +305,11 @@ impl Eip {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipam_pool_id` after provisioning.\n"]
+    pub fn ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipam_pool_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `network_border_group` after provisioning.\n"]
     pub fn network_border_group(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_border_group", self.extract_ref()))
@@ -301,6 +330,11 @@ impl Eip {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_ip", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ptr_record` after provisioning.\n"]
+    pub fn ptr_record(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ptr_record", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `public_dns` after provisioning.\n"]
     pub fn public_dns(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_dns", self.extract_ref()))
@@ -316,6 +350,12 @@ impl Eip {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_ipv4_pool", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -326,14 +366,9 @@ impl Eip {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
-    pub fn vpc(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EipTimeoutsElRef {
-        EipTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Eip_TimeoutsRef {
+        Eip_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -377,7 +412,7 @@ impl BuildEip {
         let out = Eip(std::rc::Rc::new(Eip_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EipData {
+            data: std::cell::RefCell::new(EipData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -386,14 +421,16 @@ impl BuildEip {
                 address: core::default::Default::default(),
                 associate_with_private_ip: core::default::Default::default(),
                 customer_owned_ipv4_pool: core::default::Default::default(),
+                domain: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance: core::default::Default::default(),
+                ipam_pool_id: core::default::Default::default(),
                 network_border_group: core::default::Default::default(),
                 network_interface: core::default::Default::default(),
                 public_ipv4_pool: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
-                vpc: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -433,6 +470,11 @@ impl EipRef {
     #[doc = "Get a reference to the value of field `allocation_id` after provisioning.\n"]
     pub fn allocation_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.allocation_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `associate_with_private_ip` after provisioning.\n"]
@@ -475,6 +517,11 @@ impl EipRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipam_pool_id` after provisioning.\n"]
+    pub fn ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipam_pool_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `network_border_group` after provisioning.\n"]
     pub fn network_border_group(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_border_group", self.extract_ref()))
@@ -495,6 +542,11 @@ impl EipRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_ip", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ptr_record` after provisioning.\n"]
+    pub fn ptr_record(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ptr_record", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `public_dns` after provisioning.\n"]
     pub fn public_dns(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_dns", self.extract_ref()))
@@ -510,6 +562,12 @@ impl EipRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_ipv4_pool", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -520,19 +578,14 @@ impl EipRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
-    pub fn vpc(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EipTimeoutsElRef {
-        EipTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Eip_TimeoutsRef {
+        Eip_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct EipTimeoutsEl {
+pub struct Eip_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -541,7 +594,7 @@ pub struct EipTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EipTimeoutsEl {
+impl Eip_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -561,8 +614,8 @@ impl EipTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EipTimeoutsEl {
-    type O = terrars::BlockAssignable<EipTimeoutsEl>;
+impl terrars::ToListMappable for Eip_Timeouts {
+    type O = terrars::BlockAssignable<Eip_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -573,11 +626,11 @@ impl terrars::ToListMappable for EipTimeoutsEl {
     }
 }
 
-pub struct BuildEipTimeoutsEl {}
+pub struct BuildEip_Timeouts {}
 
-impl BuildEipTimeoutsEl {
-    pub fn build(self) -> EipTimeoutsEl {
-        EipTimeoutsEl {
+impl BuildEip_Timeouts {
+    pub fn build(self) -> Eip_Timeouts {
+        Eip_Timeouts {
             delete: core::default::Default::default(),
             read: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -585,21 +638,23 @@ impl BuildEipTimeoutsEl {
     }
 }
 
-pub struct EipTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Eip_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EipTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EipTimeoutsElRef {
-        EipTimeoutsElRef {
+impl terrars::Ref for Eip_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Eip_TimeoutsRef {
+        Eip_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EipTimeoutsElRef {
+impl Eip_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

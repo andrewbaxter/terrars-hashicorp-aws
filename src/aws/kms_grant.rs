@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KmsGrantData {
+struct KmsGrantData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,18 +30,20 @@ struct KmsGrantData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     operations: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retire_on_delete: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retiring_principal: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    constraints: std::option::Option<std::vec::Vec<KmsGrantConstraintsEl>>,
+    constraints: std::option::Option<std::vec::Vec<KmsGrant_Constraints>>,
     dynamic: KmsGrantDynamic,
 }
 
 struct KmsGrant_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KmsGrantData>,
+    data: std::cell::RefCell<KmsGrantData_>,
 }
 
 #[derive(Clone)]
@@ -160,6 +164,13 @@ impl KmsGrant {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `retire_on_delete`.\n"]
     pub fn set_retire_on_delete(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().retire_on_delete = std::option::Option::Some(v.into());
@@ -173,7 +184,7 @@ impl KmsGrant {
     }
 
     #[doc = "Set the field `constraints`.\n"]
-    pub fn set_constraints(self, v: impl std::convert::Into<terrars::BlockAssignable<KmsGrantConstraintsEl>>) -> Self {
+    pub fn set_constraints(self, v: impl std::convert::Into<terrars::BlockAssignable<KmsGrant_Constraints>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().constraints = std::option::Option::Some(v);
@@ -223,6 +234,12 @@ impl KmsGrant {
     #[doc = "Get a reference to the value of field `operations` after provisioning.\n"]
     pub fn operations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.operations", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retire_on_delete` after provisioning.\n"]
@@ -282,7 +299,7 @@ impl BuildKmsGrant {
         let out = KmsGrant(std::rc::Rc::new(KmsGrant_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KmsGrantData {
+            data: std::cell::RefCell::new(KmsGrantData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -294,6 +311,7 @@ impl BuildKmsGrant {
                 key_id: self.key_id,
                 name: core::default::Default::default(),
                 operations: self.operations,
+                region: core::default::Default::default(),
                 retire_on_delete: core::default::Default::default(),
                 retiring_principal: core::default::Default::default(),
                 constraints: core::default::Default::default(),
@@ -368,6 +386,12 @@ impl KmsGrantRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.operations", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `retire_on_delete` after provisioning.\n"]
     pub fn retire_on_delete(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.retire_on_delete", self.extract_ref()))
@@ -379,15 +403,20 @@ impl KmsGrantRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct KmsGrantDynamic {
+    constraints: std::option::Option<terrars::DynamicBlock<KmsGrant_Constraints>>,
+}
+
 #[derive(Serialize)]
-pub struct KmsGrantConstraintsEl {
+pub struct KmsGrant_Constraints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_context_equals: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_context_subset: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl KmsGrantConstraintsEl {
+impl KmsGrant_Constraints {
     #[doc = "Set the field `encryption_context_equals`.\n"]
     pub fn set_encryption_context_equals(
         mut self,
@@ -407,8 +436,8 @@ impl KmsGrantConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for KmsGrantConstraintsEl {
-    type O = terrars::BlockAssignable<KmsGrantConstraintsEl>;
+impl terrars::ToListMappable for KmsGrant_Constraints {
+    type O = terrars::BlockAssignable<KmsGrant_Constraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -419,32 +448,34 @@ impl terrars::ToListMappable for KmsGrantConstraintsEl {
     }
 }
 
-pub struct BuildKmsGrantConstraintsEl {}
+pub struct BuildKmsGrant_Constraints {}
 
-impl BuildKmsGrantConstraintsEl {
-    pub fn build(self) -> KmsGrantConstraintsEl {
-        KmsGrantConstraintsEl {
+impl BuildKmsGrant_Constraints {
+    pub fn build(self) -> KmsGrant_Constraints {
+        KmsGrant_Constraints {
             encryption_context_equals: core::default::Default::default(),
             encryption_context_subset: core::default::Default::default(),
         }
     }
 }
 
-pub struct KmsGrantConstraintsElRef {
+#[allow(dead_code)]
+pub struct KmsGrant_ConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KmsGrantConstraintsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsGrantConstraintsElRef {
-        KmsGrantConstraintsElRef {
+impl terrars::Ref for KmsGrant_ConstraintsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsGrant_ConstraintsRef {
+        KmsGrant_ConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KmsGrantConstraintsElRef {
+impl KmsGrant_ConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -458,9 +489,4 @@ impl KmsGrantConstraintsElRef {
     pub fn encryption_context_subset(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.encryption_context_subset", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KmsGrantDynamic {
-    constraints: std::option::Option<terrars::DynamicBlock<KmsGrantConstraintsEl>>,
 }

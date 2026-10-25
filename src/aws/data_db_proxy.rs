@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataDbProxyData {
+struct DataDbProxyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,12 +21,14 @@ struct DataDbProxyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataDbProxy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDbProxyData>,
+    data: std::cell::RefCell<DataDbProxyData_>,
 }
 
 #[derive(Clone)]
@@ -75,13 +79,20 @@ impl DataDbProxy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `auth` after provisioning.\n"]
-    pub fn auth(&self) -> terrars::SetRef<DataDbProxyAuthElRef> {
+    pub fn auth(&self) -> terrars::SetRef<DataDbProxy_AuthRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.auth", self.extract_ref()))
     }
 
@@ -90,9 +101,19 @@ impl DataDbProxy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.debug_logging", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_auth_scheme` after provisioning.\n"]
+    pub fn default_auth_scheme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_auth_scheme", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
     pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_network_type` after provisioning.\n"]
+    pub fn endpoint_network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_network_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_family` after provisioning.\n"]
@@ -115,6 +136,12 @@ impl DataDbProxy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `require_tls` after provisioning.\n"]
     pub fn require_tls(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.require_tls", self.extract_ref()))
@@ -123,6 +150,14 @@ impl DataDbProxy {
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_connection_network_type` after provisioning.\n"]
+    pub fn target_connection_network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.target_connection_network_type", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
@@ -183,13 +218,14 @@ impl BuildDataDbProxy {
         let out = DataDbProxy(std::rc::Rc::new(DataDbProxy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDbProxyData {
+            data: std::cell::RefCell::new(DataDbProxyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -226,7 +262,7 @@ impl DataDbProxyRef {
     }
 
     #[doc = "Get a reference to the value of field `auth` after provisioning.\n"]
-    pub fn auth(&self) -> terrars::SetRef<DataDbProxyAuthElRef> {
+    pub fn auth(&self) -> terrars::SetRef<DataDbProxy_AuthRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.auth", self.extract_ref()))
     }
 
@@ -235,9 +271,19 @@ impl DataDbProxyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.debug_logging", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_auth_scheme` after provisioning.\n"]
+    pub fn default_auth_scheme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_auth_scheme", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
     pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_network_type` after provisioning.\n"]
+    pub fn endpoint_network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_network_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_family` after provisioning.\n"]
@@ -260,6 +306,12 @@ impl DataDbProxyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `require_tls` after provisioning.\n"]
     pub fn require_tls(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.require_tls", self.extract_ref()))
@@ -268,6 +320,14 @@ impl DataDbProxyRef {
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_connection_network_type` after provisioning.\n"]
+    pub fn target_connection_network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.target_connection_network_type", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
@@ -287,9 +347,11 @@ impl DataDbProxyRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDbProxyAuthEl {
+pub struct DataDbProxy_Auth {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_scheme: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_password_auth_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -300,10 +362,19 @@ pub struct DataDbProxyAuthEl {
     username: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDbProxyAuthEl {
+impl DataDbProxy_Auth {
     #[doc = "Set the field `auth_scheme`.\n"]
     pub fn set_auth_scheme(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.auth_scheme = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `client_password_auth_type`.\n"]
+    pub fn set_client_password_auth_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.client_password_auth_type = std::option::Option::Some(v.into());
         self
     }
 
@@ -332,8 +403,8 @@ impl DataDbProxyAuthEl {
     }
 }
 
-impl terrars::ToListMappable for DataDbProxyAuthEl {
-    type O = terrars::BlockAssignable<DataDbProxyAuthEl>;
+impl terrars::ToListMappable for DataDbProxy_Auth {
+    type O = terrars::BlockAssignable<DataDbProxy_Auth>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -344,12 +415,13 @@ impl terrars::ToListMappable for DataDbProxyAuthEl {
     }
 }
 
-pub struct BuildDataDbProxyAuthEl {}
+pub struct BuildDataDbProxy_Auth {}
 
-impl BuildDataDbProxyAuthEl {
-    pub fn build(self) -> DataDbProxyAuthEl {
-        DataDbProxyAuthEl {
+impl BuildDataDbProxy_Auth {
+    pub fn build(self) -> DataDbProxy_Auth {
+        DataDbProxy_Auth {
             auth_scheme: core::default::Default::default(),
+            client_password_auth_type: core::default::Default::default(),
             description: core::default::Default::default(),
             iam_auth: core::default::Default::default(),
             secret_arn: core::default::Default::default(),
@@ -358,21 +430,23 @@ impl BuildDataDbProxyAuthEl {
     }
 }
 
-pub struct DataDbProxyAuthElRef {
+#[allow(dead_code)]
+pub struct DataDbProxy_AuthRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDbProxyAuthElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDbProxyAuthElRef {
-        DataDbProxyAuthElRef {
+impl terrars::Ref for DataDbProxy_AuthRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDbProxy_AuthRef {
+        DataDbProxy_AuthRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDbProxyAuthElRef {
+impl DataDbProxy_AuthRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -380,6 +454,11 @@ impl DataDbProxyAuthElRef {
     #[doc = "Get a reference to the value of field `auth_scheme` after provisioning.\n"]
     pub fn auth_scheme(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_scheme", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `client_password_auth_type` after provisioning.\n"]
+    pub fn client_password_auth_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_password_auth_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2CapacityReservationData {
+struct Ec2CapacityReservationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,17 +41,21 @@ struct Ec2CapacityReservationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     placement_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tenancy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Ec2CapacityReservation_Timeouts>,
 }
 
 struct Ec2CapacityReservation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2CapacityReservationData>,
+    data: std::cell::RefCell<Ec2CapacityReservationData_>,
 }
 
 #[derive(Clone)]
@@ -200,6 +206,13 @@ impl Ec2CapacityReservation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -221,6 +234,12 @@ impl Ec2CapacityReservation {
     #[doc = "Set the field `tenancy`.\n"]
     pub fn set_tenancy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().tenancy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<Ec2CapacityReservation_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -294,6 +313,12 @@ impl Ec2CapacityReservation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.placement_group_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -307,6 +332,11 @@ impl Ec2CapacityReservation {
     #[doc = "Get a reference to the value of field `tenancy` after provisioning.\n"]
     pub fn tenancy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenancy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Ec2CapacityReservation_TimeoutsRef {
+        Ec2CapacityReservation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -358,7 +388,7 @@ impl BuildEc2CapacityReservation {
         let out = Ec2CapacityReservation(std::rc::Rc::new(Ec2CapacityReservation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2CapacityReservationData {
+            data: std::cell::RefCell::new(Ec2CapacityReservationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -376,9 +406,11 @@ impl BuildEc2CapacityReservation {
                 instance_type: self.instance_type,
                 outpost_arn: core::default::Default::default(),
                 placement_group_arn: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 tenancy: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -479,6 +511,12 @@ impl Ec2CapacityReservationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.placement_group_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -492,5 +530,101 @@ impl Ec2CapacityReservationRef {
     #[doc = "Get a reference to the value of field `tenancy` after provisioning.\n"]
     pub fn tenancy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenancy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Ec2CapacityReservation_TimeoutsRef {
+        Ec2CapacityReservation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Ec2CapacityReservation_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Ec2CapacityReservation_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Ec2CapacityReservation_Timeouts {
+    type O = terrars::BlockAssignable<Ec2CapacityReservation_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEc2CapacityReservation_Timeouts {}
+
+impl BuildEc2CapacityReservation_Timeouts {
+    pub fn build(self) -> Ec2CapacityReservation_Timeouts {
+        Ec2CapacityReservation_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Ec2CapacityReservation_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Ec2CapacityReservation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2CapacityReservation_TimeoutsRef {
+        Ec2CapacityReservation_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Ec2CapacityReservation_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }

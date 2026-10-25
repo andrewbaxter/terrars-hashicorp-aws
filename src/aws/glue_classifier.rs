@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlueClassifierData {
+struct GlueClassifierData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,20 +24,22 @@ struct GlueClassifierData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    csv_classifier: std::option::Option<std::vec::Vec<GlueClassifierCsvClassifierEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    grok_classifier: std::option::Option<std::vec::Vec<GlueClassifierGrokClassifierEl>>,
+    csv_classifier: std::option::Option<std::vec::Vec<GlueClassifier_CsvClassifier>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    json_classifier: std::option::Option<std::vec::Vec<GlueClassifierJsonClassifierEl>>,
+    grok_classifier: std::option::Option<std::vec::Vec<GlueClassifier_GrokClassifier>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    xml_classifier: std::option::Option<std::vec::Vec<GlueClassifierXmlClassifierEl>>,
+    json_classifier: std::option::Option<std::vec::Vec<GlueClassifier_JsonClassifier>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    xml_classifier: std::option::Option<std::vec::Vec<GlueClassifier_XmlClassifier>>,
     dynamic: GlueClassifierDynamic,
 }
 
 struct GlueClassifier_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlueClassifierData>,
+    data: std::cell::RefCell<GlueClassifierData_>,
 }
 
 #[derive(Clone)]
@@ -141,10 +145,17 @@ impl GlueClassifier {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `csv_classifier`.\n"]
     pub fn set_csv_classifier(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueClassifierCsvClassifierEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueClassifier_CsvClassifier>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -160,7 +171,7 @@ impl GlueClassifier {
     #[doc = "Set the field `grok_classifier`.\n"]
     pub fn set_grok_classifier(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueClassifierGrokClassifierEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueClassifier_GrokClassifier>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -176,7 +187,7 @@ impl GlueClassifier {
     #[doc = "Set the field `json_classifier`.\n"]
     pub fn set_json_classifier(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueClassifierJsonClassifierEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueClassifier_JsonClassifier>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +203,7 @@ impl GlueClassifier {
     #[doc = "Set the field `xml_classifier`.\n"]
     pub fn set_xml_classifier(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueClassifierXmlClassifierEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueClassifier_XmlClassifier>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,23 +226,29 @@ impl GlueClassifier {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `csv_classifier` after provisioning.\n"]
-    pub fn csv_classifier(&self) -> terrars::ListRef<GlueClassifierCsvClassifierElRef> {
+    pub fn csv_classifier(&self) -> terrars::ListRef<GlueClassifier_CsvClassifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.csv_classifier", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `grok_classifier` after provisioning.\n"]
-    pub fn grok_classifier(&self) -> terrars::ListRef<GlueClassifierGrokClassifierElRef> {
+    pub fn grok_classifier(&self) -> terrars::ListRef<GlueClassifier_GrokClassifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.grok_classifier", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `json_classifier` after provisioning.\n"]
-    pub fn json_classifier(&self) -> terrars::ListRef<GlueClassifierJsonClassifierElRef> {
+    pub fn json_classifier(&self) -> terrars::ListRef<GlueClassifier_JsonClassifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.json_classifier", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `xml_classifier` after provisioning.\n"]
-    pub fn xml_classifier(&self) -> terrars::ListRef<GlueClassifierXmlClassifierElRef> {
+    pub fn xml_classifier(&self) -> terrars::ListRef<GlueClassifier_XmlClassifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.xml_classifier", self.extract_ref()))
     }
 }
@@ -278,7 +295,7 @@ impl BuildGlueClassifier {
         let out = GlueClassifier(std::rc::Rc::new(GlueClassifier_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlueClassifierData {
+            data: std::cell::RefCell::new(GlueClassifierData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -286,6 +303,7 @@ impl BuildGlueClassifier {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 csv_classifier: core::default::Default::default(),
                 grok_classifier: core::default::Default::default(),
                 json_classifier: core::default::Default::default(),
@@ -331,29 +349,43 @@ impl GlueClassifierRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `csv_classifier` after provisioning.\n"]
-    pub fn csv_classifier(&self) -> terrars::ListRef<GlueClassifierCsvClassifierElRef> {
+    pub fn csv_classifier(&self) -> terrars::ListRef<GlueClassifier_CsvClassifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.csv_classifier", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `grok_classifier` after provisioning.\n"]
-    pub fn grok_classifier(&self) -> terrars::ListRef<GlueClassifierGrokClassifierElRef> {
+    pub fn grok_classifier(&self) -> terrars::ListRef<GlueClassifier_GrokClassifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.grok_classifier", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `json_classifier` after provisioning.\n"]
-    pub fn json_classifier(&self) -> terrars::ListRef<GlueClassifierJsonClassifierElRef> {
+    pub fn json_classifier(&self) -> terrars::ListRef<GlueClassifier_JsonClassifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.json_classifier", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `xml_classifier` after provisioning.\n"]
-    pub fn xml_classifier(&self) -> terrars::ListRef<GlueClassifierXmlClassifierElRef> {
+    pub fn xml_classifier(&self) -> terrars::ListRef<GlueClassifier_XmlClassifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.xml_classifier", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlueClassifierDynamic {
+    csv_classifier: std::option::Option<terrars::DynamicBlock<GlueClassifier_CsvClassifier>>,
+    grok_classifier: std::option::Option<terrars::DynamicBlock<GlueClassifier_GrokClassifier>>,
+    json_classifier: std::option::Option<terrars::DynamicBlock<GlueClassifier_JsonClassifier>>,
+    xml_classifier: std::option::Option<terrars::DynamicBlock<GlueClassifier_XmlClassifier>>,
+}
+
 #[derive(Serialize)]
-pub struct GlueClassifierCsvClassifierEl {
+pub struct GlueClassifier_CsvClassifier {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_single_column: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -370,9 +402,11 @@ pub struct GlueClassifierCsvClassifierEl {
     header: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     quote_symbol: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    serde: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueClassifierCsvClassifierEl {
+impl GlueClassifier_CsvClassifier {
     #[doc = "Set the field `allow_single_column`.\n"]
     pub fn set_allow_single_column(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_single_column = std::option::Option::Some(v.into());
@@ -426,10 +460,16 @@ impl GlueClassifierCsvClassifierEl {
         self.quote_symbol = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `serde`.\n"]
+    pub fn set_serde(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.serde = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for GlueClassifierCsvClassifierEl {
-    type O = terrars::BlockAssignable<GlueClassifierCsvClassifierEl>;
+impl terrars::ToListMappable for GlueClassifier_CsvClassifier {
+    type O = terrars::BlockAssignable<GlueClassifier_CsvClassifier>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -440,11 +480,11 @@ impl terrars::ToListMappable for GlueClassifierCsvClassifierEl {
     }
 }
 
-pub struct BuildGlueClassifierCsvClassifierEl {}
+pub struct BuildGlueClassifier_CsvClassifier {}
 
-impl BuildGlueClassifierCsvClassifierEl {
-    pub fn build(self) -> GlueClassifierCsvClassifierEl {
-        GlueClassifierCsvClassifierEl {
+impl BuildGlueClassifier_CsvClassifier {
+    pub fn build(self) -> GlueClassifier_CsvClassifier {
+        GlueClassifier_CsvClassifier {
             allow_single_column: core::default::Default::default(),
             contains_header: core::default::Default::default(),
             custom_datatype_configured: core::default::Default::default(),
@@ -453,25 +493,28 @@ impl BuildGlueClassifierCsvClassifierEl {
             disable_value_trimming: core::default::Default::default(),
             header: core::default::Default::default(),
             quote_symbol: core::default::Default::default(),
+            serde: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlueClassifierCsvClassifierElRef {
+#[allow(dead_code)]
+pub struct GlueClassifier_CsvClassifierRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueClassifierCsvClassifierElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueClassifierCsvClassifierElRef {
-        GlueClassifierCsvClassifierElRef {
+impl terrars::Ref for GlueClassifier_CsvClassifierRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueClassifier_CsvClassifierRef {
+        GlueClassifier_CsvClassifierRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueClassifierCsvClassifierElRef {
+impl GlueClassifier_CsvClassifierRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -515,17 +558,22 @@ impl GlueClassifierCsvClassifierElRef {
     pub fn quote_symbol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.quote_symbol", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `serde` after provisioning.\n"]
+    pub fn serde(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.serde", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct GlueClassifierGrokClassifierEl {
+pub struct GlueClassifier_GrokClassifier {
     classification: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_patterns: std::option::Option<terrars::PrimField<std::string::String>>,
     grok_pattern: terrars::PrimField<std::string::String>,
 }
 
-impl GlueClassifierGrokClassifierEl {
+impl GlueClassifier_GrokClassifier {
     #[doc = "Set the field `custom_patterns`.\n"]
     pub fn set_custom_patterns(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.custom_patterns = std::option::Option::Some(v.into());
@@ -533,8 +581,8 @@ impl GlueClassifierGrokClassifierEl {
     }
 }
 
-impl terrars::ToListMappable for GlueClassifierGrokClassifierEl {
-    type O = terrars::BlockAssignable<GlueClassifierGrokClassifierEl>;
+impl terrars::ToListMappable for GlueClassifier_GrokClassifier {
+    type O = terrars::BlockAssignable<GlueClassifier_GrokClassifier>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -545,16 +593,16 @@ impl terrars::ToListMappable for GlueClassifierGrokClassifierEl {
     }
 }
 
-pub struct BuildGlueClassifierGrokClassifierEl {
+pub struct BuildGlueClassifier_GrokClassifier {
     #[doc = ""]
     pub classification: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub grok_pattern: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueClassifierGrokClassifierEl {
-    pub fn build(self) -> GlueClassifierGrokClassifierEl {
-        GlueClassifierGrokClassifierEl {
+impl BuildGlueClassifier_GrokClassifier {
+    pub fn build(self) -> GlueClassifier_GrokClassifier {
+        GlueClassifier_GrokClassifier {
             classification: self.classification,
             custom_patterns: core::default::Default::default(),
             grok_pattern: self.grok_pattern,
@@ -562,21 +610,23 @@ impl BuildGlueClassifierGrokClassifierEl {
     }
 }
 
-pub struct GlueClassifierGrokClassifierElRef {
+#[allow(dead_code)]
+pub struct GlueClassifier_GrokClassifierRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueClassifierGrokClassifierElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueClassifierGrokClassifierElRef {
-        GlueClassifierGrokClassifierElRef {
+impl terrars::Ref for GlueClassifier_GrokClassifierRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueClassifier_GrokClassifierRef {
+        GlueClassifier_GrokClassifierRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueClassifierGrokClassifierElRef {
+impl GlueClassifier_GrokClassifierRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -598,14 +648,14 @@ impl GlueClassifierGrokClassifierElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueClassifierJsonClassifierEl {
+pub struct GlueClassifier_JsonClassifier {
     json_path: terrars::PrimField<std::string::String>,
 }
 
-impl GlueClassifierJsonClassifierEl { }
+impl GlueClassifier_JsonClassifier { }
 
-impl terrars::ToListMappable for GlueClassifierJsonClassifierEl {
-    type O = terrars::BlockAssignable<GlueClassifierJsonClassifierEl>;
+impl terrars::ToListMappable for GlueClassifier_JsonClassifier {
+    type O = terrars::BlockAssignable<GlueClassifier_JsonClassifier>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -616,32 +666,34 @@ impl terrars::ToListMappable for GlueClassifierJsonClassifierEl {
     }
 }
 
-pub struct BuildGlueClassifierJsonClassifierEl {
+pub struct BuildGlueClassifier_JsonClassifier {
     #[doc = ""]
     pub json_path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueClassifierJsonClassifierEl {
-    pub fn build(self) -> GlueClassifierJsonClassifierEl {
-        GlueClassifierJsonClassifierEl { json_path: self.json_path }
+impl BuildGlueClassifier_JsonClassifier {
+    pub fn build(self) -> GlueClassifier_JsonClassifier {
+        GlueClassifier_JsonClassifier { json_path: self.json_path }
     }
 }
 
-pub struct GlueClassifierJsonClassifierElRef {
+#[allow(dead_code)]
+pub struct GlueClassifier_JsonClassifierRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueClassifierJsonClassifierElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueClassifierJsonClassifierElRef {
-        GlueClassifierJsonClassifierElRef {
+impl terrars::Ref for GlueClassifier_JsonClassifierRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueClassifier_JsonClassifierRef {
+        GlueClassifier_JsonClassifierRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueClassifierJsonClassifierElRef {
+impl GlueClassifier_JsonClassifierRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -653,15 +705,15 @@ impl GlueClassifierJsonClassifierElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueClassifierXmlClassifierEl {
+pub struct GlueClassifier_XmlClassifier {
     classification: terrars::PrimField<std::string::String>,
     row_tag: terrars::PrimField<std::string::String>,
 }
 
-impl GlueClassifierXmlClassifierEl { }
+impl GlueClassifier_XmlClassifier { }
 
-impl terrars::ToListMappable for GlueClassifierXmlClassifierEl {
-    type O = terrars::BlockAssignable<GlueClassifierXmlClassifierEl>;
+impl terrars::ToListMappable for GlueClassifier_XmlClassifier {
+    type O = terrars::BlockAssignable<GlueClassifier_XmlClassifier>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -672,37 +724,39 @@ impl terrars::ToListMappable for GlueClassifierXmlClassifierEl {
     }
 }
 
-pub struct BuildGlueClassifierXmlClassifierEl {
+pub struct BuildGlueClassifier_XmlClassifier {
     #[doc = ""]
     pub classification: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub row_tag: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueClassifierXmlClassifierEl {
-    pub fn build(self) -> GlueClassifierXmlClassifierEl {
-        GlueClassifierXmlClassifierEl {
+impl BuildGlueClassifier_XmlClassifier {
+    pub fn build(self) -> GlueClassifier_XmlClassifier {
+        GlueClassifier_XmlClassifier {
             classification: self.classification,
             row_tag: self.row_tag,
         }
     }
 }
 
-pub struct GlueClassifierXmlClassifierElRef {
+#[allow(dead_code)]
+pub struct GlueClassifier_XmlClassifierRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueClassifierXmlClassifierElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueClassifierXmlClassifierElRef {
-        GlueClassifierXmlClassifierElRef {
+impl terrars::Ref for GlueClassifier_XmlClassifierRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueClassifier_XmlClassifierRef {
+        GlueClassifier_XmlClassifierRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueClassifierXmlClassifierElRef {
+impl GlueClassifier_XmlClassifierRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -716,12 +770,4 @@ impl GlueClassifierXmlClassifierElRef {
     pub fn row_tag(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.row_tag", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GlueClassifierDynamic {
-    csv_classifier: std::option::Option<terrars::DynamicBlock<GlueClassifierCsvClassifierEl>>,
-    grok_classifier: std::option::Option<terrars::DynamicBlock<GlueClassifierGrokClassifierEl>>,
-    json_classifier: std::option::Option<terrars::DynamicBlock<GlueClassifierJsonClassifierEl>>,
-    xml_classifier: std::option::Option<terrars::DynamicBlock<GlueClassifierXmlClassifierEl>>,
 }

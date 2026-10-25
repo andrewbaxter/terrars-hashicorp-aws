@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppconfigExtensionData {
+struct AppconfigExtensionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,22 @@ struct AppconfigExtensionData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action_point: std::option::Option<std::vec::Vec<AppconfigExtensionActionPointEl>>,
+    action_point: std::option::Option<std::vec::Vec<AppconfigExtension_ActionPoint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<std::vec::Vec<AppconfigExtensionParameterEl>>,
+    parameter: std::option::Option<std::vec::Vec<AppconfigExtension_Parameter>>,
     dynamic: AppconfigExtensionDynamic,
 }
 
 struct AppconfigExtension_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppconfigExtensionData>,
+    data: std::cell::RefCell<AppconfigExtensionData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl AppconfigExtension {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -170,7 +181,7 @@ impl AppconfigExtension {
     #[doc = "Set the field `action_point`.\n"]
     pub fn set_action_point(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppconfigExtensionActionPointEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppconfigExtension_ActionPoint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -186,7 +197,7 @@ impl AppconfigExtension {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppconfigExtensionParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppconfigExtension_Parameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,6 +228,12 @@ impl AppconfigExtension {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -277,7 +294,7 @@ impl BuildAppconfigExtension {
         let out = AppconfigExtension(std::rc::Rc::new(AppconfigExtension_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppconfigExtensionData {
+            data: std::cell::RefCell::new(AppconfigExtensionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -286,6 +303,7 @@ impl BuildAppconfigExtension {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 action_point: core::default::Default::default(),
@@ -341,6 +359,12 @@ impl AppconfigExtensionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -357,25 +381,38 @@ impl AppconfigExtensionRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppconfigExtensionDynamic {
+    action_point: std::option::Option<terrars::DynamicBlock<AppconfigExtension_ActionPoint>>,
+    parameter: std::option::Option<terrars::DynamicBlock<AppconfigExtension_Parameter>>,
+}
+
 #[derive(Serialize)]
-pub struct AppconfigExtensionActionPointElActionEl {
+pub struct AppconfigExtension_ActionPoint_Action {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
-    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     uri: terrars::PrimField<std::string::String>,
 }
 
-impl AppconfigExtensionActionPointElActionEl {
+impl AppconfigExtension_ActionPoint_Action {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `role_arn`.\n"]
+    pub fn set_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.role_arn = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for AppconfigExtensionActionPointElActionEl {
-    type O = terrars::BlockAssignable<AppconfigExtensionActionPointElActionEl>;
+impl terrars::ToListMappable for AppconfigExtension_ActionPoint_Action {
+    type O = terrars::BlockAssignable<AppconfigExtension_ActionPoint_Action>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -386,41 +423,41 @@ impl terrars::ToListMappable for AppconfigExtensionActionPointElActionEl {
     }
 }
 
-pub struct BuildAppconfigExtensionActionPointElActionEl {
+pub struct BuildAppconfigExtension_ActionPoint_Action {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub role_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppconfigExtensionActionPointElActionEl {
-    pub fn build(self) -> AppconfigExtensionActionPointElActionEl {
-        AppconfigExtensionActionPointElActionEl {
+impl BuildAppconfigExtension_ActionPoint_Action {
+    pub fn build(self) -> AppconfigExtension_ActionPoint_Action {
+        AppconfigExtension_ActionPoint_Action {
             description: core::default::Default::default(),
             name: self.name,
-            role_arn: self.role_arn,
+            role_arn: core::default::Default::default(),
             uri: self.uri,
         }
     }
 }
 
-pub struct AppconfigExtensionActionPointElActionElRef {
+#[allow(dead_code)]
+pub struct AppconfigExtension_ActionPoint_ActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppconfigExtensionActionPointElActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppconfigExtensionActionPointElActionElRef {
-        AppconfigExtensionActionPointElActionElRef {
+impl terrars::Ref for AppconfigExtension_ActionPoint_ActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppconfigExtension_ActionPoint_ActionRef {
+        AppconfigExtension_ActionPoint_ActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppconfigExtensionActionPointElActionElRef {
+impl AppconfigExtension_ActionPoint_ActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -447,23 +484,23 @@ impl AppconfigExtensionActionPointElActionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppconfigExtensionActionPointElDynamic {
-    action: std::option::Option<terrars::DynamicBlock<AppconfigExtensionActionPointElActionEl>>,
+struct AppconfigExtension_ActionPointDynamic {
+    action: std::option::Option<terrars::DynamicBlock<AppconfigExtension_ActionPoint_Action>>,
 }
 
 #[derive(Serialize)]
-pub struct AppconfigExtensionActionPointEl {
+pub struct AppconfigExtension_ActionPoint {
     point: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<std::vec::Vec<AppconfigExtensionActionPointElActionEl>>,
-    dynamic: AppconfigExtensionActionPointElDynamic,
+    action: std::option::Option<std::vec::Vec<AppconfigExtension_ActionPoint_Action>>,
+    dynamic: AppconfigExtension_ActionPointDynamic,
 }
 
-impl AppconfigExtensionActionPointEl {
+impl AppconfigExtension_ActionPoint {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppconfigExtensionActionPointElActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppconfigExtension_ActionPoint_Action>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -477,8 +514,8 @@ impl AppconfigExtensionActionPointEl {
     }
 }
 
-impl terrars::ToListMappable for AppconfigExtensionActionPointEl {
-    type O = terrars::BlockAssignable<AppconfigExtensionActionPointEl>;
+impl terrars::ToListMappable for AppconfigExtension_ActionPoint {
+    type O = terrars::BlockAssignable<AppconfigExtension_ActionPoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -489,14 +526,14 @@ impl terrars::ToListMappable for AppconfigExtensionActionPointEl {
     }
 }
 
-pub struct BuildAppconfigExtensionActionPointEl {
+pub struct BuildAppconfigExtension_ActionPoint {
     #[doc = ""]
     pub point: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppconfigExtensionActionPointEl {
-    pub fn build(self) -> AppconfigExtensionActionPointEl {
-        AppconfigExtensionActionPointEl {
+impl BuildAppconfigExtension_ActionPoint {
+    pub fn build(self) -> AppconfigExtension_ActionPoint {
+        AppconfigExtension_ActionPoint {
             point: self.point,
             action: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -504,21 +541,23 @@ impl BuildAppconfigExtensionActionPointEl {
     }
 }
 
-pub struct AppconfigExtensionActionPointElRef {
+#[allow(dead_code)]
+pub struct AppconfigExtension_ActionPointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppconfigExtensionActionPointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppconfigExtensionActionPointElRef {
-        AppconfigExtensionActionPointElRef {
+impl terrars::Ref for AppconfigExtension_ActionPointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppconfigExtension_ActionPointRef {
+        AppconfigExtension_ActionPointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppconfigExtensionActionPointElRef {
+impl AppconfigExtension_ActionPointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -530,7 +569,7 @@ impl AppconfigExtensionActionPointElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppconfigExtensionParameterEl {
+pub struct AppconfigExtension_Parameter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
@@ -538,7 +577,7 @@ pub struct AppconfigExtensionParameterEl {
     required: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl AppconfigExtensionParameterEl {
+impl AppconfigExtension_Parameter {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -552,8 +591,8 @@ impl AppconfigExtensionParameterEl {
     }
 }
 
-impl terrars::ToListMappable for AppconfigExtensionParameterEl {
-    type O = terrars::BlockAssignable<AppconfigExtensionParameterEl>;
+impl terrars::ToListMappable for AppconfigExtension_Parameter {
+    type O = terrars::BlockAssignable<AppconfigExtension_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -564,14 +603,14 @@ impl terrars::ToListMappable for AppconfigExtensionParameterEl {
     }
 }
 
-pub struct BuildAppconfigExtensionParameterEl {
+pub struct BuildAppconfigExtension_Parameter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppconfigExtensionParameterEl {
-    pub fn build(self) -> AppconfigExtensionParameterEl {
-        AppconfigExtensionParameterEl {
+impl BuildAppconfigExtension_Parameter {
+    pub fn build(self) -> AppconfigExtension_Parameter {
+        AppconfigExtension_Parameter {
             description: core::default::Default::default(),
             name: self.name,
             required: core::default::Default::default(),
@@ -579,21 +618,23 @@ impl BuildAppconfigExtensionParameterEl {
     }
 }
 
-pub struct AppconfigExtensionParameterElRef {
+#[allow(dead_code)]
+pub struct AppconfigExtension_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppconfigExtensionParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppconfigExtensionParameterElRef {
-        AppconfigExtensionParameterElRef {
+impl terrars::Ref for AppconfigExtension_ParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppconfigExtension_ParameterRef {
+        AppconfigExtension_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppconfigExtensionParameterElRef {
+impl AppconfigExtension_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -612,10 +653,4 @@ impl AppconfigExtensionParameterElRef {
     pub fn required(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.required", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppconfigExtensionDynamic {
-    action_point: std::option::Option<terrars::DynamicBlock<AppconfigExtensionActionPointEl>>,
-    parameter: std::option::Option<terrars::DynamicBlock<AppconfigExtensionParameterEl>>,
 }

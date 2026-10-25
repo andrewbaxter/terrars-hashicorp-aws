@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3controlObjectLambdaAccessPointData {
+struct S3controlObjectLambdaAccessPointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,16 @@ struct S3controlObjectLambdaAccessPointData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    configuration: std::option::Option<std::vec::Vec<S3controlObjectLambdaAccessPointConfigurationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    configuration: std::option::Option<std::vec::Vec<S3controlObjectLambdaAccessPoint_Configuration>>,
     dynamic: S3controlObjectLambdaAccessPointDynamic,
 }
 
 struct S3controlObjectLambdaAccessPoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3controlObjectLambdaAccessPointData>,
+    data: std::cell::RefCell<S3controlObjectLambdaAccessPointData_>,
 }
 
 #[derive(Clone)]
@@ -143,10 +147,17 @@ impl S3controlObjectLambdaAccessPoint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `configuration`.\n"]
     pub fn set_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3controlObjectLambdaAccessPointConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3controlObjectLambdaAccessPoint_Configuration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -164,6 +175,11 @@ impl S3controlObjectLambdaAccessPoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `alias` after provisioning.\n"]
+    pub fn alias(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.alias", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -179,8 +195,14 @@ impl S3controlObjectLambdaAccessPoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<S3controlObjectLambdaAccessPointConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<S3controlObjectLambdaAccessPoint_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 }
@@ -227,7 +249,7 @@ impl BuildS3controlObjectLambdaAccessPoint {
         let out = S3controlObjectLambdaAccessPoint(std::rc::Rc::new(S3controlObjectLambdaAccessPoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3controlObjectLambdaAccessPointData {
+            data: std::cell::RefCell::new(S3controlObjectLambdaAccessPointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -236,6 +258,7 @@ impl BuildS3controlObjectLambdaAccessPoint {
                 account_id: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -273,6 +296,11 @@ impl S3controlObjectLambdaAccessPointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `alias` after provisioning.\n"]
+    pub fn alias(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.alias", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -288,20 +316,31 @@ impl S3controlObjectLambdaAccessPointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<S3controlObjectLambdaAccessPointConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<S3controlObjectLambdaAccessPoint_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3controlObjectLambdaAccessPointDynamic {
+    configuration: std::option::Option<terrars::DynamicBlock<S3controlObjectLambdaAccessPoint_Configuration>>,
+}
+
 #[derive(Serialize)]
-pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
+pub struct S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda {
     function_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     function_payload: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
+impl S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda {
     #[doc = "Set the field `function_payload`.\n"]
     pub fn set_function_payload(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.function_payload = std::option::Option::Some(v.into());
@@ -310,11 +349,11 @@ impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationE
 }
 
 impl terrars
-::ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
+::ToListMappable for S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl,
+            S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -326,41 +365,43 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
+pub struct BuildS3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda {
     #[doc = ""]
     pub function_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
+impl BuildS3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda {
     pub fn build(
         self,
-    ) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
-        S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl {
+    ) -> S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda {
+        S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda {
             function_arn: self.function_arn,
             function_payload: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
+#[allow(dead_code)]
+pub struct S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambdaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
+::Ref for S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambdaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
-        S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
+    ) -> S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambdaRef {
+        S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambdaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef {
+impl S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambdaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -377,19 +418,19 @@ impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationE
 }
 
 #[derive(Serialize, Default)]
-struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElDynamic {
+struct S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformationDynamic {
     aws_lambda: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl,
+            S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
+pub struct S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aws_lambda: std
     ::option
@@ -397,13 +438,13 @@ pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigur
         std
         ::vec
         ::Vec<
-            S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl,
+            S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda,
         >,
     >,
-    dynamic: S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElDynamic,
+    dynamic: S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformationDynamic,
 }
 
-impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
+impl S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation {
     #[doc = "Set the field `aws_lambda`.\n"]
     pub fn set_aws_lambda(
         mut self,
@@ -415,7 +456,7 @@ impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaEl,
+                            S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambda,
                         >,
                     >,
     ) -> Self {
@@ -432,11 +473,11 @@ impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationE
 }
 
 impl terrars
-::ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
+::ToListMappable for S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl,
+            S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -448,38 +489,40 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {}
+pub struct BuildS3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation {}
 
-impl BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
+impl BuildS3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation {
     pub fn build(
         self,
-    ) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
-        S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl {
+    ) -> S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation {
+        S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation {
             aws_lambda: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
+#[allow(dead_code)]
+pub struct S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
+::Ref for S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
-        S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
+    ) -> S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformationRef {
+        S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef {
+impl S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -489,26 +532,26 @@ impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationE
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElAwsLambdaElRef,
+        S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation_AwsLambdaRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_lambda", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElDynamic {
+struct S3controlObjectLambdaAccessPoint_Configuration_TransformationConfigurationDynamic {
     content_transformation: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl,
+            S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
+pub struct S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration {
     actions: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content_transformation: std
@@ -516,12 +559,12 @@ pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigur
     ::Option<
         std
         ::vec
-        ::Vec<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl>,
+        ::Vec<S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation>,
     >,
-    dynamic: S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElDynamic,
+    dynamic: S3controlObjectLambdaAccessPoint_Configuration_TransformationConfigurationDynamic,
 }
 
-impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
+impl S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration {
     #[doc = "Set the field `content_transformation`.\n"]
     pub fn set_content_transformation(
         mut self,
@@ -533,7 +576,7 @@ impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationEl,
+                            S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformation,
                         >,
                     >,
     ) -> Self {
@@ -549,8 +592,8 @@ impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationE
     }
 }
 
-impl terrars::ToListMappable for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
-    type O = terrars::BlockAssignable<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>;
+impl terrars::ToListMappable for S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration {
+    type O = terrars::BlockAssignable<S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -561,14 +604,14 @@ impl terrars::ToListMappable for S3controlObjectLambdaAccessPointConfigurationEl
     }
 }
 
-pub struct BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
+pub struct BuildS3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration {
     #[doc = ""]
     pub actions: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
-    pub fn build(self) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
-        S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl {
+impl BuildS3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration {
+    pub fn build(self) -> S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration {
+        S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration {
             actions: self.actions,
             content_transformation: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -576,24 +619,26 @@ impl BuildS3controlObjectLambdaAccessPointConfigurationElTransformationConfigura
     }
 }
 
-pub struct S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3controlObjectLambdaAccessPoint_Configuration_TransformationConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
+impl terrars::Ref for S3controlObjectLambdaAccessPoint_Configuration_TransformationConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
-        S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
+    ) -> S3controlObjectLambdaAccessPoint_Configuration_TransformationConfigurationRef {
+        S3controlObjectLambdaAccessPoint_Configuration_TransformationConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElRef {
+impl S3controlObjectLambdaAccessPoint_Configuration_TransformationConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -607,20 +652,20 @@ impl S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationE
     pub fn content_transformation(
         &self,
     ) -> terrars
-    ::ListRef<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationElContentTransformationElRef> {
+    ::ListRef<S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration_ContentTransformationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.content_transformation", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3controlObjectLambdaAccessPointConfigurationElDynamic {
+struct S3controlObjectLambdaAccessPoint_ConfigurationDynamic {
     transformation_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct S3controlObjectLambdaAccessPointConfigurationEl {
+pub struct S3controlObjectLambdaAccessPoint_Configuration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_features: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -629,11 +674,11 @@ pub struct S3controlObjectLambdaAccessPointConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transformation_configuration: std
     ::option
-    ::Option<std::vec::Vec<S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl>>,
-    dynamic: S3controlObjectLambdaAccessPointConfigurationElDynamic,
+    ::Option<std::vec::Vec<S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration>>,
+    dynamic: S3controlObjectLambdaAccessPoint_ConfigurationDynamic,
 }
 
-impl S3controlObjectLambdaAccessPointConfigurationEl {
+impl S3controlObjectLambdaAccessPoint_Configuration {
     #[doc = "Set the field `allowed_features`.\n"]
     pub fn set_allowed_features(
         mut self,
@@ -659,9 +704,7 @@ impl S3controlObjectLambdaAccessPointConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            S3controlObjectLambdaAccessPointConfigurationElTransformationConfigurationEl,
-                        >,
+                        ::BlockAssignable<S3controlObjectLambdaAccessPoint_Configuration_TransformationConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -676,8 +719,8 @@ impl S3controlObjectLambdaAccessPointConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlObjectLambdaAccessPointConfigurationEl {
-    type O = terrars::BlockAssignable<S3controlObjectLambdaAccessPointConfigurationEl>;
+impl terrars::ToListMappable for S3controlObjectLambdaAccessPoint_Configuration {
+    type O = terrars::BlockAssignable<S3controlObjectLambdaAccessPoint_Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -688,14 +731,14 @@ impl terrars::ToListMappable for S3controlObjectLambdaAccessPointConfigurationEl
     }
 }
 
-pub struct BuildS3controlObjectLambdaAccessPointConfigurationEl {
+pub struct BuildS3controlObjectLambdaAccessPoint_Configuration {
     #[doc = ""]
     pub supporting_access_point: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3controlObjectLambdaAccessPointConfigurationEl {
-    pub fn build(self) -> S3controlObjectLambdaAccessPointConfigurationEl {
-        S3controlObjectLambdaAccessPointConfigurationEl {
+impl BuildS3controlObjectLambdaAccessPoint_Configuration {
+    pub fn build(self) -> S3controlObjectLambdaAccessPoint_Configuration {
+        S3controlObjectLambdaAccessPoint_Configuration {
             allowed_features: core::default::Default::default(),
             cloud_watch_metrics_enabled: core::default::Default::default(),
             supporting_access_point: self.supporting_access_point,
@@ -705,24 +748,26 @@ impl BuildS3controlObjectLambdaAccessPointConfigurationEl {
     }
 }
 
-pub struct S3controlObjectLambdaAccessPointConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3controlObjectLambdaAccessPoint_ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlObjectLambdaAccessPointConfigurationElRef {
+impl terrars::Ref for S3controlObjectLambdaAccessPoint_ConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlObjectLambdaAccessPointConfigurationElRef {
-        S3controlObjectLambdaAccessPointConfigurationElRef {
+    ) -> S3controlObjectLambdaAccessPoint_ConfigurationRef {
+        S3controlObjectLambdaAccessPoint_ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlObjectLambdaAccessPointConfigurationElRef {
+impl S3controlObjectLambdaAccessPoint_ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -741,9 +786,4 @@ impl S3controlObjectLambdaAccessPointConfigurationElRef {
     pub fn supporting_access_point(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.supporting_access_point", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3controlObjectLambdaAccessPointDynamic {
-    configuration: std::option::Option<terrars::DynamicBlock<S3controlObjectLambdaAccessPointConfigurationEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct BatchComputeEnvironmentData {
+struct BatchComputeEnvironmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,11 +21,13 @@ struct BatchComputeEnvironmentData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    compute_environment_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    compute_environment_name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_role: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,16 +39,18 @@ struct BatchComputeEnvironmentData {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    compute_resources: std::option::Option<std::vec::Vec<BatchComputeEnvironmentComputeResourcesEl>>,
+    compute_resources: std::option::Option<std::vec::Vec<BatchComputeEnvironment_ComputeResources>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    eks_configuration: std::option::Option<std::vec::Vec<BatchComputeEnvironmentEksConfigurationEl>>,
+    eks_configuration: std::option::Option<std::vec::Vec<BatchComputeEnvironment_EksConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update_policy: std::option::Option<std::vec::Vec<BatchComputeEnvironment_UpdatePolicy>>,
     dynamic: BatchComputeEnvironmentDynamic,
 }
 
 struct BatchComputeEnvironment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BatchComputeEnvironmentData>,
+    data: std::cell::RefCell<BatchComputeEnvironmentData_>,
 }
 
 #[derive(Clone)]
@@ -144,27 +150,28 @@ impl BatchComputeEnvironment {
         self
     }
 
-    #[doc = "Set the field `compute_environment_name`.\n"]
-    pub fn set_compute_environment_name(
-        self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.0.data.borrow_mut().compute_environment_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `compute_environment_name_prefix`.\n"]
-    pub fn set_compute_environment_name_prefix(
-        self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.0.data.borrow_mut().compute_environment_name_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name_prefix`.\n"]
+    pub fn set_name_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -201,7 +208,7 @@ impl BatchComputeEnvironment {
     #[doc = "Set the field `compute_resources`.\n"]
     pub fn set_compute_resources(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BatchComputeEnvironmentComputeResourcesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BatchComputeEnvironment_ComputeResources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,7 +224,7 @@ impl BatchComputeEnvironment {
     #[doc = "Set the field `eks_configuration`.\n"]
     pub fn set_eks_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BatchComputeEnvironmentEksConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BatchComputeEnvironment_EksConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -230,22 +237,25 @@ impl BatchComputeEnvironment {
         self
     }
 
+    #[doc = "Set the field `update_policy`.\n"]
+    pub fn set_update_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BatchComputeEnvironment_UpdatePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().update_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.update_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `compute_environment_name` after provisioning.\n"]
-    pub fn compute_environment_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compute_environment_name", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `compute_environment_name_prefix` after provisioning.\n"]
-    pub fn compute_environment_name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(
-            self.shared().clone(),
-            format!("{}.compute_environment_name_prefix", self.extract_ref()),
-        )
     }
 
     #[doc = "Get a reference to the value of field `ecs_cluster_arn` after provisioning.\n"]
@@ -256,6 +266,22 @@ impl BatchComputeEnvironment {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name_prefix` after provisioning.\n"]
+    pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
@@ -294,13 +320,18 @@ impl BatchComputeEnvironment {
     }
 
     #[doc = "Get a reference to the value of field `compute_resources` after provisioning.\n"]
-    pub fn compute_resources(&self) -> terrars::ListRef<BatchComputeEnvironmentComputeResourcesElRef> {
+    pub fn compute_resources(&self) -> terrars::ListRef<BatchComputeEnvironment_ComputeResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compute_resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `eks_configuration` after provisioning.\n"]
-    pub fn eks_configuration(&self) -> terrars::ListRef<BatchComputeEnvironmentEksConfigurationElRef> {
+    pub fn eks_configuration(&self) -> terrars::ListRef<BatchComputeEnvironment_EksConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.eks_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `update_policy` after provisioning.\n"]
+    pub fn update_policy(&self) -> terrars::ListRef<BatchComputeEnvironment_UpdatePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.update_policy", self.extract_ref()))
     }
 }
 
@@ -346,15 +377,16 @@ impl BuildBatchComputeEnvironment {
         let out = BatchComputeEnvironment(std::rc::Rc::new(BatchComputeEnvironment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BatchComputeEnvironmentData {
+            data: std::cell::RefCell::new(BatchComputeEnvironmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                compute_environment_name: core::default::Default::default(),
-                compute_environment_name_prefix: core::default::Default::default(),
                 id: core::default::Default::default(),
+                name: core::default::Default::default(),
+                name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 service_role: core::default::Default::default(),
                 state: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -362,6 +394,7 @@ impl BuildBatchComputeEnvironment {
                 type_: self.type_,
                 compute_resources: core::default::Default::default(),
                 eks_configuration: core::default::Default::default(),
+                update_policy: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -398,19 +431,6 @@ impl BatchComputeEnvironmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `compute_environment_name` after provisioning.\n"]
-    pub fn compute_environment_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compute_environment_name", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `compute_environment_name_prefix` after provisioning.\n"]
-    pub fn compute_environment_name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(
-            self.shared().clone(),
-            format!("{}.compute_environment_name_prefix", self.extract_ref()),
-        )
-    }
-
     #[doc = "Get a reference to the value of field `ecs_cluster_arn` after provisioning.\n"]
     pub fn ecs_cluster_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ecs_cluster_arn", self.extract_ref()))
@@ -419,6 +439,22 @@ impl BatchComputeEnvironmentRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name_prefix` after provisioning.\n"]
+    pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
@@ -457,28 +493,51 @@ impl BatchComputeEnvironmentRef {
     }
 
     #[doc = "Get a reference to the value of field `compute_resources` after provisioning.\n"]
-    pub fn compute_resources(&self) -> terrars::ListRef<BatchComputeEnvironmentComputeResourcesElRef> {
+    pub fn compute_resources(&self) -> terrars::ListRef<BatchComputeEnvironment_ComputeResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compute_resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `eks_configuration` after provisioning.\n"]
-    pub fn eks_configuration(&self) -> terrars::ListRef<BatchComputeEnvironmentEksConfigurationElRef> {
+    pub fn eks_configuration(&self) -> terrars::ListRef<BatchComputeEnvironment_EksConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.eks_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `update_policy` after provisioning.\n"]
+    pub fn update_policy(&self) -> terrars::ListRef<BatchComputeEnvironment_UpdatePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.update_policy", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BatchComputeEnvironmentDynamic {
+    compute_resources: std::option::Option<terrars::DynamicBlock<BatchComputeEnvironment_ComputeResources>>,
+    eks_configuration: std::option::Option<terrars::DynamicBlock<BatchComputeEnvironment_EksConfiguration>>,
+    update_policy: std::option::Option<terrars::DynamicBlock<BatchComputeEnvironment_UpdatePolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl {
+pub struct BatchComputeEnvironment_ComputeResources_Ec2Configuration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image_id_override: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image_kubernetes_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl {
+impl BatchComputeEnvironment_ComputeResources_Ec2Configuration {
     #[doc = "Set the field `image_id_override`.\n"]
     pub fn set_image_id_override(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.image_id_override = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `image_kubernetes_version`.\n"]
+    pub fn set_image_kubernetes_version(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.image_kubernetes_version = std::option::Option::Some(v.into());
         self
     }
 
@@ -489,8 +548,8 @@ impl BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl {
-    type O = terrars::BlockAssignable<BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl>;
+impl terrars::ToListMappable for BatchComputeEnvironment_ComputeResources_Ec2Configuration {
+    type O = terrars::BlockAssignable<BatchComputeEnvironment_ComputeResources_Ec2Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -501,35 +560,38 @@ impl terrars::ToListMappable for BatchComputeEnvironmentComputeResourcesElEc2Con
     }
 }
 
-pub struct BuildBatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl {}
+pub struct BuildBatchComputeEnvironment_ComputeResources_Ec2Configuration {}
 
-impl BuildBatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl {
-    pub fn build(self) -> BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl {
-        BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl {
+impl BuildBatchComputeEnvironment_ComputeResources_Ec2Configuration {
+    pub fn build(self) -> BatchComputeEnvironment_ComputeResources_Ec2Configuration {
+        BatchComputeEnvironment_ComputeResources_Ec2Configuration {
             image_id_override: core::default::Default::default(),
+            image_kubernetes_version: core::default::Default::default(),
             image_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct BatchComputeEnvironmentComputeResourcesElEc2ConfigurationElRef {
+#[allow(dead_code)]
+pub struct BatchComputeEnvironment_ComputeResources_Ec2ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BatchComputeEnvironmentComputeResourcesElEc2ConfigurationElRef {
+impl terrars::Ref for BatchComputeEnvironment_ComputeResources_Ec2ConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BatchComputeEnvironmentComputeResourcesElEc2ConfigurationElRef {
-        BatchComputeEnvironmentComputeResourcesElEc2ConfigurationElRef {
+    ) -> BatchComputeEnvironment_ComputeResources_Ec2ConfigurationRef {
+        BatchComputeEnvironment_ComputeResources_Ec2ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BatchComputeEnvironmentComputeResourcesElEc2ConfigurationElRef {
+impl BatchComputeEnvironment_ComputeResources_Ec2ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -539,6 +601,11 @@ impl BatchComputeEnvironmentComputeResourcesElEc2ConfigurationElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_id_override", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `image_kubernetes_version` after provisioning.\n"]
+    pub fn image_kubernetes_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_kubernetes_version", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `image_type` after provisioning.\n"]
     pub fn image_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_type", self.base))
@@ -546,7 +613,7 @@ impl BatchComputeEnvironmentComputeResourcesElEc2ConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {
+pub struct BatchComputeEnvironment_ComputeResources_LaunchTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_template_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -555,7 +622,7 @@ pub struct BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {
+impl BatchComputeEnvironment_ComputeResources_LaunchTemplate {
     #[doc = "Set the field `launch_template_id`.\n"]
     pub fn set_launch_template_id(
         mut self,
@@ -581,8 +648,8 @@ impl BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {
-    type O = terrars::BlockAssignable<BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl>;
+impl terrars::ToListMappable for BatchComputeEnvironment_ComputeResources_LaunchTemplate {
+    type O = terrars::BlockAssignable<BatchComputeEnvironment_ComputeResources_LaunchTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -593,11 +660,11 @@ impl terrars::ToListMappable for BatchComputeEnvironmentComputeResourcesElLaunch
     }
 }
 
-pub struct BuildBatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {}
+pub struct BuildBatchComputeEnvironment_ComputeResources_LaunchTemplate {}
 
-impl BuildBatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {
-    pub fn build(self) -> BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {
-        BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {
+impl BuildBatchComputeEnvironment_ComputeResources_LaunchTemplate {
+    pub fn build(self) -> BatchComputeEnvironment_ComputeResources_LaunchTemplate {
+        BatchComputeEnvironment_ComputeResources_LaunchTemplate {
             launch_template_id: core::default::Default::default(),
             launch_template_name: core::default::Default::default(),
             version: core::default::Default::default(),
@@ -605,24 +672,26 @@ impl BuildBatchComputeEnvironmentComputeResourcesElLaunchTemplateEl {
     }
 }
 
-pub struct BatchComputeEnvironmentComputeResourcesElLaunchTemplateElRef {
+#[allow(dead_code)]
+pub struct BatchComputeEnvironment_ComputeResources_LaunchTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BatchComputeEnvironmentComputeResourcesElLaunchTemplateElRef {
+impl terrars::Ref for BatchComputeEnvironment_ComputeResources_LaunchTemplateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BatchComputeEnvironmentComputeResourcesElLaunchTemplateElRef {
-        BatchComputeEnvironmentComputeResourcesElLaunchTemplateElRef {
+    ) -> BatchComputeEnvironment_ComputeResources_LaunchTemplateRef {
+        BatchComputeEnvironment_ComputeResources_LaunchTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BatchComputeEnvironmentComputeResourcesElLaunchTemplateElRef {
+impl BatchComputeEnvironment_ComputeResources_LaunchTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -644,17 +713,17 @@ impl BatchComputeEnvironmentComputeResourcesElLaunchTemplateElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BatchComputeEnvironmentComputeResourcesElDynamic {
+struct BatchComputeEnvironment_ComputeResourcesDynamic {
     ec2_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<BatchComputeEnvironment_ComputeResources_Ec2Configuration>>,
     launch_template: std
     ::option
-    ::Option<terrars::DynamicBlock<BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl>>,
+    ::Option<terrars::DynamicBlock<BatchComputeEnvironment_ComputeResources_LaunchTemplate>>,
 }
 
 #[derive(Serialize)]
-pub struct BatchComputeEnvironmentComputeResourcesEl {
+pub struct BatchComputeEnvironment_ComputeResources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allocation_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -673,6 +742,8 @@ pub struct BatchComputeEnvironmentComputeResourcesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_vcpus: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    placement_group: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     spot_iam_fleet_role: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -682,13 +753,13 @@ pub struct BatchComputeEnvironmentComputeResourcesEl {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ec2_configuration: std::option::Option<std::vec::Vec<BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl>>,
+    ec2_configuration: std::option::Option<std::vec::Vec<BatchComputeEnvironment_ComputeResources_Ec2Configuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    launch_template: std::option::Option<std::vec::Vec<BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl>>,
-    dynamic: BatchComputeEnvironmentComputeResourcesElDynamic,
+    launch_template: std::option::Option<std::vec::Vec<BatchComputeEnvironment_ComputeResources_LaunchTemplate>>,
+    dynamic: BatchComputeEnvironment_ComputeResourcesDynamic,
 }
 
-impl BatchComputeEnvironmentComputeResourcesEl {
+impl BatchComputeEnvironment_ComputeResources {
     #[doc = "Set the field `allocation_strategy`.\n"]
     pub fn set_allocation_strategy(
         mut self,
@@ -743,6 +814,12 @@ impl BatchComputeEnvironmentComputeResourcesEl {
         self
     }
 
+    #[doc = "Set the field `placement_group`.\n"]
+    pub fn set_placement_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.placement_group = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         mut self,
@@ -778,7 +855,7 @@ impl BatchComputeEnvironmentComputeResourcesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<BatchComputeEnvironmentComputeResourcesElEc2ConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<BatchComputeEnvironment_ComputeResources_Ec2Configuration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -799,7 +876,7 @@ impl BatchComputeEnvironmentComputeResourcesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<BatchComputeEnvironmentComputeResourcesElLaunchTemplateEl>>,
+                    ::Into<terrars::BlockAssignable<BatchComputeEnvironment_ComputeResources_LaunchTemplate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -813,8 +890,8 @@ impl BatchComputeEnvironmentComputeResourcesEl {
     }
 }
 
-impl terrars::ToListMappable for BatchComputeEnvironmentComputeResourcesEl {
-    type O = terrars::BlockAssignable<BatchComputeEnvironmentComputeResourcesEl>;
+impl terrars::ToListMappable for BatchComputeEnvironment_ComputeResources {
+    type O = terrars::BlockAssignable<BatchComputeEnvironment_ComputeResources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -825,7 +902,7 @@ impl terrars::ToListMappable for BatchComputeEnvironmentComputeResourcesEl {
     }
 }
 
-pub struct BuildBatchComputeEnvironmentComputeResourcesEl {
+pub struct BuildBatchComputeEnvironment_ComputeResources {
     #[doc = ""]
     pub max_vcpus: terrars::PrimField<f64>,
     #[doc = ""]
@@ -834,9 +911,9 @@ pub struct BuildBatchComputeEnvironmentComputeResourcesEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBatchComputeEnvironmentComputeResourcesEl {
-    pub fn build(self) -> BatchComputeEnvironmentComputeResourcesEl {
-        BatchComputeEnvironmentComputeResourcesEl {
+impl BuildBatchComputeEnvironment_ComputeResources {
+    pub fn build(self) -> BatchComputeEnvironment_ComputeResources {
+        BatchComputeEnvironment_ComputeResources {
             allocation_strategy: core::default::Default::default(),
             bid_percentage: core::default::Default::default(),
             desired_vcpus: core::default::Default::default(),
@@ -846,6 +923,7 @@ impl BuildBatchComputeEnvironmentComputeResourcesEl {
             instance_type: core::default::Default::default(),
             max_vcpus: self.max_vcpus,
             min_vcpus: core::default::Default::default(),
+            placement_group: core::default::Default::default(),
             security_group_ids: core::default::Default::default(),
             spot_iam_fleet_role: core::default::Default::default(),
             subnets: self.subnets,
@@ -858,21 +936,23 @@ impl BuildBatchComputeEnvironmentComputeResourcesEl {
     }
 }
 
-pub struct BatchComputeEnvironmentComputeResourcesElRef {
+#[allow(dead_code)]
+pub struct BatchComputeEnvironment_ComputeResourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BatchComputeEnvironmentComputeResourcesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BatchComputeEnvironmentComputeResourcesElRef {
-        BatchComputeEnvironmentComputeResourcesElRef {
+impl terrars::Ref for BatchComputeEnvironment_ComputeResourcesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BatchComputeEnvironment_ComputeResourcesRef {
+        BatchComputeEnvironment_ComputeResourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BatchComputeEnvironmentComputeResourcesElRef {
+impl BatchComputeEnvironment_ComputeResourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -922,6 +1002,11 @@ impl BatchComputeEnvironmentComputeResourcesElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_vcpus", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `placement_group` after provisioning.\n"]
+    pub fn placement_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.placement_group", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.base))
@@ -948,26 +1033,26 @@ impl BatchComputeEnvironmentComputeResourcesElRef {
     }
 
     #[doc = "Get a reference to the value of field `ec2_configuration` after provisioning.\n"]
-    pub fn ec2_configuration(&self) -> terrars::ListRef<BatchComputeEnvironmentComputeResourcesElEc2ConfigurationElRef> {
+    pub fn ec2_configuration(&self) -> terrars::ListRef<BatchComputeEnvironment_ComputeResources_Ec2ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ec2_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `launch_template` after provisioning.\n"]
-    pub fn launch_template(&self) -> terrars::ListRef<BatchComputeEnvironmentComputeResourcesElLaunchTemplateElRef> {
+    pub fn launch_template(&self) -> terrars::ListRef<BatchComputeEnvironment_ComputeResources_LaunchTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BatchComputeEnvironmentEksConfigurationEl {
+pub struct BatchComputeEnvironment_EksConfiguration {
     eks_cluster_arn: terrars::PrimField<std::string::String>,
     kubernetes_namespace: terrars::PrimField<std::string::String>,
 }
 
-impl BatchComputeEnvironmentEksConfigurationEl { }
+impl BatchComputeEnvironment_EksConfiguration { }
 
-impl terrars::ToListMappable for BatchComputeEnvironmentEksConfigurationEl {
-    type O = terrars::BlockAssignable<BatchComputeEnvironmentEksConfigurationEl>;
+impl terrars::ToListMappable for BatchComputeEnvironment_EksConfiguration {
+    type O = terrars::BlockAssignable<BatchComputeEnvironment_EksConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -978,37 +1063,39 @@ impl terrars::ToListMappable for BatchComputeEnvironmentEksConfigurationEl {
     }
 }
 
-pub struct BuildBatchComputeEnvironmentEksConfigurationEl {
+pub struct BuildBatchComputeEnvironment_EksConfiguration {
     #[doc = ""]
     pub eks_cluster_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub kubernetes_namespace: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBatchComputeEnvironmentEksConfigurationEl {
-    pub fn build(self) -> BatchComputeEnvironmentEksConfigurationEl {
-        BatchComputeEnvironmentEksConfigurationEl {
+impl BuildBatchComputeEnvironment_EksConfiguration {
+    pub fn build(self) -> BatchComputeEnvironment_EksConfiguration {
+        BatchComputeEnvironment_EksConfiguration {
             eks_cluster_arn: self.eks_cluster_arn,
             kubernetes_namespace: self.kubernetes_namespace,
         }
     }
 }
 
-pub struct BatchComputeEnvironmentEksConfigurationElRef {
+#[allow(dead_code)]
+pub struct BatchComputeEnvironment_EksConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BatchComputeEnvironmentEksConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BatchComputeEnvironmentEksConfigurationElRef {
-        BatchComputeEnvironmentEksConfigurationElRef {
+impl terrars::Ref for BatchComputeEnvironment_EksConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BatchComputeEnvironment_EksConfigurationRef {
+        BatchComputeEnvironment_EksConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BatchComputeEnvironmentEksConfigurationElRef {
+impl BatchComputeEnvironment_EksConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1024,8 +1111,79 @@ impl BatchComputeEnvironmentEksConfigurationElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct BatchComputeEnvironmentDynamic {
-    compute_resources: std::option::Option<terrars::DynamicBlock<BatchComputeEnvironmentComputeResourcesEl>>,
-    eks_configuration: std::option::Option<terrars::DynamicBlock<BatchComputeEnvironmentEksConfigurationEl>>,
+#[derive(Serialize)]
+pub struct BatchComputeEnvironment_UpdatePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    job_execution_timeout_minutes: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    terminate_jobs_on_update: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl BatchComputeEnvironment_UpdatePolicy {
+    #[doc = "Set the field `job_execution_timeout_minutes`.\n"]
+    pub fn set_job_execution_timeout_minutes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.job_execution_timeout_minutes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `terminate_jobs_on_update`.\n"]
+    pub fn set_terminate_jobs_on_update(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.terminate_jobs_on_update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BatchComputeEnvironment_UpdatePolicy {
+    type O = terrars::BlockAssignable<BatchComputeEnvironment_UpdatePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBatchComputeEnvironment_UpdatePolicy {}
+
+impl BuildBatchComputeEnvironment_UpdatePolicy {
+    pub fn build(self) -> BatchComputeEnvironment_UpdatePolicy {
+        BatchComputeEnvironment_UpdatePolicy {
+            job_execution_timeout_minutes: core::default::Default::default(),
+            terminate_jobs_on_update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BatchComputeEnvironment_UpdatePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BatchComputeEnvironment_UpdatePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BatchComputeEnvironment_UpdatePolicyRef {
+        BatchComputeEnvironment_UpdatePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BatchComputeEnvironment_UpdatePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `job_execution_timeout_minutes` after provisioning.\n"]
+    pub fn job_execution_timeout_minutes(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_execution_timeout_minutes", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `terminate_jobs_on_update` after provisioning.\n"]
+    pub fn terminate_jobs_on_update(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.terminate_jobs_on_update", self.base))
+    }
 }

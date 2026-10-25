@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RedshiftserverlessNamespaceData {
+struct RedshiftserverlessNamespaceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,7 +21,13 @@ struct RedshiftserverlessNamespaceData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    admin_password_secret_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     admin_user_password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    admin_user_password_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    admin_user_password_wo_version: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     admin_username: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,7 +42,11 @@ struct RedshiftserverlessNamespaceData {
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_exports: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    manage_admin_password: std::option::Option<terrars::PrimField<bool>>,
     namespace_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -44,7 +56,7 @@ struct RedshiftserverlessNamespaceData {
 struct RedshiftserverlessNamespace_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RedshiftserverlessNamespaceData>,
+    data: std::cell::RefCell<RedshiftserverlessNamespaceData_>,
 }
 
 #[derive(Clone)]
@@ -144,9 +156,33 @@ impl RedshiftserverlessNamespace {
         self
     }
 
+    #[doc = "Set the field `admin_password_secret_kms_key_id`.\n"]
+    pub fn set_admin_password_secret_kms_key_id(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().admin_password_secret_kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `admin_user_password`.\n"]
     pub fn set_admin_user_password(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().admin_user_password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `admin_user_password_wo`.\n"]
+    pub fn set_admin_user_password_wo(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().admin_user_password_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `admin_user_password_wo_version`.\n"]
+    pub fn set_admin_user_password_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().admin_user_password_wo_version = std::option::Option::Some(v.into());
         self
     }
 
@@ -198,6 +234,19 @@ impl RedshiftserverlessNamespace {
         self
     }
 
+    #[doc = "Set the field `manage_admin_password`.\n"]
+    pub fn set_manage_admin_password(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().manage_admin_password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -216,9 +265,35 @@ impl RedshiftserverlessNamespace {
         self
     }
 
+    #[doc = "Get a reference to the value of field `admin_password_secret_arn` after provisioning.\n"]
+    pub fn admin_password_secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.admin_password_secret_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `admin_password_secret_kms_key_id` after provisioning.\n"]
+    pub fn admin_password_secret_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.admin_password_secret_kms_key_id", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `admin_user_password` after provisioning.\n"]
     pub fn admin_user_password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.admin_user_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `admin_user_password_wo` after provisioning.\n"]
+    pub fn admin_user_password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.admin_user_password_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `admin_user_password_wo_version` after provisioning.\n"]
+    pub fn admin_user_password_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.admin_user_password_wo_version", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `admin_username` after provisioning.\n"]
@@ -261,6 +336,11 @@ impl RedshiftserverlessNamespace {
         terrars::SetRef::new(self.shared().clone(), format!("{}.log_exports", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `manage_admin_password` after provisioning.\n"]
+    pub fn manage_admin_password(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_admin_password", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `namespace_id` after provisioning.\n"]
     pub fn namespace_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_id", self.extract_ref()))
@@ -269,6 +349,12 @@ impl RedshiftserverlessNamespace {
     #[doc = "Get a reference to the value of field `namespace_name` after provisioning.\n"]
     pub fn namespace_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -324,13 +410,16 @@ impl BuildRedshiftserverlessNamespace {
         let out = RedshiftserverlessNamespace(std::rc::Rc::new(RedshiftserverlessNamespace_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RedshiftserverlessNamespaceData {
+            data: std::cell::RefCell::new(RedshiftserverlessNamespaceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                admin_password_secret_kms_key_id: core::default::Default::default(),
                 admin_user_password: core::default::Default::default(),
+                admin_user_password_wo: core::default::Default::default(),
+                admin_user_password_wo_version: core::default::Default::default(),
                 admin_username: core::default::Default::default(),
                 db_name: core::default::Default::default(),
                 default_iam_role_arn: core::default::Default::default(),
@@ -338,7 +427,9 @@ impl BuildRedshiftserverlessNamespace {
                 id: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
                 log_exports: core::default::Default::default(),
+                manage_admin_password: core::default::Default::default(),
                 namespace_name: self.namespace_name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
             }),
@@ -371,9 +462,35 @@ impl RedshiftserverlessNamespaceRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `admin_password_secret_arn` after provisioning.\n"]
+    pub fn admin_password_secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.admin_password_secret_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `admin_password_secret_kms_key_id` after provisioning.\n"]
+    pub fn admin_password_secret_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.admin_password_secret_kms_key_id", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `admin_user_password` after provisioning.\n"]
     pub fn admin_user_password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.admin_user_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `admin_user_password_wo` after provisioning.\n"]
+    pub fn admin_user_password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.admin_user_password_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `admin_user_password_wo_version` after provisioning.\n"]
+    pub fn admin_user_password_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.admin_user_password_wo_version", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `admin_username` after provisioning.\n"]
@@ -416,6 +533,11 @@ impl RedshiftserverlessNamespaceRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.log_exports", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `manage_admin_password` after provisioning.\n"]
+    pub fn manage_admin_password(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_admin_password", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `namespace_id` after provisioning.\n"]
     pub fn namespace_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_id", self.extract_ref()))
@@ -424,6 +546,12 @@ impl RedshiftserverlessNamespaceRef {
     #[doc = "Get a reference to the value of field `namespace_name` after provisioning.\n"]
     pub fn namespace_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]

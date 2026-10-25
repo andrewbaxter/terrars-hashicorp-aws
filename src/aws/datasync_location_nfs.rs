@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DatasyncLocationNfsData {
+struct DatasyncLocationNfsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct DatasyncLocationNfsData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     server_hostname: terrars::PrimField<std::string::String>,
     subdirectory: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,16 +31,16 @@ struct DatasyncLocationNfsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    mount_options: std::option::Option<std::vec::Vec<DatasyncLocationNfsMountOptionsEl>>,
+    mount_options: std::option::Option<std::vec::Vec<DatasyncLocationNfs_MountOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    on_prem_config: std::option::Option<std::vec::Vec<DatasyncLocationNfsOnPremConfigEl>>,
+    on_prem_config: std::option::Option<std::vec::Vec<DatasyncLocationNfs_OnPremConfig>>,
     dynamic: DatasyncLocationNfsDynamic,
 }
 
 struct DatasyncLocationNfs_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatasyncLocationNfsData>,
+    data: std::cell::RefCell<DatasyncLocationNfsData_>,
 }
 
 #[derive(Clone)]
@@ -142,6 +146,13 @@ impl DatasyncLocationNfs {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -163,7 +174,7 @@ impl DatasyncLocationNfs {
     #[doc = "Set the field `mount_options`.\n"]
     pub fn set_mount_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationNfsMountOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationNfs_MountOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +190,7 @@ impl DatasyncLocationNfs {
     #[doc = "Set the field `on_prem_config`.\n"]
     pub fn set_on_prem_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationNfsOnPremConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationNfs_OnPremConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,6 +211,12 @@ impl DatasyncLocationNfs {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_hostname` after provisioning.\n"]
@@ -228,12 +245,12 @@ impl DatasyncLocationNfs {
     }
 
     #[doc = "Get a reference to the value of field `mount_options` after provisioning.\n"]
-    pub fn mount_options(&self) -> terrars::ListRef<DatasyncLocationNfsMountOptionsElRef> {
+    pub fn mount_options(&self) -> terrars::ListRef<DatasyncLocationNfs_MountOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mount_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `on_prem_config` after provisioning.\n"]
-    pub fn on_prem_config(&self) -> terrars::ListRef<DatasyncLocationNfsOnPremConfigElRef> {
+    pub fn on_prem_config(&self) -> terrars::ListRef<DatasyncLocationNfs_OnPremConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.on_prem_config", self.extract_ref()))
     }
 }
@@ -282,13 +299,14 @@ impl BuildDatasyncLocationNfs {
         let out = DatasyncLocationNfs(std::rc::Rc::new(DatasyncLocationNfs_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatasyncLocationNfsData {
+            data: std::cell::RefCell::new(DatasyncLocationNfsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 server_hostname: self.server_hostname,
                 subdirectory: self.subdirectory,
                 tags: core::default::Default::default(),
@@ -336,6 +354,12 @@ impl DatasyncLocationNfsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `server_hostname` after provisioning.\n"]
     pub fn server_hostname(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_hostname", self.extract_ref()))
@@ -362,23 +386,29 @@ impl DatasyncLocationNfsRef {
     }
 
     #[doc = "Get a reference to the value of field `mount_options` after provisioning.\n"]
-    pub fn mount_options(&self) -> terrars::ListRef<DatasyncLocationNfsMountOptionsElRef> {
+    pub fn mount_options(&self) -> terrars::ListRef<DatasyncLocationNfs_MountOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mount_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `on_prem_config` after provisioning.\n"]
-    pub fn on_prem_config(&self) -> terrars::ListRef<DatasyncLocationNfsOnPremConfigElRef> {
+    pub fn on_prem_config(&self) -> terrars::ListRef<DatasyncLocationNfs_OnPremConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.on_prem_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatasyncLocationNfsDynamic {
+    mount_options: std::option::Option<terrars::DynamicBlock<DatasyncLocationNfs_MountOptions>>,
+    on_prem_config: std::option::Option<terrars::DynamicBlock<DatasyncLocationNfs_OnPremConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct DatasyncLocationNfsMountOptionsEl {
+pub struct DatasyncLocationNfs_MountOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncLocationNfsMountOptionsEl {
+impl DatasyncLocationNfs_MountOptions {
     #[doc = "Set the field `version`.\n"]
     pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.version = std::option::Option::Some(v.into());
@@ -386,8 +416,8 @@ impl DatasyncLocationNfsMountOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncLocationNfsMountOptionsEl {
-    type O = terrars::BlockAssignable<DatasyncLocationNfsMountOptionsEl>;
+impl terrars::ToListMappable for DatasyncLocationNfs_MountOptions {
+    type O = terrars::BlockAssignable<DatasyncLocationNfs_MountOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -398,29 +428,31 @@ impl terrars::ToListMappable for DatasyncLocationNfsMountOptionsEl {
     }
 }
 
-pub struct BuildDatasyncLocationNfsMountOptionsEl {}
+pub struct BuildDatasyncLocationNfs_MountOptions {}
 
-impl BuildDatasyncLocationNfsMountOptionsEl {
-    pub fn build(self) -> DatasyncLocationNfsMountOptionsEl {
-        DatasyncLocationNfsMountOptionsEl { version: core::default::Default::default() }
+impl BuildDatasyncLocationNfs_MountOptions {
+    pub fn build(self) -> DatasyncLocationNfs_MountOptions {
+        DatasyncLocationNfs_MountOptions { version: core::default::Default::default() }
     }
 }
 
-pub struct DatasyncLocationNfsMountOptionsElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationNfs_MountOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationNfsMountOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationNfsMountOptionsElRef {
-        DatasyncLocationNfsMountOptionsElRef {
+impl terrars::Ref for DatasyncLocationNfs_MountOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationNfs_MountOptionsRef {
+        DatasyncLocationNfs_MountOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationNfsMountOptionsElRef {
+impl DatasyncLocationNfs_MountOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -432,14 +464,14 @@ impl DatasyncLocationNfsMountOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DatasyncLocationNfsOnPremConfigEl {
+pub struct DatasyncLocationNfs_OnPremConfig {
     agent_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncLocationNfsOnPremConfigEl { }
+impl DatasyncLocationNfs_OnPremConfig { }
 
-impl terrars::ToListMappable for DatasyncLocationNfsOnPremConfigEl {
-    type O = terrars::BlockAssignable<DatasyncLocationNfsOnPremConfigEl>;
+impl terrars::ToListMappable for DatasyncLocationNfs_OnPremConfig {
+    type O = terrars::BlockAssignable<DatasyncLocationNfs_OnPremConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -450,32 +482,34 @@ impl terrars::ToListMappable for DatasyncLocationNfsOnPremConfigEl {
     }
 }
 
-pub struct BuildDatasyncLocationNfsOnPremConfigEl {
+pub struct BuildDatasyncLocationNfs_OnPremConfig {
     #[doc = ""]
     pub agent_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDatasyncLocationNfsOnPremConfigEl {
-    pub fn build(self) -> DatasyncLocationNfsOnPremConfigEl {
-        DatasyncLocationNfsOnPremConfigEl { agent_arns: self.agent_arns }
+impl BuildDatasyncLocationNfs_OnPremConfig {
+    pub fn build(self) -> DatasyncLocationNfs_OnPremConfig {
+        DatasyncLocationNfs_OnPremConfig { agent_arns: self.agent_arns }
     }
 }
 
-pub struct DatasyncLocationNfsOnPremConfigElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationNfs_OnPremConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationNfsOnPremConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationNfsOnPremConfigElRef {
-        DatasyncLocationNfsOnPremConfigElRef {
+impl terrars::Ref for DatasyncLocationNfs_OnPremConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationNfs_OnPremConfigRef {
+        DatasyncLocationNfs_OnPremConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationNfsOnPremConfigElRef {
+impl DatasyncLocationNfs_OnPremConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -484,10 +518,4 @@ impl DatasyncLocationNfsOnPremConfigElRef {
     pub fn agent_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.agent_arns", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatasyncLocationNfsDynamic {
-    mount_options: std::option::Option<terrars::DynamicBlock<DatasyncLocationNfsMountOptionsEl>>,
-    on_prem_config: std::option::Option<terrars::DynamicBlock<DatasyncLocationNfsOnPremConfigEl>>,
 }

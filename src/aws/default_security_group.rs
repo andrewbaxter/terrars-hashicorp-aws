@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DefaultSecurityGroupData {
+struct DefaultSecurityGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,11 +21,13 @@ struct DefaultSecurityGroupData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress: std::option::Option<terrars::SetField<DefaultSecurityGroupEgressEl>>,
+    egress: std::option::Option<terrars::SetField<DefaultSecurityGroup_Egress>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress: std::option::Option<terrars::SetField<DefaultSecurityGroupIngressEl>>,
+    ingress: std::option::Option<terrars::SetField<DefaultSecurityGroup_Ingress>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     revoke_rules_on_delete: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,7 +41,7 @@ struct DefaultSecurityGroupData {
 struct DefaultSecurityGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DefaultSecurityGroupData>,
+    data: std::cell::RefCell<DefaultSecurityGroupData_>,
 }
 
 #[derive(Clone)]
@@ -138,7 +142,7 @@ impl DefaultSecurityGroup {
     }
 
     #[doc = "Set the field `egress`.\n"]
-    pub fn set_egress(self, v: impl std::convert::Into<terrars::SetField<DefaultSecurityGroupEgressEl>>) -> Self {
+    pub fn set_egress(self, v: impl std::convert::Into<terrars::SetField<DefaultSecurityGroup_Egress>>) -> Self {
         self.0.data.borrow_mut().egress = std::option::Option::Some(v.into());
         self
     }
@@ -150,8 +154,15 @@ impl DefaultSecurityGroup {
     }
 
     #[doc = "Set the field `ingress`.\n"]
-    pub fn set_ingress(self, v: impl std::convert::Into<terrars::SetField<DefaultSecurityGroupIngressEl>>) -> Self {
+    pub fn set_ingress(self, v: impl std::convert::Into<terrars::SetField<DefaultSecurityGroup_Ingress>>) -> Self {
         self.0.data.borrow_mut().ingress = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -196,7 +207,7 @@ impl DefaultSecurityGroup {
     }
 
     #[doc = "Get a reference to the value of field `egress` after provisioning.\n"]
-    pub fn egress(&self) -> terrars::SetRef<DefaultSecurityGroupEgressElRef> {
+    pub fn egress(&self) -> terrars::SetRef<DefaultSecurityGroup_EgressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.egress", self.extract_ref()))
     }
 
@@ -206,7 +217,7 @@ impl DefaultSecurityGroup {
     }
 
     #[doc = "Get a reference to the value of field `ingress` after provisioning.\n"]
-    pub fn ingress(&self) -> terrars::SetRef<DefaultSecurityGroupIngressElRef> {
+    pub fn ingress(&self) -> terrars::SetRef<DefaultSecurityGroup_IngressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ingress", self.extract_ref()))
     }
 
@@ -223,6 +234,12 @@ impl DefaultSecurityGroup {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `revoke_rules_on_delete` after provisioning.\n"]
@@ -286,7 +303,7 @@ impl BuildDefaultSecurityGroup {
         let out = DefaultSecurityGroup(std::rc::Rc::new(DefaultSecurityGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DefaultSecurityGroupData {
+            data: std::cell::RefCell::new(DefaultSecurityGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -295,6 +312,7 @@ impl BuildDefaultSecurityGroup {
                 egress: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ingress: core::default::Default::default(),
+                region: core::default::Default::default(),
                 revoke_rules_on_delete: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -340,7 +358,7 @@ impl DefaultSecurityGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `egress` after provisioning.\n"]
-    pub fn egress(&self) -> terrars::SetRef<DefaultSecurityGroupEgressElRef> {
+    pub fn egress(&self) -> terrars::SetRef<DefaultSecurityGroup_EgressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.egress", self.extract_ref()))
     }
 
@@ -350,7 +368,7 @@ impl DefaultSecurityGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `ingress` after provisioning.\n"]
-    pub fn ingress(&self) -> terrars::SetRef<DefaultSecurityGroupIngressElRef> {
+    pub fn ingress(&self) -> terrars::SetRef<DefaultSecurityGroup_IngressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ingress", self.extract_ref()))
     }
 
@@ -367,6 +385,12 @@ impl DefaultSecurityGroupRef {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `revoke_rules_on_delete` after provisioning.\n"]
@@ -391,7 +415,7 @@ impl DefaultSecurityGroupRef {
 }
 
 #[derive(Serialize)]
-pub struct DefaultSecurityGroupEgressEl {
+pub struct DefaultSecurityGroup_Egress {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr_blocks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -412,7 +436,7 @@ pub struct DefaultSecurityGroupEgressEl {
     to_port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DefaultSecurityGroupEgressEl {
+impl DefaultSecurityGroup_Egress {
     #[doc = "Set the field `cidr_blocks`.\n"]
     pub fn set_cidr_blocks(
         mut self,
@@ -480,8 +504,8 @@ impl DefaultSecurityGroupEgressEl {
     }
 }
 
-impl terrars::ToListMappable for DefaultSecurityGroupEgressEl {
-    type O = terrars::BlockAssignable<DefaultSecurityGroupEgressEl>;
+impl terrars::ToListMappable for DefaultSecurityGroup_Egress {
+    type O = terrars::BlockAssignable<DefaultSecurityGroup_Egress>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -492,11 +516,11 @@ impl terrars::ToListMappable for DefaultSecurityGroupEgressEl {
     }
 }
 
-pub struct BuildDefaultSecurityGroupEgressEl {}
+pub struct BuildDefaultSecurityGroup_Egress {}
 
-impl BuildDefaultSecurityGroupEgressEl {
-    pub fn build(self) -> DefaultSecurityGroupEgressEl {
-        DefaultSecurityGroupEgressEl {
+impl BuildDefaultSecurityGroup_Egress {
+    pub fn build(self) -> DefaultSecurityGroup_Egress {
+        DefaultSecurityGroup_Egress {
             cidr_blocks: core::default::Default::default(),
             description: core::default::Default::default(),
             from_port: core::default::Default::default(),
@@ -510,21 +534,23 @@ impl BuildDefaultSecurityGroupEgressEl {
     }
 }
 
-pub struct DefaultSecurityGroupEgressElRef {
+#[allow(dead_code)]
+pub struct DefaultSecurityGroup_EgressRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DefaultSecurityGroupEgressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultSecurityGroupEgressElRef {
-        DefaultSecurityGroupEgressElRef {
+impl terrars::Ref for DefaultSecurityGroup_EgressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultSecurityGroup_EgressRef {
+        DefaultSecurityGroup_EgressRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DefaultSecurityGroupEgressElRef {
+impl DefaultSecurityGroup_EgressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -576,7 +602,7 @@ impl DefaultSecurityGroupEgressElRef {
 }
 
 #[derive(Serialize)]
-pub struct DefaultSecurityGroupIngressEl {
+pub struct DefaultSecurityGroup_Ingress {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr_blocks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -597,7 +623,7 @@ pub struct DefaultSecurityGroupIngressEl {
     to_port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DefaultSecurityGroupIngressEl {
+impl DefaultSecurityGroup_Ingress {
     #[doc = "Set the field `cidr_blocks`.\n"]
     pub fn set_cidr_blocks(
         mut self,
@@ -665,8 +691,8 @@ impl DefaultSecurityGroupIngressEl {
     }
 }
 
-impl terrars::ToListMappable for DefaultSecurityGroupIngressEl {
-    type O = terrars::BlockAssignable<DefaultSecurityGroupIngressEl>;
+impl terrars::ToListMappable for DefaultSecurityGroup_Ingress {
+    type O = terrars::BlockAssignable<DefaultSecurityGroup_Ingress>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -677,11 +703,11 @@ impl terrars::ToListMappable for DefaultSecurityGroupIngressEl {
     }
 }
 
-pub struct BuildDefaultSecurityGroupIngressEl {}
+pub struct BuildDefaultSecurityGroup_Ingress {}
 
-impl BuildDefaultSecurityGroupIngressEl {
-    pub fn build(self) -> DefaultSecurityGroupIngressEl {
-        DefaultSecurityGroupIngressEl {
+impl BuildDefaultSecurityGroup_Ingress {
+    pub fn build(self) -> DefaultSecurityGroup_Ingress {
+        DefaultSecurityGroup_Ingress {
             cidr_blocks: core::default::Default::default(),
             description: core::default::Default::default(),
             from_port: core::default::Default::default(),
@@ -695,21 +721,23 @@ impl BuildDefaultSecurityGroupIngressEl {
     }
 }
 
-pub struct DefaultSecurityGroupIngressElRef {
+#[allow(dead_code)]
+pub struct DefaultSecurityGroup_IngressRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DefaultSecurityGroupIngressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultSecurityGroupIngressElRef {
-        DefaultSecurityGroupIngressElRef {
+impl terrars::Ref for DefaultSecurityGroup_IngressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultSecurityGroup_IngressRef {
+        DefaultSecurityGroup_IngressRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DefaultSecurityGroupIngressElRef {
+impl DefaultSecurityGroup_IngressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

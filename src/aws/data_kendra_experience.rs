@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataKendraExperienceData {
+struct DataKendraExperienceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,12 +22,14 @@ struct DataKendraExperienceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     index_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataKendraExperience_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataKendraExperienceData>,
+    data: std::cell::RefCell<DataKendraExperienceData_>,
 }
 
 #[derive(Clone)]
@@ -76,13 +80,20 @@ impl DataKendraExperience {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<DataKendraExperienceConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<DataKendraExperience_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 
@@ -97,7 +108,7 @@ impl DataKendraExperience {
     }
 
     #[doc = "Get a reference to the value of field `endpoints` after provisioning.\n"]
-    pub fn endpoints(&self) -> terrars::SetRef<DataKendraExperienceEndpointsElRef> {
+    pub fn endpoints(&self) -> terrars::SetRef<DataKendraExperience_EndpointsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.endpoints", self.extract_ref()))
     }
 
@@ -124,6 +135,12 @@ impl DataKendraExperience {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -186,7 +203,7 @@ impl BuildDataKendraExperience {
         let out = DataKendraExperience(std::rc::Rc::new(DataKendraExperience_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataKendraExperienceData {
+            data: std::cell::RefCell::new(DataKendraExperienceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -194,6 +211,7 @@ impl BuildDataKendraExperience {
                 experience_id: self.experience_id,
                 id: core::default::Default::default(),
                 index_id: self.index_id,
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -230,7 +248,7 @@ impl DataKendraExperienceRef {
     }
 
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<DataKendraExperienceConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<DataKendraExperience_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 
@@ -245,7 +263,7 @@ impl DataKendraExperienceRef {
     }
 
     #[doc = "Get a reference to the value of field `endpoints` after provisioning.\n"]
-    pub fn endpoints(&self) -> terrars::SetRef<DataKendraExperienceEndpointsElRef> {
+    pub fn endpoints(&self) -> terrars::SetRef<DataKendraExperience_EndpointsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.endpoints", self.extract_ref()))
     }
 
@@ -274,6 +292,12 @@ impl DataKendraExperienceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -291,7 +315,7 @@ impl DataKendraExperienceRef {
 }
 
 #[derive(Serialize)]
-pub struct DataKendraExperienceConfigurationElContentSourceConfigurationEl {
+pub struct DataKendraExperience_Configuration_ContentSourceConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_source_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -300,7 +324,7 @@ pub struct DataKendraExperienceConfigurationElContentSourceConfigurationEl {
     faq_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataKendraExperienceConfigurationElContentSourceConfigurationEl {
+impl DataKendraExperience_Configuration_ContentSourceConfiguration {
     #[doc = "Set the field `data_source_ids`.\n"]
     pub fn set_data_source_ids(
         mut self,
@@ -326,8 +350,8 @@ impl DataKendraExperienceConfigurationElContentSourceConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataKendraExperienceConfigurationElContentSourceConfigurationEl {
-    type O = terrars::BlockAssignable<DataKendraExperienceConfigurationElContentSourceConfigurationEl>;
+impl terrars::ToListMappable for DataKendraExperience_Configuration_ContentSourceConfiguration {
+    type O = terrars::BlockAssignable<DataKendraExperience_Configuration_ContentSourceConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -338,11 +362,11 @@ impl terrars::ToListMappable for DataKendraExperienceConfigurationElContentSourc
     }
 }
 
-pub struct BuildDataKendraExperienceConfigurationElContentSourceConfigurationEl {}
+pub struct BuildDataKendraExperience_Configuration_ContentSourceConfiguration {}
 
-impl BuildDataKendraExperienceConfigurationElContentSourceConfigurationEl {
-    pub fn build(self) -> DataKendraExperienceConfigurationElContentSourceConfigurationEl {
-        DataKendraExperienceConfigurationElContentSourceConfigurationEl {
+impl BuildDataKendraExperience_Configuration_ContentSourceConfiguration {
+    pub fn build(self) -> DataKendraExperience_Configuration_ContentSourceConfiguration {
+        DataKendraExperience_Configuration_ContentSourceConfiguration {
             data_source_ids: core::default::Default::default(),
             direct_put_content: core::default::Default::default(),
             faq_ids: core::default::Default::default(),
@@ -350,24 +374,26 @@ impl BuildDataKendraExperienceConfigurationElContentSourceConfigurationEl {
     }
 }
 
-pub struct DataKendraExperienceConfigurationElContentSourceConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataKendraExperience_Configuration_ContentSourceConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKendraExperienceConfigurationElContentSourceConfigurationElRef {
+impl terrars::Ref for DataKendraExperience_Configuration_ContentSourceConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataKendraExperienceConfigurationElContentSourceConfigurationElRef {
-        DataKendraExperienceConfigurationElContentSourceConfigurationElRef {
+    ) -> DataKendraExperience_Configuration_ContentSourceConfigurationRef {
+        DataKendraExperience_Configuration_ContentSourceConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKendraExperienceConfigurationElContentSourceConfigurationElRef {
+impl DataKendraExperience_Configuration_ContentSourceConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -389,12 +415,12 @@ impl DataKendraExperienceConfigurationElContentSourceConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataKendraExperienceConfigurationElUserIdentityConfigurationEl {
+pub struct DataKendraExperience_Configuration_UserIdentityConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identity_attribute_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataKendraExperienceConfigurationElUserIdentityConfigurationEl {
+impl DataKendraExperience_Configuration_UserIdentityConfiguration {
     #[doc = "Set the field `identity_attribute_name`.\n"]
     pub fn set_identity_attribute_name(
         mut self,
@@ -405,8 +431,8 @@ impl DataKendraExperienceConfigurationElUserIdentityConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataKendraExperienceConfigurationElUserIdentityConfigurationEl {
-    type O = terrars::BlockAssignable<DataKendraExperienceConfigurationElUserIdentityConfigurationEl>;
+impl terrars::ToListMappable for DataKendraExperience_Configuration_UserIdentityConfiguration {
+    type O = terrars::BlockAssignable<DataKendraExperience_Configuration_UserIdentityConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -417,34 +443,36 @@ impl terrars::ToListMappable for DataKendraExperienceConfigurationElUserIdentity
     }
 }
 
-pub struct BuildDataKendraExperienceConfigurationElUserIdentityConfigurationEl {}
+pub struct BuildDataKendraExperience_Configuration_UserIdentityConfiguration {}
 
-impl BuildDataKendraExperienceConfigurationElUserIdentityConfigurationEl {
-    pub fn build(self) -> DataKendraExperienceConfigurationElUserIdentityConfigurationEl {
-        DataKendraExperienceConfigurationElUserIdentityConfigurationEl {
+impl BuildDataKendraExperience_Configuration_UserIdentityConfiguration {
+    pub fn build(self) -> DataKendraExperience_Configuration_UserIdentityConfiguration {
+        DataKendraExperience_Configuration_UserIdentityConfiguration {
             identity_attribute_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataKendraExperienceConfigurationElUserIdentityConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataKendraExperience_Configuration_UserIdentityConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKendraExperienceConfigurationElUserIdentityConfigurationElRef {
+impl terrars::Ref for DataKendraExperience_Configuration_UserIdentityConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataKendraExperienceConfigurationElUserIdentityConfigurationElRef {
-        DataKendraExperienceConfigurationElUserIdentityConfigurationElRef {
+    ) -> DataKendraExperience_Configuration_UserIdentityConfigurationRef {
+        DataKendraExperience_Configuration_UserIdentityConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKendraExperienceConfigurationElUserIdentityConfigurationElRef {
+impl DataKendraExperience_Configuration_UserIdentityConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -456,18 +484,18 @@ impl DataKendraExperienceConfigurationElUserIdentityConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataKendraExperienceConfigurationEl {
+pub struct DataKendraExperience_Configuration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content_source_configuration: std
     ::option
-    ::Option<terrars::ListField<DataKendraExperienceConfigurationElContentSourceConfigurationEl>>,
+    ::Option<terrars::ListField<DataKendraExperience_Configuration_ContentSourceConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_identity_configuration: std
     ::option
-    ::Option<terrars::ListField<DataKendraExperienceConfigurationElUserIdentityConfigurationEl>>,
+    ::Option<terrars::ListField<DataKendraExperience_Configuration_UserIdentityConfiguration>>,
 }
 
-impl DataKendraExperienceConfigurationEl {
+impl DataKendraExperience_Configuration {
     #[doc = "Set the field `content_source_configuration`.\n"]
     pub fn set_content_source_configuration(
         mut self,
@@ -476,7 +504,7 @@ impl DataKendraExperienceConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataKendraExperienceConfigurationElContentSourceConfigurationEl>>,
+                    ::Into<terrars::ListField<DataKendraExperience_Configuration_ContentSourceConfiguration>>,
     ) -> Self {
         self.content_source_configuration = std::option::Option::Some(v.into());
         self
@@ -485,20 +513,15 @@ impl DataKendraExperienceConfigurationEl {
     #[doc = "Set the field `user_identity_configuration`.\n"]
     pub fn set_user_identity_configuration(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataKendraExperienceConfigurationElUserIdentityConfigurationEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataKendraExperience_Configuration_UserIdentityConfiguration>>,
     ) -> Self {
         self.user_identity_configuration = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataKendraExperienceConfigurationEl {
-    type O = terrars::BlockAssignable<DataKendraExperienceConfigurationEl>;
+impl terrars::ToListMappable for DataKendraExperience_Configuration {
+    type O = terrars::BlockAssignable<DataKendraExperience_Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -509,32 +532,34 @@ impl terrars::ToListMappable for DataKendraExperienceConfigurationEl {
     }
 }
 
-pub struct BuildDataKendraExperienceConfigurationEl {}
+pub struct BuildDataKendraExperience_Configuration {}
 
-impl BuildDataKendraExperienceConfigurationEl {
-    pub fn build(self) -> DataKendraExperienceConfigurationEl {
-        DataKendraExperienceConfigurationEl {
+impl BuildDataKendraExperience_Configuration {
+    pub fn build(self) -> DataKendraExperience_Configuration {
+        DataKendraExperience_Configuration {
             content_source_configuration: core::default::Default::default(),
             user_identity_configuration: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataKendraExperienceConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataKendraExperience_ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKendraExperienceConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKendraExperienceConfigurationElRef {
-        DataKendraExperienceConfigurationElRef {
+impl terrars::Ref for DataKendraExperience_ConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKendraExperience_ConfigurationRef {
+        DataKendraExperience_ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKendraExperienceConfigurationElRef {
+impl DataKendraExperience_ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -542,27 +567,27 @@ impl DataKendraExperienceConfigurationElRef {
     #[doc = "Get a reference to the value of field `content_source_configuration` after provisioning.\n"]
     pub fn content_source_configuration(
         &self,
-    ) -> terrars::ListRef<DataKendraExperienceConfigurationElContentSourceConfigurationElRef> {
+    ) -> terrars::ListRef<DataKendraExperience_Configuration_ContentSourceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.content_source_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `user_identity_configuration` after provisioning.\n"]
     pub fn user_identity_configuration(
         &self,
-    ) -> terrars::ListRef<DataKendraExperienceConfigurationElUserIdentityConfigurationElRef> {
+    ) -> terrars::ListRef<DataKendraExperience_Configuration_UserIdentityConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_identity_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataKendraExperienceEndpointsEl {
+pub struct DataKendraExperience_Endpoints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataKendraExperienceEndpointsEl {
+impl DataKendraExperience_Endpoints {
     #[doc = "Set the field `endpoint`.\n"]
     pub fn set_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.endpoint = std::option::Option::Some(v.into());
@@ -576,8 +601,8 @@ impl DataKendraExperienceEndpointsEl {
     }
 }
 
-impl terrars::ToListMappable for DataKendraExperienceEndpointsEl {
-    type O = terrars::BlockAssignable<DataKendraExperienceEndpointsEl>;
+impl terrars::ToListMappable for DataKendraExperience_Endpoints {
+    type O = terrars::BlockAssignable<DataKendraExperience_Endpoints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -588,32 +613,34 @@ impl terrars::ToListMappable for DataKendraExperienceEndpointsEl {
     }
 }
 
-pub struct BuildDataKendraExperienceEndpointsEl {}
+pub struct BuildDataKendraExperience_Endpoints {}
 
-impl BuildDataKendraExperienceEndpointsEl {
-    pub fn build(self) -> DataKendraExperienceEndpointsEl {
-        DataKendraExperienceEndpointsEl {
+impl BuildDataKendraExperience_Endpoints {
+    pub fn build(self) -> DataKendraExperience_Endpoints {
+        DataKendraExperience_Endpoints {
             endpoint: core::default::Default::default(),
             endpoint_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataKendraExperienceEndpointsElRef {
+#[allow(dead_code)]
+pub struct DataKendraExperience_EndpointsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKendraExperienceEndpointsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKendraExperienceEndpointsElRef {
-        DataKendraExperienceEndpointsElRef {
+impl terrars::Ref for DataKendraExperience_EndpointsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKendraExperience_EndpointsRef {
+        DataKendraExperience_EndpointsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKendraExperienceEndpointsElRef {
+impl DataKendraExperience_EndpointsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

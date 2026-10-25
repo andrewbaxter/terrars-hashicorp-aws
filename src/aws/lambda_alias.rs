@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LambdaAliasData {
+struct LambdaAliasData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,18 @@ struct LambdaAliasData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    routing_config: std::option::Option<std::vec::Vec<LambdaAliasRoutingConfigEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_config: std::option::Option<std::vec::Vec<LambdaAlias_RoutingConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<LambdaAlias_Timeouts>,
     dynamic: LambdaAliasDynamic,
 }
 
 struct LambdaAlias_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LambdaAliasData>,
+    data: std::cell::RefCell<LambdaAliasData_>,
 }
 
 #[derive(Clone)]
@@ -145,10 +151,17 @@ impl LambdaAlias {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `routing_config`.\n"]
     pub fn set_routing_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LambdaAliasRoutingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LambdaAlias_RoutingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -158,6 +171,12 @@ impl LambdaAlias {
                 self.0.data.borrow_mut().dynamic.routing_config = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<LambdaAlias_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -196,9 +215,20 @@ impl LambdaAlias {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `routing_config` after provisioning.\n"]
-    pub fn routing_config(&self) -> terrars::ListRef<LambdaAliasRoutingConfigElRef> {
+    pub fn routing_config(&self) -> terrars::ListRef<LambdaAlias_RoutingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routing_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> LambdaAlias_TimeoutsRef {
+        LambdaAlias_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -248,7 +278,7 @@ impl BuildLambdaAlias {
         let out = LambdaAlias(std::rc::Rc::new(LambdaAlias_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LambdaAliasData {
+            data: std::cell::RefCell::new(LambdaAliasData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -259,7 +289,9 @@ impl BuildLambdaAlias {
                 function_version: self.function_version,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 routing_config: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -326,19 +358,35 @@ impl LambdaAliasRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `routing_config` after provisioning.\n"]
-    pub fn routing_config(&self) -> terrars::ListRef<LambdaAliasRoutingConfigElRef> {
+    pub fn routing_config(&self) -> terrars::ListRef<LambdaAlias_RoutingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routing_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> LambdaAlias_TimeoutsRef {
+        LambdaAlias_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LambdaAliasDynamic {
+    routing_config: std::option::Option<terrars::DynamicBlock<LambdaAlias_RoutingConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct LambdaAliasRoutingConfigEl {
+pub struct LambdaAlias_RoutingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_version_weights: std::option::Option<terrars::RecField<terrars::PrimField<f64>>>,
 }
 
-impl LambdaAliasRoutingConfigEl {
+impl LambdaAlias_RoutingConfig {
     #[doc = "Set the field `additional_version_weights`.\n"]
     pub fn set_additional_version_weights(
         mut self,
@@ -349,8 +397,8 @@ impl LambdaAliasRoutingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for LambdaAliasRoutingConfigEl {
-    type O = terrars::BlockAssignable<LambdaAliasRoutingConfigEl>;
+impl terrars::ToListMappable for LambdaAlias_RoutingConfig {
+    type O = terrars::BlockAssignable<LambdaAlias_RoutingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -361,29 +409,31 @@ impl terrars::ToListMappable for LambdaAliasRoutingConfigEl {
     }
 }
 
-pub struct BuildLambdaAliasRoutingConfigEl {}
+pub struct BuildLambdaAlias_RoutingConfig {}
 
-impl BuildLambdaAliasRoutingConfigEl {
-    pub fn build(self) -> LambdaAliasRoutingConfigEl {
-        LambdaAliasRoutingConfigEl { additional_version_weights: core::default::Default::default() }
+impl BuildLambdaAlias_RoutingConfig {
+    pub fn build(self) -> LambdaAlias_RoutingConfig {
+        LambdaAlias_RoutingConfig { additional_version_weights: core::default::Default::default() }
     }
 }
 
-pub struct LambdaAliasRoutingConfigElRef {
+#[allow(dead_code)]
+pub struct LambdaAlias_RoutingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LambdaAliasRoutingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LambdaAliasRoutingConfigElRef {
-        LambdaAliasRoutingConfigElRef {
+impl terrars::Ref for LambdaAlias_RoutingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LambdaAlias_RoutingConfigRef {
+        LambdaAlias_RoutingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LambdaAliasRoutingConfigElRef {
+impl LambdaAlias_RoutingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -394,7 +444,63 @@ impl LambdaAliasRoutingConfigElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct LambdaAliasDynamic {
-    routing_config: std::option::Option<terrars::DynamicBlock<LambdaAliasRoutingConfigEl>>,
+#[derive(Serialize)]
+pub struct LambdaAlias_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl LambdaAlias_Timeouts {
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LambdaAlias_Timeouts {
+    type O = terrars::BlockAssignable<LambdaAlias_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLambdaAlias_Timeouts {}
+
+impl BuildLambdaAlias_Timeouts {
+    pub fn build(self) -> LambdaAlias_Timeouts {
+        LambdaAlias_Timeouts { update: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LambdaAlias_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LambdaAlias_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LambdaAlias_TimeoutsRef {
+        LambdaAlias_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LambdaAlias_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

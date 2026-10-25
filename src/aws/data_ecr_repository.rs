@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEcrRepositoryData {
+struct DataEcrRepositoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,6 +22,8 @@ struct DataEcrRepositoryData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     registry_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -28,7 +32,7 @@ struct DataEcrRepositoryData {
 struct DataEcrRepository_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEcrRepositoryData>,
+    data: std::cell::RefCell<DataEcrRepositoryData_>,
 }
 
 #[derive(Clone)]
@@ -79,6 +83,13 @@ impl DataEcrRepository {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `registry_id`.\n"]
     pub fn set_registry_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().registry_id = std::option::Option::Some(v.into());
@@ -100,7 +111,7 @@ impl DataEcrRepository {
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::ListRef<DataEcrRepositoryEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<DataEcrRepository_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
@@ -110,7 +121,7 @@ impl DataEcrRepository {
     }
 
     #[doc = "Get a reference to the value of field `image_scanning_configuration` after provisioning.\n"]
-    pub fn image_scanning_configuration(&self) -> terrars::ListRef<DataEcrRepositoryImageScanningConfigurationElRef> {
+    pub fn image_scanning_configuration(&self) -> terrars::ListRef<DataEcrRepository_ImageScanningConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_scanning_configuration", self.extract_ref()))
     }
 
@@ -119,9 +130,30 @@ impl DataEcrRepository {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_tag_mutability", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `image_tag_mutability_exclusion_filter` after provisioning.\n"]
+    pub fn image_tag_mutability_exclusion_filter(
+        &self,
+    ) -> terrars::ListRef<DataEcrRepository_ImageTagMutabilityExclusionFilterRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.image_tag_mutability_exclusion_filter", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `most_recent_image_tags` after provisioning.\n"]
+    pub fn most_recent_image_tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.most_recent_image_tags", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
@@ -182,13 +214,14 @@ impl BuildDataEcrRepository {
         let out = DataEcrRepository(std::rc::Rc::new(DataEcrRepository_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEcrRepositoryData {
+            data: std::cell::RefCell::new(DataEcrRepositoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 registry_id: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
@@ -227,7 +260,7 @@ impl DataEcrRepositoryRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::ListRef<DataEcrRepositoryEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<DataEcrRepository_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
@@ -237,7 +270,7 @@ impl DataEcrRepositoryRef {
     }
 
     #[doc = "Get a reference to the value of field `image_scanning_configuration` after provisioning.\n"]
-    pub fn image_scanning_configuration(&self) -> terrars::ListRef<DataEcrRepositoryImageScanningConfigurationElRef> {
+    pub fn image_scanning_configuration(&self) -> terrars::ListRef<DataEcrRepository_ImageScanningConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_scanning_configuration", self.extract_ref()))
     }
 
@@ -246,9 +279,30 @@ impl DataEcrRepositoryRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_tag_mutability", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `image_tag_mutability_exclusion_filter` after provisioning.\n"]
+    pub fn image_tag_mutability_exclusion_filter(
+        &self,
+    ) -> terrars::ListRef<DataEcrRepository_ImageTagMutabilityExclusionFilterRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.image_tag_mutability_exclusion_filter", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `most_recent_image_tags` after provisioning.\n"]
+    pub fn most_recent_image_tags(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.most_recent_image_tags", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
@@ -268,14 +322,14 @@ impl DataEcrRepositoryRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEcrRepositoryEncryptionConfigurationEl {
+pub struct DataEcrRepository_EncryptionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEcrRepositoryEncryptionConfigurationEl {
+impl DataEcrRepository_EncryptionConfiguration {
     #[doc = "Set the field `encryption_type`.\n"]
     pub fn set_encryption_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.encryption_type = std::option::Option::Some(v.into());
@@ -289,8 +343,8 @@ impl DataEcrRepositoryEncryptionConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataEcrRepositoryEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<DataEcrRepositoryEncryptionConfigurationEl>;
+impl terrars::ToListMappable for DataEcrRepository_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<DataEcrRepository_EncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -301,32 +355,34 @@ impl terrars::ToListMappable for DataEcrRepositoryEncryptionConfigurationEl {
     }
 }
 
-pub struct BuildDataEcrRepositoryEncryptionConfigurationEl {}
+pub struct BuildDataEcrRepository_EncryptionConfiguration {}
 
-impl BuildDataEcrRepositoryEncryptionConfigurationEl {
-    pub fn build(self) -> DataEcrRepositoryEncryptionConfigurationEl {
-        DataEcrRepositoryEncryptionConfigurationEl {
+impl BuildDataEcrRepository_EncryptionConfiguration {
+    pub fn build(self) -> DataEcrRepository_EncryptionConfiguration {
+        DataEcrRepository_EncryptionConfiguration {
             encryption_type: core::default::Default::default(),
             kms_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEcrRepositoryEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataEcrRepository_EncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEcrRepositoryEncryptionConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEcrRepositoryEncryptionConfigurationElRef {
-        DataEcrRepositoryEncryptionConfigurationElRef {
+impl terrars::Ref for DataEcrRepository_EncryptionConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEcrRepository_EncryptionConfigurationRef {
+        DataEcrRepository_EncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEcrRepositoryEncryptionConfigurationElRef {
+impl DataEcrRepository_EncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -343,12 +399,12 @@ impl DataEcrRepositoryEncryptionConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEcrRepositoryImageScanningConfigurationEl {
+pub struct DataEcrRepository_ImageScanningConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scan_on_push: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataEcrRepositoryImageScanningConfigurationEl {
+impl DataEcrRepository_ImageScanningConfiguration {
     #[doc = "Set the field `scan_on_push`.\n"]
     pub fn set_scan_on_push(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.scan_on_push = std::option::Option::Some(v.into());
@@ -356,8 +412,8 @@ impl DataEcrRepositoryImageScanningConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataEcrRepositoryImageScanningConfigurationEl {
-    type O = terrars::BlockAssignable<DataEcrRepositoryImageScanningConfigurationEl>;
+impl terrars::ToListMappable for DataEcrRepository_ImageScanningConfiguration {
+    type O = terrars::BlockAssignable<DataEcrRepository_ImageScanningConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -368,32 +424,34 @@ impl terrars::ToListMappable for DataEcrRepositoryImageScanningConfigurationEl {
     }
 }
 
-pub struct BuildDataEcrRepositoryImageScanningConfigurationEl {}
+pub struct BuildDataEcrRepository_ImageScanningConfiguration {}
 
-impl BuildDataEcrRepositoryImageScanningConfigurationEl {
-    pub fn build(self) -> DataEcrRepositoryImageScanningConfigurationEl {
-        DataEcrRepositoryImageScanningConfigurationEl { scan_on_push: core::default::Default::default() }
+impl BuildDataEcrRepository_ImageScanningConfiguration {
+    pub fn build(self) -> DataEcrRepository_ImageScanningConfiguration {
+        DataEcrRepository_ImageScanningConfiguration { scan_on_push: core::default::Default::default() }
     }
 }
 
-pub struct DataEcrRepositoryImageScanningConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataEcrRepository_ImageScanningConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEcrRepositoryImageScanningConfigurationElRef {
+impl terrars::Ref for DataEcrRepository_ImageScanningConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEcrRepositoryImageScanningConfigurationElRef {
-        DataEcrRepositoryImageScanningConfigurationElRef {
+    ) -> DataEcrRepository_ImageScanningConfigurationRef {
+        DataEcrRepository_ImageScanningConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEcrRepositoryImageScanningConfigurationElRef {
+impl DataEcrRepository_ImageScanningConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -401,5 +459,85 @@ impl DataEcrRepositoryImageScanningConfigurationElRef {
     #[doc = "Get a reference to the value of field `scan_on_push` after provisioning.\n"]
     pub fn scan_on_push(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scan_on_push", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataEcrRepository_ImageTagMutabilityExclusionFilter {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataEcrRepository_ImageTagMutabilityExclusionFilter {
+    #[doc = "Set the field `filter`.\n"]
+    pub fn set_filter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.filter = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `filter_type`.\n"]
+    pub fn set_filter_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.filter_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataEcrRepository_ImageTagMutabilityExclusionFilter {
+    type O = terrars::BlockAssignable<DataEcrRepository_ImageTagMutabilityExclusionFilter>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataEcrRepository_ImageTagMutabilityExclusionFilter {}
+
+impl BuildDataEcrRepository_ImageTagMutabilityExclusionFilter {
+    pub fn build(self) -> DataEcrRepository_ImageTagMutabilityExclusionFilter {
+        DataEcrRepository_ImageTagMutabilityExclusionFilter {
+            filter: core::default::Default::default(),
+            filter_type: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataEcrRepository_ImageTagMutabilityExclusionFilterRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataEcrRepository_ImageTagMutabilityExclusionFilterRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataEcrRepository_ImageTagMutabilityExclusionFilterRef {
+        DataEcrRepository_ImageTagMutabilityExclusionFilterRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataEcrRepository_ImageTagMutabilityExclusionFilterRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
+    pub fn filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `filter_type` after provisioning.\n"]
+    pub fn filter_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter_type", self.base))
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2TransitGatewayMulticastGroupSourceData {
+struct Ec2TransitGatewayMulticastGroupSourceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,13 +24,15 @@ struct Ec2TransitGatewayMulticastGroupSourceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     network_interface_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     transit_gateway_multicast_domain_id: terrars::PrimField<std::string::String>,
 }
 
 struct Ec2TransitGatewayMulticastGroupSource_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2TransitGatewayMulticastGroupSourceData>,
+    data: std::cell::RefCell<Ec2TransitGatewayMulticastGroupSourceData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +138,13 @@ impl Ec2TransitGatewayMulticastGroupSource {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `group_ip_address` after provisioning.\n"]
     pub fn group_ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_ip_address", self.extract_ref()))
@@ -147,6 +158,12 @@ impl Ec2TransitGatewayMulticastGroupSource {
     #[doc = "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
     pub fn network_interface_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway_multicast_domain_id` after provisioning.\n"]
@@ -204,7 +221,7 @@ impl BuildEc2TransitGatewayMulticastGroupSource {
         let out = Ec2TransitGatewayMulticastGroupSource(std::rc::Rc::new(Ec2TransitGatewayMulticastGroupSource_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2TransitGatewayMulticastGroupSourceData {
+            data: std::cell::RefCell::new(Ec2TransitGatewayMulticastGroupSourceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -213,6 +230,7 @@ impl BuildEc2TransitGatewayMulticastGroupSource {
                 group_ip_address: self.group_ip_address,
                 id: core::default::Default::default(),
                 network_interface_id: self.network_interface_id,
+                region: core::default::Default::default(),
                 transit_gateway_multicast_domain_id: self.transit_gateway_multicast_domain_id,
             }),
         }));
@@ -257,6 +275,12 @@ impl Ec2TransitGatewayMulticastGroupSourceRef {
     #[doc = "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
     pub fn network_interface_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway_multicast_domain_id` after provisioning.\n"]

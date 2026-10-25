@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Inspector2OrganizationConfigurationData {
+struct Inspector2OrganizationConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,16 +23,18 @@ struct Inspector2OrganizationConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_enable: std::option::Option<std::vec::Vec<Inspector2OrganizationConfigurationAutoEnableEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Inspector2OrganizationConfigurationTimeoutsEl>,
+    auto_enable: std::option::Option<std::vec::Vec<Inspector2OrganizationConfiguration_AutoEnable>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Inspector2OrganizationConfiguration_Timeouts>,
     dynamic: Inspector2OrganizationConfigurationDynamic,
 }
 
 struct Inspector2OrganizationConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Inspector2OrganizationConfigurationData>,
+    data: std::cell::RefCell<Inspector2OrganizationConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -136,10 +140,17 @@ impl Inspector2OrganizationConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `auto_enable`.\n"]
     pub fn set_auto_enable(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Inspector2OrganizationConfigurationAutoEnableEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Inspector2OrganizationConfiguration_AutoEnable>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -153,7 +164,7 @@ impl Inspector2OrganizationConfiguration {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Inspector2OrganizationConfigurationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Inspector2OrganizationConfiguration_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -168,14 +179,20 @@ impl Inspector2OrganizationConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_account_limit_reached", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `auto_enable` after provisioning.\n"]
-    pub fn auto_enable(&self) -> terrars::ListRef<Inspector2OrganizationConfigurationAutoEnableElRef> {
+    pub fn auto_enable(&self) -> terrars::ListRef<Inspector2OrganizationConfiguration_AutoEnableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_enable", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Inspector2OrganizationConfigurationTimeoutsElRef {
-        Inspector2OrganizationConfigurationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Inspector2OrganizationConfiguration_TimeoutsRef {
+        Inspector2OrganizationConfiguration_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -222,13 +239,14 @@ impl BuildInspector2OrganizationConfiguration {
         let out = Inspector2OrganizationConfiguration(std::rc::Rc::new(Inspector2OrganizationConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Inspector2OrganizationConfigurationData {
+            data: std::cell::RefCell::new(Inspector2OrganizationConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 auto_enable: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -272,30 +290,65 @@ impl Inspector2OrganizationConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_account_limit_reached", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `auto_enable` after provisioning.\n"]
-    pub fn auto_enable(&self) -> terrars::ListRef<Inspector2OrganizationConfigurationAutoEnableElRef> {
+    pub fn auto_enable(&self) -> terrars::ListRef<Inspector2OrganizationConfiguration_AutoEnableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_enable", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Inspector2OrganizationConfigurationTimeoutsElRef {
-        Inspector2OrganizationConfigurationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Inspector2OrganizationConfiguration_TimeoutsRef {
+        Inspector2OrganizationConfiguration_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
-#[derive(Serialize)]
-pub struct Inspector2OrganizationConfigurationAutoEnableEl {
-    ec2: terrars::PrimField<bool>,
-    ecr: terrars::PrimField<bool>,
+#[derive(Serialize, Default)]
+struct Inspector2OrganizationConfigurationDynamic {
+    auto_enable: std::option::Option<terrars::DynamicBlock<Inspector2OrganizationConfiguration_AutoEnable>>,
 }
 
-impl Inspector2OrganizationConfigurationAutoEnableEl { }
+#[derive(Serialize)]
+pub struct Inspector2OrganizationConfiguration_AutoEnable {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    code_repository: std::option::Option<terrars::PrimField<bool>>,
+    ec2: terrars::PrimField<bool>,
+    ecr: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lambda: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lambda_code: std::option::Option<terrars::PrimField<bool>>,
+}
 
-impl terrars::ToListMappable for Inspector2OrganizationConfigurationAutoEnableEl {
-    type O = terrars::BlockAssignable<Inspector2OrganizationConfigurationAutoEnableEl>;
+impl Inspector2OrganizationConfiguration_AutoEnable {
+    #[doc = "Set the field `code_repository`.\n"]
+    pub fn set_code_repository(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.code_repository = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `lambda`.\n"]
+    pub fn set_lambda(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.lambda = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `lambda_code`.\n"]
+    pub fn set_lambda_code(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.lambda_code = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Inspector2OrganizationConfiguration_AutoEnable {
+    type O = terrars::BlockAssignable<Inspector2OrganizationConfiguration_AutoEnable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -306,42 +359,52 @@ impl terrars::ToListMappable for Inspector2OrganizationConfigurationAutoEnableEl
     }
 }
 
-pub struct BuildInspector2OrganizationConfigurationAutoEnableEl {
+pub struct BuildInspector2OrganizationConfiguration_AutoEnable {
     #[doc = ""]
     pub ec2: terrars::PrimField<bool>,
     #[doc = ""]
     pub ecr: terrars::PrimField<bool>,
 }
 
-impl BuildInspector2OrganizationConfigurationAutoEnableEl {
-    pub fn build(self) -> Inspector2OrganizationConfigurationAutoEnableEl {
-        Inspector2OrganizationConfigurationAutoEnableEl {
+impl BuildInspector2OrganizationConfiguration_AutoEnable {
+    pub fn build(self) -> Inspector2OrganizationConfiguration_AutoEnable {
+        Inspector2OrganizationConfiguration_AutoEnable {
+            code_repository: core::default::Default::default(),
             ec2: self.ec2,
             ecr: self.ecr,
+            lambda: core::default::Default::default(),
+            lambda_code: core::default::Default::default(),
         }
     }
 }
 
-pub struct Inspector2OrganizationConfigurationAutoEnableElRef {
+#[allow(dead_code)]
+pub struct Inspector2OrganizationConfiguration_AutoEnableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Inspector2OrganizationConfigurationAutoEnableElRef {
+impl terrars::Ref for Inspector2OrganizationConfiguration_AutoEnableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Inspector2OrganizationConfigurationAutoEnableElRef {
-        Inspector2OrganizationConfigurationAutoEnableElRef {
+    ) -> Inspector2OrganizationConfiguration_AutoEnableRef {
+        Inspector2OrganizationConfiguration_AutoEnableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Inspector2OrganizationConfigurationAutoEnableElRef {
+impl Inspector2OrganizationConfiguration_AutoEnableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `code_repository` after provisioning.\n"]
+    pub fn code_repository(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code_repository", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ec2` after provisioning.\n"]
@@ -353,10 +416,20 @@ impl Inspector2OrganizationConfigurationAutoEnableElRef {
     pub fn ecr(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ecr", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `lambda` after provisioning.\n"]
+    pub fn lambda(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lambda", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `lambda_code` after provisioning.\n"]
+    pub fn lambda_code(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lambda_code", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct Inspector2OrganizationConfigurationTimeoutsEl {
+pub struct Inspector2OrganizationConfiguration_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -365,7 +438,7 @@ pub struct Inspector2OrganizationConfigurationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Inspector2OrganizationConfigurationTimeoutsEl {
+impl Inspector2OrganizationConfiguration_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -385,8 +458,8 @@ impl Inspector2OrganizationConfigurationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Inspector2OrganizationConfigurationTimeoutsEl {
-    type O = terrars::BlockAssignable<Inspector2OrganizationConfigurationTimeoutsEl>;
+impl terrars::ToListMappable for Inspector2OrganizationConfiguration_Timeouts {
+    type O = terrars::BlockAssignable<Inspector2OrganizationConfiguration_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -397,11 +470,11 @@ impl terrars::ToListMappable for Inspector2OrganizationConfigurationTimeoutsEl {
     }
 }
 
-pub struct BuildInspector2OrganizationConfigurationTimeoutsEl {}
+pub struct BuildInspector2OrganizationConfiguration_Timeouts {}
 
-impl BuildInspector2OrganizationConfigurationTimeoutsEl {
-    pub fn build(self) -> Inspector2OrganizationConfigurationTimeoutsEl {
-        Inspector2OrganizationConfigurationTimeoutsEl {
+impl BuildInspector2OrganizationConfiguration_Timeouts {
+    pub fn build(self) -> Inspector2OrganizationConfiguration_Timeouts {
+        Inspector2OrganizationConfiguration_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -409,24 +482,26 @@ impl BuildInspector2OrganizationConfigurationTimeoutsEl {
     }
 }
 
-pub struct Inspector2OrganizationConfigurationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Inspector2OrganizationConfiguration_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Inspector2OrganizationConfigurationTimeoutsElRef {
+impl terrars::Ref for Inspector2OrganizationConfiguration_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Inspector2OrganizationConfigurationTimeoutsElRef {
-        Inspector2OrganizationConfigurationTimeoutsElRef {
+    ) -> Inspector2OrganizationConfiguration_TimeoutsRef {
+        Inspector2OrganizationConfiguration_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Inspector2OrganizationConfigurationTimeoutsElRef {
+impl Inspector2OrganizationConfiguration_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -445,9 +520,4 @@ impl Inspector2OrganizationConfigurationTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Inspector2OrganizationConfigurationDynamic {
-    auto_enable: std::option::Option<terrars::DynamicBlock<Inspector2OrganizationConfigurationAutoEnableEl>>,
 }

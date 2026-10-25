@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataConnectUserHierarchyStructureData {
+struct DataConnectUserHierarchyStructureData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,12 +21,14 @@ struct DataConnectUserHierarchyStructureData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     instance_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataConnectUserHierarchyStructure_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataConnectUserHierarchyStructureData>,
+    data: std::cell::RefCell<DataConnectUserHierarchyStructureData_>,
 }
 
 #[derive(Clone)]
@@ -75,8 +79,15 @@ impl DataConnectUserHierarchyStructure {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `hierarchy_structure` after provisioning.\n"]
-    pub fn hierarchy_structure(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElRef> {
+    pub fn hierarchy_structure(&self) -> terrars::ListRef<DataConnectUserHierarchyStructure_HierarchyStructureRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hierarchy_structure", self.extract_ref()))
     }
 
@@ -88,6 +99,12 @@ impl DataConnectUserHierarchyStructure {
     #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
     pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -133,13 +150,14 @@ impl BuildDataConnectUserHierarchyStructure {
         let out = DataConnectUserHierarchyStructure(std::rc::Rc::new(DataConnectUserHierarchyStructure_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataConnectUserHierarchyStructureData {
+            data: std::cell::RefCell::new(DataConnectUserHierarchyStructureData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -171,7 +189,7 @@ impl DataConnectUserHierarchyStructureRef {
     }
 
     #[doc = "Get a reference to the value of field `hierarchy_structure` after provisioning.\n"]
-    pub fn hierarchy_structure(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElRef> {
+    pub fn hierarchy_structure(&self) -> terrars::ListRef<DataConnectUserHierarchyStructure_HierarchyStructureRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hierarchy_structure", self.extract_ref()))
     }
 
@@ -184,10 +202,16 @@ impl DataConnectUserHierarchyStructureRef {
     pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -196,7 +220,7 @@ pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -216,8 +240,8 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
     }
 }
 
-impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
-    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructure_HierarchyStructure_LevelFive>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -228,11 +252,11 @@ impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStruc
     }
 }
 
-pub struct BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {}
+pub struct BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelFive {}
 
-impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
-    pub fn build(self) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
+impl BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
+    pub fn build(self) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -240,24 +264,26 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
     }
 }
 
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+#[allow(dead_code)]
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+    ) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -279,7 +305,7 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -288,7 +314,7 @@ pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -308,8 +334,8 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
     }
 }
 
-impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
-    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructure_HierarchyStructure_LevelFour>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -320,11 +346,11 @@ impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStruc
     }
 }
 
-pub struct BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {}
+pub struct BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelFour {}
 
-impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
-    pub fn build(self) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
+impl BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
+    pub fn build(self) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -332,24 +358,26 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
     }
 }
 
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+#[allow(dead_code)]
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+    ) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -371,7 +399,7 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -380,7 +408,7 @@ pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -400,8 +428,8 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
     }
 }
 
-impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
-    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructure_HierarchyStructure_LevelOne>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -412,11 +440,11 @@ impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStruc
     }
 }
 
-pub struct BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {}
+pub struct BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelOne {}
 
-impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
-    pub fn build(self) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
+impl BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
+    pub fn build(self) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -424,24 +452,26 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
     }
 }
 
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+#[allow(dead_code)]
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+    ) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -463,7 +493,7 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -472,7 +502,7 @@ pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -492,8 +522,8 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
     }
 }
 
-impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
-    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructure_HierarchyStructure_LevelThree>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -504,11 +534,11 @@ impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStruc
     }
 }
 
-pub struct BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {}
+pub struct BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelThree {}
 
-impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
-    pub fn build(self) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
+impl BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
+    pub fn build(self) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -516,24 +546,26 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
     }
 }
 
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
+#[allow(dead_code)]
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
+    ) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -555,7 +587,7 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -564,7 +596,7 @@ pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -584,8 +616,8 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
     }
 }
 
-impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
-    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -596,11 +628,11 @@ impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStruc
     }
 }
 
-pub struct BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {}
+pub struct BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {}
 
-impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
-    pub fn build(self) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
+impl BuildDataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
+    pub fn build(self) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -608,24 +640,26 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
     }
 }
 
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+#[allow(dead_code)]
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
-        DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+    ) -> DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
+        DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+impl DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -647,22 +681,20 @@ impl DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataConnectUserHierarchyStructureHierarchyStructureEl {
+pub struct DataConnectUserHierarchyStructure_HierarchyStructure {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_five: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>>,
+    level_five: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelFive>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_four: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>>,
+    level_four: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelFour>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_one: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>>,
+    level_one: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelOne>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_three: std
-    ::option
-    ::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>>,
+    level_three: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelThree>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_two: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>>,
+    level_two: std::option::Option<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo>>,
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureEl {
+impl DataConnectUserHierarchyStructure_HierarchyStructure {
     #[doc = "Set the field `level_five`.\n"]
     pub fn set_level_five(
         mut self,
@@ -671,7 +703,7 @@ impl DataConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>>,
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelFive>>,
     ) -> Self {
         self.level_five = std::option::Option::Some(v.into());
         self
@@ -685,7 +717,7 @@ impl DataConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>>,
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelFour>>,
     ) -> Self {
         self.level_four = std::option::Option::Some(v.into());
         self
@@ -699,7 +731,7 @@ impl DataConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>>,
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelOne>>,
     ) -> Self {
         self.level_one = std::option::Option::Some(v.into());
         self
@@ -713,7 +745,7 @@ impl DataConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>>,
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelThree>>,
     ) -> Self {
         self.level_three = std::option::Option::Some(v.into());
         self
@@ -727,15 +759,15 @@ impl DataConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>>,
+                    ::Into<terrars::ListField<DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwo>>,
     ) -> Self {
         self.level_two = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStructureEl {
-    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructureHierarchyStructureEl>;
+impl terrars::ToListMappable for DataConnectUserHierarchyStructure_HierarchyStructure {
+    type O = terrars::BlockAssignable<DataConnectUserHierarchyStructure_HierarchyStructure>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -746,11 +778,11 @@ impl terrars::ToListMappable for DataConnectUserHierarchyStructureHierarchyStruc
     }
 }
 
-pub struct BuildDataConnectUserHierarchyStructureHierarchyStructureEl {}
+pub struct BuildDataConnectUserHierarchyStructure_HierarchyStructure {}
 
-impl BuildDataConnectUserHierarchyStructureHierarchyStructureEl {
-    pub fn build(self) -> DataConnectUserHierarchyStructureHierarchyStructureEl {
-        DataConnectUserHierarchyStructureHierarchyStructureEl {
+impl BuildDataConnectUserHierarchyStructure_HierarchyStructure {
+    pub fn build(self) -> DataConnectUserHierarchyStructure_HierarchyStructure {
+        DataConnectUserHierarchyStructure_HierarchyStructure {
             level_five: core::default::Default::default(),
             level_four: core::default::Default::default(),
             level_one: core::default::Default::default(),
@@ -760,50 +792,52 @@ impl BuildDataConnectUserHierarchyStructureHierarchyStructureEl {
     }
 }
 
-pub struct DataConnectUserHierarchyStructureHierarchyStructureElRef {
+#[allow(dead_code)]
+pub struct DataConnectUserHierarchyStructure_HierarchyStructureRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectUserHierarchyStructureHierarchyStructureElRef {
+impl terrars::Ref for DataConnectUserHierarchyStructure_HierarchyStructureRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataConnectUserHierarchyStructureHierarchyStructureElRef {
-        DataConnectUserHierarchyStructureHierarchyStructureElRef {
+    ) -> DataConnectUserHierarchyStructure_HierarchyStructureRef {
+        DataConnectUserHierarchyStructure_HierarchyStructureRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectUserHierarchyStructureHierarchyStructureElRef {
+impl DataConnectUserHierarchyStructure_HierarchyStructureRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `level_five` after provisioning.\n"]
-    pub fn level_five(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef> {
+    pub fn level_five(&self) -> terrars::ListRef<DataConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_five", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_four` after provisioning.\n"]
-    pub fn level_four(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef> {
+    pub fn level_four(&self) -> terrars::ListRef<DataConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_four", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_one` after provisioning.\n"]
-    pub fn level_one(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef> {
+    pub fn level_one(&self) -> terrars::ListRef<DataConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_one", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_three` after provisioning.\n"]
-    pub fn level_three(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef> {
+    pub fn level_three(&self) -> terrars::ListRef<DataConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_three", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_two` after provisioning.\n"]
-    pub fn level_two(&self) -> terrars::ListRef<DataConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef> {
+    pub fn level_two(&self) -> terrars::ListRef<DataConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_two", self.base))
     }
 }

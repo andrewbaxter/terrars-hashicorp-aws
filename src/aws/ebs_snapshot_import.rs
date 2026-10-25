@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EbsSnapshotImportData {
+struct EbsSnapshotImportData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,6 +31,8 @@ struct EbsSnapshotImportData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     permanent_restore: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_tier: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -39,18 +43,18 @@ struct EbsSnapshotImportData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     temporary_restore_days: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    client_data: std::option::Option<std::vec::Vec<EbsSnapshotImportClientDataEl>>,
+    client_data: std::option::Option<std::vec::Vec<EbsSnapshotImport_ClientData>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disk_container: std::option::Option<std::vec::Vec<EbsSnapshotImportDiskContainerEl>>,
+    disk_container: std::option::Option<std::vec::Vec<EbsSnapshotImport_DiskContainer>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EbsSnapshotImportTimeoutsEl>,
+    timeouts: std::option::Option<EbsSnapshotImport_Timeouts>,
     dynamic: EbsSnapshotImportDynamic,
 }
 
 struct EbsSnapshotImport_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EbsSnapshotImportData>,
+    data: std::cell::RefCell<EbsSnapshotImportData_>,
 }
 
 #[derive(Clone)]
@@ -180,6 +184,13 @@ impl EbsSnapshotImport {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `role_name`.\n"]
     pub fn set_role_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().role_name = std::option::Option::Some(v.into());
@@ -219,7 +230,7 @@ impl EbsSnapshotImport {
     #[doc = "Set the field `client_data`.\n"]
     pub fn set_client_data(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EbsSnapshotImportClientDataEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EbsSnapshotImport_ClientData>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -235,7 +246,7 @@ impl EbsSnapshotImport {
     #[doc = "Set the field `disk_container`.\n"]
     pub fn set_disk_container(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EbsSnapshotImportDiskContainerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EbsSnapshotImport_DiskContainer>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -249,7 +260,7 @@ impl EbsSnapshotImport {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EbsSnapshotImportTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EbsSnapshotImport_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -304,6 +315,12 @@ impl EbsSnapshotImport {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permanent_restore", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_name` after provisioning.\n"]
     pub fn role_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_name", self.extract_ref()))
@@ -340,18 +357,18 @@ impl EbsSnapshotImport {
     }
 
     #[doc = "Get a reference to the value of field `client_data` after provisioning.\n"]
-    pub fn client_data(&self) -> terrars::ListRef<EbsSnapshotImportClientDataElRef> {
+    pub fn client_data(&self) -> terrars::ListRef<EbsSnapshotImport_ClientDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_data", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `disk_container` after provisioning.\n"]
-    pub fn disk_container(&self) -> terrars::ListRef<EbsSnapshotImportDiskContainerElRef> {
+    pub fn disk_container(&self) -> terrars::ListRef<EbsSnapshotImport_DiskContainerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_container", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EbsSnapshotImportTimeoutsElRef {
-        EbsSnapshotImportTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EbsSnapshotImport_TimeoutsRef {
+        EbsSnapshotImport_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -395,7 +412,7 @@ impl BuildEbsSnapshotImport {
         let out = EbsSnapshotImport(std::rc::Rc::new(EbsSnapshotImport_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EbsSnapshotImportData {
+            data: std::cell::RefCell::new(EbsSnapshotImportData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -406,6 +423,7 @@ impl BuildEbsSnapshotImport {
                 id: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
                 permanent_restore: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role_name: core::default::Default::default(),
                 storage_tier: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -495,6 +513,12 @@ impl EbsSnapshotImportRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permanent_restore", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_name` after provisioning.\n"]
     pub fn role_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_name", self.extract_ref()))
@@ -531,23 +555,29 @@ impl EbsSnapshotImportRef {
     }
 
     #[doc = "Get a reference to the value of field `client_data` after provisioning.\n"]
-    pub fn client_data(&self) -> terrars::ListRef<EbsSnapshotImportClientDataElRef> {
+    pub fn client_data(&self) -> terrars::ListRef<EbsSnapshotImport_ClientDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_data", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `disk_container` after provisioning.\n"]
-    pub fn disk_container(&self) -> terrars::ListRef<EbsSnapshotImportDiskContainerElRef> {
+    pub fn disk_container(&self) -> terrars::ListRef<EbsSnapshotImport_DiskContainerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_container", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EbsSnapshotImportTimeoutsElRef {
-        EbsSnapshotImportTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EbsSnapshotImport_TimeoutsRef {
+        EbsSnapshotImport_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EbsSnapshotImportDynamic {
+    client_data: std::option::Option<terrars::DynamicBlock<EbsSnapshotImport_ClientData>>,
+    disk_container: std::option::Option<terrars::DynamicBlock<EbsSnapshotImport_DiskContainer>>,
+}
+
 #[derive(Serialize)]
-pub struct EbsSnapshotImportClientDataEl {
+pub struct EbsSnapshotImport_ClientData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     comment: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -558,7 +588,7 @@ pub struct EbsSnapshotImportClientDataEl {
     upload_start: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EbsSnapshotImportClientDataEl {
+impl EbsSnapshotImport_ClientData {
     #[doc = "Set the field `comment`.\n"]
     pub fn set_comment(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.comment = std::option::Option::Some(v.into());
@@ -584,8 +614,8 @@ impl EbsSnapshotImportClientDataEl {
     }
 }
 
-impl terrars::ToListMappable for EbsSnapshotImportClientDataEl {
-    type O = terrars::BlockAssignable<EbsSnapshotImportClientDataEl>;
+impl terrars::ToListMappable for EbsSnapshotImport_ClientData {
+    type O = terrars::BlockAssignable<EbsSnapshotImport_ClientData>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -596,11 +626,11 @@ impl terrars::ToListMappable for EbsSnapshotImportClientDataEl {
     }
 }
 
-pub struct BuildEbsSnapshotImportClientDataEl {}
+pub struct BuildEbsSnapshotImport_ClientData {}
 
-impl BuildEbsSnapshotImportClientDataEl {
-    pub fn build(self) -> EbsSnapshotImportClientDataEl {
-        EbsSnapshotImportClientDataEl {
+impl BuildEbsSnapshotImport_ClientData {
+    pub fn build(self) -> EbsSnapshotImport_ClientData {
+        EbsSnapshotImport_ClientData {
             comment: core::default::Default::default(),
             upload_end: core::default::Default::default(),
             upload_size: core::default::Default::default(),
@@ -609,21 +639,23 @@ impl BuildEbsSnapshotImportClientDataEl {
     }
 }
 
-pub struct EbsSnapshotImportClientDataElRef {
+#[allow(dead_code)]
+pub struct EbsSnapshotImport_ClientDataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EbsSnapshotImportClientDataElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EbsSnapshotImportClientDataElRef {
-        EbsSnapshotImportClientDataElRef {
+impl terrars::Ref for EbsSnapshotImport_ClientDataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EbsSnapshotImport_ClientDataRef {
+        EbsSnapshotImport_ClientDataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EbsSnapshotImportClientDataElRef {
+impl EbsSnapshotImport_ClientDataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -650,15 +682,15 @@ impl EbsSnapshotImportClientDataElRef {
 }
 
 #[derive(Serialize)]
-pub struct EbsSnapshotImportDiskContainerElUserBucketEl {
+pub struct EbsSnapshotImport_DiskContainer_UserBucket {
     s3_bucket: terrars::PrimField<std::string::String>,
     s3_key: terrars::PrimField<std::string::String>,
 }
 
-impl EbsSnapshotImportDiskContainerElUserBucketEl { }
+impl EbsSnapshotImport_DiskContainer_UserBucket { }
 
-impl terrars::ToListMappable for EbsSnapshotImportDiskContainerElUserBucketEl {
-    type O = terrars::BlockAssignable<EbsSnapshotImportDiskContainerElUserBucketEl>;
+impl terrars::ToListMappable for EbsSnapshotImport_DiskContainer_UserBucket {
+    type O = terrars::BlockAssignable<EbsSnapshotImport_DiskContainer_UserBucket>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -669,40 +701,39 @@ impl terrars::ToListMappable for EbsSnapshotImportDiskContainerElUserBucketEl {
     }
 }
 
-pub struct BuildEbsSnapshotImportDiskContainerElUserBucketEl {
+pub struct BuildEbsSnapshotImport_DiskContainer_UserBucket {
     #[doc = ""]
     pub s3_bucket: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub s3_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEbsSnapshotImportDiskContainerElUserBucketEl {
-    pub fn build(self) -> EbsSnapshotImportDiskContainerElUserBucketEl {
-        EbsSnapshotImportDiskContainerElUserBucketEl {
+impl BuildEbsSnapshotImport_DiskContainer_UserBucket {
+    pub fn build(self) -> EbsSnapshotImport_DiskContainer_UserBucket {
+        EbsSnapshotImport_DiskContainer_UserBucket {
             s3_bucket: self.s3_bucket,
             s3_key: self.s3_key,
         }
     }
 }
 
-pub struct EbsSnapshotImportDiskContainerElUserBucketElRef {
+#[allow(dead_code)]
+pub struct EbsSnapshotImport_DiskContainer_UserBucketRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EbsSnapshotImportDiskContainerElUserBucketElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> EbsSnapshotImportDiskContainerElUserBucketElRef {
-        EbsSnapshotImportDiskContainerElUserBucketElRef {
+impl terrars::Ref for EbsSnapshotImport_DiskContainer_UserBucketRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EbsSnapshotImport_DiskContainer_UserBucketRef {
+        EbsSnapshotImport_DiskContainer_UserBucketRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EbsSnapshotImportDiskContainerElUserBucketElRef {
+impl EbsSnapshotImport_DiskContainer_UserBucketRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -719,23 +750,23 @@ impl EbsSnapshotImportDiskContainerElUserBucketElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EbsSnapshotImportDiskContainerElDynamic {
-    user_bucket: std::option::Option<terrars::DynamicBlock<EbsSnapshotImportDiskContainerElUserBucketEl>>,
+struct EbsSnapshotImport_DiskContainerDynamic {
+    user_bucket: std::option::Option<terrars::DynamicBlock<EbsSnapshotImport_DiskContainer_UserBucket>>,
 }
 
 #[derive(Serialize)]
-pub struct EbsSnapshotImportDiskContainerEl {
+pub struct EbsSnapshotImport_DiskContainer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     format: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     url: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_bucket: std::option::Option<std::vec::Vec<EbsSnapshotImportDiskContainerElUserBucketEl>>,
-    dynamic: EbsSnapshotImportDiskContainerElDynamic,
+    user_bucket: std::option::Option<std::vec::Vec<EbsSnapshotImport_DiskContainer_UserBucket>>,
+    dynamic: EbsSnapshotImport_DiskContainerDynamic,
 }
 
-impl EbsSnapshotImportDiskContainerEl {
+impl EbsSnapshotImport_DiskContainer {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -751,7 +782,7 @@ impl EbsSnapshotImportDiskContainerEl {
     #[doc = "Set the field `user_bucket`.\n"]
     pub fn set_user_bucket(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EbsSnapshotImportDiskContainerElUserBucketEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EbsSnapshotImport_DiskContainer_UserBucket>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -765,8 +796,8 @@ impl EbsSnapshotImportDiskContainerEl {
     }
 }
 
-impl terrars::ToListMappable for EbsSnapshotImportDiskContainerEl {
-    type O = terrars::BlockAssignable<EbsSnapshotImportDiskContainerEl>;
+impl terrars::ToListMappable for EbsSnapshotImport_DiskContainer {
+    type O = terrars::BlockAssignable<EbsSnapshotImport_DiskContainer>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -777,14 +808,14 @@ impl terrars::ToListMappable for EbsSnapshotImportDiskContainerEl {
     }
 }
 
-pub struct BuildEbsSnapshotImportDiskContainerEl {
+pub struct BuildEbsSnapshotImport_DiskContainer {
     #[doc = ""]
     pub format: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEbsSnapshotImportDiskContainerEl {
-    pub fn build(self) -> EbsSnapshotImportDiskContainerEl {
-        EbsSnapshotImportDiskContainerEl {
+impl BuildEbsSnapshotImport_DiskContainer {
+    pub fn build(self) -> EbsSnapshotImport_DiskContainer {
+        EbsSnapshotImport_DiskContainer {
             description: core::default::Default::default(),
             format: self.format,
             url: core::default::Default::default(),
@@ -794,21 +825,23 @@ impl BuildEbsSnapshotImportDiskContainerEl {
     }
 }
 
-pub struct EbsSnapshotImportDiskContainerElRef {
+#[allow(dead_code)]
+pub struct EbsSnapshotImport_DiskContainerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EbsSnapshotImportDiskContainerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EbsSnapshotImportDiskContainerElRef {
-        EbsSnapshotImportDiskContainerElRef {
+impl terrars::Ref for EbsSnapshotImport_DiskContainerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EbsSnapshotImport_DiskContainerRef {
+        EbsSnapshotImport_DiskContainerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EbsSnapshotImportDiskContainerElRef {
+impl EbsSnapshotImport_DiskContainerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -829,20 +862,20 @@ impl EbsSnapshotImportDiskContainerElRef {
     }
 
     #[doc = "Get a reference to the value of field `user_bucket` after provisioning.\n"]
-    pub fn user_bucket(&self) -> terrars::ListRef<EbsSnapshotImportDiskContainerElUserBucketElRef> {
+    pub fn user_bucket(&self) -> terrars::ListRef<EbsSnapshotImport_DiskContainer_UserBucketRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_bucket", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EbsSnapshotImportTimeoutsEl {
+pub struct EbsSnapshotImport_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EbsSnapshotImportTimeoutsEl {
+impl EbsSnapshotImport_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -856,8 +889,8 @@ impl EbsSnapshotImportTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EbsSnapshotImportTimeoutsEl {
-    type O = terrars::BlockAssignable<EbsSnapshotImportTimeoutsEl>;
+impl terrars::ToListMappable for EbsSnapshotImport_Timeouts {
+    type O = terrars::BlockAssignable<EbsSnapshotImport_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -868,32 +901,34 @@ impl terrars::ToListMappable for EbsSnapshotImportTimeoutsEl {
     }
 }
 
-pub struct BuildEbsSnapshotImportTimeoutsEl {}
+pub struct BuildEbsSnapshotImport_Timeouts {}
 
-impl BuildEbsSnapshotImportTimeoutsEl {
-    pub fn build(self) -> EbsSnapshotImportTimeoutsEl {
-        EbsSnapshotImportTimeoutsEl {
+impl BuildEbsSnapshotImport_Timeouts {
+    pub fn build(self) -> EbsSnapshotImport_Timeouts {
+        EbsSnapshotImport_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct EbsSnapshotImportTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EbsSnapshotImport_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EbsSnapshotImportTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EbsSnapshotImportTimeoutsElRef {
-        EbsSnapshotImportTimeoutsElRef {
+impl terrars::Ref for EbsSnapshotImport_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EbsSnapshotImport_TimeoutsRef {
+        EbsSnapshotImport_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EbsSnapshotImportTimeoutsElRef {
+impl EbsSnapshotImport_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -907,10 +942,4 @@ impl EbsSnapshotImportTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EbsSnapshotImportDynamic {
-    client_data: std::option::Option<terrars::DynamicBlock<EbsSnapshotImportClientDataEl>>,
-    disk_container: std::option::Option<terrars::DynamicBlock<EbsSnapshotImportDiskContainerEl>>,
 }

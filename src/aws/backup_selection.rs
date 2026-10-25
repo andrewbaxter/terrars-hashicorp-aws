@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct BackupSelectionData {
+struct BackupSelectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,18 +28,20 @@ struct BackupSelectionData {
     not_resources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     plan_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<BackupSelectionConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<BackupSelection_Condition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    selection_tag: std::option::Option<std::vec::Vec<BackupSelectionSelectionTagEl>>,
+    selection_tag: std::option::Option<std::vec::Vec<BackupSelection_SelectionTag>>,
     dynamic: BackupSelectionDynamic,
 }
 
 struct BackupSelection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BackupSelectionData>,
+    data: std::cell::RefCell<BackupSelectionData_>,
 }
 
 #[derive(Clone)]
@@ -152,6 +156,13 @@ impl BackupSelection {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resources`.\n"]
     pub fn set_resources(
         self,
@@ -162,10 +173,7 @@ impl BackupSelection {
     }
 
     #[doc = "Set the field `condition`.\n"]
-    pub fn set_condition(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelectionConditionEl>>,
-    ) -> Self {
+    pub fn set_condition(self, v: impl std::convert::Into<terrars::BlockAssignable<BackupSelection_Condition>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().condition = std::option::Option::Some(v);
@@ -180,7 +188,7 @@ impl BackupSelection {
     #[doc = "Set the field `selection_tag`.\n"]
     pub fn set_selection_tag(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelectionSelectionTagEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelection_SelectionTag>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,6 +224,12 @@ impl BackupSelection {
     #[doc = "Get a reference to the value of field `plan_id` after provisioning.\n"]
     pub fn plan_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.plan_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
@@ -270,7 +284,7 @@ impl BuildBackupSelection {
         let out = BackupSelection(std::rc::Rc::new(BackupSelection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BackupSelectionData {
+            data: std::cell::RefCell::new(BackupSelectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -281,6 +295,7 @@ impl BuildBackupSelection {
                 name: self.name,
                 not_resources: core::default::Default::default(),
                 plan_id: self.plan_id,
+                region: core::default::Default::default(),
                 resources: core::default::Default::default(),
                 condition: core::default::Default::default(),
                 selection_tag: core::default::Default::default(),
@@ -340,22 +355,34 @@ impl BackupSelectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.plan_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
     pub fn resources(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BackupSelectionDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<BackupSelection_Condition>>,
+    selection_tag: std::option::Option<terrars::DynamicBlock<BackupSelection_SelectionTag>>,
+}
+
 #[derive(Serialize)]
-pub struct BackupSelectionConditionElStringEqualsEl {
+pub struct BackupSelection_Condition_StringEquals {
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl BackupSelectionConditionElStringEqualsEl { }
+impl BackupSelection_Condition_StringEquals { }
 
-impl terrars::ToListMappable for BackupSelectionConditionElStringEqualsEl {
-    type O = terrars::BlockAssignable<BackupSelectionConditionElStringEqualsEl>;
+impl terrars::ToListMappable for BackupSelection_Condition_StringEquals {
+    type O = terrars::BlockAssignable<BackupSelection_Condition_StringEquals>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -366,37 +393,39 @@ impl terrars::ToListMappable for BackupSelectionConditionElStringEqualsEl {
     }
 }
 
-pub struct BuildBackupSelectionConditionElStringEqualsEl {
+pub struct BuildBackupSelection_Condition_StringEquals {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBackupSelectionConditionElStringEqualsEl {
-    pub fn build(self) -> BackupSelectionConditionElStringEqualsEl {
-        BackupSelectionConditionElStringEqualsEl {
+impl BuildBackupSelection_Condition_StringEquals {
+    pub fn build(self) -> BackupSelection_Condition_StringEquals {
+        BackupSelection_Condition_StringEquals {
             key: self.key,
             value: self.value,
         }
     }
 }
 
-pub struct BackupSelectionConditionElStringEqualsElRef {
+#[allow(dead_code)]
+pub struct BackupSelection_Condition_StringEqualsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupSelectionConditionElStringEqualsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelectionConditionElStringEqualsElRef {
-        BackupSelectionConditionElStringEqualsElRef {
+impl terrars::Ref for BackupSelection_Condition_StringEqualsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelection_Condition_StringEqualsRef {
+        BackupSelection_Condition_StringEqualsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupSelectionConditionElStringEqualsElRef {
+impl BackupSelection_Condition_StringEqualsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -413,15 +442,15 @@ impl BackupSelectionConditionElStringEqualsElRef {
 }
 
 #[derive(Serialize)]
-pub struct BackupSelectionConditionElStringLikeEl {
+pub struct BackupSelection_Condition_StringLike {
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl BackupSelectionConditionElStringLikeEl { }
+impl BackupSelection_Condition_StringLike { }
 
-impl terrars::ToListMappable for BackupSelectionConditionElStringLikeEl {
-    type O = terrars::BlockAssignable<BackupSelectionConditionElStringLikeEl>;
+impl terrars::ToListMappable for BackupSelection_Condition_StringLike {
+    type O = terrars::BlockAssignable<BackupSelection_Condition_StringLike>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -432,37 +461,39 @@ impl terrars::ToListMappable for BackupSelectionConditionElStringLikeEl {
     }
 }
 
-pub struct BuildBackupSelectionConditionElStringLikeEl {
+pub struct BuildBackupSelection_Condition_StringLike {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBackupSelectionConditionElStringLikeEl {
-    pub fn build(self) -> BackupSelectionConditionElStringLikeEl {
-        BackupSelectionConditionElStringLikeEl {
+impl BuildBackupSelection_Condition_StringLike {
+    pub fn build(self) -> BackupSelection_Condition_StringLike {
+        BackupSelection_Condition_StringLike {
             key: self.key,
             value: self.value,
         }
     }
 }
 
-pub struct BackupSelectionConditionElStringLikeElRef {
+#[allow(dead_code)]
+pub struct BackupSelection_Condition_StringLikeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupSelectionConditionElStringLikeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelectionConditionElStringLikeElRef {
-        BackupSelectionConditionElStringLikeElRef {
+impl terrars::Ref for BackupSelection_Condition_StringLikeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelection_Condition_StringLikeRef {
+        BackupSelection_Condition_StringLikeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupSelectionConditionElStringLikeElRef {
+impl BackupSelection_Condition_StringLikeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -479,15 +510,15 @@ impl BackupSelectionConditionElStringLikeElRef {
 }
 
 #[derive(Serialize)]
-pub struct BackupSelectionConditionElStringNotEqualsEl {
+pub struct BackupSelection_Condition_StringNotEquals {
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl BackupSelectionConditionElStringNotEqualsEl { }
+impl BackupSelection_Condition_StringNotEquals { }
 
-impl terrars::ToListMappable for BackupSelectionConditionElStringNotEqualsEl {
-    type O = terrars::BlockAssignable<BackupSelectionConditionElStringNotEqualsEl>;
+impl terrars::ToListMappable for BackupSelection_Condition_StringNotEquals {
+    type O = terrars::BlockAssignable<BackupSelection_Condition_StringNotEquals>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -498,40 +529,39 @@ impl terrars::ToListMappable for BackupSelectionConditionElStringNotEqualsEl {
     }
 }
 
-pub struct BuildBackupSelectionConditionElStringNotEqualsEl {
+pub struct BuildBackupSelection_Condition_StringNotEquals {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBackupSelectionConditionElStringNotEqualsEl {
-    pub fn build(self) -> BackupSelectionConditionElStringNotEqualsEl {
-        BackupSelectionConditionElStringNotEqualsEl {
+impl BuildBackupSelection_Condition_StringNotEquals {
+    pub fn build(self) -> BackupSelection_Condition_StringNotEquals {
+        BackupSelection_Condition_StringNotEquals {
             key: self.key,
             value: self.value,
         }
     }
 }
 
-pub struct BackupSelectionConditionElStringNotEqualsElRef {
+#[allow(dead_code)]
+pub struct BackupSelection_Condition_StringNotEqualsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupSelectionConditionElStringNotEqualsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> BackupSelectionConditionElStringNotEqualsElRef {
-        BackupSelectionConditionElStringNotEqualsElRef {
+impl terrars::Ref for BackupSelection_Condition_StringNotEqualsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelection_Condition_StringNotEqualsRef {
+        BackupSelection_Condition_StringNotEqualsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupSelectionConditionElStringNotEqualsElRef {
+impl BackupSelection_Condition_StringNotEqualsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -548,15 +578,15 @@ impl BackupSelectionConditionElStringNotEqualsElRef {
 }
 
 #[derive(Serialize)]
-pub struct BackupSelectionConditionElStringNotLikeEl {
+pub struct BackupSelection_Condition_StringNotLike {
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl BackupSelectionConditionElStringNotLikeEl { }
+impl BackupSelection_Condition_StringNotLike { }
 
-impl terrars::ToListMappable for BackupSelectionConditionElStringNotLikeEl {
-    type O = terrars::BlockAssignable<BackupSelectionConditionElStringNotLikeEl>;
+impl terrars::ToListMappable for BackupSelection_Condition_StringNotLike {
+    type O = terrars::BlockAssignable<BackupSelection_Condition_StringNotLike>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -567,37 +597,39 @@ impl terrars::ToListMappable for BackupSelectionConditionElStringNotLikeEl {
     }
 }
 
-pub struct BuildBackupSelectionConditionElStringNotLikeEl {
+pub struct BuildBackupSelection_Condition_StringNotLike {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBackupSelectionConditionElStringNotLikeEl {
-    pub fn build(self) -> BackupSelectionConditionElStringNotLikeEl {
-        BackupSelectionConditionElStringNotLikeEl {
+impl BuildBackupSelection_Condition_StringNotLike {
+    pub fn build(self) -> BackupSelection_Condition_StringNotLike {
+        BackupSelection_Condition_StringNotLike {
             key: self.key,
             value: self.value,
         }
     }
 }
 
-pub struct BackupSelectionConditionElStringNotLikeElRef {
+#[allow(dead_code)]
+pub struct BackupSelection_Condition_StringNotLikeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupSelectionConditionElStringNotLikeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelectionConditionElStringNotLikeElRef {
-        BackupSelectionConditionElStringNotLikeElRef {
+impl terrars::Ref for BackupSelection_Condition_StringNotLikeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelection_Condition_StringNotLikeRef {
+        BackupSelection_Condition_StringNotLikeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupSelectionConditionElStringNotLikeElRef {
+impl BackupSelection_Condition_StringNotLikeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -614,31 +646,31 @@ impl BackupSelectionConditionElStringNotLikeElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BackupSelectionConditionElDynamic {
-    string_equals: std::option::Option<terrars::DynamicBlock<BackupSelectionConditionElStringEqualsEl>>,
-    string_like: std::option::Option<terrars::DynamicBlock<BackupSelectionConditionElStringLikeEl>>,
-    string_not_equals: std::option::Option<terrars::DynamicBlock<BackupSelectionConditionElStringNotEqualsEl>>,
-    string_not_like: std::option::Option<terrars::DynamicBlock<BackupSelectionConditionElStringNotLikeEl>>,
+struct BackupSelection_ConditionDynamic {
+    string_equals: std::option::Option<terrars::DynamicBlock<BackupSelection_Condition_StringEquals>>,
+    string_like: std::option::Option<terrars::DynamicBlock<BackupSelection_Condition_StringLike>>,
+    string_not_equals: std::option::Option<terrars::DynamicBlock<BackupSelection_Condition_StringNotEquals>>,
+    string_not_like: std::option::Option<terrars::DynamicBlock<BackupSelection_Condition_StringNotLike>>,
 }
 
 #[derive(Serialize)]
-pub struct BackupSelectionConditionEl {
+pub struct BackupSelection_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_equals: std::option::Option<std::vec::Vec<BackupSelectionConditionElStringEqualsEl>>,
+    string_equals: std::option::Option<std::vec::Vec<BackupSelection_Condition_StringEquals>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_like: std::option::Option<std::vec::Vec<BackupSelectionConditionElStringLikeEl>>,
+    string_like: std::option::Option<std::vec::Vec<BackupSelection_Condition_StringLike>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_not_equals: std::option::Option<std::vec::Vec<BackupSelectionConditionElStringNotEqualsEl>>,
+    string_not_equals: std::option::Option<std::vec::Vec<BackupSelection_Condition_StringNotEquals>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_not_like: std::option::Option<std::vec::Vec<BackupSelectionConditionElStringNotLikeEl>>,
-    dynamic: BackupSelectionConditionElDynamic,
+    string_not_like: std::option::Option<std::vec::Vec<BackupSelection_Condition_StringNotLike>>,
+    dynamic: BackupSelection_ConditionDynamic,
 }
 
-impl BackupSelectionConditionEl {
+impl BackupSelection_Condition {
     #[doc = "Set the field `string_equals`.\n"]
     pub fn set_string_equals(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelectionConditionElStringEqualsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelection_Condition_StringEquals>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -654,7 +686,7 @@ impl BackupSelectionConditionEl {
     #[doc = "Set the field `string_like`.\n"]
     pub fn set_string_like(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelectionConditionElStringLikeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelection_Condition_StringLike>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -670,7 +702,7 @@ impl BackupSelectionConditionEl {
     #[doc = "Set the field `string_not_equals`.\n"]
     pub fn set_string_not_equals(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelectionConditionElStringNotEqualsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelection_Condition_StringNotEquals>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -686,7 +718,7 @@ impl BackupSelectionConditionEl {
     #[doc = "Set the field `string_not_like`.\n"]
     pub fn set_string_not_like(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelectionConditionElStringNotLikeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupSelection_Condition_StringNotLike>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -700,8 +732,8 @@ impl BackupSelectionConditionEl {
     }
 }
 
-impl terrars::ToListMappable for BackupSelectionConditionEl {
-    type O = terrars::BlockAssignable<BackupSelectionConditionEl>;
+impl terrars::ToListMappable for BackupSelection_Condition {
+    type O = terrars::BlockAssignable<BackupSelection_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -712,11 +744,11 @@ impl terrars::ToListMappable for BackupSelectionConditionEl {
     }
 }
 
-pub struct BuildBackupSelectionConditionEl {}
+pub struct BuildBackupSelection_Condition {}
 
-impl BuildBackupSelectionConditionEl {
-    pub fn build(self) -> BackupSelectionConditionEl {
-        BackupSelectionConditionEl {
+impl BuildBackupSelection_Condition {
+    pub fn build(self) -> BackupSelection_Condition {
+        BackupSelection_Condition {
             string_equals: core::default::Default::default(),
             string_like: core::default::Default::default(),
             string_not_equals: core::default::Default::default(),
@@ -726,38 +758,40 @@ impl BuildBackupSelectionConditionEl {
     }
 }
 
-pub struct BackupSelectionConditionElRef {
+#[allow(dead_code)]
+pub struct BackupSelection_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupSelectionConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelectionConditionElRef {
-        BackupSelectionConditionElRef {
+impl terrars::Ref for BackupSelection_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelection_ConditionRef {
+        BackupSelection_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupSelectionConditionElRef {
+impl BackupSelection_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct BackupSelectionSelectionTagEl {
+pub struct BackupSelection_SelectionTag {
     key: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl BackupSelectionSelectionTagEl { }
+impl BackupSelection_SelectionTag { }
 
-impl terrars::ToListMappable for BackupSelectionSelectionTagEl {
-    type O = terrars::BlockAssignable<BackupSelectionSelectionTagEl>;
+impl terrars::ToListMappable for BackupSelection_SelectionTag {
+    type O = terrars::BlockAssignable<BackupSelection_SelectionTag>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -768,7 +802,7 @@ impl terrars::ToListMappable for BackupSelectionSelectionTagEl {
     }
 }
 
-pub struct BuildBackupSelectionSelectionTagEl {
+pub struct BuildBackupSelection_SelectionTag {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -777,9 +811,9 @@ pub struct BuildBackupSelectionSelectionTagEl {
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBackupSelectionSelectionTagEl {
-    pub fn build(self) -> BackupSelectionSelectionTagEl {
-        BackupSelectionSelectionTagEl {
+impl BuildBackupSelection_SelectionTag {
+    pub fn build(self) -> BackupSelection_SelectionTag {
+        BackupSelection_SelectionTag {
             key: self.key,
             type_: self.type_,
             value: self.value,
@@ -787,21 +821,23 @@ impl BuildBackupSelectionSelectionTagEl {
     }
 }
 
-pub struct BackupSelectionSelectionTagElRef {
+#[allow(dead_code)]
+pub struct BackupSelection_SelectionTagRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupSelectionSelectionTagElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelectionSelectionTagElRef {
-        BackupSelectionSelectionTagElRef {
+impl terrars::Ref for BackupSelection_SelectionTagRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupSelection_SelectionTagRef {
+        BackupSelection_SelectionTagRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupSelectionSelectionTagElRef {
+impl BackupSelection_SelectionTagRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -820,10 +856,4 @@ impl BackupSelectionSelectionTagElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BackupSelectionDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<BackupSelectionConditionEl>>,
-    selection_tag: std::option::Option<terrars::DynamicBlock<BackupSelectionSelectionTagEl>>,
 }

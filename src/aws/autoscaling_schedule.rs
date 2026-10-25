@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AutoscalingScheduleData {
+struct AutoscalingScheduleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,6 +33,8 @@ struct AutoscalingScheduleData {
     min_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     recurrence: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     scheduled_action_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -41,7 +45,7 @@ struct AutoscalingScheduleData {
 struct AutoscalingSchedule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AutoscalingScheduleData>,
+    data: std::cell::RefCell<AutoscalingScheduleData_>,
 }
 
 #[derive(Clone)]
@@ -177,6 +181,13 @@ impl AutoscalingSchedule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `start_time`.\n"]
     pub fn set_start_time(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().start_time = std::option::Option::Some(v.into());
@@ -227,6 +238,12 @@ impl AutoscalingSchedule {
     #[doc = "Get a reference to the value of field `recurrence` after provisioning.\n"]
     pub fn recurrence(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.recurrence", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scheduled_action_name` after provisioning.\n"]
@@ -289,7 +306,7 @@ impl BuildAutoscalingSchedule {
         let out = AutoscalingSchedule(std::rc::Rc::new(AutoscalingSchedule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AutoscalingScheduleData {
+            data: std::cell::RefCell::new(AutoscalingScheduleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -302,6 +319,7 @@ impl BuildAutoscalingSchedule {
                 max_size: core::default::Default::default(),
                 min_size: core::default::Default::default(),
                 recurrence: core::default::Default::default(),
+                region: core::default::Default::default(),
                 scheduled_action_name: self.scheduled_action_name,
                 start_time: core::default::Default::default(),
                 time_zone: core::default::Default::default(),
@@ -373,6 +391,12 @@ impl AutoscalingScheduleRef {
     #[doc = "Get a reference to the value of field `recurrence` after provisioning.\n"]
     pub fn recurrence(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.recurrence", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scheduled_action_name` after provisioning.\n"]

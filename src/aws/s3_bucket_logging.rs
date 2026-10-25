@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketLoggingData {
+struct S3BucketLoggingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,17 +25,21 @@ struct S3BucketLoggingData {
     expected_bucket_owner: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     target_bucket: terrars::PrimField<std::string::String>,
     target_prefix: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_grant: std::option::Option<std::vec::Vec<S3BucketLoggingTargetGrantEl>>,
+    target_grant: std::option::Option<std::vec::Vec<S3BucketLogging_TargetGrant>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_object_key_format: std::option::Option<std::vec::Vec<S3BucketLogging_TargetObjectKeyFormat>>,
     dynamic: S3BucketLoggingDynamic,
 }
 
 struct S3BucketLogging_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketLoggingData>,
+    data: std::cell::RefCell<S3BucketLoggingData_>,
 }
 
 #[derive(Clone)]
@@ -145,10 +151,17 @@ impl S3BucketLogging {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `target_grant`.\n"]
     pub fn set_target_grant(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLoggingTargetGrantEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLogging_TargetGrant>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -156,6 +169,22 @@ impl S3BucketLogging {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.target_grant = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `target_object_key_format`.\n"]
+    pub fn set_target_object_key_format(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLogging_TargetObjectKeyFormat>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().target_object_key_format = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.target_object_key_format = std::option::Option::Some(d);
             },
         }
         self
@@ -176,6 +205,12 @@ impl S3BucketLogging {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_bucket` after provisioning.\n"]
     pub fn target_bucket(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_bucket", self.extract_ref()))
@@ -184,6 +219,11 @@ impl S3BucketLogging {
     #[doc = "Get a reference to the value of field `target_prefix` after provisioning.\n"]
     pub fn target_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_prefix", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_object_key_format` after provisioning.\n"]
+    pub fn target_object_key_format(&self) -> terrars::ListRef<S3BucketLogging_TargetObjectKeyFormatRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_object_key_format", self.extract_ref()))
     }
 }
 
@@ -233,7 +273,7 @@ impl BuildS3BucketLogging {
         let out = S3BucketLogging(std::rc::Rc::new(S3BucketLogging_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketLoggingData {
+            data: std::cell::RefCell::new(S3BucketLoggingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -242,9 +282,11 @@ impl BuildS3BucketLogging {
                 bucket: self.bucket,
                 expected_bucket_owner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 target_bucket: self.target_bucket,
                 target_prefix: self.target_prefix,
                 target_grant: core::default::Default::default(),
+                target_object_key_format: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -291,6 +333,12 @@ impl S3BucketLoggingRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_bucket` after provisioning.\n"]
     pub fn target_bucket(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_bucket", self.extract_ref()))
@@ -300,10 +348,21 @@ impl S3BucketLoggingRef {
     pub fn target_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_prefix", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `target_object_key_format` after provisioning.\n"]
+    pub fn target_object_key_format(&self) -> terrars::ListRef<S3BucketLogging_TargetObjectKeyFormatRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_object_key_format", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct S3BucketLoggingDynamic {
+    target_grant: std::option::Option<terrars::DynamicBlock<S3BucketLogging_TargetGrant>>,
+    target_object_key_format: std::option::Option<terrars::DynamicBlock<S3BucketLogging_TargetObjectKeyFormat>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketLoggingTargetGrantElGranteeEl {
+pub struct S3BucketLogging_TargetGrant_Grantee {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     email_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -314,7 +373,7 @@ pub struct S3BucketLoggingTargetGrantElGranteeEl {
     uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketLoggingTargetGrantElGranteeEl {
+impl S3BucketLogging_TargetGrant_Grantee {
     #[doc = "Set the field `email_address`.\n"]
     pub fn set_email_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.email_address = std::option::Option::Some(v.into());
@@ -334,8 +393,8 @@ impl S3BucketLoggingTargetGrantElGranteeEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketLoggingTargetGrantElGranteeEl {
-    type O = terrars::BlockAssignable<S3BucketLoggingTargetGrantElGranteeEl>;
+impl terrars::ToListMappable for S3BucketLogging_TargetGrant_Grantee {
+    type O = terrars::BlockAssignable<S3BucketLogging_TargetGrant_Grantee>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -346,14 +405,14 @@ impl terrars::ToListMappable for S3BucketLoggingTargetGrantElGranteeEl {
     }
 }
 
-pub struct BuildS3BucketLoggingTargetGrantElGranteeEl {
+pub struct BuildS3BucketLogging_TargetGrant_Grantee {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketLoggingTargetGrantElGranteeEl {
-    pub fn build(self) -> S3BucketLoggingTargetGrantElGranteeEl {
-        S3BucketLoggingTargetGrantElGranteeEl {
+impl BuildS3BucketLogging_TargetGrant_Grantee {
+    pub fn build(self) -> S3BucketLogging_TargetGrant_Grantee {
+        S3BucketLogging_TargetGrant_Grantee {
             email_address: core::default::Default::default(),
             id: core::default::Default::default(),
             type_: self.type_,
@@ -362,21 +421,23 @@ impl BuildS3BucketLoggingTargetGrantElGranteeEl {
     }
 }
 
-pub struct S3BucketLoggingTargetGrantElGranteeElRef {
+#[allow(dead_code)]
+pub struct S3BucketLogging_TargetGrant_GranteeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketLoggingTargetGrantElGranteeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLoggingTargetGrantElGranteeElRef {
-        S3BucketLoggingTargetGrantElGranteeElRef {
+impl terrars::Ref for S3BucketLogging_TargetGrant_GranteeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLogging_TargetGrant_GranteeRef {
+        S3BucketLogging_TargetGrant_GranteeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketLoggingTargetGrantElGranteeElRef {
+impl S3BucketLogging_TargetGrant_GranteeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -408,23 +469,23 @@ impl S3BucketLoggingTargetGrantElGranteeElRef {
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketLoggingTargetGrantElDynamic {
-    grantee: std::option::Option<terrars::DynamicBlock<S3BucketLoggingTargetGrantElGranteeEl>>,
+struct S3BucketLogging_TargetGrantDynamic {
+    grantee: std::option::Option<terrars::DynamicBlock<S3BucketLogging_TargetGrant_Grantee>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketLoggingTargetGrantEl {
+pub struct S3BucketLogging_TargetGrant {
     permission: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    grantee: std::option::Option<std::vec::Vec<S3BucketLoggingTargetGrantElGranteeEl>>,
-    dynamic: S3BucketLoggingTargetGrantElDynamic,
+    grantee: std::option::Option<std::vec::Vec<S3BucketLogging_TargetGrant_Grantee>>,
+    dynamic: S3BucketLogging_TargetGrantDynamic,
 }
 
-impl S3BucketLoggingTargetGrantEl {
+impl S3BucketLogging_TargetGrant {
     #[doc = "Set the field `grantee`.\n"]
     pub fn set_grantee(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLoggingTargetGrantElGranteeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLogging_TargetGrant_Grantee>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -438,8 +499,8 @@ impl S3BucketLoggingTargetGrantEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketLoggingTargetGrantEl {
-    type O = terrars::BlockAssignable<S3BucketLoggingTargetGrantEl>;
+impl terrars::ToListMappable for S3BucketLogging_TargetGrant {
+    type O = terrars::BlockAssignable<S3BucketLogging_TargetGrant>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -450,14 +511,14 @@ impl terrars::ToListMappable for S3BucketLoggingTargetGrantEl {
     }
 }
 
-pub struct BuildS3BucketLoggingTargetGrantEl {
+pub struct BuildS3BucketLogging_TargetGrant {
     #[doc = ""]
     pub permission: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketLoggingTargetGrantEl {
-    pub fn build(self) -> S3BucketLoggingTargetGrantEl {
-        S3BucketLoggingTargetGrantEl {
+impl BuildS3BucketLogging_TargetGrant {
+    pub fn build(self) -> S3BucketLogging_TargetGrant {
+        S3BucketLogging_TargetGrant {
             permission: self.permission,
             grantee: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -465,21 +526,23 @@ impl BuildS3BucketLoggingTargetGrantEl {
     }
 }
 
-pub struct S3BucketLoggingTargetGrantElRef {
+#[allow(dead_code)]
+pub struct S3BucketLogging_TargetGrantRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketLoggingTargetGrantElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLoggingTargetGrantElRef {
-        S3BucketLoggingTargetGrantElRef {
+impl terrars::Ref for S3BucketLogging_TargetGrantRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLogging_TargetGrantRef {
+        S3BucketLogging_TargetGrantRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketLoggingTargetGrantElRef {
+impl S3BucketLogging_TargetGrantRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -490,12 +553,229 @@ impl S3BucketLoggingTargetGrantElRef {
     }
 
     #[doc = "Get a reference to the value of field `grantee` after provisioning.\n"]
-    pub fn grantee(&self) -> terrars::ListRef<S3BucketLoggingTargetGrantElGranteeElRef> {
+    pub fn grantee(&self) -> terrars::ListRef<S3BucketLogging_TargetGrant_GranteeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.grantee", self.base))
     }
 }
 
+#[derive(Serialize)]
+pub struct S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix {
+    partition_date_source: terrars::PrimField<std::string::String>,
+}
+
+impl S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix { }
+
+impl terrars::ToListMappable for S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix {
+    type O = terrars::BlockAssignable<S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildS3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix {
+    #[doc = ""]
+    pub partition_date_source: terrars::PrimField<std::string::String>,
+}
+
+impl BuildS3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix {
+    pub fn build(self) -> S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix {
+        S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix { partition_date_source: self.partition_date_source }
+    }
+}
+
+#[allow(dead_code)]
+pub struct S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefixRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefixRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefixRef {
+        S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefixRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefixRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `partition_date_source` after provisioning.\n"]
+    pub fn partition_date_source(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.partition_date_source", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct S3BucketLogging_TargetObjectKeyFormat_SimplePrefix {}
+
+impl S3BucketLogging_TargetObjectKeyFormat_SimplePrefix { }
+
+impl terrars::ToListMappable for S3BucketLogging_TargetObjectKeyFormat_SimplePrefix {
+    type O = terrars::BlockAssignable<S3BucketLogging_TargetObjectKeyFormat_SimplePrefix>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildS3BucketLogging_TargetObjectKeyFormat_SimplePrefix {}
+
+impl BuildS3BucketLogging_TargetObjectKeyFormat_SimplePrefix {
+    pub fn build(self) -> S3BucketLogging_TargetObjectKeyFormat_SimplePrefix {
+        S3BucketLogging_TargetObjectKeyFormat_SimplePrefix {}
+    }
+}
+
+#[allow(dead_code)]
+pub struct S3BucketLogging_TargetObjectKeyFormat_SimplePrefixRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for S3BucketLogging_TargetObjectKeyFormat_SimplePrefixRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3BucketLogging_TargetObjectKeyFormat_SimplePrefixRef {
+        S3BucketLogging_TargetObjectKeyFormat_SimplePrefixRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl S3BucketLogging_TargetObjectKeyFormat_SimplePrefixRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
 #[derive(Serialize, Default)]
-struct S3BucketLoggingDynamic {
-    target_grant: std::option::Option<terrars::DynamicBlock<S3BucketLoggingTargetGrantEl>>,
+struct S3BucketLogging_TargetObjectKeyFormatDynamic {
+    partitioned_prefix: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix>>,
+    simple_prefix: std::option::Option<terrars::DynamicBlock<S3BucketLogging_TargetObjectKeyFormat_SimplePrefix>>,
+}
+
+#[derive(Serialize)]
+pub struct S3BucketLogging_TargetObjectKeyFormat {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    partitioned_prefix: std::option::Option<std::vec::Vec<S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    simple_prefix: std::option::Option<std::vec::Vec<S3BucketLogging_TargetObjectKeyFormat_SimplePrefix>>,
+    dynamic: S3BucketLogging_TargetObjectKeyFormatDynamic,
+}
+
+impl S3BucketLogging_TargetObjectKeyFormat {
+    #[doc = "Set the field `partitioned_prefix`.\n"]
+    pub fn set_partitioned_prefix(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefix>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.partitioned_prefix = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.partitioned_prefix = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `simple_prefix`.\n"]
+    pub fn set_simple_prefix(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLogging_TargetObjectKeyFormat_SimplePrefix>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.simple_prefix = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.simple_prefix = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for S3BucketLogging_TargetObjectKeyFormat {
+    type O = terrars::BlockAssignable<S3BucketLogging_TargetObjectKeyFormat>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildS3BucketLogging_TargetObjectKeyFormat {}
+
+impl BuildS3BucketLogging_TargetObjectKeyFormat {
+    pub fn build(self) -> S3BucketLogging_TargetObjectKeyFormat {
+        S3BucketLogging_TargetObjectKeyFormat {
+            partitioned_prefix: core::default::Default::default(),
+            simple_prefix: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct S3BucketLogging_TargetObjectKeyFormatRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for S3BucketLogging_TargetObjectKeyFormatRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLogging_TargetObjectKeyFormatRef {
+        S3BucketLogging_TargetObjectKeyFormatRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl S3BucketLogging_TargetObjectKeyFormatRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `partitioned_prefix` after provisioning.\n"]
+    pub fn partitioned_prefix(&self) -> terrars::ListRef<S3BucketLogging_TargetObjectKeyFormat_PartitionedPrefixRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.partitioned_prefix", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `simple_prefix` after provisioning.\n"]
+    pub fn simple_prefix(&self) -> terrars::ListRef<S3BucketLogging_TargetObjectKeyFormat_SimplePrefixRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.simple_prefix", self.base))
+    }
 }

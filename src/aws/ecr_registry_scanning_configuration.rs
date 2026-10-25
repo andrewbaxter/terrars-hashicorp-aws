@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EcrRegistryScanningConfigurationData {
+struct EcrRegistryScanningConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,16 +22,18 @@ struct EcrRegistryScanningConfigurationData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     scan_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<EcrRegistryScanningConfigurationRuleEl>>,
+    rule: std::option::Option<std::vec::Vec<EcrRegistryScanningConfiguration_Rule>>,
     dynamic: EcrRegistryScanningConfigurationDynamic,
 }
 
 struct EcrRegistryScanningConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EcrRegistryScanningConfigurationData>,
+    data: std::cell::RefCell<EcrRegistryScanningConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl EcrRegistryScanningConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `rule`.\n"]
     pub fn set_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcrRegistryScanningConfigurationRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcrRegistryScanningConfiguration_Rule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -154,6 +165,12 @@ impl EcrRegistryScanningConfiguration {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
@@ -209,13 +226,14 @@ impl BuildEcrRegistryScanningConfiguration {
         let out = EcrRegistryScanningConfiguration(std::rc::Rc::new(EcrRegistryScanningConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EcrRegistryScanningConfigurationData {
+            data: std::cell::RefCell::new(EcrRegistryScanningConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 scan_type: self.scan_type,
                 rule: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -254,6 +272,12 @@ impl EcrRegistryScanningConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
     pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
@@ -265,16 +289,21 @@ impl EcrRegistryScanningConfigurationRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct EcrRegistryScanningConfigurationDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<EcrRegistryScanningConfiguration_Rule>>,
+}
+
 #[derive(Serialize)]
-pub struct EcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
+pub struct EcrRegistryScanningConfiguration_Rule_RepositoryFilter {
     filter: terrars::PrimField<std::string::String>,
     filter_type: terrars::PrimField<std::string::String>,
 }
 
-impl EcrRegistryScanningConfigurationRuleElRepositoryFilterEl { }
+impl EcrRegistryScanningConfiguration_Rule_RepositoryFilter { }
 
-impl terrars::ToListMappable for EcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
-    type O = terrars::BlockAssignable<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>;
+impl terrars::ToListMappable for EcrRegistryScanningConfiguration_Rule_RepositoryFilter {
+    type O = terrars::BlockAssignable<EcrRegistryScanningConfiguration_Rule_RepositoryFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -285,40 +314,42 @@ impl terrars::ToListMappable for EcrRegistryScanningConfigurationRuleElRepositor
     }
 }
 
-pub struct BuildEcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
+pub struct BuildEcrRegistryScanningConfiguration_Rule_RepositoryFilter {
     #[doc = ""]
     pub filter: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub filter_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
-    pub fn build(self) -> EcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
-        EcrRegistryScanningConfigurationRuleElRepositoryFilterEl {
+impl BuildEcrRegistryScanningConfiguration_Rule_RepositoryFilter {
+    pub fn build(self) -> EcrRegistryScanningConfiguration_Rule_RepositoryFilter {
+        EcrRegistryScanningConfiguration_Rule_RepositoryFilter {
             filter: self.filter,
             filter_type: self.filter_type,
         }
     }
 }
 
-pub struct EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
+#[allow(dead_code)]
+pub struct EcrRegistryScanningConfiguration_Rule_RepositoryFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
+impl terrars::Ref for EcrRegistryScanningConfiguration_Rule_RepositoryFilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
-        EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
+    ) -> EcrRegistryScanningConfiguration_Rule_RepositoryFilterRef {
+        EcrRegistryScanningConfiguration_Rule_RepositoryFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
+impl EcrRegistryScanningConfiguration_Rule_RepositoryFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -335,30 +366,25 @@ impl EcrRegistryScanningConfigurationRuleElRepositoryFilterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EcrRegistryScanningConfigurationRuleElDynamic {
+struct EcrRegistryScanningConfiguration_RuleDynamic {
     repository_filter: std
     ::option
-    ::Option<terrars::DynamicBlock<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>>,
+    ::Option<terrars::DynamicBlock<EcrRegistryScanningConfiguration_Rule_RepositoryFilter>>,
 }
 
 #[derive(Serialize)]
-pub struct EcrRegistryScanningConfigurationRuleEl {
+pub struct EcrRegistryScanningConfiguration_Rule {
     scan_frequency: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    repository_filter: std::option::Option<std::vec::Vec<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>>,
-    dynamic: EcrRegistryScanningConfigurationRuleElDynamic,
+    repository_filter: std::option::Option<std::vec::Vec<EcrRegistryScanningConfiguration_Rule_RepositoryFilter>>,
+    dynamic: EcrRegistryScanningConfiguration_RuleDynamic,
 }
 
-impl EcrRegistryScanningConfigurationRuleEl {
+impl EcrRegistryScanningConfiguration_Rule {
     #[doc = "Set the field `repository_filter`.\n"]
     pub fn set_repository_filter(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<EcrRegistryScanningConfigurationRuleElRepositoryFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcrRegistryScanningConfiguration_Rule_RepositoryFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -372,8 +398,8 @@ impl EcrRegistryScanningConfigurationRuleEl {
     }
 }
 
-impl terrars::ToListMappable for EcrRegistryScanningConfigurationRuleEl {
-    type O = terrars::BlockAssignable<EcrRegistryScanningConfigurationRuleEl>;
+impl terrars::ToListMappable for EcrRegistryScanningConfiguration_Rule {
+    type O = terrars::BlockAssignable<EcrRegistryScanningConfiguration_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -384,14 +410,14 @@ impl terrars::ToListMappable for EcrRegistryScanningConfigurationRuleEl {
     }
 }
 
-pub struct BuildEcrRegistryScanningConfigurationRuleEl {
+pub struct BuildEcrRegistryScanningConfiguration_Rule {
     #[doc = ""]
     pub scan_frequency: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcrRegistryScanningConfigurationRuleEl {
-    pub fn build(self) -> EcrRegistryScanningConfigurationRuleEl {
-        EcrRegistryScanningConfigurationRuleEl {
+impl BuildEcrRegistryScanningConfiguration_Rule {
+    pub fn build(self) -> EcrRegistryScanningConfiguration_Rule {
+        EcrRegistryScanningConfiguration_Rule {
             scan_frequency: self.scan_frequency,
             repository_filter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -399,21 +425,23 @@ impl BuildEcrRegistryScanningConfigurationRuleEl {
     }
 }
 
-pub struct EcrRegistryScanningConfigurationRuleElRef {
+#[allow(dead_code)]
+pub struct EcrRegistryScanningConfiguration_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrRegistryScanningConfigurationRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrRegistryScanningConfigurationRuleElRef {
-        EcrRegistryScanningConfigurationRuleElRef {
+impl terrars::Ref for EcrRegistryScanningConfiguration_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrRegistryScanningConfiguration_RuleRef {
+        EcrRegistryScanningConfiguration_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrRegistryScanningConfigurationRuleElRef {
+impl EcrRegistryScanningConfiguration_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +450,4 @@ impl EcrRegistryScanningConfigurationRuleElRef {
     pub fn scan_frequency(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scan_frequency", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EcrRegistryScanningConfigurationDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<EcrRegistryScanningConfigurationRuleEl>>,
 }

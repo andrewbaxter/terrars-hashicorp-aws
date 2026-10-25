@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppautoscalingPolicyData {
+struct AppautoscalingPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,24 +25,30 @@ struct AppautoscalingPolicyData {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     resource_id: terrars::PrimField<std::string::String>,
     scalable_dimension: terrars::PrimField<std::string::String>,
     service_namespace: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predictive_scaling_policy_configuration: std
+    ::option
+    ::Option<std::vec::Vec<AppautoscalingPolicy_PredictiveScalingPolicyConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     step_scaling_policy_configuration: std
     ::option
-    ::Option<std::vec::Vec<AppautoscalingPolicyStepScalingPolicyConfigurationEl>>,
+    ::Option<std::vec::Vec<AppautoscalingPolicy_StepScalingPolicyConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_tracking_scaling_policy_configuration: std
     ::option
-    ::Option<std::vec::Vec<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl>>,
+    ::Option<std::vec::Vec<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration>>,
     dynamic: AppautoscalingPolicyDynamic,
 }
 
 struct AppautoscalingPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppautoscalingPolicyData>,
+    data: std::cell::RefCell<AppautoscalingPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -152,10 +160,39 @@ impl AppautoscalingPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `predictive_scaling_policy_configuration`.\n"]
+    pub fn set_predictive_scaling_policy_configuration(
+        self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<AppautoscalingPolicy_PredictiveScalingPolicyConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().predictive_scaling_policy_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.predictive_scaling_policy_configuration =
+                    std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `step_scaling_policy_configuration`.\n"]
     pub fn set_step_scaling_policy_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppautoscalingPolicyStepScalingPolicyConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppautoscalingPolicy_StepScalingPolicyConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -176,7 +213,7 @@ impl AppautoscalingPolicy {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,6 +252,12 @@ impl AppautoscalingPolicy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
     pub fn resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id", self.extract_ref()))
@@ -230,10 +273,20 @@ impl AppautoscalingPolicy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_namespace", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `predictive_scaling_policy_configuration` after provisioning.\n"]
+    pub fn predictive_scaling_policy_configuration(
+        &self,
+    ) -> terrars::ListRef<AppautoscalingPolicy_PredictiveScalingPolicyConfigurationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.predictive_scaling_policy_configuration", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `step_scaling_policy_configuration` after provisioning.\n"]
     pub fn step_scaling_policy_configuration(
         &self,
-    ) -> terrars::ListRef<AppautoscalingPolicyStepScalingPolicyConfigurationElRef> {
+    ) -> terrars::ListRef<AppautoscalingPolicy_StepScalingPolicyConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.step_scaling_policy_configuration", self.extract_ref()),
@@ -244,7 +297,7 @@ impl AppautoscalingPolicy {
         "Get a reference to the value of field `target_tracking_scaling_policy_configuration` after provisioning.\n"]
     pub fn target_tracking_scaling_policy_configuration(
         &self,
-    ) -> terrars::ListRef<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElRef> {
+    ) -> terrars::ListRef<AppautoscalingPolicy_TargetTrackingScalingPolicyConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.target_tracking_scaling_policy_configuration", self.extract_ref()),
@@ -300,7 +353,7 @@ impl BuildAppautoscalingPolicy {
         let out = AppautoscalingPolicy(std::rc::Rc::new(AppautoscalingPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppautoscalingPolicyData {
+            data: std::cell::RefCell::new(AppautoscalingPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -309,9 +362,11 @@ impl BuildAppautoscalingPolicy {
                 id: core::default::Default::default(),
                 name: self.name,
                 policy_type: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resource_id: self.resource_id,
                 scalable_dimension: self.scalable_dimension,
                 service_namespace: self.service_namespace,
+                predictive_scaling_policy_configuration: core::default::Default::default(),
                 step_scaling_policy_configuration: core::default::Default::default(),
                 target_tracking_scaling_policy_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -370,6 +425,12 @@ impl AppautoscalingPolicyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
     pub fn resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id", self.extract_ref()))
@@ -385,10 +446,20 @@ impl AppautoscalingPolicyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_namespace", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `predictive_scaling_policy_configuration` after provisioning.\n"]
+    pub fn predictive_scaling_policy_configuration(
+        &self,
+    ) -> terrars::ListRef<AppautoscalingPolicy_PredictiveScalingPolicyConfigurationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.predictive_scaling_policy_configuration", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `step_scaling_policy_configuration` after provisioning.\n"]
     pub fn step_scaling_policy_configuration(
         &self,
-    ) -> terrars::ListRef<AppautoscalingPolicyStepScalingPolicyConfigurationElRef> {
+    ) -> terrars::ListRef<AppautoscalingPolicy_StepScalingPolicyConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.step_scaling_policy_configuration", self.extract_ref()),
@@ -399,7 +470,7 @@ impl AppautoscalingPolicyRef {
         "Get a reference to the value of field `target_tracking_scaling_policy_configuration` after provisioning.\n"]
     pub fn target_tracking_scaling_policy_configuration(
         &self,
-    ) -> terrars::ListRef<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElRef> {
+    ) -> terrars::ListRef<AppautoscalingPolicy_TargetTrackingScalingPolicyConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.target_tracking_scaling_policy_configuration", self.extract_ref()),
@@ -407,8 +478,1739 @@ impl AppautoscalingPolicyRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicyDynamic {
+    predictive_scaling_policy_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppautoscalingPolicy_PredictiveScalingPolicyConfiguration>>,
+    step_scaling_policy_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppautoscalingPolicy_StepScalingPolicyConfiguration>>,
+    target_tracking_scaling_policy_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl {
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension {
+    name: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension {
+
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension {
+            name: self.name,
+            value: self.value,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_DimensionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_DimensionRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_DimensionRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_DimensionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_DimensionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_MetricDynamic {
+    dimension: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    namespace: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension,
+        >,
+    >,
+    dynamic: AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_MetricDynamic,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric {
+    #[doc = "Set the field `metric_name`.\n"]
+    pub fn set_metric_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.metric_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `namespace`.\n"]
+    pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.namespace = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `dimension`.\n"]
+    pub fn set_dimension(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric_Dimension,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric {}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric {
+            metric_name: core::default::Default::default(),
+            namespace: core::default::Default::default(),
+            dimension: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_MetricRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_MetricRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_MetricRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_MetricRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_MetricRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `metric_name` after provisioning.\n"]
+    pub fn metric_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `namespace` after provisioning.\n"]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStatDynamic {
+    metric: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat {
+    stat: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric,
+        >,
+    >,
+    dynamic: AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStatDynamic,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat {
+    #[doc = "Set the field `unit`.\n"]
+    pub fn set_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.unit = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metric`.\n"]
+    pub fn set_metric(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_Metric,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat {
+    #[doc = ""]
+    pub stat: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat {
+            stat: self.stat,
+            unit: core::default::Default::default(),
+            metric: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStatRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStatRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStatRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStatRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStatRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `stat` after provisioning.\n"]
+    pub fn stat(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stat", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `metric` after provisioning.\n"]
+    pub fn metric(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat_MetricRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryDynamic {
+    metric_stat: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expression: std::option::Option<terrars::PrimField<std::string::String>>,
+    id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    label: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    return_data: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_stat: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat,
+        >,
+    >,
+    dynamic: AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryDynamic,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery {
+    #[doc = "Set the field `expression`.\n"]
+    pub fn set_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.expression = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `label`.\n"]
+    pub fn set_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.label = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `return_data`.\n"]
+    pub fn set_return_data(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.return_data = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metric_stat`.\n"]
+    pub fn set_metric_stat(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStat,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_stat = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_stat = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery {
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery {
+            expression: core::default::Default::default(),
+            id: self.id,
+            label: core::default::Default::default(),
+            return_data: core::default::Default::default(),
+            metric_stat: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `expression` after provisioning.\n"]
+    pub fn expression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `label` after provisioning.\n"]
+    pub fn label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `return_data` after provisioning.\n"]
+    pub fn return_data(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.return_data", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `metric_stat` after provisioning.\n"]
+    pub fn metric_stat(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery_MetricStatRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_stat", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecificationDynamic {
+    metric_data_query: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_data_query: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+        >,
+    >,
+    dynamic: AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecificationDynamic,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification {
+    #[doc = "Set the field `metric_data_query`.\n"]
+    pub fn set_metric_data_query(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_data_query = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_data_query = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification {}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification {
+            metric_data_query: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecificationRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `metric_data_query` after provisioning.\n"]
+    pub fn metric_data_query(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_data_query", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecificationDynamic {
+    metric_data_query: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_data_query: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+        >,
+    >,
+    dynamic: AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecificationDynamic,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification {
+    #[doc = "Set the field `metric_data_query`.\n"]
+    pub fn set_metric_data_query(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_data_query = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_data_query = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification {}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification {
+            metric_data_query: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecificationRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `metric_data_query` after provisioning.\n"]
+    pub fn metric_data_query(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_data_query", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecificationDynamic {
+    metric_data_query: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_data_query: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+        >,
+    >,
+    dynamic: AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecificationDynamic,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification {
+    #[doc = "Set the field `metric_data_query`.\n"]
+    pub fn set_metric_data_query(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQuery,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_data_query = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_data_query = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification {}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification {
+            metric_data_query: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecificationRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `metric_data_query` after provisioning.\n"]
+    pub fn metric_data_query(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification_MetricDataQueryRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_data_query", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification {
+    predefined_metric_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_label: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification {
+    #[doc = "Set the field `resource_label`.\n"]
+    pub fn set_resource_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_label = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification {
+    #[doc = ""]
+    pub predefined_metric_type: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification {
+            predefined_metric_type: self.predefined_metric_type,
+            resource_label: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecificationRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
+    pub fn predefined_metric_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_label` after provisioning.\n"]
+    pub fn resource_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification {
+    predefined_metric_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_label: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification {
+    #[doc = "Set the field `resource_label`.\n"]
+    pub fn set_resource_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_label = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification {
+    #[doc = ""]
+    pub predefined_metric_type: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification {
+            predefined_metric_type: self.predefined_metric_type,
+            resource_label: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecificationRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
+    pub fn predefined_metric_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_label` after provisioning.\n"]
+    pub fn resource_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification {
+    predefined_metric_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_label: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification {
+    #[doc = "Set the field `resource_label`.\n"]
+    pub fn set_resource_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_label = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification {
+    #[doc = ""]
+    pub predefined_metric_type: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification {
+            predefined_metric_type: self.predefined_metric_type,
+            resource_label: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecificationRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `predefined_metric_type` after provisioning.\n"]
+    pub fn predefined_metric_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.predefined_metric_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_label` after provisioning.\n"]
+    pub fn resource_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_label", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecificationDynamic {
+    customized_capacity_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification,
+        >,
+    >,
+    customized_load_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification,
+        >,
+    >,
+    customized_scaling_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification,
+        >,
+    >,
+    predefined_load_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification,
+        >,
+    >,
+    predefined_metric_pair_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification,
+        >,
+    >,
+    predefined_scaling_metric_specification: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification {
+    target_value: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    customized_capacity_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    customized_load_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    customized_scaling_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predefined_load_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predefined_metric_pair_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification,
+        >,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    predefined_scaling_metric_specification: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification,
+        >,
+    >,
+    dynamic: AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecificationDynamic,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification {
+    #[doc = "Set the field `customized_capacity_metric_specification`.\n"]
+    pub fn set_customized_capacity_metric_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecification,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.customized_capacity_metric_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.customized_capacity_metric_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `customized_load_metric_specification`.\n"]
+    pub fn set_customized_load_metric_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecification,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.customized_load_metric_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.customized_load_metric_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `customized_scaling_metric_specification`.\n"]
+    pub fn set_customized_scaling_metric_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecification,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.customized_scaling_metric_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.customized_scaling_metric_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `predefined_load_metric_specification`.\n"]
+    pub fn set_predefined_load_metric_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecification,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.predefined_load_metric_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.predefined_load_metric_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `predefined_metric_pair_specification`.\n"]
+    pub fn set_predefined_metric_pair_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecification,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.predefined_metric_pair_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.predefined_metric_pair_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `predefined_scaling_metric_specification`.\n"]
+    pub fn set_predefined_scaling_metric_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecification,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.predefined_scaling_metric_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.predefined_scaling_metric_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification {
+    type O = terrars::BlockAssignable<AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification {
+    #[doc = ""]
+    pub target_value: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification {
+    pub fn build(self) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification {
+            target_value: self.target_value,
+            customized_capacity_metric_specification: core::default::Default::default(),
+            customized_load_metric_specification: core::default::Default::default(),
+            customized_scaling_metric_specification: core::default::Default::default(),
+            predefined_load_metric_specification: core::default::Default::default(),
+            predefined_metric_pair_specification: core::default::Default::default(),
+            predefined_scaling_metric_specification: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecificationRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `target_value` after provisioning.\n"]
+    pub fn target_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_value", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `customized_capacity_metric_specification` after provisioning.\n"]
+    pub fn customized_capacity_metric_specification(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedCapacityMetricSpecificationRef,
+    > {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.customized_capacity_metric_specification", self.base),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `customized_load_metric_specification` after provisioning.\n"]
+    pub fn customized_load_metric_specification(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedLoadMetricSpecificationRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.customized_load_metric_specification", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `customized_scaling_metric_specification` after provisioning.\n"]
+    pub fn customized_scaling_metric_specification(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_CustomizedScalingMetricSpecificationRef,
+    > {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.customized_scaling_metric_specification", self.base),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `predefined_load_metric_specification` after provisioning.\n"]
+    pub fn predefined_load_metric_specification(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedLoadMetricSpecificationRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.predefined_load_metric_specification", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `predefined_metric_pair_specification` after provisioning.\n"]
+    pub fn predefined_metric_pair_specification(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedMetricPairSpecificationRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.predefined_metric_pair_specification", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `predefined_scaling_metric_specification` after provisioning.\n"]
+    pub fn predefined_scaling_metric_specification(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification_PredefinedScalingMetricSpecificationRef,
+    > {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.predefined_scaling_metric_specification", self.base),
+        )
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_PredictiveScalingPolicyConfigurationDynamic {
+    metric_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification>>,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_capacity_breach_behavior: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_capacity_buffer: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scheduling_buffer_time: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_specification: std
+    ::option
+    ::Option<std::vec::Vec<AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification>>,
+    dynamic: AppautoscalingPolicy_PredictiveScalingPolicyConfigurationDynamic,
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfiguration {
+    #[doc = "Set the field `max_capacity_breach_behavior`.\n"]
+    pub fn set_max_capacity_breach_behavior(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.max_capacity_breach_behavior = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `max_capacity_buffer`.\n"]
+    pub fn set_max_capacity_buffer(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_capacity_buffer = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scheduling_buffer_time`.\n"]
+    pub fn set_scheduling_buffer_time(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.scheduling_buffer_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metric_specification`.\n"]
+    pub fn set_metric_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecification,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppautoscalingPolicy_PredictiveScalingPolicyConfiguration {
+    type O = terrars::BlockAssignable<AppautoscalingPolicy_PredictiveScalingPolicyConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration {}
+
+impl BuildAppautoscalingPolicy_PredictiveScalingPolicyConfiguration {
+    pub fn build(self) -> AppautoscalingPolicy_PredictiveScalingPolicyConfiguration {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfiguration {
+            max_capacity_breach_behavior: core::default::Default::default(),
+            max_capacity_buffer: core::default::Default::default(),
+            mode: core::default::Default::default(),
+            scheduling_buffer_time: core::default::Default::default(),
+            metric_specification: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_PredictiveScalingPolicyConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppautoscalingPolicy_PredictiveScalingPolicyConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_PredictiveScalingPolicyConfigurationRef {
+        AppautoscalingPolicy_PredictiveScalingPolicyConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_PredictiveScalingPolicyConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_capacity_breach_behavior` after provisioning.\n"]
+    pub fn max_capacity_breach_behavior(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_capacity_breach_behavior", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_capacity_buffer` after provisioning.\n"]
+    pub fn max_capacity_buffer(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_capacity_buffer", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scheduling_buffer_time` after provisioning.\n"]
+    pub fn scheduling_buffer_time(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scheduling_buffer_time", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `metric_specification` after provisioning.\n"]
+    pub fn metric_specification(
+        &self,
+    ) -> terrars::ListRef<AppautoscalingPolicy_PredictiveScalingPolicyConfiguration_MetricSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_specification", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     metric_interval_lower_bound: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -416,7 +2218,7 @@ pub struct AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl 
     scaling_adjustment: terrars::PrimField<f64>,
 }
 
-impl AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl {
+impl AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment {
     #[doc = "Set the field `metric_interval_lower_bound`.\n"]
     pub fn set_metric_interval_lower_bound(
         mut self,
@@ -436,8 +2238,8 @@ impl AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl {
     }
 }
 
-impl terrars::ToListMappable for AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl {
-    type O = terrars::BlockAssignable<AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl>;
+impl terrars::ToListMappable for AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment {
+    type O = terrars::BlockAssignable<AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -448,14 +2250,14 @@ impl terrars::ToListMappable for AppautoscalingPolicyStepScalingPolicyConfigurat
     }
 }
 
-pub struct BuildAppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl {
+pub struct BuildAppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment {
     #[doc = ""]
     pub scaling_adjustment: terrars::PrimField<f64>,
 }
 
-impl BuildAppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl {
-    pub fn build(self) -> AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl {
-        AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl {
+impl BuildAppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment {
+    pub fn build(self) -> AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment {
+        AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment {
             metric_interval_lower_bound: core::default::Default::default(),
             metric_interval_upper_bound: core::default::Default::default(),
             scaling_adjustment: self.scaling_adjustment,
@@ -463,24 +2265,26 @@ impl BuildAppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl {
     }
 }
 
-pub struct AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentElRef {
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentElRef {
+impl terrars::Ref for AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentElRef {
-        AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentElRef {
+    ) -> AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustmentRef {
+        AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentElRef {
+impl AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -502,14 +2306,14 @@ impl AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppautoscalingPolicyStepScalingPolicyConfigurationElDynamic {
+struct AppautoscalingPolicy_StepScalingPolicyConfigurationDynamic {
     step_adjustment: std
     ::option
-    ::Option<terrars::DynamicBlock<AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl>>,
+    ::Option<terrars::DynamicBlock<AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment>>,
 }
 
 #[derive(Serialize)]
-pub struct AppautoscalingPolicyStepScalingPolicyConfigurationEl {
+pub struct AppautoscalingPolicy_StepScalingPolicyConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     adjustment_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -521,11 +2325,11 @@ pub struct AppautoscalingPolicyStepScalingPolicyConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     step_adjustment: std
     ::option
-    ::Option<std::vec::Vec<AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl>>,
-    dynamic: AppautoscalingPolicyStepScalingPolicyConfigurationElDynamic,
+    ::Option<std::vec::Vec<AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment>>,
+    dynamic: AppautoscalingPolicy_StepScalingPolicyConfigurationDynamic,
 }
 
-impl AppautoscalingPolicyStepScalingPolicyConfigurationEl {
+impl AppautoscalingPolicy_StepScalingPolicyConfiguration {
     #[doc = "Set the field `adjustment_type`.\n"]
     pub fn set_adjustment_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.adjustment_type = std::option::Option::Some(v.into());
@@ -562,7 +2366,7 @@ impl AppautoscalingPolicyStepScalingPolicyConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<AppautoscalingPolicyStepScalingPolicyConfigurationElStepAdjustmentEl>,
+                        terrars::BlockAssignable<AppautoscalingPolicy_StepScalingPolicyConfiguration_StepAdjustment>,
                     >,
     ) -> Self {
         match v.into() {
@@ -577,8 +2381,8 @@ impl AppautoscalingPolicyStepScalingPolicyConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for AppautoscalingPolicyStepScalingPolicyConfigurationEl {
-    type O = terrars::BlockAssignable<AppautoscalingPolicyStepScalingPolicyConfigurationEl>;
+impl terrars::ToListMappable for AppautoscalingPolicy_StepScalingPolicyConfiguration {
+    type O = terrars::BlockAssignable<AppautoscalingPolicy_StepScalingPolicyConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -589,11 +2393,11 @@ impl terrars::ToListMappable for AppautoscalingPolicyStepScalingPolicyConfigurat
     }
 }
 
-pub struct BuildAppautoscalingPolicyStepScalingPolicyConfigurationEl {}
+pub struct BuildAppautoscalingPolicy_StepScalingPolicyConfiguration {}
 
-impl BuildAppautoscalingPolicyStepScalingPolicyConfigurationEl {
-    pub fn build(self) -> AppautoscalingPolicyStepScalingPolicyConfigurationEl {
-        AppautoscalingPolicyStepScalingPolicyConfigurationEl {
+impl BuildAppautoscalingPolicy_StepScalingPolicyConfiguration {
+    pub fn build(self) -> AppautoscalingPolicy_StepScalingPolicyConfiguration {
+        AppautoscalingPolicy_StepScalingPolicyConfiguration {
             adjustment_type: core::default::Default::default(),
             cooldown: core::default::Default::default(),
             metric_aggregation_type: core::default::Default::default(),
@@ -604,24 +2408,26 @@ impl BuildAppautoscalingPolicyStepScalingPolicyConfigurationEl {
     }
 }
 
-pub struct AppautoscalingPolicyStepScalingPolicyConfigurationElRef {
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_StepScalingPolicyConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppautoscalingPolicyStepScalingPolicyConfigurationElRef {
+impl terrars::Ref for AppautoscalingPolicy_StepScalingPolicyConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppautoscalingPolicyStepScalingPolicyConfigurationElRef {
-        AppautoscalingPolicyStepScalingPolicyConfigurationElRef {
+    ) -> AppautoscalingPolicy_StepScalingPolicyConfigurationRef {
+        AppautoscalingPolicy_StepScalingPolicyConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppautoscalingPolicyStepScalingPolicyConfigurationElRef {
+impl AppautoscalingPolicy_StepScalingPolicyConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -648,19 +2454,19 @@ impl AppautoscalingPolicyStepScalingPolicyConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl {
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl { }
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions { }
 
 impl terrars
-::ToListMappable for AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl {
+::ToListMappable for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions {
     type O =
         terrars
         ::BlockAssignable<
-            AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl,
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -672,43 +2478,45 @@ impl terrars
     }
 }
 
-pub struct BuildAppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl {
+pub struct BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl {
+impl BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions {
     pub fn build(
         self,
-    ) -> AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl {
-        AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl {
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsElRef {
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_DimensionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsElRef {
+::Ref for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_DimensionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsElRef {
-        AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsElRef {
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_DimensionsRef {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_DimensionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsElRef {
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_DimensionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -725,22 +2533,479 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMet
 }
 
 #[derive(Serialize, Default)]
-struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDynamic {
+struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_MetricDynamic {
     dimensions: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl,
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl {
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric {
     metric_name: terrars::PrimField<std::string::String>,
     namespace: terrars::PrimField<std::string::String>,
-    statistic: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimensions: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions>,
+    >,
+    dynamic: AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_MetricDynamic,
+}
+
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric {
+    #[doc = "Set the field `dimensions`.\n"]
+    pub fn set_dimensions(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimensions = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimensions = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric {
+    #[doc = ""]
+    pub metric_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub namespace: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric {
+            metric_name: self.metric_name,
+            namespace: self.namespace,
+            dimensions: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_MetricRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_MetricRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_MetricRef {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_MetricRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_MetricRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `metric_name` after provisioning.\n"]
+    pub fn metric_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metric_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `namespace` after provisioning.\n"]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStatDynamic {
+    metric: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat {
+    stat: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric,
+        >,
+    >,
+    dynamic: AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStatDynamic,
+}
+
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat {
+    #[doc = "Set the field `unit`.\n"]
+    pub fn set_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.unit = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metric`.\n"]
+    pub fn set_metric(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_Metric,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat {
+    #[doc = ""]
+    pub stat: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat {
+            stat: self.stat,
+            unit: core::default::Default::default(),
+            metric: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStatRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStatRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStatRef {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStatRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStatRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `stat` after provisioning.\n"]
+    pub fn stat(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stat", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
+    pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `metric` after provisioning.\n"]
+    pub fn metric(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat_MetricRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_MetricsDynamic {
+    metric_stat: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expression: std::option::Option<terrars::PrimField<std::string::String>>,
+    id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    label: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    return_data: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_stat: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat,
+        >,
+    >,
+    dynamic: AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_MetricsDynamic,
+}
+
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics {
+    #[doc = "Set the field `expression`.\n"]
+    pub fn set_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.expression = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `label`.\n"]
+    pub fn set_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.label = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `return_data`.\n"]
+    pub fn set_return_data(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.return_data = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metric_stat`.\n"]
+    pub fn set_metric_stat(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStat,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.metric_stat = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metric_stat = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics {
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics {
+    pub fn build(
+        self,
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics {
+            expression: core::default::Default::default(),
+            id: self.id,
+            label: core::default::Default::default(),
+            return_data: core::default::Default::default(),
+            metric_stat: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_MetricsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_MetricsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_MetricsRef {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_MetricsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_MetricsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `expression` after provisioning.\n"]
+    pub fn expression(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `label` after provisioning.\n"]
+    pub fn label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.label", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `return_data` after provisioning.\n"]
+    pub fn return_data(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.return_data", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `metric_stat` after provisioning.\n"]
+    pub fn metric_stat(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics_MetricStatRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.metric_stat", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecificationDynamic {
+    dimensions: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions,
+        >,
+    >,
+    metrics: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    namespace: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    statistic: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     unit: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -749,14 +3014,38 @@ pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomi
     ::Option<
         std
         ::vec
-        ::Vec<
-            AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl,
-        >,
+        ::Vec<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions>,
     >,
-    dynamic: AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDynamic,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metrics: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics>,
+    >,
+    dynamic: AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecificationDynamic,
 }
 
-impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl {
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification {
+    #[doc = "Set the field `metric_name`.\n"]
+    pub fn set_metric_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.metric_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `namespace`.\n"]
+    pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.namespace = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `statistic`.\n"]
+    pub fn set_statistic(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.statistic = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `unit`.\n"]
     pub fn set_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.unit = std::option::Option::Some(v.into());
@@ -774,7 +3063,7 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMet
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElDimensionsEl,
+                            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Dimensions,
                         >,
                     >,
     ) -> Self {
@@ -788,14 +3077,40 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMet
         }
         self
     }
+
+    #[doc = "Set the field `metrics`.\n"]
+    pub fn set_metrics(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification_Metrics,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.metrics = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.metrics = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
 impl terrars
-::ToListMappable for AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl {
+::ToListMappable for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification {
     type O =
         terrars
         ::BlockAssignable<
-            AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl,
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -807,48 +3122,44 @@ impl terrars
     }
 }
 
-pub struct BuildAppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl {
-    #[doc = ""]
-    pub metric_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub namespace: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub statistic: terrars::PrimField<std::string::String>,
-}
+pub struct BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification {}
 
-impl BuildAppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl {
+impl BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification {
     pub fn build(
         self,
-    ) -> AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl {
-        AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl {
-            metric_name: self.metric_name,
-            namespace: self.namespace,
-            statistic: self.statistic,
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification {
+            metric_name: core::default::Default::default(),
+            namespace: core::default::Default::default(),
+            statistic: core::default::Default::default(),
             unit: core::default::Default::default(),
             dimensions: core::default::Default::default(),
+            metrics: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElRef {
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElRef {
+impl terrars::Ref for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElRef {
-        AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElRef {
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecificationRef {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElRef {
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -875,13 +3186,13 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMet
 }
 
 #[derive(Serialize)]
-pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl {
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification {
     predefined_metric_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_label: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl {
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification {
     #[doc = "Set the field `resource_label`.\n"]
     pub fn set_resource_label(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.resource_label = std::option::Option::Some(v.into());
@@ -890,11 +3201,11 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMet
 }
 
 impl terrars
-::ToListMappable for AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl {
+::ToListMappable for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification {
     type O =
         terrars
         ::BlockAssignable<
-            AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl,
+            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -906,40 +3217,42 @@ impl terrars
     }
 }
 
-pub struct BuildAppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl {
+pub struct BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification {
     #[doc = ""]
     pub predefined_metric_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl {
+impl BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification {
     pub fn build(
         self,
-    ) -> AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl {
-        AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl {
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification {
             predefined_metric_type: self.predefined_metric_type,
             resource_label: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationElRef {
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationElRef {
+impl terrars::Ref for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationElRef {
-        AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationElRef {
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecificationRef {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationElRef {
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -956,23 +3269,23 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMet
 }
 
 #[derive(Serialize, Default)]
-struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElDynamic {
+struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfigurationDynamic {
     customized_metric_specification: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl>,
+        ::DynamicBlock<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification>,
     >,
     predefined_metric_specification: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl>,
+        ::DynamicBlock<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_scale_in: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -984,18 +3297,18 @@ pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
     customized_metric_specification: std
     ::option
     ::Option<
-        std::vec::Vec<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl>,
+        std::vec::Vec<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     predefined_metric_specification: std
     ::option
     ::Option<
-        std::vec::Vec<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl>,
+        std::vec::Vec<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification>,
     >,
-    dynamic: AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElDynamic,
+    dynamic: AppautoscalingPolicy_TargetTrackingScalingPolicyConfigurationDynamic,
 }
 
-impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration {
     #[doc = "Set the field `disable_scale_in`.\n"]
     pub fn set_disable_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.disable_scale_in = std::option::Option::Some(v.into());
@@ -1025,7 +3338,7 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationEl,
+                            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecification,
                         >,
                     >,
     ) -> Self {
@@ -1051,7 +3364,7 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationEl,
+                            AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecification,
                         >,
                     >,
     ) -> Self {
@@ -1067,8 +3380,8 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
-    type O = terrars::BlockAssignable<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl>;
+impl terrars::ToListMappable for AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration {
+    type O = terrars::BlockAssignable<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1079,14 +3392,14 @@ impl terrars::ToListMappable for AppautoscalingPolicyTargetTrackingScalingPolicy
     }
 }
 
-pub struct BuildAppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
+pub struct BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration {
     #[doc = ""]
     pub target_value: terrars::PrimField<f64>,
 }
 
-impl BuildAppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
-    pub fn build(self) -> AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
-        AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
+impl BuildAppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration {
+    pub fn build(self) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration {
             disable_scale_in: core::default::Default::default(),
             scale_in_cooldown: core::default::Default::default(),
             scale_out_cooldown: core::default::Default::default(),
@@ -1098,24 +3411,26 @@ impl BuildAppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl {
     }
 }
 
-pub struct AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElRef {
+#[allow(dead_code)]
+pub struct AppautoscalingPolicy_TargetTrackingScalingPolicyConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElRef {
+impl terrars::Ref for AppautoscalingPolicy_TargetTrackingScalingPolicyConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElRef {
-        AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElRef {
+    ) -> AppautoscalingPolicy_TargetTrackingScalingPolicyConfigurationRef {
+        AppautoscalingPolicy_TargetTrackingScalingPolicyConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElRef {
+impl AppautoscalingPolicy_TargetTrackingScalingPolicyConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1144,7 +3459,7 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElRef {
     pub fn customized_metric_specification(
         &self,
     ) -> terrars
-    ::ListRef<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElCustomizedMetricSpecificationElRef> {
+    ::ListRef<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_CustomizedMetricSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.customized_metric_specification", self.base))
     }
 
@@ -1152,17 +3467,7 @@ impl AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElRef {
     pub fn predefined_metric_specification(
         &self,
     ) -> terrars
-    ::ListRef<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationElPredefinedMetricSpecificationElRef> {
+    ::ListRef<AppautoscalingPolicy_TargetTrackingScalingPolicyConfiguration_PredefinedMetricSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.predefined_metric_specification", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppautoscalingPolicyDynamic {
-    step_scaling_policy_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppautoscalingPolicyStepScalingPolicyConfigurationEl>>,
-    target_tracking_scaling_policy_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppautoscalingPolicyTargetTrackingScalingPolicyConfigurationEl>>,
 }

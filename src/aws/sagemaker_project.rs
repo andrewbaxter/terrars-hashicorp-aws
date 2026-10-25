@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerProjectData {
+struct SagemakerProjectData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,22 @@ struct SagemakerProjectData {
     project_description: std::option::Option<terrars::PrimField<std::string::String>>,
     project_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_catalog_provisioning_details: std
     ::option
-    ::Option<std::vec::Vec<SagemakerProjectServiceCatalogProvisioningDetailsEl>>,
+    ::Option<std::vec::Vec<SagemakerProject_ServiceCatalogProvisioningDetails>>,
     dynamic: SagemakerProjectDynamic,
 }
 
 struct SagemakerProject_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerProjectData>,
+    data: std::cell::RefCell<SagemakerProjectData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl SagemakerProject {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -170,7 +181,7 @@ impl SagemakerProject {
     #[doc = "Set the field `service_catalog_provisioning_details`.\n"]
     pub fn set_service_catalog_provisioning_details(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerProjectServiceCatalogProvisioningDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerProject_ServiceCatalogProvisioningDetails>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -208,6 +219,12 @@ impl SagemakerProject {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -221,7 +238,7 @@ impl SagemakerProject {
     #[doc = "Get a reference to the value of field `service_catalog_provisioning_details` after provisioning.\n"]
     pub fn service_catalog_provisioning_details(
         &self,
-    ) -> terrars::ListRef<SagemakerProjectServiceCatalogProvisioningDetailsElRef> {
+    ) -> terrars::ListRef<SagemakerProject_ServiceCatalogProvisioningDetailsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.service_catalog_provisioning_details", self.extract_ref()),
@@ -271,7 +288,7 @@ impl BuildSagemakerProject {
         let out = SagemakerProject(std::rc::Rc::new(SagemakerProject_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerProjectData {
+            data: std::cell::RefCell::new(SagemakerProjectData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -280,6 +297,7 @@ impl BuildSagemakerProject {
                 id: core::default::Default::default(),
                 project_description: core::default::Default::default(),
                 project_name: self.project_name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 service_catalog_provisioning_details: core::default::Default::default(),
@@ -339,6 +357,12 @@ impl SagemakerProjectRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -352,7 +376,7 @@ impl SagemakerProjectRef {
     #[doc = "Get a reference to the value of field `service_catalog_provisioning_details` after provisioning.\n"]
     pub fn service_catalog_provisioning_details(
         &self,
-    ) -> terrars::ListRef<SagemakerProjectServiceCatalogProvisioningDetailsElRef> {
+    ) -> terrars::ListRef<SagemakerProject_ServiceCatalogProvisioningDetailsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.service_catalog_provisioning_details", self.extract_ref()),
@@ -360,14 +384,21 @@ impl SagemakerProjectRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerProjectDynamic {
+    service_catalog_provisioning_details: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerProject_ServiceCatalogProvisioningDetails>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl {
+pub struct SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter {
     key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl {
+impl SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter {
     #[doc = "Set the field `value`.\n"]
     pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.value = std::option::Option::Some(v.into());
@@ -375,8 +406,8 @@ impl SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl 
     }
 }
 
-impl terrars::ToListMappable for SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl {
-    type O = terrars::BlockAssignable<SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl>;
+impl terrars::ToListMappable for SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter {
+    type O = terrars::BlockAssignable<SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -387,38 +418,40 @@ impl terrars::ToListMappable for SagemakerProjectServiceCatalogProvisioningDetai
     }
 }
 
-pub struct BuildSagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl {
+pub struct BuildSagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl {
-    pub fn build(self) -> SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl {
-        SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl {
+impl BuildSagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter {
+    pub fn build(self) -> SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter {
+        SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter {
             key: self.key,
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterElRef {
+#[allow(dead_code)]
+pub struct SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterElRef {
+impl terrars::Ref for SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterElRef {
-        SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterElRef {
+    ) -> SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameterRef {
+        SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterElRef {
+impl SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -435,14 +468,14 @@ impl SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterElR
 }
 
 #[derive(Serialize, Default)]
-struct SagemakerProjectServiceCatalogProvisioningDetailsElDynamic {
+struct SagemakerProject_ServiceCatalogProvisioningDetailsDynamic {
     provisioning_parameter: std
     ::option
-    ::Option<terrars::DynamicBlock<SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl>>,
+    ::Option<terrars::DynamicBlock<SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter>>,
 }
 
 #[derive(Serialize)]
-pub struct SagemakerProjectServiceCatalogProvisioningDetailsEl {
+pub struct SagemakerProject_ServiceCatalogProvisioningDetails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path_id: std::option::Option<terrars::PrimField<std::string::String>>,
     product_id: terrars::PrimField<std::string::String>,
@@ -451,11 +484,11 @@ pub struct SagemakerProjectServiceCatalogProvisioningDetailsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     provisioning_parameter: std
     ::option
-    ::Option<std::vec::Vec<SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl>>,
-    dynamic: SagemakerProjectServiceCatalogProvisioningDetailsElDynamic,
+    ::Option<std::vec::Vec<SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter>>,
+    dynamic: SagemakerProject_ServiceCatalogProvisioningDetailsDynamic,
 }
 
-impl SagemakerProjectServiceCatalogProvisioningDetailsEl {
+impl SagemakerProject_ServiceCatalogProvisioningDetails {
     #[doc = "Set the field `path_id`.\n"]
     pub fn set_path_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.path_id = std::option::Option::Some(v.into());
@@ -481,7 +514,7 @@ impl SagemakerProjectServiceCatalogProvisioningDetailsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterEl>,
+                        ::BlockAssignable<SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameter>,
                     >,
     ) -> Self {
         match v.into() {
@@ -496,8 +529,8 @@ impl SagemakerProjectServiceCatalogProvisioningDetailsEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerProjectServiceCatalogProvisioningDetailsEl {
-    type O = terrars::BlockAssignable<SagemakerProjectServiceCatalogProvisioningDetailsEl>;
+impl terrars::ToListMappable for SagemakerProject_ServiceCatalogProvisioningDetails {
+    type O = terrars::BlockAssignable<SagemakerProject_ServiceCatalogProvisioningDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -508,14 +541,14 @@ impl terrars::ToListMappable for SagemakerProjectServiceCatalogProvisioningDetai
     }
 }
 
-pub struct BuildSagemakerProjectServiceCatalogProvisioningDetailsEl {
+pub struct BuildSagemakerProject_ServiceCatalogProvisioningDetails {
     #[doc = ""]
     pub product_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerProjectServiceCatalogProvisioningDetailsEl {
-    pub fn build(self) -> SagemakerProjectServiceCatalogProvisioningDetailsEl {
-        SagemakerProjectServiceCatalogProvisioningDetailsEl {
+impl BuildSagemakerProject_ServiceCatalogProvisioningDetails {
+    pub fn build(self) -> SagemakerProject_ServiceCatalogProvisioningDetails {
+        SagemakerProject_ServiceCatalogProvisioningDetails {
             path_id: core::default::Default::default(),
             product_id: self.product_id,
             provisioning_artifact_id: core::default::Default::default(),
@@ -525,24 +558,26 @@ impl BuildSagemakerProjectServiceCatalogProvisioningDetailsEl {
     }
 }
 
-pub struct SagemakerProjectServiceCatalogProvisioningDetailsElRef {
+#[allow(dead_code)]
+pub struct SagemakerProject_ServiceCatalogProvisioningDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerProjectServiceCatalogProvisioningDetailsElRef {
+impl terrars::Ref for SagemakerProject_ServiceCatalogProvisioningDetailsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerProjectServiceCatalogProvisioningDetailsElRef {
-        SagemakerProjectServiceCatalogProvisioningDetailsElRef {
+    ) -> SagemakerProject_ServiceCatalogProvisioningDetailsRef {
+        SagemakerProject_ServiceCatalogProvisioningDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerProjectServiceCatalogProvisioningDetailsElRef {
+impl SagemakerProject_ServiceCatalogProvisioningDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -565,14 +600,7 @@ impl SagemakerProjectServiceCatalogProvisioningDetailsElRef {
     #[doc = "Get a reference to the value of field `provisioning_parameter` after provisioning.\n"]
     pub fn provisioning_parameter(
         &self,
-    ) -> terrars::ListRef<SagemakerProjectServiceCatalogProvisioningDetailsElProvisioningParameterElRef> {
+    ) -> terrars::ListRef<SagemakerProject_ServiceCatalogProvisioningDetails_ProvisioningParameterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.provisioning_parameter", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SagemakerProjectDynamic {
-    service_catalog_provisioning_details: std
-    ::option
-    ::Option<terrars::DynamicBlock<SagemakerProjectServiceCatalogProvisioningDetailsEl>>,
 }

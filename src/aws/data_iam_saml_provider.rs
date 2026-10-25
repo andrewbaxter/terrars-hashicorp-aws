@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataIamSamlProviderData {
+struct DataIamSamlProviderData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataIamSamlProviderData {
 struct DataIamSamlProvider_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataIamSamlProviderData>,
+    data: std::cell::RefCell<DataIamSamlProviderData_>,
 }
 
 #[derive(Clone)]
@@ -111,6 +113,11 @@ impl DataIamSamlProvider {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.saml_metadata_document", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `saml_provider_uuid` after provisioning.\n"]
+    pub fn saml_provider_uuid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.saml_provider_uuid", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -164,7 +171,7 @@ impl BuildDataIamSamlProvider {
         let out = DataIamSamlProvider(std::rc::Rc::new(DataIamSamlProvider_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataIamSamlProviderData {
+            data: std::cell::RefCell::new(DataIamSamlProviderData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -225,6 +232,11 @@ impl DataIamSamlProviderRef {
     #[doc = "Get a reference to the value of field `saml_metadata_document` after provisioning.\n"]
     pub fn saml_metadata_document(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.saml_metadata_document", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `saml_provider_uuid` after provisioning.\n"]
+    pub fn saml_provider_uuid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.saml_provider_uuid", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]

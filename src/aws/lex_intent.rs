@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LexIntentData {
+struct LexIntentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,30 +30,32 @@ struct LexIntentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parent_intent_signature: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sample_utterances: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conclusion_statement: std::option::Option<std::vec::Vec<LexIntentConclusionStatementEl>>,
+    conclusion_statement: std::option::Option<std::vec::Vec<LexIntent_ConclusionStatement>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    confirmation_prompt: std::option::Option<std::vec::Vec<LexIntentConfirmationPromptEl>>,
+    confirmation_prompt: std::option::Option<std::vec::Vec<LexIntent_ConfirmationPrompt>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dialog_code_hook: std::option::Option<std::vec::Vec<LexIntentDialogCodeHookEl>>,
+    dialog_code_hook: std::option::Option<std::vec::Vec<LexIntent_DialogCodeHook>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    follow_up_prompt: std::option::Option<std::vec::Vec<LexIntentFollowUpPromptEl>>,
+    follow_up_prompt: std::option::Option<std::vec::Vec<LexIntent_FollowUpPrompt>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fulfillment_activity: std::option::Option<std::vec::Vec<LexIntentFulfillmentActivityEl>>,
+    fulfillment_activity: std::option::Option<std::vec::Vec<LexIntent_FulfillmentActivity>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rejection_statement: std::option::Option<std::vec::Vec<LexIntentRejectionStatementEl>>,
+    rejection_statement: std::option::Option<std::vec::Vec<LexIntent_RejectionStatement>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    slot: std::option::Option<std::vec::Vec<LexIntentSlotEl>>,
+    slot: std::option::Option<std::vec::Vec<LexIntent_Slot>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LexIntentTimeoutsEl>,
+    timeouts: std::option::Option<LexIntent_Timeouts>,
     dynamic: LexIntentDynamic,
 }
 
 struct LexIntent_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LexIntentData>,
+    data: std::cell::RefCell<LexIntentData_>,
 }
 
 #[derive(Clone)]
@@ -178,6 +182,13 @@ impl LexIntent {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `sample_utterances`.\n"]
     pub fn set_sample_utterances(
         self,
@@ -190,7 +201,7 @@ impl LexIntent {
     #[doc = "Set the field `conclusion_statement`.\n"]
     pub fn set_conclusion_statement(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentConclusionStatementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_ConclusionStatement>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -206,7 +217,7 @@ impl LexIntent {
     #[doc = "Set the field `confirmation_prompt`.\n"]
     pub fn set_confirmation_prompt(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentConfirmationPromptEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_ConfirmationPrompt>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -222,7 +233,7 @@ impl LexIntent {
     #[doc = "Set the field `dialog_code_hook`.\n"]
     pub fn set_dialog_code_hook(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentDialogCodeHookEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_DialogCodeHook>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -238,7 +249,7 @@ impl LexIntent {
     #[doc = "Set the field `follow_up_prompt`.\n"]
     pub fn set_follow_up_prompt(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentFollowUpPromptEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_FollowUpPrompt>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -254,7 +265,7 @@ impl LexIntent {
     #[doc = "Set the field `fulfillment_activity`.\n"]
     pub fn set_fulfillment_activity(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentFulfillmentActivityEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_FulfillmentActivity>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -270,7 +281,7 @@ impl LexIntent {
     #[doc = "Set the field `rejection_statement`.\n"]
     pub fn set_rejection_statement(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentRejectionStatementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_RejectionStatement>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -284,7 +295,7 @@ impl LexIntent {
     }
 
     #[doc = "Set the field `slot`.\n"]
-    pub fn set_slot(self, v: impl std::convert::Into<terrars::BlockAssignable<LexIntentSlotEl>>) -> Self {
+    pub fn set_slot(self, v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_Slot>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().slot = std::option::Option::Some(v);
@@ -297,7 +308,7 @@ impl LexIntent {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LexIntentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LexIntent_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -347,6 +358,12 @@ impl LexIntent {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent_intent_signature", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sample_utterances` after provisioning.\n"]
     pub fn sample_utterances(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.sample_utterances", self.extract_ref()))
@@ -358,38 +375,38 @@ impl LexIntent {
     }
 
     #[doc = "Get a reference to the value of field `conclusion_statement` after provisioning.\n"]
-    pub fn conclusion_statement(&self) -> terrars::ListRef<LexIntentConclusionStatementElRef> {
+    pub fn conclusion_statement(&self) -> terrars::ListRef<LexIntent_ConclusionStatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conclusion_statement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `confirmation_prompt` after provisioning.\n"]
-    pub fn confirmation_prompt(&self) -> terrars::ListRef<LexIntentConfirmationPromptElRef> {
+    pub fn confirmation_prompt(&self) -> terrars::ListRef<LexIntent_ConfirmationPromptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.confirmation_prompt", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dialog_code_hook` after provisioning.\n"]
-    pub fn dialog_code_hook(&self) -> terrars::ListRef<LexIntentDialogCodeHookElRef> {
+    pub fn dialog_code_hook(&self) -> terrars::ListRef<LexIntent_DialogCodeHookRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dialog_code_hook", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `follow_up_prompt` after provisioning.\n"]
-    pub fn follow_up_prompt(&self) -> terrars::ListRef<LexIntentFollowUpPromptElRef> {
+    pub fn follow_up_prompt(&self) -> terrars::ListRef<LexIntent_FollowUpPromptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.follow_up_prompt", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fulfillment_activity` after provisioning.\n"]
-    pub fn fulfillment_activity(&self) -> terrars::ListRef<LexIntentFulfillmentActivityElRef> {
+    pub fn fulfillment_activity(&self) -> terrars::ListRef<LexIntent_FulfillmentActivityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fulfillment_activity", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rejection_statement` after provisioning.\n"]
-    pub fn rejection_statement(&self) -> terrars::ListRef<LexIntentRejectionStatementElRef> {
+    pub fn rejection_statement(&self) -> terrars::ListRef<LexIntent_RejectionStatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rejection_statement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LexIntentTimeoutsElRef {
-        LexIntentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LexIntent_TimeoutsRef {
+        LexIntent_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -435,7 +452,7 @@ impl BuildLexIntent {
         let out = LexIntent(std::rc::Rc::new(LexIntent_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LexIntentData {
+            data: std::cell::RefCell::new(LexIntentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -446,6 +463,7 @@ impl BuildLexIntent {
                 id: core::default::Default::default(),
                 name: self.name,
                 parent_intent_signature: core::default::Default::default(),
+                region: core::default::Default::default(),
                 sample_utterances: core::default::Default::default(),
                 conclusion_statement: core::default::Default::default(),
                 confirmation_prompt: core::default::Default::default(),
@@ -531,6 +549,12 @@ impl LexIntentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent_intent_signature", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sample_utterances` after provisioning.\n"]
     pub fn sample_utterances(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.sample_utterances", self.extract_ref()))
@@ -542,50 +566,61 @@ impl LexIntentRef {
     }
 
     #[doc = "Get a reference to the value of field `conclusion_statement` after provisioning.\n"]
-    pub fn conclusion_statement(&self) -> terrars::ListRef<LexIntentConclusionStatementElRef> {
+    pub fn conclusion_statement(&self) -> terrars::ListRef<LexIntent_ConclusionStatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conclusion_statement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `confirmation_prompt` after provisioning.\n"]
-    pub fn confirmation_prompt(&self) -> terrars::ListRef<LexIntentConfirmationPromptElRef> {
+    pub fn confirmation_prompt(&self) -> terrars::ListRef<LexIntent_ConfirmationPromptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.confirmation_prompt", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dialog_code_hook` after provisioning.\n"]
-    pub fn dialog_code_hook(&self) -> terrars::ListRef<LexIntentDialogCodeHookElRef> {
+    pub fn dialog_code_hook(&self) -> terrars::ListRef<LexIntent_DialogCodeHookRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dialog_code_hook", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `follow_up_prompt` after provisioning.\n"]
-    pub fn follow_up_prompt(&self) -> terrars::ListRef<LexIntentFollowUpPromptElRef> {
+    pub fn follow_up_prompt(&self) -> terrars::ListRef<LexIntent_FollowUpPromptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.follow_up_prompt", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fulfillment_activity` after provisioning.\n"]
-    pub fn fulfillment_activity(&self) -> terrars::ListRef<LexIntentFulfillmentActivityElRef> {
+    pub fn fulfillment_activity(&self) -> terrars::ListRef<LexIntent_FulfillmentActivityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fulfillment_activity", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rejection_statement` after provisioning.\n"]
-    pub fn rejection_statement(&self) -> terrars::ListRef<LexIntentRejectionStatementElRef> {
+    pub fn rejection_statement(&self) -> terrars::ListRef<LexIntent_RejectionStatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rejection_statement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LexIntentTimeoutsElRef {
-        LexIntentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LexIntent_TimeoutsRef {
+        LexIntent_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LexIntentDynamic {
+    conclusion_statement: std::option::Option<terrars::DynamicBlock<LexIntent_ConclusionStatement>>,
+    confirmation_prompt: std::option::Option<terrars::DynamicBlock<LexIntent_ConfirmationPrompt>>,
+    dialog_code_hook: std::option::Option<terrars::DynamicBlock<LexIntent_DialogCodeHook>>,
+    follow_up_prompt: std::option::Option<terrars::DynamicBlock<LexIntent_FollowUpPrompt>>,
+    fulfillment_activity: std::option::Option<terrars::DynamicBlock<LexIntent_FulfillmentActivity>>,
+    rejection_statement: std::option::Option<terrars::DynamicBlock<LexIntent_RejectionStatement>>,
+    slot: std::option::Option<terrars::DynamicBlock<LexIntent_Slot>>,
+}
+
 #[derive(Serialize)]
-pub struct LexIntentConclusionStatementElMessageEl {
+pub struct LexIntent_ConfirmationPrompt_Message {
     content: terrars::PrimField<std::string::String>,
     content_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_number: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LexIntentConclusionStatementElMessageEl {
+impl LexIntent_ConfirmationPrompt_Message {
     #[doc = "Set the field `group_number`.\n"]
     pub fn set_group_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.group_number = std::option::Option::Some(v.into());
@@ -593,8 +628,8 @@ impl LexIntentConclusionStatementElMessageEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentConclusionStatementElMessageEl {
-    type O = terrars::BlockAssignable<LexIntentConclusionStatementElMessageEl>;
+impl terrars::ToListMappable for LexIntent_ConfirmationPrompt_Message {
+    type O = terrars::BlockAssignable<LexIntent_ConfirmationPrompt_Message>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -605,16 +640,16 @@ impl terrars::ToListMappable for LexIntentConclusionStatementElMessageEl {
     }
 }
 
-pub struct BuildLexIntentConclusionStatementElMessageEl {
+pub struct BuildLexIntent_ConfirmationPrompt_Message {
     #[doc = ""]
     pub content: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub content_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexIntentConclusionStatementElMessageEl {
-    pub fn build(self) -> LexIntentConclusionStatementElMessageEl {
-        LexIntentConclusionStatementElMessageEl {
+impl BuildLexIntent_ConfirmationPrompt_Message {
+    pub fn build(self) -> LexIntent_ConfirmationPrompt_Message {
+        LexIntent_ConfirmationPrompt_Message {
             content: self.content,
             content_type: self.content_type,
             group_number: core::default::Default::default(),
@@ -622,21 +657,23 @@ impl BuildLexIntentConclusionStatementElMessageEl {
     }
 }
 
-pub struct LexIntentConclusionStatementElMessageElRef {
+#[allow(dead_code)]
+pub struct LexIntent_ConfirmationPrompt_MessageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentConclusionStatementElMessageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentConclusionStatementElMessageElRef {
-        LexIntentConclusionStatementElMessageElRef {
+impl terrars::Ref for LexIntent_ConfirmationPrompt_MessageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_ConfirmationPrompt_MessageRef {
+        LexIntent_ConfirmationPrompt_MessageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentConclusionStatementElMessageElRef {
+impl LexIntent_ConfirmationPrompt_MessageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -658,20 +695,20 @@ impl LexIntentConclusionStatementElMessageElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LexIntentConclusionStatementElDynamic {
-    message: std::option::Option<terrars::DynamicBlock<LexIntentConclusionStatementElMessageEl>>,
+struct LexIntent_ConclusionStatementDynamic {
+    message: std::option::Option<terrars::DynamicBlock<LexIntent_ConfirmationPrompt_Message>>,
 }
 
 #[derive(Serialize)]
-pub struct LexIntentConclusionStatementEl {
+pub struct LexIntent_ConclusionStatement {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_card: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message: std::option::Option<std::vec::Vec<LexIntentConclusionStatementElMessageEl>>,
-    dynamic: LexIntentConclusionStatementElDynamic,
+    message: std::option::Option<std::vec::Vec<LexIntent_ConfirmationPrompt_Message>>,
+    dynamic: LexIntent_ConclusionStatementDynamic,
 }
 
-impl LexIntentConclusionStatementEl {
+impl LexIntent_ConclusionStatement {
     #[doc = "Set the field `response_card`.\n"]
     pub fn set_response_card(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.response_card = std::option::Option::Some(v.into());
@@ -681,7 +718,7 @@ impl LexIntentConclusionStatementEl {
     #[doc = "Set the field `message`.\n"]
     pub fn set_message(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentConclusionStatementElMessageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_ConfirmationPrompt_Message>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -695,8 +732,8 @@ impl LexIntentConclusionStatementEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentConclusionStatementEl {
-    type O = terrars::BlockAssignable<LexIntentConclusionStatementEl>;
+impl terrars::ToListMappable for LexIntent_ConclusionStatement {
+    type O = terrars::BlockAssignable<LexIntent_ConclusionStatement>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -707,11 +744,11 @@ impl terrars::ToListMappable for LexIntentConclusionStatementEl {
     }
 }
 
-pub struct BuildLexIntentConclusionStatementEl {}
+pub struct BuildLexIntent_ConclusionStatement {}
 
-impl BuildLexIntentConclusionStatementEl {
-    pub fn build(self) -> LexIntentConclusionStatementEl {
-        LexIntentConclusionStatementEl {
+impl BuildLexIntent_ConclusionStatement {
+    pub fn build(self) -> LexIntent_ConclusionStatement {
+        LexIntent_ConclusionStatement {
             response_card: core::default::Default::default(),
             message: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -719,21 +756,23 @@ impl BuildLexIntentConclusionStatementEl {
     }
 }
 
-pub struct LexIntentConclusionStatementElRef {
+#[allow(dead_code)]
+pub struct LexIntent_ConclusionStatementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentConclusionStatementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentConclusionStatementElRef {
-        LexIntentConclusionStatementElRef {
+impl terrars::Ref for LexIntent_ConclusionStatementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_ConclusionStatementRef {
+        LexIntent_ConclusionStatementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentConclusionStatementElRef {
+impl LexIntent_ConclusionStatementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -744,102 +783,22 @@ impl LexIntentConclusionStatementElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct LexIntentConfirmationPromptElMessageEl {
-    content: terrars::PrimField<std::string::String>,
-    content_type: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_number: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl LexIntentConfirmationPromptElMessageEl {
-    #[doc = "Set the field `group_number`.\n"]
-    pub fn set_group_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.group_number = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for LexIntentConfirmationPromptElMessageEl {
-    type O = terrars::BlockAssignable<LexIntentConfirmationPromptElMessageEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildLexIntentConfirmationPromptElMessageEl {
-    #[doc = ""]
-    pub content: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub content_type: terrars::PrimField<std::string::String>,
-}
-
-impl BuildLexIntentConfirmationPromptElMessageEl {
-    pub fn build(self) -> LexIntentConfirmationPromptElMessageEl {
-        LexIntentConfirmationPromptElMessageEl {
-            content: self.content,
-            content_type: self.content_type,
-            group_number: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct LexIntentConfirmationPromptElMessageElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for LexIntentConfirmationPromptElMessageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentConfirmationPromptElMessageElRef {
-        LexIntentConfirmationPromptElMessageElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl LexIntentConfirmationPromptElMessageElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `content` after provisioning.\n"]
-    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
-    pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `group_number` after provisioning.\n"]
-    pub fn group_number(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_number", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct LexIntentConfirmationPromptElDynamic {
-    message: std::option::Option<terrars::DynamicBlock<LexIntentConfirmationPromptElMessageEl>>,
+struct LexIntent_ConfirmationPromptDynamic {
+    message: std::option::Option<terrars::DynamicBlock<LexIntent_ConfirmationPrompt_Message>>,
 }
 
 #[derive(Serialize)]
-pub struct LexIntentConfirmationPromptEl {
+pub struct LexIntent_ConfirmationPrompt {
     max_attempts: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_card: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message: std::option::Option<std::vec::Vec<LexIntentConfirmationPromptElMessageEl>>,
-    dynamic: LexIntentConfirmationPromptElDynamic,
+    message: std::option::Option<std::vec::Vec<LexIntent_ConfirmationPrompt_Message>>,
+    dynamic: LexIntent_ConfirmationPromptDynamic,
 }
 
-impl LexIntentConfirmationPromptEl {
+impl LexIntent_ConfirmationPrompt {
     #[doc = "Set the field `response_card`.\n"]
     pub fn set_response_card(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.response_card = std::option::Option::Some(v.into());
@@ -849,7 +808,7 @@ impl LexIntentConfirmationPromptEl {
     #[doc = "Set the field `message`.\n"]
     pub fn set_message(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentConfirmationPromptElMessageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_ConfirmationPrompt_Message>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -863,8 +822,8 @@ impl LexIntentConfirmationPromptEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentConfirmationPromptEl {
-    type O = terrars::BlockAssignable<LexIntentConfirmationPromptEl>;
+impl terrars::ToListMappable for LexIntent_ConfirmationPrompt {
+    type O = terrars::BlockAssignable<LexIntent_ConfirmationPrompt>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -875,14 +834,14 @@ impl terrars::ToListMappable for LexIntentConfirmationPromptEl {
     }
 }
 
-pub struct BuildLexIntentConfirmationPromptEl {
+pub struct BuildLexIntent_ConfirmationPrompt {
     #[doc = ""]
     pub max_attempts: terrars::PrimField<f64>,
 }
 
-impl BuildLexIntentConfirmationPromptEl {
-    pub fn build(self) -> LexIntentConfirmationPromptEl {
-        LexIntentConfirmationPromptEl {
+impl BuildLexIntent_ConfirmationPrompt {
+    pub fn build(self) -> LexIntent_ConfirmationPrompt {
+        LexIntent_ConfirmationPrompt {
             max_attempts: self.max_attempts,
             response_card: core::default::Default::default(),
             message: core::default::Default::default(),
@@ -891,21 +850,23 @@ impl BuildLexIntentConfirmationPromptEl {
     }
 }
 
-pub struct LexIntentConfirmationPromptElRef {
+#[allow(dead_code)]
+pub struct LexIntent_ConfirmationPromptRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentConfirmationPromptElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentConfirmationPromptElRef {
-        LexIntentConfirmationPromptElRef {
+impl terrars::Ref for LexIntent_ConfirmationPromptRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_ConfirmationPromptRef {
+        LexIntent_ConfirmationPromptRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentConfirmationPromptElRef {
+impl LexIntent_ConfirmationPromptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -922,15 +883,15 @@ impl LexIntentConfirmationPromptElRef {
 }
 
 #[derive(Serialize)]
-pub struct LexIntentDialogCodeHookEl {
+pub struct LexIntent_DialogCodeHook {
     message_version: terrars::PrimField<std::string::String>,
     uri: terrars::PrimField<std::string::String>,
 }
 
-impl LexIntentDialogCodeHookEl { }
+impl LexIntent_DialogCodeHook { }
 
-impl terrars::ToListMappable for LexIntentDialogCodeHookEl {
-    type O = terrars::BlockAssignable<LexIntentDialogCodeHookEl>;
+impl terrars::ToListMappable for LexIntent_DialogCodeHook {
+    type O = terrars::BlockAssignable<LexIntent_DialogCodeHook>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -941,37 +902,39 @@ impl terrars::ToListMappable for LexIntentDialogCodeHookEl {
     }
 }
 
-pub struct BuildLexIntentDialogCodeHookEl {
+pub struct BuildLexIntent_DialogCodeHook {
     #[doc = ""]
     pub message_version: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexIntentDialogCodeHookEl {
-    pub fn build(self) -> LexIntentDialogCodeHookEl {
-        LexIntentDialogCodeHookEl {
+impl BuildLexIntent_DialogCodeHook {
+    pub fn build(self) -> LexIntent_DialogCodeHook {
+        LexIntent_DialogCodeHook {
             message_version: self.message_version,
             uri: self.uri,
         }
     }
 }
 
-pub struct LexIntentDialogCodeHookElRef {
+#[allow(dead_code)]
+pub struct LexIntent_DialogCodeHookRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentDialogCodeHookElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentDialogCodeHookElRef {
-        LexIntentDialogCodeHookElRef {
+impl terrars::Ref for LexIntent_DialogCodeHookRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_DialogCodeHookRef {
+        LexIntent_DialogCodeHookRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentDialogCodeHookElRef {
+impl LexIntent_DialogCodeHookRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -987,102 +950,22 @@ impl LexIntentDialogCodeHookElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct LexIntentFollowUpPromptElPromptElMessageEl {
-    content: terrars::PrimField<std::string::String>,
-    content_type: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_number: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl LexIntentFollowUpPromptElPromptElMessageEl {
-    #[doc = "Set the field `group_number`.\n"]
-    pub fn set_group_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.group_number = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for LexIntentFollowUpPromptElPromptElMessageEl {
-    type O = terrars::BlockAssignable<LexIntentFollowUpPromptElPromptElMessageEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildLexIntentFollowUpPromptElPromptElMessageEl {
-    #[doc = ""]
-    pub content: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub content_type: terrars::PrimField<std::string::String>,
-}
-
-impl BuildLexIntentFollowUpPromptElPromptElMessageEl {
-    pub fn build(self) -> LexIntentFollowUpPromptElPromptElMessageEl {
-        LexIntentFollowUpPromptElPromptElMessageEl {
-            content: self.content,
-            content_type: self.content_type,
-            group_number: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct LexIntentFollowUpPromptElPromptElMessageElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for LexIntentFollowUpPromptElPromptElMessageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentFollowUpPromptElPromptElMessageElRef {
-        LexIntentFollowUpPromptElPromptElMessageElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl LexIntentFollowUpPromptElPromptElMessageElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `content` after provisioning.\n"]
-    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
-    pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `group_number` after provisioning.\n"]
-    pub fn group_number(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_number", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct LexIntentFollowUpPromptElPromptElDynamic {
-    message: std::option::Option<terrars::DynamicBlock<LexIntentFollowUpPromptElPromptElMessageEl>>,
+struct LexIntent_FollowUpPrompt_PromptDynamic {
+    message: std::option::Option<terrars::DynamicBlock<LexIntent_ConfirmationPrompt_Message>>,
 }
 
 #[derive(Serialize)]
-pub struct LexIntentFollowUpPromptElPromptEl {
+pub struct LexIntent_FollowUpPrompt_Prompt {
     max_attempts: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_card: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message: std::option::Option<std::vec::Vec<LexIntentFollowUpPromptElPromptElMessageEl>>,
-    dynamic: LexIntentFollowUpPromptElPromptElDynamic,
+    message: std::option::Option<std::vec::Vec<LexIntent_ConfirmationPrompt_Message>>,
+    dynamic: LexIntent_FollowUpPrompt_PromptDynamic,
 }
 
-impl LexIntentFollowUpPromptElPromptEl {
+impl LexIntent_FollowUpPrompt_Prompt {
     #[doc = "Set the field `response_card`.\n"]
     pub fn set_response_card(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.response_card = std::option::Option::Some(v.into());
@@ -1092,7 +975,7 @@ impl LexIntentFollowUpPromptElPromptEl {
     #[doc = "Set the field `message`.\n"]
     pub fn set_message(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentFollowUpPromptElPromptElMessageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_ConfirmationPrompt_Message>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1106,8 +989,8 @@ impl LexIntentFollowUpPromptElPromptEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentFollowUpPromptElPromptEl {
-    type O = terrars::BlockAssignable<LexIntentFollowUpPromptElPromptEl>;
+impl terrars::ToListMappable for LexIntent_FollowUpPrompt_Prompt {
+    type O = terrars::BlockAssignable<LexIntent_FollowUpPrompt_Prompt>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1118,14 +1001,14 @@ impl terrars::ToListMappable for LexIntentFollowUpPromptElPromptEl {
     }
 }
 
-pub struct BuildLexIntentFollowUpPromptElPromptEl {
+pub struct BuildLexIntent_FollowUpPrompt_Prompt {
     #[doc = ""]
     pub max_attempts: terrars::PrimField<f64>,
 }
 
-impl BuildLexIntentFollowUpPromptElPromptEl {
-    pub fn build(self) -> LexIntentFollowUpPromptElPromptEl {
-        LexIntentFollowUpPromptElPromptEl {
+impl BuildLexIntent_FollowUpPrompt_Prompt {
+    pub fn build(self) -> LexIntent_FollowUpPrompt_Prompt {
+        LexIntent_FollowUpPrompt_Prompt {
             max_attempts: self.max_attempts,
             response_card: core::default::Default::default(),
             message: core::default::Default::default(),
@@ -1134,21 +1017,23 @@ impl BuildLexIntentFollowUpPromptElPromptEl {
     }
 }
 
-pub struct LexIntentFollowUpPromptElPromptElRef {
+#[allow(dead_code)]
+pub struct LexIntent_FollowUpPrompt_PromptRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentFollowUpPromptElPromptElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentFollowUpPromptElPromptElRef {
-        LexIntentFollowUpPromptElPromptElRef {
+impl terrars::Ref for LexIntent_FollowUpPrompt_PromptRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_FollowUpPrompt_PromptRef {
+        LexIntent_FollowUpPrompt_PromptRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentFollowUpPromptElPromptElRef {
+impl LexIntent_FollowUpPrompt_PromptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1164,104 +1049,21 @@ impl LexIntentFollowUpPromptElPromptElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct LexIntentFollowUpPromptElRejectionStatementElMessageEl {
-    content: terrars::PrimField<std::string::String>,
-    content_type: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_number: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl LexIntentFollowUpPromptElRejectionStatementElMessageEl {
-    #[doc = "Set the field `group_number`.\n"]
-    pub fn set_group_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.group_number = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for LexIntentFollowUpPromptElRejectionStatementElMessageEl {
-    type O = terrars::BlockAssignable<LexIntentFollowUpPromptElRejectionStatementElMessageEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildLexIntentFollowUpPromptElRejectionStatementElMessageEl {
-    #[doc = ""]
-    pub content: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub content_type: terrars::PrimField<std::string::String>,
-}
-
-impl BuildLexIntentFollowUpPromptElRejectionStatementElMessageEl {
-    pub fn build(self) -> LexIntentFollowUpPromptElRejectionStatementElMessageEl {
-        LexIntentFollowUpPromptElRejectionStatementElMessageEl {
-            content: self.content,
-            content_type: self.content_type,
-            group_number: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct LexIntentFollowUpPromptElRejectionStatementElMessageElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for LexIntentFollowUpPromptElRejectionStatementElMessageElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> LexIntentFollowUpPromptElRejectionStatementElMessageElRef {
-        LexIntentFollowUpPromptElRejectionStatementElMessageElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl LexIntentFollowUpPromptElRejectionStatementElMessageElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `content` after provisioning.\n"]
-    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
-    pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `group_number` after provisioning.\n"]
-    pub fn group_number(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_number", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct LexIntentFollowUpPromptElRejectionStatementElDynamic {
-    message: std::option::Option<terrars::DynamicBlock<LexIntentFollowUpPromptElRejectionStatementElMessageEl>>,
+struct LexIntent_RejectionStatementDynamic {
+    message: std::option::Option<terrars::DynamicBlock<LexIntent_ConfirmationPrompt_Message>>,
 }
 
 #[derive(Serialize)]
-pub struct LexIntentFollowUpPromptElRejectionStatementEl {
+pub struct LexIntent_RejectionStatement {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_card: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message: std::option::Option<std::vec::Vec<LexIntentFollowUpPromptElRejectionStatementElMessageEl>>,
-    dynamic: LexIntentFollowUpPromptElRejectionStatementElDynamic,
+    message: std::option::Option<std::vec::Vec<LexIntent_ConfirmationPrompt_Message>>,
+    dynamic: LexIntent_RejectionStatementDynamic,
 }
 
-impl LexIntentFollowUpPromptElRejectionStatementEl {
+impl LexIntent_RejectionStatement {
     #[doc = "Set the field `response_card`.\n"]
     pub fn set_response_card(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.response_card = std::option::Option::Some(v.into());
@@ -1271,7 +1073,7 @@ impl LexIntentFollowUpPromptElRejectionStatementEl {
     #[doc = "Set the field `message`.\n"]
     pub fn set_message(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentFollowUpPromptElRejectionStatementElMessageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_ConfirmationPrompt_Message>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1285,8 +1087,8 @@ impl LexIntentFollowUpPromptElRejectionStatementEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentFollowUpPromptElRejectionStatementEl {
-    type O = terrars::BlockAssignable<LexIntentFollowUpPromptElRejectionStatementEl>;
+impl terrars::ToListMappable for LexIntent_RejectionStatement {
+    type O = terrars::BlockAssignable<LexIntent_RejectionStatement>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1297,11 +1099,11 @@ impl terrars::ToListMappable for LexIntentFollowUpPromptElRejectionStatementEl {
     }
 }
 
-pub struct BuildLexIntentFollowUpPromptElRejectionStatementEl {}
+pub struct BuildLexIntent_RejectionStatement {}
 
-impl BuildLexIntentFollowUpPromptElRejectionStatementEl {
-    pub fn build(self) -> LexIntentFollowUpPromptElRejectionStatementEl {
-        LexIntentFollowUpPromptElRejectionStatementEl {
+impl BuildLexIntent_RejectionStatement {
+    pub fn build(self) -> LexIntent_RejectionStatement {
+        LexIntent_RejectionStatement {
             response_card: core::default::Default::default(),
             message: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1309,24 +1111,23 @@ impl BuildLexIntentFollowUpPromptElRejectionStatementEl {
     }
 }
 
-pub struct LexIntentFollowUpPromptElRejectionStatementElRef {
+#[allow(dead_code)]
+pub struct LexIntent_RejectionStatementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentFollowUpPromptElRejectionStatementElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> LexIntentFollowUpPromptElRejectionStatementElRef {
-        LexIntentFollowUpPromptElRejectionStatementElRef {
+impl terrars::Ref for LexIntent_RejectionStatementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_RejectionStatementRef {
+        LexIntent_RejectionStatementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentFollowUpPromptElRejectionStatementElRef {
+impl LexIntent_RejectionStatementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1338,25 +1139,25 @@ impl LexIntentFollowUpPromptElRejectionStatementElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LexIntentFollowUpPromptElDynamic {
-    prompt: std::option::Option<terrars::DynamicBlock<LexIntentFollowUpPromptElPromptEl>>,
-    rejection_statement: std::option::Option<terrars::DynamicBlock<LexIntentFollowUpPromptElRejectionStatementEl>>,
+struct LexIntent_FollowUpPromptDynamic {
+    prompt: std::option::Option<terrars::DynamicBlock<LexIntent_FollowUpPrompt_Prompt>>,
+    rejection_statement: std::option::Option<terrars::DynamicBlock<LexIntent_RejectionStatement>>,
 }
 
 #[derive(Serialize)]
-pub struct LexIntentFollowUpPromptEl {
+pub struct LexIntent_FollowUpPrompt {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prompt: std::option::Option<std::vec::Vec<LexIntentFollowUpPromptElPromptEl>>,
+    prompt: std::option::Option<std::vec::Vec<LexIntent_FollowUpPrompt_Prompt>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rejection_statement: std::option::Option<std::vec::Vec<LexIntentFollowUpPromptElRejectionStatementEl>>,
-    dynamic: LexIntentFollowUpPromptElDynamic,
+    rejection_statement: std::option::Option<std::vec::Vec<LexIntent_RejectionStatement>>,
+    dynamic: LexIntent_FollowUpPromptDynamic,
 }
 
-impl LexIntentFollowUpPromptEl {
+impl LexIntent_FollowUpPrompt {
     #[doc = "Set the field `prompt`.\n"]
     pub fn set_prompt(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentFollowUpPromptElPromptEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_FollowUpPrompt_Prompt>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1372,7 +1173,7 @@ impl LexIntentFollowUpPromptEl {
     #[doc = "Set the field `rejection_statement`.\n"]
     pub fn set_rejection_statement(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentFollowUpPromptElRejectionStatementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_RejectionStatement>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1386,8 +1187,8 @@ impl LexIntentFollowUpPromptEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentFollowUpPromptEl {
-    type O = terrars::BlockAssignable<LexIntentFollowUpPromptEl>;
+impl terrars::ToListMappable for LexIntent_FollowUpPrompt {
+    type O = terrars::BlockAssignable<LexIntent_FollowUpPrompt>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1398,11 +1199,11 @@ impl terrars::ToListMappable for LexIntentFollowUpPromptEl {
     }
 }
 
-pub struct BuildLexIntentFollowUpPromptEl {}
+pub struct BuildLexIntent_FollowUpPrompt {}
 
-impl BuildLexIntentFollowUpPromptEl {
-    pub fn build(self) -> LexIntentFollowUpPromptEl {
-        LexIntentFollowUpPromptEl {
+impl BuildLexIntent_FollowUpPrompt {
+    pub fn build(self) -> LexIntent_FollowUpPrompt {
+        LexIntent_FollowUpPrompt {
             prompt: core::default::Default::default(),
             rejection_statement: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1410,46 +1211,48 @@ impl BuildLexIntentFollowUpPromptEl {
     }
 }
 
-pub struct LexIntentFollowUpPromptElRef {
+#[allow(dead_code)]
+pub struct LexIntent_FollowUpPromptRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentFollowUpPromptElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentFollowUpPromptElRef {
-        LexIntentFollowUpPromptElRef {
+impl terrars::Ref for LexIntent_FollowUpPromptRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_FollowUpPromptRef {
+        LexIntent_FollowUpPromptRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentFollowUpPromptElRef {
+impl LexIntent_FollowUpPromptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `prompt` after provisioning.\n"]
-    pub fn prompt(&self) -> terrars::ListRef<LexIntentFollowUpPromptElPromptElRef> {
+    pub fn prompt(&self) -> terrars::ListRef<LexIntent_FollowUpPrompt_PromptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.prompt", self.base))
     }
 
     #[doc = "Get a reference to the value of field `rejection_statement` after provisioning.\n"]
-    pub fn rejection_statement(&self) -> terrars::ListRef<LexIntentFollowUpPromptElRejectionStatementElRef> {
+    pub fn rejection_statement(&self) -> terrars::ListRef<LexIntent_RejectionStatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rejection_statement", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LexIntentFulfillmentActivityElCodeHookEl {
+pub struct LexIntent_FulfillmentActivity_CodeHook {
     message_version: terrars::PrimField<std::string::String>,
     uri: terrars::PrimField<std::string::String>,
 }
 
-impl LexIntentFulfillmentActivityElCodeHookEl { }
+impl LexIntent_FulfillmentActivity_CodeHook { }
 
-impl terrars::ToListMappable for LexIntentFulfillmentActivityElCodeHookEl {
-    type O = terrars::BlockAssignable<LexIntentFulfillmentActivityElCodeHookEl>;
+impl terrars::ToListMappable for LexIntent_FulfillmentActivity_CodeHook {
+    type O = terrars::BlockAssignable<LexIntent_FulfillmentActivity_CodeHook>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1460,37 +1263,39 @@ impl terrars::ToListMappable for LexIntentFulfillmentActivityElCodeHookEl {
     }
 }
 
-pub struct BuildLexIntentFulfillmentActivityElCodeHookEl {
+pub struct BuildLexIntent_FulfillmentActivity_CodeHook {
     #[doc = ""]
     pub message_version: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexIntentFulfillmentActivityElCodeHookEl {
-    pub fn build(self) -> LexIntentFulfillmentActivityElCodeHookEl {
-        LexIntentFulfillmentActivityElCodeHookEl {
+impl BuildLexIntent_FulfillmentActivity_CodeHook {
+    pub fn build(self) -> LexIntent_FulfillmentActivity_CodeHook {
+        LexIntent_FulfillmentActivity_CodeHook {
             message_version: self.message_version,
             uri: self.uri,
         }
     }
 }
 
-pub struct LexIntentFulfillmentActivityElCodeHookElRef {
+#[allow(dead_code)]
+pub struct LexIntent_FulfillmentActivity_CodeHookRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentFulfillmentActivityElCodeHookElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentFulfillmentActivityElCodeHookElRef {
-        LexIntentFulfillmentActivityElCodeHookElRef {
+impl terrars::Ref for LexIntent_FulfillmentActivity_CodeHookRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_FulfillmentActivity_CodeHookRef {
+        LexIntent_FulfillmentActivity_CodeHookRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentFulfillmentActivityElCodeHookElRef {
+impl LexIntent_FulfillmentActivity_CodeHookRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1507,24 +1312,24 @@ impl LexIntentFulfillmentActivityElCodeHookElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LexIntentFulfillmentActivityElDynamic {
-    code_hook: std::option::Option<terrars::DynamicBlock<LexIntentFulfillmentActivityElCodeHookEl>>,
+struct LexIntent_FulfillmentActivityDynamic {
+    code_hook: std::option::Option<terrars::DynamicBlock<LexIntent_FulfillmentActivity_CodeHook>>,
 }
 
 #[derive(Serialize)]
-pub struct LexIntentFulfillmentActivityEl {
+pub struct LexIntent_FulfillmentActivity {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    code_hook: std::option::Option<std::vec::Vec<LexIntentFulfillmentActivityElCodeHookEl>>,
-    dynamic: LexIntentFulfillmentActivityElDynamic,
+    code_hook: std::option::Option<std::vec::Vec<LexIntent_FulfillmentActivity_CodeHook>>,
+    dynamic: LexIntent_FulfillmentActivityDynamic,
 }
 
-impl LexIntentFulfillmentActivityEl {
+impl LexIntent_FulfillmentActivity {
     #[doc = "Set the field `code_hook`.\n"]
     pub fn set_code_hook(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentFulfillmentActivityElCodeHookEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_FulfillmentActivity_CodeHook>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1538,8 +1343,8 @@ impl LexIntentFulfillmentActivityEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentFulfillmentActivityEl {
-    type O = terrars::BlockAssignable<LexIntentFulfillmentActivityEl>;
+impl terrars::ToListMappable for LexIntent_FulfillmentActivity {
+    type O = terrars::BlockAssignable<LexIntent_FulfillmentActivity>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1550,14 +1355,14 @@ impl terrars::ToListMappable for LexIntentFulfillmentActivityEl {
     }
 }
 
-pub struct BuildLexIntentFulfillmentActivityEl {
+pub struct BuildLexIntent_FulfillmentActivity {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexIntentFulfillmentActivityEl {
-    pub fn build(self) -> LexIntentFulfillmentActivityEl {
-        LexIntentFulfillmentActivityEl {
+impl BuildLexIntent_FulfillmentActivity {
+    pub fn build(self) -> LexIntent_FulfillmentActivity {
+        LexIntent_FulfillmentActivity {
             type_: self.type_,
             code_hook: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1565,21 +1370,23 @@ impl BuildLexIntentFulfillmentActivityEl {
     }
 }
 
-pub struct LexIntentFulfillmentActivityElRef {
+#[allow(dead_code)]
+pub struct LexIntent_FulfillmentActivityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentFulfillmentActivityElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentFulfillmentActivityElRef {
-        LexIntentFulfillmentActivityElRef {
+impl terrars::Ref for LexIntent_FulfillmentActivityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_FulfillmentActivityRef {
+        LexIntent_FulfillmentActivityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentFulfillmentActivityElRef {
+impl LexIntent_FulfillmentActivityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1590,277 +1397,27 @@ impl LexIntentFulfillmentActivityElRef {
     }
 
     #[doc = "Get a reference to the value of field `code_hook` after provisioning.\n"]
-    pub fn code_hook(&self) -> terrars::ListRef<LexIntentFulfillmentActivityElCodeHookElRef> {
+    pub fn code_hook(&self) -> terrars::ListRef<LexIntent_FulfillmentActivity_CodeHookRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.code_hook", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct LexIntentRejectionStatementElMessageEl {
-    content: terrars::PrimField<std::string::String>,
-    content_type: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_number: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl LexIntentRejectionStatementElMessageEl {
-    #[doc = "Set the field `group_number`.\n"]
-    pub fn set_group_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.group_number = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for LexIntentRejectionStatementElMessageEl {
-    type O = terrars::BlockAssignable<LexIntentRejectionStatementElMessageEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildLexIntentRejectionStatementElMessageEl {
-    #[doc = ""]
-    pub content: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub content_type: terrars::PrimField<std::string::String>,
-}
-
-impl BuildLexIntentRejectionStatementElMessageEl {
-    pub fn build(self) -> LexIntentRejectionStatementElMessageEl {
-        LexIntentRejectionStatementElMessageEl {
-            content: self.content,
-            content_type: self.content_type,
-            group_number: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct LexIntentRejectionStatementElMessageElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for LexIntentRejectionStatementElMessageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentRejectionStatementElMessageElRef {
-        LexIntentRejectionStatementElMessageElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl LexIntentRejectionStatementElMessageElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `content` after provisioning.\n"]
-    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
-    pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `group_number` after provisioning.\n"]
-    pub fn group_number(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_number", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct LexIntentRejectionStatementElDynamic {
-    message: std::option::Option<terrars::DynamicBlock<LexIntentRejectionStatementElMessageEl>>,
+struct LexIntent_Slot_ValueElicitationPromptDynamic {
+    message: std::option::Option<terrars::DynamicBlock<LexIntent_ConfirmationPrompt_Message>>,
 }
 
 #[derive(Serialize)]
-pub struct LexIntentRejectionStatementEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_card: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message: std::option::Option<std::vec::Vec<LexIntentRejectionStatementElMessageEl>>,
-    dynamic: LexIntentRejectionStatementElDynamic,
-}
-
-impl LexIntentRejectionStatementEl {
-    #[doc = "Set the field `response_card`.\n"]
-    pub fn set_response_card(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.response_card = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `message`.\n"]
-    pub fn set_message(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentRejectionStatementElMessageEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.message = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.message = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for LexIntentRejectionStatementEl {
-    type O = terrars::BlockAssignable<LexIntentRejectionStatementEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildLexIntentRejectionStatementEl {}
-
-impl BuildLexIntentRejectionStatementEl {
-    pub fn build(self) -> LexIntentRejectionStatementEl {
-        LexIntentRejectionStatementEl {
-            response_card: core::default::Default::default(),
-            message: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct LexIntentRejectionStatementElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for LexIntentRejectionStatementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentRejectionStatementElRef {
-        LexIntentRejectionStatementElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl LexIntentRejectionStatementElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `response_card` after provisioning.\n"]
-    pub fn response_card(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_card", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct LexIntentSlotElValueElicitationPromptElMessageEl {
-    content: terrars::PrimField<std::string::String>,
-    content_type: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_number: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl LexIntentSlotElValueElicitationPromptElMessageEl {
-    #[doc = "Set the field `group_number`.\n"]
-    pub fn set_group_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.group_number = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for LexIntentSlotElValueElicitationPromptElMessageEl {
-    type O = terrars::BlockAssignable<LexIntentSlotElValueElicitationPromptElMessageEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildLexIntentSlotElValueElicitationPromptElMessageEl {
-    #[doc = ""]
-    pub content: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub content_type: terrars::PrimField<std::string::String>,
-}
-
-impl BuildLexIntentSlotElValueElicitationPromptElMessageEl {
-    pub fn build(self) -> LexIntentSlotElValueElicitationPromptElMessageEl {
-        LexIntentSlotElValueElicitationPromptElMessageEl {
-            content: self.content,
-            content_type: self.content_type,
-            group_number: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct LexIntentSlotElValueElicitationPromptElMessageElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for LexIntentSlotElValueElicitationPromptElMessageElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> LexIntentSlotElValueElicitationPromptElMessageElRef {
-        LexIntentSlotElValueElicitationPromptElMessageElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl LexIntentSlotElValueElicitationPromptElMessageElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `content` after provisioning.\n"]
-    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
-    pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `group_number` after provisioning.\n"]
-    pub fn group_number(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_number", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct LexIntentSlotElValueElicitationPromptElDynamic {
-    message: std::option::Option<terrars::DynamicBlock<LexIntentSlotElValueElicitationPromptElMessageEl>>,
-}
-
-#[derive(Serialize)]
-pub struct LexIntentSlotElValueElicitationPromptEl {
+pub struct LexIntent_Slot_ValueElicitationPrompt {
     max_attempts: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_card: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message: std::option::Option<std::vec::Vec<LexIntentSlotElValueElicitationPromptElMessageEl>>,
-    dynamic: LexIntentSlotElValueElicitationPromptElDynamic,
+    message: std::option::Option<std::vec::Vec<LexIntent_ConfirmationPrompt_Message>>,
+    dynamic: LexIntent_Slot_ValueElicitationPromptDynamic,
 }
 
-impl LexIntentSlotElValueElicitationPromptEl {
+impl LexIntent_Slot_ValueElicitationPrompt {
     #[doc = "Set the field `response_card`.\n"]
     pub fn set_response_card(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.response_card = std::option::Option::Some(v.into());
@@ -1870,7 +1427,7 @@ impl LexIntentSlotElValueElicitationPromptEl {
     #[doc = "Set the field `message`.\n"]
     pub fn set_message(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentSlotElValueElicitationPromptElMessageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_ConfirmationPrompt_Message>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1884,8 +1441,8 @@ impl LexIntentSlotElValueElicitationPromptEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentSlotElValueElicitationPromptEl {
-    type O = terrars::BlockAssignable<LexIntentSlotElValueElicitationPromptEl>;
+impl terrars::ToListMappable for LexIntent_Slot_ValueElicitationPrompt {
+    type O = terrars::BlockAssignable<LexIntent_Slot_ValueElicitationPrompt>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1896,14 +1453,14 @@ impl terrars::ToListMappable for LexIntentSlotElValueElicitationPromptEl {
     }
 }
 
-pub struct BuildLexIntentSlotElValueElicitationPromptEl {
+pub struct BuildLexIntent_Slot_ValueElicitationPrompt {
     #[doc = ""]
     pub max_attempts: terrars::PrimField<f64>,
 }
 
-impl BuildLexIntentSlotElValueElicitationPromptEl {
-    pub fn build(self) -> LexIntentSlotElValueElicitationPromptEl {
-        LexIntentSlotElValueElicitationPromptEl {
+impl BuildLexIntent_Slot_ValueElicitationPrompt {
+    pub fn build(self) -> LexIntent_Slot_ValueElicitationPrompt {
+        LexIntent_Slot_ValueElicitationPrompt {
             max_attempts: self.max_attempts,
             response_card: core::default::Default::default(),
             message: core::default::Default::default(),
@@ -1912,21 +1469,23 @@ impl BuildLexIntentSlotElValueElicitationPromptEl {
     }
 }
 
-pub struct LexIntentSlotElValueElicitationPromptElRef {
+#[allow(dead_code)]
+pub struct LexIntent_Slot_ValueElicitationPromptRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentSlotElValueElicitationPromptElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentSlotElValueElicitationPromptElRef {
-        LexIntentSlotElValueElicitationPromptElRef {
+impl terrars::Ref for LexIntent_Slot_ValueElicitationPromptRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_Slot_ValueElicitationPromptRef {
+        LexIntent_Slot_ValueElicitationPromptRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentSlotElValueElicitationPromptElRef {
+impl LexIntent_Slot_ValueElicitationPromptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1943,12 +1502,12 @@ impl LexIntentSlotElValueElicitationPromptElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LexIntentSlotElDynamic {
-    value_elicitation_prompt: std::option::Option<terrars::DynamicBlock<LexIntentSlotElValueElicitationPromptEl>>,
+struct LexIntent_SlotDynamic {
+    value_elicitation_prompt: std::option::Option<terrars::DynamicBlock<LexIntent_Slot_ValueElicitationPrompt>>,
 }
 
 #[derive(Serialize)]
-pub struct LexIntentSlotEl {
+pub struct LexIntent_Slot {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
@@ -1963,11 +1522,11 @@ pub struct LexIntentSlotEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     slot_type_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value_elicitation_prompt: std::option::Option<std::vec::Vec<LexIntentSlotElValueElicitationPromptEl>>,
-    dynamic: LexIntentSlotElDynamic,
+    value_elicitation_prompt: std::option::Option<std::vec::Vec<LexIntent_Slot_ValueElicitationPrompt>>,
+    dynamic: LexIntent_SlotDynamic,
 }
 
-impl LexIntentSlotEl {
+impl LexIntent_Slot {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -2004,7 +1563,7 @@ impl LexIntentSlotEl {
     #[doc = "Set the field `value_elicitation_prompt`.\n"]
     pub fn set_value_elicitation_prompt(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexIntentSlotElValueElicitationPromptEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexIntent_Slot_ValueElicitationPrompt>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2018,8 +1577,8 @@ impl LexIntentSlotEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentSlotEl {
-    type O = terrars::BlockAssignable<LexIntentSlotEl>;
+impl terrars::ToListMappable for LexIntent_Slot {
+    type O = terrars::BlockAssignable<LexIntent_Slot>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2030,7 +1589,7 @@ impl terrars::ToListMappable for LexIntentSlotEl {
     }
 }
 
-pub struct BuildLexIntentSlotEl {
+pub struct BuildLexIntent_Slot {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -2039,9 +1598,9 @@ pub struct BuildLexIntentSlotEl {
     pub slot_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexIntentSlotEl {
-    pub fn build(self) -> LexIntentSlotEl {
-        LexIntentSlotEl {
+impl BuildLexIntent_Slot {
+    pub fn build(self) -> LexIntent_Slot {
+        LexIntent_Slot {
             description: core::default::Default::default(),
             name: self.name,
             priority: core::default::Default::default(),
@@ -2056,21 +1615,23 @@ impl BuildLexIntentSlotEl {
     }
 }
 
-pub struct LexIntentSlotElRef {
+#[allow(dead_code)]
+pub struct LexIntent_SlotRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentSlotElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentSlotElRef {
-        LexIntentSlotElRef {
+impl terrars::Ref for LexIntent_SlotRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_SlotRef {
+        LexIntent_SlotRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentSlotElRef {
+impl LexIntent_SlotRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2116,13 +1677,13 @@ impl LexIntentSlotElRef {
     }
 
     #[doc = "Get a reference to the value of field `value_elicitation_prompt` after provisioning.\n"]
-    pub fn value_elicitation_prompt(&self) -> terrars::ListRef<LexIntentSlotElValueElicitationPromptElRef> {
+    pub fn value_elicitation_prompt(&self) -> terrars::ListRef<LexIntent_Slot_ValueElicitationPromptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.value_elicitation_prompt", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LexIntentTimeoutsEl {
+pub struct LexIntent_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2131,7 +1692,7 @@ pub struct LexIntentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LexIntentTimeoutsEl {
+impl LexIntent_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2151,8 +1712,8 @@ impl LexIntentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LexIntentTimeoutsEl {
-    type O = terrars::BlockAssignable<LexIntentTimeoutsEl>;
+impl terrars::ToListMappable for LexIntent_Timeouts {
+    type O = terrars::BlockAssignable<LexIntent_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2163,11 +1724,11 @@ impl terrars::ToListMappable for LexIntentTimeoutsEl {
     }
 }
 
-pub struct BuildLexIntentTimeoutsEl {}
+pub struct BuildLexIntent_Timeouts {}
 
-impl BuildLexIntentTimeoutsEl {
-    pub fn build(self) -> LexIntentTimeoutsEl {
-        LexIntentTimeoutsEl {
+impl BuildLexIntent_Timeouts {
+    pub fn build(self) -> LexIntent_Timeouts {
+        LexIntent_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2175,21 +1736,23 @@ impl BuildLexIntentTimeoutsEl {
     }
 }
 
-pub struct LexIntentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LexIntent_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexIntentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntentTimeoutsElRef {
-        LexIntentTimeoutsElRef {
+impl terrars::Ref for LexIntent_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexIntent_TimeoutsRef {
+        LexIntent_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexIntentTimeoutsElRef {
+impl LexIntent_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2208,15 +1771,4 @@ impl LexIntentTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LexIntentDynamic {
-    conclusion_statement: std::option::Option<terrars::DynamicBlock<LexIntentConclusionStatementEl>>,
-    confirmation_prompt: std::option::Option<terrars::DynamicBlock<LexIntentConfirmationPromptEl>>,
-    dialog_code_hook: std::option::Option<terrars::DynamicBlock<LexIntentDialogCodeHookEl>>,
-    follow_up_prompt: std::option::Option<terrars::DynamicBlock<LexIntentFollowUpPromptEl>>,
-    fulfillment_activity: std::option::Option<terrars::DynamicBlock<LexIntentFulfillmentActivityEl>>,
-    rejection_statement: std::option::Option<terrars::DynamicBlock<LexIntentRejectionStatementEl>>,
-    slot: std::option::Option<terrars::DynamicBlock<LexIntentSlotEl>>,
 }

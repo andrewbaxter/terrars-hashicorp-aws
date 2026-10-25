@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketPublicAccessBlockData {
+struct S3BucketPublicAccessBlockData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,13 +30,17 @@ struct S3BucketPublicAccessBlockData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ignore_public_acls: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     restrict_public_buckets: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_destroy: std::option::Option<terrars::PrimField<bool>>,
 }
 
 struct S3BucketPublicAccessBlock_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketPublicAccessBlockData>,
+    data: std::cell::RefCell<S3BucketPublicAccessBlockData_>,
 }
 
 #[derive(Clone)]
@@ -158,9 +164,22 @@ impl S3BucketPublicAccessBlock {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `restrict_public_buckets`.\n"]
     pub fn set_restrict_public_buckets(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().restrict_public_buckets = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `skip_destroy`.\n"]
+    pub fn set_skip_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_destroy = std::option::Option::Some(v.into());
         self
     }
 
@@ -189,9 +208,20 @@ impl S3BucketPublicAccessBlock {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_public_acls", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `restrict_public_buckets` after provisioning.\n"]
     pub fn restrict_public_buckets(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.restrict_public_buckets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
     }
 }
 
@@ -237,7 +267,7 @@ impl BuildS3BucketPublicAccessBlock {
         let out = S3BucketPublicAccessBlock(std::rc::Rc::new(S3BucketPublicAccessBlock_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketPublicAccessBlockData {
+            data: std::cell::RefCell::new(S3BucketPublicAccessBlockData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -248,7 +278,9 @@ impl BuildS3BucketPublicAccessBlock {
                 bucket: self.bucket,
                 id: core::default::Default::default(),
                 ignore_public_acls: core::default::Default::default(),
+                region: core::default::Default::default(),
                 restrict_public_buckets: core::default::Default::default(),
+                skip_destroy: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -304,8 +336,19 @@ impl S3BucketPublicAccessBlockRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_public_acls", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `restrict_public_buckets` after provisioning.\n"]
     pub fn restrict_public_buckets(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.restrict_public_buckets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
     }
 }

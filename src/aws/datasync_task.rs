@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DatasyncTaskData {
+struct DatasyncTaskData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,28 +27,34 @@ struct DatasyncTaskData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     source_location_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    excludes: std::option::Option<std::vec::Vec<DatasyncTaskExcludesEl>>,
+    task_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    includes: std::option::Option<std::vec::Vec<DatasyncTaskIncludesEl>>,
+    excludes: std::option::Option<std::vec::Vec<DatasyncTask_Excludes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    options: std::option::Option<std::vec::Vec<DatasyncTaskOptionsEl>>,
+    includes: std::option::Option<std::vec::Vec<DatasyncTask_Includes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schedule: std::option::Option<std::vec::Vec<DatasyncTaskScheduleEl>>,
+    options: std::option::Option<std::vec::Vec<DatasyncTask_Options>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DatasyncTaskTimeoutsEl>,
+    schedule: std::option::Option<std::vec::Vec<DatasyncTask_Schedule>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    task_report_config: std::option::Option<std::vec::Vec<DatasyncTask_TaskReportConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DatasyncTask_Timeouts>,
     dynamic: DatasyncTaskDynamic,
 }
 
 struct DatasyncTask_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatasyncTaskData>,
+    data: std::cell::RefCell<DatasyncTaskData_>,
 }
 
 #[derive(Clone)]
@@ -167,6 +175,13 @@ impl DatasyncTask {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -185,8 +200,14 @@ impl DatasyncTask {
         self
     }
 
+    #[doc = "Set the field `task_mode`.\n"]
+    pub fn set_task_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().task_mode = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `excludes`.\n"]
-    pub fn set_excludes(self, v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTaskExcludesEl>>) -> Self {
+    pub fn set_excludes(self, v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTask_Excludes>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().excludes = std::option::Option::Some(v);
@@ -199,7 +220,7 @@ impl DatasyncTask {
     }
 
     #[doc = "Set the field `includes`.\n"]
-    pub fn set_includes(self, v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTaskIncludesEl>>) -> Self {
+    pub fn set_includes(self, v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTask_Includes>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().includes = std::option::Option::Some(v);
@@ -212,7 +233,7 @@ impl DatasyncTask {
     }
 
     #[doc = "Set the field `options`.\n"]
-    pub fn set_options(self, v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTaskOptionsEl>>) -> Self {
+    pub fn set_options(self, v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTask_Options>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().options = std::option::Option::Some(v);
@@ -225,7 +246,7 @@ impl DatasyncTask {
     }
 
     #[doc = "Set the field `schedule`.\n"]
-    pub fn set_schedule(self, v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTaskScheduleEl>>) -> Self {
+    pub fn set_schedule(self, v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTask_Schedule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().schedule = std::option::Option::Some(v);
@@ -237,8 +258,24 @@ impl DatasyncTask {
         self
     }
 
+    #[doc = "Set the field `task_report_config`.\n"]
+    pub fn set_task_report_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTask_TaskReportConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().task_report_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.task_report_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DatasyncTaskTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DatasyncTask_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -268,6 +305,12 @@ impl DatasyncTask {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_location_arn` after provisioning.\n"]
     pub fn source_location_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_location_arn", self.extract_ref()))
@@ -283,29 +326,39 @@ impl DatasyncTask {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `task_mode` after provisioning.\n"]
+    pub fn task_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.task_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `excludes` after provisioning.\n"]
-    pub fn excludes(&self) -> terrars::ListRef<DatasyncTaskExcludesElRef> {
+    pub fn excludes(&self) -> terrars::ListRef<DatasyncTask_ExcludesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.excludes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `includes` after provisioning.\n"]
-    pub fn includes(&self) -> terrars::ListRef<DatasyncTaskIncludesElRef> {
+    pub fn includes(&self) -> terrars::ListRef<DatasyncTask_IncludesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.includes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
-    pub fn options(&self) -> terrars::ListRef<DatasyncTaskOptionsElRef> {
+    pub fn options(&self) -> terrars::ListRef<DatasyncTask_OptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<DatasyncTaskScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<DatasyncTask_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `task_report_config` after provisioning.\n"]
+    pub fn task_report_config(&self) -> terrars::ListRef<DatasyncTask_TaskReportConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.task_report_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DatasyncTaskTimeoutsElRef {
-        DatasyncTaskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DatasyncTask_TimeoutsRef {
+        DatasyncTask_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -353,7 +406,7 @@ impl BuildDatasyncTask {
         let out = DatasyncTask(std::rc::Rc::new(DatasyncTask_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatasyncTaskData {
+            data: std::cell::RefCell::new(DatasyncTaskData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -363,13 +416,16 @@ impl BuildDatasyncTask {
                 destination_location_arn: self.destination_location_arn,
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 source_location_arn: self.source_location_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                task_mode: core::default::Default::default(),
                 excludes: core::default::Default::default(),
                 includes: core::default::Default::default(),
                 options: core::default::Default::default(),
                 schedule: core::default::Default::default(),
+                task_report_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -427,6 +483,12 @@ impl DatasyncTaskRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_location_arn` after provisioning.\n"]
     pub fn source_location_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_location_arn", self.extract_ref()))
@@ -442,41 +504,60 @@ impl DatasyncTaskRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `task_mode` after provisioning.\n"]
+    pub fn task_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.task_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `excludes` after provisioning.\n"]
-    pub fn excludes(&self) -> terrars::ListRef<DatasyncTaskExcludesElRef> {
+    pub fn excludes(&self) -> terrars::ListRef<DatasyncTask_ExcludesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.excludes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `includes` after provisioning.\n"]
-    pub fn includes(&self) -> terrars::ListRef<DatasyncTaskIncludesElRef> {
+    pub fn includes(&self) -> terrars::ListRef<DatasyncTask_IncludesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.includes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
-    pub fn options(&self) -> terrars::ListRef<DatasyncTaskOptionsElRef> {
+    pub fn options(&self) -> terrars::ListRef<DatasyncTask_OptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<DatasyncTaskScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<DatasyncTask_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `task_report_config` after provisioning.\n"]
+    pub fn task_report_config(&self) -> terrars::ListRef<DatasyncTask_TaskReportConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.task_report_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DatasyncTaskTimeoutsElRef {
-        DatasyncTaskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DatasyncTask_TimeoutsRef {
+        DatasyncTask_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatasyncTaskDynamic {
+    excludes: std::option::Option<terrars::DynamicBlock<DatasyncTask_Excludes>>,
+    includes: std::option::Option<terrars::DynamicBlock<DatasyncTask_Includes>>,
+    options: std::option::Option<terrars::DynamicBlock<DatasyncTask_Options>>,
+    schedule: std::option::Option<terrars::DynamicBlock<DatasyncTask_Schedule>>,
+    task_report_config: std::option::Option<terrars::DynamicBlock<DatasyncTask_TaskReportConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct DatasyncTaskExcludesEl {
+pub struct DatasyncTask_Excludes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     filter_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncTaskExcludesEl {
+impl DatasyncTask_Excludes {
     #[doc = "Set the field `filter_type`.\n"]
     pub fn set_filter_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.filter_type = std::option::Option::Some(v.into());
@@ -490,8 +571,8 @@ impl DatasyncTaskExcludesEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncTaskExcludesEl {
-    type O = terrars::BlockAssignable<DatasyncTaskExcludesEl>;
+impl terrars::ToListMappable for DatasyncTask_Excludes {
+    type O = terrars::BlockAssignable<DatasyncTask_Excludes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -502,32 +583,34 @@ impl terrars::ToListMappable for DatasyncTaskExcludesEl {
     }
 }
 
-pub struct BuildDatasyncTaskExcludesEl {}
+pub struct BuildDatasyncTask_Excludes {}
 
-impl BuildDatasyncTaskExcludesEl {
-    pub fn build(self) -> DatasyncTaskExcludesEl {
-        DatasyncTaskExcludesEl {
+impl BuildDatasyncTask_Excludes {
+    pub fn build(self) -> DatasyncTask_Excludes {
+        DatasyncTask_Excludes {
             filter_type: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DatasyncTaskExcludesElRef {
+#[allow(dead_code)]
+pub struct DatasyncTask_ExcludesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncTaskExcludesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTaskExcludesElRef {
-        DatasyncTaskExcludesElRef {
+impl terrars::Ref for DatasyncTask_ExcludesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTask_ExcludesRef {
+        DatasyncTask_ExcludesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncTaskExcludesElRef {
+impl DatasyncTask_ExcludesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -544,14 +627,14 @@ impl DatasyncTaskExcludesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DatasyncTaskIncludesEl {
+pub struct DatasyncTask_Includes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     filter_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncTaskIncludesEl {
+impl DatasyncTask_Includes {
     #[doc = "Set the field `filter_type`.\n"]
     pub fn set_filter_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.filter_type = std::option::Option::Some(v.into());
@@ -565,8 +648,8 @@ impl DatasyncTaskIncludesEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncTaskIncludesEl {
-    type O = terrars::BlockAssignable<DatasyncTaskIncludesEl>;
+impl terrars::ToListMappable for DatasyncTask_Includes {
+    type O = terrars::BlockAssignable<DatasyncTask_Includes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -577,32 +660,34 @@ impl terrars::ToListMappable for DatasyncTaskIncludesEl {
     }
 }
 
-pub struct BuildDatasyncTaskIncludesEl {}
+pub struct BuildDatasyncTask_Includes {}
 
-impl BuildDatasyncTaskIncludesEl {
-    pub fn build(self) -> DatasyncTaskIncludesEl {
-        DatasyncTaskIncludesEl {
+impl BuildDatasyncTask_Includes {
+    pub fn build(self) -> DatasyncTask_Includes {
+        DatasyncTask_Includes {
             filter_type: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DatasyncTaskIncludesElRef {
+#[allow(dead_code)]
+pub struct DatasyncTask_IncludesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncTaskIncludesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTaskIncludesElRef {
-        DatasyncTaskIncludesElRef {
+impl terrars::Ref for DatasyncTask_IncludesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTask_IncludesRef {
+        DatasyncTask_IncludesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncTaskIncludesElRef {
+impl DatasyncTask_IncludesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -619,7 +704,7 @@ impl DatasyncTaskIncludesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DatasyncTaskOptionsEl {
+pub struct DatasyncTask_Options {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     atime: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -630,6 +715,8 @@ pub struct DatasyncTaskOptionsEl {
     log_level: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mtime: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    object_tags: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     overwrite_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -650,7 +737,7 @@ pub struct DatasyncTaskOptionsEl {
     verify_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncTaskOptionsEl {
+impl DatasyncTask_Options {
     #[doc = "Set the field `atime`.\n"]
     pub fn set_atime(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.atime = std::option::Option::Some(v.into());
@@ -678,6 +765,12 @@ impl DatasyncTaskOptionsEl {
     #[doc = "Set the field `mtime`.\n"]
     pub fn set_mtime(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.mtime = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `object_tags`.\n"]
+    pub fn set_object_tags(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.object_tags = std::option::Option::Some(v.into());
         self
     }
 
@@ -742,8 +835,8 @@ impl DatasyncTaskOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncTaskOptionsEl {
-    type O = terrars::BlockAssignable<DatasyncTaskOptionsEl>;
+impl terrars::ToListMappable for DatasyncTask_Options {
+    type O = terrars::BlockAssignable<DatasyncTask_Options>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -754,16 +847,17 @@ impl terrars::ToListMappable for DatasyncTaskOptionsEl {
     }
 }
 
-pub struct BuildDatasyncTaskOptionsEl {}
+pub struct BuildDatasyncTask_Options {}
 
-impl BuildDatasyncTaskOptionsEl {
-    pub fn build(self) -> DatasyncTaskOptionsEl {
-        DatasyncTaskOptionsEl {
+impl BuildDatasyncTask_Options {
+    pub fn build(self) -> DatasyncTask_Options {
+        DatasyncTask_Options {
             atime: core::default::Default::default(),
             bytes_per_second: core::default::Default::default(),
             gid: core::default::Default::default(),
             log_level: core::default::Default::default(),
             mtime: core::default::Default::default(),
+            object_tags: core::default::Default::default(),
             overwrite_mode: core::default::Default::default(),
             posix_permissions: core::default::Default::default(),
             preserve_deleted_files: core::default::Default::default(),
@@ -777,21 +871,23 @@ impl BuildDatasyncTaskOptionsEl {
     }
 }
 
-pub struct DatasyncTaskOptionsElRef {
+#[allow(dead_code)]
+pub struct DatasyncTask_OptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncTaskOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTaskOptionsElRef {
-        DatasyncTaskOptionsElRef {
+impl terrars::Ref for DatasyncTask_OptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTask_OptionsRef {
+        DatasyncTask_OptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncTaskOptionsElRef {
+impl DatasyncTask_OptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -819,6 +915,11 @@ impl DatasyncTaskOptionsElRef {
     #[doc = "Get a reference to the value of field `mtime` after provisioning.\n"]
     pub fn mtime(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mtime", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `object_tags` after provisioning.\n"]
+    pub fn object_tags(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_tags", self.base))
     }
 
     #[doc = "Get a reference to the value of field `overwrite_mode` after provisioning.\n"]
@@ -868,14 +969,22 @@ impl DatasyncTaskOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DatasyncTaskScheduleEl {
+pub struct DatasyncTask_Schedule {
     schedule_expression: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncTaskScheduleEl { }
+impl DatasyncTask_Schedule {
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for DatasyncTaskScheduleEl {
-    type O = terrars::BlockAssignable<DatasyncTaskScheduleEl>;
+impl terrars::ToListMappable for DatasyncTask_Schedule {
+    type O = terrars::BlockAssignable<DatasyncTask_Schedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -886,32 +995,37 @@ impl terrars::ToListMappable for DatasyncTaskScheduleEl {
     }
 }
 
-pub struct BuildDatasyncTaskScheduleEl {
+pub struct BuildDatasyncTask_Schedule {
     #[doc = ""]
     pub schedule_expression: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDatasyncTaskScheduleEl {
-    pub fn build(self) -> DatasyncTaskScheduleEl {
-        DatasyncTaskScheduleEl { schedule_expression: self.schedule_expression }
+impl BuildDatasyncTask_Schedule {
+    pub fn build(self) -> DatasyncTask_Schedule {
+        DatasyncTask_Schedule {
+            schedule_expression: self.schedule_expression,
+            status: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DatasyncTaskScheduleElRef {
+#[allow(dead_code)]
+pub struct DatasyncTask_ScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncTaskScheduleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTaskScheduleElRef {
-        DatasyncTaskScheduleElRef {
+impl terrars::Ref for DatasyncTask_ScheduleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTask_ScheduleRef {
+        DatasyncTask_ScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncTaskScheduleElRef {
+impl DatasyncTask_ScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -920,24 +1034,56 @@ impl DatasyncTaskScheduleElRef {
     pub fn schedule_expression(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule_expression", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DatasyncTaskTimeoutsEl {
+pub struct DatasyncTask_TaskReportConfig_ReportOverrides {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    deleted_override: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skipped_override: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transferred_override: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    verified_override: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncTaskTimeoutsEl {
-    #[doc = "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.create = std::option::Option::Some(v.into());
+impl DatasyncTask_TaskReportConfig_ReportOverrides {
+    #[doc = "Set the field `deleted_override`.\n"]
+    pub fn set_deleted_override(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.deleted_override = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `skipped_override`.\n"]
+    pub fn set_skipped_override(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.skipped_override = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `transferred_override`.\n"]
+    pub fn set_transferred_override(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.transferred_override = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `verified_override`.\n"]
+    pub fn set_verified_override(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.verified_override = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DatasyncTaskTimeoutsEl {
-    type O = terrars::BlockAssignable<DatasyncTaskTimeoutsEl>;
+impl terrars::ToListMappable for DatasyncTask_TaskReportConfig_ReportOverrides {
+    type O = terrars::BlockAssignable<DatasyncTask_TaskReportConfig_ReportOverrides>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -948,29 +1094,350 @@ impl terrars::ToListMappable for DatasyncTaskTimeoutsEl {
     }
 }
 
-pub struct BuildDatasyncTaskTimeoutsEl {}
+pub struct BuildDatasyncTask_TaskReportConfig_ReportOverrides {}
 
-impl BuildDatasyncTaskTimeoutsEl {
-    pub fn build(self) -> DatasyncTaskTimeoutsEl {
-        DatasyncTaskTimeoutsEl { create: core::default::Default::default() }
+impl BuildDatasyncTask_TaskReportConfig_ReportOverrides {
+    pub fn build(self) -> DatasyncTask_TaskReportConfig_ReportOverrides {
+        DatasyncTask_TaskReportConfig_ReportOverrides {
+            deleted_override: core::default::Default::default(),
+            skipped_override: core::default::Default::default(),
+            transferred_override: core::default::Default::default(),
+            verified_override: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DatasyncTaskTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DatasyncTask_TaskReportConfig_ReportOverridesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncTaskTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTaskTimeoutsElRef {
-        DatasyncTaskTimeoutsElRef {
+impl terrars::Ref for DatasyncTask_TaskReportConfig_ReportOverridesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatasyncTask_TaskReportConfig_ReportOverridesRef {
+        DatasyncTask_TaskReportConfig_ReportOverridesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncTaskTimeoutsElRef {
+impl DatasyncTask_TaskReportConfig_ReportOverridesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `deleted_override` after provisioning.\n"]
+    pub fn deleted_override(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deleted_override", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `skipped_override` after provisioning.\n"]
+    pub fn skipped_override(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skipped_override", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `transferred_override` after provisioning.\n"]
+    pub fn transferred_override(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transferred_override", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `verified_override` after provisioning.\n"]
+    pub fn verified_override(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.verified_override", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DatasyncTask_TaskReportConfig_S3Destination {
+    bucket_access_role_arn: terrars::PrimField<std::string::String>,
+    s3_bucket_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subdirectory: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DatasyncTask_TaskReportConfig_S3Destination {
+    #[doc = "Set the field `subdirectory`.\n"]
+    pub fn set_subdirectory(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.subdirectory = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DatasyncTask_TaskReportConfig_S3Destination {
+    type O = terrars::BlockAssignable<DatasyncTask_TaskReportConfig_S3Destination>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDatasyncTask_TaskReportConfig_S3Destination {
+    #[doc = ""]
+    pub bucket_access_role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub s3_bucket_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDatasyncTask_TaskReportConfig_S3Destination {
+    pub fn build(self) -> DatasyncTask_TaskReportConfig_S3Destination {
+        DatasyncTask_TaskReportConfig_S3Destination {
+            bucket_access_role_arn: self.bucket_access_role_arn,
+            s3_bucket_arn: self.s3_bucket_arn,
+            subdirectory: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DatasyncTask_TaskReportConfig_S3DestinationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DatasyncTask_TaskReportConfig_S3DestinationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DatasyncTask_TaskReportConfig_S3DestinationRef {
+        DatasyncTask_TaskReportConfig_S3DestinationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DatasyncTask_TaskReportConfig_S3DestinationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bucket_access_role_arn` after provisioning.\n"]
+    pub fn bucket_access_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_access_role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_bucket_arn` after provisioning.\n"]
+    pub fn s3_bucket_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `subdirectory` after provisioning.\n"]
+    pub fn subdirectory(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subdirectory", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DatasyncTask_TaskReportConfigDynamic {
+    report_overrides: std::option::Option<terrars::DynamicBlock<DatasyncTask_TaskReportConfig_ReportOverrides>>,
+    s3_destination: std::option::Option<terrars::DynamicBlock<DatasyncTask_TaskReportConfig_S3Destination>>,
+}
+
+#[derive(Serialize)]
+pub struct DatasyncTask_TaskReportConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    output_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    report_level: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_object_versioning: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    report_overrides: std::option::Option<std::vec::Vec<DatasyncTask_TaskReportConfig_ReportOverrides>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_destination: std::option::Option<std::vec::Vec<DatasyncTask_TaskReportConfig_S3Destination>>,
+    dynamic: DatasyncTask_TaskReportConfigDynamic,
+}
+
+impl DatasyncTask_TaskReportConfig {
+    #[doc = "Set the field `output_type`.\n"]
+    pub fn set_output_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.output_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `report_level`.\n"]
+    pub fn set_report_level(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.report_level = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `s3_object_versioning`.\n"]
+    pub fn set_s3_object_versioning(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.s3_object_versioning = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `report_overrides`.\n"]
+    pub fn set_report_overrides(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTask_TaskReportConfig_ReportOverrides>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.report_overrides = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.report_overrides = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `s3_destination`.\n"]
+    pub fn set_s3_destination(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncTask_TaskReportConfig_S3Destination>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_destination = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_destination = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DatasyncTask_TaskReportConfig {
+    type O = terrars::BlockAssignable<DatasyncTask_TaskReportConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDatasyncTask_TaskReportConfig {}
+
+impl BuildDatasyncTask_TaskReportConfig {
+    pub fn build(self) -> DatasyncTask_TaskReportConfig {
+        DatasyncTask_TaskReportConfig {
+            output_type: core::default::Default::default(),
+            report_level: core::default::Default::default(),
+            s3_object_versioning: core::default::Default::default(),
+            report_overrides: core::default::Default::default(),
+            s3_destination: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DatasyncTask_TaskReportConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DatasyncTask_TaskReportConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTask_TaskReportConfigRef {
+        DatasyncTask_TaskReportConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DatasyncTask_TaskReportConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `output_type` after provisioning.\n"]
+    pub fn output_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `report_level` after provisioning.\n"]
+    pub fn report_level(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.report_level", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_object_versioning` after provisioning.\n"]
+    pub fn s3_object_versioning(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_object_versioning", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `report_overrides` after provisioning.\n"]
+    pub fn report_overrides(&self) -> terrars::ListRef<DatasyncTask_TaskReportConfig_ReportOverridesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.report_overrides", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_destination` after provisioning.\n"]
+    pub fn s3_destination(&self) -> terrars::ListRef<DatasyncTask_TaskReportConfig_S3DestinationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_destination", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DatasyncTask_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DatasyncTask_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DatasyncTask_Timeouts {
+    type O = terrars::BlockAssignable<DatasyncTask_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDatasyncTask_Timeouts {}
+
+impl BuildDatasyncTask_Timeouts {
+    pub fn build(self) -> DatasyncTask_Timeouts {
+        DatasyncTask_Timeouts { create: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DatasyncTask_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DatasyncTask_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncTask_TimeoutsRef {
+        DatasyncTask_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DatasyncTask_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -979,12 +1446,4 @@ impl DatasyncTaskTimeoutsElRef {
     pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatasyncTaskDynamic {
-    excludes: std::option::Option<terrars::DynamicBlock<DatasyncTaskExcludesEl>>,
-    includes: std::option::Option<terrars::DynamicBlock<DatasyncTaskIncludesEl>>,
-    options: std::option::Option<terrars::DynamicBlock<DatasyncTaskOptionsEl>>,
-    schedule: std::option::Option<terrars::DynamicBlock<DatasyncTaskScheduleEl>>,
 }

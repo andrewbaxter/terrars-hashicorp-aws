@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RedshiftserverlessWorkgroupData {
+struct RedshiftserverlessWorkgroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,9 +26,15 @@ struct RedshiftserverlessWorkgroupData {
     enhanced_vpc_routing: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_capacity: std::option::Option<terrars::PrimField<f64>>,
     namespace_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publicly_accessible: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,16 +43,22 @@ struct RedshiftserverlessWorkgroupData {
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    track_name: std::option::Option<terrars::PrimField<std::string::String>>,
     workgroup_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    config_parameter: std::option::Option<std::vec::Vec<RedshiftserverlessWorkgroupConfigParameterEl>>,
+    config_parameter: std::option::Option<std::vec::Vec<RedshiftserverlessWorkgroup_ConfigParameter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    price_performance_target: std::option::Option<std::vec::Vec<RedshiftserverlessWorkgroup_PricePerformanceTarget>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<RedshiftserverlessWorkgroup_Timeouts>,
     dynamic: RedshiftserverlessWorkgroupDynamic,
 }
 
 struct RedshiftserverlessWorkgroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RedshiftserverlessWorkgroupData>,
+    data: std::cell::RefCell<RedshiftserverlessWorkgroupData_>,
 }
 
 #[derive(Clone)]
@@ -162,9 +176,28 @@ impl RedshiftserverlessWorkgroup {
         self
     }
 
+    #[doc = "Set the field `max_capacity`.\n"]
+    pub fn set_max_capacity(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().max_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `port`.\n"]
+    pub fn set_port(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().port = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `publicly_accessible`.\n"]
     pub fn set_publicly_accessible(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().publicly_accessible = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -204,10 +237,16 @@ impl RedshiftserverlessWorkgroup {
         self
     }
 
+    #[doc = "Set the field `track_name`.\n"]
+    pub fn set_track_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().track_name = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `config_parameter`.\n"]
     pub fn set_config_parameter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftserverlessWorkgroupConfigParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftserverlessWorkgroup_ConfigParameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,6 +256,28 @@ impl RedshiftserverlessWorkgroup {
                 self.0.data.borrow_mut().dynamic.config_parameter = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `price_performance_target`.\n"]
+    pub fn set_price_performance_target(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftserverlessWorkgroup_PricePerformanceTarget>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().price_performance_target = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.price_performance_target = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<RedshiftserverlessWorkgroup_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -231,7 +292,7 @@ impl RedshiftserverlessWorkgroup {
     }
 
     #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> terrars::ListRef<RedshiftserverlessWorkgroupEndpointElRef> {
+    pub fn endpoint(&self) -> terrars::ListRef<RedshiftserverlessWorkgroup_EndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
@@ -245,14 +306,30 @@ impl RedshiftserverlessWorkgroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `max_capacity` after provisioning.\n"]
+    pub fn max_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `namespace_name` after provisioning.\n"]
     pub fn namespace_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `publicly_accessible` after provisioning.\n"]
     pub fn publicly_accessible(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
@@ -275,6 +352,11 @@ impl RedshiftserverlessWorkgroup {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `track_name` after provisioning.\n"]
+    pub fn track_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.track_name", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `workgroup_id` after provisioning.\n"]
     pub fn workgroup_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.workgroup_id", self.extract_ref()))
@@ -285,9 +367,17 @@ impl RedshiftserverlessWorkgroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.workgroup_name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `config_parameter` after provisioning.\n"]
-    pub fn config_parameter(&self) -> terrars::ListRef<RedshiftserverlessWorkgroupConfigParameterElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.config_parameter", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `price_performance_target` after provisioning.\n"]
+    pub fn price_performance_target(&self) -> terrars::ListRef<RedshiftserverlessWorkgroup_PricePerformanceTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.price_performance_target", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> RedshiftserverlessWorkgroup_TimeoutsRef {
+        RedshiftserverlessWorkgroup_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
@@ -335,7 +425,7 @@ impl BuildRedshiftserverlessWorkgroup {
         let out = RedshiftserverlessWorkgroup(std::rc::Rc::new(RedshiftserverlessWorkgroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RedshiftserverlessWorkgroupData {
+            data: std::cell::RefCell::new(RedshiftserverlessWorkgroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -344,14 +434,20 @@ impl BuildRedshiftserverlessWorkgroup {
                 base_capacity: core::default::Default::default(),
                 enhanced_vpc_routing: core::default::Default::default(),
                 id: core::default::Default::default(),
+                max_capacity: core::default::Default::default(),
                 namespace_name: self.namespace_name,
+                port: core::default::Default::default(),
                 publicly_accessible: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_group_ids: core::default::Default::default(),
                 subnet_ids: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                track_name: core::default::Default::default(),
                 workgroup_name: self.workgroup_name,
                 config_parameter: core::default::Default::default(),
+                price_performance_target: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -394,7 +490,7 @@ impl RedshiftserverlessWorkgroupRef {
     }
 
     #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> terrars::ListRef<RedshiftserverlessWorkgroupEndpointElRef> {
+    pub fn endpoint(&self) -> terrars::ListRef<RedshiftserverlessWorkgroup_EndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 
@@ -408,14 +504,30 @@ impl RedshiftserverlessWorkgroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `max_capacity` after provisioning.\n"]
+    pub fn max_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `namespace_name` after provisioning.\n"]
     pub fn namespace_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `publicly_accessible` after provisioning.\n"]
     pub fn publicly_accessible(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
@@ -438,6 +550,11 @@ impl RedshiftserverlessWorkgroupRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `track_name` after provisioning.\n"]
+    pub fn track_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.track_name", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `workgroup_id` after provisioning.\n"]
     pub fn workgroup_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.workgroup_id", self.extract_ref()))
@@ -448,14 +565,30 @@ impl RedshiftserverlessWorkgroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.workgroup_name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `config_parameter` after provisioning.\n"]
-    pub fn config_parameter(&self) -> terrars::ListRef<RedshiftserverlessWorkgroupConfigParameterElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.config_parameter", self.extract_ref()))
+    #[doc = "Get a reference to the value of field `price_performance_target` after provisioning.\n"]
+    pub fn price_performance_target(&self) -> terrars::ListRef<RedshiftserverlessWorkgroup_PricePerformanceTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.price_performance_target", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> RedshiftserverlessWorkgroup_TimeoutsRef {
+        RedshiftserverlessWorkgroup_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
+#[derive(Serialize, Default)]
+struct RedshiftserverlessWorkgroupDynamic {
+    config_parameter: std::option::Option<terrars::DynamicBlock<RedshiftserverlessWorkgroup_ConfigParameter>>,
+    price_performance_target: std
+    ::option
+    ::Option<terrars::DynamicBlock<RedshiftserverlessWorkgroup_PricePerformanceTarget>>,
+}
+
 #[derive(Serialize)]
-pub struct RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl {
+pub struct RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -466,7 +599,7 @@ pub struct RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl 
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl {
+impl RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface {
     #[doc = "Set the field `availability_zone`.\n"]
     pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.availability_zone = std::option::Option::Some(v.into());
@@ -498,8 +631,8 @@ impl RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl {
-    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl>;
+impl terrars::ToListMappable for RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface {
+    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -510,11 +643,11 @@ impl terrars::ToListMappable for RedshiftserverlessWorkgroupEndpointElVpcEndpoin
     }
 }
 
-pub struct BuildRedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl {}
+pub struct BuildRedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface {}
 
-impl BuildRedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl {
-    pub fn build(self) -> RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl {
-        RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl {
+impl BuildRedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface {
+    pub fn build(self) -> RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface {
+        RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface {
             availability_zone: core::default::Default::default(),
             network_interface_id: core::default::Default::default(),
             private_ip_address: core::default::Default::default(),
@@ -523,24 +656,26 @@ impl BuildRedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl {
     }
 }
 
-pub struct RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceElRef {
+#[allow(dead_code)]
+pub struct RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterfaceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceElRef {
+impl terrars::Ref for RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterfaceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceElRef {
-        RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceElRef {
+    ) -> RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterfaceRef {
+        RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterfaceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceElRef {
+impl RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterfaceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -567,18 +702,18 @@ impl RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceElRef {
 }
 
 #[derive(Serialize)]
-pub struct RedshiftserverlessWorkgroupEndpointElVpcEndpointEl {
+pub struct RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface: std
     ::option
-    ::Option<terrars::ListField<RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl>>,
+    ::Option<terrars::ListField<RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RedshiftserverlessWorkgroupEndpointElVpcEndpointEl {
+impl RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint {
     #[doc = "Set the field `network_interface`.\n"]
     pub fn set_network_interface(
         mut self,
@@ -587,7 +722,7 @@ impl RedshiftserverlessWorkgroupEndpointElVpcEndpointEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceEl>>,
+                    ::Into<terrars::ListField<RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterface>>,
     ) -> Self {
         self.network_interface = std::option::Option::Some(v.into());
         self
@@ -606,8 +741,8 @@ impl RedshiftserverlessWorkgroupEndpointElVpcEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftserverlessWorkgroupEndpointElVpcEndpointEl {
-    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroupEndpointElVpcEndpointEl>;
+impl terrars::ToListMappable for RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint {
+    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -618,11 +753,11 @@ impl terrars::ToListMappable for RedshiftserverlessWorkgroupEndpointElVpcEndpoin
     }
 }
 
-pub struct BuildRedshiftserverlessWorkgroupEndpointElVpcEndpointEl {}
+pub struct BuildRedshiftserverlessWorkgroup_Endpoint_VpcEndpoint {}
 
-impl BuildRedshiftserverlessWorkgroupEndpointElVpcEndpointEl {
-    pub fn build(self) -> RedshiftserverlessWorkgroupEndpointElVpcEndpointEl {
-        RedshiftserverlessWorkgroupEndpointElVpcEndpointEl {
+impl BuildRedshiftserverlessWorkgroup_Endpoint_VpcEndpoint {
+    pub fn build(self) -> RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint {
+        RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint {
             network_interface: core::default::Default::default(),
             vpc_endpoint_id: core::default::Default::default(),
             vpc_id: core::default::Default::default(),
@@ -630,24 +765,26 @@ impl BuildRedshiftserverlessWorkgroupEndpointElVpcEndpointEl {
     }
 }
 
-pub struct RedshiftserverlessWorkgroupEndpointElVpcEndpointElRef {
+#[allow(dead_code)]
+pub struct RedshiftserverlessWorkgroup_Endpoint_VpcEndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftserverlessWorkgroupEndpointElVpcEndpointElRef {
+impl terrars::Ref for RedshiftserverlessWorkgroup_Endpoint_VpcEndpointRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> RedshiftserverlessWorkgroupEndpointElVpcEndpointElRef {
-        RedshiftserverlessWorkgroupEndpointElVpcEndpointElRef {
+    ) -> RedshiftserverlessWorkgroup_Endpoint_VpcEndpointRef {
+        RedshiftserverlessWorkgroup_Endpoint_VpcEndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftserverlessWorkgroupEndpointElVpcEndpointElRef {
+impl RedshiftserverlessWorkgroup_Endpoint_VpcEndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -655,7 +792,7 @@ impl RedshiftserverlessWorkgroupEndpointElVpcEndpointElRef {
     #[doc = "Get a reference to the value of field `network_interface` after provisioning.\n"]
     pub fn network_interface(
         &self,
-    ) -> terrars::ListRef<RedshiftserverlessWorkgroupEndpointElVpcEndpointElNetworkInterfaceElRef> {
+    ) -> terrars::ListRef<RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint_NetworkInterfaceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface", self.base))
     }
 
@@ -671,16 +808,16 @@ impl RedshiftserverlessWorkgroupEndpointElVpcEndpointElRef {
 }
 
 #[derive(Serialize)]
-pub struct RedshiftserverlessWorkgroupEndpointEl {
+pub struct RedshiftserverlessWorkgroup_Endpoint {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_endpoint: std::option::Option<terrars::ListField<RedshiftserverlessWorkgroupEndpointElVpcEndpointEl>>,
+    vpc_endpoint: std::option::Option<terrars::ListField<RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint>>,
 }
 
-impl RedshiftserverlessWorkgroupEndpointEl {
+impl RedshiftserverlessWorkgroup_Endpoint {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -696,15 +833,15 @@ impl RedshiftserverlessWorkgroupEndpointEl {
     #[doc = "Set the field `vpc_endpoint`.\n"]
     pub fn set_vpc_endpoint(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<RedshiftserverlessWorkgroupEndpointElVpcEndpointEl>>,
+        v: impl std::convert::Into<terrars::ListField<RedshiftserverlessWorkgroup_Endpoint_VpcEndpoint>>,
     ) -> Self {
         self.vpc_endpoint = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for RedshiftserverlessWorkgroupEndpointEl {
-    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroupEndpointEl>;
+impl terrars::ToListMappable for RedshiftserverlessWorkgroup_Endpoint {
+    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroup_Endpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -715,11 +852,11 @@ impl terrars::ToListMappable for RedshiftserverlessWorkgroupEndpointEl {
     }
 }
 
-pub struct BuildRedshiftserverlessWorkgroupEndpointEl {}
+pub struct BuildRedshiftserverlessWorkgroup_Endpoint {}
 
-impl BuildRedshiftserverlessWorkgroupEndpointEl {
-    pub fn build(self) -> RedshiftserverlessWorkgroupEndpointEl {
-        RedshiftserverlessWorkgroupEndpointEl {
+impl BuildRedshiftserverlessWorkgroup_Endpoint {
+    pub fn build(self) -> RedshiftserverlessWorkgroup_Endpoint {
+        RedshiftserverlessWorkgroup_Endpoint {
             address: core::default::Default::default(),
             port: core::default::Default::default(),
             vpc_endpoint: core::default::Default::default(),
@@ -727,21 +864,23 @@ impl BuildRedshiftserverlessWorkgroupEndpointEl {
     }
 }
 
-pub struct RedshiftserverlessWorkgroupEndpointElRef {
+#[allow(dead_code)]
+pub struct RedshiftserverlessWorkgroup_EndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftserverlessWorkgroupEndpointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftserverlessWorkgroupEndpointElRef {
-        RedshiftserverlessWorkgroupEndpointElRef {
+impl terrars::Ref for RedshiftserverlessWorkgroup_EndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftserverlessWorkgroup_EndpointRef {
+        RedshiftserverlessWorkgroup_EndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftserverlessWorkgroupEndpointElRef {
+impl RedshiftserverlessWorkgroup_EndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -757,21 +896,21 @@ impl RedshiftserverlessWorkgroupEndpointElRef {
     }
 
     #[doc = "Get a reference to the value of field `vpc_endpoint` after provisioning.\n"]
-    pub fn vpc_endpoint(&self) -> terrars::ListRef<RedshiftserverlessWorkgroupEndpointElVpcEndpointElRef> {
+    pub fn vpc_endpoint(&self) -> terrars::ListRef<RedshiftserverlessWorkgroup_Endpoint_VpcEndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_endpoint", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct RedshiftserverlessWorkgroupConfigParameterEl {
+pub struct RedshiftserverlessWorkgroup_ConfigParameter {
     parameter_key: terrars::PrimField<std::string::String>,
     parameter_value: terrars::PrimField<std::string::String>,
 }
 
-impl RedshiftserverlessWorkgroupConfigParameterEl { }
+impl RedshiftserverlessWorkgroup_ConfigParameter { }
 
-impl terrars::ToListMappable for RedshiftserverlessWorkgroupConfigParameterEl {
-    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroupConfigParameterEl>;
+impl terrars::ToListMappable for RedshiftserverlessWorkgroup_ConfigParameter {
+    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroup_ConfigParameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -782,40 +921,42 @@ impl terrars::ToListMappable for RedshiftserverlessWorkgroupConfigParameterEl {
     }
 }
 
-pub struct BuildRedshiftserverlessWorkgroupConfigParameterEl {
+pub struct BuildRedshiftserverlessWorkgroup_ConfigParameter {
     #[doc = ""]
     pub parameter_key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub parameter_value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRedshiftserverlessWorkgroupConfigParameterEl {
-    pub fn build(self) -> RedshiftserverlessWorkgroupConfigParameterEl {
-        RedshiftserverlessWorkgroupConfigParameterEl {
+impl BuildRedshiftserverlessWorkgroup_ConfigParameter {
+    pub fn build(self) -> RedshiftserverlessWorkgroup_ConfigParameter {
+        RedshiftserverlessWorkgroup_ConfigParameter {
             parameter_key: self.parameter_key,
             parameter_value: self.parameter_value,
         }
     }
 }
 
-pub struct RedshiftserverlessWorkgroupConfigParameterElRef {
+#[allow(dead_code)]
+pub struct RedshiftserverlessWorkgroup_ConfigParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftserverlessWorkgroupConfigParameterElRef {
+impl terrars::Ref for RedshiftserverlessWorkgroup_ConfigParameterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> RedshiftserverlessWorkgroupConfigParameterElRef {
-        RedshiftserverlessWorkgroupConfigParameterElRef {
+    ) -> RedshiftserverlessWorkgroup_ConfigParameterRef {
+        RedshiftserverlessWorkgroup_ConfigParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftserverlessWorkgroupConfigParameterElRef {
+impl RedshiftserverlessWorkgroup_ConfigParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -831,7 +972,169 @@ impl RedshiftserverlessWorkgroupConfigParameterElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct RedshiftserverlessWorkgroupDynamic {
-    config_parameter: std::option::Option<terrars::DynamicBlock<RedshiftserverlessWorkgroupConfigParameterEl>>,
+#[derive(Serialize)]
+pub struct RedshiftserverlessWorkgroup_PricePerformanceTarget {
+    enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    level: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl RedshiftserverlessWorkgroup_PricePerformanceTarget {
+    #[doc = "Set the field `level`.\n"]
+    pub fn set_level(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.level = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for RedshiftserverlessWorkgroup_PricePerformanceTarget {
+    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroup_PricePerformanceTarget>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRedshiftserverlessWorkgroup_PricePerformanceTarget {
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
+}
+
+impl BuildRedshiftserverlessWorkgroup_PricePerformanceTarget {
+    pub fn build(self) -> RedshiftserverlessWorkgroup_PricePerformanceTarget {
+        RedshiftserverlessWorkgroup_PricePerformanceTarget {
+            enabled: self.enabled,
+            level: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct RedshiftserverlessWorkgroup_PricePerformanceTargetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for RedshiftserverlessWorkgroup_PricePerformanceTargetRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> RedshiftserverlessWorkgroup_PricePerformanceTargetRef {
+        RedshiftserverlessWorkgroup_PricePerformanceTargetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl RedshiftserverlessWorkgroup_PricePerformanceTargetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `level` after provisioning.\n"]
+    pub fn level(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.level", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct RedshiftserverlessWorkgroup_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl RedshiftserverlessWorkgroup_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for RedshiftserverlessWorkgroup_Timeouts {
+    type O = terrars::BlockAssignable<RedshiftserverlessWorkgroup_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRedshiftserverlessWorkgroup_Timeouts {}
+
+impl BuildRedshiftserverlessWorkgroup_Timeouts {
+    pub fn build(self) -> RedshiftserverlessWorkgroup_Timeouts {
+        RedshiftserverlessWorkgroup_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct RedshiftserverlessWorkgroup_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for RedshiftserverlessWorkgroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftserverlessWorkgroup_TimeoutsRef {
+        RedshiftserverlessWorkgroup_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl RedshiftserverlessWorkgroup_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

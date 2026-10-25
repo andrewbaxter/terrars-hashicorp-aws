@@ -1,10 +1,6 @@
 {
     "provider": "hashicorp/aws",
-    "version": "4.51.0",
+    "version": "6.70.0",
     "dest": "src/aws",
-	"exclude": [
-		"wafv2_rule_group",
-		"wafv2_web_acl"
-	],
 	"feature_gate": "Cargo.toml"
 }

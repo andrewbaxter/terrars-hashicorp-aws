@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataKendraFaqData {
+struct DataKendraFaqData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,13 +23,15 @@ struct DataKendraFaqData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     index_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataKendraFaq_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataKendraFaqData>,
+    data: std::cell::RefCell<DataKendraFaqData_>,
 }
 
 #[derive(Clone)]
@@ -75,6 +79,13 @@ impl DataKendraFaq {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -137,13 +148,19 @@ impl DataKendraFaq {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_path` after provisioning.\n"]
-    pub fn s3_path(&self) -> terrars::ListRef<DataKendraFaqS3PathElRef> {
+    pub fn s3_path(&self) -> terrars::ListRef<DataKendraFaq_S3PathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_path", self.extract_ref()))
     }
 
@@ -207,7 +224,7 @@ impl BuildDataKendraFaq {
         let out = DataKendraFaq(std::rc::Rc::new(DataKendraFaq_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataKendraFaqData {
+            data: std::cell::RefCell::new(DataKendraFaqData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -215,6 +232,7 @@ impl BuildDataKendraFaq {
                 faq_id: self.faq_id,
                 id: core::default::Default::default(),
                 index_id: self.index_id,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -296,13 +314,19 @@ impl DataKendraFaqRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_path` after provisioning.\n"]
-    pub fn s3_path(&self) -> terrars::ListRef<DataKendraFaqS3PathElRef> {
+    pub fn s3_path(&self) -> terrars::ListRef<DataKendraFaq_S3PathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_path", self.extract_ref()))
     }
 
@@ -323,14 +347,14 @@ impl DataKendraFaqRef {
 }
 
 #[derive(Serialize)]
-pub struct DataKendraFaqS3PathEl {
+pub struct DataKendraFaq_S3Path {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataKendraFaqS3PathEl {
+impl DataKendraFaq_S3Path {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -344,8 +368,8 @@ impl DataKendraFaqS3PathEl {
     }
 }
 
-impl terrars::ToListMappable for DataKendraFaqS3PathEl {
-    type O = terrars::BlockAssignable<DataKendraFaqS3PathEl>;
+impl terrars::ToListMappable for DataKendraFaq_S3Path {
+    type O = terrars::BlockAssignable<DataKendraFaq_S3Path>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -356,32 +380,34 @@ impl terrars::ToListMappable for DataKendraFaqS3PathEl {
     }
 }
 
-pub struct BuildDataKendraFaqS3PathEl {}
+pub struct BuildDataKendraFaq_S3Path {}
 
-impl BuildDataKendraFaqS3PathEl {
-    pub fn build(self) -> DataKendraFaqS3PathEl {
-        DataKendraFaqS3PathEl {
+impl BuildDataKendraFaq_S3Path {
+    pub fn build(self) -> DataKendraFaq_S3Path {
+        DataKendraFaq_S3Path {
             bucket: core::default::Default::default(),
             key: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataKendraFaqS3PathElRef {
+#[allow(dead_code)]
+pub struct DataKendraFaq_S3PathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKendraFaqS3PathElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKendraFaqS3PathElRef {
-        DataKendraFaqS3PathElRef {
+impl terrars::Ref for DataKendraFaq_S3PathRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKendraFaq_S3PathRef {
+        DataKendraFaq_S3PathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKendraFaqS3PathElRef {
+impl DataKendraFaq_S3PathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

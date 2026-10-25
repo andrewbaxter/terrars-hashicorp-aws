@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CognitoIdentityPoolData {
+struct CognitoIdentityPoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,6 +32,8 @@ struct CognitoIdentityPoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     openid_connect_provider_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     saml_provider_arns: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     supported_login_providers: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -38,14 +42,14 @@ struct CognitoIdentityPoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cognito_identity_providers: std::option::Option<std::vec::Vec<CognitoIdentityPoolCognitoIdentityProvidersEl>>,
+    cognito_identity_providers: std::option::Option<std::vec::Vec<CognitoIdentityPool_CognitoIdentityProviders>>,
     dynamic: CognitoIdentityPoolDynamic,
 }
 
 struct CognitoIdentityPool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CognitoIdentityPoolData>,
+    data: std::cell::RefCell<CognitoIdentityPoolData_>,
 }
 
 #[derive(Clone)]
@@ -181,6 +185,13 @@ impl CognitoIdentityPool {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `saml_provider_arns`.\n"]
     pub fn set_saml_provider_arns(
         self,
@@ -220,7 +231,7 @@ impl CognitoIdentityPool {
     #[doc = "Set the field `cognito_identity_providers`.\n"]
     pub fn set_cognito_identity_providers(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoIdentityPoolCognitoIdentityProvidersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoIdentityPool_CognitoIdentityProviders>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -269,6 +280,12 @@ impl CognitoIdentityPool {
     #[doc = "Get a reference to the value of field `openid_connect_provider_arns` after provisioning.\n"]
     pub fn openid_connect_provider_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.openid_connect_provider_arns", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `saml_provider_arns` after provisioning.\n"]
@@ -334,7 +351,7 @@ impl BuildCognitoIdentityPool {
         let out = CognitoIdentityPool(std::rc::Rc::new(CognitoIdentityPool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CognitoIdentityPoolData {
+            data: std::cell::RefCell::new(CognitoIdentityPoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -346,6 +363,7 @@ impl BuildCognitoIdentityPool {
                 id: core::default::Default::default(),
                 identity_pool_name: self.identity_pool_name,
                 openid_connect_provider_arns: core::default::Default::default(),
+                region: core::default::Default::default(),
                 saml_provider_arns: core::default::Default::default(),
                 supported_login_providers: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -420,6 +438,12 @@ impl CognitoIdentityPoolRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.openid_connect_provider_arns", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `saml_provider_arns` after provisioning.\n"]
     pub fn saml_provider_arns(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.saml_provider_arns", self.extract_ref()))
@@ -441,8 +465,15 @@ impl CognitoIdentityPoolRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct CognitoIdentityPoolDynamic {
+    cognito_identity_providers: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoIdentityPool_CognitoIdentityProviders>>,
+}
+
 #[derive(Serialize)]
-pub struct CognitoIdentityPoolCognitoIdentityProvidersEl {
+pub struct CognitoIdentityPool_CognitoIdentityProviders {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -451,7 +482,7 @@ pub struct CognitoIdentityPoolCognitoIdentityProvidersEl {
     server_side_token_check: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl CognitoIdentityPoolCognitoIdentityProvidersEl {
+impl CognitoIdentityPool_CognitoIdentityProviders {
     #[doc = "Set the field `client_id`.\n"]
     pub fn set_client_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.client_id = std::option::Option::Some(v.into());
@@ -471,8 +502,8 @@ impl CognitoIdentityPoolCognitoIdentityProvidersEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoIdentityPoolCognitoIdentityProvidersEl {
-    type O = terrars::BlockAssignable<CognitoIdentityPoolCognitoIdentityProvidersEl>;
+impl terrars::ToListMappable for CognitoIdentityPool_CognitoIdentityProviders {
+    type O = terrars::BlockAssignable<CognitoIdentityPool_CognitoIdentityProviders>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -483,11 +514,11 @@ impl terrars::ToListMappable for CognitoIdentityPoolCognitoIdentityProvidersEl {
     }
 }
 
-pub struct BuildCognitoIdentityPoolCognitoIdentityProvidersEl {}
+pub struct BuildCognitoIdentityPool_CognitoIdentityProviders {}
 
-impl BuildCognitoIdentityPoolCognitoIdentityProvidersEl {
-    pub fn build(self) -> CognitoIdentityPoolCognitoIdentityProvidersEl {
-        CognitoIdentityPoolCognitoIdentityProvidersEl {
+impl BuildCognitoIdentityPool_CognitoIdentityProviders {
+    pub fn build(self) -> CognitoIdentityPool_CognitoIdentityProviders {
+        CognitoIdentityPool_CognitoIdentityProviders {
             client_id: core::default::Default::default(),
             provider_name: core::default::Default::default(),
             server_side_token_check: core::default::Default::default(),
@@ -495,24 +526,26 @@ impl BuildCognitoIdentityPoolCognitoIdentityProvidersEl {
     }
 }
 
-pub struct CognitoIdentityPoolCognitoIdentityProvidersElRef {
+#[allow(dead_code)]
+pub struct CognitoIdentityPool_CognitoIdentityProvidersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoIdentityPoolCognitoIdentityProvidersElRef {
+impl terrars::Ref for CognitoIdentityPool_CognitoIdentityProvidersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoIdentityPoolCognitoIdentityProvidersElRef {
-        CognitoIdentityPoolCognitoIdentityProvidersElRef {
+    ) -> CognitoIdentityPool_CognitoIdentityProvidersRef {
+        CognitoIdentityPool_CognitoIdentityProvidersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoIdentityPoolCognitoIdentityProvidersElRef {
+impl CognitoIdentityPool_CognitoIdentityProvidersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -531,11 +564,4 @@ impl CognitoIdentityPoolCognitoIdentityProvidersElRef {
     pub fn server_side_token_check(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_side_token_check", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CognitoIdentityPoolDynamic {
-    cognito_identity_providers: std
-    ::option
-    ::Option<terrars::DynamicBlock<CognitoIdentityPoolCognitoIdentityProvidersEl>>,
 }

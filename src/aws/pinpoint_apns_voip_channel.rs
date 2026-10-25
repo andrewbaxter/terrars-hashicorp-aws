@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct PinpointApnsVoipChannelData {
+struct PinpointApnsVoipChannelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,6 +34,8 @@ struct PinpointApnsVoipChannelData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     team_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token_key: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -42,7 +46,7 @@ struct PinpointApnsVoipChannelData {
 struct PinpointApnsVoipChannel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PinpointApnsVoipChannelData>,
+    data: std::cell::RefCell<PinpointApnsVoipChannelData_>,
 }
 
 #[derive(Clone)]
@@ -181,6 +185,13 @@ impl PinpointApnsVoipChannel {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `team_id`.\n"]
     pub fn set_team_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().team_id = std::option::Option::Some(v.into());
@@ -235,6 +246,12 @@ impl PinpointApnsVoipChannel {
     #[doc = "Get a reference to the value of field `private_key` after provisioning.\n"]
     pub fn private_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `team_id` after provisioning.\n"]
@@ -295,7 +312,7 @@ impl BuildPinpointApnsVoipChannel {
         let out = PinpointApnsVoipChannel(std::rc::Rc::new(PinpointApnsVoipChannel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PinpointApnsVoipChannelData {
+            data: std::cell::RefCell::new(PinpointApnsVoipChannelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -308,6 +325,7 @@ impl BuildPinpointApnsVoipChannel {
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
                 private_key: core::default::Default::default(),
+                region: core::default::Default::default(),
                 team_id: core::default::Default::default(),
                 token_key: core::default::Default::default(),
                 token_key_id: core::default::Default::default(),
@@ -377,6 +395,12 @@ impl PinpointApnsVoipChannelRef {
     #[doc = "Get a reference to the value of field `private_key` after provisioning.\n"]
     pub fn private_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `team_id` after provisioning.\n"]

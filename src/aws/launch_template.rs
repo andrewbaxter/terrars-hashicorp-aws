@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LaunchTemplateData {
+struct LaunchTemplateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -47,6 +49,8 @@ struct LaunchTemplateData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ram_disk_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -59,52 +63,52 @@ struct LaunchTemplateData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    block_device_mappings: std::option::Option<std::vec::Vec<LaunchTemplateBlockDeviceMappingsEl>>,
+    block_device_mappings: std::option::Option<std::vec::Vec<LaunchTemplate_BlockDeviceMappings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity_reservation_specification: std
     ::option
-    ::Option<std::vec::Vec<LaunchTemplateCapacityReservationSpecificationEl>>,
+    ::Option<std::vec::Vec<LaunchTemplate_CapacityReservationSpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cpu_options: std::option::Option<std::vec::Vec<LaunchTemplateCpuOptionsEl>>,
+    cpu_options: std::option::Option<std::vec::Vec<LaunchTemplate_CpuOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    credit_specification: std::option::Option<std::vec::Vec<LaunchTemplateCreditSpecificationEl>>,
+    credit_specification: std::option::Option<std::vec::Vec<LaunchTemplate_CreditSpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    elastic_gpu_specifications: std::option::Option<std::vec::Vec<LaunchTemplateElasticGpuSpecificationsEl>>,
+    enclave_options: std::option::Option<std::vec::Vec<LaunchTemplate_EnclaveOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    elastic_inference_accelerator: std::option::Option<std::vec::Vec<LaunchTemplateElasticInferenceAcceleratorEl>>,
+    hibernation_options: std::option::Option<std::vec::Vec<LaunchTemplate_HibernationOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enclave_options: std::option::Option<std::vec::Vec<LaunchTemplateEnclaveOptionsEl>>,
+    iam_instance_profile: std::option::Option<std::vec::Vec<LaunchTemplate_IamInstanceProfile>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    hibernation_options: std::option::Option<std::vec::Vec<LaunchTemplateHibernationOptionsEl>>,
+    instance_market_options: std::option::Option<std::vec::Vec<LaunchTemplate_InstanceMarketOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    iam_instance_profile: std::option::Option<std::vec::Vec<LaunchTemplateIamInstanceProfileEl>>,
+    instance_requirements: std::option::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_market_options: std::option::Option<std::vec::Vec<LaunchTemplateInstanceMarketOptionsEl>>,
+    license_specification: std::option::Option<std::vec::Vec<LaunchTemplate_LicenseSpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_requirements: std::option::Option<std::vec::Vec<LaunchTemplateInstanceRequirementsEl>>,
+    maintenance_options: std::option::Option<std::vec::Vec<LaunchTemplate_MaintenanceOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    license_specification: std::option::Option<std::vec::Vec<LaunchTemplateLicenseSpecificationEl>>,
+    metadata_options: std::option::Option<std::vec::Vec<LaunchTemplate_MetadataOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    maintenance_options: std::option::Option<std::vec::Vec<LaunchTemplateMaintenanceOptionsEl>>,
+    monitoring: std::option::Option<std::vec::Vec<LaunchTemplate_Monitoring>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata_options: std::option::Option<std::vec::Vec<LaunchTemplateMetadataOptionsEl>>,
+    network_interfaces: std::option::Option<std::vec::Vec<LaunchTemplate_NetworkInterfaces>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    monitoring: std::option::Option<std::vec::Vec<LaunchTemplateMonitoringEl>>,
+    network_performance_options: std::option::Option<std::vec::Vec<LaunchTemplate_NetworkPerformanceOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_interfaces: std::option::Option<std::vec::Vec<LaunchTemplateNetworkInterfacesEl>>,
+    placement: std::option::Option<std::vec::Vec<LaunchTemplate_Placement>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    placement: std::option::Option<std::vec::Vec<LaunchTemplatePlacementEl>>,
+    private_dns_name_options: std::option::Option<std::vec::Vec<LaunchTemplate_PrivateDnsNameOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    private_dns_name_options: std::option::Option<std::vec::Vec<LaunchTemplatePrivateDnsNameOptionsEl>>,
+    secondary_interfaces: std::option::Option<std::vec::Vec<LaunchTemplate_SecondaryInterfaces>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag_specifications: std::option::Option<std::vec::Vec<LaunchTemplateTagSpecificationsEl>>,
+    tag_specifications: std::option::Option<std::vec::Vec<LaunchTemplate_TagSpecifications>>,
     dynamic: LaunchTemplateDynamic,
 }
 
 struct LaunchTemplate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LaunchTemplateData>,
+    data: std::cell::RefCell<LaunchTemplateData_>,
 }
 
 #[derive(Clone)]
@@ -291,6 +295,13 @@ impl LaunchTemplate {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_group_names`.\n"]
     pub fn set_security_group_names(
         self,
@@ -342,7 +353,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `block_device_mappings`.\n"]
     pub fn set_block_device_mappings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateBlockDeviceMappingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_BlockDeviceMappings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -358,7 +369,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `capacity_reservation_specification`.\n"]
     pub fn set_capacity_reservation_specification(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateCapacityReservationSpecificationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_CapacityReservationSpecification>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -374,7 +385,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `cpu_options`.\n"]
     pub fn set_cpu_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateCpuOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_CpuOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -390,7 +401,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `credit_specification`.\n"]
     pub fn set_credit_specification(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateCreditSpecificationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_CreditSpecification>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -403,42 +414,10 @@ impl LaunchTemplate {
         self
     }
 
-    #[doc = "Set the field `elastic_gpu_specifications`.\n"]
-    pub fn set_elastic_gpu_specifications(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateElasticGpuSpecificationsEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().elastic_gpu_specifications = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.elastic_gpu_specifications = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `elastic_inference_accelerator`.\n"]
-    pub fn set_elastic_inference_accelerator(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateElasticInferenceAcceleratorEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().elastic_inference_accelerator = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.elastic_inference_accelerator = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
     #[doc = "Set the field `enclave_options`.\n"]
     pub fn set_enclave_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateEnclaveOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_EnclaveOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -454,7 +433,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `hibernation_options`.\n"]
     pub fn set_hibernation_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateHibernationOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_HibernationOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -470,7 +449,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `iam_instance_profile`.\n"]
     pub fn set_iam_instance_profile(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateIamInstanceProfileEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_IamInstanceProfile>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -486,7 +465,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `instance_market_options`.\n"]
     pub fn set_instance_market_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateInstanceMarketOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_InstanceMarketOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -502,7 +481,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `instance_requirements`.\n"]
     pub fn set_instance_requirements(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateInstanceRequirementsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -518,7 +497,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `license_specification`.\n"]
     pub fn set_license_specification(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateLicenseSpecificationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_LicenseSpecification>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -534,7 +513,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `maintenance_options`.\n"]
     pub fn set_maintenance_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateMaintenanceOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_MaintenanceOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -550,7 +529,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `metadata_options`.\n"]
     pub fn set_metadata_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateMetadataOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_MetadataOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -566,7 +545,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `monitoring`.\n"]
     pub fn set_monitoring(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateMonitoringEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_Monitoring>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -582,7 +561,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `network_interfaces`.\n"]
     pub fn set_network_interfaces(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateNetworkInterfacesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_NetworkInterfaces>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -595,8 +574,24 @@ impl LaunchTemplate {
         self
     }
 
+    #[doc = "Set the field `network_performance_options`.\n"]
+    pub fn set_network_performance_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_NetworkPerformanceOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().network_performance_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.network_performance_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `placement`.\n"]
-    pub fn set_placement(self, v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplatePlacementEl>>) -> Self {
+    pub fn set_placement(self, v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_Placement>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().placement = std::option::Option::Some(v);
@@ -611,7 +606,7 @@ impl LaunchTemplate {
     #[doc = "Set the field `private_dns_name_options`.\n"]
     pub fn set_private_dns_name_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplatePrivateDnsNameOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_PrivateDnsNameOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -624,10 +619,26 @@ impl LaunchTemplate {
         self
     }
 
+    #[doc = "Set the field `secondary_interfaces`.\n"]
+    pub fn set_secondary_interfaces(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_SecondaryInterfaces>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().secondary_interfaces = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.secondary_interfaces = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `tag_specifications`.\n"]
     pub fn set_tag_specifications(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateTagSpecificationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_TagSpecifications>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -723,6 +734,12 @@ impl LaunchTemplate {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ram_disk_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_names` after provisioning.\n"]
     pub fn security_group_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_names", self.extract_ref()))
@@ -754,14 +771,14 @@ impl LaunchTemplate {
     }
 
     #[doc = "Get a reference to the value of field `block_device_mappings` after provisioning.\n"]
-    pub fn block_device_mappings(&self) -> terrars::ListRef<LaunchTemplateBlockDeviceMappingsElRef> {
+    pub fn block_device_mappings(&self) -> terrars::ListRef<LaunchTemplate_BlockDeviceMappingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.block_device_mappings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `capacity_reservation_specification` after provisioning.\n"]
     pub fn capacity_reservation_specification(
         &self,
-    ) -> terrars::ListRef<LaunchTemplateCapacityReservationSpecificationElRef> {
+    ) -> terrars::ListRef<LaunchTemplate_CapacityReservationSpecificationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.capacity_reservation_specification", self.extract_ref()),
@@ -769,82 +786,82 @@ impl LaunchTemplate {
     }
 
     #[doc = "Get a reference to the value of field `cpu_options` after provisioning.\n"]
-    pub fn cpu_options(&self) -> terrars::ListRef<LaunchTemplateCpuOptionsElRef> {
+    pub fn cpu_options(&self) -> terrars::ListRef<LaunchTemplate_CpuOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cpu_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `credit_specification` after provisioning.\n"]
-    pub fn credit_specification(&self) -> terrars::ListRef<LaunchTemplateCreditSpecificationElRef> {
+    pub fn credit_specification(&self) -> terrars::ListRef<LaunchTemplate_CreditSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.credit_specification", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `elastic_gpu_specifications` after provisioning.\n"]
-    pub fn elastic_gpu_specifications(&self) -> terrars::ListRef<LaunchTemplateElasticGpuSpecificationsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.elastic_gpu_specifications", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `elastic_inference_accelerator` after provisioning.\n"]
-    pub fn elastic_inference_accelerator(&self) -> terrars::ListRef<LaunchTemplateElasticInferenceAcceleratorElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.elastic_inference_accelerator", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `enclave_options` after provisioning.\n"]
-    pub fn enclave_options(&self) -> terrars::ListRef<LaunchTemplateEnclaveOptionsElRef> {
+    pub fn enclave_options(&self) -> terrars::ListRef<LaunchTemplate_EnclaveOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.enclave_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `hibernation_options` after provisioning.\n"]
-    pub fn hibernation_options(&self) -> terrars::ListRef<LaunchTemplateHibernationOptionsElRef> {
+    pub fn hibernation_options(&self) -> terrars::ListRef<LaunchTemplate_HibernationOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hibernation_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `iam_instance_profile` after provisioning.\n"]
-    pub fn iam_instance_profile(&self) -> terrars::ListRef<LaunchTemplateIamInstanceProfileElRef> {
+    pub fn iam_instance_profile(&self) -> terrars::ListRef<LaunchTemplate_IamInstanceProfileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.iam_instance_profile", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_market_options` after provisioning.\n"]
-    pub fn instance_market_options(&self) -> terrars::ListRef<LaunchTemplateInstanceMarketOptionsElRef> {
+    pub fn instance_market_options(&self) -> terrars::ListRef<LaunchTemplate_InstanceMarketOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_market_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_requirements` after provisioning.\n"]
-    pub fn instance_requirements(&self) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElRef> {
+    pub fn instance_requirements(&self) -> terrars::ListRef<LaunchTemplate_InstanceRequirementsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_requirements", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `maintenance_options` after provisioning.\n"]
-    pub fn maintenance_options(&self) -> terrars::ListRef<LaunchTemplateMaintenanceOptionsElRef> {
+    pub fn maintenance_options(&self) -> terrars::ListRef<LaunchTemplate_MaintenanceOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `metadata_options` after provisioning.\n"]
-    pub fn metadata_options(&self) -> terrars::ListRef<LaunchTemplateMetadataOptionsElRef> {
+    pub fn metadata_options(&self) -> terrars::ListRef<LaunchTemplate_MetadataOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `monitoring` after provisioning.\n"]
-    pub fn monitoring(&self) -> terrars::ListRef<LaunchTemplateMonitoringElRef> {
+    pub fn monitoring(&self) -> terrars::ListRef<LaunchTemplate_MonitoringRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_interfaces` after provisioning.\n"]
-    pub fn network_interfaces(&self) -> terrars::ListRef<LaunchTemplateNetworkInterfacesElRef> {
+    pub fn network_interfaces(&self) -> terrars::ListRef<LaunchTemplate_NetworkInterfacesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interfaces", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_performance_options` after provisioning.\n"]
+    pub fn network_performance_options(&self) -> terrars::ListRef<LaunchTemplate_NetworkPerformanceOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_performance_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `placement` after provisioning.\n"]
-    pub fn placement(&self) -> terrars::ListRef<LaunchTemplatePlacementElRef> {
+    pub fn placement(&self) -> terrars::ListRef<LaunchTemplate_PlacementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.placement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `private_dns_name_options` after provisioning.\n"]
-    pub fn private_dns_name_options(&self) -> terrars::ListRef<LaunchTemplatePrivateDnsNameOptionsElRef> {
+    pub fn private_dns_name_options(&self) -> terrars::ListRef<LaunchTemplate_PrivateDnsNameOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.private_dns_name_options", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `secondary_interfaces` after provisioning.\n"]
+    pub fn secondary_interfaces(&self) -> terrars::ListRef<LaunchTemplate_SecondaryInterfacesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secondary_interfaces", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tag_specifications` after provisioning.\n"]
-    pub fn tag_specifications(&self) -> terrars::ListRef<LaunchTemplateTagSpecificationsElRef> {
+    pub fn tag_specifications(&self) -> terrars::ListRef<LaunchTemplate_TagSpecificationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag_specifications", self.extract_ref()))
     }
 }
@@ -889,7 +906,7 @@ impl BuildLaunchTemplate {
         let out = LaunchTemplate(std::rc::Rc::new(LaunchTemplate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LaunchTemplateData {
+            data: std::cell::RefCell::new(LaunchTemplateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -909,6 +926,7 @@ impl BuildLaunchTemplate {
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
                 ram_disk_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_group_names: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -919,8 +937,6 @@ impl BuildLaunchTemplate {
                 capacity_reservation_specification: core::default::Default::default(),
                 cpu_options: core::default::Default::default(),
                 credit_specification: core::default::Default::default(),
-                elastic_gpu_specifications: core::default::Default::default(),
-                elastic_inference_accelerator: core::default::Default::default(),
                 enclave_options: core::default::Default::default(),
                 hibernation_options: core::default::Default::default(),
                 iam_instance_profile: core::default::Default::default(),
@@ -931,8 +947,10 @@ impl BuildLaunchTemplate {
                 metadata_options: core::default::Default::default(),
                 monitoring: core::default::Default::default(),
                 network_interfaces: core::default::Default::default(),
+                network_performance_options: core::default::Default::default(),
                 placement: core::default::Default::default(),
                 private_dns_name_options: core::default::Default::default(),
+                secondary_interfaces: core::default::Default::default(),
                 tag_specifications: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -1048,6 +1066,12 @@ impl LaunchTemplateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ram_disk_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_names` after provisioning.\n"]
     pub fn security_group_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_names", self.extract_ref()))
@@ -1079,14 +1103,14 @@ impl LaunchTemplateRef {
     }
 
     #[doc = "Get a reference to the value of field `block_device_mappings` after provisioning.\n"]
-    pub fn block_device_mappings(&self) -> terrars::ListRef<LaunchTemplateBlockDeviceMappingsElRef> {
+    pub fn block_device_mappings(&self) -> terrars::ListRef<LaunchTemplate_BlockDeviceMappingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.block_device_mappings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `capacity_reservation_specification` after provisioning.\n"]
     pub fn capacity_reservation_specification(
         &self,
-    ) -> terrars::ListRef<LaunchTemplateCapacityReservationSpecificationElRef> {
+    ) -> terrars::ListRef<LaunchTemplate_CapacityReservationSpecificationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.capacity_reservation_specification", self.extract_ref()),
@@ -1094,88 +1118,115 @@ impl LaunchTemplateRef {
     }
 
     #[doc = "Get a reference to the value of field `cpu_options` after provisioning.\n"]
-    pub fn cpu_options(&self) -> terrars::ListRef<LaunchTemplateCpuOptionsElRef> {
+    pub fn cpu_options(&self) -> terrars::ListRef<LaunchTemplate_CpuOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cpu_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `credit_specification` after provisioning.\n"]
-    pub fn credit_specification(&self) -> terrars::ListRef<LaunchTemplateCreditSpecificationElRef> {
+    pub fn credit_specification(&self) -> terrars::ListRef<LaunchTemplate_CreditSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.credit_specification", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `elastic_gpu_specifications` after provisioning.\n"]
-    pub fn elastic_gpu_specifications(&self) -> terrars::ListRef<LaunchTemplateElasticGpuSpecificationsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.elastic_gpu_specifications", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `elastic_inference_accelerator` after provisioning.\n"]
-    pub fn elastic_inference_accelerator(&self) -> terrars::ListRef<LaunchTemplateElasticInferenceAcceleratorElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.elastic_inference_accelerator", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `enclave_options` after provisioning.\n"]
-    pub fn enclave_options(&self) -> terrars::ListRef<LaunchTemplateEnclaveOptionsElRef> {
+    pub fn enclave_options(&self) -> terrars::ListRef<LaunchTemplate_EnclaveOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.enclave_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `hibernation_options` after provisioning.\n"]
-    pub fn hibernation_options(&self) -> terrars::ListRef<LaunchTemplateHibernationOptionsElRef> {
+    pub fn hibernation_options(&self) -> terrars::ListRef<LaunchTemplate_HibernationOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hibernation_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `iam_instance_profile` after provisioning.\n"]
-    pub fn iam_instance_profile(&self) -> terrars::ListRef<LaunchTemplateIamInstanceProfileElRef> {
+    pub fn iam_instance_profile(&self) -> terrars::ListRef<LaunchTemplate_IamInstanceProfileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.iam_instance_profile", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_market_options` after provisioning.\n"]
-    pub fn instance_market_options(&self) -> terrars::ListRef<LaunchTemplateInstanceMarketOptionsElRef> {
+    pub fn instance_market_options(&self) -> terrars::ListRef<LaunchTemplate_InstanceMarketOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_market_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `instance_requirements` after provisioning.\n"]
-    pub fn instance_requirements(&self) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElRef> {
+    pub fn instance_requirements(&self) -> terrars::ListRef<LaunchTemplate_InstanceRequirementsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_requirements", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `maintenance_options` after provisioning.\n"]
-    pub fn maintenance_options(&self) -> terrars::ListRef<LaunchTemplateMaintenanceOptionsElRef> {
+    pub fn maintenance_options(&self) -> terrars::ListRef<LaunchTemplate_MaintenanceOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `metadata_options` after provisioning.\n"]
-    pub fn metadata_options(&self) -> terrars::ListRef<LaunchTemplateMetadataOptionsElRef> {
+    pub fn metadata_options(&self) -> terrars::ListRef<LaunchTemplate_MetadataOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `monitoring` after provisioning.\n"]
-    pub fn monitoring(&self) -> terrars::ListRef<LaunchTemplateMonitoringElRef> {
+    pub fn monitoring(&self) -> terrars::ListRef<LaunchTemplate_MonitoringRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_interfaces` after provisioning.\n"]
-    pub fn network_interfaces(&self) -> terrars::ListRef<LaunchTemplateNetworkInterfacesElRef> {
+    pub fn network_interfaces(&self) -> terrars::ListRef<LaunchTemplate_NetworkInterfacesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interfaces", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_performance_options` after provisioning.\n"]
+    pub fn network_performance_options(&self) -> terrars::ListRef<LaunchTemplate_NetworkPerformanceOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_performance_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `placement` after provisioning.\n"]
-    pub fn placement(&self) -> terrars::ListRef<LaunchTemplatePlacementElRef> {
+    pub fn placement(&self) -> terrars::ListRef<LaunchTemplate_PlacementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.placement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `private_dns_name_options` after provisioning.\n"]
-    pub fn private_dns_name_options(&self) -> terrars::ListRef<LaunchTemplatePrivateDnsNameOptionsElRef> {
+    pub fn private_dns_name_options(&self) -> terrars::ListRef<LaunchTemplate_PrivateDnsNameOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.private_dns_name_options", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `secondary_interfaces` after provisioning.\n"]
+    pub fn secondary_interfaces(&self) -> terrars::ListRef<LaunchTemplate_SecondaryInterfacesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secondary_interfaces", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tag_specifications` after provisioning.\n"]
-    pub fn tag_specifications(&self) -> terrars::ListRef<LaunchTemplateTagSpecificationsElRef> {
+    pub fn tag_specifications(&self) -> terrars::ListRef<LaunchTemplate_TagSpecificationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag_specifications", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LaunchTemplateDynamic {
+    block_device_mappings: std::option::Option<terrars::DynamicBlock<LaunchTemplate_BlockDeviceMappings>>,
+    capacity_reservation_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<LaunchTemplate_CapacityReservationSpecification>>,
+    cpu_options: std::option::Option<terrars::DynamicBlock<LaunchTemplate_CpuOptions>>,
+    credit_specification: std::option::Option<terrars::DynamicBlock<LaunchTemplate_CreditSpecification>>,
+    enclave_options: std::option::Option<terrars::DynamicBlock<LaunchTemplate_EnclaveOptions>>,
+    hibernation_options: std::option::Option<terrars::DynamicBlock<LaunchTemplate_HibernationOptions>>,
+    iam_instance_profile: std::option::Option<terrars::DynamicBlock<LaunchTemplate_IamInstanceProfile>>,
+    instance_market_options: std::option::Option<terrars::DynamicBlock<LaunchTemplate_InstanceMarketOptions>>,
+    instance_requirements: std::option::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements>>,
+    license_specification: std::option::Option<terrars::DynamicBlock<LaunchTemplate_LicenseSpecification>>,
+    maintenance_options: std::option::Option<terrars::DynamicBlock<LaunchTemplate_MaintenanceOptions>>,
+    metadata_options: std::option::Option<terrars::DynamicBlock<LaunchTemplate_MetadataOptions>>,
+    monitoring: std::option::Option<terrars::DynamicBlock<LaunchTemplate_Monitoring>>,
+    network_interfaces: std::option::Option<terrars::DynamicBlock<LaunchTemplate_NetworkInterfaces>>,
+    network_performance_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<LaunchTemplate_NetworkPerformanceOptions>>,
+    placement: std::option::Option<terrars::DynamicBlock<LaunchTemplate_Placement>>,
+    private_dns_name_options: std::option::Option<terrars::DynamicBlock<LaunchTemplate_PrivateDnsNameOptions>>,
+    secondary_interfaces: std::option::Option<terrars::DynamicBlock<LaunchTemplate_SecondaryInterfaces>>,
+    tag_specifications: std::option::Option<terrars::DynamicBlock<LaunchTemplate_TagSpecifications>>,
+}
+
 #[derive(Serialize)]
-pub struct LaunchTemplateBlockDeviceMappingsElEbsEl {
+pub struct LaunchTemplate_BlockDeviceMappings_Ebs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_on_termination: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1189,12 +1240,14 @@ pub struct LaunchTemplateBlockDeviceMappingsElEbsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     throughput: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    volume_initialization_rate: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     volume_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchTemplateBlockDeviceMappingsElEbsEl {
+impl LaunchTemplate_BlockDeviceMappings_Ebs {
     #[doc = "Set the field `delete_on_termination`.\n"]
     pub fn set_delete_on_termination(
         mut self,
@@ -1234,6 +1287,12 @@ impl LaunchTemplateBlockDeviceMappingsElEbsEl {
         self
     }
 
+    #[doc = "Set the field `volume_initialization_rate`.\n"]
+    pub fn set_volume_initialization_rate(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.volume_initialization_rate = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `volume_size`.\n"]
     pub fn set_volume_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.volume_size = std::option::Option::Some(v.into());
@@ -1247,8 +1306,8 @@ impl LaunchTemplateBlockDeviceMappingsElEbsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateBlockDeviceMappingsElEbsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateBlockDeviceMappingsElEbsEl>;
+impl terrars::ToListMappable for LaunchTemplate_BlockDeviceMappings_Ebs {
+    type O = terrars::BlockAssignable<LaunchTemplate_BlockDeviceMappings_Ebs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1259,38 +1318,41 @@ impl terrars::ToListMappable for LaunchTemplateBlockDeviceMappingsElEbsEl {
     }
 }
 
-pub struct BuildLaunchTemplateBlockDeviceMappingsElEbsEl {}
+pub struct BuildLaunchTemplate_BlockDeviceMappings_Ebs {}
 
-impl BuildLaunchTemplateBlockDeviceMappingsElEbsEl {
-    pub fn build(self) -> LaunchTemplateBlockDeviceMappingsElEbsEl {
-        LaunchTemplateBlockDeviceMappingsElEbsEl {
+impl BuildLaunchTemplate_BlockDeviceMappings_Ebs {
+    pub fn build(self) -> LaunchTemplate_BlockDeviceMappings_Ebs {
+        LaunchTemplate_BlockDeviceMappings_Ebs {
             delete_on_termination: core::default::Default::default(),
             encrypted: core::default::Default::default(),
             iops: core::default::Default::default(),
             kms_key_id: core::default::Default::default(),
             snapshot_id: core::default::Default::default(),
             throughput: core::default::Default::default(),
+            volume_initialization_rate: core::default::Default::default(),
             volume_size: core::default::Default::default(),
             volume_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateBlockDeviceMappingsElEbsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_BlockDeviceMappings_EbsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateBlockDeviceMappingsElEbsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateBlockDeviceMappingsElEbsElRef {
-        LaunchTemplateBlockDeviceMappingsElEbsElRef {
+impl terrars::Ref for LaunchTemplate_BlockDeviceMappings_EbsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_BlockDeviceMappings_EbsRef {
+        LaunchTemplate_BlockDeviceMappings_EbsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateBlockDeviceMappingsElEbsElRef {
+impl LaunchTemplate_BlockDeviceMappings_EbsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1325,6 +1387,11 @@ impl LaunchTemplateBlockDeviceMappingsElEbsElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.throughput", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `volume_initialization_rate` after provisioning.\n"]
+    pub fn volume_initialization_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_initialization_rate", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `volume_size` after provisioning.\n"]
     pub fn volume_size(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_size", self.base))
@@ -1337,12 +1404,12 @@ impl LaunchTemplateBlockDeviceMappingsElEbsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LaunchTemplateBlockDeviceMappingsElDynamic {
-    ebs: std::option::Option<terrars::DynamicBlock<LaunchTemplateBlockDeviceMappingsElEbsEl>>,
+struct LaunchTemplate_BlockDeviceMappingsDynamic {
+    ebs: std::option::Option<terrars::DynamicBlock<LaunchTemplate_BlockDeviceMappings_Ebs>>,
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateBlockDeviceMappingsEl {
+pub struct LaunchTemplate_BlockDeviceMappings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1350,11 +1417,11 @@ pub struct LaunchTemplateBlockDeviceMappingsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     virtual_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ebs: std::option::Option<std::vec::Vec<LaunchTemplateBlockDeviceMappingsElEbsEl>>,
-    dynamic: LaunchTemplateBlockDeviceMappingsElDynamic,
+    ebs: std::option::Option<std::vec::Vec<LaunchTemplate_BlockDeviceMappings_Ebs>>,
+    dynamic: LaunchTemplate_BlockDeviceMappingsDynamic,
 }
 
-impl LaunchTemplateBlockDeviceMappingsEl {
+impl LaunchTemplate_BlockDeviceMappings {
     #[doc = "Set the field `device_name`.\n"]
     pub fn set_device_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.device_name = std::option::Option::Some(v.into());
@@ -1376,7 +1443,7 @@ impl LaunchTemplateBlockDeviceMappingsEl {
     #[doc = "Set the field `ebs`.\n"]
     pub fn set_ebs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateBlockDeviceMappingsElEbsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_BlockDeviceMappings_Ebs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1390,8 +1457,8 @@ impl LaunchTemplateBlockDeviceMappingsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateBlockDeviceMappingsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateBlockDeviceMappingsEl>;
+impl terrars::ToListMappable for LaunchTemplate_BlockDeviceMappings {
+    type O = terrars::BlockAssignable<LaunchTemplate_BlockDeviceMappings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1402,11 +1469,11 @@ impl terrars::ToListMappable for LaunchTemplateBlockDeviceMappingsEl {
     }
 }
 
-pub struct BuildLaunchTemplateBlockDeviceMappingsEl {}
+pub struct BuildLaunchTemplate_BlockDeviceMappings {}
 
-impl BuildLaunchTemplateBlockDeviceMappingsEl {
-    pub fn build(self) -> LaunchTemplateBlockDeviceMappingsEl {
-        LaunchTemplateBlockDeviceMappingsEl {
+impl BuildLaunchTemplate_BlockDeviceMappings {
+    pub fn build(self) -> LaunchTemplate_BlockDeviceMappings {
+        LaunchTemplate_BlockDeviceMappings {
             device_name: core::default::Default::default(),
             no_device: core::default::Default::default(),
             virtual_name: core::default::Default::default(),
@@ -1416,21 +1483,23 @@ impl BuildLaunchTemplateBlockDeviceMappingsEl {
     }
 }
 
-pub struct LaunchTemplateBlockDeviceMappingsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_BlockDeviceMappingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateBlockDeviceMappingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateBlockDeviceMappingsElRef {
-        LaunchTemplateBlockDeviceMappingsElRef {
+impl terrars::Ref for LaunchTemplate_BlockDeviceMappingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_BlockDeviceMappingsRef {
+        LaunchTemplate_BlockDeviceMappingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateBlockDeviceMappingsElRef {
+impl LaunchTemplate_BlockDeviceMappingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1451,20 +1520,20 @@ impl LaunchTemplateBlockDeviceMappingsElRef {
     }
 
     #[doc = "Get a reference to the value of field `ebs` after provisioning.\n"]
-    pub fn ebs(&self) -> terrars::ListRef<LaunchTemplateBlockDeviceMappingsElEbsElRef> {
+    pub fn ebs(&self) -> terrars::ListRef<LaunchTemplate_BlockDeviceMappings_EbsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ebs", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl {
+pub struct LaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity_reservation_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity_reservation_resource_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl {
+impl LaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget {
     #[doc = "Set the field `capacity_reservation_id`.\n"]
     pub fn set_capacity_reservation_id(
         mut self,
@@ -1484,8 +1553,8 @@ impl LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl {
-    type O = terrars::BlockAssignable<LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl>;
+impl terrars::ToListMappable for LaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget {
+    type O = terrars::BlockAssignable<LaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1496,35 +1565,37 @@ impl terrars::ToListMappable for LaunchTemplateCapacityReservationSpecificationE
     }
 }
 
-pub struct BuildLaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl {}
+pub struct BuildLaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget {}
 
-impl BuildLaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl {
-    pub fn build(self) -> LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl {
-        LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl {
+impl BuildLaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget {
+    pub fn build(self) -> LaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget {
+        LaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget {
             capacity_reservation_id: core::default::Default::default(),
             capacity_reservation_resource_group_arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_CapacityReservationSpecification_CapacityReservationTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetElRef {
+impl terrars::Ref for LaunchTemplate_CapacityReservationSpecification_CapacityReservationTargetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetElRef {
-        LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetElRef {
+    ) -> LaunchTemplate_CapacityReservationSpecification_CapacityReservationTargetRef {
+        LaunchTemplate_CapacityReservationSpecification_CapacityReservationTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetElRef {
+impl LaunchTemplate_CapacityReservationSpecification_CapacityReservationTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1544,24 +1615,24 @@ impl LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl
 }
 
 #[derive(Serialize, Default)]
-struct LaunchTemplateCapacityReservationSpecificationElDynamic {
+struct LaunchTemplate_CapacityReservationSpecificationDynamic {
     capacity_reservation_target: std
     ::option
-    ::Option<terrars::DynamicBlock<LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl>>,
+    ::Option<terrars::DynamicBlock<LaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget>>,
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateCapacityReservationSpecificationEl {
+pub struct LaunchTemplate_CapacityReservationSpecification {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity_reservation_preference: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity_reservation_target: std
     ::option
-    ::Option<std::vec::Vec<LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl>>,
-    dynamic: LaunchTemplateCapacityReservationSpecificationElDynamic,
+    ::Option<std::vec::Vec<LaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget>>,
+    dynamic: LaunchTemplate_CapacityReservationSpecificationDynamic,
 }
 
-impl LaunchTemplateCapacityReservationSpecificationEl {
+impl LaunchTemplate_CapacityReservationSpecification {
     #[doc = "Set the field `capacity_reservation_preference`.\n"]
     pub fn set_capacity_reservation_preference(
         mut self,
@@ -1581,7 +1652,7 @@ impl LaunchTemplateCapacityReservationSpecificationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetEl>,
+                        ::BlockAssignable<LaunchTemplate_CapacityReservationSpecification_CapacityReservationTarget>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1596,8 +1667,8 @@ impl LaunchTemplateCapacityReservationSpecificationEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateCapacityReservationSpecificationEl {
-    type O = terrars::BlockAssignable<LaunchTemplateCapacityReservationSpecificationEl>;
+impl terrars::ToListMappable for LaunchTemplate_CapacityReservationSpecification {
+    type O = terrars::BlockAssignable<LaunchTemplate_CapacityReservationSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1608,11 +1679,11 @@ impl terrars::ToListMappable for LaunchTemplateCapacityReservationSpecificationE
     }
 }
 
-pub struct BuildLaunchTemplateCapacityReservationSpecificationEl {}
+pub struct BuildLaunchTemplate_CapacityReservationSpecification {}
 
-impl BuildLaunchTemplateCapacityReservationSpecificationEl {
-    pub fn build(self) -> LaunchTemplateCapacityReservationSpecificationEl {
-        LaunchTemplateCapacityReservationSpecificationEl {
+impl BuildLaunchTemplate_CapacityReservationSpecification {
+    pub fn build(self) -> LaunchTemplate_CapacityReservationSpecification {
+        LaunchTemplate_CapacityReservationSpecification {
             capacity_reservation_preference: core::default::Default::default(),
             capacity_reservation_target: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1620,24 +1691,26 @@ impl BuildLaunchTemplateCapacityReservationSpecificationEl {
     }
 }
 
-pub struct LaunchTemplateCapacityReservationSpecificationElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_CapacityReservationSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateCapacityReservationSpecificationElRef {
+impl terrars::Ref for LaunchTemplate_CapacityReservationSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateCapacityReservationSpecificationElRef {
-        LaunchTemplateCapacityReservationSpecificationElRef {
+    ) -> LaunchTemplate_CapacityReservationSpecificationRef {
+        LaunchTemplate_CapacityReservationSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateCapacityReservationSpecificationElRef {
+impl LaunchTemplate_CapacityReservationSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1650,23 +1723,42 @@ impl LaunchTemplateCapacityReservationSpecificationElRef {
     #[doc = "Get a reference to the value of field `capacity_reservation_target` after provisioning.\n"]
     pub fn capacity_reservation_target(
         &self,
-    ) -> terrars::ListRef<LaunchTemplateCapacityReservationSpecificationElCapacityReservationTargetElRef> {
+    ) -> terrars::ListRef<LaunchTemplate_CapacityReservationSpecification_CapacityReservationTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_reservation_target", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateCpuOptionsEl {
+pub struct LaunchTemplate_CpuOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    amd_sev_snp: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     core_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    nested_virtualization: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     threads_per_core: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LaunchTemplateCpuOptionsEl {
+impl LaunchTemplate_CpuOptions {
+    #[doc = "Set the field `amd_sev_snp`.\n"]
+    pub fn set_amd_sev_snp(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.amd_sev_snp = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `core_count`.\n"]
     pub fn set_core_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.core_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `nested_virtualization`.\n"]
+    pub fn set_nested_virtualization(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.nested_virtualization = std::option::Option::Some(v.into());
         self
     }
 
@@ -1677,8 +1769,8 @@ impl LaunchTemplateCpuOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateCpuOptionsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateCpuOptionsEl>;
+impl terrars::ToListMappable for LaunchTemplate_CpuOptions {
+    type O = terrars::BlockAssignable<LaunchTemplate_CpuOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1689,39 +1781,53 @@ impl terrars::ToListMappable for LaunchTemplateCpuOptionsEl {
     }
 }
 
-pub struct BuildLaunchTemplateCpuOptionsEl {}
+pub struct BuildLaunchTemplate_CpuOptions {}
 
-impl BuildLaunchTemplateCpuOptionsEl {
-    pub fn build(self) -> LaunchTemplateCpuOptionsEl {
-        LaunchTemplateCpuOptionsEl {
+impl BuildLaunchTemplate_CpuOptions {
+    pub fn build(self) -> LaunchTemplate_CpuOptions {
+        LaunchTemplate_CpuOptions {
+            amd_sev_snp: core::default::Default::default(),
             core_count: core::default::Default::default(),
+            nested_virtualization: core::default::Default::default(),
             threads_per_core: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateCpuOptionsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_CpuOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateCpuOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateCpuOptionsElRef {
-        LaunchTemplateCpuOptionsElRef {
+impl terrars::Ref for LaunchTemplate_CpuOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_CpuOptionsRef {
+        LaunchTemplate_CpuOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateCpuOptionsElRef {
+impl LaunchTemplate_CpuOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `amd_sev_snp` after provisioning.\n"]
+    pub fn amd_sev_snp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.amd_sev_snp", self.base))
     }
 
     #[doc = "Get a reference to the value of field `core_count` after provisioning.\n"]
     pub fn core_count(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.core_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `nested_virtualization` after provisioning.\n"]
+    pub fn nested_virtualization(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nested_virtualization", self.base))
     }
 
     #[doc = "Get a reference to the value of field `threads_per_core` after provisioning.\n"]
@@ -1731,12 +1837,12 @@ impl LaunchTemplateCpuOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateCreditSpecificationEl {
+pub struct LaunchTemplate_CreditSpecification {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cpu_credits: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchTemplateCreditSpecificationEl {
+impl LaunchTemplate_CreditSpecification {
     #[doc = "Set the field `cpu_credits`.\n"]
     pub fn set_cpu_credits(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cpu_credits = std::option::Option::Some(v.into());
@@ -1744,8 +1850,8 @@ impl LaunchTemplateCreditSpecificationEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateCreditSpecificationEl {
-    type O = terrars::BlockAssignable<LaunchTemplateCreditSpecificationEl>;
+impl terrars::ToListMappable for LaunchTemplate_CreditSpecification {
+    type O = terrars::BlockAssignable<LaunchTemplate_CreditSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1756,29 +1862,31 @@ impl terrars::ToListMappable for LaunchTemplateCreditSpecificationEl {
     }
 }
 
-pub struct BuildLaunchTemplateCreditSpecificationEl {}
+pub struct BuildLaunchTemplate_CreditSpecification {}
 
-impl BuildLaunchTemplateCreditSpecificationEl {
-    pub fn build(self) -> LaunchTemplateCreditSpecificationEl {
-        LaunchTemplateCreditSpecificationEl { cpu_credits: core::default::Default::default() }
+impl BuildLaunchTemplate_CreditSpecification {
+    pub fn build(self) -> LaunchTemplate_CreditSpecification {
+        LaunchTemplate_CreditSpecification { cpu_credits: core::default::Default::default() }
     }
 }
 
-pub struct LaunchTemplateCreditSpecificationElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_CreditSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateCreditSpecificationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateCreditSpecificationElRef {
-        LaunchTemplateCreditSpecificationElRef {
+impl terrars::Ref for LaunchTemplate_CreditSpecificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_CreditSpecificationRef {
+        LaunchTemplate_CreditSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateCreditSpecificationElRef {
+impl LaunchTemplate_CreditSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1790,127 +1898,12 @@ impl LaunchTemplateCreditSpecificationElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateElasticGpuSpecificationsEl {
-    #[serde(rename = "type")]
-    type_: terrars::PrimField<std::string::String>,
-}
-
-impl LaunchTemplateElasticGpuSpecificationsEl { }
-
-impl terrars::ToListMappable for LaunchTemplateElasticGpuSpecificationsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateElasticGpuSpecificationsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildLaunchTemplateElasticGpuSpecificationsEl {
-    #[doc = ""]
-    pub type_: terrars::PrimField<std::string::String>,
-}
-
-impl BuildLaunchTemplateElasticGpuSpecificationsEl {
-    pub fn build(self) -> LaunchTemplateElasticGpuSpecificationsEl {
-        LaunchTemplateElasticGpuSpecificationsEl { type_: self.type_ }
-    }
-}
-
-pub struct LaunchTemplateElasticGpuSpecificationsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for LaunchTemplateElasticGpuSpecificationsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateElasticGpuSpecificationsElRef {
-        LaunchTemplateElasticGpuSpecificationsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl LaunchTemplateElasticGpuSpecificationsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct LaunchTemplateElasticInferenceAcceleratorEl {
-    #[serde(rename = "type")]
-    type_: terrars::PrimField<std::string::String>,
-}
-
-impl LaunchTemplateElasticInferenceAcceleratorEl { }
-
-impl terrars::ToListMappable for LaunchTemplateElasticInferenceAcceleratorEl {
-    type O = terrars::BlockAssignable<LaunchTemplateElasticInferenceAcceleratorEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildLaunchTemplateElasticInferenceAcceleratorEl {
-    #[doc = ""]
-    pub type_: terrars::PrimField<std::string::String>,
-}
-
-impl BuildLaunchTemplateElasticInferenceAcceleratorEl {
-    pub fn build(self) -> LaunchTemplateElasticInferenceAcceleratorEl {
-        LaunchTemplateElasticInferenceAcceleratorEl { type_: self.type_ }
-    }
-}
-
-pub struct LaunchTemplateElasticInferenceAcceleratorElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for LaunchTemplateElasticInferenceAcceleratorElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> LaunchTemplateElasticInferenceAcceleratorElRef {
-        LaunchTemplateElasticInferenceAcceleratorElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl LaunchTemplateElasticInferenceAcceleratorElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct LaunchTemplateEnclaveOptionsEl {
+pub struct LaunchTemplate_EnclaveOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl LaunchTemplateEnclaveOptionsEl {
+impl LaunchTemplate_EnclaveOptions {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1918,8 +1911,8 @@ impl LaunchTemplateEnclaveOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateEnclaveOptionsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateEnclaveOptionsEl>;
+impl terrars::ToListMappable for LaunchTemplate_EnclaveOptions {
+    type O = terrars::BlockAssignable<LaunchTemplate_EnclaveOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1930,29 +1923,31 @@ impl terrars::ToListMappable for LaunchTemplateEnclaveOptionsEl {
     }
 }
 
-pub struct BuildLaunchTemplateEnclaveOptionsEl {}
+pub struct BuildLaunchTemplate_EnclaveOptions {}
 
-impl BuildLaunchTemplateEnclaveOptionsEl {
-    pub fn build(self) -> LaunchTemplateEnclaveOptionsEl {
-        LaunchTemplateEnclaveOptionsEl { enabled: core::default::Default::default() }
+impl BuildLaunchTemplate_EnclaveOptions {
+    pub fn build(self) -> LaunchTemplate_EnclaveOptions {
+        LaunchTemplate_EnclaveOptions { enabled: core::default::Default::default() }
     }
 }
 
-pub struct LaunchTemplateEnclaveOptionsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_EnclaveOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateEnclaveOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateEnclaveOptionsElRef {
-        LaunchTemplateEnclaveOptionsElRef {
+impl terrars::Ref for LaunchTemplate_EnclaveOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_EnclaveOptionsRef {
+        LaunchTemplate_EnclaveOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateEnclaveOptionsElRef {
+impl LaunchTemplate_EnclaveOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1964,14 +1959,14 @@ impl LaunchTemplateEnclaveOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateHibernationOptionsEl {
+pub struct LaunchTemplate_HibernationOptions {
     configured: terrars::PrimField<bool>,
 }
 
-impl LaunchTemplateHibernationOptionsEl { }
+impl LaunchTemplate_HibernationOptions { }
 
-impl terrars::ToListMappable for LaunchTemplateHibernationOptionsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateHibernationOptionsEl>;
+impl terrars::ToListMappable for LaunchTemplate_HibernationOptions {
+    type O = terrars::BlockAssignable<LaunchTemplate_HibernationOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1982,32 +1977,34 @@ impl terrars::ToListMappable for LaunchTemplateHibernationOptionsEl {
     }
 }
 
-pub struct BuildLaunchTemplateHibernationOptionsEl {
+pub struct BuildLaunchTemplate_HibernationOptions {
     #[doc = ""]
     pub configured: terrars::PrimField<bool>,
 }
 
-impl BuildLaunchTemplateHibernationOptionsEl {
-    pub fn build(self) -> LaunchTemplateHibernationOptionsEl {
-        LaunchTemplateHibernationOptionsEl { configured: self.configured }
+impl BuildLaunchTemplate_HibernationOptions {
+    pub fn build(self) -> LaunchTemplate_HibernationOptions {
+        LaunchTemplate_HibernationOptions { configured: self.configured }
     }
 }
 
-pub struct LaunchTemplateHibernationOptionsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_HibernationOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateHibernationOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateHibernationOptionsElRef {
-        LaunchTemplateHibernationOptionsElRef {
+impl terrars::Ref for LaunchTemplate_HibernationOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_HibernationOptionsRef {
+        LaunchTemplate_HibernationOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateHibernationOptionsElRef {
+impl LaunchTemplate_HibernationOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2019,14 +2016,14 @@ impl LaunchTemplateHibernationOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateIamInstanceProfileEl {
+pub struct LaunchTemplate_IamInstanceProfile {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchTemplateIamInstanceProfileEl {
+impl LaunchTemplate_IamInstanceProfile {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -2040,8 +2037,8 @@ impl LaunchTemplateIamInstanceProfileEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateIamInstanceProfileEl {
-    type O = terrars::BlockAssignable<LaunchTemplateIamInstanceProfileEl>;
+impl terrars::ToListMappable for LaunchTemplate_IamInstanceProfile {
+    type O = terrars::BlockAssignable<LaunchTemplate_IamInstanceProfile>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2052,32 +2049,34 @@ impl terrars::ToListMappable for LaunchTemplateIamInstanceProfileEl {
     }
 }
 
-pub struct BuildLaunchTemplateIamInstanceProfileEl {}
+pub struct BuildLaunchTemplate_IamInstanceProfile {}
 
-impl BuildLaunchTemplateIamInstanceProfileEl {
-    pub fn build(self) -> LaunchTemplateIamInstanceProfileEl {
-        LaunchTemplateIamInstanceProfileEl {
+impl BuildLaunchTemplate_IamInstanceProfile {
+    pub fn build(self) -> LaunchTemplate_IamInstanceProfile {
+        LaunchTemplate_IamInstanceProfile {
             arn: core::default::Default::default(),
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateIamInstanceProfileElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_IamInstanceProfileRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateIamInstanceProfileElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateIamInstanceProfileElRef {
-        LaunchTemplateIamInstanceProfileElRef {
+impl terrars::Ref for LaunchTemplate_IamInstanceProfileRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_IamInstanceProfileRef {
+        LaunchTemplate_IamInstanceProfileRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateIamInstanceProfileElRef {
+impl LaunchTemplate_IamInstanceProfileRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2094,7 +2093,7 @@ impl LaunchTemplateIamInstanceProfileElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceMarketOptionsElSpotOptionsEl {
+pub struct LaunchTemplate_InstanceMarketOptions_SpotOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     block_duration_minutes: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2107,7 +2106,7 @@ pub struct LaunchTemplateInstanceMarketOptionsElSpotOptionsEl {
     valid_until: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchTemplateInstanceMarketOptionsElSpotOptionsEl {
+impl LaunchTemplate_InstanceMarketOptions_SpotOptions {
     #[doc = "Set the field `block_duration_minutes`.\n"]
     pub fn set_block_duration_minutes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.block_duration_minutes = std::option::Option::Some(v.into());
@@ -2145,8 +2144,8 @@ impl LaunchTemplateInstanceMarketOptionsElSpotOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceMarketOptionsElSpotOptionsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceMarketOptionsElSpotOptionsEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceMarketOptions_SpotOptions {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceMarketOptions_SpotOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2157,11 +2156,11 @@ impl terrars::ToListMappable for LaunchTemplateInstanceMarketOptionsElSpotOption
     }
 }
 
-pub struct BuildLaunchTemplateInstanceMarketOptionsElSpotOptionsEl {}
+pub struct BuildLaunchTemplate_InstanceMarketOptions_SpotOptions {}
 
-impl BuildLaunchTemplateInstanceMarketOptionsElSpotOptionsEl {
-    pub fn build(self) -> LaunchTemplateInstanceMarketOptionsElSpotOptionsEl {
-        LaunchTemplateInstanceMarketOptionsElSpotOptionsEl {
+impl BuildLaunchTemplate_InstanceMarketOptions_SpotOptions {
+    pub fn build(self) -> LaunchTemplate_InstanceMarketOptions_SpotOptions {
+        LaunchTemplate_InstanceMarketOptions_SpotOptions {
             block_duration_minutes: core::default::Default::default(),
             instance_interruption_behavior: core::default::Default::default(),
             max_price: core::default::Default::default(),
@@ -2171,24 +2170,26 @@ impl BuildLaunchTemplateInstanceMarketOptionsElSpotOptionsEl {
     }
 }
 
-pub struct LaunchTemplateInstanceMarketOptionsElSpotOptionsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceMarketOptions_SpotOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceMarketOptionsElSpotOptionsElRef {
+impl terrars::Ref for LaunchTemplate_InstanceMarketOptions_SpotOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateInstanceMarketOptionsElSpotOptionsElRef {
-        LaunchTemplateInstanceMarketOptionsElSpotOptionsElRef {
+    ) -> LaunchTemplate_InstanceMarketOptions_SpotOptionsRef {
+        LaunchTemplate_InstanceMarketOptions_SpotOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceMarketOptionsElSpotOptionsElRef {
+impl LaunchTemplate_InstanceMarketOptions_SpotOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2220,20 +2221,20 @@ impl LaunchTemplateInstanceMarketOptionsElSpotOptionsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LaunchTemplateInstanceMarketOptionsElDynamic {
-    spot_options: std::option::Option<terrars::DynamicBlock<LaunchTemplateInstanceMarketOptionsElSpotOptionsEl>>,
+struct LaunchTemplate_InstanceMarketOptionsDynamic {
+    spot_options: std::option::Option<terrars::DynamicBlock<LaunchTemplate_InstanceMarketOptions_SpotOptions>>,
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceMarketOptionsEl {
+pub struct LaunchTemplate_InstanceMarketOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     market_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spot_options: std::option::Option<std::vec::Vec<LaunchTemplateInstanceMarketOptionsElSpotOptionsEl>>,
-    dynamic: LaunchTemplateInstanceMarketOptionsElDynamic,
+    spot_options: std::option::Option<std::vec::Vec<LaunchTemplate_InstanceMarketOptions_SpotOptions>>,
+    dynamic: LaunchTemplate_InstanceMarketOptionsDynamic,
 }
 
-impl LaunchTemplateInstanceMarketOptionsEl {
+impl LaunchTemplate_InstanceMarketOptions {
     #[doc = "Set the field `market_type`.\n"]
     pub fn set_market_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.market_type = std::option::Option::Some(v.into());
@@ -2243,7 +2244,7 @@ impl LaunchTemplateInstanceMarketOptionsEl {
     #[doc = "Set the field `spot_options`.\n"]
     pub fn set_spot_options(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateInstanceMarketOptionsElSpotOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_InstanceMarketOptions_SpotOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2257,8 +2258,8 @@ impl LaunchTemplateInstanceMarketOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceMarketOptionsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceMarketOptionsEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceMarketOptions {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceMarketOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2269,11 +2270,11 @@ impl terrars::ToListMappable for LaunchTemplateInstanceMarketOptionsEl {
     }
 }
 
-pub struct BuildLaunchTemplateInstanceMarketOptionsEl {}
+pub struct BuildLaunchTemplate_InstanceMarketOptions {}
 
-impl BuildLaunchTemplateInstanceMarketOptionsEl {
-    pub fn build(self) -> LaunchTemplateInstanceMarketOptionsEl {
-        LaunchTemplateInstanceMarketOptionsEl {
+impl BuildLaunchTemplate_InstanceMarketOptions {
+    pub fn build(self) -> LaunchTemplate_InstanceMarketOptions {
+        LaunchTemplate_InstanceMarketOptions {
             market_type: core::default::Default::default(),
             spot_options: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2281,21 +2282,23 @@ impl BuildLaunchTemplateInstanceMarketOptionsEl {
     }
 }
 
-pub struct LaunchTemplateInstanceMarketOptionsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceMarketOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceMarketOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateInstanceMarketOptionsElRef {
-        LaunchTemplateInstanceMarketOptionsElRef {
+impl terrars::Ref for LaunchTemplate_InstanceMarketOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_InstanceMarketOptionsRef {
+        LaunchTemplate_InstanceMarketOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceMarketOptionsElRef {
+impl LaunchTemplate_InstanceMarketOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2306,20 +2309,20 @@ impl LaunchTemplateInstanceMarketOptionsElRef {
     }
 
     #[doc = "Get a reference to the value of field `spot_options` after provisioning.\n"]
-    pub fn spot_options(&self) -> terrars::ListRef<LaunchTemplateInstanceMarketOptionsElSpotOptionsElRef> {
+    pub fn spot_options(&self) -> terrars::ListRef<LaunchTemplate_InstanceMarketOptions_SpotOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spot_options", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceRequirementsElAcceleratorCountEl {
+pub struct LaunchTemplate_InstanceRequirements_AcceleratorCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LaunchTemplateInstanceRequirementsElAcceleratorCountEl {
+impl LaunchTemplate_InstanceRequirements_AcceleratorCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2333,8 +2336,8 @@ impl LaunchTemplateInstanceRequirementsElAcceleratorCountEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElAcceleratorCountEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElAcceleratorCountEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements_AcceleratorCount {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_AcceleratorCount>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2345,35 +2348,37 @@ impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElAccelerator
     }
 }
 
-pub struct BuildLaunchTemplateInstanceRequirementsElAcceleratorCountEl {}
+pub struct BuildLaunchTemplate_InstanceRequirements_AcceleratorCount {}
 
-impl BuildLaunchTemplateInstanceRequirementsElAcceleratorCountEl {
-    pub fn build(self) -> LaunchTemplateInstanceRequirementsElAcceleratorCountEl {
-        LaunchTemplateInstanceRequirementsElAcceleratorCountEl {
+impl BuildLaunchTemplate_InstanceRequirements_AcceleratorCount {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements_AcceleratorCount {
+        LaunchTemplate_InstanceRequirements_AcceleratorCount {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateInstanceRequirementsElAcceleratorCountElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirements_AcceleratorCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceRequirementsElAcceleratorCountElRef {
+impl terrars::Ref for LaunchTemplate_InstanceRequirements_AcceleratorCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateInstanceRequirementsElAcceleratorCountElRef {
-        LaunchTemplateInstanceRequirementsElAcceleratorCountElRef {
+    ) -> LaunchTemplate_InstanceRequirements_AcceleratorCountRef {
+        LaunchTemplate_InstanceRequirements_AcceleratorCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceRequirementsElAcceleratorCountElRef {
+impl LaunchTemplate_InstanceRequirements_AcceleratorCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2390,14 +2395,14 @@ impl LaunchTemplateInstanceRequirementsElAcceleratorCountElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+pub struct LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+impl LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2411,8 +2416,8 @@ impl LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2423,35 +2428,37 @@ impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElAccelerator
     }
 }
 
-pub struct BuildLaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl {}
+pub struct BuildLaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib {}
 
-impl BuildLaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-    pub fn build(self) -> LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-        LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+impl BuildLaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib {
+        LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMibRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+impl terrars::Ref for LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMibRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
-        LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+    ) -> LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMibRef {
+        LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMibRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+impl LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMibRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2468,14 +2475,14 @@ impl LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+pub struct LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+impl LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2489,8 +2496,8 @@ impl LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2501,35 +2508,37 @@ impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElBaselineEbs
     }
 }
 
-pub struct BuildLaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl {}
+pub struct BuildLaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps {}
 
-impl BuildLaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
-    pub fn build(self) -> LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
-        LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+impl BuildLaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps {
+        LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+impl terrars::Ref for LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
-        LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+    ) -> LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
+        LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+impl LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2546,14 +2555,14 @@ impl LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl {
+pub struct LaunchTemplate_InstanceRequirements_MemoryGibPerVcpu {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl {
+impl LaunchTemplate_InstanceRequirements_MemoryGibPerVcpu {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2567,8 +2576,8 @@ impl LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements_MemoryGibPerVcpu {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_MemoryGibPerVcpu>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2579,35 +2588,37 @@ impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElMemoryGibPe
     }
 }
 
-pub struct BuildLaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl {}
+pub struct BuildLaunchTemplate_InstanceRequirements_MemoryGibPerVcpu {}
 
-impl BuildLaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl {
-    pub fn build(self) -> LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl {
-        LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl {
+impl BuildLaunchTemplate_InstanceRequirements_MemoryGibPerVcpu {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements_MemoryGibPerVcpu {
+        LaunchTemplate_InstanceRequirements_MemoryGibPerVcpu {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirements_MemoryGibPerVcpuRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuElRef {
+impl terrars::Ref for LaunchTemplate_InstanceRequirements_MemoryGibPerVcpuRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuElRef {
-        LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuElRef {
+    ) -> LaunchTemplate_InstanceRequirements_MemoryGibPerVcpuRef {
+        LaunchTemplate_InstanceRequirements_MemoryGibPerVcpuRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuElRef {
+impl LaunchTemplate_InstanceRequirements_MemoryGibPerVcpuRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2624,13 +2635,13 @@ impl LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceRequirementsElMemoryMibEl {
+pub struct LaunchTemplate_InstanceRequirements_MemoryMib {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     min: terrars::PrimField<f64>,
 }
 
-impl LaunchTemplateInstanceRequirementsElMemoryMibEl {
+impl LaunchTemplate_InstanceRequirements_MemoryMib {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2638,8 +2649,8 @@ impl LaunchTemplateInstanceRequirementsElMemoryMibEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElMemoryMibEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElMemoryMibEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements_MemoryMib {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_MemoryMib>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2650,38 +2661,40 @@ impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElMemoryMibEl
     }
 }
 
-pub struct BuildLaunchTemplateInstanceRequirementsElMemoryMibEl {
+pub struct BuildLaunchTemplate_InstanceRequirements_MemoryMib {
     #[doc = ""]
     pub min: terrars::PrimField<f64>,
 }
 
-impl BuildLaunchTemplateInstanceRequirementsElMemoryMibEl {
-    pub fn build(self) -> LaunchTemplateInstanceRequirementsElMemoryMibEl {
-        LaunchTemplateInstanceRequirementsElMemoryMibEl {
+impl BuildLaunchTemplate_InstanceRequirements_MemoryMib {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements_MemoryMib {
+        LaunchTemplate_InstanceRequirements_MemoryMib {
             max: core::default::Default::default(),
             min: self.min,
         }
     }
 }
 
-pub struct LaunchTemplateInstanceRequirementsElMemoryMibElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirements_MemoryMibRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceRequirementsElMemoryMibElRef {
+impl terrars::Ref for LaunchTemplate_InstanceRequirements_MemoryMibRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateInstanceRequirementsElMemoryMibElRef {
-        LaunchTemplateInstanceRequirementsElMemoryMibElRef {
+    ) -> LaunchTemplate_InstanceRequirements_MemoryMibRef {
+        LaunchTemplate_InstanceRequirements_MemoryMibRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceRequirementsElMemoryMibElRef {
+impl LaunchTemplate_InstanceRequirements_MemoryMibRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2698,14 +2711,14 @@ impl LaunchTemplateInstanceRequirementsElMemoryMibElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl {
+pub struct LaunchTemplate_InstanceRequirements_NetworkBandwidthGbps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl {
+impl LaunchTemplate_InstanceRequirements_NetworkBandwidthGbps {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2719,8 +2732,8 @@ impl LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements_NetworkBandwidthGbps {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_NetworkBandwidthGbps>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2731,35 +2744,37 @@ impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElNetworkInte
     }
 }
 
-pub struct BuildLaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl {}
+pub struct BuildLaunchTemplate_InstanceRequirements_NetworkBandwidthGbps {}
 
-impl BuildLaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl {
-    pub fn build(self) -> LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl {
-        LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl {
+impl BuildLaunchTemplate_InstanceRequirements_NetworkBandwidthGbps {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements_NetworkBandwidthGbps {
+        LaunchTemplate_InstanceRequirements_NetworkBandwidthGbps {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateInstanceRequirementsElNetworkInterfaceCountElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirements_NetworkBandwidthGbpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceRequirementsElNetworkInterfaceCountElRef {
+impl terrars::Ref for LaunchTemplate_InstanceRequirements_NetworkBandwidthGbpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateInstanceRequirementsElNetworkInterfaceCountElRef {
-        LaunchTemplateInstanceRequirementsElNetworkInterfaceCountElRef {
+    ) -> LaunchTemplate_InstanceRequirements_NetworkBandwidthGbpsRef {
+        LaunchTemplate_InstanceRequirements_NetworkBandwidthGbpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceRequirementsElNetworkInterfaceCountElRef {
+impl LaunchTemplate_InstanceRequirements_NetworkBandwidthGbpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2776,14 +2791,14 @@ impl LaunchTemplateInstanceRequirementsElNetworkInterfaceCountElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl {
+pub struct LaunchTemplate_InstanceRequirements_NetworkInterfaceCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl {
+impl LaunchTemplate_InstanceRequirements_NetworkInterfaceCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2797,8 +2812,8 @@ impl LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements_NetworkInterfaceCount {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_NetworkInterfaceCount>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2809,35 +2824,37 @@ impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElTotalLocalS
     }
 }
 
-pub struct BuildLaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl {}
+pub struct BuildLaunchTemplate_InstanceRequirements_NetworkInterfaceCount {}
 
-impl BuildLaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl {
-    pub fn build(self) -> LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl {
-        LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl {
+impl BuildLaunchTemplate_InstanceRequirements_NetworkInterfaceCount {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements_NetworkInterfaceCount {
+        LaunchTemplate_InstanceRequirements_NetworkInterfaceCount {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateInstanceRequirementsElTotalLocalStorageGbElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirements_NetworkInterfaceCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceRequirementsElTotalLocalStorageGbElRef {
+impl terrars::Ref for LaunchTemplate_InstanceRequirements_NetworkInterfaceCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateInstanceRequirementsElTotalLocalStorageGbElRef {
-        LaunchTemplateInstanceRequirementsElTotalLocalStorageGbElRef {
+    ) -> LaunchTemplate_InstanceRequirements_NetworkInterfaceCountRef {
+        LaunchTemplate_InstanceRequirements_NetworkInterfaceCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceRequirementsElTotalLocalStorageGbElRef {
+impl LaunchTemplate_InstanceRequirements_NetworkInterfaceCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2854,13 +2871,93 @@ impl LaunchTemplateInstanceRequirementsElTotalLocalStorageGbElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceRequirementsElVcpuCountEl {
+pub struct LaunchTemplate_InstanceRequirements_TotalLocalStorageGb {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl LaunchTemplate_InstanceRequirements_TotalLocalStorageGb {
+    #[doc = "Set the field `max`.\n"]
+    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min`.\n"]
+    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements_TotalLocalStorageGb {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_TotalLocalStorageGb>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLaunchTemplate_InstanceRequirements_TotalLocalStorageGb {}
+
+impl BuildLaunchTemplate_InstanceRequirements_TotalLocalStorageGb {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements_TotalLocalStorageGb {
+        LaunchTemplate_InstanceRequirements_TotalLocalStorageGb {
+            max: core::default::Default::default(),
+            min: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirements_TotalLocalStorageGbRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LaunchTemplate_InstanceRequirements_TotalLocalStorageGbRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> LaunchTemplate_InstanceRequirements_TotalLocalStorageGbRef {
+        LaunchTemplate_InstanceRequirements_TotalLocalStorageGbRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LaunchTemplate_InstanceRequirements_TotalLocalStorageGbRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max` after provisioning.\n"]
+    pub fn max(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min` after provisioning.\n"]
+    pub fn min(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct LaunchTemplate_InstanceRequirements_VcpuCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     min: terrars::PrimField<f64>,
 }
 
-impl LaunchTemplateInstanceRequirementsElVcpuCountEl {
+impl LaunchTemplate_InstanceRequirements_VcpuCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2868,8 +2965,8 @@ impl LaunchTemplateInstanceRequirementsElVcpuCountEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElVcpuCountEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElVcpuCountEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements_VcpuCount {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_VcpuCount>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2880,38 +2977,40 @@ impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsElVcpuCountEl
     }
 }
 
-pub struct BuildLaunchTemplateInstanceRequirementsElVcpuCountEl {
+pub struct BuildLaunchTemplate_InstanceRequirements_VcpuCount {
     #[doc = ""]
     pub min: terrars::PrimField<f64>,
 }
 
-impl BuildLaunchTemplateInstanceRequirementsElVcpuCountEl {
-    pub fn build(self) -> LaunchTemplateInstanceRequirementsElVcpuCountEl {
-        LaunchTemplateInstanceRequirementsElVcpuCountEl {
+impl BuildLaunchTemplate_InstanceRequirements_VcpuCount {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements_VcpuCount {
+        LaunchTemplate_InstanceRequirements_VcpuCount {
             max: core::default::Default::default(),
             min: self.min,
         }
     }
 }
 
-pub struct LaunchTemplateInstanceRequirementsElVcpuCountElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirements_VcpuCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceRequirementsElVcpuCountElRef {
+impl terrars::Ref for LaunchTemplate_InstanceRequirements_VcpuCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LaunchTemplateInstanceRequirementsElVcpuCountElRef {
-        LaunchTemplateInstanceRequirementsElVcpuCountElRef {
+    ) -> LaunchTemplate_InstanceRequirements_VcpuCountRef {
+        LaunchTemplate_InstanceRequirements_VcpuCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceRequirementsElVcpuCountElRef {
+impl LaunchTemplate_InstanceRequirements_VcpuCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2928,37 +3027,42 @@ impl LaunchTemplateInstanceRequirementsElVcpuCountElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LaunchTemplateInstanceRequirementsElDynamic {
+struct LaunchTemplate_InstanceRequirementsDynamic {
     accelerator_count: std
     ::option
-    ::Option<terrars::DynamicBlock<LaunchTemplateInstanceRequirementsElAcceleratorCountEl>>,
+    ::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements_AcceleratorCount>>,
     accelerator_total_memory_mib: std
     ::option
-    ::Option<terrars::DynamicBlock<LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl>>,
+    ::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib>>,
     baseline_ebs_bandwidth_mbps: std
     ::option
-    ::Option<terrars::DynamicBlock<LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl>>,
+    ::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps>>,
     memory_gib_per_vcpu: std
     ::option
-    ::Option<terrars::DynamicBlock<LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl>>,
-    memory_mib: std::option::Option<terrars::DynamicBlock<LaunchTemplateInstanceRequirementsElMemoryMibEl>>,
+    ::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements_MemoryGibPerVcpu>>,
+    memory_mib: std::option::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements_MemoryMib>>,
+    network_bandwidth_gbps: std
+    ::option
+    ::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements_NetworkBandwidthGbps>>,
     network_interface_count: std
     ::option
-    ::Option<terrars::DynamicBlock<LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl>>,
+    ::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements_NetworkInterfaceCount>>,
     total_local_storage_gb: std
     ::option
-    ::Option<terrars::DynamicBlock<LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl>>,
-    vcpu_count: std::option::Option<terrars::DynamicBlock<LaunchTemplateInstanceRequirementsElVcpuCountEl>>,
+    ::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements_TotalLocalStorageGb>>,
+    vcpu_count: std::option::Option<terrars::DynamicBlock<LaunchTemplate_InstanceRequirements_VcpuCount>>,
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateInstanceRequirementsEl {
+pub struct LaunchTemplate_InstanceRequirements {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_manufacturers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_instance_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bare_metal: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2974,37 +3078,41 @@ pub struct LaunchTemplateInstanceRequirementsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     local_storage_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_spot_price_as_percentage_of_optimal_on_demand_price: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     on_demand_max_price_percentage_over_lowest_price: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     require_hibernate_support: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     spot_max_price_percentage_over_lowest_price: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accelerator_count: std::option::Option<std::vec::Vec<LaunchTemplateInstanceRequirementsElAcceleratorCountEl>>,
+    accelerator_count: std::option::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements_AcceleratorCount>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_total_memory_mib: std
     ::option
-    ::Option<std::vec::Vec<LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl>>,
+    ::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     baseline_ebs_bandwidth_mbps: std
     ::option
-    ::Option<std::vec::Vec<LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl>>,
+    ::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    memory_gib_per_vcpu: std::option::Option<std::vec::Vec<LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl>>,
+    memory_gib_per_vcpu: std::option::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements_MemoryGibPerVcpu>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    memory_mib: std::option::Option<std::vec::Vec<LaunchTemplateInstanceRequirementsElMemoryMibEl>>,
+    memory_mib: std::option::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements_MemoryMib>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_bandwidth_gbps: std::option::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements_NetworkBandwidthGbps>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface_count: std
     ::option
-    ::Option<std::vec::Vec<LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl>>,
+    ::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements_NetworkInterfaceCount>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    total_local_storage_gb: std::option::Option<std::vec::Vec<LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl>>,
+    total_local_storage_gb: std::option::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements_TotalLocalStorageGb>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vcpu_count: std::option::Option<std::vec::Vec<LaunchTemplateInstanceRequirementsElVcpuCountEl>>,
-    dynamic: LaunchTemplateInstanceRequirementsElDynamic,
+    vcpu_count: std::option::Option<std::vec::Vec<LaunchTemplate_InstanceRequirements_VcpuCount>>,
+    dynamic: LaunchTemplate_InstanceRequirementsDynamic,
 }
 
-impl LaunchTemplateInstanceRequirementsEl {
+impl LaunchTemplate_InstanceRequirements {
     #[doc = "Set the field `accelerator_manufacturers`.\n"]
     pub fn set_accelerator_manufacturers(
         mut self,
@@ -3029,6 +3137,15 @@ impl LaunchTemplateInstanceRequirementsEl {
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.accelerator_types = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `allowed_instance_types`.\n"]
+    pub fn set_allowed_instance_types(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_instance_types = std::option::Option::Some(v.into());
         self
     }
 
@@ -3089,6 +3206,15 @@ impl LaunchTemplateInstanceRequirementsEl {
         self
     }
 
+    #[doc = "Set the field `max_spot_price_as_percentage_of_optimal_on_demand_price`.\n"]
+    pub fn set_max_spot_price_as_percentage_of_optimal_on_demand_price(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.max_spot_price_as_percentage_of_optimal_on_demand_price = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `on_demand_max_price_percentage_over_lowest_price`.\n"]
     pub fn set_on_demand_max_price_percentage_over_lowest_price(
         mut self,
@@ -3116,7 +3242,7 @@ impl LaunchTemplateInstanceRequirementsEl {
     #[doc = "Set the field `accelerator_count`.\n"]
     pub fn set_accelerator_count(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElAcceleratorCountEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_AcceleratorCount>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3137,7 +3263,7 @@ impl LaunchTemplateInstanceRequirementsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibEl>>,
+                    ::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMib>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3158,7 +3284,7 @@ impl LaunchTemplateInstanceRequirementsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsEl>>,
+                    ::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbps>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3174,7 +3300,7 @@ impl LaunchTemplateInstanceRequirementsEl {
     #[doc = "Set the field `memory_gib_per_vcpu`.\n"]
     pub fn set_memory_gib_per_vcpu(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_MemoryGibPerVcpu>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3190,7 +3316,7 @@ impl LaunchTemplateInstanceRequirementsEl {
     #[doc = "Set the field `memory_mib`.\n"]
     pub fn set_memory_mib(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElMemoryMibEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_MemoryMib>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3198,6 +3324,27 @@ impl LaunchTemplateInstanceRequirementsEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.memory_mib = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `network_bandwidth_gbps`.\n"]
+    pub fn set_network_bandwidth_gbps(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_NetworkBandwidthGbps>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_bandwidth_gbps = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_bandwidth_gbps = std::option::Option::Some(d);
             },
         }
         self
@@ -3211,7 +3358,7 @@ impl LaunchTemplateInstanceRequirementsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElNetworkInterfaceCountEl>>,
+                    ::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_NetworkInterfaceCount>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3232,7 +3379,7 @@ impl LaunchTemplateInstanceRequirementsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElTotalLocalStorageGbEl>>,
+                    ::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_TotalLocalStorageGb>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3248,7 +3395,7 @@ impl LaunchTemplateInstanceRequirementsEl {
     #[doc = "Set the field `vcpu_count`.\n"]
     pub fn set_vcpu_count(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplateInstanceRequirementsElVcpuCountEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_InstanceRequirements_VcpuCount>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3262,8 +3409,8 @@ impl LaunchTemplateInstanceRequirementsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateInstanceRequirementsEl>;
+impl terrars::ToListMappable for LaunchTemplate_InstanceRequirements {
+    type O = terrars::BlockAssignable<LaunchTemplate_InstanceRequirements>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3274,14 +3421,15 @@ impl terrars::ToListMappable for LaunchTemplateInstanceRequirementsEl {
     }
 }
 
-pub struct BuildLaunchTemplateInstanceRequirementsEl {}
+pub struct BuildLaunchTemplate_InstanceRequirements {}
 
-impl BuildLaunchTemplateInstanceRequirementsEl {
-    pub fn build(self) -> LaunchTemplateInstanceRequirementsEl {
-        LaunchTemplateInstanceRequirementsEl {
+impl BuildLaunchTemplate_InstanceRequirements {
+    pub fn build(self) -> LaunchTemplate_InstanceRequirements {
+        LaunchTemplate_InstanceRequirements {
             accelerator_manufacturers: core::default::Default::default(),
             accelerator_names: core::default::Default::default(),
             accelerator_types: core::default::Default::default(),
+            allowed_instance_types: core::default::Default::default(),
             bare_metal: core::default::Default::default(),
             burstable_performance: core::default::Default::default(),
             cpu_manufacturers: core::default::Default::default(),
@@ -3289,6 +3437,7 @@ impl BuildLaunchTemplateInstanceRequirementsEl {
             instance_generations: core::default::Default::default(),
             local_storage: core::default::Default::default(),
             local_storage_types: core::default::Default::default(),
+            max_spot_price_as_percentage_of_optimal_on_demand_price: core::default::Default::default(),
             on_demand_max_price_percentage_over_lowest_price: core::default::Default::default(),
             require_hibernate_support: core::default::Default::default(),
             spot_max_price_percentage_over_lowest_price: core::default::Default::default(),
@@ -3297,6 +3446,7 @@ impl BuildLaunchTemplateInstanceRequirementsEl {
             baseline_ebs_bandwidth_mbps: core::default::Default::default(),
             memory_gib_per_vcpu: core::default::Default::default(),
             memory_mib: core::default::Default::default(),
+            network_bandwidth_gbps: core::default::Default::default(),
             network_interface_count: core::default::Default::default(),
             total_local_storage_gb: core::default::Default::default(),
             vcpu_count: core::default::Default::default(),
@@ -3305,21 +3455,23 @@ impl BuildLaunchTemplateInstanceRequirementsEl {
     }
 }
 
-pub struct LaunchTemplateInstanceRequirementsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_InstanceRequirementsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateInstanceRequirementsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateInstanceRequirementsElRef {
-        LaunchTemplateInstanceRequirementsElRef {
+impl terrars::Ref for LaunchTemplate_InstanceRequirementsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_InstanceRequirementsRef {
+        LaunchTemplate_InstanceRequirementsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateInstanceRequirementsElRef {
+impl LaunchTemplate_InstanceRequirementsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3337,6 +3489,11 @@ impl LaunchTemplateInstanceRequirementsElRef {
     #[doc = "Get a reference to the value of field `accelerator_types` after provisioning.\n"]
     pub fn accelerator_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.accelerator_types", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `allowed_instance_types` after provisioning.\n"]
+    pub fn allowed_instance_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_instance_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `bare_metal` after provisioning.\n"]
@@ -3375,6 +3532,15 @@ impl LaunchTemplateInstanceRequirementsElRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `max_spot_price_as_percentage_of_optimal_on_demand_price` after provisioning.\n"]
+    pub fn max_spot_price_as_percentage_of_optimal_on_demand_price(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.max_spot_price_as_percentage_of_optimal_on_demand_price", self.base),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `on_demand_max_price_percentage_over_lowest_price` after provisioning.\n"]
     pub fn on_demand_max_price_percentage_over_lowest_price(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(
@@ -3397,63 +3563,68 @@ impl LaunchTemplateInstanceRequirementsElRef {
     }
 
     #[doc = "Get a reference to the value of field `accelerator_count` after provisioning.\n"]
-    pub fn accelerator_count(&self) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElAcceleratorCountElRef> {
+    pub fn accelerator_count(&self) -> terrars::ListRef<LaunchTemplate_InstanceRequirements_AcceleratorCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerator_count", self.base))
     }
 
     #[doc = "Get a reference to the value of field `accelerator_total_memory_mib` after provisioning.\n"]
     pub fn accelerator_total_memory_mib(
         &self,
-    ) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElAcceleratorTotalMemoryMibElRef> {
+    ) -> terrars::ListRef<LaunchTemplate_InstanceRequirements_AcceleratorTotalMemoryMibRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerator_total_memory_mib", self.base))
     }
 
     #[doc = "Get a reference to the value of field `baseline_ebs_bandwidth_mbps` after provisioning.\n"]
     pub fn baseline_ebs_bandwidth_mbps(
         &self,
-    ) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElBaselineEbsBandwidthMbpsElRef> {
+    ) -> terrars::ListRef<LaunchTemplate_InstanceRequirements_BaselineEbsBandwidthMbpsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.baseline_ebs_bandwidth_mbps", self.base))
     }
 
     #[doc = "Get a reference to the value of field `memory_gib_per_vcpu` after provisioning.\n"]
-    pub fn memory_gib_per_vcpu(&self) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElMemoryGibPerVcpuElRef> {
+    pub fn memory_gib_per_vcpu(&self) -> terrars::ListRef<LaunchTemplate_InstanceRequirements_MemoryGibPerVcpuRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memory_gib_per_vcpu", self.base))
     }
 
     #[doc = "Get a reference to the value of field `memory_mib` after provisioning.\n"]
-    pub fn memory_mib(&self) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElMemoryMibElRef> {
+    pub fn memory_mib(&self) -> terrars::ListRef<LaunchTemplate_InstanceRequirements_MemoryMibRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memory_mib", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `network_bandwidth_gbps` after provisioning.\n"]
+    pub fn network_bandwidth_gbps(
+        &self,
+    ) -> terrars::ListRef<LaunchTemplate_InstanceRequirements_NetworkBandwidthGbpsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_bandwidth_gbps", self.base))
     }
 
     #[doc = "Get a reference to the value of field `network_interface_count` after provisioning.\n"]
     pub fn network_interface_count(
         &self,
-    ) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElNetworkInterfaceCountElRef> {
+    ) -> terrars::ListRef<LaunchTemplate_InstanceRequirements_NetworkInterfaceCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface_count", self.base))
     }
 
     #[doc = "Get a reference to the value of field `total_local_storage_gb` after provisioning.\n"]
-    pub fn total_local_storage_gb(
-        &self,
-    ) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElTotalLocalStorageGbElRef> {
+    pub fn total_local_storage_gb(&self) -> terrars::ListRef<LaunchTemplate_InstanceRequirements_TotalLocalStorageGbRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.total_local_storage_gb", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vcpu_count` after provisioning.\n"]
-    pub fn vcpu_count(&self) -> terrars::ListRef<LaunchTemplateInstanceRequirementsElVcpuCountElRef> {
+    pub fn vcpu_count(&self) -> terrars::ListRef<LaunchTemplate_InstanceRequirements_VcpuCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vcpu_count", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateLicenseSpecificationEl {
+pub struct LaunchTemplate_LicenseSpecification {
     license_configuration_arn: terrars::PrimField<std::string::String>,
 }
 
-impl LaunchTemplateLicenseSpecificationEl { }
+impl LaunchTemplate_LicenseSpecification { }
 
-impl terrars::ToListMappable for LaunchTemplateLicenseSpecificationEl {
-    type O = terrars::BlockAssignable<LaunchTemplateLicenseSpecificationEl>;
+impl terrars::ToListMappable for LaunchTemplate_LicenseSpecification {
+    type O = terrars::BlockAssignable<LaunchTemplate_LicenseSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3464,32 +3635,34 @@ impl terrars::ToListMappable for LaunchTemplateLicenseSpecificationEl {
     }
 }
 
-pub struct BuildLaunchTemplateLicenseSpecificationEl {
+pub struct BuildLaunchTemplate_LicenseSpecification {
     #[doc = ""]
     pub license_configuration_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLaunchTemplateLicenseSpecificationEl {
-    pub fn build(self) -> LaunchTemplateLicenseSpecificationEl {
-        LaunchTemplateLicenseSpecificationEl { license_configuration_arn: self.license_configuration_arn }
+impl BuildLaunchTemplate_LicenseSpecification {
+    pub fn build(self) -> LaunchTemplate_LicenseSpecification {
+        LaunchTemplate_LicenseSpecification { license_configuration_arn: self.license_configuration_arn }
     }
 }
 
-pub struct LaunchTemplateLicenseSpecificationElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_LicenseSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateLicenseSpecificationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateLicenseSpecificationElRef {
-        LaunchTemplateLicenseSpecificationElRef {
+impl terrars::Ref for LaunchTemplate_LicenseSpecificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_LicenseSpecificationRef {
+        LaunchTemplate_LicenseSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateLicenseSpecificationElRef {
+impl LaunchTemplate_LicenseSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3501,12 +3674,12 @@ impl LaunchTemplateLicenseSpecificationElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateMaintenanceOptionsEl {
+pub struct LaunchTemplate_MaintenanceOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_recovery: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchTemplateMaintenanceOptionsEl {
+impl LaunchTemplate_MaintenanceOptions {
     #[doc = "Set the field `auto_recovery`.\n"]
     pub fn set_auto_recovery(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.auto_recovery = std::option::Option::Some(v.into());
@@ -3514,8 +3687,8 @@ impl LaunchTemplateMaintenanceOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateMaintenanceOptionsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateMaintenanceOptionsEl>;
+impl terrars::ToListMappable for LaunchTemplate_MaintenanceOptions {
+    type O = terrars::BlockAssignable<LaunchTemplate_MaintenanceOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3526,29 +3699,31 @@ impl terrars::ToListMappable for LaunchTemplateMaintenanceOptionsEl {
     }
 }
 
-pub struct BuildLaunchTemplateMaintenanceOptionsEl {}
+pub struct BuildLaunchTemplate_MaintenanceOptions {}
 
-impl BuildLaunchTemplateMaintenanceOptionsEl {
-    pub fn build(self) -> LaunchTemplateMaintenanceOptionsEl {
-        LaunchTemplateMaintenanceOptionsEl { auto_recovery: core::default::Default::default() }
+impl BuildLaunchTemplate_MaintenanceOptions {
+    pub fn build(self) -> LaunchTemplate_MaintenanceOptions {
+        LaunchTemplate_MaintenanceOptions { auto_recovery: core::default::Default::default() }
     }
 }
 
-pub struct LaunchTemplateMaintenanceOptionsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_MaintenanceOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateMaintenanceOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateMaintenanceOptionsElRef {
-        LaunchTemplateMaintenanceOptionsElRef {
+impl terrars::Ref for LaunchTemplate_MaintenanceOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_MaintenanceOptionsRef {
+        LaunchTemplate_MaintenanceOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateMaintenanceOptionsElRef {
+impl LaunchTemplate_MaintenanceOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3560,7 +3735,7 @@ impl LaunchTemplateMaintenanceOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateMetadataOptionsEl {
+pub struct LaunchTemplate_MetadataOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3573,7 +3748,7 @@ pub struct LaunchTemplateMetadataOptionsEl {
     instance_metadata_tags: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchTemplateMetadataOptionsEl {
+impl LaunchTemplate_MetadataOptions {
     #[doc = "Set the field `http_endpoint`.\n"]
     pub fn set_http_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.http_endpoint = std::option::Option::Some(v.into());
@@ -3611,8 +3786,8 @@ impl LaunchTemplateMetadataOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateMetadataOptionsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateMetadataOptionsEl>;
+impl terrars::ToListMappable for LaunchTemplate_MetadataOptions {
+    type O = terrars::BlockAssignable<LaunchTemplate_MetadataOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3623,11 +3798,11 @@ impl terrars::ToListMappable for LaunchTemplateMetadataOptionsEl {
     }
 }
 
-pub struct BuildLaunchTemplateMetadataOptionsEl {}
+pub struct BuildLaunchTemplate_MetadataOptions {}
 
-impl BuildLaunchTemplateMetadataOptionsEl {
-    pub fn build(self) -> LaunchTemplateMetadataOptionsEl {
-        LaunchTemplateMetadataOptionsEl {
+impl BuildLaunchTemplate_MetadataOptions {
+    pub fn build(self) -> LaunchTemplate_MetadataOptions {
+        LaunchTemplate_MetadataOptions {
             http_endpoint: core::default::Default::default(),
             http_protocol_ipv6: core::default::Default::default(),
             http_put_response_hop_limit: core::default::Default::default(),
@@ -3637,21 +3812,23 @@ impl BuildLaunchTemplateMetadataOptionsEl {
     }
 }
 
-pub struct LaunchTemplateMetadataOptionsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_MetadataOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateMetadataOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateMetadataOptionsElRef {
-        LaunchTemplateMetadataOptionsElRef {
+impl terrars::Ref for LaunchTemplate_MetadataOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_MetadataOptionsRef {
+        LaunchTemplate_MetadataOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateMetadataOptionsElRef {
+impl LaunchTemplate_MetadataOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3683,12 +3860,12 @@ impl LaunchTemplateMetadataOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateMonitoringEl {
+pub struct LaunchTemplate_Monitoring {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl LaunchTemplateMonitoringEl {
+impl LaunchTemplate_Monitoring {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -3696,8 +3873,8 @@ impl LaunchTemplateMonitoringEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateMonitoringEl {
-    type O = terrars::BlockAssignable<LaunchTemplateMonitoringEl>;
+impl terrars::ToListMappable for LaunchTemplate_Monitoring {
+    type O = terrars::BlockAssignable<LaunchTemplate_Monitoring>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3708,29 +3885,31 @@ impl terrars::ToListMappable for LaunchTemplateMonitoringEl {
     }
 }
 
-pub struct BuildLaunchTemplateMonitoringEl {}
+pub struct BuildLaunchTemplate_Monitoring {}
 
-impl BuildLaunchTemplateMonitoringEl {
-    pub fn build(self) -> LaunchTemplateMonitoringEl {
-        LaunchTemplateMonitoringEl { enabled: core::default::Default::default() }
+impl BuildLaunchTemplate_Monitoring {
+    pub fn build(self) -> LaunchTemplate_Monitoring {
+        LaunchTemplate_Monitoring { enabled: core::default::Default::default() }
     }
 }
 
-pub struct LaunchTemplateMonitoringElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_MonitoringRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateMonitoringElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateMonitoringElRef {
-        LaunchTemplateMonitoringElRef {
+impl terrars::Ref for LaunchTemplate_MonitoringRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_MonitoringRef {
+        LaunchTemplate_MonitoringRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateMonitoringElRef {
+impl LaunchTemplate_MonitoringRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3742,7 +3921,288 @@ impl LaunchTemplateMonitoringElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateNetworkInterfacesEl {
+pub struct LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tcp_established_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    udp_stream_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    udp_timeout: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification {
+    #[doc = "Set the field `tcp_established_timeout`.\n"]
+    pub fn set_tcp_established_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.tcp_established_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `udp_stream_timeout`.\n"]
+    pub fn set_udp_stream_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.udp_stream_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `udp_timeout`.\n"]
+    pub fn set_udp_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.udp_timeout = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification {
+    type O = terrars::BlockAssignable<LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification {}
+
+impl BuildLaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification {
+    pub fn build(self) -> LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification {
+        LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification {
+            tcp_established_timeout: core::default::Default::default(),
+            udp_stream_timeout: core::default::Default::default(),
+            udp_timeout: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecificationRef {
+        LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `tcp_established_timeout` after provisioning.\n"]
+    pub fn tcp_established_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tcp_established_timeout", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `udp_stream_timeout` after provisioning.\n"]
+    pub fn udp_stream_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.udp_stream_timeout", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `udp_timeout` after provisioning.\n"]
+    pub fn udp_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.udp_timeout", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ena_srd_udp_enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification {
+    #[doc = "Set the field `ena_srd_udp_enabled`.\n"]
+    pub fn set_ena_srd_udp_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.ena_srd_udp_enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification {
+    type O = terrars::BlockAssignable<LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification {}
+
+impl BuildLaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification {
+    pub fn build(self) -> LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification {
+        LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification {
+            ena_srd_udp_enabled: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+        LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ena_srd_udp_enabled` after provisioning.\n"]
+    pub fn ena_srd_udp_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ena_srd_udp_enabled", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct LaunchTemplate_NetworkInterfaces_EnaSrdSpecificationDynamic {
+    ena_srd_udp_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification>>,
+}
+
+#[derive(Serialize)]
+pub struct LaunchTemplate_NetworkInterfaces_EnaSrdSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ena_srd_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ena_srd_udp_specification: std
+    ::option
+    ::Option<std::vec::Vec<LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification>>,
+    dynamic: LaunchTemplate_NetworkInterfaces_EnaSrdSpecificationDynamic,
+}
+
+impl LaunchTemplate_NetworkInterfaces_EnaSrdSpecification {
+    #[doc = "Set the field `ena_srd_enabled`.\n"]
+    pub fn set_ena_srd_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.ena_srd_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ena_srd_udp_specification`.\n"]
+    pub fn set_ena_srd_udp_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecification>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.ena_srd_udp_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ena_srd_udp_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for LaunchTemplate_NetworkInterfaces_EnaSrdSpecification {
+    type O = terrars::BlockAssignable<LaunchTemplate_NetworkInterfaces_EnaSrdSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLaunchTemplate_NetworkInterfaces_EnaSrdSpecification {}
+
+impl BuildLaunchTemplate_NetworkInterfaces_EnaSrdSpecification {
+    pub fn build(self) -> LaunchTemplate_NetworkInterfaces_EnaSrdSpecification {
+        LaunchTemplate_NetworkInterfaces_EnaSrdSpecification {
+            ena_srd_enabled: core::default::Default::default(),
+            ena_srd_udp_specification: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LaunchTemplate_NetworkInterfaces_EnaSrdSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LaunchTemplate_NetworkInterfaces_EnaSrdSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> LaunchTemplate_NetworkInterfaces_EnaSrdSpecificationRef {
+        LaunchTemplate_NetworkInterfaces_EnaSrdSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LaunchTemplate_NetworkInterfaces_EnaSrdSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ena_srd_enabled` after provisioning.\n"]
+    pub fn ena_srd_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ena_srd_enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ena_srd_udp_specification` after provisioning.\n"]
+    pub fn ena_srd_udp_specification(
+        &self,
+    ) -> terrars::ListRef<LaunchTemplate_NetworkInterfaces_EnaSrdSpecification_EnaSrdUdpSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ena_srd_udp_specification", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct LaunchTemplate_NetworkInterfacesDynamic {
+    connection_tracking_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification>>,
+    ena_srd_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<LaunchTemplate_NetworkInterfaces_EnaSrdSpecification>>,
+}
+
+#[derive(Serialize)]
+pub struct LaunchTemplate_NetworkInterfaces {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     associate_carrier_ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3753,6 +4213,8 @@ pub struct LaunchTemplateNetworkInterfacesEl {
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_index: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ena_queue_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     interface_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3776,14 +4238,23 @@ pub struct LaunchTemplateNetworkInterfacesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    primary_ipv6: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_tracking_specification: std
+    ::option
+    ::Option<std::vec::Vec<LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ena_srd_specification: std::option::Option<std::vec::Vec<LaunchTemplate_NetworkInterfaces_EnaSrdSpecification>>,
+    dynamic: LaunchTemplate_NetworkInterfacesDynamic,
 }
 
-impl LaunchTemplateNetworkInterfacesEl {
+impl LaunchTemplate_NetworkInterfaces {
     #[doc = "Set the field `associate_carrier_ip_address`.\n"]
     pub fn set_associate_carrier_ip_address(
         mut self,
@@ -3820,6 +4291,12 @@ impl LaunchTemplateNetworkInterfacesEl {
     #[doc = "Set the field `device_index`.\n"]
     pub fn set_device_index(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.device_index = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ena_queue_count`.\n"]
+    pub fn set_ena_queue_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ena_queue_count = std::option::Option::Some(v.into());
         self
     }
 
@@ -3904,6 +4381,12 @@ impl LaunchTemplateNetworkInterfacesEl {
         self
     }
 
+    #[doc = "Set the field `primary_ipv6`.\n"]
+    pub fn set_primary_ipv6(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.primary_ipv6 = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `private_ip_address`.\n"]
     pub fn set_private_ip_address(
         mut self,
@@ -3927,10 +4410,49 @@ impl LaunchTemplateNetworkInterfacesEl {
         self.subnet_id = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `connection_tracking_specification`.\n"]
+    pub fn set_connection_tracking_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecification>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.connection_tracking_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.connection_tracking_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `ena_srd_specification`.\n"]
+    pub fn set_ena_srd_specification(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchTemplate_NetworkInterfaces_EnaSrdSpecification>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.ena_srd_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ena_srd_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for LaunchTemplateNetworkInterfacesEl {
-    type O = terrars::BlockAssignable<LaunchTemplateNetworkInterfacesEl>;
+impl terrars::ToListMappable for LaunchTemplate_NetworkInterfaces {
+    type O = terrars::BlockAssignable<LaunchTemplate_NetworkInterfaces>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3941,16 +4463,17 @@ impl terrars::ToListMappable for LaunchTemplateNetworkInterfacesEl {
     }
 }
 
-pub struct BuildLaunchTemplateNetworkInterfacesEl {}
+pub struct BuildLaunchTemplate_NetworkInterfaces {}
 
-impl BuildLaunchTemplateNetworkInterfacesEl {
-    pub fn build(self) -> LaunchTemplateNetworkInterfacesEl {
-        LaunchTemplateNetworkInterfacesEl {
+impl BuildLaunchTemplate_NetworkInterfaces {
+    pub fn build(self) -> LaunchTemplate_NetworkInterfaces {
+        LaunchTemplate_NetworkInterfaces {
             associate_carrier_ip_address: core::default::Default::default(),
             associate_public_ip_address: core::default::Default::default(),
             delete_on_termination: core::default::Default::default(),
             description: core::default::Default::default(),
             device_index: core::default::Default::default(),
+            ena_queue_count: core::default::Default::default(),
             interface_type: core::default::Default::default(),
             ipv4_address_count: core::default::Default::default(),
             ipv4_addresses: core::default::Default::default(),
@@ -3962,28 +4485,34 @@ impl BuildLaunchTemplateNetworkInterfacesEl {
             ipv6_prefixes: core::default::Default::default(),
             network_card_index: core::default::Default::default(),
             network_interface_id: core::default::Default::default(),
+            primary_ipv6: core::default::Default::default(),
             private_ip_address: core::default::Default::default(),
             security_groups: core::default::Default::default(),
             subnet_id: core::default::Default::default(),
+            connection_tracking_specification: core::default::Default::default(),
+            ena_srd_specification: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateNetworkInterfacesElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_NetworkInterfacesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateNetworkInterfacesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateNetworkInterfacesElRef {
-        LaunchTemplateNetworkInterfacesElRef {
+impl terrars::Ref for LaunchTemplate_NetworkInterfacesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_NetworkInterfacesRef {
+        LaunchTemplate_NetworkInterfacesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateNetworkInterfacesElRef {
+impl LaunchTemplate_NetworkInterfacesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4011,6 +4540,11 @@ impl LaunchTemplateNetworkInterfacesElRef {
     #[doc = "Get a reference to the value of field `device_index` after provisioning.\n"]
     pub fn device_index(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.device_index", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ena_queue_count` after provisioning.\n"]
+    pub fn ena_queue_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ena_queue_count", self.base))
     }
 
     #[doc = "Get a reference to the value of field `interface_type` after provisioning.\n"]
@@ -4068,6 +4602,11 @@ impl LaunchTemplateNetworkInterfacesElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `primary_ipv6` after provisioning.\n"]
+    pub fn primary_ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_ipv6", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `private_ip_address` after provisioning.\n"]
     pub fn private_ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_ip_address", self.base))
@@ -4082,14 +4621,92 @@ impl LaunchTemplateNetworkInterfacesElRef {
     pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `connection_tracking_specification` after provisioning.\n"]
+    pub fn connection_tracking_specification(
+        &self,
+    ) -> terrars::ListRef<LaunchTemplate_NetworkInterfaces_ConnectionTrackingSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.connection_tracking_specification", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ena_srd_specification` after provisioning.\n"]
+    pub fn ena_srd_specification(&self) -> terrars::ListRef<LaunchTemplate_NetworkInterfaces_EnaSrdSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ena_srd_specification", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplatePlacementEl {
+pub struct LaunchTemplate_NetworkPerformanceOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bandwidth_weighting: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl LaunchTemplate_NetworkPerformanceOptions {
+    #[doc = "Set the field `bandwidth_weighting`.\n"]
+    pub fn set_bandwidth_weighting(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.bandwidth_weighting = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LaunchTemplate_NetworkPerformanceOptions {
+    type O = terrars::BlockAssignable<LaunchTemplate_NetworkPerformanceOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLaunchTemplate_NetworkPerformanceOptions {}
+
+impl BuildLaunchTemplate_NetworkPerformanceOptions {
+    pub fn build(self) -> LaunchTemplate_NetworkPerformanceOptions {
+        LaunchTemplate_NetworkPerformanceOptions { bandwidth_weighting: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LaunchTemplate_NetworkPerformanceOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LaunchTemplate_NetworkPerformanceOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_NetworkPerformanceOptionsRef {
+        LaunchTemplate_NetworkPerformanceOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LaunchTemplate_NetworkPerformanceOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bandwidth_weighting` after provisioning.\n"]
+    pub fn bandwidth_weighting(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bandwidth_weighting", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct LaunchTemplate_Placement {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     affinity: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    group_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4104,7 +4721,7 @@ pub struct LaunchTemplatePlacementEl {
     tenancy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchTemplatePlacementEl {
+impl LaunchTemplate_Placement {
     #[doc = "Set the field `affinity`.\n"]
     pub fn set_affinity(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.affinity = std::option::Option::Some(v.into());
@@ -4114,6 +4731,12 @@ impl LaunchTemplatePlacementEl {
     #[doc = "Set the field `availability_zone`.\n"]
     pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.availability_zone = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `group_id`.\n"]
+    pub fn set_group_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.group_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -4157,8 +4780,8 @@ impl LaunchTemplatePlacementEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplatePlacementEl {
-    type O = terrars::BlockAssignable<LaunchTemplatePlacementEl>;
+impl terrars::ToListMappable for LaunchTemplate_Placement {
+    type O = terrars::BlockAssignable<LaunchTemplate_Placement>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4169,13 +4792,14 @@ impl terrars::ToListMappable for LaunchTemplatePlacementEl {
     }
 }
 
-pub struct BuildLaunchTemplatePlacementEl {}
+pub struct BuildLaunchTemplate_Placement {}
 
-impl BuildLaunchTemplatePlacementEl {
-    pub fn build(self) -> LaunchTemplatePlacementEl {
-        LaunchTemplatePlacementEl {
+impl BuildLaunchTemplate_Placement {
+    pub fn build(self) -> LaunchTemplate_Placement {
+        LaunchTemplate_Placement {
             affinity: core::default::Default::default(),
             availability_zone: core::default::Default::default(),
+            group_id: core::default::Default::default(),
             group_name: core::default::Default::default(),
             host_id: core::default::Default::default(),
             host_resource_group_arn: core::default::Default::default(),
@@ -4186,21 +4810,23 @@ impl BuildLaunchTemplatePlacementEl {
     }
 }
 
-pub struct LaunchTemplatePlacementElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_PlacementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplatePlacementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplatePlacementElRef {
-        LaunchTemplatePlacementElRef {
+impl terrars::Ref for LaunchTemplate_PlacementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_PlacementRef {
+        LaunchTemplate_PlacementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplatePlacementElRef {
+impl LaunchTemplate_PlacementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4213,6 +4839,11 @@ impl LaunchTemplatePlacementElRef {
     #[doc = "Get a reference to the value of field `availability_zone` after provisioning.\n"]
     pub fn availability_zone(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `group_id` after provisioning.\n"]
+    pub fn group_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_id", self.base))
     }
 
     #[doc = "Get a reference to the value of field `group_name` after provisioning.\n"]
@@ -4247,7 +4878,7 @@ impl LaunchTemplatePlacementElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplatePrivateDnsNameOptionsEl {
+pub struct LaunchTemplate_PrivateDnsNameOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_resource_name_dns_a_record: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4256,7 +4887,7 @@ pub struct LaunchTemplatePrivateDnsNameOptionsEl {
     hostname_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchTemplatePrivateDnsNameOptionsEl {
+impl LaunchTemplate_PrivateDnsNameOptions {
     #[doc = "Set the field `enable_resource_name_dns_a_record`.\n"]
     pub fn set_enable_resource_name_dns_a_record(
         mut self,
@@ -4282,8 +4913,8 @@ impl LaunchTemplatePrivateDnsNameOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplatePrivateDnsNameOptionsEl {
-    type O = terrars::BlockAssignable<LaunchTemplatePrivateDnsNameOptionsEl>;
+impl terrars::ToListMappable for LaunchTemplate_PrivateDnsNameOptions {
+    type O = terrars::BlockAssignable<LaunchTemplate_PrivateDnsNameOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4294,11 +4925,11 @@ impl terrars::ToListMappable for LaunchTemplatePrivateDnsNameOptionsEl {
     }
 }
 
-pub struct BuildLaunchTemplatePrivateDnsNameOptionsEl {}
+pub struct BuildLaunchTemplate_PrivateDnsNameOptions {}
 
-impl BuildLaunchTemplatePrivateDnsNameOptionsEl {
-    pub fn build(self) -> LaunchTemplatePrivateDnsNameOptionsEl {
-        LaunchTemplatePrivateDnsNameOptionsEl {
+impl BuildLaunchTemplate_PrivateDnsNameOptions {
+    pub fn build(self) -> LaunchTemplate_PrivateDnsNameOptions {
+        LaunchTemplate_PrivateDnsNameOptions {
             enable_resource_name_dns_a_record: core::default::Default::default(),
             enable_resource_name_dns_aaaa_record: core::default::Default::default(),
             hostname_type: core::default::Default::default(),
@@ -4306,21 +4937,23 @@ impl BuildLaunchTemplatePrivateDnsNameOptionsEl {
     }
 }
 
-pub struct LaunchTemplatePrivateDnsNameOptionsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_PrivateDnsNameOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplatePrivateDnsNameOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplatePrivateDnsNameOptionsElRef {
-        LaunchTemplatePrivateDnsNameOptionsElRef {
+impl terrars::Ref for LaunchTemplate_PrivateDnsNameOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_PrivateDnsNameOptionsRef {
+        LaunchTemplate_PrivateDnsNameOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplatePrivateDnsNameOptionsElRef {
+impl LaunchTemplate_PrivateDnsNameOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4342,14 +4975,167 @@ impl LaunchTemplatePrivateDnsNameOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchTemplateTagSpecificationsEl {
+pub struct LaunchTemplate_SecondaryInterfaces {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_on_termination: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    device_index: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    interface_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_card_index: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_ip_address_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_ip_addresses: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl LaunchTemplate_SecondaryInterfaces {
+    #[doc = "Set the field `delete_on_termination`.\n"]
+    pub fn set_delete_on_termination(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.delete_on_termination = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `device_index`.\n"]
+    pub fn set_device_index(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.device_index = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `interface_type`.\n"]
+    pub fn set_interface_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.interface_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `network_card_index`.\n"]
+    pub fn set_network_card_index(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.network_card_index = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `private_ip_address_count`.\n"]
+    pub fn set_private_ip_address_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.private_ip_address_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `private_ip_addresses`.\n"]
+    pub fn set_private_ip_addresses(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.private_ip_addresses = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secondary_subnet_id`.\n"]
+    pub fn set_secondary_subnet_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.secondary_subnet_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LaunchTemplate_SecondaryInterfaces {
+    type O = terrars::BlockAssignable<LaunchTemplate_SecondaryInterfaces>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLaunchTemplate_SecondaryInterfaces {}
+
+impl BuildLaunchTemplate_SecondaryInterfaces {
+    pub fn build(self) -> LaunchTemplate_SecondaryInterfaces {
+        LaunchTemplate_SecondaryInterfaces {
+            delete_on_termination: core::default::Default::default(),
+            device_index: core::default::Default::default(),
+            interface_type: core::default::Default::default(),
+            network_card_index: core::default::Default::default(),
+            private_ip_address_count: core::default::Default::default(),
+            private_ip_addresses: core::default::Default::default(),
+            secondary_subnet_id: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LaunchTemplate_SecondaryInterfacesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LaunchTemplate_SecondaryInterfacesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_SecondaryInterfacesRef {
+        LaunchTemplate_SecondaryInterfacesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LaunchTemplate_SecondaryInterfacesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `delete_on_termination` after provisioning.\n"]
+    pub fn delete_on_termination(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_on_termination", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `device_index` after provisioning.\n"]
+    pub fn device_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.device_index", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `interface_type` after provisioning.\n"]
+    pub fn interface_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.interface_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `network_card_index` after provisioning.\n"]
+    pub fn network_card_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_card_index", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `private_ip_address_count` after provisioning.\n"]
+    pub fn private_ip_address_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_ip_address_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `private_ip_addresses` after provisioning.\n"]
+    pub fn private_ip_addresses(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.private_ip_addresses", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_subnet_id` after provisioning.\n"]
+    pub fn secondary_subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secondary_subnet_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct LaunchTemplate_TagSpecifications {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl LaunchTemplateTagSpecificationsEl {
+impl LaunchTemplate_TagSpecifications {
     #[doc = "Set the field `resource_type`.\n"]
     pub fn set_resource_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.resource_type = std::option::Option::Some(v.into());
@@ -4366,8 +5152,8 @@ impl LaunchTemplateTagSpecificationsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchTemplateTagSpecificationsEl {
-    type O = terrars::BlockAssignable<LaunchTemplateTagSpecificationsEl>;
+impl terrars::ToListMappable for LaunchTemplate_TagSpecifications {
+    type O = terrars::BlockAssignable<LaunchTemplate_TagSpecifications>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4378,32 +5164,34 @@ impl terrars::ToListMappable for LaunchTemplateTagSpecificationsEl {
     }
 }
 
-pub struct BuildLaunchTemplateTagSpecificationsEl {}
+pub struct BuildLaunchTemplate_TagSpecifications {}
 
-impl BuildLaunchTemplateTagSpecificationsEl {
-    pub fn build(self) -> LaunchTemplateTagSpecificationsEl {
-        LaunchTemplateTagSpecificationsEl {
+impl BuildLaunchTemplate_TagSpecifications {
+    pub fn build(self) -> LaunchTemplate_TagSpecifications {
+        LaunchTemplate_TagSpecifications {
             resource_type: core::default::Default::default(),
             tags: core::default::Default::default(),
         }
     }
 }
 
-pub struct LaunchTemplateTagSpecificationsElRef {
+#[allow(dead_code)]
+pub struct LaunchTemplate_TagSpecificationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchTemplateTagSpecificationsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplateTagSpecificationsElRef {
-        LaunchTemplateTagSpecificationsElRef {
+impl terrars::Ref for LaunchTemplate_TagSpecificationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchTemplate_TagSpecificationsRef {
+        LaunchTemplate_TagSpecificationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchTemplateTagSpecificationsElRef {
+impl LaunchTemplate_TagSpecificationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4417,31 +5205,4 @@ impl LaunchTemplateTagSpecificationsElRef {
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LaunchTemplateDynamic {
-    block_device_mappings: std::option::Option<terrars::DynamicBlock<LaunchTemplateBlockDeviceMappingsEl>>,
-    capacity_reservation_specification: std
-    ::option
-    ::Option<terrars::DynamicBlock<LaunchTemplateCapacityReservationSpecificationEl>>,
-    cpu_options: std::option::Option<terrars::DynamicBlock<LaunchTemplateCpuOptionsEl>>,
-    credit_specification: std::option::Option<terrars::DynamicBlock<LaunchTemplateCreditSpecificationEl>>,
-    elastic_gpu_specifications: std::option::Option<terrars::DynamicBlock<LaunchTemplateElasticGpuSpecificationsEl>>,
-    elastic_inference_accelerator: std
-    ::option
-    ::Option<terrars::DynamicBlock<LaunchTemplateElasticInferenceAcceleratorEl>>,
-    enclave_options: std::option::Option<terrars::DynamicBlock<LaunchTemplateEnclaveOptionsEl>>,
-    hibernation_options: std::option::Option<terrars::DynamicBlock<LaunchTemplateHibernationOptionsEl>>,
-    iam_instance_profile: std::option::Option<terrars::DynamicBlock<LaunchTemplateIamInstanceProfileEl>>,
-    instance_market_options: std::option::Option<terrars::DynamicBlock<LaunchTemplateInstanceMarketOptionsEl>>,
-    instance_requirements: std::option::Option<terrars::DynamicBlock<LaunchTemplateInstanceRequirementsEl>>,
-    license_specification: std::option::Option<terrars::DynamicBlock<LaunchTemplateLicenseSpecificationEl>>,
-    maintenance_options: std::option::Option<terrars::DynamicBlock<LaunchTemplateMaintenanceOptionsEl>>,
-    metadata_options: std::option::Option<terrars::DynamicBlock<LaunchTemplateMetadataOptionsEl>>,
-    monitoring: std::option::Option<terrars::DynamicBlock<LaunchTemplateMonitoringEl>>,
-    network_interfaces: std::option::Option<terrars::DynamicBlock<LaunchTemplateNetworkInterfacesEl>>,
-    placement: std::option::Option<terrars::DynamicBlock<LaunchTemplatePlacementEl>>,
-    private_dns_name_options: std::option::Option<terrars::DynamicBlock<LaunchTemplatePrivateDnsNameOptionsEl>>,
-    tag_specifications: std::option::Option<terrars::DynamicBlock<LaunchTemplateTagSpecificationsEl>>,
 }

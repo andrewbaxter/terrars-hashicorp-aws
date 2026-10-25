@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafByteMatchSetData {
+struct WafByteMatchSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,14 @@ struct WafByteMatchSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    byte_match_tuples: std::option::Option<std::vec::Vec<WafByteMatchSetByteMatchTuplesEl>>,
+    byte_match_tuples: std::option::Option<std::vec::Vec<WafByteMatchSet_ByteMatchTuples>>,
     dynamic: WafByteMatchSetDynamic,
 }
 
 struct WafByteMatchSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafByteMatchSetData>,
+    data: std::cell::RefCell<WafByteMatchSetData_>,
 }
 
 #[derive(Clone)]
@@ -138,7 +140,7 @@ impl WafByteMatchSet {
     #[doc = "Set the field `byte_match_tuples`.\n"]
     pub fn set_byte_match_tuples(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafByteMatchSetByteMatchTuplesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafByteMatchSet_ByteMatchTuples>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -149,6 +151,11 @@ impl WafByteMatchSet {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -204,7 +211,7 @@ impl BuildWafByteMatchSet {
         let out = WafByteMatchSet(std::rc::Rc::new(WafByteMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafByteMatchSetData {
+            data: std::cell::RefCell::new(WafByteMatchSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -244,6 +251,11 @@ impl WafByteMatchSetRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -255,15 +267,20 @@ impl WafByteMatchSetRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafByteMatchSetDynamic {
+    byte_match_tuples: std::option::Option<terrars::DynamicBlock<WafByteMatchSet_ByteMatchTuples>>,
+}
+
 #[derive(Serialize)]
-pub struct WafByteMatchSetByteMatchTuplesElFieldToMatchEl {
+pub struct WafByteMatchSet_ByteMatchTuples_FieldToMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafByteMatchSetByteMatchTuplesElFieldToMatchEl {
+impl WafByteMatchSet_ByteMatchTuples_FieldToMatch {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -271,8 +288,8 @@ impl WafByteMatchSetByteMatchTuplesElFieldToMatchEl {
     }
 }
 
-impl terrars::ToListMappable for WafByteMatchSetByteMatchTuplesElFieldToMatchEl {
-    type O = terrars::BlockAssignable<WafByteMatchSetByteMatchTuplesElFieldToMatchEl>;
+impl terrars::ToListMappable for WafByteMatchSet_ByteMatchTuples_FieldToMatch {
+    type O = terrars::BlockAssignable<WafByteMatchSet_ByteMatchTuples_FieldToMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -283,38 +300,40 @@ impl terrars::ToListMappable for WafByteMatchSetByteMatchTuplesElFieldToMatchEl 
     }
 }
 
-pub struct BuildWafByteMatchSetByteMatchTuplesElFieldToMatchEl {
+pub struct BuildWafByteMatchSet_ByteMatchTuples_FieldToMatch {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafByteMatchSetByteMatchTuplesElFieldToMatchEl {
-    pub fn build(self) -> WafByteMatchSetByteMatchTuplesElFieldToMatchEl {
-        WafByteMatchSetByteMatchTuplesElFieldToMatchEl {
+impl BuildWafByteMatchSet_ByteMatchTuples_FieldToMatch {
+    pub fn build(self) -> WafByteMatchSet_ByteMatchTuples_FieldToMatch {
+        WafByteMatchSet_ByteMatchTuples_FieldToMatch {
             data: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct WafByteMatchSetByteMatchTuplesElFieldToMatchElRef {
+#[allow(dead_code)]
+pub struct WafByteMatchSet_ByteMatchTuples_FieldToMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafByteMatchSetByteMatchTuplesElFieldToMatchElRef {
+impl terrars::Ref for WafByteMatchSet_ByteMatchTuples_FieldToMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafByteMatchSetByteMatchTuplesElFieldToMatchElRef {
-        WafByteMatchSetByteMatchTuplesElFieldToMatchElRef {
+    ) -> WafByteMatchSet_ByteMatchTuples_FieldToMatchRef {
+        WafByteMatchSet_ByteMatchTuples_FieldToMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafByteMatchSetByteMatchTuplesElFieldToMatchElRef {
+impl WafByteMatchSet_ByteMatchTuples_FieldToMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -331,22 +350,22 @@ impl WafByteMatchSetByteMatchTuplesElFieldToMatchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafByteMatchSetByteMatchTuplesElDynamic {
-    field_to_match: std::option::Option<terrars::DynamicBlock<WafByteMatchSetByteMatchTuplesElFieldToMatchEl>>,
+struct WafByteMatchSet_ByteMatchTuplesDynamic {
+    field_to_match: std::option::Option<terrars::DynamicBlock<WafByteMatchSet_ByteMatchTuples_FieldToMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct WafByteMatchSetByteMatchTuplesEl {
+pub struct WafByteMatchSet_ByteMatchTuples {
     positional_constraint: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_string: std::option::Option<terrars::PrimField<std::string::String>>,
     text_transformation: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_to_match: std::option::Option<std::vec::Vec<WafByteMatchSetByteMatchTuplesElFieldToMatchEl>>,
-    dynamic: WafByteMatchSetByteMatchTuplesElDynamic,
+    field_to_match: std::option::Option<std::vec::Vec<WafByteMatchSet_ByteMatchTuples_FieldToMatch>>,
+    dynamic: WafByteMatchSet_ByteMatchTuplesDynamic,
 }
 
-impl WafByteMatchSetByteMatchTuplesEl {
+impl WafByteMatchSet_ByteMatchTuples {
     #[doc = "Set the field `target_string`.\n"]
     pub fn set_target_string(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.target_string = std::option::Option::Some(v.into());
@@ -356,7 +375,7 @@ impl WafByteMatchSetByteMatchTuplesEl {
     #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafByteMatchSetByteMatchTuplesElFieldToMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafByteMatchSet_ByteMatchTuples_FieldToMatch>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -370,8 +389,8 @@ impl WafByteMatchSetByteMatchTuplesEl {
     }
 }
 
-impl terrars::ToListMappable for WafByteMatchSetByteMatchTuplesEl {
-    type O = terrars::BlockAssignable<WafByteMatchSetByteMatchTuplesEl>;
+impl terrars::ToListMappable for WafByteMatchSet_ByteMatchTuples {
+    type O = terrars::BlockAssignable<WafByteMatchSet_ByteMatchTuples>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -382,16 +401,16 @@ impl terrars::ToListMappable for WafByteMatchSetByteMatchTuplesEl {
     }
 }
 
-pub struct BuildWafByteMatchSetByteMatchTuplesEl {
+pub struct BuildWafByteMatchSet_ByteMatchTuples {
     #[doc = ""]
     pub positional_constraint: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub text_transformation: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafByteMatchSetByteMatchTuplesEl {
-    pub fn build(self) -> WafByteMatchSetByteMatchTuplesEl {
-        WafByteMatchSetByteMatchTuplesEl {
+impl BuildWafByteMatchSet_ByteMatchTuples {
+    pub fn build(self) -> WafByteMatchSet_ByteMatchTuples {
+        WafByteMatchSet_ByteMatchTuples {
             positional_constraint: self.positional_constraint,
             target_string: core::default::Default::default(),
             text_transformation: self.text_transformation,
@@ -401,21 +420,23 @@ impl BuildWafByteMatchSetByteMatchTuplesEl {
     }
 }
 
-pub struct WafByteMatchSetByteMatchTuplesElRef {
+#[allow(dead_code)]
+pub struct WafByteMatchSet_ByteMatchTuplesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafByteMatchSetByteMatchTuplesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafByteMatchSetByteMatchTuplesElRef {
-        WafByteMatchSetByteMatchTuplesElRef {
+impl terrars::Ref for WafByteMatchSet_ByteMatchTuplesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafByteMatchSet_ByteMatchTuplesRef {
+        WafByteMatchSet_ByteMatchTuplesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafByteMatchSetByteMatchTuplesElRef {
+impl WafByteMatchSet_ByteMatchTuplesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -436,12 +457,7 @@ impl WafByteMatchSetByteMatchTuplesElRef {
     }
 
     #[doc = "Get a reference to the value of field `field_to_match` after provisioning.\n"]
-    pub fn field_to_match(&self) -> terrars::ListRef<WafByteMatchSetByteMatchTuplesElFieldToMatchElRef> {
+    pub fn field_to_match(&self) -> terrars::ListRef<WafByteMatchSet_ByteMatchTuples_FieldToMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafByteMatchSetDynamic {
-    byte_match_tuples: std::option::Option<terrars::DynamicBlock<WafByteMatchSetByteMatchTuplesEl>>,
 }

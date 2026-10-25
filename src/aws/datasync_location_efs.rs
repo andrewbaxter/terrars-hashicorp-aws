@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DatasyncLocationEfsData {
+struct DatasyncLocationEfsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,20 +30,22 @@ struct DatasyncLocationEfsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     in_transit_encryption: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subdirectory: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ec2_config: std::option::Option<std::vec::Vec<DatasyncLocationEfsEc2ConfigEl>>,
+    ec2_config: std::option::Option<std::vec::Vec<DatasyncLocationEfs_Ec2Config>>,
     dynamic: DatasyncLocationEfsDynamic,
 }
 
 struct DatasyncLocationEfs_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatasyncLocationEfsData>,
+    data: std::cell::RefCell<DatasyncLocationEfsData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +172,13 @@ impl DatasyncLocationEfs {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `subdirectory`.\n"]
     pub fn set_subdirectory(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().subdirectory = std::option::Option::Some(v.into());
@@ -195,7 +206,7 @@ impl DatasyncLocationEfs {
     #[doc = "Set the field `ec2_config`.\n"]
     pub fn set_ec2_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationEfsEc2ConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationEfs_Ec2Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -238,6 +249,12 @@ impl DatasyncLocationEfs {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.in_transit_encryption", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subdirectory` after provisioning.\n"]
     pub fn subdirectory(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subdirectory", self.extract_ref()))
@@ -259,7 +276,7 @@ impl DatasyncLocationEfs {
     }
 
     #[doc = "Get a reference to the value of field `ec2_config` after provisioning.\n"]
-    pub fn ec2_config(&self) -> terrars::ListRef<DatasyncLocationEfsEc2ConfigElRef> {
+    pub fn ec2_config(&self) -> terrars::ListRef<DatasyncLocationEfs_Ec2ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ec2_config", self.extract_ref()))
     }
 }
@@ -306,7 +323,7 @@ impl BuildDatasyncLocationEfs {
         let out = DatasyncLocationEfs(std::rc::Rc::new(DatasyncLocationEfs_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatasyncLocationEfsData {
+            data: std::cell::RefCell::new(DatasyncLocationEfsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -317,6 +334,7 @@ impl BuildDatasyncLocationEfs {
                 file_system_access_role_arn: core::default::Default::default(),
                 id: core::default::Default::default(),
                 in_transit_encryption: core::default::Default::default(),
+                region: core::default::Default::default(),
                 subdirectory: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -382,6 +400,12 @@ impl DatasyncLocationEfsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.in_transit_encryption", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subdirectory` after provisioning.\n"]
     pub fn subdirectory(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subdirectory", self.extract_ref()))
@@ -403,21 +427,26 @@ impl DatasyncLocationEfsRef {
     }
 
     #[doc = "Get a reference to the value of field `ec2_config` after provisioning.\n"]
-    pub fn ec2_config(&self) -> terrars::ListRef<DatasyncLocationEfsEc2ConfigElRef> {
+    pub fn ec2_config(&self) -> terrars::ListRef<DatasyncLocationEfs_Ec2ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ec2_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatasyncLocationEfsDynamic {
+    ec2_config: std::option::Option<terrars::DynamicBlock<DatasyncLocationEfs_Ec2Config>>,
+}
+
 #[derive(Serialize)]
-pub struct DatasyncLocationEfsEc2ConfigEl {
+pub struct DatasyncLocationEfs_Ec2Config {
     security_group_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
     subnet_arn: terrars::PrimField<std::string::String>,
 }
 
-impl DatasyncLocationEfsEc2ConfigEl { }
+impl DatasyncLocationEfs_Ec2Config { }
 
-impl terrars::ToListMappable for DatasyncLocationEfsEc2ConfigEl {
-    type O = terrars::BlockAssignable<DatasyncLocationEfsEc2ConfigEl>;
+impl terrars::ToListMappable for DatasyncLocationEfs_Ec2Config {
+    type O = terrars::BlockAssignable<DatasyncLocationEfs_Ec2Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -428,37 +457,39 @@ impl terrars::ToListMappable for DatasyncLocationEfsEc2ConfigEl {
     }
 }
 
-pub struct BuildDatasyncLocationEfsEc2ConfigEl {
+pub struct BuildDatasyncLocationEfs_Ec2Config {
     #[doc = ""]
     pub security_group_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub subnet_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDatasyncLocationEfsEc2ConfigEl {
-    pub fn build(self) -> DatasyncLocationEfsEc2ConfigEl {
-        DatasyncLocationEfsEc2ConfigEl {
+impl BuildDatasyncLocationEfs_Ec2Config {
+    pub fn build(self) -> DatasyncLocationEfs_Ec2Config {
+        DatasyncLocationEfs_Ec2Config {
             security_group_arns: self.security_group_arns,
             subnet_arn: self.subnet_arn,
         }
     }
 }
 
-pub struct DatasyncLocationEfsEc2ConfigElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationEfs_Ec2ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationEfsEc2ConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationEfsEc2ConfigElRef {
-        DatasyncLocationEfsEc2ConfigElRef {
+impl terrars::Ref for DatasyncLocationEfs_Ec2ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationEfs_Ec2ConfigRef {
+        DatasyncLocationEfs_Ec2ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationEfsEc2ConfigElRef {
+impl DatasyncLocationEfs_Ec2ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -472,9 +503,4 @@ impl DatasyncLocationEfsEc2ConfigElRef {
     pub fn subnet_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatasyncLocationEfsDynamic {
-    ec2_config: std::option::Option<terrars::DynamicBlock<DatasyncLocationEfsEc2ConfigEl>>,
 }

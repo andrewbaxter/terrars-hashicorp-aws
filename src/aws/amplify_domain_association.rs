@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AmplifyDomainAssociationData {
+struct AmplifyDomainAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,18 +23,24 @@ struct AmplifyDomainAssociationData {
     app_id: terrars::PrimField<std::string::String>,
     domain_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_auto_sub_domain: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_for_verification: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sub_domain: std::option::Option<std::vec::Vec<AmplifyDomainAssociationSubDomainEl>>,
+    certificate_settings: std::option::Option<std::vec::Vec<AmplifyDomainAssociation_CertificateSettings>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sub_domain: std::option::Option<std::vec::Vec<AmplifyDomainAssociation_SubDomain>>,
     dynamic: AmplifyDomainAssociationDynamic,
 }
 
 struct AmplifyDomainAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AmplifyDomainAssociationData>,
+    data: std::cell::RefCell<AmplifyDomainAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -132,9 +140,22 @@ impl AmplifyDomainAssociation {
         self
     }
 
+    #[doc = "Set the field `enable_auto_sub_domain`.\n"]
+    pub fn set_enable_auto_sub_domain(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_auto_sub_domain = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -144,10 +165,26 @@ impl AmplifyDomainAssociation {
         self
     }
 
+    #[doc = "Set the field `certificate_settings`.\n"]
+    pub fn set_certificate_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AmplifyDomainAssociation_CertificateSettings>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().certificate_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.certificate_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `sub_domain`.\n"]
     pub fn set_sub_domain(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AmplifyDomainAssociationSubDomainEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AmplifyDomainAssociation_SubDomain>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -183,14 +220,30 @@ impl AmplifyDomainAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_auto_sub_domain` after provisioning.\n"]
+    pub fn enable_auto_sub_domain(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_auto_sub_domain", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `wait_for_verification` after provisioning.\n"]
     pub fn wait_for_verification(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_verification", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_settings` after provisioning.\n"]
+    pub fn certificate_settings(&self) -> terrars::ListRef<AmplifyDomainAssociation_CertificateSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.certificate_settings", self.extract_ref()))
     }
 }
 
@@ -238,7 +291,7 @@ impl BuildAmplifyDomainAssociation {
         let out = AmplifyDomainAssociation(std::rc::Rc::new(AmplifyDomainAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AmplifyDomainAssociationData {
+            data: std::cell::RefCell::new(AmplifyDomainAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -246,8 +299,11 @@ impl BuildAmplifyDomainAssociation {
                 provisioner: core::default::Default::default(),
                 app_id: self.app_id,
                 domain_name: self.domain_name,
+                enable_auto_sub_domain: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 wait_for_verification: core::default::Default::default(),
+                certificate_settings: core::default::Default::default(),
                 sub_domain: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -303,27 +359,60 @@ impl AmplifyDomainAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_auto_sub_domain` after provisioning.\n"]
+    pub fn enable_auto_sub_domain(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_auto_sub_domain", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `wait_for_verification` after provisioning.\n"]
     pub fn wait_for_verification(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_verification", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `certificate_settings` after provisioning.\n"]
+    pub fn certificate_settings(&self) -> terrars::ListRef<AmplifyDomainAssociation_CertificateSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.certificate_settings", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AmplifyDomainAssociationDynamic {
+    certificate_settings: std::option::Option<terrars::DynamicBlock<AmplifyDomainAssociation_CertificateSettings>>,
+    sub_domain: std::option::Option<terrars::DynamicBlock<AmplifyDomainAssociation_SubDomain>>,
 }
 
 #[derive(Serialize)]
-pub struct AmplifyDomainAssociationSubDomainEl {
-    branch_name: terrars::PrimField<std::string::String>,
-    prefix: terrars::PrimField<std::string::String>,
+pub struct AmplifyDomainAssociation_CertificateSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_certificate_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
 }
 
-impl AmplifyDomainAssociationSubDomainEl { }
+impl AmplifyDomainAssociation_CertificateSettings {
+    #[doc = "Set the field `custom_certificate_arn`.\n"]
+    pub fn set_custom_certificate_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.custom_certificate_arn = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for AmplifyDomainAssociationSubDomainEl {
-    type O = terrars::BlockAssignable<AmplifyDomainAssociationSubDomainEl>;
+impl terrars::ToListMappable for AmplifyDomainAssociation_CertificateSettings {
+    type O = terrars::BlockAssignable<AmplifyDomainAssociation_CertificateSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -334,37 +423,113 @@ impl terrars::ToListMappable for AmplifyDomainAssociationSubDomainEl {
     }
 }
 
-pub struct BuildAmplifyDomainAssociationSubDomainEl {
+pub struct BuildAmplifyDomainAssociation_CertificateSettings {
     #[doc = ""]
-    pub branch_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub prefix: terrars::PrimField<std::string::String>,
+    pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAmplifyDomainAssociationSubDomainEl {
-    pub fn build(self) -> AmplifyDomainAssociationSubDomainEl {
-        AmplifyDomainAssociationSubDomainEl {
-            branch_name: self.branch_name,
-            prefix: self.prefix,
+impl BuildAmplifyDomainAssociation_CertificateSettings {
+    pub fn build(self) -> AmplifyDomainAssociation_CertificateSettings {
+        AmplifyDomainAssociation_CertificateSettings {
+            custom_certificate_arn: core::default::Default::default(),
+            type_: self.type_,
         }
     }
 }
 
-pub struct AmplifyDomainAssociationSubDomainElRef {
+#[allow(dead_code)]
+pub struct AmplifyDomainAssociation_CertificateSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AmplifyDomainAssociationSubDomainElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyDomainAssociationSubDomainElRef {
-        AmplifyDomainAssociationSubDomainElRef {
+impl terrars::Ref for AmplifyDomainAssociation_CertificateSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AmplifyDomainAssociation_CertificateSettingsRef {
+        AmplifyDomainAssociation_CertificateSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AmplifyDomainAssociationSubDomainElRef {
+impl AmplifyDomainAssociation_CertificateSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_verification_dns_record` after provisioning.\n"]
+    pub fn certificate_verification_dns_record(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_verification_dns_record", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_certificate_arn` after provisioning.\n"]
+    pub fn custom_certificate_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_certificate_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AmplifyDomainAssociation_SubDomain {
+    branch_name: terrars::PrimField<std::string::String>,
+    prefix: terrars::PrimField<std::string::String>,
+}
+
+impl AmplifyDomainAssociation_SubDomain { }
+
+impl terrars::ToListMappable for AmplifyDomainAssociation_SubDomain {
+    type O = terrars::BlockAssignable<AmplifyDomainAssociation_SubDomain>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAmplifyDomainAssociation_SubDomain {
+    #[doc = ""]
+    pub branch_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub prefix: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAmplifyDomainAssociation_SubDomain {
+    pub fn build(self) -> AmplifyDomainAssociation_SubDomain {
+        AmplifyDomainAssociation_SubDomain {
+            branch_name: self.branch_name,
+            prefix: self.prefix,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AmplifyDomainAssociation_SubDomainRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AmplifyDomainAssociation_SubDomainRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyDomainAssociation_SubDomainRef {
+        AmplifyDomainAssociation_SubDomainRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AmplifyDomainAssociation_SubDomainRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -388,9 +553,4 @@ impl AmplifyDomainAssociationSubDomainElRef {
     pub fn verified(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.verified", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AmplifyDomainAssociationDynamic {
-    sub_domain: std::option::Option<terrars::DynamicBlock<AmplifyDomainAssociationSubDomainEl>>,
 }

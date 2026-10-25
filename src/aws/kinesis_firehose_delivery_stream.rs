@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KinesisFirehoseDeliveryStreamData {
+struct KinesisFirehoseDeliveryStreamData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,6 +29,8 @@ struct KinesisFirehoseDeliveryStreamData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -35,32 +39,44 @@ struct KinesisFirehoseDeliveryStreamData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     elasticsearch_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_ElasticsearchConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    extended_s3_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl>>,
+    extended_s3_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_ExtendedS3Configuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_endpoint_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iceberg_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_IcebergConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kinesis_source_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_KinesisSourceConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redshift_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamRedshiftConfigurationEl>>,
+    msk_source_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_MskSourceConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamS3ConfigurationEl>>,
+    opensearch_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_OpensearchConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    server_side_encryption: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamServerSideEncryptionEl>>,
+    opensearchserverless_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    splunk_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamSplunkConfigurationEl>>,
+    redshift_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_RedshiftConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    server_side_encryption: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_ServerSideEncryption>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    snowflake_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SnowflakeConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    splunk_configuration: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<KinesisFirehoseDeliveryStream_Timeouts>,
     dynamic: KinesisFirehoseDeliveryStreamDynamic,
 }
 
 struct KinesisFirehoseDeliveryStream_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KinesisFirehoseDeliveryStreamData>,
+    data: std::cell::RefCell<KinesisFirehoseDeliveryStreamData_>,
 }
 
 #[derive(Clone)]
@@ -178,6 +194,13 @@ impl KinesisFirehoseDeliveryStream {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -210,7 +233,7 @@ impl KinesisFirehoseDeliveryStream {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_ElasticsearchConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -226,7 +249,7 @@ impl KinesisFirehoseDeliveryStream {
     #[doc = "Set the field `extended_s3_configuration`.\n"]
     pub fn set_extended_s3_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_ExtendedS3Configuration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -247,7 +270,7 @@ impl KinesisFirehoseDeliveryStream {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -255,6 +278,22 @@ impl KinesisFirehoseDeliveryStream {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.http_endpoint_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `iceberg_configuration`.\n"]
+    pub fn set_iceberg_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_IcebergConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().iceberg_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.iceberg_configuration = std::option::Option::Some(d);
             },
         }
         self
@@ -268,7 +307,7 @@ impl KinesisFirehoseDeliveryStream {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_KinesisSourceConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -281,10 +320,63 @@ impl KinesisFirehoseDeliveryStream {
         self
     }
 
+    #[doc = "Set the field `msk_source_configuration`.\n"]
+    pub fn set_msk_source_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_MskSourceConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().msk_source_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.msk_source_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `opensearch_configuration`.\n"]
+    pub fn set_opensearch_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().opensearch_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.opensearch_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `opensearchserverless_configuration`.\n"]
+    pub fn set_opensearchserverless_configuration(
+        self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().opensearchserverless_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.opensearchserverless_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `redshift_configuration`.\n"]
     pub fn set_redshift_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStreamRedshiftConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_RedshiftConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -297,26 +389,10 @@ impl KinesisFirehoseDeliveryStream {
         self
     }
 
-    #[doc = "Set the field `s3_configuration`.\n"]
-    pub fn set_s3_configuration(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStreamS3ConfigurationEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().s3_configuration = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.s3_configuration = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
     #[doc = "Set the field `server_side_encryption`.\n"]
     pub fn set_server_side_encryption(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStreamServerSideEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_ServerSideEncryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -329,10 +405,26 @@ impl KinesisFirehoseDeliveryStream {
         self
     }
 
+    #[doc = "Set the field `snowflake_configuration`.\n"]
+    pub fn set_snowflake_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SnowflakeConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().snowflake_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.snowflake_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `splunk_configuration`.\n"]
     pub fn set_splunk_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStreamSplunkConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -342,6 +434,12 @@ impl KinesisFirehoseDeliveryStream {
                 self.0.data.borrow_mut().dynamic.splunk_configuration = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<KinesisFirehoseDeliveryStream_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -370,6 +468,12 @@ impl KinesisFirehoseDeliveryStream {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -388,49 +492,82 @@ impl KinesisFirehoseDeliveryStream {
     #[doc = "Get a reference to the value of field `elasticsearch_configuration` after provisioning.\n"]
     pub fn elasticsearch_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_ElasticsearchConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.elasticsearch_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `extended_s3_configuration` after provisioning.\n"]
     pub fn extended_s3_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_ExtendedS3ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.extended_s3_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `http_endpoint_configuration` after provisioning.\n"]
     pub fn http_endpoint_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_HttpEndpointConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_endpoint_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `iceberg_configuration` after provisioning.\n"]
+    pub fn iceberg_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_IcebergConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.iceberg_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `kinesis_source_configuration` after provisioning.\n"]
     pub fn kinesis_source_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamKinesisSourceConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_KinesisSourceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_source_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `msk_source_configuration` after provisioning.\n"]
+    pub fn msk_source_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_MskSourceConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.msk_source_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `opensearch_configuration` after provisioning.\n"]
+    pub fn opensearch_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_OpensearchConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.opensearch_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `opensearchserverless_configuration` after provisioning.\n"]
+    pub fn opensearchserverless_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_OpensearchserverlessConfigurationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.opensearchserverless_configuration", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `redshift_configuration` after provisioning.\n"]
-    pub fn redshift_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStreamRedshiftConfigurationElRef> {
+    pub fn redshift_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_RedshiftConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redshift_configuration", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
-    pub fn s3_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStreamS3ConfigurationElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]
-    pub fn server_side_encryption(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStreamServerSideEncryptionElRef> {
+    pub fn server_side_encryption(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_ServerSideEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_side_encryption", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `snowflake_configuration` after provisioning.\n"]
+    pub fn snowflake_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SnowflakeConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.snowflake_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `splunk_configuration` after provisioning.\n"]
-    pub fn splunk_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStreamSplunkConfigurationElRef> {
+    pub fn splunk_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.splunk_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> KinesisFirehoseDeliveryStream_TimeoutsRef {
+        KinesisFirehoseDeliveryStream_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
@@ -478,7 +615,7 @@ impl BuildKinesisFirehoseDeliveryStream {
         let out = KinesisFirehoseDeliveryStream(std::rc::Rc::new(KinesisFirehoseDeliveryStream_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KinesisFirehoseDeliveryStreamData {
+            data: std::cell::RefCell::new(KinesisFirehoseDeliveryStreamData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -489,17 +626,23 @@ impl BuildKinesisFirehoseDeliveryStream {
                 destination_id: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 version_id: core::default::Default::default(),
                 elasticsearch_configuration: core::default::Default::default(),
                 extended_s3_configuration: core::default::Default::default(),
                 http_endpoint_configuration: core::default::Default::default(),
+                iceberg_configuration: core::default::Default::default(),
                 kinesis_source_configuration: core::default::Default::default(),
+                msk_source_configuration: core::default::Default::default(),
+                opensearch_configuration: core::default::Default::default(),
+                opensearchserverless_configuration: core::default::Default::default(),
                 redshift_configuration: core::default::Default::default(),
-                s3_configuration: core::default::Default::default(),
                 server_side_encryption: core::default::Default::default(),
+                snowflake_configuration: core::default::Default::default(),
                 splunk_configuration: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -556,6 +699,12 @@ impl KinesisFirehoseDeliveryStreamRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -574,54 +723,127 @@ impl KinesisFirehoseDeliveryStreamRef {
     #[doc = "Get a reference to the value of field `elasticsearch_configuration` after provisioning.\n"]
     pub fn elasticsearch_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_ElasticsearchConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.elasticsearch_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `extended_s3_configuration` after provisioning.\n"]
     pub fn extended_s3_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_ExtendedS3ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.extended_s3_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `http_endpoint_configuration` after provisioning.\n"]
     pub fn http_endpoint_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_HttpEndpointConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_endpoint_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `iceberg_configuration` after provisioning.\n"]
+    pub fn iceberg_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_IcebergConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.iceberg_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `kinesis_source_configuration` after provisioning.\n"]
     pub fn kinesis_source_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamKinesisSourceConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_KinesisSourceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_source_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `msk_source_configuration` after provisioning.\n"]
+    pub fn msk_source_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_MskSourceConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.msk_source_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `opensearch_configuration` after provisioning.\n"]
+    pub fn opensearch_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_OpensearchConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.opensearch_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `opensearchserverless_configuration` after provisioning.\n"]
+    pub fn opensearchserverless_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_OpensearchserverlessConfigurationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.opensearchserverless_configuration", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `redshift_configuration` after provisioning.\n"]
-    pub fn redshift_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStreamRedshiftConfigurationElRef> {
+    pub fn redshift_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_RedshiftConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redshift_configuration", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
-    pub fn s3_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStreamS3ConfigurationElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]
-    pub fn server_side_encryption(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStreamServerSideEncryptionElRef> {
+    pub fn server_side_encryption(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_ServerSideEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_side_encryption", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `snowflake_configuration` after provisioning.\n"]
+    pub fn snowflake_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SnowflakeConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.snowflake_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `splunk_configuration` after provisioning.\n"]
-    pub fn splunk_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStreamSplunkConfigurationElRef> {
+    pub fn splunk_configuration(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.splunk_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> KinesisFirehoseDeliveryStream_TimeoutsRef {
+        KinesisFirehoseDeliveryStream_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
+#[derive(Serialize, Default)]
+struct KinesisFirehoseDeliveryStreamDynamic {
+    elasticsearch_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_ElasticsearchConfiguration>>,
+    extended_s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_ExtendedS3Configuration>>,
+    http_endpoint_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration>>,
+    iceberg_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_IcebergConfiguration>>,
+    kinesis_source_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_KinesisSourceConfiguration>>,
+    msk_source_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_MskSourceConfiguration>>,
+    opensearch_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_OpensearchConfiguration>>,
+    opensearchserverless_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration>>,
+    redshift_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_RedshiftConfiguration>>,
+    server_side_encryption: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_ServerSideEncryption>>,
+    snowflake_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SnowflakeConfiguration>>,
+    splunk_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl {
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -630,7 +852,7 @@ pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLo
     log_stream_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl {
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -650,10 +872,8 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingO
     }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -664,11 +884,11 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfi
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions {}
 
-impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl {
+impl BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions {
             enabled: core::default::Default::default(),
             log_group_name: core::default::Default::default(),
             log_stream_name: core::default::Default::default(),
@@ -676,24 +896,26 @@ impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLog
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsElRef {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsElRef {
+    ) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsElRef {
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -715,19 +937,19 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingO
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl {
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters {
     parameter_name: terrars::PrimField<std::string::String>,
     parameter_value: terrars::PrimField<std::string::String>,
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl { }
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters { }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl,
+            KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -739,43 +961,45 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl {
+pub struct BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters {
     #[doc = ""]
     pub parameter_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub parameter_value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl {
+impl BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl {
+    ) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters {
             parameter_name: self.parameter_name,
             parameter_value: self.parameter_value,
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_ParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
+::Ref for KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_ParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
+    ) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_ParametersRef {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_ParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_ParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -792,35 +1016,31 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigur
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElDynamic {
+struct KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_ProcessorsDynamic {
     parameters: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl,
+            KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl {
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<
-            KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >,
+        std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters>,
     >,
-    dynamic: KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElDynamic,
+    dynamic: KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_ProcessorsDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl {
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors {
     #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         mut self,
@@ -832,7 +1052,7 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigur
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersEl,
+                            KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors_Parameters,
                         >,
                     >,
     ) -> Self {
@@ -848,13 +1068,10 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigur
     }
 }
 
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl {
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors {
     type O =
         terrars
-        ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl,
-        >;
+        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -865,16 +1082,14 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl {
+pub struct BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl {
-    pub fn build(
-        self,
-    ) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl {
+impl BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors {
             type_: self.type_,
             parameters: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -882,25 +1097,26 @@ impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingCon
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_ProcessorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_ProcessorsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElRef {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElRef {
+    ) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_ProcessorsRef {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_ProcessorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElRef {
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_ProcessorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -909,42 +1125,29 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigur
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-
-    #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElParametersElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
-    }
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationDynamic {
     processors: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl>,
+        terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     processors: std
     ::option
-    ::Option<
-        std::vec::Vec<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl>,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElDynamic,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors>>,
+    dynamic: KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl {
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -962,7 +1165,7 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigur
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsEl,
+                            KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_Processors,
                         >,
                     >,
     ) -> Self {
@@ -978,9 +1181,8 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigur
     }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl {
-    type O =
-        terrars::BlockAssignable<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -991,11 +1193,11 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfi
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration {}
 
-impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration {
             enabled: core::default::Default::default(),
             processors: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1003,24 +1205,26 @@ impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingCon
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElRef {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1033,23 +1237,111 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigur
     #[doc = "Get a reference to the value of field `processors` after provisioning.\n"]
     pub fn processors(
         &self,
-    ) -> terrars
-    ::ListRef<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElProcessorsElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration_ProcessorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.processors", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl {
-    role_arn: terrars::PrimField<std::string::String>,
-    security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
-    subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationDynamic {
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl { }
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration {
+    bucket_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compression_format: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    error_output_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    dynamic: KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationDynamic,
+}
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl>;
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration {
+    #[doc = "Set the field `buffering_interval`.\n"]
+    pub fn set_buffering_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_interval = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `buffering_size`.\n"]
+    pub fn set_buffering_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_size = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `compression_format`.\n"]
+    pub fn set_compression_format(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.compression_format = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `error_output_prefix`.\n"]
+    pub fn set_error_output_prefix(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.error_output_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kms_key_arn`.\n"]
+    pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cloudwatch_logging_options`.\n"]
+    pub fn set_cloudwatch_logging_options(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_logging_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_logging_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1060,7 +1352,124 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfi
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl {
+pub struct BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration {
+    #[doc = ""]
+    pub bucket_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration {
+            bucket_arn: self.bucket_arn,
+            buffering_interval: core::default::Default::default(),
+            buffering_size: core::default::Default::default(),
+            compression_format: core::default::Default::default(),
+            error_output_prefix: core::default::Default::default(),
+            kms_key_arn: core::default::Default::default(),
+            prefix: core::default::Default::default(),
+            role_arn: self.role_arn,
+            cloudwatch_logging_options: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bucket_arn` after provisioning.\n"]
+    pub fn bucket_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_interval` after provisioning.\n"]
+    pub fn buffering_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_interval", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_size` after provisioning.\n"]
+    pub fn buffering_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `compression_format` after provisioning.\n"]
+    pub fn compression_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compression_format", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `error_output_prefix` after provisioning.\n"]
+    pub fn error_output_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_output_prefix", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
+    pub fn cloudwatch_logging_options(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig {
+    role_arn: terrars::PrimField<std::string::String>,
+    security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig { }
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig {
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -1069,9 +1478,9 @@ pub struct BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConf
     pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl {
+impl BuildKinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig {
+        KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig {
             role_arn: self.role_arn,
             security_group_ids: self.security_group_ids,
             subnet_ids: self.subnet_ids,
@@ -1079,24 +1488,26 @@ impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl {
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigElRef {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigElRef {
+    ) -> KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfigRef {
+        KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigElRef {
+impl KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1123,24 +1534,23 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_ElasticsearchConfigurationDynamic {
     cloudwatch_logging_options: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl>,
-    >,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
     processing_configuration: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl>,
-    >,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
     vpc_config: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl>>,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_ElasticsearchConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     buffering_interval: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1162,17 +1572,21 @@ pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_logging_options: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     processing_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_config: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl>>,
-    dynamic: KinesisFirehoseDeliveryStreamElasticsearchConfigurationElDynamic,
+    s3_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_config: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>>,
+    dynamic: KinesisFirehoseDeliveryStream_ElasticsearchConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
+impl KinesisFirehoseDeliveryStream_ElasticsearchConfiguration {
     #[doc = "Set the field `buffering_interval`.\n"]
     pub fn set_buffering_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.buffering_interval = std::option::Option::Some(v.into());
@@ -1234,9 +1648,7 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1260,9 +1672,7 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1276,6 +1686,29 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
         self
     }
 
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `vpc_config`.\n"]
     pub fn set_vpc_config(
         mut self,
@@ -1284,9 +1717,7 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1300,8 +1731,8 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_ElasticsearchConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_ElasticsearchConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1312,16 +1743,16 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamElasticsearchConfi
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
+pub struct BuildKinesisFirehoseDeliveryStream_ElasticsearchConfiguration {
     #[doc = ""]
     pub index_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_ElasticsearchConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_ElasticsearchConfiguration {
+        KinesisFirehoseDeliveryStream_ElasticsearchConfiguration {
             buffering_interval: core::default::Default::default(),
             buffering_size: core::default::Default::default(),
             cluster_endpoint: core::default::Default::default(),
@@ -1334,30 +1765,33 @@ impl BuildKinesisFirehoseDeliveryStreamElasticsearchConfigurationEl {
             type_name: core::default::Default::default(),
             cloudwatch_logging_options: core::default::Default::default(),
             processing_configuration: core::default::Default::default(),
+            s3_configuration: core::default::Default::default(),
             vpc_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamElasticsearchConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ElasticsearchConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamElasticsearchConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_ElasticsearchConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamElasticsearchConfigurationElRef {
-        KinesisFirehoseDeliveryStreamElasticsearchConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_ElasticsearchConfigurationRef {
+        KinesisFirehoseDeliveryStream_ElasticsearchConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_ElasticsearchConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1415,125 +1849,37 @@ impl KinesisFirehoseDeliveryStreamElasticsearchConfigurationElRef {
     #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
     pub fn cloudwatch_logging_options(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElCloudwatchLoggingOptionsElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `processing_configuration` after provisioning.\n"]
     pub fn processing_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElProcessingConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.processing_configuration", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamElasticsearchConfigurationElVpcConfigElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_stream_name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_group_name`.\n"]
-    pub fn set_log_group_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_group_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_stream_name`.\n"]
-    pub fn set_log_stream_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_stream_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl {
-    type O =
-        terrars::BlockAssignable<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl {
-            enabled: core::default::Default::default(),
-            log_group_name: core::default::Default::default(),
-            log_stream_name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_stream_name` after provisioning.\n"]
-    pub fn log_stream_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_stream_name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timestamp_formats: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe {
     #[doc = "Set the field `timestamp_formats`.\n"]
     pub fn set_timestamp_formats(
         mut self,
@@ -1545,11 +1891,11 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1561,37 +1907,39 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe {
             timestamp_formats: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeElRef {
+::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDeRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1603,7 +1951,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     case_insensitive: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1612,7 +1960,7 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
     convert_dots_in_json_keys_to_underscores: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe {
     #[doc = "Set the field `case_insensitive`.\n"]
     pub fn set_case_insensitive(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.case_insensitive = std::option::Option::Some(v.into());
@@ -1639,11 +1987,11 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1655,13 +2003,13 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe {
             case_insensitive: core::default::Default::default(),
             column_to_json_key_mappings: core::default::Default::default(),
             convert_dots_in_json_keys_to_underscores: core::default::Default::default(),
@@ -1669,25 +2017,27 @@ impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConver
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeElRef {
+::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDeRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1712,13 +2062,13 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElDynamic {
+struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_DeserializerDynamic {
     hive_json_ser_de: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe,
         >,
     >,
     open_x_json_ser_de: std
@@ -1726,13 +2076,13 @@ struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversio
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hive_json_ser_de: std
     ::option
@@ -1740,7 +2090,7 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
         std
         ::vec
         ::Vec<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1750,13 +2100,13 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
         std
         ::vec
         ::Vec<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe,
         >,
     >,
-    dynamic: KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElDynamic,
+    dynamic: KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_DeserializerDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer {
     #[doc = "Set the field `hive_json_ser_de`.\n"]
     pub fn set_hive_json_ser_de(
         mut self,
@@ -1768,7 +2118,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDe,
                         >,
                     >,
     ) -> Self {
@@ -1794,7 +2144,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDe,
                         >,
                     >,
     ) -> Self {
@@ -1811,11 +2161,11 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1827,13 +2177,13 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer {
             hive_json_ser_de: core::default::Default::default(),
             open_x_json_ser_de: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1841,25 +2191,27 @@ impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConver
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_DeserializerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElRef {
+::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_DeserializerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_DeserializerRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_DeserializerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_DeserializerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1869,7 +2221,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
         &self,
     ) -> terrars
     ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElHiveJsonSerDeElRef,
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_HiveJsonSerDeRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hive_json_ser_de", self.base))
     }
@@ -1879,26 +2231,26 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
         &self,
     ) -> terrars
     ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElOpenXJsonSerDeElRef,
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer_OpenXJsonSerDeRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.open_x_json_ser_de", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfigurationDynamic {
     deserializer: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deserializer: std
     ::option
@@ -1906,13 +2258,13 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
         std
         ::vec
         ::Vec<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer,
         >,
     >,
-    dynamic: KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDynamic,
+    dynamic: KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration {
     #[doc = "Set the field `deserializer`.\n"]
     pub fn set_deserializer(
         mut self,
@@ -1924,7 +2276,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_Deserializer,
                         >,
                     >,
     ) -> Self {
@@ -1941,11 +2293,11 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1957,38 +2309,40 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration {
             deserializer: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElRef {
+::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfigurationRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1998,14 +2352,14 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
         &self,
     ) -> terrars
     ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElDeserializerElRef,
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration_DeserializerRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deserializer", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     block_size_bytes: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2028,7 +2382,7 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
     stripe_size_bytes: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe {
     #[doc = "Set the field `block_size_bytes`.\n"]
     pub fn set_block_size_bytes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.block_size_bytes = std::option::Option::Some(v.into());
@@ -2097,11 +2451,11 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2113,13 +2467,13 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe {
             block_size_bytes: core::default::Default::default(),
             bloom_filter_columns: core::default::Default::default(),
             bloom_filter_false_positive_probability: core::default::Default::default(),
@@ -2134,25 +2488,27 @@ impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConver
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeElRef {
+::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDeRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2212,7 +2568,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     block_size_bytes: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2227,7 +2583,7 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
     writer_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe {
     #[doc = "Set the field `block_size_bytes`.\n"]
     pub fn set_block_size_bytes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.block_size_bytes = std::option::Option::Some(v.into());
@@ -2266,11 +2622,11 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2282,13 +2638,13 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe {
             block_size_bytes: core::default::Default::default(),
             compression: core::default::Default::default(),
             enable_dictionary_compression: core::default::Default::default(),
@@ -2299,25 +2655,27 @@ impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConver
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeElRef {
+::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDeRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2354,13 +2712,13 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElDynamic {
+struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_SerializerDynamic {
     orc_ser_de: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe,
         >,
     >,
     parquet_ser_de: std
@@ -2368,13 +2726,13 @@ struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversio
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     orc_ser_de: std
     ::option
@@ -2382,7 +2740,7 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
         std
         ::vec
         ::Vec<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2392,13 +2750,13 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
         std
         ::vec
         ::Vec<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe,
         >,
     >,
-    dynamic: KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElDynamic,
+    dynamic: KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_SerializerDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer {
     #[doc = "Set the field `orc_ser_de`.\n"]
     pub fn set_orc_ser_de(
         mut self,
@@ -2410,7 +2768,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDe,
                         >,
                     >,
     ) -> Self {
@@ -2436,7 +2794,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDe,
                         >,
                     >,
     ) -> Self {
@@ -2453,11 +2811,11 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2469,13 +2827,13 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer {
             orc_ser_de: core::default::Default::default(),
             parquet_ser_de: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2483,25 +2841,27 @@ impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConver
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_SerializerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElRef {
+::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_SerializerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_SerializerRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_SerializerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_SerializerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2511,7 +2871,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
         &self,
     ) -> terrars
     ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElOrcSerDeElRef,
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_OrcSerDeRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.orc_ser_de", self.base))
     }
@@ -2521,26 +2881,26 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
         &self,
     ) -> terrars
     ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElParquetSerDeElRef,
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer_ParquetSerDeRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parquet_ser_de", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfigurationDynamic {
     serializer: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     serializer: std
     ::option
@@ -2548,13 +2908,13 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
         std
         ::vec
         ::Vec<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer,
         >,
     >,
-    dynamic: KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElDynamic,
+    dynamic: KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration {
     #[doc = "Set the field `serializer`.\n"]
     pub fn set_serializer(
         mut self,
@@ -2566,7 +2926,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_Serializer,
                         >,
                     >,
     ) -> Self {
@@ -2583,11 +2943,11 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2599,38 +2959,40 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration {
             serializer: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElRef {
+::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfigurationRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2640,14 +3002,14 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
         &self,
     ) -> terrars
     ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElSerializerElRef,
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration_SerializerRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.serializer", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     database_name: terrars::PrimField<std::string::String>,
@@ -2659,7 +3021,7 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
     version_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -2680,11 +3042,11 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2696,7 +3058,7 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl {
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration {
     #[doc = ""]
     pub database_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -2705,11 +3067,11 @@ pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormat
     pub table_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration {
             catalog_id: core::default::Default::default(),
             database_name: self.database_name,
             region: core::default::Default::default(),
@@ -2720,25 +3082,27 @@ impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConver
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationElRef {
+::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfigurationRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2775,13 +3139,13 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfigurationDynamic {
     input_format_configuration: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration,
         >,
     >,
     output_format_configuration: std
@@ -2789,7 +3153,7 @@ struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversio
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration,
         >,
     >,
     schema_configuration: std
@@ -2797,13 +3161,13 @@ struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversio
     ::Option<
         terrars
         ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2813,7 +3177,7 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
         std
         ::vec
         ::Vec<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2823,7 +3187,7 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
         std
         ::vec
         ::Vec<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2833,13 +3197,13 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConve
         std
         ::vec
         ::Vec<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl,
+            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration,
         >,
     >,
-    dynamic: KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElDynamic,
+    dynamic: KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -2857,7 +3221,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -2883,7 +3247,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -2909,7 +3273,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -2926,10 +3290,10 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration {
     type O =
         terrars
-        ::BlockAssignable<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl>;
+        ::BlockAssignable<KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2940,11 +3304,11 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration {
             enabled: core::default::Default::default(),
             input_format_configuration: core::default::Default::default(),
             output_format_configuration: core::default::Default::default(),
@@ -2954,24 +3318,26 @@ impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConver
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfigurationRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2986,7 +3352,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
         &self,
     ) -> terrars
     ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElInputFormatConfigurationElRef,
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_InputFormatConfigurationRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_format_configuration", self.base))
     }
@@ -2996,7 +3362,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
         &self,
     ) -> terrars
     ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElOutputFormatConfigurationElRef,
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_OutputFormatConfigurationRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_format_configuration", self.base))
     }
@@ -3006,21 +3372,21 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionC
         &self,
     ) -> terrars
     ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElSchemaConfigurationElRef,
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration_SchemaConfigurationRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retry_duration: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -3035,10 +3401,10 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningCo
 }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration {
     type O =
         terrars
-        ::BlockAssignable<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl>;
+        ::BlockAssignable<KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3049,35 +3415,37 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration {}
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration {
             enabled: core::default::Default::default(),
             retry_duration: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfigurationRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3093,447 +3461,20 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningCo
     }
 }
 
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    parameter_name: terrars::PrimField<std::string::String>,
-    parameter_value: terrars::PrimField<std::string::String>,
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl { }
-
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    #[doc = ""]
-    pub parameter_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub parameter_value: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    pub fn build(
-        self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-            parameter_name: self.parameter_name,
-            parameter_value: self.parameter_value,
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `parameter_name` after provisioning.\n"]
-    pub fn parameter_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `parameter_value` after provisioning.\n"]
-    pub fn parameter_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_value", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElDynamic {
-    parameters: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl {
-    #[serde(rename = "type")]
-    type_: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl>,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl {
-    #[doc = "Set the field `parameters`.\n"]
-    pub fn set_parameters(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.parameters = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.parameters = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl {
-    #[doc = ""]
-    pub type_: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl {
-    pub fn build(
-        self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl {
-            type_: self.type_,
-            parameters: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElParametersElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElDynamic {
-    processors: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    processors: std
-    ::option
-    ::Option<
-        std::vec::Vec<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl>,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `processors`.\n"]
-    pub fn set_processors(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.processors = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.processors = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl {
-    type O =
-        terrars::BlockAssignable<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl {
-            enabled: core::default::Default::default(),
-            processors: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `processors` after provisioning.\n"]
-    pub fn processors(
-        &self,
-    ) -> terrars
-    ::ListRef<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElProcessorsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.processors", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_stream_name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_group_name`.\n"]
-    pub fn set_log_group_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_group_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_stream_name`.\n"]
-    pub fn set_log_stream_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_stream_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-    pub fn build(
-        self,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-            enabled: core::default::Default::default(),
-            log_group_name: core::default::Default::default(),
-            log_stream_name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_stream_name` after provisioning.\n"]
-    pub fn log_stream_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_stream_name", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfigurationDynamic {
     cloudwatch_logging_options: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration {
     bucket_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    buffer_interval: std::option::Option<terrars::PrimField<f64>>,
+    buffering_interval: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    buffer_size: std::option::Option<terrars::PrimField<f64>>,
+    buffering_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compression_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3546,24 +3487,20 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigu
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_logging_options: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl>,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElDynamic,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    dynamic: KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl {
-    #[doc = "Set the field `buffer_interval`.\n"]
-    pub fn set_buffer_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.buffer_interval = std::option::Option::Some(v.into());
+impl KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration {
+    #[doc = "Set the field `buffering_interval`.\n"]
+    pub fn set_buffering_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_interval = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `buffer_size`.\n"]
-    pub fn set_buffer_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.buffer_size = std::option::Option::Some(v.into());
+    #[doc = "Set the field `buffering_size`.\n"]
+    pub fn set_buffering_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_size = std::option::Option::Some(v.into());
         self
     }
 
@@ -3607,9 +3544,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfiguration
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3624,8 +3559,8 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfiguration
     }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3636,19 +3571,19 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3Configur
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl {
+pub struct BuildKinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration {
     #[doc = ""]
     pub bucket_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration {
+        KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration {
             bucket_arn: self.bucket_arn,
-            buffer_interval: core::default::Default::default(),
-            buffer_size: core::default::Default::default(),
+            buffering_interval: core::default::Default::default(),
+            buffering_size: core::default::Default::default(),
             compression_format: core::default::Default::default(),
             error_output_prefix: core::default::Default::default(),
             kms_key_arn: core::default::Default::default(),
@@ -3660,24 +3595,26 @@ impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigur
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfigurationRef {
+        KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3687,14 +3624,14 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfiguration
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `buffer_interval` after provisioning.\n"]
-    pub fn buffer_interval(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffer_interval", self.base))
+    #[doc = "Get a reference to the value of field `buffering_interval` after provisioning.\n"]
+    pub fn buffering_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_interval", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `buffer_size` after provisioning.\n"]
-    pub fn buffer_size(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffer_size", self.base))
+    #[doc = "Get a reference to the value of field `buffering_size` after provisioning.\n"]
+    pub fn buffering_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_size", self.base))
     }
 
     #[doc = "Get a reference to the value of field `compression_format` after provisioning.\n"]
@@ -3725,50 +3662,49 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfiguration
     #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
     pub fn cloudwatch_logging_options(
         &self,
-    ) -> terrars
-    ::ListRef<
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef,
-    > {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_ExtendedS3ConfigurationDynamic {
     cloudwatch_logging_options: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl>>,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
     data_format_conversion_configuration: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl>,
+        terrars::DynamicBlock<KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration>,
     >,
     dynamic_partitioning_configuration: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl>,
+        terrars::DynamicBlock<KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration>,
     >,
     processing_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
     s3_backup_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3Configuration {
     bucket_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    buffer_interval: std::option::Option<terrars::PrimField<f64>>,
+    buffering_interval: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    buffer_size: std::option::Option<terrars::PrimField<f64>>,
+    buffering_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compression_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_time_zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_output_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_extension: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3779,38 +3715,36 @@ pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_logging_options: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_format_conversion_configuration: std
     ::option
-    ::Option<
-        std::vec::Vec<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl>,
-    >,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dynamic_partitioning_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     processing_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_backup_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl>>,
-    dynamic: KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamic,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration>>,
+    dynamic: KinesisFirehoseDeliveryStream_ExtendedS3ConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
-    #[doc = "Set the field `buffer_interval`.\n"]
-    pub fn set_buffer_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.buffer_interval = std::option::Option::Some(v.into());
+impl KinesisFirehoseDeliveryStream_ExtendedS3Configuration {
+    #[doc = "Set the field `buffering_interval`.\n"]
+    pub fn set_buffering_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_interval = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `buffer_size`.\n"]
-    pub fn set_buffer_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.buffer_size = std::option::Option::Some(v.into());
+    #[doc = "Set the field `buffering_size`.\n"]
+    pub fn set_buffering_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_size = std::option::Option::Some(v.into());
         self
     }
 
@@ -3823,12 +3757,24 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
         self
     }
 
+    #[doc = "Set the field `custom_time_zone`.\n"]
+    pub fn set_custom_time_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.custom_time_zone = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `error_output_prefix`.\n"]
     pub fn set_error_output_prefix(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.error_output_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `file_extension`.\n"]
+    pub fn set_file_extension(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.file_extension = std::option::Option::Some(v.into());
         self
     }
 
@@ -3860,9 +3806,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3887,7 +3831,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -3913,7 +3857,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationEl,
+                            KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -3938,9 +3882,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3964,9 +3906,7 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3981,8 +3921,8 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_ExtendedS3Configuration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_ExtendedS3Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3993,21 +3933,23 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamExtendedS3Configur
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
+pub struct BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration {
     #[doc = ""]
     pub bucket_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_ExtendedS3Configuration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_ExtendedS3Configuration {
+        KinesisFirehoseDeliveryStream_ExtendedS3Configuration {
             bucket_arn: self.bucket_arn,
-            buffer_interval: core::default::Default::default(),
-            buffer_size: core::default::Default::default(),
+            buffering_interval: core::default::Default::default(),
+            buffering_size: core::default::Default::default(),
             compression_format: core::default::Default::default(),
+            custom_time_zone: core::default::Default::default(),
             error_output_prefix: core::default::Default::default(),
+            file_extension: core::default::Default::default(),
             kms_key_arn: core::default::Default::default(),
             prefix: core::default::Default::default(),
             role_arn: self.role_arn,
@@ -4022,24 +3964,26 @@ impl BuildKinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl {
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ExtendedS3ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_ExtendedS3ConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef {
-        KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_ExtendedS3ConfigurationRef {
+        KinesisFirehoseDeliveryStream_ExtendedS3ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_ExtendedS3ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4049,14 +3993,14 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `buffer_interval` after provisioning.\n"]
-    pub fn buffer_interval(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffer_interval", self.base))
+    #[doc = "Get a reference to the value of field `buffering_interval` after provisioning.\n"]
+    pub fn buffering_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_interval", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `buffer_size` after provisioning.\n"]
-    pub fn buffer_size(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffer_size", self.base))
+    #[doc = "Get a reference to the value of field `buffering_size` after provisioning.\n"]
+    pub fn buffering_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_size", self.base))
     }
 
     #[doc = "Get a reference to the value of field `compression_format` after provisioning.\n"]
@@ -4064,9 +4008,19 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.compression_format", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `custom_time_zone` after provisioning.\n"]
+    pub fn custom_time_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_time_zone", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `error_output_prefix` after provisioning.\n"]
     pub fn error_output_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_output_prefix", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `file_extension` after provisioning.\n"]
+    pub fn file_extension(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_extension", self.base))
     }
 
     #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
@@ -4092,472 +4046,53 @@ impl KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElRef {
     #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
     pub fn cloudwatch_logging_options(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElCloudwatchLoggingOptionsElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `data_format_conversion_configuration` after provisioning.\n"]
     pub fn data_format_conversion_configuration(
         &self,
-    ) -> terrars
-    ::ListRef<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDataFormatConversionConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DataFormatConversionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_format_conversion_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dynamic_partitioning_configuration` after provisioning.\n"]
     pub fn dynamic_partitioning_configuration(
         &self,
-    ) -> terrars
-    ::ListRef<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElDynamicPartitioningConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_ExtendedS3Configuration_DynamicPartitioningConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dynamic_partitioning_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `processing_configuration` after provisioning.\n"]
     pub fn processing_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElProcessingConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.processing_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `s3_backup_configuration` after provisioning.\n"]
     pub fn s3_backup_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationElS3BackupConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_backup_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_stream_name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_group_name`.\n"]
-    pub fn set_log_group_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_group_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_stream_name`.\n"]
-    pub fn set_log_stream_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_stream_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl {
-    type O =
-        terrars::BlockAssignable<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl {
-            enabled: core::default::Default::default(),
-            log_group_name: core::default::Default::default(),
-            log_stream_name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsElRef {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_stream_name` after provisioning.\n"]
-    pub fn log_stream_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_stream_name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    parameter_name: terrars::PrimField<std::string::String>,
-    parameter_value: terrars::PrimField<std::string::String>,
-}
-
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl { }
-
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    #[doc = ""]
-    pub parameter_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub parameter_value: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    pub fn build(
-        self,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-            parameter_name: self.parameter_name,
-            parameter_value: self.parameter_value,
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `parameter_name` after provisioning.\n"]
-    pub fn parameter_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `parameter_value` after provisioning.\n"]
-    pub fn parameter_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_value", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElDynamic {
-    parameters: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl {
-    #[serde(rename = "type")]
-    type_: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl {
-    #[doc = "Set the field `parameters`.\n"]
-    pub fn set_parameters(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.parameters = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.parameters = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl {
-    #[doc = ""]
-    pub type_: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl {
-    pub fn build(
-        self,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl {
-            type_: self.type_,
-            parameters: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElRef {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElParametersElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElDynamic {
-    processors: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    processors: std
-    ::option
-    ::Option<
-        std::vec::Vec<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl>,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `processors`.\n"]
-    pub fn set_processors(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.processors = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.processors = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl {
-    type O =
-        terrars::BlockAssignable<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl {
-            enabled: core::default::Default::default(),
-            processors: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElRef {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `processors` after provisioning.\n"]
-    pub fn processors(
-        &self,
-    ) -> terrars
-    ::ListRef<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElProcessorsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.processors", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl {
+pub struct KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl { }
+impl KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes { }
 
 impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl {
+::ToListMappable for KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes {
     type O =
         terrars
         ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl,
+            KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -4569,43 +4104,45 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl {
+pub struct BuildKinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl {
+impl BuildKinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes {
     pub fn build(
         self,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl {
+    ) -> KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes {
+        KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesElRef {
+::Ref for KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesElRef {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesElRef {
+    ) -> KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributesRef {
+        KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesElRef {
+impl KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4622,33 +4159,29 @@ impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfiguratio
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfigurationDynamic {
     common_attributes: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl,
-        >,
+        ::DynamicBlock<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content_encoding: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     common_attributes: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl>,
+        std::vec::Vec<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes>,
     >,
-    dynamic: KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElDynamic,
+    dynamic: KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl {
+impl KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration {
     #[doc = "Set the field `content_encoding`.\n"]
     pub fn set_content_encoding(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.content_encoding = std::option::Option::Some(v.into());
@@ -4666,7 +4199,7 @@ impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfiguratio
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesEl,
+                            KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributes,
                         >,
                     >,
     ) -> Self {
@@ -4682,9 +4215,8 @@ impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfiguratio
     }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl {
-    type O =
-        terrars::BlockAssignable<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4695,11 +4227,11 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamHttpEndpointConfig
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration {}
 
-impl BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration {
+        KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration {
             content_encoding: core::default::Default::default(),
             common_attributes: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -4707,24 +4239,26 @@ impl BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigu
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElRef {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfigurationRef {
+        KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4738,30 +4272,126 @@ impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfiguratio
     pub fn common_attributes(
         &self,
     ) -> terrars
-    ::ListRef<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElCommonAttributesElRef> {
+    ::ListRef<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration_CommonAttributesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.common_attributes", self.base))
     }
 }
 
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration {
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `role_arn`.\n"]
+    pub fn set_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.role_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_arn`.\n"]
+    pub fn set_secret_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_arn = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration {}
+
+impl BuildKinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration {
+            enabled: core::default::Default::default(),
+            role_arn: core::default::Default::default(),
+            secret_arn: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfigurationRef {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
+    pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_HttpEndpointConfigurationDynamic {
     cloudwatch_logging_options: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl>,
-    >,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
     processing_configuration: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl>,
-    >,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
     request_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration>>,
+    s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    secrets_manager_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_HttpEndpointConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4780,19 +4410,27 @@ pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_logging_options: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     processing_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl>>,
-    dynamic: KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElDynamic,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secrets_manager_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration>>,
+    dynamic: KinesisFirehoseDeliveryStream_HttpEndpointConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
+impl KinesisFirehoseDeliveryStream_HttpEndpointConfiguration {
     #[doc = "Set the field `access_key`.\n"]
     pub fn set_access_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_key = std::option::Option::Some(v.into());
@@ -4845,9 +4483,7 @@ impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4871,9 +4507,7 @@ impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -4898,7 +4532,7 @@ impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationEl,
+                            KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -4912,10 +4546,59 @@ impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
         }
         self
     }
+
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `secrets_manager_configuration`.\n"]
+    pub fn set_secrets_manager_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.secrets_manager_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.secrets_manager_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_HttpEndpointConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4926,14 +4609,14 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamHttpEndpointConfig
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
+pub struct BuildKinesisFirehoseDeliveryStream_HttpEndpointConfiguration {
     #[doc = ""]
     pub url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_HttpEndpointConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_HttpEndpointConfiguration {
+        KinesisFirehoseDeliveryStream_HttpEndpointConfiguration {
             access_key: core::default::Default::default(),
             buffering_interval: core::default::Default::default(),
             buffering_size: core::default::Default::default(),
@@ -4945,29 +4628,33 @@ impl BuildKinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl {
             cloudwatch_logging_options: core::default::Default::default(),
             processing_configuration: core::default::Default::default(),
             request_configuration: core::default::Default::default(),
+            s3_configuration: core::default::Default::default(),
+            secrets_manager_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_HttpEndpointConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_HttpEndpointConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRef {
-        KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_HttpEndpointConfigurationRef {
+        KinesisFirehoseDeliveryStream_HttpEndpointConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_HttpEndpointConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5015,715 +4702,72 @@ impl KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRef {
     #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
     pub fn cloudwatch_logging_options(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElCloudwatchLoggingOptionsElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `processing_configuration` after provisioning.\n"]
     pub fn processing_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElProcessingConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.processing_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `request_configuration` after provisioning.\n"]
     pub fn request_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationElRequestConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_HttpEndpointConfiguration_RequestConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.request_configuration", self.base))
     }
-}
 
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl {
-    kinesis_stream_arn: terrars::PrimField<std::string::String>,
-    role_arn: terrars::PrimField<std::string::String>,
-}
-
-impl KinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl { }
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl {
-    #[doc = ""]
-    pub kinesis_stream_arn: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub role_arn: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl {
-        KinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl {
-            kinesis_stream_arn: self.kinesis_stream_arn,
-            role_arn: self.role_arn,
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamKinesisSourceConfigurationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamKinesisSourceConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamKinesisSourceConfigurationElRef {
-        KinesisFirehoseDeliveryStreamKinesisSourceConfigurationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamKinesisSourceConfigurationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `kinesis_stream_arn` after provisioning.\n"]
-    pub fn kinesis_stream_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kinesis_stream_arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_stream_name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_group_name`.\n"]
-    pub fn set_log_group_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_group_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_stream_name`.\n"]
-    pub fn set_log_stream_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_stream_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl {
-    type O =
-        terrars::BlockAssignable<KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl {
-            enabled: core::default::Default::default(),
-            log_group_name: core::default::Default::default(),
-            log_stream_name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsElRef {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_stream_name` after provisioning.\n"]
-    pub fn log_stream_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_stream_name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    parameter_name: terrars::PrimField<std::string::String>,
-    parameter_value: terrars::PrimField<std::string::String>,
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl { }
-
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    #[doc = ""]
-    pub parameter_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub parameter_value: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    pub fn build(
-        self,
-    ) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-            parameter_name: self.parameter_name,
-            parameter_value: self.parameter_value,
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `parameter_name` after provisioning.\n"]
-    pub fn parameter_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `parameter_value` after provisioning.\n"]
-    pub fn parameter_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_value", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElDynamic {
-    parameters: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl {
-    #[serde(rename = "type")]
-    type_: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl>,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl {
-    #[doc = "Set the field `parameters`.\n"]
-    pub fn set_parameters(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.parameters = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.parameters = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl {
-    type O =
-        terrars
-        ::BlockAssignable<KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl {
-    #[doc = ""]
-    pub type_: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl {
-            type_: self.type_,
-            parameters: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElRef {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(
         &self,
-    ) -> terrars
-    ::ListRef<
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElParametersElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElDynamic {
-    processors: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    processors: std
-    ::option
-    ::Option<
-        std::vec::Vec<KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl>,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
     }
 
-    #[doc = "Set the field `processors`.\n"]
-    pub fn set_processors(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.processors = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.processors = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl {
-            enabled: core::default::Default::default(),
-            processors: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElRef {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `processors` after provisioning.\n"]
-    pub fn processors(
+    #[doc = "Get a reference to the value of field `secrets_manager_configuration` after provisioning.\n"]
+    pub fn secrets_manager_configuration(
         &self,
-    ) -> terrars
-    ::ListRef<KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElProcessorsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.processors", self.base))
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secrets_manager_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
+pub struct KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration {
+    database_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
+    s3_error_output_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    table_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_stream_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    unique_keys: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_group_name`.\n"]
-    pub fn set_log_group_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_group_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_stream_name`.\n"]
-    pub fn set_log_stream_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_stream_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-    pub fn build(
-        self,
-    ) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl {
-            enabled: core::default::Default::default(),
-            log_group_name: core::default::Default::default(),
-            log_stream_name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_stream_name` after provisioning.\n"]
-    pub fn log_stream_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_stream_name", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElDynamic {
-    cloudwatch_logging_options: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl {
-    bucket_arn: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    buffer_interval: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    buffer_size: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    compression_format: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    error_output_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    role_arn: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloudwatch_logging_options: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl>,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl {
-    #[doc = "Set the field `buffer_interval`.\n"]
-    pub fn set_buffer_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.buffer_interval = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `buffer_size`.\n"]
-    pub fn set_buffer_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.buffer_size = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `compression_format`.\n"]
-    pub fn set_compression_format(
+impl KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration {
+    #[doc = "Set the field `s3_error_output_prefix`.\n"]
+    pub fn set_s3_error_output_prefix(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
-        self.compression_format = std::option::Option::Some(v.into());
+        self.s3_error_output_prefix = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `error_output_prefix`.\n"]
-    pub fn set_error_output_prefix(
+    #[doc = "Set the field `unique_keys`.\n"]
+    pub fn set_unique_keys(
         mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
-        self.error_output_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `kms_key_arn`.\n"]
-    pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.kms_key_arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `cloudwatch_logging_options`.\n"]
-    pub fn set_cloudwatch_logging_options(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.cloudwatch_logging_options = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloudwatch_logging_options = std::option::Option::Some(d);
-            },
-        }
+        self.unique_keys = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration {
+    type O =
+        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5734,159 +4778,134 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurat
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl {
+pub struct BuildKinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration {
     #[doc = ""]
-    pub bucket_arn: terrars::PrimField<std::string::String>,
+    pub database_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub role_arn: terrars::PrimField<std::string::String>,
+    pub table_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl {
-            bucket_arn: self.bucket_arn,
-            buffer_interval: core::default::Default::default(),
-            buffer_size: core::default::Default::default(),
-            compression_format: core::default::Default::default(),
-            error_output_prefix: core::default::Default::default(),
-            kms_key_arn: core::default::Default::default(),
-            prefix: core::default::Default::default(),
-            role_arn: self.role_arn,
-            cloudwatch_logging_options: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
+impl BuildKinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration {
+        KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration {
+            database_name: self.database_name,
+            s3_error_output_prefix: core::default::Default::default(),
+            table_name: self.table_name,
+            unique_keys: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElRef {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfigurationRef {
+        KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `bucket_arn` after provisioning.\n"]
-    pub fn bucket_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
+    #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
+    pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `buffer_interval` after provisioning.\n"]
-    pub fn buffer_interval(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffer_interval", self.base))
+    #[doc = "Get a reference to the value of field `s3_error_output_prefix` after provisioning.\n"]
+    pub fn s3_error_output_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_error_output_prefix", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `buffer_size` after provisioning.\n"]
-    pub fn buffer_size(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffer_size", self.base))
+    #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
+    pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `compression_format` after provisioning.\n"]
-    pub fn compression_format(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compression_format", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `error_output_prefix` after provisioning.\n"]
-    pub fn error_output_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_output_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
-    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
-    pub fn cloudwatch_logging_options(
-        &self,
-    ) -> terrars
-    ::ListRef<
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElCloudwatchLoggingOptionsElRef,
-    > {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
+    #[doc = "Get a reference to the value of field `unique_keys` after provisioning.\n"]
+    pub fn unique_keys(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.unique_keys", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_IcebergConfigurationDynamic {
     cloudwatch_logging_options: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl>>,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    destination_table_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration>>,
     processing_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl>>,
-    s3_backup_configuration: std
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    s3_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
-    cluster_jdbcurl: terrars::PrimField<std::string::String>,
+pub struct KinesisFirehoseDeliveryStream_IcebergConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    copy_options: std::option::Option<terrars::PrimField<std::string::String>>,
+    append_only: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_table_columns: std::option::Option<terrars::PrimField<std::string::String>>,
-    data_table_name: terrars::PrimField<std::string::String>,
-    password: terrars::PrimField<std::string::String>,
+    buffering_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_size: std::option::Option<terrars::PrimField<f64>>,
+    catalog_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retry_duration: std::option::Option<terrars::PrimField<f64>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_backup_mode: std::option::Option<terrars::PrimField<std::string::String>>,
-    username: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_logging_options: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_table_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     processing_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_backup_configuration: std
+    s3_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl>>,
-    dynamic: KinesisFirehoseDeliveryStreamRedshiftConfigurationElDynamic,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    dynamic: KinesisFirehoseDeliveryStream_IcebergConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
-    #[doc = "Set the field `copy_options`.\n"]
-    pub fn set_copy_options(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.copy_options = std::option::Option::Some(v.into());
+impl KinesisFirehoseDeliveryStream_IcebergConfiguration {
+    #[doc = "Set the field `append_only`.\n"]
+    pub fn set_append_only(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.append_only = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `data_table_columns`.\n"]
-    pub fn set_data_table_columns(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.data_table_columns = std::option::Option::Some(v.into());
+    #[doc = "Set the field `buffering_interval`.\n"]
+    pub fn set_buffering_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_interval = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `buffering_size`.\n"]
+    pub fn set_buffering_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_size = std::option::Option::Some(v.into());
         self
     }
 
@@ -5912,9 +4931,1023 @@ impl KinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_logging_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_logging_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `destination_table_configuration`.\n"]
+    pub fn set_destination_table_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
                         ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsEl,
+                            KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfiguration,
                         >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.destination_table_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.destination_table_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `processing_configuration`.\n"]
+    pub fn set_processing_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.processing_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.processing_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_IcebergConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_IcebergConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_IcebergConfiguration {
+    #[doc = ""]
+    pub catalog_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKinesisFirehoseDeliveryStream_IcebergConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_IcebergConfiguration {
+        KinesisFirehoseDeliveryStream_IcebergConfiguration {
+            append_only: core::default::Default::default(),
+            buffering_interval: core::default::Default::default(),
+            buffering_size: core::default::Default::default(),
+            catalog_arn: self.catalog_arn,
+            retry_duration: core::default::Default::default(),
+            role_arn: self.role_arn,
+            s3_backup_mode: core::default::Default::default(),
+            cloudwatch_logging_options: core::default::Default::default(),
+            destination_table_configuration: core::default::Default::default(),
+            processing_configuration: core::default::Default::default(),
+            s3_configuration: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_IcebergConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_IcebergConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_IcebergConfigurationRef {
+        KinesisFirehoseDeliveryStream_IcebergConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_IcebergConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `append_only` after provisioning.\n"]
+    pub fn append_only(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.append_only", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_interval` after provisioning.\n"]
+    pub fn buffering_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_interval", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_size` after provisioning.\n"]
+    pub fn buffering_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `catalog_arn` after provisioning.\n"]
+    pub fn catalog_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `retry_duration` after provisioning.\n"]
+    pub fn retry_duration(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retry_duration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_backup_mode` after provisioning.\n"]
+    pub fn s3_backup_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_backup_mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
+    pub fn cloudwatch_logging_options(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `destination_table_configuration` after provisioning.\n"]
+    pub fn destination_table_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_IcebergConfiguration_DestinationTableConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_table_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `processing_configuration` after provisioning.\n"]
+    pub fn processing_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.processing_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_KinesisSourceConfiguration {
+    kinesis_stream_arn: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl KinesisFirehoseDeliveryStream_KinesisSourceConfiguration { }
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_KinesisSourceConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_KinesisSourceConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_KinesisSourceConfiguration {
+    #[doc = ""]
+    pub kinesis_stream_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKinesisFirehoseDeliveryStream_KinesisSourceConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_KinesisSourceConfiguration {
+        KinesisFirehoseDeliveryStream_KinesisSourceConfiguration {
+            kinesis_stream_arn: self.kinesis_stream_arn,
+            role_arn: self.role_arn,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_KinesisSourceConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_KinesisSourceConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_KinesisSourceConfigurationRef {
+        KinesisFirehoseDeliveryStream_KinesisSourceConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_KinesisSourceConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `kinesis_stream_arn` after provisioning.\n"]
+    pub fn kinesis_stream_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kinesis_stream_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration {
+    connectivity: terrars::PrimField<std::string::String>,
+    role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration { }
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration {
+    type O =
+        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration {
+    #[doc = ""]
+    pub connectivity: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration {
+        KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration {
+            connectivity: self.connectivity,
+            role_arn: self.role_arn,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfigurationRef {
+        KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `connectivity` after provisioning.\n"]
+    pub fn connectivity(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connectivity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct KinesisFirehoseDeliveryStream_MskSourceConfigurationDynamic {
+    authentication_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_MskSourceConfiguration {
+    msk_cluster_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read_from_timestamp: std::option::Option<terrars::PrimField<std::string::String>>,
+    topic_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authentication_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration>>,
+    dynamic: KinesisFirehoseDeliveryStream_MskSourceConfigurationDynamic,
+}
+
+impl KinesisFirehoseDeliveryStream_MskSourceConfiguration {
+    #[doc = "Set the field `read_from_timestamp`.\n"]
+    pub fn set_read_from_timestamp(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.read_from_timestamp = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `authentication_configuration`.\n"]
+    pub fn set_authentication_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfiguration,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.authentication_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.authentication_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_MskSourceConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_MskSourceConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_MskSourceConfiguration {
+    #[doc = ""]
+    pub msk_cluster_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub topic_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKinesisFirehoseDeliveryStream_MskSourceConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_MskSourceConfiguration {
+        KinesisFirehoseDeliveryStream_MskSourceConfiguration {
+            msk_cluster_arn: self.msk_cluster_arn,
+            read_from_timestamp: core::default::Default::default(),
+            topic_name: self.topic_name,
+            authentication_configuration: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_MskSourceConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_MskSourceConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_MskSourceConfigurationRef {
+        KinesisFirehoseDeliveryStream_MskSourceConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_MskSourceConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `msk_cluster_arn` after provisioning.\n"]
+    pub fn msk_cluster_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.msk_cluster_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `read_from_timestamp` after provisioning.\n"]
+    pub fn read_from_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read_from_timestamp", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `topic_name` after provisioning.\n"]
+    pub fn topic_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `authentication_configuration` after provisioning.\n"]
+    pub fn authentication_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_MskSourceConfiguration_AuthenticationConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_configuration", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions {
+    default_document_id_format: terrars::PrimField<std::string::String>,
+}
+
+impl KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions { }
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions {
+    #[doc = ""]
+    pub default_document_id_format: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions {
+        KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions {
+            default_document_id_format: self.default_document_id_format,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptionsRef {
+        KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `default_document_id_format` after provisioning.\n"]
+    pub fn default_document_id_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_document_id_format", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct KinesisFirehoseDeliveryStream_OpensearchConfigurationDynamic {
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    document_id_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions>>,
+    processing_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    vpc_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_OpensearchConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    index_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    index_rotation_period: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retry_duration: std::option::Option<terrars::PrimField<f64>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_backup_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    type_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    document_id_options: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    processing_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_config: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>>,
+    dynamic: KinesisFirehoseDeliveryStream_OpensearchConfigurationDynamic,
+}
+
+impl KinesisFirehoseDeliveryStream_OpensearchConfiguration {
+    #[doc = "Set the field `buffering_interval`.\n"]
+    pub fn set_buffering_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_interval = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `buffering_size`.\n"]
+    pub fn set_buffering_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_size = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cluster_endpoint`.\n"]
+    pub fn set_cluster_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cluster_endpoint = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `domain_arn`.\n"]
+    pub fn set_domain_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.domain_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `index_rotation_period`.\n"]
+    pub fn set_index_rotation_period(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.index_rotation_period = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retry_duration`.\n"]
+    pub fn set_retry_duration(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.retry_duration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `s3_backup_mode`.\n"]
+    pub fn set_s3_backup_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.s3_backup_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `type_name`.\n"]
+    pub fn set_type_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cloudwatch_logging_options`.\n"]
+    pub fn set_cloudwatch_logging_options(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_logging_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_logging_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `document_id_options`.\n"]
+    pub fn set_document_id_options(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptions>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.document_id_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.document_id_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `processing_configuration`.\n"]
+    pub fn set_processing_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.processing_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.processing_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `vpc_config`.\n"]
+    pub fn set_vpc_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.vpc_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.vpc_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_OpensearchConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_OpensearchConfiguration {
+    #[doc = ""]
+    pub index_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKinesisFirehoseDeliveryStream_OpensearchConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_OpensearchConfiguration {
+        KinesisFirehoseDeliveryStream_OpensearchConfiguration {
+            buffering_interval: core::default::Default::default(),
+            buffering_size: core::default::Default::default(),
+            cluster_endpoint: core::default::Default::default(),
+            domain_arn: core::default::Default::default(),
+            index_name: self.index_name,
+            index_rotation_period: core::default::Default::default(),
+            retry_duration: core::default::Default::default(),
+            role_arn: self.role_arn,
+            s3_backup_mode: core::default::Default::default(),
+            type_name: core::default::Default::default(),
+            cloudwatch_logging_options: core::default::Default::default(),
+            document_id_options: core::default::Default::default(),
+            processing_configuration: core::default::Default::default(),
+            s3_configuration: core::default::Default::default(),
+            vpc_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_OpensearchConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_OpensearchConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_OpensearchConfigurationRef {
+        KinesisFirehoseDeliveryStream_OpensearchConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_OpensearchConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_interval` after provisioning.\n"]
+    pub fn buffering_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_interval", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_size` after provisioning.\n"]
+    pub fn buffering_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cluster_endpoint` after provisioning.\n"]
+    pub fn cluster_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_endpoint", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_arn` after provisioning.\n"]
+    pub fn domain_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `index_name` after provisioning.\n"]
+    pub fn index_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `index_rotation_period` after provisioning.\n"]
+    pub fn index_rotation_period(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_rotation_period", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `retry_duration` after provisioning.\n"]
+    pub fn retry_duration(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retry_duration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_backup_mode` after provisioning.\n"]
+    pub fn s3_backup_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_backup_mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_name` after provisioning.\n"]
+    pub fn type_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
+    pub fn cloudwatch_logging_options(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `document_id_options` after provisioning.\n"]
+    pub fn document_id_options(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_OpensearchConfiguration_DocumentIdOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.document_id_options", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `processing_configuration` after provisioning.\n"]
+    pub fn processing_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.processing_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct KinesisFirehoseDeliveryStream_OpensearchserverlessConfigurationDynamic {
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    processing_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    vpc_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_size: std::option::Option<terrars::PrimField<f64>>,
+    collection_endpoint: terrars::PrimField<std::string::String>,
+    index_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retry_duration: std::option::Option<terrars::PrimField<f64>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_backup_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    processing_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_config: std::option::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>>,
+    dynamic: KinesisFirehoseDeliveryStream_OpensearchserverlessConfigurationDynamic,
+}
+
+impl KinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration {
+    #[doc = "Set the field `buffering_interval`.\n"]
+    pub fn set_buffering_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_interval = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `buffering_size`.\n"]
+    pub fn set_buffering_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_size = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retry_duration`.\n"]
+    pub fn set_retry_duration(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.retry_duration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `s3_backup_mode`.\n"]
+    pub fn set_s3_backup_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.s3_backup_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cloudwatch_logging_options`.\n"]
+    pub fn set_cloudwatch_logging_options(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5938,9 +5971,325 @@ impl KinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.processing_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.processing_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `vpc_config`.\n"]
+    pub fn set_vpc_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.vpc_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.vpc_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration {
+    #[doc = ""]
+    pub collection_endpoint: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub index_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration {
+        KinesisFirehoseDeliveryStream_OpensearchserverlessConfiguration {
+            buffering_interval: core::default::Default::default(),
+            buffering_size: core::default::Default::default(),
+            collection_endpoint: self.collection_endpoint,
+            index_name: self.index_name,
+            retry_duration: core::default::Default::default(),
+            role_arn: self.role_arn,
+            s3_backup_mode: core::default::Default::default(),
+            cloudwatch_logging_options: core::default::Default::default(),
+            processing_configuration: core::default::Default::default(),
+            s3_configuration: core::default::Default::default(),
+            vpc_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_OpensearchserverlessConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_OpensearchserverlessConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_OpensearchserverlessConfigurationRef {
+        KinesisFirehoseDeliveryStream_OpensearchserverlessConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_OpensearchserverlessConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_interval` after provisioning.\n"]
+    pub fn buffering_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_interval", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_size` after provisioning.\n"]
+    pub fn buffering_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `collection_endpoint` after provisioning.\n"]
+    pub fn collection_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.collection_endpoint", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `index_name` after provisioning.\n"]
+    pub fn index_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `retry_duration` after provisioning.\n"]
+    pub fn retry_duration(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retry_duration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_backup_mode` after provisioning.\n"]
+    pub fn s3_backup_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_backup_mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
+    pub fn cloudwatch_logging_options(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `processing_configuration` after provisioning.\n"]
+    pub fn processing_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.processing_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
+    pub fn vpc_config(&self) -> terrars::ListRef<KinesisFirehoseDeliveryStream_OpensearchConfiguration_VpcConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct KinesisFirehoseDeliveryStream_RedshiftConfigurationDynamic {
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    processing_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    s3_backup_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration>>,
+    s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    secrets_manager_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration>>,
+}
+
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_RedshiftConfiguration {
+    cluster_jdbcurl: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    copy_options: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_table_columns: std::option::Option<terrars::PrimField<std::string::String>>,
+    data_table_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retry_duration: std::option::Option<terrars::PrimField<f64>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_backup_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    username: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    processing_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_backup_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secrets_manager_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration>>,
+    dynamic: KinesisFirehoseDeliveryStream_RedshiftConfigurationDynamic,
+}
+
+impl KinesisFirehoseDeliveryStream_RedshiftConfiguration {
+    #[doc = "Set the field `copy_options`.\n"]
+    pub fn set_copy_options(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.copy_options = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `data_table_columns`.\n"]
+    pub fn set_data_table_columns(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.data_table_columns = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `password`.\n"]
+    pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retry_duration`.\n"]
+    pub fn set_retry_duration(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.retry_duration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `s3_backup_mode`.\n"]
+    pub fn set_s3_backup_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.s3_backup_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `username`.\n"]
+    pub fn set_username(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.username = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cloudwatch_logging_options`.\n"]
+    pub fn set_cloudwatch_logging_options(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_logging_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_logging_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `processing_configuration`.\n"]
+    pub fn set_processing_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5964,7 +6313,7 @@ impl KinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationEl>,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -5977,10 +6326,59 @@ impl KinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
         }
         self
     }
+
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `secrets_manager_configuration`.\n"]
+    pub fn set_secrets_manager_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.secrets_manager_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.secrets_manager_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamRedshiftConfigurationEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_RedshiftConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_RedshiftConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5991,57 +6389,57 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamRedshiftConfigurat
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
+pub struct BuildKinesisFirehoseDeliveryStream_RedshiftConfiguration {
     #[doc = ""]
     pub cluster_jdbcurl: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub data_table_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub password: terrars::PrimField<std::string::String>,
-    #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_RedshiftConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_RedshiftConfiguration {
+        KinesisFirehoseDeliveryStream_RedshiftConfiguration {
             cluster_jdbcurl: self.cluster_jdbcurl,
             copy_options: core::default::Default::default(),
             data_table_columns: core::default::Default::default(),
             data_table_name: self.data_table_name,
-            password: self.password,
+            password: core::default::Default::default(),
             retry_duration: core::default::Default::default(),
             role_arn: self.role_arn,
             s3_backup_mode: core::default::Default::default(),
-            username: self.username,
+            username: core::default::Default::default(),
             cloudwatch_logging_options: core::default::Default::default(),
             processing_configuration: core::default::Default::default(),
             s3_backup_configuration: core::default::Default::default(),
+            s3_configuration: core::default::Default::default(),
+            secrets_manager_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamRedshiftConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_RedshiftConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamRedshiftConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_RedshiftConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamRedshiftConfigurationElRef {
-        KinesisFirehoseDeliveryStreamRedshiftConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_RedshiftConfigurationRef {
+        KinesisFirehoseDeliveryStream_RedshiftConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_RedshiftConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6094,323 +6492,41 @@ impl KinesisFirehoseDeliveryStreamRedshiftConfigurationElRef {
     #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
     pub fn cloudwatch_logging_options(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamRedshiftConfigurationElCloudwatchLoggingOptionsElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `processing_configuration` after provisioning.\n"]
     pub fn processing_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamRedshiftConfigurationElProcessingConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.processing_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `s3_backup_configuration` after provisioning.\n"]
     pub fn s3_backup_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamRedshiftConfigurationElS3BackupConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_RedshiftConfiguration_S3BackupConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_backup_configuration", self.base))
     }
-}
 
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_stream_name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_group_name`.\n"]
-    pub fn set_log_group_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_group_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_stream_name`.\n"]
-    pub fn set_log_stream_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_stream_name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl {
-        KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl {
-            enabled: core::default::Default::default(),
-            log_group_name: core::default::Default::default(),
-            log_stream_name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsElRef {
-        KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_stream_name` after provisioning.\n"]
-    pub fn log_stream_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_stream_name", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamS3ConfigurationElDynamic {
-    cloudwatch_logging_options: std
-    ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl>>,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamS3ConfigurationEl {
-    bucket_arn: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    buffer_interval: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    buffer_size: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    compression_format: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    error_output_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-    role_arn: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloudwatch_logging_options: std
-    ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl>>,
-    dynamic: KinesisFirehoseDeliveryStreamS3ConfigurationElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamS3ConfigurationEl {
-    #[doc = "Set the field `buffer_interval`.\n"]
-    pub fn set_buffer_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.buffer_interval = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `buffer_size`.\n"]
-    pub fn set_buffer_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.buffer_size = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `compression_format`.\n"]
-    pub fn set_compression_format(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.compression_format = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `error_output_prefix`.\n"]
-    pub fn set_error_output_prefix(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.error_output_prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `kms_key_arn`.\n"]
-    pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.kms_key_arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `prefix`.\n"]
-    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.prefix = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `cloudwatch_logging_options`.\n"]
-    pub fn set_cloudwatch_logging_options(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.cloudwatch_logging_options = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.cloudwatch_logging_options = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamS3ConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamS3ConfigurationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamS3ConfigurationEl {
-    #[doc = ""]
-    pub bucket_arn: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub role_arn: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKinesisFirehoseDeliveryStreamS3ConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamS3ConfigurationEl {
-        KinesisFirehoseDeliveryStreamS3ConfigurationEl {
-            bucket_arn: self.bucket_arn,
-            buffer_interval: core::default::Default::default(),
-            buffer_size: core::default::Default::default(),
-            compression_format: core::default::Default::default(),
-            error_output_prefix: core::default::Default::default(),
-            kms_key_arn: core::default::Default::default(),
-            prefix: core::default::Default::default(),
-            role_arn: self.role_arn,
-            cloudwatch_logging_options: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamS3ConfigurationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamS3ConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamS3ConfigurationElRef {
-        KinesisFirehoseDeliveryStreamS3ConfigurationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamS3ConfigurationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_arn` after provisioning.\n"]
-    pub fn bucket_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `buffer_interval` after provisioning.\n"]
-    pub fn buffer_interval(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffer_interval", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `buffer_size` after provisioning.\n"]
-    pub fn buffer_size(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffer_size", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `compression_format` after provisioning.\n"]
-    pub fn compression_format(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compression_format", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `error_output_prefix` after provisioning.\n"]
-    pub fn error_output_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.error_output_prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
-    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
-    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
-    pub fn cloudwatch_logging_options(
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamS3ConfigurationElCloudwatchLoggingOptionsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secrets_manager_configuration` after provisioning.\n"]
+    pub fn secrets_manager_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secrets_manager_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamServerSideEncryptionEl {
+pub struct KinesisFirehoseDeliveryStream_ServerSideEncryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6419,7 +6535,7 @@ pub struct KinesisFirehoseDeliveryStreamServerSideEncryptionEl {
     key_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KinesisFirehoseDeliveryStreamServerSideEncryptionEl {
+impl KinesisFirehoseDeliveryStream_ServerSideEncryption {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -6439,8 +6555,8 @@ impl KinesisFirehoseDeliveryStreamServerSideEncryptionEl {
     }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamServerSideEncryptionEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamServerSideEncryptionEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_ServerSideEncryption {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_ServerSideEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6451,11 +6567,11 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamServerSideEncrypti
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamServerSideEncryptionEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_ServerSideEncryption {}
 
-impl BuildKinesisFirehoseDeliveryStreamServerSideEncryptionEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamServerSideEncryptionEl {
-        KinesisFirehoseDeliveryStreamServerSideEncryptionEl {
+impl BuildKinesisFirehoseDeliveryStream_ServerSideEncryption {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_ServerSideEncryption {
+        KinesisFirehoseDeliveryStream_ServerSideEncryption {
             enabled: core::default::Default::default(),
             key_arn: core::default::Default::default(),
             key_type: core::default::Default::default(),
@@ -6463,24 +6579,26 @@ impl BuildKinesisFirehoseDeliveryStreamServerSideEncryptionEl {
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamServerSideEncryptionElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_ServerSideEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamServerSideEncryptionElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_ServerSideEncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamServerSideEncryptionElRef {
-        KinesisFirehoseDeliveryStreamServerSideEncryptionElRef {
+    ) -> KinesisFirehoseDeliveryStream_ServerSideEncryptionRef {
+        KinesisFirehoseDeliveryStream_ServerSideEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamServerSideEncryptionElRef {
+impl KinesisFirehoseDeliveryStream_ServerSideEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6502,37 +6620,30 @@ impl KinesisFirehoseDeliveryStreamServerSideEncryptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl {
+pub struct KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_stream_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    snowflake_role: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl {
+impl KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `log_group_name`.\n"]
-    pub fn set_log_group_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_group_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_stream_name`.\n"]
-    pub fn set_log_stream_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_stream_name = std::option::Option::Some(v.into());
+    #[doc = "Set the field `snowflake_role`.\n"]
+    pub fn set_snowflake_role(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.snowflake_role = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration {
+    type O =
+        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6543,36 +6654,37 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamSplunkConfiguratio
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl {}
+pub struct BuildKinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration {}
 
-impl BuildKinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl {
+impl BuildKinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration {
+        KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration {
             enabled: core::default::Default::default(),
-            log_group_name: core::default::Default::default(),
-            log_stream_name: core::default::Default::default(),
+            snowflake_role: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsElRef {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsElRef {
+    ) -> KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfigurationRef {
+        KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsElRef {
+impl KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6582,32 +6694,22 @@ impl KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsE
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_stream_name` after provisioning.\n"]
-    pub fn log_stream_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_stream_name", self.base))
+    #[doc = "Get a reference to the value of field `snowflake_role` after provisioning.\n"]
+    pub fn snowflake_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.snowflake_role", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    parameter_name: terrars::PrimField<std::string::String>,
-    parameter_value: terrars::PrimField<std::string::String>,
+pub struct KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration {
+    private_link_vpce_id: terrars::PrimField<std::string::String>,
 }
 
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl { }
+impl KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration { }
 
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl {
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration {
     type O =
-        terrars
-        ::BlockAssignable<
-            KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >;
+        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6618,310 +6720,570 @@ impl terrars
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl {
+pub struct BuildKinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration {
     #[doc = ""]
-    pub parameter_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub parameter_value: terrars::PrimField<std::string::String>,
+    pub private_link_vpce_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-    pub fn build(
-        self,
-    ) -> KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl {
-            parameter_name: self.parameter_name,
-            parameter_value: self.parameter_value,
+impl BuildKinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration {
+        KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration {
+            private_link_vpce_id: self.private_link_vpce_id,
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
+    ) -> KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfigurationRef {
+        KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersElRef {
+impl KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `parameter_name` after provisioning.\n"]
-    pub fn parameter_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `parameter_value` after provisioning.\n"]
-    pub fn parameter_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_value", self.base))
+    #[doc = "Get a reference to the value of field `private_link_vpce_id` after provisioning.\n"]
+    pub fn private_link_vpce_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_link_vpce_id", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElDynamic {
-    parameters: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl {
-    #[serde(rename = "type")]
-    type_: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl>,
-    >,
-    dynamic: KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl {
-    #[doc = "Set the field `parameters`.\n"]
-    pub fn set_parameters(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.parameters = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.parameters = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl {
-    type O =
-        terrars
-        ::BlockAssignable<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl {
-    #[doc = ""]
-    pub type_: terrars::PrimField<std::string::String>,
-}
-
-impl BuildKinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl {
-            type_: self.type_,
-            parameters: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElRef {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(
-        &self,
-    ) -> terrars
-    ::ListRef<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElParametersElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElDynamic {
-    processors: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    processors: std
-    ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl>>,
-    dynamic: KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElDynamic,
-}
-
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `processors`.\n"]
-    pub fn set_processors(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.processors = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.processors = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildKinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl {}
-
-impl BuildKinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl {
-            enabled: core::default::Default::default(),
-            processors: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElRef {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `processors` after provisioning.\n"]
-    pub fn processors(
-        &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElProcessorsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.processors", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamSplunkConfigurationElDynamic {
+struct KinesisFirehoseDeliveryStream_SnowflakeConfigurationDynamic {
     cloudwatch_logging_options: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl>>,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
     processing_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    secrets_manager_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration>>,
+    snowflake_role_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration>>,
+    snowflake_vpc_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
+pub struct KinesisFirehoseDeliveryStream_SnowflakeConfiguration {
+    account_url: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    content_column_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_loading_option: std::option::Option<terrars::PrimField<std::string::String>>,
+    database: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_passphrase: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metadata_column_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retry_duration: std::option::Option<terrars::PrimField<f64>>,
+    role_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_backup_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    schema: terrars::PrimField<std::string::String>,
+    table: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    processing_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secrets_manager_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    snowflake_role_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    snowflake_vpc_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration>>,
+    dynamic: KinesisFirehoseDeliveryStream_SnowflakeConfigurationDynamic,
+}
+
+impl KinesisFirehoseDeliveryStream_SnowflakeConfiguration {
+    #[doc = "Set the field `buffering_interval`.\n"]
+    pub fn set_buffering_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_interval = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `buffering_size`.\n"]
+    pub fn set_buffering_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_size = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `content_column_name`.\n"]
+    pub fn set_content_column_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.content_column_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `data_loading_option`.\n"]
+    pub fn set_data_loading_option(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.data_loading_option = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `key_passphrase`.\n"]
+    pub fn set_key_passphrase(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.key_passphrase = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metadata_column_name`.\n"]
+    pub fn set_metadata_column_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.metadata_column_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `private_key`.\n"]
+    pub fn set_private_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.private_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retry_duration`.\n"]
+    pub fn set_retry_duration(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.retry_duration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `s3_backup_mode`.\n"]
+    pub fn set_s3_backup_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.s3_backup_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user`.\n"]
+    pub fn set_user(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.user = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cloudwatch_logging_options`.\n"]
+    pub fn set_cloudwatch_logging_options(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_logging_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_logging_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `processing_configuration`.\n"]
+    pub fn set_processing_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.processing_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.processing_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `secrets_manager_configuration`.\n"]
+    pub fn set_secrets_manager_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.secrets_manager_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.secrets_manager_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `snowflake_role_configuration`.\n"]
+    pub fn set_snowflake_role_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfiguration,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.snowflake_role_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.snowflake_role_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `snowflake_vpc_configuration`.\n"]
+    pub fn set_snowflake_vpc_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfiguration,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.snowflake_vpc_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.snowflake_vpc_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_SnowflakeConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SnowflakeConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_SnowflakeConfiguration {
+    #[doc = ""]
+    pub account_url: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub database: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub schema: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub table: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKinesisFirehoseDeliveryStream_SnowflakeConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_SnowflakeConfiguration {
+        KinesisFirehoseDeliveryStream_SnowflakeConfiguration {
+            account_url: self.account_url,
+            buffering_interval: core::default::Default::default(),
+            buffering_size: core::default::Default::default(),
+            content_column_name: core::default::Default::default(),
+            data_loading_option: core::default::Default::default(),
+            database: self.database,
+            key_passphrase: core::default::Default::default(),
+            metadata_column_name: core::default::Default::default(),
+            private_key: core::default::Default::default(),
+            retry_duration: core::default::Default::default(),
+            role_arn: self.role_arn,
+            s3_backup_mode: core::default::Default::default(),
+            schema: self.schema,
+            table: self.table,
+            user: core::default::Default::default(),
+            cloudwatch_logging_options: core::default::Default::default(),
+            processing_configuration: core::default::Default::default(),
+            s3_configuration: core::default::Default::default(),
+            secrets_manager_configuration: core::default::Default::default(),
+            snowflake_role_configuration: core::default::Default::default(),
+            snowflake_vpc_configuration: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SnowflakeConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_SnowflakeConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KinesisFirehoseDeliveryStream_SnowflakeConfigurationRef {
+        KinesisFirehoseDeliveryStream_SnowflakeConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_SnowflakeConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `account_url` after provisioning.\n"]
+    pub fn account_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_url", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_interval` after provisioning.\n"]
+    pub fn buffering_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_interval", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_size` after provisioning.\n"]
+    pub fn buffering_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `content_column_name` after provisioning.\n"]
+    pub fn content_column_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_column_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `data_loading_option` after provisioning.\n"]
+    pub fn data_loading_option(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_loading_option", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `database` after provisioning.\n"]
+    pub fn database(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `key_passphrase` after provisioning.\n"]
+    pub fn key_passphrase(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_passphrase", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `metadata_column_name` after provisioning.\n"]
+    pub fn metadata_column_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metadata_column_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `private_key` after provisioning.\n"]
+    pub fn private_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `retry_duration` after provisioning.\n"]
+    pub fn retry_duration(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retry_duration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_backup_mode` after provisioning.\n"]
+    pub fn s3_backup_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_backup_mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
+    pub fn schema(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `table` after provisioning.\n"]
+    pub fn table(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.table", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `user` after provisioning.\n"]
+    pub fn user(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
+    pub fn cloudwatch_logging_options(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `processing_configuration` after provisioning.\n"]
+    pub fn processing_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.processing_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secrets_manager_configuration` after provisioning.\n"]
+    pub fn secrets_manager_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secrets_manager_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `snowflake_role_configuration` after provisioning.\n"]
+    pub fn snowflake_role_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeRoleConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.snowflake_role_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `snowflake_vpc_configuration` after provisioning.\n"]
+    pub fn snowflake_vpc_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SnowflakeConfiguration_SnowflakeVpcConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.snowflake_vpc_configuration", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct KinesisFirehoseDeliveryStream_SplunkConfigurationDynamic {
+    cloudwatch_logging_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
+    processing_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    secrets_manager_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration>>,
+}
+
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buffering_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hec_acknowledgment_timeout: std::option::Option<terrars::PrimField<f64>>,
     hec_endpoint: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hec_endpoint_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    hec_token: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hec_token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retry_duration: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -6929,15 +7291,35 @@ pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_logging_options: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl>>,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     processing_configuration: std
     ::option
-    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl>>,
-    dynamic: KinesisFirehoseDeliveryStreamSplunkConfigurationElDynamic,
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secrets_manager_configuration: std
+    ::option
+    ::Option<std::vec::Vec<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration>>,
+    dynamic: KinesisFirehoseDeliveryStream_SplunkConfigurationDynamic,
 }
 
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
+impl KinesisFirehoseDeliveryStream_SplunkConfiguration {
+    #[doc = "Set the field `buffering_interval`.\n"]
+    pub fn set_buffering_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_interval = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `buffering_size`.\n"]
+    pub fn set_buffering_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.buffering_size = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `hec_acknowledgment_timeout`.\n"]
     pub fn set_hec_acknowledgment_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.hec_acknowledgment_timeout = std::option::Option::Some(v.into());
@@ -6947,6 +7329,12 @@ impl KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
     #[doc = "Set the field `hec_endpoint_type`.\n"]
     pub fn set_hec_endpoint_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.hec_endpoint_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `hec_token`.\n"]
+    pub fn set_hec_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.hec_token = std::option::Option::Some(v.into());
         self
     }
 
@@ -6972,9 +7360,7 @@ impl KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsEl,
-                        >,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -6998,7 +7384,7 @@ impl KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationEl>,
+                        ::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7011,10 +7397,59 @@ impl KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
         }
         self
     }
+
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3Configuration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `secrets_manager_configuration`.\n"]
+    pub fn set_secrets_manager_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfiguration,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.secrets_manager_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.secrets_manager_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
-    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStreamSplunkConfigurationEl>;
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_SplunkConfiguration {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_SplunkConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7025,49 +7460,63 @@ impl terrars::ToListMappable for KinesisFirehoseDeliveryStreamSplunkConfiguratio
     }
 }
 
-pub struct BuildKinesisFirehoseDeliveryStreamSplunkConfigurationEl {
+pub struct BuildKinesisFirehoseDeliveryStream_SplunkConfiguration {
     #[doc = ""]
     pub hec_endpoint: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub hec_token: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisFirehoseDeliveryStreamSplunkConfigurationEl {
-    pub fn build(self) -> KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationEl {
+impl BuildKinesisFirehoseDeliveryStream_SplunkConfiguration {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_SplunkConfiguration {
+        KinesisFirehoseDeliveryStream_SplunkConfiguration {
+            buffering_interval: core::default::Default::default(),
+            buffering_size: core::default::Default::default(),
             hec_acknowledgment_timeout: core::default::Default::default(),
             hec_endpoint: self.hec_endpoint,
             hec_endpoint_type: core::default::Default::default(),
-            hec_token: self.hec_token,
+            hec_token: core::default::Default::default(),
             retry_duration: core::default::Default::default(),
             s3_backup_mode: core::default::Default::default(),
             cloudwatch_logging_options: core::default::Default::default(),
             processing_configuration: core::default::Default::default(),
+            s3_configuration: core::default::Default::default(),
+            secrets_manager_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct KinesisFirehoseDeliveryStreamSplunkConfigurationElRef {
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_SplunkConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisFirehoseDeliveryStreamSplunkConfigurationElRef {
+impl terrars::Ref for KinesisFirehoseDeliveryStream_SplunkConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KinesisFirehoseDeliveryStreamSplunkConfigurationElRef {
-        KinesisFirehoseDeliveryStreamSplunkConfigurationElRef {
+    ) -> KinesisFirehoseDeliveryStream_SplunkConfigurationRef {
+        KinesisFirehoseDeliveryStream_SplunkConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisFirehoseDeliveryStreamSplunkConfigurationElRef {
+impl KinesisFirehoseDeliveryStream_SplunkConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_interval` after provisioning.\n"]
+    pub fn buffering_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_interval", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `buffering_size` after provisioning.\n"]
+    pub fn buffering_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.buffering_size", self.base))
     }
 
     #[doc = "Get a reference to the value of field `hec_acknowledgment_timeout` after provisioning.\n"]
@@ -7103,40 +7552,119 @@ impl KinesisFirehoseDeliveryStreamSplunkConfigurationElRef {
     #[doc = "Get a reference to the value of field `cloudwatch_logging_options` after provisioning.\n"]
     pub fn cloudwatch_logging_options(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamSplunkConfigurationElCloudwatchLoggingOptionsElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_CloudwatchLoggingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logging_options", self.base))
     }
 
     #[doc = "Get a reference to the value of field `processing_configuration` after provisioning.\n"]
     pub fn processing_configuration(
         &self,
-    ) -> terrars::ListRef<KinesisFirehoseDeliveryStreamSplunkConfigurationElProcessingConfigurationElRef> {
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_ProcessingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.processing_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secrets_manager_configuration` after provisioning.\n"]
+    pub fn secrets_manager_configuration(
+        &self,
+    ) -> terrars::ListRef<KinesisFirehoseDeliveryStream_SplunkConfiguration_SecretsManagerConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.secrets_manager_configuration", self.base))
     }
 }
 
-#[derive(Serialize, Default)]
-struct KinesisFirehoseDeliveryStreamDynamic {
-    elasticsearch_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamElasticsearchConfigurationEl>>,
-    extended_s3_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamExtendedS3ConfigurationEl>>,
-    http_endpoint_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamHttpEndpointConfigurationEl>>,
-    kinesis_source_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamKinesisSourceConfigurationEl>>,
-    redshift_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamRedshiftConfigurationEl>>,
-    s3_configuration: std::option::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamS3ConfigurationEl>>,
-    server_side_encryption: std
-    ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamServerSideEncryptionEl>>,
-    splunk_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<KinesisFirehoseDeliveryStreamSplunkConfigurationEl>>,
+#[derive(Serialize)]
+pub struct KinesisFirehoseDeliveryStream_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl KinesisFirehoseDeliveryStream_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for KinesisFirehoseDeliveryStream_Timeouts {
+    type O = terrars::BlockAssignable<KinesisFirehoseDeliveryStream_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKinesisFirehoseDeliveryStream_Timeouts {}
+
+impl BuildKinesisFirehoseDeliveryStream_Timeouts {
+    pub fn build(self) -> KinesisFirehoseDeliveryStream_Timeouts {
+        KinesisFirehoseDeliveryStream_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KinesisFirehoseDeliveryStream_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KinesisFirehoseDeliveryStream_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KinesisFirehoseDeliveryStream_TimeoutsRef {
+        KinesisFirehoseDeliveryStream_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KinesisFirehoseDeliveryStream_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

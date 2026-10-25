@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EfsBackupPolicyData {
+struct EfsBackupPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct EfsBackupPolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    backup_policy: std::option::Option<std::vec::Vec<EfsBackupPolicyBackupPolicyEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backup_policy: std::option::Option<std::vec::Vec<EfsBackupPolicy_BackupPolicy>>,
     dynamic: EfsBackupPolicyDynamic,
 }
 
 struct EfsBackupPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EfsBackupPolicyData>,
+    data: std::cell::RefCell<EfsBackupPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl EfsBackupPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `backup_policy`.\n"]
     pub fn set_backup_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EfsBackupPolicyBackupPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EfsBackupPolicy_BackupPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -161,8 +172,14 @@ impl EfsBackupPolicy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `backup_policy` after provisioning.\n"]
-    pub fn backup_policy(&self) -> terrars::ListRef<EfsBackupPolicyBackupPolicyElRef> {
+    pub fn backup_policy(&self) -> terrars::ListRef<EfsBackupPolicy_BackupPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.backup_policy", self.extract_ref()))
     }
 }
@@ -209,7 +226,7 @@ impl BuildEfsBackupPolicy {
         let out = EfsBackupPolicy(std::rc::Rc::new(EfsBackupPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EfsBackupPolicyData {
+            data: std::cell::RefCell::new(EfsBackupPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -217,6 +234,7 @@ impl BuildEfsBackupPolicy {
                 provisioner: core::default::Default::default(),
                 file_system_id: self.file_system_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 backup_policy: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -259,21 +277,32 @@ impl EfsBackupPolicyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `backup_policy` after provisioning.\n"]
-    pub fn backup_policy(&self) -> terrars::ListRef<EfsBackupPolicyBackupPolicyElRef> {
+    pub fn backup_policy(&self) -> terrars::ListRef<EfsBackupPolicy_BackupPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.backup_policy", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EfsBackupPolicyDynamic {
+    backup_policy: std::option::Option<terrars::DynamicBlock<EfsBackupPolicy_BackupPolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct EfsBackupPolicyBackupPolicyEl {
+pub struct EfsBackupPolicy_BackupPolicy {
     status: terrars::PrimField<std::string::String>,
 }
 
-impl EfsBackupPolicyBackupPolicyEl { }
+impl EfsBackupPolicy_BackupPolicy { }
 
-impl terrars::ToListMappable for EfsBackupPolicyBackupPolicyEl {
-    type O = terrars::BlockAssignable<EfsBackupPolicyBackupPolicyEl>;
+impl terrars::ToListMappable for EfsBackupPolicy_BackupPolicy {
+    type O = terrars::BlockAssignable<EfsBackupPolicy_BackupPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -284,32 +313,34 @@ impl terrars::ToListMappable for EfsBackupPolicyBackupPolicyEl {
     }
 }
 
-pub struct BuildEfsBackupPolicyBackupPolicyEl {
+pub struct BuildEfsBackupPolicy_BackupPolicy {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEfsBackupPolicyBackupPolicyEl {
-    pub fn build(self) -> EfsBackupPolicyBackupPolicyEl {
-        EfsBackupPolicyBackupPolicyEl { status: self.status }
+impl BuildEfsBackupPolicy_BackupPolicy {
+    pub fn build(self) -> EfsBackupPolicy_BackupPolicy {
+        EfsBackupPolicy_BackupPolicy { status: self.status }
     }
 }
 
-pub struct EfsBackupPolicyBackupPolicyElRef {
+#[allow(dead_code)]
+pub struct EfsBackupPolicy_BackupPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EfsBackupPolicyBackupPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsBackupPolicyBackupPolicyElRef {
-        EfsBackupPolicyBackupPolicyElRef {
+impl terrars::Ref for EfsBackupPolicy_BackupPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsBackupPolicy_BackupPolicyRef {
+        EfsBackupPolicy_BackupPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EfsBackupPolicyBackupPolicyElRef {
+impl EfsBackupPolicy_BackupPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -318,9 +349,4 @@ impl EfsBackupPolicyBackupPolicyElRef {
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EfsBackupPolicyDynamic {
-    backup_policy: std::option::Option<terrars::DynamicBlock<EfsBackupPolicyBackupPolicyEl>>,
 }

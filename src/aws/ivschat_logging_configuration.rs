@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IvschatLoggingConfigurationData {
+struct IvschatLoggingConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,20 +25,22 @@ struct IvschatLoggingConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_configuration: std::option::Option<std::vec::Vec<IvschatLoggingConfigurationDestinationConfigurationEl>>,
+    destination_configuration: std::option::Option<std::vec::Vec<IvschatLoggingConfiguration_DestinationConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IvschatLoggingConfigurationTimeoutsEl>,
+    timeouts: std::option::Option<IvschatLoggingConfiguration_Timeouts>,
     dynamic: IvschatLoggingConfigurationDynamic,
 }
 
 struct IvschatLoggingConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IvschatLoggingConfigurationData>,
+    data: std::cell::RefCell<IvschatLoggingConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl IvschatLoggingConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -169,7 +180,7 @@ impl IvschatLoggingConfiguration {
     #[doc = "Set the field `destination_configuration`.\n"]
     pub fn set_destination_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IvschatLoggingConfigurationDestinationConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IvschatLoggingConfiguration_DestinationConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -183,7 +194,7 @@ impl IvschatLoggingConfiguration {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IvschatLoggingConfigurationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IvschatLoggingConfiguration_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -203,6 +214,12 @@ impl IvschatLoggingConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -219,15 +236,13 @@ impl IvschatLoggingConfiguration {
     }
 
     #[doc = "Get a reference to the value of field `destination_configuration` after provisioning.\n"]
-    pub fn destination_configuration(
-        &self,
-    ) -> terrars::ListRef<IvschatLoggingConfigurationDestinationConfigurationElRef> {
+    pub fn destination_configuration(&self) -> terrars::ListRef<IvschatLoggingConfiguration_DestinationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IvschatLoggingConfigurationTimeoutsElRef {
-        IvschatLoggingConfigurationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IvschatLoggingConfiguration_TimeoutsRef {
+        IvschatLoggingConfiguration_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -274,7 +289,7 @@ impl BuildIvschatLoggingConfiguration {
         let out = IvschatLoggingConfiguration(std::rc::Rc::new(IvschatLoggingConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IvschatLoggingConfigurationData {
+            data: std::cell::RefCell::new(IvschatLoggingConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -282,6 +297,7 @@ impl BuildIvschatLoggingConfiguration {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 destination_configuration: core::default::Default::default(),
@@ -332,6 +348,12 @@ impl IvschatLoggingConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -348,30 +370,35 @@ impl IvschatLoggingConfigurationRef {
     }
 
     #[doc = "Get a reference to the value of field `destination_configuration` after provisioning.\n"]
-    pub fn destination_configuration(
-        &self,
-    ) -> terrars::ListRef<IvschatLoggingConfigurationDestinationConfigurationElRef> {
+    pub fn destination_configuration(&self) -> terrars::ListRef<IvschatLoggingConfiguration_DestinationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IvschatLoggingConfigurationTimeoutsElRef {
-        IvschatLoggingConfigurationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> IvschatLoggingConfiguration_TimeoutsRef {
+        IvschatLoggingConfiguration_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct IvschatLoggingConfigurationDynamic {
+    destination_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<IvschatLoggingConfiguration_DestinationConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl {
+pub struct IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs {
     log_group_name: terrars::PrimField<std::string::String>,
 }
 
-impl IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl { }
+impl IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs { }
 
-impl terrars::ToListMappable for IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl {
-    type O = terrars::BlockAssignable<IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl>;
+impl terrars::ToListMappable for IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs {
+    type O = terrars::BlockAssignable<IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -382,35 +409,37 @@ impl terrars::ToListMappable for IvschatLoggingConfigurationDestinationConfigura
     }
 }
 
-pub struct BuildIvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl {
+pub struct BuildIvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs {
     #[doc = ""]
     pub log_group_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl {
-    pub fn build(self) -> IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl {
-        IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl { log_group_name: self.log_group_name }
+impl BuildIvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs {
+    pub fn build(self) -> IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs {
+        IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs { log_group_name: self.log_group_name }
     }
 }
 
-pub struct IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsElRef {
+#[allow(dead_code)]
+pub struct IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsElRef {
+impl terrars::Ref for IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsElRef {
-        IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsElRef {
+    ) -> IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogsRef {
+        IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsElRef {
+impl IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,14 +451,14 @@ impl IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct IvschatLoggingConfigurationDestinationConfigurationElFirehoseEl {
+pub struct IvschatLoggingConfiguration_DestinationConfiguration_Firehose {
     delivery_stream_name: terrars::PrimField<std::string::String>,
 }
 
-impl IvschatLoggingConfigurationDestinationConfigurationElFirehoseEl { }
+impl IvschatLoggingConfiguration_DestinationConfiguration_Firehose { }
 
-impl terrars::ToListMappable for IvschatLoggingConfigurationDestinationConfigurationElFirehoseEl {
-    type O = terrars::BlockAssignable<IvschatLoggingConfigurationDestinationConfigurationElFirehoseEl>;
+impl terrars::ToListMappable for IvschatLoggingConfiguration_DestinationConfiguration_Firehose {
+    type O = terrars::BlockAssignable<IvschatLoggingConfiguration_DestinationConfiguration_Firehose>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -440,37 +469,39 @@ impl terrars::ToListMappable for IvschatLoggingConfigurationDestinationConfigura
     }
 }
 
-pub struct BuildIvschatLoggingConfigurationDestinationConfigurationElFirehoseEl {
+pub struct BuildIvschatLoggingConfiguration_DestinationConfiguration_Firehose {
     #[doc = ""]
     pub delivery_stream_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIvschatLoggingConfigurationDestinationConfigurationElFirehoseEl {
-    pub fn build(self) -> IvschatLoggingConfigurationDestinationConfigurationElFirehoseEl {
-        IvschatLoggingConfigurationDestinationConfigurationElFirehoseEl {
+impl BuildIvschatLoggingConfiguration_DestinationConfiguration_Firehose {
+    pub fn build(self) -> IvschatLoggingConfiguration_DestinationConfiguration_Firehose {
+        IvschatLoggingConfiguration_DestinationConfiguration_Firehose {
             delivery_stream_name: self.delivery_stream_name,
         }
     }
 }
 
-pub struct IvschatLoggingConfigurationDestinationConfigurationElFirehoseElRef {
+#[allow(dead_code)]
+pub struct IvschatLoggingConfiguration_DestinationConfiguration_FirehoseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IvschatLoggingConfigurationDestinationConfigurationElFirehoseElRef {
+impl terrars::Ref for IvschatLoggingConfiguration_DestinationConfiguration_FirehoseRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IvschatLoggingConfigurationDestinationConfigurationElFirehoseElRef {
-        IvschatLoggingConfigurationDestinationConfigurationElFirehoseElRef {
+    ) -> IvschatLoggingConfiguration_DestinationConfiguration_FirehoseRef {
+        IvschatLoggingConfiguration_DestinationConfiguration_FirehoseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IvschatLoggingConfigurationDestinationConfigurationElFirehoseElRef {
+impl IvschatLoggingConfiguration_DestinationConfiguration_FirehoseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -482,14 +513,14 @@ impl IvschatLoggingConfigurationDestinationConfigurationElFirehoseElRef {
 }
 
 #[derive(Serialize)]
-pub struct IvschatLoggingConfigurationDestinationConfigurationElS3El {
+pub struct IvschatLoggingConfiguration_DestinationConfiguration_S3 {
     bucket_name: terrars::PrimField<std::string::String>,
 }
 
-impl IvschatLoggingConfigurationDestinationConfigurationElS3El { }
+impl IvschatLoggingConfiguration_DestinationConfiguration_S3 { }
 
-impl terrars::ToListMappable for IvschatLoggingConfigurationDestinationConfigurationElS3El {
-    type O = terrars::BlockAssignable<IvschatLoggingConfigurationDestinationConfigurationElS3El>;
+impl terrars::ToListMappable for IvschatLoggingConfiguration_DestinationConfiguration_S3 {
+    type O = terrars::BlockAssignable<IvschatLoggingConfiguration_DestinationConfiguration_S3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -500,35 +531,37 @@ impl terrars::ToListMappable for IvschatLoggingConfigurationDestinationConfigura
     }
 }
 
-pub struct BuildIvschatLoggingConfigurationDestinationConfigurationElS3El {
+pub struct BuildIvschatLoggingConfiguration_DestinationConfiguration_S3 {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIvschatLoggingConfigurationDestinationConfigurationElS3El {
-    pub fn build(self) -> IvschatLoggingConfigurationDestinationConfigurationElS3El {
-        IvschatLoggingConfigurationDestinationConfigurationElS3El { bucket_name: self.bucket_name }
+impl BuildIvschatLoggingConfiguration_DestinationConfiguration_S3 {
+    pub fn build(self) -> IvschatLoggingConfiguration_DestinationConfiguration_S3 {
+        IvschatLoggingConfiguration_DestinationConfiguration_S3 { bucket_name: self.bucket_name }
     }
 }
 
-pub struct IvschatLoggingConfigurationDestinationConfigurationElS3ElRef {
+#[allow(dead_code)]
+pub struct IvschatLoggingConfiguration_DestinationConfiguration_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IvschatLoggingConfigurationDestinationConfigurationElS3ElRef {
+impl terrars::Ref for IvschatLoggingConfiguration_DestinationConfiguration_S3Ref {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IvschatLoggingConfigurationDestinationConfigurationElS3ElRef {
-        IvschatLoggingConfigurationDestinationConfigurationElS3ElRef {
+    ) -> IvschatLoggingConfiguration_DestinationConfiguration_S3Ref {
+        IvschatLoggingConfiguration_DestinationConfiguration_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IvschatLoggingConfigurationDestinationConfigurationElS3ElRef {
+impl IvschatLoggingConfiguration_DestinationConfiguration_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -540,30 +573,30 @@ impl IvschatLoggingConfigurationDestinationConfigurationElS3ElRef {
 }
 
 #[derive(Serialize, Default)]
-struct IvschatLoggingConfigurationDestinationConfigurationElDynamic {
+struct IvschatLoggingConfiguration_DestinationConfigurationDynamic {
     cloudwatch_logs: std
     ::option
-    ::Option<terrars::DynamicBlock<IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl>>,
+    ::Option<terrars::DynamicBlock<IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs>>,
     firehose: std
     ::option
-    ::Option<terrars::DynamicBlock<IvschatLoggingConfigurationDestinationConfigurationElFirehoseEl>>,
-    s3: std::option::Option<terrars::DynamicBlock<IvschatLoggingConfigurationDestinationConfigurationElS3El>>,
+    ::Option<terrars::DynamicBlock<IvschatLoggingConfiguration_DestinationConfiguration_Firehose>>,
+    s3: std::option::Option<terrars::DynamicBlock<IvschatLoggingConfiguration_DestinationConfiguration_S3>>,
 }
 
 #[derive(Serialize)]
-pub struct IvschatLoggingConfigurationDestinationConfigurationEl {
+pub struct IvschatLoggingConfiguration_DestinationConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_logs: std
     ::option
-    ::Option<std::vec::Vec<IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl>>,
+    ::Option<std::vec::Vec<IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    firehose: std::option::Option<std::vec::Vec<IvschatLoggingConfigurationDestinationConfigurationElFirehoseEl>>,
+    firehose: std::option::Option<std::vec::Vec<IvschatLoggingConfiguration_DestinationConfiguration_Firehose>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3: std::option::Option<std::vec::Vec<IvschatLoggingConfigurationDestinationConfigurationElS3El>>,
-    dynamic: IvschatLoggingConfigurationDestinationConfigurationElDynamic,
+    s3: std::option::Option<std::vec::Vec<IvschatLoggingConfiguration_DestinationConfiguration_S3>>,
+    dynamic: IvschatLoggingConfiguration_DestinationConfigurationDynamic,
 }
 
-impl IvschatLoggingConfigurationDestinationConfigurationEl {
+impl IvschatLoggingConfiguration_DestinationConfiguration {
     #[doc = "Set the field `cloudwatch_logs`.\n"]
     pub fn set_cloudwatch_logs(
         mut self,
@@ -573,8 +606,7 @@ impl IvschatLoggingConfigurationDestinationConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsEl>,
+                        terrars::BlockAssignable<IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogs>,
                     >,
     ) -> Self {
         match v.into() {
@@ -596,7 +628,7 @@ impl IvschatLoggingConfigurationDestinationConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IvschatLoggingConfigurationDestinationConfigurationElFirehoseEl>>,
+                    ::Into<terrars::BlockAssignable<IvschatLoggingConfiguration_DestinationConfiguration_Firehose>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -617,7 +649,7 @@ impl IvschatLoggingConfigurationDestinationConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IvschatLoggingConfigurationDestinationConfigurationElS3El>>,
+                    ::Into<terrars::BlockAssignable<IvschatLoggingConfiguration_DestinationConfiguration_S3>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -631,8 +663,8 @@ impl IvschatLoggingConfigurationDestinationConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for IvschatLoggingConfigurationDestinationConfigurationEl {
-    type O = terrars::BlockAssignable<IvschatLoggingConfigurationDestinationConfigurationEl>;
+impl terrars::ToListMappable for IvschatLoggingConfiguration_DestinationConfiguration {
+    type O = terrars::BlockAssignable<IvschatLoggingConfiguration_DestinationConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -643,11 +675,11 @@ impl terrars::ToListMappable for IvschatLoggingConfigurationDestinationConfigura
     }
 }
 
-pub struct BuildIvschatLoggingConfigurationDestinationConfigurationEl {}
+pub struct BuildIvschatLoggingConfiguration_DestinationConfiguration {}
 
-impl BuildIvschatLoggingConfigurationDestinationConfigurationEl {
-    pub fn build(self) -> IvschatLoggingConfigurationDestinationConfigurationEl {
-        IvschatLoggingConfigurationDestinationConfigurationEl {
+impl BuildIvschatLoggingConfiguration_DestinationConfiguration {
+    pub fn build(self) -> IvschatLoggingConfiguration_DestinationConfiguration {
+        IvschatLoggingConfiguration_DestinationConfiguration {
             cloudwatch_logs: core::default::Default::default(),
             firehose: core::default::Default::default(),
             s3: core::default::Default::default(),
@@ -656,24 +688,26 @@ impl BuildIvschatLoggingConfigurationDestinationConfigurationEl {
     }
 }
 
-pub struct IvschatLoggingConfigurationDestinationConfigurationElRef {
+#[allow(dead_code)]
+pub struct IvschatLoggingConfiguration_DestinationConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IvschatLoggingConfigurationDestinationConfigurationElRef {
+impl terrars::Ref for IvschatLoggingConfiguration_DestinationConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IvschatLoggingConfigurationDestinationConfigurationElRef {
-        IvschatLoggingConfigurationDestinationConfigurationElRef {
+    ) -> IvschatLoggingConfiguration_DestinationConfigurationRef {
+        IvschatLoggingConfiguration_DestinationConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IvschatLoggingConfigurationDestinationConfigurationElRef {
+impl IvschatLoggingConfiguration_DestinationConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -681,23 +715,23 @@ impl IvschatLoggingConfigurationDestinationConfigurationElRef {
     #[doc = "Get a reference to the value of field `cloudwatch_logs` after provisioning.\n"]
     pub fn cloudwatch_logs(
         &self,
-    ) -> terrars::ListRef<IvschatLoggingConfigurationDestinationConfigurationElCloudwatchLogsElRef> {
+    ) -> terrars::ListRef<IvschatLoggingConfiguration_DestinationConfiguration_CloudwatchLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `firehose` after provisioning.\n"]
-    pub fn firehose(&self) -> terrars::ListRef<IvschatLoggingConfigurationDestinationConfigurationElFirehoseElRef> {
+    pub fn firehose(&self) -> terrars::ListRef<IvschatLoggingConfiguration_DestinationConfiguration_FirehoseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.firehose", self.base))
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<IvschatLoggingConfigurationDestinationConfigurationElS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<IvschatLoggingConfiguration_DestinationConfiguration_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IvschatLoggingConfigurationTimeoutsEl {
+pub struct IvschatLoggingConfiguration_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -706,7 +740,7 @@ pub struct IvschatLoggingConfigurationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IvschatLoggingConfigurationTimeoutsEl {
+impl IvschatLoggingConfiguration_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -726,8 +760,8 @@ impl IvschatLoggingConfigurationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IvschatLoggingConfigurationTimeoutsEl {
-    type O = terrars::BlockAssignable<IvschatLoggingConfigurationTimeoutsEl>;
+impl terrars::ToListMappable for IvschatLoggingConfiguration_Timeouts {
+    type O = terrars::BlockAssignable<IvschatLoggingConfiguration_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -738,11 +772,11 @@ impl terrars::ToListMappable for IvschatLoggingConfigurationTimeoutsEl {
     }
 }
 
-pub struct BuildIvschatLoggingConfigurationTimeoutsEl {}
+pub struct BuildIvschatLoggingConfiguration_Timeouts {}
 
-impl BuildIvschatLoggingConfigurationTimeoutsEl {
-    pub fn build(self) -> IvschatLoggingConfigurationTimeoutsEl {
-        IvschatLoggingConfigurationTimeoutsEl {
+impl BuildIvschatLoggingConfiguration_Timeouts {
+    pub fn build(self) -> IvschatLoggingConfiguration_Timeouts {
+        IvschatLoggingConfiguration_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -750,21 +784,23 @@ impl BuildIvschatLoggingConfigurationTimeoutsEl {
     }
 }
 
-pub struct IvschatLoggingConfigurationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IvschatLoggingConfiguration_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IvschatLoggingConfigurationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IvschatLoggingConfigurationTimeoutsElRef {
-        IvschatLoggingConfigurationTimeoutsElRef {
+impl terrars::Ref for IvschatLoggingConfiguration_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IvschatLoggingConfiguration_TimeoutsRef {
+        IvschatLoggingConfiguration_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IvschatLoggingConfigurationTimeoutsElRef {
+impl IvschatLoggingConfiguration_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -783,11 +819,4 @@ impl IvschatLoggingConfigurationTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IvschatLoggingConfigurationDynamic {
-    destination_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<IvschatLoggingConfigurationDestinationConfigurationEl>>,
 }

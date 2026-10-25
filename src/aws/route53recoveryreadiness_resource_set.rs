@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53recoveryreadinessResourceSetData {
+struct Route53recoveryreadinessResourceSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,16 +29,16 @@ struct Route53recoveryreadinessResourceSetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resources: std::option::Option<std::vec::Vec<Route53recoveryreadinessResourceSetResourcesEl>>,
+    resources: std::option::Option<std::vec::Vec<Route53recoveryreadinessResourceSet_Resources>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Route53recoveryreadinessResourceSetTimeoutsEl>,
+    timeouts: std::option::Option<Route53recoveryreadinessResourceSet_Timeouts>,
     dynamic: Route53recoveryreadinessResourceSetDynamic,
 }
 
 struct Route53recoveryreadinessResourceSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53recoveryreadinessResourceSetData>,
+    data: std::cell::RefCell<Route53recoveryreadinessResourceSetData_>,
 }
 
 #[derive(Clone)]
@@ -163,7 +165,7 @@ impl Route53recoveryreadinessResourceSet {
     #[doc = "Set the field `resources`.\n"]
     pub fn set_resources(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53recoveryreadinessResourceSetResourcesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53recoveryreadinessResourceSet_Resources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -177,7 +179,7 @@ impl Route53recoveryreadinessResourceSet {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Route53recoveryreadinessResourceSetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Route53recoveryreadinessResourceSet_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -213,13 +215,13 @@ impl Route53recoveryreadinessResourceSet {
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<Route53recoveryreadinessResourceSetResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<Route53recoveryreadinessResourceSet_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53recoveryreadinessResourceSetTimeoutsElRef {
-        Route53recoveryreadinessResourceSetTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53recoveryreadinessResourceSet_TimeoutsRef {
+        Route53recoveryreadinessResourceSet_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -270,7 +272,7 @@ impl BuildRoute53recoveryreadinessResourceSet {
         let out = Route53recoveryreadinessResourceSet(std::rc::Rc::new(Route53recoveryreadinessResourceSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53recoveryreadinessResourceSetData {
+            data: std::cell::RefCell::new(Route53recoveryreadinessResourceSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -345,26 +347,31 @@ impl Route53recoveryreadinessResourceSetRef {
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<Route53recoveryreadinessResourceSetResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<Route53recoveryreadinessResourceSet_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53recoveryreadinessResourceSetTimeoutsElRef {
-        Route53recoveryreadinessResourceSetTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53recoveryreadinessResourceSet_TimeoutsRef {
+        Route53recoveryreadinessResourceSet_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct Route53recoveryreadinessResourceSetDynamic {
+    resources: std::option::Option<terrars::DynamicBlock<Route53recoveryreadinessResourceSet_Resources>>,
+}
+
 #[derive(Serialize)]
-pub struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl {
+pub struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl {
+impl Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -373,12 +380,10 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetReso
 }
 
 impl terrars
-::ToListMappable for Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl {
+::ToListMappable for Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource {
     type O =
         terrars
-        ::BlockAssignable<
-            Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl,
-        >;
+        ::BlockAssignable<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -389,37 +394,36 @@ impl terrars
     }
 }
 
-pub struct BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl {}
+pub struct BuildRoute53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource {}
 
-impl BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl {
-    pub fn build(
-        self,
-    ) -> Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl {
-        Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl {
+impl BuildRoute53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource {
+    pub fn build(self) -> Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource {
+        Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource {
             arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceElRef {
+#[allow(dead_code)]
+pub struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceElRef {
+impl terrars::Ref for Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceElRef {
-        Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceElRef {
+    ) -> Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResourceRef {
+        Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceElRef {
+impl Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -431,14 +435,14 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetReso
 }
 
 #[derive(Serialize)]
-pub struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl {
+pub struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     record_set_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl {
+impl Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource {
     #[doc = "Set the field `domain_name`.\n"]
     pub fn set_domain_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.domain_name = std::option::Option::Some(v.into());
@@ -453,12 +457,10 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetReso
 }
 
 impl terrars
-::ToListMappable for Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl {
+::ToListMappable for Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource {
     type O =
         terrars
-        ::BlockAssignable<
-            Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl,
-        >;
+        ::BlockAssignable<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -469,38 +471,37 @@ impl terrars
     }
 }
 
-pub struct BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl {}
+pub struct BuildRoute53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource {}
 
-impl BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl {
-    pub fn build(
-        self,
-    ) -> Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl {
-        Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl {
+impl BuildRoute53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource {
+    pub fn build(self) -> Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource {
+        Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource {
             domain_name: core::default::Default::default(),
             record_set_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceElRef {
+#[allow(dead_code)]
+pub struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53ResourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceElRef {
+impl terrars::Ref for Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53ResourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceElRef {
-        Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceElRef {
+    ) -> Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53ResourceRef {
+        Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53ResourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceElRef {
+impl Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53ResourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -517,39 +518,39 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetReso
 }
 
 #[derive(Serialize, Default)]
-struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElDynamic {
+struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResourceDynamic {
     nlb_resource: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl>,
+        ::DynamicBlock<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource>,
     >,
     r53_resource: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl>,
+        ::DynamicBlock<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl {
+pub struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nlb_resource: std
     ::option
     ::Option<
-        std::vec::Vec<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl>,
+        std::vec::Vec<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     r53_resource: std
     ::option
     ::Option<
-        std::vec::Vec<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl>,
+        std::vec::Vec<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource>,
     >,
-    dynamic: Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElDynamic,
+    dynamic: Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResourceDynamic,
 }
 
-impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl {
+impl Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource {
     #[doc = "Set the field `nlb_resource`.\n"]
     pub fn set_nlb_resource(
         mut self,
@@ -561,7 +562,7 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetReso
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceEl,
+                            Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResource,
                         >,
                     >,
     ) -> Self {
@@ -587,7 +588,7 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetReso
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceEl,
+                            Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53Resource,
                         >,
                     >,
     ) -> Self {
@@ -603,9 +604,9 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetReso
     }
 }
 
-impl terrars::ToListMappable for Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl {
+impl terrars::ToListMappable for Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource {
     type O =
-        terrars::BlockAssignable<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl>;
+        terrars::BlockAssignable<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -616,11 +617,11 @@ impl terrars::ToListMappable for Route53recoveryreadinessResourceSetResourcesElD
     }
 }
 
-pub struct BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl {}
+pub struct BuildRoute53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource {}
 
-impl BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl {
-    pub fn build(self) -> Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl {
-        Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl {
+impl BuildRoute53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource {
+    pub fn build(self) -> Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource {
+        Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource {
             nlb_resource: core::default::Default::default(),
             r53_resource: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -628,24 +629,26 @@ impl BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTarge
     }
 }
 
-pub struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElRef {
+#[allow(dead_code)]
+pub struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElRef {
+impl terrars::Ref for Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElRef {
-        Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElRef {
+    ) -> Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResourceRef {
+        Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElRef {
+impl Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -654,7 +657,7 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetReso
     pub fn nlb_resource(
         &self,
     ) -> terrars
-    ::ListRef<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElNlbResourceElRef> {
+    ::ListRef<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_NlbResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nlb_resource", self.base))
     }
 
@@ -662,22 +665,20 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetReso
     pub fn r53_resource(
         &self,
     ) -> terrars
-    ::ListRef<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElR53ResourceElRef> {
+    ::ListRef<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource_R53ResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.r53_resource", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElDynamic {
+struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResourceDynamic {
     target_resource: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl>,
-    >,
+    ::Option<terrars::DynamicBlock<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource>>,
 }
 
 #[derive(Serialize)]
-pub struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
+pub struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResource {
     domain_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hosted_zone_arn: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -688,11 +689,11 @@ pub struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_resource: std
     ::option
-    ::Option<std::vec::Vec<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl>>,
-    dynamic: Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElDynamic,
+    ::Option<std::vec::Vec<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource>>,
+    dynamic: Route53recoveryreadinessResourceSet_Resources_DnsTargetResourceDynamic,
 }
 
-impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
+impl Route53recoveryreadinessResourceSet_Resources_DnsTargetResource {
     #[doc = "Set the field `hosted_zone_arn`.\n"]
     pub fn set_hosted_zone_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.hosted_zone_arn = std::option::Option::Some(v.into());
@@ -722,7 +723,7 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceEl,
+                            Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResource,
                         >,
                     >,
     ) -> Self {
@@ -738,8 +739,8 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
     }
 }
 
-impl terrars::ToListMappable for Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
-    type O = terrars::BlockAssignable<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl>;
+impl terrars::ToListMappable for Route53recoveryreadinessResourceSet_Resources_DnsTargetResource {
+    type O = terrars::BlockAssignable<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -750,14 +751,14 @@ impl terrars::ToListMappable for Route53recoveryreadinessResourceSetResourcesElD
     }
 }
 
-pub struct BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
+pub struct BuildRoute53recoveryreadinessResourceSet_Resources_DnsTargetResource {
     #[doc = ""]
     pub domain_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
-    pub fn build(self) -> Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
-        Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
+impl BuildRoute53recoveryreadinessResourceSet_Resources_DnsTargetResource {
+    pub fn build(self) -> Route53recoveryreadinessResourceSet_Resources_DnsTargetResource {
+        Route53recoveryreadinessResourceSet_Resources_DnsTargetResource {
             domain_name: self.domain_name,
             hosted_zone_arn: core::default::Default::default(),
             record_set_id: core::default::Default::default(),
@@ -768,24 +769,26 @@ impl BuildRoute53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl {
     }
 }
 
-pub struct Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElRef {
+#[allow(dead_code)]
+pub struct Route53recoveryreadinessResourceSet_Resources_DnsTargetResourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElRef {
+impl terrars::Ref for Route53recoveryreadinessResourceSet_Resources_DnsTargetResourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElRef {
-        Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElRef {
+    ) -> Route53recoveryreadinessResourceSet_Resources_DnsTargetResourceRef {
+        Route53recoveryreadinessResourceSet_Resources_DnsTargetResourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElRef {
+impl Route53recoveryreadinessResourceSet_Resources_DnsTargetResourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -813,20 +816,20 @@ impl Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElRef {
     #[doc = "Get a reference to the value of field `target_resource` after provisioning.\n"]
     pub fn target_resource(
         &self,
-    ) -> terrars::ListRef<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElTargetResourceElRef> {
+    ) -> terrars::ListRef<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource_TargetResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_resource", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Route53recoveryreadinessResourceSetResourcesElDynamic {
+struct Route53recoveryreadinessResourceSet_ResourcesDynamic {
     dns_target_resource: std
     ::option
-    ::Option<terrars::DynamicBlock<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl>>,
+    ::Option<terrars::DynamicBlock<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource>>,
 }
 
 #[derive(Serialize)]
-pub struct Route53recoveryreadinessResourceSetResourcesEl {
+pub struct Route53recoveryreadinessResourceSet_Resources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     readiness_scopes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -834,11 +837,11 @@ pub struct Route53recoveryreadinessResourceSetResourcesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_target_resource: std
     ::option
-    ::Option<std::vec::Vec<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl>>,
-    dynamic: Route53recoveryreadinessResourceSetResourcesElDynamic,
+    ::Option<std::vec::Vec<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource>>,
+    dynamic: Route53recoveryreadinessResourceSet_ResourcesDynamic,
 }
 
-impl Route53recoveryreadinessResourceSetResourcesEl {
+impl Route53recoveryreadinessResourceSet_Resources {
     #[doc = "Set the field `readiness_scopes`.\n"]
     pub fn set_readiness_scopes(
         mut self,
@@ -862,9 +865,7 @@ impl Route53recoveryreadinessResourceSetResourcesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<Route53recoveryreadinessResourceSet_Resources_DnsTargetResource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -878,8 +879,8 @@ impl Route53recoveryreadinessResourceSetResourcesEl {
     }
 }
 
-impl terrars::ToListMappable for Route53recoveryreadinessResourceSetResourcesEl {
-    type O = terrars::BlockAssignable<Route53recoveryreadinessResourceSetResourcesEl>;
+impl terrars::ToListMappable for Route53recoveryreadinessResourceSet_Resources {
+    type O = terrars::BlockAssignable<Route53recoveryreadinessResourceSet_Resources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -890,11 +891,11 @@ impl terrars::ToListMappable for Route53recoveryreadinessResourceSetResourcesEl 
     }
 }
 
-pub struct BuildRoute53recoveryreadinessResourceSetResourcesEl {}
+pub struct BuildRoute53recoveryreadinessResourceSet_Resources {}
 
-impl BuildRoute53recoveryreadinessResourceSetResourcesEl {
-    pub fn build(self) -> Route53recoveryreadinessResourceSetResourcesEl {
-        Route53recoveryreadinessResourceSetResourcesEl {
+impl BuildRoute53recoveryreadinessResourceSet_Resources {
+    pub fn build(self) -> Route53recoveryreadinessResourceSet_Resources {
+        Route53recoveryreadinessResourceSet_Resources {
             readiness_scopes: core::default::Default::default(),
             resource_arn: core::default::Default::default(),
             dns_target_resource: core::default::Default::default(),
@@ -903,24 +904,26 @@ impl BuildRoute53recoveryreadinessResourceSetResourcesEl {
     }
 }
 
-pub struct Route53recoveryreadinessResourceSetResourcesElRef {
+#[allow(dead_code)]
+pub struct Route53recoveryreadinessResourceSet_ResourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53recoveryreadinessResourceSetResourcesElRef {
+impl terrars::Ref for Route53recoveryreadinessResourceSet_ResourcesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53recoveryreadinessResourceSetResourcesElRef {
-        Route53recoveryreadinessResourceSetResourcesElRef {
+    ) -> Route53recoveryreadinessResourceSet_ResourcesRef {
+        Route53recoveryreadinessResourceSet_ResourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53recoveryreadinessResourceSetResourcesElRef {
+impl Route53recoveryreadinessResourceSet_ResourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -943,18 +946,18 @@ impl Route53recoveryreadinessResourceSetResourcesElRef {
     #[doc = "Get a reference to the value of field `dns_target_resource` after provisioning.\n"]
     pub fn dns_target_resource(
         &self,
-    ) -> terrars::ListRef<Route53recoveryreadinessResourceSetResourcesElDnsTargetResourceElRef> {
+    ) -> terrars::ListRef<Route53recoveryreadinessResourceSet_Resources_DnsTargetResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_target_resource", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct Route53recoveryreadinessResourceSetTimeoutsEl {
+pub struct Route53recoveryreadinessResourceSet_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53recoveryreadinessResourceSetTimeoutsEl {
+impl Route53recoveryreadinessResourceSet_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -962,8 +965,8 @@ impl Route53recoveryreadinessResourceSetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Route53recoveryreadinessResourceSetTimeoutsEl {
-    type O = terrars::BlockAssignable<Route53recoveryreadinessResourceSetTimeoutsEl>;
+impl terrars::ToListMappable for Route53recoveryreadinessResourceSet_Timeouts {
+    type O = terrars::BlockAssignable<Route53recoveryreadinessResourceSet_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -974,32 +977,34 @@ impl terrars::ToListMappable for Route53recoveryreadinessResourceSetTimeoutsEl {
     }
 }
 
-pub struct BuildRoute53recoveryreadinessResourceSetTimeoutsEl {}
+pub struct BuildRoute53recoveryreadinessResourceSet_Timeouts {}
 
-impl BuildRoute53recoveryreadinessResourceSetTimeoutsEl {
-    pub fn build(self) -> Route53recoveryreadinessResourceSetTimeoutsEl {
-        Route53recoveryreadinessResourceSetTimeoutsEl { delete: core::default::Default::default() }
+impl BuildRoute53recoveryreadinessResourceSet_Timeouts {
+    pub fn build(self) -> Route53recoveryreadinessResourceSet_Timeouts {
+        Route53recoveryreadinessResourceSet_Timeouts { delete: core::default::Default::default() }
     }
 }
 
-pub struct Route53recoveryreadinessResourceSetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Route53recoveryreadinessResourceSet_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53recoveryreadinessResourceSetTimeoutsElRef {
+impl terrars::Ref for Route53recoveryreadinessResourceSet_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53recoveryreadinessResourceSetTimeoutsElRef {
-        Route53recoveryreadinessResourceSetTimeoutsElRef {
+    ) -> Route53recoveryreadinessResourceSet_TimeoutsRef {
+        Route53recoveryreadinessResourceSet_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53recoveryreadinessResourceSetTimeoutsElRef {
+impl Route53recoveryreadinessResourceSet_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1008,9 +1013,4 @@ impl Route53recoveryreadinessResourceSetTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Route53recoveryreadinessResourceSetDynamic {
-    resources: std::option::Option<terrars::DynamicBlock<Route53recoveryreadinessResourceSetResourcesEl>>,
 }

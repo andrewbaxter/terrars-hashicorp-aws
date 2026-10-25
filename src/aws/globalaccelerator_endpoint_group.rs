@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlobalacceleratorEndpointGroupData {
+struct GlobalacceleratorEndpointGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,18 +38,18 @@ struct GlobalacceleratorEndpointGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     traffic_dial_percentage: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint_configuration: std::option::Option<std::vec::Vec<GlobalacceleratorEndpointGroupEndpointConfigurationEl>>,
+    endpoint_configuration: std::option::Option<std::vec::Vec<GlobalacceleratorEndpointGroup_EndpointConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_override: std::option::Option<std::vec::Vec<GlobalacceleratorEndpointGroupPortOverrideEl>>,
+    port_override: std::option::Option<std::vec::Vec<GlobalacceleratorEndpointGroup_PortOverride>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GlobalacceleratorEndpointGroupTimeoutsEl>,
+    timeouts: std::option::Option<GlobalacceleratorEndpointGroup_Timeouts>,
     dynamic: GlobalacceleratorEndpointGroupDynamic,
 }
 
 struct GlobalacceleratorEndpointGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlobalacceleratorEndpointGroupData>,
+    data: std::cell::RefCell<GlobalacceleratorEndpointGroupData_>,
 }
 
 #[derive(Clone)]
@@ -198,7 +200,7 @@ impl GlobalacceleratorEndpointGroup {
     #[doc = "Set the field `endpoint_configuration`.\n"]
     pub fn set_endpoint_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlobalacceleratorEndpointGroupEndpointConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlobalacceleratorEndpointGroup_EndpointConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,7 +216,7 @@ impl GlobalacceleratorEndpointGroup {
     #[doc = "Set the field `port_override`.\n"]
     pub fn set_port_override(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlobalacceleratorEndpointGroupPortOverrideEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlobalacceleratorEndpointGroup_PortOverride>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -228,7 +230,7 @@ impl GlobalacceleratorEndpointGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GlobalacceleratorEndpointGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GlobalacceleratorEndpointGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -287,8 +289,8 @@ impl GlobalacceleratorEndpointGroup {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GlobalacceleratorEndpointGroupTimeoutsElRef {
-        GlobalacceleratorEndpointGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> GlobalacceleratorEndpointGroup_TimeoutsRef {
+        GlobalacceleratorEndpointGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -337,7 +339,7 @@ impl BuildGlobalacceleratorEndpointGroup {
         let out = GlobalacceleratorEndpointGroup(std::rc::Rc::new(GlobalacceleratorEndpointGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlobalacceleratorEndpointGroupData {
+            data: std::cell::RefCell::new(GlobalacceleratorEndpointGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -440,16 +442,26 @@ impl GlobalacceleratorEndpointGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GlobalacceleratorEndpointGroupTimeoutsElRef {
-        GlobalacceleratorEndpointGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> GlobalacceleratorEndpointGroup_TimeoutsRef {
+        GlobalacceleratorEndpointGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlobalacceleratorEndpointGroupDynamic {
+    endpoint_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlobalacceleratorEndpointGroup_EndpointConfiguration>>,
+    port_override: std::option::Option<terrars::DynamicBlock<GlobalacceleratorEndpointGroup_PortOverride>>,
+}
+
 #[derive(Serialize)]
-pub struct GlobalacceleratorEndpointGroupEndpointConfigurationEl {
+pub struct GlobalacceleratorEndpointGroup_EndpointConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    attachment_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_ip_preservation_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -458,7 +470,13 @@ pub struct GlobalacceleratorEndpointGroupEndpointConfigurationEl {
     weight: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GlobalacceleratorEndpointGroupEndpointConfigurationEl {
+impl GlobalacceleratorEndpointGroup_EndpointConfiguration {
+    #[doc = "Set the field `attachment_arn`.\n"]
+    pub fn set_attachment_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.attachment_arn = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `client_ip_preservation_enabled`.\n"]
     pub fn set_client_ip_preservation_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.client_ip_preservation_enabled = std::option::Option::Some(v.into());
@@ -478,8 +496,8 @@ impl GlobalacceleratorEndpointGroupEndpointConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for GlobalacceleratorEndpointGroupEndpointConfigurationEl {
-    type O = terrars::BlockAssignable<GlobalacceleratorEndpointGroupEndpointConfigurationEl>;
+impl terrars::ToListMappable for GlobalacceleratorEndpointGroup_EndpointConfiguration {
+    type O = terrars::BlockAssignable<GlobalacceleratorEndpointGroup_EndpointConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,11 +508,12 @@ impl terrars::ToListMappable for GlobalacceleratorEndpointGroupEndpointConfigura
     }
 }
 
-pub struct BuildGlobalacceleratorEndpointGroupEndpointConfigurationEl {}
+pub struct BuildGlobalacceleratorEndpointGroup_EndpointConfiguration {}
 
-impl BuildGlobalacceleratorEndpointGroupEndpointConfigurationEl {
-    pub fn build(self) -> GlobalacceleratorEndpointGroupEndpointConfigurationEl {
-        GlobalacceleratorEndpointGroupEndpointConfigurationEl {
+impl BuildGlobalacceleratorEndpointGroup_EndpointConfiguration {
+    pub fn build(self) -> GlobalacceleratorEndpointGroup_EndpointConfiguration {
+        GlobalacceleratorEndpointGroup_EndpointConfiguration {
+            attachment_arn: core::default::Default::default(),
             client_ip_preservation_enabled: core::default::Default::default(),
             endpoint_id: core::default::Default::default(),
             weight: core::default::Default::default(),
@@ -502,26 +521,33 @@ impl BuildGlobalacceleratorEndpointGroupEndpointConfigurationEl {
     }
 }
 
-pub struct GlobalacceleratorEndpointGroupEndpointConfigurationElRef {
+#[allow(dead_code)]
+pub struct GlobalacceleratorEndpointGroup_EndpointConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlobalacceleratorEndpointGroupEndpointConfigurationElRef {
+impl terrars::Ref for GlobalacceleratorEndpointGroup_EndpointConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GlobalacceleratorEndpointGroupEndpointConfigurationElRef {
-        GlobalacceleratorEndpointGroupEndpointConfigurationElRef {
+    ) -> GlobalacceleratorEndpointGroup_EndpointConfigurationRef {
+        GlobalacceleratorEndpointGroup_EndpointConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlobalacceleratorEndpointGroupEndpointConfigurationElRef {
+impl GlobalacceleratorEndpointGroup_EndpointConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `attachment_arn` after provisioning.\n"]
+    pub fn attachment_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attachment_arn", self.base))
     }
 
     #[doc = "Get a reference to the value of field `client_ip_preservation_enabled` after provisioning.\n"]
@@ -541,15 +567,15 @@ impl GlobalacceleratorEndpointGroupEndpointConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlobalacceleratorEndpointGroupPortOverrideEl {
+pub struct GlobalacceleratorEndpointGroup_PortOverride {
     endpoint_port: terrars::PrimField<f64>,
     listener_port: terrars::PrimField<f64>,
 }
 
-impl GlobalacceleratorEndpointGroupPortOverrideEl { }
+impl GlobalacceleratorEndpointGroup_PortOverride { }
 
-impl terrars::ToListMappable for GlobalacceleratorEndpointGroupPortOverrideEl {
-    type O = terrars::BlockAssignable<GlobalacceleratorEndpointGroupPortOverrideEl>;
+impl terrars::ToListMappable for GlobalacceleratorEndpointGroup_PortOverride {
+    type O = terrars::BlockAssignable<GlobalacceleratorEndpointGroup_PortOverride>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -560,40 +586,42 @@ impl terrars::ToListMappable for GlobalacceleratorEndpointGroupPortOverrideEl {
     }
 }
 
-pub struct BuildGlobalacceleratorEndpointGroupPortOverrideEl {
+pub struct BuildGlobalacceleratorEndpointGroup_PortOverride {
     #[doc = ""]
     pub endpoint_port: terrars::PrimField<f64>,
     #[doc = ""]
     pub listener_port: terrars::PrimField<f64>,
 }
 
-impl BuildGlobalacceleratorEndpointGroupPortOverrideEl {
-    pub fn build(self) -> GlobalacceleratorEndpointGroupPortOverrideEl {
-        GlobalacceleratorEndpointGroupPortOverrideEl {
+impl BuildGlobalacceleratorEndpointGroup_PortOverride {
+    pub fn build(self) -> GlobalacceleratorEndpointGroup_PortOverride {
+        GlobalacceleratorEndpointGroup_PortOverride {
             endpoint_port: self.endpoint_port,
             listener_port: self.listener_port,
         }
     }
 }
 
-pub struct GlobalacceleratorEndpointGroupPortOverrideElRef {
+#[allow(dead_code)]
+pub struct GlobalacceleratorEndpointGroup_PortOverrideRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlobalacceleratorEndpointGroupPortOverrideElRef {
+impl terrars::Ref for GlobalacceleratorEndpointGroup_PortOverrideRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GlobalacceleratorEndpointGroupPortOverrideElRef {
-        GlobalacceleratorEndpointGroupPortOverrideElRef {
+    ) -> GlobalacceleratorEndpointGroup_PortOverrideRef {
+        GlobalacceleratorEndpointGroup_PortOverrideRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlobalacceleratorEndpointGroupPortOverrideElRef {
+impl GlobalacceleratorEndpointGroup_PortOverrideRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -610,7 +638,7 @@ impl GlobalacceleratorEndpointGroupPortOverrideElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlobalacceleratorEndpointGroupTimeoutsEl {
+pub struct GlobalacceleratorEndpointGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -619,7 +647,7 @@ pub struct GlobalacceleratorEndpointGroupTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlobalacceleratorEndpointGroupTimeoutsEl {
+impl GlobalacceleratorEndpointGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -639,8 +667,8 @@ impl GlobalacceleratorEndpointGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GlobalacceleratorEndpointGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<GlobalacceleratorEndpointGroupTimeoutsEl>;
+impl terrars::ToListMappable for GlobalacceleratorEndpointGroup_Timeouts {
+    type O = terrars::BlockAssignable<GlobalacceleratorEndpointGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -651,11 +679,11 @@ impl terrars::ToListMappable for GlobalacceleratorEndpointGroupTimeoutsEl {
     }
 }
 
-pub struct BuildGlobalacceleratorEndpointGroupTimeoutsEl {}
+pub struct BuildGlobalacceleratorEndpointGroup_Timeouts {}
 
-impl BuildGlobalacceleratorEndpointGroupTimeoutsEl {
-    pub fn build(self) -> GlobalacceleratorEndpointGroupTimeoutsEl {
-        GlobalacceleratorEndpointGroupTimeoutsEl {
+impl BuildGlobalacceleratorEndpointGroup_Timeouts {
+    pub fn build(self) -> GlobalacceleratorEndpointGroup_Timeouts {
+        GlobalacceleratorEndpointGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -663,21 +691,23 @@ impl BuildGlobalacceleratorEndpointGroupTimeoutsEl {
     }
 }
 
-pub struct GlobalacceleratorEndpointGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GlobalacceleratorEndpointGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlobalacceleratorEndpointGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorEndpointGroupTimeoutsElRef {
-        GlobalacceleratorEndpointGroupTimeoutsElRef {
+impl terrars::Ref for GlobalacceleratorEndpointGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorEndpointGroup_TimeoutsRef {
+        GlobalacceleratorEndpointGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlobalacceleratorEndpointGroupTimeoutsElRef {
+impl GlobalacceleratorEndpointGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -696,12 +726,4 @@ impl GlobalacceleratorEndpointGroupTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GlobalacceleratorEndpointGroupDynamic {
-    endpoint_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<GlobalacceleratorEndpointGroupEndpointConfigurationEl>>,
-    port_override: std::option::Option<terrars::DynamicBlock<GlobalacceleratorEndpointGroupPortOverrideEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbSnapshotData {
+struct DbSnapshotData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,17 +25,21 @@ struct DbSnapshotData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shared_accounts: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DbSnapshotTimeoutsEl>,
+    timeouts: std::option::Option<DbSnapshot_Timeouts>,
 }
 
 struct DbSnapshot_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbSnapshotData>,
+    data: std::cell::RefCell<DbSnapshotData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +145,22 @@ impl DbSnapshot {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `shared_accounts`.\n"]
+    pub fn set_shared_accounts(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().shared_accounts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -158,7 +180,7 @@ impl DbSnapshot {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DbSnapshotTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DbSnapshot_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -233,6 +255,17 @@ impl DbSnapshot {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `shared_accounts` after provisioning.\n"]
+    pub fn shared_accounts(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.shared_accounts", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_type` after provisioning.\n"]
     pub fn snapshot_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_type", self.extract_ref()))
@@ -277,8 +310,8 @@ impl DbSnapshot {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbSnapshotTimeoutsElRef {
-        DbSnapshotTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbSnapshot_TimeoutsRef {
+        DbSnapshot_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -326,7 +359,7 @@ impl BuildDbSnapshot {
         let out = DbSnapshot(std::rc::Rc::new(DbSnapshot_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbSnapshotData {
+            data: std::cell::RefCell::new(DbSnapshotData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -335,6 +368,8 @@ impl BuildDbSnapshot {
                 db_instance_identifier: self.db_instance_identifier,
                 db_snapshot_identifier: self.db_snapshot_identifier,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
+                shared_accounts: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -438,6 +473,17 @@ impl DbSnapshotRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `shared_accounts` after provisioning.\n"]
+    pub fn shared_accounts(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.shared_accounts", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_type` after provisioning.\n"]
     pub fn snapshot_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_type", self.extract_ref()))
@@ -482,27 +528,27 @@ impl DbSnapshotRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbSnapshotTimeoutsElRef {
-        DbSnapshotTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbSnapshot_TimeoutsRef {
+        DbSnapshot_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DbSnapshotTimeoutsEl {
+pub struct DbSnapshot_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    read: std::option::Option<terrars::PrimField<std::string::String>>,
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DbSnapshotTimeoutsEl {
-    #[doc = "Set the field `read`.\n"]
-    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.read = std::option::Option::Some(v.into());
+impl DbSnapshot_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DbSnapshotTimeoutsEl {
-    type O = terrars::BlockAssignable<DbSnapshotTimeoutsEl>;
+impl terrars::ToListMappable for DbSnapshot_Timeouts {
+    type O = terrars::BlockAssignable<DbSnapshot_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -513,35 +559,37 @@ impl terrars::ToListMappable for DbSnapshotTimeoutsEl {
     }
 }
 
-pub struct BuildDbSnapshotTimeoutsEl {}
+pub struct BuildDbSnapshot_Timeouts {}
 
-impl BuildDbSnapshotTimeoutsEl {
-    pub fn build(self) -> DbSnapshotTimeoutsEl {
-        DbSnapshotTimeoutsEl { read: core::default::Default::default() }
+impl BuildDbSnapshot_Timeouts {
+    pub fn build(self) -> DbSnapshot_Timeouts {
+        DbSnapshot_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct DbSnapshotTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DbSnapshot_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbSnapshotTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbSnapshotTimeoutsElRef {
-        DbSnapshotTimeoutsElRef {
+impl terrars::Ref for DbSnapshot_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbSnapshot_TimeoutsRef {
+        DbSnapshot_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbSnapshotTimeoutsElRef {
+impl DbSnapshot_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
-    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 }

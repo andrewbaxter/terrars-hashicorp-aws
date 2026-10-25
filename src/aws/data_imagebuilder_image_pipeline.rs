@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataImagebuilderImagePipelineData {
+struct DataImagebuilderImagePipelineData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataImagebuilderImagePipelineData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataImagebuilderImagePipeline_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataImagebuilderImagePipelineData>,
+    data: std::cell::RefCell<DataImagebuilderImagePipelineData_>,
 }
 
 #[derive(Clone)]
@@ -74,6 +78,13 @@ impl DataImagebuilderImagePipeline {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -147,10 +158,17 @@ impl DataImagebuilderImagePipeline {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_recipe_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `image_scanning_configuration` after provisioning.\n"]
+    pub fn image_scanning_configuration(
+        &self,
+    ) -> terrars::ListRef<DataImagebuilderImagePipeline_ImageScanningConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.image_scanning_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `image_tests_configuration` after provisioning.\n"]
     pub fn image_tests_configuration(
         &self,
-    ) -> terrars::ListRef<DataImagebuilderImagePipelineImageTestsConfigurationElRef> {
+    ) -> terrars::ListRef<DataImagebuilderImagePipeline_ImageTestsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_tests_configuration", self.extract_ref()))
     }
 
@@ -172,8 +190,14 @@ impl DataImagebuilderImagePipeline {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<DataImagebuilderImagePipelineScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<DataImagebuilderImagePipeline_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 
@@ -230,13 +254,14 @@ impl BuildDataImagebuilderImagePipeline {
         let out = DataImagebuilderImagePipeline(std::rc::Rc::new(DataImagebuilderImagePipeline_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataImagebuilderImagePipelineData {
+            data: std::cell::RefCell::new(DataImagebuilderImagePipelineData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 arn: self.arn,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -329,10 +354,17 @@ impl DataImagebuilderImagePipelineRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_recipe_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `image_scanning_configuration` after provisioning.\n"]
+    pub fn image_scanning_configuration(
+        &self,
+    ) -> terrars::ListRef<DataImagebuilderImagePipeline_ImageScanningConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.image_scanning_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `image_tests_configuration` after provisioning.\n"]
     pub fn image_tests_configuration(
         &self,
-    ) -> terrars::ListRef<DataImagebuilderImagePipelineImageTestsConfigurationElRef> {
+    ) -> terrars::ListRef<DataImagebuilderImagePipeline_ImageTestsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_tests_configuration", self.extract_ref()))
     }
 
@@ -354,8 +386,14 @@ impl DataImagebuilderImagePipelineRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<DataImagebuilderImagePipelineScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<DataImagebuilderImagePipeline_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 
@@ -371,14 +409,191 @@ impl DataImagebuilderImagePipelineRef {
 }
 
 #[derive(Serialize)]
-pub struct DataImagebuilderImagePipelineImageTestsConfigurationEl {
+pub struct DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_tags: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repository_name: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration {
+    #[doc = "Set the field `container_tags`.\n"]
+    pub fn set_container_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.container_tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `repository_name`.\n"]
+    pub fn set_repository_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.repository_name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration {
+    type O = terrars::BlockAssignable<DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration {}
+
+impl BuildDataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration {
+    pub fn build(self) -> DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration {
+        DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration {
+            container_tags: core::default::Default::default(),
+            repository_name: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfigurationRef {
+        DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `container_tags` after provisioning.\n"]
+    pub fn container_tags(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.container_tags", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `repository_name` after provisioning.\n"]
+    pub fn repository_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataImagebuilderImagePipeline_ImageScanningConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ecr_configuration: std
+    ::option
+    ::Option<terrars::ListField<DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    image_scanning_enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataImagebuilderImagePipeline_ImageScanningConfiguration {
+    #[doc = "Set the field `ecr_configuration`.\n"]
+    pub fn set_ecr_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::ListField<DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfiguration>,
+                    >,
+    ) -> Self {
+        self.ecr_configuration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `image_scanning_enabled`.\n"]
+    pub fn set_image_scanning_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.image_scanning_enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataImagebuilderImagePipeline_ImageScanningConfiguration {
+    type O = terrars::BlockAssignable<DataImagebuilderImagePipeline_ImageScanningConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataImagebuilderImagePipeline_ImageScanningConfiguration {}
+
+impl BuildDataImagebuilderImagePipeline_ImageScanningConfiguration {
+    pub fn build(self) -> DataImagebuilderImagePipeline_ImageScanningConfiguration {
+        DataImagebuilderImagePipeline_ImageScanningConfiguration {
+            ecr_configuration: core::default::Default::default(),
+            image_scanning_enabled: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataImagebuilderImagePipeline_ImageScanningConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataImagebuilderImagePipeline_ImageScanningConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataImagebuilderImagePipeline_ImageScanningConfigurationRef {
+        DataImagebuilderImagePipeline_ImageScanningConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataImagebuilderImagePipeline_ImageScanningConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ecr_configuration` after provisioning.\n"]
+    pub fn ecr_configuration(
+        &self,
+    ) -> terrars::ListRef<DataImagebuilderImagePipeline_ImageScanningConfiguration_EcrConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ecr_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `image_scanning_enabled` after provisioning.\n"]
+    pub fn image_scanning_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_scanning_enabled", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataImagebuilderImagePipeline_ImageTestsConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image_tests_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timeout_minutes: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataImagebuilderImagePipelineImageTestsConfigurationEl {
+impl DataImagebuilderImagePipeline_ImageTestsConfiguration {
     #[doc = "Set the field `image_tests_enabled`.\n"]
     pub fn set_image_tests_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.image_tests_enabled = std::option::Option::Some(v.into());
@@ -392,8 +607,8 @@ impl DataImagebuilderImagePipelineImageTestsConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataImagebuilderImagePipelineImageTestsConfigurationEl {
-    type O = terrars::BlockAssignable<DataImagebuilderImagePipelineImageTestsConfigurationEl>;
+impl terrars::ToListMappable for DataImagebuilderImagePipeline_ImageTestsConfiguration {
+    type O = terrars::BlockAssignable<DataImagebuilderImagePipeline_ImageTestsConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -404,35 +619,37 @@ impl terrars::ToListMappable for DataImagebuilderImagePipelineImageTestsConfigur
     }
 }
 
-pub struct BuildDataImagebuilderImagePipelineImageTestsConfigurationEl {}
+pub struct BuildDataImagebuilderImagePipeline_ImageTestsConfiguration {}
 
-impl BuildDataImagebuilderImagePipelineImageTestsConfigurationEl {
-    pub fn build(self) -> DataImagebuilderImagePipelineImageTestsConfigurationEl {
-        DataImagebuilderImagePipelineImageTestsConfigurationEl {
+impl BuildDataImagebuilderImagePipeline_ImageTestsConfiguration {
+    pub fn build(self) -> DataImagebuilderImagePipeline_ImageTestsConfiguration {
+        DataImagebuilderImagePipeline_ImageTestsConfiguration {
             image_tests_enabled: core::default::Default::default(),
             timeout_minutes: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataImagebuilderImagePipelineImageTestsConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataImagebuilderImagePipeline_ImageTestsConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagebuilderImagePipelineImageTestsConfigurationElRef {
+impl terrars::Ref for DataImagebuilderImagePipeline_ImageTestsConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataImagebuilderImagePipelineImageTestsConfigurationElRef {
-        DataImagebuilderImagePipelineImageTestsConfigurationElRef {
+    ) -> DataImagebuilderImagePipeline_ImageTestsConfigurationRef {
+        DataImagebuilderImagePipeline_ImageTestsConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagebuilderImagePipelineImageTestsConfigurationElRef {
+impl DataImagebuilderImagePipeline_ImageTestsConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -449,14 +666,14 @@ impl DataImagebuilderImagePipelineImageTestsConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataImagebuilderImagePipelineScheduleEl {
+pub struct DataImagebuilderImagePipeline_Schedule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pipeline_execution_start_condition: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schedule_expression: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataImagebuilderImagePipelineScheduleEl {
+impl DataImagebuilderImagePipeline_Schedule {
     #[doc = "Set the field `pipeline_execution_start_condition`.\n"]
     pub fn set_pipeline_execution_start_condition(
         mut self,
@@ -476,8 +693,8 @@ impl DataImagebuilderImagePipelineScheduleEl {
     }
 }
 
-impl terrars::ToListMappable for DataImagebuilderImagePipelineScheduleEl {
-    type O = terrars::BlockAssignable<DataImagebuilderImagePipelineScheduleEl>;
+impl terrars::ToListMappable for DataImagebuilderImagePipeline_Schedule {
+    type O = terrars::BlockAssignable<DataImagebuilderImagePipeline_Schedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -488,32 +705,34 @@ impl terrars::ToListMappable for DataImagebuilderImagePipelineScheduleEl {
     }
 }
 
-pub struct BuildDataImagebuilderImagePipelineScheduleEl {}
+pub struct BuildDataImagebuilderImagePipeline_Schedule {}
 
-impl BuildDataImagebuilderImagePipelineScheduleEl {
-    pub fn build(self) -> DataImagebuilderImagePipelineScheduleEl {
-        DataImagebuilderImagePipelineScheduleEl {
+impl BuildDataImagebuilderImagePipeline_Schedule {
+    pub fn build(self) -> DataImagebuilderImagePipeline_Schedule {
+        DataImagebuilderImagePipeline_Schedule {
             pipeline_execution_start_condition: core::default::Default::default(),
             schedule_expression: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataImagebuilderImagePipelineScheduleElRef {
+#[allow(dead_code)]
+pub struct DataImagebuilderImagePipeline_ScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagebuilderImagePipelineScheduleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImagebuilderImagePipelineScheduleElRef {
-        DataImagebuilderImagePipelineScheduleElRef {
+impl terrars::Ref for DataImagebuilderImagePipeline_ScheduleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImagebuilderImagePipeline_ScheduleRef {
+        DataImagebuilderImagePipeline_ScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagebuilderImagePipelineScheduleElRef {
+impl DataImagebuilderImagePipeline_ScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

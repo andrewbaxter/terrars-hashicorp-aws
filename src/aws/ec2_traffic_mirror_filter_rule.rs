@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2TrafficMirrorFilterRuleData {
+struct Ec2TrafficMirrorFilterRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,22 +27,24 @@ struct Ec2TrafficMirrorFilterRuleData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocol: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     rule_action: terrars::PrimField<std::string::String>,
     rule_number: terrars::PrimField<f64>,
     source_cidr_block: terrars::PrimField<std::string::String>,
     traffic_direction: terrars::PrimField<std::string::String>,
     traffic_mirror_filter_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_port_range: std::option::Option<std::vec::Vec<Ec2TrafficMirrorFilterRuleDestinationPortRangeEl>>,
+    destination_port_range: std::option::Option<std::vec::Vec<Ec2TrafficMirrorFilterRule_DestinationPortRange>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_port_range: std::option::Option<std::vec::Vec<Ec2TrafficMirrorFilterRuleSourcePortRangeEl>>,
+    source_port_range: std::option::Option<std::vec::Vec<Ec2TrafficMirrorFilterRule_SourcePortRange>>,
     dynamic: Ec2TrafficMirrorFilterRuleDynamic,
 }
 
 struct Ec2TrafficMirrorFilterRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2TrafficMirrorFilterRuleData>,
+    data: std::cell::RefCell<Ec2TrafficMirrorFilterRuleData_>,
 }
 
 #[derive(Clone)]
@@ -158,10 +162,17 @@ impl Ec2TrafficMirrorFilterRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `destination_port_range`.\n"]
     pub fn set_destination_port_range(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Ec2TrafficMirrorFilterRuleDestinationPortRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2TrafficMirrorFilterRule_DestinationPortRange>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -177,7 +188,7 @@ impl Ec2TrafficMirrorFilterRule {
     #[doc = "Set the field `source_port_range`.\n"]
     pub fn set_source_port_range(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Ec2TrafficMirrorFilterRuleSourcePortRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2TrafficMirrorFilterRule_SourcePortRange>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,6 +226,12 @@ impl Ec2TrafficMirrorFilterRule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rule_action` after provisioning.\n"]
     pub fn rule_action(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_action", self.extract_ref()))
@@ -241,12 +258,12 @@ impl Ec2TrafficMirrorFilterRule {
     }
 
     #[doc = "Get a reference to the value of field `destination_port_range` after provisioning.\n"]
-    pub fn destination_port_range(&self) -> terrars::ListRef<Ec2TrafficMirrorFilterRuleDestinationPortRangeElRef> {
+    pub fn destination_port_range(&self) -> terrars::ListRef<Ec2TrafficMirrorFilterRule_DestinationPortRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_port_range", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_port_range` after provisioning.\n"]
-    pub fn source_port_range(&self) -> terrars::ListRef<Ec2TrafficMirrorFilterRuleSourcePortRangeElRef> {
+    pub fn source_port_range(&self) -> terrars::ListRef<Ec2TrafficMirrorFilterRule_SourcePortRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_port_range", self.extract_ref()))
     }
 }
@@ -303,7 +320,7 @@ impl BuildEc2TrafficMirrorFilterRule {
         let out = Ec2TrafficMirrorFilterRule(std::rc::Rc::new(Ec2TrafficMirrorFilterRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2TrafficMirrorFilterRuleData {
+            data: std::cell::RefCell::new(Ec2TrafficMirrorFilterRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -313,6 +330,7 @@ impl BuildEc2TrafficMirrorFilterRule {
                 destination_cidr_block: self.destination_cidr_block,
                 id: core::default::Default::default(),
                 protocol: core::default::Default::default(),
+                region: core::default::Default::default(),
                 rule_action: self.rule_action,
                 rule_number: self.rule_number,
                 source_cidr_block: self.source_cidr_block,
@@ -376,6 +394,12 @@ impl Ec2TrafficMirrorFilterRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rule_action` after provisioning.\n"]
     pub fn rule_action(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_action", self.extract_ref()))
@@ -402,169 +426,13 @@ impl Ec2TrafficMirrorFilterRuleRef {
     }
 
     #[doc = "Get a reference to the value of field `destination_port_range` after provisioning.\n"]
-    pub fn destination_port_range(&self) -> terrars::ListRef<Ec2TrafficMirrorFilterRuleDestinationPortRangeElRef> {
+    pub fn destination_port_range(&self) -> terrars::ListRef<Ec2TrafficMirrorFilterRule_DestinationPortRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_port_range", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_port_range` after provisioning.\n"]
-    pub fn source_port_range(&self) -> terrars::ListRef<Ec2TrafficMirrorFilterRuleSourcePortRangeElRef> {
+    pub fn source_port_range(&self) -> terrars::ListRef<Ec2TrafficMirrorFilterRule_SourcePortRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_port_range", self.extract_ref()))
-    }
-}
-
-#[derive(Serialize)]
-pub struct Ec2TrafficMirrorFilterRuleDestinationPortRangeEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from_port: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to_port: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl Ec2TrafficMirrorFilterRuleDestinationPortRangeEl {
-    #[doc = "Set the field `from_port`.\n"]
-    pub fn set_from_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from_port = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to_port`.\n"]
-    pub fn set_to_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to_port = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for Ec2TrafficMirrorFilterRuleDestinationPortRangeEl {
-    type O = terrars::BlockAssignable<Ec2TrafficMirrorFilterRuleDestinationPortRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildEc2TrafficMirrorFilterRuleDestinationPortRangeEl {}
-
-impl BuildEc2TrafficMirrorFilterRuleDestinationPortRangeEl {
-    pub fn build(self) -> Ec2TrafficMirrorFilterRuleDestinationPortRangeEl {
-        Ec2TrafficMirrorFilterRuleDestinationPortRangeEl {
-            from_port: core::default::Default::default(),
-            to_port: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Ec2TrafficMirrorFilterRuleDestinationPortRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Ec2TrafficMirrorFilterRuleDestinationPortRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Ec2TrafficMirrorFilterRuleDestinationPortRangeElRef {
-        Ec2TrafficMirrorFilterRuleDestinationPortRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Ec2TrafficMirrorFilterRuleDestinationPortRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from_port` after provisioning.\n"]
-    pub fn from_port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from_port", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to_port` after provisioning.\n"]
-    pub fn to_port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to_port", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct Ec2TrafficMirrorFilterRuleSourcePortRangeEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from_port: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to_port: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl Ec2TrafficMirrorFilterRuleSourcePortRangeEl {
-    #[doc = "Set the field `from_port`.\n"]
-    pub fn set_from_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from_port = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to_port`.\n"]
-    pub fn set_to_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to_port = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for Ec2TrafficMirrorFilterRuleSourcePortRangeEl {
-    type O = terrars::BlockAssignable<Ec2TrafficMirrorFilterRuleSourcePortRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildEc2TrafficMirrorFilterRuleSourcePortRangeEl {}
-
-impl BuildEc2TrafficMirrorFilterRuleSourcePortRangeEl {
-    pub fn build(self) -> Ec2TrafficMirrorFilterRuleSourcePortRangeEl {
-        Ec2TrafficMirrorFilterRuleSourcePortRangeEl {
-            from_port: core::default::Default::default(),
-            to_port: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Ec2TrafficMirrorFilterRuleSourcePortRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Ec2TrafficMirrorFilterRuleSourcePortRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Ec2TrafficMirrorFilterRuleSourcePortRangeElRef {
-        Ec2TrafficMirrorFilterRuleSourcePortRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Ec2TrafficMirrorFilterRuleSourcePortRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from_port` after provisioning.\n"]
-    pub fn from_port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from_port", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to_port` after provisioning.\n"]
-    pub fn to_port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to_port", self.base))
     }
 }
 
@@ -572,6 +440,163 @@ impl Ec2TrafficMirrorFilterRuleSourcePortRangeElRef {
 struct Ec2TrafficMirrorFilterRuleDynamic {
     destination_port_range: std
     ::option
-    ::Option<terrars::DynamicBlock<Ec2TrafficMirrorFilterRuleDestinationPortRangeEl>>,
-    source_port_range: std::option::Option<terrars::DynamicBlock<Ec2TrafficMirrorFilterRuleSourcePortRangeEl>>,
+    ::Option<terrars::DynamicBlock<Ec2TrafficMirrorFilterRule_DestinationPortRange>>,
+    source_port_range: std::option::Option<terrars::DynamicBlock<Ec2TrafficMirrorFilterRule_SourcePortRange>>,
+}
+
+#[derive(Serialize)]
+pub struct Ec2TrafficMirrorFilterRule_DestinationPortRange {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    from_port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    to_port: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl Ec2TrafficMirrorFilterRule_DestinationPortRange {
+    #[doc = "Set the field `from_port`.\n"]
+    pub fn set_from_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.from_port = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `to_port`.\n"]
+    pub fn set_to_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.to_port = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Ec2TrafficMirrorFilterRule_DestinationPortRange {
+    type O = terrars::BlockAssignable<Ec2TrafficMirrorFilterRule_DestinationPortRange>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEc2TrafficMirrorFilterRule_DestinationPortRange {}
+
+impl BuildEc2TrafficMirrorFilterRule_DestinationPortRange {
+    pub fn build(self) -> Ec2TrafficMirrorFilterRule_DestinationPortRange {
+        Ec2TrafficMirrorFilterRule_DestinationPortRange {
+            from_port: core::default::Default::default(),
+            to_port: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Ec2TrafficMirrorFilterRule_DestinationPortRangeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Ec2TrafficMirrorFilterRule_DestinationPortRangeRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Ec2TrafficMirrorFilterRule_DestinationPortRangeRef {
+        Ec2TrafficMirrorFilterRule_DestinationPortRangeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Ec2TrafficMirrorFilterRule_DestinationPortRangeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `from_port` after provisioning.\n"]
+    pub fn from_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from_port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `to_port` after provisioning.\n"]
+    pub fn to_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to_port", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Ec2TrafficMirrorFilterRule_SourcePortRange {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    from_port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    to_port: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl Ec2TrafficMirrorFilterRule_SourcePortRange {
+    #[doc = "Set the field `from_port`.\n"]
+    pub fn set_from_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.from_port = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `to_port`.\n"]
+    pub fn set_to_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.to_port = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Ec2TrafficMirrorFilterRule_SourcePortRange {
+    type O = terrars::BlockAssignable<Ec2TrafficMirrorFilterRule_SourcePortRange>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEc2TrafficMirrorFilterRule_SourcePortRange {}
+
+impl BuildEc2TrafficMirrorFilterRule_SourcePortRange {
+    pub fn build(self) -> Ec2TrafficMirrorFilterRule_SourcePortRange {
+        Ec2TrafficMirrorFilterRule_SourcePortRange {
+            from_port: core::default::Default::default(),
+            to_port: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Ec2TrafficMirrorFilterRule_SourcePortRangeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Ec2TrafficMirrorFilterRule_SourcePortRangeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2TrafficMirrorFilterRule_SourcePortRangeRef {
+        Ec2TrafficMirrorFilterRule_SourcePortRangeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Ec2TrafficMirrorFilterRule_SourcePortRangeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `from_port` after provisioning.\n"]
+    pub fn from_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from_port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `to_port` after provisioning.\n"]
+    pub fn to_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to_port", self.base))
+    }
 }

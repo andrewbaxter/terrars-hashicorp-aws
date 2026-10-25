@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataVpcPeeringConnectionData {
+struct DataVpcPeeringConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,11 +29,7 @@ struct DataVpcPeeringConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     peer_owner_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    peer_region: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     peer_vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,16 +37,16 @@ struct DataVpcPeeringConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataVpcPeeringConnectionFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataVpcPeeringConnection_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataVpcPeeringConnectionTimeoutsEl>,
+    timeouts: std::option::Option<DataVpcPeeringConnection_Timeouts>,
     dynamic: DataVpcPeeringConnectionDynamic,
 }
 
 struct DataVpcPeeringConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVpcPeeringConnectionData>,
+    data: std::cell::RefCell<DataVpcPeeringConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -123,21 +121,9 @@ impl DataVpcPeeringConnection {
         self
     }
 
-    #[doc = "Set the field `peer_region`.\n"]
-    pub fn set_peer_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().peer_region = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `peer_vpc_id`.\n"]
     pub fn set_peer_vpc_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().peer_vpc_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `region`.\n"]
-    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -165,7 +151,7 @@ impl DataVpcPeeringConnection {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataVpcPeeringConnectionFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataVpcPeeringConnection_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +165,7 @@ impl DataVpcPeeringConnection {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcPeeringConnectionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcPeeringConnection_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -195,13 +181,18 @@ impl DataVpcPeeringConnection {
     }
 
     #[doc = "Get a reference to the value of field `cidr_block_set` after provisioning.\n"]
-    pub fn cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnectionCidrBlockSetElRef> {
+    pub fn cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnection_CidrBlockSetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cidr_block_set", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block_set` after provisioning.\n"]
+    pub fn ipv6_cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnection_Ipv6CidrBlockSetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ipv6_cidr_block_set", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
@@ -215,8 +206,13 @@ impl DataVpcPeeringConnection {
     }
 
     #[doc = "Get a reference to the value of field `peer_cidr_block_set` after provisioning.\n"]
-    pub fn peer_cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnectionPeerCidrBlockSetElRef> {
+    pub fn peer_cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnection_PeerCidrBlockSetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.peer_cidr_block_set", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `peer_ipv6_cidr_block_set` after provisioning.\n"]
+    pub fn peer_ipv6_cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnection_PeerIpv6CidrBlockSetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.peer_ipv6_cidr_block_set", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `peer_owner_id` after provisioning.\n"]
@@ -244,6 +240,11 @@ impl DataVpcPeeringConnection {
         terrars::RecRef::new(self.shared().clone(), format!("{}.requester", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `requester_region` after provisioning.\n"]
+    pub fn requester_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.requester_region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -260,8 +261,8 @@ impl DataVpcPeeringConnection {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcPeeringConnectionTimeoutsElRef {
-        DataVpcPeeringConnectionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpcPeeringConnection_TimeoutsRef {
+        DataVpcPeeringConnection_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -305,7 +306,7 @@ impl BuildDataVpcPeeringConnection {
         let out = DataVpcPeeringConnection(std::rc::Rc::new(DataVpcPeeringConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVpcPeeringConnectionData {
+            data: std::cell::RefCell::new(DataVpcPeeringConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -315,9 +316,7 @@ impl BuildDataVpcPeeringConnection {
                 owner_id: core::default::Default::default(),
                 peer_cidr_block: core::default::Default::default(),
                 peer_owner_id: core::default::Default::default(),
-                peer_region: core::default::Default::default(),
                 peer_vpc_id: core::default::Default::default(),
-                region: core::default::Default::default(),
                 status: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 vpc_id: core::default::Default::default(),
@@ -365,13 +364,18 @@ impl DataVpcPeeringConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `cidr_block_set` after provisioning.\n"]
-    pub fn cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnectionCidrBlockSetElRef> {
+    pub fn cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnection_CidrBlockSetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cidr_block_set", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block_set` after provisioning.\n"]
+    pub fn ipv6_cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnection_Ipv6CidrBlockSetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ipv6_cidr_block_set", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
@@ -385,8 +389,13 @@ impl DataVpcPeeringConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `peer_cidr_block_set` after provisioning.\n"]
-    pub fn peer_cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnectionPeerCidrBlockSetElRef> {
+    pub fn peer_cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnection_PeerCidrBlockSetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.peer_cidr_block_set", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `peer_ipv6_cidr_block_set` after provisioning.\n"]
+    pub fn peer_ipv6_cidr_block_set(&self) -> terrars::ListRef<DataVpcPeeringConnection_PeerIpv6CidrBlockSetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.peer_ipv6_cidr_block_set", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `peer_owner_id` after provisioning.\n"]
@@ -414,6 +423,11 @@ impl DataVpcPeeringConnectionRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.requester", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `requester_region` after provisioning.\n"]
+    pub fn requester_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.requester_region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -430,18 +444,23 @@ impl DataVpcPeeringConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcPeeringConnectionTimeoutsElRef {
-        DataVpcPeeringConnectionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpcPeeringConnection_TimeoutsRef {
+        DataVpcPeeringConnection_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataVpcPeeringConnectionDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataVpcPeeringConnection_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataVpcPeeringConnectionCidrBlockSetEl {
+pub struct DataVpcPeeringConnection_CidrBlockSet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcPeeringConnectionCidrBlockSetEl {
+impl DataVpcPeeringConnection_CidrBlockSet {
     #[doc = "Set the field `cidr_block`.\n"]
     pub fn set_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cidr_block = std::option::Option::Some(v.into());
@@ -449,8 +468,8 @@ impl DataVpcPeeringConnectionCidrBlockSetEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcPeeringConnectionCidrBlockSetEl {
-    type O = terrars::BlockAssignable<DataVpcPeeringConnectionCidrBlockSetEl>;
+impl terrars::ToListMappable for DataVpcPeeringConnection_CidrBlockSet {
+    type O = terrars::BlockAssignable<DataVpcPeeringConnection_CidrBlockSet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -461,29 +480,31 @@ impl terrars::ToListMappable for DataVpcPeeringConnectionCidrBlockSetEl {
     }
 }
 
-pub struct BuildDataVpcPeeringConnectionCidrBlockSetEl {}
+pub struct BuildDataVpcPeeringConnection_CidrBlockSet {}
 
-impl BuildDataVpcPeeringConnectionCidrBlockSetEl {
-    pub fn build(self) -> DataVpcPeeringConnectionCidrBlockSetEl {
-        DataVpcPeeringConnectionCidrBlockSetEl { cidr_block: core::default::Default::default() }
+impl BuildDataVpcPeeringConnection_CidrBlockSet {
+    pub fn build(self) -> DataVpcPeeringConnection_CidrBlockSet {
+        DataVpcPeeringConnection_CidrBlockSet { cidr_block: core::default::Default::default() }
     }
 }
 
-pub struct DataVpcPeeringConnectionCidrBlockSetElRef {
+#[allow(dead_code)]
+pub struct DataVpcPeeringConnection_CidrBlockSetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcPeeringConnectionCidrBlockSetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcPeeringConnectionCidrBlockSetElRef {
-        DataVpcPeeringConnectionCidrBlockSetElRef {
+impl terrars::Ref for DataVpcPeeringConnection_CidrBlockSetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcPeeringConnection_CidrBlockSetRef {
+        DataVpcPeeringConnection_CidrBlockSetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcPeeringConnectionCidrBlockSetElRef {
+impl DataVpcPeeringConnection_CidrBlockSetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -495,21 +516,21 @@ impl DataVpcPeeringConnectionCidrBlockSetElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcPeeringConnectionPeerCidrBlockSetEl {
+pub struct DataVpcPeeringConnection_Ipv6CidrBlockSet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcPeeringConnectionPeerCidrBlockSetEl {
-    #[doc = "Set the field `cidr_block`.\n"]
-    pub fn set_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cidr_block = std::option::Option::Some(v.into());
+impl DataVpcPeeringConnection_Ipv6CidrBlockSet {
+    #[doc = "Set the field `ipv6_cidr_block`.\n"]
+    pub fn set_ipv6_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6_cidr_block = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataVpcPeeringConnectionPeerCidrBlockSetEl {
-    type O = terrars::BlockAssignable<DataVpcPeeringConnectionPeerCidrBlockSetEl>;
+impl terrars::ToListMappable for DataVpcPeeringConnection_Ipv6CidrBlockSet {
+    type O = terrars::BlockAssignable<DataVpcPeeringConnection_Ipv6CidrBlockSet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -520,29 +541,92 @@ impl terrars::ToListMappable for DataVpcPeeringConnectionPeerCidrBlockSetEl {
     }
 }
 
-pub struct BuildDataVpcPeeringConnectionPeerCidrBlockSetEl {}
+pub struct BuildDataVpcPeeringConnection_Ipv6CidrBlockSet {}
 
-impl BuildDataVpcPeeringConnectionPeerCidrBlockSetEl {
-    pub fn build(self) -> DataVpcPeeringConnectionPeerCidrBlockSetEl {
-        DataVpcPeeringConnectionPeerCidrBlockSetEl { cidr_block: core::default::Default::default() }
+impl BuildDataVpcPeeringConnection_Ipv6CidrBlockSet {
+    pub fn build(self) -> DataVpcPeeringConnection_Ipv6CidrBlockSet {
+        DataVpcPeeringConnection_Ipv6CidrBlockSet { ipv6_cidr_block: core::default::Default::default() }
     }
 }
 
-pub struct DataVpcPeeringConnectionPeerCidrBlockSetElRef {
+#[allow(dead_code)]
+pub struct DataVpcPeeringConnection_Ipv6CidrBlockSetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcPeeringConnectionPeerCidrBlockSetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcPeeringConnectionPeerCidrBlockSetElRef {
-        DataVpcPeeringConnectionPeerCidrBlockSetElRef {
+impl terrars::Ref for DataVpcPeeringConnection_Ipv6CidrBlockSetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcPeeringConnection_Ipv6CidrBlockSetRef {
+        DataVpcPeeringConnection_Ipv6CidrBlockSetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcPeeringConnectionPeerCidrBlockSetElRef {
+impl DataVpcPeeringConnection_Ipv6CidrBlockSetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
+    pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVpcPeeringConnection_PeerCidrBlockSet {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataVpcPeeringConnection_PeerCidrBlockSet {
+    #[doc = "Set the field `cidr_block`.\n"]
+    pub fn set_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cidr_block = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataVpcPeeringConnection_PeerCidrBlockSet {
+    type O = terrars::BlockAssignable<DataVpcPeeringConnection_PeerCidrBlockSet>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVpcPeeringConnection_PeerCidrBlockSet {}
+
+impl BuildDataVpcPeeringConnection_PeerCidrBlockSet {
+    pub fn build(self) -> DataVpcPeeringConnection_PeerCidrBlockSet {
+        DataVpcPeeringConnection_PeerCidrBlockSet { cidr_block: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVpcPeeringConnection_PeerCidrBlockSetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataVpcPeeringConnection_PeerCidrBlockSetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcPeeringConnection_PeerCidrBlockSetRef {
+        DataVpcPeeringConnection_PeerCidrBlockSetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVpcPeeringConnection_PeerCidrBlockSetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -554,15 +638,79 @@ impl DataVpcPeeringConnectionPeerCidrBlockSetElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcPeeringConnectionFilterEl {
+pub struct DataVpcPeeringConnection_PeerIpv6CidrBlockSet {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataVpcPeeringConnection_PeerIpv6CidrBlockSet {
+    #[doc = "Set the field `ipv6_cidr_block`.\n"]
+    pub fn set_ipv6_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6_cidr_block = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataVpcPeeringConnection_PeerIpv6CidrBlockSet {
+    type O = terrars::BlockAssignable<DataVpcPeeringConnection_PeerIpv6CidrBlockSet>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVpcPeeringConnection_PeerIpv6CidrBlockSet {}
+
+impl BuildDataVpcPeeringConnection_PeerIpv6CidrBlockSet {
+    pub fn build(self) -> DataVpcPeeringConnection_PeerIpv6CidrBlockSet {
+        DataVpcPeeringConnection_PeerIpv6CidrBlockSet { ipv6_cidr_block: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVpcPeeringConnection_PeerIpv6CidrBlockSetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataVpcPeeringConnection_PeerIpv6CidrBlockSetRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataVpcPeeringConnection_PeerIpv6CidrBlockSetRef {
+        DataVpcPeeringConnection_PeerIpv6CidrBlockSetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVpcPeeringConnection_PeerIpv6CidrBlockSetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
+    pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVpcPeeringConnection_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcPeeringConnectionFilterEl { }
+impl DataVpcPeeringConnection_Filter { }
 
-impl terrars::ToListMappable for DataVpcPeeringConnectionFilterEl {
-    type O = terrars::BlockAssignable<DataVpcPeeringConnectionFilterEl>;
+impl terrars::ToListMappable for DataVpcPeeringConnection_Filter {
+    type O = terrars::BlockAssignable<DataVpcPeeringConnection_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -573,37 +721,39 @@ impl terrars::ToListMappable for DataVpcPeeringConnectionFilterEl {
     }
 }
 
-pub struct BuildDataVpcPeeringConnectionFilterEl {
+pub struct BuildDataVpcPeeringConnection_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataVpcPeeringConnectionFilterEl {
-    pub fn build(self) -> DataVpcPeeringConnectionFilterEl {
-        DataVpcPeeringConnectionFilterEl {
+impl BuildDataVpcPeeringConnection_Filter {
+    pub fn build(self) -> DataVpcPeeringConnection_Filter {
+        DataVpcPeeringConnection_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataVpcPeeringConnectionFilterElRef {
+#[allow(dead_code)]
+pub struct DataVpcPeeringConnection_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcPeeringConnectionFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcPeeringConnectionFilterElRef {
-        DataVpcPeeringConnectionFilterElRef {
+impl terrars::Ref for DataVpcPeeringConnection_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcPeeringConnection_FilterRef {
+        DataVpcPeeringConnection_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcPeeringConnectionFilterElRef {
+impl DataVpcPeeringConnection_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -620,12 +770,12 @@ impl DataVpcPeeringConnectionFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcPeeringConnectionTimeoutsEl {
+pub struct DataVpcPeeringConnection_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcPeeringConnectionTimeoutsEl {
+impl DataVpcPeeringConnection_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -633,8 +783,8 @@ impl DataVpcPeeringConnectionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcPeeringConnectionTimeoutsEl {
-    type O = terrars::BlockAssignable<DataVpcPeeringConnectionTimeoutsEl>;
+impl terrars::ToListMappable for DataVpcPeeringConnection_Timeouts {
+    type O = terrars::BlockAssignable<DataVpcPeeringConnection_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -645,29 +795,31 @@ impl terrars::ToListMappable for DataVpcPeeringConnectionTimeoutsEl {
     }
 }
 
-pub struct BuildDataVpcPeeringConnectionTimeoutsEl {}
+pub struct BuildDataVpcPeeringConnection_Timeouts {}
 
-impl BuildDataVpcPeeringConnectionTimeoutsEl {
-    pub fn build(self) -> DataVpcPeeringConnectionTimeoutsEl {
-        DataVpcPeeringConnectionTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataVpcPeeringConnection_Timeouts {
+    pub fn build(self) -> DataVpcPeeringConnection_Timeouts {
+        DataVpcPeeringConnection_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataVpcPeeringConnectionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataVpcPeeringConnection_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcPeeringConnectionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcPeeringConnectionTimeoutsElRef {
-        DataVpcPeeringConnectionTimeoutsElRef {
+impl terrars::Ref for DataVpcPeeringConnection_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcPeeringConnection_TimeoutsRef {
+        DataVpcPeeringConnection_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcPeeringConnectionTimeoutsElRef {
+impl DataVpcPeeringConnection_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -676,9 +828,4 @@ impl DataVpcPeeringConnectionTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataVpcPeeringConnectionDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataVpcPeeringConnectionFilterEl>>,
 }

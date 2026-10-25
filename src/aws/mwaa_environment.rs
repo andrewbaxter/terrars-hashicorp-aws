@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MwaaEnvironmentData {
+struct MwaaEnvironmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct MwaaEnvironmentData {
     airflow_version: std::option::Option<terrars::PrimField<std::string::String>>,
     dag_s3_path: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint_management: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment_class: std::option::Option<terrars::PrimField<std::string::String>>,
     execution_role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,7 +35,11 @@ struct MwaaEnvironmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_webservers: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_workers: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_webservers: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_workers: std::option::Option<terrars::PrimField<f64>>,
     name: terrars::PrimField<std::string::String>,
@@ -40,12 +48,18 @@ struct MwaaEnvironmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     plugins_s3_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     requirements_s3_object_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     requirements_s3_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schedulers: std::option::Option<terrars::PrimField<f64>>,
     source_bucket_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    startup_script_s3_object_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    startup_script_s3_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -55,18 +69,20 @@ struct MwaaEnvironmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weekly_maintenance_window_start: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_configuration: std::option::Option<std::vec::Vec<MwaaEnvironmentLoggingConfigurationEl>>,
+    worker_replacement_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_configuration: std::option::Option<std::vec::Vec<MwaaEnvironmentNetworkConfigurationEl>>,
+    logging_configuration: std::option::Option<std::vec::Vec<MwaaEnvironment_LoggingConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MwaaEnvironmentTimeoutsEl>,
+    network_configuration: std::option::Option<std::vec::Vec<MwaaEnvironment_NetworkConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<MwaaEnvironment_Timeouts>,
     dynamic: MwaaEnvironmentDynamic,
 }
 
 struct MwaaEnvironment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MwaaEnvironmentData>,
+    data: std::cell::RefCell<MwaaEnvironmentData_>,
 }
 
 #[derive(Clone)]
@@ -181,6 +197,12 @@ impl MwaaEnvironment {
         self
     }
 
+    #[doc = "Set the field `endpoint_management`.\n"]
+    pub fn set_endpoint_management(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().endpoint_management = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `environment_class`.\n"]
     pub fn set_environment_class(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().environment_class = std::option::Option::Some(v.into());
@@ -199,9 +221,21 @@ impl MwaaEnvironment {
         self
     }
 
+    #[doc = "Set the field `max_webservers`.\n"]
+    pub fn set_max_webservers(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().max_webservers = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `max_workers`.\n"]
     pub fn set_max_workers(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().max_workers = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min_webservers`.\n"]
+    pub fn set_min_webservers(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().min_webservers = std::option::Option::Some(v.into());
         self
     }
 
@@ -226,6 +260,13 @@ impl MwaaEnvironment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `requirements_s3_object_version`.\n"]
     pub fn set_requirements_s3_object_version(
         self,
@@ -244,6 +285,24 @@ impl MwaaEnvironment {
     #[doc = "Set the field `schedulers`.\n"]
     pub fn set_schedulers(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().schedulers = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `startup_script_s3_object_version`.\n"]
+    pub fn set_startup_script_s3_object_version(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().startup_script_s3_object_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `startup_script_s3_path`.\n"]
+    pub fn set_startup_script_s3_path(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().startup_script_s3_path = std::option::Option::Some(v.into());
         self
     }
 
@@ -280,10 +339,19 @@ impl MwaaEnvironment {
         self
     }
 
+    #[doc = "Set the field `worker_replacement_strategy`.\n"]
+    pub fn set_worker_replacement_strategy(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().worker_replacement_strategy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `logging_configuration`.\n"]
     pub fn set_logging_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -299,7 +367,7 @@ impl MwaaEnvironment {
     #[doc = "Set the field `network_configuration`.\n"]
     pub fn set_network_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironmentNetworkConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironment_NetworkConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -313,7 +381,7 @@ impl MwaaEnvironment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MwaaEnvironmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MwaaEnvironment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -343,6 +411,19 @@ impl MwaaEnvironment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dag_s3_path", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `database_vpc_endpoint_service` after provisioning.\n"]
+    pub fn database_vpc_endpoint_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.database_vpc_endpoint_service", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_management` after provisioning.\n"]
+    pub fn endpoint_management(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_management", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `environment_class` after provisioning.\n"]
     pub fn environment_class(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.environment_class", self.extract_ref()))
@@ -364,13 +445,23 @@ impl MwaaEnvironment {
     }
 
     #[doc = "Get a reference to the value of field `last_updated` after provisioning.\n"]
-    pub fn last_updated(&self) -> terrars::ListRef<MwaaEnvironmentLastUpdatedElRef> {
+    pub fn last_updated(&self) -> terrars::ListRef<MwaaEnvironment_LastUpdatedRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.last_updated", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `max_webservers` after provisioning.\n"]
+    pub fn max_webservers(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_webservers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `max_workers` after provisioning.\n"]
     pub fn max_workers(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_workers", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `min_webservers` after provisioning.\n"]
+    pub fn min_webservers(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_webservers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `min_workers` after provisioning.\n"]
@@ -391,6 +482,12 @@ impl MwaaEnvironment {
     #[doc = "Get a reference to the value of field `plugins_s3_path` after provisioning.\n"]
     pub fn plugins_s3_path(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.plugins_s3_path", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `requirements_s3_object_version` after provisioning.\n"]
@@ -421,6 +518,19 @@ impl MwaaEnvironment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_bucket_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `startup_script_s3_object_version` after provisioning.\n"]
+    pub fn startup_script_s3_object_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.startup_script_s3_object_version", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `startup_script_s3_path` after provisioning.\n"]
+    pub fn startup_script_s3_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.startup_script_s3_path", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -446,6 +556,14 @@ impl MwaaEnvironment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.webserver_url", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `webserver_vpc_endpoint_service` after provisioning.\n"]
+    pub fn webserver_vpc_endpoint_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.webserver_vpc_endpoint_service", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `weekly_maintenance_window_start` after provisioning.\n"]
     pub fn weekly_maintenance_window_start(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
@@ -454,19 +572,24 @@ impl MwaaEnvironment {
         )
     }
 
+    #[doc = "Get a reference to the value of field `worker_replacement_strategy` after provisioning.\n"]
+    pub fn worker_replacement_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.worker_replacement_strategy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(&self) -> terrars::ListRef<MwaaEnvironmentLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<MwaaEnvironment_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_configuration` after provisioning.\n"]
-    pub fn network_configuration(&self) -> terrars::ListRef<MwaaEnvironmentNetworkConfigurationElRef> {
+    pub fn network_configuration(&self) -> terrars::ListRef<MwaaEnvironment_NetworkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MwaaEnvironmentTimeoutsElRef {
-        MwaaEnvironmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MwaaEnvironment_TimeoutsRef {
+        MwaaEnvironment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -518,7 +641,7 @@ impl BuildMwaaEnvironment {
         let out = MwaaEnvironment(std::rc::Rc::new(MwaaEnvironment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MwaaEnvironmentData {
+            data: std::cell::RefCell::new(MwaaEnvironmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -527,23 +650,30 @@ impl BuildMwaaEnvironment {
                 airflow_configuration_options: core::default::Default::default(),
                 airflow_version: core::default::Default::default(),
                 dag_s3_path: self.dag_s3_path,
+                endpoint_management: core::default::Default::default(),
                 environment_class: core::default::Default::default(),
                 execution_role_arn: self.execution_role_arn,
                 id: core::default::Default::default(),
                 kms_key: core::default::Default::default(),
+                max_webservers: core::default::Default::default(),
                 max_workers: core::default::Default::default(),
+                min_webservers: core::default::Default::default(),
                 min_workers: core::default::Default::default(),
                 name: self.name,
                 plugins_s3_object_version: core::default::Default::default(),
                 plugins_s3_path: core::default::Default::default(),
+                region: core::default::Default::default(),
                 requirements_s3_object_version: core::default::Default::default(),
                 requirements_s3_path: core::default::Default::default(),
                 schedulers: core::default::Default::default(),
                 source_bucket_arn: self.source_bucket_arn,
+                startup_script_s3_object_version: core::default::Default::default(),
+                startup_script_s3_path: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 webserver_access_mode: core::default::Default::default(),
                 weekly_maintenance_window_start: core::default::Default::default(),
+                worker_replacement_strategy: core::default::Default::default(),
                 logging_configuration: core::default::Default::default(),
                 network_configuration: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -603,6 +733,19 @@ impl MwaaEnvironmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dag_s3_path", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `database_vpc_endpoint_service` after provisioning.\n"]
+    pub fn database_vpc_endpoint_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.database_vpc_endpoint_service", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_management` after provisioning.\n"]
+    pub fn endpoint_management(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_management", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `environment_class` after provisioning.\n"]
     pub fn environment_class(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.environment_class", self.extract_ref()))
@@ -624,13 +767,23 @@ impl MwaaEnvironmentRef {
     }
 
     #[doc = "Get a reference to the value of field `last_updated` after provisioning.\n"]
-    pub fn last_updated(&self) -> terrars::ListRef<MwaaEnvironmentLastUpdatedElRef> {
+    pub fn last_updated(&self) -> terrars::ListRef<MwaaEnvironment_LastUpdatedRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.last_updated", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `max_webservers` after provisioning.\n"]
+    pub fn max_webservers(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_webservers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `max_workers` after provisioning.\n"]
     pub fn max_workers(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_workers", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `min_webservers` after provisioning.\n"]
+    pub fn min_webservers(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_webservers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `min_workers` after provisioning.\n"]
@@ -651,6 +804,12 @@ impl MwaaEnvironmentRef {
     #[doc = "Get a reference to the value of field `plugins_s3_path` after provisioning.\n"]
     pub fn plugins_s3_path(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.plugins_s3_path", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `requirements_s3_object_version` after provisioning.\n"]
@@ -681,6 +840,19 @@ impl MwaaEnvironmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_bucket_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `startup_script_s3_object_version` after provisioning.\n"]
+    pub fn startup_script_s3_object_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.startup_script_s3_object_version", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `startup_script_s3_path` after provisioning.\n"]
+    pub fn startup_script_s3_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.startup_script_s3_path", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -706,6 +878,14 @@ impl MwaaEnvironmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.webserver_url", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `webserver_vpc_endpoint_service` after provisioning.\n"]
+    pub fn webserver_vpc_endpoint_service(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.webserver_vpc_endpoint_service", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `weekly_maintenance_window_start` after provisioning.\n"]
     pub fn weekly_maintenance_window_start(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
@@ -714,31 +894,42 @@ impl MwaaEnvironmentRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `worker_replacement_strategy` after provisioning.\n"]
+    pub fn worker_replacement_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.worker_replacement_strategy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(&self) -> terrars::ListRef<MwaaEnvironmentLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<MwaaEnvironment_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_configuration` after provisioning.\n"]
-    pub fn network_configuration(&self) -> terrars::ListRef<MwaaEnvironmentNetworkConfigurationElRef> {
+    pub fn network_configuration(&self) -> terrars::ListRef<MwaaEnvironment_NetworkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MwaaEnvironmentTimeoutsElRef {
-        MwaaEnvironmentTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MwaaEnvironment_TimeoutsRef {
+        MwaaEnvironment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MwaaEnvironmentDynamic {
+    logging_configuration: std::option::Option<terrars::DynamicBlock<MwaaEnvironment_LoggingConfiguration>>,
+    network_configuration: std::option::Option<terrars::DynamicBlock<MwaaEnvironment_NetworkConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct MwaaEnvironmentLastUpdatedElErrorEl {
+pub struct MwaaEnvironment_LastUpdated_Error {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_code: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MwaaEnvironmentLastUpdatedElErrorEl {
+impl MwaaEnvironment_LastUpdated_Error {
     #[doc = "Set the field `error_code`.\n"]
     pub fn set_error_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.error_code = std::option::Option::Some(v.into());
@@ -752,8 +943,8 @@ impl MwaaEnvironmentLastUpdatedElErrorEl {
     }
 }
 
-impl terrars::ToListMappable for MwaaEnvironmentLastUpdatedElErrorEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentLastUpdatedElErrorEl>;
+impl terrars::ToListMappable for MwaaEnvironment_LastUpdated_Error {
+    type O = terrars::BlockAssignable<MwaaEnvironment_LastUpdated_Error>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -764,32 +955,34 @@ impl terrars::ToListMappable for MwaaEnvironmentLastUpdatedElErrorEl {
     }
 }
 
-pub struct BuildMwaaEnvironmentLastUpdatedElErrorEl {}
+pub struct BuildMwaaEnvironment_LastUpdated_Error {}
 
-impl BuildMwaaEnvironmentLastUpdatedElErrorEl {
-    pub fn build(self) -> MwaaEnvironmentLastUpdatedElErrorEl {
-        MwaaEnvironmentLastUpdatedElErrorEl {
+impl BuildMwaaEnvironment_LastUpdated_Error {
+    pub fn build(self) -> MwaaEnvironment_LastUpdated_Error {
+        MwaaEnvironment_LastUpdated_Error {
             error_code: core::default::Default::default(),
             error_message: core::default::Default::default(),
         }
     }
 }
 
-pub struct MwaaEnvironmentLastUpdatedElErrorElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_LastUpdated_ErrorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentLastUpdatedElErrorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironmentLastUpdatedElErrorElRef {
-        MwaaEnvironmentLastUpdatedElErrorElRef {
+impl terrars::Ref for MwaaEnvironment_LastUpdated_ErrorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironment_LastUpdated_ErrorRef {
+        MwaaEnvironment_LastUpdated_ErrorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentLastUpdatedElErrorElRef {
+impl MwaaEnvironment_LastUpdated_ErrorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -806,16 +999,16 @@ impl MwaaEnvironmentLastUpdatedElErrorElRef {
 }
 
 #[derive(Serialize)]
-pub struct MwaaEnvironmentLastUpdatedEl {
+pub struct MwaaEnvironment_LastUpdated {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     created_at: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    error: std::option::Option<terrars::ListField<MwaaEnvironmentLastUpdatedElErrorEl>>,
+    error: std::option::Option<terrars::ListField<MwaaEnvironment_LastUpdated_Error>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MwaaEnvironmentLastUpdatedEl {
+impl MwaaEnvironment_LastUpdated {
     #[doc = "Set the field `created_at`.\n"]
     pub fn set_created_at(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.created_at = std::option::Option::Some(v.into());
@@ -825,7 +1018,7 @@ impl MwaaEnvironmentLastUpdatedEl {
     #[doc = "Set the field `error`.\n"]
     pub fn set_error(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<MwaaEnvironmentLastUpdatedElErrorEl>>,
+        v: impl std::convert::Into<terrars::ListField<MwaaEnvironment_LastUpdated_Error>>,
     ) -> Self {
         self.error = std::option::Option::Some(v.into());
         self
@@ -838,8 +1031,8 @@ impl MwaaEnvironmentLastUpdatedEl {
     }
 }
 
-impl terrars::ToListMappable for MwaaEnvironmentLastUpdatedEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentLastUpdatedEl>;
+impl terrars::ToListMappable for MwaaEnvironment_LastUpdated {
+    type O = terrars::BlockAssignable<MwaaEnvironment_LastUpdated>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -850,11 +1043,11 @@ impl terrars::ToListMappable for MwaaEnvironmentLastUpdatedEl {
     }
 }
 
-pub struct BuildMwaaEnvironmentLastUpdatedEl {}
+pub struct BuildMwaaEnvironment_LastUpdated {}
 
-impl BuildMwaaEnvironmentLastUpdatedEl {
-    pub fn build(self) -> MwaaEnvironmentLastUpdatedEl {
-        MwaaEnvironmentLastUpdatedEl {
+impl BuildMwaaEnvironment_LastUpdated {
+    pub fn build(self) -> MwaaEnvironment_LastUpdated {
+        MwaaEnvironment_LastUpdated {
             created_at: core::default::Default::default(),
             error: core::default::Default::default(),
             status: core::default::Default::default(),
@@ -862,21 +1055,23 @@ impl BuildMwaaEnvironmentLastUpdatedEl {
     }
 }
 
-pub struct MwaaEnvironmentLastUpdatedElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_LastUpdatedRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentLastUpdatedElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironmentLastUpdatedElRef {
-        MwaaEnvironmentLastUpdatedElRef {
+impl terrars::Ref for MwaaEnvironment_LastUpdatedRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironment_LastUpdatedRef {
+        MwaaEnvironment_LastUpdatedRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentLastUpdatedElRef {
+impl MwaaEnvironment_LastUpdatedRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -887,7 +1082,7 @@ impl MwaaEnvironmentLastUpdatedElRef {
     }
 
     #[doc = "Get a reference to the value of field `error` after provisioning.\n"]
-    pub fn error(&self) -> terrars::ListRef<MwaaEnvironmentLastUpdatedElErrorElRef> {
+    pub fn error(&self) -> terrars::ListRef<MwaaEnvironment_LastUpdated_ErrorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error", self.base))
     }
 
@@ -898,14 +1093,14 @@ impl MwaaEnvironmentLastUpdatedElRef {
 }
 
 #[derive(Serialize)]
-pub struct MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl {
+pub struct MwaaEnvironment_LoggingConfiguration_DagProcessingLogs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl {
+impl MwaaEnvironment_LoggingConfiguration_DagProcessingLogs {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -919,8 +1114,8 @@ impl MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl {
     }
 }
 
-impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl>;
+impl terrars::ToListMappable for MwaaEnvironment_LoggingConfiguration_DagProcessingLogs {
+    type O = terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_DagProcessingLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -931,35 +1126,37 @@ impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElDagProcess
     }
 }
 
-pub struct BuildMwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl {}
+pub struct BuildMwaaEnvironment_LoggingConfiguration_DagProcessingLogs {}
 
-impl BuildMwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl {
-    pub fn build(self) -> MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl {
-        MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl {
+impl BuildMwaaEnvironment_LoggingConfiguration_DagProcessingLogs {
+    pub fn build(self) -> MwaaEnvironment_LoggingConfiguration_DagProcessingLogs {
+        MwaaEnvironment_LoggingConfiguration_DagProcessingLogs {
             enabled: core::default::Default::default(),
             log_level: core::default::Default::default(),
         }
     }
 }
 
-pub struct MwaaEnvironmentLoggingConfigurationElDagProcessingLogsElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_LoggingConfiguration_DagProcessingLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentLoggingConfigurationElDagProcessingLogsElRef {
+impl terrars::Ref for MwaaEnvironment_LoggingConfiguration_DagProcessingLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MwaaEnvironmentLoggingConfigurationElDagProcessingLogsElRef {
-        MwaaEnvironmentLoggingConfigurationElDagProcessingLogsElRef {
+    ) -> MwaaEnvironment_LoggingConfiguration_DagProcessingLogsRef {
+        MwaaEnvironment_LoggingConfiguration_DagProcessingLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentLoggingConfigurationElDagProcessingLogsElRef {
+impl MwaaEnvironment_LoggingConfiguration_DagProcessingLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -981,14 +1178,14 @@ impl MwaaEnvironmentLoggingConfigurationElDagProcessingLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl {
+pub struct MwaaEnvironment_LoggingConfiguration_SchedulerLogs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl {
+impl MwaaEnvironment_LoggingConfiguration_SchedulerLogs {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1002,8 +1199,8 @@ impl MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl {
     }
 }
 
-impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl>;
+impl terrars::ToListMappable for MwaaEnvironment_LoggingConfiguration_SchedulerLogs {
+    type O = terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_SchedulerLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1014,35 +1211,37 @@ impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElSchedulerL
     }
 }
 
-pub struct BuildMwaaEnvironmentLoggingConfigurationElSchedulerLogsEl {}
+pub struct BuildMwaaEnvironment_LoggingConfiguration_SchedulerLogs {}
 
-impl BuildMwaaEnvironmentLoggingConfigurationElSchedulerLogsEl {
-    pub fn build(self) -> MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl {
-        MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl {
+impl BuildMwaaEnvironment_LoggingConfiguration_SchedulerLogs {
+    pub fn build(self) -> MwaaEnvironment_LoggingConfiguration_SchedulerLogs {
+        MwaaEnvironment_LoggingConfiguration_SchedulerLogs {
             enabled: core::default::Default::default(),
             log_level: core::default::Default::default(),
         }
     }
 }
 
-pub struct MwaaEnvironmentLoggingConfigurationElSchedulerLogsElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_LoggingConfiguration_SchedulerLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentLoggingConfigurationElSchedulerLogsElRef {
+impl terrars::Ref for MwaaEnvironment_LoggingConfiguration_SchedulerLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MwaaEnvironmentLoggingConfigurationElSchedulerLogsElRef {
-        MwaaEnvironmentLoggingConfigurationElSchedulerLogsElRef {
+    ) -> MwaaEnvironment_LoggingConfiguration_SchedulerLogsRef {
+        MwaaEnvironment_LoggingConfiguration_SchedulerLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentLoggingConfigurationElSchedulerLogsElRef {
+impl MwaaEnvironment_LoggingConfiguration_SchedulerLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1064,14 +1263,14 @@ impl MwaaEnvironmentLoggingConfigurationElSchedulerLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MwaaEnvironmentLoggingConfigurationElTaskLogsEl {
+pub struct MwaaEnvironment_LoggingConfiguration_TaskLogs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MwaaEnvironmentLoggingConfigurationElTaskLogsEl {
+impl MwaaEnvironment_LoggingConfiguration_TaskLogs {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1085,8 +1284,8 @@ impl MwaaEnvironmentLoggingConfigurationElTaskLogsEl {
     }
 }
 
-impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElTaskLogsEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElTaskLogsEl>;
+impl terrars::ToListMappable for MwaaEnvironment_LoggingConfiguration_TaskLogs {
+    type O = terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_TaskLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1097,35 +1296,37 @@ impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElTaskLogsEl
     }
 }
 
-pub struct BuildMwaaEnvironmentLoggingConfigurationElTaskLogsEl {}
+pub struct BuildMwaaEnvironment_LoggingConfiguration_TaskLogs {}
 
-impl BuildMwaaEnvironmentLoggingConfigurationElTaskLogsEl {
-    pub fn build(self) -> MwaaEnvironmentLoggingConfigurationElTaskLogsEl {
-        MwaaEnvironmentLoggingConfigurationElTaskLogsEl {
+impl BuildMwaaEnvironment_LoggingConfiguration_TaskLogs {
+    pub fn build(self) -> MwaaEnvironment_LoggingConfiguration_TaskLogs {
+        MwaaEnvironment_LoggingConfiguration_TaskLogs {
             enabled: core::default::Default::default(),
             log_level: core::default::Default::default(),
         }
     }
 }
 
-pub struct MwaaEnvironmentLoggingConfigurationElTaskLogsElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_LoggingConfiguration_TaskLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentLoggingConfigurationElTaskLogsElRef {
+impl terrars::Ref for MwaaEnvironment_LoggingConfiguration_TaskLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MwaaEnvironmentLoggingConfigurationElTaskLogsElRef {
-        MwaaEnvironmentLoggingConfigurationElTaskLogsElRef {
+    ) -> MwaaEnvironment_LoggingConfiguration_TaskLogsRef {
+        MwaaEnvironment_LoggingConfiguration_TaskLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentLoggingConfigurationElTaskLogsElRef {
+impl MwaaEnvironment_LoggingConfiguration_TaskLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1147,14 +1348,14 @@ impl MwaaEnvironmentLoggingConfigurationElTaskLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MwaaEnvironmentLoggingConfigurationElWebserverLogsEl {
+pub struct MwaaEnvironment_LoggingConfiguration_WebserverLogs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MwaaEnvironmentLoggingConfigurationElWebserverLogsEl {
+impl MwaaEnvironment_LoggingConfiguration_WebserverLogs {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1168,8 +1369,8 @@ impl MwaaEnvironmentLoggingConfigurationElWebserverLogsEl {
     }
 }
 
-impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElWebserverLogsEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElWebserverLogsEl>;
+impl terrars::ToListMappable for MwaaEnvironment_LoggingConfiguration_WebserverLogs {
+    type O = terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_WebserverLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1180,35 +1381,37 @@ impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElWebserverL
     }
 }
 
-pub struct BuildMwaaEnvironmentLoggingConfigurationElWebserverLogsEl {}
+pub struct BuildMwaaEnvironment_LoggingConfiguration_WebserverLogs {}
 
-impl BuildMwaaEnvironmentLoggingConfigurationElWebserverLogsEl {
-    pub fn build(self) -> MwaaEnvironmentLoggingConfigurationElWebserverLogsEl {
-        MwaaEnvironmentLoggingConfigurationElWebserverLogsEl {
+impl BuildMwaaEnvironment_LoggingConfiguration_WebserverLogs {
+    pub fn build(self) -> MwaaEnvironment_LoggingConfiguration_WebserverLogs {
+        MwaaEnvironment_LoggingConfiguration_WebserverLogs {
             enabled: core::default::Default::default(),
             log_level: core::default::Default::default(),
         }
     }
 }
 
-pub struct MwaaEnvironmentLoggingConfigurationElWebserverLogsElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_LoggingConfiguration_WebserverLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentLoggingConfigurationElWebserverLogsElRef {
+impl terrars::Ref for MwaaEnvironment_LoggingConfiguration_WebserverLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MwaaEnvironmentLoggingConfigurationElWebserverLogsElRef {
-        MwaaEnvironmentLoggingConfigurationElWebserverLogsElRef {
+    ) -> MwaaEnvironment_LoggingConfiguration_WebserverLogsRef {
+        MwaaEnvironment_LoggingConfiguration_WebserverLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentLoggingConfigurationElWebserverLogsElRef {
+impl MwaaEnvironment_LoggingConfiguration_WebserverLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1230,14 +1433,14 @@ impl MwaaEnvironmentLoggingConfigurationElWebserverLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MwaaEnvironmentLoggingConfigurationElWorkerLogsEl {
+pub struct MwaaEnvironment_LoggingConfiguration_WorkerLogs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MwaaEnvironmentLoggingConfigurationElWorkerLogsEl {
+impl MwaaEnvironment_LoggingConfiguration_WorkerLogs {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1251,8 +1454,8 @@ impl MwaaEnvironmentLoggingConfigurationElWorkerLogsEl {
     }
 }
 
-impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElWorkerLogsEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElWorkerLogsEl>;
+impl terrars::ToListMappable for MwaaEnvironment_LoggingConfiguration_WorkerLogs {
+    type O = terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_WorkerLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1263,35 +1466,37 @@ impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationElWorkerLogs
     }
 }
 
-pub struct BuildMwaaEnvironmentLoggingConfigurationElWorkerLogsEl {}
+pub struct BuildMwaaEnvironment_LoggingConfiguration_WorkerLogs {}
 
-impl BuildMwaaEnvironmentLoggingConfigurationElWorkerLogsEl {
-    pub fn build(self) -> MwaaEnvironmentLoggingConfigurationElWorkerLogsEl {
-        MwaaEnvironmentLoggingConfigurationElWorkerLogsEl {
+impl BuildMwaaEnvironment_LoggingConfiguration_WorkerLogs {
+    pub fn build(self) -> MwaaEnvironment_LoggingConfiguration_WorkerLogs {
+        MwaaEnvironment_LoggingConfiguration_WorkerLogs {
             enabled: core::default::Default::default(),
             log_level: core::default::Default::default(),
         }
     }
 }
 
-pub struct MwaaEnvironmentLoggingConfigurationElWorkerLogsElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_LoggingConfiguration_WorkerLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentLoggingConfigurationElWorkerLogsElRef {
+impl terrars::Ref for MwaaEnvironment_LoggingConfiguration_WorkerLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MwaaEnvironmentLoggingConfigurationElWorkerLogsElRef {
-        MwaaEnvironmentLoggingConfigurationElWorkerLogsElRef {
+    ) -> MwaaEnvironment_LoggingConfiguration_WorkerLogsRef {
+        MwaaEnvironment_LoggingConfiguration_WorkerLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentLoggingConfigurationElWorkerLogsElRef {
+impl MwaaEnvironment_LoggingConfiguration_WorkerLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1313,41 +1518,36 @@ impl MwaaEnvironmentLoggingConfigurationElWorkerLogsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MwaaEnvironmentLoggingConfigurationElDynamic {
+struct MwaaEnvironment_LoggingConfigurationDynamic {
     dag_processing_logs: std
     ::option
-    ::Option<terrars::DynamicBlock<MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl>>,
-    scheduler_logs: std::option::Option<terrars::DynamicBlock<MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl>>,
-    task_logs: std::option::Option<terrars::DynamicBlock<MwaaEnvironmentLoggingConfigurationElTaskLogsEl>>,
-    webserver_logs: std::option::Option<terrars::DynamicBlock<MwaaEnvironmentLoggingConfigurationElWebserverLogsEl>>,
-    worker_logs: std::option::Option<terrars::DynamicBlock<MwaaEnvironmentLoggingConfigurationElWorkerLogsEl>>,
+    ::Option<terrars::DynamicBlock<MwaaEnvironment_LoggingConfiguration_DagProcessingLogs>>,
+    scheduler_logs: std::option::Option<terrars::DynamicBlock<MwaaEnvironment_LoggingConfiguration_SchedulerLogs>>,
+    task_logs: std::option::Option<terrars::DynamicBlock<MwaaEnvironment_LoggingConfiguration_TaskLogs>>,
+    webserver_logs: std::option::Option<terrars::DynamicBlock<MwaaEnvironment_LoggingConfiguration_WebserverLogs>>,
+    worker_logs: std::option::Option<terrars::DynamicBlock<MwaaEnvironment_LoggingConfiguration_WorkerLogs>>,
 }
 
 #[derive(Serialize)]
-pub struct MwaaEnvironmentLoggingConfigurationEl {
+pub struct MwaaEnvironment_LoggingConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dag_processing_logs: std::option::Option<std::vec::Vec<MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl>>,
+    dag_processing_logs: std::option::Option<std::vec::Vec<MwaaEnvironment_LoggingConfiguration_DagProcessingLogs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scheduler_logs: std::option::Option<std::vec::Vec<MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl>>,
+    scheduler_logs: std::option::Option<std::vec::Vec<MwaaEnvironment_LoggingConfiguration_SchedulerLogs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    task_logs: std::option::Option<std::vec::Vec<MwaaEnvironmentLoggingConfigurationElTaskLogsEl>>,
+    task_logs: std::option::Option<std::vec::Vec<MwaaEnvironment_LoggingConfiguration_TaskLogs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    webserver_logs: std::option::Option<std::vec::Vec<MwaaEnvironmentLoggingConfigurationElWebserverLogsEl>>,
+    webserver_logs: std::option::Option<std::vec::Vec<MwaaEnvironment_LoggingConfiguration_WebserverLogs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    worker_logs: std::option::Option<std::vec::Vec<MwaaEnvironmentLoggingConfigurationElWorkerLogsEl>>,
-    dynamic: MwaaEnvironmentLoggingConfigurationElDynamic,
+    worker_logs: std::option::Option<std::vec::Vec<MwaaEnvironment_LoggingConfiguration_WorkerLogs>>,
+    dynamic: MwaaEnvironment_LoggingConfigurationDynamic,
 }
 
-impl MwaaEnvironmentLoggingConfigurationEl {
+impl MwaaEnvironment_LoggingConfiguration {
     #[doc = "Set the field `dag_processing_logs`.\n"]
     pub fn set_dag_processing_logs(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElDagProcessingLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_DagProcessingLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1363,7 +1563,7 @@ impl MwaaEnvironmentLoggingConfigurationEl {
     #[doc = "Set the field `scheduler_logs`.\n"]
     pub fn set_scheduler_logs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElSchedulerLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_SchedulerLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1379,7 +1579,7 @@ impl MwaaEnvironmentLoggingConfigurationEl {
     #[doc = "Set the field `task_logs`.\n"]
     pub fn set_task_logs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElTaskLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_TaskLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1395,7 +1595,7 @@ impl MwaaEnvironmentLoggingConfigurationEl {
     #[doc = "Set the field `webserver_logs`.\n"]
     pub fn set_webserver_logs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElWebserverLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_WebserverLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1411,7 +1611,7 @@ impl MwaaEnvironmentLoggingConfigurationEl {
     #[doc = "Set the field `worker_logs`.\n"]
     pub fn set_worker_logs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationElWorkerLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration_WorkerLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1425,8 +1625,8 @@ impl MwaaEnvironmentLoggingConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentLoggingConfigurationEl>;
+impl terrars::ToListMappable for MwaaEnvironment_LoggingConfiguration {
+    type O = terrars::BlockAssignable<MwaaEnvironment_LoggingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1437,11 +1637,11 @@ impl terrars::ToListMappable for MwaaEnvironmentLoggingConfigurationEl {
     }
 }
 
-pub struct BuildMwaaEnvironmentLoggingConfigurationEl {}
+pub struct BuildMwaaEnvironment_LoggingConfiguration {}
 
-impl BuildMwaaEnvironmentLoggingConfigurationEl {
-    pub fn build(self) -> MwaaEnvironmentLoggingConfigurationEl {
-        MwaaEnvironmentLoggingConfigurationEl {
+impl BuildMwaaEnvironment_LoggingConfiguration {
+    pub fn build(self) -> MwaaEnvironment_LoggingConfiguration {
+        MwaaEnvironment_LoggingConfiguration {
             dag_processing_logs: core::default::Default::default(),
             scheduler_logs: core::default::Default::default(),
             task_logs: core::default::Default::default(),
@@ -1452,61 +1652,63 @@ impl BuildMwaaEnvironmentLoggingConfigurationEl {
     }
 }
 
-pub struct MwaaEnvironmentLoggingConfigurationElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_LoggingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentLoggingConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironmentLoggingConfigurationElRef {
-        MwaaEnvironmentLoggingConfigurationElRef {
+impl terrars::Ref for MwaaEnvironment_LoggingConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironment_LoggingConfigurationRef {
+        MwaaEnvironment_LoggingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentLoggingConfigurationElRef {
+impl MwaaEnvironment_LoggingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `dag_processing_logs` after provisioning.\n"]
-    pub fn dag_processing_logs(&self) -> terrars::ListRef<MwaaEnvironmentLoggingConfigurationElDagProcessingLogsElRef> {
+    pub fn dag_processing_logs(&self) -> terrars::ListRef<MwaaEnvironment_LoggingConfiguration_DagProcessingLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dag_processing_logs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `scheduler_logs` after provisioning.\n"]
-    pub fn scheduler_logs(&self) -> terrars::ListRef<MwaaEnvironmentLoggingConfigurationElSchedulerLogsElRef> {
+    pub fn scheduler_logs(&self) -> terrars::ListRef<MwaaEnvironment_LoggingConfiguration_SchedulerLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scheduler_logs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `task_logs` after provisioning.\n"]
-    pub fn task_logs(&self) -> terrars::ListRef<MwaaEnvironmentLoggingConfigurationElTaskLogsElRef> {
+    pub fn task_logs(&self) -> terrars::ListRef<MwaaEnvironment_LoggingConfiguration_TaskLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.task_logs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `webserver_logs` after provisioning.\n"]
-    pub fn webserver_logs(&self) -> terrars::ListRef<MwaaEnvironmentLoggingConfigurationElWebserverLogsElRef> {
+    pub fn webserver_logs(&self) -> terrars::ListRef<MwaaEnvironment_LoggingConfiguration_WebserverLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.webserver_logs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `worker_logs` after provisioning.\n"]
-    pub fn worker_logs(&self) -> terrars::ListRef<MwaaEnvironmentLoggingConfigurationElWorkerLogsElRef> {
+    pub fn worker_logs(&self) -> terrars::ListRef<MwaaEnvironment_LoggingConfiguration_WorkerLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.worker_logs", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MwaaEnvironmentNetworkConfigurationEl {
+pub struct MwaaEnvironment_NetworkConfiguration {
     security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl MwaaEnvironmentNetworkConfigurationEl { }
+impl MwaaEnvironment_NetworkConfiguration { }
 
-impl terrars::ToListMappable for MwaaEnvironmentNetworkConfigurationEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentNetworkConfigurationEl>;
+impl terrars::ToListMappable for MwaaEnvironment_NetworkConfiguration {
+    type O = terrars::BlockAssignable<MwaaEnvironment_NetworkConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1517,37 +1719,39 @@ impl terrars::ToListMappable for MwaaEnvironmentNetworkConfigurationEl {
     }
 }
 
-pub struct BuildMwaaEnvironmentNetworkConfigurationEl {
+pub struct BuildMwaaEnvironment_NetworkConfiguration {
     #[doc = ""]
     pub security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildMwaaEnvironmentNetworkConfigurationEl {
-    pub fn build(self) -> MwaaEnvironmentNetworkConfigurationEl {
-        MwaaEnvironmentNetworkConfigurationEl {
+impl BuildMwaaEnvironment_NetworkConfiguration {
+    pub fn build(self) -> MwaaEnvironment_NetworkConfiguration {
+        MwaaEnvironment_NetworkConfiguration {
             security_group_ids: self.security_group_ids,
             subnet_ids: self.subnet_ids,
         }
     }
 }
 
-pub struct MwaaEnvironmentNetworkConfigurationElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_NetworkConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentNetworkConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironmentNetworkConfigurationElRef {
-        MwaaEnvironmentNetworkConfigurationElRef {
+impl terrars::Ref for MwaaEnvironment_NetworkConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironment_NetworkConfigurationRef {
+        MwaaEnvironment_NetworkConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentNetworkConfigurationElRef {
+impl MwaaEnvironment_NetworkConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1564,7 +1768,7 @@ impl MwaaEnvironmentNetworkConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct MwaaEnvironmentTimeoutsEl {
+pub struct MwaaEnvironment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1573,7 +1777,7 @@ pub struct MwaaEnvironmentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MwaaEnvironmentTimeoutsEl {
+impl MwaaEnvironment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1593,8 +1797,8 @@ impl MwaaEnvironmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MwaaEnvironmentTimeoutsEl {
-    type O = terrars::BlockAssignable<MwaaEnvironmentTimeoutsEl>;
+impl terrars::ToListMappable for MwaaEnvironment_Timeouts {
+    type O = terrars::BlockAssignable<MwaaEnvironment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1605,11 +1809,11 @@ impl terrars::ToListMappable for MwaaEnvironmentTimeoutsEl {
     }
 }
 
-pub struct BuildMwaaEnvironmentTimeoutsEl {}
+pub struct BuildMwaaEnvironment_Timeouts {}
 
-impl BuildMwaaEnvironmentTimeoutsEl {
-    pub fn build(self) -> MwaaEnvironmentTimeoutsEl {
-        MwaaEnvironmentTimeoutsEl {
+impl BuildMwaaEnvironment_Timeouts {
+    pub fn build(self) -> MwaaEnvironment_Timeouts {
+        MwaaEnvironment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1617,21 +1821,23 @@ impl BuildMwaaEnvironmentTimeoutsEl {
     }
 }
 
-pub struct MwaaEnvironmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MwaaEnvironment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MwaaEnvironmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironmentTimeoutsElRef {
-        MwaaEnvironmentTimeoutsElRef {
+impl terrars::Ref for MwaaEnvironment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MwaaEnvironment_TimeoutsRef {
+        MwaaEnvironment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MwaaEnvironmentTimeoutsElRef {
+impl MwaaEnvironment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1650,10 +1856,4 @@ impl MwaaEnvironmentTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MwaaEnvironmentDynamic {
-    logging_configuration: std::option::Option<terrars::DynamicBlock<MwaaEnvironmentLoggingConfigurationEl>>,
-    network_configuration: std::option::Option<terrars::DynamicBlock<MwaaEnvironmentNetworkConfigurationEl>>,
 }

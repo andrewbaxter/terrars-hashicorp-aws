@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EmrInstanceGroupData {
+struct EmrInstanceGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,14 +37,16 @@ struct EmrInstanceGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ebs_config: std::option::Option<std::vec::Vec<EmrInstanceGroupEbsConfigEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ebs_config: std::option::Option<std::vec::Vec<EmrInstanceGroup_EbsConfig>>,
     dynamic: EmrInstanceGroupDynamic,
 }
 
 struct EmrInstanceGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EmrInstanceGroupData>,
+    data: std::cell::RefCell<EmrInstanceGroupData_>,
 }
 
 #[derive(Clone)]
@@ -184,10 +188,17 @@ impl EmrInstanceGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `ebs_config`.\n"]
     pub fn set_ebs_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EmrInstanceGroupEbsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EmrInstanceGroup_EbsConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -245,6 +256,12 @@ impl EmrInstanceGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `running_instance_count` after provisioning.\n"]
     pub fn running_instance_count(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.running_instance_count", self.extract_ref()))
@@ -300,7 +317,7 @@ impl BuildEmrInstanceGroup {
         let out = EmrInstanceGroup(std::rc::Rc::new(EmrInstanceGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EmrInstanceGroupData {
+            data: std::cell::RefCell::new(EmrInstanceGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -315,6 +332,7 @@ impl BuildEmrInstanceGroup {
                 instance_count: core::default::Default::default(),
                 instance_type: self.instance_type,
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 ebs_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -392,6 +410,12 @@ impl EmrInstanceGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `running_instance_count` after provisioning.\n"]
     pub fn running_instance_count(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.running_instance_count", self.extract_ref()))
@@ -403,8 +427,13 @@ impl EmrInstanceGroupRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct EmrInstanceGroupDynamic {
+    ebs_config: std::option::Option<terrars::DynamicBlock<EmrInstanceGroup_EbsConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct EmrInstanceGroupEbsConfigEl {
+pub struct EmrInstanceGroup_EbsConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     iops: std::option::Option<terrars::PrimField<f64>>,
     size: terrars::PrimField<f64>,
@@ -414,7 +443,7 @@ pub struct EmrInstanceGroupEbsConfigEl {
     volumes_per_instance: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl EmrInstanceGroupEbsConfigEl {
+impl EmrInstanceGroup_EbsConfig {
     #[doc = "Set the field `iops`.\n"]
     pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.iops = std::option::Option::Some(v.into());
@@ -428,8 +457,8 @@ impl EmrInstanceGroupEbsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for EmrInstanceGroupEbsConfigEl {
-    type O = terrars::BlockAssignable<EmrInstanceGroupEbsConfigEl>;
+impl terrars::ToListMappable for EmrInstanceGroup_EbsConfig {
+    type O = terrars::BlockAssignable<EmrInstanceGroup_EbsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -440,16 +469,16 @@ impl terrars::ToListMappable for EmrInstanceGroupEbsConfigEl {
     }
 }
 
-pub struct BuildEmrInstanceGroupEbsConfigEl {
+pub struct BuildEmrInstanceGroup_EbsConfig {
     #[doc = ""]
     pub size: terrars::PrimField<f64>,
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEmrInstanceGroupEbsConfigEl {
-    pub fn build(self) -> EmrInstanceGroupEbsConfigEl {
-        EmrInstanceGroupEbsConfigEl {
+impl BuildEmrInstanceGroup_EbsConfig {
+    pub fn build(self) -> EmrInstanceGroup_EbsConfig {
+        EmrInstanceGroup_EbsConfig {
             iops: core::default::Default::default(),
             size: self.size,
             type_: self.type_,
@@ -458,21 +487,23 @@ impl BuildEmrInstanceGroupEbsConfigEl {
     }
 }
 
-pub struct EmrInstanceGroupEbsConfigElRef {
+#[allow(dead_code)]
+pub struct EmrInstanceGroup_EbsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EmrInstanceGroupEbsConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EmrInstanceGroupEbsConfigElRef {
-        EmrInstanceGroupEbsConfigElRef {
+impl terrars::Ref for EmrInstanceGroup_EbsConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EmrInstanceGroup_EbsConfigRef {
+        EmrInstanceGroup_EbsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EmrInstanceGroupEbsConfigElRef {
+impl EmrInstanceGroup_EbsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -496,9 +527,4 @@ impl EmrInstanceGroupEbsConfigElRef {
     pub fn volumes_per_instance(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.volumes_per_instance", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EmrInstanceGroupDynamic {
-    ebs_config: std::option::Option<terrars::DynamicBlock<EmrInstanceGroupEbsConfigEl>>,
 }

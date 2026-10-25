@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketOwnershipControlsData {
+struct S3BucketOwnershipControlsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct S3BucketOwnershipControlsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<S3BucketOwnershipControlsRuleEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rule: std::option::Option<std::vec::Vec<S3BucketOwnershipControls_Rule>>,
     dynamic: S3BucketOwnershipControlsDynamic,
 }
 
 struct S3BucketOwnershipControls_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketOwnershipControlsData>,
+    data: std::cell::RefCell<S3BucketOwnershipControlsData_>,
 }
 
 #[derive(Clone)]
@@ -135,11 +139,15 @@ impl S3BucketOwnershipControls {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `rule`.\n"]
-    pub fn set_rule(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketOwnershipControlsRuleEl>>,
-    ) -> Self {
+    pub fn set_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketOwnershipControls_Rule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().rule = std::option::Option::Some(v);
@@ -161,8 +169,14 @@ impl S3BucketOwnershipControls {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<S3BucketOwnershipControlsRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<S3BucketOwnershipControls_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
     }
 }
@@ -209,7 +223,7 @@ impl BuildS3BucketOwnershipControls {
         let out = S3BucketOwnershipControls(std::rc::Rc::new(S3BucketOwnershipControls_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketOwnershipControlsData {
+            data: std::cell::RefCell::new(S3BucketOwnershipControlsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -217,6 +231,7 @@ impl BuildS3BucketOwnershipControls {
                 provisioner: core::default::Default::default(),
                 bucket: self.bucket,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 rule: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -259,21 +274,32 @@ impl S3BucketOwnershipControlsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<S3BucketOwnershipControlsRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<S3BucketOwnershipControls_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketOwnershipControlsDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<S3BucketOwnershipControls_Rule>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketOwnershipControlsRuleEl {
+pub struct S3BucketOwnershipControls_Rule {
     object_ownership: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketOwnershipControlsRuleEl { }
+impl S3BucketOwnershipControls_Rule { }
 
-impl terrars::ToListMappable for S3BucketOwnershipControlsRuleEl {
-    type O = terrars::BlockAssignable<S3BucketOwnershipControlsRuleEl>;
+impl terrars::ToListMappable for S3BucketOwnershipControls_Rule {
+    type O = terrars::BlockAssignable<S3BucketOwnershipControls_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -284,32 +310,34 @@ impl terrars::ToListMappable for S3BucketOwnershipControlsRuleEl {
     }
 }
 
-pub struct BuildS3BucketOwnershipControlsRuleEl {
+pub struct BuildS3BucketOwnershipControls_Rule {
     #[doc = ""]
     pub object_ownership: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketOwnershipControlsRuleEl {
-    pub fn build(self) -> S3BucketOwnershipControlsRuleEl {
-        S3BucketOwnershipControlsRuleEl { object_ownership: self.object_ownership }
+impl BuildS3BucketOwnershipControls_Rule {
+    pub fn build(self) -> S3BucketOwnershipControls_Rule {
+        S3BucketOwnershipControls_Rule { object_ownership: self.object_ownership }
     }
 }
 
-pub struct S3BucketOwnershipControlsRuleElRef {
+#[allow(dead_code)]
+pub struct S3BucketOwnershipControls_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketOwnershipControlsRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketOwnershipControlsRuleElRef {
-        S3BucketOwnershipControlsRuleElRef {
+impl terrars::Ref for S3BucketOwnershipControls_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketOwnershipControls_RuleRef {
+        S3BucketOwnershipControls_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketOwnershipControlsRuleElRef {
+impl S3BucketOwnershipControls_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -318,9 +346,4 @@ impl S3BucketOwnershipControlsRuleElRef {
     pub fn object_ownership(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.object_ownership", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketOwnershipControlsDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<S3BucketOwnershipControlsRuleEl>>,
 }

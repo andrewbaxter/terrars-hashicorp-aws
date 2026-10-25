@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct TranscribeVocabularyData {
+struct TranscribeVocabularyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct TranscribeVocabularyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     phrases: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -31,13 +35,13 @@ struct TranscribeVocabularyData {
     vocabulary_file_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     vocabulary_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<TranscribeVocabularyTimeoutsEl>,
+    timeouts: std::option::Option<TranscribeVocabulary_Timeouts>,
 }
 
 struct TranscribeVocabulary_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<TranscribeVocabularyData>,
+    data: std::cell::RefCell<TranscribeVocabularyData_>,
 }
 
 #[derive(Clone)]
@@ -152,6 +156,13 @@ impl TranscribeVocabulary {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -177,7 +188,7 @@ impl TranscribeVocabulary {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<TranscribeVocabularyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<TranscribeVocabulary_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -207,6 +218,12 @@ impl TranscribeVocabulary {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phrases", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -228,8 +245,8 @@ impl TranscribeVocabulary {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> TranscribeVocabularyTimeoutsElRef {
-        TranscribeVocabularyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> TranscribeVocabulary_TimeoutsRef {
+        TranscribeVocabulary_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -277,7 +294,7 @@ impl BuildTranscribeVocabulary {
         let out = TranscribeVocabulary(std::rc::Rc::new(TranscribeVocabulary_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(TranscribeVocabularyData {
+            data: std::cell::RefCell::new(TranscribeVocabularyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -286,6 +303,7 @@ impl BuildTranscribeVocabulary {
                 id: core::default::Default::default(),
                 language_code: self.language_code,
                 phrases: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 vocabulary_file_uri: core::default::Default::default(),
@@ -346,6 +364,12 @@ impl TranscribeVocabularyRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phrases", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -367,13 +391,13 @@ impl TranscribeVocabularyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> TranscribeVocabularyTimeoutsElRef {
-        TranscribeVocabularyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> TranscribeVocabulary_TimeoutsRef {
+        TranscribeVocabulary_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct TranscribeVocabularyTimeoutsEl {
+pub struct TranscribeVocabulary_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -382,7 +406,7 @@ pub struct TranscribeVocabularyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl TranscribeVocabularyTimeoutsEl {
+impl TranscribeVocabulary_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -402,8 +426,8 @@ impl TranscribeVocabularyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for TranscribeVocabularyTimeoutsEl {
-    type O = terrars::BlockAssignable<TranscribeVocabularyTimeoutsEl>;
+impl terrars::ToListMappable for TranscribeVocabulary_Timeouts {
+    type O = terrars::BlockAssignable<TranscribeVocabulary_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -414,11 +438,11 @@ impl terrars::ToListMappable for TranscribeVocabularyTimeoutsEl {
     }
 }
 
-pub struct BuildTranscribeVocabularyTimeoutsEl {}
+pub struct BuildTranscribeVocabulary_Timeouts {}
 
-impl BuildTranscribeVocabularyTimeoutsEl {
-    pub fn build(self) -> TranscribeVocabularyTimeoutsEl {
-        TranscribeVocabularyTimeoutsEl {
+impl BuildTranscribeVocabulary_Timeouts {
+    pub fn build(self) -> TranscribeVocabulary_Timeouts {
+        TranscribeVocabulary_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -426,21 +450,23 @@ impl BuildTranscribeVocabularyTimeoutsEl {
     }
 }
 
-pub struct TranscribeVocabularyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct TranscribeVocabulary_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TranscribeVocabularyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TranscribeVocabularyTimeoutsElRef {
-        TranscribeVocabularyTimeoutsElRef {
+impl terrars::Ref for TranscribeVocabulary_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TranscribeVocabulary_TimeoutsRef {
+        TranscribeVocabulary_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TranscribeVocabularyTimeoutsElRef {
+impl TranscribeVocabulary_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodecommitTriggerData {
+struct CodecommitTriggerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,16 +22,18 @@ struct CodecommitTriggerData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     repository_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trigger: std::option::Option<std::vec::Vec<CodecommitTriggerTriggerEl>>,
+    trigger: std::option::Option<std::vec::Vec<CodecommitTrigger_Trigger>>,
     dynamic: CodecommitTriggerDynamic,
 }
 
 struct CodecommitTrigger_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodecommitTriggerData>,
+    data: std::cell::RefCell<CodecommitTriggerData_>,
 }
 
 #[derive(Clone)]
@@ -135,8 +139,15 @@ impl CodecommitTrigger {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `trigger`.\n"]
-    pub fn set_trigger(self, v: impl std::convert::Into<terrars::BlockAssignable<CodecommitTriggerTriggerEl>>) -> Self {
+    pub fn set_trigger(self, v: impl std::convert::Into<terrars::BlockAssignable<CodecommitTrigger_Trigger>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().trigger = std::option::Option::Some(v);
@@ -156,6 +167,12 @@ impl CodecommitTrigger {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `repository_name` after provisioning.\n"]
@@ -206,13 +223,14 @@ impl BuildCodecommitTrigger {
         let out = CodecommitTrigger(std::rc::Rc::new(CodecommitTrigger_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodecommitTriggerData {
+            data: std::cell::RefCell::new(CodecommitTriggerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 repository_name: self.repository_name,
                 trigger: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -256,14 +274,25 @@ impl CodecommitTriggerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `repository_name` after provisioning.\n"]
     pub fn repository_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository_name", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CodecommitTriggerDynamic {
+    trigger: std::option::Option<terrars::DynamicBlock<CodecommitTrigger_Trigger>>,
+}
+
 #[derive(Serialize)]
-pub struct CodecommitTriggerTriggerEl {
+pub struct CodecommitTrigger_Trigger {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branches: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -273,7 +302,7 @@ pub struct CodecommitTriggerTriggerEl {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl CodecommitTriggerTriggerEl {
+impl CodecommitTrigger_Trigger {
     #[doc = "Set the field `branches`.\n"]
     pub fn set_branches(
         mut self,
@@ -290,8 +319,8 @@ impl CodecommitTriggerTriggerEl {
     }
 }
 
-impl terrars::ToListMappable for CodecommitTriggerTriggerEl {
-    type O = terrars::BlockAssignable<CodecommitTriggerTriggerEl>;
+impl terrars::ToListMappable for CodecommitTrigger_Trigger {
+    type O = terrars::BlockAssignable<CodecommitTrigger_Trigger>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -302,7 +331,7 @@ impl terrars::ToListMappable for CodecommitTriggerTriggerEl {
     }
 }
 
-pub struct BuildCodecommitTriggerTriggerEl {
+pub struct BuildCodecommitTrigger_Trigger {
     #[doc = ""]
     pub destination_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -311,9 +340,9 @@ pub struct BuildCodecommitTriggerTriggerEl {
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodecommitTriggerTriggerEl {
-    pub fn build(self) -> CodecommitTriggerTriggerEl {
-        CodecommitTriggerTriggerEl {
+impl BuildCodecommitTrigger_Trigger {
+    pub fn build(self) -> CodecommitTrigger_Trigger {
+        CodecommitTrigger_Trigger {
             branches: core::default::Default::default(),
             custom_data: core::default::Default::default(),
             destination_arn: self.destination_arn,
@@ -323,21 +352,23 @@ impl BuildCodecommitTriggerTriggerEl {
     }
 }
 
-pub struct CodecommitTriggerTriggerElRef {
+#[allow(dead_code)]
+pub struct CodecommitTrigger_TriggerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodecommitTriggerTriggerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodecommitTriggerTriggerElRef {
-        CodecommitTriggerTriggerElRef {
+impl terrars::Ref for CodecommitTrigger_TriggerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodecommitTrigger_TriggerRef {
+        CodecommitTrigger_TriggerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodecommitTriggerTriggerElRef {
+impl CodecommitTrigger_TriggerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -366,9 +397,4 @@ impl CodecommitTriggerTriggerElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CodecommitTriggerDynamic {
-    trigger: std::option::Option<terrars::DynamicBlock<CodecommitTriggerTriggerEl>>,
 }

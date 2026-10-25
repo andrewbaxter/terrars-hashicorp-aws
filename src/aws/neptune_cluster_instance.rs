@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NeptuneClusterInstanceData {
+struct NeptuneClusterInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -51,17 +53,21 @@ struct NeptuneClusterInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publicly_accessible: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_final_snapshot: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NeptuneClusterInstanceTimeoutsEl>,
+    timeouts: std::option::Option<NeptuneClusterInstance_Timeouts>,
 }
 
 struct NeptuneClusterInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NeptuneClusterInstanceData>,
+    data: std::cell::RefCell<NeptuneClusterInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -263,6 +269,19 @@ impl NeptuneClusterInstance {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `skip_final_snapshot`.\n"]
+    pub fn set_skip_final_snapshot(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_final_snapshot = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -282,7 +301,7 @@ impl NeptuneClusterInstance {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NeptuneClusterInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NeptuneClusterInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -397,9 +416,25 @@ impl NeptuneClusterInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_final_snapshot` after provisioning.\n"]
+    pub fn skip_final_snapshot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_final_snapshot", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `storage_encrypted` after provisioning.\n"]
     pub fn storage_encrypted(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_encrypted", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
+    pub fn storage_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -418,8 +453,8 @@ impl NeptuneClusterInstance {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NeptuneClusterInstanceTimeoutsElRef {
-        NeptuneClusterInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NeptuneClusterInstance_TimeoutsRef {
+        NeptuneClusterInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -467,7 +502,7 @@ impl BuildNeptuneClusterInstance {
         let out = NeptuneClusterInstance(std::rc::Rc::new(NeptuneClusterInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NeptuneClusterInstanceData {
+            data: std::cell::RefCell::new(NeptuneClusterInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -490,6 +525,8 @@ impl BuildNeptuneClusterInstance {
                 preferred_maintenance_window: core::default::Default::default(),
                 promotion_tier: core::default::Default::default(),
                 publicly_accessible: core::default::Default::default(),
+                region: core::default::Default::default(),
+                skip_final_snapshot: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -633,9 +670,25 @@ impl NeptuneClusterInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_final_snapshot` after provisioning.\n"]
+    pub fn skip_final_snapshot(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_final_snapshot", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `storage_encrypted` after provisioning.\n"]
     pub fn storage_encrypted(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_encrypted", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
+    pub fn storage_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -654,13 +707,13 @@ impl NeptuneClusterInstanceRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NeptuneClusterInstanceTimeoutsElRef {
-        NeptuneClusterInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NeptuneClusterInstance_TimeoutsRef {
+        NeptuneClusterInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct NeptuneClusterInstanceTimeoutsEl {
+pub struct NeptuneClusterInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -669,7 +722,7 @@ pub struct NeptuneClusterInstanceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NeptuneClusterInstanceTimeoutsEl {
+impl NeptuneClusterInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -689,8 +742,8 @@ impl NeptuneClusterInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NeptuneClusterInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<NeptuneClusterInstanceTimeoutsEl>;
+impl terrars::ToListMappable for NeptuneClusterInstance_Timeouts {
+    type O = terrars::BlockAssignable<NeptuneClusterInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -701,11 +754,11 @@ impl terrars::ToListMappable for NeptuneClusterInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildNeptuneClusterInstanceTimeoutsEl {}
+pub struct BuildNeptuneClusterInstance_Timeouts {}
 
-impl BuildNeptuneClusterInstanceTimeoutsEl {
-    pub fn build(self) -> NeptuneClusterInstanceTimeoutsEl {
-        NeptuneClusterInstanceTimeoutsEl {
+impl BuildNeptuneClusterInstance_Timeouts {
+    pub fn build(self) -> NeptuneClusterInstance_Timeouts {
+        NeptuneClusterInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -713,21 +766,23 @@ impl BuildNeptuneClusterInstanceTimeoutsEl {
     }
 }
 
-pub struct NeptuneClusterInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NeptuneClusterInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NeptuneClusterInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneClusterInstanceTimeoutsElRef {
-        NeptuneClusterInstanceTimeoutsElRef {
+impl terrars::Ref for NeptuneClusterInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneClusterInstance_TimeoutsRef {
+        NeptuneClusterInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NeptuneClusterInstanceTimeoutsElRef {
+impl NeptuneClusterInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GuarddutyDetectorData {
+struct GuarddutyDetectorData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,18 +27,20 @@ struct GuarddutyDetectorData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    datasources: std::option::Option<std::vec::Vec<GuarddutyDetectorDatasourcesEl>>,
+    datasources: std::option::Option<std::vec::Vec<GuarddutyDetector_Datasources>>,
     dynamic: GuarddutyDetectorDynamic,
 }
 
 struct GuarddutyDetector_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GuarddutyDetectorData>,
+    data: std::cell::RefCell<GuarddutyDetectorData_>,
 }
 
 #[derive(Clone)]
@@ -157,6 +161,13 @@ impl GuarddutyDetector {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -178,7 +189,7 @@ impl GuarddutyDetector {
     #[doc = "Set the field `datasources`.\n"]
     pub fn set_datasources(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetectorDatasourcesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetector_Datasources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,6 +227,12 @@ impl GuarddutyDetector {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -227,7 +244,7 @@ impl GuarddutyDetector {
     }
 
     #[doc = "Get a reference to the value of field `datasources` after provisioning.\n"]
-    pub fn datasources(&self) -> terrars::ListRef<GuarddutyDetectorDatasourcesElRef> {
+    pub fn datasources(&self) -> terrars::ListRef<GuarddutyDetector_DatasourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datasources", self.extract_ref()))
     }
 }
@@ -272,7 +289,7 @@ impl BuildGuarddutyDetector {
         let out = GuarddutyDetector(std::rc::Rc::new(GuarddutyDetector_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GuarddutyDetectorData {
+            data: std::cell::RefCell::new(GuarddutyDetectorData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -281,6 +298,7 @@ impl BuildGuarddutyDetector {
                 enable: core::default::Default::default(),
                 finding_publishing_frequency: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 datasources: core::default::Default::default(),
@@ -340,6 +358,12 @@ impl GuarddutyDetectorRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -351,20 +375,25 @@ impl GuarddutyDetectorRef {
     }
 
     #[doc = "Get a reference to the value of field `datasources` after provisioning.\n"]
-    pub fn datasources(&self) -> terrars::ListRef<GuarddutyDetectorDatasourcesElRef> {
+    pub fn datasources(&self) -> terrars::ListRef<GuarddutyDetector_DatasourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datasources", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GuarddutyDetectorDynamic {
+    datasources: std::option::Option<terrars::DynamicBlock<GuarddutyDetector_Datasources>>,
+}
+
 #[derive(Serialize)]
-pub struct GuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl {
+pub struct GuarddutyDetector_Datasources_Kubernetes_AuditLogs {
     enable: terrars::PrimField<bool>,
 }
 
-impl GuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl { }
+impl GuarddutyDetector_Datasources_Kubernetes_AuditLogs { }
 
-impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl {
-    type O = terrars::BlockAssignable<GuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl>;
+impl terrars::ToListMappable for GuarddutyDetector_Datasources_Kubernetes_AuditLogs {
+    type O = terrars::BlockAssignable<GuarddutyDetector_Datasources_Kubernetes_AuditLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -375,35 +404,37 @@ impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElKubernetesElAudit
     }
 }
 
-pub struct BuildGuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl {
+pub struct BuildGuarddutyDetector_Datasources_Kubernetes_AuditLogs {
     #[doc = ""]
     pub enable: terrars::PrimField<bool>,
 }
 
-impl BuildGuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl {
-    pub fn build(self) -> GuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl {
-        GuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl { enable: self.enable }
+impl BuildGuarddutyDetector_Datasources_Kubernetes_AuditLogs {
+    pub fn build(self) -> GuarddutyDetector_Datasources_Kubernetes_AuditLogs {
+        GuarddutyDetector_Datasources_Kubernetes_AuditLogs { enable: self.enable }
     }
 }
 
-pub struct GuarddutyDetectorDatasourcesElKubernetesElAuditLogsElRef {
+#[allow(dead_code)]
+pub struct GuarddutyDetector_Datasources_Kubernetes_AuditLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GuarddutyDetectorDatasourcesElKubernetesElAuditLogsElRef {
+impl terrars::Ref for GuarddutyDetector_Datasources_Kubernetes_AuditLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GuarddutyDetectorDatasourcesElKubernetesElAuditLogsElRef {
-        GuarddutyDetectorDatasourcesElKubernetesElAuditLogsElRef {
+    ) -> GuarddutyDetector_Datasources_Kubernetes_AuditLogsRef {
+        GuarddutyDetector_Datasources_Kubernetes_AuditLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GuarddutyDetectorDatasourcesElKubernetesElAuditLogsElRef {
+impl GuarddutyDetector_Datasources_Kubernetes_AuditLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -415,22 +446,22 @@ impl GuarddutyDetectorDatasourcesElKubernetesElAuditLogsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GuarddutyDetectorDatasourcesElKubernetesElDynamic {
-    audit_logs: std::option::Option<terrars::DynamicBlock<GuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl>>,
+struct GuarddutyDetector_Datasources_KubernetesDynamic {
+    audit_logs: std::option::Option<terrars::DynamicBlock<GuarddutyDetector_Datasources_Kubernetes_AuditLogs>>,
 }
 
 #[derive(Serialize)]
-pub struct GuarddutyDetectorDatasourcesElKubernetesEl {
+pub struct GuarddutyDetector_Datasources_Kubernetes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    audit_logs: std::option::Option<std::vec::Vec<GuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl>>,
-    dynamic: GuarddutyDetectorDatasourcesElKubernetesElDynamic,
+    audit_logs: std::option::Option<std::vec::Vec<GuarddutyDetector_Datasources_Kubernetes_AuditLogs>>,
+    dynamic: GuarddutyDetector_Datasources_KubernetesDynamic,
 }
 
-impl GuarddutyDetectorDatasourcesElKubernetesEl {
+impl GuarddutyDetector_Datasources_Kubernetes {
     #[doc = "Set the field `audit_logs`.\n"]
     pub fn set_audit_logs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetectorDatasourcesElKubernetesElAuditLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetector_Datasources_Kubernetes_AuditLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -444,8 +475,8 @@ impl GuarddutyDetectorDatasourcesElKubernetesEl {
     }
 }
 
-impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElKubernetesEl {
-    type O = terrars::BlockAssignable<GuarddutyDetectorDatasourcesElKubernetesEl>;
+impl terrars::ToListMappable for GuarddutyDetector_Datasources_Kubernetes {
+    type O = terrars::BlockAssignable<GuarddutyDetector_Datasources_Kubernetes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -456,54 +487,56 @@ impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElKubernetesEl {
     }
 }
 
-pub struct BuildGuarddutyDetectorDatasourcesElKubernetesEl {}
+pub struct BuildGuarddutyDetector_Datasources_Kubernetes {}
 
-impl BuildGuarddutyDetectorDatasourcesElKubernetesEl {
-    pub fn build(self) -> GuarddutyDetectorDatasourcesElKubernetesEl {
-        GuarddutyDetectorDatasourcesElKubernetesEl {
+impl BuildGuarddutyDetector_Datasources_Kubernetes {
+    pub fn build(self) -> GuarddutyDetector_Datasources_Kubernetes {
+        GuarddutyDetector_Datasources_Kubernetes {
             audit_logs: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GuarddutyDetectorDatasourcesElKubernetesElRef {
+#[allow(dead_code)]
+pub struct GuarddutyDetector_Datasources_KubernetesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GuarddutyDetectorDatasourcesElKubernetesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GuarddutyDetectorDatasourcesElKubernetesElRef {
-        GuarddutyDetectorDatasourcesElKubernetesElRef {
+impl terrars::Ref for GuarddutyDetector_Datasources_KubernetesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GuarddutyDetector_Datasources_KubernetesRef {
+        GuarddutyDetector_Datasources_KubernetesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GuarddutyDetectorDatasourcesElKubernetesElRef {
+impl GuarddutyDetector_Datasources_KubernetesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `audit_logs` after provisioning.\n"]
-    pub fn audit_logs(&self) -> terrars::ListRef<GuarddutyDetectorDatasourcesElKubernetesElAuditLogsElRef> {
+    pub fn audit_logs(&self) -> terrars::ListRef<GuarddutyDetector_Datasources_Kubernetes_AuditLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audit_logs", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl {
+pub struct GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes {
     enable: terrars::PrimField<bool>,
 }
 
-impl GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl { }
+impl GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes { }
 
 impl terrars
-::ToListMappable for GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl {
+::ToListMappable for GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes {
     type O =
         terrars
-        ::BlockAssignable<GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl>;
+        ::BlockAssignable<GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -514,37 +547,39 @@ impl terrars
     }
 }
 
-pub struct BuildGuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl {
+pub struct BuildGuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes {
     #[doc = ""]
     pub enable: terrars::PrimField<bool>,
 }
 
-impl BuildGuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl {
-    pub fn build(self) -> GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl {
-        GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl {
+impl BuildGuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes {
+    pub fn build(self) -> GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes {
+        GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes {
             enable: self.enable,
         }
     }
 }
 
-pub struct GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesElRef {
+#[allow(dead_code)]
+pub struct GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesElRef {
+impl terrars::Ref for GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesElRef {
-        GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesElRef {
+    ) -> GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumesRef {
+        GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesElRef {
+impl GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -556,27 +591,24 @@ impl GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFinding
 }
 
 #[derive(Serialize, Default)]
-struct GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElDynamic {
+struct GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindingsDynamic {
     ebs_volumes: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl>,
+        terrars::DynamicBlock<GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl {
+pub struct GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ebs_volumes: std
     ::option
-    ::Option<
-        std::vec::Vec<GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl>,
-    >,
-    dynamic: GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElDynamic,
+    ::Option<std::vec::Vec<GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes>>,
+    dynamic: GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindingsDynamic,
 }
 
-impl GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl {
+impl GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings {
     #[doc = "Set the field `ebs_volumes`.\n"]
     pub fn set_ebs_volumes(
         mut self,
@@ -588,7 +620,7 @@ impl GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFinding
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesEl,
+                            GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumes,
                         >,
                     >,
     ) -> Self {
@@ -604,9 +636,8 @@ impl GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFinding
     }
 }
 
-impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl {
-    type O =
-        terrars::BlockAssignable<GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl>;
+impl terrars::ToListMappable for GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings {
+    type O = terrars::BlockAssignable<GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -617,35 +648,37 @@ impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElMalwareProtection
     }
 }
 
-pub struct BuildGuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl {}
+pub struct BuildGuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings {}
 
-impl BuildGuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl {
-    pub fn build(self) -> GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl {
-        GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl {
+impl BuildGuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings {
+    pub fn build(self) -> GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings {
+        GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings {
             ebs_volumes: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElRef {
+#[allow(dead_code)]
+pub struct GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElRef {
+impl terrars::Ref for GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElRef {
-        GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElRef {
+    ) -> GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindingsRef {
+        GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElRef {
+impl GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -653,29 +686,28 @@ impl GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFinding
     #[doc = "Get a reference to the value of field `ebs_volumes` after provisioning.\n"]
     pub fn ebs_volumes(
         &self,
-    ) -> terrars
-    ::ListRef<GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElEbsVolumesElRef> {
+    ) -> terrars::ListRef<GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings_EbsVolumesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ebs_volumes", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct GuarddutyDetectorDatasourcesElMalwareProtectionElDynamic {
+struct GuarddutyDetector_Datasources_MalwareProtectionDynamic {
     scan_ec2_instance_with_findings: std
     ::option
-    ::Option<terrars::DynamicBlock<GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl>>,
+    ::Option<terrars::DynamicBlock<GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings>>,
 }
 
 #[derive(Serialize)]
-pub struct GuarddutyDetectorDatasourcesElMalwareProtectionEl {
+pub struct GuarddutyDetector_Datasources_MalwareProtection {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scan_ec2_instance_with_findings: std
     ::option
-    ::Option<std::vec::Vec<GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl>>,
-    dynamic: GuarddutyDetectorDatasourcesElMalwareProtectionElDynamic,
+    ::Option<std::vec::Vec<GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings>>,
+    dynamic: GuarddutyDetector_Datasources_MalwareProtectionDynamic,
 }
 
-impl GuarddutyDetectorDatasourcesElMalwareProtectionEl {
+impl GuarddutyDetector_Datasources_MalwareProtection {
     #[doc = "Set the field `scan_ec2_instance_with_findings`.\n"]
     pub fn set_scan_ec2_instance_with_findings(
         mut self,
@@ -686,9 +718,7 @@ impl GuarddutyDetectorDatasourcesElMalwareProtectionEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsEl,
-                        >,
+                        ::BlockAssignable<GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindings>,
                     >,
     ) -> Self {
         match v.into() {
@@ -703,8 +733,8 @@ impl GuarddutyDetectorDatasourcesElMalwareProtectionEl {
     }
 }
 
-impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElMalwareProtectionEl {
-    type O = terrars::BlockAssignable<GuarddutyDetectorDatasourcesElMalwareProtectionEl>;
+impl terrars::ToListMappable for GuarddutyDetector_Datasources_MalwareProtection {
+    type O = terrars::BlockAssignable<GuarddutyDetector_Datasources_MalwareProtection>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -715,35 +745,37 @@ impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElMalwareProtection
     }
 }
 
-pub struct BuildGuarddutyDetectorDatasourcesElMalwareProtectionEl {}
+pub struct BuildGuarddutyDetector_Datasources_MalwareProtection {}
 
-impl BuildGuarddutyDetectorDatasourcesElMalwareProtectionEl {
-    pub fn build(self) -> GuarddutyDetectorDatasourcesElMalwareProtectionEl {
-        GuarddutyDetectorDatasourcesElMalwareProtectionEl {
+impl BuildGuarddutyDetector_Datasources_MalwareProtection {
+    pub fn build(self) -> GuarddutyDetector_Datasources_MalwareProtection {
+        GuarddutyDetector_Datasources_MalwareProtection {
             scan_ec2_instance_with_findings: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GuarddutyDetectorDatasourcesElMalwareProtectionElRef {
+#[allow(dead_code)]
+pub struct GuarddutyDetector_Datasources_MalwareProtectionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GuarddutyDetectorDatasourcesElMalwareProtectionElRef {
+impl terrars::Ref for GuarddutyDetector_Datasources_MalwareProtectionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GuarddutyDetectorDatasourcesElMalwareProtectionElRef {
-        GuarddutyDetectorDatasourcesElMalwareProtectionElRef {
+    ) -> GuarddutyDetector_Datasources_MalwareProtectionRef {
+        GuarddutyDetector_Datasources_MalwareProtectionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GuarddutyDetectorDatasourcesElMalwareProtectionElRef {
+impl GuarddutyDetector_Datasources_MalwareProtectionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -751,20 +783,20 @@ impl GuarddutyDetectorDatasourcesElMalwareProtectionElRef {
     #[doc = "Get a reference to the value of field `scan_ec2_instance_with_findings` after provisioning.\n"]
     pub fn scan_ec2_instance_with_findings(
         &self,
-    ) -> terrars::ListRef<GuarddutyDetectorDatasourcesElMalwareProtectionElScanEc2InstanceWithFindingsElRef> {
+    ) -> terrars::ListRef<GuarddutyDetector_Datasources_MalwareProtection_ScanEc2InstanceWithFindingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scan_ec2_instance_with_findings", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GuarddutyDetectorDatasourcesElS3LogsEl {
+pub struct GuarddutyDetector_Datasources_S3Logs {
     enable: terrars::PrimField<bool>,
 }
 
-impl GuarddutyDetectorDatasourcesElS3LogsEl { }
+impl GuarddutyDetector_Datasources_S3Logs { }
 
-impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElS3LogsEl {
-    type O = terrars::BlockAssignable<GuarddutyDetectorDatasourcesElS3LogsEl>;
+impl terrars::ToListMappable for GuarddutyDetector_Datasources_S3Logs {
+    type O = terrars::BlockAssignable<GuarddutyDetector_Datasources_S3Logs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -775,32 +807,34 @@ impl terrars::ToListMappable for GuarddutyDetectorDatasourcesElS3LogsEl {
     }
 }
 
-pub struct BuildGuarddutyDetectorDatasourcesElS3LogsEl {
+pub struct BuildGuarddutyDetector_Datasources_S3Logs {
     #[doc = ""]
     pub enable: terrars::PrimField<bool>,
 }
 
-impl BuildGuarddutyDetectorDatasourcesElS3LogsEl {
-    pub fn build(self) -> GuarddutyDetectorDatasourcesElS3LogsEl {
-        GuarddutyDetectorDatasourcesElS3LogsEl { enable: self.enable }
+impl BuildGuarddutyDetector_Datasources_S3Logs {
+    pub fn build(self) -> GuarddutyDetector_Datasources_S3Logs {
+        GuarddutyDetector_Datasources_S3Logs { enable: self.enable }
     }
 }
 
-pub struct GuarddutyDetectorDatasourcesElS3LogsElRef {
+#[allow(dead_code)]
+pub struct GuarddutyDetector_Datasources_S3LogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GuarddutyDetectorDatasourcesElS3LogsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GuarddutyDetectorDatasourcesElS3LogsElRef {
-        GuarddutyDetectorDatasourcesElS3LogsElRef {
+impl terrars::Ref for GuarddutyDetector_Datasources_S3LogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GuarddutyDetector_Datasources_S3LogsRef {
+        GuarddutyDetector_Datasources_S3LogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GuarddutyDetectorDatasourcesElS3LogsElRef {
+impl GuarddutyDetector_Datasources_S3LogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -812,30 +846,28 @@ impl GuarddutyDetectorDatasourcesElS3LogsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GuarddutyDetectorDatasourcesElDynamic {
-    kubernetes: std::option::Option<terrars::DynamicBlock<GuarddutyDetectorDatasourcesElKubernetesEl>>,
-    malware_protection: std
-    ::option
-    ::Option<terrars::DynamicBlock<GuarddutyDetectorDatasourcesElMalwareProtectionEl>>,
-    s3_logs: std::option::Option<terrars::DynamicBlock<GuarddutyDetectorDatasourcesElS3LogsEl>>,
+struct GuarddutyDetector_DatasourcesDynamic {
+    kubernetes: std::option::Option<terrars::DynamicBlock<GuarddutyDetector_Datasources_Kubernetes>>,
+    malware_protection: std::option::Option<terrars::DynamicBlock<GuarddutyDetector_Datasources_MalwareProtection>>,
+    s3_logs: std::option::Option<terrars::DynamicBlock<GuarddutyDetector_Datasources_S3Logs>>,
 }
 
 #[derive(Serialize)]
-pub struct GuarddutyDetectorDatasourcesEl {
+pub struct GuarddutyDetector_Datasources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kubernetes: std::option::Option<std::vec::Vec<GuarddutyDetectorDatasourcesElKubernetesEl>>,
+    kubernetes: std::option::Option<std::vec::Vec<GuarddutyDetector_Datasources_Kubernetes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    malware_protection: std::option::Option<std::vec::Vec<GuarddutyDetectorDatasourcesElMalwareProtectionEl>>,
+    malware_protection: std::option::Option<std::vec::Vec<GuarddutyDetector_Datasources_MalwareProtection>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_logs: std::option::Option<std::vec::Vec<GuarddutyDetectorDatasourcesElS3LogsEl>>,
-    dynamic: GuarddutyDetectorDatasourcesElDynamic,
+    s3_logs: std::option::Option<std::vec::Vec<GuarddutyDetector_Datasources_S3Logs>>,
+    dynamic: GuarddutyDetector_DatasourcesDynamic,
 }
 
-impl GuarddutyDetectorDatasourcesEl {
+impl GuarddutyDetector_Datasources {
     #[doc = "Set the field `kubernetes`.\n"]
     pub fn set_kubernetes(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetectorDatasourcesElKubernetesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetector_Datasources_Kubernetes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -851,7 +883,7 @@ impl GuarddutyDetectorDatasourcesEl {
     #[doc = "Set the field `malware_protection`.\n"]
     pub fn set_malware_protection(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetectorDatasourcesElMalwareProtectionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetector_Datasources_MalwareProtection>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -867,7 +899,7 @@ impl GuarddutyDetectorDatasourcesEl {
     #[doc = "Set the field `s3_logs`.\n"]
     pub fn set_s3_logs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetectorDatasourcesElS3LogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyDetector_Datasources_S3Logs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -881,8 +913,8 @@ impl GuarddutyDetectorDatasourcesEl {
     }
 }
 
-impl terrars::ToListMappable for GuarddutyDetectorDatasourcesEl {
-    type O = terrars::BlockAssignable<GuarddutyDetectorDatasourcesEl>;
+impl terrars::ToListMappable for GuarddutyDetector_Datasources {
+    type O = terrars::BlockAssignable<GuarddutyDetector_Datasources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -893,11 +925,11 @@ impl terrars::ToListMappable for GuarddutyDetectorDatasourcesEl {
     }
 }
 
-pub struct BuildGuarddutyDetectorDatasourcesEl {}
+pub struct BuildGuarddutyDetector_Datasources {}
 
-impl BuildGuarddutyDetectorDatasourcesEl {
-    pub fn build(self) -> GuarddutyDetectorDatasourcesEl {
-        GuarddutyDetectorDatasourcesEl {
+impl BuildGuarddutyDetector_Datasources {
+    pub fn build(self) -> GuarddutyDetector_Datasources {
+        GuarddutyDetector_Datasources {
             kubernetes: core::default::Default::default(),
             malware_protection: core::default::Default::default(),
             s3_logs: core::default::Default::default(),
@@ -906,42 +938,39 @@ impl BuildGuarddutyDetectorDatasourcesEl {
     }
 }
 
-pub struct GuarddutyDetectorDatasourcesElRef {
+#[allow(dead_code)]
+pub struct GuarddutyDetector_DatasourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GuarddutyDetectorDatasourcesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GuarddutyDetectorDatasourcesElRef {
-        GuarddutyDetectorDatasourcesElRef {
+impl terrars::Ref for GuarddutyDetector_DatasourcesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GuarddutyDetector_DatasourcesRef {
+        GuarddutyDetector_DatasourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GuarddutyDetectorDatasourcesElRef {
+impl GuarddutyDetector_DatasourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `kubernetes` after provisioning.\n"]
-    pub fn kubernetes(&self) -> terrars::ListRef<GuarddutyDetectorDatasourcesElKubernetesElRef> {
+    pub fn kubernetes(&self) -> terrars::ListRef<GuarddutyDetector_Datasources_KubernetesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kubernetes", self.base))
     }
 
     #[doc = "Get a reference to the value of field `malware_protection` after provisioning.\n"]
-    pub fn malware_protection(&self) -> terrars::ListRef<GuarddutyDetectorDatasourcesElMalwareProtectionElRef> {
+    pub fn malware_protection(&self) -> terrars::ListRef<GuarddutyDetector_Datasources_MalwareProtectionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.malware_protection", self.base))
     }
 
     #[doc = "Get a reference to the value of field `s3_logs` after provisioning.\n"]
-    pub fn s3_logs(&self) -> terrars::ListRef<GuarddutyDetectorDatasourcesElS3LogsElRef> {
+    pub fn s3_logs(&self) -> terrars::ListRef<GuarddutyDetector_Datasources_S3LogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_logs", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GuarddutyDetectorDynamic {
-    datasources: std::option::Option<terrars::DynamicBlock<GuarddutyDetectorDatasourcesEl>>,
 }

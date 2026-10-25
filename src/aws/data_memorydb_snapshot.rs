@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataMemorydbSnapshotData {
+struct DataMemorydbSnapshotData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataMemorydbSnapshotData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataMemorydbSnapshot_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMemorydbSnapshotData>,
+    data: std::cell::RefCell<DataMemorydbSnapshotData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataMemorydbSnapshot {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -92,7 +103,7 @@ impl DataMemorydbSnapshot {
     }
 
     #[doc = "Get a reference to the value of field `cluster_configuration` after provisioning.\n"]
-    pub fn cluster_configuration(&self) -> terrars::ListRef<DataMemorydbSnapshotClusterConfigurationElRef> {
+    pub fn cluster_configuration(&self) -> terrars::ListRef<DataMemorydbSnapshot_ClusterConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_configuration", self.extract_ref()))
     }
 
@@ -114,6 +125,12 @@ impl DataMemorydbSnapshot {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
@@ -169,13 +186,14 @@ impl BuildDataMemorydbSnapshot {
         let out = DataMemorydbSnapshot(std::rc::Rc::new(DataMemorydbSnapshot_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMemorydbSnapshotData {
+            data: std::cell::RefCell::new(DataMemorydbSnapshotData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -213,7 +231,7 @@ impl DataMemorydbSnapshotRef {
     }
 
     #[doc = "Get a reference to the value of field `cluster_configuration` after provisioning.\n"]
-    pub fn cluster_configuration(&self) -> terrars::ListRef<DataMemorydbSnapshotClusterConfigurationElRef> {
+    pub fn cluster_configuration(&self) -> terrars::ListRef<DataMemorydbSnapshot_ClusterConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_configuration", self.extract_ref()))
     }
 
@@ -237,6 +255,12 @@ impl DataMemorydbSnapshotRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
     pub fn source(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
@@ -249,9 +273,11 @@ impl DataMemorydbSnapshotRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMemorydbSnapshotClusterConfigurationEl {
+pub struct DataMemorydbSnapshot_ClusterConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    engine: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -278,10 +304,16 @@ pub struct DataMemorydbSnapshotClusterConfigurationEl {
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMemorydbSnapshotClusterConfigurationEl {
+impl DataMemorydbSnapshot_ClusterConfiguration {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `engine`.\n"]
+    pub fn set_engine(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.engine = std::option::Option::Some(v.into());
         self
     }
 
@@ -364,8 +396,8 @@ impl DataMemorydbSnapshotClusterConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataMemorydbSnapshotClusterConfigurationEl {
-    type O = terrars::BlockAssignable<DataMemorydbSnapshotClusterConfigurationEl>;
+impl terrars::ToListMappable for DataMemorydbSnapshot_ClusterConfiguration {
+    type O = terrars::BlockAssignable<DataMemorydbSnapshot_ClusterConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -376,12 +408,13 @@ impl terrars::ToListMappable for DataMemorydbSnapshotClusterConfigurationEl {
     }
 }
 
-pub struct BuildDataMemorydbSnapshotClusterConfigurationEl {}
+pub struct BuildDataMemorydbSnapshot_ClusterConfiguration {}
 
-impl BuildDataMemorydbSnapshotClusterConfigurationEl {
-    pub fn build(self) -> DataMemorydbSnapshotClusterConfigurationEl {
-        DataMemorydbSnapshotClusterConfigurationEl {
+impl BuildDataMemorydbSnapshot_ClusterConfiguration {
+    pub fn build(self) -> DataMemorydbSnapshot_ClusterConfiguration {
+        DataMemorydbSnapshot_ClusterConfiguration {
             description: core::default::Default::default(),
+            engine: core::default::Default::default(),
             engine_version: core::default::Default::default(),
             maintenance_window: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -398,21 +431,23 @@ impl BuildDataMemorydbSnapshotClusterConfigurationEl {
     }
 }
 
-pub struct DataMemorydbSnapshotClusterConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataMemorydbSnapshot_ClusterConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMemorydbSnapshotClusterConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbSnapshotClusterConfigurationElRef {
-        DataMemorydbSnapshotClusterConfigurationElRef {
+impl terrars::Ref for DataMemorydbSnapshot_ClusterConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbSnapshot_ClusterConfigurationRef {
+        DataMemorydbSnapshot_ClusterConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMemorydbSnapshotClusterConfigurationElRef {
+impl DataMemorydbSnapshot_ClusterConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -420,6 +455,11 @@ impl DataMemorydbSnapshotClusterConfigurationElRef {
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
+    pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.base))
     }
 
     #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]

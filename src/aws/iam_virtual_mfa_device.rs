@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IamVirtualMfaDeviceData {
+struct IamVirtualMfaDeviceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,7 +34,7 @@ struct IamVirtualMfaDeviceData {
 struct IamVirtualMfaDevice_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamVirtualMfaDeviceData>,
+    data: std::cell::RefCell<IamVirtualMfaDeviceData_>,
 }
 
 #[derive(Clone)]
@@ -172,6 +174,11 @@ impl IamVirtualMfaDevice {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.base_32_string_seed", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_date` after provisioning.\n"]
+    pub fn enable_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_date", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -187,6 +194,11 @@ impl IamVirtualMfaDevice {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qr_code_png", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `serial_number` after provisioning.\n"]
+    pub fn serial_number(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.serial_number", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -195,6 +207,11 @@ impl IamVirtualMfaDevice {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]
+    pub fn user_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `virtual_mfa_device_name` after provisioning.\n"]
@@ -245,7 +262,7 @@ impl BuildIamVirtualMfaDevice {
         let out = IamVirtualMfaDevice(std::rc::Rc::new(IamVirtualMfaDevice_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamVirtualMfaDeviceData {
+            data: std::cell::RefCell::new(IamVirtualMfaDeviceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -296,6 +313,11 @@ impl IamVirtualMfaDeviceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.base_32_string_seed", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_date` after provisioning.\n"]
+    pub fn enable_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_date", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -311,6 +333,11 @@ impl IamVirtualMfaDeviceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qr_code_png", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `serial_number` after provisioning.\n"]
+    pub fn serial_number(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.serial_number", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -319,6 +346,11 @@ impl IamVirtualMfaDeviceRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]
+    pub fn user_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `virtual_mfa_device_name` after provisioning.\n"]

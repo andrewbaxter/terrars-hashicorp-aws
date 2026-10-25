@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Apigatewayv2StageData {
+struct Apigatewayv2StageData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,24 +33,26 @@ struct Apigatewayv2StageData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stage_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_log_settings: std::option::Option<std::vec::Vec<Apigatewayv2StageAccessLogSettingsEl>>,
+    access_log_settings: std::option::Option<std::vec::Vec<Apigatewayv2Stage_AccessLogSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_route_settings: std::option::Option<std::vec::Vec<Apigatewayv2StageDefaultRouteSettingsEl>>,
+    default_route_settings: std::option::Option<std::vec::Vec<Apigatewayv2Stage_DefaultRouteSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route_settings: std::option::Option<std::vec::Vec<Apigatewayv2StageRouteSettingsEl>>,
+    route_settings: std::option::Option<std::vec::Vec<Apigatewayv2Stage_RouteSettings>>,
     dynamic: Apigatewayv2StageDynamic,
 }
 
 struct Apigatewayv2Stage_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Apigatewayv2StageData>,
+    data: std::cell::RefCell<Apigatewayv2StageData_>,
 }
 
 #[derive(Clone)]
@@ -178,6 +182,13 @@ impl Apigatewayv2Stage {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `stage_variables`.\n"]
     pub fn set_stage_variables(
         self,
@@ -208,7 +219,7 @@ impl Apigatewayv2Stage {
     #[doc = "Set the field `access_log_settings`.\n"]
     pub fn set_access_log_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2StageAccessLogSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2Stage_AccessLogSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -224,7 +235,7 @@ impl Apigatewayv2Stage {
     #[doc = "Set the field `default_route_settings`.\n"]
     pub fn set_default_route_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2StageDefaultRouteSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2Stage_DefaultRouteSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -240,7 +251,7 @@ impl Apigatewayv2Stage {
     #[doc = "Set the field `route_settings`.\n"]
     pub fn set_route_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2StageRouteSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2Stage_RouteSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -303,6 +314,12 @@ impl Apigatewayv2Stage {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stage_variables` after provisioning.\n"]
     pub fn stage_variables(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.stage_variables", self.extract_ref()))
@@ -319,12 +336,12 @@ impl Apigatewayv2Stage {
     }
 
     #[doc = "Get a reference to the value of field `access_log_settings` after provisioning.\n"]
-    pub fn access_log_settings(&self) -> terrars::ListRef<Apigatewayv2StageAccessLogSettingsElRef> {
+    pub fn access_log_settings(&self) -> terrars::ListRef<Apigatewayv2Stage_AccessLogSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_log_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `default_route_settings` after provisioning.\n"]
-    pub fn default_route_settings(&self) -> terrars::ListRef<Apigatewayv2StageDefaultRouteSettingsElRef> {
+    pub fn default_route_settings(&self) -> terrars::ListRef<Apigatewayv2Stage_DefaultRouteSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_route_settings", self.extract_ref()))
     }
 }
@@ -373,7 +390,7 @@ impl BuildApigatewayv2Stage {
         let out = Apigatewayv2Stage(std::rc::Rc::new(Apigatewayv2Stage_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Apigatewayv2StageData {
+            data: std::cell::RefCell::new(Apigatewayv2StageData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -386,6 +403,7 @@ impl BuildApigatewayv2Stage {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 stage_variables: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -473,6 +491,12 @@ impl Apigatewayv2StageRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stage_variables` after provisioning.\n"]
     pub fn stage_variables(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.stage_variables", self.extract_ref()))
@@ -489,26 +513,33 @@ impl Apigatewayv2StageRef {
     }
 
     #[doc = "Get a reference to the value of field `access_log_settings` after provisioning.\n"]
-    pub fn access_log_settings(&self) -> terrars::ListRef<Apigatewayv2StageAccessLogSettingsElRef> {
+    pub fn access_log_settings(&self) -> terrars::ListRef<Apigatewayv2Stage_AccessLogSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_log_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `default_route_settings` after provisioning.\n"]
-    pub fn default_route_settings(&self) -> terrars::ListRef<Apigatewayv2StageDefaultRouteSettingsElRef> {
+    pub fn default_route_settings(&self) -> terrars::ListRef<Apigatewayv2Stage_DefaultRouteSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_route_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Apigatewayv2StageDynamic {
+    access_log_settings: std::option::Option<terrars::DynamicBlock<Apigatewayv2Stage_AccessLogSettings>>,
+    default_route_settings: std::option::Option<terrars::DynamicBlock<Apigatewayv2Stage_DefaultRouteSettings>>,
+    route_settings: std::option::Option<terrars::DynamicBlock<Apigatewayv2Stage_RouteSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct Apigatewayv2StageAccessLogSettingsEl {
+pub struct Apigatewayv2Stage_AccessLogSettings {
     destination_arn: terrars::PrimField<std::string::String>,
     format: terrars::PrimField<std::string::String>,
 }
 
-impl Apigatewayv2StageAccessLogSettingsEl { }
+impl Apigatewayv2Stage_AccessLogSettings { }
 
-impl terrars::ToListMappable for Apigatewayv2StageAccessLogSettingsEl {
-    type O = terrars::BlockAssignable<Apigatewayv2StageAccessLogSettingsEl>;
+impl terrars::ToListMappable for Apigatewayv2Stage_AccessLogSettings {
+    type O = terrars::BlockAssignable<Apigatewayv2Stage_AccessLogSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -519,37 +550,39 @@ impl terrars::ToListMappable for Apigatewayv2StageAccessLogSettingsEl {
     }
 }
 
-pub struct BuildApigatewayv2StageAccessLogSettingsEl {
+pub struct BuildApigatewayv2Stage_AccessLogSettings {
     #[doc = ""]
     pub destination_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub format: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApigatewayv2StageAccessLogSettingsEl {
-    pub fn build(self) -> Apigatewayv2StageAccessLogSettingsEl {
-        Apigatewayv2StageAccessLogSettingsEl {
+impl BuildApigatewayv2Stage_AccessLogSettings {
+    pub fn build(self) -> Apigatewayv2Stage_AccessLogSettings {
+        Apigatewayv2Stage_AccessLogSettings {
             destination_arn: self.destination_arn,
             format: self.format,
         }
     }
 }
 
-pub struct Apigatewayv2StageAccessLogSettingsElRef {
+#[allow(dead_code)]
+pub struct Apigatewayv2Stage_AccessLogSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Apigatewayv2StageAccessLogSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2StageAccessLogSettingsElRef {
-        Apigatewayv2StageAccessLogSettingsElRef {
+impl terrars::Ref for Apigatewayv2Stage_AccessLogSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2Stage_AccessLogSettingsRef {
+        Apigatewayv2Stage_AccessLogSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Apigatewayv2StageAccessLogSettingsElRef {
+impl Apigatewayv2Stage_AccessLogSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -566,7 +599,7 @@ impl Apigatewayv2StageAccessLogSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct Apigatewayv2StageDefaultRouteSettingsEl {
+pub struct Apigatewayv2Stage_DefaultRouteSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_trace_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -579,7 +612,7 @@ pub struct Apigatewayv2StageDefaultRouteSettingsEl {
     throttling_rate_limit: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl Apigatewayv2StageDefaultRouteSettingsEl {
+impl Apigatewayv2Stage_DefaultRouteSettings {
     #[doc = "Set the field `data_trace_enabled`.\n"]
     pub fn set_data_trace_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.data_trace_enabled = std::option::Option::Some(v.into());
@@ -611,8 +644,8 @@ impl Apigatewayv2StageDefaultRouteSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for Apigatewayv2StageDefaultRouteSettingsEl {
-    type O = terrars::BlockAssignable<Apigatewayv2StageDefaultRouteSettingsEl>;
+impl terrars::ToListMappable for Apigatewayv2Stage_DefaultRouteSettings {
+    type O = terrars::BlockAssignable<Apigatewayv2Stage_DefaultRouteSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -623,11 +656,11 @@ impl terrars::ToListMappable for Apigatewayv2StageDefaultRouteSettingsEl {
     }
 }
 
-pub struct BuildApigatewayv2StageDefaultRouteSettingsEl {}
+pub struct BuildApigatewayv2Stage_DefaultRouteSettings {}
 
-impl BuildApigatewayv2StageDefaultRouteSettingsEl {
-    pub fn build(self) -> Apigatewayv2StageDefaultRouteSettingsEl {
-        Apigatewayv2StageDefaultRouteSettingsEl {
+impl BuildApigatewayv2Stage_DefaultRouteSettings {
+    pub fn build(self) -> Apigatewayv2Stage_DefaultRouteSettings {
+        Apigatewayv2Stage_DefaultRouteSettings {
             data_trace_enabled: core::default::Default::default(),
             detailed_metrics_enabled: core::default::Default::default(),
             logging_level: core::default::Default::default(),
@@ -637,21 +670,23 @@ impl BuildApigatewayv2StageDefaultRouteSettingsEl {
     }
 }
 
-pub struct Apigatewayv2StageDefaultRouteSettingsElRef {
+#[allow(dead_code)]
+pub struct Apigatewayv2Stage_DefaultRouteSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Apigatewayv2StageDefaultRouteSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2StageDefaultRouteSettingsElRef {
-        Apigatewayv2StageDefaultRouteSettingsElRef {
+impl terrars::Ref for Apigatewayv2Stage_DefaultRouteSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2Stage_DefaultRouteSettingsRef {
+        Apigatewayv2Stage_DefaultRouteSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Apigatewayv2StageDefaultRouteSettingsElRef {
+impl Apigatewayv2Stage_DefaultRouteSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -683,7 +718,7 @@ impl Apigatewayv2StageDefaultRouteSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct Apigatewayv2StageRouteSettingsEl {
+pub struct Apigatewayv2Stage_RouteSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_trace_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -697,7 +732,7 @@ pub struct Apigatewayv2StageRouteSettingsEl {
     throttling_rate_limit: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl Apigatewayv2StageRouteSettingsEl {
+impl Apigatewayv2Stage_RouteSettings {
     #[doc = "Set the field `data_trace_enabled`.\n"]
     pub fn set_data_trace_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.data_trace_enabled = std::option::Option::Some(v.into());
@@ -729,8 +764,8 @@ impl Apigatewayv2StageRouteSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for Apigatewayv2StageRouteSettingsEl {
-    type O = terrars::BlockAssignable<Apigatewayv2StageRouteSettingsEl>;
+impl terrars::ToListMappable for Apigatewayv2Stage_RouteSettings {
+    type O = terrars::BlockAssignable<Apigatewayv2Stage_RouteSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -741,14 +776,14 @@ impl terrars::ToListMappable for Apigatewayv2StageRouteSettingsEl {
     }
 }
 
-pub struct BuildApigatewayv2StageRouteSettingsEl {
+pub struct BuildApigatewayv2Stage_RouteSettings {
     #[doc = ""]
     pub route_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApigatewayv2StageRouteSettingsEl {
-    pub fn build(self) -> Apigatewayv2StageRouteSettingsEl {
-        Apigatewayv2StageRouteSettingsEl {
+impl BuildApigatewayv2Stage_RouteSettings {
+    pub fn build(self) -> Apigatewayv2Stage_RouteSettings {
+        Apigatewayv2Stage_RouteSettings {
             data_trace_enabled: core::default::Default::default(),
             detailed_metrics_enabled: core::default::Default::default(),
             logging_level: core::default::Default::default(),
@@ -759,21 +794,23 @@ impl BuildApigatewayv2StageRouteSettingsEl {
     }
 }
 
-pub struct Apigatewayv2StageRouteSettingsElRef {
+#[allow(dead_code)]
+pub struct Apigatewayv2Stage_RouteSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Apigatewayv2StageRouteSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2StageRouteSettingsElRef {
-        Apigatewayv2StageRouteSettingsElRef {
+impl terrars::Ref for Apigatewayv2Stage_RouteSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2Stage_RouteSettingsRef {
+        Apigatewayv2Stage_RouteSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Apigatewayv2StageRouteSettingsElRef {
+impl Apigatewayv2Stage_RouteSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -807,11 +844,4 @@ impl Apigatewayv2StageRouteSettingsElRef {
     pub fn throttling_rate_limit(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.throttling_rate_limit", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Apigatewayv2StageDynamic {
-    access_log_settings: std::option::Option<terrars::DynamicBlock<Apigatewayv2StageAccessLogSettingsEl>>,
-    default_route_settings: std::option::Option<terrars::DynamicBlock<Apigatewayv2StageDefaultRouteSettingsEl>>,
-    route_settings: std::option::Option<terrars::DynamicBlock<Apigatewayv2StageRouteSettingsEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct OrganizationsPolicyAttachmentData {
+struct OrganizationsPolicyAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,13 +23,15 @@ struct OrganizationsPolicyAttachmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     policy_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_destroy: std::option::Option<terrars::PrimField<bool>>,
     target_id: terrars::PrimField<std::string::String>,
 }
 
 struct OrganizationsPolicyAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<OrganizationsPolicyAttachmentData>,
+    data: std::cell::RefCell<OrganizationsPolicyAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -133,6 +137,12 @@ impl OrganizationsPolicyAttachment {
         self
     }
 
+    #[doc = "Set the field `skip_destroy`.\n"]
+    pub fn set_skip_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -141,6 +151,11 @@ impl OrganizationsPolicyAttachment {
     #[doc = "Get a reference to the value of field `policy_id` after provisioning.\n"]
     pub fn policy_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_id` after provisioning.\n"]
@@ -193,7 +208,7 @@ impl BuildOrganizationsPolicyAttachment {
         let out = OrganizationsPolicyAttachment(std::rc::Rc::new(OrganizationsPolicyAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(OrganizationsPolicyAttachmentData {
+            data: std::cell::RefCell::new(OrganizationsPolicyAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -201,6 +216,7 @@ impl BuildOrganizationsPolicyAttachment {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 policy_id: self.policy_id,
+                skip_destroy: core::default::Default::default(),
                 target_id: self.target_id,
             }),
         }));
@@ -240,6 +256,11 @@ impl OrganizationsPolicyAttachmentRef {
     #[doc = "Get a reference to the value of field `policy_id` after provisioning.\n"]
     pub fn policy_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_id` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EcrPullThroughCacheRuleData {
+struct EcrPullThroughCacheRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,16 +20,24 @@ struct EcrPullThroughCacheRuleData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    credential_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     ecr_repository_prefix: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     upstream_registry_url: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    upstream_repository_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct EcrPullThroughCacheRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EcrPullThroughCacheRuleData>,
+    data: std::cell::RefCell<EcrPullThroughCacheRuleData_>,
 }
 
 #[derive(Clone)]
@@ -127,10 +137,48 @@ impl EcrPullThroughCacheRule {
         self
     }
 
+    #[doc = "Set the field `credential_arn`.\n"]
+    pub fn set_credential_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().credential_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `custom_role_arn`.\n"]
+    pub fn set_custom_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().custom_role_arn = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `upstream_repository_prefix`.\n"]
+    pub fn set_upstream_repository_prefix(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().upstream_repository_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `credential_arn` after provisioning.\n"]
+    pub fn credential_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.credential_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_role_arn` after provisioning.\n"]
+    pub fn custom_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_role_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ecr_repository_prefix` after provisioning.\n"]
@@ -143,6 +191,12 @@ impl EcrPullThroughCacheRule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
     pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
@@ -151,6 +205,11 @@ impl EcrPullThroughCacheRule {
     #[doc = "Get a reference to the value of field `upstream_registry_url` after provisioning.\n"]
     pub fn upstream_registry_url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.upstream_registry_url", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `upstream_repository_prefix` after provisioning.\n"]
+    pub fn upstream_repository_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upstream_repository_prefix", self.extract_ref()))
     }
 }
 
@@ -198,15 +257,19 @@ impl BuildEcrPullThroughCacheRule {
         let out = EcrPullThroughCacheRule(std::rc::Rc::new(EcrPullThroughCacheRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EcrPullThroughCacheRuleData {
+            data: std::cell::RefCell::new(EcrPullThroughCacheRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                credential_arn: core::default::Default::default(),
+                custom_role_arn: core::default::Default::default(),
                 ecr_repository_prefix: self.ecr_repository_prefix,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 upstream_registry_url: self.upstream_registry_url,
+                upstream_repository_prefix: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -237,6 +300,16 @@ impl EcrPullThroughCacheRuleRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `credential_arn` after provisioning.\n"]
+    pub fn credential_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.credential_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_role_arn` after provisioning.\n"]
+    pub fn custom_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_role_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ecr_repository_prefix` after provisioning.\n"]
     pub fn ecr_repository_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ecr_repository_prefix", self.extract_ref()))
@@ -247,6 +320,12 @@ impl EcrPullThroughCacheRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
     pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
@@ -255,5 +334,10 @@ impl EcrPullThroughCacheRuleRef {
     #[doc = "Get a reference to the value of field `upstream_registry_url` after provisioning.\n"]
     pub fn upstream_registry_url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.upstream_registry_url", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `upstream_repository_prefix` after provisioning.\n"]
+    pub fn upstream_repository_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upstream_repository_prefix", self.extract_ref()))
     }
 }

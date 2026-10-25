@@ -1,7 +1,9 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 
 #[derive(Serialize)]
-struct ProviderAwsData {
+struct ProviderAwsData_ {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     alias: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,15 +21,21 @@ struct ProviderAwsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_proxy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    https_proxy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     insecure: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_retries: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    no_proxy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     profile: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_force_path_style: std::option::Option<terrars::PrimField<bool>>,
+    retry_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_us_east_1_regional_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_use_path_style: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,13 +43,9 @@ struct ProviderAwsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     shared_config_files: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    shared_credentials_file: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     shared_credentials_files: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skip_credentials_validation: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    skip_get_ec2_platforms: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skip_metadata_api_check: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -51,15 +55,21 @@ struct ProviderAwsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sts_region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag_policy_compliance: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    token_bucket_rate_limiter_capacity: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_dualstack_endpoint: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_fips_endpoint: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_agent: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
 struct ProviderAws_ {
-    data: std::cell::RefCell<ProviderAwsData>,
+    data: std::cell::RefCell<ProviderAwsData_>,
 }
 
 pub struct ProviderAws(std::rc::Rc<ProviderAws_>);
@@ -132,9 +142,16 @@ impl ProviderAws {
     }
 
     #[doc =
-        "Set the field `http_proxy`.\nThe address of an HTTP proxy to use when accessing the AWS API. Can also be configured using the `HTTP_PROXY` or `HTTPS_PROXY` environment variables."]
+        "Set the field `http_proxy`.\nURL of a proxy to use for HTTP requests when accessing the AWS API. Can also be set using the `HTTP_PROXY` or `http_proxy` environment variables."]
     pub fn set_http_proxy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().http_proxy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `https_proxy`.\nURL of a proxy to use for HTTPS requests when accessing the AWS API. Can also be set using the `HTTPS_PROXY` or `https_proxy` environment variables."]
+    pub fn set_https_proxy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().https_proxy = std::option::Option::Some(v.into());
         self
     }
 
@@ -153,6 +170,13 @@ impl ProviderAws {
     }
 
     #[doc =
+        "Set the field `no_proxy`.\nComma-separated list of hosts that should not use HTTP or HTTPS proxies. Can also be set using the `NO_PROXY` or `no_proxy` environment variables."]
+    pub fn set_no_proxy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().no_proxy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `profile`.\nThe profile for API operations. If not set, the default profile\ncreated with `aws configure` will be used."]
     pub fn set_profile(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().profile = std::option::Option::Some(v.into());
@@ -167,9 +191,19 @@ impl ProviderAws {
     }
 
     #[doc =
-        "Set the field `s3_force_path_style`.\nSet this to true to enable the request to use path-style addressing,\ni.e., https://s3.amazonaws.com/BUCKET/KEY. By default, the S3 client will\nuse virtual hosted bucket addressing when possible\n(https://BUCKET.s3.amazonaws.com/KEY). Specific to the Amazon S3 service."]
-    pub fn set_s3_force_path_style(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().s3_force_path_style = std::option::Option::Some(v.into());
+        "Set the field `retry_mode`.\nSpecifies how retries are attempted. Valid values are `standard` and `adaptive`. Can also be configured using the `AWS_RETRY_MODE` environment variable."]
+    pub fn set_retry_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().retry_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `s3_us_east_1_regional_endpoint`.\nSpecifies whether S3 API calls in the `us-east-1` region use the legacy global endpoint or a regional endpoint. Valid values are `legacy` or `regional`. Can also be configured using the `AWS_S3_US_EAST_1_REGIONAL_ENDPOINT` environment variable or the `s3_us_east_1_regional_endpoint` shared config file parameter"]
+    pub fn set_s3_us_east_1_regional_endpoint(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().s3_us_east_1_regional_endpoint = std::option::Option::Some(v.into());
         self
     }
 
@@ -198,16 +232,6 @@ impl ProviderAws {
     }
 
     #[doc =
-        "Set the field `shared_credentials_file`.\nThe path to the shared credentials file. If not set, defaults to ~/.aws/credentials."]
-    pub fn set_shared_credentials_file(
-        self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.0.data.borrow_mut().shared_credentials_file = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
         "Set the field `shared_credentials_files`.\nList of paths to shared credentials files. If not set, defaults to [~/.aws/credentials]."]
     pub fn set_shared_credentials_files(
         self,
@@ -221,13 +245,6 @@ impl ProviderAws {
         "Set the field `skip_credentials_validation`.\nSkip the credentials validation via STS API. Used for AWS API implementations that do not have STS available/implemented."]
     pub fn set_skip_credentials_validation(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().skip_credentials_validation = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc =
-        "Set the field `skip_get_ec2_platforms`.\nSkip getting the supported EC2 platforms. Used by users that don't have ec2:DescribeAccountAttributes permissions."]
-    pub fn set_skip_get_ec2_platforms(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().skip_get_ec2_platforms = std::option::Option::Some(v.into());
         self
     }
 
@@ -263,9 +280,23 @@ impl ProviderAws {
     }
 
     #[doc =
+        "Set the field `tag_policy_compliance`.\nThe severity with which to enforce organizational tagging policies on resources managed by this provider instance. At this time this only includes compliance with required tag keys by resource type. Valid values are \"error\", \"warning\", and \"disabled\". When unset or \"disabled\", tag policy compliance will not be enforced by the provider. Can also be configured with the TF_AWS_TAG_POLICY_COMPLIANCE environment variable."]
+    pub fn set_tag_policy_compliance(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().tag_policy_compliance = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
         "Set the field `token`.\nsession token. A session token is only required if you are\nusing temporary security credentials."]
     pub fn set_token(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().token = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `token_bucket_rate_limiter_capacity`.\nThe capacity of the AWS SDK's token bucket rate limiter."]
+    pub fn set_token_bucket_rate_limiter_capacity(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().token_bucket_rate_limiter_capacity = std::option::Option::Some(v.into());
         self
     }
 
@@ -280,6 +311,16 @@ impl ProviderAws {
         self.0.data.borrow_mut().use_fips_endpoint = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc =
+        "Set the field `user_agent`.\nProduct details to append to the User-Agent string sent in all AWS API calls."]
+    pub fn set_user_agent(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().user_agent = std::option::Option::Some(v.into());
+        self
+    }
 }
 
 impl terrars::Provider for ProviderAws_ {
@@ -290,7 +331,7 @@ impl terrars::Provider for ProviderAws_ {
     fn extract_provider_type(&self) -> serde_json::Value {
         serde_json::json!({
             "source": "hashicorp/aws",
-            "version": "4.51.0",
+            "version": "6.70.0",
         })
     }
 
@@ -303,7 +344,7 @@ pub struct BuildProviderAws {}
 
 impl BuildProviderAws {
     pub fn build(self, stack: &mut terrars::Stack) -> ProviderAws {
-        let out = ProviderAws(std::rc::Rc::new(ProviderAws_ { data: std::cell::RefCell::new(ProviderAwsData {
+        let out = ProviderAws(std::rc::Rc::new(ProviderAws_ { data: std::cell::RefCell::new(ProviderAwsData_ {
             alias: std::option::Option::None,
             access_key: core::default::Default::default(),
             allowed_account_ids: core::default::Default::default(),
@@ -312,25 +353,29 @@ impl BuildProviderAws {
             ec2_metadata_service_endpoint_mode: core::default::Default::default(),
             forbidden_account_ids: core::default::Default::default(),
             http_proxy: core::default::Default::default(),
+            https_proxy: core::default::Default::default(),
             insecure: core::default::Default::default(),
             max_retries: core::default::Default::default(),
+            no_proxy: core::default::Default::default(),
             profile: core::default::Default::default(),
             region: core::default::Default::default(),
-            s3_force_path_style: core::default::Default::default(),
+            retry_mode: core::default::Default::default(),
+            s3_us_east_1_regional_endpoint: core::default::Default::default(),
             s3_use_path_style: core::default::Default::default(),
             secret_key: core::default::Default::default(),
             shared_config_files: core::default::Default::default(),
-            shared_credentials_file: core::default::Default::default(),
             shared_credentials_files: core::default::Default::default(),
             skip_credentials_validation: core::default::Default::default(),
-            skip_get_ec2_platforms: core::default::Default::default(),
             skip_metadata_api_check: core::default::Default::default(),
             skip_region_validation: core::default::Default::default(),
             skip_requesting_account_id: core::default::Default::default(),
             sts_region: core::default::Default::default(),
+            tag_policy_compliance: core::default::Default::default(),
             token: core::default::Default::default(),
+            token_bucket_rate_limiter_capacity: core::default::Default::default(),
             use_dualstack_endpoint: core::default::Default::default(),
             use_fips_endpoint: core::default::Default::default(),
+            user_agent: core::default::Default::default(),
         }) }));
         stack.add_provider(out.0.clone());
         out

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SecurityGroupData {
+struct SecurityGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,15 +23,17 @@ struct SecurityGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress: std::option::Option<terrars::SetField<SecurityGroupEgressEl>>,
+    egress: std::option::Option<terrars::SetField<SecurityGroup_Egress>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress: std::option::Option<terrars::SetField<SecurityGroupIngressEl>>,
+    ingress: std::option::Option<terrars::SetField<SecurityGroup_Ingress>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     revoke_rules_on_delete: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,13 +43,13 @@ struct SecurityGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SecurityGroupTimeoutsEl>,
+    timeouts: std::option::Option<SecurityGroup_Timeouts>,
 }
 
 struct SecurityGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SecurityGroupData>,
+    data: std::cell::RefCell<SecurityGroupData_>,
 }
 
 #[derive(Clone)]
@@ -152,7 +156,7 @@ impl SecurityGroup {
     }
 
     #[doc = "Set the field `egress`.\n"]
-    pub fn set_egress(self, v: impl std::convert::Into<terrars::SetField<SecurityGroupEgressEl>>) -> Self {
+    pub fn set_egress(self, v: impl std::convert::Into<terrars::SetField<SecurityGroup_Egress>>) -> Self {
         self.0.data.borrow_mut().egress = std::option::Option::Some(v.into());
         self
     }
@@ -164,7 +168,7 @@ impl SecurityGroup {
     }
 
     #[doc = "Set the field `ingress`.\n"]
-    pub fn set_ingress(self, v: impl std::convert::Into<terrars::SetField<SecurityGroupIngressEl>>) -> Self {
+    pub fn set_ingress(self, v: impl std::convert::Into<terrars::SetField<SecurityGroup_Ingress>>) -> Self {
         self.0.data.borrow_mut().ingress = std::option::Option::Some(v.into());
         self
     }
@@ -178,6 +182,13 @@ impl SecurityGroup {
     #[doc = "Set the field `name_prefix`.\n"]
     pub fn set_name_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().name_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -212,7 +223,7 @@ impl SecurityGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SecurityGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SecurityGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -228,7 +239,7 @@ impl SecurityGroup {
     }
 
     #[doc = "Get a reference to the value of field `egress` after provisioning.\n"]
-    pub fn egress(&self) -> terrars::SetRef<SecurityGroupEgressElRef> {
+    pub fn egress(&self) -> terrars::SetRef<SecurityGroup_EgressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.egress", self.extract_ref()))
     }
 
@@ -238,7 +249,7 @@ impl SecurityGroup {
     }
 
     #[doc = "Get a reference to the value of field `ingress` after provisioning.\n"]
-    pub fn ingress(&self) -> terrars::SetRef<SecurityGroupIngressElRef> {
+    pub fn ingress(&self) -> terrars::SetRef<SecurityGroup_IngressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ingress", self.extract_ref()))
     }
 
@@ -255,6 +266,12 @@ impl SecurityGroup {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `revoke_rules_on_delete` after provisioning.\n"]
@@ -278,8 +295,8 @@ impl SecurityGroup {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SecurityGroupTimeoutsElRef {
-        SecurityGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SecurityGroup_TimeoutsRef {
+        SecurityGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -323,7 +340,7 @@ impl BuildSecurityGroup {
         let out = SecurityGroup(std::rc::Rc::new(SecurityGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SecurityGroupData {
+            data: std::cell::RefCell::new(SecurityGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -335,6 +352,7 @@ impl BuildSecurityGroup {
                 ingress: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 revoke_rules_on_delete: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -381,7 +399,7 @@ impl SecurityGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `egress` after provisioning.\n"]
-    pub fn egress(&self) -> terrars::SetRef<SecurityGroupEgressElRef> {
+    pub fn egress(&self) -> terrars::SetRef<SecurityGroup_EgressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.egress", self.extract_ref()))
     }
 
@@ -391,7 +409,7 @@ impl SecurityGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `ingress` after provisioning.\n"]
-    pub fn ingress(&self) -> terrars::SetRef<SecurityGroupIngressElRef> {
+    pub fn ingress(&self) -> terrars::SetRef<SecurityGroup_IngressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ingress", self.extract_ref()))
     }
 
@@ -408,6 +426,12 @@ impl SecurityGroupRef {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `revoke_rules_on_delete` after provisioning.\n"]
@@ -431,13 +455,13 @@ impl SecurityGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SecurityGroupTimeoutsElRef {
-        SecurityGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SecurityGroup_TimeoutsRef {
+        SecurityGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct SecurityGroupEgressEl {
+pub struct SecurityGroup_Egress {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr_blocks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -458,7 +482,7 @@ pub struct SecurityGroupEgressEl {
     to_port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SecurityGroupEgressEl {
+impl SecurityGroup_Egress {
     #[doc = "Set the field `cidr_blocks`.\n"]
     pub fn set_cidr_blocks(
         mut self,
@@ -526,8 +550,8 @@ impl SecurityGroupEgressEl {
     }
 }
 
-impl terrars::ToListMappable for SecurityGroupEgressEl {
-    type O = terrars::BlockAssignable<SecurityGroupEgressEl>;
+impl terrars::ToListMappable for SecurityGroup_Egress {
+    type O = terrars::BlockAssignable<SecurityGroup_Egress>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -538,11 +562,11 @@ impl terrars::ToListMappable for SecurityGroupEgressEl {
     }
 }
 
-pub struct BuildSecurityGroupEgressEl {}
+pub struct BuildSecurityGroup_Egress {}
 
-impl BuildSecurityGroupEgressEl {
-    pub fn build(self) -> SecurityGroupEgressEl {
-        SecurityGroupEgressEl {
+impl BuildSecurityGroup_Egress {
+    pub fn build(self) -> SecurityGroup_Egress {
+        SecurityGroup_Egress {
             cidr_blocks: core::default::Default::default(),
             description: core::default::Default::default(),
             from_port: core::default::Default::default(),
@@ -556,21 +580,23 @@ impl BuildSecurityGroupEgressEl {
     }
 }
 
-pub struct SecurityGroupEgressElRef {
+#[allow(dead_code)]
+pub struct SecurityGroup_EgressRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SecurityGroupEgressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityGroupEgressElRef {
-        SecurityGroupEgressElRef {
+impl terrars::Ref for SecurityGroup_EgressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityGroup_EgressRef {
+        SecurityGroup_EgressRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SecurityGroupEgressElRef {
+impl SecurityGroup_EgressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -622,7 +648,7 @@ impl SecurityGroupEgressElRef {
 }
 
 #[derive(Serialize)]
-pub struct SecurityGroupIngressEl {
+pub struct SecurityGroup_Ingress {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr_blocks: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -643,7 +669,7 @@ pub struct SecurityGroupIngressEl {
     to_port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SecurityGroupIngressEl {
+impl SecurityGroup_Ingress {
     #[doc = "Set the field `cidr_blocks`.\n"]
     pub fn set_cidr_blocks(
         mut self,
@@ -711,8 +737,8 @@ impl SecurityGroupIngressEl {
     }
 }
 
-impl terrars::ToListMappable for SecurityGroupIngressEl {
-    type O = terrars::BlockAssignable<SecurityGroupIngressEl>;
+impl terrars::ToListMappable for SecurityGroup_Ingress {
+    type O = terrars::BlockAssignable<SecurityGroup_Ingress>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -723,11 +749,11 @@ impl terrars::ToListMappable for SecurityGroupIngressEl {
     }
 }
 
-pub struct BuildSecurityGroupIngressEl {}
+pub struct BuildSecurityGroup_Ingress {}
 
-impl BuildSecurityGroupIngressEl {
-    pub fn build(self) -> SecurityGroupIngressEl {
-        SecurityGroupIngressEl {
+impl BuildSecurityGroup_Ingress {
+    pub fn build(self) -> SecurityGroup_Ingress {
+        SecurityGroup_Ingress {
             cidr_blocks: core::default::Default::default(),
             description: core::default::Default::default(),
             from_port: core::default::Default::default(),
@@ -741,21 +767,23 @@ impl BuildSecurityGroupIngressEl {
     }
 }
 
-pub struct SecurityGroupIngressElRef {
+#[allow(dead_code)]
+pub struct SecurityGroup_IngressRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SecurityGroupIngressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityGroupIngressElRef {
-        SecurityGroupIngressElRef {
+impl terrars::Ref for SecurityGroup_IngressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityGroup_IngressRef {
+        SecurityGroup_IngressRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SecurityGroupIngressElRef {
+impl SecurityGroup_IngressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -807,14 +835,14 @@ impl SecurityGroupIngressElRef {
 }
 
 #[derive(Serialize)]
-pub struct SecurityGroupTimeoutsEl {
+pub struct SecurityGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SecurityGroupTimeoutsEl {
+impl SecurityGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -828,8 +856,8 @@ impl SecurityGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SecurityGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<SecurityGroupTimeoutsEl>;
+impl terrars::ToListMappable for SecurityGroup_Timeouts {
+    type O = terrars::BlockAssignable<SecurityGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -840,32 +868,34 @@ impl terrars::ToListMappable for SecurityGroupTimeoutsEl {
     }
 }
 
-pub struct BuildSecurityGroupTimeoutsEl {}
+pub struct BuildSecurityGroup_Timeouts {}
 
-impl BuildSecurityGroupTimeoutsEl {
-    pub fn build(self) -> SecurityGroupTimeoutsEl {
-        SecurityGroupTimeoutsEl {
+impl BuildSecurityGroup_Timeouts {
+    pub fn build(self) -> SecurityGroup_Timeouts {
+        SecurityGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct SecurityGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SecurityGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SecurityGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityGroupTimeoutsElRef {
-        SecurityGroupTimeoutsElRef {
+impl terrars::Ref for SecurityGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SecurityGroup_TimeoutsRef {
+        SecurityGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SecurityGroupTimeoutsElRef {
+impl SecurityGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

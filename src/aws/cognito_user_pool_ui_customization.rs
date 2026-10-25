@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CognitoUserPoolUiCustomizationData {
+struct CognitoUserPoolUiCustomizationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,13 +28,15 @@ struct CognitoUserPoolUiCustomizationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image_file: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     user_pool_id: terrars::PrimField<std::string::String>,
 }
 
 struct CognitoUserPoolUiCustomization_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CognitoUserPoolUiCustomizationData>,
+    data: std::cell::RefCell<CognitoUserPoolUiCustomizationData_>,
 }
 
 #[derive(Clone)]
@@ -156,6 +160,13 @@ impl CognitoUserPoolUiCustomization {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `client_id` after provisioning.\n"]
     pub fn client_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_id", self.extract_ref()))
@@ -194,6 +205,12 @@ impl CognitoUserPoolUiCustomization {
     #[doc = "Get a reference to the value of field `last_modified_date` after provisioning.\n"]
     pub fn last_modified_date(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_date", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_pool_id` after provisioning.\n"]
@@ -244,7 +261,7 @@ impl BuildCognitoUserPoolUiCustomization {
         let out = CognitoUserPoolUiCustomization(std::rc::Rc::new(CognitoUserPoolUiCustomization_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CognitoUserPoolUiCustomizationData {
+            data: std::cell::RefCell::new(CognitoUserPoolUiCustomizationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -254,6 +271,7 @@ impl BuildCognitoUserPoolUiCustomization {
                 css: core::default::Default::default(),
                 id: core::default::Default::default(),
                 image_file: core::default::Default::default(),
+                region: core::default::Default::default(),
                 user_pool_id: self.user_pool_id,
             }),
         }));
@@ -323,6 +341,12 @@ impl CognitoUserPoolUiCustomizationRef {
     #[doc = "Get a reference to the value of field `last_modified_date` after provisioning.\n"]
     pub fn last_modified_date(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_date", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_pool_id` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlobalacceleratorAcceleratorData {
+struct GlobalacceleratorAcceleratorData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,16 +34,16 @@ struct GlobalacceleratorAcceleratorData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attributes: std::option::Option<std::vec::Vec<GlobalacceleratorAcceleratorAttributesEl>>,
+    attributes: std::option::Option<std::vec::Vec<GlobalacceleratorAccelerator_Attributes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GlobalacceleratorAcceleratorTimeoutsEl>,
+    timeouts: std::option::Option<GlobalacceleratorAccelerator_Timeouts>,
     dynamic: GlobalacceleratorAcceleratorDynamic,
 }
 
 struct GlobalacceleratorAccelerator_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlobalacceleratorAcceleratorData>,
+    data: std::cell::RefCell<GlobalacceleratorAcceleratorData_>,
 }
 
 #[derive(Clone)]
@@ -189,7 +191,7 @@ impl GlobalacceleratorAccelerator {
     #[doc = "Set the field `attributes`.\n"]
     pub fn set_attributes(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlobalacceleratorAcceleratorAttributesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlobalacceleratorAccelerator_Attributes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,14 +205,24 @@ impl GlobalacceleratorAccelerator {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GlobalacceleratorAcceleratorTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GlobalacceleratorAccelerator_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dual_stack_dns_name` after provisioning.\n"]
+    pub fn dual_stack_dns_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dual_stack_dns_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
@@ -239,7 +251,7 @@ impl GlobalacceleratorAccelerator {
     }
 
     #[doc = "Get a reference to the value of field `ip_sets` after provisioning.\n"]
-    pub fn ip_sets(&self) -> terrars::ListRef<GlobalacceleratorAcceleratorIpSetsElRef> {
+    pub fn ip_sets(&self) -> terrars::ListRef<GlobalacceleratorAccelerator_IpSetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_sets", self.extract_ref()))
     }
 
@@ -259,13 +271,13 @@ impl GlobalacceleratorAccelerator {
     }
 
     #[doc = "Get a reference to the value of field `attributes` after provisioning.\n"]
-    pub fn attributes(&self) -> terrars::ListRef<GlobalacceleratorAcceleratorAttributesElRef> {
+    pub fn attributes(&self) -> terrars::ListRef<GlobalacceleratorAccelerator_AttributesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attributes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GlobalacceleratorAcceleratorTimeoutsElRef {
-        GlobalacceleratorAcceleratorTimeoutsElRef::new(
+    pub fn timeouts(&self) -> GlobalacceleratorAccelerator_TimeoutsRef {
+        GlobalacceleratorAccelerator_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -314,7 +326,7 @@ impl BuildGlobalacceleratorAccelerator {
         let out = GlobalacceleratorAccelerator(std::rc::Rc::new(GlobalacceleratorAccelerator_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlobalacceleratorAcceleratorData {
+            data: std::cell::RefCell::new(GlobalacceleratorAcceleratorData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -360,9 +372,19 @@ impl GlobalacceleratorAcceleratorRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dual_stack_dns_name` after provisioning.\n"]
+    pub fn dual_stack_dns_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dual_stack_dns_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
@@ -391,7 +413,7 @@ impl GlobalacceleratorAcceleratorRef {
     }
 
     #[doc = "Get a reference to the value of field `ip_sets` after provisioning.\n"]
-    pub fn ip_sets(&self) -> terrars::ListRef<GlobalacceleratorAcceleratorIpSetsElRef> {
+    pub fn ip_sets(&self) -> terrars::ListRef<GlobalacceleratorAccelerator_IpSetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ip_sets", self.extract_ref()))
     }
 
@@ -411,28 +433,33 @@ impl GlobalacceleratorAcceleratorRef {
     }
 
     #[doc = "Get a reference to the value of field `attributes` after provisioning.\n"]
-    pub fn attributes(&self) -> terrars::ListRef<GlobalacceleratorAcceleratorAttributesElRef> {
+    pub fn attributes(&self) -> terrars::ListRef<GlobalacceleratorAccelerator_AttributesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attributes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GlobalacceleratorAcceleratorTimeoutsElRef {
-        GlobalacceleratorAcceleratorTimeoutsElRef::new(
+    pub fn timeouts(&self) -> GlobalacceleratorAccelerator_TimeoutsRef {
+        GlobalacceleratorAccelerator_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlobalacceleratorAcceleratorDynamic {
+    attributes: std::option::Option<terrars::DynamicBlock<GlobalacceleratorAccelerator_Attributes>>,
+}
+
 #[derive(Serialize)]
-pub struct GlobalacceleratorAcceleratorIpSetsEl {
+pub struct GlobalacceleratorAccelerator_IpSets {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_addresses: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_family: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlobalacceleratorAcceleratorIpSetsEl {
+impl GlobalacceleratorAccelerator_IpSets {
     #[doc = "Set the field `ip_addresses`.\n"]
     pub fn set_ip_addresses(
         mut self,
@@ -449,8 +476,8 @@ impl GlobalacceleratorAcceleratorIpSetsEl {
     }
 }
 
-impl terrars::ToListMappable for GlobalacceleratorAcceleratorIpSetsEl {
-    type O = terrars::BlockAssignable<GlobalacceleratorAcceleratorIpSetsEl>;
+impl terrars::ToListMappable for GlobalacceleratorAccelerator_IpSets {
+    type O = terrars::BlockAssignable<GlobalacceleratorAccelerator_IpSets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -461,32 +488,34 @@ impl terrars::ToListMappable for GlobalacceleratorAcceleratorIpSetsEl {
     }
 }
 
-pub struct BuildGlobalacceleratorAcceleratorIpSetsEl {}
+pub struct BuildGlobalacceleratorAccelerator_IpSets {}
 
-impl BuildGlobalacceleratorAcceleratorIpSetsEl {
-    pub fn build(self) -> GlobalacceleratorAcceleratorIpSetsEl {
-        GlobalacceleratorAcceleratorIpSetsEl {
+impl BuildGlobalacceleratorAccelerator_IpSets {
+    pub fn build(self) -> GlobalacceleratorAccelerator_IpSets {
+        GlobalacceleratorAccelerator_IpSets {
             ip_addresses: core::default::Default::default(),
             ip_family: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlobalacceleratorAcceleratorIpSetsElRef {
+#[allow(dead_code)]
+pub struct GlobalacceleratorAccelerator_IpSetsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlobalacceleratorAcceleratorIpSetsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorAcceleratorIpSetsElRef {
-        GlobalacceleratorAcceleratorIpSetsElRef {
+impl terrars::Ref for GlobalacceleratorAccelerator_IpSetsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorAccelerator_IpSetsRef {
+        GlobalacceleratorAccelerator_IpSetsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlobalacceleratorAcceleratorIpSetsElRef {
+impl GlobalacceleratorAccelerator_IpSetsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -503,7 +532,7 @@ impl GlobalacceleratorAcceleratorIpSetsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlobalacceleratorAcceleratorAttributesEl {
+pub struct GlobalacceleratorAccelerator_Attributes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     flow_logs_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -512,7 +541,7 @@ pub struct GlobalacceleratorAcceleratorAttributesEl {
     flow_logs_s3_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlobalacceleratorAcceleratorAttributesEl {
+impl GlobalacceleratorAccelerator_Attributes {
     #[doc = "Set the field `flow_logs_enabled`.\n"]
     pub fn set_flow_logs_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.flow_logs_enabled = std::option::Option::Some(v.into());
@@ -538,8 +567,8 @@ impl GlobalacceleratorAcceleratorAttributesEl {
     }
 }
 
-impl terrars::ToListMappable for GlobalacceleratorAcceleratorAttributesEl {
-    type O = terrars::BlockAssignable<GlobalacceleratorAcceleratorAttributesEl>;
+impl terrars::ToListMappable for GlobalacceleratorAccelerator_Attributes {
+    type O = terrars::BlockAssignable<GlobalacceleratorAccelerator_Attributes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -550,11 +579,11 @@ impl terrars::ToListMappable for GlobalacceleratorAcceleratorAttributesEl {
     }
 }
 
-pub struct BuildGlobalacceleratorAcceleratorAttributesEl {}
+pub struct BuildGlobalacceleratorAccelerator_Attributes {}
 
-impl BuildGlobalacceleratorAcceleratorAttributesEl {
-    pub fn build(self) -> GlobalacceleratorAcceleratorAttributesEl {
-        GlobalacceleratorAcceleratorAttributesEl {
+impl BuildGlobalacceleratorAccelerator_Attributes {
+    pub fn build(self) -> GlobalacceleratorAccelerator_Attributes {
+        GlobalacceleratorAccelerator_Attributes {
             flow_logs_enabled: core::default::Default::default(),
             flow_logs_s3_bucket: core::default::Default::default(),
             flow_logs_s3_prefix: core::default::Default::default(),
@@ -562,21 +591,23 @@ impl BuildGlobalacceleratorAcceleratorAttributesEl {
     }
 }
 
-pub struct GlobalacceleratorAcceleratorAttributesElRef {
+#[allow(dead_code)]
+pub struct GlobalacceleratorAccelerator_AttributesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlobalacceleratorAcceleratorAttributesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorAcceleratorAttributesElRef {
-        GlobalacceleratorAcceleratorAttributesElRef {
+impl terrars::Ref for GlobalacceleratorAccelerator_AttributesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorAccelerator_AttributesRef {
+        GlobalacceleratorAccelerator_AttributesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlobalacceleratorAcceleratorAttributesElRef {
+impl GlobalacceleratorAccelerator_AttributesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -598,14 +629,14 @@ impl GlobalacceleratorAcceleratorAttributesElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlobalacceleratorAcceleratorTimeoutsEl {
+pub struct GlobalacceleratorAccelerator_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlobalacceleratorAcceleratorTimeoutsEl {
+impl GlobalacceleratorAccelerator_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -619,8 +650,8 @@ impl GlobalacceleratorAcceleratorTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GlobalacceleratorAcceleratorTimeoutsEl {
-    type O = terrars::BlockAssignable<GlobalacceleratorAcceleratorTimeoutsEl>;
+impl terrars::ToListMappable for GlobalacceleratorAccelerator_Timeouts {
+    type O = terrars::BlockAssignable<GlobalacceleratorAccelerator_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -631,32 +662,34 @@ impl terrars::ToListMappable for GlobalacceleratorAcceleratorTimeoutsEl {
     }
 }
 
-pub struct BuildGlobalacceleratorAcceleratorTimeoutsEl {}
+pub struct BuildGlobalacceleratorAccelerator_Timeouts {}
 
-impl BuildGlobalacceleratorAcceleratorTimeoutsEl {
-    pub fn build(self) -> GlobalacceleratorAcceleratorTimeoutsEl {
-        GlobalacceleratorAcceleratorTimeoutsEl {
+impl BuildGlobalacceleratorAccelerator_Timeouts {
+    pub fn build(self) -> GlobalacceleratorAccelerator_Timeouts {
+        GlobalacceleratorAccelerator_Timeouts {
             create: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlobalacceleratorAcceleratorTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GlobalacceleratorAccelerator_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlobalacceleratorAcceleratorTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorAcceleratorTimeoutsElRef {
-        GlobalacceleratorAcceleratorTimeoutsElRef {
+impl terrars::Ref for GlobalacceleratorAccelerator_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorAccelerator_TimeoutsRef {
+        GlobalacceleratorAccelerator_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlobalacceleratorAcceleratorTimeoutsElRef {
+impl GlobalacceleratorAccelerator_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -670,9 +703,4 @@ impl GlobalacceleratorAcceleratorTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GlobalacceleratorAcceleratorDynamic {
-    attributes: std::option::Option<terrars::DynamicBlock<GlobalacceleratorAcceleratorAttributesEl>>,
 }

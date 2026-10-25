@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ServicecatalogProductData {
+struct ServicecatalogProductData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,6 +31,8 @@ struct ServicecatalogProductData {
     name: terrars::PrimField<std::string::String>,
     owner: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     support_description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     support_email: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -43,16 +47,16 @@ struct ServicecatalogProductData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     provisioning_artifact_parameters: std
     ::option
-    ::Option<std::vec::Vec<ServicecatalogProductProvisioningArtifactParametersEl>>,
+    ::Option<std::vec::Vec<ServicecatalogProduct_ProvisioningArtifactParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ServicecatalogProductTimeoutsEl>,
+    timeouts: std::option::Option<ServicecatalogProduct_Timeouts>,
     dynamic: ServicecatalogProductDynamic,
 }
 
 struct ServicecatalogProduct_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ServicecatalogProductData>,
+    data: std::cell::RefCell<ServicecatalogProductData_>,
 }
 
 #[derive(Clone)]
@@ -176,6 +180,13 @@ impl ServicecatalogProduct {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `support_description`.\n"]
     pub fn set_support_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().support_description = std::option::Option::Some(v.into());
@@ -215,7 +226,7 @@ impl ServicecatalogProduct {
     #[doc = "Set the field `provisioning_artifact_parameters`.\n"]
     pub fn set_provisioning_artifact_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ServicecatalogProductProvisioningArtifactParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ServicecatalogProduct_ProvisioningArtifactParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -229,7 +240,7 @@ impl ServicecatalogProduct {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogProductTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogProduct_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -279,6 +290,12 @@ impl ServicecatalogProduct {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -317,7 +334,7 @@ impl ServicecatalogProduct {
     #[doc = "Get a reference to the value of field `provisioning_artifact_parameters` after provisioning.\n"]
     pub fn provisioning_artifact_parameters(
         &self,
-    ) -> terrars::ListRef<ServicecatalogProductProvisioningArtifactParametersElRef> {
+    ) -> terrars::ListRef<ServicecatalogProduct_ProvisioningArtifactParametersRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.provisioning_artifact_parameters", self.extract_ref()),
@@ -325,8 +342,8 @@ impl ServicecatalogProduct {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogProductTimeoutsElRef {
-        ServicecatalogProductTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ServicecatalogProduct_TimeoutsRef {
+        ServicecatalogProduct_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -376,7 +393,7 @@ impl BuildServicecatalogProduct {
         let out = ServicecatalogProduct(std::rc::Rc::new(ServicecatalogProduct_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ServicecatalogProductData {
+            data: std::cell::RefCell::new(ServicecatalogProductData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -388,6 +405,7 @@ impl BuildServicecatalogProduct {
                 id: core::default::Default::default(),
                 name: self.name,
                 owner: self.owner,
+                region: core::default::Default::default(),
                 support_description: core::default::Default::default(),
                 support_email: core::default::Default::default(),
                 support_url: core::default::Default::default(),
@@ -472,6 +490,12 @@ impl ServicecatalogProductRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -510,7 +534,7 @@ impl ServicecatalogProductRef {
     #[doc = "Get a reference to the value of field `provisioning_artifact_parameters` after provisioning.\n"]
     pub fn provisioning_artifact_parameters(
         &self,
-    ) -> terrars::ListRef<ServicecatalogProductProvisioningArtifactParametersElRef> {
+    ) -> terrars::ListRef<ServicecatalogProduct_ProvisioningArtifactParametersRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.provisioning_artifact_parameters", self.extract_ref()),
@@ -518,13 +542,20 @@ impl ServicecatalogProductRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogProductTimeoutsElRef {
-        ServicecatalogProductTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ServicecatalogProduct_TimeoutsRef {
+        ServicecatalogProduct_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ServicecatalogProductDynamic {
+    provisioning_artifact_parameters: std
+    ::option
+    ::Option<terrars::DynamicBlock<ServicecatalogProduct_ProvisioningArtifactParameters>>,
+}
+
 #[derive(Serialize)]
-pub struct ServicecatalogProductProvisioningArtifactParametersEl {
+pub struct ServicecatalogProduct_ProvisioningArtifactParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -539,7 +570,7 @@ pub struct ServicecatalogProductProvisioningArtifactParametersEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ServicecatalogProductProvisioningArtifactParametersEl {
+impl ServicecatalogProduct_ProvisioningArtifactParameters {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -580,8 +611,8 @@ impl ServicecatalogProductProvisioningArtifactParametersEl {
     }
 }
 
-impl terrars::ToListMappable for ServicecatalogProductProvisioningArtifactParametersEl {
-    type O = terrars::BlockAssignable<ServicecatalogProductProvisioningArtifactParametersEl>;
+impl terrars::ToListMappable for ServicecatalogProduct_ProvisioningArtifactParameters {
+    type O = terrars::BlockAssignable<ServicecatalogProduct_ProvisioningArtifactParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -592,11 +623,11 @@ impl terrars::ToListMappable for ServicecatalogProductProvisioningArtifactParame
     }
 }
 
-pub struct BuildServicecatalogProductProvisioningArtifactParametersEl {}
+pub struct BuildServicecatalogProduct_ProvisioningArtifactParameters {}
 
-impl BuildServicecatalogProductProvisioningArtifactParametersEl {
-    pub fn build(self) -> ServicecatalogProductProvisioningArtifactParametersEl {
-        ServicecatalogProductProvisioningArtifactParametersEl {
+impl BuildServicecatalogProduct_ProvisioningArtifactParameters {
+    pub fn build(self) -> ServicecatalogProduct_ProvisioningArtifactParameters {
+        ServicecatalogProduct_ProvisioningArtifactParameters {
             description: core::default::Default::default(),
             disable_template_validation: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -607,24 +638,26 @@ impl BuildServicecatalogProductProvisioningArtifactParametersEl {
     }
 }
 
-pub struct ServicecatalogProductProvisioningArtifactParametersElRef {
+#[allow(dead_code)]
+pub struct ServicecatalogProduct_ProvisioningArtifactParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ServicecatalogProductProvisioningArtifactParametersElRef {
+impl terrars::Ref for ServicecatalogProduct_ProvisioningArtifactParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ServicecatalogProductProvisioningArtifactParametersElRef {
-        ServicecatalogProductProvisioningArtifactParametersElRef {
+    ) -> ServicecatalogProduct_ProvisioningArtifactParametersRef {
+        ServicecatalogProduct_ProvisioningArtifactParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ServicecatalogProductProvisioningArtifactParametersElRef {
+impl ServicecatalogProduct_ProvisioningArtifactParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -661,7 +694,7 @@ impl ServicecatalogProductProvisioningArtifactParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct ServicecatalogProductTimeoutsEl {
+pub struct ServicecatalogProduct_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -672,7 +705,7 @@ pub struct ServicecatalogProductTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ServicecatalogProductTimeoutsEl {
+impl ServicecatalogProduct_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -698,8 +731,8 @@ impl ServicecatalogProductTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ServicecatalogProductTimeoutsEl {
-    type O = terrars::BlockAssignable<ServicecatalogProductTimeoutsEl>;
+impl terrars::ToListMappable for ServicecatalogProduct_Timeouts {
+    type O = terrars::BlockAssignable<ServicecatalogProduct_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -710,11 +743,11 @@ impl terrars::ToListMappable for ServicecatalogProductTimeoutsEl {
     }
 }
 
-pub struct BuildServicecatalogProductTimeoutsEl {}
+pub struct BuildServicecatalogProduct_Timeouts {}
 
-impl BuildServicecatalogProductTimeoutsEl {
-    pub fn build(self) -> ServicecatalogProductTimeoutsEl {
-        ServicecatalogProductTimeoutsEl {
+impl BuildServicecatalogProduct_Timeouts {
+    pub fn build(self) -> ServicecatalogProduct_Timeouts {
+        ServicecatalogProduct_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             read: core::default::Default::default(),
@@ -723,21 +756,23 @@ impl BuildServicecatalogProductTimeoutsEl {
     }
 }
 
-pub struct ServicecatalogProductTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ServicecatalogProduct_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ServicecatalogProductTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ServicecatalogProductTimeoutsElRef {
-        ServicecatalogProductTimeoutsElRef {
+impl terrars::Ref for ServicecatalogProduct_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ServicecatalogProduct_TimeoutsRef {
+        ServicecatalogProduct_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ServicecatalogProductTimeoutsElRef {
+impl ServicecatalogProduct_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -761,11 +796,4 @@ impl ServicecatalogProductTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ServicecatalogProductDynamic {
-    provisioning_artifact_parameters: std
-    ::option
-    ::Option<terrars::DynamicBlock<ServicecatalogProductProvisioningArtifactParametersEl>>,
 }

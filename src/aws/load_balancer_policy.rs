@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LoadBalancerPolicyData {
+struct LoadBalancerPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,16 @@ struct LoadBalancerPolicyData {
     policy_name: terrars::PrimField<std::string::String>,
     policy_type_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    policy_attribute: std::option::Option<std::vec::Vec<LoadBalancerPolicyPolicyAttributeEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_attribute: std::option::Option<std::vec::Vec<LoadBalancerPolicy_PolicyAttribute>>,
     dynamic: LoadBalancerPolicyDynamic,
 }
 
 struct LoadBalancerPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LoadBalancerPolicyData>,
+    data: std::cell::RefCell<LoadBalancerPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -137,10 +141,17 @@ impl LoadBalancerPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `policy_attribute`.\n"]
     pub fn set_policy_attribute(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LoadBalancerPolicyPolicyAttributeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LoadBalancerPolicy_PolicyAttribute>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -171,6 +182,12 @@ impl LoadBalancerPolicy {
     #[doc = "Get a reference to the value of field `policy_type_name` after provisioning.\n"]
     pub fn policy_type_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_type_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -220,7 +237,7 @@ impl BuildLoadBalancerPolicy {
         let out = LoadBalancerPolicy(std::rc::Rc::new(LoadBalancerPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LoadBalancerPolicyData {
+            data: std::cell::RefCell::new(LoadBalancerPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -230,6 +247,7 @@ impl BuildLoadBalancerPolicy {
                 load_balancer_name: self.load_balancer_name,
                 policy_name: self.policy_name,
                 policy_type_name: self.policy_type_name,
+                region: core::default::Default::default(),
                 policy_attribute: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -281,17 +299,28 @@ impl LoadBalancerPolicyRef {
     pub fn policy_type_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_type_name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct LoadBalancerPolicyDynamic {
+    policy_attribute: std::option::Option<terrars::DynamicBlock<LoadBalancerPolicy_PolicyAttribute>>,
 }
 
 #[derive(Serialize)]
-pub struct LoadBalancerPolicyPolicyAttributeEl {
+pub struct LoadBalancerPolicy_PolicyAttribute {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LoadBalancerPolicyPolicyAttributeEl {
+impl LoadBalancerPolicy_PolicyAttribute {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -305,8 +334,8 @@ impl LoadBalancerPolicyPolicyAttributeEl {
     }
 }
 
-impl terrars::ToListMappable for LoadBalancerPolicyPolicyAttributeEl {
-    type O = terrars::BlockAssignable<LoadBalancerPolicyPolicyAttributeEl>;
+impl terrars::ToListMappable for LoadBalancerPolicy_PolicyAttribute {
+    type O = terrars::BlockAssignable<LoadBalancerPolicy_PolicyAttribute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -317,32 +346,34 @@ impl terrars::ToListMappable for LoadBalancerPolicyPolicyAttributeEl {
     }
 }
 
-pub struct BuildLoadBalancerPolicyPolicyAttributeEl {}
+pub struct BuildLoadBalancerPolicy_PolicyAttribute {}
 
-impl BuildLoadBalancerPolicyPolicyAttributeEl {
-    pub fn build(self) -> LoadBalancerPolicyPolicyAttributeEl {
-        LoadBalancerPolicyPolicyAttributeEl {
+impl BuildLoadBalancerPolicy_PolicyAttribute {
+    pub fn build(self) -> LoadBalancerPolicy_PolicyAttribute {
+        LoadBalancerPolicy_PolicyAttribute {
             name: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct LoadBalancerPolicyPolicyAttributeElRef {
+#[allow(dead_code)]
+pub struct LoadBalancerPolicy_PolicyAttributeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LoadBalancerPolicyPolicyAttributeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LoadBalancerPolicyPolicyAttributeElRef {
-        LoadBalancerPolicyPolicyAttributeElRef {
+impl terrars::Ref for LoadBalancerPolicy_PolicyAttributeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LoadBalancerPolicy_PolicyAttributeRef {
+        LoadBalancerPolicy_PolicyAttributeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LoadBalancerPolicyPolicyAttributeElRef {
+impl LoadBalancerPolicy_PolicyAttributeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -356,9 +387,4 @@ impl LoadBalancerPolicyPolicyAttributeElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LoadBalancerPolicyDynamic {
-    policy_attribute: std::option::Option<terrars::DynamicBlock<LoadBalancerPolicyPolicyAttributeEl>>,
 }

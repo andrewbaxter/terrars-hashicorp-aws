@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3controlStorageLensConfigurationData {
+struct S3controlStorageLensConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,22 @@ struct S3controlStorageLensConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_lens_configuration: std
     ::option
-    ::Option<std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationEl>>,
+    ::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration>>,
     dynamic: S3controlStorageLensConfigurationDynamic,
 }
 
 struct S3controlStorageLensConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3controlStorageLensConfigurationData>,
+    data: std::cell::RefCell<S3controlStorageLensConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl S3controlStorageLensConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -175,7 +186,7 @@ impl S3controlStorageLensConfiguration {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -208,6 +219,12 @@ impl S3controlStorageLensConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -221,7 +238,7 @@ impl S3controlStorageLensConfiguration {
     #[doc = "Get a reference to the value of field `storage_lens_configuration` after provisioning.\n"]
     pub fn storage_lens_configuration(
         &self,
-    ) -> terrars::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElRef> {
+    ) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_lens_configuration", self.extract_ref()))
     }
 }
@@ -268,7 +285,7 @@ impl BuildS3controlStorageLensConfiguration {
         let out = S3controlStorageLensConfiguration(std::rc::Rc::new(S3controlStorageLensConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3controlStorageLensConfigurationData {
+            data: std::cell::RefCell::new(S3controlStorageLensConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -277,6 +294,7 @@ impl BuildS3controlStorageLensConfiguration {
                 account_id: core::default::Default::default(),
                 config_id: self.config_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 storage_lens_configuration: core::default::Default::default(),
@@ -331,6 +349,12 @@ impl S3controlStorageLensConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -344,18 +368,25 @@ impl S3controlStorageLensConfigurationRef {
     #[doc = "Get a reference to the value of field `storage_lens_configuration` after provisioning.\n"]
     pub fn storage_lens_configuration(
         &self,
-    ) -> terrars::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElRef> {
+    ) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_lens_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3controlStorageLensConfigurationDynamic {
+    storage_lens_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -364,10 +395,10 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAc
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics {
     type O =
         terrars
-        ::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl>;
+        ::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -378,34 +409,36 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl {
-    pub fn build(self) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics {
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsElRef {
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetricsRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -417,12 +450,12 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAc
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -431,11 +464,11 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAd
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -447,37 +480,39 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics {
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetricsRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -489,12 +524,12 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAd
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -503,11 +538,11 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAd
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -519,37 +554,39 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics {
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetricsRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,12 +598,12 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAd
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -575,11 +612,11 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -591,37 +628,39 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics {
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetricsRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -633,12 +672,12 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -647,11 +686,11 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -663,37 +702,39 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics {
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetricsRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -705,151 +746,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {}
-
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {
-    pub fn build(
-        self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl {
-            enabled: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {}
-
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {
-    pub fn build(
-        self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl {
-            enabled: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delimiter: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -858,7 +755,7 @@ pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLev
     min_storage_bytes_percentage: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria {
     #[doc = "Set the field `delimiter`.\n"]
     pub fn set_delimiter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delimiter = std::option::Option::Some(v.into());
@@ -879,11 +776,11 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -895,13 +792,13 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria {
             delimiter: core::default::Default::default(),
             max_depth: core::default::Default::default(),
             min_storage_bytes_percentage: core::default::Default::default(),
@@ -909,25 +806,27 @@ impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLeve
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteriaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteriaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteriaRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteriaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteriaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -949,19 +848,19 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
 }
 
 #[derive(Serialize, Default)]
-struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElDynamic {
+struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetricsDynamic {
     selection_criteria: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -971,13 +870,13 @@ pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLev
         std
         ::vec
         ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria,
         >,
     >,
-    dynamic: S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElDynamic,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetricsDynamic,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -995,7 +894,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteria,
                         >,
                     >,
     ) -> Self {
@@ -1012,11 +911,11 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1028,13 +927,13 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics {
             enabled: core::default::Default::default(),
             selection_criteria: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1042,25 +941,27 @@ impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLeve
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetricsRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1075,26 +976,26 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElSelectionCriteriaElRef,
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics_SelectionCriteriaRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.selection_criteria", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElDynamic {
+struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevelDynamic {
     storage_metrics: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_metrics: std
     ::option
@@ -1102,13 +1003,13 @@ pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLev
         std
         ::vec
         ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics,
         >,
     >,
-    dynamic: S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElDynamic,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevelDynamic,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel {
     #[doc = "Set the field `storage_metrics`.\n"]
     pub fn set_storage_metrics(
         mut self,
@@ -1120,7 +1021,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetrics,
                         >,
                     >,
     ) -> Self {
@@ -1137,11 +1038,11 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1153,38 +1054,40 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel {
             storage_metrics: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevelRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevelRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevelRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevelRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevelRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1194,28 +1097,25 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElStorageMetricsElRef,
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel_StorageMetricsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_metrics", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDynamic {
+struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevelDynamic {
     activity_metrics: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl,
-        >,
+        terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics>,
     >,
     advanced_cost_optimization_metrics: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics,
         >,
     >,
     advanced_data_protection_metrics: std
@@ -1223,7 +1123,15 @@ struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics,
+        >,
+    >,
+    advanced_performance_metrics: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics,
         >,
     >,
     detailed_status_code_metrics: std
@@ -1231,7 +1139,7 @@ struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics,
         >,
     >,
     prefix_level: std
@@ -1239,30 +1147,24 @@ struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     activity_metrics: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl>,
-    >,
+    ::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     advanced_cost_optimization_metrics: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl,
-        >,
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     advanced_data_protection_metrics: std
@@ -1270,9 +1172,15 @@ pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLev
     ::Option<
         std
         ::vec
-        ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl,
-        >,
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    advanced_performance_metrics: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     detailed_status_code_metrics: std
@@ -1280,22 +1188,18 @@ pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLev
     ::Option<
         std
         ::vec
-        ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl,
-        >,
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix_level: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl>,
+        std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel>,
     >,
-    dynamic: S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDynamic,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevelDynamic,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel {
     #[doc = "Set the field `activity_metrics`.\n"]
     pub fn set_activity_metrics(
         mut self,
@@ -1307,7 +1211,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics,
                         >,
                     >,
     ) -> Self {
@@ -1333,7 +1237,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics,
                         >,
                     >,
     ) -> Self {
@@ -1359,7 +1263,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics,
                         >,
                     >,
     ) -> Self {
@@ -1369,6 +1273,32 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.advanced_data_protection_metrics = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `advanced_performance_metrics`.\n"]
+    pub fn set_advanced_performance_metrics(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.advanced_performance_metrics = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.advanced_performance_metrics = std::option::Option::Some(d);
             },
         }
         self
@@ -1385,7 +1315,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics,
                         >,
                     >,
     ) -> Self {
@@ -1411,7 +1341,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevel,
                         >,
                     >,
     ) -> Self {
@@ -1427,11 +1357,10 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
     }
 }
 
-impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl {
+impl terrars::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel {
     type O =
         terrars
-        ::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl>;
+        ::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1442,14 +1371,15 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl {
-    pub fn build(self) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel {
             activity_metrics: core::default::Default::default(),
             advanced_cost_optimization_metrics: core::default::Default::default(),
             advanced_data_protection_metrics: core::default::Default::default(),
+            advanced_performance_metrics: core::default::Default::default(),
             detailed_status_code_metrics: core::default::Default::default(),
             prefix_level: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1457,24 +1387,26 @@ impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLeve
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevelRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElRef {
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevelRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevelRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevelRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevelRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1482,10 +1414,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
     #[doc = "Get a reference to the value of field `activity_metrics` after provisioning.\n"]
     pub fn activity_metrics(
         &self,
-    ) -> terrars
-    ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElActivityMetricsElRef,
-    > {
+    ) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetricsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.activity_metrics", self.base))
     }
 
@@ -1494,7 +1423,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedCostOptimizationMetricsElRef,
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetricsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_cost_optimization_metrics", self.base))
     }
@@ -1504,18 +1433,24 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElAdvancedDataProtectionMetricsElRef,
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetricsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_data_protection_metrics", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `advanced_performance_metrics` after provisioning.\n"]
+    pub fn advanced_performance_metrics(
+        &self,
+    ) -> terrars
+    ::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetricsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_performance_metrics", self.base))
     }
 
     #[doc = "Get a reference to the value of field `detailed_status_code_metrics` after provisioning.\n"]
     pub fn detailed_status_code_metrics(
         &self,
     ) -> terrars
-    ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElDetailedStatusCodeMetricsElRef,
-    > {
+    ::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetricsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.detailed_status_code_metrics", self.base))
     }
 
@@ -1523,97 +1458,24 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBu
     pub fn prefix_level(
         &self,
     ) -> terrars
-    ::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElPrefixLevelElRef> {
+    ::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel_PrefixLevelRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.prefix_level", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl {}
-
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl {
-    pub fn build(
-        self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl {
-            enabled: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
-    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDynamic {
+struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevelDynamic {
     activity_metrics: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl>,
+        terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics>,
     >,
     advanced_cost_optimization_metrics: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics,
         >,
     >,
     advanced_data_protection_metrics: std
@@ -1621,41 +1483,45 @@ struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics,
+        >,
+    >,
+    advanced_performance_metrics: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics,
         >,
     >,
     bucket_level: std
     ::option
     ::Option<
-        terrars::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl>,
+        terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel>,
     >,
     detailed_status_code_metrics: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     activity_metrics: std
     ::option
-    ::Option<
-        std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl>,
-    >,
+    ::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     advanced_cost_optimization_metrics: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl,
-        >,
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     advanced_data_protection_metrics: std
@@ -1663,26 +1529,32 @@ pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLev
     ::Option<
         std
         ::vec
-        ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl,
-        >,
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    advanced_performance_metrics: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_level: std
     ::option
-    ::Option<std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl>>,
+    ::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     detailed_status_code_metrics: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl>,
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics>,
     >,
-    dynamic: S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDynamic,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevelDynamic,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel {
     #[doc = "Set the field `activity_metrics`.\n"]
     pub fn set_activity_metrics(
         mut self,
@@ -1694,7 +1566,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetrics,
                         >,
                     >,
     ) -> Self {
@@ -1720,7 +1592,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetrics,
                         >,
                     >,
     ) -> Self {
@@ -1746,7 +1618,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetrics,
                         >,
                     >,
     ) -> Self {
@@ -1756,6 +1628,32 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.advanced_data_protection_metrics = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `advanced_performance_metrics`.\n"]
+    pub fn set_advanced_performance_metrics(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetrics,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.advanced_performance_metrics = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.advanced_performance_metrics = std::option::Option::Some(d);
             },
         }
         self
@@ -1772,7 +1670,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevel,
                         >,
                     >,
     ) -> Self {
@@ -1798,7 +1696,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetrics,
                         >,
                     >,
     ) -> Self {
@@ -1814,8 +1712,8 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
-    type O = terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl>;
+impl terrars::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel {
+    type O = terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1826,14 +1724,15 @@ impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensCon
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
-    pub fn build(self) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel {
             activity_metrics: core::default::Default::default(),
             advanced_cost_optimization_metrics: core::default::Default::default(),
             advanced_data_protection_metrics: core::default::Default::default(),
+            advanced_performance_metrics: core::default::Default::default(),
             bucket_level: core::default::Default::default(),
             detailed_status_code_metrics: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1841,24 +1740,26 @@ impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAccountLeve
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevelRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRef {
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevelRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevelRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevelRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevelRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1866,8 +1767,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRe
     #[doc = "Get a reference to the value of field `activity_metrics` after provisioning.\n"]
     pub fn activity_metrics(
         &self,
-    ) -> terrars
-    ::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElActivityMetricsElRef> {
+    ) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_ActivityMetricsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.activity_metrics", self.base))
     }
 
@@ -1876,7 +1776,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRe
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedCostOptimizationMetricsElRef,
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedCostOptimizationMetricsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_cost_optimization_metrics", self.base))
     }
@@ -1886,15 +1786,23 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRe
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElAdvancedDataProtectionMetricsElRef,
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedDataProtectionMetricsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_data_protection_metrics", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `advanced_performance_metrics` after provisioning.\n"]
+    pub fn advanced_performance_metrics(
+        &self,
+    ) -> terrars
+    ::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_AdvancedPerformanceMetricsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_performance_metrics", self.base))
     }
 
     #[doc = "Get a reference to the value of field `bucket_level` after provisioning.\n"]
     pub fn bucket_level(
         &self,
-    ) -> terrars::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElBucketLevelElRef> {
+    ) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_BucketLevelRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bucket_level", self.base))
     }
 
@@ -1902,22 +1810,20 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRe
     pub fn detailed_status_code_metrics(
         &self,
     ) -> terrars
-    ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElDetailedStatusCodeMetricsElRef,
-    > {
+    ::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel_DetailedStatusCodeMetricsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.detailed_status_code_metrics", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg {
     arn: terrars::PrimField<std::string::String>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl { }
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg { }
 
-impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl {
-    type O = terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl>;
+impl terrars::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg {
+    type O = terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1928,35 +1834,37 @@ impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensCon
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl {
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg {
     #[doc = ""]
     pub arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl {
-    pub fn build(self) -> S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl { arn: self.arn }
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg { arn: self.arn }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrgRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgElRef {
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrgRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrgRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrgRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrgRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1968,17 +1876,17 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics {
     enabled: terrars::PrimField<bool>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl { }
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics { }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics {
     type O =
         terrars
-        ::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl>;
+        ::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1989,37 +1897,39 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl {
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl {
-    pub fn build(self) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics {
             enabled: self.enabled,
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsElRef {
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetricsRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2031,20 +1941,18 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElClou
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms {
     key_id: terrars::PrimField<std::string::String>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl {
-
-}
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms { }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2056,40 +1964,42 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl {
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms {
     #[doc = ""]
     pub key_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms {
             key_id: self.key_id,
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKmsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKmsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKmsRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKmsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKmsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2101,18 +2011,16 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {}
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3 {}
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
-
-}
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3 { }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3 {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2124,48 +2032,50 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3 {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3 {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El {}
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3 {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3 {}
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3ElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3ElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3Ref {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3ElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3ElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3Ref {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3ElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElDynamic {
+struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_EncryptionDynamic {
     sse_kms: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms,
         >,
     >,
     sse_s3: std
@@ -2173,13 +2083,13 @@ struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sse_kms: std
     ::option
@@ -2187,7 +2097,7 @@ pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExport
         std
         ::vec
         ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2197,13 +2107,13 @@ pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExport
         std
         ::vec
         ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3,
         >,
     >,
-    dynamic: S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElDynamic,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_EncryptionDynamic,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption {
     #[doc = "Set the field `sse_kms`.\n"]
     pub fn set_sse_kms(
         mut self,
@@ -2215,7 +2125,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKms,
                         >,
                     >,
     ) -> Self {
@@ -2241,7 +2151,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3El,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3,
                         >,
                     >,
     ) -> Self {
@@ -2258,11 +2168,11 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption {
     type O =
         terrars
         ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2274,13 +2184,13 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption {
     pub fn build(
         self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption {
             sse_kms: core::default::Default::default(),
             sse_s3: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2288,25 +2198,27 @@ impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportE
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_EncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElRef {
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_EncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_EncryptionRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_EncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_EncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2316,7 +2228,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseKmsElRef,
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseKmsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sse_kms", self.base))
     }
@@ -2326,26 +2238,26 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElSseS3ElRef,
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption_SseS3Ref,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sse_s3", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElDynamic {
+struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestinationDynamic {
     encryption: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl,
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination {
     account_id: terrars::PrimField<std::string::String>,
     arn: terrars::PrimField<std::string::String>,
     format: terrars::PrimField<std::string::String>,
@@ -2358,14 +2270,12 @@ pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExport
     ::Option<
         std
         ::vec
-        ::Vec<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl,
-        >,
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption>,
     >,
-    dynamic: S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElDynamic,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestinationDynamic,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination {
     #[doc = "Set the field `prefix`.\n"]
     pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix = std::option::Option::Some(v.into());
@@ -2383,7 +2293,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption,
                         >,
                     >,
     ) -> Self {
@@ -2400,12 +2310,10 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
 }
 
 impl terrars
-::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl {
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination {
     type O =
         terrars
-        ::BlockAssignable<
-            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl,
-        >;
+        ::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2416,7 +2324,7 @@ impl terrars
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl {
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination {
     #[doc = ""]
     pub account_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -2427,11 +2335,9 @@ pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataE
     pub output_schema_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl {
-    pub fn build(
-        self,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination {
             account_id: self.account_id,
             arn: self.arn,
             format: self.format,
@@ -2443,24 +2349,26 @@ impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportE
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElRef {
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestinationRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2495,46 +2403,188 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3Bu
         &self,
     ) -> terrars
     ::ListRef<
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElEncryptionElRef,
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_EncryptionRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElDynamic {
-    cloud_watch_metrics: std
+struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestinationDynamic {
+    encryption: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl>,
-    >,
-    s3_bucket_destination: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl>,
+        ::DynamicBlock<
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption,
+        >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination {
+    enabled: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption>,
+    >,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestinationDynamic,
+}
+
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination {
+    #[doc = "Set the field `encryption`.\n"]
+    pub fn set_encryption(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_Encryption,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.encryption = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.encryption = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination {
+    type O =
+        terrars
+        ::BlockAssignable<
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination {
+    #[doc = ""]
+    pub enabled: terrars::PrimField<bool>,
+}
+
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination {
+    pub fn build(
+        self,
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination {
+            enabled: self.enabled,
+            encryption: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestinationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars
+::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestinationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestinationRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestinationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestinationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `encryption` after provisioning.\n"]
+    pub fn encryption(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination_EncryptionRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExportDynamic {
     cloud_watch_metrics: std
     ::option
     ::Option<
-        std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl>,
+        terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics>,
     >,
+    s3_bucket_destination: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination>,
+    >,
+    storage_lens_table_destination: std
+    ::option
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination,
+        >,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloud_watch_metrics: std
+    ::option
+    ::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_bucket_destination: std
     ::option
     ::Option<
-        std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl>,
+        std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination>,
     >,
-    dynamic: S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElDynamic,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_lens_table_destination: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination>,
+    >,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfiguration_DataExportDynamic,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport {
     #[doc = "Set the field `cloud_watch_metrics`.\n"]
     pub fn set_cloud_watch_metrics(
         mut self,
@@ -2546,7 +2596,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetrics,
                         >,
                     >,
     ) -> Self {
@@ -2572,7 +2622,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationEl,
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination,
                         >,
                     >,
     ) -> Self {
@@ -2586,10 +2636,36 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {
         }
         self
     }
+
+    #[doc = "Set the field `storage_lens_table_destination`.\n"]
+    pub fn set_storage_lens_table_destination(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.storage_lens_table_destination = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.storage_lens_table_destination = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {
-    type O = terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl>;
+impl terrars::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport {
+    type O = terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2600,36 +2676,39 @@ impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensCon
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {
-    pub fn build(self) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_DataExport {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport {
             cloud_watch_metrics: core::default::Default::default(),
             s3_bucket_destination: core::default::Default::default(),
+            storage_lens_table_destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_DataExportRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElRef {
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_DataExportRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_DataExportRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_DataExportRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_DataExportRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2637,8 +2716,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElRef 
     #[doc = "Get a reference to the value of field `cloud_watch_metrics` after provisioning.\n"]
     pub fn cloud_watch_metrics(
         &self,
-    ) -> terrars
-    ::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElCloudWatchMetricsElRef> {
+    ) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_CloudWatchMetricsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloud_watch_metrics", self.base))
     }
 
@@ -2646,20 +2724,28 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElRef 
     pub fn s3_bucket_destination(
         &self,
     ) -> terrars
-    ::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElS3BucketDestinationElRef> {
+    ::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_bucket_destination", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `storage_lens_table_destination` after provisioning.\n"]
+    pub fn storage_lens_table_destination(
+        &self,
+    ) -> terrars
+    ::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestinationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.storage_lens_table_destination", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_Exclude {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     buckets: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     regions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_Exclude {
     #[doc = "Set the field `buckets`.\n"]
     pub fn set_buckets(
         mut self,
@@ -2679,8 +2765,8 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl {
-    type O = terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl>;
+impl terrars::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_Exclude {
+    type O = terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_Exclude>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2691,119 +2777,37 @@ impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensCon
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl {}
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_Exclude {}
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl {
-    pub fn build(self) -> S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_Exclude {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_Exclude {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_Exclude {
             buckets: core::default::Default::default(),
             regions: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElExcludeElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_ExcludeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElExcludeElRef {
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_ExcludeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElExcludeElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElExcludeElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_ExcludeRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_ExcludeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElExcludeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `buckets` after provisioning.\n"]
-    pub fn buckets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.buckets", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `regions` after provisioning.\n"]
-    pub fn regions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.regions", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    buckets: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    regions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl S3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl {
-    #[doc = "Set the field `buckets`.\n"]
-    pub fn set_buckets(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.buckets = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `regions`.\n"]
-    pub fn set_regions(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.regions = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl {
-    type O = terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl {}
-
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl {
-    pub fn build(self) -> S3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl {
-            buckets: core::default::Default::default(),
-            regions: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElIncludeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElIncludeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElIncludeElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElIncludeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl S3controlStorageLensConfigurationStorageLensConfigurationElIncludeElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_ExcludeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2820,45 +2824,307 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElIncludeElRef {
 }
 
 #[derive(Serialize, Default)]
-struct S3controlStorageLensConfigurationStorageLensConfigurationElDynamic {
-    account_level: std
+struct S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExportDynamic {
+    s3_bucket_destination: std
     ::option
-    ::Option<terrars::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl>>,
-    aws_org: std
+    ::Option<
+        terrars
+        ::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination>,
+    >,
+    storage_lens_table_destination: std
     ::option
-    ::Option<terrars::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl>>,
-    data_export: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl>>,
-    exclude: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl>>,
-    include: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl>>,
+    ::Option<
+        terrars
+        ::DynamicBlock<
+            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination,
+        >,
+    >,
 }
 
 #[derive(Serialize)]
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationEl {
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_bucket_destination: std
+    ::option
+    ::Option<
+        std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_lens_table_destination: std
+    ::option
+    ::Option<
+        std
+        ::vec
+        ::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination>,
+    >,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExportDynamic,
+}
+
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport {
+    #[doc = "Set the field `s3_bucket_destination`.\n"]
+    pub fn set_s3_bucket_destination(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestination,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_bucket_destination = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_bucket_destination = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `storage_lens_table_destination`.\n"]
+    pub fn set_storage_lens_table_destination(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestination,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.storage_lens_table_destination = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.storage_lens_table_destination = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport {
+    type O =
+        terrars
+        ::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport {}
+
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport {
+            s3_bucket_destination: core::default::Default::default(),
+            storage_lens_table_destination: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExportRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExportRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExportRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExportRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExportRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `s3_bucket_destination` after provisioning.\n"]
+    pub fn s3_bucket_destination(
+        &self,
+    ) -> terrars
+    ::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_S3BucketDestinationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_bucket_destination", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `storage_lens_table_destination` after provisioning.\n"]
+    pub fn storage_lens_table_destination(
+        &self,
+    ) -> terrars
+    ::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport_StorageLensTableDestinationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.storage_lens_table_destination", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_Include {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    buckets: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+}
+
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_Include {
+    #[doc = "Set the field `buckets`.\n"]
+    pub fn set_buckets(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.buckets = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `regions`.\n"]
+    pub fn set_regions(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.regions = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration_Include {
+    type O = terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_Include>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration_Include {}
+
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration_Include {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration_Include {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_Include {
+            buckets: core::default::Default::default(),
+            regions: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration_IncludeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfiguration_IncludeRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> S3controlStorageLensConfiguration_StorageLensConfiguration_IncludeRef {
+        S3controlStorageLensConfiguration_StorageLensConfiguration_IncludeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl S3controlStorageLensConfiguration_StorageLensConfiguration_IncludeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `buckets` after provisioning.\n"]
+    pub fn buckets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.buckets", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `regions` after provisioning.\n"]
+    pub fn regions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.regions", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct S3controlStorageLensConfiguration_StorageLensConfigurationDynamic {
+    account_level: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel>>,
+    aws_org: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg>>,
+    data_export: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport>>,
+    exclude: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_Exclude>>,
+    expanded_prefixes_data_export: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport>,
+    >,
+    include: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3controlStorageLensConfiguration_StorageLensConfiguration_Include>>,
+}
+
+#[derive(Serialize)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfiguration {
     enabled: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix_delimiter: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account_level: std
     ::option
-    ::Option<std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl>>,
+    ::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    aws_org: std::option::Option<std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl>>,
+    aws_org: std::option::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_export: std
     ::option
-    ::Option<std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl>>,
+    ::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exclude: std::option::Option<std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl>>,
+    exclude: std::option::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_Exclude>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    include: std::option::Option<std::vec::Vec<S3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl>>,
-    dynamic: S3controlStorageLensConfigurationStorageLensConfigurationElDynamic,
+    expanded_prefixes_data_export: std
+    ::option
+    ::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include: std::option::Option<std::vec::Vec<S3controlStorageLensConfiguration_StorageLensConfiguration_Include>>,
+    dynamic: S3controlStorageLensConfiguration_StorageLensConfigurationDynamic,
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationEl {
+impl S3controlStorageLensConfiguration_StorageLensConfiguration {
+    #[doc = "Set the field `prefix_delimiter`.\n"]
+    pub fn set_prefix_delimiter(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix_delimiter = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `account_level`.\n"]
     pub fn set_account_level(
         mut self,
@@ -2869,7 +3135,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelEl>,
+                        ::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevel>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2892,7 +3158,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgEl>,
+                        terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrg>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2916,7 +3182,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportEl>,
+                        ::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExport>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2939,7 +3205,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElExcludeEl>,
+                        terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_Exclude>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2948,6 +3214,32 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.exclude = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `expanded_prefixes_data_export`.\n"]
+    pub fn set_expanded_prefixes_data_export(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExport,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.expanded_prefixes_data_export = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.expanded_prefixes_data_export = std::option::Option::Some(d);
             },
         }
         self
@@ -2962,7 +3254,7 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationElIncludeEl>,
+                        terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration_Include>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2977,8 +3269,8 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensConfigurationEl {
-    type O = terrars::BlockAssignable<S3controlStorageLensConfigurationStorageLensConfigurationEl>;
+impl terrars::ToListMappable for S3controlStorageLensConfiguration_StorageLensConfiguration {
+    type O = terrars::BlockAssignable<S3controlStorageLensConfiguration_StorageLensConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2989,43 +3281,47 @@ impl terrars::ToListMappable for S3controlStorageLensConfigurationStorageLensCon
     }
 }
 
-pub struct BuildS3controlStorageLensConfigurationStorageLensConfigurationEl {
+pub struct BuildS3controlStorageLensConfiguration_StorageLensConfiguration {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildS3controlStorageLensConfigurationStorageLensConfigurationEl {
-    pub fn build(self) -> S3controlStorageLensConfigurationStorageLensConfigurationEl {
-        S3controlStorageLensConfigurationStorageLensConfigurationEl {
+impl BuildS3controlStorageLensConfiguration_StorageLensConfiguration {
+    pub fn build(self) -> S3controlStorageLensConfiguration_StorageLensConfiguration {
+        S3controlStorageLensConfiguration_StorageLensConfiguration {
             enabled: self.enabled,
+            prefix_delimiter: core::default::Default::default(),
             account_level: core::default::Default::default(),
             aws_org: core::default::Default::default(),
             data_export: core::default::Default::default(),
             exclude: core::default::Default::default(),
+            expanded_prefixes_data_export: core::default::Default::default(),
             include: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlStorageLensConfigurationStorageLensConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3controlStorageLensConfiguration_StorageLensConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlStorageLensConfigurationStorageLensConfigurationElRef {
+impl terrars::Ref for S3controlStorageLensConfiguration_StorageLensConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlStorageLensConfigurationStorageLensConfigurationElRef {
-        S3controlStorageLensConfigurationStorageLensConfigurationElRef {
+    ) -> S3controlStorageLensConfiguration_StorageLensConfigurationRef {
+        S3controlStorageLensConfiguration_StorageLensConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlStorageLensConfigurationStorageLensConfigurationElRef {
+impl S3controlStorageLensConfiguration_StorageLensConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3035,39 +3331,44 @@ impl S3controlStorageLensConfigurationStorageLensConfigurationElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `prefix_delimiter` after provisioning.\n"]
+    pub fn prefix_delimiter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_delimiter", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `account_level` after provisioning.\n"]
     pub fn account_level(
         &self,
-    ) -> terrars::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElAccountLevelElRef> {
+    ) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AccountLevelRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.account_level", self.base))
     }
 
     #[doc = "Get a reference to the value of field `aws_org` after provisioning.\n"]
-    pub fn aws_org(&self) -> terrars::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElAwsOrgElRef> {
+    pub fn aws_org(&self) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_AwsOrgRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_org", self.base))
     }
 
     #[doc = "Get a reference to the value of field `data_export` after provisioning.\n"]
     pub fn data_export(
         &self,
-    ) -> terrars::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElDataExportElRef> {
+    ) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_DataExportRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_export", self.base))
     }
 
     #[doc = "Get a reference to the value of field `exclude` after provisioning.\n"]
-    pub fn exclude(&self) -> terrars::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElExcludeElRef> {
+    pub fn exclude(&self) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_ExcludeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.exclude", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `expanded_prefixes_data_export` after provisioning.\n"]
+    pub fn expanded_prefixes_data_export(
+        &self,
+    ) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_ExpandedPrefixesDataExportRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.expanded_prefixes_data_export", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `include` after provisioning.\n"]
-    pub fn include(&self) -> terrars::ListRef<S3controlStorageLensConfigurationStorageLensConfigurationElIncludeElRef> {
+    pub fn include(&self) -> terrars::ListRef<S3controlStorageLensConfiguration_StorageLensConfiguration_IncludeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.include", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3controlStorageLensConfigurationDynamic {
-    storage_lens_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3controlStorageLensConfigurationStorageLensConfigurationEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataDxRouterConfigurationData {
+struct DataDxRouterConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -18,6 +20,8 @@ struct DataDxRouterConfigurationData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     router_type_identifier: terrars::PrimField<std::string::String>,
     virtual_interface_id: terrars::PrimField<std::string::String>,
 }
@@ -25,7 +29,7 @@ struct DataDxRouterConfigurationData {
 struct DataDxRouterConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDxRouterConfigurationData>,
+    data: std::cell::RefCell<DataDxRouterConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -76,6 +80,13 @@ impl DataDxRouterConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `customer_router_config` after provisioning.\n"]
     pub fn customer_router_config(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_router_config", self.extract_ref()))
@@ -86,8 +97,14 @@ impl DataDxRouterConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `router` after provisioning.\n"]
-    pub fn router(&self) -> terrars::ListRef<DataDxRouterConfigurationRouterElRef> {
+    pub fn router(&self) -> terrars::ListRef<DataDxRouterConfiguration_RouterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.router", self.extract_ref()))
     }
 
@@ -151,12 +168,13 @@ impl BuildDataDxRouterConfiguration {
         let out = DataDxRouterConfiguration(std::rc::Rc::new(DataDxRouterConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDxRouterConfigurationData {
+            data: std::cell::RefCell::new(DataDxRouterConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 router_type_identifier: self.router_type_identifier,
                 virtual_interface_id: self.virtual_interface_id,
             }),
@@ -199,8 +217,14 @@ impl DataDxRouterConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `router` after provisioning.\n"]
-    pub fn router(&self) -> terrars::ListRef<DataDxRouterConfigurationRouterElRef> {
+    pub fn router(&self) -> terrars::ListRef<DataDxRouterConfiguration_RouterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.router", self.extract_ref()))
     }
 
@@ -221,7 +245,7 @@ impl DataDxRouterConfigurationRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDxRouterConfigurationRouterEl {
+pub struct DataDxRouterConfiguration_Router {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     platform: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -236,7 +260,7 @@ pub struct DataDxRouterConfigurationRouterEl {
     xslt_template_name_for_mac_sec: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDxRouterConfigurationRouterEl {
+impl DataDxRouterConfiguration_Router {
     #[doc = "Set the field `platform`.\n"]
     pub fn set_platform(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.platform = std::option::Option::Some(v.into());
@@ -283,8 +307,8 @@ impl DataDxRouterConfigurationRouterEl {
     }
 }
 
-impl terrars::ToListMappable for DataDxRouterConfigurationRouterEl {
-    type O = terrars::BlockAssignable<DataDxRouterConfigurationRouterEl>;
+impl terrars::ToListMappable for DataDxRouterConfiguration_Router {
+    type O = terrars::BlockAssignable<DataDxRouterConfiguration_Router>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -295,11 +319,11 @@ impl terrars::ToListMappable for DataDxRouterConfigurationRouterEl {
     }
 }
 
-pub struct BuildDataDxRouterConfigurationRouterEl {}
+pub struct BuildDataDxRouterConfiguration_Router {}
 
-impl BuildDataDxRouterConfigurationRouterEl {
-    pub fn build(self) -> DataDxRouterConfigurationRouterEl {
-        DataDxRouterConfigurationRouterEl {
+impl BuildDataDxRouterConfiguration_Router {
+    pub fn build(self) -> DataDxRouterConfiguration_Router {
+        DataDxRouterConfiguration_Router {
             platform: core::default::Default::default(),
             router_type_identifier: core::default::Default::default(),
             software: core::default::Default::default(),
@@ -310,21 +334,23 @@ impl BuildDataDxRouterConfigurationRouterEl {
     }
 }
 
-pub struct DataDxRouterConfigurationRouterElRef {
+#[allow(dead_code)]
+pub struct DataDxRouterConfiguration_RouterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDxRouterConfigurationRouterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDxRouterConfigurationRouterElRef {
-        DataDxRouterConfigurationRouterElRef {
+impl terrars::Ref for DataDxRouterConfiguration_RouterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDxRouterConfiguration_RouterRef {
+        DataDxRouterConfiguration_RouterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDxRouterConfigurationRouterElRef {
+impl DataDxRouterConfiguration_RouterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

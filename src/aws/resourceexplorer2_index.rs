@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Resourceexplorer2IndexData {
+struct Resourceexplorer2IndexData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,17 +21,19 @@ struct Resourceexplorer2IndexData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Resourceexplorer2IndexTimeoutsEl>,
+    timeouts: std::option::Option<Resourceexplorer2Index_Timeouts>,
 }
 
 struct Resourceexplorer2Index_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Resourceexplorer2IndexData>,
+    data: std::cell::RefCell<Resourceexplorer2IndexData_>,
 }
 
 #[derive(Clone)]
@@ -129,6 +133,13 @@ impl Resourceexplorer2Index {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -139,7 +150,7 @@ impl Resourceexplorer2Index {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Resourceexplorer2IndexTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Resourceexplorer2Index_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -152,6 +163,12 @@ impl Resourceexplorer2Index {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -170,8 +187,8 @@ impl Resourceexplorer2Index {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Resourceexplorer2IndexTimeoutsElRef {
-        Resourceexplorer2IndexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Resourceexplorer2Index_TimeoutsRef {
+        Resourceexplorer2Index_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -217,12 +234,13 @@ impl BuildResourceexplorer2Index {
         let out = Resourceexplorer2Index(std::rc::Rc::new(Resourceexplorer2Index_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Resourceexplorer2IndexData {
+            data: std::cell::RefCell::new(Resourceexplorer2IndexData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 type_: self.type_,
                 timeouts: core::default::Default::default(),
@@ -266,6 +284,12 @@ impl Resourceexplorer2IndexRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -282,13 +306,13 @@ impl Resourceexplorer2IndexRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Resourceexplorer2IndexTimeoutsElRef {
-        Resourceexplorer2IndexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Resourceexplorer2Index_TimeoutsRef {
+        Resourceexplorer2Index_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct Resourceexplorer2IndexTimeoutsEl {
+pub struct Resourceexplorer2Index_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -297,28 +321,31 @@ pub struct Resourceexplorer2IndexTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Resourceexplorer2IndexTimeoutsEl {
-    #[doc = "Set the field `create`.\n"]
+impl Resourceexplorer2Index_Timeouts {
+    #[doc =
+        "Set the field `create`.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours)."]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `delete`.\n"]
+    #[doc =
+        "Set the field `delete`.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs."]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `update`.\n"]
+    #[doc =
+        "Set the field `update`.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours)."]
     pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for Resourceexplorer2IndexTimeoutsEl {
-    type O = terrars::BlockAssignable<Resourceexplorer2IndexTimeoutsEl>;
+impl terrars::ToListMappable for Resourceexplorer2Index_Timeouts {
+    type O = terrars::BlockAssignable<Resourceexplorer2Index_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -329,11 +356,11 @@ impl terrars::ToListMappable for Resourceexplorer2IndexTimeoutsEl {
     }
 }
 
-pub struct BuildResourceexplorer2IndexTimeoutsEl {}
+pub struct BuildResourceexplorer2Index_Timeouts {}
 
-impl BuildResourceexplorer2IndexTimeoutsEl {
-    pub fn build(self) -> Resourceexplorer2IndexTimeoutsEl {
-        Resourceexplorer2IndexTimeoutsEl {
+impl BuildResourceexplorer2Index_Timeouts {
+    pub fn build(self) -> Resourceexplorer2Index_Timeouts {
+        Resourceexplorer2Index_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -341,36 +368,41 @@ impl BuildResourceexplorer2IndexTimeoutsEl {
     }
 }
 
-pub struct Resourceexplorer2IndexTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Resourceexplorer2Index_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Resourceexplorer2IndexTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Resourceexplorer2IndexTimeoutsElRef {
-        Resourceexplorer2IndexTimeoutsElRef {
+impl terrars::Ref for Resourceexplorer2Index_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Resourceexplorer2Index_TimeoutsRef {
+        Resourceexplorer2Index_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Resourceexplorer2IndexTimeoutsElRef {
+impl Resourceexplorer2Index_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `create` after provisioning.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours)."]
     pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `delete` after provisioning.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs."]
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `update` after provisioning.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours)."]
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }

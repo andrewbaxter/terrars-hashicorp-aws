@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudtrailEventDataStoreData {
+struct CloudtrailEventDataStoreData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,14 +21,22 @@ struct CloudtrailEventDataStoreData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    billing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     multi_region_enabled: std::option::Option<terrars::PrimField<bool>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     organization_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retention_period: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    suspend: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,16 +44,16 @@ struct CloudtrailEventDataStoreData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     termination_protection_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    advanced_event_selector: std::option::Option<std::vec::Vec<CloudtrailEventDataStoreAdvancedEventSelectorEl>>,
+    advanced_event_selector: std::option::Option<std::vec::Vec<CloudtrailEventDataStore_AdvancedEventSelector>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudtrailEventDataStoreTimeoutsEl>,
+    timeouts: std::option::Option<CloudtrailEventDataStore_Timeouts>,
     dynamic: CloudtrailEventDataStoreDynamic,
 }
 
 struct CloudtrailEventDataStore_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudtrailEventDataStoreData>,
+    data: std::cell::RefCell<CloudtrailEventDataStoreData_>,
 }
 
 #[derive(Clone)]
@@ -143,9 +153,21 @@ impl CloudtrailEventDataStore {
         self
     }
 
+    #[doc = "Set the field `billing_mode`.\n"]
+    pub fn set_billing_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().billing_mode = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -161,9 +183,22 @@ impl CloudtrailEventDataStore {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `retention_period`.\n"]
     pub fn set_retention_period(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().retention_period = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `suspend`.\n"]
+    pub fn set_suspend(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().suspend = std::option::Option::Some(v.into());
         self
     }
 
@@ -194,7 +229,7 @@ impl CloudtrailEventDataStore {
     #[doc = "Set the field `advanced_event_selector`.\n"]
     pub fn set_advanced_event_selector(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudtrailEventDataStoreAdvancedEventSelectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudtrailEventDataStore_AdvancedEventSelector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -208,7 +243,7 @@ impl CloudtrailEventDataStore {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudtrailEventDataStoreTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudtrailEventDataStore_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -218,9 +253,19 @@ impl CloudtrailEventDataStore {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `billing_mode` after provisioning.\n"]
+    pub fn billing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `multi_region_enabled` after provisioning.\n"]
@@ -238,9 +283,20 @@ impl CloudtrailEventDataStore {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.organization_enabled", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `retention_period` after provisioning.\n"]
     pub fn retention_period(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_period", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `suspend` after provisioning.\n"]
+    pub fn suspend(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.suspend", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -262,13 +318,13 @@ impl CloudtrailEventDataStore {
     }
 
     #[doc = "Get a reference to the value of field `advanced_event_selector` after provisioning.\n"]
-    pub fn advanced_event_selector(&self) -> terrars::ListRef<CloudtrailEventDataStoreAdvancedEventSelectorElRef> {
+    pub fn advanced_event_selector(&self) -> terrars::ListRef<CloudtrailEventDataStore_AdvancedEventSelectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_event_selector", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudtrailEventDataStoreTimeoutsElRef {
-        CloudtrailEventDataStoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudtrailEventDataStore_TimeoutsRef {
+        CloudtrailEventDataStore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -314,17 +370,21 @@ impl BuildCloudtrailEventDataStore {
         let out = CloudtrailEventDataStore(std::rc::Rc::new(CloudtrailEventDataStore_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudtrailEventDataStoreData {
+            data: std::cell::RefCell::new(CloudtrailEventDataStoreData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                billing_mode: core::default::Default::default(),
                 id: core::default::Default::default(),
+                kms_key_id: core::default::Default::default(),
                 multi_region_enabled: core::default::Default::default(),
                 name: self.name,
                 organization_enabled: core::default::Default::default(),
+                region: core::default::Default::default(),
                 retention_period: core::default::Default::default(),
+                suspend: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 termination_protection_enabled: core::default::Default::default(),
@@ -366,9 +426,19 @@ impl CloudtrailEventDataStoreRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `billing_mode` after provisioning.\n"]
+    pub fn billing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `multi_region_enabled` after provisioning.\n"]
@@ -386,9 +456,20 @@ impl CloudtrailEventDataStoreRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.organization_enabled", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `retention_period` after provisioning.\n"]
     pub fn retention_period(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_period", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `suspend` after provisioning.\n"]
+    pub fn suspend(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.suspend", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -410,18 +491,25 @@ impl CloudtrailEventDataStoreRef {
     }
 
     #[doc = "Get a reference to the value of field `advanced_event_selector` after provisioning.\n"]
-    pub fn advanced_event_selector(&self) -> terrars::ListRef<CloudtrailEventDataStoreAdvancedEventSelectorElRef> {
+    pub fn advanced_event_selector(&self) -> terrars::ListRef<CloudtrailEventDataStore_AdvancedEventSelectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_event_selector", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudtrailEventDataStoreTimeoutsElRef {
-        CloudtrailEventDataStoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudtrailEventDataStore_TimeoutsRef {
+        CloudtrailEventDataStore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudtrailEventDataStoreDynamic {
+    advanced_event_selector: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudtrailEventDataStore_AdvancedEventSelector>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {
+pub struct CloudtrailEventDataStore_AdvancedEventSelector_FieldSelector {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ends_with: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -438,7 +526,7 @@ pub struct CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {
     starts_with: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {
+impl CloudtrailEventDataStore_AdvancedEventSelector_FieldSelector {
     #[doc = "Set the field `ends_with`.\n"]
     pub fn set_ends_with(
         mut self,
@@ -500,8 +588,8 @@ impl CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {
     }
 }
 
-impl terrars::ToListMappable for CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {
-    type O = terrars::BlockAssignable<CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl>;
+impl terrars::ToListMappable for CloudtrailEventDataStore_AdvancedEventSelector_FieldSelector {
+    type O = terrars::BlockAssignable<CloudtrailEventDataStore_AdvancedEventSelector_FieldSelector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -512,11 +600,11 @@ impl terrars::ToListMappable for CloudtrailEventDataStoreAdvancedEventSelectorEl
     }
 }
 
-pub struct BuildCloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {}
+pub struct BuildCloudtrailEventDataStore_AdvancedEventSelector_FieldSelector {}
 
-impl BuildCloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {
-    pub fn build(self) -> CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {
-        CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {
+impl BuildCloudtrailEventDataStore_AdvancedEventSelector_FieldSelector {
+    pub fn build(self) -> CloudtrailEventDataStore_AdvancedEventSelector_FieldSelector {
+        CloudtrailEventDataStore_AdvancedEventSelector_FieldSelector {
             ends_with: core::default::Default::default(),
             equals: core::default::Default::default(),
             field: core::default::Default::default(),
@@ -528,24 +616,26 @@ impl BuildCloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl {
     }
 }
 
-pub struct CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorElRef {
+#[allow(dead_code)]
+pub struct CloudtrailEventDataStore_AdvancedEventSelector_FieldSelectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorElRef {
+impl terrars::Ref for CloudtrailEventDataStore_AdvancedEventSelector_FieldSelectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorElRef {
-        CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorElRef {
+    ) -> CloudtrailEventDataStore_AdvancedEventSelector_FieldSelectorRef {
+        CloudtrailEventDataStore_AdvancedEventSelector_FieldSelectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorElRef {
+impl CloudtrailEventDataStore_AdvancedEventSelector_FieldSelectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -587,22 +677,22 @@ impl CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudtrailEventDataStoreAdvancedEventSelectorElDynamic {
+struct CloudtrailEventDataStore_AdvancedEventSelectorDynamic {
     field_selector: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl>>,
+    ::Option<terrars::DynamicBlock<CloudtrailEventDataStore_AdvancedEventSelector_FieldSelector>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudtrailEventDataStoreAdvancedEventSelectorEl {
+pub struct CloudtrailEventDataStore_AdvancedEventSelector {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_selector: std::option::Option<std::vec::Vec<CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl>>,
-    dynamic: CloudtrailEventDataStoreAdvancedEventSelectorElDynamic,
+    field_selector: std::option::Option<std::vec::Vec<CloudtrailEventDataStore_AdvancedEventSelector_FieldSelector>>,
+    dynamic: CloudtrailEventDataStore_AdvancedEventSelectorDynamic,
 }
 
-impl CloudtrailEventDataStoreAdvancedEventSelectorEl {
+impl CloudtrailEventDataStore_AdvancedEventSelector {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -617,7 +707,7 @@ impl CloudtrailEventDataStoreAdvancedEventSelectorEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudtrailEventDataStoreAdvancedEventSelectorElFieldSelectorEl>>,
+                    ::Into<terrars::BlockAssignable<CloudtrailEventDataStore_AdvancedEventSelector_FieldSelector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -631,8 +721,8 @@ impl CloudtrailEventDataStoreAdvancedEventSelectorEl {
     }
 }
 
-impl terrars::ToListMappable for CloudtrailEventDataStoreAdvancedEventSelectorEl {
-    type O = terrars::BlockAssignable<CloudtrailEventDataStoreAdvancedEventSelectorEl>;
+impl terrars::ToListMappable for CloudtrailEventDataStore_AdvancedEventSelector {
+    type O = terrars::BlockAssignable<CloudtrailEventDataStore_AdvancedEventSelector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -643,11 +733,11 @@ impl terrars::ToListMappable for CloudtrailEventDataStoreAdvancedEventSelectorEl
     }
 }
 
-pub struct BuildCloudtrailEventDataStoreAdvancedEventSelectorEl {}
+pub struct BuildCloudtrailEventDataStore_AdvancedEventSelector {}
 
-impl BuildCloudtrailEventDataStoreAdvancedEventSelectorEl {
-    pub fn build(self) -> CloudtrailEventDataStoreAdvancedEventSelectorEl {
-        CloudtrailEventDataStoreAdvancedEventSelectorEl {
+impl BuildCloudtrailEventDataStore_AdvancedEventSelector {
+    pub fn build(self) -> CloudtrailEventDataStore_AdvancedEventSelector {
+        CloudtrailEventDataStore_AdvancedEventSelector {
             name: core::default::Default::default(),
             field_selector: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -655,24 +745,26 @@ impl BuildCloudtrailEventDataStoreAdvancedEventSelectorEl {
     }
 }
 
-pub struct CloudtrailEventDataStoreAdvancedEventSelectorElRef {
+#[allow(dead_code)]
+pub struct CloudtrailEventDataStore_AdvancedEventSelectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudtrailEventDataStoreAdvancedEventSelectorElRef {
+impl terrars::Ref for CloudtrailEventDataStore_AdvancedEventSelectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudtrailEventDataStoreAdvancedEventSelectorElRef {
-        CloudtrailEventDataStoreAdvancedEventSelectorElRef {
+    ) -> CloudtrailEventDataStore_AdvancedEventSelectorRef {
+        CloudtrailEventDataStore_AdvancedEventSelectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudtrailEventDataStoreAdvancedEventSelectorElRef {
+impl CloudtrailEventDataStore_AdvancedEventSelectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -684,7 +776,7 @@ impl CloudtrailEventDataStoreAdvancedEventSelectorElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudtrailEventDataStoreTimeoutsEl {
+pub struct CloudtrailEventDataStore_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -693,7 +785,7 @@ pub struct CloudtrailEventDataStoreTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudtrailEventDataStoreTimeoutsEl {
+impl CloudtrailEventDataStore_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -713,8 +805,8 @@ impl CloudtrailEventDataStoreTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudtrailEventDataStoreTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudtrailEventDataStoreTimeoutsEl>;
+impl terrars::ToListMappable for CloudtrailEventDataStore_Timeouts {
+    type O = terrars::BlockAssignable<CloudtrailEventDataStore_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -725,11 +817,11 @@ impl terrars::ToListMappable for CloudtrailEventDataStoreTimeoutsEl {
     }
 }
 
-pub struct BuildCloudtrailEventDataStoreTimeoutsEl {}
+pub struct BuildCloudtrailEventDataStore_Timeouts {}
 
-impl BuildCloudtrailEventDataStoreTimeoutsEl {
-    pub fn build(self) -> CloudtrailEventDataStoreTimeoutsEl {
-        CloudtrailEventDataStoreTimeoutsEl {
+impl BuildCloudtrailEventDataStore_Timeouts {
+    pub fn build(self) -> CloudtrailEventDataStore_Timeouts {
+        CloudtrailEventDataStore_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -737,21 +829,23 @@ impl BuildCloudtrailEventDataStoreTimeoutsEl {
     }
 }
 
-pub struct CloudtrailEventDataStoreTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudtrailEventDataStore_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudtrailEventDataStoreTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudtrailEventDataStoreTimeoutsElRef {
-        CloudtrailEventDataStoreTimeoutsElRef {
+impl terrars::Ref for CloudtrailEventDataStore_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudtrailEventDataStore_TimeoutsRef {
+        CloudtrailEventDataStore_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudtrailEventDataStoreTimeoutsElRef {
+impl CloudtrailEventDataStore_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -770,11 +864,4 @@ impl CloudtrailEventDataStoreTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudtrailEventDataStoreDynamic {
-    advanced_event_selector: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudtrailEventDataStoreAdvancedEventSelectorEl>>,
 }

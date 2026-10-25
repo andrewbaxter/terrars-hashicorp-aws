@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerWorkforceData {
+struct SagemakerWorkforceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,22 +22,24 @@ struct SagemakerWorkforceData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     workforce_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cognito_config: std::option::Option<std::vec::Vec<SagemakerWorkforceCognitoConfigEl>>,
+    cognito_config: std::option::Option<std::vec::Vec<SagemakerWorkforce_CognitoConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    oidc_config: std::option::Option<std::vec::Vec<SagemakerWorkforceOidcConfigEl>>,
+    oidc_config: std::option::Option<std::vec::Vec<SagemakerWorkforce_OidcConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_ip_config: std::option::Option<std::vec::Vec<SagemakerWorkforceSourceIpConfigEl>>,
+    source_ip_config: std::option::Option<std::vec::Vec<SagemakerWorkforce_SourceIpConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    workforce_vpc_config: std::option::Option<std::vec::Vec<SagemakerWorkforceWorkforceVpcConfigEl>>,
+    workforce_vpc_config: std::option::Option<std::vec::Vec<SagemakerWorkforce_WorkforceVpcConfig>>,
     dynamic: SagemakerWorkforceDynamic,
 }
 
 struct SagemakerWorkforce_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerWorkforceData>,
+    data: std::cell::RefCell<SagemakerWorkforceData_>,
 }
 
 #[derive(Clone)]
@@ -141,10 +145,17 @@ impl SagemakerWorkforce {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `cognito_config`.\n"]
     pub fn set_cognito_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkforceCognitoConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkforce_CognitoConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -160,7 +171,7 @@ impl SagemakerWorkforce {
     #[doc = "Set the field `oidc_config`.\n"]
     pub fn set_oidc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkforceOidcConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkforce_OidcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -176,7 +187,7 @@ impl SagemakerWorkforce {
     #[doc = "Set the field `source_ip_config`.\n"]
     pub fn set_source_ip_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkforceSourceIpConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkforce_SourceIpConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +203,7 @@ impl SagemakerWorkforce {
     #[doc = "Set the field `workforce_vpc_config`.\n"]
     pub fn set_workforce_vpc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkforceWorkforceVpcConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerWorkforce_WorkforceVpcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,6 +226,12 @@ impl SagemakerWorkforce {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subdomain` after provisioning.\n"]
     pub fn subdomain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subdomain", self.extract_ref()))
@@ -226,22 +243,22 @@ impl SagemakerWorkforce {
     }
 
     #[doc = "Get a reference to the value of field `cognito_config` after provisioning.\n"]
-    pub fn cognito_config(&self) -> terrars::ListRef<SagemakerWorkforceCognitoConfigElRef> {
+    pub fn cognito_config(&self) -> terrars::ListRef<SagemakerWorkforce_CognitoConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cognito_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `oidc_config` after provisioning.\n"]
-    pub fn oidc_config(&self) -> terrars::ListRef<SagemakerWorkforceOidcConfigElRef> {
+    pub fn oidc_config(&self) -> terrars::ListRef<SagemakerWorkforce_OidcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oidc_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_ip_config` after provisioning.\n"]
-    pub fn source_ip_config(&self) -> terrars::ListRef<SagemakerWorkforceSourceIpConfigElRef> {
+    pub fn source_ip_config(&self) -> terrars::ListRef<SagemakerWorkforce_SourceIpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_ip_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `workforce_vpc_config` after provisioning.\n"]
-    pub fn workforce_vpc_config(&self) -> terrars::ListRef<SagemakerWorkforceWorkforceVpcConfigElRef> {
+    pub fn workforce_vpc_config(&self) -> terrars::ListRef<SagemakerWorkforce_WorkforceVpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workforce_vpc_config", self.extract_ref()))
     }
 }
@@ -288,13 +305,14 @@ impl BuildSagemakerWorkforce {
         let out = SagemakerWorkforce(std::rc::Rc::new(SagemakerWorkforce_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerWorkforceData {
+            data: std::cell::RefCell::new(SagemakerWorkforceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 workforce_name: self.workforce_name,
                 cognito_config: core::default::Default::default(),
                 oidc_config: core::default::Default::default(),
@@ -341,6 +359,12 @@ impl SagemakerWorkforceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subdomain` after provisioning.\n"]
     pub fn subdomain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subdomain", self.extract_ref()))
@@ -352,36 +376,44 @@ impl SagemakerWorkforceRef {
     }
 
     #[doc = "Get a reference to the value of field `cognito_config` after provisioning.\n"]
-    pub fn cognito_config(&self) -> terrars::ListRef<SagemakerWorkforceCognitoConfigElRef> {
+    pub fn cognito_config(&self) -> terrars::ListRef<SagemakerWorkforce_CognitoConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cognito_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `oidc_config` after provisioning.\n"]
-    pub fn oidc_config(&self) -> terrars::ListRef<SagemakerWorkforceOidcConfigElRef> {
+    pub fn oidc_config(&self) -> terrars::ListRef<SagemakerWorkforce_OidcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oidc_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_ip_config` after provisioning.\n"]
-    pub fn source_ip_config(&self) -> terrars::ListRef<SagemakerWorkforceSourceIpConfigElRef> {
+    pub fn source_ip_config(&self) -> terrars::ListRef<SagemakerWorkforce_SourceIpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_ip_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `workforce_vpc_config` after provisioning.\n"]
-    pub fn workforce_vpc_config(&self) -> terrars::ListRef<SagemakerWorkforceWorkforceVpcConfigElRef> {
+    pub fn workforce_vpc_config(&self) -> terrars::ListRef<SagemakerWorkforce_WorkforceVpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workforce_vpc_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerWorkforceDynamic {
+    cognito_config: std::option::Option<terrars::DynamicBlock<SagemakerWorkforce_CognitoConfig>>,
+    oidc_config: std::option::Option<terrars::DynamicBlock<SagemakerWorkforce_OidcConfig>>,
+    source_ip_config: std::option::Option<terrars::DynamicBlock<SagemakerWorkforce_SourceIpConfig>>,
+    workforce_vpc_config: std::option::Option<terrars::DynamicBlock<SagemakerWorkforce_WorkforceVpcConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerWorkforceCognitoConfigEl {
+pub struct SagemakerWorkforce_CognitoConfig {
     client_id: terrars::PrimField<std::string::String>,
     user_pool: terrars::PrimField<std::string::String>,
 }
 
-impl SagemakerWorkforceCognitoConfigEl { }
+impl SagemakerWorkforce_CognitoConfig { }
 
-impl terrars::ToListMappable for SagemakerWorkforceCognitoConfigEl {
-    type O = terrars::BlockAssignable<SagemakerWorkforceCognitoConfigEl>;
+impl terrars::ToListMappable for SagemakerWorkforce_CognitoConfig {
+    type O = terrars::BlockAssignable<SagemakerWorkforce_CognitoConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -392,37 +424,39 @@ impl terrars::ToListMappable for SagemakerWorkforceCognitoConfigEl {
     }
 }
 
-pub struct BuildSagemakerWorkforceCognitoConfigEl {
+pub struct BuildSagemakerWorkforce_CognitoConfig {
     #[doc = ""]
     pub client_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub user_pool: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerWorkforceCognitoConfigEl {
-    pub fn build(self) -> SagemakerWorkforceCognitoConfigEl {
-        SagemakerWorkforceCognitoConfigEl {
+impl BuildSagemakerWorkforce_CognitoConfig {
+    pub fn build(self) -> SagemakerWorkforce_CognitoConfig {
+        SagemakerWorkforce_CognitoConfig {
             client_id: self.client_id,
             user_pool: self.user_pool,
         }
     }
 }
 
-pub struct SagemakerWorkforceCognitoConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerWorkforce_CognitoConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerWorkforceCognitoConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerWorkforceCognitoConfigElRef {
-        SagemakerWorkforceCognitoConfigElRef {
+impl terrars::Ref for SagemakerWorkforce_CognitoConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerWorkforce_CognitoConfigRef {
+        SagemakerWorkforce_CognitoConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerWorkforceCognitoConfigElRef {
+impl SagemakerWorkforce_CognitoConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -439,21 +473,40 @@ impl SagemakerWorkforceCognitoConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct SagemakerWorkforceOidcConfigEl {
+pub struct SagemakerWorkforce_OidcConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authentication_request_extra_params: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     authorization_endpoint: terrars::PrimField<std::string::String>,
     client_id: terrars::PrimField<std::string::String>,
     client_secret: terrars::PrimField<std::string::String>,
     issuer: terrars::PrimField<std::string::String>,
     jwks_uri: terrars::PrimField<std::string::String>,
     logout_endpoint: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scope: std::option::Option<terrars::PrimField<std::string::String>>,
     token_endpoint: terrars::PrimField<std::string::String>,
     user_info_endpoint: terrars::PrimField<std::string::String>,
 }
 
-impl SagemakerWorkforceOidcConfigEl { }
+impl SagemakerWorkforce_OidcConfig {
+    #[doc = "Set the field `authentication_request_extra_params`.\n"]
+    pub fn set_authentication_request_extra_params(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.authentication_request_extra_params = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for SagemakerWorkforceOidcConfigEl {
-    type O = terrars::BlockAssignable<SagemakerWorkforceOidcConfigEl>;
+    #[doc = "Set the field `scope`.\n"]
+    pub fn set_scope(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.scope = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SagemakerWorkforce_OidcConfig {
+    type O = terrars::BlockAssignable<SagemakerWorkforce_OidcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -464,7 +517,7 @@ impl terrars::ToListMappable for SagemakerWorkforceOidcConfigEl {
     }
 }
 
-pub struct BuildSagemakerWorkforceOidcConfigEl {
+pub struct BuildSagemakerWorkforce_OidcConfig {
     #[doc = ""]
     pub authorization_endpoint: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -483,38 +536,47 @@ pub struct BuildSagemakerWorkforceOidcConfigEl {
     pub user_info_endpoint: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerWorkforceOidcConfigEl {
-    pub fn build(self) -> SagemakerWorkforceOidcConfigEl {
-        SagemakerWorkforceOidcConfigEl {
+impl BuildSagemakerWorkforce_OidcConfig {
+    pub fn build(self) -> SagemakerWorkforce_OidcConfig {
+        SagemakerWorkforce_OidcConfig {
+            authentication_request_extra_params: core::default::Default::default(),
             authorization_endpoint: self.authorization_endpoint,
             client_id: self.client_id,
             client_secret: self.client_secret,
             issuer: self.issuer,
             jwks_uri: self.jwks_uri,
             logout_endpoint: self.logout_endpoint,
+            scope: core::default::Default::default(),
             token_endpoint: self.token_endpoint,
             user_info_endpoint: self.user_info_endpoint,
         }
     }
 }
 
-pub struct SagemakerWorkforceOidcConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerWorkforce_OidcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerWorkforceOidcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerWorkforceOidcConfigElRef {
-        SagemakerWorkforceOidcConfigElRef {
+impl terrars::Ref for SagemakerWorkforce_OidcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerWorkforce_OidcConfigRef {
+        SagemakerWorkforce_OidcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerWorkforceOidcConfigElRef {
+impl SagemakerWorkforce_OidcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `authentication_request_extra_params` after provisioning.\n"]
+    pub fn authentication_request_extra_params(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.authentication_request_extra_params", self.base))
     }
 
     #[doc = "Get a reference to the value of field `authorization_endpoint` after provisioning.\n"]
@@ -547,6 +609,11 @@ impl SagemakerWorkforceOidcConfigElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.logout_endpoint", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
+    pub fn scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scope", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `token_endpoint` after provisioning.\n"]
     pub fn token_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.token_endpoint", self.base))
@@ -559,14 +626,14 @@ impl SagemakerWorkforceOidcConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct SagemakerWorkforceSourceIpConfigEl {
+pub struct SagemakerWorkforce_SourceIpConfig {
     cidrs: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl SagemakerWorkforceSourceIpConfigEl { }
+impl SagemakerWorkforce_SourceIpConfig { }
 
-impl terrars::ToListMappable for SagemakerWorkforceSourceIpConfigEl {
-    type O = terrars::BlockAssignable<SagemakerWorkforceSourceIpConfigEl>;
+impl terrars::ToListMappable for SagemakerWorkforce_SourceIpConfig {
+    type O = terrars::BlockAssignable<SagemakerWorkforce_SourceIpConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -577,32 +644,34 @@ impl terrars::ToListMappable for SagemakerWorkforceSourceIpConfigEl {
     }
 }
 
-pub struct BuildSagemakerWorkforceSourceIpConfigEl {
+pub struct BuildSagemakerWorkforce_SourceIpConfig {
     #[doc = ""]
     pub cidrs: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSagemakerWorkforceSourceIpConfigEl {
-    pub fn build(self) -> SagemakerWorkforceSourceIpConfigEl {
-        SagemakerWorkforceSourceIpConfigEl { cidrs: self.cidrs }
+impl BuildSagemakerWorkforce_SourceIpConfig {
+    pub fn build(self) -> SagemakerWorkforce_SourceIpConfig {
+        SagemakerWorkforce_SourceIpConfig { cidrs: self.cidrs }
     }
 }
 
-pub struct SagemakerWorkforceSourceIpConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerWorkforce_SourceIpConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerWorkforceSourceIpConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerWorkforceSourceIpConfigElRef {
-        SagemakerWorkforceSourceIpConfigElRef {
+impl terrars::Ref for SagemakerWorkforce_SourceIpConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerWorkforce_SourceIpConfigRef {
+        SagemakerWorkforce_SourceIpConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerWorkforceSourceIpConfigElRef {
+impl SagemakerWorkforce_SourceIpConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -614,7 +683,7 @@ impl SagemakerWorkforceSourceIpConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct SagemakerWorkforceWorkforceVpcConfigEl {
+pub struct SagemakerWorkforce_WorkforceVpcConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -623,7 +692,7 @@ pub struct SagemakerWorkforceWorkforceVpcConfigEl {
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SagemakerWorkforceWorkforceVpcConfigEl {
+impl SagemakerWorkforce_WorkforceVpcConfig {
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         mut self,
@@ -649,8 +718,8 @@ impl SagemakerWorkforceWorkforceVpcConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerWorkforceWorkforceVpcConfigEl {
-    type O = terrars::BlockAssignable<SagemakerWorkforceWorkforceVpcConfigEl>;
+impl terrars::ToListMappable for SagemakerWorkforce_WorkforceVpcConfig {
+    type O = terrars::BlockAssignable<SagemakerWorkforce_WorkforceVpcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -661,11 +730,11 @@ impl terrars::ToListMappable for SagemakerWorkforceWorkforceVpcConfigEl {
     }
 }
 
-pub struct BuildSagemakerWorkforceWorkforceVpcConfigEl {}
+pub struct BuildSagemakerWorkforce_WorkforceVpcConfig {}
 
-impl BuildSagemakerWorkforceWorkforceVpcConfigEl {
-    pub fn build(self) -> SagemakerWorkforceWorkforceVpcConfigEl {
-        SagemakerWorkforceWorkforceVpcConfigEl {
+impl BuildSagemakerWorkforce_WorkforceVpcConfig {
+    pub fn build(self) -> SagemakerWorkforce_WorkforceVpcConfig {
+        SagemakerWorkforce_WorkforceVpcConfig {
             security_group_ids: core::default::Default::default(),
             subnets: core::default::Default::default(),
             vpc_id: core::default::Default::default(),
@@ -673,21 +742,23 @@ impl BuildSagemakerWorkforceWorkforceVpcConfigEl {
     }
 }
 
-pub struct SagemakerWorkforceWorkforceVpcConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerWorkforce_WorkforceVpcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerWorkforceWorkforceVpcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerWorkforceWorkforceVpcConfigElRef {
-        SagemakerWorkforceWorkforceVpcConfigElRef {
+impl terrars::Ref for SagemakerWorkforce_WorkforceVpcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerWorkforce_WorkforceVpcConfigRef {
+        SagemakerWorkforce_WorkforceVpcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerWorkforceWorkforceVpcConfigElRef {
+impl SagemakerWorkforce_WorkforceVpcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -711,12 +782,4 @@ impl SagemakerWorkforceWorkforceVpcConfigElRef {
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SagemakerWorkforceDynamic {
-    cognito_config: std::option::Option<terrars::DynamicBlock<SagemakerWorkforceCognitoConfigEl>>,
-    oidc_config: std::option::Option<terrars::DynamicBlock<SagemakerWorkforceOidcConfigEl>>,
-    source_ip_config: std::option::Option<terrars::DynamicBlock<SagemakerWorkforceSourceIpConfigEl>>,
-    workforce_vpc_config: std::option::Option<terrars::DynamicBlock<SagemakerWorkforceWorkforceVpcConfigEl>>,
 }

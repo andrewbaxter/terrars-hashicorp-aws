@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerEndpointData {
+struct SagemakerEndpointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct SagemakerEndpointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deployment_config: std::option::Option<std::vec::Vec<SagemakerEndpointDeploymentConfigEl>>,
+    deployment_config: std::option::Option<std::vec::Vec<SagemakerEndpoint_DeploymentConfig>>,
     dynamic: SagemakerEndpointDynamic,
 }
 
 struct SagemakerEndpoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerEndpointData>,
+    data: std::cell::RefCell<SagemakerEndpointData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl SagemakerEndpoint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl SagemakerEndpoint {
     #[doc = "Set the field `deployment_config`.\n"]
     pub fn set_deployment_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerEndpointDeploymentConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -201,6 +212,12 @@ impl SagemakerEndpoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -212,7 +229,7 @@ impl SagemakerEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `deployment_config` after provisioning.\n"]
-    pub fn deployment_config(&self) -> terrars::ListRef<SagemakerEndpointDeploymentConfigElRef> {
+    pub fn deployment_config(&self) -> terrars::ListRef<SagemakerEndpoint_DeploymentConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployment_config", self.extract_ref()))
     }
 }
@@ -259,7 +276,7 @@ impl BuildSagemakerEndpoint {
         let out = SagemakerEndpoint(std::rc::Rc::new(SagemakerEndpoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerEndpointData {
+            data: std::cell::RefCell::new(SagemakerEndpointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -268,6 +285,7 @@ impl BuildSagemakerEndpoint {
                 endpoint_config_name: self.endpoint_config_name,
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 deployment_config: core::default::Default::default(),
@@ -322,6 +340,12 @@ impl SagemakerEndpointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -333,20 +357,25 @@ impl SagemakerEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `deployment_config` after provisioning.\n"]
-    pub fn deployment_config(&self) -> terrars::ListRef<SagemakerEndpointDeploymentConfigElRef> {
+    pub fn deployment_config(&self) -> terrars::ListRef<SagemakerEndpoint_DeploymentConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployment_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerEndpointDynamic {
+    deployment_config: std::option::Option<terrars::DynamicBlock<SagemakerEndpoint_DeploymentConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl {
+pub struct SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms {
     alarm_name: terrars::PrimField<std::string::String>,
 }
 
-impl SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl { }
+impl SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms { }
 
-impl terrars::ToListMappable for SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl {
-    type O = terrars::BlockAssignable<SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl>;
+impl terrars::ToListMappable for SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms {
+    type O = terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -357,35 +386,37 @@ impl terrars::ToListMappable for SagemakerEndpointDeploymentConfigElAutoRollback
     }
 }
 
-pub struct BuildSagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl {
+pub struct BuildSagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms {
     #[doc = ""]
     pub alarm_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl {
-    pub fn build(self) -> SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl {
-        SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl { alarm_name: self.alarm_name }
+impl BuildSagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms {
+    pub fn build(self) -> SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms {
+        SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms { alarm_name: self.alarm_name }
     }
 }
 
-pub struct SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsElRef {
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_AlarmsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsElRef {
+impl terrars::Ref for SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_AlarmsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsElRef {
-        SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsElRef {
+    ) -> SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_AlarmsRef {
+        SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_AlarmsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsElRef {
+impl SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_AlarmsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -397,20 +428,20 @@ impl SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElDynamic {
+struct SagemakerEndpoint_DeploymentConfig_AutoRollbackConfigurationDynamic {
     alarms: std
     ::option
-    ::Option<terrars::DynamicBlock<SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl>>,
+    ::Option<terrars::DynamicBlock<SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms>>,
 }
 
 #[derive(Serialize)]
-pub struct SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl {
+pub struct SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alarms: std::option::Option<std::vec::Vec<SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl>>,
-    dynamic: SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElDynamic,
+    alarms: std::option::Option<std::vec::Vec<SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms>>,
+    dynamic: SagemakerEndpoint_DeploymentConfig_AutoRollbackConfigurationDynamic,
 }
 
-impl SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl {
+impl SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration {
     #[doc = "Set the field `alarms`.\n"]
     pub fn set_alarms(
         mut self,
@@ -420,8 +451,7 @@ impl SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElAlarmsEl>,
+                        terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration_Alarms>,
                     >,
     ) -> Self {
         match v.into() {
@@ -436,8 +466,8 @@ impl SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl {
-    type O = terrars::BlockAssignable<SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl>;
+impl terrars::ToListMappable for SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration {
+    type O = terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -448,55 +478,57 @@ impl terrars::ToListMappable for SagemakerEndpointDeploymentConfigElAutoRollback
     }
 }
 
-pub struct BuildSagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl {}
+pub struct BuildSagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration {}
 
-impl BuildSagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl {
-    pub fn build(self) -> SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl {
-        SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl {
+impl BuildSagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration {
+    pub fn build(self) -> SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration {
+        SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration {
             alarms: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElRef {
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfig_AutoRollbackConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElRef {
+impl terrars::Ref for SagemakerEndpoint_DeploymentConfig_AutoRollbackConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElRef {
-        SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElRef {
+    ) -> SagemakerEndpoint_DeploymentConfig_AutoRollbackConfigurationRef {
+        SagemakerEndpoint_DeploymentConfig_AutoRollbackConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElRef {
+impl SagemakerEndpoint_DeploymentConfig_AutoRollbackConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl {
+pub struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<f64>,
 }
 
-impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl { }
+impl SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize { }
 
 impl terrars
-::ToListMappable for SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl {
+::ToListMappable for SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize {
     type O =
         terrars
         ::BlockAssignable<
-            SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl,
+            SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -508,43 +540,45 @@ impl terrars
     }
 }
 
-pub struct BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl {
+pub struct BuildSagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<f64>,
 }
 
-impl BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl {
+impl BuildSagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize {
     pub fn build(
         self,
-    ) -> SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl {
-        SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl {
+    ) -> SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize {
+        SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeElRef {
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySizeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeElRef {
+::Ref for SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySizeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeElRef {
-        SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeElRef {
+    ) -> SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySizeRef {
+        SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySizeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeElRef {
+impl SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySizeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,20 +595,20 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingCon
 }
 
 #[derive(Serialize)]
-pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl {
+pub struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<f64>,
 }
 
-impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl { }
+impl SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize { }
 
 impl terrars
-::ToListMappable for SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl {
+::ToListMappable for SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize {
     type O =
         terrars
         ::BlockAssignable<
-            SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl,
+            SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -586,43 +620,45 @@ impl terrars
     }
 }
 
-pub struct BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl {
+pub struct BuildSagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<f64>,
 }
 
-impl BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl {
+impl BuildSagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize {
     pub fn build(
         self,
-    ) -> SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl {
-        SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl {
+    ) -> SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize {
+        SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeElRef {
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSizeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeElRef {
+::Ref for SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSizeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeElRef {
-        SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeElRef {
+    ) -> SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSizeRef {
+        SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSizeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeElRef {
+impl SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSizeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -639,13 +675,13 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingCon
 }
 
 #[derive(Serialize, Default)]
-struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElDynamic {
+struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfigurationDynamic {
     canary_size: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl,
+            SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize,
         >,
     >,
     linear_step_size: std
@@ -653,13 +689,13 @@ struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingC
     ::Option<
         terrars
         ::DynamicBlock<
-            SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl,
+            SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl {
+pub struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     wait_interval_in_seconds: terrars::PrimField<f64>,
@@ -667,9 +703,7 @@ pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRout
     canary_size: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl>,
+        std::vec::Vec<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     linear_step_size: std
@@ -677,12 +711,12 @@ pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRout
     ::Option<
         std
         ::vec
-        ::Vec<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl>,
+        ::Vec<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize>,
     >,
-    dynamic: SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElDynamic,
+    dynamic: SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfigurationDynamic,
 }
 
-impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl {
+impl SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration {
     #[doc = "Set the field `canary_size`.\n"]
     pub fn set_canary_size(
         mut self,
@@ -694,7 +728,7 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingCon
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeEl,
+                            SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySize,
                         >,
                     >,
     ) -> Self {
@@ -720,7 +754,7 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingCon
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeEl,
+                            SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSize,
                         >,
                     >,
     ) -> Self {
@@ -736,11 +770,10 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingCon
     }
 }
 
-impl terrars
-::ToListMappable for SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl {
+impl terrars::ToListMappable for SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration {
     type O =
         terrars
-        ::BlockAssignable<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl>;
+        ::BlockAssignable<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -751,16 +784,16 @@ impl terrars
     }
 }
 
-pub struct BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl {
+pub struct BuildSagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub wait_interval_in_seconds: terrars::PrimField<f64>,
 }
 
-impl BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl {
-    pub fn build(self) -> SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl {
-        SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl {
+impl BuildSagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration {
+    pub fn build(self) -> SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration {
+        SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration {
             type_: self.type_,
             wait_interval_in_seconds: self.wait_interval_in_seconds,
             canary_size: core::default::Default::default(),
@@ -770,24 +803,26 @@ impl BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRouti
     }
 }
 
-pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElRef {
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElRef {
+impl terrars::Ref for SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElRef {
-        SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElRef {
+    ) -> SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfigurationRef {
+        SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElRef {
+impl SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -806,7 +841,7 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingCon
     pub fn canary_size(
         &self,
     ) -> terrars
-    ::ListRef<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElCanarySizeElRef> {
+    ::ListRef<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_CanarySizeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.canary_size", self.base))
     }
 
@@ -814,24 +849,22 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingCon
     pub fn linear_step_size(
         &self,
     ) -> terrars
-    ::ListRef<
-        SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElLinearStepSizeElRef,
-    > {
+    ::ListRef<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration_LinearStepSizeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.linear_step_size", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElDynamic {
+struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicyDynamic {
     traffic_routing_configuration: std
     ::option
     ::Option<
-        terrars::DynamicBlock<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl>,
+        terrars::DynamicBlock<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
+pub struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_execution_timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -839,11 +872,11 @@ pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     traffic_routing_configuration: std
     ::option
-    ::Option<std::vec::Vec<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl>>,
-    dynamic: SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElDynamic,
+    ::Option<std::vec::Vec<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration>>,
+    dynamic: SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicyDynamic,
 }
 
-impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
+impl SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy {
     #[doc = "Set the field `maximum_execution_timeout_in_seconds`.\n"]
     pub fn set_maximum_execution_timeout_in_seconds(
         mut self,
@@ -870,7 +903,7 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationEl,
+                            SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -886,8 +919,8 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
-    type O = terrars::BlockAssignable<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl>;
+impl terrars::ToListMappable for SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy {
+    type O = terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -898,11 +931,11 @@ impl terrars::ToListMappable for SagemakerEndpointDeploymentConfigElBlueGreenUpd
     }
 }
 
-pub struct BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {}
+pub struct BuildSagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy {}
 
-impl BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
-    pub fn build(self) -> SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
-        SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
+impl BuildSagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy {
+    pub fn build(self) -> SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy {
+        SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy {
             maximum_execution_timeout_in_seconds: core::default::Default::default(),
             termination_wait_in_seconds: core::default::Default::default(),
             traffic_routing_configuration: core::default::Default::default(),
@@ -911,24 +944,26 @@ impl BuildSagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl {
     }
 }
 
-pub struct SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElRef {
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElRef {
+impl terrars::Ref for SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElRef {
-        SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElRef {
+    ) -> SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicyRef {
+        SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElRef {
+impl SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -946,35 +981,350 @@ impl SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElRef {
     #[doc = "Get a reference to the value of field `traffic_routing_configuration` after provisioning.\n"]
     pub fn traffic_routing_configuration(
         &self,
-    ) -> terrars::ListRef<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElTrafficRoutingConfigurationElRef> {
+    ) -> terrars::ListRef<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy_TrafficRoutingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.traffic_routing_configuration", self.base))
     }
 }
 
-#[derive(Serialize, Default)]
-struct SagemakerEndpointDeploymentConfigElDynamic {
-    auto_rollback_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl>>,
-    blue_green_update_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl>>,
+#[derive(Serialize)]
+pub struct SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize {
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
+}
+
+impl SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize { }
+
+impl terrars::ToListMappable for SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize {
+    type O = terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize {
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
+}
+
+impl BuildSagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize {
+    pub fn build(self) -> SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize {
+        SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize {
+            type_: self.type_,
+            value: self.value,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSizeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSizeRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSizeRef {
+        SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSizeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSizeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct SagemakerEndpointDeploymentConfigEl {
+pub struct SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize {
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<f64>,
+}
+
+impl SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize { }
+
+impl terrars::ToListMappable for SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize {
+    type O =
+        terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize {
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<f64>,
+}
+
+impl BuildSagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize {
+    pub fn build(self) -> SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize {
+        SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize {
+            type_: self.type_,
+            value: self.value,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSizeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSizeRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSizeRef {
+        SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSizeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSizeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicyDynamic {
+    maximum_batch_size: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize>>,
+    rollback_maximum_batch_size: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize>>,
+}
+
+#[derive(Serialize)]
+pub struct SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maximum_execution_timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
+    wait_interval_in_seconds: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maximum_batch_size: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rollback_maximum_batch_size: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize>>,
+    dynamic: SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicyDynamic,
+}
+
+impl SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy {
+    #[doc = "Set the field `maximum_execution_timeout_in_seconds`.\n"]
+    pub fn set_maximum_execution_timeout_in_seconds(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.maximum_execution_timeout_in_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `maximum_batch_size`.\n"]
+    pub fn set_maximum_batch_size(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSize>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.maximum_batch_size = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.maximum_batch_size = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `rollback_maximum_batch_size`.\n"]
+    pub fn set_rollback_maximum_batch_size(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSize,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.rollback_maximum_batch_size = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.rollback_maximum_batch_size = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy {
+    type O = terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy {
+    #[doc = ""]
+    pub wait_interval_in_seconds: terrars::PrimField<f64>,
+}
+
+impl BuildSagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy {
+    pub fn build(self) -> SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy {
+        SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy {
+            maximum_execution_timeout_in_seconds: core::default::Default::default(),
+            wait_interval_in_seconds: self.wait_interval_in_seconds,
+            maximum_batch_size: core::default::Default::default(),
+            rollback_maximum_batch_size: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicyRef {
+        SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `maximum_execution_timeout_in_seconds` after provisioning.\n"]
+    pub fn maximum_execution_timeout_in_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_execution_timeout_in_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `wait_interval_in_seconds` after provisioning.\n"]
+    pub fn wait_interval_in_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_interval_in_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `maximum_batch_size` after provisioning.\n"]
+    pub fn maximum_batch_size(
+        &self,
+    ) -> terrars::ListRef<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_MaximumBatchSizeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.maximum_batch_size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `rollback_maximum_batch_size` after provisioning.\n"]
+    pub fn rollback_maximum_batch_size(
+        &self,
+    ) -> terrars::ListRef<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy_RollbackMaximumBatchSizeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rollback_maximum_batch_size", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct SagemakerEndpoint_DeploymentConfigDynamic {
+    auto_rollback_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration>>,
+    blue_green_update_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy>>,
+    rolling_update_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy>>,
+}
+
+#[derive(Serialize)]
+pub struct SagemakerEndpoint_DeploymentConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_rollback_configuration: std
     ::option
-    ::Option<std::vec::Vec<SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl>>,
+    ::Option<std::vec::Vec<SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     blue_green_update_policy: std
     ::option
-    ::Option<std::vec::Vec<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl>>,
-    dynamic: SagemakerEndpointDeploymentConfigElDynamic,
+    ::Option<std::vec::Vec<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rolling_update_policy: std::option::Option<std::vec::Vec<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy>>,
+    dynamic: SagemakerEndpoint_DeploymentConfigDynamic,
 }
 
-impl SagemakerEndpointDeploymentConfigEl {
+impl SagemakerEndpoint_DeploymentConfig {
     #[doc = "Set the field `auto_rollback_configuration`.\n"]
     pub fn set_auto_rollback_configuration(
         mut self,
@@ -983,7 +1333,7 @@ impl SagemakerEndpointDeploymentConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_AutoRollbackConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1004,7 +1354,7 @@ impl SagemakerEndpointDeploymentConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyEl>>,
+                    ::Into<terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1016,10 +1366,26 @@ impl SagemakerEndpointDeploymentConfigEl {
         }
         self
     }
+
+    #[doc = "Set the field `rolling_update_policy`.\n"]
+    pub fn set_rolling_update_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.rolling_update_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.rolling_update_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for SagemakerEndpointDeploymentConfigEl {
-    type O = terrars::BlockAssignable<SagemakerEndpointDeploymentConfigEl>;
+impl terrars::ToListMappable for SagemakerEndpoint_DeploymentConfig {
+    type O = terrars::BlockAssignable<SagemakerEndpoint_DeploymentConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1030,33 +1396,36 @@ impl terrars::ToListMappable for SagemakerEndpointDeploymentConfigEl {
     }
 }
 
-pub struct BuildSagemakerEndpointDeploymentConfigEl {}
+pub struct BuildSagemakerEndpoint_DeploymentConfig {}
 
-impl BuildSagemakerEndpointDeploymentConfigEl {
-    pub fn build(self) -> SagemakerEndpointDeploymentConfigEl {
-        SagemakerEndpointDeploymentConfigEl {
+impl BuildSagemakerEndpoint_DeploymentConfig {
+    pub fn build(self) -> SagemakerEndpoint_DeploymentConfig {
+        SagemakerEndpoint_DeploymentConfig {
             auto_rollback_configuration: core::default::Default::default(),
             blue_green_update_policy: core::default::Default::default(),
+            rolling_update_policy: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SagemakerEndpointDeploymentConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerEndpoint_DeploymentConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerEndpointDeploymentConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerEndpointDeploymentConfigElRef {
-        SagemakerEndpointDeploymentConfigElRef {
+impl terrars::Ref for SagemakerEndpoint_DeploymentConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerEndpoint_DeploymentConfigRef {
+        SagemakerEndpoint_DeploymentConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerEndpointDeploymentConfigElRef {
+impl SagemakerEndpoint_DeploymentConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1064,19 +1433,19 @@ impl SagemakerEndpointDeploymentConfigElRef {
     #[doc = "Get a reference to the value of field `auto_rollback_configuration` after provisioning.\n"]
     pub fn auto_rollback_configuration(
         &self,
-    ) -> terrars::ListRef<SagemakerEndpointDeploymentConfigElAutoRollbackConfigurationElRef> {
+    ) -> terrars::ListRef<SagemakerEndpoint_DeploymentConfig_AutoRollbackConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_rollback_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `blue_green_update_policy` after provisioning.\n"]
     pub fn blue_green_update_policy(
         &self,
-    ) -> terrars::ListRef<SagemakerEndpointDeploymentConfigElBlueGreenUpdatePolicyElRef> {
+    ) -> terrars::ListRef<SagemakerEndpoint_DeploymentConfig_BlueGreenUpdatePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.blue_green_update_policy", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct SagemakerEndpointDynamic {
-    deployment_config: std::option::Option<terrars::DynamicBlock<SagemakerEndpointDeploymentConfigEl>>,
+    #[doc = "Get a reference to the value of field `rolling_update_policy` after provisioning.\n"]
+    pub fn rolling_update_policy(&self) -> terrars::ListRef<SagemakerEndpoint_DeploymentConfig_RollingUpdatePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rolling_update_policy", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataAlbData {
+struct DataAlbData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,15 +25,17 @@ struct DataAlbData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataAlbTimeoutsEl>,
+    timeouts: std::option::Option<DataAlb_Timeouts>,
 }
 
 struct DataAlb_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAlbData>,
+    data: std::cell::RefCell<DataAlbData_>,
 }
 
 #[derive(Clone)]
@@ -94,6 +98,13 @@ impl DataAlb {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -104,13 +115,13 @@ impl DataAlb {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataAlbTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataAlb_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Get a reference to the value of field `access_logs` after provisioning.\n"]
-    pub fn access_logs(&self) -> terrars::ListRef<DataAlbAccessLogsElRef> {
+    pub fn access_logs(&self) -> terrars::ListRef<DataAlb_AccessLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_logs", self.extract_ref()))
     }
 
@@ -122,6 +133,16 @@ impl DataAlb {
     #[doc = "Get a reference to the value of field `arn_suffix` after provisioning.\n"]
     pub fn arn_suffix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn_suffix", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `client_keep_alive` after provisioning.\n"]
+    pub fn client_keep_alive(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_keep_alive", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `connection_logs` after provisioning.\n"]
+    pub fn connection_logs(&self) -> terrars::ListRef<DataAlb_ConnectionLogsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.connection_logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `customer_owned_ipv4_pool` after provisioning.\n"]
@@ -137,6 +158,14 @@ impl DataAlb {
     #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dns_record_client_routing_policy` after provisioning.\n"]
+    pub fn dns_record_client_routing_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.dns_record_client_routing_policy", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `drop_invalid_header_fields` after provisioning.\n"]
@@ -162,9 +191,49 @@ impl DataAlb {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_http2", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_prefix_for_ipv6_source_nat` after provisioning.\n"]
+    pub fn enable_prefix_for_ipv6_source_nat(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_prefix_for_ipv6_source_nat", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `enable_tls_version_and_cipher_suite_headers` after provisioning.\n"]
+    pub fn enable_tls_version_and_cipher_suite_headers(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_tls_version_and_cipher_suite_headers", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `enable_waf_fail_open` after provisioning.\n"]
     pub fn enable_waf_fail_open(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_waf_fail_open", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_xff_client_port` after provisioning.\n"]
+    pub fn enable_xff_client_port(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_xff_client_port", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_zonal_shift` after provisioning.\n"]
+    pub fn enable_zonal_shift(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_zonal_shift", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enforce_security_group_inbound_rules_on_private_link_traffic` after provisioning.\n"]
+    pub fn enforce_security_group_inbound_rules_on_private_link_traffic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enforce_security_group_inbound_rules_on_private_link_traffic", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `health_check_logs` after provisioning.\n"]
+    pub fn health_check_logs(&self) -> terrars::ListRef<DataAlb_HealthCheckLogsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -187,6 +256,11 @@ impl DataAlb {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipam_pools` after provisioning.\n"]
+    pub fn ipam_pools(&self) -> terrars::ListRef<DataAlb_IpamPoolsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ipam_pools", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `load_balancer_type` after provisioning.\n"]
     pub fn load_balancer_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.extract_ref()))
@@ -202,13 +276,27 @@ impl DataAlb {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve_host_header", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_ips_auto_assigned_per_subnet` after provisioning.\n"]
+    pub fn secondary_ips_auto_assigned_per_subnet(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.secondary_ips_auto_assigned_per_subnet", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_mapping` after provisioning.\n"]
-    pub fn subnet_mapping(&self) -> terrars::SetRef<DataAlbSubnetMappingElRef> {
+    pub fn subnet_mapping(&self) -> terrars::SetRef<DataAlb_SubnetMappingRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_mapping", self.extract_ref()))
     }
 
@@ -227,14 +315,19 @@ impl DataAlb {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `xff_header_processing_mode` after provisioning.\n"]
+    pub fn xff_header_processing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xff_header_processing_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `zone_id` after provisioning.\n"]
     pub fn zone_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAlbTimeoutsElRef {
-        DataAlbTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAlb_TimeoutsRef {
+        DataAlb_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -278,7 +371,7 @@ impl BuildDataAlb {
         let out = DataAlb(std::rc::Rc::new(DataAlb_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAlbData {
+            data: std::cell::RefCell::new(DataAlbData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -286,6 +379,7 @@ impl BuildDataAlb {
                 arn: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
@@ -319,7 +413,7 @@ impl DataAlbRef {
     }
 
     #[doc = "Get a reference to the value of field `access_logs` after provisioning.\n"]
-    pub fn access_logs(&self) -> terrars::ListRef<DataAlbAccessLogsElRef> {
+    pub fn access_logs(&self) -> terrars::ListRef<DataAlb_AccessLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_logs", self.extract_ref()))
     }
 
@@ -331,6 +425,16 @@ impl DataAlbRef {
     #[doc = "Get a reference to the value of field `arn_suffix` after provisioning.\n"]
     pub fn arn_suffix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn_suffix", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `client_keep_alive` after provisioning.\n"]
+    pub fn client_keep_alive(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_keep_alive", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `connection_logs` after provisioning.\n"]
+    pub fn connection_logs(&self) -> terrars::ListRef<DataAlb_ConnectionLogsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.connection_logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `customer_owned_ipv4_pool` after provisioning.\n"]
@@ -346,6 +450,14 @@ impl DataAlbRef {
     #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dns_record_client_routing_policy` after provisioning.\n"]
+    pub fn dns_record_client_routing_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.dns_record_client_routing_policy", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `drop_invalid_header_fields` after provisioning.\n"]
@@ -371,9 +483,49 @@ impl DataAlbRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_http2", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_prefix_for_ipv6_source_nat` after provisioning.\n"]
+    pub fn enable_prefix_for_ipv6_source_nat(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_prefix_for_ipv6_source_nat", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `enable_tls_version_and_cipher_suite_headers` after provisioning.\n"]
+    pub fn enable_tls_version_and_cipher_suite_headers(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_tls_version_and_cipher_suite_headers", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `enable_waf_fail_open` after provisioning.\n"]
     pub fn enable_waf_fail_open(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_waf_fail_open", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_xff_client_port` after provisioning.\n"]
+    pub fn enable_xff_client_port(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_xff_client_port", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_zonal_shift` after provisioning.\n"]
+    pub fn enable_zonal_shift(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_zonal_shift", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enforce_security_group_inbound_rules_on_private_link_traffic` after provisioning.\n"]
+    pub fn enforce_security_group_inbound_rules_on_private_link_traffic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enforce_security_group_inbound_rules_on_private_link_traffic", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `health_check_logs` after provisioning.\n"]
+    pub fn health_check_logs(&self) -> terrars::ListRef<DataAlb_HealthCheckLogsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -396,6 +548,11 @@ impl DataAlbRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipam_pools` after provisioning.\n"]
+    pub fn ipam_pools(&self) -> terrars::ListRef<DataAlb_IpamPoolsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ipam_pools", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `load_balancer_type` after provisioning.\n"]
     pub fn load_balancer_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_type", self.extract_ref()))
@@ -411,13 +568,27 @@ impl DataAlbRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve_host_header", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_ips_auto_assigned_per_subnet` after provisioning.\n"]
+    pub fn secondary_ips_auto_assigned_per_subnet(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.secondary_ips_auto_assigned_per_subnet", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_mapping` after provisioning.\n"]
-    pub fn subnet_mapping(&self) -> terrars::SetRef<DataAlbSubnetMappingElRef> {
+    pub fn subnet_mapping(&self) -> terrars::SetRef<DataAlb_SubnetMappingRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_mapping", self.extract_ref()))
     }
 
@@ -436,19 +607,24 @@ impl DataAlbRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `xff_header_processing_mode` after provisioning.\n"]
+    pub fn xff_header_processing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xff_header_processing_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `zone_id` after provisioning.\n"]
     pub fn zone_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAlbTimeoutsElRef {
-        DataAlbTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAlb_TimeoutsRef {
+        DataAlb_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAlbAccessLogsEl {
+pub struct DataAlb_AccessLogs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -457,7 +633,7 @@ pub struct DataAlbAccessLogsEl {
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAlbAccessLogsEl {
+impl DataAlb_AccessLogs {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -477,8 +653,8 @@ impl DataAlbAccessLogsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAlbAccessLogsEl {
-    type O = terrars::BlockAssignable<DataAlbAccessLogsEl>;
+impl terrars::ToListMappable for DataAlb_AccessLogs {
+    type O = terrars::BlockAssignable<DataAlb_AccessLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -489,11 +665,11 @@ impl terrars::ToListMappable for DataAlbAccessLogsEl {
     }
 }
 
-pub struct BuildDataAlbAccessLogsEl {}
+pub struct BuildDataAlb_AccessLogs {}
 
-impl BuildDataAlbAccessLogsEl {
-    pub fn build(self) -> DataAlbAccessLogsEl {
-        DataAlbAccessLogsEl {
+impl BuildDataAlb_AccessLogs {
+    pub fn build(self) -> DataAlb_AccessLogs {
+        DataAlb_AccessLogs {
             bucket: core::default::Default::default(),
             enabled: core::default::Default::default(),
             prefix: core::default::Default::default(),
@@ -501,21 +677,23 @@ impl BuildDataAlbAccessLogsEl {
     }
 }
 
-pub struct DataAlbAccessLogsElRef {
+#[allow(dead_code)]
+pub struct DataAlb_AccessLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlbAccessLogsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlbAccessLogsElRef {
-        DataAlbAccessLogsElRef {
+impl terrars::Ref for DataAlb_AccessLogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlb_AccessLogsRef {
+        DataAlb_AccessLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlbAccessLogsElRef {
+impl DataAlb_AccessLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -537,7 +715,250 @@ impl DataAlbAccessLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAlbSubnetMappingEl {
+pub struct DataAlb_ConnectionLogs {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataAlb_ConnectionLogs {
+    #[doc = "Set the field `bucket`.\n"]
+    pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataAlb_ConnectionLogs {
+    type O = terrars::BlockAssignable<DataAlb_ConnectionLogs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataAlb_ConnectionLogs {}
+
+impl BuildDataAlb_ConnectionLogs {
+    pub fn build(self) -> DataAlb_ConnectionLogs {
+        DataAlb_ConnectionLogs {
+            bucket: core::default::Default::default(),
+            enabled: core::default::Default::default(),
+            prefix: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataAlb_ConnectionLogsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataAlb_ConnectionLogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlb_ConnectionLogsRef {
+        DataAlb_ConnectionLogsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataAlb_ConnectionLogsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataAlb_HealthCheckLogs {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataAlb_HealthCheckLogs {
+    #[doc = "Set the field `bucket`.\n"]
+    pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataAlb_HealthCheckLogs {
+    type O = terrars::BlockAssignable<DataAlb_HealthCheckLogs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataAlb_HealthCheckLogs {}
+
+impl BuildDataAlb_HealthCheckLogs {
+    pub fn build(self) -> DataAlb_HealthCheckLogs {
+        DataAlb_HealthCheckLogs {
+            bucket: core::default::Default::default(),
+            enabled: core::default::Default::default(),
+            prefix: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataAlb_HealthCheckLogsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataAlb_HealthCheckLogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlb_HealthCheckLogsRef {
+        DataAlb_HealthCheckLogsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataAlb_HealthCheckLogsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataAlb_IpamPools {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv4_ipam_pool_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataAlb_IpamPools {
+    #[doc = "Set the field `ipv4_ipam_pool_id`.\n"]
+    pub fn set_ipv4_ipam_pool_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv4_ipam_pool_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataAlb_IpamPools {
+    type O = terrars::BlockAssignable<DataAlb_IpamPools>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataAlb_IpamPools {}
+
+impl BuildDataAlb_IpamPools {
+    pub fn build(self) -> DataAlb_IpamPools {
+        DataAlb_IpamPools { ipv4_ipam_pool_id: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataAlb_IpamPoolsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataAlb_IpamPoolsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlb_IpamPoolsRef {
+        DataAlb_IpamPoolsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataAlb_IpamPoolsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ipv4_ipam_pool_id` after provisioning.\n"]
+    pub fn ipv4_ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_ipam_pool_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataAlb_SubnetMapping {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allocation_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -550,7 +971,7 @@ pub struct DataAlbSubnetMappingEl {
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAlbSubnetMappingEl {
+impl DataAlb_SubnetMapping {
     #[doc = "Set the field `allocation_id`.\n"]
     pub fn set_allocation_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.allocation_id = std::option::Option::Some(v.into());
@@ -585,8 +1006,8 @@ impl DataAlbSubnetMappingEl {
     }
 }
 
-impl terrars::ToListMappable for DataAlbSubnetMappingEl {
-    type O = terrars::BlockAssignable<DataAlbSubnetMappingEl>;
+impl terrars::ToListMappable for DataAlb_SubnetMapping {
+    type O = terrars::BlockAssignable<DataAlb_SubnetMapping>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -597,11 +1018,11 @@ impl terrars::ToListMappable for DataAlbSubnetMappingEl {
     }
 }
 
-pub struct BuildDataAlbSubnetMappingEl {}
+pub struct BuildDataAlb_SubnetMapping {}
 
-impl BuildDataAlbSubnetMappingEl {
-    pub fn build(self) -> DataAlbSubnetMappingEl {
-        DataAlbSubnetMappingEl {
+impl BuildDataAlb_SubnetMapping {
+    pub fn build(self) -> DataAlb_SubnetMapping {
+        DataAlb_SubnetMapping {
             allocation_id: core::default::Default::default(),
             ipv6_address: core::default::Default::default(),
             outpost_id: core::default::Default::default(),
@@ -611,21 +1032,23 @@ impl BuildDataAlbSubnetMappingEl {
     }
 }
 
-pub struct DataAlbSubnetMappingElRef {
+#[allow(dead_code)]
+pub struct DataAlb_SubnetMappingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlbSubnetMappingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlbSubnetMappingElRef {
-        DataAlbSubnetMappingElRef {
+impl terrars::Ref for DataAlb_SubnetMappingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlb_SubnetMappingRef {
+        DataAlb_SubnetMappingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlbSubnetMappingElRef {
+impl DataAlb_SubnetMappingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -657,12 +1080,12 @@ impl DataAlbSubnetMappingElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAlbTimeoutsEl {
+pub struct DataAlb_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAlbTimeoutsEl {
+impl DataAlb_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -670,8 +1093,8 @@ impl DataAlbTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAlbTimeoutsEl {
-    type O = terrars::BlockAssignable<DataAlbTimeoutsEl>;
+impl terrars::ToListMappable for DataAlb_Timeouts {
+    type O = terrars::BlockAssignable<DataAlb_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -682,29 +1105,31 @@ impl terrars::ToListMappable for DataAlbTimeoutsEl {
     }
 }
 
-pub struct BuildDataAlbTimeoutsEl {}
+pub struct BuildDataAlb_Timeouts {}
 
-impl BuildDataAlbTimeoutsEl {
-    pub fn build(self) -> DataAlbTimeoutsEl {
-        DataAlbTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataAlb_Timeouts {
+    pub fn build(self) -> DataAlb_Timeouts {
+        DataAlb_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataAlbTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataAlb_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlbTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlbTimeoutsElRef {
-        DataAlbTimeoutsElRef {
+impl terrars::Ref for DataAlb_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlb_TimeoutsRef {
+        DataAlb_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlbTimeoutsElRef {
+impl DataAlb_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

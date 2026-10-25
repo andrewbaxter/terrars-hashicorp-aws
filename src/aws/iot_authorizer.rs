@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IotAuthorizerData {
+struct IotAuthorizerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,9 +27,15 @@ struct IotAuthorizerData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     signing_disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token_key_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,7 +45,7 @@ struct IotAuthorizerData {
 struct IotAuthorizer_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IotAuthorizerData>,
+    data: std::cell::RefCell<IotAuthorizerData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +157,13 @@ impl IotAuthorizer {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `signing_disabled`.\n"]
     pub fn set_signing_disabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().signing_disabled = std::option::Option::Some(v.into());
@@ -158,6 +173,24 @@ impl IotAuthorizer {
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().status = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
         self
     }
 
@@ -201,6 +234,12 @@ impl IotAuthorizer {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `signing_disabled` after provisioning.\n"]
     pub fn signing_disabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.signing_disabled", self.extract_ref()))
@@ -209,6 +248,16 @@ impl IotAuthorizer {
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `token_key_name` after provisioning.\n"]
@@ -266,7 +315,7 @@ impl BuildIotAuthorizer {
         let out = IotAuthorizer(std::rc::Rc::new(IotAuthorizer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IotAuthorizerData {
+            data: std::cell::RefCell::new(IotAuthorizerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -276,8 +325,11 @@ impl BuildIotAuthorizer {
                 enable_caching_for_http: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 signing_disabled: core::default::Default::default(),
                 status: core::default::Default::default(),
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
                 token_key_name: core::default::Default::default(),
                 token_signing_public_keys: core::default::Default::default(),
             }),
@@ -335,6 +387,12 @@ impl IotAuthorizerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `signing_disabled` after provisioning.\n"]
     pub fn signing_disabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.signing_disabled", self.extract_ref()))
@@ -343,6 +401,16 @@ impl IotAuthorizerRef {
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `token_key_name` after provisioning.\n"]

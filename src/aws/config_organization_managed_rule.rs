@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConfigOrganizationManagedRuleData {
+struct ConfigOrganizationManagedRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,6 +32,8 @@ struct ConfigOrganizationManagedRuleData {
     maximum_execution_frequency: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_id_scope: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_types_scope: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -39,13 +43,13 @@ struct ConfigOrganizationManagedRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tag_value_scope: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ConfigOrganizationManagedRuleTimeoutsEl>,
+    timeouts: std::option::Option<ConfigOrganizationManagedRule_Timeouts>,
 }
 
 struct ConfigOrganizationManagedRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConfigOrganizationManagedRuleData>,
+    data: std::cell::RefCell<ConfigOrganizationManagedRuleData_>,
 }
 
 #[derive(Clone)]
@@ -181,6 +185,13 @@ impl ConfigOrganizationManagedRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resource_id_scope`.\n"]
     pub fn set_resource_id_scope(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().resource_id_scope = std::option::Option::Some(v.into());
@@ -209,7 +220,7 @@ impl ConfigOrganizationManagedRule {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ConfigOrganizationManagedRuleTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ConfigOrganizationManagedRule_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -249,6 +260,12 @@ impl ConfigOrganizationManagedRule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_id_scope` after provisioning.\n"]
     pub fn resource_id_scope(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id_scope", self.extract_ref()))
@@ -275,8 +292,8 @@ impl ConfigOrganizationManagedRule {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ConfigOrganizationManagedRuleTimeoutsElRef {
-        ConfigOrganizationManagedRuleTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ConfigOrganizationManagedRule_TimeoutsRef {
+        ConfigOrganizationManagedRule_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -327,7 +344,7 @@ impl BuildConfigOrganizationManagedRule {
         let out = ConfigOrganizationManagedRule(std::rc::Rc::new(ConfigOrganizationManagedRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConfigOrganizationManagedRuleData {
+            data: std::cell::RefCell::new(ConfigOrganizationManagedRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -339,6 +356,7 @@ impl BuildConfigOrganizationManagedRule {
                 input_parameters: core::default::Default::default(),
                 maximum_execution_frequency: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 resource_id_scope: core::default::Default::default(),
                 resource_types_scope: core::default::Default::default(),
                 rule_identifier: self.rule_identifier,
@@ -410,6 +428,12 @@ impl ConfigOrganizationManagedRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_id_scope` after provisioning.\n"]
     pub fn resource_id_scope(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id_scope", self.extract_ref()))
@@ -436,8 +460,8 @@ impl ConfigOrganizationManagedRuleRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ConfigOrganizationManagedRuleTimeoutsElRef {
-        ConfigOrganizationManagedRuleTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ConfigOrganizationManagedRule_TimeoutsRef {
+        ConfigOrganizationManagedRule_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -445,7 +469,7 @@ impl ConfigOrganizationManagedRuleRef {
 }
 
 #[derive(Serialize)]
-pub struct ConfigOrganizationManagedRuleTimeoutsEl {
+pub struct ConfigOrganizationManagedRule_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -454,7 +478,7 @@ pub struct ConfigOrganizationManagedRuleTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConfigOrganizationManagedRuleTimeoutsEl {
+impl ConfigOrganizationManagedRule_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -474,8 +498,8 @@ impl ConfigOrganizationManagedRuleTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigOrganizationManagedRuleTimeoutsEl {
-    type O = terrars::BlockAssignable<ConfigOrganizationManagedRuleTimeoutsEl>;
+impl terrars::ToListMappable for ConfigOrganizationManagedRule_Timeouts {
+    type O = terrars::BlockAssignable<ConfigOrganizationManagedRule_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -486,11 +510,11 @@ impl terrars::ToListMappable for ConfigOrganizationManagedRuleTimeoutsEl {
     }
 }
 
-pub struct BuildConfigOrganizationManagedRuleTimeoutsEl {}
+pub struct BuildConfigOrganizationManagedRule_Timeouts {}
 
-impl BuildConfigOrganizationManagedRuleTimeoutsEl {
-    pub fn build(self) -> ConfigOrganizationManagedRuleTimeoutsEl {
-        ConfigOrganizationManagedRuleTimeoutsEl {
+impl BuildConfigOrganizationManagedRule_Timeouts {
+    pub fn build(self) -> ConfigOrganizationManagedRule_Timeouts {
+        ConfigOrganizationManagedRule_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -498,21 +522,23 @@ impl BuildConfigOrganizationManagedRuleTimeoutsEl {
     }
 }
 
-pub struct ConfigOrganizationManagedRuleTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ConfigOrganizationManagedRule_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigOrganizationManagedRuleTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigOrganizationManagedRuleTimeoutsElRef {
-        ConfigOrganizationManagedRuleTimeoutsElRef {
+impl terrars::Ref for ConfigOrganizationManagedRule_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigOrganizationManagedRule_TimeoutsRef {
+        ConfigOrganizationManagedRule_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigOrganizationManagedRuleTimeoutsElRef {
+impl ConfigOrganizationManagedRule_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KmsExternalKeyData {
+struct KmsExternalKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,9 +33,15 @@ struct KmsExternalKeyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_material_base64: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_spec: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_usage: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     multi_region: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -45,7 +53,7 @@ struct KmsExternalKeyData {
 struct KmsExternalKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KmsExternalKeyData>,
+    data: std::cell::RefCell<KmsExternalKeyData_>,
 }
 
 #[derive(Clone)]
@@ -181,6 +189,18 @@ impl KmsExternalKey {
         self
     }
 
+    #[doc = "Set the field `key_spec`.\n"]
+    pub fn set_key_spec(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().key_spec = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `key_usage`.\n"]
+    pub fn set_key_usage(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().key_usage = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `multi_region`.\n"]
     pub fn set_multi_region(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().multi_region = std::option::Option::Some(v.into());
@@ -190,6 +210,13 @@ impl KmsExternalKey {
     #[doc = "Set the field `policy`.\n"]
     pub fn set_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -260,6 +287,11 @@ impl KmsExternalKey {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_material_base64", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `key_spec` after provisioning.\n"]
+    pub fn key_spec(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `key_state` after provisioning.\n"]
     pub fn key_state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_state", self.extract_ref()))
@@ -278,6 +310,12 @@ impl KmsExternalKey {
     #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
     pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -336,7 +374,7 @@ impl BuildKmsExternalKey {
         let out = KmsExternalKey(std::rc::Rc::new(KmsExternalKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KmsExternalKeyData {
+            data: std::cell::RefCell::new(KmsExternalKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -348,8 +386,11 @@ impl BuildKmsExternalKey {
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
                 key_material_base64: core::default::Default::default(),
+                key_spec: core::default::Default::default(),
+                key_usage: core::default::Default::default(),
                 multi_region: core::default::Default::default(),
                 policy: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 valid_to: core::default::Default::default(),
@@ -426,6 +467,11 @@ impl KmsExternalKeyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_material_base64", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `key_spec` after provisioning.\n"]
+    pub fn key_spec(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `key_state` after provisioning.\n"]
     pub fn key_state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_state", self.extract_ref()))
@@ -444,6 +490,12 @@ impl KmsExternalKeyRef {
     #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
     pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]

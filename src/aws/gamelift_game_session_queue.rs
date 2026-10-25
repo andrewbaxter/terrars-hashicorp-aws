@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GameliftGameSessionQueueData {
+struct GameliftGameSessionQueueData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct GameliftGameSessionQueueData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_event_data: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destinations: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,20 +30,22 @@ struct GameliftGameSessionQueueData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notification_target: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    player_latency_policy: std::option::Option<std::vec::Vec<GameliftGameSessionQueuePlayerLatencyPolicyEl>>,
+    player_latency_policy: std::option::Option<std::vec::Vec<GameliftGameSessionQueue_PlayerLatencyPolicy>>,
     dynamic: GameliftGameSessionQueueDynamic,
 }
 
 struct GameliftGameSessionQueue_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GameliftGameSessionQueueData>,
+    data: std::cell::RefCell<GameliftGameSessionQueueData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +145,12 @@ impl GameliftGameSessionQueue {
         self
     }
 
+    #[doc = "Set the field `custom_event_data`.\n"]
+    pub fn set_custom_event_data(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().custom_event_data = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `destinations`.\n"]
     pub fn set_destinations(
         self,
@@ -157,6 +169,13 @@ impl GameliftGameSessionQueue {
     #[doc = "Set the field `notification_target`.\n"]
     pub fn set_notification_target(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().notification_target = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -187,7 +206,7 @@ impl GameliftGameSessionQueue {
     #[doc = "Set the field `player_latency_policy`.\n"]
     pub fn set_player_latency_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftGameSessionQueuePlayerLatencyPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftGameSessionQueue_PlayerLatencyPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,6 +222,11 @@ impl GameliftGameSessionQueue {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_event_data` after provisioning.\n"]
+    pub fn custom_event_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_event_data", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `destinations` after provisioning.\n"]
@@ -225,6 +249,12 @@ impl GameliftGameSessionQueue {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.notification_target", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -241,7 +271,7 @@ impl GameliftGameSessionQueue {
     }
 
     #[doc = "Get a reference to the value of field `player_latency_policy` after provisioning.\n"]
-    pub fn player_latency_policy(&self) -> terrars::ListRef<GameliftGameSessionQueuePlayerLatencyPolicyElRef> {
+    pub fn player_latency_policy(&self) -> terrars::ListRef<GameliftGameSessionQueue_PlayerLatencyPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.player_latency_policy", self.extract_ref()))
     }
 }
@@ -288,16 +318,18 @@ impl BuildGameliftGameSessionQueue {
         let out = GameliftGameSessionQueue(std::rc::Rc::new(GameliftGameSessionQueue_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GameliftGameSessionQueueData {
+            data: std::cell::RefCell::new(GameliftGameSessionQueueData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                custom_event_data: core::default::Default::default(),
                 destinations: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 notification_target: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeout_in_seconds: core::default::Default::default(),
@@ -338,6 +370,11 @@ impl GameliftGameSessionQueueRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `custom_event_data` after provisioning.\n"]
+    pub fn custom_event_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_event_data", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `destinations` after provisioning.\n"]
     pub fn destinations(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destinations", self.extract_ref()))
@@ -358,6 +395,12 @@ impl GameliftGameSessionQueueRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.notification_target", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -374,19 +417,24 @@ impl GameliftGameSessionQueueRef {
     }
 
     #[doc = "Get a reference to the value of field `player_latency_policy` after provisioning.\n"]
-    pub fn player_latency_policy(&self) -> terrars::ListRef<GameliftGameSessionQueuePlayerLatencyPolicyElRef> {
+    pub fn player_latency_policy(&self) -> terrars::ListRef<GameliftGameSessionQueue_PlayerLatencyPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.player_latency_policy", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GameliftGameSessionQueueDynamic {
+    player_latency_policy: std::option::Option<terrars::DynamicBlock<GameliftGameSessionQueue_PlayerLatencyPolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct GameliftGameSessionQueuePlayerLatencyPolicyEl {
+pub struct GameliftGameSessionQueue_PlayerLatencyPolicy {
     maximum_individual_player_latency_milliseconds: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy_duration_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GameliftGameSessionQueuePlayerLatencyPolicyEl {
+impl GameliftGameSessionQueue_PlayerLatencyPolicy {
     #[doc = "Set the field `policy_duration_seconds`.\n"]
     pub fn set_policy_duration_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.policy_duration_seconds = std::option::Option::Some(v.into());
@@ -394,8 +442,8 @@ impl GameliftGameSessionQueuePlayerLatencyPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftGameSessionQueuePlayerLatencyPolicyEl {
-    type O = terrars::BlockAssignable<GameliftGameSessionQueuePlayerLatencyPolicyEl>;
+impl terrars::ToListMappable for GameliftGameSessionQueue_PlayerLatencyPolicy {
+    type O = terrars::BlockAssignable<GameliftGameSessionQueue_PlayerLatencyPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -406,38 +454,40 @@ impl terrars::ToListMappable for GameliftGameSessionQueuePlayerLatencyPolicyEl {
     }
 }
 
-pub struct BuildGameliftGameSessionQueuePlayerLatencyPolicyEl {
+pub struct BuildGameliftGameSessionQueue_PlayerLatencyPolicy {
     #[doc = ""]
     pub maximum_individual_player_latency_milliseconds: terrars::PrimField<f64>,
 }
 
-impl BuildGameliftGameSessionQueuePlayerLatencyPolicyEl {
-    pub fn build(self) -> GameliftGameSessionQueuePlayerLatencyPolicyEl {
-        GameliftGameSessionQueuePlayerLatencyPolicyEl {
+impl BuildGameliftGameSessionQueue_PlayerLatencyPolicy {
+    pub fn build(self) -> GameliftGameSessionQueue_PlayerLatencyPolicy {
+        GameliftGameSessionQueue_PlayerLatencyPolicy {
             maximum_individual_player_latency_milliseconds: self.maximum_individual_player_latency_milliseconds,
             policy_duration_seconds: core::default::Default::default(),
         }
     }
 }
 
-pub struct GameliftGameSessionQueuePlayerLatencyPolicyElRef {
+#[allow(dead_code)]
+pub struct GameliftGameSessionQueue_PlayerLatencyPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftGameSessionQueuePlayerLatencyPolicyElRef {
+impl terrars::Ref for GameliftGameSessionQueue_PlayerLatencyPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GameliftGameSessionQueuePlayerLatencyPolicyElRef {
-        GameliftGameSessionQueuePlayerLatencyPolicyElRef {
+    ) -> GameliftGameSessionQueue_PlayerLatencyPolicyRef {
+        GameliftGameSessionQueue_PlayerLatencyPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftGameSessionQueuePlayerLatencyPolicyElRef {
+impl GameliftGameSessionQueue_PlayerLatencyPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -455,9 +505,4 @@ impl GameliftGameSessionQueuePlayerLatencyPolicyElRef {
     pub fn policy_duration_seconds(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_duration_seconds", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GameliftGameSessionQueueDynamic {
-    player_latency_policy: std::option::Option<terrars::DynamicBlock<GameliftGameSessionQueuePlayerLatencyPolicyEl>>,
 }

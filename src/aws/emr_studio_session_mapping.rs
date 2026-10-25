@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EmrStudioSessionMappingData {
+struct EmrStudioSessionMappingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct EmrStudioSessionMappingData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     identity_name: std::option::Option<terrars::PrimField<std::string::String>>,
     identity_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     session_policy_arn: terrars::PrimField<std::string::String>,
     studio_id: terrars::PrimField<std::string::String>,
 }
@@ -32,7 +36,7 @@ struct EmrStudioSessionMappingData {
 struct EmrStudioSessionMapping_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EmrStudioSessionMappingData>,
+    data: std::cell::RefCell<EmrStudioSessionMappingData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl EmrStudioSessionMapping {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -168,6 +179,12 @@ impl EmrStudioSessionMapping {
     #[doc = "Get a reference to the value of field `identity_type` after provisioning.\n"]
     pub fn identity_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `session_policy_arn` after provisioning.\n"]
@@ -227,7 +244,7 @@ impl BuildEmrStudioSessionMapping {
         let out = EmrStudioSessionMapping(std::rc::Rc::new(EmrStudioSessionMapping_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EmrStudioSessionMappingData {
+            data: std::cell::RefCell::new(EmrStudioSessionMappingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -237,6 +254,7 @@ impl BuildEmrStudioSessionMapping {
                 identity_id: core::default::Default::default(),
                 identity_name: core::default::Default::default(),
                 identity_type: self.identity_type,
+                region: core::default::Default::default(),
                 session_policy_arn: self.session_policy_arn,
                 studio_id: self.studio_id,
             }),
@@ -287,6 +305,12 @@ impl EmrStudioSessionMappingRef {
     #[doc = "Get a reference to the value of field `identity_type` after provisioning.\n"]
     pub fn identity_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `session_policy_arn` after provisioning.\n"]

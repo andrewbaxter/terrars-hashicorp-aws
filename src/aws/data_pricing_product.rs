@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataPricingProductData {
+struct DataPricingProductData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,14 +22,14 @@ struct DataPricingProductData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     service_code: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filters: std::option::Option<std::vec::Vec<DataPricingProductFiltersEl>>,
+    filters: std::option::Option<std::vec::Vec<DataPricingProduct_Filters>>,
     dynamic: DataPricingProductDynamic,
 }
 
 struct DataPricingProduct_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataPricingProductData>,
+    data: std::cell::RefCell<DataPricingProductData_>,
 }
 
 #[derive(Clone)]
@@ -79,7 +81,7 @@ impl DataPricingProduct {
     }
 
     #[doc = "Set the field `filters`.\n"]
-    pub fn set_filters(self, v: impl std::convert::Into<terrars::BlockAssignable<DataPricingProductFiltersEl>>) -> Self {
+    pub fn set_filters(self, v: impl std::convert::Into<terrars::BlockAssignable<DataPricingProduct_Filters>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filters = std::option::Option::Some(v);
@@ -107,7 +109,7 @@ impl DataPricingProduct {
     }
 
     #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> terrars::ListRef<DataPricingProductFiltersElRef> {
+    pub fn filters(&self) -> terrars::ListRef<DataPricingProduct_FiltersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 }
@@ -154,7 +156,7 @@ impl BuildDataPricingProduct {
         let out = DataPricingProduct(std::rc::Rc::new(DataPricingProduct_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataPricingProductData {
+            data: std::cell::RefCell::new(DataPricingProductData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -209,21 +211,26 @@ impl DataPricingProductRef {
     }
 
     #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> terrars::ListRef<DataPricingProductFiltersElRef> {
+    pub fn filters(&self) -> terrars::ListRef<DataPricingProduct_FiltersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataPricingProductDynamic {
+    filters: std::option::Option<terrars::DynamicBlock<DataPricingProduct_Filters>>,
+}
+
 #[derive(Serialize)]
-pub struct DataPricingProductFiltersEl {
+pub struct DataPricingProduct_Filters {
     field: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl DataPricingProductFiltersEl { }
+impl DataPricingProduct_Filters { }
 
-impl terrars::ToListMappable for DataPricingProductFiltersEl {
-    type O = terrars::BlockAssignable<DataPricingProductFiltersEl>;
+impl terrars::ToListMappable for DataPricingProduct_Filters {
+    type O = terrars::BlockAssignable<DataPricingProduct_Filters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -234,37 +241,39 @@ impl terrars::ToListMappable for DataPricingProductFiltersEl {
     }
 }
 
-pub struct BuildDataPricingProductFiltersEl {
+pub struct BuildDataPricingProduct_Filters {
     #[doc = ""]
     pub field: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataPricingProductFiltersEl {
-    pub fn build(self) -> DataPricingProductFiltersEl {
-        DataPricingProductFiltersEl {
+impl BuildDataPricingProduct_Filters {
+    pub fn build(self) -> DataPricingProduct_Filters {
+        DataPricingProduct_Filters {
             field: self.field,
             value: self.value,
         }
     }
 }
 
-pub struct DataPricingProductFiltersElRef {
+#[allow(dead_code)]
+pub struct DataPricingProduct_FiltersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataPricingProductFiltersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPricingProductFiltersElRef {
-        DataPricingProductFiltersElRef {
+impl terrars::Ref for DataPricingProduct_FiltersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataPricingProduct_FiltersRef {
+        DataPricingProduct_FiltersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataPricingProductFiltersElRef {
+impl DataPricingProduct_FiltersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -278,9 +287,4 @@ impl DataPricingProductFiltersElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataPricingProductDynamic {
-    filters: std::option::Option<terrars::DynamicBlock<DataPricingProductFiltersEl>>,
 }

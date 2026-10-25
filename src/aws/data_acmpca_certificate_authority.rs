@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataAcmpcaCertificateAuthorityData {
+struct DataAcmpcaCertificateAuthorityData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataAcmpcaCertificateAuthorityData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataAcmpcaCertificateAuthority_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAcmpcaCertificateAuthorityData>,
+    data: std::cell::RefCell<DataAcmpcaCertificateAuthorityData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataAcmpcaCertificateAuthority {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -111,6 +122,14 @@ impl DataAcmpcaCertificateAuthority {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `key_storage_security_standard` after provisioning.\n"]
+    pub fn key_storage_security_standard(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.key_storage_security_standard", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `not_after` after provisioning.\n"]
     pub fn not_after(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.not_after", self.extract_ref()))
@@ -121,10 +140,16 @@ impl DataAcmpcaCertificateAuthority {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.not_before", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `revocation_configuration` after provisioning.\n"]
     pub fn revocation_configuration(
         &self,
-    ) -> terrars::ListRef<DataAcmpcaCertificateAuthorityRevocationConfigurationElRef> {
+    ) -> terrars::ListRef<DataAcmpcaCertificateAuthority_RevocationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.revocation_configuration", self.extract_ref()))
     }
 
@@ -196,13 +221,14 @@ impl BuildDataAcmpcaCertificateAuthority {
         let out = DataAcmpcaCertificateAuthority(std::rc::Rc::new(DataAcmpcaCertificateAuthority_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAcmpcaCertificateAuthorityData {
+            data: std::cell::RefCell::new(DataAcmpcaCertificateAuthorityData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 arn: self.arn,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -259,6 +285,14 @@ impl DataAcmpcaCertificateAuthorityRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `key_storage_security_standard` after provisioning.\n"]
+    pub fn key_storage_security_standard(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.key_storage_security_standard", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `not_after` after provisioning.\n"]
     pub fn not_after(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.not_after", self.extract_ref()))
@@ -269,10 +303,16 @@ impl DataAcmpcaCertificateAuthorityRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.not_before", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `revocation_configuration` after provisioning.\n"]
     pub fn revocation_configuration(
         &self,
-    ) -> terrars::ListRef<DataAcmpcaCertificateAuthorityRevocationConfigurationElRef> {
+    ) -> terrars::ListRef<DataAcmpcaCertificateAuthority_RevocationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.revocation_configuration", self.extract_ref()))
     }
 
@@ -303,9 +343,11 @@ impl DataAcmpcaCertificateAuthorityRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl {
+pub struct DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_cname: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -316,10 +358,16 @@ pub struct DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurati
     s3_object_acl: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl {
+impl DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration {
     #[doc = "Set the field `custom_cname`.\n"]
     pub fn set_custom_cname(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.custom_cname = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `custom_path`.\n"]
+    pub fn set_custom_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.custom_path = std::option::Option::Some(v.into());
         self
     }
 
@@ -348,8 +396,8 @@ impl DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl {
-    type O = terrars::BlockAssignable<DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl>;
+impl terrars::ToListMappable for DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration {
+    type O = terrars::BlockAssignable<DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -360,12 +408,13 @@ impl terrars::ToListMappable for DataAcmpcaCertificateAuthorityRevocationConfigu
     }
 }
 
-pub struct BuildDataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl {}
+pub struct BuildDataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration {}
 
-impl BuildDataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl {
-    pub fn build(self) -> DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl {
-        DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl {
+impl BuildDataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration {
+    pub fn build(self) -> DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration {
+        DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration {
             custom_cname: core::default::Default::default(),
+            custom_path: core::default::Default::default(),
             enabled: core::default::Default::default(),
             expiration_in_days: core::default::Default::default(),
             s3_bucket_name: core::default::Default::default(),
@@ -374,24 +423,26 @@ impl BuildDataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfiguratio
     }
 }
 
-pub struct DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationElRef {
+impl terrars::Ref for DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationElRef {
-        DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationElRef {
+    ) -> DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfigurationRef {
+        DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationElRef {
+impl DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -399,6 +450,11 @@ impl DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationElRe
     #[doc = "Get a reference to the value of field `custom_cname` after provisioning.\n"]
     pub fn custom_cname(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_cname", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_path` after provisioning.\n"]
+    pub fn custom_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_path", self.base))
     }
 
     #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
@@ -423,14 +479,14 @@ impl DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationElRe
 }
 
 #[derive(Serialize)]
-pub struct DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl {
+pub struct DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ocsp_custom_cname: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl {
+impl DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -444,8 +500,8 @@ impl DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl 
     }
 }
 
-impl terrars::ToListMappable for DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl {
-    type O = terrars::BlockAssignable<DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl>;
+impl terrars::ToListMappable for DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration {
+    type O = terrars::BlockAssignable<DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -456,35 +512,37 @@ impl terrars::ToListMappable for DataAcmpcaCertificateAuthorityRevocationConfigu
     }
 }
 
-pub struct BuildDataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl {}
+pub struct BuildDataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration {}
 
-impl BuildDataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl {
-    pub fn build(self) -> DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl {
-        DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl {
+impl BuildDataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration {
+    pub fn build(self) -> DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration {
+        DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration {
             enabled: core::default::Default::default(),
             ocsp_custom_cname: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationElRef {
+impl terrars::Ref for DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationElRef {
-        DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationElRef {
+    ) -> DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfigurationRef {
+        DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationElRef {
+impl DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -501,18 +559,18 @@ impl DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationElR
 }
 
 #[derive(Serialize)]
-pub struct DataAcmpcaCertificateAuthorityRevocationConfigurationEl {
+pub struct DataAcmpcaCertificateAuthority_RevocationConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     crl_configuration: std
     ::option
-    ::Option<terrars::ListField<DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl>>,
+    ::Option<terrars::ListField<DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ocsp_configuration: std
     ::option
-    ::Option<terrars::ListField<DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl>>,
+    ::Option<terrars::ListField<DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration>>,
 }
 
-impl DataAcmpcaCertificateAuthorityRevocationConfigurationEl {
+impl DataAcmpcaCertificateAuthority_RevocationConfiguration {
     #[doc = "Set the field `crl_configuration`.\n"]
     pub fn set_crl_configuration(
         mut self,
@@ -522,7 +580,7 @@ impl DataAcmpcaCertificateAuthorityRevocationConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::ListField<DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationEl>,
+                        terrars::ListField<DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfiguration>,
                     >,
     ) -> Self {
         self.crl_configuration = std::option::Option::Some(v.into());
@@ -538,7 +596,7 @@ impl DataAcmpcaCertificateAuthorityRevocationConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::ListField<DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationEl>,
+                        terrars::ListField<DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfiguration>,
                     >,
     ) -> Self {
         self.ocsp_configuration = std::option::Option::Some(v.into());
@@ -546,8 +604,8 @@ impl DataAcmpcaCertificateAuthorityRevocationConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataAcmpcaCertificateAuthorityRevocationConfigurationEl {
-    type O = terrars::BlockAssignable<DataAcmpcaCertificateAuthorityRevocationConfigurationEl>;
+impl terrars::ToListMappable for DataAcmpcaCertificateAuthority_RevocationConfiguration {
+    type O = terrars::BlockAssignable<DataAcmpcaCertificateAuthority_RevocationConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -558,35 +616,37 @@ impl terrars::ToListMappable for DataAcmpcaCertificateAuthorityRevocationConfigu
     }
 }
 
-pub struct BuildDataAcmpcaCertificateAuthorityRevocationConfigurationEl {}
+pub struct BuildDataAcmpcaCertificateAuthority_RevocationConfiguration {}
 
-impl BuildDataAcmpcaCertificateAuthorityRevocationConfigurationEl {
-    pub fn build(self) -> DataAcmpcaCertificateAuthorityRevocationConfigurationEl {
-        DataAcmpcaCertificateAuthorityRevocationConfigurationEl {
+impl BuildDataAcmpcaCertificateAuthority_RevocationConfiguration {
+    pub fn build(self) -> DataAcmpcaCertificateAuthority_RevocationConfiguration {
+        DataAcmpcaCertificateAuthority_RevocationConfiguration {
             crl_configuration: core::default::Default::default(),
             ocsp_configuration: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAcmpcaCertificateAuthorityRevocationConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataAcmpcaCertificateAuthority_RevocationConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAcmpcaCertificateAuthorityRevocationConfigurationElRef {
+impl terrars::Ref for DataAcmpcaCertificateAuthority_RevocationConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAcmpcaCertificateAuthorityRevocationConfigurationElRef {
-        DataAcmpcaCertificateAuthorityRevocationConfigurationElRef {
+    ) -> DataAcmpcaCertificateAuthority_RevocationConfigurationRef {
+        DataAcmpcaCertificateAuthority_RevocationConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAcmpcaCertificateAuthorityRevocationConfigurationElRef {
+impl DataAcmpcaCertificateAuthority_RevocationConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -594,14 +654,14 @@ impl DataAcmpcaCertificateAuthorityRevocationConfigurationElRef {
     #[doc = "Get a reference to the value of field `crl_configuration` after provisioning.\n"]
     pub fn crl_configuration(
         &self,
-    ) -> terrars::ListRef<DataAcmpcaCertificateAuthorityRevocationConfigurationElCrlConfigurationElRef> {
+    ) -> terrars::ListRef<DataAcmpcaCertificateAuthority_RevocationConfiguration_CrlConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.crl_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ocsp_configuration` after provisioning.\n"]
     pub fn ocsp_configuration(
         &self,
-    ) -> terrars::ListRef<DataAcmpcaCertificateAuthorityRevocationConfigurationElOcspConfigurationElRef> {
+    ) -> terrars::ListRef<DataAcmpcaCertificateAuthority_RevocationConfiguration_OcspConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ocsp_configuration", self.base))
     }
 }

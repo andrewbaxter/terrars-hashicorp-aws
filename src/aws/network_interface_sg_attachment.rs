@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkInterfaceSgAttachmentData {
+struct NetworkInterfaceSgAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,13 +23,17 @@ struct NetworkInterfaceSgAttachmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     network_interface_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     security_group_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<NetworkInterfaceSgAttachment_Timeouts>,
 }
 
 struct NetworkInterfaceSgAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkInterfaceSgAttachmentData>,
+    data: std::cell::RefCell<NetworkInterfaceSgAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -133,6 +139,19 @@ impl NetworkInterfaceSgAttachment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkInterfaceSgAttachment_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -143,9 +162,23 @@ impl NetworkInterfaceSgAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
     pub fn security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> NetworkInterfaceSgAttachment_TimeoutsRef {
+        NetworkInterfaceSgAttachment_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
@@ -193,7 +226,7 @@ impl BuildNetworkInterfaceSgAttachment {
         let out = NetworkInterfaceSgAttachment(std::rc::Rc::new(NetworkInterfaceSgAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkInterfaceSgAttachmentData {
+            data: std::cell::RefCell::new(NetworkInterfaceSgAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -201,7 +234,9 @@ impl BuildNetworkInterfaceSgAttachment {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 network_interface_id: self.network_interface_id,
+                region: core::default::Default::default(),
                 security_group_id: self.security_group_id,
+                timeouts: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -242,8 +277,113 @@ impl NetworkInterfaceSgAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
     pub fn security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> NetworkInterfaceSgAttachment_TimeoutsRef {
+        NetworkInterfaceSgAttachment_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
+    }
+}
+
+#[derive(Serialize)]
+pub struct NetworkInterfaceSgAttachment_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl NetworkInterfaceSgAttachment_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `read`.\n"]
+    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.read = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkInterfaceSgAttachment_Timeouts {
+    type O = terrars::BlockAssignable<NetworkInterfaceSgAttachment_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkInterfaceSgAttachment_Timeouts {}
+
+impl BuildNetworkInterfaceSgAttachment_Timeouts {
+    pub fn build(self) -> NetworkInterfaceSgAttachment_Timeouts {
+        NetworkInterfaceSgAttachment_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            read: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkInterfaceSgAttachment_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkInterfaceSgAttachment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkInterfaceSgAttachment_TimeoutsRef {
+        NetworkInterfaceSgAttachment_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkInterfaceSgAttachment_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
+    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct PinpointAppData {
+struct PinpointAppData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,22 +27,24 @@ struct PinpointAppData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    campaign_hook: std::option::Option<std::vec::Vec<PinpointAppCampaignHookEl>>,
+    campaign_hook: std::option::Option<std::vec::Vec<PinpointApp_CampaignHook>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    limits: std::option::Option<std::vec::Vec<PinpointAppLimitsEl>>,
+    limits: std::option::Option<std::vec::Vec<PinpointApp_Limits>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    quiet_time: std::option::Option<std::vec::Vec<PinpointAppQuietTimeEl>>,
+    quiet_time: std::option::Option<std::vec::Vec<PinpointApp_QuietTime>>,
     dynamic: PinpointAppDynamic,
 }
 
 struct PinpointApp_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PinpointAppData>,
+    data: std::cell::RefCell<PinpointAppData_>,
 }
 
 #[derive(Clone)]
@@ -158,6 +162,13 @@ impl PinpointApp {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -179,7 +190,7 @@ impl PinpointApp {
     #[doc = "Set the field `campaign_hook`.\n"]
     pub fn set_campaign_hook(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PinpointAppCampaignHookEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PinpointApp_CampaignHook>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -193,7 +204,7 @@ impl PinpointApp {
     }
 
     #[doc = "Set the field `limits`.\n"]
-    pub fn set_limits(self, v: impl std::convert::Into<terrars::BlockAssignable<PinpointAppLimitsEl>>) -> Self {
+    pub fn set_limits(self, v: impl std::convert::Into<terrars::BlockAssignable<PinpointApp_Limits>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().limits = std::option::Option::Some(v);
@@ -206,7 +217,7 @@ impl PinpointApp {
     }
 
     #[doc = "Set the field `quiet_time`.\n"]
-    pub fn set_quiet_time(self, v: impl std::convert::Into<terrars::BlockAssignable<PinpointAppQuietTimeEl>>) -> Self {
+    pub fn set_quiet_time(self, v: impl std::convert::Into<terrars::BlockAssignable<PinpointApp_QuietTime>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().quiet_time = std::option::Option::Some(v);
@@ -243,6 +254,12 @@ impl PinpointApp {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -254,17 +271,17 @@ impl PinpointApp {
     }
 
     #[doc = "Get a reference to the value of field `campaign_hook` after provisioning.\n"]
-    pub fn campaign_hook(&self) -> terrars::ListRef<PinpointAppCampaignHookElRef> {
+    pub fn campaign_hook(&self) -> terrars::ListRef<PinpointApp_CampaignHookRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.campaign_hook", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `limits` after provisioning.\n"]
-    pub fn limits(&self) -> terrars::ListRef<PinpointAppLimitsElRef> {
+    pub fn limits(&self) -> terrars::ListRef<PinpointApp_LimitsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.limits", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `quiet_time` after provisioning.\n"]
-    pub fn quiet_time(&self) -> terrars::ListRef<PinpointAppQuietTimeElRef> {
+    pub fn quiet_time(&self) -> terrars::ListRef<PinpointApp_QuietTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.quiet_time", self.extract_ref()))
     }
 }
@@ -309,7 +326,7 @@ impl BuildPinpointApp {
         let out = PinpointApp(std::rc::Rc::new(PinpointApp_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PinpointAppData {
+            data: std::cell::RefCell::new(PinpointAppData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -318,6 +335,7 @@ impl BuildPinpointApp {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 campaign_hook: core::default::Default::default(),
@@ -379,6 +397,12 @@ impl PinpointAppRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -390,23 +414,30 @@ impl PinpointAppRef {
     }
 
     #[doc = "Get a reference to the value of field `campaign_hook` after provisioning.\n"]
-    pub fn campaign_hook(&self) -> terrars::ListRef<PinpointAppCampaignHookElRef> {
+    pub fn campaign_hook(&self) -> terrars::ListRef<PinpointApp_CampaignHookRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.campaign_hook", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `limits` after provisioning.\n"]
-    pub fn limits(&self) -> terrars::ListRef<PinpointAppLimitsElRef> {
+    pub fn limits(&self) -> terrars::ListRef<PinpointApp_LimitsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.limits", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `quiet_time` after provisioning.\n"]
-    pub fn quiet_time(&self) -> terrars::ListRef<PinpointAppQuietTimeElRef> {
+    pub fn quiet_time(&self) -> terrars::ListRef<PinpointApp_QuietTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.quiet_time", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct PinpointAppDynamic {
+    campaign_hook: std::option::Option<terrars::DynamicBlock<PinpointApp_CampaignHook>>,
+    limits: std::option::Option<terrars::DynamicBlock<PinpointApp_Limits>>,
+    quiet_time: std::option::Option<terrars::DynamicBlock<PinpointApp_QuietTime>>,
+}
+
 #[derive(Serialize)]
-pub struct PinpointAppCampaignHookEl {
+pub struct PinpointApp_CampaignHook {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lambda_function_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -415,7 +446,7 @@ pub struct PinpointAppCampaignHookEl {
     web_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PinpointAppCampaignHookEl {
+impl PinpointApp_CampaignHook {
     #[doc = "Set the field `lambda_function_name`.\n"]
     pub fn set_lambda_function_name(
         mut self,
@@ -438,8 +469,8 @@ impl PinpointAppCampaignHookEl {
     }
 }
 
-impl terrars::ToListMappable for PinpointAppCampaignHookEl {
-    type O = terrars::BlockAssignable<PinpointAppCampaignHookEl>;
+impl terrars::ToListMappable for PinpointApp_CampaignHook {
+    type O = terrars::BlockAssignable<PinpointApp_CampaignHook>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -450,11 +481,11 @@ impl terrars::ToListMappable for PinpointAppCampaignHookEl {
     }
 }
 
-pub struct BuildPinpointAppCampaignHookEl {}
+pub struct BuildPinpointApp_CampaignHook {}
 
-impl BuildPinpointAppCampaignHookEl {
-    pub fn build(self) -> PinpointAppCampaignHookEl {
-        PinpointAppCampaignHookEl {
+impl BuildPinpointApp_CampaignHook {
+    pub fn build(self) -> PinpointApp_CampaignHook {
+        PinpointApp_CampaignHook {
             lambda_function_name: core::default::Default::default(),
             mode: core::default::Default::default(),
             web_url: core::default::Default::default(),
@@ -462,21 +493,23 @@ impl BuildPinpointAppCampaignHookEl {
     }
 }
 
-pub struct PinpointAppCampaignHookElRef {
+#[allow(dead_code)]
+pub struct PinpointApp_CampaignHookRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PinpointAppCampaignHookElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PinpointAppCampaignHookElRef {
-        PinpointAppCampaignHookElRef {
+impl terrars::Ref for PinpointApp_CampaignHookRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PinpointApp_CampaignHookRef {
+        PinpointApp_CampaignHookRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PinpointAppCampaignHookElRef {
+impl PinpointApp_CampaignHookRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -498,7 +531,7 @@ impl PinpointAppCampaignHookElRef {
 }
 
 #[derive(Serialize)]
-pub struct PinpointAppLimitsEl {
+pub struct PinpointApp_Limits {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     daily: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -509,7 +542,7 @@ pub struct PinpointAppLimitsEl {
     total: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl PinpointAppLimitsEl {
+impl PinpointApp_Limits {
     #[doc = "Set the field `daily`.\n"]
     pub fn set_daily(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.daily = std::option::Option::Some(v.into());
@@ -535,8 +568,8 @@ impl PinpointAppLimitsEl {
     }
 }
 
-impl terrars::ToListMappable for PinpointAppLimitsEl {
-    type O = terrars::BlockAssignable<PinpointAppLimitsEl>;
+impl terrars::ToListMappable for PinpointApp_Limits {
+    type O = terrars::BlockAssignable<PinpointApp_Limits>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -547,11 +580,11 @@ impl terrars::ToListMappable for PinpointAppLimitsEl {
     }
 }
 
-pub struct BuildPinpointAppLimitsEl {}
+pub struct BuildPinpointApp_Limits {}
 
-impl BuildPinpointAppLimitsEl {
-    pub fn build(self) -> PinpointAppLimitsEl {
-        PinpointAppLimitsEl {
+impl BuildPinpointApp_Limits {
+    pub fn build(self) -> PinpointApp_Limits {
+        PinpointApp_Limits {
             daily: core::default::Default::default(),
             maximum_duration: core::default::Default::default(),
             messages_per_second: core::default::Default::default(),
@@ -560,21 +593,23 @@ impl BuildPinpointAppLimitsEl {
     }
 }
 
-pub struct PinpointAppLimitsElRef {
+#[allow(dead_code)]
+pub struct PinpointApp_LimitsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PinpointAppLimitsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PinpointAppLimitsElRef {
-        PinpointAppLimitsElRef {
+impl terrars::Ref for PinpointApp_LimitsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PinpointApp_LimitsRef {
+        PinpointApp_LimitsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PinpointAppLimitsElRef {
+impl PinpointApp_LimitsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -601,14 +636,14 @@ impl PinpointAppLimitsElRef {
 }
 
 #[derive(Serialize)]
-pub struct PinpointAppQuietTimeEl {
+pub struct PinpointApp_QuietTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     end: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl PinpointAppQuietTimeEl {
+impl PinpointApp_QuietTime {
     #[doc = "Set the field `end`.\n"]
     pub fn set_end(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.end = std::option::Option::Some(v.into());
@@ -622,8 +657,8 @@ impl PinpointAppQuietTimeEl {
     }
 }
 
-impl terrars::ToListMappable for PinpointAppQuietTimeEl {
-    type O = terrars::BlockAssignable<PinpointAppQuietTimeEl>;
+impl terrars::ToListMappable for PinpointApp_QuietTime {
+    type O = terrars::BlockAssignable<PinpointApp_QuietTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -634,32 +669,34 @@ impl terrars::ToListMappable for PinpointAppQuietTimeEl {
     }
 }
 
-pub struct BuildPinpointAppQuietTimeEl {}
+pub struct BuildPinpointApp_QuietTime {}
 
-impl BuildPinpointAppQuietTimeEl {
-    pub fn build(self) -> PinpointAppQuietTimeEl {
-        PinpointAppQuietTimeEl {
+impl BuildPinpointApp_QuietTime {
+    pub fn build(self) -> PinpointApp_QuietTime {
+        PinpointApp_QuietTime {
             end: core::default::Default::default(),
             start: core::default::Default::default(),
         }
     }
 }
 
-pub struct PinpointAppQuietTimeElRef {
+#[allow(dead_code)]
+pub struct PinpointApp_QuietTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PinpointAppQuietTimeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PinpointAppQuietTimeElRef {
-        PinpointAppQuietTimeElRef {
+impl terrars::Ref for PinpointApp_QuietTimeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PinpointApp_QuietTimeRef {
+        PinpointApp_QuietTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PinpointAppQuietTimeElRef {
+impl PinpointApp_QuietTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -673,11 +710,4 @@ impl PinpointAppQuietTimeElRef {
     pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct PinpointAppDynamic {
-    campaign_hook: std::option::Option<terrars::DynamicBlock<PinpointAppCampaignHookEl>>,
-    limits: std::option::Option<terrars::DynamicBlock<PinpointAppLimitsEl>>,
-    quiet_time: std::option::Option<terrars::DynamicBlock<PinpointAppQuietTimeEl>>,
 }

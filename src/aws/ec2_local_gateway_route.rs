@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2LocalGatewayRouteData {
+struct Ec2LocalGatewayRouteData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,12 +25,14 @@ struct Ec2LocalGatewayRouteData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     local_gateway_route_table_id: terrars::PrimField<std::string::String>,
     local_gateway_virtual_interface_group_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct Ec2LocalGatewayRoute_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2LocalGatewayRouteData>,
+    data: std::cell::RefCell<Ec2LocalGatewayRouteData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +138,13 @@ impl Ec2LocalGatewayRoute {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `destination_cidr_block` after provisioning.\n"]
     pub fn destination_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_cidr_block", self.extract_ref()))
@@ -155,6 +166,12 @@ impl Ec2LocalGatewayRoute {
             self.shared().clone(),
             format!("{}.local_gateway_virtual_interface_group_id", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -204,7 +221,7 @@ impl BuildEc2LocalGatewayRoute {
         let out = Ec2LocalGatewayRoute(std::rc::Rc::new(Ec2LocalGatewayRoute_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2LocalGatewayRouteData {
+            data: std::cell::RefCell::new(Ec2LocalGatewayRouteData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -214,6 +231,7 @@ impl BuildEc2LocalGatewayRoute {
                 id: core::default::Default::default(),
                 local_gateway_route_table_id: self.local_gateway_route_table_id,
                 local_gateway_virtual_interface_group_id: self.local_gateway_virtual_interface_group_id,
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -265,5 +283,11 @@ impl Ec2LocalGatewayRouteRef {
             self.shared().clone(),
             format!("{}.local_gateway_virtual_interface_group_id", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }

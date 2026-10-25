@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KmsCiphertextData {
+struct KmsCiphertextData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,13 +25,20 @@ struct KmsCiphertextData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     key_id: terrars::PrimField<std::string::String>,
-    plaintext: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    plaintext: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    plaintext_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    plaintext_wo_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct KmsCiphertext_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KmsCiphertextData>,
+    data: std::cell::RefCell<KmsCiphertextData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +153,31 @@ impl KmsCiphertext {
         self
     }
 
+    #[doc = "Set the field `plaintext`.\n"]
+    pub fn set_plaintext(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().plaintext = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `plaintext_wo`.\n"]
+    pub fn set_plaintext_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().plaintext_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `plaintext_wo_version`.\n"]
+    pub fn set_plaintext_wo_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().plaintext_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `ciphertext_blob` after provisioning.\n"]
     pub fn ciphertext_blob(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ciphertext_blob", self.extract_ref()))
@@ -167,6 +201,22 @@ impl KmsCiphertext {
     #[doc = "Get a reference to the value of field `plaintext` after provisioning.\n"]
     pub fn plaintext(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.plaintext", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `plaintext_wo` after provisioning.\n"]
+    pub fn plaintext_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.plaintext_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `plaintext_wo_version` after provisioning.\n"]
+    pub fn plaintext_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.plaintext_wo_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -205,8 +255,6 @@ pub struct BuildKmsCiphertext {
     pub tf_id: std::string::String,
     #[doc = ""]
     pub key_id: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub plaintext: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKmsCiphertext {
@@ -214,7 +262,7 @@ impl BuildKmsCiphertext {
         let out = KmsCiphertext(std::rc::Rc::new(KmsCiphertext_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KmsCiphertextData {
+            data: std::cell::RefCell::new(KmsCiphertextData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -223,7 +271,10 @@ impl BuildKmsCiphertext {
                 context: core::default::Default::default(),
                 id: core::default::Default::default(),
                 key_id: self.key_id,
-                plaintext: self.plaintext,
+                plaintext: core::default::Default::default(),
+                plaintext_wo: core::default::Default::default(),
+                plaintext_wo_version: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -277,5 +328,21 @@ impl KmsCiphertextRef {
     #[doc = "Get a reference to the value of field `plaintext` after provisioning.\n"]
     pub fn plaintext(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.plaintext", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `plaintext_wo` after provisioning.\n"]
+    pub fn plaintext_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.plaintext_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `plaintext_wo_version` after provisioning.\n"]
+    pub fn plaintext_wo_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.plaintext_wo_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }

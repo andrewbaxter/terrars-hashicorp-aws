@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GameliftFleetData {
+struct GameliftFleetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,28 +37,30 @@ struct GameliftFleetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     new_game_session_protection_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     script_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    certificate_configuration: std::option::Option<std::vec::Vec<GameliftFleetCertificateConfigurationEl>>,
+    certificate_configuration: std::option::Option<std::vec::Vec<GameliftFleet_CertificateConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ec2_inbound_permission: std::option::Option<std::vec::Vec<GameliftFleetEc2InboundPermissionEl>>,
+    ec2_inbound_permission: std::option::Option<std::vec::Vec<GameliftFleet_Ec2InboundPermission>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_creation_limit_policy: std::option::Option<std::vec::Vec<GameliftFleetResourceCreationLimitPolicyEl>>,
+    resource_creation_limit_policy: std::option::Option<std::vec::Vec<GameliftFleet_ResourceCreationLimitPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    runtime_configuration: std::option::Option<std::vec::Vec<GameliftFleetRuntimeConfigurationEl>>,
+    runtime_configuration: std::option::Option<std::vec::Vec<GameliftFleet_RuntimeConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GameliftFleetTimeoutsEl>,
+    timeouts: std::option::Option<GameliftFleet_Timeouts>,
     dynamic: GameliftFleetDynamic,
 }
 
 struct GameliftFleet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GameliftFleetData>,
+    data: std::cell::RefCell<GameliftFleetData_>,
 }
 
 #[derive(Clone)]
@@ -204,6 +208,13 @@ impl GameliftFleet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `script_id`.\n"]
     pub fn set_script_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().script_id = std::option::Option::Some(v.into());
@@ -231,7 +242,7 @@ impl GameliftFleet {
     #[doc = "Set the field `certificate_configuration`.\n"]
     pub fn set_certificate_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleetCertificateConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleet_CertificateConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -247,7 +258,7 @@ impl GameliftFleet {
     #[doc = "Set the field `ec2_inbound_permission`.\n"]
     pub fn set_ec2_inbound_permission(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleetEc2InboundPermissionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleet_Ec2InboundPermission>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -263,7 +274,7 @@ impl GameliftFleet {
     #[doc = "Set the field `resource_creation_limit_policy`.\n"]
     pub fn set_resource_creation_limit_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleetResourceCreationLimitPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleet_ResourceCreationLimitPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -279,7 +290,7 @@ impl GameliftFleet {
     #[doc = "Set the field `runtime_configuration`.\n"]
     pub fn set_runtime_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleetRuntimeConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleet_RuntimeConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -293,7 +304,7 @@ impl GameliftFleet {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GameliftFleetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GameliftFleet_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -366,6 +377,12 @@ impl GameliftFleet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `script_arn` after provisioning.\n"]
     pub fn script_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.script_arn", self.extract_ref()))
@@ -387,12 +404,12 @@ impl GameliftFleet {
     }
 
     #[doc = "Get a reference to the value of field `certificate_configuration` after provisioning.\n"]
-    pub fn certificate_configuration(&self) -> terrars::ListRef<GameliftFleetCertificateConfigurationElRef> {
+    pub fn certificate_configuration(&self) -> terrars::ListRef<GameliftFleet_CertificateConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certificate_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_creation_limit_policy` after provisioning.\n"]
-    pub fn resource_creation_limit_policy(&self) -> terrars::ListRef<GameliftFleetResourceCreationLimitPolicyElRef> {
+    pub fn resource_creation_limit_policy(&self) -> terrars::ListRef<GameliftFleet_ResourceCreationLimitPolicyRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.resource_creation_limit_policy", self.extract_ref()),
@@ -400,13 +417,13 @@ impl GameliftFleet {
     }
 
     #[doc = "Get a reference to the value of field `runtime_configuration` after provisioning.\n"]
-    pub fn runtime_configuration(&self) -> terrars::ListRef<GameliftFleetRuntimeConfigurationElRef> {
+    pub fn runtime_configuration(&self) -> terrars::ListRef<GameliftFleet_RuntimeConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.runtime_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GameliftFleetTimeoutsElRef {
-        GameliftFleetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GameliftFleet_TimeoutsRef {
+        GameliftFleet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -454,7 +471,7 @@ impl BuildGameliftFleet {
         let out = GameliftFleet(std::rc::Rc::new(GameliftFleet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GameliftFleetData {
+            data: std::cell::RefCell::new(GameliftFleetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -469,6 +486,7 @@ impl BuildGameliftFleet {
                 metric_groups: core::default::Default::default(),
                 name: self.name,
                 new_game_session_protection_policy: core::default::Default::default(),
+                region: core::default::Default::default(),
                 script_id: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -576,6 +594,12 @@ impl GameliftFleetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `script_arn` after provisioning.\n"]
     pub fn script_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.script_arn", self.extract_ref()))
@@ -597,12 +621,12 @@ impl GameliftFleetRef {
     }
 
     #[doc = "Get a reference to the value of field `certificate_configuration` after provisioning.\n"]
-    pub fn certificate_configuration(&self) -> terrars::ListRef<GameliftFleetCertificateConfigurationElRef> {
+    pub fn certificate_configuration(&self) -> terrars::ListRef<GameliftFleet_CertificateConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certificate_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_creation_limit_policy` after provisioning.\n"]
-    pub fn resource_creation_limit_policy(&self) -> terrars::ListRef<GameliftFleetResourceCreationLimitPolicyElRef> {
+    pub fn resource_creation_limit_policy(&self) -> terrars::ListRef<GameliftFleet_ResourceCreationLimitPolicyRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.resource_creation_limit_policy", self.extract_ref()),
@@ -610,23 +634,33 @@ impl GameliftFleetRef {
     }
 
     #[doc = "Get a reference to the value of field `runtime_configuration` after provisioning.\n"]
-    pub fn runtime_configuration(&self) -> terrars::ListRef<GameliftFleetRuntimeConfigurationElRef> {
+    pub fn runtime_configuration(&self) -> terrars::ListRef<GameliftFleet_RuntimeConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.runtime_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GameliftFleetTimeoutsElRef {
-        GameliftFleetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GameliftFleet_TimeoutsRef {
+        GameliftFleet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GameliftFleetDynamic {
+    certificate_configuration: std::option::Option<terrars::DynamicBlock<GameliftFleet_CertificateConfiguration>>,
+    ec2_inbound_permission: std::option::Option<terrars::DynamicBlock<GameliftFleet_Ec2InboundPermission>>,
+    resource_creation_limit_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<GameliftFleet_ResourceCreationLimitPolicy>>,
+    runtime_configuration: std::option::Option<terrars::DynamicBlock<GameliftFleet_RuntimeConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct GameliftFleetCertificateConfigurationEl {
+pub struct GameliftFleet_CertificateConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GameliftFleetCertificateConfigurationEl {
+impl GameliftFleet_CertificateConfiguration {
     #[doc = "Set the field `certificate_type`.\n"]
     pub fn set_certificate_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.certificate_type = std::option::Option::Some(v.into());
@@ -634,8 +668,8 @@ impl GameliftFleetCertificateConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftFleetCertificateConfigurationEl {
-    type O = terrars::BlockAssignable<GameliftFleetCertificateConfigurationEl>;
+impl terrars::ToListMappable for GameliftFleet_CertificateConfiguration {
+    type O = terrars::BlockAssignable<GameliftFleet_CertificateConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -646,29 +680,31 @@ impl terrars::ToListMappable for GameliftFleetCertificateConfigurationEl {
     }
 }
 
-pub struct BuildGameliftFleetCertificateConfigurationEl {}
+pub struct BuildGameliftFleet_CertificateConfiguration {}
 
-impl BuildGameliftFleetCertificateConfigurationEl {
-    pub fn build(self) -> GameliftFleetCertificateConfigurationEl {
-        GameliftFleetCertificateConfigurationEl { certificate_type: core::default::Default::default() }
+impl BuildGameliftFleet_CertificateConfiguration {
+    pub fn build(self) -> GameliftFleet_CertificateConfiguration {
+        GameliftFleet_CertificateConfiguration { certificate_type: core::default::Default::default() }
     }
 }
 
-pub struct GameliftFleetCertificateConfigurationElRef {
+#[allow(dead_code)]
+pub struct GameliftFleet_CertificateConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftFleetCertificateConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleetCertificateConfigurationElRef {
-        GameliftFleetCertificateConfigurationElRef {
+impl terrars::Ref for GameliftFleet_CertificateConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleet_CertificateConfigurationRef {
+        GameliftFleet_CertificateConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftFleetCertificateConfigurationElRef {
+impl GameliftFleet_CertificateConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -680,17 +716,17 @@ impl GameliftFleetCertificateConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct GameliftFleetEc2InboundPermissionEl {
+pub struct GameliftFleet_Ec2InboundPermission {
     from_port: terrars::PrimField<f64>,
     ip_range: terrars::PrimField<std::string::String>,
     protocol: terrars::PrimField<std::string::String>,
     to_port: terrars::PrimField<f64>,
 }
 
-impl GameliftFleetEc2InboundPermissionEl { }
+impl GameliftFleet_Ec2InboundPermission { }
 
-impl terrars::ToListMappable for GameliftFleetEc2InboundPermissionEl {
-    type O = terrars::BlockAssignable<GameliftFleetEc2InboundPermissionEl>;
+impl terrars::ToListMappable for GameliftFleet_Ec2InboundPermission {
+    type O = terrars::BlockAssignable<GameliftFleet_Ec2InboundPermission>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -701,7 +737,7 @@ impl terrars::ToListMappable for GameliftFleetEc2InboundPermissionEl {
     }
 }
 
-pub struct BuildGameliftFleetEc2InboundPermissionEl {
+pub struct BuildGameliftFleet_Ec2InboundPermission {
     #[doc = ""]
     pub from_port: terrars::PrimField<f64>,
     #[doc = ""]
@@ -712,9 +748,9 @@ pub struct BuildGameliftFleetEc2InboundPermissionEl {
     pub to_port: terrars::PrimField<f64>,
 }
 
-impl BuildGameliftFleetEc2InboundPermissionEl {
-    pub fn build(self) -> GameliftFleetEc2InboundPermissionEl {
-        GameliftFleetEc2InboundPermissionEl {
+impl BuildGameliftFleet_Ec2InboundPermission {
+    pub fn build(self) -> GameliftFleet_Ec2InboundPermission {
+        GameliftFleet_Ec2InboundPermission {
             from_port: self.from_port,
             ip_range: self.ip_range,
             protocol: self.protocol,
@@ -723,21 +759,23 @@ impl BuildGameliftFleetEc2InboundPermissionEl {
     }
 }
 
-pub struct GameliftFleetEc2InboundPermissionElRef {
+#[allow(dead_code)]
+pub struct GameliftFleet_Ec2InboundPermissionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftFleetEc2InboundPermissionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleetEc2InboundPermissionElRef {
-        GameliftFleetEc2InboundPermissionElRef {
+impl terrars::Ref for GameliftFleet_Ec2InboundPermissionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleet_Ec2InboundPermissionRef {
+        GameliftFleet_Ec2InboundPermissionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftFleetEc2InboundPermissionElRef {
+impl GameliftFleet_Ec2InboundPermissionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -764,14 +802,14 @@ impl GameliftFleetEc2InboundPermissionElRef {
 }
 
 #[derive(Serialize)]
-pub struct GameliftFleetResourceCreationLimitPolicyEl {
+pub struct GameliftFleet_ResourceCreationLimitPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     new_game_sessions_per_creator: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy_period_in_minutes: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GameliftFleetResourceCreationLimitPolicyEl {
+impl GameliftFleet_ResourceCreationLimitPolicy {
     #[doc = "Set the field `new_game_sessions_per_creator`.\n"]
     pub fn set_new_game_sessions_per_creator(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.new_game_sessions_per_creator = std::option::Option::Some(v.into());
@@ -785,8 +823,8 @@ impl GameliftFleetResourceCreationLimitPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftFleetResourceCreationLimitPolicyEl {
-    type O = terrars::BlockAssignable<GameliftFleetResourceCreationLimitPolicyEl>;
+impl terrars::ToListMappable for GameliftFleet_ResourceCreationLimitPolicy {
+    type O = terrars::BlockAssignable<GameliftFleet_ResourceCreationLimitPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -797,32 +835,34 @@ impl terrars::ToListMappable for GameliftFleetResourceCreationLimitPolicyEl {
     }
 }
 
-pub struct BuildGameliftFleetResourceCreationLimitPolicyEl {}
+pub struct BuildGameliftFleet_ResourceCreationLimitPolicy {}
 
-impl BuildGameliftFleetResourceCreationLimitPolicyEl {
-    pub fn build(self) -> GameliftFleetResourceCreationLimitPolicyEl {
-        GameliftFleetResourceCreationLimitPolicyEl {
+impl BuildGameliftFleet_ResourceCreationLimitPolicy {
+    pub fn build(self) -> GameliftFleet_ResourceCreationLimitPolicy {
+        GameliftFleet_ResourceCreationLimitPolicy {
             new_game_sessions_per_creator: core::default::Default::default(),
             policy_period_in_minutes: core::default::Default::default(),
         }
     }
 }
 
-pub struct GameliftFleetResourceCreationLimitPolicyElRef {
+#[allow(dead_code)]
+pub struct GameliftFleet_ResourceCreationLimitPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftFleetResourceCreationLimitPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleetResourceCreationLimitPolicyElRef {
-        GameliftFleetResourceCreationLimitPolicyElRef {
+impl terrars::Ref for GameliftFleet_ResourceCreationLimitPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleet_ResourceCreationLimitPolicyRef {
+        GameliftFleet_ResourceCreationLimitPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftFleetResourceCreationLimitPolicyElRef {
+impl GameliftFleet_ResourceCreationLimitPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -839,14 +879,14 @@ impl GameliftFleetResourceCreationLimitPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct GameliftFleetRuntimeConfigurationElServerProcessEl {
+pub struct GameliftFleet_RuntimeConfiguration_ServerProcess {
     concurrent_executions: terrars::PrimField<f64>,
     launch_path: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GameliftFleetRuntimeConfigurationElServerProcessEl {
+impl GameliftFleet_RuntimeConfiguration_ServerProcess {
     #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.parameters = std::option::Option::Some(v.into());
@@ -854,8 +894,8 @@ impl GameliftFleetRuntimeConfigurationElServerProcessEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftFleetRuntimeConfigurationElServerProcessEl {
-    type O = terrars::BlockAssignable<GameliftFleetRuntimeConfigurationElServerProcessEl>;
+impl terrars::ToListMappable for GameliftFleet_RuntimeConfiguration_ServerProcess {
+    type O = terrars::BlockAssignable<GameliftFleet_RuntimeConfiguration_ServerProcess>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -866,16 +906,16 @@ impl terrars::ToListMappable for GameliftFleetRuntimeConfigurationElServerProces
     }
 }
 
-pub struct BuildGameliftFleetRuntimeConfigurationElServerProcessEl {
+pub struct BuildGameliftFleet_RuntimeConfiguration_ServerProcess {
     #[doc = ""]
     pub concurrent_executions: terrars::PrimField<f64>,
     #[doc = ""]
     pub launch_path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGameliftFleetRuntimeConfigurationElServerProcessEl {
-    pub fn build(self) -> GameliftFleetRuntimeConfigurationElServerProcessEl {
-        GameliftFleetRuntimeConfigurationElServerProcessEl {
+impl BuildGameliftFleet_RuntimeConfiguration_ServerProcess {
+    pub fn build(self) -> GameliftFleet_RuntimeConfiguration_ServerProcess {
+        GameliftFleet_RuntimeConfiguration_ServerProcess {
             concurrent_executions: self.concurrent_executions,
             launch_path: self.launch_path,
             parameters: core::default::Default::default(),
@@ -883,24 +923,26 @@ impl BuildGameliftFleetRuntimeConfigurationElServerProcessEl {
     }
 }
 
-pub struct GameliftFleetRuntimeConfigurationElServerProcessElRef {
+#[allow(dead_code)]
+pub struct GameliftFleet_RuntimeConfiguration_ServerProcessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftFleetRuntimeConfigurationElServerProcessElRef {
+impl terrars::Ref for GameliftFleet_RuntimeConfiguration_ServerProcessRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GameliftFleetRuntimeConfigurationElServerProcessElRef {
-        GameliftFleetRuntimeConfigurationElServerProcessElRef {
+    ) -> GameliftFleet_RuntimeConfiguration_ServerProcessRef {
+        GameliftFleet_RuntimeConfiguration_ServerProcessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftFleetRuntimeConfigurationElServerProcessElRef {
+impl GameliftFleet_RuntimeConfiguration_ServerProcessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -922,22 +964,22 @@ impl GameliftFleetRuntimeConfigurationElServerProcessElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GameliftFleetRuntimeConfigurationElDynamic {
-    server_process: std::option::Option<terrars::DynamicBlock<GameliftFleetRuntimeConfigurationElServerProcessEl>>,
+struct GameliftFleet_RuntimeConfigurationDynamic {
+    server_process: std::option::Option<terrars::DynamicBlock<GameliftFleet_RuntimeConfiguration_ServerProcess>>,
 }
 
 #[derive(Serialize)]
-pub struct GameliftFleetRuntimeConfigurationEl {
+pub struct GameliftFleet_RuntimeConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     game_session_activation_timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_concurrent_game_session_activations: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    server_process: std::option::Option<std::vec::Vec<GameliftFleetRuntimeConfigurationElServerProcessEl>>,
-    dynamic: GameliftFleetRuntimeConfigurationElDynamic,
+    server_process: std::option::Option<std::vec::Vec<GameliftFleet_RuntimeConfiguration_ServerProcess>>,
+    dynamic: GameliftFleet_RuntimeConfigurationDynamic,
 }
 
-impl GameliftFleetRuntimeConfigurationEl {
+impl GameliftFleet_RuntimeConfiguration {
     #[doc = "Set the field `game_session_activation_timeout_seconds`.\n"]
     pub fn set_game_session_activation_timeout_seconds(
         mut self,
@@ -959,7 +1001,7 @@ impl GameliftFleetRuntimeConfigurationEl {
     #[doc = "Set the field `server_process`.\n"]
     pub fn set_server_process(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleetRuntimeConfigurationElServerProcessEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftFleet_RuntimeConfiguration_ServerProcess>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -973,8 +1015,8 @@ impl GameliftFleetRuntimeConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftFleetRuntimeConfigurationEl {
-    type O = terrars::BlockAssignable<GameliftFleetRuntimeConfigurationEl>;
+impl terrars::ToListMappable for GameliftFleet_RuntimeConfiguration {
+    type O = terrars::BlockAssignable<GameliftFleet_RuntimeConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -985,11 +1027,11 @@ impl terrars::ToListMappable for GameliftFleetRuntimeConfigurationEl {
     }
 }
 
-pub struct BuildGameliftFleetRuntimeConfigurationEl {}
+pub struct BuildGameliftFleet_RuntimeConfiguration {}
 
-impl BuildGameliftFleetRuntimeConfigurationEl {
-    pub fn build(self) -> GameliftFleetRuntimeConfigurationEl {
-        GameliftFleetRuntimeConfigurationEl {
+impl BuildGameliftFleet_RuntimeConfiguration {
+    pub fn build(self) -> GameliftFleet_RuntimeConfiguration {
+        GameliftFleet_RuntimeConfiguration {
             game_session_activation_timeout_seconds: core::default::Default::default(),
             max_concurrent_game_session_activations: core::default::Default::default(),
             server_process: core::default::Default::default(),
@@ -998,21 +1040,23 @@ impl BuildGameliftFleetRuntimeConfigurationEl {
     }
 }
 
-pub struct GameliftFleetRuntimeConfigurationElRef {
+#[allow(dead_code)]
+pub struct GameliftFleet_RuntimeConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftFleetRuntimeConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleetRuntimeConfigurationElRef {
-        GameliftFleetRuntimeConfigurationElRef {
+impl terrars::Ref for GameliftFleet_RuntimeConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleet_RuntimeConfigurationRef {
+        GameliftFleet_RuntimeConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftFleetRuntimeConfigurationElRef {
+impl GameliftFleet_RuntimeConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1034,20 +1078,20 @@ impl GameliftFleetRuntimeConfigurationElRef {
     }
 
     #[doc = "Get a reference to the value of field `server_process` after provisioning.\n"]
-    pub fn server_process(&self) -> terrars::ListRef<GameliftFleetRuntimeConfigurationElServerProcessElRef> {
+    pub fn server_process(&self) -> terrars::ListRef<GameliftFleet_RuntimeConfiguration_ServerProcessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_process", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GameliftFleetTimeoutsEl {
+pub struct GameliftFleet_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GameliftFleetTimeoutsEl {
+impl GameliftFleet_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1061,8 +1105,8 @@ impl GameliftFleetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftFleetTimeoutsEl {
-    type O = terrars::BlockAssignable<GameliftFleetTimeoutsEl>;
+impl terrars::ToListMappable for GameliftFleet_Timeouts {
+    type O = terrars::BlockAssignable<GameliftFleet_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1073,32 +1117,34 @@ impl terrars::ToListMappable for GameliftFleetTimeoutsEl {
     }
 }
 
-pub struct BuildGameliftFleetTimeoutsEl {}
+pub struct BuildGameliftFleet_Timeouts {}
 
-impl BuildGameliftFleetTimeoutsEl {
-    pub fn build(self) -> GameliftFleetTimeoutsEl {
-        GameliftFleetTimeoutsEl {
+impl BuildGameliftFleet_Timeouts {
+    pub fn build(self) -> GameliftFleet_Timeouts {
+        GameliftFleet_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct GameliftFleetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GameliftFleet_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftFleetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleetTimeoutsElRef {
-        GameliftFleetTimeoutsElRef {
+impl terrars::Ref for GameliftFleet_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftFleet_TimeoutsRef {
+        GameliftFleet_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftFleetTimeoutsElRef {
+impl GameliftFleet_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1112,14 +1158,4 @@ impl GameliftFleetTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GameliftFleetDynamic {
-    certificate_configuration: std::option::Option<terrars::DynamicBlock<GameliftFleetCertificateConfigurationEl>>,
-    ec2_inbound_permission: std::option::Option<terrars::DynamicBlock<GameliftFleetEc2InboundPermissionEl>>,
-    resource_creation_limit_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<GameliftFleetResourceCreationLimitPolicyEl>>,
-    runtime_configuration: std::option::Option<terrars::DynamicBlock<GameliftFleetRuntimeConfigurationEl>>,
 }

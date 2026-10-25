@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppmeshVirtualGatewayData {
+struct AppmeshVirtualGatewayData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,18 +27,20 @@ struct AppmeshVirtualGatewayData {
     mesh_owner: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spec: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecEl>>,
+    spec: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec>>,
     dynamic: AppmeshVirtualGatewayDynamic,
 }
 
 struct AppmeshVirtualGateway_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppmeshVirtualGatewayData>,
+    data: std::cell::RefCell<AppmeshVirtualGatewayData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl AppmeshVirtualGateway {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -167,7 +178,7 @@ impl AppmeshVirtualGateway {
     }
 
     #[doc = "Set the field `spec`.\n"]
-    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecEl>>) -> Self {
+    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().spec = std::option::Option::Some(v);
@@ -214,6 +225,12 @@ impl AppmeshVirtualGateway {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -230,7 +247,7 @@ impl AppmeshVirtualGateway {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualGateway_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
@@ -279,7 +296,7 @@ impl BuildAppmeshVirtualGateway {
         let out = AppmeshVirtualGateway(std::rc::Rc::new(AppmeshVirtualGateway_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppmeshVirtualGatewayData {
+            data: std::cell::RefCell::new(AppmeshVirtualGatewayData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -289,6 +306,7 @@ impl BuildAppmeshVirtualGateway {
                 mesh_name: self.mesh_name,
                 mesh_owner: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 spec: core::default::Default::default(),
@@ -358,6 +376,12 @@ impl AppmeshVirtualGatewayRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -374,22 +398,26 @@ impl AppmeshVirtualGatewayRef {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualGateway_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppmeshVirtualGatewayDynamic {
+    spec: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec>>,
+}
+
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File {
     certificate_chain: terrars::PrimField<std::string::String>,
     private_key: terrars::PrimField<std::string::String>,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl { }
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File { }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl {
-    type O =
-        terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -400,40 +428,42 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElCli
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File {
     #[doc = ""]
     pub certificate_chain: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub private_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File {
             certificate_chain: self.certificate_chain,
             private_key: self.private_key,
         }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_FileRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_FileRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_FileRef {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_FileRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileElRef {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_FileRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -450,15 +480,14 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateE
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds {
     secret_name: terrars::PrimField<std::string::String>,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl { }
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds { }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl {
-    type O =
-        terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -469,37 +498,37 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElCli
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds {
     #[doc = ""]
     pub secret_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl {
-            secret_name: self.secret_name,
-        }
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds { secret_name: self.secret_name }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_SdsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_SdsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_SdsRef {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_SdsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsElRef {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_SdsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -511,33 +540,21 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateE
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElDynamic {
-    file: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl>,
-    >,
-    sds: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl>,
-    >,
+struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_CertificateDynamic {
+    file: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File>>,
+    sds: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl {
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    file: std
-    ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl>>,
+    file: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sds: std
-    ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElDynamic,
+    sds: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
+    dynamic: AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_CertificateDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate {
     #[doc = "Set the field `file`.\n"]
     pub fn set_file(
         mut self,
@@ -546,12 +563,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateE
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileEl,
-                        >,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -572,12 +584,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateE
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsEl,
-                        >,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -591,8 +598,8 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateE
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -603,11 +610,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElCli
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate {}
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl {
+impl BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate {
             file: core::default::Default::default(),
             sds: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -615,57 +622,51 @@ impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertifi
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_CertificateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_CertificateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElRef {
+    ) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_CertificateRef {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_CertificateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElRef {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_CertificateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
-    pub fn file(
-        &self,
-    ) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElFileElRef> {
+    pub fn file(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_FileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sds` after provisioning.\n"]
-    pub fn sds(
-        &self,
-    ) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElSdsElRef> {
+    pub fn sds(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_SdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sds", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match {
     exact: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl { }
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match { }
 
-impl terrars
-::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl {
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match {
     type O =
-        terrars
-        ::BlockAssignable<
-            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl,
-        >;
+        terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -676,40 +677,37 @@ impl terrars
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match {
     #[doc = ""]
     pub exact: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl {
-    pub fn build(
-        self,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl {
-            exact: self.exact,
-        }
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match { exact: self.exact }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_MatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_MatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_MatchRef {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_MatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_MatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -721,33 +719,24 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElDynamic {
+struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNamesDynamic {
     match_: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<
-            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl,
-        >,
+        terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames {
     #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
     match_: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<
-            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl,
-        >,
-    >,
-    dynamic: AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElDynamic,
+    ::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match>>,
+    dynamic: AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNamesDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames {
     #[doc = "Set the field `match_`.\n"]
     pub fn set_match(
         mut self,
@@ -759,7 +748,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchEl,
+                            AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_Match,
                         >,
                     >,
     ) -> Self {
@@ -775,13 +764,8 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
     }
 }
 
-impl terrars
-::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl,
-        >;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -792,38 +776,37 @@ impl terrars
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames {}
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl {
-    pub fn build(
-        self,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames {
             match_: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNamesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNamesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNamesRef {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNamesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElRef {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNamesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -831,26 +814,21 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
     #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
     pub fn match_(
         &self,
-    ) -> terrars
-    ::ListRef<
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElMatchElRef,
-    > {
+    ) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames_MatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl {
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm {
     certificate_authority_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl { }
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm { }
 
-impl terrars
-::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl {
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm {
     type O =
-        terrars
-        ::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl>;
+        terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -861,37 +839,39 @@ impl terrars
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl {
+pub struct BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm {
     #[doc = ""]
     pub certificate_authority_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl {
+impl BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm {
             certificate_authority_arns: self.certificate_authority_arns,
         }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_AcmRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_AcmRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmElRef {
+    ) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_AcmRef {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_AcmRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmElRef {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_AcmRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -903,17 +883,14 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File {
     certificate_chain: terrars::PrimField<std::string::String>,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl { }
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File { }
 
-impl terrars
-::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl {
-    type O =
-        terrars
-        ::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -924,37 +901,37 @@ impl terrars
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File {
     #[doc = ""]
     pub certificate_chain: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl {
-            certificate_chain: self.certificate_chain,
-        }
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File { certificate_chain: self.certificate_chain }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_FileRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_FileRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_FileRef {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_FileRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileElRef {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_FileRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -965,107 +942,29 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
     }
 }
 
-#[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl {
-    secret_name: terrars::PrimField<std::string::String>,
-}
-
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl { }
-
-impl terrars
-::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl {
-    type O =
-        terrars
-        ::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl {
-    #[doc = ""]
-    pub secret_name: terrars::PrimField<std::string::String>,
-}
-
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl {
-            secret_name: self.secret_name,
-        }
-    }
-}
-
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `secret_name` after provisioning.\n"]
-    pub fn secret_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_name", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElDynamic {
+struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_TrustDynamic {
     acm: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl>,
-    >,
-    file: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl>,
-    >,
-    sds: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm>>,
+    file: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File>>,
+    sds: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl {
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     acm: std
     ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl>>,
+    ::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    file: std
-    ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl>>,
+    file: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sds: std
-    ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElDynamic,
+    sds: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
+    dynamic: AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_TrustDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust {
     #[doc = "Set the field `acm`.\n"]
     pub fn set_acm(
         mut self,
@@ -1077,7 +976,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmEl,
+                            AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_Acm,
                         >,
                     >,
     ) -> Self {
@@ -1100,12 +999,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileEl,
-                        >,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1126,12 +1020,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsEl,
-                        >,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1145,9 +1034,8 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl {
-    type O =
-        terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1158,11 +1046,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElCli
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust {}
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl {
+impl BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust {
             acm: core::default::Default::default(),
             file: core::default::Default::default(),
             sds: core::default::Default::default(),
@@ -1171,24 +1059,26 @@ impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidat
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_TrustRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_TrustRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElRef {
+    ) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_TrustRef {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_TrustRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElRef {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_TrustRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1196,61 +1086,45 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
     #[doc = "Get a reference to the value of field `acm` after provisioning.\n"]
     pub fn acm(
         &self,
-    ) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElAcmElRef> {
+    ) -> terrars::ListRef<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust_AcmRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.acm", self.base))
     }
 
     #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
-    pub fn file(
-        &self,
-    ) -> terrars
-    ::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElFileElRef> {
+    pub fn file(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_FileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sds` after provisioning.\n"]
-    pub fn sds(
-        &self,
-    ) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElSdsElRef> {
+    pub fn sds(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_SdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sds", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElDynamic {
+struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_ValidationDynamic {
     subject_alternative_names: std
     ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl,
-        >,
-    >,
+    ::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames>>,
     trust: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl {
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subject_alternative_names: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl>,
-    >,
+    ::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     trust: std
     ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElDynamic,
+    ::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust>>,
+    dynamic: AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_ValidationDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation {
     #[doc = "Set the field `subject_alternative_names`.\n"]
     pub fn set_subject_alternative_names(
         mut self,
@@ -1261,9 +1135,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesEl,
-                        >,
+                        ::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1288,7 +1160,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustEl,
+                            AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_Trust,
                         >,
                     >,
     ) -> Self {
@@ -1304,8 +1176,8 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1316,11 +1188,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElCli
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation {}
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl {
+impl BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation {
             subject_alternative_names: core::default::Default::default(),
             trust: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1328,24 +1200,26 @@ impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidat
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_ValidationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_ValidationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElRef {
+    ) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_ValidationRef {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_ValidationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElRef {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_ValidationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1353,33 +1227,30 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl
     #[doc = "Get a reference to the value of field `subject_alternative_names` after provisioning.\n"]
     pub fn subject_alternative_names(
         &self,
-    ) -> terrars
-    ::ListRef<
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElSubjectAlternativeNamesElRef,
-    > {
+    ) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNamesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subject_alternative_names", self.base))
     }
 
     #[doc = "Get a reference to the value of field `trust` after provisioning.\n"]
     pub fn trust(
         &self,
-    ) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElTrustElRef> {
+    ) -> terrars::ListRef<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation_TrustRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trust", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElDynamic {
+struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_TlsDynamic {
     certificate: std
     ::option
-    ::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl>>,
+    ::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate>>,
     validation: std
     ::option
-    ::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl>>,
+    ::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enforce: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1387,15 +1258,15 @@ pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate: std
     ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl>>,
+    ::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     validation: std
     ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElDynamic,
+    ::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation>>,
+    dynamic: AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_TlsDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls {
     #[doc = "Set the field `enforce`.\n"]
     pub fn set_enforce(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enforce = std::option::Option::Some(v.into());
@@ -1418,9 +1289,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateEl,
-                        >,
+                        ::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Certificate>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1444,7 +1313,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationEl>,
+                        ::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_Validation>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1459,8 +1328,8 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1471,11 +1340,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElCli
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls {}
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
+impl BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls {
             enforce: core::default::Default::default(),
             ports: core::default::Default::default(),
             certificate: core::default::Default::default(),
@@ -1485,24 +1354,26 @@ impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl {
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_TlsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_TlsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElRef {
+    ) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_TlsRef {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_TlsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElRef {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_TlsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1520,31 +1391,31 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElRef {
     #[doc = "Get a reference to the value of field `certificate` after provisioning.\n"]
     pub fn certificate(
         &self,
-    ) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElCertificateElRef> {
+    ) -> terrars::ListRef<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_CertificateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certificate", self.base))
     }
 
     #[doc = "Get a reference to the value of field `validation` after provisioning.\n"]
     pub fn validation(
         &self,
-    ) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElValidationElRef> {
+    ) -> terrars::ListRef<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls_ValidationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validation", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElDynamic {
-    tls: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl>>,
+struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicyDynamic {
+    tls: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl {
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tls: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElDynamic,
+    tls: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls>>,
+    dynamic: AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicyDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy {
     #[doc = "Set the field `tls`.\n"]
     pub fn set_tls(
         mut self,
@@ -1553,7 +1424,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_Tls>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1567,8 +1438,8 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1579,60 +1450,62 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsElCli
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy {}
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl {
+impl BuildAppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy {
             tls: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElRef {
+    ) -> AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicyRef {
+        AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElRef {
+impl AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `tls` after provisioning.\n"]
-    pub fn tls(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElTlsElRef> {
+    pub fn tls(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy_TlsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tls", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElBackendDefaultsElDynamic {
+struct AppmeshVirtualGateway_Spec_BackendDefaultsDynamic {
     client_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl>>,
+    ::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsEl {
+pub struct AppmeshVirtualGateway_Spec_BackendDefaults {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    client_policy: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElBackendDefaultsElDynamic,
+    client_policy: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy>>,
+    dynamic: AppmeshVirtualGateway_Spec_BackendDefaultsDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsEl {
+impl AppmeshVirtualGateway_Spec_BackendDefaults {
     #[doc = "Set the field `client_policy`.\n"]
     pub fn set_client_policy(
         mut self,
@@ -1641,7 +1514,7 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1655,8 +1528,8 @@ impl AppmeshVirtualGatewaySpecElBackendDefaultsEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_BackendDefaults {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1667,54 +1540,53 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElBackendDefaultsEl {
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElBackendDefaultsEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_BackendDefaults {}
 
-impl BuildAppmeshVirtualGatewaySpecElBackendDefaultsEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElBackendDefaultsEl {
-        AppmeshVirtualGatewaySpecElBackendDefaultsEl {
+impl BuildAppmeshVirtualGateway_Spec_BackendDefaults {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_BackendDefaults {
+        AppmeshVirtualGateway_Spec_BackendDefaults {
             client_policy: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElBackendDefaultsElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_BackendDefaultsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElBackendDefaultsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElBackendDefaultsElRef {
-        AppmeshVirtualGatewaySpecElBackendDefaultsElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_BackendDefaultsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualGateway_Spec_BackendDefaultsRef {
+        AppmeshVirtualGateway_Spec_BackendDefaultsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElBackendDefaultsElRef {
+impl AppmeshVirtualGateway_Spec_BackendDefaultsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `client_policy` after provisioning.\n"]
-    pub fn client_policy(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElClientPolicyElRef> {
+    pub fn client_policy(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_BackendDefaults_ClientPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_policy", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc {
     max_requests: terrars::PrimField<f64>,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl { }
+impl AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc { }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1725,35 +1597,37 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElConnection
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc {
     #[doc = ""]
     pub max_requests: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl {
-        AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl { max_requests: self.max_requests }
+impl BuildAppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc {
+        AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc { max_requests: self.max_requests }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_ConnectionPool_GrpcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_ConnectionPool_GrpcRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcElRef {
-        AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_ConnectionPool_GrpcRef {
+        AppmeshVirtualGateway_Spec_Listener_ConnectionPool_GrpcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcElRef {
+impl AppmeshVirtualGateway_Spec_Listener_ConnectionPool_GrpcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1765,13 +1639,13 @@ impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http {
     max_connections: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_pending_requests: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl {
+impl AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http {
     #[doc = "Set the field `max_pending_requests`.\n"]
     pub fn set_max_pending_requests(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_pending_requests = std::option::Option::Some(v.into());
@@ -1779,8 +1653,8 @@ impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1791,38 +1665,40 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElConnection
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http {
     #[doc = ""]
     pub max_connections: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl {
-        AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http {
+        AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http {
             max_connections: self.max_connections,
             max_pending_requests: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_ConnectionPool_HttpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_ConnectionPool_HttpRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpElRef {
-        AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_ConnectionPool_HttpRef {
+        AppmeshVirtualGateway_Spec_Listener_ConnectionPool_HttpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpElRef {
+impl AppmeshVirtualGateway_Spec_Listener_ConnectionPool_HttpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1839,14 +1715,14 @@ impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El {
+pub struct AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2 {
     max_requests: terrars::PrimField<f64>,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El { }
+impl AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2 { }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2 {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1857,35 +1733,37 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElConnection
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2 {
     #[doc = ""]
     pub max_requests: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El {
-        AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El { max_requests: self.max_requests }
+impl BuildAppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2 {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2 {
+        AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2 { max_requests: self.max_requests }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2ElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2ElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2Ref {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2ElRef {
-        AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2ElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2Ref {
+        AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2ElRef {
+impl AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1897,24 +1775,24 @@ impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2ElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElListenerElConnectionPoolElDynamic {
-    grpc: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl>>,
-    http: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl>>,
-    http2: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El>>,
+struct AppmeshVirtualGateway_Spec_Listener_ConnectionPoolDynamic {
+    grpc: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc>>,
+    http: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http>>,
+    http2: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_ConnectionPool {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    grpc: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl>>,
+    grpc: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl>>,
+    http: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http2: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El>>,
-    dynamic: AppmeshVirtualGatewaySpecElListenerElConnectionPoolElDynamic,
+    http2: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2>>,
+    dynamic: AppmeshVirtualGateway_Spec_Listener_ConnectionPoolDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
+impl AppmeshVirtualGateway_Spec_Listener_ConnectionPool {
     #[doc = "Set the field `grpc`.\n"]
     pub fn set_grpc(
         mut self,
@@ -1923,7 +1801,7 @@ impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Grpc>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1944,7 +1822,7 @@ impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1965,7 +1843,7 @@ impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2El>>,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1979,8 +1857,8 @@ impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_ConnectionPool {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_ConnectionPool>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1991,11 +1869,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElConnection
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_ConnectionPool {}
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
-        AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_ConnectionPool {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_ConnectionPool {
+        AppmeshVirtualGateway_Spec_Listener_ConnectionPool {
             grpc: core::default::Default::default(),
             http: core::default::Default::default(),
             http2: core::default::Default::default(),
@@ -2004,46 +1882,48 @@ impl BuildAppmeshVirtualGatewaySpecElListenerElConnectionPoolEl {
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElConnectionPoolElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_ConnectionPoolRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElConnectionPoolElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_ConnectionPoolRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElConnectionPoolElRef {
-        AppmeshVirtualGatewaySpecElListenerElConnectionPoolElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_ConnectionPoolRef {
+        AppmeshVirtualGateway_Spec_Listener_ConnectionPoolRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElConnectionPoolElRef {
+impl AppmeshVirtualGateway_Spec_Listener_ConnectionPoolRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `grpc` after provisioning.\n"]
-    pub fn grpc(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElGrpcElRef> {
+    pub fn grpc(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_GrpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.grpc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `http` after provisioning.\n"]
-    pub fn http(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttpElRef> {
+    pub fn http(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_HttpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http", self.base))
     }
 
     #[doc = "Get a reference to the value of field `http2` after provisioning.\n"]
-    pub fn http2(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElHttp2ElRef> {
+    pub fn http2(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_ConnectionPool_Http2Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http2", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_HealthCheck {
     healthy_threshold: terrars::PrimField<f64>,
     interval_millis: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2055,7 +1935,7 @@ pub struct AppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
     unhealthy_threshold: terrars::PrimField<f64>,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
+impl AppmeshVirtualGateway_Spec_Listener_HealthCheck {
     #[doc = "Set the field `path`.\n"]
     pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.path = std::option::Option::Some(v.into());
@@ -2069,8 +1949,8 @@ impl AppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElHealthCheckEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_HealthCheck {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_HealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2081,7 +1961,7 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElHealthChec
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_HealthCheck {
     #[doc = ""]
     pub healthy_threshold: terrars::PrimField<f64>,
     #[doc = ""]
@@ -2094,9 +1974,9 @@ pub struct BuildAppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
     pub unhealthy_threshold: terrars::PrimField<f64>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
-        AppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_HealthCheck {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_HealthCheck {
+        AppmeshVirtualGateway_Spec_Listener_HealthCheck {
             healthy_threshold: self.healthy_threshold,
             interval_millis: self.interval_millis,
             path: core::default::Default::default(),
@@ -2108,24 +1988,26 @@ impl BuildAppmeshVirtualGatewaySpecElListenerElHealthCheckEl {
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElHealthCheckElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_HealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElHealthCheckElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_HealthCheckRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElHealthCheckElRef {
-        AppmeshVirtualGatewaySpecElListenerElHealthCheckElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_HealthCheckRef {
+        AppmeshVirtualGateway_Spec_Listener_HealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElHealthCheckElRef {
+impl AppmeshVirtualGateway_Spec_Listener_HealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2167,15 +2049,15 @@ impl AppmeshVirtualGatewaySpecElListenerElHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElPortMappingEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_PortMapping {
     port: terrars::PrimField<f64>,
     protocol: terrars::PrimField<std::string::String>,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElPortMappingEl { }
+impl AppmeshVirtualGateway_Spec_Listener_PortMapping { }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElPortMappingEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElPortMappingEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_PortMapping {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_PortMapping>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2186,40 +2068,42 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElPortMappin
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElPortMappingEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_PortMapping {
     #[doc = ""]
     pub port: terrars::PrimField<f64>,
     #[doc = ""]
     pub protocol: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElPortMappingEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElPortMappingEl {
-        AppmeshVirtualGatewaySpecElListenerElPortMappingEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_PortMapping {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_PortMapping {
+        AppmeshVirtualGateway_Spec_Listener_PortMapping {
             port: self.port,
             protocol: self.protocol,
         }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElPortMappingElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_PortMappingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElPortMappingElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_PortMappingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElPortMappingElRef {
-        AppmeshVirtualGatewaySpecElListenerElPortMappingElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_PortMappingRef {
+        AppmeshVirtualGateway_Spec_Listener_PortMappingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElPortMappingElRef {
+impl AppmeshVirtualGateway_Spec_Listener_PortMappingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2236,14 +2120,14 @@ impl AppmeshVirtualGatewaySpecElListenerElPortMappingElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm {
     certificate_arn: terrars::PrimField<std::string::String>,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl { }
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm { }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2254,35 +2138,37 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElCerti
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm {
     #[doc = ""]
     pub certificate_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl { certificate_arn: self.certificate_arn }
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm { certificate_arn: self.certificate_arn }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_AcmRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_AcmRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_AcmRef {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_AcmRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmElRef {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_AcmRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2293,152 +2179,25 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl {
-    certificate_chain: terrars::PrimField<std::string::String>,
-    private_key: terrars::PrimField<std::string::String>,
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl { }
-
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl {
-    #[doc = ""]
-    pub certificate_chain: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub private_key: terrars::PrimField<std::string::String>,
-}
-
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl {
-            certificate_chain: self.certificate_chain,
-            private_key: self.private_key,
-        }
-    }
-}
-
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `certificate_chain` after provisioning.\n"]
-    pub fn certificate_chain(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_chain", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `private_key` after provisioning.\n"]
-    pub fn private_key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl {
-    secret_name: terrars::PrimField<std::string::String>,
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl { }
-
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl {
-    #[doc = ""]
-    pub secret_name: terrars::PrimField<std::string::String>,
-}
-
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl { secret_name: self.secret_name }
-    }
-}
-
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `secret_name` after provisioning.\n"]
-    pub fn secret_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_name", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElDynamic {
-    acm: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl>>,
-    file: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl>>,
-    sds: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl>>,
+struct AppmeshVirtualGateway_Spec_Listener_Tls_CertificateDynamic {
+    acm: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm>>,
+    file: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File>>,
+    sds: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Certificate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    acm: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl>>,
+    acm: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    file: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl>>,
+    file: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sds: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElDynamic,
+    sds: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
+    dynamic: AppmeshVirtualGateway_Spec_Listener_Tls_CertificateDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Certificate {
     #[doc = "Set the field `acm`.\n"]
     pub fn set_acm(
         mut self,
@@ -2447,7 +2206,7 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Acm>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2468,7 +2227,7 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_File>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2489,7 +2248,7 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2503,8 +2262,8 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls_Certificate {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2515,11 +2274,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElCerti
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls_Certificate {}
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls_Certificate {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls_Certificate {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Certificate {
             acm: core::default::Default::default(),
             file: core::default::Default::default(),
             sds: core::default::Default::default(),
@@ -2528,343 +2287,62 @@ impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl {
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_CertificateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_Tls_CertificateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_Tls_CertificateRef {
+        AppmeshVirtualGateway_Spec_Listener_Tls_CertificateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElRef {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_CertificateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `acm` after provisioning.\n"]
-    pub fn acm(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElAcmElRef> {
+    pub fn acm(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_AcmRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.acm", self.base))
     }
 
     #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
-    pub fn file(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElFileElRef> {
+    pub fn file(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_FileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sds` after provisioning.\n"]
-    pub fn sds(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElSdsElRef> {
+    pub fn sds(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_SdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sds", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl {
-    exact: terrars::SetField<terrars::PrimField<std::string::String>>,
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl { }
-
-impl terrars
-::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl {
-    type O =
-        terrars
-        ::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl {
-    #[doc = ""]
-    pub exact: terrars::SetField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl { exact: self.exact }
-    }
-}
-
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `exact` after provisioning.\n"]
-    pub fn exact(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.exact", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElDynamic {
-    match_: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl>,
-    >,
+struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_TrustDynamic {
+    file: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File>>,
+    sds: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl {
-    #[serde(rename = "match", skip_serializing_if = "std::option::Option::is_none")]
-    match_: std
-    ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElDynamic,
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl {
-    #[doc = "Set the field `match_`.\n"]
-    pub fn set_match(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.match_ = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.match_ = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl {
-    type O =
-        terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl {}
-
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl {
-            match_: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `match_` after provisioning.\n"]
-    pub fn match_(
-        &self,
-    ) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElMatchElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.match", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl {
-    certificate_chain: terrars::PrimField<std::string::String>,
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl { }
-
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl {
-    #[doc = ""]
-    pub certificate_chain: terrars::PrimField<std::string::String>,
-}
-
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl {
-            certificate_chain: self.certificate_chain,
-        }
-    }
-}
-
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `certificate_chain` after provisioning.\n"]
-    pub fn certificate_chain(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_chain", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl {
-    secret_name: terrars::PrimField<std::string::String>,
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl { }
-
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl {
-    #[doc = ""]
-    pub secret_name: terrars::PrimField<std::string::String>,
-}
-
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl { secret_name: self.secret_name }
-    }
-}
-
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `secret_name` after provisioning.\n"]
-    pub fn secret_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_name", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElDynamic {
-    file: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl>>,
-    sds: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl>>,
-}
-
-#[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    file: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl>>,
+    file: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sds: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElDynamic,
+    sds: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
+    dynamic: AppmeshVirtualGateway_Spec_Listener_Tls_Validation_TrustDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust {
     #[doc = "Set the field `file`.\n"]
     pub fn set_file(
         mut self,
@@ -2873,9 +2351,7 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_File>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2896,9 +2372,7 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_Sds>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2912,8 +2386,8 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2924,11 +2398,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElValid
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust {}
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust {
             file: core::default::Default::default(),
             sds: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2936,61 +2410,61 @@ impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl {
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation_TrustRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_Tls_Validation_TrustRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_Tls_Validation_TrustRef {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Validation_TrustRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElRef {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Validation_TrustRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
-    pub fn file(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElFileElRef> {
+    pub fn file(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust_FileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sds` after provisioning.\n"]
-    pub fn sds(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElSdsElRef> {
+    pub fn sds(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate_SdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sds", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElDynamic {
+struct AppmeshVirtualGateway_Spec_Listener_Tls_ValidationDynamic {
     subject_alternative_names: std
     ::option
-    ::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl>>,
-    trust: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl>>,
+    ::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames>>,
+    trust: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_Validation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subject_alternative_names: std
     ::option
-    ::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl>>,
+    ::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trust: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElListenerElTlsElValidationElDynamic,
+    trust: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust>>,
+    dynamic: AppmeshVirtualGateway_Spec_Listener_Tls_ValidationDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_Validation {
     #[doc = "Set the field `subject_alternative_names`.\n"]
     pub fn set_subject_alternative_names(
         mut self,
@@ -3001,9 +2475,7 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesEl,
-                        >,
+                        ::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNames>,
                     >,
     ) -> Self {
         match v.into() {
@@ -3025,7 +2497,7 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustEl>>,
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_Trust>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3039,8 +2511,8 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls_Validation {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3051,11 +2523,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsElValid
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation {}
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls_Validation {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls_Validation {
+        AppmeshVirtualGateway_Spec_Listener_Tls_Validation {
             subject_alternative_names: core::default::Default::default(),
             trust: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3063,24 +2535,26 @@ impl BuildAppmeshVirtualGatewaySpecElListenerElTlsElValidationEl {
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElValidationElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls_ValidationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElValidationElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_Tls_ValidationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElListenerElTlsElValidationElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElValidationElRef {
+    ) -> AppmeshVirtualGateway_Spec_Listener_Tls_ValidationRef {
+        AppmeshVirtualGateway_Spec_Listener_Tls_ValidationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElRef {
+impl AppmeshVirtualGateway_Spec_Listener_Tls_ValidationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3088,42 +2562,37 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElValidationElRef {
     #[doc = "Get a reference to the value of field `subject_alternative_names` after provisioning.\n"]
     pub fn subject_alternative_names(
         &self,
-    ) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElSubjectAlternativeNamesElRef> {
+    ) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_SubjectAlternativeNamesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subject_alternative_names", self.base))
     }
 
     #[doc = "Get a reference to the value of field `trust` after provisioning.\n"]
-    pub fn trust(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElTrustElRef> {
+    pub fn trust(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_Validation_TrustRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trust", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElListenerElTlsElDynamic {
-    certificate: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl>>,
-    validation: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl>>,
+struct AppmeshVirtualGateway_Spec_Listener_TlsDynamic {
+    certificate: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate>>,
+    validation: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls_Validation>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsEl {
+pub struct AppmeshVirtualGateway_Spec_Listener_Tls {
     mode: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    certificate: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl>>,
+    certificate: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    validation: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElListenerElTlsElDynamic,
+    validation: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls_Validation>>,
+    dynamic: AppmeshVirtualGateway_Spec_Listener_TlsDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsEl {
+impl AppmeshVirtualGateway_Spec_Listener_Tls {
     #[doc = "Set the field `certificate`.\n"]
     pub fn set_certificate(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Certificate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3139,7 +2608,7 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsEl {
     #[doc = "Set the field `validation`.\n"]
     pub fn set_validation(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsElValidationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls_Validation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3153,8 +2622,8 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener_Tls {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3165,14 +2634,14 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerElTlsEl {
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerElTlsEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Listener_Tls {
     #[doc = ""]
     pub mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElListenerElTlsEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerElTlsEl {
-        AppmeshVirtualGatewaySpecElListenerElTlsEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener_Tls {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener_Tls {
+        AppmeshVirtualGateway_Spec_Listener_Tls {
             mode: self.mode,
             certificate: core::default::Default::default(),
             validation: core::default::Default::default(),
@@ -3181,21 +2650,23 @@ impl BuildAppmeshVirtualGatewaySpecElListenerElTlsEl {
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElTlsElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Listener_TlsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElTlsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualGatewaySpecElListenerElTlsElRef {
-        AppmeshVirtualGatewaySpecElListenerElTlsElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Listener_TlsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualGateway_Spec_Listener_TlsRef {
+        AppmeshVirtualGateway_Spec_Listener_TlsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElTlsElRef {
+impl AppmeshVirtualGateway_Spec_Listener_TlsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3206,44 +2677,42 @@ impl AppmeshVirtualGatewaySpecElListenerElTlsElRef {
     }
 
     #[doc = "Get a reference to the value of field `certificate` after provisioning.\n"]
-    pub fn certificate(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElCertificateElRef> {
+    pub fn certificate(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_CertificateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.certificate", self.base))
     }
 
     #[doc = "Get a reference to the value of field `validation` after provisioning.\n"]
-    pub fn validation(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElValidationElRef> {
+    pub fn validation(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_Tls_ValidationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validation", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElListenerElDynamic {
-    connection_pool: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl>>,
-    health_check: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElHealthCheckEl>>,
-    port_mapping: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElPortMappingEl>>,
-    tls: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerElTlsEl>>,
+struct AppmeshVirtualGateway_Spec_ListenerDynamic {
+    connection_pool: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_ConnectionPool>>,
+    health_check: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_HealthCheck>>,
+    port_mapping: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_PortMapping>>,
+    tls: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener_Tls>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElListenerEl {
+pub struct AppmeshVirtualGateway_Spec_Listener {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    connection_pool: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl>>,
+    connection_pool: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_ConnectionPool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    health_check: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElHealthCheckEl>>,
+    health_check: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_HealthCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_mapping: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElPortMappingEl>>,
+    port_mapping: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_PortMapping>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tls: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerElTlsEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElListenerElDynamic,
+    tls: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener_Tls>>,
+    dynamic: AppmeshVirtualGateway_Spec_ListenerDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElListenerEl {
+impl AppmeshVirtualGateway_Spec_Listener {
     #[doc = "Set the field `connection_pool`.\n"]
     pub fn set_connection_pool(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElConnectionPoolEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_ConnectionPool>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3259,7 +2728,7 @@ impl AppmeshVirtualGatewaySpecElListenerEl {
     #[doc = "Set the field `health_check`.\n"]
     pub fn set_health_check(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElHealthCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_HealthCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3275,7 +2744,7 @@ impl AppmeshVirtualGatewaySpecElListenerEl {
     #[doc = "Set the field `port_mapping`.\n"]
     pub fn set_port_mapping(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElPortMappingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_PortMapping>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3291,7 +2760,7 @@ impl AppmeshVirtualGatewaySpecElListenerEl {
     #[doc = "Set the field `tls`.\n"]
     pub fn set_tls(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerElTlsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener_Tls>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3305,8 +2774,8 @@ impl AppmeshVirtualGatewaySpecElListenerEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Listener {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3317,11 +2786,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElListenerEl {
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElListenerEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_Listener {}
 
-impl BuildAppmeshVirtualGatewaySpecElListenerEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElListenerEl {
-        AppmeshVirtualGatewaySpecElListenerEl {
+impl BuildAppmeshVirtualGateway_Spec_Listener {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Listener {
+        AppmeshVirtualGateway_Spec_Listener {
             connection_pool: core::default::Default::default(),
             health_check: core::default::Default::default(),
             port_mapping: core::default::Default::default(),
@@ -3331,55 +2800,58 @@ impl BuildAppmeshVirtualGatewaySpecElListenerEl {
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElListenerElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_ListenerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElListenerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualGatewaySpecElListenerElRef {
-        AppmeshVirtualGatewaySpecElListenerElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_ListenerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualGateway_Spec_ListenerRef {
+        AppmeshVirtualGateway_Spec_ListenerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElListenerElRef {
+impl AppmeshVirtualGateway_Spec_ListenerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `connection_pool` after provisioning.\n"]
-    pub fn connection_pool(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElConnectionPoolElRef> {
+    pub fn connection_pool(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_ConnectionPoolRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connection_pool", self.base))
     }
 
     #[doc = "Get a reference to the value of field `health_check` after provisioning.\n"]
-    pub fn health_check(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElHealthCheckElRef> {
+    pub fn health_check(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check", self.base))
     }
 
     #[doc = "Get a reference to the value of field `port_mapping` after provisioning.\n"]
-    pub fn port_mapping(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElPortMappingElRef> {
+    pub fn port_mapping(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_PortMappingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.port_mapping", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tls` after provisioning.\n"]
-    pub fn tls(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElTlsElRef> {
+    pub fn tls(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Listener_TlsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tls", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl {
-    path: terrars::PrimField<std::string::String>,
+pub struct AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json {
+    key: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
-impl AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl { }
+impl AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json { }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3390,35 +2862,242 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElLoggingElAccessLogEl
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl {
+pub struct BuildAppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json {
     #[doc = ""]
-    pub path: terrars::PrimField<std::string::String>,
+    pub key: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl {
-        AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl { path: self.path }
+impl BuildAppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json {
+        AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json {
+            key: self.key,
+            value: self.value,
+        }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_JsonRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_JsonRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileElRef {
-        AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileElRef {
+    ) -> AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_JsonRef {
+        AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_JsonRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileElRef {
+impl AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_JsonRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppmeshVirtualGateway_Spec_Logging_AccessLog_File_FormatDynamic {
+    json: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json>>,
+}
+
+#[derive(Serialize)]
+pub struct AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    text: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    json: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json>>,
+    dynamic: AppmeshVirtualGateway_Spec_Logging_AccessLog_File_FormatDynamic,
+}
+
+impl AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format {
+    #[doc = "Set the field `text`.\n"]
+    pub fn set_text(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.text = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `json`.\n"]
+    pub fn set_json(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_Json>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.json = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.json = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format {}
+
+impl BuildAppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format {
+        AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format {
+            text: core::default::Default::default(),
+            json: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Logging_AccessLog_File_FormatRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Logging_AccessLog_File_FormatRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppmeshVirtualGateway_Spec_Logging_AccessLog_File_FormatRef {
+        AppmeshVirtualGateway_Spec_Logging_AccessLog_File_FormatRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppmeshVirtualGateway_Spec_Logging_AccessLog_File_FormatRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `text` after provisioning.\n"]
+    pub fn text(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.text", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `json` after provisioning.\n"]
+    pub fn json(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format_JsonRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.json", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AppmeshVirtualGateway_Spec_Logging_AccessLog_FileDynamic {
+    format: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format>>,
+}
+
+#[derive(Serialize)]
+pub struct AppmeshVirtualGateway_Spec_Logging_AccessLog_File {
+    path: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    format: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format>>,
+    dynamic: AppmeshVirtualGateway_Spec_Logging_AccessLog_FileDynamic,
+}
+
+impl AppmeshVirtualGateway_Spec_Logging_AccessLog_File {
+    #[doc = "Set the field `format`.\n"]
+    pub fn set_format(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_Format>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.format = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.format = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Logging_AccessLog_File {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging_AccessLog_File>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppmeshVirtualGateway_Spec_Logging_AccessLog_File {
+    #[doc = ""]
+    pub path: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppmeshVirtualGateway_Spec_Logging_AccessLog_File {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Logging_AccessLog_File {
+        AppmeshVirtualGateway_Spec_Logging_AccessLog_File {
+            path: self.path,
+            format: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Logging_AccessLog_FileRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Logging_AccessLog_FileRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppmeshVirtualGateway_Spec_Logging_AccessLog_FileRef {
+        AppmeshVirtualGateway_Spec_Logging_AccessLog_FileRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppmeshVirtualGateway_Spec_Logging_AccessLog_FileRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3427,25 +3106,30 @@ impl AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileElRef {
     pub fn path(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.path", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `format` after provisioning.\n"]
+    pub fn format(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Logging_AccessLog_File_FormatRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.format", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElLoggingElAccessLogElDynamic {
-    file: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl>>,
+struct AppmeshVirtualGateway_Spec_Logging_AccessLogDynamic {
+    file: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Logging_AccessLog_File>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElLoggingElAccessLogEl {
+pub struct AppmeshVirtualGateway_Spec_Logging_AccessLog {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    file: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElLoggingElAccessLogElDynamic,
+    file: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Logging_AccessLog_File>>,
+    dynamic: AppmeshVirtualGateway_Spec_Logging_AccessLogDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElLoggingElAccessLogEl {
+impl AppmeshVirtualGateway_Spec_Logging_AccessLog {
     #[doc = "Set the field `file`.\n"]
     pub fn set_file(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging_AccessLog_File>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3459,8 +3143,8 @@ impl AppmeshVirtualGatewaySpecElLoggingElAccessLogEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElLoggingElAccessLogEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElLoggingElAccessLogEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Logging_AccessLog {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging_AccessLog>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3471,62 +3155,64 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElLoggingElAccessLogEl
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElLoggingElAccessLogEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_Logging_AccessLog {}
 
-impl BuildAppmeshVirtualGatewaySpecElLoggingElAccessLogEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElLoggingElAccessLogEl {
-        AppmeshVirtualGatewaySpecElLoggingElAccessLogEl {
+impl BuildAppmeshVirtualGateway_Spec_Logging_AccessLog {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Logging_AccessLog {
+        AppmeshVirtualGateway_Spec_Logging_AccessLog {
             file: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElLoggingElAccessLogElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_Logging_AccessLogRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElLoggingElAccessLogElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_Logging_AccessLogRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualGatewaySpecElLoggingElAccessLogElRef {
-        AppmeshVirtualGatewaySpecElLoggingElAccessLogElRef {
+    ) -> AppmeshVirtualGateway_Spec_Logging_AccessLogRef {
+        AppmeshVirtualGateway_Spec_Logging_AccessLogRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElLoggingElAccessLogElRef {
+impl AppmeshVirtualGateway_Spec_Logging_AccessLogRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `file` after provisioning.\n"]
-    pub fn file(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElLoggingElAccessLogElFileElRef> {
+    pub fn file(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Logging_AccessLog_FileRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElLoggingElDynamic {
-    access_log: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElLoggingElAccessLogEl>>,
+struct AppmeshVirtualGateway_Spec_LoggingDynamic {
+    access_log: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Logging_AccessLog>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecElLoggingEl {
+pub struct AppmeshVirtualGateway_Spec_Logging {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_log: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElLoggingElAccessLogEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElLoggingElDynamic,
+    access_log: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Logging_AccessLog>>,
+    dynamic: AppmeshVirtualGateway_Spec_LoggingDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecElLoggingEl {
+impl AppmeshVirtualGateway_Spec_Logging {
     #[doc = "Set the field `access_log`.\n"]
     pub fn set_access_log(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElLoggingElAccessLogEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging_AccessLog>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3540,8 +3226,8 @@ impl AppmeshVirtualGatewaySpecElLoggingEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElLoggingEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecElLoggingEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec_Logging {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3552,65 +3238,67 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecElLoggingEl {
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecElLoggingEl {}
+pub struct BuildAppmeshVirtualGateway_Spec_Logging {}
 
-impl BuildAppmeshVirtualGatewaySpecElLoggingEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecElLoggingEl {
-        AppmeshVirtualGatewaySpecElLoggingEl {
+impl BuildAppmeshVirtualGateway_Spec_Logging {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec_Logging {
+        AppmeshVirtualGateway_Spec_Logging {
             access_log: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElLoggingElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_Spec_LoggingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElLoggingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualGatewaySpecElLoggingElRef {
-        AppmeshVirtualGatewaySpecElLoggingElRef {
+impl terrars::Ref for AppmeshVirtualGateway_Spec_LoggingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualGateway_Spec_LoggingRef {
+        AppmeshVirtualGateway_Spec_LoggingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElLoggingElRef {
+impl AppmeshVirtualGateway_Spec_LoggingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `access_log` after provisioning.\n"]
-    pub fn access_log(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElLoggingElAccessLogElRef> {
+    pub fn access_log(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_Logging_AccessLogRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_log", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualGatewaySpecElDynamic {
-    backend_defaults: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElBackendDefaultsEl>>,
-    listener: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElListenerEl>>,
-    logging: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecElLoggingEl>>,
+struct AppmeshVirtualGateway_SpecDynamic {
+    backend_defaults: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_BackendDefaults>>,
+    listener: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Listener>>,
+    logging: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGateway_Spec_Logging>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualGatewaySpecEl {
+pub struct AppmeshVirtualGateway_Spec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    backend_defaults: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElBackendDefaultsEl>>,
+    backend_defaults: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_BackendDefaults>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    listener: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElListenerEl>>,
+    listener: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Listener>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging: std::option::Option<std::vec::Vec<AppmeshVirtualGatewaySpecElLoggingEl>>,
-    dynamic: AppmeshVirtualGatewaySpecElDynamic,
+    logging: std::option::Option<std::vec::Vec<AppmeshVirtualGateway_Spec_Logging>>,
+    dynamic: AppmeshVirtualGateway_SpecDynamic,
 }
 
-impl AppmeshVirtualGatewaySpecEl {
+impl AppmeshVirtualGateway_Spec {
     #[doc = "Set the field `backend_defaults`.\n"]
     pub fn set_backend_defaults(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElBackendDefaultsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_BackendDefaults>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3626,7 +3314,7 @@ impl AppmeshVirtualGatewaySpecEl {
     #[doc = "Set the field `listener`.\n"]
     pub fn set_listener(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElListenerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Listener>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3642,7 +3330,7 @@ impl AppmeshVirtualGatewaySpecEl {
     #[doc = "Set the field `logging`.\n"]
     pub fn set_logging(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGatewaySpecElLoggingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualGateway_Spec_Logging>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3656,8 +3344,8 @@ impl AppmeshVirtualGatewaySpecEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualGatewaySpecEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualGatewaySpecEl>;
+impl terrars::ToListMappable for AppmeshVirtualGateway_Spec {
+    type O = terrars::BlockAssignable<AppmeshVirtualGateway_Spec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3668,11 +3356,11 @@ impl terrars::ToListMappable for AppmeshVirtualGatewaySpecEl {
     }
 }
 
-pub struct BuildAppmeshVirtualGatewaySpecEl {}
+pub struct BuildAppmeshVirtualGateway_Spec {}
 
-impl BuildAppmeshVirtualGatewaySpecEl {
-    pub fn build(self) -> AppmeshVirtualGatewaySpecEl {
-        AppmeshVirtualGatewaySpecEl {
+impl BuildAppmeshVirtualGateway_Spec {
+    pub fn build(self) -> AppmeshVirtualGateway_Spec {
+        AppmeshVirtualGateway_Spec {
             backend_defaults: core::default::Default::default(),
             listener: core::default::Default::default(),
             logging: core::default::Default::default(),
@@ -3681,42 +3369,39 @@ impl BuildAppmeshVirtualGatewaySpecEl {
     }
 }
 
-pub struct AppmeshVirtualGatewaySpecElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualGateway_SpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualGatewaySpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualGatewaySpecElRef {
-        AppmeshVirtualGatewaySpecElRef {
+impl terrars::Ref for AppmeshVirtualGateway_SpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualGateway_SpecRef {
+        AppmeshVirtualGateway_SpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualGatewaySpecElRef {
+impl AppmeshVirtualGateway_SpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `backend_defaults` after provisioning.\n"]
-    pub fn backend_defaults(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElBackendDefaultsElRef> {
+    pub fn backend_defaults(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_BackendDefaultsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.backend_defaults", self.base))
     }
 
     #[doc = "Get a reference to the value of field `listener` after provisioning.\n"]
-    pub fn listener(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElListenerElRef> {
+    pub fn listener(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_ListenerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.listener", self.base))
     }
 
     #[doc = "Get a reference to the value of field `logging` after provisioning.\n"]
-    pub fn logging(&self) -> terrars::ListRef<AppmeshVirtualGatewaySpecElLoggingElRef> {
+    pub fn logging(&self) -> terrars::ListRef<AppmeshVirtualGateway_Spec_LoggingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshVirtualGatewayDynamic {
-    spec: std::option::Option<terrars::DynamicBlock<AppmeshVirtualGatewaySpecEl>>,
 }

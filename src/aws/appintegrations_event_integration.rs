@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppintegrationsEventIntegrationData {
+struct AppintegrationsEventIntegrationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,18 +27,20 @@ struct AppintegrationsEventIntegrationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    event_filter: std::option::Option<std::vec::Vec<AppintegrationsEventIntegrationEventFilterEl>>,
+    event_filter: std::option::Option<std::vec::Vec<AppintegrationsEventIntegration_EventFilter>>,
     dynamic: AppintegrationsEventIntegrationDynamic,
 }
 
 struct AppintegrationsEventIntegration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppintegrationsEventIntegrationData>,
+    data: std::cell::RefCell<AppintegrationsEventIntegrationData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl AppintegrationsEventIntegration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -169,7 +180,7 @@ impl AppintegrationsEventIntegration {
     #[doc = "Set the field `event_filter`.\n"]
     pub fn set_event_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppintegrationsEventIntegrationEventFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppintegrationsEventIntegration_EventFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -207,6 +218,12 @@ impl AppintegrationsEventIntegration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -218,7 +235,7 @@ impl AppintegrationsEventIntegration {
     }
 
     #[doc = "Get a reference to the value of field `event_filter` after provisioning.\n"]
-    pub fn event_filter(&self) -> terrars::ListRef<AppintegrationsEventIntegrationEventFilterElRef> {
+    pub fn event_filter(&self) -> terrars::ListRef<AppintegrationsEventIntegration_EventFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_filter", self.extract_ref()))
     }
 }
@@ -267,7 +284,7 @@ impl BuildAppintegrationsEventIntegration {
         let out = AppintegrationsEventIntegration(std::rc::Rc::new(AppintegrationsEventIntegration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppintegrationsEventIntegrationData {
+            data: std::cell::RefCell::new(AppintegrationsEventIntegrationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -277,6 +294,7 @@ impl BuildAppintegrationsEventIntegration {
                 eventbridge_bus: self.eventbridge_bus,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 event_filter: core::default::Default::default(),
@@ -336,6 +354,12 @@ impl AppintegrationsEventIntegrationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -347,20 +371,25 @@ impl AppintegrationsEventIntegrationRef {
     }
 
     #[doc = "Get a reference to the value of field `event_filter` after provisioning.\n"]
-    pub fn event_filter(&self) -> terrars::ListRef<AppintegrationsEventIntegrationEventFilterElRef> {
+    pub fn event_filter(&self) -> terrars::ListRef<AppintegrationsEventIntegration_EventFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_filter", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppintegrationsEventIntegrationDynamic {
+    event_filter: std::option::Option<terrars::DynamicBlock<AppintegrationsEventIntegration_EventFilter>>,
+}
+
 #[derive(Serialize)]
-pub struct AppintegrationsEventIntegrationEventFilterEl {
+pub struct AppintegrationsEventIntegration_EventFilter {
     source: terrars::PrimField<std::string::String>,
 }
 
-impl AppintegrationsEventIntegrationEventFilterEl { }
+impl AppintegrationsEventIntegration_EventFilter { }
 
-impl terrars::ToListMappable for AppintegrationsEventIntegrationEventFilterEl {
-    type O = terrars::BlockAssignable<AppintegrationsEventIntegrationEventFilterEl>;
+impl terrars::ToListMappable for AppintegrationsEventIntegration_EventFilter {
+    type O = terrars::BlockAssignable<AppintegrationsEventIntegration_EventFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -371,35 +400,37 @@ impl terrars::ToListMappable for AppintegrationsEventIntegrationEventFilterEl {
     }
 }
 
-pub struct BuildAppintegrationsEventIntegrationEventFilterEl {
+pub struct BuildAppintegrationsEventIntegration_EventFilter {
     #[doc = ""]
     pub source: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppintegrationsEventIntegrationEventFilterEl {
-    pub fn build(self) -> AppintegrationsEventIntegrationEventFilterEl {
-        AppintegrationsEventIntegrationEventFilterEl { source: self.source }
+impl BuildAppintegrationsEventIntegration_EventFilter {
+    pub fn build(self) -> AppintegrationsEventIntegration_EventFilter {
+        AppintegrationsEventIntegration_EventFilter { source: self.source }
     }
 }
 
-pub struct AppintegrationsEventIntegrationEventFilterElRef {
+#[allow(dead_code)]
+pub struct AppintegrationsEventIntegration_EventFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppintegrationsEventIntegrationEventFilterElRef {
+impl terrars::Ref for AppintegrationsEventIntegration_EventFilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppintegrationsEventIntegrationEventFilterElRef {
-        AppintegrationsEventIntegrationEventFilterElRef {
+    ) -> AppintegrationsEventIntegration_EventFilterRef {
+        AppintegrationsEventIntegration_EventFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppintegrationsEventIntegrationEventFilterElRef {
+impl AppintegrationsEventIntegration_EventFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -408,9 +439,4 @@ impl AppintegrationsEventIntegrationEventFilterElRef {
     pub fn source(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppintegrationsEventIntegrationDynamic {
-    event_filter: std::option::Option<terrars::DynamicBlock<AppintegrationsEventIntegrationEventFilterEl>>,
 }

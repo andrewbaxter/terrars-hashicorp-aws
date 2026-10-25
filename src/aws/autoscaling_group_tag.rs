@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AutoscalingGroupTagData {
+struct AutoscalingGroupTagData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct AutoscalingGroupTagData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag: std::option::Option<std::vec::Vec<AutoscalingGroupTagTagEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag: std::option::Option<std::vec::Vec<AutoscalingGroupTag_Tag>>,
     dynamic: AutoscalingGroupTagDynamic,
 }
 
 struct AutoscalingGroupTag_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AutoscalingGroupTagData>,
+    data: std::cell::RefCell<AutoscalingGroupTagData_>,
 }
 
 #[derive(Clone)]
@@ -135,8 +139,15 @@ impl AutoscalingGroupTag {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tag`.\n"]
-    pub fn set_tag(self, v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupTagTagEl>>) -> Self {
+    pub fn set_tag(self, v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupTag_Tag>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().tag = std::option::Option::Some(v);
@@ -158,8 +169,14 @@ impl AutoscalingGroupTag {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tag` after provisioning.\n"]
-    pub fn tag(&self) -> terrars::ListRef<AutoscalingGroupTagTagElRef> {
+    pub fn tag(&self) -> terrars::ListRef<AutoscalingGroupTag_TagRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag", self.extract_ref()))
     }
 }
@@ -206,7 +223,7 @@ impl BuildAutoscalingGroupTag {
         let out = AutoscalingGroupTag(std::rc::Rc::new(AutoscalingGroupTag_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AutoscalingGroupTagData {
+            data: std::cell::RefCell::new(AutoscalingGroupTagData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -214,6 +231,7 @@ impl BuildAutoscalingGroupTag {
                 provisioner: core::default::Default::default(),
                 autoscaling_group_name: self.autoscaling_group_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tag: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -256,23 +274,34 @@ impl AutoscalingGroupTagRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tag` after provisioning.\n"]
-    pub fn tag(&self) -> terrars::ListRef<AutoscalingGroupTagTagElRef> {
+    pub fn tag(&self) -> terrars::ListRef<AutoscalingGroupTag_TagRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AutoscalingGroupTagDynamic {
+    tag: std::option::Option<terrars::DynamicBlock<AutoscalingGroupTag_Tag>>,
+}
+
 #[derive(Serialize)]
-pub struct AutoscalingGroupTagTagEl {
+pub struct AutoscalingGroupTag_Tag {
     key: terrars::PrimField<std::string::String>,
     propagate_at_launch: terrars::PrimField<bool>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl AutoscalingGroupTagTagEl { }
+impl AutoscalingGroupTag_Tag { }
 
-impl terrars::ToListMappable for AutoscalingGroupTagTagEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupTagTagEl>;
+impl terrars::ToListMappable for AutoscalingGroupTag_Tag {
+    type O = terrars::BlockAssignable<AutoscalingGroupTag_Tag>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -283,7 +312,7 @@ impl terrars::ToListMappable for AutoscalingGroupTagTagEl {
     }
 }
 
-pub struct BuildAutoscalingGroupTagTagEl {
+pub struct BuildAutoscalingGroupTag_Tag {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -292,9 +321,9 @@ pub struct BuildAutoscalingGroupTagTagEl {
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingGroupTagTagEl {
-    pub fn build(self) -> AutoscalingGroupTagTagEl {
-        AutoscalingGroupTagTagEl {
+impl BuildAutoscalingGroupTag_Tag {
+    pub fn build(self) -> AutoscalingGroupTag_Tag {
+        AutoscalingGroupTag_Tag {
             key: self.key,
             propagate_at_launch: self.propagate_at_launch,
             value: self.value,
@@ -302,21 +331,23 @@ impl BuildAutoscalingGroupTagTagEl {
     }
 }
 
-pub struct AutoscalingGroupTagTagElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroupTag_TagRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupTagTagElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroupTagTagElRef {
-        AutoscalingGroupTagTagElRef {
+impl terrars::Ref for AutoscalingGroupTag_TagRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroupTag_TagRef {
+        AutoscalingGroupTag_TagRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupTagTagElRef {
+impl AutoscalingGroupTag_TagRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -335,9 +366,4 @@ impl AutoscalingGroupTagTagElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AutoscalingGroupTagDynamic {
-    tag: std::option::Option<terrars::DynamicBlock<AutoscalingGroupTagTagEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudfrontRealtimeLogConfigData {
+struct CloudfrontRealtimeLogConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,14 @@ struct CloudfrontRealtimeLogConfigData {
     name: terrars::PrimField<std::string::String>,
     sampling_rate: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint: std::option::Option<std::vec::Vec<CloudfrontRealtimeLogConfigEndpointEl>>,
+    endpoint: std::option::Option<std::vec::Vec<CloudfrontRealtimeLogConfig_Endpoint>>,
     dynamic: CloudfrontRealtimeLogConfigDynamic,
 }
 
 struct CloudfrontRealtimeLogConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudfrontRealtimeLogConfigData>,
+    data: std::cell::RefCell<CloudfrontRealtimeLogConfigData_>,
 }
 
 #[derive(Clone)]
@@ -140,7 +142,7 @@ impl CloudfrontRealtimeLogConfig {
     #[doc = "Set the field `endpoint`.\n"]
     pub fn set_endpoint(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontRealtimeLogConfigEndpointEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontRealtimeLogConfig_Endpoint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +181,7 @@ impl CloudfrontRealtimeLogConfig {
     }
 
     #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> terrars::ListRef<CloudfrontRealtimeLogConfigEndpointElRef> {
+    pub fn endpoint(&self) -> terrars::ListRef<CloudfrontRealtimeLogConfig_EndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 }
@@ -230,7 +232,7 @@ impl BuildCloudfrontRealtimeLogConfig {
         let out = CloudfrontRealtimeLogConfig(std::rc::Rc::new(CloudfrontRealtimeLogConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudfrontRealtimeLogConfigData {
+            data: std::cell::RefCell::new(CloudfrontRealtimeLogConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,21 +300,26 @@ impl CloudfrontRealtimeLogConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> terrars::ListRef<CloudfrontRealtimeLogConfigEndpointElRef> {
+    pub fn endpoint(&self) -> terrars::ListRef<CloudfrontRealtimeLogConfig_EndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudfrontRealtimeLogConfigDynamic {
+    endpoint: std::option::Option<terrars::DynamicBlock<CloudfrontRealtimeLogConfig_Endpoint>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
+pub struct CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig {
     role_arn: terrars::PrimField<std::string::String>,
     stream_arn: terrars::PrimField<std::string::String>,
 }
 
-impl CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl { }
+impl CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig { }
 
-impl terrars::ToListMappable for CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
-    type O = terrars::BlockAssignable<CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>;
+impl terrars::ToListMappable for CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig {
+    type O = terrars::BlockAssignable<CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -323,40 +330,42 @@ impl terrars::ToListMappable for CloudfrontRealtimeLogConfigEndpointElKinesisStr
     }
 }
 
-pub struct BuildCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
+pub struct BuildCloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig {
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub stream_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
-    pub fn build(self) -> CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
-        CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl {
+impl BuildCloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig {
+    pub fn build(self) -> CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig {
+        CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig {
             role_arn: self.role_arn,
             stream_arn: self.stream_arn,
         }
     }
 }
 
-pub struct CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
+impl terrars::Ref for CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
-        CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
+    ) -> CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfigRef {
+        CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
+impl CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -373,21 +382,21 @@ impl CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontRealtimeLogConfigEndpointElDynamic {
+struct CloudfrontRealtimeLogConfig_EndpointDynamic {
     kinesis_stream_config: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontRealtimeLogConfigEndpointEl {
+pub struct CloudfrontRealtimeLogConfig_Endpoint {
     stream_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kinesis_stream_config: std::option::Option<std::vec::Vec<CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>>,
-    dynamic: CloudfrontRealtimeLogConfigEndpointElDynamic,
+    kinesis_stream_config: std::option::Option<std::vec::Vec<CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig>>,
+    dynamic: CloudfrontRealtimeLogConfig_EndpointDynamic,
 }
 
-impl CloudfrontRealtimeLogConfigEndpointEl {
+impl CloudfrontRealtimeLogConfig_Endpoint {
     #[doc = "Set the field `kinesis_stream_config`.\n"]
     pub fn set_kinesis_stream_config(
         mut self,
@@ -396,7 +405,7 @@ impl CloudfrontRealtimeLogConfigEndpointEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigEl>>,
+                    ::Into<terrars::BlockAssignable<CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -410,8 +419,8 @@ impl CloudfrontRealtimeLogConfigEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontRealtimeLogConfigEndpointEl {
-    type O = terrars::BlockAssignable<CloudfrontRealtimeLogConfigEndpointEl>;
+impl terrars::ToListMappable for CloudfrontRealtimeLogConfig_Endpoint {
+    type O = terrars::BlockAssignable<CloudfrontRealtimeLogConfig_Endpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -422,14 +431,14 @@ impl terrars::ToListMappable for CloudfrontRealtimeLogConfigEndpointEl {
     }
 }
 
-pub struct BuildCloudfrontRealtimeLogConfigEndpointEl {
+pub struct BuildCloudfrontRealtimeLogConfig_Endpoint {
     #[doc = ""]
     pub stream_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontRealtimeLogConfigEndpointEl {
-    pub fn build(self) -> CloudfrontRealtimeLogConfigEndpointEl {
-        CloudfrontRealtimeLogConfigEndpointEl {
+impl BuildCloudfrontRealtimeLogConfig_Endpoint {
+    pub fn build(self) -> CloudfrontRealtimeLogConfig_Endpoint {
+        CloudfrontRealtimeLogConfig_Endpoint {
             stream_type: self.stream_type,
             kinesis_stream_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -437,21 +446,23 @@ impl BuildCloudfrontRealtimeLogConfigEndpointEl {
     }
 }
 
-pub struct CloudfrontRealtimeLogConfigEndpointElRef {
+#[allow(dead_code)]
+pub struct CloudfrontRealtimeLogConfig_EndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontRealtimeLogConfigEndpointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontRealtimeLogConfigEndpointElRef {
-        CloudfrontRealtimeLogConfigEndpointElRef {
+impl terrars::Ref for CloudfrontRealtimeLogConfig_EndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontRealtimeLogConfig_EndpointRef {
+        CloudfrontRealtimeLogConfig_EndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontRealtimeLogConfigEndpointElRef {
+impl CloudfrontRealtimeLogConfig_EndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -462,14 +473,7 @@ impl CloudfrontRealtimeLogConfigEndpointElRef {
     }
 
     #[doc = "Get a reference to the value of field `kinesis_stream_config` after provisioning.\n"]
-    pub fn kinesis_stream_config(
-        &self,
-    ) -> terrars::ListRef<CloudfrontRealtimeLogConfigEndpointElKinesisStreamConfigElRef> {
+    pub fn kinesis_stream_config(&self) -> terrars::ListRef<CloudfrontRealtimeLogConfig_Endpoint_KinesisStreamConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_stream_config", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudfrontRealtimeLogConfigDynamic {
-    endpoint: std::option::Option<terrars::DynamicBlock<CloudfrontRealtimeLogConfigEndpointEl>>,
 }

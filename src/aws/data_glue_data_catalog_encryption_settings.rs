@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataGlueDataCatalogEncryptionSettingsData {
+struct DataGlueDataCatalogEncryptionSettingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,12 +21,14 @@ struct DataGlueDataCatalogEncryptionSettingsData {
     catalog_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataGlueDataCatalogEncryptionSettings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataGlueDataCatalogEncryptionSettingsData>,
+    data: std::cell::RefCell<DataGlueDataCatalogEncryptionSettingsData_>,
 }
 
 #[derive(Clone)]
@@ -75,6 +79,13 @@ impl DataGlueDataCatalogEncryptionSettings {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `catalog_id` after provisioning.\n"]
     pub fn catalog_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
@@ -83,7 +94,7 @@ impl DataGlueDataCatalogEncryptionSettings {
     #[doc = "Get a reference to the value of field `data_catalog_encryption_settings` after provisioning.\n"]
     pub fn data_catalog_encryption_settings(
         &self,
-    ) -> terrars::ListRef<DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElRef> {
+    ) -> terrars::ListRef<DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettingsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.data_catalog_encryption_settings", self.extract_ref()),
@@ -93,6 +104,12 @@ impl DataGlueDataCatalogEncryptionSettings {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -138,13 +155,14 @@ impl BuildDataGlueDataCatalogEncryptionSettings {
         let out = DataGlueDataCatalogEncryptionSettings(std::rc::Rc::new(DataGlueDataCatalogEncryptionSettings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataGlueDataCatalogEncryptionSettingsData {
+            data: std::cell::RefCell::new(DataGlueDataCatalogEncryptionSettingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 catalog_id: self.catalog_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -183,7 +201,7 @@ impl DataGlueDataCatalogEncryptionSettingsRef {
     #[doc = "Get a reference to the value of field `data_catalog_encryption_settings` after provisioning.\n"]
     pub fn data_catalog_encryption_settings(
         &self,
-    ) -> terrars::ListRef<DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElRef> {
+    ) -> terrars::ListRef<DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettingsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.data_catalog_encryption_settings", self.extract_ref()),
@@ -194,17 +212,23 @@ impl DataGlueDataCatalogEncryptionSettingsRef {
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl {
+pub struct DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aws_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     return_connection_password_encrypted: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl {
+impl DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption {
     #[doc = "Set the field `aws_kms_key_id`.\n"]
     pub fn set_aws_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.aws_kms_key_id = std::option::Option::Some(v.into());
@@ -222,11 +246,11 @@ impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnect
 }
 
 impl terrars
-::ToListMappable for DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl {
+::ToListMappable for DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption {
     type O =
         terrars
         ::BlockAssignable<
-            DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl,
+            DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -238,38 +262,40 @@ impl terrars
     }
 }
 
-pub struct BuildDataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl {}
+pub struct BuildDataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption {}
 
-impl BuildDataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl {
+impl BuildDataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption {
     pub fn build(
         self,
-    ) -> DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl {
-        DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl {
+    ) -> DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption {
+        DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption {
             aws_kms_key_id: core::default::Default::default(),
             return_connection_password_encrypted: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionElRef {
+#[allow(dead_code)]
+pub struct DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionElRef {
+::Ref for DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionElRef {
-        DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionElRef {
+    ) -> DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryptionRef {
+        DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionElRef {
+impl DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -286,20 +312,31 @@ impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnect
 }
 
 #[derive(Serialize)]
-pub struct DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl {
+pub struct DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_encryption_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    catalog_encryption_service_role: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sse_aws_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl {
+impl DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest {
     #[doc = "Set the field `catalog_encryption_mode`.\n"]
     pub fn set_catalog_encryption_mode(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.catalog_encryption_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `catalog_encryption_service_role`.\n"]
+    pub fn set_catalog_encryption_service_role(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.catalog_encryption_service_role = std::option::Option::Some(v.into());
         self
     }
 
@@ -313,11 +350,10 @@ impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncrypt
     }
 }
 
-impl terrars
-::ToListMappable for DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl {
+impl terrars::ToListMappable for DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest {
     type O =
         terrars
-        ::BlockAssignable<DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl>;
+        ::BlockAssignable<DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -328,35 +364,38 @@ impl terrars
     }
 }
 
-pub struct BuildDataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl {}
+pub struct BuildDataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest {}
 
-impl BuildDataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl {
-    pub fn build(self) -> DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl {
-        DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl {
+impl BuildDataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest {
+    pub fn build(self) -> DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest {
+        DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest {
             catalog_encryption_mode: core::default::Default::default(),
+            catalog_encryption_service_role: core::default::Default::default(),
             sse_aws_kms_key_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestElRef {
+#[allow(dead_code)]
+pub struct DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRestRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestElRef {
+impl terrars::Ref for DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRestRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestElRef {
-        DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestElRef {
+    ) -> DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRestRef {
+        DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRestRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestElRef {
+impl DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRestRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -366,6 +405,11 @@ impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncrypt
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog_encryption_mode", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `catalog_encryption_service_role` after provisioning.\n"]
+    pub fn catalog_encryption_service_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog_encryption_service_role", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `sse_aws_kms_key_id` after provisioning.\n"]
     pub fn sse_aws_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sse_aws_kms_key_id", self.base))
@@ -373,25 +417,23 @@ impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncrypt
 }
 
 #[derive(Serialize)]
-pub struct DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {
+pub struct DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connection_password_encryption: std
     ::option
     ::Option<
         terrars
-        ::ListField<
-            DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl,
-        >,
+        ::ListField<DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_at_rest: std
     ::option
     ::Option<
-        terrars::ListField<DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl>,
+        terrars::ListField<DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest>,
     >,
 }
 
-impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {
+impl DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings {
     #[doc = "Set the field `connection_password_encryption`.\n"]
     pub fn set_connection_password_encryption(
         mut self,
@@ -403,7 +445,7 @@ impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {
                     ::Into<
                         terrars
                         ::ListField<
-                            DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionEl,
+                            DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryption,
                         >,
                     >,
     ) -> Self {
@@ -422,7 +464,7 @@ impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {
                     ::Into<
                         terrars
                         ::ListField<
-                            DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestEl,
+                            DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRest,
                         >,
                     >,
     ) -> Self {
@@ -431,8 +473,8 @@ impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {
-    type O = terrars::BlockAssignable<DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl>;
+impl terrars::ToListMappable for DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings {
+    type O = terrars::BlockAssignable<DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -443,35 +485,37 @@ impl terrars::ToListMappable for DataGlueDataCatalogEncryptionSettingsDataCatalo
     }
 }
 
-pub struct BuildDataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {}
+pub struct BuildDataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings {}
 
-impl BuildDataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {
-    pub fn build(self) -> DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {
-        DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsEl {
+impl BuildDataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings {
+    pub fn build(self) -> DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings {
+        DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings {
             connection_password_encryption: core::default::Default::default(),
             encryption_at_rest: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElRef {
+#[allow(dead_code)]
+pub struct DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElRef {
+impl terrars::Ref for DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElRef {
-        DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElRef {
+    ) -> DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettingsRef {
+        DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElRef {
+impl DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -480,14 +524,14 @@ impl DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElRef {
     pub fn connection_password_encryption(
         &self,
     ) -> terrars
-    ::ListRef<DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElConnectionPasswordEncryptionElRef> {
+    ::ListRef<DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_ConnectionPasswordEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connection_password_encryption", self.base))
     }
 
     #[doc = "Get a reference to the value of field `encryption_at_rest` after provisioning.\n"]
     pub fn encryption_at_rest(
         &self,
-    ) -> terrars::ListRef<DataGlueDataCatalogEncryptionSettingsDataCatalogEncryptionSettingsElEncryptionAtRestElRef> {
+    ) -> terrars::ListRef<DataGlueDataCatalogEncryptionSettings_DataCatalogEncryptionSettings_EncryptionAtRestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_at_rest", self.base))
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FsxOpenzfsVolumeData {
+struct FsxOpenzfsVolumeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct FsxOpenzfsVolumeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_compression_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_volume_options: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     parent_volume_id: terrars::PrimField<std::string::String>,
@@ -30,6 +34,8 @@ struct FsxOpenzfsVolumeData {
     read_only: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     record_size_kib: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_capacity_quota_gib: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -41,20 +47,20 @@ struct FsxOpenzfsVolumeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nfs_exports: std::option::Option<std::vec::Vec<FsxOpenzfsVolumeNfsExportsEl>>,
+    nfs_exports: std::option::Option<std::vec::Vec<FsxOpenzfsVolume_NfsExports>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    origin_snapshot: std::option::Option<std::vec::Vec<FsxOpenzfsVolumeOriginSnapshotEl>>,
+    origin_snapshot: std::option::Option<std::vec::Vec<FsxOpenzfsVolume_OriginSnapshot>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FsxOpenzfsVolumeTimeoutsEl>,
+    timeouts: std::option::Option<FsxOpenzfsVolume_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_and_group_quotas: std::option::Option<std::vec::Vec<FsxOpenzfsVolumeUserAndGroupQuotasEl>>,
+    user_and_group_quotas: std::option::Option<std::vec::Vec<FsxOpenzfsVolume_UserAndGroupQuotas>>,
     dynamic: FsxOpenzfsVolumeDynamic,
 }
 
 struct FsxOpenzfsVolume_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FsxOpenzfsVolumeData>,
+    data: std::cell::RefCell<FsxOpenzfsVolumeData_>,
 }
 
 #[derive(Clone)]
@@ -166,6 +172,15 @@ impl FsxOpenzfsVolume {
         self
     }
 
+    #[doc = "Set the field `delete_volume_options`.\n"]
+    pub fn set_delete_volume_options(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().delete_volume_options = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -181,6 +196,13 @@ impl FsxOpenzfsVolume {
     #[doc = "Set the field `record_size_kib`.\n"]
     pub fn set_record_size_kib(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().record_size_kib = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -223,7 +245,7 @@ impl FsxOpenzfsVolume {
     #[doc = "Set the field `nfs_exports`.\n"]
     pub fn set_nfs_exports(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsVolumeNfsExportsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsVolume_NfsExports>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -239,7 +261,7 @@ impl FsxOpenzfsVolume {
     #[doc = "Set the field `origin_snapshot`.\n"]
     pub fn set_origin_snapshot(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsVolumeOriginSnapshotEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsVolume_OriginSnapshot>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -253,7 +275,7 @@ impl FsxOpenzfsVolume {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FsxOpenzfsVolumeTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FsxOpenzfsVolume_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -261,7 +283,7 @@ impl FsxOpenzfsVolume {
     #[doc = "Set the field `user_and_group_quotas`.\n"]
     pub fn set_user_and_group_quotas(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsVolumeUserAndGroupQuotasEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsVolume_UserAndGroupQuotas>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -289,6 +311,11 @@ impl FsxOpenzfsVolume {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_compression_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `delete_volume_options` after provisioning.\n"]
+    pub fn delete_volume_options(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.delete_volume_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -312,6 +339,12 @@ impl FsxOpenzfsVolume {
     #[doc = "Get a reference to the value of field `record_size_kib` after provisioning.\n"]
     pub fn record_size_kib(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_size_kib", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_capacity_quota_gib` after provisioning.\n"]
@@ -343,18 +376,18 @@ impl FsxOpenzfsVolume {
     }
 
     #[doc = "Get a reference to the value of field `nfs_exports` after provisioning.\n"]
-    pub fn nfs_exports(&self) -> terrars::ListRef<FsxOpenzfsVolumeNfsExportsElRef> {
+    pub fn nfs_exports(&self) -> terrars::ListRef<FsxOpenzfsVolume_NfsExportsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nfs_exports", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `origin_snapshot` after provisioning.\n"]
-    pub fn origin_snapshot(&self) -> terrars::ListRef<FsxOpenzfsVolumeOriginSnapshotElRef> {
+    pub fn origin_snapshot(&self) -> terrars::ListRef<FsxOpenzfsVolume_OriginSnapshotRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.origin_snapshot", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxOpenzfsVolumeTimeoutsElRef {
-        FsxOpenzfsVolumeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxOpenzfsVolume_TimeoutsRef {
+        FsxOpenzfsVolume_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -402,7 +435,7 @@ impl BuildFsxOpenzfsVolume {
         let out = FsxOpenzfsVolume(std::rc::Rc::new(FsxOpenzfsVolume_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FsxOpenzfsVolumeData {
+            data: std::cell::RefCell::new(FsxOpenzfsVolumeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -410,11 +443,13 @@ impl BuildFsxOpenzfsVolume {
                 provisioner: core::default::Default::default(),
                 copy_tags_to_snapshots: core::default::Default::default(),
                 data_compression_type: core::default::Default::default(),
+                delete_volume_options: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 parent_volume_id: self.parent_volume_id,
                 read_only: core::default::Default::default(),
                 record_size_kib: core::default::Default::default(),
+                region: core::default::Default::default(),
                 storage_capacity_quota_gib: core::default::Default::default(),
                 storage_capacity_reservation_gib: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -470,6 +505,11 @@ impl FsxOpenzfsVolumeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_compression_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `delete_volume_options` after provisioning.\n"]
+    pub fn delete_volume_options(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.delete_volume_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -493,6 +533,12 @@ impl FsxOpenzfsVolumeRef {
     #[doc = "Get a reference to the value of field `record_size_kib` after provisioning.\n"]
     pub fn record_size_kib(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.record_size_kib", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_capacity_quota_gib` after provisioning.\n"]
@@ -524,31 +570,38 @@ impl FsxOpenzfsVolumeRef {
     }
 
     #[doc = "Get a reference to the value of field `nfs_exports` after provisioning.\n"]
-    pub fn nfs_exports(&self) -> terrars::ListRef<FsxOpenzfsVolumeNfsExportsElRef> {
+    pub fn nfs_exports(&self) -> terrars::ListRef<FsxOpenzfsVolume_NfsExportsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nfs_exports", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `origin_snapshot` after provisioning.\n"]
-    pub fn origin_snapshot(&self) -> terrars::ListRef<FsxOpenzfsVolumeOriginSnapshotElRef> {
+    pub fn origin_snapshot(&self) -> terrars::ListRef<FsxOpenzfsVolume_OriginSnapshotRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.origin_snapshot", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxOpenzfsVolumeTimeoutsElRef {
-        FsxOpenzfsVolumeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxOpenzfsVolume_TimeoutsRef {
+        FsxOpenzfsVolume_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FsxOpenzfsVolumeDynamic {
+    nfs_exports: std::option::Option<terrars::DynamicBlock<FsxOpenzfsVolume_NfsExports>>,
+    origin_snapshot: std::option::Option<terrars::DynamicBlock<FsxOpenzfsVolume_OriginSnapshot>>,
+    user_and_group_quotas: std::option::Option<terrars::DynamicBlock<FsxOpenzfsVolume_UserAndGroupQuotas>>,
+}
+
 #[derive(Serialize)]
-pub struct FsxOpenzfsVolumeNfsExportsElClientConfigurationsEl {
+pub struct FsxOpenzfsVolume_NfsExports_ClientConfigurations {
     clients: terrars::PrimField<std::string::String>,
     options: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxOpenzfsVolumeNfsExportsElClientConfigurationsEl { }
+impl FsxOpenzfsVolume_NfsExports_ClientConfigurations { }
 
-impl terrars::ToListMappable for FsxOpenzfsVolumeNfsExportsElClientConfigurationsEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsVolumeNfsExportsElClientConfigurationsEl>;
+impl terrars::ToListMappable for FsxOpenzfsVolume_NfsExports_ClientConfigurations {
+    type O = terrars::BlockAssignable<FsxOpenzfsVolume_NfsExports_ClientConfigurations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -559,40 +612,42 @@ impl terrars::ToListMappable for FsxOpenzfsVolumeNfsExportsElClientConfiguration
     }
 }
 
-pub struct BuildFsxOpenzfsVolumeNfsExportsElClientConfigurationsEl {
+pub struct BuildFsxOpenzfsVolume_NfsExports_ClientConfigurations {
     #[doc = ""]
     pub clients: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub options: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildFsxOpenzfsVolumeNfsExportsElClientConfigurationsEl {
-    pub fn build(self) -> FsxOpenzfsVolumeNfsExportsElClientConfigurationsEl {
-        FsxOpenzfsVolumeNfsExportsElClientConfigurationsEl {
+impl BuildFsxOpenzfsVolume_NfsExports_ClientConfigurations {
+    pub fn build(self) -> FsxOpenzfsVolume_NfsExports_ClientConfigurations {
+        FsxOpenzfsVolume_NfsExports_ClientConfigurations {
             clients: self.clients,
             options: self.options,
         }
     }
 }
 
-pub struct FsxOpenzfsVolumeNfsExportsElClientConfigurationsElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsVolume_NfsExports_ClientConfigurationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsVolumeNfsExportsElClientConfigurationsElRef {
+impl terrars::Ref for FsxOpenzfsVolume_NfsExports_ClientConfigurationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOpenzfsVolumeNfsExportsElClientConfigurationsElRef {
-        FsxOpenzfsVolumeNfsExportsElClientConfigurationsElRef {
+    ) -> FsxOpenzfsVolume_NfsExports_ClientConfigurationsRef {
+        FsxOpenzfsVolume_NfsExports_ClientConfigurationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsVolumeNfsExportsElClientConfigurationsElRef {
+impl FsxOpenzfsVolume_NfsExports_ClientConfigurationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -609,24 +664,24 @@ impl FsxOpenzfsVolumeNfsExportsElClientConfigurationsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct FsxOpenzfsVolumeNfsExportsElDynamic {
+struct FsxOpenzfsVolume_NfsExportsDynamic {
     client_configurations: std
     ::option
-    ::Option<terrars::DynamicBlock<FsxOpenzfsVolumeNfsExportsElClientConfigurationsEl>>,
+    ::Option<terrars::DynamicBlock<FsxOpenzfsVolume_NfsExports_ClientConfigurations>>,
 }
 
 #[derive(Serialize)]
-pub struct FsxOpenzfsVolumeNfsExportsEl {
+pub struct FsxOpenzfsVolume_NfsExports {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    client_configurations: std::option::Option<std::vec::Vec<FsxOpenzfsVolumeNfsExportsElClientConfigurationsEl>>,
-    dynamic: FsxOpenzfsVolumeNfsExportsElDynamic,
+    client_configurations: std::option::Option<std::vec::Vec<FsxOpenzfsVolume_NfsExports_ClientConfigurations>>,
+    dynamic: FsxOpenzfsVolume_NfsExportsDynamic,
 }
 
-impl FsxOpenzfsVolumeNfsExportsEl {
+impl FsxOpenzfsVolume_NfsExports {
     #[doc = "Set the field `client_configurations`.\n"]
     pub fn set_client_configurations(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsVolumeNfsExportsElClientConfigurationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsVolume_NfsExports_ClientConfigurations>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -640,8 +695,8 @@ impl FsxOpenzfsVolumeNfsExportsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOpenzfsVolumeNfsExportsEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsVolumeNfsExportsEl>;
+impl terrars::ToListMappable for FsxOpenzfsVolume_NfsExports {
+    type O = terrars::BlockAssignable<FsxOpenzfsVolume_NfsExports>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -652,47 +707,49 @@ impl terrars::ToListMappable for FsxOpenzfsVolumeNfsExportsEl {
     }
 }
 
-pub struct BuildFsxOpenzfsVolumeNfsExportsEl {}
+pub struct BuildFsxOpenzfsVolume_NfsExports {}
 
-impl BuildFsxOpenzfsVolumeNfsExportsEl {
-    pub fn build(self) -> FsxOpenzfsVolumeNfsExportsEl {
-        FsxOpenzfsVolumeNfsExportsEl {
+impl BuildFsxOpenzfsVolume_NfsExports {
+    pub fn build(self) -> FsxOpenzfsVolume_NfsExports {
+        FsxOpenzfsVolume_NfsExports {
             client_configurations: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOpenzfsVolumeNfsExportsElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsVolume_NfsExportsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsVolumeNfsExportsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsVolumeNfsExportsElRef {
-        FsxOpenzfsVolumeNfsExportsElRef {
+impl terrars::Ref for FsxOpenzfsVolume_NfsExportsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsVolume_NfsExportsRef {
+        FsxOpenzfsVolume_NfsExportsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsVolumeNfsExportsElRef {
+impl FsxOpenzfsVolume_NfsExportsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct FsxOpenzfsVolumeOriginSnapshotEl {
+pub struct FsxOpenzfsVolume_OriginSnapshot {
     copy_strategy: terrars::PrimField<std::string::String>,
     snapshot_arn: terrars::PrimField<std::string::String>,
 }
 
-impl FsxOpenzfsVolumeOriginSnapshotEl { }
+impl FsxOpenzfsVolume_OriginSnapshot { }
 
-impl terrars::ToListMappable for FsxOpenzfsVolumeOriginSnapshotEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsVolumeOriginSnapshotEl>;
+impl terrars::ToListMappable for FsxOpenzfsVolume_OriginSnapshot {
+    type O = terrars::BlockAssignable<FsxOpenzfsVolume_OriginSnapshot>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -703,37 +760,39 @@ impl terrars::ToListMappable for FsxOpenzfsVolumeOriginSnapshotEl {
     }
 }
 
-pub struct BuildFsxOpenzfsVolumeOriginSnapshotEl {
+pub struct BuildFsxOpenzfsVolume_OriginSnapshot {
     #[doc = ""]
     pub copy_strategy: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub snapshot_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFsxOpenzfsVolumeOriginSnapshotEl {
-    pub fn build(self) -> FsxOpenzfsVolumeOriginSnapshotEl {
-        FsxOpenzfsVolumeOriginSnapshotEl {
+impl BuildFsxOpenzfsVolume_OriginSnapshot {
+    pub fn build(self) -> FsxOpenzfsVolume_OriginSnapshot {
+        FsxOpenzfsVolume_OriginSnapshot {
             copy_strategy: self.copy_strategy,
             snapshot_arn: self.snapshot_arn,
         }
     }
 }
 
-pub struct FsxOpenzfsVolumeOriginSnapshotElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsVolume_OriginSnapshotRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsVolumeOriginSnapshotElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsVolumeOriginSnapshotElRef {
-        FsxOpenzfsVolumeOriginSnapshotElRef {
+impl terrars::Ref for FsxOpenzfsVolume_OriginSnapshotRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsVolume_OriginSnapshotRef {
+        FsxOpenzfsVolume_OriginSnapshotRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsVolumeOriginSnapshotElRef {
+impl FsxOpenzfsVolume_OriginSnapshotRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -750,7 +809,7 @@ impl FsxOpenzfsVolumeOriginSnapshotElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOpenzfsVolumeTimeoutsEl {
+pub struct FsxOpenzfsVolume_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -759,7 +818,7 @@ pub struct FsxOpenzfsVolumeTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxOpenzfsVolumeTimeoutsEl {
+impl FsxOpenzfsVolume_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -779,8 +838,8 @@ impl FsxOpenzfsVolumeTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOpenzfsVolumeTimeoutsEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsVolumeTimeoutsEl>;
+impl terrars::ToListMappable for FsxOpenzfsVolume_Timeouts {
+    type O = terrars::BlockAssignable<FsxOpenzfsVolume_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -791,11 +850,11 @@ impl terrars::ToListMappable for FsxOpenzfsVolumeTimeoutsEl {
     }
 }
 
-pub struct BuildFsxOpenzfsVolumeTimeoutsEl {}
+pub struct BuildFsxOpenzfsVolume_Timeouts {}
 
-impl BuildFsxOpenzfsVolumeTimeoutsEl {
-    pub fn build(self) -> FsxOpenzfsVolumeTimeoutsEl {
-        FsxOpenzfsVolumeTimeoutsEl {
+impl BuildFsxOpenzfsVolume_Timeouts {
+    pub fn build(self) -> FsxOpenzfsVolume_Timeouts {
+        FsxOpenzfsVolume_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -803,21 +862,23 @@ impl BuildFsxOpenzfsVolumeTimeoutsEl {
     }
 }
 
-pub struct FsxOpenzfsVolumeTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsVolume_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsVolumeTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsVolumeTimeoutsElRef {
-        FsxOpenzfsVolumeTimeoutsElRef {
+impl terrars::Ref for FsxOpenzfsVolume_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsVolume_TimeoutsRef {
+        FsxOpenzfsVolume_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsVolumeTimeoutsElRef {
+impl FsxOpenzfsVolume_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -839,17 +900,17 @@ impl FsxOpenzfsVolumeTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOpenzfsVolumeUserAndGroupQuotasEl {
+pub struct FsxOpenzfsVolume_UserAndGroupQuotas {
     id: terrars::PrimField<f64>,
     storage_capacity_quota_gib: terrars::PrimField<f64>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl FsxOpenzfsVolumeUserAndGroupQuotasEl { }
+impl FsxOpenzfsVolume_UserAndGroupQuotas { }
 
-impl terrars::ToListMappable for FsxOpenzfsVolumeUserAndGroupQuotasEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsVolumeUserAndGroupQuotasEl>;
+impl terrars::ToListMappable for FsxOpenzfsVolume_UserAndGroupQuotas {
+    type O = terrars::BlockAssignable<FsxOpenzfsVolume_UserAndGroupQuotas>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -860,7 +921,7 @@ impl terrars::ToListMappable for FsxOpenzfsVolumeUserAndGroupQuotasEl {
     }
 }
 
-pub struct BuildFsxOpenzfsVolumeUserAndGroupQuotasEl {
+pub struct BuildFsxOpenzfsVolume_UserAndGroupQuotas {
     #[doc = ""]
     pub id: terrars::PrimField<f64>,
     #[doc = ""]
@@ -869,9 +930,9 @@ pub struct BuildFsxOpenzfsVolumeUserAndGroupQuotasEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFsxOpenzfsVolumeUserAndGroupQuotasEl {
-    pub fn build(self) -> FsxOpenzfsVolumeUserAndGroupQuotasEl {
-        FsxOpenzfsVolumeUserAndGroupQuotasEl {
+impl BuildFsxOpenzfsVolume_UserAndGroupQuotas {
+    pub fn build(self) -> FsxOpenzfsVolume_UserAndGroupQuotas {
+        FsxOpenzfsVolume_UserAndGroupQuotas {
             id: self.id,
             storage_capacity_quota_gib: self.storage_capacity_quota_gib,
             type_: self.type_,
@@ -879,21 +940,23 @@ impl BuildFsxOpenzfsVolumeUserAndGroupQuotasEl {
     }
 }
 
-pub struct FsxOpenzfsVolumeUserAndGroupQuotasElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsVolume_UserAndGroupQuotasRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsVolumeUserAndGroupQuotasElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsVolumeUserAndGroupQuotasElRef {
-        FsxOpenzfsVolumeUserAndGroupQuotasElRef {
+impl terrars::Ref for FsxOpenzfsVolume_UserAndGroupQuotasRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsVolume_UserAndGroupQuotasRef {
+        FsxOpenzfsVolume_UserAndGroupQuotasRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsVolumeUserAndGroupQuotasElRef {
+impl FsxOpenzfsVolume_UserAndGroupQuotasRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -912,11 +975,4 @@ impl FsxOpenzfsVolumeUserAndGroupQuotasElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FsxOpenzfsVolumeDynamic {
-    nfs_exports: std::option::Option<terrars::DynamicBlock<FsxOpenzfsVolumeNfsExportsEl>>,
-    origin_snapshot: std::option::Option<terrars::DynamicBlock<FsxOpenzfsVolumeOriginSnapshotEl>>,
-    user_and_group_quotas: std::option::Option<terrars::DynamicBlock<FsxOpenzfsVolumeUserAndGroupQuotasEl>>,
 }

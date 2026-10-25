@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct StoragegatewayGatewayData {
+struct StoragegatewayGatewayData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,6 +41,8 @@ struct StoragegatewayGatewayData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     medium_changer_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     smb_file_share_visibility: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     smb_guest_password: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -51,18 +55,18 @@ struct StoragegatewayGatewayData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tape_drive_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    maintenance_start_time: std::option::Option<std::vec::Vec<StoragegatewayGatewayMaintenanceStartTimeEl>>,
+    maintenance_start_time: std::option::Option<std::vec::Vec<StoragegatewayGateway_MaintenanceStartTime>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    smb_active_directory_settings: std::option::Option<std::vec::Vec<StoragegatewayGatewaySmbActiveDirectorySettingsEl>>,
+    smb_active_directory_settings: std::option::Option<std::vec::Vec<StoragegatewayGateway_SmbActiveDirectorySettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<StoragegatewayGatewayTimeoutsEl>,
+    timeouts: std::option::Option<StoragegatewayGateway_Timeouts>,
     dynamic: StoragegatewayGatewayDynamic,
 }
 
 struct StoragegatewayGateway_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<StoragegatewayGatewayData>,
+    data: std::cell::RefCell<StoragegatewayGatewayData_>,
 }
 
 #[derive(Clone)]
@@ -225,6 +229,13 @@ impl StoragegatewayGateway {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `smb_file_share_visibility`.\n"]
     pub fn set_smb_file_share_visibility(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().smb_file_share_visibility = std::option::Option::Some(v.into());
@@ -270,7 +281,7 @@ impl StoragegatewayGateway {
     #[doc = "Set the field `maintenance_start_time`.\n"]
     pub fn set_maintenance_start_time(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<StoragegatewayGatewayMaintenanceStartTimeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<StoragegatewayGateway_MaintenanceStartTime>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -286,7 +297,7 @@ impl StoragegatewayGateway {
     #[doc = "Set the field `smb_active_directory_settings`.\n"]
     pub fn set_smb_active_directory_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<StoragegatewayGatewaySmbActiveDirectorySettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<StoragegatewayGateway_SmbActiveDirectorySettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -300,7 +311,7 @@ impl StoragegatewayGateway {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<StoragegatewayGatewayTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<StoragegatewayGateway_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -362,7 +373,7 @@ impl StoragegatewayGateway {
     }
 
     #[doc = "Get a reference to the value of field `gateway_network_interface` after provisioning.\n"]
-    pub fn gateway_network_interface(&self) -> terrars::ListRef<StoragegatewayGatewayGatewayNetworkInterfaceElRef> {
+    pub fn gateway_network_interface(&self) -> terrars::ListRef<StoragegatewayGateway_GatewayNetworkInterfaceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gateway_network_interface", self.extract_ref()))
     }
 
@@ -396,6 +407,12 @@ impl StoragegatewayGateway {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.medium_changer_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `smb_file_share_visibility` after provisioning.\n"]
     pub fn smb_file_share_visibility(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.smb_file_share_visibility", self.extract_ref()))
@@ -427,20 +444,18 @@ impl StoragegatewayGateway {
     }
 
     #[doc = "Get a reference to the value of field `maintenance_start_time` after provisioning.\n"]
-    pub fn maintenance_start_time(&self) -> terrars::ListRef<StoragegatewayGatewayMaintenanceStartTimeElRef> {
+    pub fn maintenance_start_time(&self) -> terrars::ListRef<StoragegatewayGateway_MaintenanceStartTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_start_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `smb_active_directory_settings` after provisioning.\n"]
-    pub fn smb_active_directory_settings(
-        &self,
-    ) -> terrars::ListRef<StoragegatewayGatewaySmbActiveDirectorySettingsElRef> {
+    pub fn smb_active_directory_settings(&self) -> terrars::ListRef<StoragegatewayGateway_SmbActiveDirectorySettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.smb_active_directory_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> StoragegatewayGatewayTimeoutsElRef {
-        StoragegatewayGatewayTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> StoragegatewayGateway_TimeoutsRef {
+        StoragegatewayGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -488,7 +503,7 @@ impl BuildStoragegatewayGateway {
         let out = StoragegatewayGateway(std::rc::Rc::new(StoragegatewayGateway_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(StoragegatewayGatewayData {
+            data: std::cell::RefCell::new(StoragegatewayGatewayData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -505,6 +520,7 @@ impl BuildStoragegatewayGateway {
                 gateway_vpc_endpoint: core::default::Default::default(),
                 id: core::default::Default::default(),
                 medium_changer_type: core::default::Default::default(),
+                region: core::default::Default::default(),
                 smb_file_share_visibility: core::default::Default::default(),
                 smb_guest_password: core::default::Default::default(),
                 smb_security_strategy: core::default::Default::default(),
@@ -602,7 +618,7 @@ impl StoragegatewayGatewayRef {
     }
 
     #[doc = "Get a reference to the value of field `gateway_network_interface` after provisioning.\n"]
-    pub fn gateway_network_interface(&self) -> terrars::ListRef<StoragegatewayGatewayGatewayNetworkInterfaceElRef> {
+    pub fn gateway_network_interface(&self) -> terrars::ListRef<StoragegatewayGateway_GatewayNetworkInterfaceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.gateway_network_interface", self.extract_ref()))
     }
 
@@ -636,6 +652,12 @@ impl StoragegatewayGatewayRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.medium_changer_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `smb_file_share_visibility` after provisioning.\n"]
     pub fn smb_file_share_visibility(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.smb_file_share_visibility", self.extract_ref()))
@@ -667,30 +689,36 @@ impl StoragegatewayGatewayRef {
     }
 
     #[doc = "Get a reference to the value of field `maintenance_start_time` after provisioning.\n"]
-    pub fn maintenance_start_time(&self) -> terrars::ListRef<StoragegatewayGatewayMaintenanceStartTimeElRef> {
+    pub fn maintenance_start_time(&self) -> terrars::ListRef<StoragegatewayGateway_MaintenanceStartTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_start_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `smb_active_directory_settings` after provisioning.\n"]
-    pub fn smb_active_directory_settings(
-        &self,
-    ) -> terrars::ListRef<StoragegatewayGatewaySmbActiveDirectorySettingsElRef> {
+    pub fn smb_active_directory_settings(&self) -> terrars::ListRef<StoragegatewayGateway_SmbActiveDirectorySettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.smb_active_directory_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> StoragegatewayGatewayTimeoutsElRef {
-        StoragegatewayGatewayTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> StoragegatewayGateway_TimeoutsRef {
+        StoragegatewayGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct StoragegatewayGatewayDynamic {
+    maintenance_start_time: std::option::Option<terrars::DynamicBlock<StoragegatewayGateway_MaintenanceStartTime>>,
+    smb_active_directory_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<StoragegatewayGateway_SmbActiveDirectorySettings>>,
+}
+
 #[derive(Serialize)]
-pub struct StoragegatewayGatewayGatewayNetworkInterfaceEl {
+pub struct StoragegatewayGateway_GatewayNetworkInterface {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv4_address: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl StoragegatewayGatewayGatewayNetworkInterfaceEl {
+impl StoragegatewayGateway_GatewayNetworkInterface {
     #[doc = "Set the field `ipv4_address`.\n"]
     pub fn set_ipv4_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ipv4_address = std::option::Option::Some(v.into());
@@ -698,8 +726,8 @@ impl StoragegatewayGatewayGatewayNetworkInterfaceEl {
     }
 }
 
-impl terrars::ToListMappable for StoragegatewayGatewayGatewayNetworkInterfaceEl {
-    type O = terrars::BlockAssignable<StoragegatewayGatewayGatewayNetworkInterfaceEl>;
+impl terrars::ToListMappable for StoragegatewayGateway_GatewayNetworkInterface {
+    type O = terrars::BlockAssignable<StoragegatewayGateway_GatewayNetworkInterface>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -710,32 +738,34 @@ impl terrars::ToListMappable for StoragegatewayGatewayGatewayNetworkInterfaceEl 
     }
 }
 
-pub struct BuildStoragegatewayGatewayGatewayNetworkInterfaceEl {}
+pub struct BuildStoragegatewayGateway_GatewayNetworkInterface {}
 
-impl BuildStoragegatewayGatewayGatewayNetworkInterfaceEl {
-    pub fn build(self) -> StoragegatewayGatewayGatewayNetworkInterfaceEl {
-        StoragegatewayGatewayGatewayNetworkInterfaceEl { ipv4_address: core::default::Default::default() }
+impl BuildStoragegatewayGateway_GatewayNetworkInterface {
+    pub fn build(self) -> StoragegatewayGateway_GatewayNetworkInterface {
+        StoragegatewayGateway_GatewayNetworkInterface { ipv4_address: core::default::Default::default() }
     }
 }
 
-pub struct StoragegatewayGatewayGatewayNetworkInterfaceElRef {
+#[allow(dead_code)]
+pub struct StoragegatewayGateway_GatewayNetworkInterfaceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StoragegatewayGatewayGatewayNetworkInterfaceElRef {
+impl terrars::Ref for StoragegatewayGateway_GatewayNetworkInterfaceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> StoragegatewayGatewayGatewayNetworkInterfaceElRef {
-        StoragegatewayGatewayGatewayNetworkInterfaceElRef {
+    ) -> StoragegatewayGateway_GatewayNetworkInterfaceRef {
+        StoragegatewayGateway_GatewayNetworkInterfaceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StoragegatewayGatewayGatewayNetworkInterfaceElRef {
+impl StoragegatewayGateway_GatewayNetworkInterfaceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -747,7 +777,7 @@ impl StoragegatewayGatewayGatewayNetworkInterfaceElRef {
 }
 
 #[derive(Serialize)]
-pub struct StoragegatewayGatewayMaintenanceStartTimeEl {
+pub struct StoragegatewayGateway_MaintenanceStartTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     day_of_month: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -757,7 +787,7 @@ pub struct StoragegatewayGatewayMaintenanceStartTimeEl {
     minute_of_hour: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl StoragegatewayGatewayMaintenanceStartTimeEl {
+impl StoragegatewayGateway_MaintenanceStartTime {
     #[doc = "Set the field `day_of_month`.\n"]
     pub fn set_day_of_month(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.day_of_month = std::option::Option::Some(v.into());
@@ -777,8 +807,8 @@ impl StoragegatewayGatewayMaintenanceStartTimeEl {
     }
 }
 
-impl terrars::ToListMappable for StoragegatewayGatewayMaintenanceStartTimeEl {
-    type O = terrars::BlockAssignable<StoragegatewayGatewayMaintenanceStartTimeEl>;
+impl terrars::ToListMappable for StoragegatewayGateway_MaintenanceStartTime {
+    type O = terrars::BlockAssignable<StoragegatewayGateway_MaintenanceStartTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -789,14 +819,14 @@ impl terrars::ToListMappable for StoragegatewayGatewayMaintenanceStartTimeEl {
     }
 }
 
-pub struct BuildStoragegatewayGatewayMaintenanceStartTimeEl {
+pub struct BuildStoragegatewayGateway_MaintenanceStartTime {
     #[doc = ""]
     pub hour_of_day: terrars::PrimField<f64>,
 }
 
-impl BuildStoragegatewayGatewayMaintenanceStartTimeEl {
-    pub fn build(self) -> StoragegatewayGatewayMaintenanceStartTimeEl {
-        StoragegatewayGatewayMaintenanceStartTimeEl {
+impl BuildStoragegatewayGateway_MaintenanceStartTime {
+    pub fn build(self) -> StoragegatewayGateway_MaintenanceStartTime {
+        StoragegatewayGateway_MaintenanceStartTime {
             day_of_month: core::default::Default::default(),
             day_of_week: core::default::Default::default(),
             hour_of_day: self.hour_of_day,
@@ -805,24 +835,23 @@ impl BuildStoragegatewayGatewayMaintenanceStartTimeEl {
     }
 }
 
-pub struct StoragegatewayGatewayMaintenanceStartTimeElRef {
+#[allow(dead_code)]
+pub struct StoragegatewayGateway_MaintenanceStartTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StoragegatewayGatewayMaintenanceStartTimeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> StoragegatewayGatewayMaintenanceStartTimeElRef {
-        StoragegatewayGatewayMaintenanceStartTimeElRef {
+impl terrars::Ref for StoragegatewayGateway_MaintenanceStartTimeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StoragegatewayGateway_MaintenanceStartTimeRef {
+        StoragegatewayGateway_MaintenanceStartTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StoragegatewayGatewayMaintenanceStartTimeElRef {
+impl StoragegatewayGateway_MaintenanceStartTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -849,7 +878,7 @@ impl StoragegatewayGatewayMaintenanceStartTimeElRef {
 }
 
 #[derive(Serialize)]
-pub struct StoragegatewayGatewaySmbActiveDirectorySettingsEl {
+pub struct StoragegatewayGateway_SmbActiveDirectorySettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain_controllers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     domain_name: terrars::PrimField<std::string::String>,
@@ -861,7 +890,7 @@ pub struct StoragegatewayGatewaySmbActiveDirectorySettingsEl {
     username: terrars::PrimField<std::string::String>,
 }
 
-impl StoragegatewayGatewaySmbActiveDirectorySettingsEl {
+impl StoragegatewayGateway_SmbActiveDirectorySettings {
     #[doc = "Set the field `domain_controllers`.\n"]
     pub fn set_domain_controllers(
         mut self,
@@ -887,8 +916,8 @@ impl StoragegatewayGatewaySmbActiveDirectorySettingsEl {
     }
 }
 
-impl terrars::ToListMappable for StoragegatewayGatewaySmbActiveDirectorySettingsEl {
-    type O = terrars::BlockAssignable<StoragegatewayGatewaySmbActiveDirectorySettingsEl>;
+impl terrars::ToListMappable for StoragegatewayGateway_SmbActiveDirectorySettings {
+    type O = terrars::BlockAssignable<StoragegatewayGateway_SmbActiveDirectorySettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -899,7 +928,7 @@ impl terrars::ToListMappable for StoragegatewayGatewaySmbActiveDirectorySettings
     }
 }
 
-pub struct BuildStoragegatewayGatewaySmbActiveDirectorySettingsEl {
+pub struct BuildStoragegatewayGateway_SmbActiveDirectorySettings {
     #[doc = ""]
     pub domain_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -908,9 +937,9 @@ pub struct BuildStoragegatewayGatewaySmbActiveDirectorySettingsEl {
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildStoragegatewayGatewaySmbActiveDirectorySettingsEl {
-    pub fn build(self) -> StoragegatewayGatewaySmbActiveDirectorySettingsEl {
-        StoragegatewayGatewaySmbActiveDirectorySettingsEl {
+impl BuildStoragegatewayGateway_SmbActiveDirectorySettings {
+    pub fn build(self) -> StoragegatewayGateway_SmbActiveDirectorySettings {
+        StoragegatewayGateway_SmbActiveDirectorySettings {
             domain_controllers: core::default::Default::default(),
             domain_name: self.domain_name,
             organizational_unit: core::default::Default::default(),
@@ -921,24 +950,26 @@ impl BuildStoragegatewayGatewaySmbActiveDirectorySettingsEl {
     }
 }
 
-pub struct StoragegatewayGatewaySmbActiveDirectorySettingsElRef {
+#[allow(dead_code)]
+pub struct StoragegatewayGateway_SmbActiveDirectorySettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StoragegatewayGatewaySmbActiveDirectorySettingsElRef {
+impl terrars::Ref for StoragegatewayGateway_SmbActiveDirectorySettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> StoragegatewayGatewaySmbActiveDirectorySettingsElRef {
-        StoragegatewayGatewaySmbActiveDirectorySettingsElRef {
+    ) -> StoragegatewayGateway_SmbActiveDirectorySettingsRef {
+        StoragegatewayGateway_SmbActiveDirectorySettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StoragegatewayGatewaySmbActiveDirectorySettingsElRef {
+impl StoragegatewayGateway_SmbActiveDirectorySettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -980,12 +1011,12 @@ impl StoragegatewayGatewaySmbActiveDirectorySettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct StoragegatewayGatewayTimeoutsEl {
+pub struct StoragegatewayGateway_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl StoragegatewayGatewayTimeoutsEl {
+impl StoragegatewayGateway_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -993,8 +1024,8 @@ impl StoragegatewayGatewayTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for StoragegatewayGatewayTimeoutsEl {
-    type O = terrars::BlockAssignable<StoragegatewayGatewayTimeoutsEl>;
+impl terrars::ToListMappable for StoragegatewayGateway_Timeouts {
+    type O = terrars::BlockAssignable<StoragegatewayGateway_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1005,29 +1036,31 @@ impl terrars::ToListMappable for StoragegatewayGatewayTimeoutsEl {
     }
 }
 
-pub struct BuildStoragegatewayGatewayTimeoutsEl {}
+pub struct BuildStoragegatewayGateway_Timeouts {}
 
-impl BuildStoragegatewayGatewayTimeoutsEl {
-    pub fn build(self) -> StoragegatewayGatewayTimeoutsEl {
-        StoragegatewayGatewayTimeoutsEl { create: core::default::Default::default() }
+impl BuildStoragegatewayGateway_Timeouts {
+    pub fn build(self) -> StoragegatewayGateway_Timeouts {
+        StoragegatewayGateway_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct StoragegatewayGatewayTimeoutsElRef {
+#[allow(dead_code)]
+pub struct StoragegatewayGateway_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StoragegatewayGatewayTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> StoragegatewayGatewayTimeoutsElRef {
-        StoragegatewayGatewayTimeoutsElRef {
+impl terrars::Ref for StoragegatewayGateway_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> StoragegatewayGateway_TimeoutsRef {
+        StoragegatewayGateway_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StoragegatewayGatewayTimeoutsElRef {
+impl StoragegatewayGateway_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1036,12 +1069,4 @@ impl StoragegatewayGatewayTimeoutsElRef {
     pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct StoragegatewayGatewayDynamic {
-    maintenance_start_time: std::option::Option<terrars::DynamicBlock<StoragegatewayGatewayMaintenanceStartTimeEl>>,
-    smb_active_directory_settings: std
-    ::option
-    ::Option<terrars::DynamicBlock<StoragegatewayGatewaySmbActiveDirectorySettingsEl>>,
 }

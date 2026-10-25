@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbProxyEndpointData {
+struct DbProxyEndpointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct DbProxyEndpointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -32,13 +36,13 @@ struct DbProxyEndpointData {
     vpc_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     vpc_subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DbProxyEndpointTimeoutsEl>,
+    timeouts: std::option::Option<DbProxyEndpoint_Timeouts>,
 }
 
 struct DbProxyEndpoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbProxyEndpointData>,
+    data: std::cell::RefCell<DbProxyEndpointData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +148,13 @@ impl DbProxyEndpoint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -178,7 +189,7 @@ impl DbProxyEndpoint {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DbProxyEndpointTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DbProxyEndpoint_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -213,6 +224,12 @@ impl DbProxyEndpoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_default", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -244,8 +261,8 @@ impl DbProxyEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbProxyEndpointTimeoutsElRef {
-        DbProxyEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbProxyEndpoint_TimeoutsRef {
+        DbProxyEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -295,7 +312,7 @@ impl BuildDbProxyEndpoint {
         let out = DbProxyEndpoint(std::rc::Rc::new(DbProxyEndpoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbProxyEndpointData {
+            data: std::cell::RefCell::new(DbProxyEndpointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -304,6 +321,7 @@ impl BuildDbProxyEndpoint {
                 db_proxy_endpoint_name: self.db_proxy_endpoint_name,
                 db_proxy_name: self.db_proxy_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 target_role: core::default::Default::default(),
@@ -370,6 +388,12 @@ impl DbProxyEndpointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_default", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -401,13 +425,13 @@ impl DbProxyEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbProxyEndpointTimeoutsElRef {
-        DbProxyEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbProxyEndpoint_TimeoutsRef {
+        DbProxyEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DbProxyEndpointTimeoutsEl {
+pub struct DbProxyEndpoint_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -416,7 +440,7 @@ pub struct DbProxyEndpointTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DbProxyEndpointTimeoutsEl {
+impl DbProxyEndpoint_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -436,8 +460,8 @@ impl DbProxyEndpointTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DbProxyEndpointTimeoutsEl {
-    type O = terrars::BlockAssignable<DbProxyEndpointTimeoutsEl>;
+impl terrars::ToListMappable for DbProxyEndpoint_Timeouts {
+    type O = terrars::BlockAssignable<DbProxyEndpoint_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -448,11 +472,11 @@ impl terrars::ToListMappable for DbProxyEndpointTimeoutsEl {
     }
 }
 
-pub struct BuildDbProxyEndpointTimeoutsEl {}
+pub struct BuildDbProxyEndpoint_Timeouts {}
 
-impl BuildDbProxyEndpointTimeoutsEl {
-    pub fn build(self) -> DbProxyEndpointTimeoutsEl {
-        DbProxyEndpointTimeoutsEl {
+impl BuildDbProxyEndpoint_Timeouts {
+    pub fn build(self) -> DbProxyEndpoint_Timeouts {
+        DbProxyEndpoint_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -460,21 +484,23 @@ impl BuildDbProxyEndpointTimeoutsEl {
     }
 }
 
-pub struct DbProxyEndpointTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DbProxyEndpoint_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbProxyEndpointTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbProxyEndpointTimeoutsElRef {
-        DbProxyEndpointTimeoutsElRef {
+impl terrars::Ref for DbProxyEndpoint_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbProxyEndpoint_TimeoutsRef {
+        DbProxyEndpoint_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbProxyEndpointTimeoutsElRef {
+impl DbProxyEndpoint_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

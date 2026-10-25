@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MedialiveMultiplexData {
+struct MedialiveMultiplexData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,22 +25,24 @@ struct MedialiveMultiplexData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_multiplex: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    multiplex_settings: std::option::Option<std::vec::Vec<MedialiveMultiplexMultiplexSettingsEl>>,
+    multiplex_settings: std::option::Option<std::vec::Vec<MedialiveMultiplex_MultiplexSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MedialiveMultiplexTimeoutsEl>,
+    timeouts: std::option::Option<MedialiveMultiplex_Timeouts>,
     dynamic: MedialiveMultiplexDynamic,
 }
 
 struct MedialiveMultiplex_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MedialiveMultiplexData>,
+    data: std::cell::RefCell<MedialiveMultiplexData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +148,13 @@ impl MedialiveMultiplex {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `start_multiplex`.\n"]
     pub fn set_start_multiplex(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().start_multiplex = std::option::Option::Some(v.into());
@@ -171,7 +182,7 @@ impl MedialiveMultiplex {
     #[doc = "Set the field `multiplex_settings`.\n"]
     pub fn set_multiplex_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveMultiplexMultiplexSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveMultiplex_MultiplexSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,7 +196,7 @@ impl MedialiveMultiplex {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MedialiveMultiplexTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MedialiveMultiplex_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -210,6 +221,12 @@ impl MedialiveMultiplex {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `start_multiplex` after provisioning.\n"]
     pub fn start_multiplex(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_multiplex", self.extract_ref()))
@@ -226,13 +243,13 @@ impl MedialiveMultiplex {
     }
 
     #[doc = "Get a reference to the value of field `multiplex_settings` after provisioning.\n"]
-    pub fn multiplex_settings(&self) -> terrars::ListRef<MedialiveMultiplexMultiplexSettingsElRef> {
+    pub fn multiplex_settings(&self) -> terrars::ListRef<MedialiveMultiplex_MultiplexSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.multiplex_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MedialiveMultiplexTimeoutsElRef {
-        MedialiveMultiplexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MedialiveMultiplex_TimeoutsRef {
+        MedialiveMultiplex_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -280,7 +297,7 @@ impl BuildMedialiveMultiplex {
         let out = MedialiveMultiplex(std::rc::Rc::new(MedialiveMultiplex_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MedialiveMultiplexData {
+            data: std::cell::RefCell::new(MedialiveMultiplexData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -289,6 +306,7 @@ impl BuildMedialiveMultiplex {
                 availability_zones: self.availability_zones,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 start_multiplex: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -345,6 +363,12 @@ impl MedialiveMultiplexRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `start_multiplex` after provisioning.\n"]
     pub fn start_multiplex(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_multiplex", self.extract_ref()))
@@ -361,18 +385,23 @@ impl MedialiveMultiplexRef {
     }
 
     #[doc = "Get a reference to the value of field `multiplex_settings` after provisioning.\n"]
-    pub fn multiplex_settings(&self) -> terrars::ListRef<MedialiveMultiplexMultiplexSettingsElRef> {
+    pub fn multiplex_settings(&self) -> terrars::ListRef<MedialiveMultiplex_MultiplexSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.multiplex_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MedialiveMultiplexTimeoutsElRef {
-        MedialiveMultiplexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MedialiveMultiplex_TimeoutsRef {
+        MedialiveMultiplex_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MedialiveMultiplexDynamic {
+    multiplex_settings: std::option::Option<terrars::DynamicBlock<MedialiveMultiplex_MultiplexSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct MedialiveMultiplexMultiplexSettingsEl {
+pub struct MedialiveMultiplex_MultiplexSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_video_buffer_delay_milliseconds: std::option::Option<terrars::PrimField<f64>>,
     transport_stream_bitrate: terrars::PrimField<f64>,
@@ -381,7 +410,7 @@ pub struct MedialiveMultiplexMultiplexSettingsEl {
     transport_stream_reserved_bitrate: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl MedialiveMultiplexMultiplexSettingsEl {
+impl MedialiveMultiplex_MultiplexSettings {
     #[doc = "Set the field `maximum_video_buffer_delay_milliseconds`.\n"]
     pub fn set_maximum_video_buffer_delay_milliseconds(
         mut self,
@@ -398,8 +427,8 @@ impl MedialiveMultiplexMultiplexSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for MedialiveMultiplexMultiplexSettingsEl {
-    type O = terrars::BlockAssignable<MedialiveMultiplexMultiplexSettingsEl>;
+impl terrars::ToListMappable for MedialiveMultiplex_MultiplexSettings {
+    type O = terrars::BlockAssignable<MedialiveMultiplex_MultiplexSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -410,16 +439,16 @@ impl terrars::ToListMappable for MedialiveMultiplexMultiplexSettingsEl {
     }
 }
 
-pub struct BuildMedialiveMultiplexMultiplexSettingsEl {
+pub struct BuildMedialiveMultiplex_MultiplexSettings {
     #[doc = ""]
     pub transport_stream_bitrate: terrars::PrimField<f64>,
     #[doc = ""]
     pub transport_stream_id: terrars::PrimField<f64>,
 }
 
-impl BuildMedialiveMultiplexMultiplexSettingsEl {
-    pub fn build(self) -> MedialiveMultiplexMultiplexSettingsEl {
-        MedialiveMultiplexMultiplexSettingsEl {
+impl BuildMedialiveMultiplex_MultiplexSettings {
+    pub fn build(self) -> MedialiveMultiplex_MultiplexSettings {
+        MedialiveMultiplex_MultiplexSettings {
             maximum_video_buffer_delay_milliseconds: core::default::Default::default(),
             transport_stream_bitrate: self.transport_stream_bitrate,
             transport_stream_id: self.transport_stream_id,
@@ -428,21 +457,23 @@ impl BuildMedialiveMultiplexMultiplexSettingsEl {
     }
 }
 
-pub struct MedialiveMultiplexMultiplexSettingsElRef {
+#[allow(dead_code)]
+pub struct MedialiveMultiplex_MultiplexSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveMultiplexMultiplexSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveMultiplexMultiplexSettingsElRef {
-        MedialiveMultiplexMultiplexSettingsElRef {
+impl terrars::Ref for MedialiveMultiplex_MultiplexSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveMultiplex_MultiplexSettingsRef {
+        MedialiveMultiplex_MultiplexSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveMultiplexMultiplexSettingsElRef {
+impl MedialiveMultiplex_MultiplexSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -472,7 +503,7 @@ impl MedialiveMultiplexMultiplexSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MedialiveMultiplexTimeoutsEl {
+pub struct MedialiveMultiplex_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -481,7 +512,7 @@ pub struct MedialiveMultiplexTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MedialiveMultiplexTimeoutsEl {
+impl MedialiveMultiplex_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -501,8 +532,8 @@ impl MedialiveMultiplexTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MedialiveMultiplexTimeoutsEl {
-    type O = terrars::BlockAssignable<MedialiveMultiplexTimeoutsEl>;
+impl terrars::ToListMappable for MedialiveMultiplex_Timeouts {
+    type O = terrars::BlockAssignable<MedialiveMultiplex_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -513,11 +544,11 @@ impl terrars::ToListMappable for MedialiveMultiplexTimeoutsEl {
     }
 }
 
-pub struct BuildMedialiveMultiplexTimeoutsEl {}
+pub struct BuildMedialiveMultiplex_Timeouts {}
 
-impl BuildMedialiveMultiplexTimeoutsEl {
-    pub fn build(self) -> MedialiveMultiplexTimeoutsEl {
-        MedialiveMultiplexTimeoutsEl {
+impl BuildMedialiveMultiplex_Timeouts {
+    pub fn build(self) -> MedialiveMultiplex_Timeouts {
+        MedialiveMultiplex_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -525,21 +556,23 @@ impl BuildMedialiveMultiplexTimeoutsEl {
     }
 }
 
-pub struct MedialiveMultiplexTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MedialiveMultiplex_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveMultiplexTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveMultiplexTimeoutsElRef {
-        MedialiveMultiplexTimeoutsElRef {
+impl terrars::Ref for MedialiveMultiplex_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveMultiplex_TimeoutsRef {
+        MedialiveMultiplex_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveMultiplexTimeoutsElRef {
+impl MedialiveMultiplex_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -558,9 +591,4 @@ impl MedialiveMultiplexTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MedialiveMultiplexDynamic {
-    multiplex_settings: std::option::Option<terrars::DynamicBlock<MedialiveMultiplexMultiplexSettingsEl>>,
 }

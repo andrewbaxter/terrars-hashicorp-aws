@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppstreamFleetData {
+struct AppstreamFleetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -40,8 +42,12 @@ struct AppstreamFleetData {
     image_name: std::option::Option<terrars::PrimField<std::string::String>>,
     instance_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_sessions_per_instance: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_user_duration_in_seconds: std::option::Option<terrars::PrimField<f64>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stream_view: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -49,18 +55,18 @@ struct AppstreamFleetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    compute_capacity: std::option::Option<std::vec::Vec<AppstreamFleetComputeCapacityEl>>,
+    compute_capacity: std::option::Option<std::vec::Vec<AppstreamFleet_ComputeCapacity>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    domain_join_info: std::option::Option<std::vec::Vec<AppstreamFleetDomainJoinInfoEl>>,
+    domain_join_info: std::option::Option<std::vec::Vec<AppstreamFleet_DomainJoinInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_config: std::option::Option<std::vec::Vec<AppstreamFleetVpcConfigEl>>,
+    vpc_config: std::option::Option<std::vec::Vec<AppstreamFleet_VpcConfig>>,
     dynamic: AppstreamFleetDynamic,
 }
 
 struct AppstreamFleet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppstreamFleetData>,
+    data: std::cell::RefCell<AppstreamFleetData_>,
 }
 
 #[derive(Clone)]
@@ -220,9 +226,22 @@ impl AppstreamFleet {
         self
     }
 
+    #[doc = "Set the field `max_sessions_per_instance`.\n"]
+    pub fn set_max_sessions_per_instance(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().max_sessions_per_instance = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `max_user_duration_in_seconds`.\n"]
     pub fn set_max_user_duration_in_seconds(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().max_user_duration_in_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -253,7 +272,7 @@ impl AppstreamFleet {
     #[doc = "Set the field `compute_capacity`.\n"]
     pub fn set_compute_capacity(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamFleetComputeCapacityEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamFleet_ComputeCapacity>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -269,7 +288,7 @@ impl AppstreamFleet {
     #[doc = "Set the field `domain_join_info`.\n"]
     pub fn set_domain_join_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamFleetDomainJoinInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamFleet_DomainJoinInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -283,10 +302,7 @@ impl AppstreamFleet {
     }
 
     #[doc = "Set the field `vpc_config`.\n"]
-    pub fn set_vpc_config(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamFleetVpcConfigEl>>,
-    ) -> Self {
+    pub fn set_vpc_config(self, v: impl std::convert::Into<terrars::BlockAssignable<AppstreamFleet_VpcConfig>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().vpc_config = std::option::Option::Some(v);
@@ -372,6 +388,11 @@ impl AppstreamFleet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `max_sessions_per_instance` after provisioning.\n"]
+    pub fn max_sessions_per_instance(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_sessions_per_instance", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `max_user_duration_in_seconds` after provisioning.\n"]
     pub fn max_user_duration_in_seconds(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_user_duration_in_seconds", self.extract_ref()))
@@ -380,6 +401,12 @@ impl AppstreamFleet {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -403,17 +430,17 @@ impl AppstreamFleet {
     }
 
     #[doc = "Get a reference to the value of field `compute_capacity` after provisioning.\n"]
-    pub fn compute_capacity(&self) -> terrars::ListRef<AppstreamFleetComputeCapacityElRef> {
+    pub fn compute_capacity(&self) -> terrars::ListRef<AppstreamFleet_ComputeCapacityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compute_capacity", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `domain_join_info` after provisioning.\n"]
-    pub fn domain_join_info(&self) -> terrars::ListRef<AppstreamFleetDomainJoinInfoElRef> {
+    pub fn domain_join_info(&self) -> terrars::ListRef<AppstreamFleet_DomainJoinInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.domain_join_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<AppstreamFleetVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<AppstreamFleet_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
@@ -462,7 +489,7 @@ impl BuildAppstreamFleet {
         let out = AppstreamFleet(std::rc::Rc::new(AppstreamFleet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppstreamFleetData {
+            data: std::cell::RefCell::new(AppstreamFleetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -479,8 +506,10 @@ impl BuildAppstreamFleet {
                 image_arn: core::default::Default::default(),
                 image_name: core::default::Default::default(),
                 instance_type: self.instance_type,
+                max_sessions_per_instance: core::default::Default::default(),
                 max_user_duration_in_seconds: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 stream_view: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -592,6 +621,11 @@ impl AppstreamFleetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `max_sessions_per_instance` after provisioning.\n"]
+    pub fn max_sessions_per_instance(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_sessions_per_instance", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `max_user_duration_in_seconds` after provisioning.\n"]
     pub fn max_user_duration_in_seconds(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_user_duration_in_seconds", self.extract_ref()))
@@ -600,6 +634,12 @@ impl AppstreamFleetRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -623,30 +663,52 @@ impl AppstreamFleetRef {
     }
 
     #[doc = "Get a reference to the value of field `compute_capacity` after provisioning.\n"]
-    pub fn compute_capacity(&self) -> terrars::ListRef<AppstreamFleetComputeCapacityElRef> {
+    pub fn compute_capacity(&self) -> terrars::ListRef<AppstreamFleet_ComputeCapacityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compute_capacity", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `domain_join_info` after provisioning.\n"]
-    pub fn domain_join_info(&self) -> terrars::ListRef<AppstreamFleetDomainJoinInfoElRef> {
+    pub fn domain_join_info(&self) -> terrars::ListRef<AppstreamFleet_DomainJoinInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.domain_join_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<AppstreamFleetVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<AppstreamFleet_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppstreamFleetComputeCapacityEl {
-    desired_instances: terrars::PrimField<f64>,
+#[derive(Serialize, Default)]
+struct AppstreamFleetDynamic {
+    compute_capacity: std::option::Option<terrars::DynamicBlock<AppstreamFleet_ComputeCapacity>>,
+    domain_join_info: std::option::Option<terrars::DynamicBlock<AppstreamFleet_DomainJoinInfo>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<AppstreamFleet_VpcConfig>>,
 }
 
-impl AppstreamFleetComputeCapacityEl { }
+#[derive(Serialize)]
+pub struct AppstreamFleet_ComputeCapacity {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    desired_instances: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    desired_sessions: std::option::Option<terrars::PrimField<f64>>,
+}
 
-impl terrars::ToListMappable for AppstreamFleetComputeCapacityEl {
-    type O = terrars::BlockAssignable<AppstreamFleetComputeCapacityEl>;
+impl AppstreamFleet_ComputeCapacity {
+    #[doc = "Set the field `desired_instances`.\n"]
+    pub fn set_desired_instances(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.desired_instances = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `desired_sessions`.\n"]
+    pub fn set_desired_sessions(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.desired_sessions = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppstreamFleet_ComputeCapacity {
+    type O = terrars::BlockAssignable<AppstreamFleet_ComputeCapacity>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -657,32 +719,34 @@ impl terrars::ToListMappable for AppstreamFleetComputeCapacityEl {
     }
 }
 
-pub struct BuildAppstreamFleetComputeCapacityEl {
-    #[doc = ""]
-    pub desired_instances: terrars::PrimField<f64>,
-}
+pub struct BuildAppstreamFleet_ComputeCapacity {}
 
-impl BuildAppstreamFleetComputeCapacityEl {
-    pub fn build(self) -> AppstreamFleetComputeCapacityEl {
-        AppstreamFleetComputeCapacityEl { desired_instances: self.desired_instances }
+impl BuildAppstreamFleet_ComputeCapacity {
+    pub fn build(self) -> AppstreamFleet_ComputeCapacity {
+        AppstreamFleet_ComputeCapacity {
+            desired_instances: core::default::Default::default(),
+            desired_sessions: core::default::Default::default(),
+        }
     }
 }
 
-pub struct AppstreamFleetComputeCapacityElRef {
+#[allow(dead_code)]
+pub struct AppstreamFleet_ComputeCapacityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamFleetComputeCapacityElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamFleetComputeCapacityElRef {
-        AppstreamFleetComputeCapacityElRef {
+impl terrars::Ref for AppstreamFleet_ComputeCapacityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamFleet_ComputeCapacityRef {
+        AppstreamFleet_ComputeCapacityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamFleetComputeCapacityElRef {
+impl AppstreamFleet_ComputeCapacityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -697,6 +761,11 @@ impl AppstreamFleetComputeCapacityElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.desired_instances", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `desired_sessions` after provisioning.\n"]
+    pub fn desired_sessions(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.desired_sessions", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `in_use` after provisioning.\n"]
     pub fn in_use(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.in_use", self.base))
@@ -709,14 +778,14 @@ impl AppstreamFleetComputeCapacityElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppstreamFleetDomainJoinInfoEl {
+pub struct AppstreamFleet_DomainJoinInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     directory_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     organizational_unit_distinguished_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppstreamFleetDomainJoinInfoEl {
+impl AppstreamFleet_DomainJoinInfo {
     #[doc = "Set the field `directory_name`.\n"]
     pub fn set_directory_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.directory_name = std::option::Option::Some(v.into());
@@ -733,8 +802,8 @@ impl AppstreamFleetDomainJoinInfoEl {
     }
 }
 
-impl terrars::ToListMappable for AppstreamFleetDomainJoinInfoEl {
-    type O = terrars::BlockAssignable<AppstreamFleetDomainJoinInfoEl>;
+impl terrars::ToListMappable for AppstreamFleet_DomainJoinInfo {
+    type O = terrars::BlockAssignable<AppstreamFleet_DomainJoinInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -745,32 +814,34 @@ impl terrars::ToListMappable for AppstreamFleetDomainJoinInfoEl {
     }
 }
 
-pub struct BuildAppstreamFleetDomainJoinInfoEl {}
+pub struct BuildAppstreamFleet_DomainJoinInfo {}
 
-impl BuildAppstreamFleetDomainJoinInfoEl {
-    pub fn build(self) -> AppstreamFleetDomainJoinInfoEl {
-        AppstreamFleetDomainJoinInfoEl {
+impl BuildAppstreamFleet_DomainJoinInfo {
+    pub fn build(self) -> AppstreamFleet_DomainJoinInfo {
+        AppstreamFleet_DomainJoinInfo {
             directory_name: core::default::Default::default(),
             organizational_unit_distinguished_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppstreamFleetDomainJoinInfoElRef {
+#[allow(dead_code)]
+pub struct AppstreamFleet_DomainJoinInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamFleetDomainJoinInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamFleetDomainJoinInfoElRef {
-        AppstreamFleetDomainJoinInfoElRef {
+impl terrars::Ref for AppstreamFleet_DomainJoinInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamFleet_DomainJoinInfoRef {
+        AppstreamFleet_DomainJoinInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamFleetDomainJoinInfoElRef {
+impl AppstreamFleet_DomainJoinInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -790,14 +861,14 @@ impl AppstreamFleetDomainJoinInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppstreamFleetVpcConfigEl {
+pub struct AppstreamFleet_VpcConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AppstreamFleetVpcConfigEl {
+impl AppstreamFleet_VpcConfig {
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         mut self,
@@ -817,8 +888,8 @@ impl AppstreamFleetVpcConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppstreamFleetVpcConfigEl {
-    type O = terrars::BlockAssignable<AppstreamFleetVpcConfigEl>;
+impl terrars::ToListMappable for AppstreamFleet_VpcConfig {
+    type O = terrars::BlockAssignable<AppstreamFleet_VpcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -829,32 +900,34 @@ impl terrars::ToListMappable for AppstreamFleetVpcConfigEl {
     }
 }
 
-pub struct BuildAppstreamFleetVpcConfigEl {}
+pub struct BuildAppstreamFleet_VpcConfig {}
 
-impl BuildAppstreamFleetVpcConfigEl {
-    pub fn build(self) -> AppstreamFleetVpcConfigEl {
-        AppstreamFleetVpcConfigEl {
+impl BuildAppstreamFleet_VpcConfig {
+    pub fn build(self) -> AppstreamFleet_VpcConfig {
+        AppstreamFleet_VpcConfig {
             security_group_ids: core::default::Default::default(),
             subnet_ids: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppstreamFleetVpcConfigElRef {
+#[allow(dead_code)]
+pub struct AppstreamFleet_VpcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamFleetVpcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamFleetVpcConfigElRef {
-        AppstreamFleetVpcConfigElRef {
+impl terrars::Ref for AppstreamFleet_VpcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamFleet_VpcConfigRef {
+        AppstreamFleet_VpcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamFleetVpcConfigElRef {
+impl AppstreamFleet_VpcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -868,11 +941,4 @@ impl AppstreamFleetVpcConfigElRef {
     pub fn subnet_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppstreamFleetDynamic {
-    compute_capacity: std::option::Option<terrars::DynamicBlock<AppstreamFleetComputeCapacityEl>>,
-    domain_join_info: std::option::Option<terrars::DynamicBlock<AppstreamFleetDomainJoinInfoEl>>,
-    vpc_config: std::option::Option<terrars::DynamicBlock<AppstreamFleetVpcConfigEl>>,
 }

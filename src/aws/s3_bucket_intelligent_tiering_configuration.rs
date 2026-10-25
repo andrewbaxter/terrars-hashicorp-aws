@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketIntelligentTieringConfigurationData {
+struct S3BucketIntelligentTieringConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,18 +25,20 @@ struct S3BucketIntelligentTieringConfigurationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<S3BucketIntelligentTieringConfigurationFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<S3BucketIntelligentTieringConfiguration_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tiering: std::option::Option<std::vec::Vec<S3BucketIntelligentTieringConfigurationTieringEl>>,
+    tiering: std::option::Option<std::vec::Vec<S3BucketIntelligentTieringConfiguration_Tiering>>,
     dynamic: S3BucketIntelligentTieringConfigurationDynamic,
 }
 
 struct S3BucketIntelligentTieringConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketIntelligentTieringConfigurationData>,
+    data: std::cell::RefCell<S3BucketIntelligentTieringConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl S3BucketIntelligentTieringConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().status = std::option::Option::Some(v.into());
@@ -149,7 +160,7 @@ impl S3BucketIntelligentTieringConfiguration {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketIntelligentTieringConfigurationFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketIntelligentTieringConfiguration_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -165,7 +176,7 @@ impl S3BucketIntelligentTieringConfiguration {
     #[doc = "Set the field `tiering`.\n"]
     pub fn set_tiering(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketIntelligentTieringConfigurationTieringEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketIntelligentTieringConfiguration_Tiering>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -193,13 +204,19 @@ impl S3BucketIntelligentTieringConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<S3BucketIntelligentTieringConfigurationFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<S3BucketIntelligentTieringConfiguration_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 }
@@ -248,7 +265,7 @@ impl BuildS3BucketIntelligentTieringConfiguration {
         let out = S3BucketIntelligentTieringConfiguration(std::rc::Rc::new(S3BucketIntelligentTieringConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketIntelligentTieringConfigurationData {
+            data: std::cell::RefCell::new(S3BucketIntelligentTieringConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -257,6 +274,7 @@ impl BuildS3BucketIntelligentTieringConfiguration {
                 bucket: self.bucket,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 status: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 tiering: core::default::Default::default(),
@@ -306,26 +324,38 @@ impl S3BucketIntelligentTieringConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<S3BucketIntelligentTieringConfigurationFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<S3BucketIntelligentTieringConfiguration_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketIntelligentTieringConfigurationDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<S3BucketIntelligentTieringConfiguration_Filter>>,
+    tiering: std::option::Option<terrars::DynamicBlock<S3BucketIntelligentTieringConfiguration_Tiering>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketIntelligentTieringConfigurationFilterEl {
+pub struct S3BucketIntelligentTieringConfiguration_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl S3BucketIntelligentTieringConfigurationFilterEl {
+impl S3BucketIntelligentTieringConfiguration_Filter {
     #[doc = "Set the field `prefix`.\n"]
     pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix = std::option::Option::Some(v.into());
@@ -342,8 +372,8 @@ impl S3BucketIntelligentTieringConfigurationFilterEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketIntelligentTieringConfigurationFilterEl {
-    type O = terrars::BlockAssignable<S3BucketIntelligentTieringConfigurationFilterEl>;
+impl terrars::ToListMappable for S3BucketIntelligentTieringConfiguration_Filter {
+    type O = terrars::BlockAssignable<S3BucketIntelligentTieringConfiguration_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -354,35 +384,37 @@ impl terrars::ToListMappable for S3BucketIntelligentTieringConfigurationFilterEl
     }
 }
 
-pub struct BuildS3BucketIntelligentTieringConfigurationFilterEl {}
+pub struct BuildS3BucketIntelligentTieringConfiguration_Filter {}
 
-impl BuildS3BucketIntelligentTieringConfigurationFilterEl {
-    pub fn build(self) -> S3BucketIntelligentTieringConfigurationFilterEl {
-        S3BucketIntelligentTieringConfigurationFilterEl {
+impl BuildS3BucketIntelligentTieringConfiguration_Filter {
+    pub fn build(self) -> S3BucketIntelligentTieringConfiguration_Filter {
+        S3BucketIntelligentTieringConfiguration_Filter {
             prefix: core::default::Default::default(),
             tags: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketIntelligentTieringConfigurationFilterElRef {
+#[allow(dead_code)]
+pub struct S3BucketIntelligentTieringConfiguration_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketIntelligentTieringConfigurationFilterElRef {
+impl terrars::Ref for S3BucketIntelligentTieringConfiguration_FilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketIntelligentTieringConfigurationFilterElRef {
-        S3BucketIntelligentTieringConfigurationFilterElRef {
+    ) -> S3BucketIntelligentTieringConfiguration_FilterRef {
+        S3BucketIntelligentTieringConfiguration_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketIntelligentTieringConfigurationFilterElRef {
+impl S3BucketIntelligentTieringConfiguration_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -399,15 +431,15 @@ impl S3BucketIntelligentTieringConfigurationFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketIntelligentTieringConfigurationTieringEl {
+pub struct S3BucketIntelligentTieringConfiguration_Tiering {
     access_tier: terrars::PrimField<std::string::String>,
     days: terrars::PrimField<f64>,
 }
 
-impl S3BucketIntelligentTieringConfigurationTieringEl { }
+impl S3BucketIntelligentTieringConfiguration_Tiering { }
 
-impl terrars::ToListMappable for S3BucketIntelligentTieringConfigurationTieringEl {
-    type O = terrars::BlockAssignable<S3BucketIntelligentTieringConfigurationTieringEl>;
+impl terrars::ToListMappable for S3BucketIntelligentTieringConfiguration_Tiering {
+    type O = terrars::BlockAssignable<S3BucketIntelligentTieringConfiguration_Tiering>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -418,40 +450,42 @@ impl terrars::ToListMappable for S3BucketIntelligentTieringConfigurationTieringE
     }
 }
 
-pub struct BuildS3BucketIntelligentTieringConfigurationTieringEl {
+pub struct BuildS3BucketIntelligentTieringConfiguration_Tiering {
     #[doc = ""]
     pub access_tier: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub days: terrars::PrimField<f64>,
 }
 
-impl BuildS3BucketIntelligentTieringConfigurationTieringEl {
-    pub fn build(self) -> S3BucketIntelligentTieringConfigurationTieringEl {
-        S3BucketIntelligentTieringConfigurationTieringEl {
+impl BuildS3BucketIntelligentTieringConfiguration_Tiering {
+    pub fn build(self) -> S3BucketIntelligentTieringConfiguration_Tiering {
+        S3BucketIntelligentTieringConfiguration_Tiering {
             access_tier: self.access_tier,
             days: self.days,
         }
     }
 }
 
-pub struct S3BucketIntelligentTieringConfigurationTieringElRef {
+#[allow(dead_code)]
+pub struct S3BucketIntelligentTieringConfiguration_TieringRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketIntelligentTieringConfigurationTieringElRef {
+impl terrars::Ref for S3BucketIntelligentTieringConfiguration_TieringRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketIntelligentTieringConfigurationTieringElRef {
-        S3BucketIntelligentTieringConfigurationTieringElRef {
+    ) -> S3BucketIntelligentTieringConfiguration_TieringRef {
+        S3BucketIntelligentTieringConfiguration_TieringRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketIntelligentTieringConfigurationTieringElRef {
+impl S3BucketIntelligentTieringConfiguration_TieringRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -465,10 +499,4 @@ impl S3BucketIntelligentTieringConfigurationTieringElRef {
     pub fn days(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.days", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketIntelligentTieringConfigurationDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<S3BucketIntelligentTieringConfigurationFilterEl>>,
-    tiering: std::option::Option<terrars::DynamicBlock<S3BucketIntelligentTieringConfigurationTieringEl>>,
 }

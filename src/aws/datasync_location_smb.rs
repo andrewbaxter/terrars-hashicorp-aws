@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DatasyncLocationSmbData {
+struct DatasyncLocationSmbData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct DatasyncLocationSmbData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     password: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     server_hostname: terrars::PrimField<std::string::String>,
     subdirectory: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,14 +36,14 @@ struct DatasyncLocationSmbData {
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     user: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    mount_options: std::option::Option<std::vec::Vec<DatasyncLocationSmbMountOptionsEl>>,
+    mount_options: std::option::Option<std::vec::Vec<DatasyncLocationSmb_MountOptions>>,
     dynamic: DatasyncLocationSmbDynamic,
 }
 
 struct DatasyncLocationSmb_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatasyncLocationSmbData>,
+    data: std::cell::RefCell<DatasyncLocationSmbData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl DatasyncLocationSmb {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -172,7 +183,7 @@ impl DatasyncLocationSmb {
     #[doc = "Set the field `mount_options`.\n"]
     pub fn set_mount_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationSmbMountOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationSmb_MountOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -210,6 +221,12 @@ impl DatasyncLocationSmb {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `server_hostname` after provisioning.\n"]
     pub fn server_hostname(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_hostname", self.extract_ref()))
@@ -241,7 +258,7 @@ impl DatasyncLocationSmb {
     }
 
     #[doc = "Get a reference to the value of field `mount_options` after provisioning.\n"]
-    pub fn mount_options(&self) -> terrars::ListRef<DatasyncLocationSmbMountOptionsElRef> {
+    pub fn mount_options(&self) -> terrars::ListRef<DatasyncLocationSmb_MountOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mount_options", self.extract_ref()))
     }
 }
@@ -296,7 +313,7 @@ impl BuildDatasyncLocationSmb {
         let out = DatasyncLocationSmb(std::rc::Rc::new(DatasyncLocationSmb_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatasyncLocationSmbData {
+            data: std::cell::RefCell::new(DatasyncLocationSmbData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -306,6 +323,7 @@ impl BuildDatasyncLocationSmb {
                 domain: core::default::Default::default(),
                 id: core::default::Default::default(),
                 password: self.password,
+                region: core::default::Default::default(),
                 server_hostname: self.server_hostname,
                 subdirectory: self.subdirectory,
                 tags: core::default::Default::default(),
@@ -368,6 +386,12 @@ impl DatasyncLocationSmbRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `server_hostname` after provisioning.\n"]
     pub fn server_hostname(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_hostname", self.extract_ref()))
@@ -399,18 +423,23 @@ impl DatasyncLocationSmbRef {
     }
 
     #[doc = "Get a reference to the value of field `mount_options` after provisioning.\n"]
-    pub fn mount_options(&self) -> terrars::ListRef<DatasyncLocationSmbMountOptionsElRef> {
+    pub fn mount_options(&self) -> terrars::ListRef<DatasyncLocationSmb_MountOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mount_options", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatasyncLocationSmbDynamic {
+    mount_options: std::option::Option<terrars::DynamicBlock<DatasyncLocationSmb_MountOptions>>,
+}
+
 #[derive(Serialize)]
-pub struct DatasyncLocationSmbMountOptionsEl {
+pub struct DatasyncLocationSmb_MountOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncLocationSmbMountOptionsEl {
+impl DatasyncLocationSmb_MountOptions {
     #[doc = "Set the field `version`.\n"]
     pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.version = std::option::Option::Some(v.into());
@@ -418,8 +447,8 @@ impl DatasyncLocationSmbMountOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncLocationSmbMountOptionsEl {
-    type O = terrars::BlockAssignable<DatasyncLocationSmbMountOptionsEl>;
+impl terrars::ToListMappable for DatasyncLocationSmb_MountOptions {
+    type O = terrars::BlockAssignable<DatasyncLocationSmb_MountOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -430,29 +459,31 @@ impl terrars::ToListMappable for DatasyncLocationSmbMountOptionsEl {
     }
 }
 
-pub struct BuildDatasyncLocationSmbMountOptionsEl {}
+pub struct BuildDatasyncLocationSmb_MountOptions {}
 
-impl BuildDatasyncLocationSmbMountOptionsEl {
-    pub fn build(self) -> DatasyncLocationSmbMountOptionsEl {
-        DatasyncLocationSmbMountOptionsEl { version: core::default::Default::default() }
+impl BuildDatasyncLocationSmb_MountOptions {
+    pub fn build(self) -> DatasyncLocationSmb_MountOptions {
+        DatasyncLocationSmb_MountOptions { version: core::default::Default::default() }
     }
 }
 
-pub struct DatasyncLocationSmbMountOptionsElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationSmb_MountOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationSmbMountOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationSmbMountOptionsElRef {
-        DatasyncLocationSmbMountOptionsElRef {
+impl terrars::Ref for DatasyncLocationSmb_MountOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationSmb_MountOptionsRef {
+        DatasyncLocationSmb_MountOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationSmbMountOptionsElRef {
+impl DatasyncLocationSmb_MountOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -461,9 +492,4 @@ impl DatasyncLocationSmbMountOptionsElRef {
     pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatasyncLocationSmbDynamic {
-    mount_options: std::option::Option<terrars::DynamicBlock<DatasyncLocationSmbMountOptionsEl>>,
 }

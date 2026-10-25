@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EcrpublicRepositoryData {
+struct EcrpublicRepositoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,22 +24,24 @@ struct EcrpublicRepositoryData {
     force_destroy: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     repository_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    catalog_data: std::option::Option<std::vec::Vec<EcrpublicRepositoryCatalogDataEl>>,
+    catalog_data: std::option::Option<std::vec::Vec<EcrpublicRepository_CatalogData>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EcrpublicRepositoryTimeoutsEl>,
+    timeouts: std::option::Option<EcrpublicRepository_Timeouts>,
     dynamic: EcrpublicRepositoryDynamic,
 }
 
 struct EcrpublicRepository_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EcrpublicRepositoryData>,
+    data: std::cell::RefCell<EcrpublicRepositoryData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl EcrpublicRepository {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -170,7 +181,7 @@ impl EcrpublicRepository {
     #[doc = "Set the field `catalog_data`.\n"]
     pub fn set_catalog_data(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcrpublicRepositoryCatalogDataEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcrpublicRepository_CatalogData>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +195,7 @@ impl EcrpublicRepository {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EcrpublicRepositoryTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EcrpublicRepository_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -202,6 +213,12 @@ impl EcrpublicRepository {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
@@ -230,13 +247,13 @@ impl EcrpublicRepository {
     }
 
     #[doc = "Get a reference to the value of field `catalog_data` after provisioning.\n"]
-    pub fn catalog_data(&self) -> terrars::ListRef<EcrpublicRepositoryCatalogDataElRef> {
+    pub fn catalog_data(&self) -> terrars::ListRef<EcrpublicRepository_CatalogDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.catalog_data", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EcrpublicRepositoryTimeoutsElRef {
-        EcrpublicRepositoryTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EcrpublicRepository_TimeoutsRef {
+        EcrpublicRepository_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -282,7 +299,7 @@ impl BuildEcrpublicRepository {
         let out = EcrpublicRepository(std::rc::Rc::new(EcrpublicRepository_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EcrpublicRepositoryData {
+            data: std::cell::RefCell::new(EcrpublicRepositoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -290,6 +307,7 @@ impl BuildEcrpublicRepository {
                 provisioner: core::default::Default::default(),
                 force_destroy: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 repository_name: self.repository_name,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -341,6 +359,12 @@ impl EcrpublicRepositoryRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
     pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
@@ -367,18 +391,23 @@ impl EcrpublicRepositoryRef {
     }
 
     #[doc = "Get a reference to the value of field `catalog_data` after provisioning.\n"]
-    pub fn catalog_data(&self) -> terrars::ListRef<EcrpublicRepositoryCatalogDataElRef> {
+    pub fn catalog_data(&self) -> terrars::ListRef<EcrpublicRepository_CatalogDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.catalog_data", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EcrpublicRepositoryTimeoutsElRef {
-        EcrpublicRepositoryTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EcrpublicRepository_TimeoutsRef {
+        EcrpublicRepository_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EcrpublicRepositoryDynamic {
+    catalog_data: std::option::Option<terrars::DynamicBlock<EcrpublicRepository_CatalogData>>,
+}
+
 #[derive(Serialize)]
-pub struct EcrpublicRepositoryCatalogDataEl {
+pub struct EcrpublicRepository_CatalogData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     about_text: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -393,7 +422,7 @@ pub struct EcrpublicRepositoryCatalogDataEl {
     usage_text: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EcrpublicRepositoryCatalogDataEl {
+impl EcrpublicRepository_CatalogData {
     #[doc = "Set the field `about_text`.\n"]
     pub fn set_about_text(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.about_text = std::option::Option::Some(v.into());
@@ -437,8 +466,8 @@ impl EcrpublicRepositoryCatalogDataEl {
     }
 }
 
-impl terrars::ToListMappable for EcrpublicRepositoryCatalogDataEl {
-    type O = terrars::BlockAssignable<EcrpublicRepositoryCatalogDataEl>;
+impl terrars::ToListMappable for EcrpublicRepository_CatalogData {
+    type O = terrars::BlockAssignable<EcrpublicRepository_CatalogData>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -449,11 +478,11 @@ impl terrars::ToListMappable for EcrpublicRepositoryCatalogDataEl {
     }
 }
 
-pub struct BuildEcrpublicRepositoryCatalogDataEl {}
+pub struct BuildEcrpublicRepository_CatalogData {}
 
-impl BuildEcrpublicRepositoryCatalogDataEl {
-    pub fn build(self) -> EcrpublicRepositoryCatalogDataEl {
-        EcrpublicRepositoryCatalogDataEl {
+impl BuildEcrpublicRepository_CatalogData {
+    pub fn build(self) -> EcrpublicRepository_CatalogData {
+        EcrpublicRepository_CatalogData {
             about_text: core::default::Default::default(),
             architectures: core::default::Default::default(),
             description: core::default::Default::default(),
@@ -464,21 +493,23 @@ impl BuildEcrpublicRepositoryCatalogDataEl {
     }
 }
 
-pub struct EcrpublicRepositoryCatalogDataElRef {
+#[allow(dead_code)]
+pub struct EcrpublicRepository_CatalogDataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrpublicRepositoryCatalogDataElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrpublicRepositoryCatalogDataElRef {
-        EcrpublicRepositoryCatalogDataElRef {
+impl terrars::Ref for EcrpublicRepository_CatalogDataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrpublicRepository_CatalogDataRef {
+        EcrpublicRepository_CatalogDataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrpublicRepositoryCatalogDataElRef {
+impl EcrpublicRepository_CatalogDataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -515,12 +546,12 @@ impl EcrpublicRepositoryCatalogDataElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcrpublicRepositoryTimeoutsEl {
+pub struct EcrpublicRepository_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EcrpublicRepositoryTimeoutsEl {
+impl EcrpublicRepository_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -528,8 +559,8 @@ impl EcrpublicRepositoryTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EcrpublicRepositoryTimeoutsEl {
-    type O = terrars::BlockAssignable<EcrpublicRepositoryTimeoutsEl>;
+impl terrars::ToListMappable for EcrpublicRepository_Timeouts {
+    type O = terrars::BlockAssignable<EcrpublicRepository_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -540,29 +571,31 @@ impl terrars::ToListMappable for EcrpublicRepositoryTimeoutsEl {
     }
 }
 
-pub struct BuildEcrpublicRepositoryTimeoutsEl {}
+pub struct BuildEcrpublicRepository_Timeouts {}
 
-impl BuildEcrpublicRepositoryTimeoutsEl {
-    pub fn build(self) -> EcrpublicRepositoryTimeoutsEl {
-        EcrpublicRepositoryTimeoutsEl { delete: core::default::Default::default() }
+impl BuildEcrpublicRepository_Timeouts {
+    pub fn build(self) -> EcrpublicRepository_Timeouts {
+        EcrpublicRepository_Timeouts { delete: core::default::Default::default() }
     }
 }
 
-pub struct EcrpublicRepositoryTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EcrpublicRepository_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrpublicRepositoryTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrpublicRepositoryTimeoutsElRef {
-        EcrpublicRepositoryTimeoutsElRef {
+impl terrars::Ref for EcrpublicRepository_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrpublicRepository_TimeoutsRef {
+        EcrpublicRepository_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrpublicRepositoryTimeoutsElRef {
+impl EcrpublicRepository_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -571,9 +604,4 @@ impl EcrpublicRepositoryTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EcrpublicRepositoryDynamic {
-    catalog_data: std::option::Option<terrars::DynamicBlock<EcrpublicRepositoryCatalogDataEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudwatchLogResourcePolicyData {
+struct CloudwatchLogResourcePolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,13 +23,18 @@ struct CloudwatchLogResourcePolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     policy_document: terrars::PrimField<std::string::String>,
-    policy_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct CloudwatchLogResourcePolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudwatchLogResourcePolicyData>,
+    data: std::cell::RefCell<CloudwatchLogResourcePolicyData_>,
 }
 
 #[derive(Clone)]
@@ -133,6 +140,25 @@ impl CloudwatchLogResourcePolicy {
         self
     }
 
+    #[doc = "Set the field `policy_name`.\n"]
+    pub fn set_policy_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().policy_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resource_arn`.\n"]
+    pub fn set_resource_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().resource_arn = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -146,6 +172,27 @@ impl CloudwatchLogResourcePolicy {
     #[doc = "Get a reference to the value of field `policy_name` after provisioning.\n"]
     pub fn policy_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `policy_scope` after provisioning.\n"]
+    pub fn policy_scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_scope", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `revision_id` after provisioning.\n"]
+    pub fn revision_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_id", self.extract_ref()))
     }
 }
 
@@ -184,8 +231,6 @@ pub struct BuildCloudwatchLogResourcePolicy {
     pub tf_id: std::string::String,
     #[doc = ""]
     pub policy_document: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub policy_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCloudwatchLogResourcePolicy {
@@ -193,7 +238,7 @@ impl BuildCloudwatchLogResourcePolicy {
         let out = CloudwatchLogResourcePolicy(std::rc::Rc::new(CloudwatchLogResourcePolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudwatchLogResourcePolicyData {
+            data: std::cell::RefCell::new(CloudwatchLogResourcePolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -201,7 +246,9 @@ impl BuildCloudwatchLogResourcePolicy {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 policy_document: self.policy_document,
-                policy_name: self.policy_name,
+                policy_name: core::default::Default::default(),
+                region: core::default::Default::default(),
+                resource_arn: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -245,5 +292,26 @@ impl CloudwatchLogResourcePolicyRef {
     #[doc = "Get a reference to the value of field `policy_name` after provisioning.\n"]
     pub fn policy_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `policy_scope` after provisioning.\n"]
+    pub fn policy_scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_scope", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `revision_id` after provisioning.\n"]
+    pub fn revision_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_id", self.extract_ref()))
     }
 }

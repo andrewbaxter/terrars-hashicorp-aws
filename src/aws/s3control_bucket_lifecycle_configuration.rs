@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3controlBucketLifecycleConfigurationData {
+struct S3controlBucketLifecycleConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct S3controlBucketLifecycleConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<S3controlBucketLifecycleConfigurationRuleEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rule: std::option::Option<std::vec::Vec<S3controlBucketLifecycleConfiguration_Rule>>,
     dynamic: S3controlBucketLifecycleConfigurationDynamic,
 }
 
 struct S3controlBucketLifecycleConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3controlBucketLifecycleConfigurationData>,
+    data: std::cell::RefCell<S3controlBucketLifecycleConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl S3controlBucketLifecycleConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `rule`.\n"]
     pub fn set_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3controlBucketLifecycleConfigurationRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3controlBucketLifecycleConfiguration_Rule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -159,6 +170,12 @@ impl S3controlBucketLifecycleConfiguration {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -204,7 +221,7 @@ impl BuildS3controlBucketLifecycleConfiguration {
         let out = S3controlBucketLifecycleConfiguration(std::rc::Rc::new(S3controlBucketLifecycleConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3controlBucketLifecycleConfigurationData {
+            data: std::cell::RefCell::new(S3controlBucketLifecycleConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -212,6 +229,7 @@ impl BuildS3controlBucketLifecycleConfiguration {
                 provisioner: core::default::Default::default(),
                 bucket: self.bucket,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 rule: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -253,17 +271,28 @@ impl S3controlBucketLifecycleConfigurationRef {
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct S3controlBucketLifecycleConfigurationDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<S3controlBucketLifecycleConfiguration_Rule>>,
 }
 
 #[derive(Serialize)]
-pub struct S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
+pub struct S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload {
     days_after_initiation: terrars::PrimField<f64>,
 }
 
-impl S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl { }
+impl S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload { }
 
-impl terrars::ToListMappable for S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
-    type O = terrars::BlockAssignable<S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>;
+impl terrars::ToListMappable for S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload {
+    type O = terrars::BlockAssignable<S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -274,37 +303,39 @@ impl terrars::ToListMappable for S3controlBucketLifecycleConfigurationRuleElAbor
     }
 }
 
-pub struct BuildS3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
+pub struct BuildS3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload {
     #[doc = ""]
     pub days_after_initiation: terrars::PrimField<f64>,
 }
 
-impl BuildS3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
-    pub fn build(self) -> S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
-        S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl {
+impl BuildS3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload {
+    pub fn build(self) -> S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload {
+        S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload {
             days_after_initiation: self.days_after_initiation,
         }
     }
 }
 
-pub struct S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
+#[allow(dead_code)]
+pub struct S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUploadRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
+impl terrars::Ref for S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUploadRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
-        S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
+    ) -> S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUploadRef {
+        S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUploadRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef {
+impl S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUploadRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -316,7 +347,7 @@ impl S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl
 }
 
 #[derive(Serialize)]
-pub struct S3controlBucketLifecycleConfigurationRuleElExpirationEl {
+pub struct S3controlBucketLifecycleConfiguration_Rule_Expiration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     date: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -325,7 +356,7 @@ pub struct S3controlBucketLifecycleConfigurationRuleElExpirationEl {
     expired_object_delete_marker: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3controlBucketLifecycleConfigurationRuleElExpirationEl {
+impl S3controlBucketLifecycleConfiguration_Rule_Expiration {
     #[doc = "Set the field `date`.\n"]
     pub fn set_date(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.date = std::option::Option::Some(v.into());
@@ -345,8 +376,8 @@ impl S3controlBucketLifecycleConfigurationRuleElExpirationEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlBucketLifecycleConfigurationRuleElExpirationEl {
-    type O = terrars::BlockAssignable<S3controlBucketLifecycleConfigurationRuleElExpirationEl>;
+impl terrars::ToListMappable for S3controlBucketLifecycleConfiguration_Rule_Expiration {
+    type O = terrars::BlockAssignable<S3controlBucketLifecycleConfiguration_Rule_Expiration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -357,11 +388,11 @@ impl terrars::ToListMappable for S3controlBucketLifecycleConfigurationRuleElExpi
     }
 }
 
-pub struct BuildS3controlBucketLifecycleConfigurationRuleElExpirationEl {}
+pub struct BuildS3controlBucketLifecycleConfiguration_Rule_Expiration {}
 
-impl BuildS3controlBucketLifecycleConfigurationRuleElExpirationEl {
-    pub fn build(self) -> S3controlBucketLifecycleConfigurationRuleElExpirationEl {
-        S3controlBucketLifecycleConfigurationRuleElExpirationEl {
+impl BuildS3controlBucketLifecycleConfiguration_Rule_Expiration {
+    pub fn build(self) -> S3controlBucketLifecycleConfiguration_Rule_Expiration {
+        S3controlBucketLifecycleConfiguration_Rule_Expiration {
             date: core::default::Default::default(),
             days: core::default::Default::default(),
             expired_object_delete_marker: core::default::Default::default(),
@@ -369,24 +400,26 @@ impl BuildS3controlBucketLifecycleConfigurationRuleElExpirationEl {
     }
 }
 
-pub struct S3controlBucketLifecycleConfigurationRuleElExpirationElRef {
+#[allow(dead_code)]
+pub struct S3controlBucketLifecycleConfiguration_Rule_ExpirationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlBucketLifecycleConfigurationRuleElExpirationElRef {
+impl terrars::Ref for S3controlBucketLifecycleConfiguration_Rule_ExpirationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlBucketLifecycleConfigurationRuleElExpirationElRef {
-        S3controlBucketLifecycleConfigurationRuleElExpirationElRef {
+    ) -> S3controlBucketLifecycleConfiguration_Rule_ExpirationRef {
+        S3controlBucketLifecycleConfiguration_Rule_ExpirationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlBucketLifecycleConfigurationRuleElExpirationElRef {
+impl S3controlBucketLifecycleConfiguration_Rule_ExpirationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -408,14 +441,14 @@ impl S3controlBucketLifecycleConfigurationRuleElExpirationElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3controlBucketLifecycleConfigurationRuleElFilterEl {
+pub struct S3controlBucketLifecycleConfiguration_Rule_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl S3controlBucketLifecycleConfigurationRuleElFilterEl {
+impl S3controlBucketLifecycleConfiguration_Rule_Filter {
     #[doc = "Set the field `prefix`.\n"]
     pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix = std::option::Option::Some(v.into());
@@ -432,8 +465,8 @@ impl S3controlBucketLifecycleConfigurationRuleElFilterEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlBucketLifecycleConfigurationRuleElFilterEl {
-    type O = terrars::BlockAssignable<S3controlBucketLifecycleConfigurationRuleElFilterEl>;
+impl terrars::ToListMappable for S3controlBucketLifecycleConfiguration_Rule_Filter {
+    type O = terrars::BlockAssignable<S3controlBucketLifecycleConfiguration_Rule_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -444,35 +477,37 @@ impl terrars::ToListMappable for S3controlBucketLifecycleConfigurationRuleElFilt
     }
 }
 
-pub struct BuildS3controlBucketLifecycleConfigurationRuleElFilterEl {}
+pub struct BuildS3controlBucketLifecycleConfiguration_Rule_Filter {}
 
-impl BuildS3controlBucketLifecycleConfigurationRuleElFilterEl {
-    pub fn build(self) -> S3controlBucketLifecycleConfigurationRuleElFilterEl {
-        S3controlBucketLifecycleConfigurationRuleElFilterEl {
+impl BuildS3controlBucketLifecycleConfiguration_Rule_Filter {
+    pub fn build(self) -> S3controlBucketLifecycleConfiguration_Rule_Filter {
+        S3controlBucketLifecycleConfiguration_Rule_Filter {
             prefix: core::default::Default::default(),
             tags: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlBucketLifecycleConfigurationRuleElFilterElRef {
+#[allow(dead_code)]
+pub struct S3controlBucketLifecycleConfiguration_Rule_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlBucketLifecycleConfigurationRuleElFilterElRef {
+impl terrars::Ref for S3controlBucketLifecycleConfiguration_Rule_FilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlBucketLifecycleConfigurationRuleElFilterElRef {
-        S3controlBucketLifecycleConfigurationRuleElFilterElRef {
+    ) -> S3controlBucketLifecycleConfiguration_Rule_FilterRef {
+        S3controlBucketLifecycleConfiguration_Rule_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlBucketLifecycleConfigurationRuleElFilterElRef {
+impl S3controlBucketLifecycleConfiguration_Rule_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -489,31 +524,31 @@ impl S3controlBucketLifecycleConfigurationRuleElFilterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct S3controlBucketLifecycleConfigurationRuleElDynamic {
+struct S3controlBucketLifecycleConfiguration_RuleDynamic {
     abort_incomplete_multipart_upload: std
     ::option
-    ::Option<terrars::DynamicBlock<S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>>,
-    expiration: std::option::Option<terrars::DynamicBlock<S3controlBucketLifecycleConfigurationRuleElExpirationEl>>,
-    filter: std::option::Option<terrars::DynamicBlock<S3controlBucketLifecycleConfigurationRuleElFilterEl>>,
+    ::Option<terrars::DynamicBlock<S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload>>,
+    expiration: std::option::Option<terrars::DynamicBlock<S3controlBucketLifecycleConfiguration_Rule_Expiration>>,
+    filter: std::option::Option<terrars::DynamicBlock<S3controlBucketLifecycleConfiguration_Rule_Filter>>,
 }
 
 #[derive(Serialize)]
-pub struct S3controlBucketLifecycleConfigurationRuleEl {
+pub struct S3controlBucketLifecycleConfiguration_Rule {
     id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     abort_incomplete_multipart_upload: std
     ::option
-    ::Option<std::vec::Vec<S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>>,
+    ::Option<std::vec::Vec<S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    expiration: std::option::Option<std::vec::Vec<S3controlBucketLifecycleConfigurationRuleElExpirationEl>>,
+    expiration: std::option::Option<std::vec::Vec<S3controlBucketLifecycleConfiguration_Rule_Expiration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<S3controlBucketLifecycleConfigurationRuleElFilterEl>>,
-    dynamic: S3controlBucketLifecycleConfigurationRuleElDynamic,
+    filter: std::option::Option<std::vec::Vec<S3controlBucketLifecycleConfiguration_Rule_Filter>>,
+    dynamic: S3controlBucketLifecycleConfiguration_RuleDynamic,
 }
 
-impl S3controlBucketLifecycleConfigurationRuleEl {
+impl S3controlBucketLifecycleConfiguration_Rule {
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.status = std::option::Option::Some(v.into());
@@ -530,7 +565,7 @@ impl S3controlBucketLifecycleConfigurationRuleEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadEl>,
+                        ::BlockAssignable<S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUpload>,
                     >,
     ) -> Self {
         match v.into() {
@@ -547,12 +582,7 @@ impl S3controlBucketLifecycleConfigurationRuleEl {
     #[doc = "Set the field `expiration`.\n"]
     pub fn set_expiration(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<S3controlBucketLifecycleConfigurationRuleElExpirationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3controlBucketLifecycleConfiguration_Rule_Expiration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -568,7 +598,7 @@ impl S3controlBucketLifecycleConfigurationRuleEl {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3controlBucketLifecycleConfigurationRuleElFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3controlBucketLifecycleConfiguration_Rule_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -582,8 +612,8 @@ impl S3controlBucketLifecycleConfigurationRuleEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlBucketLifecycleConfigurationRuleEl {
-    type O = terrars::BlockAssignable<S3controlBucketLifecycleConfigurationRuleEl>;
+impl terrars::ToListMappable for S3controlBucketLifecycleConfiguration_Rule {
+    type O = terrars::BlockAssignable<S3controlBucketLifecycleConfiguration_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -594,14 +624,14 @@ impl terrars::ToListMappable for S3controlBucketLifecycleConfigurationRuleEl {
     }
 }
 
-pub struct BuildS3controlBucketLifecycleConfigurationRuleEl {
+pub struct BuildS3controlBucketLifecycleConfiguration_Rule {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3controlBucketLifecycleConfigurationRuleEl {
-    pub fn build(self) -> S3controlBucketLifecycleConfigurationRuleEl {
-        S3controlBucketLifecycleConfigurationRuleEl {
+impl BuildS3controlBucketLifecycleConfiguration_Rule {
+    pub fn build(self) -> S3controlBucketLifecycleConfiguration_Rule {
+        S3controlBucketLifecycleConfiguration_Rule {
             id: self.id,
             status: core::default::Default::default(),
             abort_incomplete_multipart_upload: core::default::Default::default(),
@@ -612,24 +642,23 @@ impl BuildS3controlBucketLifecycleConfigurationRuleEl {
     }
 }
 
-pub struct S3controlBucketLifecycleConfigurationRuleElRef {
+#[allow(dead_code)]
+pub struct S3controlBucketLifecycleConfiguration_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlBucketLifecycleConfigurationRuleElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> S3controlBucketLifecycleConfigurationRuleElRef {
-        S3controlBucketLifecycleConfigurationRuleElRef {
+impl terrars::Ref for S3controlBucketLifecycleConfiguration_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3controlBucketLifecycleConfiguration_RuleRef {
+        S3controlBucketLifecycleConfiguration_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlBucketLifecycleConfigurationRuleElRef {
+impl S3controlBucketLifecycleConfiguration_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -647,22 +676,17 @@ impl S3controlBucketLifecycleConfigurationRuleElRef {
     #[doc = "Get a reference to the value of field `abort_incomplete_multipart_upload` after provisioning.\n"]
     pub fn abort_incomplete_multipart_upload(
         &self,
-    ) -> terrars::ListRef<S3controlBucketLifecycleConfigurationRuleElAbortIncompleteMultipartUploadElRef> {
+    ) -> terrars::ListRef<S3controlBucketLifecycleConfiguration_Rule_AbortIncompleteMultipartUploadRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.abort_incomplete_multipart_upload", self.base))
     }
 
     #[doc = "Get a reference to the value of field `expiration` after provisioning.\n"]
-    pub fn expiration(&self) -> terrars::ListRef<S3controlBucketLifecycleConfigurationRuleElExpirationElRef> {
+    pub fn expiration(&self) -> terrars::ListRef<S3controlBucketLifecycleConfiguration_Rule_ExpirationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.expiration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<S3controlBucketLifecycleConfigurationRuleElFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<S3controlBucketLifecycleConfiguration_Rule_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3controlBucketLifecycleConfigurationDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<S3controlBucketLifecycleConfigurationRuleEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodestarnotificationsNotificationRuleData {
+struct CodestarnotificationsNotificationRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct CodestarnotificationsNotificationRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     resource: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -31,14 +35,14 @@ struct CodestarnotificationsNotificationRuleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target: std::option::Option<std::vec::Vec<CodestarnotificationsNotificationRuleTargetEl>>,
+    target: std::option::Option<std::vec::Vec<CodestarnotificationsNotificationRule_Target>>,
     dynamic: CodestarnotificationsNotificationRuleDynamic,
 }
 
 struct CodestarnotificationsNotificationRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodestarnotificationsNotificationRuleData>,
+    data: std::cell::RefCell<CodestarnotificationsNotificationRuleData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +148,13 @@ impl CodestarnotificationsNotificationRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().status = std::option::Option::Some(v.into());
@@ -171,7 +182,7 @@ impl CodestarnotificationsNotificationRule {
     #[doc = "Set the field `target`.\n"]
     pub fn set_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodestarnotificationsNotificationRuleTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodestarnotificationsNotificationRule_Target>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -207,6 +218,12 @@ impl CodestarnotificationsNotificationRule {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource` after provisioning.\n"]
@@ -278,7 +295,7 @@ impl BuildCodestarnotificationsNotificationRule {
         let out = CodestarnotificationsNotificationRule(std::rc::Rc::new(CodestarnotificationsNotificationRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodestarnotificationsNotificationRuleData {
+            data: std::cell::RefCell::new(CodestarnotificationsNotificationRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -288,6 +305,7 @@ impl BuildCodestarnotificationsNotificationRule {
                 event_type_ids: self.event_type_ids,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 resource: self.resource,
                 status: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -349,6 +367,12 @@ impl CodestarnotificationsNotificationRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource` after provisioning.\n"]
     pub fn resource(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource", self.extract_ref()))
@@ -370,14 +394,19 @@ impl CodestarnotificationsNotificationRuleRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct CodestarnotificationsNotificationRuleDynamic {
+    target: std::option::Option<terrars::DynamicBlock<CodestarnotificationsNotificationRule_Target>>,
+}
+
 #[derive(Serialize)]
-pub struct CodestarnotificationsNotificationRuleTargetEl {
+pub struct CodestarnotificationsNotificationRule_Target {
     address: terrars::PrimField<std::string::String>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodestarnotificationsNotificationRuleTargetEl {
+impl CodestarnotificationsNotificationRule_Target {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -385,8 +414,8 @@ impl CodestarnotificationsNotificationRuleTargetEl {
     }
 }
 
-impl terrars::ToListMappable for CodestarnotificationsNotificationRuleTargetEl {
-    type O = terrars::BlockAssignable<CodestarnotificationsNotificationRuleTargetEl>;
+impl terrars::ToListMappable for CodestarnotificationsNotificationRule_Target {
+    type O = terrars::BlockAssignable<CodestarnotificationsNotificationRule_Target>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -397,38 +426,40 @@ impl terrars::ToListMappable for CodestarnotificationsNotificationRuleTargetEl {
     }
 }
 
-pub struct BuildCodestarnotificationsNotificationRuleTargetEl {
+pub struct BuildCodestarnotificationsNotificationRule_Target {
     #[doc = ""]
     pub address: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodestarnotificationsNotificationRuleTargetEl {
-    pub fn build(self) -> CodestarnotificationsNotificationRuleTargetEl {
-        CodestarnotificationsNotificationRuleTargetEl {
+impl BuildCodestarnotificationsNotificationRule_Target {
+    pub fn build(self) -> CodestarnotificationsNotificationRule_Target {
+        CodestarnotificationsNotificationRule_Target {
             address: self.address,
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct CodestarnotificationsNotificationRuleTargetElRef {
+#[allow(dead_code)]
+pub struct CodestarnotificationsNotificationRule_TargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodestarnotificationsNotificationRuleTargetElRef {
+impl terrars::Ref for CodestarnotificationsNotificationRule_TargetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodestarnotificationsNotificationRuleTargetElRef {
-        CodestarnotificationsNotificationRuleTargetElRef {
+    ) -> CodestarnotificationsNotificationRule_TargetRef {
+        CodestarnotificationsNotificationRule_TargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodestarnotificationsNotificationRuleTargetElRef {
+impl CodestarnotificationsNotificationRule_TargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -447,9 +478,4 @@ impl CodestarnotificationsNotificationRuleTargetElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CodestarnotificationsNotificationRuleDynamic {
-    target: std::option::Option<terrars::DynamicBlock<CodestarnotificationsNotificationRuleTargetEl>>,
 }

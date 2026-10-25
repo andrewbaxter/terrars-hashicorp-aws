@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlueConnectionData {
+struct GlueConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct GlueConnectionData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    athena_properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,18 +36,22 @@ struct GlueConnectionData {
     match_criteria: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    physical_connection_requirements: std::option::Option<std::vec::Vec<GlueConnectionPhysicalConnectionRequirementsEl>>,
+    authentication_configuration: std::option::Option<std::vec::Vec<GlueConnection_AuthenticationConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    physical_connection_requirements: std::option::Option<std::vec::Vec<GlueConnection_PhysicalConnectionRequirements>>,
     dynamic: GlueConnectionDynamic,
 }
 
 struct GlueConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlueConnectionData>,
+    data: std::cell::RefCell<GlueConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +151,15 @@ impl GlueConnection {
         self
     }
 
+    #[doc = "Set the field `athena_properties`.\n"]
+    pub fn set_athena_properties(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().athena_properties = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().catalog_id = std::option::Option::Some(v.into());
@@ -185,6 +202,13 @@ impl GlueConnection {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -203,10 +227,26 @@ impl GlueConnection {
         self
     }
 
+    #[doc = "Set the field `authentication_configuration`.\n"]
+    pub fn set_authentication_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueConnection_AuthenticationConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().authentication_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.authentication_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `physical_connection_requirements`.\n"]
     pub fn set_physical_connection_requirements(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueConnectionPhysicalConnectionRequirementsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueConnection_PhysicalConnectionRequirements>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -222,6 +262,11 @@ impl GlueConnection {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `athena_properties` after provisioning.\n"]
+    pub fn athena_properties(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.athena_properties", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `catalog_id` after provisioning.\n"]
@@ -259,6 +304,12 @@ impl GlueConnection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -269,10 +320,13 @@ impl GlueConnection {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `authentication_configuration` after provisioning.\n"]
+    pub fn authentication_configuration(&self) -> terrars::ListRef<GlueConnection_AuthenticationConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `physical_connection_requirements` after provisioning.\n"]
-    pub fn physical_connection_requirements(
-        &self,
-    ) -> terrars::ListRef<GlueConnectionPhysicalConnectionRequirementsElRef> {
+    pub fn physical_connection_requirements(&self) -> terrars::ListRef<GlueConnection_PhysicalConnectionRequirementsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.physical_connection_requirements", self.extract_ref()),
@@ -322,12 +376,13 @@ impl BuildGlueConnection {
         let out = GlueConnection(std::rc::Rc::new(GlueConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlueConnectionData {
+            data: std::cell::RefCell::new(GlueConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                athena_properties: core::default::Default::default(),
                 catalog_id: core::default::Default::default(),
                 connection_properties: core::default::Default::default(),
                 connection_type: core::default::Default::default(),
@@ -335,8 +390,10 @@ impl BuildGlueConnection {
                 id: core::default::Default::default(),
                 match_criteria: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                authentication_configuration: core::default::Default::default(),
                 physical_connection_requirements: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -374,6 +431,11 @@ impl GlueConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `athena_properties` after provisioning.\n"]
+    pub fn athena_properties(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.athena_properties", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `catalog_id` after provisioning.\n"]
     pub fn catalog_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.catalog_id", self.extract_ref()))
@@ -409,6 +471,12 @@ impl GlueConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -419,10 +487,13 @@ impl GlueConnectionRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `authentication_configuration` after provisioning.\n"]
+    pub fn authentication_configuration(&self) -> terrars::ListRef<GlueConnection_AuthenticationConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `physical_connection_requirements` after provisioning.\n"]
-    pub fn physical_connection_requirements(
-        &self,
-    ) -> terrars::ListRef<GlueConnectionPhysicalConnectionRequirementsElRef> {
+    pub fn physical_connection_requirements(&self) -> terrars::ListRef<GlueConnection_PhysicalConnectionRequirementsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.physical_connection_requirements", self.extract_ref()),
@@ -430,8 +501,783 @@ impl GlueConnectionRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlueConnectionDynamic {
+    authentication_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueConnection_AuthenticationConfiguration>>,
+    physical_connection_requirements: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueConnection_PhysicalConnectionRequirements>>,
+}
+
 #[derive(Serialize)]
-pub struct GlueConnectionPhysicalConnectionRequirementsEl {
+pub struct GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials {
+    password: terrars::PrimField<std::string::String>,
+    username: terrars::PrimField<std::string::String>,
+}
+
+impl GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials { }
+
+impl terrars::ToListMappable for GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials {
+    type O = terrars::BlockAssignable<GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials {
+    #[doc = ""]
+    pub password: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub username: terrars::PrimField<std::string::String>,
+}
+
+impl BuildGlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials {
+    pub fn build(self) -> GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials {
+        GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials {
+            password: self.password,
+            username: self.username,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentialsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentialsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentialsRef {
+        GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentialsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentialsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
+    pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `username` after provisioning.\n"]
+    pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties {
+    authorization_code: terrars::PrimField<std::string::String>,
+    redirect_uri: terrars::PrimField<std::string::String>,
+}
+
+impl GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties { }
+
+impl terrars
+::ToListMappable for GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties {
+    type O =
+        terrars
+        ::BlockAssignable<GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties {
+    #[doc = ""]
+    pub authorization_code: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub redirect_uri: terrars::PrimField<std::string::String>,
+}
+
+impl BuildGlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties {
+    pub fn build(self) -> GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties {
+        GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties {
+            authorization_code: self.authorization_code,
+            redirect_uri: self.redirect_uri,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodePropertiesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodePropertiesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodePropertiesRef {
+        GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodePropertiesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodePropertiesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `authorization_code` after provisioning.\n"]
+    pub fn authorization_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorization_code", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `redirect_uri` after provisioning.\n"]
+    pub fn redirect_uri(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_uri", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    aws_managed_client_application_reference: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_managed_client_application_client_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication {
+    #[doc = "Set the field `aws_managed_client_application_reference`.\n"]
+    pub fn set_aws_managed_client_application_reference(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.aws_managed_client_application_reference = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user_managed_client_application_client_id`.\n"]
+    pub fn set_user_managed_client_application_client_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.user_managed_client_application_client_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication {
+    type O =
+        terrars
+        ::BlockAssignable<GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication {}
+
+impl BuildGlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication {
+    pub fn build(self) -> GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication {
+        GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication {
+            aws_managed_client_application_reference: core::default::Default::default(),
+            user_managed_client_application_client_id: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplicationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplicationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplicationRef {
+        GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplicationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplicationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `aws_managed_client_application_reference` after provisioning.\n"]
+    pub fn aws_managed_client_application_reference(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.aws_managed_client_application_reference", self.base),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `user_managed_client_application_client_id` after provisioning.\n"]
+    pub fn user_managed_client_application_client_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.user_managed_client_application_client_id", self.base),
+        )
+    }
+}
+
+#[derive(Serialize)]
+pub struct GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_token: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    jwt_token: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    refresh_token: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_managed_client_application_client_secret: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials {
+    #[doc = "Set the field `access_token`.\n"]
+    pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.access_token = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `jwt_token`.\n"]
+    pub fn set_jwt_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.jwt_token = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `refresh_token`.\n"]
+    pub fn set_refresh_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.refresh_token = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user_managed_client_application_client_secret`.\n"]
+    pub fn set_user_managed_client_application_client_secret(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.user_managed_client_application_client_secret = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials {
+    type O = terrars::BlockAssignable<GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials {}
+
+impl BuildGlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials {
+    pub fn build(self) -> GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials {
+        GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials {
+            access_token: core::default::Default::default(),
+            jwt_token: core::default::Default::default(),
+            refresh_token: core::default::Default::default(),
+            user_managed_client_application_client_secret: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2CredentialsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2CredentialsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2CredentialsRef {
+        GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2CredentialsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2CredentialsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `access_token` after provisioning.\n"]
+    pub fn access_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_token", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `jwt_token` after provisioning.\n"]
+    pub fn jwt_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.jwt_token", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `refresh_token` after provisioning.\n"]
+    pub fn refresh_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.refresh_token", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `user_managed_client_application_client_secret` after provisioning.\n"]
+    pub fn user_managed_client_application_client_secret(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.user_managed_client_application_client_secret", self.base),
+        )
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GlueConnection_AuthenticationConfiguration_Oauth2PropertiesDynamic {
+    authorization_code_properties: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties>,
+    >,
+    oauth2_client_application: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication>,
+    >,
+    oauth2_credentials: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials>>,
+}
+
+#[derive(Serialize)]
+pub struct GlueConnection_AuthenticationConfiguration_Oauth2Properties {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oauth2_grant_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    token_url: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    token_url_parameters_map: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authorization_code_properties: std
+    ::option
+    ::Option<std::vec::Vec<GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oauth2_client_application: std
+    ::option
+    ::Option<std::vec::Vec<GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oauth2_credentials: std
+    ::option
+    ::Option<std::vec::Vec<GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials>>,
+    dynamic: GlueConnection_AuthenticationConfiguration_Oauth2PropertiesDynamic,
+}
+
+impl GlueConnection_AuthenticationConfiguration_Oauth2Properties {
+    #[doc = "Set the field `oauth2_grant_type`.\n"]
+    pub fn set_oauth2_grant_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.oauth2_grant_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `token_url`.\n"]
+    pub fn set_token_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.token_url = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `token_url_parameters_map`.\n"]
+    pub fn set_token_url_parameters_map(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.token_url_parameters_map = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `authorization_code_properties`.\n"]
+    pub fn set_authorization_code_properties(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodeProperties,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.authorization_code_properties = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.authorization_code_properties = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `oauth2_client_application`.\n"]
+    pub fn set_oauth2_client_application(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplication,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.oauth2_client_application = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oauth2_client_application = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `oauth2_credentials`.\n"]
+    pub fn set_oauth2_credentials(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2Credentials,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.oauth2_credentials = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oauth2_credentials = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GlueConnection_AuthenticationConfiguration_Oauth2Properties {
+    type O = terrars::BlockAssignable<GlueConnection_AuthenticationConfiguration_Oauth2Properties>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueConnection_AuthenticationConfiguration_Oauth2Properties {}
+
+impl BuildGlueConnection_AuthenticationConfiguration_Oauth2Properties {
+    pub fn build(self) -> GlueConnection_AuthenticationConfiguration_Oauth2Properties {
+        GlueConnection_AuthenticationConfiguration_Oauth2Properties {
+            oauth2_grant_type: core::default::Default::default(),
+            token_url: core::default::Default::default(),
+            token_url_parameters_map: core::default::Default::default(),
+            authorization_code_properties: core::default::Default::default(),
+            oauth2_client_application: core::default::Default::default(),
+            oauth2_credentials: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueConnection_AuthenticationConfiguration_Oauth2PropertiesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueConnection_AuthenticationConfiguration_Oauth2PropertiesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> GlueConnection_AuthenticationConfiguration_Oauth2PropertiesRef {
+        GlueConnection_AuthenticationConfiguration_Oauth2PropertiesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueConnection_AuthenticationConfiguration_Oauth2PropertiesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `oauth2_grant_type` after provisioning.\n"]
+    pub fn oauth2_grant_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.oauth2_grant_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `token_url` after provisioning.\n"]
+    pub fn token_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.token_url", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `token_url_parameters_map` after provisioning.\n"]
+    pub fn token_url_parameters_map(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.token_url_parameters_map", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `authorization_code_properties` after provisioning.\n"]
+    pub fn authorization_code_properties(
+        &self,
+    ) -> terrars::ListRef<GlueConnection_AuthenticationConfiguration_Oauth2Properties_AuthorizationCodePropertiesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authorization_code_properties", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `oauth2_client_application` after provisioning.\n"]
+    pub fn oauth2_client_application(
+        &self,
+    ) -> terrars::ListRef<GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2ClientApplicationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oauth2_client_application", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `oauth2_credentials` after provisioning.\n"]
+    pub fn oauth2_credentials(
+        &self,
+    ) -> terrars::ListRef<GlueConnection_AuthenticationConfiguration_Oauth2Properties_Oauth2CredentialsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oauth2_credentials", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GlueConnection_AuthenticationConfigurationDynamic {
+    basic_authentication_credentials: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials>>,
+    oauth2_properties: std
+    ::option
+    ::Option<terrars::DynamicBlock<GlueConnection_AuthenticationConfiguration_Oauth2Properties>>,
+}
+
+#[derive(Serialize)]
+pub struct GlueConnection_AuthenticationConfiguration {
+    authentication_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_authentication_credentials: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    basic_authentication_credentials: std
+    ::option
+    ::Option<std::vec::Vec<GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oauth2_properties: std::option::Option<std::vec::Vec<GlueConnection_AuthenticationConfiguration_Oauth2Properties>>,
+    dynamic: GlueConnection_AuthenticationConfigurationDynamic,
+}
+
+impl GlueConnection_AuthenticationConfiguration {
+    #[doc = "Set the field `custom_authentication_credentials`.\n"]
+    pub fn set_custom_authentication_credentials(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.custom_authentication_credentials = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kms_key_arn`.\n"]
+    pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_arn`.\n"]
+    pub fn set_secret_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `basic_authentication_credentials`.\n"]
+    pub fn set_basic_authentication_credentials(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentials>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.basic_authentication_credentials = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.basic_authentication_credentials = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `oauth2_properties`.\n"]
+    pub fn set_oauth2_properties(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<GlueConnection_AuthenticationConfiguration_Oauth2Properties>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.oauth2_properties = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.oauth2_properties = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for GlueConnection_AuthenticationConfiguration {
+    type O = terrars::BlockAssignable<GlueConnection_AuthenticationConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueConnection_AuthenticationConfiguration {
+    #[doc = ""]
+    pub authentication_type: terrars::PrimField<std::string::String>,
+}
+
+impl BuildGlueConnection_AuthenticationConfiguration {
+    pub fn build(self) -> GlueConnection_AuthenticationConfiguration {
+        GlueConnection_AuthenticationConfiguration {
+            authentication_type: self.authentication_type,
+            custom_authentication_credentials: core::default::Default::default(),
+            kms_key_arn: core::default::Default::default(),
+            secret_arn: core::default::Default::default(),
+            basic_authentication_credentials: core::default::Default::default(),
+            oauth2_properties: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueConnection_AuthenticationConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueConnection_AuthenticationConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueConnection_AuthenticationConfigurationRef {
+        GlueConnection_AuthenticationConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueConnection_AuthenticationConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `authentication_type` after provisioning.\n"]
+    pub fn authentication_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authentication_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_authentication_credentials` after provisioning.\n"]
+    pub fn custom_authentication_credentials(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.custom_authentication_credentials", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
+    pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `basic_authentication_credentials` after provisioning.\n"]
+    pub fn basic_authentication_credentials(
+        &self,
+    ) -> terrars::ListRef<GlueConnection_AuthenticationConfiguration_BasicAuthenticationCredentialsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.basic_authentication_credentials", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `oauth2_properties` after provisioning.\n"]
+    pub fn oauth2_properties(&self) -> terrars::ListRef<GlueConnection_AuthenticationConfiguration_Oauth2PropertiesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.oauth2_properties", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GlueConnection_PhysicalConnectionRequirements {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -440,7 +1286,7 @@ pub struct GlueConnectionPhysicalConnectionRequirementsEl {
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueConnectionPhysicalConnectionRequirementsEl {
+impl GlueConnection_PhysicalConnectionRequirements {
     #[doc = "Set the field `availability_zone`.\n"]
     pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.availability_zone = std::option::Option::Some(v.into());
@@ -463,8 +1309,8 @@ impl GlueConnectionPhysicalConnectionRequirementsEl {
     }
 }
 
-impl terrars::ToListMappable for GlueConnectionPhysicalConnectionRequirementsEl {
-    type O = terrars::BlockAssignable<GlueConnectionPhysicalConnectionRequirementsEl>;
+impl terrars::ToListMappable for GlueConnection_PhysicalConnectionRequirements {
+    type O = terrars::BlockAssignable<GlueConnection_PhysicalConnectionRequirements>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -475,11 +1321,11 @@ impl terrars::ToListMappable for GlueConnectionPhysicalConnectionRequirementsEl 
     }
 }
 
-pub struct BuildGlueConnectionPhysicalConnectionRequirementsEl {}
+pub struct BuildGlueConnection_PhysicalConnectionRequirements {}
 
-impl BuildGlueConnectionPhysicalConnectionRequirementsEl {
-    pub fn build(self) -> GlueConnectionPhysicalConnectionRequirementsEl {
-        GlueConnectionPhysicalConnectionRequirementsEl {
+impl BuildGlueConnection_PhysicalConnectionRequirements {
+    pub fn build(self) -> GlueConnection_PhysicalConnectionRequirements {
+        GlueConnection_PhysicalConnectionRequirements {
             availability_zone: core::default::Default::default(),
             security_group_id_list: core::default::Default::default(),
             subnet_id: core::default::Default::default(),
@@ -487,24 +1333,26 @@ impl BuildGlueConnectionPhysicalConnectionRequirementsEl {
     }
 }
 
-pub struct GlueConnectionPhysicalConnectionRequirementsElRef {
+#[allow(dead_code)]
+pub struct GlueConnection_PhysicalConnectionRequirementsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueConnectionPhysicalConnectionRequirementsElRef {
+impl terrars::Ref for GlueConnection_PhysicalConnectionRequirementsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GlueConnectionPhysicalConnectionRequirementsElRef {
-        GlueConnectionPhysicalConnectionRequirementsElRef {
+    ) -> GlueConnection_PhysicalConnectionRequirementsRef {
+        GlueConnection_PhysicalConnectionRequirementsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueConnectionPhysicalConnectionRequirementsElRef {
+impl GlueConnection_PhysicalConnectionRequirementsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -523,11 +1371,4 @@ impl GlueConnectionPhysicalConnectionRequirementsElRef {
     pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GlueConnectionDynamic {
-    physical_connection_requirements: std
-    ::option
-    ::Option<terrars::DynamicBlock<GlueConnectionPhysicalConnectionRequirementsEl>>,
 }

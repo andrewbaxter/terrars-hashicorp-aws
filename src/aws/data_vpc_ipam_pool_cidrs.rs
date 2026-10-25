@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataVpcIpamPoolCidrsData {
+struct DataVpcIpamPoolCidrsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,16 +22,18 @@ struct DataVpcIpamPoolCidrsData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     ipam_pool_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataVpcIpamPoolCidrsFilterEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataVpcIpamPoolCidrsTimeoutsEl>,
+    filter: std::option::Option<std::vec::Vec<DataVpcIpamPoolCidrs_Filter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataVpcIpamPoolCidrs_Timeouts>,
     dynamic: DataVpcIpamPoolCidrsDynamic,
 }
 
 struct DataVpcIpamPoolCidrs_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVpcIpamPoolCidrsData>,
+    data: std::cell::RefCell<DataVpcIpamPoolCidrsData_>,
 }
 
 #[derive(Clone)]
@@ -80,8 +84,15 @@ impl DataVpcIpamPoolCidrs {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataVpcIpamPoolCidrsFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataVpcIpamPoolCidrs_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -94,7 +105,7 @@ impl DataVpcIpamPoolCidrs {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcIpamPoolCidrsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcIpamPoolCidrs_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -105,7 +116,7 @@ impl DataVpcIpamPoolCidrs {
     }
 
     #[doc = "Get a reference to the value of field `ipam_pool_cidrs` after provisioning.\n"]
-    pub fn ipam_pool_cidrs(&self) -> terrars::SetRef<DataVpcIpamPoolCidrsIpamPoolCidrsElRef> {
+    pub fn ipam_pool_cidrs(&self) -> terrars::SetRef<DataVpcIpamPoolCidrs_IpamPoolCidrsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ipam_pool_cidrs", self.extract_ref()))
     }
 
@@ -114,9 +125,15 @@ impl DataVpcIpamPoolCidrs {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipam_pool_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcIpamPoolCidrsTimeoutsElRef {
-        DataVpcIpamPoolCidrsTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpcIpamPoolCidrs_TimeoutsRef {
+        DataVpcIpamPoolCidrs_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -162,13 +179,14 @@ impl BuildDataVpcIpamPoolCidrs {
         let out = DataVpcIpamPoolCidrs(std::rc::Rc::new(DataVpcIpamPoolCidrs_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVpcIpamPoolCidrsData {
+            data: std::cell::RefCell::new(DataVpcIpamPoolCidrsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 ipam_pool_id: self.ipam_pool_id,
+                region: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -208,7 +226,7 @@ impl DataVpcIpamPoolCidrsRef {
     }
 
     #[doc = "Get a reference to the value of field `ipam_pool_cidrs` after provisioning.\n"]
-    pub fn ipam_pool_cidrs(&self) -> terrars::SetRef<DataVpcIpamPoolCidrsIpamPoolCidrsElRef> {
+    pub fn ipam_pool_cidrs(&self) -> terrars::SetRef<DataVpcIpamPoolCidrs_IpamPoolCidrsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ipam_pool_cidrs", self.extract_ref()))
     }
 
@@ -217,21 +235,32 @@ impl DataVpcIpamPoolCidrsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipam_pool_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcIpamPoolCidrsTimeoutsElRef {
-        DataVpcIpamPoolCidrsTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpcIpamPoolCidrs_TimeoutsRef {
+        DataVpcIpamPoolCidrs_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataVpcIpamPoolCidrsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataVpcIpamPoolCidrs_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataVpcIpamPoolCidrsIpamPoolCidrsEl {
+pub struct DataVpcIpamPoolCidrs_IpamPoolCidrs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcIpamPoolCidrsIpamPoolCidrsEl {
+impl DataVpcIpamPoolCidrs_IpamPoolCidrs {
     #[doc = "Set the field `cidr`.\n"]
     pub fn set_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cidr = std::option::Option::Some(v.into());
@@ -245,8 +274,8 @@ impl DataVpcIpamPoolCidrsIpamPoolCidrsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcIpamPoolCidrsIpamPoolCidrsEl {
-    type O = terrars::BlockAssignable<DataVpcIpamPoolCidrsIpamPoolCidrsEl>;
+impl terrars::ToListMappable for DataVpcIpamPoolCidrs_IpamPoolCidrs {
+    type O = terrars::BlockAssignable<DataVpcIpamPoolCidrs_IpamPoolCidrs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -257,32 +286,34 @@ impl terrars::ToListMappable for DataVpcIpamPoolCidrsIpamPoolCidrsEl {
     }
 }
 
-pub struct BuildDataVpcIpamPoolCidrsIpamPoolCidrsEl {}
+pub struct BuildDataVpcIpamPoolCidrs_IpamPoolCidrs {}
 
-impl BuildDataVpcIpamPoolCidrsIpamPoolCidrsEl {
-    pub fn build(self) -> DataVpcIpamPoolCidrsIpamPoolCidrsEl {
-        DataVpcIpamPoolCidrsIpamPoolCidrsEl {
+impl BuildDataVpcIpamPoolCidrs_IpamPoolCidrs {
+    pub fn build(self) -> DataVpcIpamPoolCidrs_IpamPoolCidrs {
+        DataVpcIpamPoolCidrs_IpamPoolCidrs {
             cidr: core::default::Default::default(),
             state: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVpcIpamPoolCidrsIpamPoolCidrsElRef {
+#[allow(dead_code)]
+pub struct DataVpcIpamPoolCidrs_IpamPoolCidrsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcIpamPoolCidrsIpamPoolCidrsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcIpamPoolCidrsIpamPoolCidrsElRef {
-        DataVpcIpamPoolCidrsIpamPoolCidrsElRef {
+impl terrars::Ref for DataVpcIpamPoolCidrs_IpamPoolCidrsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcIpamPoolCidrs_IpamPoolCidrsRef {
+        DataVpcIpamPoolCidrs_IpamPoolCidrsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcIpamPoolCidrsIpamPoolCidrsElRef {
+impl DataVpcIpamPoolCidrs_IpamPoolCidrsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -299,15 +330,15 @@ impl DataVpcIpamPoolCidrsIpamPoolCidrsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcIpamPoolCidrsFilterEl {
+pub struct DataVpcIpamPoolCidrs_Filter {
     name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcIpamPoolCidrsFilterEl { }
+impl DataVpcIpamPoolCidrs_Filter { }
 
-impl terrars::ToListMappable for DataVpcIpamPoolCidrsFilterEl {
-    type O = terrars::BlockAssignable<DataVpcIpamPoolCidrsFilterEl>;
+impl terrars::ToListMappable for DataVpcIpamPoolCidrs_Filter {
+    type O = terrars::BlockAssignable<DataVpcIpamPoolCidrs_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -318,37 +349,39 @@ impl terrars::ToListMappable for DataVpcIpamPoolCidrsFilterEl {
     }
 }
 
-pub struct BuildDataVpcIpamPoolCidrsFilterEl {
+pub struct BuildDataVpcIpamPoolCidrs_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataVpcIpamPoolCidrsFilterEl {
-    pub fn build(self) -> DataVpcIpamPoolCidrsFilterEl {
-        DataVpcIpamPoolCidrsFilterEl {
+impl BuildDataVpcIpamPoolCidrs_Filter {
+    pub fn build(self) -> DataVpcIpamPoolCidrs_Filter {
+        DataVpcIpamPoolCidrs_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataVpcIpamPoolCidrsFilterElRef {
+#[allow(dead_code)]
+pub struct DataVpcIpamPoolCidrs_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcIpamPoolCidrsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcIpamPoolCidrsFilterElRef {
-        DataVpcIpamPoolCidrsFilterElRef {
+impl terrars::Ref for DataVpcIpamPoolCidrs_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcIpamPoolCidrs_FilterRef {
+        DataVpcIpamPoolCidrs_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcIpamPoolCidrsFilterElRef {
+impl DataVpcIpamPoolCidrs_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -359,18 +392,18 @@ impl DataVpcIpamPoolCidrsFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataVpcIpamPoolCidrsTimeoutsEl {
+pub struct DataVpcIpamPoolCidrs_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcIpamPoolCidrsTimeoutsEl {
+impl DataVpcIpamPoolCidrs_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -378,8 +411,8 @@ impl DataVpcIpamPoolCidrsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcIpamPoolCidrsTimeoutsEl {
-    type O = terrars::BlockAssignable<DataVpcIpamPoolCidrsTimeoutsEl>;
+impl terrars::ToListMappable for DataVpcIpamPoolCidrs_Timeouts {
+    type O = terrars::BlockAssignable<DataVpcIpamPoolCidrs_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -390,29 +423,31 @@ impl terrars::ToListMappable for DataVpcIpamPoolCidrsTimeoutsEl {
     }
 }
 
-pub struct BuildDataVpcIpamPoolCidrsTimeoutsEl {}
+pub struct BuildDataVpcIpamPoolCidrs_Timeouts {}
 
-impl BuildDataVpcIpamPoolCidrsTimeoutsEl {
-    pub fn build(self) -> DataVpcIpamPoolCidrsTimeoutsEl {
-        DataVpcIpamPoolCidrsTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataVpcIpamPoolCidrs_Timeouts {
+    pub fn build(self) -> DataVpcIpamPoolCidrs_Timeouts {
+        DataVpcIpamPoolCidrs_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataVpcIpamPoolCidrsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataVpcIpamPoolCidrs_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcIpamPoolCidrsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcIpamPoolCidrsTimeoutsElRef {
-        DataVpcIpamPoolCidrsTimeoutsElRef {
+impl terrars::Ref for DataVpcIpamPoolCidrs_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcIpamPoolCidrs_TimeoutsRef {
+        DataVpcIpamPoolCidrs_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcIpamPoolCidrsTimeoutsElRef {
+impl DataVpcIpamPoolCidrs_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -421,9 +456,4 @@ impl DataVpcIpamPoolCidrsTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataVpcIpamPoolCidrsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataVpcIpamPoolCidrsFilterEl>>,
 }

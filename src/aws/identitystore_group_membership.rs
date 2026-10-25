@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IdentitystoreGroupMembershipData {
+struct IdentitystoreGroupMembershipData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,12 +25,14 @@ struct IdentitystoreGroupMembershipData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     identity_store_id: terrars::PrimField<std::string::String>,
     member_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct IdentitystoreGroupMembership_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IdentitystoreGroupMembershipData>,
+    data: std::cell::RefCell<IdentitystoreGroupMembershipData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +138,13 @@ impl IdentitystoreGroupMembership {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `group_id` after provisioning.\n"]
     pub fn group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_id", self.extract_ref()))
@@ -157,6 +168,12 @@ impl IdentitystoreGroupMembership {
     #[doc = "Get a reference to the value of field `membership_id` after provisioning.\n"]
     pub fn membership_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.membership_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -206,7 +223,7 @@ impl BuildIdentitystoreGroupMembership {
         let out = IdentitystoreGroupMembership(std::rc::Rc::new(IdentitystoreGroupMembership_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IdentitystoreGroupMembershipData {
+            data: std::cell::RefCell::new(IdentitystoreGroupMembershipData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -216,6 +233,7 @@ impl BuildIdentitystoreGroupMembership {
                 id: core::default::Default::default(),
                 identity_store_id: self.identity_store_id,
                 member_id: self.member_id,
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -269,5 +287,11 @@ impl IdentitystoreGroupMembershipRef {
     #[doc = "Get a reference to the value of field `membership_id` after provisioning.\n"]
     pub fn membership_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.membership_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }

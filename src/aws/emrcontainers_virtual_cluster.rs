@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EmrcontainersVirtualClusterData {
+struct EmrcontainersVirtualClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,20 +24,22 @@ struct EmrcontainersVirtualClusterData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    container_provider: std::option::Option<std::vec::Vec<EmrcontainersVirtualClusterContainerProviderEl>>,
+    container_provider: std::option::Option<std::vec::Vec<EmrcontainersVirtualCluster_ContainerProvider>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EmrcontainersVirtualClusterTimeoutsEl>,
+    timeouts: std::option::Option<EmrcontainersVirtualCluster_Timeouts>,
     dynamic: EmrcontainersVirtualClusterDynamic,
 }
 
 struct EmrcontainersVirtualCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EmrcontainersVirtualClusterData>,
+    data: std::cell::RefCell<EmrcontainersVirtualClusterData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl EmrcontainersVirtualCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -162,7 +173,7 @@ impl EmrcontainersVirtualCluster {
     #[doc = "Set the field `container_provider`.\n"]
     pub fn set_container_provider(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EmrcontainersVirtualClusterContainerProviderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EmrcontainersVirtualCluster_ContainerProvider>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -176,7 +187,7 @@ impl EmrcontainersVirtualCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EmrcontainersVirtualClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EmrcontainersVirtualCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -196,6 +207,12 @@ impl EmrcontainersVirtualCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -207,13 +224,13 @@ impl EmrcontainersVirtualCluster {
     }
 
     #[doc = "Get a reference to the value of field `container_provider` after provisioning.\n"]
-    pub fn container_provider(&self) -> terrars::ListRef<EmrcontainersVirtualClusterContainerProviderElRef> {
+    pub fn container_provider(&self) -> terrars::ListRef<EmrcontainersVirtualCluster_ContainerProviderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.container_provider", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EmrcontainersVirtualClusterTimeoutsElRef {
-        EmrcontainersVirtualClusterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> EmrcontainersVirtualCluster_TimeoutsRef {
+        EmrcontainersVirtualCluster_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -262,7 +279,7 @@ impl BuildEmrcontainersVirtualCluster {
         let out = EmrcontainersVirtualCluster(std::rc::Rc::new(EmrcontainersVirtualCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EmrcontainersVirtualClusterData {
+            data: std::cell::RefCell::new(EmrcontainersVirtualClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -270,6 +287,7 @@ impl BuildEmrcontainersVirtualCluster {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 container_provider: core::default::Default::default(),
@@ -320,6 +338,12 @@ impl EmrcontainersVirtualClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -331,26 +355,31 @@ impl EmrcontainersVirtualClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `container_provider` after provisioning.\n"]
-    pub fn container_provider(&self) -> terrars::ListRef<EmrcontainersVirtualClusterContainerProviderElRef> {
+    pub fn container_provider(&self) -> terrars::ListRef<EmrcontainersVirtualCluster_ContainerProviderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.container_provider", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EmrcontainersVirtualClusterTimeoutsElRef {
-        EmrcontainersVirtualClusterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> EmrcontainersVirtualCluster_TimeoutsRef {
+        EmrcontainersVirtualCluster_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct EmrcontainersVirtualClusterDynamic {
+    container_provider: std::option::Option<terrars::DynamicBlock<EmrcontainersVirtualCluster_ContainerProvider>>,
+}
+
 #[derive(Serialize)]
-pub struct EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl {
+pub struct EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl {
+impl EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo {
     #[doc = "Set the field `namespace`.\n"]
     pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.namespace = std::option::Option::Some(v.into());
@@ -358,8 +387,8 @@ impl EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl {
     }
 }
 
-impl terrars::ToListMappable for EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl {
-    type O = terrars::BlockAssignable<EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl>;
+impl terrars::ToListMappable for EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo {
+    type O = terrars::BlockAssignable<EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -370,34 +399,34 @@ impl terrars::ToListMappable for EmrcontainersVirtualClusterContainerProviderElI
     }
 }
 
-pub struct BuildEmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl {}
+pub struct BuildEmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo {}
 
-impl BuildEmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl {
-    pub fn build(self) -> EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl {
-        EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl {
-            namespace: core::default::Default::default(),
-        }
+impl BuildEmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo {
+    pub fn build(self) -> EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo {
+        EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo { namespace: core::default::Default::default() }
     }
 }
 
-pub struct EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoElRef {
+#[allow(dead_code)]
+pub struct EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoElRef {
+impl terrars::Ref for EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoElRef {
-        EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoElRef {
+    ) -> EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfoRef {
+        EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoElRef {
+impl EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -409,20 +438,18 @@ impl EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EmrcontainersVirtualClusterContainerProviderElInfoElDynamic {
-    eks_info: std
-    ::option
-    ::Option<terrars::DynamicBlock<EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl>>,
+struct EmrcontainersVirtualCluster_ContainerProvider_InfoDynamic {
+    eks_info: std::option::Option<terrars::DynamicBlock<EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo>>,
 }
 
 #[derive(Serialize)]
-pub struct EmrcontainersVirtualClusterContainerProviderElInfoEl {
+pub struct EmrcontainersVirtualCluster_ContainerProvider_Info {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    eks_info: std::option::Option<std::vec::Vec<EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl>>,
-    dynamic: EmrcontainersVirtualClusterContainerProviderElInfoElDynamic,
+    eks_info: std::option::Option<std::vec::Vec<EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo>>,
+    dynamic: EmrcontainersVirtualCluster_ContainerProvider_InfoDynamic,
 }
 
-impl EmrcontainersVirtualClusterContainerProviderElInfoEl {
+impl EmrcontainersVirtualCluster_ContainerProvider_Info {
     #[doc = "Set the field `eks_info`.\n"]
     pub fn set_eks_info(
         mut self,
@@ -431,7 +458,7 @@ impl EmrcontainersVirtualClusterContainerProviderElInfoEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoEl>>,
+                    ::Into<terrars::BlockAssignable<EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -445,8 +472,8 @@ impl EmrcontainersVirtualClusterContainerProviderElInfoEl {
     }
 }
 
-impl terrars::ToListMappable for EmrcontainersVirtualClusterContainerProviderElInfoEl {
-    type O = terrars::BlockAssignable<EmrcontainersVirtualClusterContainerProviderElInfoEl>;
+impl terrars::ToListMappable for EmrcontainersVirtualCluster_ContainerProvider_Info {
+    type O = terrars::BlockAssignable<EmrcontainersVirtualCluster_ContainerProvider_Info>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -457,65 +484,67 @@ impl terrars::ToListMappable for EmrcontainersVirtualClusterContainerProviderElI
     }
 }
 
-pub struct BuildEmrcontainersVirtualClusterContainerProviderElInfoEl {}
+pub struct BuildEmrcontainersVirtualCluster_ContainerProvider_Info {}
 
-impl BuildEmrcontainersVirtualClusterContainerProviderElInfoEl {
-    pub fn build(self) -> EmrcontainersVirtualClusterContainerProviderElInfoEl {
-        EmrcontainersVirtualClusterContainerProviderElInfoEl {
+impl BuildEmrcontainersVirtualCluster_ContainerProvider_Info {
+    pub fn build(self) -> EmrcontainersVirtualCluster_ContainerProvider_Info {
+        EmrcontainersVirtualCluster_ContainerProvider_Info {
             eks_info: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct EmrcontainersVirtualClusterContainerProviderElInfoElRef {
+#[allow(dead_code)]
+pub struct EmrcontainersVirtualCluster_ContainerProvider_InfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EmrcontainersVirtualClusterContainerProviderElInfoElRef {
+impl terrars::Ref for EmrcontainersVirtualCluster_ContainerProvider_InfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EmrcontainersVirtualClusterContainerProviderElInfoElRef {
-        EmrcontainersVirtualClusterContainerProviderElInfoElRef {
+    ) -> EmrcontainersVirtualCluster_ContainerProvider_InfoRef {
+        EmrcontainersVirtualCluster_ContainerProvider_InfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EmrcontainersVirtualClusterContainerProviderElInfoElRef {
+impl EmrcontainersVirtualCluster_ContainerProvider_InfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `eks_info` after provisioning.\n"]
-    pub fn eks_info(&self) -> terrars::ListRef<EmrcontainersVirtualClusterContainerProviderElInfoElEksInfoElRef> {
+    pub fn eks_info(&self) -> terrars::ListRef<EmrcontainersVirtualCluster_ContainerProvider_Info_EksInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.eks_info", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct EmrcontainersVirtualClusterContainerProviderElDynamic {
-    info: std::option::Option<terrars::DynamicBlock<EmrcontainersVirtualClusterContainerProviderElInfoEl>>,
+struct EmrcontainersVirtualCluster_ContainerProviderDynamic {
+    info: std::option::Option<terrars::DynamicBlock<EmrcontainersVirtualCluster_ContainerProvider_Info>>,
 }
 
 #[derive(Serialize)]
-pub struct EmrcontainersVirtualClusterContainerProviderEl {
+pub struct EmrcontainersVirtualCluster_ContainerProvider {
     id: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    info: std::option::Option<std::vec::Vec<EmrcontainersVirtualClusterContainerProviderElInfoEl>>,
-    dynamic: EmrcontainersVirtualClusterContainerProviderElDynamic,
+    info: std::option::Option<std::vec::Vec<EmrcontainersVirtualCluster_ContainerProvider_Info>>,
+    dynamic: EmrcontainersVirtualCluster_ContainerProviderDynamic,
 }
 
-impl EmrcontainersVirtualClusterContainerProviderEl {
+impl EmrcontainersVirtualCluster_ContainerProvider {
     #[doc = "Set the field `info`.\n"]
     pub fn set_info(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EmrcontainersVirtualClusterContainerProviderElInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EmrcontainersVirtualCluster_ContainerProvider_Info>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -529,8 +558,8 @@ impl EmrcontainersVirtualClusterContainerProviderEl {
     }
 }
 
-impl terrars::ToListMappable for EmrcontainersVirtualClusterContainerProviderEl {
-    type O = terrars::BlockAssignable<EmrcontainersVirtualClusterContainerProviderEl>;
+impl terrars::ToListMappable for EmrcontainersVirtualCluster_ContainerProvider {
+    type O = terrars::BlockAssignable<EmrcontainersVirtualCluster_ContainerProvider>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -541,16 +570,16 @@ impl terrars::ToListMappable for EmrcontainersVirtualClusterContainerProviderEl 
     }
 }
 
-pub struct BuildEmrcontainersVirtualClusterContainerProviderEl {
+pub struct BuildEmrcontainersVirtualCluster_ContainerProvider {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEmrcontainersVirtualClusterContainerProviderEl {
-    pub fn build(self) -> EmrcontainersVirtualClusterContainerProviderEl {
-        EmrcontainersVirtualClusterContainerProviderEl {
+impl BuildEmrcontainersVirtualCluster_ContainerProvider {
+    pub fn build(self) -> EmrcontainersVirtualCluster_ContainerProvider {
+        EmrcontainersVirtualCluster_ContainerProvider {
             id: self.id,
             type_: self.type_,
             info: core::default::Default::default(),
@@ -559,24 +588,26 @@ impl BuildEmrcontainersVirtualClusterContainerProviderEl {
     }
 }
 
-pub struct EmrcontainersVirtualClusterContainerProviderElRef {
+#[allow(dead_code)]
+pub struct EmrcontainersVirtualCluster_ContainerProviderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EmrcontainersVirtualClusterContainerProviderElRef {
+impl terrars::Ref for EmrcontainersVirtualCluster_ContainerProviderRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EmrcontainersVirtualClusterContainerProviderElRef {
-        EmrcontainersVirtualClusterContainerProviderElRef {
+    ) -> EmrcontainersVirtualCluster_ContainerProviderRef {
+        EmrcontainersVirtualCluster_ContainerProviderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EmrcontainersVirtualClusterContainerProviderElRef {
+impl EmrcontainersVirtualCluster_ContainerProviderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -592,18 +623,18 @@ impl EmrcontainersVirtualClusterContainerProviderElRef {
     }
 
     #[doc = "Get a reference to the value of field `info` after provisioning.\n"]
-    pub fn info(&self) -> terrars::ListRef<EmrcontainersVirtualClusterContainerProviderElInfoElRef> {
+    pub fn info(&self) -> terrars::ListRef<EmrcontainersVirtualCluster_ContainerProvider_InfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.info", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EmrcontainersVirtualClusterTimeoutsEl {
+pub struct EmrcontainersVirtualCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EmrcontainersVirtualClusterTimeoutsEl {
+impl EmrcontainersVirtualCluster_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -611,8 +642,8 @@ impl EmrcontainersVirtualClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EmrcontainersVirtualClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<EmrcontainersVirtualClusterTimeoutsEl>;
+impl terrars::ToListMappable for EmrcontainersVirtualCluster_Timeouts {
+    type O = terrars::BlockAssignable<EmrcontainersVirtualCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -623,29 +654,31 @@ impl terrars::ToListMappable for EmrcontainersVirtualClusterTimeoutsEl {
     }
 }
 
-pub struct BuildEmrcontainersVirtualClusterTimeoutsEl {}
+pub struct BuildEmrcontainersVirtualCluster_Timeouts {}
 
-impl BuildEmrcontainersVirtualClusterTimeoutsEl {
-    pub fn build(self) -> EmrcontainersVirtualClusterTimeoutsEl {
-        EmrcontainersVirtualClusterTimeoutsEl { delete: core::default::Default::default() }
+impl BuildEmrcontainersVirtualCluster_Timeouts {
+    pub fn build(self) -> EmrcontainersVirtualCluster_Timeouts {
+        EmrcontainersVirtualCluster_Timeouts { delete: core::default::Default::default() }
     }
 }
 
-pub struct EmrcontainersVirtualClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EmrcontainersVirtualCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EmrcontainersVirtualClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EmrcontainersVirtualClusterTimeoutsElRef {
-        EmrcontainersVirtualClusterTimeoutsElRef {
+impl terrars::Ref for EmrcontainersVirtualCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EmrcontainersVirtualCluster_TimeoutsRef {
+        EmrcontainersVirtualCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EmrcontainersVirtualClusterTimeoutsElRef {
+impl EmrcontainersVirtualCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -654,9 +687,4 @@ impl EmrcontainersVirtualClusterTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EmrcontainersVirtualClusterDynamic {
-    container_provider: std::option::Option<terrars::DynamicBlock<EmrcontainersVirtualClusterContainerProviderEl>>,
 }

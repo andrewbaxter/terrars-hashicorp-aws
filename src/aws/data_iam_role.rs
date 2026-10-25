@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataIamRoleData {
+struct DataIamRoleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataIamRoleData {
 struct DataIamRole_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataIamRoleData>,
+    data: std::cell::RefCell<DataIamRoleData_>,
 }
 
 #[derive(Clone)]
@@ -131,6 +133,11 @@ impl DataIamRole {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permissions_boundary", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `role_last_used` after provisioning.\n"]
+    pub fn role_last_used(&self) -> terrars::ListRef<DataIamRole_RoleLastUsedRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.role_last_used", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -184,7 +191,7 @@ impl BuildDataIamRole {
         let out = DataIamRole(std::rc::Rc::new(DataIamRole_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataIamRoleData {
+            data: std::cell::RefCell::new(DataIamRoleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -267,6 +274,11 @@ impl DataIamRoleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permissions_boundary", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `role_last_used` after provisioning.\n"]
+    pub fn role_last_used(&self) -> terrars::ListRef<DataIamRole_RoleLastUsedRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.role_last_used", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -275,5 +287,82 @@ impl DataIamRoleRef {
     #[doc = "Get a reference to the value of field `unique_id` after provisioning.\n"]
     pub fn unique_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.unique_id", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataIamRole_RoleLastUsed {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    last_used_date: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataIamRole_RoleLastUsed {
+    #[doc = "Set the field `last_used_date`.\n"]
+    pub fn set_last_used_date(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.last_used_date = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `region`.\n"]
+    pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.region = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataIamRole_RoleLastUsed {
+    type O = terrars::BlockAssignable<DataIamRole_RoleLastUsed>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataIamRole_RoleLastUsed {}
+
+impl BuildDataIamRole_RoleLastUsed {
+    pub fn build(self) -> DataIamRole_RoleLastUsed {
+        DataIamRole_RoleLastUsed {
+            last_used_date: core::default::Default::default(),
+            region: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataIamRole_RoleLastUsedRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataIamRole_RoleLastUsedRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIamRole_RoleLastUsedRef {
+        DataIamRole_RoleLastUsedRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataIamRole_RoleLastUsedRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `last_used_date` after provisioning.\n"]
+    pub fn last_used_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_used_date", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
     }
 }

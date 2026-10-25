@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataVpcData {
+struct DataVpcData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,20 +27,22 @@ struct DataVpcData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataVpcFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataVpc_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataVpcTimeoutsEl>,
+    timeouts: std::option::Option<DataVpc_Timeouts>,
     dynamic: DataVpcDynamic,
 }
 
 struct DataVpc_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVpcData>,
+    data: std::cell::RefCell<DataVpcData_>,
 }
 
 #[derive(Clone)]
@@ -107,6 +111,13 @@ impl DataVpc {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `state`.\n"]
     pub fn set_state(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().state = std::option::Option::Some(v.into());
@@ -123,7 +134,7 @@ impl DataVpc {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataVpcFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataVpc_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -136,7 +147,7 @@ impl DataVpc {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpc_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -152,7 +163,7 @@ impl DataVpc {
     }
 
     #[doc = "Get a reference to the value of field `cidr_block_associations` after provisioning.\n"]
-    pub fn cidr_block_associations(&self) -> terrars::ListRef<DataVpcCidrBlockAssociationsElRef> {
+    pub fn cidr_block_associations(&self) -> terrars::ListRef<DataVpc_CidrBlockAssociationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cidr_block_associations", self.extract_ref()))
     }
 
@@ -204,6 +215,11 @@ impl DataVpc {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block_associations` after provisioning.\n"]
+    pub fn ipv6_cidr_block_associations(&self) -> terrars::SetRef<DataVpc_Ipv6CidrBlockAssociationsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.ipv6_cidr_block_associations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `main_route_table_id` after provisioning.\n"]
     pub fn main_route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.main_route_table_id", self.extract_ref()))
@@ -212,6 +228,12 @@ impl DataVpc {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -225,8 +247,8 @@ impl DataVpc {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcTimeoutsElRef {
-        DataVpcTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpc_TimeoutsRef {
+        DataVpc_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -270,7 +292,7 @@ impl BuildDataVpc {
         let out = DataVpc(std::rc::Rc::new(DataVpc_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVpcData {
+            data: std::cell::RefCell::new(DataVpcData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -279,6 +301,7 @@ impl BuildDataVpc {
                 default: core::default::Default::default(),
                 dhcp_options_id: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 state: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
@@ -325,7 +348,7 @@ impl DataVpcRef {
     }
 
     #[doc = "Get a reference to the value of field `cidr_block_associations` after provisioning.\n"]
-    pub fn cidr_block_associations(&self) -> terrars::ListRef<DataVpcCidrBlockAssociationsElRef> {
+    pub fn cidr_block_associations(&self) -> terrars::ListRef<DataVpc_CidrBlockAssociationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cidr_block_associations", self.extract_ref()))
     }
 
@@ -377,6 +400,11 @@ impl DataVpcRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block_associations` after provisioning.\n"]
+    pub fn ipv6_cidr_block_associations(&self) -> terrars::SetRef<DataVpc_Ipv6CidrBlockAssociationsRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.ipv6_cidr_block_associations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `main_route_table_id` after provisioning.\n"]
     pub fn main_route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.main_route_table_id", self.extract_ref()))
@@ -385,6 +413,12 @@ impl DataVpcRef {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -398,13 +432,18 @@ impl DataVpcRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcTimeoutsElRef {
-        DataVpcTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpc_TimeoutsRef {
+        DataVpc_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataVpcDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataVpc_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataVpcCidrBlockAssociationsEl {
+pub struct DataVpc_CidrBlockAssociations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     association_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -413,7 +452,7 @@ pub struct DataVpcCidrBlockAssociationsEl {
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcCidrBlockAssociationsEl {
+impl DataVpc_CidrBlockAssociations {
     #[doc = "Set the field `association_id`.\n"]
     pub fn set_association_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.association_id = std::option::Option::Some(v.into());
@@ -433,8 +472,8 @@ impl DataVpcCidrBlockAssociationsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcCidrBlockAssociationsEl {
-    type O = terrars::BlockAssignable<DataVpcCidrBlockAssociationsEl>;
+impl terrars::ToListMappable for DataVpc_CidrBlockAssociations {
+    type O = terrars::BlockAssignable<DataVpc_CidrBlockAssociations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -445,11 +484,11 @@ impl terrars::ToListMappable for DataVpcCidrBlockAssociationsEl {
     }
 }
 
-pub struct BuildDataVpcCidrBlockAssociationsEl {}
+pub struct BuildDataVpc_CidrBlockAssociations {}
 
-impl BuildDataVpcCidrBlockAssociationsEl {
-    pub fn build(self) -> DataVpcCidrBlockAssociationsEl {
-        DataVpcCidrBlockAssociationsEl {
+impl BuildDataVpc_CidrBlockAssociations {
+    pub fn build(self) -> DataVpc_CidrBlockAssociations {
+        DataVpc_CidrBlockAssociations {
             association_id: core::default::Default::default(),
             cidr_block: core::default::Default::default(),
             state: core::default::Default::default(),
@@ -457,21 +496,23 @@ impl BuildDataVpcCidrBlockAssociationsEl {
     }
 }
 
-pub struct DataVpcCidrBlockAssociationsElRef {
+#[allow(dead_code)]
+pub struct DataVpc_CidrBlockAssociationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcCidrBlockAssociationsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcCidrBlockAssociationsElRef {
-        DataVpcCidrBlockAssociationsElRef {
+impl terrars::Ref for DataVpc_CidrBlockAssociationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpc_CidrBlockAssociationsRef {
+        DataVpc_CidrBlockAssociationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcCidrBlockAssociationsElRef {
+impl DataVpc_CidrBlockAssociationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -493,15 +534,75 @@ impl DataVpcCidrBlockAssociationsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+pub struct DataVpc_Ipv6CidrBlockAssociations {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    association_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_source: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_address_attribute: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_pool: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_border_group: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcFilterEl { }
+impl DataVpc_Ipv6CidrBlockAssociations {
+    #[doc = "Set the field `association_id`.\n"]
+    pub fn set_association_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.association_id = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for DataVpcFilterEl {
-    type O = terrars::BlockAssignable<DataVpcFilterEl>;
+    #[doc = "Set the field `ip_source`.\n"]
+    pub fn set_ip_source(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_source = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv6_address_attribute`.\n"]
+    pub fn set_ipv6_address_attribute(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.ipv6_address_attribute = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv6_cidr_block`.\n"]
+    pub fn set_ipv6_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6_cidr_block = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv6_pool`.\n"]
+    pub fn set_ipv6_pool(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6_pool = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `network_border_group`.\n"]
+    pub fn set_network_border_group(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.network_border_group = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataVpc_Ipv6CidrBlockAssociations {
+    type O = terrars::BlockAssignable<DataVpc_Ipv6CidrBlockAssociations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -512,37 +613,132 @@ impl terrars::ToListMappable for DataVpcFilterEl {
     }
 }
 
-pub struct BuildDataVpcFilterEl {
-    #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
-}
+pub struct BuildDataVpc_Ipv6CidrBlockAssociations {}
 
-impl BuildDataVpcFilterEl {
-    pub fn build(self) -> DataVpcFilterEl {
-        DataVpcFilterEl {
-            name: self.name,
-            values: self.values,
+impl BuildDataVpc_Ipv6CidrBlockAssociations {
+    pub fn build(self) -> DataVpc_Ipv6CidrBlockAssociations {
+        DataVpc_Ipv6CidrBlockAssociations {
+            association_id: core::default::Default::default(),
+            ip_source: core::default::Default::default(),
+            ipv6_address_attribute: core::default::Default::default(),
+            ipv6_cidr_block: core::default::Default::default(),
+            ipv6_pool: core::default::Default::default(),
+            network_border_group: core::default::Default::default(),
+            state: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVpcFilterElRef {
+#[allow(dead_code)]
+pub struct DataVpc_Ipv6CidrBlockAssociationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcFilterElRef {
-        DataVpcFilterElRef {
+impl terrars::Ref for DataVpc_Ipv6CidrBlockAssociationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpc_Ipv6CidrBlockAssociationsRef {
+        DataVpc_Ipv6CidrBlockAssociationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcFilterElRef {
+impl DataVpc_Ipv6CidrBlockAssociationsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `association_id` after provisioning.\n"]
+    pub fn association_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.association_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ip_source` after provisioning.\n"]
+    pub fn ip_source(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_source", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_address_attribute` after provisioning.\n"]
+    pub fn ipv6_address_attribute(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_address_attribute", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
+    pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_pool` after provisioning.\n"]
+    pub fn ipv6_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_pool", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `network_border_group` after provisioning.\n"]
+    pub fn network_border_group(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_border_group", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataVpc_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl DataVpc_Filter { }
+
+impl terrars::ToListMappable for DataVpc_Filter {
+    type O = terrars::BlockAssignable<DataVpc_Filter>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataVpc_Filter {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildDataVpc_Filter {
+    pub fn build(self) -> DataVpc_Filter {
+        DataVpc_Filter {
+            name: self.name,
+            values: self.values,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataVpc_FilterRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataVpc_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpc_FilterRef {
+        DataVpc_FilterRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataVpc_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -559,12 +755,12 @@ impl DataVpcFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcTimeoutsEl {
+pub struct DataVpc_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcTimeoutsEl {
+impl DataVpc_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -572,8 +768,8 @@ impl DataVpcTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcTimeoutsEl {
-    type O = terrars::BlockAssignable<DataVpcTimeoutsEl>;
+impl terrars::ToListMappable for DataVpc_Timeouts {
+    type O = terrars::BlockAssignable<DataVpc_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -584,29 +780,31 @@ impl terrars::ToListMappable for DataVpcTimeoutsEl {
     }
 }
 
-pub struct BuildDataVpcTimeoutsEl {}
+pub struct BuildDataVpc_Timeouts {}
 
-impl BuildDataVpcTimeoutsEl {
-    pub fn build(self) -> DataVpcTimeoutsEl {
-        DataVpcTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataVpc_Timeouts {
+    pub fn build(self) -> DataVpc_Timeouts {
+        DataVpc_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataVpcTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataVpc_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcTimeoutsElRef {
-        DataVpcTimeoutsElRef {
+impl terrars::Ref for DataVpc_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpc_TimeoutsRef {
+        DataVpc_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcTimeoutsElRef {
+impl DataVpc_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -615,9 +813,4 @@ impl DataVpcTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataVpcDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataVpcFilterEl>>,
 }

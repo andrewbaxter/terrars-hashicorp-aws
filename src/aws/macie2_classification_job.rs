@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Macie2ClassificationJobData {
+struct Macie2ClassificationJobData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,22 +36,26 @@ struct Macie2ClassificationJobData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sampling_percentage: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_job_definition: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionEl>>,
+    s3_job_definition: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schedule_frequency: std::option::Option<std::vec::Vec<Macie2ClassificationJobScheduleFrequencyEl>>,
+    schedule_frequency: std::option::Option<std::vec::Vec<Macie2ClassificationJob_ScheduleFrequency>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Macie2ClassificationJob_Timeouts>,
     dynamic: Macie2ClassificationJobDynamic,
 }
 
 struct Macie2ClassificationJob_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Macie2ClassificationJobData>,
+    data: std::cell::RefCell<Macie2ClassificationJobData_>,
 }
 
 #[derive(Clone)]
@@ -194,6 +200,13 @@ impl Macie2ClassificationJob {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `sampling_percentage`.\n"]
     pub fn set_sampling_percentage(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().sampling_percentage = std::option::Option::Some(v.into());
@@ -221,7 +234,7 @@ impl Macie2ClassificationJob {
     #[doc = "Set the field `s3_job_definition`.\n"]
     pub fn set_s3_job_definition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -237,7 +250,7 @@ impl Macie2ClassificationJob {
     #[doc = "Set the field `schedule_frequency`.\n"]
     pub fn set_schedule_frequency(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Macie2ClassificationJobScheduleFrequencyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Macie2ClassificationJob_ScheduleFrequency>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -247,6 +260,12 @@ impl Macie2ClassificationJob {
                 self.0.data.borrow_mut().dynamic.schedule_frequency = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<Macie2ClassificationJob_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -305,6 +324,12 @@ impl Macie2ClassificationJob {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sampling_percentage` after provisioning.\n"]
     pub fn sampling_percentage(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sampling_percentage", self.extract_ref()))
@@ -321,18 +346,23 @@ impl Macie2ClassificationJob {
     }
 
     #[doc = "Get a reference to the value of field `user_paused_details` after provisioning.\n"]
-    pub fn user_paused_details(&self) -> terrars::ListRef<Macie2ClassificationJobUserPausedDetailsElRef> {
+    pub fn user_paused_details(&self) -> terrars::ListRef<Macie2ClassificationJob_UserPausedDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_paused_details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_job_definition` after provisioning.\n"]
-    pub fn s3_job_definition(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElRef> {
+    pub fn s3_job_definition(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_job_definition", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schedule_frequency` after provisioning.\n"]
-    pub fn schedule_frequency(&self) -> terrars::ListRef<Macie2ClassificationJobScheduleFrequencyElRef> {
+    pub fn schedule_frequency(&self) -> terrars::ListRef<Macie2ClassificationJob_ScheduleFrequencyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule_frequency", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Macie2ClassificationJob_TimeoutsRef {
+        Macie2ClassificationJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -378,7 +408,7 @@ impl BuildMacie2ClassificationJob {
         let out = Macie2ClassificationJob(std::rc::Rc::new(Macie2ClassificationJob_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Macie2ClassificationJobData {
+            data: std::cell::RefCell::new(Macie2ClassificationJobData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -392,11 +422,13 @@ impl BuildMacie2ClassificationJob {
                 job_type: self.job_type,
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 sampling_percentage: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 s3_job_definition: core::default::Default::default(),
                 schedule_frequency: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -483,6 +515,12 @@ impl Macie2ClassificationJobRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sampling_percentage` after provisioning.\n"]
     pub fn sampling_percentage(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sampling_percentage", self.extract_ref()))
@@ -499,23 +537,34 @@ impl Macie2ClassificationJobRef {
     }
 
     #[doc = "Get a reference to the value of field `user_paused_details` after provisioning.\n"]
-    pub fn user_paused_details(&self) -> terrars::ListRef<Macie2ClassificationJobUserPausedDetailsElRef> {
+    pub fn user_paused_details(&self) -> terrars::ListRef<Macie2ClassificationJob_UserPausedDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_paused_details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_job_definition` after provisioning.\n"]
-    pub fn s3_job_definition(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElRef> {
+    pub fn s3_job_definition(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_job_definition", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schedule_frequency` after provisioning.\n"]
-    pub fn schedule_frequency(&self) -> terrars::ListRef<Macie2ClassificationJobScheduleFrequencyElRef> {
+    pub fn schedule_frequency(&self) -> terrars::ListRef<Macie2ClassificationJob_ScheduleFrequencyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule_frequency", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Macie2ClassificationJob_TimeoutsRef {
+        Macie2ClassificationJob_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Macie2ClassificationJobDynamic {
+    s3_job_definition: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition>>,
+    schedule_frequency: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJob_ScheduleFrequency>>,
+}
+
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobUserPausedDetailsEl {
+pub struct Macie2ClassificationJob_UserPausedDetails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     job_expires_at: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -524,7 +573,7 @@ pub struct Macie2ClassificationJobUserPausedDetailsEl {
     job_paused_at: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Macie2ClassificationJobUserPausedDetailsEl {
+impl Macie2ClassificationJob_UserPausedDetails {
     #[doc = "Set the field `job_expires_at`.\n"]
     pub fn set_job_expires_at(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.job_expires_at = std::option::Option::Some(v.into());
@@ -547,8 +596,8 @@ impl Macie2ClassificationJobUserPausedDetailsEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobUserPausedDetailsEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobUserPausedDetailsEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_UserPausedDetails {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_UserPausedDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -559,11 +608,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobUserPausedDetailsEl {
     }
 }
 
-pub struct BuildMacie2ClassificationJobUserPausedDetailsEl {}
+pub struct BuildMacie2ClassificationJob_UserPausedDetails {}
 
-impl BuildMacie2ClassificationJobUserPausedDetailsEl {
-    pub fn build(self) -> Macie2ClassificationJobUserPausedDetailsEl {
-        Macie2ClassificationJobUserPausedDetailsEl {
+impl BuildMacie2ClassificationJob_UserPausedDetails {
+    pub fn build(self) -> Macie2ClassificationJob_UserPausedDetails {
+        Macie2ClassificationJob_UserPausedDetails {
             job_expires_at: core::default::Default::default(),
             job_imminent_expiration_health_event_arn: core::default::Default::default(),
             job_paused_at: core::default::Default::default(),
@@ -571,21 +620,23 @@ impl BuildMacie2ClassificationJobUserPausedDetailsEl {
     }
 }
 
-pub struct Macie2ClassificationJobUserPausedDetailsElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_UserPausedDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobUserPausedDetailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2ClassificationJobUserPausedDetailsElRef {
-        Macie2ClassificationJobUserPausedDetailsElRef {
+impl terrars::Ref for Macie2ClassificationJob_UserPausedDetailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2ClassificationJob_UserPausedDetailsRef {
+        Macie2ClassificationJob_UserPausedDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobUserPausedDetailsElRef {
+impl Macie2ClassificationJob_UserPausedDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -610,7 +661,7 @@ impl Macie2ClassificationJobUserPausedDetailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     comparator: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -619,7 +670,7 @@ pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAnd
     values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion {
     #[doc = "Set the field `comparator`.\n"]
     pub fn set_comparator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.comparator = std::option::Option::Some(v.into());
@@ -642,11 +693,10 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimp
     }
 }
 
-impl terrars
-::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl {
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion {
     type O =
         terrars
-        ::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl>;
+        ::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -657,11 +707,11 @@ impl terrars
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion {
             comparator: core::default::Default::default(),
             key: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -669,24 +719,26 @@ impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndE
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterionRef {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionElRef {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -708,14 +760,14 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimp
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -729,13 +781,10 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagC
     }
 }
 
-impl terrars
-::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl {
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues {
     type O =
         terrars
-        ::BlockAssignable<
-            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl,
-        >;
+        ::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -746,38 +795,37 @@ impl terrars
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl {
-    pub fn build(
-        self,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues {
             key: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValuesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValuesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValuesRef {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValuesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesElRef {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValuesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -794,33 +842,26 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagC
 }
 
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElDynamic {
+struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterionDynamic {
     tag_values: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<
-            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl,
-        >,
+        terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     comparator: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tag_values: std
     ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl>,
-    >,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElDynamic,
+    ::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterionDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion {
     #[doc = "Set the field `comparator`.\n"]
     pub fn set_comparator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.comparator = std::option::Option::Some(v.into());
@@ -838,7 +879,7 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagC
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesEl,
+                            Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues,
                         >,
                     >,
     ) -> Self {
@@ -854,10 +895,9 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagC
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl {
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion {
     type O =
-        terrars
-        ::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl>;
+        terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -868,11 +908,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketC
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion {
             comparator: core::default::Default::default(),
             tag_values: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -880,24 +920,26 @@ impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndE
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterionRef {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElRef {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -910,41 +952,39 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagC
     #[doc = "Get a reference to the value of field `tag_values` after provisioning.\n"]
     pub fn tag_values(
         &self,
-    ) -> terrars
-    ::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElTagValuesElRef> {
+    ) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValuesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag_values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElDynamic {
+struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_AndDynamic {
     simple_criterion: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl>,
+        terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion>,
     >,
     tag_criterion: std
     ::option
     ::Option<
-        terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl>,
+        terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     simple_criterion: std
     ::option
-    ::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl>>,
+    ::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tag_criterion: std
     ::option
-    ::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElDynamic,
+    ::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_AndDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And {
     #[doc = "Set the field `simple_criterion`.\n"]
     pub fn set_simple_criterion(
         mut self,
@@ -956,7 +996,7 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionEl,
+                            Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterion,
                         >,
                     >,
     ) -> Self {
@@ -982,7 +1022,7 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionEl,
+                            Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterion,
                         >,
                     >,
     ) -> Self {
@@ -998,8 +1038,8 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1010,11 +1050,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketC
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And {
             simple_criterion: core::default::Default::default(),
             tag_criterion: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1022,24 +1062,26 @@ impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndE
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_AndRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_AndRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_AndRef {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_AndRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElRef {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_AndRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1047,34 +1089,33 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElRef 
     #[doc = "Get a reference to the value of field `simple_criterion` after provisioning.\n"]
     pub fn simple_criterion(
         &self,
-    ) -> terrars
-    ::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElSimpleCriterionElRef> {
+    ) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_SimpleCriterionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.simple_criterion", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tag_criterion` after provisioning.\n"]
     pub fn tag_criterion(
         &self,
-    ) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElTagCriterionElRef> {
+    ) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And_TagCriterionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag_criterion", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElDynamic {
+struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_ExcludesDynamic {
     and: std
     ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl>>,
+    ::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And>>,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    and: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElDynamic,
+    and: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_BucketCriteria_ExcludesDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes {
     #[doc = "Set the field `and`.\n"]
     pub fn set_and(
         mut self,
@@ -1084,8 +1125,7 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndEl>,
+                        terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1100,8 +1140,8 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1112,511 +1152,62 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketC
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes {
             and: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_ExcludesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_ExcludesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_ExcludesRef {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_ExcludesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElRef {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_ExcludesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `and` after provisioning.\n"]
-    pub fn and(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElAndElRef> {
+    pub fn and(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_AndRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.and", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    comparator: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl {
-    #[doc = "Set the field `comparator`.\n"]
-    pub fn set_comparator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.comparator = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl {
-    type O =
-        terrars
-        ::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl {}
-
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl {
-            comparator: core::default::Default::default(),
-            key: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `comparator` after provisioning.\n"]
-    pub fn comparator(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparator", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl {}
-
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl {
-    pub fn build(
-        self,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl {
-            key: core::default::Default::default(),
-            value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElDynamic {
-    tag_values: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<
-            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl,
-        >,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    comparator: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag_values: std
-    ::option
-    ::Option<
-        std
-        ::vec
-        ::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl>,
-    >,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElDynamic,
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl {
-    #[doc = "Set the field `comparator`.\n"]
-    pub fn set_comparator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.comparator = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tag_values`.\n"]
-    pub fn set_tag_values(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.tag_values = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.tag_values = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl {
-    type O =
-        terrars
-        ::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl {}
-
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl {
-            comparator: core::default::Default::default(),
-            tag_values: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `comparator` after provisioning.\n"]
-    pub fn comparator(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparator", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `tag_values` after provisioning.\n"]
-    pub fn tag_values(
-        &self,
-    ) -> terrars
-    ::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElTagValuesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.tag_values", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElDynamic {
-    simple_criterion: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl>,
-    >,
-    tag_criterion: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl>,
-    >,
-}
-
-#[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    simple_criterion: std
-    ::option
-    ::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag_criterion: std
-    ::option
-    ::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElDynamic,
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl {
-    #[doc = "Set the field `simple_criterion`.\n"]
-    pub fn set_simple_criterion(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.simple_criterion = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.simple_criterion = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `tag_criterion`.\n"]
-    pub fn set_tag_criterion(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.tag_criterion = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.tag_criterion = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl {}
-
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl {
-            simple_criterion: core::default::Default::default(),
-            tag_criterion: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `simple_criterion` after provisioning.\n"]
-    pub fn simple_criterion(
-        &self,
-    ) -> terrars
-    ::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElSimpleCriterionElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.simple_criterion", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `tag_criterion` after provisioning.\n"]
-    pub fn tag_criterion(
-        &self,
-    ) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElTagCriterionElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.tag_criterion", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElDynamic {
+struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_IncludesDynamic {
     and: std
     ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl>>,
+    ::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And>>,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    and: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElDynamic,
+    and: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_BucketCriteria_IncludesDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes {
     #[doc = "Set the field `and`.\n"]
     pub fn set_and(
         mut self,
@@ -1626,8 +1217,7 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndEl>,
+                        terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_And>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1642,8 +1232,8 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1654,65 +1244,67 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketC
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes {
             and: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria_IncludesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_BucketCriteria_IncludesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria_IncludesRef {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria_IncludesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElRef {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria_IncludesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `and` after provisioning.\n"]
-    pub fn and(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElAndElRef> {
+    pub fn and(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes_AndRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.and", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElDynamic {
+struct Macie2ClassificationJob_S3JobDefinition_BucketCriteriaDynamic {
     excludes: std
     ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl>>,
+    ::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes>>,
     includes: std
     ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl>>,
+    ::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes>>,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteria {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    excludes: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl>>,
+    excludes: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    includes: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElDynamic,
+    includes: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_BucketCriteriaDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteria {
     #[doc = "Set the field `excludes`.\n"]
     pub fn set_excludes(
         mut self,
@@ -1721,9 +1313,7 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Excludes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1744,9 +1334,7 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_Includes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1760,8 +1348,8 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_BucketCriteria {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1772,11 +1360,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketC
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_BucketCriteria {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteria {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteria {
             excludes: core::default::Default::default(),
             includes: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1784,49 +1372,51 @@ impl BuildMacie2ClassificationJobS3JobDefinitionElBucketCriteriaEl {
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketCriteriaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_BucketCriteriaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_BucketCriteriaRef {
+        Macie2ClassificationJob_S3JobDefinition_BucketCriteriaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElRef {
+impl Macie2ClassificationJob_S3JobDefinition_BucketCriteriaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `excludes` after provisioning.\n"]
-    pub fn excludes(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElExcludesElRef> {
+    pub fn excludes(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_ExcludesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.excludes", self.base))
     }
 
     #[doc = "Get a reference to the value of field `includes` after provisioning.\n"]
-    pub fn includes(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElIncludesElRef> {
+    pub fn includes(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_BucketCriteria_IncludesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.includes", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketDefinitions {
     account_id: terrars::PrimField<std::string::String>,
     buckets: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl { }
+impl Macie2ClassificationJob_S3JobDefinition_BucketDefinitions { }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_BucketDefinitions {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketDefinitions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1837,40 +1427,42 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElBucketD
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl {
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_BucketDefinitions {
     #[doc = ""]
     pub account_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub buckets: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl {
-        Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_BucketDefinitions {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_BucketDefinitions {
+        Macie2ClassificationJob_S3JobDefinition_BucketDefinitions {
             account_id: self.account_id,
             buckets: self.buckets,
         }
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_BucketDefinitionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_BucketDefinitionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsElRef {
-        Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_BucketDefinitionsRef {
+        Macie2ClassificationJob_S3JobDefinition_BucketDefinitionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsElRef {
+impl Macie2ClassificationJob_S3JobDefinition_BucketDefinitionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1887,7 +1479,7 @@ impl Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     comparator: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1896,7 +1488,7 @@ pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpl
     values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm {
     #[doc = "Set the field `comparator`.\n"]
     pub fn set_comparator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.comparator = std::option::Option::Some(v.into());
@@ -1919,9 +1511,8 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScope
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl {
-    type O =
-        terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1932,11 +1523,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScoping
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm {
             comparator: core::default::Default::default(),
             key: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -1944,24 +1535,26 @@ impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimple
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTermRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTermRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTermRef {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTermRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermElRef {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTermRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1982,99 +1575,17 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScope
     }
 }
 
-#[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl {
-    type O =
-        terrars
-        ::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl {}
-
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl {
-            key: core::default::Default::default(),
-            value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElDynamic {
+struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTermDynamic {
     tag_values: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl>,
+        terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     comparator: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2084,13 +1595,11 @@ pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagSc
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tag_values: std
     ::option
-    ::Option<
-        std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl>,
-    >,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElDynamic,
+    ::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTermDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm {
     #[doc = "Set the field `comparator`.\n"]
     pub fn set_comparator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.comparator = std::option::Option::Some(v.into());
@@ -2120,7 +1629,7 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTer
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesEl,
+                            Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValues,
                         >,
                     >,
     ) -> Self {
@@ -2136,9 +1645,8 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTer
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl {
-    type O =
-        terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2149,11 +1657,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScoping
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm {
             comparator: core::default::Default::default(),
             key: core::default::Default::default(),
             target: core::default::Default::default(),
@@ -2163,24 +1671,26 @@ impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagSco
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTermRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTermRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTermRef {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTermRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElRef {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTermRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2203,38 +1713,35 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTer
     #[doc = "Get a reference to the value of field `tag_values` after provisioning.\n"]
     pub fn tag_values(
         &self,
-    ) -> terrars
-    ::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElTagValuesElRef> {
+    ) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm_TagValuesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag_values", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElDynamic {
+struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_AndDynamic {
     simple_scope_term: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl>,
-    >,
+    ::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm>>,
     tag_scope_term: std
     ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl>>,
+    ::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm>>,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     simple_scope_term: std
     ::option
-    ::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl>>,
+    ::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tag_scope_term: std
     ::option
-    ::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElDynamic,
+    ::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_AndDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And {
     #[doc = "Set the field `simple_scope_term`.\n"]
     pub fn set_simple_scope_term(
         mut self,
@@ -2246,7 +1753,7 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermEl,
+                            Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTerm,
                         >,
                     >,
     ) -> Self {
@@ -2271,9 +1778,7 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermEl,
-                        >,
+                        ::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTerm>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2288,8 +1793,8 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2300,11 +1805,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScoping
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And {
             simple_scope_term: core::default::Default::default(),
             tag_scope_term: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2312,24 +1817,26 @@ impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl {
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_AndRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_AndRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_AndRef {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_AndRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElRef {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_AndRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2337,33 +1844,31 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElRef {
     #[doc = "Get a reference to the value of field `simple_scope_term` after provisioning.\n"]
     pub fn simple_scope_term(
         &self,
-    ) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElSimpleScopeTermElRef> {
+    ) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_SimpleScopeTermRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.simple_scope_term", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tag_scope_term` after provisioning.\n"]
     pub fn tag_scope_term(
         &self,
-    ) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElTagScopeTermElRef> {
+    ) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And_TagScopeTermRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag_scope_term", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElDynamic {
-    and: std
-    ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl>>,
+struct Macie2ClassificationJob_S3JobDefinition_Scoping_ExcludesDynamic {
+    and: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And>>,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    and: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElDynamic,
+    and: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_Scoping_ExcludesDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes {
     #[doc = "Set the field `and`.\n"]
     pub fn set_and(
         mut self,
@@ -2372,9 +1877,7 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2388,8 +1891,8 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2400,523 +1903,60 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScoping
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElExcludesEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Excludes {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes {
             and: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_ExcludesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_Scoping_ExcludesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_Scoping_ExcludesRef {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_ExcludesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElRef {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_ExcludesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `and` after provisioning.\n"]
-    pub fn and(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElAndElRef> {
+    pub fn and(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_AndRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.and", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    comparator: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl {
-    #[doc = "Set the field `comparator`.\n"]
-    pub fn set_comparator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.comparator = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl {
-    type O =
-        terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl {}
-
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl {
-            comparator: core::default::Default::default(),
-            key: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `comparator` after provisioning.\n"]
-    pub fn comparator(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparator", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl {
-    type O =
-        terrars
-        ::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl {}
-
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl {
-            key: core::default::Default::default(),
-            value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElDynamic {
-    tag_values: std
-    ::option
-    ::Option<
-        terrars
-        ::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl>,
-    >,
+struct Macie2ClassificationJob_S3JobDefinition_Scoping_IncludesDynamic {
+    and: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And>>,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_Includes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    comparator: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag_values: std
-    ::option
-    ::Option<
-        std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl>,
-    >,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElDynamic,
+    and: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_Scoping_IncludesDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl {
-    #[doc = "Set the field `comparator`.\n"]
-    pub fn set_comparator(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.comparator = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `target`.\n"]
-    pub fn set_target(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.target = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tag_values`.\n"]
-    pub fn set_tag_values(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.tag_values = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.tag_values = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl {
-    type O =
-        terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl {}
-
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl {
-            comparator: core::default::Default::default(),
-            key: core::default::Default::default(),
-            target: core::default::Default::default(),
-            tag_values: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `comparator` after provisioning.\n"]
-    pub fn comparator(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.comparator", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `tag_values` after provisioning.\n"]
-    pub fn tag_values(
-        &self,
-    ) -> terrars
-    ::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElTagValuesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.tag_values", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElDynamic {
-    simple_scope_term: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl>,
-    >,
-    tag_scope_term: std
-    ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl>>,
-}
-
-#[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    simple_scope_term: std
-    ::option
-    ::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag_scope_term: std
-    ::option
-    ::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElDynamic,
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl {
-    #[doc = "Set the field `simple_scope_term`.\n"]
-    pub fn set_simple_scope_term(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.simple_scope_term = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.simple_scope_term = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `tag_scope_term`.\n"]
-    pub fn set_tag_scope_term(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<
-                            Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermEl,
-                        >,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.tag_scope_term = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.tag_scope_term = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl {}
-
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl {
-            simple_scope_term: core::default::Default::default(),
-            tag_scope_term: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `simple_scope_term` after provisioning.\n"]
-    pub fn simple_scope_term(
-        &self,
-    ) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElSimpleScopeTermElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.simple_scope_term", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `tag_scope_term` after provisioning.\n"]
-    pub fn tag_scope_term(
-        &self,
-    ) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElTagScopeTermElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.tag_scope_term", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElDynamic {
-    and: std
-    ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl>>,
-}
-
-#[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    and: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElDynamic,
-}
-
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_Includes {
     #[doc = "Set the field `and`.\n"]
     pub fn set_and(
         mut self,
@@ -2925,9 +1965,7 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_And>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2941,8 +1979,8 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_Scoping_Includes {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Includes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2953,63 +1991,63 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScoping
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Includes {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingElIncludesEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_Scoping_Includes {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_Scoping_Includes {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_Includes {
             and: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping_IncludesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_Scoping_IncludesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_Scoping_IncludesRef {
+        Macie2ClassificationJob_S3JobDefinition_Scoping_IncludesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElRef {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping_IncludesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `and` after provisioning.\n"]
-    pub fn and(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElAndElRef> {
+    pub fn and(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes_AndRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.and", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElScopingElDynamic {
-    excludes: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl>>,
-    includes: std
-    ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl>>,
+struct Macie2ClassificationJob_S3JobDefinition_ScopingDynamic {
+    excludes: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes>>,
+    includes: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_Scoping_Includes>>,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingEl {
+pub struct Macie2ClassificationJob_S3JobDefinition_Scoping {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    excludes: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl>>,
+    excludes: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    includes: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElScopingElDynamic,
+    includes: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_Scoping_Includes>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinition_ScopingDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingEl {
+impl Macie2ClassificationJob_S3JobDefinition_Scoping {
     #[doc = "Set the field `excludes`.\n"]
     pub fn set_excludes(
         mut self,
@@ -3018,7 +2056,7 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesEl>>,
+                    ::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Excludes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3039,7 +2077,7 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesEl>>,
+                    ::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping_Includes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3053,8 +2091,8 @@ impl Macie2ClassificationJobS3JobDefinitionElScopingEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScopingEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition_Scoping {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3065,11 +2103,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionElScoping
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionElScopingEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition_Scoping {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionElScopingEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionElScopingEl {
-        Macie2ClassificationJobS3JobDefinitionElScopingEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition_Scoping {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition_Scoping {
+        Macie2ClassificationJob_S3JobDefinition_Scoping {
             excludes: core::default::Default::default(),
             includes: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3077,71 +2115,68 @@ impl BuildMacie2ClassificationJobS3JobDefinitionElScopingEl {
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElScopingElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinition_ScopingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElScopingElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinition_ScopingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationJobS3JobDefinitionElScopingElRef {
-        Macie2ClassificationJobS3JobDefinitionElScopingElRef {
+    ) -> Macie2ClassificationJob_S3JobDefinition_ScopingRef {
+        Macie2ClassificationJob_S3JobDefinition_ScopingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElScopingElRef {
+impl Macie2ClassificationJob_S3JobDefinition_ScopingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `excludes` after provisioning.\n"]
-    pub fn excludes(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElExcludesElRef> {
+    pub fn excludes(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_Scoping_ExcludesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.excludes", self.base))
     }
 
     #[doc = "Get a reference to the value of field `includes` after provisioning.\n"]
-    pub fn includes(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElIncludesElRef> {
+    pub fn includes(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_Scoping_IncludesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.includes", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Macie2ClassificationJobS3JobDefinitionElDynamic {
+struct Macie2ClassificationJob_S3JobDefinitionDynamic {
     bucket_criteria: std
     ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl>>,
+    ::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_BucketCriteria>>,
     bucket_definitions: std
     ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl>>,
-    scoping: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionElScopingEl>>,
+    ::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_BucketDefinitions>>,
+    scoping: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJob_S3JobDefinition_Scoping>>,
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobS3JobDefinitionEl {
+pub struct Macie2ClassificationJob_S3JobDefinition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_criteria: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl>>,
+    bucket_criteria: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_BucketCriteria>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_definitions: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl>>,
+    bucket_definitions: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_BucketDefinitions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scoping: std::option::Option<std::vec::Vec<Macie2ClassificationJobS3JobDefinitionElScopingEl>>,
-    dynamic: Macie2ClassificationJobS3JobDefinitionElDynamic,
+    scoping: std::option::Option<std::vec::Vec<Macie2ClassificationJob_S3JobDefinition_Scoping>>,
+    dynamic: Macie2ClassificationJob_S3JobDefinitionDynamic,
 }
 
-impl Macie2ClassificationJobS3JobDefinitionEl {
+impl Macie2ClassificationJob_S3JobDefinition {
     #[doc = "Set the field `bucket_criteria`.\n"]
     pub fn set_bucket_criteria(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketCriteria>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3162,7 +2197,7 @@ impl Macie2ClassificationJobS3JobDefinitionEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsEl>>,
+                    ::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_BucketDefinitions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3178,7 +2213,7 @@ impl Macie2ClassificationJobS3JobDefinitionEl {
     #[doc = "Set the field `scoping`.\n"]
     pub fn set_scoping(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionElScopingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition_Scoping>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3192,8 +2227,8 @@ impl Macie2ClassificationJobS3JobDefinitionEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobS3JobDefinitionEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_S3JobDefinition {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_S3JobDefinition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3204,11 +2239,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobS3JobDefinitionEl {
     }
 }
 
-pub struct BuildMacie2ClassificationJobS3JobDefinitionEl {}
+pub struct BuildMacie2ClassificationJob_S3JobDefinition {}
 
-impl BuildMacie2ClassificationJobS3JobDefinitionEl {
-    pub fn build(self) -> Macie2ClassificationJobS3JobDefinitionEl {
-        Macie2ClassificationJobS3JobDefinitionEl {
+impl BuildMacie2ClassificationJob_S3JobDefinition {
+    pub fn build(self) -> Macie2ClassificationJob_S3JobDefinition {
+        Macie2ClassificationJob_S3JobDefinition {
             bucket_criteria: core::default::Default::default(),
             bucket_definitions: core::default::Default::default(),
             scoping: core::default::Default::default(),
@@ -3217,43 +2252,45 @@ impl BuildMacie2ClassificationJobS3JobDefinitionEl {
     }
 }
 
-pub struct Macie2ClassificationJobS3JobDefinitionElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_S3JobDefinitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobS3JobDefinitionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2ClassificationJobS3JobDefinitionElRef {
-        Macie2ClassificationJobS3JobDefinitionElRef {
+impl terrars::Ref for Macie2ClassificationJob_S3JobDefinitionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2ClassificationJob_S3JobDefinitionRef {
+        Macie2ClassificationJob_S3JobDefinitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobS3JobDefinitionElRef {
+impl Macie2ClassificationJob_S3JobDefinitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `bucket_criteria` after provisioning.\n"]
-    pub fn bucket_criteria(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketCriteriaElRef> {
+    pub fn bucket_criteria(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_BucketCriteriaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bucket_criteria", self.base))
     }
 
     #[doc = "Get a reference to the value of field `bucket_definitions` after provisioning.\n"]
-    pub fn bucket_definitions(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElBucketDefinitionsElRef> {
+    pub fn bucket_definitions(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_BucketDefinitionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bucket_definitions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `scoping` after provisioning.\n"]
-    pub fn scoping(&self) -> terrars::ListRef<Macie2ClassificationJobS3JobDefinitionElScopingElRef> {
+    pub fn scoping(&self) -> terrars::ListRef<Macie2ClassificationJob_S3JobDefinition_ScopingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scoping", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct Macie2ClassificationJobScheduleFrequencyEl {
+pub struct Macie2ClassificationJob_ScheduleFrequency {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     daily_schedule: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3262,7 +2299,7 @@ pub struct Macie2ClassificationJobScheduleFrequencyEl {
     weekly_schedule: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Macie2ClassificationJobScheduleFrequencyEl {
+impl Macie2ClassificationJob_ScheduleFrequency {
     #[doc = "Set the field `daily_schedule`.\n"]
     pub fn set_daily_schedule(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.daily_schedule = std::option::Option::Some(v.into());
@@ -3282,8 +2319,8 @@ impl Macie2ClassificationJobScheduleFrequencyEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationJobScheduleFrequencyEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationJobScheduleFrequencyEl>;
+impl terrars::ToListMappable for Macie2ClassificationJob_ScheduleFrequency {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_ScheduleFrequency>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3294,11 +2331,11 @@ impl terrars::ToListMappable for Macie2ClassificationJobScheduleFrequencyEl {
     }
 }
 
-pub struct BuildMacie2ClassificationJobScheduleFrequencyEl {}
+pub struct BuildMacie2ClassificationJob_ScheduleFrequency {}
 
-impl BuildMacie2ClassificationJobScheduleFrequencyEl {
-    pub fn build(self) -> Macie2ClassificationJobScheduleFrequencyEl {
-        Macie2ClassificationJobScheduleFrequencyEl {
+impl BuildMacie2ClassificationJob_ScheduleFrequency {
+    pub fn build(self) -> Macie2ClassificationJob_ScheduleFrequency {
+        Macie2ClassificationJob_ScheduleFrequency {
             daily_schedule: core::default::Default::default(),
             monthly_schedule: core::default::Default::default(),
             weekly_schedule: core::default::Default::default(),
@@ -3306,21 +2343,23 @@ impl BuildMacie2ClassificationJobScheduleFrequencyEl {
     }
 }
 
-pub struct Macie2ClassificationJobScheduleFrequencyElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_ScheduleFrequencyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationJobScheduleFrequencyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2ClassificationJobScheduleFrequencyElRef {
-        Macie2ClassificationJobScheduleFrequencyElRef {
+impl terrars::Ref for Macie2ClassificationJob_ScheduleFrequencyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2ClassificationJob_ScheduleFrequencyRef {
+        Macie2ClassificationJob_ScheduleFrequencyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationJobScheduleFrequencyElRef {
+impl Macie2ClassificationJob_ScheduleFrequencyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3341,8 +2380,79 @@ impl Macie2ClassificationJobScheduleFrequencyElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct Macie2ClassificationJobDynamic {
-    s3_job_definition: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJobS3JobDefinitionEl>>,
-    schedule_frequency: std::option::Option<terrars::DynamicBlock<Macie2ClassificationJobScheduleFrequencyEl>>,
+#[derive(Serialize)]
+pub struct Macie2ClassificationJob_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Macie2ClassificationJob_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Macie2ClassificationJob_Timeouts {
+    type O = terrars::BlockAssignable<Macie2ClassificationJob_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildMacie2ClassificationJob_Timeouts {}
+
+impl BuildMacie2ClassificationJob_Timeouts {
+    pub fn build(self) -> Macie2ClassificationJob_Timeouts {
+        Macie2ClassificationJob_Timeouts {
+            create: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Macie2ClassificationJob_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Macie2ClassificationJob_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2ClassificationJob_TimeoutsRef {
+        Macie2ClassificationJob_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Macie2ClassificationJob_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SnsSmsPreferencesData {
+struct SnsSmsPreferencesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,13 +33,15 @@ struct SnsSmsPreferencesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     monthly_spend_limit: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     usage_report_s3_bucket: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct SnsSmsPreferences_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SnsSmsPreferencesData>,
+    data: std::cell::RefCell<SnsSmsPreferencesData_>,
 }
 
 #[derive(Clone)]
@@ -179,6 +183,13 @@ impl SnsSmsPreferences {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `usage_report_s3_bucket`.\n"]
     pub fn set_usage_report_s3_bucket(
         self,
@@ -219,6 +230,12 @@ impl SnsSmsPreferences {
     #[doc = "Get a reference to the value of field `monthly_spend_limit` after provisioning.\n"]
     pub fn monthly_spend_limit(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.monthly_spend_limit", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `usage_report_s3_bucket` after provisioning.\n"]
@@ -267,7 +284,7 @@ impl BuildSnsSmsPreferences {
         let out = SnsSmsPreferences(std::rc::Rc::new(SnsSmsPreferences_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SnsSmsPreferencesData {
+            data: std::cell::RefCell::new(SnsSmsPreferencesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -279,6 +296,7 @@ impl BuildSnsSmsPreferences {
                 delivery_status_success_sampling_rate: core::default::Default::default(),
                 id: core::default::Default::default(),
                 monthly_spend_limit: core::default::Default::default(),
+                region: core::default::Default::default(),
                 usage_report_s3_bucket: core::default::Default::default(),
             }),
         }));
@@ -341,6 +359,12 @@ impl SnsSmsPreferencesRef {
     #[doc = "Get a reference to the value of field `monthly_spend_limit` after provisioning.\n"]
     pub fn monthly_spend_limit(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.monthly_spend_limit", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `usage_report_s3_bucket` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApiGatewayAccountData {
+struct ApiGatewayAccountData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,13 +23,13 @@ struct ApiGatewayAccountData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct ApiGatewayAccount_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApiGatewayAccountData>,
+    data: std::cell::RefCell<ApiGatewayAccountData_>,
 }
 
 #[derive(Clone)]
@@ -133,10 +135,16 @@ impl ApiGatewayAccount {
         self
     }
 
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Get a reference to the value of field `api_key_version` after provisioning.\n"]
+    pub fn api_key_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_key_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cloudwatch_role_arn` after provisioning.\n"]
@@ -144,13 +152,24 @@ impl ApiGatewayAccount {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloudwatch_role_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `features` after provisioning.\n"]
+    pub fn features(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.features", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `throttle_settings` after provisioning.\n"]
-    pub fn throttle_settings(&self) -> terrars::ListRef<ApiGatewayAccountThrottleSettingsElRef> {
+    pub fn throttle_settings(&self) -> terrars::ListRef<ApiGatewayAccount_ThrottleSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.throttle_settings", self.extract_ref()))
     }
 }
@@ -195,14 +214,14 @@ impl BuildApiGatewayAccount {
         let out = ApiGatewayAccount(std::rc::Rc::new(ApiGatewayAccount_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApiGatewayAccountData {
+            data: std::cell::RefCell::new(ApiGatewayAccountData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 cloudwatch_role_arn: core::default::Default::default(),
-                id: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -233,9 +252,19 @@ impl ApiGatewayAccountRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `api_key_version` after provisioning.\n"]
+    pub fn api_key_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_key_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cloudwatch_role_arn` after provisioning.\n"]
     pub fn cloudwatch_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloudwatch_role_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `features` after provisioning.\n"]
+    pub fn features(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.features", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -243,21 +272,27 @@ impl ApiGatewayAccountRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `throttle_settings` after provisioning.\n"]
-    pub fn throttle_settings(&self) -> terrars::ListRef<ApiGatewayAccountThrottleSettingsElRef> {
+    pub fn throttle_settings(&self) -> terrars::ListRef<ApiGatewayAccount_ThrottleSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.throttle_settings", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ApiGatewayAccountThrottleSettingsEl {
+pub struct ApiGatewayAccount_ThrottleSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     burst_limit: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rate_limit: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ApiGatewayAccountThrottleSettingsEl {
+impl ApiGatewayAccount_ThrottleSettings {
     #[doc = "Set the field `burst_limit`.\n"]
     pub fn set_burst_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.burst_limit = std::option::Option::Some(v.into());
@@ -271,8 +306,8 @@ impl ApiGatewayAccountThrottleSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayAccountThrottleSettingsEl {
-    type O = terrars::BlockAssignable<ApiGatewayAccountThrottleSettingsEl>;
+impl terrars::ToListMappable for ApiGatewayAccount_ThrottleSettings {
+    type O = terrars::BlockAssignable<ApiGatewayAccount_ThrottleSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -283,32 +318,34 @@ impl terrars::ToListMappable for ApiGatewayAccountThrottleSettingsEl {
     }
 }
 
-pub struct BuildApiGatewayAccountThrottleSettingsEl {}
+pub struct BuildApiGatewayAccount_ThrottleSettings {}
 
-impl BuildApiGatewayAccountThrottleSettingsEl {
-    pub fn build(self) -> ApiGatewayAccountThrottleSettingsEl {
-        ApiGatewayAccountThrottleSettingsEl {
+impl BuildApiGatewayAccount_ThrottleSettings {
+    pub fn build(self) -> ApiGatewayAccount_ThrottleSettings {
+        ApiGatewayAccount_ThrottleSettings {
             burst_limit: core::default::Default::default(),
             rate_limit: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApiGatewayAccountThrottleSettingsElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayAccount_ThrottleSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayAccountThrottleSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayAccountThrottleSettingsElRef {
-        ApiGatewayAccountThrottleSettingsElRef {
+impl terrars::Ref for ApiGatewayAccount_ThrottleSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayAccount_ThrottleSettingsRef {
+        ApiGatewayAccount_ThrottleSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayAccountThrottleSettingsElRef {
+impl ApiGatewayAccount_ThrottleSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

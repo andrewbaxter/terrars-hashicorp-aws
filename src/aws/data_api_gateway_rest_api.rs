@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataApiGatewayRestApiData {
+struct DataApiGatewayRestApiData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataApiGatewayRestApiData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataApiGatewayRestApi_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataApiGatewayRestApiData>,
+    data: std::cell::RefCell<DataApiGatewayRestApiData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataApiGatewayRestApi {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -106,8 +117,13 @@ impl DataApiGatewayRestApi {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `endpoint_access_mode` after provisioning.\n"]
+    pub fn endpoint_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_access_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `endpoint_configuration` after provisioning.\n"]
-    pub fn endpoint_configuration(&self) -> terrars::ListRef<DataApiGatewayRestApiEndpointConfigurationElRef> {
+    pub fn endpoint_configuration(&self) -> terrars::ListRef<DataApiGatewayRestApi_EndpointConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_configuration", self.extract_ref()))
     }
 
@@ -122,7 +138,7 @@ impl DataApiGatewayRestApi {
     }
 
     #[doc = "Get a reference to the value of field `minimum_compression_size` after provisioning.\n"]
-    pub fn minimum_compression_size(&self) -> terrars::PrimExpr<f64> {
+    pub fn minimum_compression_size(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_compression_size", self.extract_ref()))
     }
 
@@ -136,9 +152,20 @@ impl DataApiGatewayRestApi {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_resource_id` after provisioning.\n"]
     pub fn root_resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_resource_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `security_policy` after provisioning.\n"]
+    pub fn security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -189,13 +216,14 @@ impl BuildDataApiGatewayRestApi {
         let out = DataApiGatewayRestApi(std::rc::Rc::new(DataApiGatewayRestApi_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataApiGatewayRestApiData {
+            data: std::cell::RefCell::new(DataApiGatewayRestApiData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -247,8 +275,13 @@ impl DataApiGatewayRestApiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `endpoint_access_mode` after provisioning.\n"]
+    pub fn endpoint_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_access_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `endpoint_configuration` after provisioning.\n"]
-    pub fn endpoint_configuration(&self) -> terrars::ListRef<DataApiGatewayRestApiEndpointConfigurationElRef> {
+    pub fn endpoint_configuration(&self) -> terrars::ListRef<DataApiGatewayRestApi_EndpointConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_configuration", self.extract_ref()))
     }
 
@@ -263,7 +296,7 @@ impl DataApiGatewayRestApiRef {
     }
 
     #[doc = "Get a reference to the value of field `minimum_compression_size` after provisioning.\n"]
-    pub fn minimum_compression_size(&self) -> terrars::PrimExpr<f64> {
+    pub fn minimum_compression_size(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_compression_size", self.extract_ref()))
     }
 
@@ -277,9 +310,20 @@ impl DataApiGatewayRestApiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_resource_id` after provisioning.\n"]
     pub fn root_resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_resource_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `security_policy` after provisioning.\n"]
+    pub fn security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -289,14 +333,22 @@ impl DataApiGatewayRestApiRef {
 }
 
 #[derive(Serialize)]
-pub struct DataApiGatewayRestApiEndpointConfigurationEl {
+pub struct DataApiGatewayRestApi_EndpointConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     types: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataApiGatewayRestApiEndpointConfigurationEl {
+impl DataApiGatewayRestApi_EndpointConfiguration {
+    #[doc = "Set the field `ip_address_type`.\n"]
+    pub fn set_ip_address_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `types`.\n"]
     pub fn set_types(
         mut self,
@@ -316,8 +368,8 @@ impl DataApiGatewayRestApiEndpointConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataApiGatewayRestApiEndpointConfigurationEl {
-    type O = terrars::BlockAssignable<DataApiGatewayRestApiEndpointConfigurationEl>;
+impl terrars::ToListMappable for DataApiGatewayRestApi_EndpointConfiguration {
+    type O = terrars::BlockAssignable<DataApiGatewayRestApi_EndpointConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -328,37 +380,45 @@ impl terrars::ToListMappable for DataApiGatewayRestApiEndpointConfigurationEl {
     }
 }
 
-pub struct BuildDataApiGatewayRestApiEndpointConfigurationEl {}
+pub struct BuildDataApiGatewayRestApi_EndpointConfiguration {}
 
-impl BuildDataApiGatewayRestApiEndpointConfigurationEl {
-    pub fn build(self) -> DataApiGatewayRestApiEndpointConfigurationEl {
-        DataApiGatewayRestApiEndpointConfigurationEl {
+impl BuildDataApiGatewayRestApi_EndpointConfiguration {
+    pub fn build(self) -> DataApiGatewayRestApi_EndpointConfiguration {
+        DataApiGatewayRestApi_EndpointConfiguration {
+            ip_address_type: core::default::Default::default(),
             types: core::default::Default::default(),
             vpc_endpoint_ids: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataApiGatewayRestApiEndpointConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataApiGatewayRestApi_EndpointConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataApiGatewayRestApiEndpointConfigurationElRef {
+impl terrars::Ref for DataApiGatewayRestApi_EndpointConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataApiGatewayRestApiEndpointConfigurationElRef {
-        DataApiGatewayRestApiEndpointConfigurationElRef {
+    ) -> DataApiGatewayRestApi_EndpointConfigurationRef {
+        DataApiGatewayRestApi_EndpointConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataApiGatewayRestApiEndpointConfigurationElRef {
+impl DataApiGatewayRestApi_EndpointConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `types` after provisioning.\n"]

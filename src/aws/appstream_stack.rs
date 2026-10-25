@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppstreamStackData {
+struct AppstreamStackData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,24 +34,28 @@ struct AppstreamStackData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     redirect_url: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_endpoints: std::option::Option<std::vec::Vec<AppstreamStackAccessEndpointsEl>>,
+    access_endpoints: std::option::Option<std::vec::Vec<AppstreamStack_AccessEndpoints>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    application_settings: std::option::Option<std::vec::Vec<AppstreamStackApplicationSettingsEl>>,
+    application_settings: std::option::Option<std::vec::Vec<AppstreamStack_ApplicationSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage_connectors: std::option::Option<std::vec::Vec<AppstreamStackStorageConnectorsEl>>,
+    storage_connectors: std::option::Option<std::vec::Vec<AppstreamStack_StorageConnectors>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_settings: std::option::Option<std::vec::Vec<AppstreamStackUserSettingsEl>>,
+    streaming_experience_settings: std::option::Option<std::vec::Vec<AppstreamStack_StreamingExperienceSettings>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_settings: std::option::Option<std::vec::Vec<AppstreamStack_UserSettings>>,
     dynamic: AppstreamStackDynamic,
 }
 
 struct AppstreamStack_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppstreamStackData>,
+    data: std::cell::RefCell<AppstreamStackData_>,
 }
 
 #[derive(Clone)]
@@ -188,6 +194,13 @@ impl AppstreamStack {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -209,7 +222,7 @@ impl AppstreamStack {
     #[doc = "Set the field `access_endpoints`.\n"]
     pub fn set_access_endpoints(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamStackAccessEndpointsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamStack_AccessEndpoints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -225,7 +238,7 @@ impl AppstreamStack {
     #[doc = "Set the field `application_settings`.\n"]
     pub fn set_application_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamStackApplicationSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamStack_ApplicationSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -241,7 +254,7 @@ impl AppstreamStack {
     #[doc = "Set the field `storage_connectors`.\n"]
     pub fn set_storage_connectors(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamStackStorageConnectorsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamStack_StorageConnectors>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -254,10 +267,26 @@ impl AppstreamStack {
         self
     }
 
+    #[doc = "Set the field `streaming_experience_settings`.\n"]
+    pub fn set_streaming_experience_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamStack_StreamingExperienceSettings>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().streaming_experience_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.streaming_experience_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `user_settings`.\n"]
     pub fn set_user_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamStackUserSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamStack_UserSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -315,6 +344,12 @@ impl AppstreamStack {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_url", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -326,8 +361,13 @@ impl AppstreamStack {
     }
 
     #[doc = "Get a reference to the value of field `application_settings` after provisioning.\n"]
-    pub fn application_settings(&self) -> terrars::ListRef<AppstreamStackApplicationSettingsElRef> {
+    pub fn application_settings(&self) -> terrars::ListRef<AppstreamStack_ApplicationSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.application_settings", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `streaming_experience_settings` after provisioning.\n"]
+    pub fn streaming_experience_settings(&self) -> terrars::ListRef<AppstreamStack_StreamingExperienceSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.streaming_experience_settings", self.extract_ref()))
     }
 }
 
@@ -373,7 +413,7 @@ impl BuildAppstreamStack {
         let out = AppstreamStack(std::rc::Rc::new(AppstreamStack_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppstreamStackData {
+            data: std::cell::RefCell::new(AppstreamStackData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -386,11 +426,13 @@ impl BuildAppstreamStack {
                 id: core::default::Default::default(),
                 name: self.name,
                 redirect_url: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 access_endpoints: core::default::Default::default(),
                 application_settings: core::default::Default::default(),
                 storage_connectors: core::default::Default::default(),
+                streaming_experience_settings: core::default::Default::default(),
                 user_settings: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -468,6 +510,12 @@ impl AppstreamStackRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_url", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -479,19 +527,35 @@ impl AppstreamStackRef {
     }
 
     #[doc = "Get a reference to the value of field `application_settings` after provisioning.\n"]
-    pub fn application_settings(&self) -> terrars::ListRef<AppstreamStackApplicationSettingsElRef> {
+    pub fn application_settings(&self) -> terrars::ListRef<AppstreamStack_ApplicationSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.application_settings", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `streaming_experience_settings` after provisioning.\n"]
+    pub fn streaming_experience_settings(&self) -> terrars::ListRef<AppstreamStack_StreamingExperienceSettingsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.streaming_experience_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppstreamStackDynamic {
+    access_endpoints: std::option::Option<terrars::DynamicBlock<AppstreamStack_AccessEndpoints>>,
+    application_settings: std::option::Option<terrars::DynamicBlock<AppstreamStack_ApplicationSettings>>,
+    storage_connectors: std::option::Option<terrars::DynamicBlock<AppstreamStack_StorageConnectors>>,
+    streaming_experience_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppstreamStack_StreamingExperienceSettings>>,
+    user_settings: std::option::Option<terrars::DynamicBlock<AppstreamStack_UserSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct AppstreamStackAccessEndpointsEl {
+pub struct AppstreamStack_AccessEndpoints {
     endpoint_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpce_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppstreamStackAccessEndpointsEl {
+impl AppstreamStack_AccessEndpoints {
     #[doc = "Set the field `vpce_id`.\n"]
     pub fn set_vpce_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.vpce_id = std::option::Option::Some(v.into());
@@ -499,8 +563,8 @@ impl AppstreamStackAccessEndpointsEl {
     }
 }
 
-impl terrars::ToListMappable for AppstreamStackAccessEndpointsEl {
-    type O = terrars::BlockAssignable<AppstreamStackAccessEndpointsEl>;
+impl terrars::ToListMappable for AppstreamStack_AccessEndpoints {
+    type O = terrars::BlockAssignable<AppstreamStack_AccessEndpoints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -511,35 +575,37 @@ impl terrars::ToListMappable for AppstreamStackAccessEndpointsEl {
     }
 }
 
-pub struct BuildAppstreamStackAccessEndpointsEl {
+pub struct BuildAppstreamStack_AccessEndpoints {
     #[doc = ""]
     pub endpoint_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppstreamStackAccessEndpointsEl {
-    pub fn build(self) -> AppstreamStackAccessEndpointsEl {
-        AppstreamStackAccessEndpointsEl {
+impl BuildAppstreamStack_AccessEndpoints {
+    pub fn build(self) -> AppstreamStack_AccessEndpoints {
+        AppstreamStack_AccessEndpoints {
             endpoint_type: self.endpoint_type,
             vpce_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppstreamStackAccessEndpointsElRef {
+#[allow(dead_code)]
+pub struct AppstreamStack_AccessEndpointsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamStackAccessEndpointsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamStackAccessEndpointsElRef {
-        AppstreamStackAccessEndpointsElRef {
+impl terrars::Ref for AppstreamStack_AccessEndpointsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamStack_AccessEndpointsRef {
+        AppstreamStack_AccessEndpointsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamStackAccessEndpointsElRef {
+impl AppstreamStack_AccessEndpointsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -556,13 +622,13 @@ impl AppstreamStackAccessEndpointsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppstreamStackApplicationSettingsEl {
+pub struct AppstreamStack_ApplicationSettings {
     enabled: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     settings_group: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppstreamStackApplicationSettingsEl {
+impl AppstreamStack_ApplicationSettings {
     #[doc = "Set the field `settings_group`.\n"]
     pub fn set_settings_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.settings_group = std::option::Option::Some(v.into());
@@ -570,8 +636,8 @@ impl AppstreamStackApplicationSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for AppstreamStackApplicationSettingsEl {
-    type O = terrars::BlockAssignable<AppstreamStackApplicationSettingsEl>;
+impl terrars::ToListMappable for AppstreamStack_ApplicationSettings {
+    type O = terrars::BlockAssignable<AppstreamStack_ApplicationSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -582,35 +648,37 @@ impl terrars::ToListMappable for AppstreamStackApplicationSettingsEl {
     }
 }
 
-pub struct BuildAppstreamStackApplicationSettingsEl {
+pub struct BuildAppstreamStack_ApplicationSettings {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildAppstreamStackApplicationSettingsEl {
-    pub fn build(self) -> AppstreamStackApplicationSettingsEl {
-        AppstreamStackApplicationSettingsEl {
+impl BuildAppstreamStack_ApplicationSettings {
+    pub fn build(self) -> AppstreamStack_ApplicationSettings {
+        AppstreamStack_ApplicationSettings {
             enabled: self.enabled,
             settings_group: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppstreamStackApplicationSettingsElRef {
+#[allow(dead_code)]
+pub struct AppstreamStack_ApplicationSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamStackApplicationSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamStackApplicationSettingsElRef {
-        AppstreamStackApplicationSettingsElRef {
+impl terrars::Ref for AppstreamStack_ApplicationSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamStack_ApplicationSettingsRef {
+        AppstreamStack_ApplicationSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamStackApplicationSettingsElRef {
+impl AppstreamStack_ApplicationSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -627,7 +695,7 @@ impl AppstreamStackApplicationSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppstreamStackStorageConnectorsEl {
+pub struct AppstreamStack_StorageConnectors {
     connector_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domains: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -635,7 +703,7 @@ pub struct AppstreamStackStorageConnectorsEl {
     resource_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppstreamStackStorageConnectorsEl {
+impl AppstreamStack_StorageConnectors {
     #[doc = "Set the field `domains`.\n"]
     pub fn set_domains(
         mut self,
@@ -655,8 +723,8 @@ impl AppstreamStackStorageConnectorsEl {
     }
 }
 
-impl terrars::ToListMappable for AppstreamStackStorageConnectorsEl {
-    type O = terrars::BlockAssignable<AppstreamStackStorageConnectorsEl>;
+impl terrars::ToListMappable for AppstreamStack_StorageConnectors {
+    type O = terrars::BlockAssignable<AppstreamStack_StorageConnectors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -667,14 +735,14 @@ impl terrars::ToListMappable for AppstreamStackStorageConnectorsEl {
     }
 }
 
-pub struct BuildAppstreamStackStorageConnectorsEl {
+pub struct BuildAppstreamStack_StorageConnectors {
     #[doc = ""]
     pub connector_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppstreamStackStorageConnectorsEl {
-    pub fn build(self) -> AppstreamStackStorageConnectorsEl {
-        AppstreamStackStorageConnectorsEl {
+impl BuildAppstreamStack_StorageConnectors {
+    pub fn build(self) -> AppstreamStack_StorageConnectors {
+        AppstreamStack_StorageConnectors {
             connector_type: self.connector_type,
             domains: core::default::Default::default(),
             resource_identifier: core::default::Default::default(),
@@ -682,21 +750,23 @@ impl BuildAppstreamStackStorageConnectorsEl {
     }
 }
 
-pub struct AppstreamStackStorageConnectorsElRef {
+#[allow(dead_code)]
+pub struct AppstreamStack_StorageConnectorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamStackStorageConnectorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamStackStorageConnectorsElRef {
-        AppstreamStackStorageConnectorsElRef {
+impl terrars::Ref for AppstreamStack_StorageConnectorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamStack_StorageConnectorsRef {
+        AppstreamStack_StorageConnectorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamStackStorageConnectorsElRef {
+impl AppstreamStack_StorageConnectorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -718,15 +788,24 @@ impl AppstreamStackStorageConnectorsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppstreamStackUserSettingsEl {
-    action: terrars::PrimField<std::string::String>,
-    permission: terrars::PrimField<std::string::String>,
+pub struct AppstreamStack_StreamingExperienceSettings {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preferred_protocol: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppstreamStackUserSettingsEl { }
+impl AppstreamStack_StreamingExperienceSettings {
+    #[doc = "Set the field `preferred_protocol`.\n"]
+    pub fn set_preferred_protocol(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.preferred_protocol = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for AppstreamStackUserSettingsEl {
-    type O = terrars::BlockAssignable<AppstreamStackUserSettingsEl>;
+impl terrars::ToListMappable for AppstreamStack_StreamingExperienceSettings {
+    type O = terrars::BlockAssignable<AppstreamStack_StreamingExperienceSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -737,37 +816,94 @@ impl terrars::ToListMappable for AppstreamStackUserSettingsEl {
     }
 }
 
-pub struct BuildAppstreamStackUserSettingsEl {
-    #[doc = ""]
-    pub action: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub permission: terrars::PrimField<std::string::String>,
-}
+pub struct BuildAppstreamStack_StreamingExperienceSettings {}
 
-impl BuildAppstreamStackUserSettingsEl {
-    pub fn build(self) -> AppstreamStackUserSettingsEl {
-        AppstreamStackUserSettingsEl {
-            action: self.action,
-            permission: self.permission,
-        }
+impl BuildAppstreamStack_StreamingExperienceSettings {
+    pub fn build(self) -> AppstreamStack_StreamingExperienceSettings {
+        AppstreamStack_StreamingExperienceSettings { preferred_protocol: core::default::Default::default() }
     }
 }
 
-pub struct AppstreamStackUserSettingsElRef {
+#[allow(dead_code)]
+pub struct AppstreamStack_StreamingExperienceSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamStackUserSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamStackUserSettingsElRef {
-        AppstreamStackUserSettingsElRef {
+impl terrars::Ref for AppstreamStack_StreamingExperienceSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamStack_StreamingExperienceSettingsRef {
+        AppstreamStack_StreamingExperienceSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamStackUserSettingsElRef {
+impl AppstreamStack_StreamingExperienceSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `preferred_protocol` after provisioning.\n"]
+    pub fn preferred_protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_protocol", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppstreamStack_UserSettings {
+    action: terrars::PrimField<std::string::String>,
+    permission: terrars::PrimField<std::string::String>,
+}
+
+impl AppstreamStack_UserSettings { }
+
+impl terrars::ToListMappable for AppstreamStack_UserSettings {
+    type O = terrars::BlockAssignable<AppstreamStack_UserSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppstreamStack_UserSettings {
+    #[doc = ""]
+    pub action: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub permission: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppstreamStack_UserSettings {
+    pub fn build(self) -> AppstreamStack_UserSettings {
+        AppstreamStack_UserSettings {
+            action: self.action,
+            permission: self.permission,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppstreamStack_UserSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppstreamStack_UserSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamStack_UserSettingsRef {
+        AppstreamStack_UserSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppstreamStack_UserSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -781,12 +917,4 @@ impl AppstreamStackUserSettingsElRef {
     pub fn permission(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppstreamStackDynamic {
-    access_endpoints: std::option::Option<terrars::DynamicBlock<AppstreamStackAccessEndpointsEl>>,
-    application_settings: std::option::Option<terrars::DynamicBlock<AppstreamStackApplicationSettingsEl>>,
-    storage_connectors: std::option::Option<terrars::DynamicBlock<AppstreamStackStorageConnectorsEl>>,
-    user_settings: std::option::Option<terrars::DynamicBlock<AppstreamStackUserSettingsEl>>,
 }

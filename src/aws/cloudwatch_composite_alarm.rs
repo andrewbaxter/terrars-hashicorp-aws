@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudwatchCompositeAlarmData {
+struct CloudwatchCompositeAlarmData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,15 +35,20 @@ struct CloudwatchCompositeAlarmData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ok_actions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    actions_suppressor: std::option::Option<std::vec::Vec<CloudwatchCompositeAlarm_ActionsSuppressor>>,
+    dynamic: CloudwatchCompositeAlarmDynamic,
 }
 
 struct CloudwatchCompositeAlarm_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudwatchCompositeAlarmData>,
+    data: std::cell::RefCell<CloudwatchCompositeAlarmData_>,
 }
 
 #[derive(Clone)]
@@ -186,6 +193,13 @@ impl CloudwatchCompositeAlarm {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -201,6 +215,22 @@ impl CloudwatchCompositeAlarm {
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `actions_suppressor`.\n"]
+    pub fn set_actions_suppressor(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchCompositeAlarm_ActionsSuppressor>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().actions_suppressor = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.actions_suppressor = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -249,6 +279,12 @@ impl CloudwatchCompositeAlarm {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ok_actions", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -257,6 +293,11 @@ impl CloudwatchCompositeAlarm {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `actions_suppressor` after provisioning.\n"]
+    pub fn actions_suppressor(&self) -> terrars::ListRef<CloudwatchCompositeAlarm_ActionsSuppressorRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.actions_suppressor", self.extract_ref()))
     }
 }
 
@@ -304,7 +345,7 @@ impl BuildCloudwatchCompositeAlarm {
         let out = CloudwatchCompositeAlarm(std::rc::Rc::new(CloudwatchCompositeAlarm_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudwatchCompositeAlarmData {
+            data: std::cell::RefCell::new(CloudwatchCompositeAlarmData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -318,8 +359,11 @@ impl BuildCloudwatchCompositeAlarm {
                 id: core::default::Default::default(),
                 insufficient_data_actions: core::default::Default::default(),
                 ok_actions: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                actions_suppressor: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -395,6 +439,12 @@ impl CloudwatchCompositeAlarmRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ok_actions", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -403,5 +453,92 @@ impl CloudwatchCompositeAlarmRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `actions_suppressor` after provisioning.\n"]
+    pub fn actions_suppressor(&self) -> terrars::ListRef<CloudwatchCompositeAlarm_ActionsSuppressorRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.actions_suppressor", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CloudwatchCompositeAlarmDynamic {
+    actions_suppressor: std::option::Option<terrars::DynamicBlock<CloudwatchCompositeAlarm_ActionsSuppressor>>,
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchCompositeAlarm_ActionsSuppressor {
+    alarm: terrars::PrimField<std::string::String>,
+    extension_period: terrars::PrimField<f64>,
+    wait_period: terrars::PrimField<f64>,
+}
+
+impl CloudwatchCompositeAlarm_ActionsSuppressor { }
+
+impl terrars::ToListMappable for CloudwatchCompositeAlarm_ActionsSuppressor {
+    type O = terrars::BlockAssignable<CloudwatchCompositeAlarm_ActionsSuppressor>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchCompositeAlarm_ActionsSuppressor {
+    #[doc = ""]
+    pub alarm: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub extension_period: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub wait_period: terrars::PrimField<f64>,
+}
+
+impl BuildCloudwatchCompositeAlarm_ActionsSuppressor {
+    pub fn build(self) -> CloudwatchCompositeAlarm_ActionsSuppressor {
+        CloudwatchCompositeAlarm_ActionsSuppressor {
+            alarm: self.alarm,
+            extension_period: self.extension_period,
+            wait_period: self.wait_period,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchCompositeAlarm_ActionsSuppressorRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchCompositeAlarm_ActionsSuppressorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchCompositeAlarm_ActionsSuppressorRef {
+        CloudwatchCompositeAlarm_ActionsSuppressorRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchCompositeAlarm_ActionsSuppressorRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `alarm` after provisioning.\n"]
+    pub fn alarm(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.alarm", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `extension_period` after provisioning.\n"]
+    pub fn extension_period(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.extension_period", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `wait_period` after provisioning.\n"]
+    pub fn wait_period(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_period", self.base))
     }
 }

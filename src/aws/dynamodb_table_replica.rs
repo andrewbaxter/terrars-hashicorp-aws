@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DynamodbTableReplicaData {
+struct DynamodbTableReplicaData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct DynamodbTableReplicaData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deletion_protection_enabled: std::option::Option<terrars::PrimField<bool>>,
     global_table_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,19 +30,21 @@ struct DynamodbTableReplicaData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     point_in_time_recovery: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     table_class_override: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DynamodbTableReplicaTimeoutsEl>,
+    timeouts: std::option::Option<DynamodbTableReplica_Timeouts>,
 }
 
 struct DynamodbTableReplica_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DynamodbTableReplicaData>,
+    data: std::cell::RefCell<DynamodbTableReplicaData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +144,12 @@ impl DynamodbTableReplica {
         self
     }
 
+    #[doc = "Set the field `deletion_protection_enabled`.\n"]
+    pub fn set_deletion_protection_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().deletion_protection_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -153,6 +165,13 @@ impl DynamodbTableReplica {
     #[doc = "Set the field `point_in_time_recovery`.\n"]
     pub fn set_point_in_time_recovery(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().point_in_time_recovery = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -181,7 +200,7 @@ impl DynamodbTableReplica {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DynamodbTableReplicaTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DynamodbTableReplica_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -189,6 +208,11 @@ impl DynamodbTableReplica {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `deletion_protection_enabled` after provisioning.\n"]
+    pub fn deletion_protection_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection_enabled", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `global_table_arn` after provisioning.\n"]
@@ -211,6 +235,12 @@ impl DynamodbTableReplica {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.point_in_time_recovery", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_class_override` after provisioning.\n"]
     pub fn table_class_override(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_class_override", self.extract_ref()))
@@ -227,8 +257,8 @@ impl DynamodbTableReplica {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DynamodbTableReplicaTimeoutsElRef {
-        DynamodbTableReplicaTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DynamodbTableReplica_TimeoutsRef {
+        DynamodbTableReplica_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -274,16 +304,18 @@ impl BuildDynamodbTableReplica {
         let out = DynamodbTableReplica(std::rc::Rc::new(DynamodbTableReplica_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DynamodbTableReplicaData {
+            data: std::cell::RefCell::new(DynamodbTableReplicaData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deletion_protection_enabled: core::default::Default::default(),
                 global_table_arn: self.global_table_arn,
                 id: core::default::Default::default(),
                 kms_key_arn: core::default::Default::default(),
                 point_in_time_recovery: core::default::Default::default(),
+                region: core::default::Default::default(),
                 table_class_override: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -323,6 +355,11 @@ impl DynamodbTableReplicaRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `deletion_protection_enabled` after provisioning.\n"]
+    pub fn deletion_protection_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection_enabled", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `global_table_arn` after provisioning.\n"]
     pub fn global_table_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.global_table_arn", self.extract_ref()))
@@ -343,6 +380,12 @@ impl DynamodbTableReplicaRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.point_in_time_recovery", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_class_override` after provisioning.\n"]
     pub fn table_class_override(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_class_override", self.extract_ref()))
@@ -359,13 +402,13 @@ impl DynamodbTableReplicaRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DynamodbTableReplicaTimeoutsElRef {
-        DynamodbTableReplicaTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DynamodbTableReplica_TimeoutsRef {
+        DynamodbTableReplica_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DynamodbTableReplicaTimeoutsEl {
+pub struct DynamodbTableReplica_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -374,7 +417,7 @@ pub struct DynamodbTableReplicaTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DynamodbTableReplicaTimeoutsEl {
+impl DynamodbTableReplica_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -394,8 +437,8 @@ impl DynamodbTableReplicaTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DynamodbTableReplicaTimeoutsEl {
-    type O = terrars::BlockAssignable<DynamodbTableReplicaTimeoutsEl>;
+impl terrars::ToListMappable for DynamodbTableReplica_Timeouts {
+    type O = terrars::BlockAssignable<DynamodbTableReplica_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -406,11 +449,11 @@ impl terrars::ToListMappable for DynamodbTableReplicaTimeoutsEl {
     }
 }
 
-pub struct BuildDynamodbTableReplicaTimeoutsEl {}
+pub struct BuildDynamodbTableReplica_Timeouts {}
 
-impl BuildDynamodbTableReplicaTimeoutsEl {
-    pub fn build(self) -> DynamodbTableReplicaTimeoutsEl {
-        DynamodbTableReplicaTimeoutsEl {
+impl BuildDynamodbTableReplica_Timeouts {
+    pub fn build(self) -> DynamodbTableReplica_Timeouts {
+        DynamodbTableReplica_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -418,21 +461,23 @@ impl BuildDynamodbTableReplicaTimeoutsEl {
     }
 }
 
-pub struct DynamodbTableReplicaTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DynamodbTableReplica_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DynamodbTableReplicaTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DynamodbTableReplicaTimeoutsElRef {
-        DynamodbTableReplicaTimeoutsElRef {
+impl terrars::Ref for DynamodbTableReplica_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DynamodbTableReplica_TimeoutsRef {
+        DynamodbTableReplica_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DynamodbTableReplicaTimeoutsElRef {
+impl DynamodbTableReplica_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

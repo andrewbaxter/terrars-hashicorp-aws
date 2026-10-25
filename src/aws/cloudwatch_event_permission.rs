@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudwatchEventPermissionData {
+struct CloudwatchEventPermissionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,16 +27,18 @@ struct CloudwatchEventPermissionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     principal: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     statement_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<CloudwatchEventPermissionConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<CloudwatchEventPermission_Condition>>,
     dynamic: CloudwatchEventPermissionDynamic,
 }
 
 struct CloudwatchEventPermission_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudwatchEventPermissionData>,
+    data: std::cell::RefCell<CloudwatchEventPermissionData_>,
 }
 
 #[derive(Clone)]
@@ -152,10 +156,17 @@ impl CloudwatchEventPermission {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventPermissionConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventPermission_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,13 +199,19 @@ impl CloudwatchEventPermission {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `statement_id` after provisioning.\n"]
     pub fn statement_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.statement_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudwatchEventPermissionConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudwatchEventPermission_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
@@ -243,7 +260,7 @@ impl BuildCloudwatchEventPermission {
         let out = CloudwatchEventPermission(std::rc::Rc::new(CloudwatchEventPermission_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudwatchEventPermissionData {
+            data: std::cell::RefCell::new(CloudwatchEventPermissionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -253,6 +270,7 @@ impl BuildCloudwatchEventPermission {
                 event_bus_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 principal: self.principal,
+                region: core::default::Default::default(),
                 statement_id: self.statement_id,
                 condition: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -306,29 +324,40 @@ impl CloudwatchEventPermissionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `statement_id` after provisioning.\n"]
     pub fn statement_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.statement_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<CloudwatchEventPermissionConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<CloudwatchEventPermission_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudwatchEventPermissionDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<CloudwatchEventPermission_Condition>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudwatchEventPermissionConditionEl {
+pub struct CloudwatchEventPermission_Condition {
     key: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl CloudwatchEventPermissionConditionEl { }
+impl CloudwatchEventPermission_Condition { }
 
-impl terrars::ToListMappable for CloudwatchEventPermissionConditionEl {
-    type O = terrars::BlockAssignable<CloudwatchEventPermissionConditionEl>;
+impl terrars::ToListMappable for CloudwatchEventPermission_Condition {
+    type O = terrars::BlockAssignable<CloudwatchEventPermission_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -339,7 +368,7 @@ impl terrars::ToListMappable for CloudwatchEventPermissionConditionEl {
     }
 }
 
-pub struct BuildCloudwatchEventPermissionConditionEl {
+pub struct BuildCloudwatchEventPermission_Condition {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -348,9 +377,9 @@ pub struct BuildCloudwatchEventPermissionConditionEl {
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchEventPermissionConditionEl {
-    pub fn build(self) -> CloudwatchEventPermissionConditionEl {
-        CloudwatchEventPermissionConditionEl {
+impl BuildCloudwatchEventPermission_Condition {
+    pub fn build(self) -> CloudwatchEventPermission_Condition {
+        CloudwatchEventPermission_Condition {
             key: self.key,
             type_: self.type_,
             value: self.value,
@@ -358,21 +387,23 @@ impl BuildCloudwatchEventPermissionConditionEl {
     }
 }
 
-pub struct CloudwatchEventPermissionConditionElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventPermission_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventPermissionConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventPermissionConditionElRef {
-        CloudwatchEventPermissionConditionElRef {
+impl terrars::Ref for CloudwatchEventPermission_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventPermission_ConditionRef {
+        CloudwatchEventPermission_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventPermissionConditionElRef {
+impl CloudwatchEventPermission_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -391,9 +422,4 @@ impl CloudwatchEventPermissionConditionElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudwatchEventPermissionDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<CloudwatchEventPermissionConditionEl>>,
 }

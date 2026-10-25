@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LambdaLayerVersionPermissionData {
+struct LambdaLayerVersionPermissionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,10 @@ struct LambdaLayerVersionPermissionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     organization_id: std::option::Option<terrars::PrimField<std::string::String>>,
     principal: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_destroy: std::option::Option<terrars::PrimField<bool>>,
     statement_id: terrars::PrimField<std::string::String>,
     version_number: terrars::PrimField<f64>,
 }
@@ -32,7 +38,7 @@ struct LambdaLayerVersionPermissionData {
 struct LambdaLayerVersionPermission_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LambdaLayerVersionPermissionData>,
+    data: std::cell::RefCell<LambdaLayerVersionPermissionData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +150,19 @@ impl LambdaLayerVersionPermission {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `skip_destroy`.\n"]
+    pub fn set_skip_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
     pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
@@ -174,9 +193,20 @@ impl LambdaLayerVersionPermission {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `revision_id` after provisioning.\n"]
     pub fn revision_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `statement_id` after provisioning.\n"]
@@ -240,7 +270,7 @@ impl BuildLambdaLayerVersionPermission {
         let out = LambdaLayerVersionPermission(std::rc::Rc::new(LambdaLayerVersionPermission_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LambdaLayerVersionPermissionData {
+            data: std::cell::RefCell::new(LambdaLayerVersionPermissionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -251,6 +281,8 @@ impl BuildLambdaLayerVersionPermission {
                 layer_name: self.layer_name,
                 organization_id: core::default::Default::default(),
                 principal: self.principal,
+                region: core::default::Default::default(),
+                skip_destroy: core::default::Default::default(),
                 statement_id: self.statement_id,
                 version_number: self.version_number,
             }),
@@ -313,9 +345,20 @@ impl LambdaLayerVersionPermissionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `revision_id` after provisioning.\n"]
     pub fn revision_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `statement_id` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudwatchMetricAlarmData {
+struct CloudwatchMetricAlarmData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,14 +27,18 @@ struct CloudwatchMetricAlarmData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     alarm_description: std::option::Option<terrars::PrimField<std::string::String>>,
     alarm_name: terrars::PrimField<std::string::String>,
-    comparison_operator: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    comparison_operator: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     datapoints_to_alarm: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dimensions: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     evaluate_low_sample_count_percentiles: std::option::Option<terrars::PrimField<std::string::String>>,
-    evaluation_periods: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    evaluation_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    evaluation_periods: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     extended_statistic: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -48,6 +54,8 @@ struct CloudwatchMetricAlarmData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     period: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     statistic: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -62,14 +70,20 @@ struct CloudwatchMetricAlarmData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     unit: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metric_query: std::option::Option<std::vec::Vec<CloudwatchMetricAlarmMetricQueryEl>>,
+    evaluation_criteria: std::option::Option<std::vec::Vec<CloudwatchMetricAlarm_EvaluationCriteria>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    evaluation_window: std::option::Option<std::vec::Vec<CloudwatchMetricAlarm_EvaluationWindow>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_query: std::option::Option<std::vec::Vec<CloudwatchMetricAlarm_MetricQuery>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    warm_up_configuration: std::option::Option<std::vec::Vec<CloudwatchMetricAlarm_WarmUpConfiguration>>,
     dynamic: CloudwatchMetricAlarmDynamic,
 }
 
 struct CloudwatchMetricAlarm_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudwatchMetricAlarmData>,
+    data: std::cell::RefCell<CloudwatchMetricAlarmData_>,
 }
 
 #[derive(Clone)]
@@ -190,6 +204,12 @@ impl CloudwatchMetricAlarm {
         self
     }
 
+    #[doc = "Set the field `comparison_operator`.\n"]
+    pub fn set_comparison_operator(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().comparison_operator = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `datapoints_to_alarm`.\n"]
     pub fn set_datapoints_to_alarm(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().datapoints_to_alarm = std::option::Option::Some(v.into());
@@ -211,6 +231,18 @@ impl CloudwatchMetricAlarm {
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().evaluate_low_sample_count_percentiles = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `evaluation_interval`.\n"]
+    pub fn set_evaluation_interval(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().evaluation_interval = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `evaluation_periods`.\n"]
+    pub fn set_evaluation_periods(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().evaluation_periods = std::option::Option::Some(v.into());
         self
     }
 
@@ -262,6 +294,13 @@ impl CloudwatchMetricAlarm {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `statistic`.\n"]
     pub fn set_statistic(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().statistic = std::option::Option::Some(v.into());
@@ -310,10 +349,42 @@ impl CloudwatchMetricAlarm {
         self
     }
 
+    #[doc = "Set the field `evaluation_criteria`.\n"]
+    pub fn set_evaluation_criteria(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricAlarm_EvaluationCriteria>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().evaluation_criteria = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.evaluation_criteria = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `evaluation_window`.\n"]
+    pub fn set_evaluation_window(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricAlarm_EvaluationWindow>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().evaluation_window = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.evaluation_window = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `metric_query`.\n"]
     pub fn set_metric_query(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricAlarmMetricQueryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricAlarm_MetricQuery>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -321,6 +392,22 @@ impl CloudwatchMetricAlarm {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.metric_query = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `warm_up_configuration`.\n"]
+    pub fn set_warm_up_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricAlarm_WarmUpConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().warm_up_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.warm_up_configuration = std::option::Option::Some(d);
             },
         }
         self
@@ -374,6 +461,11 @@ impl CloudwatchMetricAlarm {
         )
     }
 
+    #[doc = "Get a reference to the value of field `evaluation_interval` after provisioning.\n"]
+    pub fn evaluation_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.evaluation_interval", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `evaluation_periods` after provisioning.\n"]
     pub fn evaluation_periods(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.evaluation_periods", self.extract_ref()))
@@ -414,6 +506,12 @@ impl CloudwatchMetricAlarm {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.period", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `statistic` after provisioning.\n"]
     pub fn statistic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.statistic", self.extract_ref()))
@@ -447,6 +545,21 @@ impl CloudwatchMetricAlarm {
     #[doc = "Get a reference to the value of field `unit` after provisioning.\n"]
     pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `evaluation_criteria` after provisioning.\n"]
+    pub fn evaluation_criteria(&self) -> terrars::ListRef<CloudwatchMetricAlarm_EvaluationCriteriaRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.evaluation_criteria", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `evaluation_window` after provisioning.\n"]
+    pub fn evaluation_window(&self) -> terrars::ListRef<CloudwatchMetricAlarm_EvaluationWindowRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.evaluation_window", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `warm_up_configuration` after provisioning.\n"]
+    pub fn warm_up_configuration(&self) -> terrars::ListRef<CloudwatchMetricAlarm_WarmUpConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.warm_up_configuration", self.extract_ref()))
     }
 }
 
@@ -485,10 +598,6 @@ pub struct BuildCloudwatchMetricAlarm {
     pub tf_id: std::string::String,
     #[doc = ""]
     pub alarm_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub comparison_operator: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub evaluation_periods: terrars::PrimField<f64>,
 }
 
 impl BuildCloudwatchMetricAlarm {
@@ -496,7 +605,7 @@ impl BuildCloudwatchMetricAlarm {
         let out = CloudwatchMetricAlarm(std::rc::Rc::new(CloudwatchMetricAlarm_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudwatchMetricAlarmData {
+            data: std::cell::RefCell::new(CloudwatchMetricAlarmData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -506,11 +615,12 @@ impl BuildCloudwatchMetricAlarm {
                 alarm_actions: core::default::Default::default(),
                 alarm_description: core::default::Default::default(),
                 alarm_name: self.alarm_name,
-                comparison_operator: self.comparison_operator,
+                comparison_operator: core::default::Default::default(),
                 datapoints_to_alarm: core::default::Default::default(),
                 dimensions: core::default::Default::default(),
                 evaluate_low_sample_count_percentiles: core::default::Default::default(),
-                evaluation_periods: self.evaluation_periods,
+                evaluation_interval: core::default::Default::default(),
+                evaluation_periods: core::default::Default::default(),
                 extended_statistic: core::default::Default::default(),
                 id: core::default::Default::default(),
                 insufficient_data_actions: core::default::Default::default(),
@@ -518,6 +628,7 @@ impl BuildCloudwatchMetricAlarm {
                 namespace: core::default::Default::default(),
                 ok_actions: core::default::Default::default(),
                 period: core::default::Default::default(),
+                region: core::default::Default::default(),
                 statistic: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -525,7 +636,10 @@ impl BuildCloudwatchMetricAlarm {
                 threshold_metric_id: core::default::Default::default(),
                 treat_missing_data: core::default::Default::default(),
                 unit: core::default::Default::default(),
+                evaluation_criteria: core::default::Default::default(),
+                evaluation_window: core::default::Default::default(),
                 metric_query: core::default::Default::default(),
+                warm_up_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -605,6 +719,11 @@ impl CloudwatchMetricAlarmRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `evaluation_interval` after provisioning.\n"]
+    pub fn evaluation_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.evaluation_interval", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `evaluation_periods` after provisioning.\n"]
     pub fn evaluation_periods(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.evaluation_periods", self.extract_ref()))
@@ -645,6 +764,12 @@ impl CloudwatchMetricAlarmRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.period", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `statistic` after provisioning.\n"]
     pub fn statistic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.statistic", self.extract_ref()))
@@ -679,10 +804,356 @@ impl CloudwatchMetricAlarmRef {
     pub fn unit(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `evaluation_criteria` after provisioning.\n"]
+    pub fn evaluation_criteria(&self) -> terrars::ListRef<CloudwatchMetricAlarm_EvaluationCriteriaRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.evaluation_criteria", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `evaluation_window` after provisioning.\n"]
+    pub fn evaluation_window(&self) -> terrars::ListRef<CloudwatchMetricAlarm_EvaluationWindowRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.evaluation_window", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `warm_up_configuration` after provisioning.\n"]
+    pub fn warm_up_configuration(&self) -> terrars::ListRef<CloudwatchMetricAlarm_WarmUpConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.warm_up_configuration", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CloudwatchMetricAlarmDynamic {
+    evaluation_criteria: std::option::Option<terrars::DynamicBlock<CloudwatchMetricAlarm_EvaluationCriteria>>,
+    evaluation_window: std::option::Option<terrars::DynamicBlock<CloudwatchMetricAlarm_EvaluationWindow>>,
+    metric_query: std::option::Option<terrars::DynamicBlock<CloudwatchMetricAlarm_MetricQuery>>,
+    warm_up_configuration: std::option::Option<terrars::DynamicBlock<CloudwatchMetricAlarm_WarmUpConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchMetricAlarmMetricQueryElMetricEl {
+pub struct CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pending_period: std::option::Option<terrars::PrimField<f64>>,
+    query: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    recovery_period: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria {
+    #[doc = "Set the field `pending_period`.\n"]
+    pub fn set_pending_period(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.pending_period = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `recovery_period`.\n"]
+    pub fn set_recovery_period(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.recovery_period = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria {
+    type O = terrars::BlockAssignable<CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria {
+    #[doc = ""]
+    pub query: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria {
+    pub fn build(self) -> CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria {
+        CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria {
+            pending_period: core::default::Default::default(),
+            query: self.query,
+            recovery_period: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteriaRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteriaRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteriaRef {
+        CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteriaRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteriaRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `pending_period` after provisioning.\n"]
+    pub fn pending_period(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pending_period", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `query` after provisioning.\n"]
+    pub fn query(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.query", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `recovery_period` after provisioning.\n"]
+    pub fn recovery_period(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.recovery_period", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CloudwatchMetricAlarm_EvaluationCriteriaDynamic {
+    promql_criteria: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria>>,
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchMetricAlarm_EvaluationCriteria {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    promql_criteria: std::option::Option<std::vec::Vec<CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria>>,
+    dynamic: CloudwatchMetricAlarm_EvaluationCriteriaDynamic,
+}
+
+impl CloudwatchMetricAlarm_EvaluationCriteria {
+    #[doc = "Set the field `promql_criteria`.\n"]
+    pub fn set_promql_criteria(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteria>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.promql_criteria = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.promql_criteria = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchMetricAlarm_EvaluationCriteria {
+    type O = terrars::BlockAssignable<CloudwatchMetricAlarm_EvaluationCriteria>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchMetricAlarm_EvaluationCriteria {}
+
+impl BuildCloudwatchMetricAlarm_EvaluationCriteria {
+    pub fn build(self) -> CloudwatchMetricAlarm_EvaluationCriteria {
+        CloudwatchMetricAlarm_EvaluationCriteria {
+            promql_criteria: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchMetricAlarm_EvaluationCriteriaRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchMetricAlarm_EvaluationCriteriaRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricAlarm_EvaluationCriteriaRef {
+        CloudwatchMetricAlarm_EvaluationCriteriaRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchMetricAlarm_EvaluationCriteriaRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `promql_criteria` after provisioning.\n"]
+    pub fn promql_criteria(&self) -> terrars::ListRef<CloudwatchMetricAlarm_EvaluationCriteria_PromqlCriteriaRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.promql_criteria", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchMetricAlarm_EvaluationWindow_WallClockWindow {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timezone: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl CloudwatchMetricAlarm_EvaluationWindow_WallClockWindow {
+    #[doc = "Set the field `timezone`.\n"]
+    pub fn set_timezone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.timezone = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchMetricAlarm_EvaluationWindow_WallClockWindow {
+    type O = terrars::BlockAssignable<CloudwatchMetricAlarm_EvaluationWindow_WallClockWindow>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchMetricAlarm_EvaluationWindow_WallClockWindow {}
+
+impl BuildCloudwatchMetricAlarm_EvaluationWindow_WallClockWindow {
+    pub fn build(self) -> CloudwatchMetricAlarm_EvaluationWindow_WallClockWindow {
+        CloudwatchMetricAlarm_EvaluationWindow_WallClockWindow { timezone: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchMetricAlarm_EvaluationWindow_WallClockWindowRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchMetricAlarm_EvaluationWindow_WallClockWindowRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudwatchMetricAlarm_EvaluationWindow_WallClockWindowRef {
+        CloudwatchMetricAlarm_EvaluationWindow_WallClockWindowRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchMetricAlarm_EvaluationWindow_WallClockWindowRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `timezone` after provisioning.\n"]
+    pub fn timezone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.timezone", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CloudwatchMetricAlarm_EvaluationWindowDynamic {
+    wall_clock_window: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudwatchMetricAlarm_EvaluationWindow_WallClockWindow>>,
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchMetricAlarm_EvaluationWindow {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    wall_clock_window: std::option::Option<std::vec::Vec<CloudwatchMetricAlarm_EvaluationWindow_WallClockWindow>>,
+    dynamic: CloudwatchMetricAlarm_EvaluationWindowDynamic,
+}
+
+impl CloudwatchMetricAlarm_EvaluationWindow {
+    #[doc = "Set the field `wall_clock_window`.\n"]
+    pub fn set_wall_clock_window(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricAlarm_EvaluationWindow_WallClockWindow>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.wall_clock_window = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.wall_clock_window = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchMetricAlarm_EvaluationWindow {
+    type O = terrars::BlockAssignable<CloudwatchMetricAlarm_EvaluationWindow>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchMetricAlarm_EvaluationWindow {}
+
+impl BuildCloudwatchMetricAlarm_EvaluationWindow {
+    pub fn build(self) -> CloudwatchMetricAlarm_EvaluationWindow {
+        CloudwatchMetricAlarm_EvaluationWindow {
+            wall_clock_window: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchMetricAlarm_EvaluationWindowRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchMetricAlarm_EvaluationWindowRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricAlarm_EvaluationWindowRef {
+        CloudwatchMetricAlarm_EvaluationWindowRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchMetricAlarm_EvaluationWindowRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `wall_clock_window` after provisioning.\n"]
+    pub fn wall_clock_window(&self) -> terrars::ListRef<CloudwatchMetricAlarm_EvaluationWindow_WallClockWindowRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.wall_clock_window", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchMetricAlarm_MetricQuery_Metric {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dimensions: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     metric_name: terrars::PrimField<std::string::String>,
@@ -694,7 +1165,7 @@ pub struct CloudwatchMetricAlarmMetricQueryElMetricEl {
     unit: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudwatchMetricAlarmMetricQueryElMetricEl {
+impl CloudwatchMetricAlarm_MetricQuery_Metric {
     #[doc = "Set the field `dimensions`.\n"]
     pub fn set_dimensions(
         mut self,
@@ -717,8 +1188,8 @@ impl CloudwatchMetricAlarmMetricQueryElMetricEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchMetricAlarmMetricQueryElMetricEl {
-    type O = terrars::BlockAssignable<CloudwatchMetricAlarmMetricQueryElMetricEl>;
+impl terrars::ToListMappable for CloudwatchMetricAlarm_MetricQuery_Metric {
+    type O = terrars::BlockAssignable<CloudwatchMetricAlarm_MetricQuery_Metric>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -729,7 +1200,7 @@ impl terrars::ToListMappable for CloudwatchMetricAlarmMetricQueryElMetricEl {
     }
 }
 
-pub struct BuildCloudwatchMetricAlarmMetricQueryElMetricEl {
+pub struct BuildCloudwatchMetricAlarm_MetricQuery_Metric {
     #[doc = ""]
     pub metric_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -738,9 +1209,9 @@ pub struct BuildCloudwatchMetricAlarmMetricQueryElMetricEl {
     pub stat: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchMetricAlarmMetricQueryElMetricEl {
-    pub fn build(self) -> CloudwatchMetricAlarmMetricQueryElMetricEl {
-        CloudwatchMetricAlarmMetricQueryElMetricEl {
+impl BuildCloudwatchMetricAlarm_MetricQuery_Metric {
+    pub fn build(self) -> CloudwatchMetricAlarm_MetricQuery_Metric {
+        CloudwatchMetricAlarm_MetricQuery_Metric {
             dimensions: core::default::Default::default(),
             metric_name: self.metric_name,
             namespace: core::default::Default::default(),
@@ -751,21 +1222,23 @@ impl BuildCloudwatchMetricAlarmMetricQueryElMetricEl {
     }
 }
 
-pub struct CloudwatchMetricAlarmMetricQueryElMetricElRef {
+#[allow(dead_code)]
+pub struct CloudwatchMetricAlarm_MetricQuery_MetricRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchMetricAlarmMetricQueryElMetricElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricAlarmMetricQueryElMetricElRef {
-        CloudwatchMetricAlarmMetricQueryElMetricElRef {
+impl terrars::Ref for CloudwatchMetricAlarm_MetricQuery_MetricRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricAlarm_MetricQuery_MetricRef {
+        CloudwatchMetricAlarm_MetricQuery_MetricRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchMetricAlarmMetricQueryElMetricElRef {
+impl CloudwatchMetricAlarm_MetricQuery_MetricRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -802,12 +1275,12 @@ impl CloudwatchMetricAlarmMetricQueryElMetricElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudwatchMetricAlarmMetricQueryElDynamic {
-    metric: std::option::Option<terrars::DynamicBlock<CloudwatchMetricAlarmMetricQueryElMetricEl>>,
+struct CloudwatchMetricAlarm_MetricQueryDynamic {
+    metric: std::option::Option<terrars::DynamicBlock<CloudwatchMetricAlarm_MetricQuery_Metric>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchMetricAlarmMetricQueryEl {
+pub struct CloudwatchMetricAlarm_MetricQuery {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -816,13 +1289,15 @@ pub struct CloudwatchMetricAlarmMetricQueryEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     label: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    period: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     return_data: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metric: std::option::Option<std::vec::Vec<CloudwatchMetricAlarmMetricQueryElMetricEl>>,
-    dynamic: CloudwatchMetricAlarmMetricQueryElDynamic,
+    metric: std::option::Option<std::vec::Vec<CloudwatchMetricAlarm_MetricQuery_Metric>>,
+    dynamic: CloudwatchMetricAlarm_MetricQueryDynamic,
 }
 
-impl CloudwatchMetricAlarmMetricQueryEl {
+impl CloudwatchMetricAlarm_MetricQuery {
     #[doc = "Set the field `account_id`.\n"]
     pub fn set_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.account_id = std::option::Option::Some(v.into());
@@ -841,6 +1316,12 @@ impl CloudwatchMetricAlarmMetricQueryEl {
         self
     }
 
+    #[doc = "Set the field `period`.\n"]
+    pub fn set_period(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.period = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `return_data`.\n"]
     pub fn set_return_data(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.return_data = std::option::Option::Some(v.into());
@@ -850,7 +1331,7 @@ impl CloudwatchMetricAlarmMetricQueryEl {
     #[doc = "Set the field `metric`.\n"]
     pub fn set_metric(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricAlarmMetricQueryElMetricEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricAlarm_MetricQuery_Metric>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -864,8 +1345,8 @@ impl CloudwatchMetricAlarmMetricQueryEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchMetricAlarmMetricQueryEl {
-    type O = terrars::BlockAssignable<CloudwatchMetricAlarmMetricQueryEl>;
+impl terrars::ToListMappable for CloudwatchMetricAlarm_MetricQuery {
+    type O = terrars::BlockAssignable<CloudwatchMetricAlarm_MetricQuery>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -876,18 +1357,19 @@ impl terrars::ToListMappable for CloudwatchMetricAlarmMetricQueryEl {
     }
 }
 
-pub struct BuildCloudwatchMetricAlarmMetricQueryEl {
+pub struct BuildCloudwatchMetricAlarm_MetricQuery {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchMetricAlarmMetricQueryEl {
-    pub fn build(self) -> CloudwatchMetricAlarmMetricQueryEl {
-        CloudwatchMetricAlarmMetricQueryEl {
+impl BuildCloudwatchMetricAlarm_MetricQuery {
+    pub fn build(self) -> CloudwatchMetricAlarm_MetricQuery {
+        CloudwatchMetricAlarm_MetricQuery {
             account_id: core::default::Default::default(),
             expression: core::default::Default::default(),
             id: self.id,
             label: core::default::Default::default(),
+            period: core::default::Default::default(),
             return_data: core::default::Default::default(),
             metric: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -895,21 +1377,23 @@ impl BuildCloudwatchMetricAlarmMetricQueryEl {
     }
 }
 
-pub struct CloudwatchMetricAlarmMetricQueryElRef {
+#[allow(dead_code)]
+pub struct CloudwatchMetricAlarm_MetricQueryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchMetricAlarmMetricQueryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricAlarmMetricQueryElRef {
-        CloudwatchMetricAlarmMetricQueryElRef {
+impl terrars::Ref for CloudwatchMetricAlarm_MetricQueryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricAlarm_MetricQueryRef {
+        CloudwatchMetricAlarm_MetricQueryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchMetricAlarmMetricQueryElRef {
+impl CloudwatchMetricAlarm_MetricQueryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -934,18 +1418,98 @@ impl CloudwatchMetricAlarmMetricQueryElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.label", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `period` after provisioning.\n"]
+    pub fn period(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.period", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `return_data` after provisioning.\n"]
     pub fn return_data(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.return_data", self.base))
     }
 
     #[doc = "Get a reference to the value of field `metric` after provisioning.\n"]
-    pub fn metric(&self) -> terrars::ListRef<CloudwatchMetricAlarmMetricQueryElMetricElRef> {
+    pub fn metric(&self) -> terrars::ListRef<CloudwatchMetricAlarm_MetricQuery_MetricRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metric", self.base))
     }
 }
 
-#[derive(Serialize, Default)]
-struct CloudwatchMetricAlarmDynamic {
-    metric_query: std::option::Option<terrars::DynamicBlock<CloudwatchMetricAlarmMetricQueryEl>>,
+#[derive(Serialize)]
+pub struct CloudwatchMetricAlarm_WarmUpConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    only_start_evaluating_after_warm_up_period_ends: std::option::Option<terrars::PrimField<bool>>,
+    warm_up_period_duration_in_minutes: terrars::PrimField<f64>,
+}
+
+impl CloudwatchMetricAlarm_WarmUpConfiguration {
+    #[doc = "Set the field `only_start_evaluating_after_warm_up_period_ends`.\n"]
+    pub fn set_only_start_evaluating_after_warm_up_period_ends(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.only_start_evaluating_after_warm_up_period_ends = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchMetricAlarm_WarmUpConfiguration {
+    type O = terrars::BlockAssignable<CloudwatchMetricAlarm_WarmUpConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchMetricAlarm_WarmUpConfiguration {
+    #[doc = ""]
+    pub warm_up_period_duration_in_minutes: terrars::PrimField<f64>,
+}
+
+impl BuildCloudwatchMetricAlarm_WarmUpConfiguration {
+    pub fn build(self) -> CloudwatchMetricAlarm_WarmUpConfiguration {
+        CloudwatchMetricAlarm_WarmUpConfiguration {
+            only_start_evaluating_after_warm_up_period_ends: core::default::Default::default(),
+            warm_up_period_duration_in_minutes: self.warm_up_period_duration_in_minutes,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchMetricAlarm_WarmUpConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchMetricAlarm_WarmUpConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricAlarm_WarmUpConfigurationRef {
+        CloudwatchMetricAlarm_WarmUpConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchMetricAlarm_WarmUpConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc =
+        "Get a reference to the value of field `only_start_evaluating_after_warm_up_period_ends` after provisioning.\n"]
+    pub fn only_start_evaluating_after_warm_up_period_ends(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.only_start_evaluating_after_warm_up_period_ends", self.base),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `warm_up_period_duration_in_minutes` after provisioning.\n"]
+    pub fn warm_up_period_duration_in_minutes(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warm_up_period_duration_in_minutes", self.base))
+    }
 }

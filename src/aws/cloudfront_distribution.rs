@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudfrontDistributionData {
+struct CloudfrontDistributionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,7 +23,11 @@ struct CloudfrontDistributionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aliases: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    anycast_ip_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     comment: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    continuous_deployment_policy_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_root_object: std::option::Option<terrars::PrimField<std::string::String>>,
     enabled: terrars::PrimField<bool>,
@@ -36,6 +42,8 @@ struct CloudfrontDistributionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retain_on_delete: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    staging: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -44,28 +52,36 @@ struct CloudfrontDistributionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     web_acl_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_error_response: std::option::Option<std::vec::Vec<CloudfrontDistributionCustomErrorResponseEl>>,
+    cache_tag_config: std::option::Option<std::vec::Vec<CloudfrontDistribution_CacheTagConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_cache_behavior: std::option::Option<std::vec::Vec<CloudfrontDistributionDefaultCacheBehaviorEl>>,
+    connection_function_association: std
+    ::option
+    ::Option<std::vec::Vec<CloudfrontDistribution_ConnectionFunctionAssociation>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<CloudfrontDistributionLoggingConfigEl>>,
+    custom_error_response: std::option::Option<std::vec::Vec<CloudfrontDistribution_CustomErrorResponse>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ordered_cache_behavior: std::option::Option<std::vec::Vec<CloudfrontDistributionOrderedCacheBehaviorEl>>,
+    default_cache_behavior: std::option::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    origin: std::option::Option<std::vec::Vec<CloudfrontDistributionOriginEl>>,
+    logging_config: std::option::Option<std::vec::Vec<CloudfrontDistribution_LoggingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    origin_group: std::option::Option<std::vec::Vec<CloudfrontDistributionOriginGroupEl>>,
+    ordered_cache_behavior: std::option::Option<std::vec::Vec<CloudfrontDistribution_OrderedCacheBehavior>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    restrictions: std::option::Option<std::vec::Vec<CloudfrontDistributionRestrictionsEl>>,
+    origin: std::option::Option<std::vec::Vec<CloudfrontDistribution_Origin>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    viewer_certificate: std::option::Option<std::vec::Vec<CloudfrontDistributionViewerCertificateEl>>,
+    origin_group: std::option::Option<std::vec::Vec<CloudfrontDistribution_OriginGroup>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    restrictions: std::option::Option<std::vec::Vec<CloudfrontDistribution_Restrictions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    viewer_certificate: std::option::Option<std::vec::Vec<CloudfrontDistribution_ViewerCertificate>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    viewer_mtls_config: std::option::Option<std::vec::Vec<CloudfrontDistribution_ViewerMtlsConfig>>,
     dynamic: CloudfrontDistributionDynamic,
 }
 
 struct CloudfrontDistribution_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudfrontDistributionData>,
+    data: std::cell::RefCell<CloudfrontDistributionData_>,
 }
 
 #[derive(Clone)]
@@ -174,9 +190,24 @@ impl CloudfrontDistribution {
         self
     }
 
+    #[doc = "Set the field `anycast_ip_list_id`.\n"]
+    pub fn set_anycast_ip_list_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().anycast_ip_list_id = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `comment`.\n"]
     pub fn set_comment(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().comment = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `continuous_deployment_policy_id`.\n"]
+    pub fn set_continuous_deployment_policy_id(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().continuous_deployment_policy_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -216,6 +247,12 @@ impl CloudfrontDistribution {
         self
     }
 
+    #[doc = "Set the field `staging`.\n"]
+    pub fn set_staging(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().staging = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -246,10 +283,42 @@ impl CloudfrontDistribution {
         self
     }
 
+    #[doc = "Set the field `cache_tag_config`.\n"]
+    pub fn set_cache_tag_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_CacheTagConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cache_tag_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cache_tag_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `connection_function_association`.\n"]
+    pub fn set_connection_function_association(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_ConnectionFunctionAssociation>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().connection_function_association = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.connection_function_association = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `custom_error_response`.\n"]
     pub fn set_custom_error_response(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionCustomErrorResponseEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_CustomErrorResponse>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -265,7 +334,7 @@ impl CloudfrontDistribution {
     #[doc = "Set the field `default_cache_behavior`.\n"]
     pub fn set_default_cache_behavior(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -281,7 +350,7 @@ impl CloudfrontDistribution {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -297,7 +366,7 @@ impl CloudfrontDistribution {
     #[doc = "Set the field `ordered_cache_behavior`.\n"]
     pub fn set_ordered_cache_behavior(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_OrderedCacheBehavior>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -313,7 +382,7 @@ impl CloudfrontDistribution {
     #[doc = "Set the field `origin`.\n"]
     pub fn set_origin(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionOriginEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_Origin>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -329,7 +398,7 @@ impl CloudfrontDistribution {
     #[doc = "Set the field `origin_group`.\n"]
     pub fn set_origin_group(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionOriginGroupEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_OriginGroup>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -345,7 +414,7 @@ impl CloudfrontDistribution {
     #[doc = "Set the field `restrictions`.\n"]
     pub fn set_restrictions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionRestrictionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_Restrictions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -361,7 +430,7 @@ impl CloudfrontDistribution {
     #[doc = "Set the field `viewer_certificate`.\n"]
     pub fn set_viewer_certificate(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionViewerCertificateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_ViewerCertificate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -374,9 +443,30 @@ impl CloudfrontDistribution {
         self
     }
 
+    #[doc = "Set the field `viewer_mtls_config`.\n"]
+    pub fn set_viewer_mtls_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_ViewerMtlsConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().viewer_mtls_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.viewer_mtls_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Get a reference to the value of field `aliases` after provisioning.\n"]
     pub fn aliases(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.aliases", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `anycast_ip_list_id` after provisioning.\n"]
+    pub fn anycast_ip_list_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.anycast_ip_list_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -392,6 +482,14 @@ impl CloudfrontDistribution {
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
     pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `continuous_deployment_policy_id` after provisioning.\n"]
+    pub fn continuous_deployment_policy_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.continuous_deployment_policy_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `default_root_object` after provisioning.\n"]
@@ -447,6 +545,11 @@ impl CloudfrontDistribution {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `logging_v1_enabled` after provisioning.\n"]
+    pub fn logging_v1_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.logging_v1_enabled", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `price_class` after provisioning.\n"]
     pub fn price_class(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.price_class", self.extract_ref()))
@@ -455,6 +558,11 @@ impl CloudfrontDistribution {
     #[doc = "Get a reference to the value of field `retain_on_delete` after provisioning.\n"]
     pub fn retain_on_delete(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.retain_on_delete", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `staging` after provisioning.\n"]
+    pub fn staging(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.staging", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -473,12 +581,12 @@ impl CloudfrontDistribution {
     }
 
     #[doc = "Get a reference to the value of field `trusted_key_groups` after provisioning.\n"]
-    pub fn trusted_key_groups(&self) -> terrars::ListRef<CloudfrontDistributionTrustedKeyGroupsElRef> {
+    pub fn trusted_key_groups(&self) -> terrars::ListRef<CloudfrontDistribution_TrustedKeyGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trusted_key_groups", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `trusted_signers` after provisioning.\n"]
-    pub fn trusted_signers(&self) -> terrars::ListRef<CloudfrontDistributionTrustedSignersElRef> {
+    pub fn trusted_signers(&self) -> terrars::ListRef<CloudfrontDistribution_TrustedSignersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trusted_signers", self.extract_ref()))
     }
 
@@ -492,29 +600,49 @@ impl CloudfrontDistribution {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.web_acl_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cache_tag_config` after provisioning.\n"]
+    pub fn cache_tag_config(&self) -> terrars::ListRef<CloudfrontDistribution_CacheTagConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_tag_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `connection_function_association` after provisioning.\n"]
+    pub fn connection_function_association(
+        &self,
+    ) -> terrars::ListRef<CloudfrontDistribution_ConnectionFunctionAssociationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.connection_function_association", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `default_cache_behavior` after provisioning.\n"]
-    pub fn default_cache_behavior(&self) -> terrars::ListRef<CloudfrontDistributionDefaultCacheBehaviorElRef> {
+    pub fn default_cache_behavior(&self) -> terrars::ListRef<CloudfrontDistribution_DefaultCacheBehaviorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_cache_behavior", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<CloudfrontDistributionLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<CloudfrontDistribution_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ordered_cache_behavior` after provisioning.\n"]
-    pub fn ordered_cache_behavior(&self) -> terrars::ListRef<CloudfrontDistributionOrderedCacheBehaviorElRef> {
+    pub fn ordered_cache_behavior(&self) -> terrars::ListRef<CloudfrontDistribution_OrderedCacheBehaviorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ordered_cache_behavior", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `restrictions` after provisioning.\n"]
-    pub fn restrictions(&self) -> terrars::ListRef<CloudfrontDistributionRestrictionsElRef> {
+    pub fn restrictions(&self) -> terrars::ListRef<CloudfrontDistribution_RestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restrictions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `viewer_certificate` after provisioning.\n"]
-    pub fn viewer_certificate(&self) -> terrars::ListRef<CloudfrontDistributionViewerCertificateElRef> {
+    pub fn viewer_certificate(&self) -> terrars::ListRef<CloudfrontDistribution_ViewerCertificateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.viewer_certificate", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `viewer_mtls_config` after provisioning.\n"]
+    pub fn viewer_mtls_config(&self) -> terrars::ListRef<CloudfrontDistribution_ViewerMtlsConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.viewer_mtls_config", self.extract_ref()))
     }
 }
 
@@ -560,14 +688,16 @@ impl BuildCloudfrontDistribution {
         let out = CloudfrontDistribution(std::rc::Rc::new(CloudfrontDistribution_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudfrontDistributionData {
+            data: std::cell::RefCell::new(CloudfrontDistributionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 aliases: core::default::Default::default(),
+                anycast_ip_list_id: core::default::Default::default(),
                 comment: core::default::Default::default(),
+                continuous_deployment_policy_id: core::default::Default::default(),
                 default_root_object: core::default::Default::default(),
                 enabled: self.enabled,
                 http_version: core::default::Default::default(),
@@ -575,10 +705,13 @@ impl BuildCloudfrontDistribution {
                 is_ipv6_enabled: core::default::Default::default(),
                 price_class: core::default::Default::default(),
                 retain_on_delete: core::default::Default::default(),
+                staging: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 wait_for_deployment: core::default::Default::default(),
                 web_acl_id: core::default::Default::default(),
+                cache_tag_config: core::default::Default::default(),
+                connection_function_association: core::default::Default::default(),
                 custom_error_response: core::default::Default::default(),
                 default_cache_behavior: core::default::Default::default(),
                 logging_config: core::default::Default::default(),
@@ -587,6 +720,7 @@ impl BuildCloudfrontDistribution {
                 origin_group: core::default::Default::default(),
                 restrictions: core::default::Default::default(),
                 viewer_certificate: core::default::Default::default(),
+                viewer_mtls_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -623,6 +757,11 @@ impl CloudfrontDistributionRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.aliases", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `anycast_ip_list_id` after provisioning.\n"]
+    pub fn anycast_ip_list_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.anycast_ip_list_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -636,6 +775,14 @@ impl CloudfrontDistributionRef {
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
     pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `continuous_deployment_policy_id` after provisioning.\n"]
+    pub fn continuous_deployment_policy_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.continuous_deployment_policy_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `default_root_object` after provisioning.\n"]
@@ -691,6 +838,11 @@ impl CloudfrontDistributionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `logging_v1_enabled` after provisioning.\n"]
+    pub fn logging_v1_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.logging_v1_enabled", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `price_class` after provisioning.\n"]
     pub fn price_class(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.price_class", self.extract_ref()))
@@ -699,6 +851,11 @@ impl CloudfrontDistributionRef {
     #[doc = "Get a reference to the value of field `retain_on_delete` after provisioning.\n"]
     pub fn retain_on_delete(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.retain_on_delete", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `staging` after provisioning.\n"]
+    pub fn staging(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.staging", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -717,12 +874,12 @@ impl CloudfrontDistributionRef {
     }
 
     #[doc = "Get a reference to the value of field `trusted_key_groups` after provisioning.\n"]
-    pub fn trusted_key_groups(&self) -> terrars::ListRef<CloudfrontDistributionTrustedKeyGroupsElRef> {
+    pub fn trusted_key_groups(&self) -> terrars::ListRef<CloudfrontDistribution_TrustedKeyGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trusted_key_groups", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `trusted_signers` after provisioning.\n"]
-    pub fn trusted_signers(&self) -> terrars::ListRef<CloudfrontDistributionTrustedSignersElRef> {
+    pub fn trusted_signers(&self) -> terrars::ListRef<CloudfrontDistribution_TrustedSignersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trusted_signers", self.extract_ref()))
     }
 
@@ -736,41 +893,78 @@ impl CloudfrontDistributionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.web_acl_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cache_tag_config` after provisioning.\n"]
+    pub fn cache_tag_config(&self) -> terrars::ListRef<CloudfrontDistribution_CacheTagConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_tag_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `connection_function_association` after provisioning.\n"]
+    pub fn connection_function_association(
+        &self,
+    ) -> terrars::ListRef<CloudfrontDistribution_ConnectionFunctionAssociationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.connection_function_association", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `default_cache_behavior` after provisioning.\n"]
-    pub fn default_cache_behavior(&self) -> terrars::ListRef<CloudfrontDistributionDefaultCacheBehaviorElRef> {
+    pub fn default_cache_behavior(&self) -> terrars::ListRef<CloudfrontDistribution_DefaultCacheBehaviorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_cache_behavior", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<CloudfrontDistributionLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<CloudfrontDistribution_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ordered_cache_behavior` after provisioning.\n"]
-    pub fn ordered_cache_behavior(&self) -> terrars::ListRef<CloudfrontDistributionOrderedCacheBehaviorElRef> {
+    pub fn ordered_cache_behavior(&self) -> terrars::ListRef<CloudfrontDistribution_OrderedCacheBehaviorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ordered_cache_behavior", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `restrictions` after provisioning.\n"]
-    pub fn restrictions(&self) -> terrars::ListRef<CloudfrontDistributionRestrictionsElRef> {
+    pub fn restrictions(&self) -> terrars::ListRef<CloudfrontDistribution_RestrictionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restrictions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `viewer_certificate` after provisioning.\n"]
-    pub fn viewer_certificate(&self) -> terrars::ListRef<CloudfrontDistributionViewerCertificateElRef> {
+    pub fn viewer_certificate(&self) -> terrars::ListRef<CloudfrontDistribution_ViewerCertificateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.viewer_certificate", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `viewer_mtls_config` after provisioning.\n"]
+    pub fn viewer_mtls_config(&self) -> terrars::ListRef<CloudfrontDistribution_ViewerMtlsConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.viewer_mtls_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudfrontDistributionDynamic {
+    cache_tag_config: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_CacheTagConfig>>,
+    connection_function_association: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_ConnectionFunctionAssociation>>,
+    custom_error_response: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_CustomErrorResponse>>,
+    default_cache_behavior: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior>>,
+    logging_config: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_LoggingConfig>>,
+    ordered_cache_behavior: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_OrderedCacheBehavior>>,
+    origin: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_Origin>>,
+    origin_group: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_OriginGroup>>,
+    restrictions: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_Restrictions>>,
+    viewer_certificate: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_ViewerCertificate>>,
+    viewer_mtls_config: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_ViewerMtlsConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudfrontDistributionTrustedKeyGroupsElItemsEl {
+pub struct CloudfrontDistribution_TrustedKeyGroups_Items {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_pair_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudfrontDistributionTrustedKeyGroupsElItemsEl {
+impl CloudfrontDistribution_TrustedKeyGroups_Items {
     #[doc = "Set the field `key_group_id`.\n"]
     pub fn set_key_group_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key_group_id = std::option::Option::Some(v.into());
@@ -787,8 +981,8 @@ impl CloudfrontDistributionTrustedKeyGroupsElItemsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionTrustedKeyGroupsElItemsEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionTrustedKeyGroupsElItemsEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_TrustedKeyGroups_Items {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_TrustedKeyGroups_Items>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -799,35 +993,37 @@ impl terrars::ToListMappable for CloudfrontDistributionTrustedKeyGroupsElItemsEl
     }
 }
 
-pub struct BuildCloudfrontDistributionTrustedKeyGroupsElItemsEl {}
+pub struct BuildCloudfrontDistribution_TrustedKeyGroups_Items {}
 
-impl BuildCloudfrontDistributionTrustedKeyGroupsElItemsEl {
-    pub fn build(self) -> CloudfrontDistributionTrustedKeyGroupsElItemsEl {
-        CloudfrontDistributionTrustedKeyGroupsElItemsEl {
+impl BuildCloudfrontDistribution_TrustedKeyGroups_Items {
+    pub fn build(self) -> CloudfrontDistribution_TrustedKeyGroups_Items {
+        CloudfrontDistribution_TrustedKeyGroups_Items {
             key_group_id: core::default::Default::default(),
             key_pair_ids: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionTrustedKeyGroupsElItemsElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_TrustedKeyGroups_ItemsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionTrustedKeyGroupsElItemsElRef {
+impl terrars::Ref for CloudfrontDistribution_TrustedKeyGroups_ItemsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionTrustedKeyGroupsElItemsElRef {
-        CloudfrontDistributionTrustedKeyGroupsElItemsElRef {
+    ) -> CloudfrontDistribution_TrustedKeyGroups_ItemsRef {
+        CloudfrontDistribution_TrustedKeyGroups_ItemsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionTrustedKeyGroupsElItemsElRef {
+impl CloudfrontDistribution_TrustedKeyGroups_ItemsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -844,14 +1040,14 @@ impl CloudfrontDistributionTrustedKeyGroupsElItemsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionTrustedKeyGroupsEl {
+pub struct CloudfrontDistribution_TrustedKeyGroups {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    items: std::option::Option<terrars::ListField<CloudfrontDistributionTrustedKeyGroupsElItemsEl>>,
+    items: std::option::Option<terrars::ListField<CloudfrontDistribution_TrustedKeyGroups_Items>>,
 }
 
-impl CloudfrontDistributionTrustedKeyGroupsEl {
+impl CloudfrontDistribution_TrustedKeyGroups {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -861,15 +1057,15 @@ impl CloudfrontDistributionTrustedKeyGroupsEl {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<CloudfrontDistributionTrustedKeyGroupsElItemsEl>>,
+        v: impl std::convert::Into<terrars::ListField<CloudfrontDistribution_TrustedKeyGroups_Items>>,
     ) -> Self {
         self.items = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionTrustedKeyGroupsEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionTrustedKeyGroupsEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_TrustedKeyGroups {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_TrustedKeyGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -880,32 +1076,34 @@ impl terrars::ToListMappable for CloudfrontDistributionTrustedKeyGroupsEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionTrustedKeyGroupsEl {}
+pub struct BuildCloudfrontDistribution_TrustedKeyGroups {}
 
-impl BuildCloudfrontDistributionTrustedKeyGroupsEl {
-    pub fn build(self) -> CloudfrontDistributionTrustedKeyGroupsEl {
-        CloudfrontDistributionTrustedKeyGroupsEl {
+impl BuildCloudfrontDistribution_TrustedKeyGroups {
+    pub fn build(self) -> CloudfrontDistribution_TrustedKeyGroups {
+        CloudfrontDistribution_TrustedKeyGroups {
             enabled: core::default::Default::default(),
             items: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionTrustedKeyGroupsElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_TrustedKeyGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionTrustedKeyGroupsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistributionTrustedKeyGroupsElRef {
-        CloudfrontDistributionTrustedKeyGroupsElRef {
+impl terrars::Ref for CloudfrontDistribution_TrustedKeyGroupsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_TrustedKeyGroupsRef {
+        CloudfrontDistribution_TrustedKeyGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionTrustedKeyGroupsElRef {
+impl CloudfrontDistribution_TrustedKeyGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -916,20 +1114,20 @@ impl CloudfrontDistributionTrustedKeyGroupsElRef {
     }
 
     #[doc = "Get a reference to the value of field `items` after provisioning.\n"]
-    pub fn items(&self) -> terrars::ListRef<CloudfrontDistributionTrustedKeyGroupsElItemsElRef> {
+    pub fn items(&self) -> terrars::ListRef<CloudfrontDistribution_TrustedKeyGroups_ItemsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.items", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionTrustedSignersElItemsEl {
+pub struct CloudfrontDistribution_TrustedSigners_Items {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aws_account_number: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_pair_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudfrontDistributionTrustedSignersElItemsEl {
+impl CloudfrontDistribution_TrustedSigners_Items {
     #[doc = "Set the field `aws_account_number`.\n"]
     pub fn set_aws_account_number(
         mut self,
@@ -949,8 +1147,8 @@ impl CloudfrontDistributionTrustedSignersElItemsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionTrustedSignersElItemsEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionTrustedSignersElItemsEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_TrustedSigners_Items {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_TrustedSigners_Items>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -961,35 +1159,37 @@ impl terrars::ToListMappable for CloudfrontDistributionTrustedSignersElItemsEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionTrustedSignersElItemsEl {}
+pub struct BuildCloudfrontDistribution_TrustedSigners_Items {}
 
-impl BuildCloudfrontDistributionTrustedSignersElItemsEl {
-    pub fn build(self) -> CloudfrontDistributionTrustedSignersElItemsEl {
-        CloudfrontDistributionTrustedSignersElItemsEl {
+impl BuildCloudfrontDistribution_TrustedSigners_Items {
+    pub fn build(self) -> CloudfrontDistribution_TrustedSigners_Items {
+        CloudfrontDistribution_TrustedSigners_Items {
             aws_account_number: core::default::Default::default(),
             key_pair_ids: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionTrustedSignersElItemsElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_TrustedSigners_ItemsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionTrustedSignersElItemsElRef {
+impl terrars::Ref for CloudfrontDistribution_TrustedSigners_ItemsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionTrustedSignersElItemsElRef {
-        CloudfrontDistributionTrustedSignersElItemsElRef {
+    ) -> CloudfrontDistribution_TrustedSigners_ItemsRef {
+        CloudfrontDistribution_TrustedSigners_ItemsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionTrustedSignersElItemsElRef {
+impl CloudfrontDistribution_TrustedSigners_ItemsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1006,14 +1206,14 @@ impl CloudfrontDistributionTrustedSignersElItemsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionTrustedSignersEl {
+pub struct CloudfrontDistribution_TrustedSigners {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    items: std::option::Option<terrars::ListField<CloudfrontDistributionTrustedSignersElItemsEl>>,
+    items: std::option::Option<terrars::ListField<CloudfrontDistribution_TrustedSigners_Items>>,
 }
 
-impl CloudfrontDistributionTrustedSignersEl {
+impl CloudfrontDistribution_TrustedSigners {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1023,15 +1223,15 @@ impl CloudfrontDistributionTrustedSignersEl {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<CloudfrontDistributionTrustedSignersElItemsEl>>,
+        v: impl std::convert::Into<terrars::ListField<CloudfrontDistribution_TrustedSigners_Items>>,
     ) -> Self {
         self.items = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionTrustedSignersEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionTrustedSignersEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_TrustedSigners {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_TrustedSigners>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1042,32 +1242,34 @@ impl terrars::ToListMappable for CloudfrontDistributionTrustedSignersEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionTrustedSignersEl {}
+pub struct BuildCloudfrontDistribution_TrustedSigners {}
 
-impl BuildCloudfrontDistributionTrustedSignersEl {
-    pub fn build(self) -> CloudfrontDistributionTrustedSignersEl {
-        CloudfrontDistributionTrustedSignersEl {
+impl BuildCloudfrontDistribution_TrustedSigners {
+    pub fn build(self) -> CloudfrontDistribution_TrustedSigners {
+        CloudfrontDistribution_TrustedSigners {
             enabled: core::default::Default::default(),
             items: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionTrustedSignersElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_TrustedSignersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionTrustedSignersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistributionTrustedSignersElRef {
-        CloudfrontDistributionTrustedSignersElRef {
+impl terrars::Ref for CloudfrontDistribution_TrustedSignersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_TrustedSignersRef {
+        CloudfrontDistribution_TrustedSignersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionTrustedSignersElRef {
+impl CloudfrontDistribution_TrustedSignersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1078,13 +1280,130 @@ impl CloudfrontDistributionTrustedSignersElRef {
     }
 
     #[doc = "Get a reference to the value of field `items` after provisioning.\n"]
-    pub fn items(&self) -> terrars::ListRef<CloudfrontDistributionTrustedSignersElItemsElRef> {
+    pub fn items(&self) -> terrars::ListRef<CloudfrontDistribution_TrustedSigners_ItemsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.items", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionCustomErrorResponseEl {
+pub struct CloudfrontDistribution_CacheTagConfig {
+    header_name: terrars::PrimField<std::string::String>,
+}
+
+impl CloudfrontDistribution_CacheTagConfig { }
+
+impl terrars::ToListMappable for CloudfrontDistribution_CacheTagConfig {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_CacheTagConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudfrontDistribution_CacheTagConfig {
+    #[doc = ""]
+    pub header_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudfrontDistribution_CacheTagConfig {
+    pub fn build(self) -> CloudfrontDistribution_CacheTagConfig {
+        CloudfrontDistribution_CacheTagConfig { header_name: self.header_name }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_CacheTagConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudfrontDistribution_CacheTagConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_CacheTagConfigRef {
+        CloudfrontDistribution_CacheTagConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudfrontDistribution_CacheTagConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `header_name` after provisioning.\n"]
+    pub fn header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.header_name", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudfrontDistribution_ConnectionFunctionAssociation {
+    id: terrars::PrimField<std::string::String>,
+}
+
+impl CloudfrontDistribution_ConnectionFunctionAssociation { }
+
+impl terrars::ToListMappable for CloudfrontDistribution_ConnectionFunctionAssociation {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_ConnectionFunctionAssociation>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudfrontDistribution_ConnectionFunctionAssociation {
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudfrontDistribution_ConnectionFunctionAssociation {
+    pub fn build(self) -> CloudfrontDistribution_ConnectionFunctionAssociation {
+        CloudfrontDistribution_ConnectionFunctionAssociation { id: self.id }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_ConnectionFunctionAssociationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudfrontDistribution_ConnectionFunctionAssociationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudfrontDistribution_ConnectionFunctionAssociationRef {
+        CloudfrontDistribution_ConnectionFunctionAssociationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudfrontDistribution_ConnectionFunctionAssociationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudfrontDistribution_CustomErrorResponse {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_caching_min_ttl: std::option::Option<terrars::PrimField<f64>>,
     error_code: terrars::PrimField<f64>,
@@ -1094,7 +1413,7 @@ pub struct CloudfrontDistributionCustomErrorResponseEl {
     response_page_path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudfrontDistributionCustomErrorResponseEl {
+impl CloudfrontDistribution_CustomErrorResponse {
     #[doc = "Set the field `error_caching_min_ttl`.\n"]
     pub fn set_error_caching_min_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.error_caching_min_ttl = std::option::Option::Some(v.into());
@@ -1117,8 +1436,8 @@ impl CloudfrontDistributionCustomErrorResponseEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionCustomErrorResponseEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionCustomErrorResponseEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_CustomErrorResponse {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_CustomErrorResponse>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1129,14 +1448,14 @@ impl terrars::ToListMappable for CloudfrontDistributionCustomErrorResponseEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionCustomErrorResponseEl {
+pub struct BuildCloudfrontDistribution_CustomErrorResponse {
     #[doc = ""]
     pub error_code: terrars::PrimField<f64>,
 }
 
-impl BuildCloudfrontDistributionCustomErrorResponseEl {
-    pub fn build(self) -> CloudfrontDistributionCustomErrorResponseEl {
-        CloudfrontDistributionCustomErrorResponseEl {
+impl BuildCloudfrontDistribution_CustomErrorResponse {
+    pub fn build(self) -> CloudfrontDistribution_CustomErrorResponse {
+        CloudfrontDistribution_CustomErrorResponse {
             error_caching_min_ttl: core::default::Default::default(),
             error_code: self.error_code,
             response_code: core::default::Default::default(),
@@ -1145,24 +1464,23 @@ impl BuildCloudfrontDistributionCustomErrorResponseEl {
     }
 }
 
-pub struct CloudfrontDistributionCustomErrorResponseElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_CustomErrorResponseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionCustomErrorResponseElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudfrontDistributionCustomErrorResponseElRef {
-        CloudfrontDistributionCustomErrorResponseElRef {
+impl terrars::Ref for CloudfrontDistribution_CustomErrorResponseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_CustomErrorResponseRef {
+        CloudfrontDistribution_CustomErrorResponseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionCustomErrorResponseElRef {
+impl CloudfrontDistribution_CustomErrorResponseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1189,13 +1507,13 @@ impl CloudfrontDistributionCustomErrorResponseElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl {
+pub struct CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies {
     forward: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     whitelisted_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl {
+impl CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies {
     #[doc = "Set the field `whitelisted_names`.\n"]
     pub fn set_whitelisted_names(
         mut self,
@@ -1206,8 +1524,8 @@ impl CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1218,38 +1536,40 @@ impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorElFor
     }
 }
 
-pub struct BuildCloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl {
+pub struct BuildCloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies {
     #[doc = ""]
     pub forward: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl {
-    pub fn build(self) -> CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl {
-        CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl {
+impl BuildCloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies {
+    pub fn build(self) -> CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies {
+        CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies {
             forward: self.forward,
             whitelisted_names: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_CookiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesElRef {
+impl terrars::Ref for CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_CookiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesElRef {
-        CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesElRef {
+    ) -> CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_CookiesRef {
+        CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_CookiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesElRef {
+impl CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_CookiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1266,25 +1586,25 @@ impl CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElDynamic {
+struct CloudfrontDistribution_DefaultCacheBehavior_ForwardedValuesDynamic {
     cookies: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
+pub struct CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     query_string: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_string_cache_keys: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cookies: std::option::Option<std::vec::Vec<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl>>,
-    dynamic: CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElDynamic,
+    cookies: std::option::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies>>,
+    dynamic: CloudfrontDistribution_DefaultCacheBehavior_ForwardedValuesDynamic,
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
+impl CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues {
     #[doc = "Set the field `headers`.\n"]
     pub fn set_headers(
         mut self,
@@ -1312,8 +1632,7 @@ impl CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesEl>,
+                        terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_Cookies>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1328,8 +1647,8 @@ impl CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1340,14 +1659,14 @@ impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorElFor
     }
 }
 
-pub struct BuildCloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
+pub struct BuildCloudfrontDistribution_DefaultCacheBehavior_ForwardedValues {
     #[doc = ""]
     pub query_string: terrars::PrimField<bool>,
 }
 
-impl BuildCloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
-    pub fn build(self) -> CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
-        CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
+impl BuildCloudfrontDistribution_DefaultCacheBehavior_ForwardedValues {
+    pub fn build(self) -> CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues {
+        CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues {
             headers: core::default::Default::default(),
             query_string: self.query_string,
             query_string_cache_keys: core::default::Default::default(),
@@ -1357,24 +1676,26 @@ impl BuildCloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl {
     }
 }
 
-pub struct CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_DefaultCacheBehavior_ForwardedValuesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElRef {
+impl terrars::Ref for CloudfrontDistribution_DefaultCacheBehavior_ForwardedValuesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElRef {
-        CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElRef {
+    ) -> CloudfrontDistribution_DefaultCacheBehavior_ForwardedValuesRef {
+        CloudfrontDistribution_DefaultCacheBehavior_ForwardedValuesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElRef {
+impl CloudfrontDistribution_DefaultCacheBehavior_ForwardedValuesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1395,21 +1716,21 @@ impl CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElRef {
     }
 
     #[doc = "Get a reference to the value of field `cookies` after provisioning.\n"]
-    pub fn cookies(&self) -> terrars::ListRef<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElCookiesElRef> {
+    pub fn cookies(&self) -> terrars::ListRef<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues_CookiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cookies", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl {
+pub struct CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation {
     event_type: terrars::PrimField<std::string::String>,
     function_arn: terrars::PrimField<std::string::String>,
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl { }
+impl CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation { }
 
-impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1420,40 +1741,42 @@ impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorElFun
     }
 }
 
-pub struct BuildCloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl {
+pub struct BuildCloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation {
     #[doc = ""]
     pub event_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub function_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl {
-    pub fn build(self) -> CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl {
-        CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl {
+impl BuildCloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation {
+    pub fn build(self) -> CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation {
+        CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation {
             event_type: self.event_type,
             function_arn: self.function_arn,
         }
     }
 }
 
-pub struct CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationElRef {
+impl terrars::Ref for CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationElRef {
-        CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationElRef {
+    ) -> CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociationRef {
+        CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationElRef {
+impl CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1470,23 +1793,21 @@ impl CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl {
-    event_type: terrars::PrimField<std::string::String>,
+pub struct CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    include_body: std::option::Option<terrars::PrimField<bool>>,
-    lambda_arn: terrars::PrimField<std::string::String>,
+    enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl {
-    #[doc = "Set the field `include_body`.\n"]
-    pub fn set_include_body(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.include_body = std::option::Option::Some(v.into());
+impl CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig {
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1497,16 +1818,82 @@ impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorElLam
     }
 }
 
-pub struct BuildCloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl {
+pub struct BuildCloudfrontDistribution_DefaultCacheBehavior_GrpcConfig {}
+
+impl BuildCloudfrontDistribution_DefaultCacheBehavior_GrpcConfig {
+    pub fn build(self) -> CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig {
+        CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig { enabled: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_DefaultCacheBehavior_GrpcConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudfrontDistribution_DefaultCacheBehavior_GrpcConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudfrontDistribution_DefaultCacheBehavior_GrpcConfigRef {
+        CloudfrontDistribution_DefaultCacheBehavior_GrpcConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudfrontDistribution_DefaultCacheBehavior_GrpcConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation {
+    event_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_body: std::option::Option<terrars::PrimField<bool>>,
+    lambda_arn: terrars::PrimField<std::string::String>,
+}
+
+impl CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation {
+    #[doc = "Set the field `include_body`.\n"]
+    pub fn set_include_body(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.include_body = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation {
     #[doc = ""]
     pub event_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub lambda_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl {
-    pub fn build(self) -> CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl {
-        CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl {
+impl BuildCloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation {
+    pub fn build(self) -> CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation {
+        CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation {
             event_type: self.event_type,
             include_body: core::default::Default::default(),
             lambda_arn: self.lambda_arn,
@@ -1514,24 +1901,26 @@ impl BuildCloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationE
     }
 }
 
-pub struct CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationElRef {
+impl terrars::Ref for CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationElRef {
-        CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationElRef {
+    ) -> CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociationRef {
+        CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationElRef {
+impl CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1553,20 +1942,21 @@ impl CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationElRef 
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontDistributionDefaultCacheBehaviorElDynamic {
+struct CloudfrontDistribution_DefaultCacheBehaviorDynamic {
     forwarded_values: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues>>,
     function_association: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation>>,
+    grpc_config: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig>>,
     lambda_function_association: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionDefaultCacheBehaviorEl {
+pub struct CloudfrontDistribution_DefaultCacheBehavior {
     allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_policy_id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -1596,19 +1986,21 @@ pub struct CloudfrontDistributionDefaultCacheBehaviorEl {
     trusted_signers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     viewer_protocol_policy: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    forwarded_values: std::option::Option<std::vec::Vec<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl>>,
+    forwarded_values: std::option::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     function_association: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl>>,
+    ::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grpc_config: std::option::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lambda_function_association: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl>>,
-    dynamic: CloudfrontDistributionDefaultCacheBehaviorElDynamic,
+    ::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation>>,
+    dynamic: CloudfrontDistribution_DefaultCacheBehaviorDynamic,
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorEl {
+impl CloudfrontDistribution_DefaultCacheBehavior {
     #[doc = "Set the field `cache_policy_id`.\n"]
     pub fn set_cache_policy_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cache_policy_id = std::option::Option::Some(v.into());
@@ -1707,7 +2099,7 @@ impl CloudfrontDistributionDefaultCacheBehaviorEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesEl>>,
+                    ::Into<terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1728,9 +2120,7 @@ impl CloudfrontDistributionDefaultCacheBehaviorEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorElFunctionAssociationEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1738,6 +2128,22 @@ impl CloudfrontDistributionDefaultCacheBehaviorEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.function_association = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `grpc_config`.\n"]
+    pub fn set_grpc_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.grpc_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.grpc_config = std::option::Option::Some(d);
             },
         }
         self
@@ -1753,7 +2159,7 @@ impl CloudfrontDistributionDefaultCacheBehaviorEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorElLambdaFunctionAssociationEl>,
+                        ::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1768,8 +2174,8 @@ impl CloudfrontDistributionDefaultCacheBehaviorEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionDefaultCacheBehaviorEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_DefaultCacheBehavior {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1780,7 +2186,7 @@ impl terrars::ToListMappable for CloudfrontDistributionDefaultCacheBehaviorEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionDefaultCacheBehaviorEl {
+pub struct BuildCloudfrontDistribution_DefaultCacheBehavior {
     #[doc = ""]
     pub allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
@@ -1791,9 +2197,9 @@ pub struct BuildCloudfrontDistributionDefaultCacheBehaviorEl {
     pub viewer_protocol_policy: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionDefaultCacheBehaviorEl {
-    pub fn build(self) -> CloudfrontDistributionDefaultCacheBehaviorEl {
-        CloudfrontDistributionDefaultCacheBehaviorEl {
+impl BuildCloudfrontDistribution_DefaultCacheBehavior {
+    pub fn build(self) -> CloudfrontDistribution_DefaultCacheBehavior {
+        CloudfrontDistribution_DefaultCacheBehavior {
             allowed_methods: self.allowed_methods,
             cache_policy_id: core::default::Default::default(),
             cached_methods: self.cached_methods,
@@ -1812,30 +2218,33 @@ impl BuildCloudfrontDistributionDefaultCacheBehaviorEl {
             viewer_protocol_policy: self.viewer_protocol_policy,
             forwarded_values: core::default::Default::default(),
             function_association: core::default::Default::default(),
+            grpc_config: core::default::Default::default(),
             lambda_function_association: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionDefaultCacheBehaviorElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_DefaultCacheBehaviorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionDefaultCacheBehaviorElRef {
+impl terrars::Ref for CloudfrontDistribution_DefaultCacheBehaviorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionDefaultCacheBehaviorElRef {
-        CloudfrontDistributionDefaultCacheBehaviorElRef {
+    ) -> CloudfrontDistribution_DefaultCacheBehaviorRef {
+        CloudfrontDistribution_DefaultCacheBehaviorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionDefaultCacheBehaviorElRef {
+impl CloudfrontDistribution_DefaultCacheBehaviorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1921,21 +2330,33 @@ impl CloudfrontDistributionDefaultCacheBehaviorElRef {
     }
 
     #[doc = "Get a reference to the value of field `forwarded_values` after provisioning.\n"]
-    pub fn forwarded_values(&self) -> terrars::ListRef<CloudfrontDistributionDefaultCacheBehaviorElForwardedValuesElRef> {
+    pub fn forwarded_values(&self) -> terrars::ListRef<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValuesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.forwarded_values", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `grpc_config` after provisioning.\n"]
+    pub fn grpc_config(&self) -> terrars::ListRef<CloudfrontDistribution_DefaultCacheBehavior_GrpcConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionLoggingConfigEl {
-    bucket: terrars::PrimField<std::string::String>,
+pub struct CloudfrontDistribution_LoggingConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     include_cookies: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudfrontDistributionLoggingConfigEl {
+impl CloudfrontDistribution_LoggingConfig {
+    #[doc = "Set the field `bucket`.\n"]
+    pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `include_cookies`.\n"]
     pub fn set_include_cookies(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.include_cookies = std::option::Option::Some(v.into());
@@ -1949,8 +2370,8 @@ impl CloudfrontDistributionLoggingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionLoggingConfigEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionLoggingConfigEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_LoggingConfig {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_LoggingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1961,36 +2382,35 @@ impl terrars::ToListMappable for CloudfrontDistributionLoggingConfigEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionLoggingConfigEl {
-    #[doc = ""]
-    pub bucket: terrars::PrimField<std::string::String>,
-}
+pub struct BuildCloudfrontDistribution_LoggingConfig {}
 
-impl BuildCloudfrontDistributionLoggingConfigEl {
-    pub fn build(self) -> CloudfrontDistributionLoggingConfigEl {
-        CloudfrontDistributionLoggingConfigEl {
-            bucket: self.bucket,
+impl BuildCloudfrontDistribution_LoggingConfig {
+    pub fn build(self) -> CloudfrontDistribution_LoggingConfig {
+        CloudfrontDistribution_LoggingConfig {
+            bucket: core::default::Default::default(),
             include_cookies: core::default::Default::default(),
             prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionLoggingConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_LoggingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistributionLoggingConfigElRef {
-        CloudfrontDistributionLoggingConfigElRef {
+impl terrars::Ref for CloudfrontDistribution_LoggingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_LoggingConfigRef {
+        CloudfrontDistribution_LoggingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionLoggingConfigElRef {
+impl CloudfrontDistribution_LoggingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2011,385 +2431,22 @@ impl CloudfrontDistributionLoggingConfigElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl {
-    forward: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    whitelisted_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl {
-    #[doc = "Set the field `whitelisted_names`.\n"]
-    pub fn set_whitelisted_names(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.whitelisted_names = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl {
-    #[doc = ""]
-    pub forward: terrars::PrimField<std::string::String>,
-}
-
-impl BuildCloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl {
-    pub fn build(self) -> CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl {
-        CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl {
-            forward: self.forward,
-            whitelisted_names: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesElRef {
-        CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `forward` after provisioning.\n"]
-    pub fn forward(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.forward", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `whitelisted_names` after provisioning.\n"]
-    pub fn whitelisted_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.whitelisted_names", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElDynamic {
-    cookies: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl>>,
-}
-
-#[derive(Serialize)]
-pub struct CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    query_string: terrars::PrimField<bool>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query_string_cache_keys: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cookies: std::option::Option<std::vec::Vec<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl>>,
-    dynamic: CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElDynamic,
-}
-
-impl CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl {
-    #[doc = "Set the field `headers`.\n"]
-    pub fn set_headers(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.headers = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `query_string_cache_keys`.\n"]
-    pub fn set_query_string_cache_keys(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.query_string_cache_keys = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `cookies`.\n"]
-    pub fn set_cookies(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.cookies = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.cookies = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-}
-
-impl terrars::ToListMappable for CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl {
-    #[doc = ""]
-    pub query_string: terrars::PrimField<bool>,
-}
-
-impl BuildCloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl {
-    pub fn build(self) -> CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl {
-        CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl {
-            headers: core::default::Default::default(),
-            query_string: self.query_string,
-            query_string_cache_keys: core::default::Default::default(),
-            cookies: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElRef {
-        CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `headers` after provisioning.\n"]
-    pub fn headers(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.headers", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `query_string` after provisioning.\n"]
-    pub fn query_string(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.query_string", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `query_string_cache_keys` after provisioning.\n"]
-    pub fn query_string_cache_keys(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.query_string_cache_keys", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `cookies` after provisioning.\n"]
-    pub fn cookies(&self) -> terrars::ListRef<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElCookiesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.cookies", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl {
-    event_type: terrars::PrimField<std::string::String>,
-    function_arn: terrars::PrimField<std::string::String>,
-}
-
-impl CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl { }
-
-impl terrars::ToListMappable for CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl {
-    #[doc = ""]
-    pub event_type: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub function_arn: terrars::PrimField<std::string::String>,
-}
-
-impl BuildCloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl {
-    pub fn build(self) -> CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl {
-        CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl {
-            event_type: self.event_type,
-            function_arn: self.function_arn,
-        }
-    }
-}
-
-pub struct CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationElRef {
-        CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `event_type` after provisioning.\n"]
-    pub fn event_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `function_arn` after provisioning.\n"]
-    pub fn function_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_arn", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl {
-    event_type: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    include_body: std::option::Option<terrars::PrimField<bool>>,
-    lambda_arn: terrars::PrimField<std::string::String>,
-}
-
-impl CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl {
-    #[doc = "Set the field `include_body`.\n"]
-    pub fn set_include_body(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.include_body = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl {
-    #[doc = ""]
-    pub event_type: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub lambda_arn: terrars::PrimField<std::string::String>,
-}
-
-impl BuildCloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl {
-    pub fn build(self) -> CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl {
-        CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl {
-            event_type: self.event_type,
-            include_body: core::default::Default::default(),
-            lambda_arn: self.lambda_arn,
-        }
-    }
-}
-
-pub struct CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationElRef {
-        CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `event_type` after provisioning.\n"]
-    pub fn event_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `include_body` after provisioning.\n"]
-    pub fn include_body(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_body", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `lambda_arn` after provisioning.\n"]
-    pub fn lambda_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lambda_arn", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct CloudfrontDistributionOrderedCacheBehaviorElDynamic {
+struct CloudfrontDistribution_OrderedCacheBehaviorDynamic {
     forwarded_values: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues>>,
     function_association: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation>>,
+    grpc_config: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig>>,
     lambda_function_association: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionOrderedCacheBehaviorEl {
+pub struct CloudfrontDistribution_OrderedCacheBehavior {
     allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_policy_id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -2420,19 +2477,21 @@ pub struct CloudfrontDistributionOrderedCacheBehaviorEl {
     trusted_signers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     viewer_protocol_policy: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    forwarded_values: std::option::Option<std::vec::Vec<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl>>,
+    forwarded_values: std::option::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     function_association: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl>>,
+    ::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grpc_config: std::option::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lambda_function_association: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl>>,
-    dynamic: CloudfrontDistributionOrderedCacheBehaviorElDynamic,
+    ::Option<std::vec::Vec<CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation>>,
+    dynamic: CloudfrontDistribution_OrderedCacheBehaviorDynamic,
 }
 
-impl CloudfrontDistributionOrderedCacheBehaviorEl {
+impl CloudfrontDistribution_OrderedCacheBehavior {
     #[doc = "Set the field `cache_policy_id`.\n"]
     pub fn set_cache_policy_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cache_policy_id = std::option::Option::Some(v.into());
@@ -2531,7 +2590,7 @@ impl CloudfrontDistributionOrderedCacheBehaviorEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesEl>>,
+                    ::Into<terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValues>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2552,9 +2611,7 @@ impl CloudfrontDistributionOrderedCacheBehaviorEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorElFunctionAssociationEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_FunctionAssociation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2562,6 +2619,22 @@ impl CloudfrontDistributionOrderedCacheBehaviorEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.function_association = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `grpc_config`.\n"]
+    pub fn set_grpc_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_GrpcConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.grpc_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.grpc_config = std::option::Option::Some(d);
             },
         }
         self
@@ -2577,7 +2650,7 @@ impl CloudfrontDistributionOrderedCacheBehaviorEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorElLambdaFunctionAssociationEl>,
+                        ::BlockAssignable<CloudfrontDistribution_DefaultCacheBehavior_LambdaFunctionAssociation>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2592,8 +2665,8 @@ impl CloudfrontDistributionOrderedCacheBehaviorEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionOrderedCacheBehaviorEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOrderedCacheBehaviorEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_OrderedCacheBehavior {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_OrderedCacheBehavior>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2604,7 +2677,7 @@ impl terrars::ToListMappable for CloudfrontDistributionOrderedCacheBehaviorEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionOrderedCacheBehaviorEl {
+pub struct BuildCloudfrontDistribution_OrderedCacheBehavior {
     #[doc = ""]
     pub allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
@@ -2617,9 +2690,9 @@ pub struct BuildCloudfrontDistributionOrderedCacheBehaviorEl {
     pub viewer_protocol_policy: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionOrderedCacheBehaviorEl {
-    pub fn build(self) -> CloudfrontDistributionOrderedCacheBehaviorEl {
-        CloudfrontDistributionOrderedCacheBehaviorEl {
+impl BuildCloudfrontDistribution_OrderedCacheBehavior {
+    pub fn build(self) -> CloudfrontDistribution_OrderedCacheBehavior {
+        CloudfrontDistribution_OrderedCacheBehavior {
             allowed_methods: self.allowed_methods,
             cache_policy_id: core::default::Default::default(),
             cached_methods: self.cached_methods,
@@ -2639,30 +2712,33 @@ impl BuildCloudfrontDistributionOrderedCacheBehaviorEl {
             viewer_protocol_policy: self.viewer_protocol_policy,
             forwarded_values: core::default::Default::default(),
             function_association: core::default::Default::default(),
+            grpc_config: core::default::Default::default(),
             lambda_function_association: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionOrderedCacheBehaviorElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_OrderedCacheBehaviorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionOrderedCacheBehaviorElRef {
+impl terrars::Ref for CloudfrontDistribution_OrderedCacheBehaviorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionOrderedCacheBehaviorElRef {
-        CloudfrontDistributionOrderedCacheBehaviorElRef {
+    ) -> CloudfrontDistribution_OrderedCacheBehaviorRef {
+        CloudfrontDistribution_OrderedCacheBehaviorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionOrderedCacheBehaviorElRef {
+impl CloudfrontDistribution_OrderedCacheBehaviorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2753,21 +2829,26 @@ impl CloudfrontDistributionOrderedCacheBehaviorElRef {
     }
 
     #[doc = "Get a reference to the value of field `forwarded_values` after provisioning.\n"]
-    pub fn forwarded_values(&self) -> terrars::ListRef<CloudfrontDistributionOrderedCacheBehaviorElForwardedValuesElRef> {
+    pub fn forwarded_values(&self) -> terrars::ListRef<CloudfrontDistribution_DefaultCacheBehavior_ForwardedValuesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.forwarded_values", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `grpc_config` after provisioning.\n"]
+    pub fn grpc_config(&self) -> terrars::ListRef<CloudfrontDistribution_DefaultCacheBehavior_GrpcConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.grpc_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionOriginElCustomHeaderEl {
+pub struct CloudfrontDistribution_Origin_CustomHeader {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl CloudfrontDistributionOriginElCustomHeaderEl { }
+impl CloudfrontDistribution_Origin_CustomHeader { }
 
-impl terrars::ToListMappable for CloudfrontDistributionOriginElCustomHeaderEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOriginElCustomHeaderEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_Origin_CustomHeader {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_Origin_CustomHeader>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2778,40 +2859,39 @@ impl terrars::ToListMappable for CloudfrontDistributionOriginElCustomHeaderEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionOriginElCustomHeaderEl {
+pub struct BuildCloudfrontDistribution_Origin_CustomHeader {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionOriginElCustomHeaderEl {
-    pub fn build(self) -> CloudfrontDistributionOriginElCustomHeaderEl {
-        CloudfrontDistributionOriginElCustomHeaderEl {
+impl BuildCloudfrontDistribution_Origin_CustomHeader {
+    pub fn build(self) -> CloudfrontDistribution_Origin_CustomHeader {
+        CloudfrontDistribution_Origin_CustomHeader {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct CloudfrontDistributionOriginElCustomHeaderElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_Origin_CustomHeaderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionOriginElCustomHeaderElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudfrontDistributionOriginElCustomHeaderElRef {
-        CloudfrontDistributionOriginElCustomHeaderElRef {
+impl terrars::Ref for CloudfrontDistribution_Origin_CustomHeaderRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_Origin_CustomHeaderRef {
+        CloudfrontDistribution_Origin_CustomHeaderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionOriginElCustomHeaderElRef {
+impl CloudfrontDistribution_Origin_CustomHeaderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2828,18 +2908,100 @@ impl CloudfrontDistributionOriginElCustomHeaderElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionOriginElCustomOriginConfigEl {
+pub struct CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig {
+    client_certificate_arn: terrars::PrimField<std::string::String>,
+}
+
+impl CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig { }
+
+impl terrars::ToListMappable for CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig {
+    #[doc = ""]
+    pub client_certificate_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig {
+    pub fn build(self) -> CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig {
+        CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig {
+            client_certificate_arn: self.client_certificate_arn,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfigRef {
+        CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `client_certificate_arn` after provisioning.\n"]
+    pub fn client_certificate_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_certificate_arn", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CloudfrontDistribution_Origin_CustomOriginConfigDynamic {
+    origin_mtls_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct CloudfrontDistribution_Origin_CustomOriginConfig {
     http_port: terrars::PrimField<f64>,
     https_port: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     origin_keepalive_timeout: std::option::Option<terrars::PrimField<f64>>,
     origin_protocol_policy: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     origin_read_timeout: std::option::Option<terrars::PrimField<f64>>,
     origin_ssl_protocols: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    origin_mtls_config: std
+    ::option
+    ::Option<std::vec::Vec<CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig>>,
+    dynamic: CloudfrontDistribution_Origin_CustomOriginConfigDynamic,
 }
 
-impl CloudfrontDistributionOriginElCustomOriginConfigEl {
+impl CloudfrontDistribution_Origin_CustomOriginConfig {
+    #[doc = "Set the field `ip_address_type`.\n"]
+    pub fn set_ip_address_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `origin_keepalive_timeout`.\n"]
     pub fn set_origin_keepalive_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.origin_keepalive_timeout = std::option::Option::Some(v.into());
@@ -2851,10 +3013,33 @@ impl CloudfrontDistributionOriginElCustomOriginConfigEl {
         self.origin_read_timeout = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `origin_mtls_config`.\n"]
+    pub fn set_origin_mtls_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfig>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.origin_mtls_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.origin_mtls_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionOriginElCustomOriginConfigEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOriginElCustomOriginConfigEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_Origin_CustomOriginConfig {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_Origin_CustomOriginConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2865,7 +3050,7 @@ impl terrars::ToListMappable for CloudfrontDistributionOriginElCustomOriginConfi
     }
 }
 
-pub struct BuildCloudfrontDistributionOriginElCustomOriginConfigEl {
+pub struct BuildCloudfrontDistribution_Origin_CustomOriginConfig {
     #[doc = ""]
     pub http_port: terrars::PrimField<f64>,
     #[doc = ""]
@@ -2876,37 +3061,42 @@ pub struct BuildCloudfrontDistributionOriginElCustomOriginConfigEl {
     pub origin_ssl_protocols: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildCloudfrontDistributionOriginElCustomOriginConfigEl {
-    pub fn build(self) -> CloudfrontDistributionOriginElCustomOriginConfigEl {
-        CloudfrontDistributionOriginElCustomOriginConfigEl {
+impl BuildCloudfrontDistribution_Origin_CustomOriginConfig {
+    pub fn build(self) -> CloudfrontDistribution_Origin_CustomOriginConfig {
+        CloudfrontDistribution_Origin_CustomOriginConfig {
             http_port: self.http_port,
             https_port: self.https_port,
+            ip_address_type: core::default::Default::default(),
             origin_keepalive_timeout: core::default::Default::default(),
             origin_protocol_policy: self.origin_protocol_policy,
             origin_read_timeout: core::default::Default::default(),
             origin_ssl_protocols: self.origin_ssl_protocols,
+            origin_mtls_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionOriginElCustomOriginConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_Origin_CustomOriginConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionOriginElCustomOriginConfigElRef {
+impl terrars::Ref for CloudfrontDistribution_Origin_CustomOriginConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionOriginElCustomOriginConfigElRef {
-        CloudfrontDistributionOriginElCustomOriginConfigElRef {
+    ) -> CloudfrontDistribution_Origin_CustomOriginConfigRef {
+        CloudfrontDistribution_Origin_CustomOriginConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionOriginElCustomOriginConfigElRef {
+impl CloudfrontDistribution_Origin_CustomOriginConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2919,6 +3109,11 @@ impl CloudfrontDistributionOriginElCustomOriginConfigElRef {
     #[doc = "Get a reference to the value of field `https_port` after provisioning.\n"]
     pub fn https_port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.https_port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `origin_keepalive_timeout` after provisioning.\n"]
@@ -2940,18 +3135,35 @@ impl CloudfrontDistributionOriginElCustomOriginConfigElRef {
     pub fn origin_ssl_protocols(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.origin_ssl_protocols", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `origin_mtls_config` after provisioning.\n"]
+    pub fn origin_mtls_config(
+        &self,
+    ) -> terrars::ListRef<CloudfrontDistribution_Origin_CustomOriginConfig_OriginMtlsConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.origin_mtls_config", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionOriginElOriginShieldEl {
+pub struct CloudfrontDistribution_Origin_OriginShield {
     enabled: terrars::PrimField<bool>,
-    origin_shield_region: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    origin_shield_region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudfrontDistributionOriginElOriginShieldEl { }
+impl CloudfrontDistribution_Origin_OriginShield {
+    #[doc = "Set the field `origin_shield_region`.\n"]
+    pub fn set_origin_shield_region(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.origin_shield_region = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for CloudfrontDistributionOriginElOriginShieldEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOriginElOriginShieldEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_Origin_OriginShield {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_Origin_OriginShield>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2962,40 +3174,37 @@ impl terrars::ToListMappable for CloudfrontDistributionOriginElOriginShieldEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionOriginElOriginShieldEl {
+pub struct BuildCloudfrontDistribution_Origin_OriginShield {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
-    #[doc = ""]
-    pub origin_shield_region: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionOriginElOriginShieldEl {
-    pub fn build(self) -> CloudfrontDistributionOriginElOriginShieldEl {
-        CloudfrontDistributionOriginElOriginShieldEl {
+impl BuildCloudfrontDistribution_Origin_OriginShield {
+    pub fn build(self) -> CloudfrontDistribution_Origin_OriginShield {
+        CloudfrontDistribution_Origin_OriginShield {
             enabled: self.enabled,
-            origin_shield_region: self.origin_shield_region,
+            origin_shield_region: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionOriginElOriginShieldElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_Origin_OriginShieldRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionOriginElOriginShieldElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudfrontDistributionOriginElOriginShieldElRef {
-        CloudfrontDistributionOriginElOriginShieldElRef {
+impl terrars::Ref for CloudfrontDistribution_Origin_OriginShieldRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_Origin_OriginShieldRef {
+        CloudfrontDistribution_Origin_OriginShieldRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionOriginElOriginShieldElRef {
+impl CloudfrontDistribution_Origin_OriginShieldRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3012,14 +3221,14 @@ impl CloudfrontDistributionOriginElOriginShieldElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionOriginElS3OriginConfigEl {
+pub struct CloudfrontDistribution_Origin_S3OriginConfig {
     origin_access_identity: terrars::PrimField<std::string::String>,
 }
 
-impl CloudfrontDistributionOriginElS3OriginConfigEl { }
+impl CloudfrontDistribution_Origin_S3OriginConfig { }
 
-impl terrars::ToListMappable for CloudfrontDistributionOriginElS3OriginConfigEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOriginElS3OriginConfigEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_Origin_S3OriginConfig {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_Origin_S3OriginConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3030,35 +3239,37 @@ impl terrars::ToListMappable for CloudfrontDistributionOriginElS3OriginConfigEl 
     }
 }
 
-pub struct BuildCloudfrontDistributionOriginElS3OriginConfigEl {
+pub struct BuildCloudfrontDistribution_Origin_S3OriginConfig {
     #[doc = ""]
     pub origin_access_identity: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionOriginElS3OriginConfigEl {
-    pub fn build(self) -> CloudfrontDistributionOriginElS3OriginConfigEl {
-        CloudfrontDistributionOriginElS3OriginConfigEl { origin_access_identity: self.origin_access_identity }
+impl BuildCloudfrontDistribution_Origin_S3OriginConfig {
+    pub fn build(self) -> CloudfrontDistribution_Origin_S3OriginConfig {
+        CloudfrontDistribution_Origin_S3OriginConfig { origin_access_identity: self.origin_access_identity }
     }
 }
 
-pub struct CloudfrontDistributionOriginElS3OriginConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_Origin_S3OriginConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionOriginElS3OriginConfigElRef {
+impl terrars::Ref for CloudfrontDistribution_Origin_S3OriginConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionOriginElS3OriginConfigElRef {
-        CloudfrontDistributionOriginElS3OriginConfigElRef {
+    ) -> CloudfrontDistribution_Origin_S3OriginConfigRef {
+        CloudfrontDistribution_Origin_S3OriginConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionOriginElS3OriginConfigElRef {
+impl CloudfrontDistribution_Origin_S3OriginConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3069,18 +3280,123 @@ impl CloudfrontDistributionOriginElS3OriginConfigElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct CloudfrontDistribution_Origin_VpcOriginConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    origin_keepalive_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    origin_read_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    owner_account_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    vpc_origin_id: terrars::PrimField<std::string::String>,
+}
+
+impl CloudfrontDistribution_Origin_VpcOriginConfig {
+    #[doc = "Set the field `origin_keepalive_timeout`.\n"]
+    pub fn set_origin_keepalive_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.origin_keepalive_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `origin_read_timeout`.\n"]
+    pub fn set_origin_read_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.origin_read_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `owner_account_id`.\n"]
+    pub fn set_owner_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.owner_account_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudfrontDistribution_Origin_VpcOriginConfig {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_Origin_VpcOriginConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudfrontDistribution_Origin_VpcOriginConfig {
+    #[doc = ""]
+    pub vpc_origin_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudfrontDistribution_Origin_VpcOriginConfig {
+    pub fn build(self) -> CloudfrontDistribution_Origin_VpcOriginConfig {
+        CloudfrontDistribution_Origin_VpcOriginConfig {
+            origin_keepalive_timeout: core::default::Default::default(),
+            origin_read_timeout: core::default::Default::default(),
+            owner_account_id: core::default::Default::default(),
+            vpc_origin_id: self.vpc_origin_id,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_Origin_VpcOriginConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudfrontDistribution_Origin_VpcOriginConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudfrontDistribution_Origin_VpcOriginConfigRef {
+        CloudfrontDistribution_Origin_VpcOriginConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudfrontDistribution_Origin_VpcOriginConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `origin_keepalive_timeout` after provisioning.\n"]
+    pub fn origin_keepalive_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin_keepalive_timeout", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `origin_read_timeout` after provisioning.\n"]
+    pub fn origin_read_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin_read_timeout", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `owner_account_id` after provisioning.\n"]
+    pub fn owner_account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_account_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_origin_id` after provisioning.\n"]
+    pub fn vpc_origin_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_origin_id", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct CloudfrontDistributionOriginElDynamic {
-    custom_header: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionOriginElCustomHeaderEl>>,
+struct CloudfrontDistribution_OriginDynamic {
+    custom_header: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_Origin_CustomHeader>>,
     custom_origin_config: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionOriginElCustomOriginConfigEl>>,
-    origin_shield: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionOriginElOriginShieldEl>>,
-    s3_origin_config: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionOriginElS3OriginConfigEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_Origin_CustomOriginConfig>>,
+    origin_shield: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_Origin_OriginShield>>,
+    s3_origin_config: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_Origin_S3OriginConfig>>,
+    vpc_origin_config: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_Origin_VpcOriginConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionOriginEl {
+pub struct CloudfrontDistribution_Origin {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connection_attempts: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3092,17 +3408,21 @@ pub struct CloudfrontDistributionOriginEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     origin_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_header: std::option::Option<std::vec::Vec<CloudfrontDistributionOriginElCustomHeaderEl>>,
+    response_completion_timeout: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_origin_config: std::option::Option<std::vec::Vec<CloudfrontDistributionOriginElCustomOriginConfigEl>>,
+    custom_header: std::option::Option<std::vec::Vec<CloudfrontDistribution_Origin_CustomHeader>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    origin_shield: std::option::Option<std::vec::Vec<CloudfrontDistributionOriginElOriginShieldEl>>,
+    custom_origin_config: std::option::Option<std::vec::Vec<CloudfrontDistribution_Origin_CustomOriginConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_origin_config: std::option::Option<std::vec::Vec<CloudfrontDistributionOriginElS3OriginConfigEl>>,
-    dynamic: CloudfrontDistributionOriginElDynamic,
+    origin_shield: std::option::Option<std::vec::Vec<CloudfrontDistribution_Origin_OriginShield>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_origin_config: std::option::Option<std::vec::Vec<CloudfrontDistribution_Origin_S3OriginConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_origin_config: std::option::Option<std::vec::Vec<CloudfrontDistribution_Origin_VpcOriginConfig>>,
+    dynamic: CloudfrontDistribution_OriginDynamic,
 }
 
-impl CloudfrontDistributionOriginEl {
+impl CloudfrontDistribution_Origin {
     #[doc = "Set the field `connection_attempts`.\n"]
     pub fn set_connection_attempts(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.connection_attempts = std::option::Option::Some(v.into());
@@ -3130,10 +3450,16 @@ impl CloudfrontDistributionOriginEl {
         self
     }
 
+    #[doc = "Set the field `response_completion_timeout`.\n"]
+    pub fn set_response_completion_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.response_completion_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `custom_header`.\n"]
     pub fn set_custom_header(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionOriginElCustomHeaderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_Origin_CustomHeader>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3149,7 +3475,7 @@ impl CloudfrontDistributionOriginEl {
     #[doc = "Set the field `custom_origin_config`.\n"]
     pub fn set_custom_origin_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionOriginElCustomOriginConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_Origin_CustomOriginConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3165,7 +3491,7 @@ impl CloudfrontDistributionOriginEl {
     #[doc = "Set the field `origin_shield`.\n"]
     pub fn set_origin_shield(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionOriginElOriginShieldEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_Origin_OriginShield>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3181,7 +3507,7 @@ impl CloudfrontDistributionOriginEl {
     #[doc = "Set the field `s3_origin_config`.\n"]
     pub fn set_s3_origin_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionOriginElS3OriginConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_Origin_S3OriginConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3193,10 +3519,26 @@ impl CloudfrontDistributionOriginEl {
         }
         self
     }
+
+    #[doc = "Set the field `vpc_origin_config`.\n"]
+    pub fn set_vpc_origin_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_Origin_VpcOriginConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.vpc_origin_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.vpc_origin_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionOriginEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOriginEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_Origin {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_Origin>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3207,46 +3549,50 @@ impl terrars::ToListMappable for CloudfrontDistributionOriginEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionOriginEl {
+pub struct BuildCloudfrontDistribution_Origin {
     #[doc = ""]
     pub domain_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub origin_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionOriginEl {
-    pub fn build(self) -> CloudfrontDistributionOriginEl {
-        CloudfrontDistributionOriginEl {
+impl BuildCloudfrontDistribution_Origin {
+    pub fn build(self) -> CloudfrontDistribution_Origin {
+        CloudfrontDistribution_Origin {
             connection_attempts: core::default::Default::default(),
             connection_timeout: core::default::Default::default(),
             domain_name: self.domain_name,
             origin_access_control_id: core::default::Default::default(),
             origin_id: self.origin_id,
             origin_path: core::default::Default::default(),
+            response_completion_timeout: core::default::Default::default(),
             custom_header: core::default::Default::default(),
             custom_origin_config: core::default::Default::default(),
             origin_shield: core::default::Default::default(),
             s3_origin_config: core::default::Default::default(),
+            vpc_origin_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionOriginElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_OriginRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionOriginElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistributionOriginElRef {
-        CloudfrontDistributionOriginElRef {
+impl terrars::Ref for CloudfrontDistribution_OriginRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_OriginRef {
+        CloudfrontDistribution_OriginRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionOriginElRef {
+impl CloudfrontDistribution_OriginRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3281,31 +3627,41 @@ impl CloudfrontDistributionOriginElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin_path", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `response_completion_timeout` after provisioning.\n"]
+    pub fn response_completion_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.response_completion_timeout", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `custom_origin_config` after provisioning.\n"]
-    pub fn custom_origin_config(&self) -> terrars::ListRef<CloudfrontDistributionOriginElCustomOriginConfigElRef> {
+    pub fn custom_origin_config(&self) -> terrars::ListRef<CloudfrontDistribution_Origin_CustomOriginConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_origin_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `origin_shield` after provisioning.\n"]
-    pub fn origin_shield(&self) -> terrars::ListRef<CloudfrontDistributionOriginElOriginShieldElRef> {
+    pub fn origin_shield(&self) -> terrars::ListRef<CloudfrontDistribution_Origin_OriginShieldRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.origin_shield", self.base))
     }
 
     #[doc = "Get a reference to the value of field `s3_origin_config` after provisioning.\n"]
-    pub fn s3_origin_config(&self) -> terrars::ListRef<CloudfrontDistributionOriginElS3OriginConfigElRef> {
+    pub fn s3_origin_config(&self) -> terrars::ListRef<CloudfrontDistribution_Origin_S3OriginConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_origin_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_origin_config` after provisioning.\n"]
+    pub fn vpc_origin_config(&self) -> terrars::ListRef<CloudfrontDistribution_Origin_VpcOriginConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_origin_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionOriginGroupElFailoverCriteriaEl {
+pub struct CloudfrontDistribution_OriginGroup_FailoverCriteria {
     status_codes: terrars::SetField<terrars::PrimField<f64>>,
 }
 
-impl CloudfrontDistributionOriginGroupElFailoverCriteriaEl { }
+impl CloudfrontDistribution_OriginGroup_FailoverCriteria { }
 
-impl terrars::ToListMappable for CloudfrontDistributionOriginGroupElFailoverCriteriaEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOriginGroupElFailoverCriteriaEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_OriginGroup_FailoverCriteria {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_OriginGroup_FailoverCriteria>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3316,35 +3672,37 @@ impl terrars::ToListMappable for CloudfrontDistributionOriginGroupElFailoverCrit
     }
 }
 
-pub struct BuildCloudfrontDistributionOriginGroupElFailoverCriteriaEl {
+pub struct BuildCloudfrontDistribution_OriginGroup_FailoverCriteria {
     #[doc = ""]
     pub status_codes: terrars::SetField<terrars::PrimField<f64>>,
 }
 
-impl BuildCloudfrontDistributionOriginGroupElFailoverCriteriaEl {
-    pub fn build(self) -> CloudfrontDistributionOriginGroupElFailoverCriteriaEl {
-        CloudfrontDistributionOriginGroupElFailoverCriteriaEl { status_codes: self.status_codes }
+impl BuildCloudfrontDistribution_OriginGroup_FailoverCriteria {
+    pub fn build(self) -> CloudfrontDistribution_OriginGroup_FailoverCriteria {
+        CloudfrontDistribution_OriginGroup_FailoverCriteria { status_codes: self.status_codes }
     }
 }
 
-pub struct CloudfrontDistributionOriginGroupElFailoverCriteriaElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_OriginGroup_FailoverCriteriaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionOriginGroupElFailoverCriteriaElRef {
+impl terrars::Ref for CloudfrontDistribution_OriginGroup_FailoverCriteriaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionOriginGroupElFailoverCriteriaElRef {
-        CloudfrontDistributionOriginGroupElFailoverCriteriaElRef {
+    ) -> CloudfrontDistribution_OriginGroup_FailoverCriteriaRef {
+        CloudfrontDistribution_OriginGroup_FailoverCriteriaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionOriginGroupElFailoverCriteriaElRef {
+impl CloudfrontDistribution_OriginGroup_FailoverCriteriaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3356,14 +3714,14 @@ impl CloudfrontDistributionOriginGroupElFailoverCriteriaElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionOriginGroupElMemberEl {
+pub struct CloudfrontDistribution_OriginGroup_Member {
     origin_id: terrars::PrimField<std::string::String>,
 }
 
-impl CloudfrontDistributionOriginGroupElMemberEl { }
+impl CloudfrontDistribution_OriginGroup_Member { }
 
-impl terrars::ToListMappable for CloudfrontDistributionOriginGroupElMemberEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOriginGroupElMemberEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_OriginGroup_Member {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_OriginGroup_Member>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3374,35 +3732,34 @@ impl terrars::ToListMappable for CloudfrontDistributionOriginGroupElMemberEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionOriginGroupElMemberEl {
+pub struct BuildCloudfrontDistribution_OriginGroup_Member {
     #[doc = ""]
     pub origin_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionOriginGroupElMemberEl {
-    pub fn build(self) -> CloudfrontDistributionOriginGroupElMemberEl {
-        CloudfrontDistributionOriginGroupElMemberEl { origin_id: self.origin_id }
+impl BuildCloudfrontDistribution_OriginGroup_Member {
+    pub fn build(self) -> CloudfrontDistribution_OriginGroup_Member {
+        CloudfrontDistribution_OriginGroup_Member { origin_id: self.origin_id }
     }
 }
 
-pub struct CloudfrontDistributionOriginGroupElMemberElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_OriginGroup_MemberRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionOriginGroupElMemberElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CloudfrontDistributionOriginGroupElMemberElRef {
-        CloudfrontDistributionOriginGroupElMemberElRef {
+impl terrars::Ref for CloudfrontDistribution_OriginGroup_MemberRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_OriginGroup_MemberRef {
+        CloudfrontDistribution_OriginGroup_MemberRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionOriginGroupElMemberElRef {
+impl CloudfrontDistribution_OriginGroup_MemberRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3414,28 +3771,28 @@ impl CloudfrontDistributionOriginGroupElMemberElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontDistributionOriginGroupElDynamic {
+struct CloudfrontDistribution_OriginGroupDynamic {
     failover_criteria: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionOriginGroupElFailoverCriteriaEl>>,
-    member: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionOriginGroupElMemberEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_OriginGroup_FailoverCriteria>>,
+    member: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_OriginGroup_Member>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionOriginGroupEl {
+pub struct CloudfrontDistribution_OriginGroup {
     origin_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    failover_criteria: std::option::Option<std::vec::Vec<CloudfrontDistributionOriginGroupElFailoverCriteriaEl>>,
+    failover_criteria: std::option::Option<std::vec::Vec<CloudfrontDistribution_OriginGroup_FailoverCriteria>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    member: std::option::Option<std::vec::Vec<CloudfrontDistributionOriginGroupElMemberEl>>,
-    dynamic: CloudfrontDistributionOriginGroupElDynamic,
+    member: std::option::Option<std::vec::Vec<CloudfrontDistribution_OriginGroup_Member>>,
+    dynamic: CloudfrontDistribution_OriginGroupDynamic,
 }
 
-impl CloudfrontDistributionOriginGroupEl {
+impl CloudfrontDistribution_OriginGroup {
     #[doc = "Set the field `failover_criteria`.\n"]
     pub fn set_failover_criteria(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionOriginGroupElFailoverCriteriaEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_OriginGroup_FailoverCriteria>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3451,7 +3808,7 @@ impl CloudfrontDistributionOriginGroupEl {
     #[doc = "Set the field `member`.\n"]
     pub fn set_member(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionOriginGroupElMemberEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_OriginGroup_Member>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3465,8 +3822,8 @@ impl CloudfrontDistributionOriginGroupEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionOriginGroupEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionOriginGroupEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_OriginGroup {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_OriginGroup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3477,14 +3834,14 @@ impl terrars::ToListMappable for CloudfrontDistributionOriginGroupEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionOriginGroupEl {
+pub struct BuildCloudfrontDistribution_OriginGroup {
     #[doc = ""]
     pub origin_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionOriginGroupEl {
-    pub fn build(self) -> CloudfrontDistributionOriginGroupEl {
-        CloudfrontDistributionOriginGroupEl {
+impl BuildCloudfrontDistribution_OriginGroup {
+    pub fn build(self) -> CloudfrontDistribution_OriginGroup {
+        CloudfrontDistribution_OriginGroup {
             origin_id: self.origin_id,
             failover_criteria: core::default::Default::default(),
             member: core::default::Default::default(),
@@ -3493,21 +3850,23 @@ impl BuildCloudfrontDistributionOriginGroupEl {
     }
 }
 
-pub struct CloudfrontDistributionOriginGroupElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_OriginGroupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionOriginGroupElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistributionOriginGroupElRef {
-        CloudfrontDistributionOriginGroupElRef {
+impl terrars::Ref for CloudfrontDistribution_OriginGroupRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_OriginGroupRef {
+        CloudfrontDistribution_OriginGroupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionOriginGroupElRef {
+impl CloudfrontDistribution_OriginGroupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3518,24 +3877,24 @@ impl CloudfrontDistributionOriginGroupElRef {
     }
 
     #[doc = "Get a reference to the value of field `failover_criteria` after provisioning.\n"]
-    pub fn failover_criteria(&self) -> terrars::ListRef<CloudfrontDistributionOriginGroupElFailoverCriteriaElRef> {
+    pub fn failover_criteria(&self) -> terrars::ListRef<CloudfrontDistribution_OriginGroup_FailoverCriteriaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.failover_criteria", self.base))
     }
 
     #[doc = "Get a reference to the value of field `member` after provisioning.\n"]
-    pub fn member(&self) -> terrars::ListRef<CloudfrontDistributionOriginGroupElMemberElRef> {
+    pub fn member(&self) -> terrars::ListRef<CloudfrontDistribution_OriginGroup_MemberRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.member", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionRestrictionsElGeoRestrictionEl {
+pub struct CloudfrontDistribution_Restrictions_GeoRestriction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     locations: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     restriction_type: terrars::PrimField<std::string::String>,
 }
 
-impl CloudfrontDistributionRestrictionsElGeoRestrictionEl {
+impl CloudfrontDistribution_Restrictions_GeoRestriction {
     #[doc = "Set the field `locations`.\n"]
     pub fn set_locations(
         mut self,
@@ -3546,8 +3905,8 @@ impl CloudfrontDistributionRestrictionsElGeoRestrictionEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionRestrictionsElGeoRestrictionEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionRestrictionsElGeoRestrictionEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_Restrictions_GeoRestriction {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_Restrictions_GeoRestriction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3558,38 +3917,40 @@ impl terrars::ToListMappable for CloudfrontDistributionRestrictionsElGeoRestrict
     }
 }
 
-pub struct BuildCloudfrontDistributionRestrictionsElGeoRestrictionEl {
+pub struct BuildCloudfrontDistribution_Restrictions_GeoRestriction {
     #[doc = ""]
     pub restriction_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontDistributionRestrictionsElGeoRestrictionEl {
-    pub fn build(self) -> CloudfrontDistributionRestrictionsElGeoRestrictionEl {
-        CloudfrontDistributionRestrictionsElGeoRestrictionEl {
+impl BuildCloudfrontDistribution_Restrictions_GeoRestriction {
+    pub fn build(self) -> CloudfrontDistribution_Restrictions_GeoRestriction {
+        CloudfrontDistribution_Restrictions_GeoRestriction {
             locations: core::default::Default::default(),
             restriction_type: self.restriction_type,
         }
     }
 }
 
-pub struct CloudfrontDistributionRestrictionsElGeoRestrictionElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_Restrictions_GeoRestrictionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionRestrictionsElGeoRestrictionElRef {
+impl terrars::Ref for CloudfrontDistribution_Restrictions_GeoRestrictionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontDistributionRestrictionsElGeoRestrictionElRef {
-        CloudfrontDistributionRestrictionsElGeoRestrictionElRef {
+    ) -> CloudfrontDistribution_Restrictions_GeoRestrictionRef {
+        CloudfrontDistribution_Restrictions_GeoRestrictionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionRestrictionsElGeoRestrictionElRef {
+impl CloudfrontDistribution_Restrictions_GeoRestrictionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3606,24 +3967,22 @@ impl CloudfrontDistributionRestrictionsElGeoRestrictionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontDistributionRestrictionsElDynamic {
-    geo_restriction: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudfrontDistributionRestrictionsElGeoRestrictionEl>>,
+struct CloudfrontDistribution_RestrictionsDynamic {
+    geo_restriction: std::option::Option<terrars::DynamicBlock<CloudfrontDistribution_Restrictions_GeoRestriction>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionRestrictionsEl {
+pub struct CloudfrontDistribution_Restrictions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    geo_restriction: std::option::Option<std::vec::Vec<CloudfrontDistributionRestrictionsElGeoRestrictionEl>>,
-    dynamic: CloudfrontDistributionRestrictionsElDynamic,
+    geo_restriction: std::option::Option<std::vec::Vec<CloudfrontDistribution_Restrictions_GeoRestriction>>,
+    dynamic: CloudfrontDistribution_RestrictionsDynamic,
 }
 
-impl CloudfrontDistributionRestrictionsEl {
+impl CloudfrontDistribution_Restrictions {
     #[doc = "Set the field `geo_restriction`.\n"]
     pub fn set_geo_restriction(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistributionRestrictionsElGeoRestrictionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontDistribution_Restrictions_GeoRestriction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3637,8 +3996,8 @@ impl CloudfrontDistributionRestrictionsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionRestrictionsEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionRestrictionsEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_Restrictions {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_Restrictions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3649,44 +4008,46 @@ impl terrars::ToListMappable for CloudfrontDistributionRestrictionsEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionRestrictionsEl {}
+pub struct BuildCloudfrontDistribution_Restrictions {}
 
-impl BuildCloudfrontDistributionRestrictionsEl {
-    pub fn build(self) -> CloudfrontDistributionRestrictionsEl {
-        CloudfrontDistributionRestrictionsEl {
+impl BuildCloudfrontDistribution_Restrictions {
+    pub fn build(self) -> CloudfrontDistribution_Restrictions {
+        CloudfrontDistribution_Restrictions {
             geo_restriction: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontDistributionRestrictionsElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_RestrictionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionRestrictionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistributionRestrictionsElRef {
-        CloudfrontDistributionRestrictionsElRef {
+impl terrars::Ref for CloudfrontDistribution_RestrictionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_RestrictionsRef {
+        CloudfrontDistribution_RestrictionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionRestrictionsElRef {
+impl CloudfrontDistribution_RestrictionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `geo_restriction` after provisioning.\n"]
-    pub fn geo_restriction(&self) -> terrars::ListRef<CloudfrontDistributionRestrictionsElGeoRestrictionElRef> {
+    pub fn geo_restriction(&self) -> terrars::ListRef<CloudfrontDistribution_Restrictions_GeoRestrictionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.geo_restriction", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontDistributionViewerCertificateEl {
+pub struct CloudfrontDistribution_ViewerCertificate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     acm_certificate_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3699,7 +4060,7 @@ pub struct CloudfrontDistributionViewerCertificateEl {
     ssl_support_method: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudfrontDistributionViewerCertificateEl {
+impl CloudfrontDistribution_ViewerCertificate {
     #[doc = "Set the field `acm_certificate_arn`.\n"]
     pub fn set_acm_certificate_arn(
         mut self,
@@ -3743,8 +4104,8 @@ impl CloudfrontDistributionViewerCertificateEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontDistributionViewerCertificateEl {
-    type O = terrars::BlockAssignable<CloudfrontDistributionViewerCertificateEl>;
+impl terrars::ToListMappable for CloudfrontDistribution_ViewerCertificate {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_ViewerCertificate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3755,11 +4116,11 @@ impl terrars::ToListMappable for CloudfrontDistributionViewerCertificateEl {
     }
 }
 
-pub struct BuildCloudfrontDistributionViewerCertificateEl {}
+pub struct BuildCloudfrontDistribution_ViewerCertificate {}
 
-impl BuildCloudfrontDistributionViewerCertificateEl {
-    pub fn build(self) -> CloudfrontDistributionViewerCertificateEl {
-        CloudfrontDistributionViewerCertificateEl {
+impl BuildCloudfrontDistribution_ViewerCertificate {
+    pub fn build(self) -> CloudfrontDistribution_ViewerCertificate {
+        CloudfrontDistribution_ViewerCertificate {
             acm_certificate_arn: core::default::Default::default(),
             cloudfront_default_certificate: core::default::Default::default(),
             iam_certificate_id: core::default::Default::default(),
@@ -3769,21 +4130,23 @@ impl BuildCloudfrontDistributionViewerCertificateEl {
     }
 }
 
-pub struct CloudfrontDistributionViewerCertificateElRef {
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_ViewerCertificateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontDistributionViewerCertificateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistributionViewerCertificateElRef {
-        CloudfrontDistributionViewerCertificateElRef {
+impl terrars::Ref for CloudfrontDistribution_ViewerCertificateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_ViewerCertificateRef {
+        CloudfrontDistribution_ViewerCertificateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontDistributionViewerCertificateElRef {
+impl CloudfrontDistribution_ViewerCertificateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3814,14 +4177,193 @@ impl CloudfrontDistributionViewerCertificateElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    advertise_trust_store_ca_names: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ignore_certificate_expiry: std::option::Option<terrars::PrimField<bool>>,
+    trust_store_id: terrars::PrimField<std::string::String>,
+}
+
+impl CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig {
+    #[doc = "Set the field `advertise_trust_store_ca_names`.\n"]
+    pub fn set_advertise_trust_store_ca_names(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.advertise_trust_store_ca_names = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ignore_certificate_expiry`.\n"]
+    pub fn set_ignore_certificate_expiry(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.ignore_certificate_expiry = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig {
+    #[doc = ""]
+    pub trust_store_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig {
+    pub fn build(self) -> CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig {
+        CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig {
+            advertise_trust_store_ca_names: core::default::Default::default(),
+            ignore_certificate_expiry: core::default::Default::default(),
+            trust_store_id: self.trust_store_id,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfigRef {
+        CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `advertise_trust_store_ca_names` after provisioning.\n"]
+    pub fn advertise_trust_store_ca_names(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.advertise_trust_store_ca_names", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ignore_certificate_expiry` after provisioning.\n"]
+    pub fn ignore_certificate_expiry(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_certificate_expiry", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `trust_store_id` after provisioning.\n"]
+    pub fn trust_store_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.trust_store_id", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct CloudfrontDistributionDynamic {
-    custom_error_response: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionCustomErrorResponseEl>>,
-    default_cache_behavior: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionDefaultCacheBehaviorEl>>,
-    logging_config: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionLoggingConfigEl>>,
-    ordered_cache_behavior: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionOrderedCacheBehaviorEl>>,
-    origin: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionOriginEl>>,
-    origin_group: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionOriginGroupEl>>,
-    restrictions: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionRestrictionsEl>>,
-    viewer_certificate: std::option::Option<terrars::DynamicBlock<CloudfrontDistributionViewerCertificateEl>>,
+struct CloudfrontDistribution_ViewerMtlsConfigDynamic {
+    trust_store_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct CloudfrontDistribution_ViewerMtlsConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trust_store_config: std::option::Option<std::vec::Vec<CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig>>,
+    dynamic: CloudfrontDistribution_ViewerMtlsConfigDynamic,
+}
+
+impl CloudfrontDistribution_ViewerMtlsConfig {
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `trust_store_config`.\n"]
+    pub fn set_trust_store_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.trust_store_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.trust_store_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudfrontDistribution_ViewerMtlsConfig {
+    type O = terrars::BlockAssignable<CloudfrontDistribution_ViewerMtlsConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudfrontDistribution_ViewerMtlsConfig {}
+
+impl BuildCloudfrontDistribution_ViewerMtlsConfig {
+    pub fn build(self) -> CloudfrontDistribution_ViewerMtlsConfig {
+        CloudfrontDistribution_ViewerMtlsConfig {
+            mode: core::default::Default::default(),
+            trust_store_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudfrontDistribution_ViewerMtlsConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudfrontDistribution_ViewerMtlsConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudfrontDistribution_ViewerMtlsConfigRef {
+        CloudfrontDistribution_ViewerMtlsConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudfrontDistribution_ViewerMtlsConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `trust_store_config` after provisioning.\n"]
+    pub fn trust_store_config(&self) -> terrars::ListRef<CloudfrontDistribution_ViewerMtlsConfig_TrustStoreConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.trust_store_config", self.base))
+    }
 }

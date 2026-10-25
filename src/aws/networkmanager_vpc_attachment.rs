@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerVpcAttachmentData {
+struct NetworkmanagerVpcAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct NetworkmanagerVpcAttachmentData {
     core_network_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_policy_label: std::option::Option<terrars::PrimField<std::string::String>>,
     subnet_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -28,16 +32,16 @@ struct NetworkmanagerVpcAttachmentData {
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     vpc_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    options: std::option::Option<std::vec::Vec<NetworkmanagerVpcAttachmentOptionsEl>>,
+    options: std::option::Option<std::vec::Vec<NetworkmanagerVpcAttachment_Options>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerVpcAttachmentTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerVpcAttachment_Timeouts>,
     dynamic: NetworkmanagerVpcAttachmentDynamic,
 }
 
 struct NetworkmanagerVpcAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerVpcAttachmentData>,
+    data: std::cell::RefCell<NetworkmanagerVpcAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,12 @@ impl NetworkmanagerVpcAttachment {
         self
     }
 
+    #[doc = "Set the field `routing_policy_label`.\n"]
+    pub fn set_routing_policy_label(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().routing_policy_label = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -164,7 +174,7 @@ impl NetworkmanagerVpcAttachment {
     #[doc = "Set the field `options`.\n"]
     pub fn set_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerVpcAttachmentOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerVpcAttachment_Options>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -178,7 +188,7 @@ impl NetworkmanagerVpcAttachment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerVpcAttachmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerVpcAttachment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -231,6 +241,11 @@ impl NetworkmanagerVpcAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_policy_label` after provisioning.\n"]
+    pub fn routing_policy_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_policy_label", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `segment_name` after provisioning.\n"]
     pub fn segment_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_name", self.extract_ref()))
@@ -262,13 +277,13 @@ impl NetworkmanagerVpcAttachment {
     }
 
     #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
-    pub fn options(&self) -> terrars::ListRef<NetworkmanagerVpcAttachmentOptionsElRef> {
+    pub fn options(&self) -> terrars::ListRef<NetworkmanagerVpcAttachment_OptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerVpcAttachmentTimeoutsElRef {
-        NetworkmanagerVpcAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerVpcAttachment_TimeoutsRef {
+        NetworkmanagerVpcAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -321,7 +336,7 @@ impl BuildNetworkmanagerVpcAttachment {
         let out = NetworkmanagerVpcAttachment(std::rc::Rc::new(NetworkmanagerVpcAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkmanagerVpcAttachmentData {
+            data: std::cell::RefCell::new(NetworkmanagerVpcAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -329,6 +344,7 @@ impl BuildNetworkmanagerVpcAttachment {
                 provisioner: core::default::Default::default(),
                 core_network_id: self.core_network_id,
                 id: core::default::Default::default(),
+                routing_policy_label: core::default::Default::default(),
                 subnet_arns: self.subnet_arns,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -414,6 +430,11 @@ impl NetworkmanagerVpcAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_policy_label` after provisioning.\n"]
+    pub fn routing_policy_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_policy_label", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `segment_name` after provisioning.\n"]
     pub fn segment_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_name", self.extract_ref()))
@@ -445,31 +466,46 @@ impl NetworkmanagerVpcAttachmentRef {
     }
 
     #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
-    pub fn options(&self) -> terrars::ListRef<NetworkmanagerVpcAttachmentOptionsElRef> {
+    pub fn options(&self) -> terrars::ListRef<NetworkmanagerVpcAttachment_OptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerVpcAttachmentTimeoutsElRef {
-        NetworkmanagerVpcAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerVpcAttachment_TimeoutsRef {
+        NetworkmanagerVpcAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkmanagerVpcAttachmentDynamic {
+    options: std::option::Option<terrars::DynamicBlock<NetworkmanagerVpcAttachment_Options>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkmanagerVpcAttachmentOptionsEl {
+pub struct NetworkmanagerVpcAttachment_Options {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     appliance_mode_support: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_support: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv6_support: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_group_referencing_support: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl NetworkmanagerVpcAttachmentOptionsEl {
+impl NetworkmanagerVpcAttachment_Options {
     #[doc = "Set the field `appliance_mode_support`.\n"]
     pub fn set_appliance_mode_support(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.appliance_mode_support = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `dns_support`.\n"]
+    pub fn set_dns_support(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.dns_support = std::option::Option::Some(v.into());
         self
     }
 
@@ -478,10 +514,19 @@ impl NetworkmanagerVpcAttachmentOptionsEl {
         self.ipv6_support = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `security_group_referencing_support`.\n"]
+    pub fn set_security_group_referencing_support(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.security_group_referencing_support = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for NetworkmanagerVpcAttachmentOptionsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerVpcAttachmentOptionsEl>;
+impl terrars::ToListMappable for NetworkmanagerVpcAttachment_Options {
+    type O = terrars::BlockAssignable<NetworkmanagerVpcAttachment_Options>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -492,32 +537,36 @@ impl terrars::ToListMappable for NetworkmanagerVpcAttachmentOptionsEl {
     }
 }
 
-pub struct BuildNetworkmanagerVpcAttachmentOptionsEl {}
+pub struct BuildNetworkmanagerVpcAttachment_Options {}
 
-impl BuildNetworkmanagerVpcAttachmentOptionsEl {
-    pub fn build(self) -> NetworkmanagerVpcAttachmentOptionsEl {
-        NetworkmanagerVpcAttachmentOptionsEl {
+impl BuildNetworkmanagerVpcAttachment_Options {
+    pub fn build(self) -> NetworkmanagerVpcAttachment_Options {
+        NetworkmanagerVpcAttachment_Options {
             appliance_mode_support: core::default::Default::default(),
+            dns_support: core::default::Default::default(),
             ipv6_support: core::default::Default::default(),
+            security_group_referencing_support: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkmanagerVpcAttachmentOptionsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerVpcAttachment_OptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerVpcAttachmentOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerVpcAttachmentOptionsElRef {
-        NetworkmanagerVpcAttachmentOptionsElRef {
+impl terrars::Ref for NetworkmanagerVpcAttachment_OptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerVpcAttachment_OptionsRef {
+        NetworkmanagerVpcAttachment_OptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerVpcAttachmentOptionsElRef {
+impl NetworkmanagerVpcAttachment_OptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -527,14 +576,24 @@ impl NetworkmanagerVpcAttachmentOptionsElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.appliance_mode_support", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `dns_support` after provisioning.\n"]
+    pub fn dns_support(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_support", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `ipv6_support` after provisioning.\n"]
     pub fn ipv6_support(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_support", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `security_group_referencing_support` after provisioning.\n"]
+    pub fn security_group_referencing_support(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group_referencing_support", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerVpcAttachmentTimeoutsEl {
+pub struct NetworkmanagerVpcAttachment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -543,7 +602,7 @@ pub struct NetworkmanagerVpcAttachmentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerVpcAttachmentTimeoutsEl {
+impl NetworkmanagerVpcAttachment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -563,8 +622,8 @@ impl NetworkmanagerVpcAttachmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerVpcAttachmentTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerVpcAttachmentTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerVpcAttachment_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerVpcAttachment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -575,11 +634,11 @@ impl terrars::ToListMappable for NetworkmanagerVpcAttachmentTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkmanagerVpcAttachmentTimeoutsEl {}
+pub struct BuildNetworkmanagerVpcAttachment_Timeouts {}
 
-impl BuildNetworkmanagerVpcAttachmentTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerVpcAttachmentTimeoutsEl {
-        NetworkmanagerVpcAttachmentTimeoutsEl {
+impl BuildNetworkmanagerVpcAttachment_Timeouts {
+    pub fn build(self) -> NetworkmanagerVpcAttachment_Timeouts {
+        NetworkmanagerVpcAttachment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -587,21 +646,23 @@ impl BuildNetworkmanagerVpcAttachmentTimeoutsEl {
     }
 }
 
-pub struct NetworkmanagerVpcAttachmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerVpcAttachment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerVpcAttachmentTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerVpcAttachmentTimeoutsElRef {
-        NetworkmanagerVpcAttachmentTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerVpcAttachment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerVpcAttachment_TimeoutsRef {
+        NetworkmanagerVpcAttachment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerVpcAttachmentTimeoutsElRef {
+impl NetworkmanagerVpcAttachment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -620,9 +681,4 @@ impl NetworkmanagerVpcAttachmentTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkmanagerVpcAttachmentDynamic {
-    options: std::option::Option<terrars::DynamicBlock<NetworkmanagerVpcAttachmentOptionsEl>>,
 }

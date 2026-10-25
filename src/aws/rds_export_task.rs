@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RdsExportTaskData {
+struct RdsExportTaskData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,18 +25,20 @@ struct RdsExportTaskData {
     export_task_identifier: terrars::PrimField<std::string::String>,
     iam_role_arn: terrars::PrimField<std::string::String>,
     kms_key_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     s3_bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     source_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RdsExportTaskTimeoutsEl>,
+    timeouts: std::option::Option<RdsExportTask_Timeouts>,
 }
 
 struct RdsExportTask_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RdsExportTaskData>,
+    data: std::cell::RefCell<RdsExportTaskData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl RdsExportTask {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `s3_prefix`.\n"]
     pub fn set_s3_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().s3_prefix = std::option::Option::Some(v.into());
@@ -150,7 +161,7 @@ impl RdsExportTask {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RdsExportTaskTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RdsExportTask_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -188,6 +199,12 @@ impl RdsExportTask {
     #[doc = "Get a reference to the value of field `percent_progress` after provisioning.\n"]
     pub fn percent_progress(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.percent_progress", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_bucket_name` after provisioning.\n"]
@@ -236,8 +253,8 @@ impl RdsExportTask {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RdsExportTaskTimeoutsElRef {
-        RdsExportTaskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RdsExportTask_TimeoutsRef {
+        RdsExportTask_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -291,7 +308,7 @@ impl BuildRdsExportTask {
         let out = RdsExportTask(std::rc::Rc::new(RdsExportTask_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RdsExportTaskData {
+            data: std::cell::RefCell::new(RdsExportTaskData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -301,6 +318,7 @@ impl BuildRdsExportTask {
                 export_task_identifier: self.export_task_identifier,
                 iam_role_arn: self.iam_role_arn,
                 kms_key_id: self.kms_key_id,
+                region: core::default::Default::default(),
                 s3_bucket_name: self.s3_bucket_name,
                 s3_prefix: core::default::Default::default(),
                 source_arn: self.source_arn,
@@ -370,6 +388,12 @@ impl RdsExportTaskRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.percent_progress", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `s3_bucket_name` after provisioning.\n"]
     pub fn s3_bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket_name", self.extract_ref()))
@@ -416,35 +440,37 @@ impl RdsExportTaskRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RdsExportTaskTimeoutsElRef {
-        RdsExportTaskTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RdsExportTask_TimeoutsRef {
+        RdsExportTask_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct RdsExportTaskTimeoutsEl {
+pub struct RdsExportTask_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RdsExportTaskTimeoutsEl {
-    #[doc = "Set the field `create`.\n"]
+impl RdsExportTask_Timeouts {
+    #[doc =
+        "Set the field `create`.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours)."]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `delete`.\n"]
+    #[doc =
+        "Set the field `delete`.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs."]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for RdsExportTaskTimeoutsEl {
-    type O = terrars::BlockAssignable<RdsExportTaskTimeoutsEl>;
+impl terrars::ToListMappable for RdsExportTask_Timeouts {
+    type O = terrars::BlockAssignable<RdsExportTask_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -455,42 +481,46 @@ impl terrars::ToListMappable for RdsExportTaskTimeoutsEl {
     }
 }
 
-pub struct BuildRdsExportTaskTimeoutsEl {}
+pub struct BuildRdsExportTask_Timeouts {}
 
-impl BuildRdsExportTaskTimeoutsEl {
-    pub fn build(self) -> RdsExportTaskTimeoutsEl {
-        RdsExportTaskTimeoutsEl {
+impl BuildRdsExportTask_Timeouts {
+    pub fn build(self) -> RdsExportTask_Timeouts {
+        RdsExportTask_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct RdsExportTaskTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RdsExportTask_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsExportTaskTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsExportTaskTimeoutsElRef {
-        RdsExportTaskTimeoutsElRef {
+impl terrars::Ref for RdsExportTask_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsExportTask_TimeoutsRef {
+        RdsExportTask_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsExportTaskTimeoutsElRef {
+impl RdsExportTask_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `create` after provisioning.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours)."]
     pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `delete` after provisioning.\nA string that can be [parsed as a duration](https://pkg.go.dev/time#ParseDuration) consisting of numbers and unit suffixes, such as \"30s\" or \"2h45m\". Valid time units are \"s\" (seconds), \"m\" (minutes), \"h\" (hours). Setting a timeout for a Delete operation is only applicable if changes are saved into state before the destroy operation occurs."]
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }

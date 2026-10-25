@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RedshiftClusterIamRolesData {
+struct RedshiftClusterIamRolesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,13 +28,15 @@ struct RedshiftClusterIamRolesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RedshiftClusterIamRolesTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<RedshiftClusterIamRoles_Timeouts>,
 }
 
 struct RedshiftClusterIamRoles_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RedshiftClusterIamRolesData>,
+    data: std::cell::RefCell<RedshiftClusterIamRolesData_>,
 }
 
 #[derive(Clone)]
@@ -153,8 +157,15 @@ impl RedshiftClusterIamRoles {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RedshiftClusterIamRolesTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RedshiftClusterIamRoles_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -179,9 +190,15 @@ impl RedshiftClusterIamRoles {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RedshiftClusterIamRolesTimeoutsElRef {
-        RedshiftClusterIamRolesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RedshiftClusterIamRoles_TimeoutsRef {
+        RedshiftClusterIamRoles_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -227,7 +244,7 @@ impl BuildRedshiftClusterIamRoles {
         let out = RedshiftClusterIamRoles(std::rc::Rc::new(RedshiftClusterIamRoles_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RedshiftClusterIamRolesData {
+            data: std::cell::RefCell::new(RedshiftClusterIamRolesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -237,6 +254,7 @@ impl BuildRedshiftClusterIamRoles {
                 default_iam_role_arn: core::default::Default::default(),
                 iam_role_arns: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -288,14 +306,20 @@ impl RedshiftClusterIamRolesRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RedshiftClusterIamRolesTimeoutsElRef {
-        RedshiftClusterIamRolesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RedshiftClusterIamRoles_TimeoutsRef {
+        RedshiftClusterIamRoles_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct RedshiftClusterIamRolesTimeoutsEl {
+pub struct RedshiftClusterIamRoles_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -304,7 +328,7 @@ pub struct RedshiftClusterIamRolesTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RedshiftClusterIamRolesTimeoutsEl {
+impl RedshiftClusterIamRoles_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -324,8 +348,8 @@ impl RedshiftClusterIamRolesTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftClusterIamRolesTimeoutsEl {
-    type O = terrars::BlockAssignable<RedshiftClusterIamRolesTimeoutsEl>;
+impl terrars::ToListMappable for RedshiftClusterIamRoles_Timeouts {
+    type O = terrars::BlockAssignable<RedshiftClusterIamRoles_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -336,11 +360,11 @@ impl terrars::ToListMappable for RedshiftClusterIamRolesTimeoutsEl {
     }
 }
 
-pub struct BuildRedshiftClusterIamRolesTimeoutsEl {}
+pub struct BuildRedshiftClusterIamRoles_Timeouts {}
 
-impl BuildRedshiftClusterIamRolesTimeoutsEl {
-    pub fn build(self) -> RedshiftClusterIamRolesTimeoutsEl {
-        RedshiftClusterIamRolesTimeoutsEl {
+impl BuildRedshiftClusterIamRoles_Timeouts {
+    pub fn build(self) -> RedshiftClusterIamRoles_Timeouts {
+        RedshiftClusterIamRoles_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -348,21 +372,23 @@ impl BuildRedshiftClusterIamRolesTimeoutsEl {
     }
 }
 
-pub struct RedshiftClusterIamRolesTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RedshiftClusterIamRoles_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftClusterIamRolesTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftClusterIamRolesTimeoutsElRef {
-        RedshiftClusterIamRolesTimeoutsElRef {
+impl terrars::Ref for RedshiftClusterIamRoles_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftClusterIamRoles_TimeoutsRef {
+        RedshiftClusterIamRoles_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftClusterIamRolesTimeoutsElRef {
+impl RedshiftClusterIamRoles_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

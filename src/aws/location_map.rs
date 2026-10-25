@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LocationMapData {
+struct LocationMapData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct LocationMapData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     map_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    configuration: std::option::Option<std::vec::Vec<LocationMapConfigurationEl>>,
+    configuration: std::option::Option<std::vec::Vec<LocationMap_Configuration>>,
     dynamic: LocationMapDynamic,
 }
 
 struct LocationMap_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LocationMapData>,
+    data: std::cell::RefCell<LocationMapData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl LocationMap {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl LocationMap {
     #[doc = "Set the field `configuration`.\n"]
     pub fn set_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LocationMapConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LocationMap_Configuration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -206,6 +217,12 @@ impl LocationMap {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.map_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -222,7 +239,7 @@ impl LocationMap {
     }
 
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<LocationMapConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<LocationMap_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 }
@@ -269,7 +286,7 @@ impl BuildLocationMap {
         let out = LocationMap(std::rc::Rc::new(LocationMap_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LocationMapData {
+            data: std::cell::RefCell::new(LocationMapData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -278,6 +295,7 @@ impl BuildLocationMap {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 map_name: self.map_name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 configuration: core::default::Default::default(),
@@ -337,6 +355,12 @@ impl LocationMapRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.map_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -353,20 +377,25 @@ impl LocationMapRef {
     }
 
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<LocationMapConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<LocationMap_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LocationMapDynamic {
+    configuration: std::option::Option<terrars::DynamicBlock<LocationMap_Configuration>>,
+}
+
 #[derive(Serialize)]
-pub struct LocationMapConfigurationEl {
+pub struct LocationMap_Configuration {
     style: terrars::PrimField<std::string::String>,
 }
 
-impl LocationMapConfigurationEl { }
+impl LocationMap_Configuration { }
 
-impl terrars::ToListMappable for LocationMapConfigurationEl {
-    type O = terrars::BlockAssignable<LocationMapConfigurationEl>;
+impl terrars::ToListMappable for LocationMap_Configuration {
+    type O = terrars::BlockAssignable<LocationMap_Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -377,32 +406,34 @@ impl terrars::ToListMappable for LocationMapConfigurationEl {
     }
 }
 
-pub struct BuildLocationMapConfigurationEl {
+pub struct BuildLocationMap_Configuration {
     #[doc = ""]
     pub style: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLocationMapConfigurationEl {
-    pub fn build(self) -> LocationMapConfigurationEl {
-        LocationMapConfigurationEl { style: self.style }
+impl BuildLocationMap_Configuration {
+    pub fn build(self) -> LocationMap_Configuration {
+        LocationMap_Configuration { style: self.style }
     }
 }
 
-pub struct LocationMapConfigurationElRef {
+#[allow(dead_code)]
+pub struct LocationMap_ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LocationMapConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LocationMapConfigurationElRef {
-        LocationMapConfigurationElRef {
+impl terrars::Ref for LocationMap_ConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LocationMap_ConfigurationRef {
+        LocationMap_ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LocationMapConfigurationElRef {
+impl LocationMap_ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -411,9 +442,4 @@ impl LocationMapConfigurationElRef {
     pub fn style(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.style", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LocationMapDynamic {
-    configuration: std::option::Option<terrars::DynamicBlock<LocationMapConfigurationEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataRouteTablesData {
+struct DataRouteTablesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,20 +21,22 @@ struct DataRouteTablesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataRouteTablesFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataRouteTables_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataRouteTablesTimeoutsEl>,
+    timeouts: std::option::Option<DataRouteTables_Timeouts>,
     dynamic: DataRouteTablesDynamic,
 }
 
 struct DataRouteTables_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRouteTablesData>,
+    data: std::cell::RefCell<DataRouteTablesData_>,
 }
 
 #[derive(Clone)]
@@ -83,6 +87,13 @@ impl DataRouteTables {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -99,7 +110,7 @@ impl DataRouteTables {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRouteTablesFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataRouteTables_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -112,7 +123,7 @@ impl DataRouteTables {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataRouteTablesTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataRouteTables_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -127,6 +138,12 @@ impl DataRouteTables {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -138,8 +155,8 @@ impl DataRouteTables {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataRouteTablesTimeoutsElRef {
-        DataRouteTablesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataRouteTables_TimeoutsRef {
+        DataRouteTables_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -183,12 +200,13 @@ impl BuildDataRouteTables {
         let out = DataRouteTables(std::rc::Rc::new(DataRouteTables_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRouteTablesData {
+            data: std::cell::RefCell::new(DataRouteTablesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 vpc_id: core::default::Default::default(),
                 filter: core::default::Default::default(),
@@ -234,6 +252,12 @@ impl DataRouteTablesRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -245,21 +269,26 @@ impl DataRouteTablesRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataRouteTablesTimeoutsElRef {
-        DataRouteTablesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataRouteTables_TimeoutsRef {
+        DataRouteTables_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataRouteTablesFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct DataRouteTablesDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataRouteTables_Filter>>,
 }
 
-impl DataRouteTablesFilterEl { }
+#[derive(Serialize)]
+pub struct DataRouteTables_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for DataRouteTablesFilterEl {
-    type O = terrars::BlockAssignable<DataRouteTablesFilterEl>;
+impl DataRouteTables_Filter { }
+
+impl terrars::ToListMappable for DataRouteTables_Filter {
+    type O = terrars::BlockAssignable<DataRouteTables_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -270,37 +299,39 @@ impl terrars::ToListMappable for DataRouteTablesFilterEl {
     }
 }
 
-pub struct BuildDataRouteTablesFilterEl {
+pub struct BuildDataRouteTables_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataRouteTablesFilterEl {
-    pub fn build(self) -> DataRouteTablesFilterEl {
-        DataRouteTablesFilterEl {
+impl BuildDataRouteTables_Filter {
+    pub fn build(self) -> DataRouteTables_Filter {
+        DataRouteTables_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataRouteTablesFilterElRef {
+#[allow(dead_code)]
+pub struct DataRouteTables_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRouteTablesFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRouteTablesFilterElRef {
-        DataRouteTablesFilterElRef {
+impl terrars::Ref for DataRouteTables_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRouteTables_FilterRef {
+        DataRouteTables_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRouteTablesFilterElRef {
+impl DataRouteTables_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -311,18 +342,18 @@ impl DataRouteTablesFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataRouteTablesTimeoutsEl {
+pub struct DataRouteTables_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRouteTablesTimeoutsEl {
+impl DataRouteTables_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -330,8 +361,8 @@ impl DataRouteTablesTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataRouteTablesTimeoutsEl {
-    type O = terrars::BlockAssignable<DataRouteTablesTimeoutsEl>;
+impl terrars::ToListMappable for DataRouteTables_Timeouts {
+    type O = terrars::BlockAssignable<DataRouteTables_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -342,29 +373,31 @@ impl terrars::ToListMappable for DataRouteTablesTimeoutsEl {
     }
 }
 
-pub struct BuildDataRouteTablesTimeoutsEl {}
+pub struct BuildDataRouteTables_Timeouts {}
 
-impl BuildDataRouteTablesTimeoutsEl {
-    pub fn build(self) -> DataRouteTablesTimeoutsEl {
-        DataRouteTablesTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataRouteTables_Timeouts {
+    pub fn build(self) -> DataRouteTables_Timeouts {
+        DataRouteTables_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataRouteTablesTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataRouteTables_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRouteTablesTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRouteTablesTimeoutsElRef {
-        DataRouteTablesTimeoutsElRef {
+impl terrars::Ref for DataRouteTables_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRouteTables_TimeoutsRef {
+        DataRouteTables_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRouteTablesTimeoutsElRef {
+impl DataRouteTables_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -373,9 +406,4 @@ impl DataRouteTablesTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataRouteTablesDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataRouteTablesFilterEl>>,
 }

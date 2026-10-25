@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataOrganizationsOrganizationData {
+struct DataOrganizationsOrganizationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -18,12 +20,14 @@ struct DataOrganizationsOrganizationData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    return_organization_only: std::option::Option<terrars::PrimField<bool>>,
 }
 
 struct DataOrganizationsOrganization_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataOrganizationsOrganizationData>,
+    data: std::cell::RefCell<DataOrganizationsOrganizationData_>,
 }
 
 #[derive(Clone)]
@@ -74,8 +78,14 @@ impl DataOrganizationsOrganization {
         self
     }
 
+    #[doc = "Set the field `return_organization_only`.\n"]
+    pub fn set_return_organization_only(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().return_organization_only = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `accounts` after provisioning.\n"]
-    pub fn accounts(&self) -> terrars::ListRef<DataOrganizationsOrganizationAccountsElRef> {
+    pub fn accounts(&self) -> terrars::ListRef<DataOrganizationsOrganization_AccountsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accounts", self.extract_ref()))
     }
 
@@ -119,13 +129,23 @@ impl DataOrganizationsOrganization {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `master_account_name` after provisioning.\n"]
+    pub fn master_account_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_account_name", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `non_master_accounts` after provisioning.\n"]
-    pub fn non_master_accounts(&self) -> terrars::ListRef<DataOrganizationsOrganizationNonMasterAccountsElRef> {
+    pub fn non_master_accounts(&self) -> terrars::ListRef<DataOrganizationsOrganization_NonMasterAccountsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.non_master_accounts", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `return_organization_only` after provisioning.\n"]
+    pub fn return_organization_only(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.return_organization_only", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `roots` after provisioning.\n"]
-    pub fn roots(&self) -> terrars::ListRef<DataOrganizationsOrganizationRootsElRef> {
+    pub fn roots(&self) -> terrars::ListRef<DataOrganizationsOrganization_RootsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.roots", self.extract_ref()))
     }
 }
@@ -170,12 +190,13 @@ impl BuildDataOrganizationsOrganization {
         let out = DataOrganizationsOrganization(std::rc::Rc::new(DataOrganizationsOrganization_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataOrganizationsOrganizationData {
+            data: std::cell::RefCell::new(DataOrganizationsOrganizationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                return_organization_only: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -207,7 +228,7 @@ impl DataOrganizationsOrganizationRef {
     }
 
     #[doc = "Get a reference to the value of field `accounts` after provisioning.\n"]
-    pub fn accounts(&self) -> terrars::ListRef<DataOrganizationsOrganizationAccountsElRef> {
+    pub fn accounts(&self) -> terrars::ListRef<DataOrganizationsOrganization_AccountsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accounts", self.extract_ref()))
     }
 
@@ -251,19 +272,29 @@ impl DataOrganizationsOrganizationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `master_account_name` after provisioning.\n"]
+    pub fn master_account_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_account_name", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `non_master_accounts` after provisioning.\n"]
-    pub fn non_master_accounts(&self) -> terrars::ListRef<DataOrganizationsOrganizationNonMasterAccountsElRef> {
+    pub fn non_master_accounts(&self) -> terrars::ListRef<DataOrganizationsOrganization_NonMasterAccountsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.non_master_accounts", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `return_organization_only` after provisioning.\n"]
+    pub fn return_organization_only(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.return_organization_only", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `roots` after provisioning.\n"]
-    pub fn roots(&self) -> terrars::ListRef<DataOrganizationsOrganizationRootsElRef> {
+    pub fn roots(&self) -> terrars::ListRef<DataOrganizationsOrganization_RootsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.roots", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataOrganizationsOrganizationAccountsEl {
+pub struct DataOrganizationsOrganization_Accounts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -271,12 +302,18 @@ pub struct DataOrganizationsOrganizationAccountsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    joined_method: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    joined_timestamp: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataOrganizationsOrganizationAccountsEl {
+impl DataOrganizationsOrganization_Accounts {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -295,9 +332,27 @@ impl DataOrganizationsOrganizationAccountsEl {
         self
     }
 
+    #[doc = "Set the field `joined_method`.\n"]
+    pub fn set_joined_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.joined_method = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `joined_timestamp`.\n"]
+    pub fn set_joined_timestamp(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.joined_timestamp = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
         self
     }
 
@@ -308,8 +363,8 @@ impl DataOrganizationsOrganizationAccountsEl {
     }
 }
 
-impl terrars::ToListMappable for DataOrganizationsOrganizationAccountsEl {
-    type O = terrars::BlockAssignable<DataOrganizationsOrganizationAccountsEl>;
+impl terrars::ToListMappable for DataOrganizationsOrganization_Accounts {
+    type O = terrars::BlockAssignable<DataOrganizationsOrganization_Accounts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -320,35 +375,40 @@ impl terrars::ToListMappable for DataOrganizationsOrganizationAccountsEl {
     }
 }
 
-pub struct BuildDataOrganizationsOrganizationAccountsEl {}
+pub struct BuildDataOrganizationsOrganization_Accounts {}
 
-impl BuildDataOrganizationsOrganizationAccountsEl {
-    pub fn build(self) -> DataOrganizationsOrganizationAccountsEl {
-        DataOrganizationsOrganizationAccountsEl {
+impl BuildDataOrganizationsOrganization_Accounts {
+    pub fn build(self) -> DataOrganizationsOrganization_Accounts {
+        DataOrganizationsOrganization_Accounts {
             arn: core::default::Default::default(),
             email: core::default::Default::default(),
             id: core::default::Default::default(),
+            joined_method: core::default::Default::default(),
+            joined_timestamp: core::default::Default::default(),
             name: core::default::Default::default(),
+            state: core::default::Default::default(),
             status: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataOrganizationsOrganizationAccountsElRef {
+#[allow(dead_code)]
+pub struct DataOrganizationsOrganization_AccountsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataOrganizationsOrganizationAccountsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataOrganizationsOrganizationAccountsElRef {
-        DataOrganizationsOrganizationAccountsElRef {
+impl terrars::Ref for DataOrganizationsOrganization_AccountsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataOrganizationsOrganization_AccountsRef {
+        DataOrganizationsOrganization_AccountsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataOrganizationsOrganizationAccountsElRef {
+impl DataOrganizationsOrganization_AccountsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -368,9 +428,24 @@ impl DataOrganizationsOrganizationAccountsElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `joined_method` after provisioning.\n"]
+    pub fn joined_method(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.joined_method", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `joined_timestamp` after provisioning.\n"]
+    pub fn joined_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.joined_timestamp", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -380,7 +455,7 @@ impl DataOrganizationsOrganizationAccountsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataOrganizationsOrganizationNonMasterAccountsEl {
+pub struct DataOrganizationsOrganization_NonMasterAccounts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -388,12 +463,18 @@ pub struct DataOrganizationsOrganizationNonMasterAccountsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    joined_method: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    joined_timestamp: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataOrganizationsOrganizationNonMasterAccountsEl {
+impl DataOrganizationsOrganization_NonMasterAccounts {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -412,9 +493,27 @@ impl DataOrganizationsOrganizationNonMasterAccountsEl {
         self
     }
 
+    #[doc = "Set the field `joined_method`.\n"]
+    pub fn set_joined_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.joined_method = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `joined_timestamp`.\n"]
+    pub fn set_joined_timestamp(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.joined_timestamp = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
         self
     }
 
@@ -425,8 +524,8 @@ impl DataOrganizationsOrganizationNonMasterAccountsEl {
     }
 }
 
-impl terrars::ToListMappable for DataOrganizationsOrganizationNonMasterAccountsEl {
-    type O = terrars::BlockAssignable<DataOrganizationsOrganizationNonMasterAccountsEl>;
+impl terrars::ToListMappable for DataOrganizationsOrganization_NonMasterAccounts {
+    type O = terrars::BlockAssignable<DataOrganizationsOrganization_NonMasterAccounts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -437,38 +536,43 @@ impl terrars::ToListMappable for DataOrganizationsOrganizationNonMasterAccountsE
     }
 }
 
-pub struct BuildDataOrganizationsOrganizationNonMasterAccountsEl {}
+pub struct BuildDataOrganizationsOrganization_NonMasterAccounts {}
 
-impl BuildDataOrganizationsOrganizationNonMasterAccountsEl {
-    pub fn build(self) -> DataOrganizationsOrganizationNonMasterAccountsEl {
-        DataOrganizationsOrganizationNonMasterAccountsEl {
+impl BuildDataOrganizationsOrganization_NonMasterAccounts {
+    pub fn build(self) -> DataOrganizationsOrganization_NonMasterAccounts {
+        DataOrganizationsOrganization_NonMasterAccounts {
             arn: core::default::Default::default(),
             email: core::default::Default::default(),
             id: core::default::Default::default(),
+            joined_method: core::default::Default::default(),
+            joined_timestamp: core::default::Default::default(),
             name: core::default::Default::default(),
+            state: core::default::Default::default(),
             status: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataOrganizationsOrganizationNonMasterAccountsElRef {
+#[allow(dead_code)]
+pub struct DataOrganizationsOrganization_NonMasterAccountsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataOrganizationsOrganizationNonMasterAccountsElRef {
+impl terrars::Ref for DataOrganizationsOrganization_NonMasterAccountsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataOrganizationsOrganizationNonMasterAccountsElRef {
-        DataOrganizationsOrganizationNonMasterAccountsElRef {
+    ) -> DataOrganizationsOrganization_NonMasterAccountsRef {
+        DataOrganizationsOrganization_NonMasterAccountsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataOrganizationsOrganizationNonMasterAccountsElRef {
+impl DataOrganizationsOrganization_NonMasterAccountsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -488,9 +592,24 @@ impl DataOrganizationsOrganizationNonMasterAccountsElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `joined_method` after provisioning.\n"]
+    pub fn joined_method(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.joined_method", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `joined_timestamp` after provisioning.\n"]
+    pub fn joined_timestamp(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.joined_timestamp", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -500,14 +619,14 @@ impl DataOrganizationsOrganizationNonMasterAccountsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataOrganizationsOrganizationRootsElPolicyTypesEl {
+pub struct DataOrganizationsOrganization_Roots_PolicyTypes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataOrganizationsOrganizationRootsElPolicyTypesEl {
+impl DataOrganizationsOrganization_Roots_PolicyTypes {
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.status = std::option::Option::Some(v.into());
@@ -521,8 +640,8 @@ impl DataOrganizationsOrganizationRootsElPolicyTypesEl {
     }
 }
 
-impl terrars::ToListMappable for DataOrganizationsOrganizationRootsElPolicyTypesEl {
-    type O = terrars::BlockAssignable<DataOrganizationsOrganizationRootsElPolicyTypesEl>;
+impl terrars::ToListMappable for DataOrganizationsOrganization_Roots_PolicyTypes {
+    type O = terrars::BlockAssignable<DataOrganizationsOrganization_Roots_PolicyTypes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -533,35 +652,37 @@ impl terrars::ToListMappable for DataOrganizationsOrganizationRootsElPolicyTypes
     }
 }
 
-pub struct BuildDataOrganizationsOrganizationRootsElPolicyTypesEl {}
+pub struct BuildDataOrganizationsOrganization_Roots_PolicyTypes {}
 
-impl BuildDataOrganizationsOrganizationRootsElPolicyTypesEl {
-    pub fn build(self) -> DataOrganizationsOrganizationRootsElPolicyTypesEl {
-        DataOrganizationsOrganizationRootsElPolicyTypesEl {
+impl BuildDataOrganizationsOrganization_Roots_PolicyTypes {
+    pub fn build(self) -> DataOrganizationsOrganization_Roots_PolicyTypes {
+        DataOrganizationsOrganization_Roots_PolicyTypes {
             status: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataOrganizationsOrganizationRootsElPolicyTypesElRef {
+#[allow(dead_code)]
+pub struct DataOrganizationsOrganization_Roots_PolicyTypesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataOrganizationsOrganizationRootsElPolicyTypesElRef {
+impl terrars::Ref for DataOrganizationsOrganization_Roots_PolicyTypesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataOrganizationsOrganizationRootsElPolicyTypesElRef {
-        DataOrganizationsOrganizationRootsElPolicyTypesElRef {
+    ) -> DataOrganizationsOrganization_Roots_PolicyTypesRef {
+        DataOrganizationsOrganization_Roots_PolicyTypesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataOrganizationsOrganizationRootsElPolicyTypesElRef {
+impl DataOrganizationsOrganization_Roots_PolicyTypesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -578,7 +699,7 @@ impl DataOrganizationsOrganizationRootsElPolicyTypesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataOrganizationsOrganizationRootsEl {
+pub struct DataOrganizationsOrganization_Roots {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -586,10 +707,10 @@ pub struct DataOrganizationsOrganizationRootsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    policy_types: std::option::Option<terrars::ListField<DataOrganizationsOrganizationRootsElPolicyTypesEl>>,
+    policy_types: std::option::Option<terrars::ListField<DataOrganizationsOrganization_Roots_PolicyTypes>>,
 }
 
-impl DataOrganizationsOrganizationRootsEl {
+impl DataOrganizationsOrganization_Roots {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -611,15 +732,15 @@ impl DataOrganizationsOrganizationRootsEl {
     #[doc = "Set the field `policy_types`.\n"]
     pub fn set_policy_types(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataOrganizationsOrganizationRootsElPolicyTypesEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataOrganizationsOrganization_Roots_PolicyTypes>>,
     ) -> Self {
         self.policy_types = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataOrganizationsOrganizationRootsEl {
-    type O = terrars::BlockAssignable<DataOrganizationsOrganizationRootsEl>;
+impl terrars::ToListMappable for DataOrganizationsOrganization_Roots {
+    type O = terrars::BlockAssignable<DataOrganizationsOrganization_Roots>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -630,11 +751,11 @@ impl terrars::ToListMappable for DataOrganizationsOrganizationRootsEl {
     }
 }
 
-pub struct BuildDataOrganizationsOrganizationRootsEl {}
+pub struct BuildDataOrganizationsOrganization_Roots {}
 
-impl BuildDataOrganizationsOrganizationRootsEl {
-    pub fn build(self) -> DataOrganizationsOrganizationRootsEl {
-        DataOrganizationsOrganizationRootsEl {
+impl BuildDataOrganizationsOrganization_Roots {
+    pub fn build(self) -> DataOrganizationsOrganization_Roots {
+        DataOrganizationsOrganization_Roots {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -643,21 +764,23 @@ impl BuildDataOrganizationsOrganizationRootsEl {
     }
 }
 
-pub struct DataOrganizationsOrganizationRootsElRef {
+#[allow(dead_code)]
+pub struct DataOrganizationsOrganization_RootsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataOrganizationsOrganizationRootsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataOrganizationsOrganizationRootsElRef {
-        DataOrganizationsOrganizationRootsElRef {
+impl terrars::Ref for DataOrganizationsOrganization_RootsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataOrganizationsOrganization_RootsRef {
+        DataOrganizationsOrganization_RootsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataOrganizationsOrganizationRootsElRef {
+impl DataOrganizationsOrganization_RootsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -678,7 +801,7 @@ impl DataOrganizationsOrganizationRootsElRef {
     }
 
     #[doc = "Get a reference to the value of field `policy_types` after provisioning.\n"]
-    pub fn policy_types(&self) -> terrars::ListRef<DataOrganizationsOrganizationRootsElPolicyTypesElRef> {
+    pub fn policy_types(&self) -> terrars::ListRef<DataOrganizationsOrganization_Roots_PolicyTypesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.policy_types", self.base))
     }
 }

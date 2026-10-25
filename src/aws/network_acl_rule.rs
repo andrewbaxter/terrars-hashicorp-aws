@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkAclRuleData {
+struct NetworkAclRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,6 +36,8 @@ struct NetworkAclRuleData {
     ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
     network_acl_id: terrars::PrimField<std::string::String>,
     protocol: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     rule_action: terrars::PrimField<std::string::String>,
     rule_number: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -43,7 +47,7 @@ struct NetworkAclRuleData {
 struct NetworkAclRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkAclRuleData>,
+    data: std::cell::RefCell<NetworkAclRuleData_>,
 }
 
 #[derive(Clone)]
@@ -185,6 +189,13 @@ impl NetworkAclRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `to_port`.\n"]
     pub fn set_to_port(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().to_port = std::option::Option::Some(v.into());
@@ -234,6 +245,12 @@ impl NetworkAclRule {
     #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
     pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rule_action` after provisioning.\n"]
@@ -300,7 +317,7 @@ impl BuildNetworkAclRule {
         let out = NetworkAclRule(std::rc::Rc::new(NetworkAclRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkAclRuleData {
+            data: std::cell::RefCell::new(NetworkAclRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -315,6 +332,7 @@ impl BuildNetworkAclRule {
                 ipv6_cidr_block: core::default::Default::default(),
                 network_acl_id: self.network_acl_id,
                 protocol: self.protocol,
+                region: core::default::Default::default(),
                 rule_action: self.rule_action,
                 rule_number: self.rule_number,
                 to_port: core::default::Default::default(),
@@ -391,6 +409,12 @@ impl NetworkAclRuleRef {
     #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
     pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rule_action` after provisioning.\n"]

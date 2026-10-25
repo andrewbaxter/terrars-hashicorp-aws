@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AuditmanagerControlData {
+struct AuditmanagerControlData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,18 +28,20 @@ struct AuditmanagerControlData {
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     testing_information: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    control_mapping_sources: std::option::Option<std::vec::Vec<AuditmanagerControlControlMappingSourcesEl>>,
+    control_mapping_sources: std::option::Option<std::vec::Vec<AuditmanagerControl_ControlMappingSources>>,
     dynamic: AuditmanagerControlDynamic,
 }
 
 struct AuditmanagerControl_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AuditmanagerControlData>,
+    data: std::cell::RefCell<AuditmanagerControlData_>,
 }
 
 #[derive(Clone)]
@@ -158,6 +162,13 @@ impl AuditmanagerControl {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -176,7 +187,7 @@ impl AuditmanagerControl {
     #[doc = "Set the field `control_mapping_sources`.\n"]
     pub fn set_control_mapping_sources(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerControlControlMappingSourcesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerControl_ControlMappingSources>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,6 +228,12 @@ impl AuditmanagerControl {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -282,7 +299,7 @@ impl BuildAuditmanagerControl {
         let out = AuditmanagerControl(std::rc::Rc::new(AuditmanagerControl_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AuditmanagerControlData {
+            data: std::cell::RefCell::new(AuditmanagerControlData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -292,6 +309,7 @@ impl BuildAuditmanagerControl {
                 action_plan_title: core::default::Default::default(),
                 description: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 testing_information: core::default::Default::default(),
                 control_mapping_sources: core::default::Default::default(),
@@ -356,6 +374,12 @@ impl AuditmanagerControlRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -377,16 +401,38 @@ impl AuditmanagerControlRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct AuditmanagerControlControlMappingSourcesElSourceKeywordEl {
-    keyword_input_type: terrars::PrimField<std::string::String>,
-    keyword_value: terrars::PrimField<std::string::String>,
+#[derive(Serialize, Default)]
+struct AuditmanagerControlDynamic {
+    control_mapping_sources: std::option::Option<terrars::DynamicBlock<AuditmanagerControl_ControlMappingSources>>,
 }
 
-impl AuditmanagerControlControlMappingSourcesElSourceKeywordEl { }
+#[derive(Serialize)]
+pub struct AuditmanagerControl_ControlMappingSources_SourceKeyword {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    keyword_input_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    keyword_value: std::option::Option<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for AuditmanagerControlControlMappingSourcesElSourceKeywordEl {
-    type O = terrars::BlockAssignable<AuditmanagerControlControlMappingSourcesElSourceKeywordEl>;
+impl AuditmanagerControl_ControlMappingSources_SourceKeyword {
+    #[doc = "Set the field `keyword_input_type`.\n"]
+    pub fn set_keyword_input_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.keyword_input_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `keyword_value`.\n"]
+    pub fn set_keyword_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.keyword_value = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AuditmanagerControl_ControlMappingSources_SourceKeyword {
+    type O = terrars::BlockAssignable<AuditmanagerControl_ControlMappingSources_SourceKeyword>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -397,40 +443,37 @@ impl terrars::ToListMappable for AuditmanagerControlControlMappingSourcesElSourc
     }
 }
 
-pub struct BuildAuditmanagerControlControlMappingSourcesElSourceKeywordEl {
-    #[doc = ""]
-    pub keyword_input_type: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub keyword_value: terrars::PrimField<std::string::String>,
-}
+pub struct BuildAuditmanagerControl_ControlMappingSources_SourceKeyword {}
 
-impl BuildAuditmanagerControlControlMappingSourcesElSourceKeywordEl {
-    pub fn build(self) -> AuditmanagerControlControlMappingSourcesElSourceKeywordEl {
-        AuditmanagerControlControlMappingSourcesElSourceKeywordEl {
-            keyword_input_type: self.keyword_input_type,
-            keyword_value: self.keyword_value,
+impl BuildAuditmanagerControl_ControlMappingSources_SourceKeyword {
+    pub fn build(self) -> AuditmanagerControl_ControlMappingSources_SourceKeyword {
+        AuditmanagerControl_ControlMappingSources_SourceKeyword {
+            keyword_input_type: core::default::Default::default(),
+            keyword_value: core::default::Default::default(),
         }
     }
 }
 
-pub struct AuditmanagerControlControlMappingSourcesElSourceKeywordElRef {
+#[allow(dead_code)]
+pub struct AuditmanagerControl_ControlMappingSources_SourceKeywordRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AuditmanagerControlControlMappingSourcesElSourceKeywordElRef {
+impl terrars::Ref for AuditmanagerControl_ControlMappingSources_SourceKeywordRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AuditmanagerControlControlMappingSourcesElSourceKeywordElRef {
-        AuditmanagerControlControlMappingSourcesElSourceKeywordElRef {
+    ) -> AuditmanagerControl_ControlMappingSources_SourceKeywordRef {
+        AuditmanagerControl_ControlMappingSources_SourceKeywordRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AuditmanagerControlControlMappingSourcesElSourceKeywordElRef {
+impl AuditmanagerControl_ControlMappingSources_SourceKeywordRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -446,30 +489,22 @@ impl AuditmanagerControlControlMappingSourcesElSourceKeywordElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct AuditmanagerControlControlMappingSourcesElDynamic {
-    source_keyword: std
-    ::option
-    ::Option<terrars::DynamicBlock<AuditmanagerControlControlMappingSourcesElSourceKeywordEl>>,
-}
-
 #[derive(Serialize)]
-pub struct AuditmanagerControlControlMappingSourcesEl {
+pub struct AuditmanagerControl_ControlMappingSources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_frequency: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_keyword: std::option::Option<terrars::ListField<AuditmanagerControl_ControlMappingSources_SourceKeyword>>,
     source_name: terrars::PrimField<std::string::String>,
     source_set_up_option: terrars::PrimField<std::string::String>,
     source_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     troubleshooting_text: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_keyword: std::option::Option<std::vec::Vec<AuditmanagerControlControlMappingSourcesElSourceKeywordEl>>,
-    dynamic: AuditmanagerControlControlMappingSourcesElDynamic,
 }
 
-impl AuditmanagerControlControlMappingSourcesEl {
+impl AuditmanagerControl_ControlMappingSources {
     #[doc = "Set the field `source_description`.\n"]
     pub fn set_source_description(
         mut self,
@@ -485,6 +520,15 @@ impl AuditmanagerControlControlMappingSourcesEl {
         self
     }
 
+    #[doc = "Set the field `source_keyword`.\n"]
+    pub fn set_source_keyword(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<AuditmanagerControl_ControlMappingSources_SourceKeyword>>,
+    ) -> Self {
+        self.source_keyword = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `troubleshooting_text`.\n"]
     pub fn set_troubleshooting_text(
         mut self,
@@ -493,31 +537,10 @@ impl AuditmanagerControlControlMappingSourcesEl {
         self.troubleshooting_text = std::option::Option::Some(v.into());
         self
     }
-
-    #[doc = "Set the field `source_keyword`.\n"]
-    pub fn set_source_keyword(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<AuditmanagerControlControlMappingSourcesElSourceKeywordEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.source_keyword = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.source_keyword = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
 }
 
-impl terrars::ToListMappable for AuditmanagerControlControlMappingSourcesEl {
-    type O = terrars::BlockAssignable<AuditmanagerControlControlMappingSourcesEl>;
+impl terrars::ToListMappable for AuditmanagerControl_ControlMappingSources {
+    type O = terrars::BlockAssignable<AuditmanagerControl_ControlMappingSources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -528,7 +551,7 @@ impl terrars::ToListMappable for AuditmanagerControlControlMappingSourcesEl {
     }
 }
 
-pub struct BuildAuditmanagerControlControlMappingSourcesEl {
+pub struct BuildAuditmanagerControl_ControlMappingSources {
     #[doc = ""]
     pub source_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -537,36 +560,37 @@ pub struct BuildAuditmanagerControlControlMappingSourcesEl {
     pub source_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAuditmanagerControlControlMappingSourcesEl {
-    pub fn build(self) -> AuditmanagerControlControlMappingSourcesEl {
-        AuditmanagerControlControlMappingSourcesEl {
+impl BuildAuditmanagerControl_ControlMappingSources {
+    pub fn build(self) -> AuditmanagerControl_ControlMappingSources {
+        AuditmanagerControl_ControlMappingSources {
             source_description: core::default::Default::default(),
             source_frequency: core::default::Default::default(),
+            source_keyword: core::default::Default::default(),
             source_name: self.source_name,
             source_set_up_option: self.source_set_up_option,
             source_type: self.source_type,
             troubleshooting_text: core::default::Default::default(),
-            source_keyword: core::default::Default::default(),
-            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AuditmanagerControlControlMappingSourcesElRef {
+#[allow(dead_code)]
+pub struct AuditmanagerControl_ControlMappingSourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AuditmanagerControlControlMappingSourcesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerControlControlMappingSourcesElRef {
-        AuditmanagerControlControlMappingSourcesElRef {
+impl terrars::Ref for AuditmanagerControl_ControlMappingSourcesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerControl_ControlMappingSourcesRef {
+        AuditmanagerControl_ControlMappingSourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AuditmanagerControlControlMappingSourcesElRef {
+impl AuditmanagerControl_ControlMappingSourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -584,6 +608,11 @@ impl AuditmanagerControlControlMappingSourcesElRef {
     #[doc = "Get a reference to the value of field `source_id` after provisioning.\n"]
     pub fn source_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `source_keyword` after provisioning.\n"]
+    pub fn source_keyword(&self) -> terrars::ListRef<AuditmanagerControl_ControlMappingSources_SourceKeywordRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_keyword", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source_name` after provisioning.\n"]
@@ -605,14 +634,4 @@ impl AuditmanagerControlControlMappingSourcesElRef {
     pub fn troubleshooting_text(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.troubleshooting_text", self.base))
     }
-
-    #[doc = "Get a reference to the value of field `source_keyword` after provisioning.\n"]
-    pub fn source_keyword(&self) -> terrars::ListRef<AuditmanagerControlControlMappingSourcesElSourceKeywordElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.source_keyword", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct AuditmanagerControlDynamic {
-    control_mapping_sources: std::option::Option<terrars::DynamicBlock<AuditmanagerControlControlMappingSourcesEl>>,
 }

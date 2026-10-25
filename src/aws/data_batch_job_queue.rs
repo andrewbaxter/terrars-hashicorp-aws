@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataBatchJobQueueData {
+struct DataBatchJobQueueData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataBatchJobQueueData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataBatchJobQueue_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataBatchJobQueueData>,
+    data: std::cell::RefCell<DataBatchJobQueueData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataBatchJobQueue {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -92,13 +103,18 @@ impl DataBatchJobQueue {
     }
 
     #[doc = "Get a reference to the value of field `compute_environment_order` after provisioning.\n"]
-    pub fn compute_environment_order(&self) -> terrars::ListRef<DataBatchJobQueueComputeEnvironmentOrderElRef> {
+    pub fn compute_environment_order(&self) -> terrars::ListRef<DataBatchJobQueue_ComputeEnvironmentOrderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compute_environment_order", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `job_state_time_limit_action` after provisioning.\n"]
+    pub fn job_state_time_limit_action(&self) -> terrars::ListRef<DataBatchJobQueue_JobStateTimeLimitActionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.job_state_time_limit_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -109,6 +125,12 @@ impl DataBatchJobQueue {
     #[doc = "Get a reference to the value of field `priority` after provisioning.\n"]
     pub fn priority(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scheduling_policy_arn` after provisioning.\n"]
@@ -179,13 +201,14 @@ impl BuildDataBatchJobQueue {
         let out = DataBatchJobQueue(std::rc::Rc::new(DataBatchJobQueue_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataBatchJobQueueData {
+            data: std::cell::RefCell::new(DataBatchJobQueueData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -223,13 +246,18 @@ impl DataBatchJobQueueRef {
     }
 
     #[doc = "Get a reference to the value of field `compute_environment_order` after provisioning.\n"]
-    pub fn compute_environment_order(&self) -> terrars::ListRef<DataBatchJobQueueComputeEnvironmentOrderElRef> {
+    pub fn compute_environment_order(&self) -> terrars::ListRef<DataBatchJobQueue_ComputeEnvironmentOrderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compute_environment_order", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `job_state_time_limit_action` after provisioning.\n"]
+    pub fn job_state_time_limit_action(&self) -> terrars::ListRef<DataBatchJobQueue_JobStateTimeLimitActionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.job_state_time_limit_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -240,6 +268,12 @@ impl DataBatchJobQueueRef {
     #[doc = "Get a reference to the value of field `priority` after provisioning.\n"]
     pub fn priority(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scheduling_policy_arn` after provisioning.\n"]
@@ -269,14 +303,14 @@ impl DataBatchJobQueueRef {
 }
 
 #[derive(Serialize)]
-pub struct DataBatchJobQueueComputeEnvironmentOrderEl {
+pub struct DataBatchJobQueue_ComputeEnvironmentOrder {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compute_environment: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     order: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataBatchJobQueueComputeEnvironmentOrderEl {
+impl DataBatchJobQueue_ComputeEnvironmentOrder {
     #[doc = "Set the field `compute_environment`.\n"]
     pub fn set_compute_environment(
         mut self,
@@ -293,8 +327,8 @@ impl DataBatchJobQueueComputeEnvironmentOrderEl {
     }
 }
 
-impl terrars::ToListMappable for DataBatchJobQueueComputeEnvironmentOrderEl {
-    type O = terrars::BlockAssignable<DataBatchJobQueueComputeEnvironmentOrderEl>;
+impl terrars::ToListMappable for DataBatchJobQueue_ComputeEnvironmentOrder {
+    type O = terrars::BlockAssignable<DataBatchJobQueue_ComputeEnvironmentOrder>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -305,32 +339,34 @@ impl terrars::ToListMappable for DataBatchJobQueueComputeEnvironmentOrderEl {
     }
 }
 
-pub struct BuildDataBatchJobQueueComputeEnvironmentOrderEl {}
+pub struct BuildDataBatchJobQueue_ComputeEnvironmentOrder {}
 
-impl BuildDataBatchJobQueueComputeEnvironmentOrderEl {
-    pub fn build(self) -> DataBatchJobQueueComputeEnvironmentOrderEl {
-        DataBatchJobQueueComputeEnvironmentOrderEl {
+impl BuildDataBatchJobQueue_ComputeEnvironmentOrder {
+    pub fn build(self) -> DataBatchJobQueue_ComputeEnvironmentOrder {
+        DataBatchJobQueue_ComputeEnvironmentOrder {
             compute_environment: core::default::Default::default(),
             order: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataBatchJobQueueComputeEnvironmentOrderElRef {
+#[allow(dead_code)]
+pub struct DataBatchJobQueue_ComputeEnvironmentOrderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataBatchJobQueueComputeEnvironmentOrderElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataBatchJobQueueComputeEnvironmentOrderElRef {
-        DataBatchJobQueueComputeEnvironmentOrderElRef {
+impl terrars::Ref for DataBatchJobQueue_ComputeEnvironmentOrderRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataBatchJobQueue_ComputeEnvironmentOrderRef {
+        DataBatchJobQueue_ComputeEnvironmentOrderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataBatchJobQueueComputeEnvironmentOrderElRef {
+impl DataBatchJobQueue_ComputeEnvironmentOrderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -343,5 +379,110 @@ impl DataBatchJobQueueComputeEnvironmentOrderElRef {
     #[doc = "Get a reference to the value of field `order` after provisioning.\n"]
     pub fn order(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.order", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataBatchJobQueue_JobStateTimeLimitAction {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    action: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_time_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reason: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataBatchJobQueue_JobStateTimeLimitAction {
+    #[doc = "Set the field `action`.\n"]
+    pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.action = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `max_time_seconds`.\n"]
+    pub fn set_max_time_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_time_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `reason`.\n"]
+    pub fn set_reason(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.reason = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataBatchJobQueue_JobStateTimeLimitAction {
+    type O = terrars::BlockAssignable<DataBatchJobQueue_JobStateTimeLimitAction>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataBatchJobQueue_JobStateTimeLimitAction {}
+
+impl BuildDataBatchJobQueue_JobStateTimeLimitAction {
+    pub fn build(self) -> DataBatchJobQueue_JobStateTimeLimitAction {
+        DataBatchJobQueue_JobStateTimeLimitAction {
+            action: core::default::Default::default(),
+            max_time_seconds: core::default::Default::default(),
+            reason: core::default::Default::default(),
+            state: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataBatchJobQueue_JobStateTimeLimitActionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataBatchJobQueue_JobStateTimeLimitActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataBatchJobQueue_JobStateTimeLimitActionRef {
+        DataBatchJobQueue_JobStateTimeLimitActionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataBatchJobQueue_JobStateTimeLimitActionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
+    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_time_seconds` after provisioning.\n"]
+    pub fn max_time_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_time_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `reason` after provisioning.\n"]
+    pub fn reason(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reason", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
     }
 }

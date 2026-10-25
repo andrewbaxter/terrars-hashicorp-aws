@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DxGatewayAssociationData {
+struct DxGatewayAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,15 +32,15 @@ struct DxGatewayAssociationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     proposal_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpn_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DxGatewayAssociationTimeoutsEl>,
+    timeouts: std::option::Option<DxGatewayAssociation_Timeouts>,
 }
 
 struct DxGatewayAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DxGatewayAssociationData>,
+    data: std::cell::RefCell<DxGatewayAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -174,14 +176,15 @@ impl DxGatewayAssociation {
         self
     }
 
-    #[doc = "Set the field `vpn_gateway_id`.\n"]
-    pub fn set_vpn_gateway_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().vpn_gateway_id = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DxGatewayAssociationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DxGatewayAssociation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -234,14 +237,23 @@ impl DxGatewayAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.proposal_id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `vpn_gateway_id` after provisioning.\n"]
-    pub fn vpn_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpn_gateway_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_attachment_id` after provisioning.\n"]
+    pub fn transit_gateway_attachment_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.transit_gateway_attachment_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DxGatewayAssociationTimeoutsElRef {
-        DxGatewayAssociationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DxGatewayAssociation_TimeoutsRef {
+        DxGatewayAssociation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -287,7 +299,7 @@ impl BuildDxGatewayAssociation {
         let out = DxGatewayAssociation(std::rc::Rc::new(DxGatewayAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DxGatewayAssociationData {
+            data: std::cell::RefCell::new(DxGatewayAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -299,7 +311,7 @@ impl BuildDxGatewayAssociation {
                 dx_gateway_id: self.dx_gateway_id,
                 id: core::default::Default::default(),
                 proposal_id: core::default::Default::default(),
-                vpn_gateway_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -379,19 +391,28 @@ impl DxGatewayAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.proposal_id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `vpn_gateway_id` after provisioning.\n"]
-    pub fn vpn_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpn_gateway_id", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_attachment_id` after provisioning.\n"]
+    pub fn transit_gateway_attachment_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.transit_gateway_attachment_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DxGatewayAssociationTimeoutsElRef {
-        DxGatewayAssociationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DxGatewayAssociation_TimeoutsRef {
+        DxGatewayAssociation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DxGatewayAssociationTimeoutsEl {
+pub struct DxGatewayAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -400,7 +421,7 @@ pub struct DxGatewayAssociationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DxGatewayAssociationTimeoutsEl {
+impl DxGatewayAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -420,8 +441,8 @@ impl DxGatewayAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DxGatewayAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<DxGatewayAssociationTimeoutsEl>;
+impl terrars::ToListMappable for DxGatewayAssociation_Timeouts {
+    type O = terrars::BlockAssignable<DxGatewayAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -432,11 +453,11 @@ impl terrars::ToListMappable for DxGatewayAssociationTimeoutsEl {
     }
 }
 
-pub struct BuildDxGatewayAssociationTimeoutsEl {}
+pub struct BuildDxGatewayAssociation_Timeouts {}
 
-impl BuildDxGatewayAssociationTimeoutsEl {
-    pub fn build(self) -> DxGatewayAssociationTimeoutsEl {
-        DxGatewayAssociationTimeoutsEl {
+impl BuildDxGatewayAssociation_Timeouts {
+    pub fn build(self) -> DxGatewayAssociation_Timeouts {
+        DxGatewayAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -444,21 +465,23 @@ impl BuildDxGatewayAssociationTimeoutsEl {
     }
 }
 
-pub struct DxGatewayAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DxGatewayAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DxGatewayAssociationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DxGatewayAssociationTimeoutsElRef {
-        DxGatewayAssociationTimeoutsElRef {
+impl terrars::Ref for DxGatewayAssociation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DxGatewayAssociation_TimeoutsRef {
+        DxGatewayAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DxGatewayAssociationTimeoutsElRef {
+impl DxGatewayAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

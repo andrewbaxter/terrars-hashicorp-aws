@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppmeshVirtualServiceData {
+struct AppmeshVirtualServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,18 +27,20 @@ struct AppmeshVirtualServiceData {
     mesh_owner: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spec: std::option::Option<std::vec::Vec<AppmeshVirtualServiceSpecEl>>,
+    spec: std::option::Option<std::vec::Vec<AppmeshVirtualService_Spec>>,
     dynamic: AppmeshVirtualServiceDynamic,
 }
 
 struct AppmeshVirtualService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppmeshVirtualServiceData>,
+    data: std::cell::RefCell<AppmeshVirtualServiceData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl AppmeshVirtualService {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -167,7 +178,7 @@ impl AppmeshVirtualService {
     }
 
     #[doc = "Set the field `spec`.\n"]
-    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualServiceSpecEl>>) -> Self {
+    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualService_Spec>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().spec = std::option::Option::Some(v);
@@ -214,6 +225,12 @@ impl AppmeshVirtualService {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -230,7 +247,7 @@ impl AppmeshVirtualService {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualServiceSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualService_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
@@ -279,7 +296,7 @@ impl BuildAppmeshVirtualService {
         let out = AppmeshVirtualService(std::rc::Rc::new(AppmeshVirtualService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppmeshVirtualServiceData {
+            data: std::cell::RefCell::new(AppmeshVirtualServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -289,6 +306,7 @@ impl BuildAppmeshVirtualService {
                 mesh_name: self.mesh_name,
                 mesh_owner: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 spec: core::default::Default::default(),
@@ -358,6 +376,12 @@ impl AppmeshVirtualServiceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -374,20 +398,25 @@ impl AppmeshVirtualServiceRef {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualServiceSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshVirtualService_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppmeshVirtualServiceDynamic {
+    spec: std::option::Option<terrars::DynamicBlock<AppmeshVirtualService_Spec>>,
+}
+
 #[derive(Serialize)]
-pub struct AppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
+pub struct AppmeshVirtualService_Spec_Provider_VirtualNode {
     virtual_node_name: terrars::PrimField<std::string::String>,
 }
 
-impl AppmeshVirtualServiceSpecElProviderElVirtualNodeEl { }
+impl AppmeshVirtualService_Spec_Provider_VirtualNode { }
 
-impl terrars::ToListMappable for AppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualServiceSpecElProviderElVirtualNodeEl>;
+impl terrars::ToListMappable for AppmeshVirtualService_Spec_Provider_VirtualNode {
+    type O = terrars::BlockAssignable<AppmeshVirtualService_Spec_Provider_VirtualNode>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -398,35 +427,37 @@ impl terrars::ToListMappable for AppmeshVirtualServiceSpecElProviderElVirtualNod
     }
 }
 
-pub struct BuildAppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
+pub struct BuildAppmeshVirtualService_Spec_Provider_VirtualNode {
     #[doc = ""]
     pub virtual_node_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
-    pub fn build(self) -> AppmeshVirtualServiceSpecElProviderElVirtualNodeEl {
-        AppmeshVirtualServiceSpecElProviderElVirtualNodeEl { virtual_node_name: self.virtual_node_name }
+impl BuildAppmeshVirtualService_Spec_Provider_VirtualNode {
+    pub fn build(self) -> AppmeshVirtualService_Spec_Provider_VirtualNode {
+        AppmeshVirtualService_Spec_Provider_VirtualNode { virtual_node_name: self.virtual_node_name }
     }
 }
 
-pub struct AppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualService_Spec_Provider_VirtualNodeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
+impl terrars::Ref for AppmeshVirtualService_Spec_Provider_VirtualNodeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
-        AppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
+    ) -> AppmeshVirtualService_Spec_Provider_VirtualNodeRef {
+        AppmeshVirtualService_Spec_Provider_VirtualNodeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
+impl AppmeshVirtualService_Spec_Provider_VirtualNodeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -438,14 +469,14 @@ impl AppmeshVirtualServiceSpecElProviderElVirtualNodeElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
+pub struct AppmeshVirtualService_Spec_Provider_VirtualRouter {
     virtual_router_name: terrars::PrimField<std::string::String>,
 }
 
-impl AppmeshVirtualServiceSpecElProviderElVirtualRouterEl { }
+impl AppmeshVirtualService_Spec_Provider_VirtualRouter { }
 
-impl terrars::ToListMappable for AppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualServiceSpecElProviderElVirtualRouterEl>;
+impl terrars::ToListMappable for AppmeshVirtualService_Spec_Provider_VirtualRouter {
+    type O = terrars::BlockAssignable<AppmeshVirtualService_Spec_Provider_VirtualRouter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -456,35 +487,37 @@ impl terrars::ToListMappable for AppmeshVirtualServiceSpecElProviderElVirtualRou
     }
 }
 
-pub struct BuildAppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
+pub struct BuildAppmeshVirtualService_Spec_Provider_VirtualRouter {
     #[doc = ""]
     pub virtual_router_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
-    pub fn build(self) -> AppmeshVirtualServiceSpecElProviderElVirtualRouterEl {
-        AppmeshVirtualServiceSpecElProviderElVirtualRouterEl { virtual_router_name: self.virtual_router_name }
+impl BuildAppmeshVirtualService_Spec_Provider_VirtualRouter {
+    pub fn build(self) -> AppmeshVirtualService_Spec_Provider_VirtualRouter {
+        AppmeshVirtualService_Spec_Provider_VirtualRouter { virtual_router_name: self.virtual_router_name }
     }
 }
 
-pub struct AppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualService_Spec_Provider_VirtualRouterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
+impl terrars::Ref for AppmeshVirtualService_Spec_Provider_VirtualRouterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
-        AppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
+    ) -> AppmeshVirtualService_Spec_Provider_VirtualRouterRef {
+        AppmeshVirtualService_Spec_Provider_VirtualRouterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
+impl AppmeshVirtualService_Spec_Provider_VirtualRouterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -496,27 +529,25 @@ impl AppmeshVirtualServiceSpecElProviderElVirtualRouterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualServiceSpecElProviderElDynamic {
-    virtual_node: std::option::Option<terrars::DynamicBlock<AppmeshVirtualServiceSpecElProviderElVirtualNodeEl>>,
-    virtual_router: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppmeshVirtualServiceSpecElProviderElVirtualRouterEl>>,
+struct AppmeshVirtualService_Spec_ProviderDynamic {
+    virtual_node: std::option::Option<terrars::DynamicBlock<AppmeshVirtualService_Spec_Provider_VirtualNode>>,
+    virtual_router: std::option::Option<terrars::DynamicBlock<AppmeshVirtualService_Spec_Provider_VirtualRouter>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualServiceSpecElProviderEl {
+pub struct AppmeshVirtualService_Spec_Provider {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    virtual_node: std::option::Option<std::vec::Vec<AppmeshVirtualServiceSpecElProviderElVirtualNodeEl>>,
+    virtual_node: std::option::Option<std::vec::Vec<AppmeshVirtualService_Spec_Provider_VirtualNode>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    virtual_router: std::option::Option<std::vec::Vec<AppmeshVirtualServiceSpecElProviderElVirtualRouterEl>>,
-    dynamic: AppmeshVirtualServiceSpecElProviderElDynamic,
+    virtual_router: std::option::Option<std::vec::Vec<AppmeshVirtualService_Spec_Provider_VirtualRouter>>,
+    dynamic: AppmeshVirtualService_Spec_ProviderDynamic,
 }
 
-impl AppmeshVirtualServiceSpecElProviderEl {
+impl AppmeshVirtualService_Spec_Provider {
     #[doc = "Set the field `virtual_node`.\n"]
     pub fn set_virtual_node(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualServiceSpecElProviderElVirtualNodeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualService_Spec_Provider_VirtualNode>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -532,7 +563,7 @@ impl AppmeshVirtualServiceSpecElProviderEl {
     #[doc = "Set the field `virtual_router`.\n"]
     pub fn set_virtual_router(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualServiceSpecElProviderElVirtualRouterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualService_Spec_Provider_VirtualRouter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -546,8 +577,8 @@ impl AppmeshVirtualServiceSpecElProviderEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualServiceSpecElProviderEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualServiceSpecElProviderEl>;
+impl terrars::ToListMappable for AppmeshVirtualService_Spec_Provider {
+    type O = terrars::BlockAssignable<AppmeshVirtualService_Spec_Provider>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -558,11 +589,11 @@ impl terrars::ToListMappable for AppmeshVirtualServiceSpecElProviderEl {
     }
 }
 
-pub struct BuildAppmeshVirtualServiceSpecElProviderEl {}
+pub struct BuildAppmeshVirtualService_Spec_Provider {}
 
-impl BuildAppmeshVirtualServiceSpecElProviderEl {
-    pub fn build(self) -> AppmeshVirtualServiceSpecElProviderEl {
-        AppmeshVirtualServiceSpecElProviderEl {
+impl BuildAppmeshVirtualService_Spec_Provider {
+    pub fn build(self) -> AppmeshVirtualService_Spec_Provider {
+        AppmeshVirtualService_Spec_Provider {
             virtual_node: core::default::Default::default(),
             virtual_router: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -570,53 +601,55 @@ impl BuildAppmeshVirtualServiceSpecElProviderEl {
     }
 }
 
-pub struct AppmeshVirtualServiceSpecElProviderElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualService_Spec_ProviderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualServiceSpecElProviderElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualServiceSpecElProviderElRef {
-        AppmeshVirtualServiceSpecElProviderElRef {
+impl terrars::Ref for AppmeshVirtualService_Spec_ProviderRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualService_Spec_ProviderRef {
+        AppmeshVirtualService_Spec_ProviderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualServiceSpecElProviderElRef {
+impl AppmeshVirtualService_Spec_ProviderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `virtual_node` after provisioning.\n"]
-    pub fn virtual_node(&self) -> terrars::ListRef<AppmeshVirtualServiceSpecElProviderElVirtualNodeElRef> {
+    pub fn virtual_node(&self) -> terrars::ListRef<AppmeshVirtualService_Spec_Provider_VirtualNodeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_node", self.base))
     }
 
     #[doc = "Get a reference to the value of field `virtual_router` after provisioning.\n"]
-    pub fn virtual_router(&self) -> terrars::ListRef<AppmeshVirtualServiceSpecElProviderElVirtualRouterElRef> {
+    pub fn virtual_router(&self) -> terrars::ListRef<AppmeshVirtualService_Spec_Provider_VirtualRouterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.virtual_router", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppmeshVirtualServiceSpecElDynamic {
-    provider: std::option::Option<terrars::DynamicBlock<AppmeshVirtualServiceSpecElProviderEl>>,
+struct AppmeshVirtualService_SpecDynamic {
+    provider: std::option::Option<terrars::DynamicBlock<AppmeshVirtualService_Spec_Provider>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshVirtualServiceSpecEl {
+pub struct AppmeshVirtualService_Spec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    provider: std::option::Option<std::vec::Vec<AppmeshVirtualServiceSpecElProviderEl>>,
-    dynamic: AppmeshVirtualServiceSpecElDynamic,
+    provider: std::option::Option<std::vec::Vec<AppmeshVirtualService_Spec_Provider>>,
+    dynamic: AppmeshVirtualService_SpecDynamic,
 }
 
-impl AppmeshVirtualServiceSpecEl {
+impl AppmeshVirtualService_Spec {
     #[doc = "Set the field `provider`.\n"]
     pub fn set_provider(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualServiceSpecElProviderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshVirtualService_Spec_Provider>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -630,8 +663,8 @@ impl AppmeshVirtualServiceSpecEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshVirtualServiceSpecEl {
-    type O = terrars::BlockAssignable<AppmeshVirtualServiceSpecEl>;
+impl terrars::ToListMappable for AppmeshVirtualService_Spec {
+    type O = terrars::BlockAssignable<AppmeshVirtualService_Spec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -642,43 +675,40 @@ impl terrars::ToListMappable for AppmeshVirtualServiceSpecEl {
     }
 }
 
-pub struct BuildAppmeshVirtualServiceSpecEl {}
+pub struct BuildAppmeshVirtualService_Spec {}
 
-impl BuildAppmeshVirtualServiceSpecEl {
-    pub fn build(self) -> AppmeshVirtualServiceSpecEl {
-        AppmeshVirtualServiceSpecEl {
+impl BuildAppmeshVirtualService_Spec {
+    pub fn build(self) -> AppmeshVirtualService_Spec {
+        AppmeshVirtualService_Spec {
             provider: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshVirtualServiceSpecElRef {
+#[allow(dead_code)]
+pub struct AppmeshVirtualService_SpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshVirtualServiceSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualServiceSpecElRef {
-        AppmeshVirtualServiceSpecElRef {
+impl terrars::Ref for AppmeshVirtualService_SpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshVirtualService_SpecRef {
+        AppmeshVirtualService_SpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshVirtualServiceSpecElRef {
+impl AppmeshVirtualService_SpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `provider` after provisioning.\n"]
-    pub fn provider(&self) -> terrars::ListRef<AppmeshVirtualServiceSpecElProviderElRef> {
+    pub fn provider(&self) -> terrars::ListRef<AppmeshVirtualService_Spec_ProviderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.provider", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppmeshVirtualServiceDynamic {
-    spec: std::option::Option<terrars::DynamicBlock<AppmeshVirtualServiceSpecEl>>,
 }

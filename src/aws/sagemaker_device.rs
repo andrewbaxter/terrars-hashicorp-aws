@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerDeviceData {
+struct SagemakerDeviceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct SagemakerDeviceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    device: std::option::Option<std::vec::Vec<SagemakerDeviceDeviceEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    device: std::option::Option<std::vec::Vec<SagemakerDevice_Device>>,
     dynamic: SagemakerDeviceDynamic,
 }
 
 struct SagemakerDevice_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerDeviceData>,
+    data: std::cell::RefCell<SagemakerDeviceData_>,
 }
 
 #[derive(Clone)]
@@ -135,8 +139,15 @@ impl SagemakerDevice {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `device`.\n"]
-    pub fn set_device(self, v: impl std::convert::Into<terrars::BlockAssignable<SagemakerDeviceDeviceEl>>) -> Self {
+    pub fn set_device(self, v: impl std::convert::Into<terrars::BlockAssignable<SagemakerDevice_Device>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().device = std::option::Option::Some(v);
@@ -168,8 +179,14 @@ impl SagemakerDevice {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `device` after provisioning.\n"]
-    pub fn device(&self) -> terrars::ListRef<SagemakerDeviceDeviceElRef> {
+    pub fn device(&self) -> terrars::ListRef<SagemakerDevice_DeviceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.device", self.extract_ref()))
     }
 }
@@ -216,7 +233,7 @@ impl BuildSagemakerDevice {
         let out = SagemakerDevice(std::rc::Rc::new(SagemakerDevice_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerDeviceData {
+            data: std::cell::RefCell::new(SagemakerDeviceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -224,6 +241,7 @@ impl BuildSagemakerDevice {
                 provisioner: core::default::Default::default(),
                 device_fleet_name: self.device_fleet_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 device: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -276,14 +294,25 @@ impl SagemakerDeviceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `device` after provisioning.\n"]
-    pub fn device(&self) -> terrars::ListRef<SagemakerDeviceDeviceElRef> {
+    pub fn device(&self) -> terrars::ListRef<SagemakerDevice_DeviceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.device", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerDeviceDynamic {
+    device: std::option::Option<terrars::DynamicBlock<SagemakerDevice_Device>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerDeviceDeviceEl {
+pub struct SagemakerDevice_Device {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     device_name: terrars::PrimField<std::string::String>,
@@ -291,7 +320,7 @@ pub struct SagemakerDeviceDeviceEl {
     iot_thing_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SagemakerDeviceDeviceEl {
+impl SagemakerDevice_Device {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -305,8 +334,8 @@ impl SagemakerDeviceDeviceEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerDeviceDeviceEl {
-    type O = terrars::BlockAssignable<SagemakerDeviceDeviceEl>;
+impl terrars::ToListMappable for SagemakerDevice_Device {
+    type O = terrars::BlockAssignable<SagemakerDevice_Device>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -317,14 +346,14 @@ impl terrars::ToListMappable for SagemakerDeviceDeviceEl {
     }
 }
 
-pub struct BuildSagemakerDeviceDeviceEl {
+pub struct BuildSagemakerDevice_Device {
     #[doc = ""]
     pub device_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerDeviceDeviceEl {
-    pub fn build(self) -> SagemakerDeviceDeviceEl {
-        SagemakerDeviceDeviceEl {
+impl BuildSagemakerDevice_Device {
+    pub fn build(self) -> SagemakerDevice_Device {
+        SagemakerDevice_Device {
             description: core::default::Default::default(),
             device_name: self.device_name,
             iot_thing_name: core::default::Default::default(),
@@ -332,21 +361,23 @@ impl BuildSagemakerDeviceDeviceEl {
     }
 }
 
-pub struct SagemakerDeviceDeviceElRef {
+#[allow(dead_code)]
+pub struct SagemakerDevice_DeviceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerDeviceDeviceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerDeviceDeviceElRef {
-        SagemakerDeviceDeviceElRef {
+impl terrars::Ref for SagemakerDevice_DeviceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerDevice_DeviceRef {
+        SagemakerDevice_DeviceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerDeviceDeviceElRef {
+impl SagemakerDevice_DeviceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -365,9 +396,4 @@ impl SagemakerDeviceDeviceElRef {
     pub fn iot_thing_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.iot_thing_name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SagemakerDeviceDynamic {
-    device: std::option::Option<terrars::DynamicBlock<SagemakerDeviceDeviceEl>>,
 }

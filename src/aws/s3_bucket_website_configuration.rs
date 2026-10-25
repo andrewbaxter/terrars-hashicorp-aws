@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketWebsiteConfigurationData {
+struct S3BucketWebsiteConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,22 +26,24 @@ struct S3BucketWebsiteConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     routing_rules: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    error_document: std::option::Option<std::vec::Vec<S3BucketWebsiteConfigurationErrorDocumentEl>>,
+    error_document: std::option::Option<std::vec::Vec<S3BucketWebsiteConfiguration_ErrorDocument>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    index_document: std::option::Option<std::vec::Vec<S3BucketWebsiteConfigurationIndexDocumentEl>>,
+    index_document: std::option::Option<std::vec::Vec<S3BucketWebsiteConfiguration_IndexDocument>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect_all_requests_to: std::option::Option<std::vec::Vec<S3BucketWebsiteConfigurationRedirectAllRequestsToEl>>,
+    redirect_all_requests_to: std::option::Option<std::vec::Vec<S3BucketWebsiteConfiguration_RedirectAllRequestsTo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    routing_rule: std::option::Option<std::vec::Vec<S3BucketWebsiteConfigurationRoutingRuleEl>>,
+    routing_rule: std::option::Option<std::vec::Vec<S3BucketWebsiteConfiguration_RoutingRule>>,
     dynamic: S3BucketWebsiteConfigurationDynamic,
 }
 
 struct S3BucketWebsiteConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketWebsiteConfigurationData>,
+    data: std::cell::RefCell<S3BucketWebsiteConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl S3BucketWebsiteConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `routing_rules`.\n"]
     pub fn set_routing_rules(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().routing_rules = std::option::Option::Some(v.into());
@@ -160,7 +171,7 @@ impl S3BucketWebsiteConfiguration {
     #[doc = "Set the field `error_document`.\n"]
     pub fn set_error_document(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfigurationErrorDocumentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfiguration_ErrorDocument>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -176,7 +187,7 @@ impl S3BucketWebsiteConfiguration {
     #[doc = "Set the field `index_document`.\n"]
     pub fn set_index_document(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfigurationIndexDocumentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfiguration_IndexDocument>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +203,7 @@ impl S3BucketWebsiteConfiguration {
     #[doc = "Set the field `redirect_all_requests_to`.\n"]
     pub fn set_redirect_all_requests_to(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfigurationRedirectAllRequestsToEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfiguration_RedirectAllRequestsTo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -208,7 +219,7 @@ impl S3BucketWebsiteConfiguration {
     #[doc = "Set the field `routing_rule`.\n"]
     pub fn set_routing_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfigurationRoutingRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfiguration_RoutingRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -236,6 +247,12 @@ impl S3BucketWebsiteConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `routing_rules` after provisioning.\n"]
     pub fn routing_rules(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_rules", self.extract_ref()))
@@ -252,22 +269,22 @@ impl S3BucketWebsiteConfiguration {
     }
 
     #[doc = "Get a reference to the value of field `error_document` after provisioning.\n"]
-    pub fn error_document(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationErrorDocumentElRef> {
+    pub fn error_document(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_ErrorDocumentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_document", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `index_document` after provisioning.\n"]
-    pub fn index_document(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationIndexDocumentElRef> {
+    pub fn index_document(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_IndexDocumentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.index_document", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `redirect_all_requests_to` after provisioning.\n"]
-    pub fn redirect_all_requests_to(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationRedirectAllRequestsToElRef> {
+    pub fn redirect_all_requests_to(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_RedirectAllRequestsToRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redirect_all_requests_to", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `routing_rule` after provisioning.\n"]
-    pub fn routing_rule(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationRoutingRuleElRef> {
+    pub fn routing_rule(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_RoutingRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routing_rule", self.extract_ref()))
     }
 }
@@ -314,7 +331,7 @@ impl BuildS3BucketWebsiteConfiguration {
         let out = S3BucketWebsiteConfiguration(std::rc::Rc::new(S3BucketWebsiteConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketWebsiteConfigurationData {
+            data: std::cell::RefCell::new(S3BucketWebsiteConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -323,6 +340,7 @@ impl BuildS3BucketWebsiteConfiguration {
                 bucket: self.bucket,
                 expected_bucket_owner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 routing_rules: core::default::Default::default(),
                 error_document: core::default::Default::default(),
                 index_document: core::default::Default::default(),
@@ -374,6 +392,12 @@ impl S3BucketWebsiteConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `routing_rules` after provisioning.\n"]
     pub fn routing_rules(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_rules", self.extract_ref()))
@@ -390,35 +414,45 @@ impl S3BucketWebsiteConfigurationRef {
     }
 
     #[doc = "Get a reference to the value of field `error_document` after provisioning.\n"]
-    pub fn error_document(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationErrorDocumentElRef> {
+    pub fn error_document(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_ErrorDocumentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.error_document", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `index_document` after provisioning.\n"]
-    pub fn index_document(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationIndexDocumentElRef> {
+    pub fn index_document(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_IndexDocumentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.index_document", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `redirect_all_requests_to` after provisioning.\n"]
-    pub fn redirect_all_requests_to(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationRedirectAllRequestsToElRef> {
+    pub fn redirect_all_requests_to(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_RedirectAllRequestsToRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redirect_all_requests_to", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `routing_rule` after provisioning.\n"]
-    pub fn routing_rule(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationRoutingRuleElRef> {
+    pub fn routing_rule(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_RoutingRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.routing_rule", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketWebsiteConfigurationDynamic {
+    error_document: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfiguration_ErrorDocument>>,
+    index_document: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfiguration_IndexDocument>>,
+    redirect_all_requests_to: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3BucketWebsiteConfiguration_RedirectAllRequestsTo>>,
+    routing_rule: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfiguration_RoutingRule>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketWebsiteConfigurationErrorDocumentEl {
+pub struct S3BucketWebsiteConfiguration_ErrorDocument {
     key: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketWebsiteConfigurationErrorDocumentEl { }
+impl S3BucketWebsiteConfiguration_ErrorDocument { }
 
-impl terrars::ToListMappable for S3BucketWebsiteConfigurationErrorDocumentEl {
-    type O = terrars::BlockAssignable<S3BucketWebsiteConfigurationErrorDocumentEl>;
+impl terrars::ToListMappable for S3BucketWebsiteConfiguration_ErrorDocument {
+    type O = terrars::BlockAssignable<S3BucketWebsiteConfiguration_ErrorDocument>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -429,35 +463,34 @@ impl terrars::ToListMappable for S3BucketWebsiteConfigurationErrorDocumentEl {
     }
 }
 
-pub struct BuildS3BucketWebsiteConfigurationErrorDocumentEl {
+pub struct BuildS3BucketWebsiteConfiguration_ErrorDocument {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketWebsiteConfigurationErrorDocumentEl {
-    pub fn build(self) -> S3BucketWebsiteConfigurationErrorDocumentEl {
-        S3BucketWebsiteConfigurationErrorDocumentEl { key: self.key }
+impl BuildS3BucketWebsiteConfiguration_ErrorDocument {
+    pub fn build(self) -> S3BucketWebsiteConfiguration_ErrorDocument {
+        S3BucketWebsiteConfiguration_ErrorDocument { key: self.key }
     }
 }
 
-pub struct S3BucketWebsiteConfigurationErrorDocumentElRef {
+#[allow(dead_code)]
+pub struct S3BucketWebsiteConfiguration_ErrorDocumentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketWebsiteConfigurationErrorDocumentElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> S3BucketWebsiteConfigurationErrorDocumentElRef {
-        S3BucketWebsiteConfigurationErrorDocumentElRef {
+impl terrars::Ref for S3BucketWebsiteConfiguration_ErrorDocumentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketWebsiteConfiguration_ErrorDocumentRef {
+        S3BucketWebsiteConfiguration_ErrorDocumentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketWebsiteConfigurationErrorDocumentElRef {
+impl S3BucketWebsiteConfiguration_ErrorDocumentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -469,14 +502,14 @@ impl S3BucketWebsiteConfigurationErrorDocumentElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketWebsiteConfigurationIndexDocumentEl {
+pub struct S3BucketWebsiteConfiguration_IndexDocument {
     suffix: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketWebsiteConfigurationIndexDocumentEl { }
+impl S3BucketWebsiteConfiguration_IndexDocument { }
 
-impl terrars::ToListMappable for S3BucketWebsiteConfigurationIndexDocumentEl {
-    type O = terrars::BlockAssignable<S3BucketWebsiteConfigurationIndexDocumentEl>;
+impl terrars::ToListMappable for S3BucketWebsiteConfiguration_IndexDocument {
+    type O = terrars::BlockAssignable<S3BucketWebsiteConfiguration_IndexDocument>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -487,35 +520,34 @@ impl terrars::ToListMappable for S3BucketWebsiteConfigurationIndexDocumentEl {
     }
 }
 
-pub struct BuildS3BucketWebsiteConfigurationIndexDocumentEl {
+pub struct BuildS3BucketWebsiteConfiguration_IndexDocument {
     #[doc = ""]
     pub suffix: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketWebsiteConfigurationIndexDocumentEl {
-    pub fn build(self) -> S3BucketWebsiteConfigurationIndexDocumentEl {
-        S3BucketWebsiteConfigurationIndexDocumentEl { suffix: self.suffix }
+impl BuildS3BucketWebsiteConfiguration_IndexDocument {
+    pub fn build(self) -> S3BucketWebsiteConfiguration_IndexDocument {
+        S3BucketWebsiteConfiguration_IndexDocument { suffix: self.suffix }
     }
 }
 
-pub struct S3BucketWebsiteConfigurationIndexDocumentElRef {
+#[allow(dead_code)]
+pub struct S3BucketWebsiteConfiguration_IndexDocumentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketWebsiteConfigurationIndexDocumentElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> S3BucketWebsiteConfigurationIndexDocumentElRef {
-        S3BucketWebsiteConfigurationIndexDocumentElRef {
+impl terrars::Ref for S3BucketWebsiteConfiguration_IndexDocumentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketWebsiteConfiguration_IndexDocumentRef {
+        S3BucketWebsiteConfiguration_IndexDocumentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketWebsiteConfigurationIndexDocumentElRef {
+impl S3BucketWebsiteConfiguration_IndexDocumentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -527,13 +559,13 @@ impl S3BucketWebsiteConfigurationIndexDocumentElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketWebsiteConfigurationRedirectAllRequestsToEl {
+pub struct S3BucketWebsiteConfiguration_RedirectAllRequestsTo {
     host_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocol: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketWebsiteConfigurationRedirectAllRequestsToEl {
+impl S3BucketWebsiteConfiguration_RedirectAllRequestsTo {
     #[doc = "Set the field `protocol`.\n"]
     pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.protocol = std::option::Option::Some(v.into());
@@ -541,8 +573,8 @@ impl S3BucketWebsiteConfigurationRedirectAllRequestsToEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketWebsiteConfigurationRedirectAllRequestsToEl {
-    type O = terrars::BlockAssignable<S3BucketWebsiteConfigurationRedirectAllRequestsToEl>;
+impl terrars::ToListMappable for S3BucketWebsiteConfiguration_RedirectAllRequestsTo {
+    type O = terrars::BlockAssignable<S3BucketWebsiteConfiguration_RedirectAllRequestsTo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -553,38 +585,40 @@ impl terrars::ToListMappable for S3BucketWebsiteConfigurationRedirectAllRequests
     }
 }
 
-pub struct BuildS3BucketWebsiteConfigurationRedirectAllRequestsToEl {
+pub struct BuildS3BucketWebsiteConfiguration_RedirectAllRequestsTo {
     #[doc = ""]
     pub host_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketWebsiteConfigurationRedirectAllRequestsToEl {
-    pub fn build(self) -> S3BucketWebsiteConfigurationRedirectAllRequestsToEl {
-        S3BucketWebsiteConfigurationRedirectAllRequestsToEl {
+impl BuildS3BucketWebsiteConfiguration_RedirectAllRequestsTo {
+    pub fn build(self) -> S3BucketWebsiteConfiguration_RedirectAllRequestsTo {
+        S3BucketWebsiteConfiguration_RedirectAllRequestsTo {
             host_name: self.host_name,
             protocol: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketWebsiteConfigurationRedirectAllRequestsToElRef {
+#[allow(dead_code)]
+pub struct S3BucketWebsiteConfiguration_RedirectAllRequestsToRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketWebsiteConfigurationRedirectAllRequestsToElRef {
+impl terrars::Ref for S3BucketWebsiteConfiguration_RedirectAllRequestsToRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketWebsiteConfigurationRedirectAllRequestsToElRef {
-        S3BucketWebsiteConfigurationRedirectAllRequestsToElRef {
+    ) -> S3BucketWebsiteConfiguration_RedirectAllRequestsToRef {
+        S3BucketWebsiteConfiguration_RedirectAllRequestsToRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketWebsiteConfigurationRedirectAllRequestsToElRef {
+impl S3BucketWebsiteConfiguration_RedirectAllRequestsToRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -601,14 +635,14 @@ impl S3BucketWebsiteConfigurationRedirectAllRequestsToElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketWebsiteConfigurationRoutingRuleElConditionEl {
+pub struct S3BucketWebsiteConfiguration_RoutingRule_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_error_code_returned_equals: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_prefix_equals: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketWebsiteConfigurationRoutingRuleElConditionEl {
+impl S3BucketWebsiteConfiguration_RoutingRule_Condition {
     #[doc = "Set the field `http_error_code_returned_equals`.\n"]
     pub fn set_http_error_code_returned_equals(
         mut self,
@@ -625,8 +659,8 @@ impl S3BucketWebsiteConfigurationRoutingRuleElConditionEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketWebsiteConfigurationRoutingRuleElConditionEl {
-    type O = terrars::BlockAssignable<S3BucketWebsiteConfigurationRoutingRuleElConditionEl>;
+impl terrars::ToListMappable for S3BucketWebsiteConfiguration_RoutingRule_Condition {
+    type O = terrars::BlockAssignable<S3BucketWebsiteConfiguration_RoutingRule_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -637,35 +671,37 @@ impl terrars::ToListMappable for S3BucketWebsiteConfigurationRoutingRuleElCondit
     }
 }
 
-pub struct BuildS3BucketWebsiteConfigurationRoutingRuleElConditionEl {}
+pub struct BuildS3BucketWebsiteConfiguration_RoutingRule_Condition {}
 
-impl BuildS3BucketWebsiteConfigurationRoutingRuleElConditionEl {
-    pub fn build(self) -> S3BucketWebsiteConfigurationRoutingRuleElConditionEl {
-        S3BucketWebsiteConfigurationRoutingRuleElConditionEl {
+impl BuildS3BucketWebsiteConfiguration_RoutingRule_Condition {
+    pub fn build(self) -> S3BucketWebsiteConfiguration_RoutingRule_Condition {
+        S3BucketWebsiteConfiguration_RoutingRule_Condition {
             http_error_code_returned_equals: core::default::Default::default(),
             key_prefix_equals: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketWebsiteConfigurationRoutingRuleElConditionElRef {
+#[allow(dead_code)]
+pub struct S3BucketWebsiteConfiguration_RoutingRule_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketWebsiteConfigurationRoutingRuleElConditionElRef {
+impl terrars::Ref for S3BucketWebsiteConfiguration_RoutingRule_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketWebsiteConfigurationRoutingRuleElConditionElRef {
-        S3BucketWebsiteConfigurationRoutingRuleElConditionElRef {
+    ) -> S3BucketWebsiteConfiguration_RoutingRule_ConditionRef {
+        S3BucketWebsiteConfiguration_RoutingRule_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketWebsiteConfigurationRoutingRuleElConditionElRef {
+impl S3BucketWebsiteConfiguration_RoutingRule_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -682,7 +718,7 @@ impl S3BucketWebsiteConfigurationRoutingRuleElConditionElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketWebsiteConfigurationRoutingRuleElRedirectEl {
+pub struct S3BucketWebsiteConfiguration_RoutingRule_Redirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -695,7 +731,7 @@ pub struct S3BucketWebsiteConfigurationRoutingRuleElRedirectEl {
     replace_key_with: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketWebsiteConfigurationRoutingRuleElRedirectEl {
+impl S3BucketWebsiteConfiguration_RoutingRule_Redirect {
     #[doc = "Set the field `host_name`.\n"]
     pub fn set_host_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host_name = std::option::Option::Some(v.into());
@@ -733,8 +769,8 @@ impl S3BucketWebsiteConfigurationRoutingRuleElRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketWebsiteConfigurationRoutingRuleElRedirectEl {
-    type O = terrars::BlockAssignable<S3BucketWebsiteConfigurationRoutingRuleElRedirectEl>;
+impl terrars::ToListMappable for S3BucketWebsiteConfiguration_RoutingRule_Redirect {
+    type O = terrars::BlockAssignable<S3BucketWebsiteConfiguration_RoutingRule_Redirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -745,11 +781,11 @@ impl terrars::ToListMappable for S3BucketWebsiteConfigurationRoutingRuleElRedire
     }
 }
 
-pub struct BuildS3BucketWebsiteConfigurationRoutingRuleElRedirectEl {}
+pub struct BuildS3BucketWebsiteConfiguration_RoutingRule_Redirect {}
 
-impl BuildS3BucketWebsiteConfigurationRoutingRuleElRedirectEl {
-    pub fn build(self) -> S3BucketWebsiteConfigurationRoutingRuleElRedirectEl {
-        S3BucketWebsiteConfigurationRoutingRuleElRedirectEl {
+impl BuildS3BucketWebsiteConfiguration_RoutingRule_Redirect {
+    pub fn build(self) -> S3BucketWebsiteConfiguration_RoutingRule_Redirect {
+        S3BucketWebsiteConfiguration_RoutingRule_Redirect {
             host_name: core::default::Default::default(),
             http_redirect_code: core::default::Default::default(),
             protocol: core::default::Default::default(),
@@ -759,24 +795,26 @@ impl BuildS3BucketWebsiteConfigurationRoutingRuleElRedirectEl {
     }
 }
 
-pub struct S3BucketWebsiteConfigurationRoutingRuleElRedirectElRef {
+#[allow(dead_code)]
+pub struct S3BucketWebsiteConfiguration_RoutingRule_RedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketWebsiteConfigurationRoutingRuleElRedirectElRef {
+impl terrars::Ref for S3BucketWebsiteConfiguration_RoutingRule_RedirectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketWebsiteConfigurationRoutingRuleElRedirectElRef {
-        S3BucketWebsiteConfigurationRoutingRuleElRedirectElRef {
+    ) -> S3BucketWebsiteConfiguration_RoutingRule_RedirectRef {
+        S3BucketWebsiteConfiguration_RoutingRule_RedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketWebsiteConfigurationRoutingRuleElRedirectElRef {
+impl S3BucketWebsiteConfiguration_RoutingRule_RedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -808,25 +846,25 @@ impl S3BucketWebsiteConfigurationRoutingRuleElRedirectElRef {
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketWebsiteConfigurationRoutingRuleElDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfigurationRoutingRuleElConditionEl>>,
-    redirect: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfigurationRoutingRuleElRedirectEl>>,
+struct S3BucketWebsiteConfiguration_RoutingRuleDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfiguration_RoutingRule_Condition>>,
+    redirect: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfiguration_RoutingRule_Redirect>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketWebsiteConfigurationRoutingRuleEl {
+pub struct S3BucketWebsiteConfiguration_RoutingRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<S3BucketWebsiteConfigurationRoutingRuleElConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<S3BucketWebsiteConfiguration_RoutingRule_Condition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect: std::option::Option<std::vec::Vec<S3BucketWebsiteConfigurationRoutingRuleElRedirectEl>>,
-    dynamic: S3BucketWebsiteConfigurationRoutingRuleElDynamic,
+    redirect: std::option::Option<std::vec::Vec<S3BucketWebsiteConfiguration_RoutingRule_Redirect>>,
+    dynamic: S3BucketWebsiteConfiguration_RoutingRuleDynamic,
 }
 
-impl S3BucketWebsiteConfigurationRoutingRuleEl {
+impl S3BucketWebsiteConfiguration_RoutingRule {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfigurationRoutingRuleElConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfiguration_RoutingRule_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -842,7 +880,7 @@ impl S3BucketWebsiteConfigurationRoutingRuleEl {
     #[doc = "Set the field `redirect`.\n"]
     pub fn set_redirect(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfigurationRoutingRuleElRedirectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteConfiguration_RoutingRule_Redirect>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -856,8 +894,8 @@ impl S3BucketWebsiteConfigurationRoutingRuleEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketWebsiteConfigurationRoutingRuleEl {
-    type O = terrars::BlockAssignable<S3BucketWebsiteConfigurationRoutingRuleEl>;
+impl terrars::ToListMappable for S3BucketWebsiteConfiguration_RoutingRule {
+    type O = terrars::BlockAssignable<S3BucketWebsiteConfiguration_RoutingRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -868,11 +906,11 @@ impl terrars::ToListMappable for S3BucketWebsiteConfigurationRoutingRuleEl {
     }
 }
 
-pub struct BuildS3BucketWebsiteConfigurationRoutingRuleEl {}
+pub struct BuildS3BucketWebsiteConfiguration_RoutingRule {}
 
-impl BuildS3BucketWebsiteConfigurationRoutingRuleEl {
-    pub fn build(self) -> S3BucketWebsiteConfigurationRoutingRuleEl {
-        S3BucketWebsiteConfigurationRoutingRuleEl {
+impl BuildS3BucketWebsiteConfiguration_RoutingRule {
+    pub fn build(self) -> S3BucketWebsiteConfiguration_RoutingRule {
+        S3BucketWebsiteConfiguration_RoutingRule {
             condition: core::default::Default::default(),
             redirect: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -880,42 +918,34 @@ impl BuildS3BucketWebsiteConfigurationRoutingRuleEl {
     }
 }
 
-pub struct S3BucketWebsiteConfigurationRoutingRuleElRef {
+#[allow(dead_code)]
+pub struct S3BucketWebsiteConfiguration_RoutingRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketWebsiteConfigurationRoutingRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketWebsiteConfigurationRoutingRuleElRef {
-        S3BucketWebsiteConfigurationRoutingRuleElRef {
+impl terrars::Ref for S3BucketWebsiteConfiguration_RoutingRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketWebsiteConfiguration_RoutingRuleRef {
+        S3BucketWebsiteConfiguration_RoutingRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketWebsiteConfigurationRoutingRuleElRef {
+impl S3BucketWebsiteConfiguration_RoutingRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `condition` after provisioning.\n"]
-    pub fn condition(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationRoutingRuleElConditionElRef> {
+    pub fn condition(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_RoutingRule_ConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.condition", self.base))
     }
 
     #[doc = "Get a reference to the value of field `redirect` after provisioning.\n"]
-    pub fn redirect(&self) -> terrars::ListRef<S3BucketWebsiteConfigurationRoutingRuleElRedirectElRef> {
+    pub fn redirect(&self) -> terrars::ListRef<S3BucketWebsiteConfiguration_RoutingRule_RedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redirect", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketWebsiteConfigurationDynamic {
-    error_document: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfigurationErrorDocumentEl>>,
-    index_document: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfigurationIndexDocumentEl>>,
-    redirect_all_requests_to: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3BucketWebsiteConfigurationRedirectAllRequestsToEl>>,
-    routing_rule: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteConfigurationRoutingRuleEl>>,
 }

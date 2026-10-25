@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataNetworkmanagerSiteData {
+struct DataNetworkmanagerSiteData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataNetworkmanagerSiteData {
 struct DataNetworkmanagerSite_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataNetworkmanagerSiteData>,
+    data: std::cell::RefCell<DataNetworkmanagerSiteData_>,
 }
 
 #[derive(Clone)]
@@ -108,7 +110,7 @@ impl DataNetworkmanagerSite {
     }
 
     #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> terrars::ListRef<DataNetworkmanagerSiteLocationElRef> {
+    pub fn location(&self) -> terrars::ListRef<DataNetworkmanagerSite_LocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
@@ -167,7 +169,7 @@ impl BuildDataNetworkmanagerSite {
         let out = DataNetworkmanagerSite(std::rc::Rc::new(DataNetworkmanagerSite_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataNetworkmanagerSiteData {
+            data: std::cell::RefCell::new(DataNetworkmanagerSiteData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -227,7 +229,7 @@ impl DataNetworkmanagerSiteRef {
     }
 
     #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> terrars::ListRef<DataNetworkmanagerSiteLocationElRef> {
+    pub fn location(&self) -> terrars::ListRef<DataNetworkmanagerSite_LocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
@@ -243,7 +245,7 @@ impl DataNetworkmanagerSiteRef {
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkmanagerSiteLocationEl {
+pub struct DataNetworkmanagerSite_Location {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -252,7 +254,7 @@ pub struct DataNetworkmanagerSiteLocationEl {
     longitude: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataNetworkmanagerSiteLocationEl {
+impl DataNetworkmanagerSite_Location {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -272,8 +274,8 @@ impl DataNetworkmanagerSiteLocationEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkmanagerSiteLocationEl {
-    type O = terrars::BlockAssignable<DataNetworkmanagerSiteLocationEl>;
+impl terrars::ToListMappable for DataNetworkmanagerSite_Location {
+    type O = terrars::BlockAssignable<DataNetworkmanagerSite_Location>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -284,11 +286,11 @@ impl terrars::ToListMappable for DataNetworkmanagerSiteLocationEl {
     }
 }
 
-pub struct BuildDataNetworkmanagerSiteLocationEl {}
+pub struct BuildDataNetworkmanagerSite_Location {}
 
-impl BuildDataNetworkmanagerSiteLocationEl {
-    pub fn build(self) -> DataNetworkmanagerSiteLocationEl {
-        DataNetworkmanagerSiteLocationEl {
+impl BuildDataNetworkmanagerSite_Location {
+    pub fn build(self) -> DataNetworkmanagerSite_Location {
+        DataNetworkmanagerSite_Location {
             address: core::default::Default::default(),
             latitude: core::default::Default::default(),
             longitude: core::default::Default::default(),
@@ -296,21 +298,23 @@ impl BuildDataNetworkmanagerSiteLocationEl {
     }
 }
 
-pub struct DataNetworkmanagerSiteLocationElRef {
+#[allow(dead_code)]
+pub struct DataNetworkmanagerSite_LocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkmanagerSiteLocationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkmanagerSiteLocationElRef {
-        DataNetworkmanagerSiteLocationElRef {
+impl terrars::Ref for DataNetworkmanagerSite_LocationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkmanagerSite_LocationRef {
+        DataNetworkmanagerSite_LocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkmanagerSiteLocationElRef {
+impl DataNetworkmanagerSite_LocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

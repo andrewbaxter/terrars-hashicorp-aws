@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ChimeVoiceConnectorTerminationCredentialsData {
+struct ChimeVoiceConnectorTerminationCredentialsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,16 +22,18 @@ struct ChimeVoiceConnectorTerminationCredentialsData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     voice_connector_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    credentials: std::option::Option<std::vec::Vec<ChimeVoiceConnectorTerminationCredentialsCredentialsEl>>,
+    credentials: std::option::Option<std::vec::Vec<ChimeVoiceConnectorTerminationCredentials_Credentials>>,
     dynamic: ChimeVoiceConnectorTerminationCredentialsDynamic,
 }
 
 struct ChimeVoiceConnectorTerminationCredentials_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ChimeVoiceConnectorTerminationCredentialsData>,
+    data: std::cell::RefCell<ChimeVoiceConnectorTerminationCredentialsData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl ChimeVoiceConnectorTerminationCredentials {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `credentials`.\n"]
     pub fn set_credentials(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ChimeVoiceConnectorTerminationCredentialsCredentialsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ChimeVoiceConnectorTerminationCredentials_Credentials>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -154,6 +165,12 @@ impl ChimeVoiceConnectorTerminationCredentials {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `voice_connector_id` after provisioning.\n"]
@@ -205,13 +222,14 @@ impl BuildChimeVoiceConnectorTerminationCredentials {
             ChimeVoiceConnectorTerminationCredentials(std::rc::Rc::new(ChimeVoiceConnectorTerminationCredentials_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(ChimeVoiceConnectorTerminationCredentialsData {
+                data: std::cell::RefCell::new(ChimeVoiceConnectorTerminationCredentialsData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
                     for_each: std::option::Option::None,
                     provisioner: core::default::Default::default(),
                     id: core::default::Default::default(),
+                    region: core::default::Default::default(),
                     voice_connector_id: self.voice_connector_id,
                     credentials: core::default::Default::default(),
                     dynamic: core::default::Default::default(),
@@ -250,22 +268,33 @@ impl ChimeVoiceConnectorTerminationCredentialsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `voice_connector_id` after provisioning.\n"]
     pub fn voice_connector_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.voice_connector_id", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ChimeVoiceConnectorTerminationCredentialsDynamic {
+    credentials: std::option::Option<terrars::DynamicBlock<ChimeVoiceConnectorTerminationCredentials_Credentials>>,
+}
+
 #[derive(Serialize)]
-pub struct ChimeVoiceConnectorTerminationCredentialsCredentialsEl {
+pub struct ChimeVoiceConnectorTerminationCredentials_Credentials {
     password: terrars::PrimField<std::string::String>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl ChimeVoiceConnectorTerminationCredentialsCredentialsEl { }
+impl ChimeVoiceConnectorTerminationCredentials_Credentials { }
 
-impl terrars::ToListMappable for ChimeVoiceConnectorTerminationCredentialsCredentialsEl {
-    type O = terrars::BlockAssignable<ChimeVoiceConnectorTerminationCredentialsCredentialsEl>;
+impl terrars::ToListMappable for ChimeVoiceConnectorTerminationCredentials_Credentials {
+    type O = terrars::BlockAssignable<ChimeVoiceConnectorTerminationCredentials_Credentials>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -276,40 +305,42 @@ impl terrars::ToListMappable for ChimeVoiceConnectorTerminationCredentialsCreden
     }
 }
 
-pub struct BuildChimeVoiceConnectorTerminationCredentialsCredentialsEl {
+pub struct BuildChimeVoiceConnectorTerminationCredentials_Credentials {
     #[doc = ""]
     pub password: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildChimeVoiceConnectorTerminationCredentialsCredentialsEl {
-    pub fn build(self) -> ChimeVoiceConnectorTerminationCredentialsCredentialsEl {
-        ChimeVoiceConnectorTerminationCredentialsCredentialsEl {
+impl BuildChimeVoiceConnectorTerminationCredentials_Credentials {
+    pub fn build(self) -> ChimeVoiceConnectorTerminationCredentials_Credentials {
+        ChimeVoiceConnectorTerminationCredentials_Credentials {
             password: self.password,
             username: self.username,
         }
     }
 }
 
-pub struct ChimeVoiceConnectorTerminationCredentialsCredentialsElRef {
+#[allow(dead_code)]
+pub struct ChimeVoiceConnectorTerminationCredentials_CredentialsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ChimeVoiceConnectorTerminationCredentialsCredentialsElRef {
+impl terrars::Ref for ChimeVoiceConnectorTerminationCredentials_CredentialsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ChimeVoiceConnectorTerminationCredentialsCredentialsElRef {
-        ChimeVoiceConnectorTerminationCredentialsCredentialsElRef {
+    ) -> ChimeVoiceConnectorTerminationCredentials_CredentialsRef {
+        ChimeVoiceConnectorTerminationCredentials_CredentialsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ChimeVoiceConnectorTerminationCredentialsCredentialsElRef {
+impl ChimeVoiceConnectorTerminationCredentials_CredentialsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -323,9 +354,4 @@ impl ChimeVoiceConnectorTerminationCredentialsCredentialsElRef {
     pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ChimeVoiceConnectorTerminationCredentialsDynamic {
-    credentials: std::option::Option<terrars::DynamicBlock<ChimeVoiceConnectorTerminationCredentialsCredentialsEl>>,
 }

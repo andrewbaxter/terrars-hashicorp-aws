@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkfirewallLoggingConfigurationData {
+struct NetworkfirewallLoggingConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,18 +20,22 @@ struct NetworkfirewallLoggingConfigurationData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_monitoring_dashboard: std::option::Option<terrars::PrimField<bool>>,
     firewall_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_configuration: std::option::Option<std::vec::Vec<NetworkfirewallLoggingConfigurationLoggingConfigurationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    logging_configuration: std::option::Option<std::vec::Vec<NetworkfirewallLoggingConfiguration_LoggingConfiguration>>,
     dynamic: NetworkfirewallLoggingConfigurationDynamic,
 }
 
 struct NetworkfirewallLoggingConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkfirewallLoggingConfigurationData>,
+    data: std::cell::RefCell<NetworkfirewallLoggingConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -129,9 +135,22 @@ impl NetworkfirewallLoggingConfiguration {
         self
     }
 
+    #[doc = "Set the field `enable_monitoring_dashboard`.\n"]
+    pub fn set_enable_monitoring_dashboard(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_monitoring_dashboard = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -143,7 +162,7 @@ impl NetworkfirewallLoggingConfiguration {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<NetworkfirewallLoggingConfigurationLoggingConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<NetworkfirewallLoggingConfiguration_LoggingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -156,6 +175,11 @@ impl NetworkfirewallLoggingConfiguration {
         self
     }
 
+    #[doc = "Get a reference to the value of field `enable_monitoring_dashboard` after provisioning.\n"]
+    pub fn enable_monitoring_dashboard(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_monitoring_dashboard", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `firewall_arn` after provisioning.\n"]
     pub fn firewall_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.firewall_arn", self.extract_ref()))
@@ -166,10 +190,14 @@ impl NetworkfirewallLoggingConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(
-        &self,
-    ) -> terrars::ListRef<NetworkfirewallLoggingConfigurationLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<NetworkfirewallLoggingConfiguration_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 }
@@ -216,14 +244,16 @@ impl BuildNetworkfirewallLoggingConfiguration {
         let out = NetworkfirewallLoggingConfiguration(std::rc::Rc::new(NetworkfirewallLoggingConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkfirewallLoggingConfigurationData {
+            data: std::cell::RefCell::new(NetworkfirewallLoggingConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                enable_monitoring_dashboard: core::default::Default::default(),
                 firewall_arn: self.firewall_arn,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 logging_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -256,6 +286,11 @@ impl NetworkfirewallLoggingConfigurationRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `enable_monitoring_dashboard` after provisioning.\n"]
+    pub fn enable_monitoring_dashboard(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_monitoring_dashboard", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `firewall_arn` after provisioning.\n"]
     pub fn firewall_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.firewall_arn", self.extract_ref()))
@@ -266,26 +301,36 @@ impl NetworkfirewallLoggingConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(
-        &self,
-    ) -> terrars::ListRef<NetworkfirewallLoggingConfigurationLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<NetworkfirewallLoggingConfiguration_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkfirewallLoggingConfigurationDynamic {
+    logging_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkfirewallLoggingConfiguration_LoggingConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl {
+pub struct NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig {
     log_destination: terrars::RecField<terrars::PrimField<std::string::String>>,
     log_destination_type: terrars::PrimField<std::string::String>,
     log_type: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl { }
+impl NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig { }
 
-impl terrars::ToListMappable for NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl {
-    type O =
-        terrars::BlockAssignable<NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl>;
+impl terrars::ToListMappable for NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig {
+    type O = terrars::BlockAssignable<NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -296,7 +341,7 @@ impl terrars::ToListMappable for NetworkfirewallLoggingConfigurationLoggingConfi
     }
 }
 
-pub struct BuildNetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl {
+pub struct BuildNetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig {
     #[doc = ""]
     pub log_destination: terrars::RecField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
@@ -305,9 +350,9 @@ pub struct BuildNetworkfirewallLoggingConfigurationLoggingConfigurationElLogDest
     pub log_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl {
-    pub fn build(self) -> NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl {
-        NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl {
+impl BuildNetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig {
+    pub fn build(self) -> NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig {
+        NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig {
             log_destination: self.log_destination,
             log_destination_type: self.log_destination_type,
             log_type: self.log_type,
@@ -315,24 +360,26 @@ impl BuildNetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinatio
     }
 }
 
-pub struct NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigElRef {
+impl terrars::Ref for NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigElRef {
-        NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigElRef {
+    ) -> NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfigRef {
+        NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigElRef {
+impl NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -354,22 +401,22 @@ impl NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConf
 }
 
 #[derive(Serialize, Default)]
-struct NetworkfirewallLoggingConfigurationLoggingConfigurationElDynamic {
+struct NetworkfirewallLoggingConfiguration_LoggingConfigurationDynamic {
     log_destination_config: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl>>,
+    ::Option<terrars::DynamicBlock<NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallLoggingConfigurationLoggingConfigurationEl {
+pub struct NetworkfirewallLoggingConfiguration_LoggingConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_destination_config: std
     ::option
-    ::Option<std::vec::Vec<NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl>>,
-    dynamic: NetworkfirewallLoggingConfigurationLoggingConfigurationElDynamic,
+    ::Option<std::vec::Vec<NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig>>,
+    dynamic: NetworkfirewallLoggingConfiguration_LoggingConfigurationDynamic,
 }
 
-impl NetworkfirewallLoggingConfigurationLoggingConfigurationEl {
+impl NetworkfirewallLoggingConfiguration_LoggingConfiguration {
     #[doc = "Set the field `log_destination_config`.\n"]
     pub fn set_log_destination_config(
         mut self,
@@ -381,7 +428,7 @@ impl NetworkfirewallLoggingConfigurationLoggingConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkfirewallLoggingConfigurationLoggingConfigurationElLogDestinationConfigEl,
+                            NetworkfirewallLoggingConfiguration_LoggingConfiguration_LogDestinationConfig,
                         >,
                     >,
     ) -> Self {
@@ -397,8 +444,8 @@ impl NetworkfirewallLoggingConfigurationLoggingConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkfirewallLoggingConfigurationLoggingConfigurationEl {
-    type O = terrars::BlockAssignable<NetworkfirewallLoggingConfigurationLoggingConfigurationEl>;
+impl terrars::ToListMappable for NetworkfirewallLoggingConfiguration_LoggingConfiguration {
+    type O = terrars::BlockAssignable<NetworkfirewallLoggingConfiguration_LoggingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -409,43 +456,38 @@ impl terrars::ToListMappable for NetworkfirewallLoggingConfigurationLoggingConfi
     }
 }
 
-pub struct BuildNetworkfirewallLoggingConfigurationLoggingConfigurationEl {}
+pub struct BuildNetworkfirewallLoggingConfiguration_LoggingConfiguration {}
 
-impl BuildNetworkfirewallLoggingConfigurationLoggingConfigurationEl {
-    pub fn build(self) -> NetworkfirewallLoggingConfigurationLoggingConfigurationEl {
-        NetworkfirewallLoggingConfigurationLoggingConfigurationEl {
+impl BuildNetworkfirewallLoggingConfiguration_LoggingConfiguration {
+    pub fn build(self) -> NetworkfirewallLoggingConfiguration_LoggingConfiguration {
+        NetworkfirewallLoggingConfiguration_LoggingConfiguration {
             log_destination_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkfirewallLoggingConfigurationLoggingConfigurationElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallLoggingConfiguration_LoggingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallLoggingConfigurationLoggingConfigurationElRef {
+impl terrars::Ref for NetworkfirewallLoggingConfiguration_LoggingConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallLoggingConfigurationLoggingConfigurationElRef {
-        NetworkfirewallLoggingConfigurationLoggingConfigurationElRef {
+    ) -> NetworkfirewallLoggingConfiguration_LoggingConfigurationRef {
+        NetworkfirewallLoggingConfiguration_LoggingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallLoggingConfigurationLoggingConfigurationElRef {
+impl NetworkfirewallLoggingConfiguration_LoggingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkfirewallLoggingConfigurationDynamic {
-    logging_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<NetworkfirewallLoggingConfigurationLoggingConfigurationEl>>,
 }

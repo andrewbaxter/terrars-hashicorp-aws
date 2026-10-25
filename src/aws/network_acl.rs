@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkAclData {
+struct NetworkAclData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,11 +21,13 @@ struct NetworkAclData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress: std::option::Option<terrars::SetField<NetworkAclEgressEl>>,
+    egress: std::option::Option<terrars::SetField<NetworkAcl_Egress>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress: std::option::Option<terrars::SetField<NetworkAclIngressEl>>,
+    ingress: std::option::Option<terrars::SetField<NetworkAcl_Ingress>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,7 +40,7 @@ struct NetworkAclData {
 struct NetworkAcl_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkAclData>,
+    data: std::cell::RefCell<NetworkAclData_>,
 }
 
 #[derive(Clone)]
@@ -137,7 +141,7 @@ impl NetworkAcl {
     }
 
     #[doc = "Set the field `egress`.\n"]
-    pub fn set_egress(self, v: impl std::convert::Into<terrars::SetField<NetworkAclEgressEl>>) -> Self {
+    pub fn set_egress(self, v: impl std::convert::Into<terrars::SetField<NetworkAcl_Egress>>) -> Self {
         self.0.data.borrow_mut().egress = std::option::Option::Some(v.into());
         self
     }
@@ -149,8 +153,15 @@ impl NetworkAcl {
     }
 
     #[doc = "Set the field `ingress`.\n"]
-    pub fn set_ingress(self, v: impl std::convert::Into<terrars::SetField<NetworkAclIngressEl>>) -> Self {
+    pub fn set_ingress(self, v: impl std::convert::Into<terrars::SetField<NetworkAcl_Ingress>>) -> Self {
         self.0.data.borrow_mut().ingress = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -187,7 +198,7 @@ impl NetworkAcl {
     }
 
     #[doc = "Get a reference to the value of field `egress` after provisioning.\n"]
-    pub fn egress(&self) -> terrars::SetRef<NetworkAclEgressElRef> {
+    pub fn egress(&self) -> terrars::SetRef<NetworkAcl_EgressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.egress", self.extract_ref()))
     }
 
@@ -197,13 +208,19 @@ impl NetworkAcl {
     }
 
     #[doc = "Get a reference to the value of field `ingress` after provisioning.\n"]
-    pub fn ingress(&self) -> terrars::SetRef<NetworkAclIngressElRef> {
+    pub fn ingress(&self) -> terrars::SetRef<NetworkAcl_IngressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ingress", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
@@ -269,7 +286,7 @@ impl BuildNetworkAcl {
         let out = NetworkAcl(std::rc::Rc::new(NetworkAcl_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkAclData {
+            data: std::cell::RefCell::new(NetworkAclData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -278,6 +295,7 @@ impl BuildNetworkAcl {
                 egress: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ingress: core::default::Default::default(),
+                region: core::default::Default::default(),
                 subnet_ids: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -318,7 +336,7 @@ impl NetworkAclRef {
     }
 
     #[doc = "Get a reference to the value of field `egress` after provisioning.\n"]
-    pub fn egress(&self) -> terrars::SetRef<NetworkAclEgressElRef> {
+    pub fn egress(&self) -> terrars::SetRef<NetworkAcl_EgressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.egress", self.extract_ref()))
     }
 
@@ -328,13 +346,19 @@ impl NetworkAclRef {
     }
 
     #[doc = "Get a reference to the value of field `ingress` after provisioning.\n"]
-    pub fn ingress(&self) -> terrars::SetRef<NetworkAclIngressElRef> {
+    pub fn ingress(&self) -> terrars::SetRef<NetworkAcl_IngressRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ingress", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
@@ -359,7 +383,7 @@ impl NetworkAclRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkAclEgressEl {
+pub struct NetworkAcl_Egress {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -380,7 +404,7 @@ pub struct NetworkAclEgressEl {
     to_port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl NetworkAclEgressEl {
+impl NetworkAcl_Egress {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.action = std::option::Option::Some(v.into());
@@ -436,8 +460,8 @@ impl NetworkAclEgressEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkAclEgressEl {
-    type O = terrars::BlockAssignable<NetworkAclEgressEl>;
+impl terrars::ToListMappable for NetworkAcl_Egress {
+    type O = terrars::BlockAssignable<NetworkAcl_Egress>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -448,11 +472,11 @@ impl terrars::ToListMappable for NetworkAclEgressEl {
     }
 }
 
-pub struct BuildNetworkAclEgressEl {}
+pub struct BuildNetworkAcl_Egress {}
 
-impl BuildNetworkAclEgressEl {
-    pub fn build(self) -> NetworkAclEgressEl {
-        NetworkAclEgressEl {
+impl BuildNetworkAcl_Egress {
+    pub fn build(self) -> NetworkAcl_Egress {
+        NetworkAcl_Egress {
             action: core::default::Default::default(),
             cidr_block: core::default::Default::default(),
             from_port: core::default::Default::default(),
@@ -466,21 +490,23 @@ impl BuildNetworkAclEgressEl {
     }
 }
 
-pub struct NetworkAclEgressElRef {
+#[allow(dead_code)]
+pub struct NetworkAcl_EgressRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkAclEgressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkAclEgressElRef {
-        NetworkAclEgressElRef {
+impl terrars::Ref for NetworkAcl_EgressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkAcl_EgressRef {
+        NetworkAcl_EgressRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkAclEgressElRef {
+impl NetworkAcl_EgressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -532,7 +558,7 @@ impl NetworkAclEgressElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkAclIngressEl {
+pub struct NetworkAcl_Ingress {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -553,7 +579,7 @@ pub struct NetworkAclIngressEl {
     to_port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl NetworkAclIngressEl {
+impl NetworkAcl_Ingress {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.action = std::option::Option::Some(v.into());
@@ -609,8 +635,8 @@ impl NetworkAclIngressEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkAclIngressEl {
-    type O = terrars::BlockAssignable<NetworkAclIngressEl>;
+impl terrars::ToListMappable for NetworkAcl_Ingress {
+    type O = terrars::BlockAssignable<NetworkAcl_Ingress>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -621,11 +647,11 @@ impl terrars::ToListMappable for NetworkAclIngressEl {
     }
 }
 
-pub struct BuildNetworkAclIngressEl {}
+pub struct BuildNetworkAcl_Ingress {}
 
-impl BuildNetworkAclIngressEl {
-    pub fn build(self) -> NetworkAclIngressEl {
-        NetworkAclIngressEl {
+impl BuildNetworkAcl_Ingress {
+    pub fn build(self) -> NetworkAcl_Ingress {
+        NetworkAcl_Ingress {
             action: core::default::Default::default(),
             cidr_block: core::default::Default::default(),
             from_port: core::default::Default::default(),
@@ -639,21 +665,23 @@ impl BuildNetworkAclIngressEl {
     }
 }
 
-pub struct NetworkAclIngressElRef {
+#[allow(dead_code)]
+pub struct NetworkAcl_IngressRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkAclIngressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkAclIngressElRef {
-        NetworkAclIngressElRef {
+impl terrars::Ref for NetworkAcl_IngressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkAcl_IngressRef {
+        NetworkAcl_IngressRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkAclIngressElRef {
+impl NetworkAcl_IngressRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

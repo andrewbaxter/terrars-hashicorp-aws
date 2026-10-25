@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppflowConnectorProfileData {
+struct AppflowConnectorProfileData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,16 @@ struct AppflowConnectorProfileData {
     kms_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    connector_profile_config: std::option::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connector_profile_config: std::option::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig>>,
     dynamic: AppflowConnectorProfileDynamic,
 }
 
 struct AppflowConnectorProfile_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppflowConnectorProfileData>,
+    data: std::cell::RefCell<AppflowConnectorProfileData_>,
 }
 
 #[derive(Clone)]
@@ -153,10 +157,17 @@ impl AppflowConnectorProfile {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `connector_profile_config`.\n"]
     pub fn set_connector_profile_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,8 +220,14 @@ impl AppflowConnectorProfile {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `connector_profile_config` after provisioning.\n"]
-    pub fn connector_profile_config(&self) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElRef> {
+    pub fn connector_profile_config(&self) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connector_profile_config", self.extract_ref()))
     }
 }
@@ -261,7 +278,7 @@ impl BuildAppflowConnectorProfile {
         let out = AppflowConnectorProfile(std::rc::Rc::new(AppflowConnectorProfile_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppflowConnectorProfileData {
+            data: std::cell::RefCell::new(AppflowConnectorProfileData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -273,6 +290,7 @@ impl BuildAppflowConnectorProfile {
                 id: core::default::Default::default(),
                 kms_arn: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 connector_profile_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -345,25 +363,37 @@ impl AppflowConnectorProfileRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `connector_profile_config` after provisioning.\n"]
-    pub fn connector_profile_config(&self) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElRef> {
+    pub fn connector_profile_config(&self) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connector_profile_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppflowConnectorProfileDynamic {
+    connector_profile_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude {
     api_key: terrars::PrimField<std::string::String>,
     secret_key: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -374,40 +404,42 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude {
     #[doc = ""]
     pub api_key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub secret_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude {
             api_key: self.api_key,
             secret_key: self.secret_key,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_AmplitudeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_AmplitudeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_AmplitudeRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_AmplitudeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_AmplitudeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -424,13 +456,13 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey {
     api_key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_secret_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey {
     #[doc = "Set the field `api_secret_key`.\n"]
     pub fn set_api_secret_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.api_secret_key = std::option::Option::Some(v.into());
@@ -439,11 +471,11 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -455,41 +487,43 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey {
     #[doc = ""]
     pub api_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey {
     pub fn build(
         self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey {
             api_key: self.api_key,
             api_secret_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyElRef {
+::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKeyRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -506,19 +540,19 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic {
     password: terrars::PrimField<std::string::String>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic { }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -530,43 +564,45 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic {
     #[doc = ""]
     pub password: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic {
     pub fn build(
         self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic {
             password: self.password,
             username: self.username,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_BasicRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicElRef {
+::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_BasicRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_BasicRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_BasicRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_BasicRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -583,13 +619,13 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     credentials_map: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     custom_authentication_type: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom {
     #[doc = "Set the field `credentials_map`.\n"]
     pub fn set_credentials_map(
         mut self,
@@ -601,11 +637,11 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -617,41 +653,43 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom {
     #[doc = ""]
     pub custom_authentication_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom {
     pub fn build(
         self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom {
             credentials_map: core::default::Default::default(),
             custom_authentication_type: self.custom_authentication_type,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_CustomRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomElRef {
+::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_CustomRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_CustomRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_CustomRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_CustomRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -668,14 +706,14 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_code: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     redirect_uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest {
     #[doc = "Set the field `auth_code`.\n"]
     pub fn set_auth_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.auth_code = std::option::Option::Some(v.into());
@@ -690,11 +728,11 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -706,38 +744,40 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest {
     pub fn build(
         self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest {
             auth_code: core::default::Default::default(),
             redirect_uri: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestElRef {
+::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -754,19 +794,17 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2Dynamic {
     oauth_request: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl,
-        >,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2 {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -779,16 +817,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     oauth_request: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl,
-        >,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2Dynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2 {
     #[doc = "Set the field `access_token`.\n"]
     pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_token = std::option::Option::Some(v.into());
@@ -824,7 +858,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest,
                         >,
                     >,
     ) -> Self {
@@ -841,11 +875,11 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2 {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -857,13 +891,13 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2 {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2 {
     pub fn build(
         self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2 {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2 {
             access_token: core::default::Default::default(),
             client_id: core::default::Default::default(),
             client_secret: core::default::Default::default(),
@@ -874,25 +908,27 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElRef {
+::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2Ref {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2Ref {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -921,21 +957,19 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn oauth_request(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElOauthRequestElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_request", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnectorDynamic {
     api_key: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey,
         >,
     >,
     basic: std
@@ -943,7 +977,7 @@ struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredential
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic,
         >,
     >,
     custom: std
@@ -951,7 +985,7 @@ struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredential
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom,
         >,
     >,
     oauth2: std
@@ -959,13 +993,13 @@ struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredential
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector {
     authentication_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     api_key: std
@@ -973,7 +1007,7 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     ::Option<
         std
         ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl>,
+        ::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     basic: std
@@ -981,7 +1015,7 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     ::Option<
         std
         ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl>,
+        ::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom: std
@@ -989,7 +1023,7 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     ::Option<
         std
         ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl>,
+        ::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     oauth2: std
@@ -997,12 +1031,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     ::Option<
         std
         ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El>,
+        ::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnectorDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector {
     #[doc = "Set the field `api_key`.\n"]
     pub fn set_api_key(
         mut self,
@@ -1014,7 +1048,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKey,
                         >,
                     >,
     ) -> Self {
@@ -1040,7 +1074,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Basic,
                         >,
                     >,
     ) -> Self {
@@ -1066,7 +1100,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Custom,
                         >,
                     >,
     ) -> Self {
@@ -1092,7 +1126,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2El,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2,
                         >,
                     >,
     ) -> Self {
@@ -1109,12 +1143,10 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector {
     type O =
         terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl,
-        >;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1125,16 +1157,14 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector {
     #[doc = ""]
     pub authentication_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector {
             authentication_type: self.authentication_type,
             api_key: core::default::Default::default(),
             basic: core::default::Default::default(),
@@ -1145,24 +1175,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnectorRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1176,9 +1208,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn api_key(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElApiKeyElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_ApiKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.api_key", self.base))
     }
 
@@ -1186,9 +1216,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn basic(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElBasicElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_BasicRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.basic", self.base))
     }
 
@@ -1196,9 +1224,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn custom(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElCustomElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_CustomRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom", self.base))
     }
 
@@ -1206,25 +1232,22 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn oauth2(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElOauth2ElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector_Oauth2Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth2", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog {
     api_key: terrars::PrimField<std::string::String>,
     application_key: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog { }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1235,40 +1258,42 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog {
     #[doc = ""]
     pub api_key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub application_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog {
             api_key: self.api_key,
             application_key: self.application_key,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DatadogRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DatadogRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DatadogRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DatadogRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DatadogRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1285,17 +1310,16 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace {
     api_token: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1306,37 +1330,39 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace {
     #[doc = ""]
     pub api_token: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace {
             api_token: self.api_token,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DynatraceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DynatraceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DynatraceRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DynatraceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DynatraceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1347,106 +1373,18 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_code: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect_uri: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {
-    #[doc = "Set the field `auth_code`.\n"]
-    pub fn set_auth_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.auth_code = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `redirect_uri`.\n"]
-    pub fn set_redirect_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.redirect_uri = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {}
-
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl {
-            auth_code: core::default::Default::default(),
-            redirect_uri: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `auth_code` after provisioning.\n"]
-    pub fn auth_code(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_code", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `redirect_uri` after provisioning.\n"]
-    pub fn redirect_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalyticsDynamic {
     oauth_request: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl,
-        >,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_token: std::option::Option<terrars::PrimField<std::string::String>>,
     client_id: terrars::PrimField<std::string::String>,
@@ -1457,16 +1395,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     oauth_request: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl,
-        >,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalyticsDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics {
     #[doc = "Set the field `access_token`.\n"]
     pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_token = std::option::Option::Some(v.into());
@@ -1490,7 +1424,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest,
                         >,
                     >,
     ) -> Self {
@@ -1507,12 +1441,10 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics {
     type O =
         terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl,
-        >;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1523,18 +1455,16 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics {
     #[doc = ""]
     pub client_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub client_secret: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics {
             access_token: core::default::Default::default(),
             client_id: self.client_id,
             client_secret: self.client_secret,
@@ -1545,24 +1475,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalyticsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalyticsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalyticsRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalyticsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalyticsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1591,113 +1523,23 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn oauth_request(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElOauthRequestElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_request", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_code: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect_uri: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {
-    #[doc = "Set the field `auth_code`.\n"]
-    pub fn set_auth_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.auth_code = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `redirect_uri`.\n"]
-    pub fn set_redirect_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.redirect_uri = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {}
-
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl {
-            auth_code: core::default::Default::default(),
-            redirect_uri: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `auth_code` after provisioning.\n"]
-    pub fn auth_code(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_code", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `redirect_uri` after provisioning.\n"]
-    pub fn redirect_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_HoneycodeDynamic {
     oauth_request: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl,
-        >,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1706,14 +1548,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     oauth_request: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl>,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_HoneycodeDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode {
     #[doc = "Set the field `access_token`.\n"]
     pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_token = std::option::Option::Some(v.into());
@@ -1737,7 +1577,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest,
                         >,
                     >,
     ) -> Self {
@@ -1753,11 +1593,10 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1768,11 +1607,11 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode {
             access_token: core::default::Default::default(),
             refresh_token: core::default::Default::default(),
             oauth_request: core::default::Default::default(),
@@ -1781,24 +1620,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_HoneycodeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_HoneycodeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_HoneycodeRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_HoneycodeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_HoneycodeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1817,28 +1658,26 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn oauth_request(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElOauthRequestElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_request", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus {
     access_key_id: terrars::PrimField<std::string::String>,
     datakey: terrars::PrimField<std::string::String>,
     secret_access_key: terrars::PrimField<std::string::String>,
     user_id: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus { }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1849,7 +1688,7 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus {
     #[doc = ""]
     pub access_key_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -1860,9 +1699,9 @@ pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileC
     pub user_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus {
             access_key_id: self.access_key_id,
             datakey: self.datakey,
             secret_access_key: self.secret_access_key,
@@ -1871,24 +1710,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexusRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexusRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1914,106 +1755,18 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_code: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect_uri: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl {
-    #[doc = "Set the field `auth_code`.\n"]
-    pub fn set_auth_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.auth_code = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `redirect_uri`.\n"]
-    pub fn set_redirect_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.redirect_uri = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl {}
-
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl {
-            auth_code: core::default::Default::default(),
-            redirect_uri: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `auth_code` after provisioning.\n"]
-    pub fn auth_code(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_code", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `redirect_uri` after provisioning.\n"]
-    pub fn redirect_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_MarketoDynamic {
     oauth_request: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl,
-        >,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_token: std::option::Option<terrars::PrimField<std::string::String>>,
     client_id: terrars::PrimField<std::string::String>,
@@ -2022,14 +1775,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     oauth_request: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl>,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_MarketoDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo {
     #[doc = "Set the field `access_token`.\n"]
     pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_token = std::option::Option::Some(v.into());
@@ -2047,7 +1798,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest,
                         >,
                     >,
     ) -> Self {
@@ -2063,10 +1814,9 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2077,16 +1827,16 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo {
     #[doc = ""]
     pub client_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub client_secret: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo {
             access_token: core::default::Default::default(),
             client_id: self.client_id,
             client_secret: self.client_secret,
@@ -2096,24 +1846,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_MarketoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_MarketoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_MarketoRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_MarketoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_MarketoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2137,24 +1889,23 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn oauth_request(
         &self,
     ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElOauthRequestElRef> {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_request", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift {
     password: terrars::PrimField<std::string::String>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2165,40 +1916,42 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift {
     #[doc = ""]
     pub password: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift {
             password: self.password,
             username: self.username,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_RedshiftRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_RedshiftRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_RedshiftRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_RedshiftRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_RedshiftRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2214,124 +1967,38 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_code: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect_uri: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {
-    #[doc = "Set the field `auth_code`.\n"]
-    pub fn set_auth_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.auth_code = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `redirect_uri`.\n"]
-    pub fn set_redirect_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.redirect_uri = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {}
-
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl {
-            auth_code: core::default::Default::default(),
-            redirect_uri: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `auth_code` after provisioning.\n"]
-    pub fn auth_code(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_code", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `redirect_uri` after provisioning.\n"]
-    pub fn redirect_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SalesforceDynamic {
     oauth_request: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl,
-        >,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_credentials_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    jwt_token: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    oauth2_grant_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     refresh_token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     oauth_request: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl>,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SalesforceDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce {
     #[doc = "Set the field `access_token`.\n"]
     pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_token = std::option::Option::Some(v.into());
@@ -2347,6 +2014,18 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
         self
     }
 
+    #[doc = "Set the field `jwt_token`.\n"]
+    pub fn set_jwt_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.jwt_token = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `oauth2_grant_type`.\n"]
+    pub fn set_oauth2_grant_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.oauth2_grant_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `refresh_token`.\n"]
     pub fn set_refresh_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.refresh_token = std::option::Option::Some(v.into());
@@ -2364,7 +2043,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest,
                         >,
                     >,
     ) -> Self {
@@ -2381,10 +2060,10 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2395,13 +2074,15 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce {
             access_token: core::default::Default::default(),
             client_credentials_arn: core::default::Default::default(),
+            jwt_token: core::default::Default::default(),
+            oauth2_grant_type: core::default::Default::default(),
             refresh_token: core::default::Default::default(),
             oauth_request: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2409,24 +2090,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SalesforceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SalesforceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SalesforceRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SalesforceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SalesforceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2441,6 +2124,16 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_credentials_arn", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `jwt_token` after provisioning.\n"]
+    pub fn jwt_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.jwt_token", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `oauth2_grant_type` after provisioning.\n"]
+    pub fn oauth2_grant_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.oauth2_grant_type", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `refresh_token` after provisioning.\n"]
     pub fn refresh_token(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.refresh_token", self.base))
@@ -2450,27 +2143,25 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn oauth_request(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElOauthRequestElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_request", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials {
     password: terrars::PrimField<std::string::String>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials { }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2482,43 +2173,45 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials {
     #[doc = ""]
     pub password: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials {
     pub fn build(
         self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials {
             password: self.password,
             username: self.username,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentialsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsElRef {
+::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentialsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentialsRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentialsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentialsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2534,106 +2227,18 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_code: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect_uri: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {
-    #[doc = "Set the field `auth_code`.\n"]
-    pub fn set_auth_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.auth_code = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `redirect_uri`.\n"]
-    pub fn set_redirect_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.redirect_uri = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {}
-
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl {
-            auth_code: core::default::Default::default(),
-            redirect_uri: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `auth_code` after provisioning.\n"]
-    pub fn auth_code(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_code", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `redirect_uri` after provisioning.\n"]
-    pub fn redirect_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentialsDynamic {
     oauth_request: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl,
-        >,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_token: std::option::Option<terrars::PrimField<std::string::String>>,
     client_id: terrars::PrimField<std::string::String>,
@@ -2644,16 +2249,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     oauth_request: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl,
-        >,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentialsDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials {
     #[doc = "Set the field `access_token`.\n"]
     pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_token = std::option::Option::Some(v.into());
@@ -2677,7 +2278,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest,
                         >,
                     >,
     ) -> Self {
@@ -2694,11 +2295,11 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2710,18 +2311,18 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials {
     #[doc = ""]
     pub client_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub client_secret: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials {
     pub fn build(
         self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials {
             access_token: core::default::Default::default(),
             client_id: self.client_id,
             client_secret: self.client_secret,
@@ -2732,25 +2333,27 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentialsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElRef {
+::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentialsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentialsRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentialsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentialsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2779,21 +2382,19 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn oauth_request(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElOauthRequestElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_request", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoDataDynamic {
     basic_auth_credentials: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials,
         >,
     >,
     oauth_credentials: std
@@ -2801,13 +2402,13 @@ struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredential
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     basic_auth_credentials: std
     ::option
@@ -2815,7 +2416,7 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
         std
         ::vec
         ::Vec<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2824,14 +2425,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     ::Option<
         std
         ::vec
-        ::Vec<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl,
-        >,
+        ::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoDataDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData {
     #[doc = "Set the field `basic_auth_credentials`.\n"]
     pub fn set_basic_auth_credentials(
         mut self,
@@ -2843,7 +2442,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentials,
                         >,
                     >,
     ) -> Self {
@@ -2869,7 +2468,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentials,
                         >,
                     >,
     ) -> Self {
@@ -2885,11 +2484,10 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2900,11 +2498,11 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData {
             basic_auth_credentials: core::default::Default::default(),
             oauth_credentials: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2912,24 +2510,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoDataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoDataRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoDataRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoDataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoDataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2939,7 +2539,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
         &self,
     ) -> terrars
     ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElBasicAuthCredentialsElRef,
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_BasicAuthCredentialsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.basic_auth_credentials", self.base))
     }
@@ -2949,25 +2549,25 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
         &self,
     ) -> terrars
     ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElOauthCredentialsElRef,
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData_OauthCredentialsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_credentials", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow {
     password: terrars::PrimField<std::string::String>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow { }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2978,40 +2578,42 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow {
     #[doc = ""]
     pub password: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow {
             password: self.password,
             username: self.username,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNowRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3028,17 +2630,16 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular {
     api_key: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3049,37 +2650,37 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular {
     #[doc = ""]
     pub api_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl {
-            api_key: self.api_key,
-        }
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular { api_key: self.api_key }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SingularRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SingularRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SingularRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SingularRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SingularRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3090,106 +2691,18 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_code: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect_uri: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl {
-    #[doc = "Set the field `auth_code`.\n"]
-    pub fn set_auth_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.auth_code = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `redirect_uri`.\n"]
-    pub fn set_redirect_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.redirect_uri = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl {}
-
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl {
-            auth_code: core::default::Default::default(),
-            redirect_uri: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `auth_code` after provisioning.\n"]
-    pub fn auth_code(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_code", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `redirect_uri` after provisioning.\n"]
-    pub fn redirect_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SlackDynamic {
     oauth_request: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl,
-        >,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_token: std::option::Option<terrars::PrimField<std::string::String>>,
     client_id: terrars::PrimField<std::string::String>,
@@ -3198,14 +2711,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     oauth_request: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl>,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SlackDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack {
     #[doc = "Set the field `access_token`.\n"]
     pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_token = std::option::Option::Some(v.into());
@@ -3223,7 +2734,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest,
                         >,
                     >,
     ) -> Self {
@@ -3239,10 +2750,9 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3253,16 +2763,16 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack {
     #[doc = ""]
     pub client_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub client_secret: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack {
             access_token: core::default::Default::default(),
             client_id: self.client_id,
             client_secret: self.client_secret,
@@ -3272,24 +2782,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SlackRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SlackRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SlackRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SlackRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SlackRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3313,24 +2825,23 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn oauth_request(
         &self,
     ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElOauthRequestElRef> {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_request", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake {
     password: terrars::PrimField<std::string::String>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3341,40 +2852,42 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake {
     #[doc = ""]
     pub password: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake {
             password: self.password,
             username: self.username,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SnowflakeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SnowflakeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SnowflakeRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SnowflakeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SnowflakeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3391,17 +2904,17 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro {
     api_secret_key: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro { }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3412,37 +2925,39 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro {
     #[doc = ""]
     pub api_secret_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro {
             api_secret_key: self.api_secret_key,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_TrendmicroRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_TrendmicroRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_TrendmicroRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_TrendmicroRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_TrendmicroRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3454,17 +2969,16 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva {
     password: terrars::PrimField<std::string::String>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva { }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3475,40 +2989,42 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva {
     #[doc = ""]
     pub password: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva {
             password: self.password,
             username: self.username,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_VeevaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_VeevaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_VeevaRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_VeevaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_VeevaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3524,106 +3040,18 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-#[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_code: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect_uri: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl {
-    #[doc = "Set the field `auth_code`.\n"]
-    pub fn set_auth_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.auth_code = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `redirect_uri`.\n"]
-    pub fn set_redirect_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.redirect_uri = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl {}
-
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl {
-            auth_code: core::default::Default::default(),
-            redirect_uri: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `auth_code` after provisioning.\n"]
-    pub fn auth_code(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_code", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `redirect_uri` after provisioning.\n"]
-    pub fn redirect_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.redirect_uri", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ZendeskDynamic {
     oauth_request: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl,
-        >,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_token: std::option::Option<terrars::PrimField<std::string::String>>,
     client_id: terrars::PrimField<std::string::String>,
@@ -3632,14 +3060,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCreden
     oauth_request: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl>,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ZendeskDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk {
     #[doc = "Set the field `access_token`.\n"]
     pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_token = std::option::Option::Some(v.into());
@@ -3657,7 +3083,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequest,
                         >,
                     >,
     ) -> Self {
@@ -3673,10 +3099,9 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3687,16 +3112,16 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk {
     #[doc = ""]
     pub client_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub client_secret: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk {
             access_token: core::default::Default::default(),
             client_id: self.client_id,
             client_secret: self.client_secret,
@@ -3706,24 +3131,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ZendeskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ZendeskRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ZendeskRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ZendeskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ZendeskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3747,193 +3174,185 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn oauth_request(
         &self,
     ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElOauthRequestElRef> {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack_OauthRequestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_request", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentialsDynamic {
     amplitude: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude>,
     >,
     custom_connector: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl>,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector>,
     >,
     datadog: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog>,
     >,
     dynatrace: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace>,
     >,
     google_analytics: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl>,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics>,
     >,
     honeycode: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode>,
     >,
     infor_nexus: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus>,
     >,
     marketo: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo>,
     >,
     redshift: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift>,
     >,
     salesforce: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce>,
     >,
     sapo_data: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData>,
     >,
     service_now: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow>,
     >,
     singular: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular>,
     >,
     slack: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack>>,
     snowflake: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake>,
     >,
     trendmicro: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro>,
     >,
     veeva: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva>>,
     zendesk: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     amplitude: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_connector: std
     ::option
     ::Option<
-        std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl>,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     datadog: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dynatrace: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     google_analytics: std
     ::option
     ::Option<
-        std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl>,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     honeycode: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     infor_nexus: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     marketo: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     redshift: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     salesforce: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sapo_data: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_now: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     singular: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     slack: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snowflake: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     trendmicro: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     veeva: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zendesk: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl>>,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynamic,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk>>,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentialsDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials {
     #[doc = "Set the field `amplitude`.\n"]
     pub fn set_amplitude(
         mut self,
@@ -3945,7 +3364,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Amplitude,
                         >,
                     >,
     ) -> Self {
@@ -3971,7 +3390,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnector,
                         >,
                     >,
     ) -> Self {
@@ -3997,7 +3416,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Datadog,
                         >,
                     >,
     ) -> Self {
@@ -4023,7 +3442,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Dynatrace,
                         >,
                     >,
     ) -> Self {
@@ -4049,7 +3468,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalytics,
                         >,
                     >,
     ) -> Self {
@@ -4075,7 +3494,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Honeycode,
                         >,
                     >,
     ) -> Self {
@@ -4101,7 +3520,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexus,
                         >,
                     >,
     ) -> Self {
@@ -4127,7 +3546,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Marketo,
                         >,
                     >,
     ) -> Self {
@@ -4153,7 +3572,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Redshift,
                         >,
                     >,
     ) -> Self {
@@ -4179,7 +3598,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Salesforce,
                         >,
                     >,
     ) -> Self {
@@ -4205,7 +3624,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoData,
                         >,
                     >,
     ) -> Self {
@@ -4231,7 +3650,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNow,
                         >,
                     >,
     ) -> Self {
@@ -4257,7 +3676,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Singular,
                         >,
                     >,
     ) -> Self {
@@ -4283,7 +3702,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Slack,
                         >,
                     >,
     ) -> Self {
@@ -4309,7 +3728,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Snowflake,
                         >,
                     >,
     ) -> Self {
@@ -4335,7 +3754,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Trendmicro,
                         >,
                     >,
     ) -> Self {
@@ -4361,7 +3780,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Veeva,
                         >,
                     >,
     ) -> Self {
@@ -4387,7 +3806,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_Zendesk,
                         >,
                     >,
     ) -> Self {
@@ -4403,8 +3822,8 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     }
 }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl {
-    type O = terrars::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl>;
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials {
+    type O = terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4415,11 +3834,11 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials {
             amplitude: core::default::Default::default(),
             custom_connector: core::default::Default::default(),
             datadog: core::default::Default::default(),
@@ -4443,24 +3862,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredent
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentialsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentialsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentialsRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentialsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentialsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4468,7 +3889,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     #[doc = "Get a reference to the value of field `amplitude` after provisioning.\n"]
     pub fn amplitude(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElAmplitudeElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_AmplitudeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.amplitude", self.base))
     }
 
@@ -4476,21 +3897,21 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn custom_connector(
         &self,
     ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElCustomConnectorElRef> {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_CustomConnectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_connector", self.base))
     }
 
     #[doc = "Get a reference to the value of field `datadog` after provisioning.\n"]
     pub fn datadog(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDatadogElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DatadogRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datadog", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dynatrace` after provisioning.\n"]
     pub fn dynatrace(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElDynatraceElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_DynatraceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dynatrace", self.base))
     }
 
@@ -4498,116 +3919,111 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsE
     pub fn google_analytics(
         &self,
     ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElGoogleAnalyticsElRef> {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_GoogleAnalyticsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.google_analytics", self.base))
     }
 
     #[doc = "Get a reference to the value of field `honeycode` after provisioning.\n"]
     pub fn honeycode(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElHoneycodeElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_HoneycodeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.honeycode", self.base))
     }
 
     #[doc = "Get a reference to the value of field `infor_nexus` after provisioning.\n"]
     pub fn infor_nexus(
         &self,
-    ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElInforNexusElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_InforNexusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.infor_nexus", self.base))
     }
 
     #[doc = "Get a reference to the value of field `marketo` after provisioning.\n"]
     pub fn marketo(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElMarketoElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_MarketoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.marketo", self.base))
     }
 
     #[doc = "Get a reference to the value of field `redshift` after provisioning.\n"]
     pub fn redshift(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRedshiftElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_RedshiftRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redshift", self.base))
     }
 
     #[doc = "Get a reference to the value of field `salesforce` after provisioning.\n"]
     pub fn salesforce(
         &self,
-    ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSalesforceElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SalesforceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.salesforce", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sapo_data` after provisioning.\n"]
     pub fn sapo_data(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSapoDataElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SapoDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sapo_data", self.base))
     }
 
     #[doc = "Get a reference to the value of field `service_now` after provisioning.\n"]
     pub fn service_now(
         &self,
-    ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElServiceNowElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ServiceNowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_now", self.base))
     }
 
     #[doc = "Get a reference to the value of field `singular` after provisioning.\n"]
     pub fn singular(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSingularElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SingularRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.singular", self.base))
     }
 
     #[doc = "Get a reference to the value of field `slack` after provisioning.\n"]
     pub fn slack(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSlackElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SlackRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.slack", self.base))
     }
 
     #[doc = "Get a reference to the value of field `snowflake` after provisioning.\n"]
     pub fn snowflake(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElSnowflakeElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_SnowflakeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snowflake", self.base))
     }
 
     #[doc = "Get a reference to the value of field `trendmicro` after provisioning.\n"]
     pub fn trendmicro(
         &self,
-    ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElTrendmicroElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_TrendmicroRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trendmicro", self.base))
     }
 
     #[doc = "Get a reference to the value of field `veeva` after provisioning.\n"]
     pub fn veeva(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElVeevaElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_VeevaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.veeva", self.base))
     }
 
     #[doc = "Get a reference to the value of field `zendesk` after provisioning.\n"]
     pub fn zendesk(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElZendeskElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials_ZendeskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zendesk", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl {}
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude {}
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4618,46 +4034,48 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl {}
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude {}
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_AmplitudeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_AmplitudeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_AmplitudeRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_AmplitudeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_AmplitudeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties {
     oauth2_grant_type: terrars::PrimField<std::string::String>,
     token_url: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     token_url_custom_properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties {
     #[doc = "Set the field `token_url_custom_properties`.\n"]
     pub fn set_token_url_custom_properties(
         mut self,
@@ -4669,11 +4087,11 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -4685,18 +4103,18 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties {
     #[doc = ""]
     pub oauth2_grant_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub token_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties {
     pub fn build(
         self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties {
             oauth2_grant_type: self.oauth2_grant_type,
             token_url: self.token_url,
             token_url_custom_properties: core::default::Default::default(),
@@ -4704,25 +4122,27 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropert
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2PropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesElRef {
+::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2PropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2PropertiesRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2PropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2PropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4744,19 +4164,19 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnectorDynamic {
     oauth2_properties: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     profile_properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4766,13 +4186,13 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileProper
         std
         ::vec
         ::Vec<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties,
         >,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnectorDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector {
     #[doc = "Set the field `profile_properties`.\n"]
     pub fn set_profile_properties(
         mut self,
@@ -4793,7 +4213,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2Properties,
                         >,
                     >,
     ) -> Self {
@@ -4810,12 +4230,10 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector {
     type O =
         terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl,
-        >;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4826,13 +4244,11 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector {
             profile_properties: core::default::Default::default(),
             oauth2_properties: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -4840,24 +4256,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropert
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnectorRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4872,23 +4290,22 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
         &self,
     ) -> terrars
     ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElOauth2PropertiesElRef,
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector_Oauth2PropertiesRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth2_properties", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog {
     instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog { }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4899,37 +4316,39 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog {
     #[doc = ""]
     pub instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog {
             instance_url: self.instance_url,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DatadogRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DatadogRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DatadogRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DatadogRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DatadogRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -4941,17 +4360,16 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace {
     instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4962,37 +4380,39 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace {
     #[doc = ""]
     pub instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace {
             instance_url: self.instance_url,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DynatraceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DynatraceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DynatraceRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DynatraceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DynatraceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5004,17 +4424,15 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl {}
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics {}
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics { }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics {
     type O =
         terrars
-        ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl,
-        >;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5025,49 +4443,48 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl {
-    pub fn build(
-        self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl {}
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics {}
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalyticsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalyticsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalyticsRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalyticsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalyticsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl {}
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode {}
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5078,49 +4495,50 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl {}
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode {}
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_HoneycodeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_HoneycodeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_HoneycodeRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_HoneycodeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_HoneycodeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus {
     instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5131,37 +4549,39 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus {
     #[doc = ""]
     pub instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus {
             instance_url: self.instance_url,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexusRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexusRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5173,16 +4593,15 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo {
     instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo { }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5193,37 +4612,39 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo {
     #[doc = ""]
     pub instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo {
             instance_url: self.instance_url,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_MarketoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_MarketoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_MarketoRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_MarketoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_MarketoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5235,7 +4656,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift {
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -5250,7 +4671,7 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileProper
     role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift {
     #[doc = "Set the field `bucket_prefix`.\n"]
     pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_prefix = std::option::Option::Some(v.into());
@@ -5285,10 +4706,9 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
     }
 }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5299,16 +4719,16 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift {
             bucket_name: self.bucket_name,
             bucket_prefix: core::default::Default::default(),
             cluster_identifier: core::default::Default::default(),
@@ -5320,24 +4740,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropert
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_RedshiftRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_RedshiftRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_RedshiftRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_RedshiftRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_RedshiftRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5379,14 +4801,16 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_url: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_sandbox_environment: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    use_privatelink_for_metadata_and_authorization: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce {
     #[doc = "Set the field `instance_url`.\n"]
     pub fn set_instance_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.instance_url = std::option::Option::Some(v.into());
@@ -5398,13 +4822,21 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
         self.is_sandbox_environment = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `use_privatelink_for_metadata_and_authorization`.\n"]
+    pub fn set_use_privatelink_for_metadata_and_authorization(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.use_privatelink_for_metadata_and_authorization = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5415,35 +4847,38 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce {
             instance_url: core::default::Default::default(),
             is_sandbox_environment: core::default::Default::default(),
+            use_privatelink_for_metadata_and_authorization: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SalesforceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SalesforceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SalesforceRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SalesforceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SalesforceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5457,23 +4892,32 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
     pub fn is_sandbox_environment(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_sandbox_environment", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `use_privatelink_for_metadata_and_authorization` after provisioning.\n"]
+    pub fn use_privatelink_for_metadata_and_authorization(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.use_privatelink_for_metadata_and_authorization", self.base),
+        )
+    }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties {
     auth_code_url: terrars::PrimField<std::string::String>,
     oauth_scopes: terrars::ListField<terrars::PrimField<std::string::String>>,
     token_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties { }
 
 impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl {
+::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties {
     type O =
         terrars
         ::BlockAssignable<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -5485,7 +4929,7 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties {
     #[doc = ""]
     pub auth_code_url: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -5494,11 +4938,11 @@ pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileP
     pub token_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties {
     pub fn build(
         self,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties {
             auth_code_url: self.auth_code_url,
             oauth_scopes: self.oauth_scopes,
             token_url: self.token_url,
@@ -5506,25 +4950,27 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropert
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesElRef {
+::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthPropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthPropertiesRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthPropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5546,19 +4992,19 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoDataDynamic {
     oauth_properties: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl,
+            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData {
     application_host_url: terrars::PrimField<std::string::String>,
     application_service_path: terrars::PrimField<std::string::String>,
     client_number: terrars::PrimField<std::string::String>,
@@ -5573,12 +5019,12 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileProper
     ::Option<
         std
         ::vec
-        ::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl>,
+        ::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties>,
     >,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElDynamic,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoDataDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData {
     #[doc = "Set the field `logon_language`.\n"]
     pub fn set_logon_language(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.logon_language = std::option::Option::Some(v.into());
@@ -5605,7 +5051,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthProperties,
                         >,
                     >,
     ) -> Self {
@@ -5621,10 +5067,9 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
     }
 }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5635,7 +5080,7 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData {
     #[doc = ""]
     pub application_host_url: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -5646,9 +5091,9 @@ pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileP
     pub port_number: terrars::PrimField<f64>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData {
             application_host_url: self.application_host_url,
             application_service_path: self.application_service_path,
             client_number: self.client_number,
@@ -5661,24 +5106,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropert
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoDataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoDataRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoDataRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoDataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoDataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5717,25 +5164,22 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
     pub fn oauth_properties(
         &self,
     ) -> terrars
-    ::ListRef<
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElOauthPropertiesElRef,
-    > {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData_OauthPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.oauth_properties", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow {
     instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5746,37 +5190,39 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow {
     #[doc = ""]
     pub instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow {
             instance_url: self.instance_url,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNowRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNowRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5788,14 +5234,13 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl {}
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular {}
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular { }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5806,47 +5251,49 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl {}
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular {}
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SingularRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SingularRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SingularRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SingularRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SingularRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack {
     instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack { }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack {
     type O =
-        terrars::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5857,37 +5304,39 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack {
     #[doc = ""]
     pub instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack {
             instance_url: self.instance_url,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SlackRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SlackRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SlackRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SlackRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SlackRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5899,7 +5348,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account_name: std::option::Option<terrars::PrimField<std::string::String>>,
     bucket_name: terrars::PrimField<std::string::String>,
@@ -5913,7 +5362,7 @@ pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfileProper
     warehouse: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake {
     #[doc = "Set the field `account_name`.\n"]
     pub fn set_account_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.account_name = std::option::Option::Some(v.into());
@@ -5942,11 +5391,10 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
     }
 }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5957,7 +5405,7 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -5966,9 +5414,9 @@ pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfileP
     pub warehouse: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake {
             account_name: core::default::Default::default(),
             bucket_name: self.bucket_name,
             bucket_prefix: core::default::Default::default(),
@@ -5980,24 +5428,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropert
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SnowflakeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SnowflakeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SnowflakeRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SnowflakeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SnowflakeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6039,15 +5489,14 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl {}
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro {}
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro { }
 
-impl terrars
-::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro {
     type O =
         terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl>;
+        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6058,47 +5507,49 @@ impl terrars
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl {}
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro {}
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_TrendmicroRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_TrendmicroRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_TrendmicroRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_TrendmicroRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_TrendmicroRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva {
     instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva { }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva {
     type O =
-        terrars::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6109,37 +5560,39 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva {
     #[doc = ""]
     pub instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva {
             instance_url: self.instance_url,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_VeevaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_VeevaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_VeevaRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_VeevaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_VeevaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6151,16 +5604,15 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk {
     instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl { }
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk { }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl {
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk {
     type O =
-        terrars
-        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl>;
+        terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6171,37 +5623,39 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl {
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk {
     #[doc = ""]
     pub instance_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk {
             instance_url: self.instance_url,
         }
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ZendeskRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ZendeskRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ZendeskRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ZendeskRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ZendeskRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6213,183 +5667,179 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
 }
 
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfilePropertiesDynamic {
     amplitude: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude>,
     >,
     custom_connector: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl>,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector>,
     >,
     datadog: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog>,
     >,
     dynatrace: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace>,
     >,
     google_analytics: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl>,
+        ::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics>,
     >,
     honeycode: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode>,
     >,
     infor_nexus: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus>,
     >,
     marketo: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo>,
     >,
     redshift: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift>,
     >,
     salesforce: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce>,
     >,
     sapo_data: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData>,
     >,
     service_now: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow>,
     >,
     singular: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular>,
     >,
     slack: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack>>,
     snowflake: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake>,
     >,
     trendmicro: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro>,
     >,
     veeva: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva>>,
     zendesk: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl>,
+        terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     amplitude: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_connector: std
     ::option
     ::Option<
-        std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl>,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     datadog: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dynatrace: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     google_analytics: std
     ::option
     ::Option<
-        std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl>,
+        std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     honeycode: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     infor_nexus: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     marketo: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     redshift: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     salesforce: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sapo_data: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_now: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     singular: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     slack: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snowflake: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     trendmicro: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     veeva: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zendesk: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl>>,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynamic,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk>>,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfilePropertiesDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties {
     #[doc = "Set the field `amplitude`.\n"]
     pub fn set_amplitude(
         mut self,
@@ -6401,7 +5851,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Amplitude,
                         >,
                     >,
     ) -> Self {
@@ -6427,7 +5877,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnector,
                         >,
                     >,
     ) -> Self {
@@ -6453,7 +5903,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Datadog,
                         >,
                     >,
     ) -> Self {
@@ -6479,7 +5929,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Dynatrace,
                         >,
                     >,
     ) -> Self {
@@ -6505,7 +5955,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalytics,
                         >,
                     >,
     ) -> Self {
@@ -6531,7 +5981,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Honeycode,
                         >,
                     >,
     ) -> Self {
@@ -6557,7 +6007,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexus,
                         >,
                     >,
     ) -> Self {
@@ -6583,7 +6033,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Marketo,
                         >,
                     >,
     ) -> Self {
@@ -6609,7 +6059,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Redshift,
                         >,
                     >,
     ) -> Self {
@@ -6635,7 +6085,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Salesforce,
                         >,
                     >,
     ) -> Self {
@@ -6661,7 +6111,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoData,
                         >,
                     >,
     ) -> Self {
@@ -6687,7 +6137,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNow,
                         >,
                     >,
     ) -> Self {
@@ -6713,7 +6163,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Singular,
                         >,
                     >,
     ) -> Self {
@@ -6739,7 +6189,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Slack,
                         >,
                     >,
     ) -> Self {
@@ -6765,7 +6215,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Snowflake,
                         >,
                     >,
     ) -> Self {
@@ -6791,7 +6241,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Trendmicro,
                         >,
                     >,
     ) -> Self {
@@ -6817,7 +6267,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Veeva,
                         >,
                     >,
     ) -> Self {
@@ -6843,7 +6293,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskEl,
+                            AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_Zendesk,
                         >,
                     >,
     ) -> Self {
@@ -6859,8 +6309,8 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
     }
 }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl {
-    type O = terrars::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl>;
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties {
+    type O = terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6871,11 +6321,11 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties {
             amplitude: core::default::Default::default(),
             custom_connector: core::default::Default::default(),
             datadog: core::default::Default::default(),
@@ -6899,24 +6349,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropert
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfilePropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfilePropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRef {
-        AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfilePropertiesRef {
+        AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfilePropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfilePropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6924,7 +6376,7 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
     #[doc = "Get a reference to the value of field `amplitude` after provisioning.\n"]
     pub fn amplitude(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElAmplitudeElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_AmplitudeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.amplitude", self.base))
     }
 
@@ -6932,21 +6384,21 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
     pub fn custom_connector(
         &self,
     ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElCustomConnectorElRef> {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_CustomConnectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_connector", self.base))
     }
 
     #[doc = "Get a reference to the value of field `datadog` after provisioning.\n"]
     pub fn datadog(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDatadogElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DatadogRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.datadog", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dynatrace` after provisioning.\n"]
     pub fn dynatrace(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElDynatraceElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_DynatraceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dynatrace", self.base))
     }
 
@@ -6954,126 +6406,126 @@ impl AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl
     pub fn google_analytics(
         &self,
     ) -> terrars
-    ::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElGoogleAnalyticsElRef> {
+    ::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_GoogleAnalyticsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.google_analytics", self.base))
     }
 
     #[doc = "Get a reference to the value of field `honeycode` after provisioning.\n"]
     pub fn honeycode(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElHoneycodeElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_HoneycodeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.honeycode", self.base))
     }
 
     #[doc = "Get a reference to the value of field `infor_nexus` after provisioning.\n"]
     pub fn infor_nexus(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElInforNexusElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_InforNexusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.infor_nexus", self.base))
     }
 
     #[doc = "Get a reference to the value of field `marketo` after provisioning.\n"]
     pub fn marketo(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElMarketoElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_MarketoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.marketo", self.base))
     }
 
     #[doc = "Get a reference to the value of field `redshift` after provisioning.\n"]
     pub fn redshift(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRedshiftElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_RedshiftRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redshift", self.base))
     }
 
     #[doc = "Get a reference to the value of field `salesforce` after provisioning.\n"]
     pub fn salesforce(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSalesforceElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SalesforceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.salesforce", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sapo_data` after provisioning.\n"]
     pub fn sapo_data(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSapoDataElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SapoDataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sapo_data", self.base))
     }
 
     #[doc = "Get a reference to the value of field `service_now` after provisioning.\n"]
     pub fn service_now(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElServiceNowElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ServiceNowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_now", self.base))
     }
 
     #[doc = "Get a reference to the value of field `singular` after provisioning.\n"]
     pub fn singular(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSingularElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SingularRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.singular", self.base))
     }
 
     #[doc = "Get a reference to the value of field `slack` after provisioning.\n"]
     pub fn slack(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSlackElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SlackRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.slack", self.base))
     }
 
     #[doc = "Get a reference to the value of field `snowflake` after provisioning.\n"]
     pub fn snowflake(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElSnowflakeElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_SnowflakeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snowflake", self.base))
     }
 
     #[doc = "Get a reference to the value of field `trendmicro` after provisioning.\n"]
     pub fn trendmicro(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElTrendmicroElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_TrendmicroRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trendmicro", self.base))
     }
 
     #[doc = "Get a reference to the value of field `veeva` after provisioning.\n"]
     pub fn veeva(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElVeevaElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_VeevaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.veeva", self.base))
     }
 
     #[doc = "Get a reference to the value of field `zendesk` after provisioning.\n"]
     pub fn zendesk(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElZendeskElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties_ZendeskRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zendesk", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppflowConnectorProfileConnectorProfileConfigElDynamic {
+struct AppflowConnectorProfile_ConnectorProfileConfigDynamic {
     connector_profile_credentials: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl>>,
+    ::Option<terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials>>,
     connector_profile_properties: std
     ::option
-    ::Option<terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl>>,
+    ::Option<terrars::DynamicBlock<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties>>,
 }
 
 #[derive(Serialize)]
-pub struct AppflowConnectorProfileConnectorProfileConfigEl {
+pub struct AppflowConnectorProfile_ConnectorProfileConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connector_profile_credentials: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl>>,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connector_profile_properties: std
     ::option
-    ::Option<std::vec::Vec<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl>>,
-    dynamic: AppflowConnectorProfileConnectorProfileConfigElDynamic,
+    ::Option<std::vec::Vec<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties>>,
+    dynamic: AppflowConnectorProfile_ConnectorProfileConfigDynamic,
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigEl {
+impl AppflowConnectorProfile_ConnectorProfileConfig {
     #[doc = "Set the field `connector_profile_credentials`.\n"]
     pub fn set_connector_profile_credentials(
         mut self,
@@ -7084,9 +6536,7 @@ impl AppflowConnectorProfileConnectorProfileConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsEl,
-                        >,
+                        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentials>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7110,7 +6560,7 @@ impl AppflowConnectorProfileConnectorProfileConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesEl>,
+                        ::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileProperties>,
                     >,
     ) -> Self {
         match v.into() {
@@ -7125,8 +6575,8 @@ impl AppflowConnectorProfileConnectorProfileConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl {
-    type O = terrars::BlockAssignable<AppflowConnectorProfileConnectorProfileConfigEl>;
+impl terrars::ToListMappable for AppflowConnectorProfile_ConnectorProfileConfig {
+    type O = terrars::BlockAssignable<AppflowConnectorProfile_ConnectorProfileConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7137,11 +6587,11 @@ impl terrars::ToListMappable for AppflowConnectorProfileConnectorProfileConfigEl
     }
 }
 
-pub struct BuildAppflowConnectorProfileConnectorProfileConfigEl {}
+pub struct BuildAppflowConnectorProfile_ConnectorProfileConfig {}
 
-impl BuildAppflowConnectorProfileConnectorProfileConfigEl {
-    pub fn build(self) -> AppflowConnectorProfileConnectorProfileConfigEl {
-        AppflowConnectorProfileConnectorProfileConfigEl {
+impl BuildAppflowConnectorProfile_ConnectorProfileConfig {
+    pub fn build(self) -> AppflowConnectorProfile_ConnectorProfileConfig {
+        AppflowConnectorProfile_ConnectorProfileConfig {
             connector_profile_credentials: core::default::Default::default(),
             connector_profile_properties: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -7149,24 +6599,26 @@ impl BuildAppflowConnectorProfileConnectorProfileConfigEl {
     }
 }
 
-pub struct AppflowConnectorProfileConnectorProfileConfigElRef {
+#[allow(dead_code)]
+pub struct AppflowConnectorProfile_ConnectorProfileConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppflowConnectorProfileConnectorProfileConfigElRef {
+impl terrars::Ref for AppflowConnectorProfile_ConnectorProfileConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppflowConnectorProfileConnectorProfileConfigElRef {
-        AppflowConnectorProfileConnectorProfileConfigElRef {
+    ) -> AppflowConnectorProfile_ConnectorProfileConfigRef {
+        AppflowConnectorProfile_ConnectorProfileConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppflowConnectorProfileConnectorProfileConfigElRef {
+impl AppflowConnectorProfile_ConnectorProfileConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -7174,21 +6626,14 @@ impl AppflowConnectorProfileConnectorProfileConfigElRef {
     #[doc = "Get a reference to the value of field `connector_profile_credentials` after provisioning.\n"]
     pub fn connector_profile_credentials(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfileCredentialsElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfileCredentialsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connector_profile_credentials", self.base))
     }
 
     #[doc = "Get a reference to the value of field `connector_profile_properties` after provisioning.\n"]
     pub fn connector_profile_properties(
         &self,
-    ) -> terrars::ListRef<AppflowConnectorProfileConnectorProfileConfigElConnectorProfilePropertiesElRef> {
+    ) -> terrars::ListRef<AppflowConnectorProfile_ConnectorProfileConfig_ConnectorProfilePropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connector_profile_properties", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppflowConnectorProfileDynamic {
-    connector_profile_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppflowConnectorProfileConnectorProfileConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodepipelineWebhookData {
+struct CodepipelineWebhookData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,22 +25,24 @@ struct CodepipelineWebhookData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     target_action: terrars::PrimField<std::string::String>,
     target_pipeline: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authentication_configuration: std::option::Option<std::vec::Vec<CodepipelineWebhookAuthenticationConfigurationEl>>,
+    authentication_configuration: std::option::Option<std::vec::Vec<CodepipelineWebhook_AuthenticationConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<CodepipelineWebhookFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<CodepipelineWebhook_Filter>>,
     dynamic: CodepipelineWebhookDynamic,
 }
 
 struct CodepipelineWebhook_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodepipelineWebhookData>,
+    data: std::cell::RefCell<CodepipelineWebhookData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +148,13 @@ impl CodepipelineWebhook {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -165,7 +176,7 @@ impl CodepipelineWebhook {
     #[doc = "Set the field `authentication_configuration`.\n"]
     pub fn set_authentication_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineWebhookAuthenticationConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineWebhook_AuthenticationConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -179,7 +190,7 @@ impl CodepipelineWebhook {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineWebhookFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<CodepipelineWebhook_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -211,6 +222,12 @@ impl CodepipelineWebhook {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -237,7 +254,7 @@ impl CodepipelineWebhook {
     }
 
     #[doc = "Get a reference to the value of field `authentication_configuration` after provisioning.\n"]
-    pub fn authentication_configuration(&self) -> terrars::ListRef<CodepipelineWebhookAuthenticationConfigurationElRef> {
+    pub fn authentication_configuration(&self) -> terrars::ListRef<CodepipelineWebhook_AuthenticationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_configuration", self.extract_ref()))
     }
 }
@@ -290,7 +307,7 @@ impl BuildCodepipelineWebhook {
         let out = CodepipelineWebhook(std::rc::Rc::new(CodepipelineWebhook_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodepipelineWebhookData {
+            data: std::cell::RefCell::new(CodepipelineWebhookData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -299,6 +316,7 @@ impl BuildCodepipelineWebhook {
                 authentication: self.authentication,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 target_action: self.target_action,
@@ -356,6 +374,12 @@ impl CodepipelineWebhookRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -382,20 +406,28 @@ impl CodepipelineWebhookRef {
     }
 
     #[doc = "Get a reference to the value of field `authentication_configuration` after provisioning.\n"]
-    pub fn authentication_configuration(&self) -> terrars::ListRef<CodepipelineWebhookAuthenticationConfigurationElRef> {
+    pub fn authentication_configuration(&self) -> terrars::ListRef<CodepipelineWebhook_AuthenticationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CodepipelineWebhookDynamic {
+    authentication_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodepipelineWebhook_AuthenticationConfiguration>>,
+    filter: std::option::Option<terrars::DynamicBlock<CodepipelineWebhook_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct CodepipelineWebhookAuthenticationConfigurationEl {
+pub struct CodepipelineWebhook_AuthenticationConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_ip_range: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret_token: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodepipelineWebhookAuthenticationConfigurationEl {
+impl CodepipelineWebhook_AuthenticationConfiguration {
     #[doc = "Set the field `allowed_ip_range`.\n"]
     pub fn set_allowed_ip_range(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.allowed_ip_range = std::option::Option::Some(v.into());
@@ -409,8 +441,8 @@ impl CodepipelineWebhookAuthenticationConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CodepipelineWebhookAuthenticationConfigurationEl {
-    type O = terrars::BlockAssignable<CodepipelineWebhookAuthenticationConfigurationEl>;
+impl terrars::ToListMappable for CodepipelineWebhook_AuthenticationConfiguration {
+    type O = terrars::BlockAssignable<CodepipelineWebhook_AuthenticationConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -421,35 +453,37 @@ impl terrars::ToListMappable for CodepipelineWebhookAuthenticationConfigurationE
     }
 }
 
-pub struct BuildCodepipelineWebhookAuthenticationConfigurationEl {}
+pub struct BuildCodepipelineWebhook_AuthenticationConfiguration {}
 
-impl BuildCodepipelineWebhookAuthenticationConfigurationEl {
-    pub fn build(self) -> CodepipelineWebhookAuthenticationConfigurationEl {
-        CodepipelineWebhookAuthenticationConfigurationEl {
+impl BuildCodepipelineWebhook_AuthenticationConfiguration {
+    pub fn build(self) -> CodepipelineWebhook_AuthenticationConfiguration {
+        CodepipelineWebhook_AuthenticationConfiguration {
             allowed_ip_range: core::default::Default::default(),
             secret_token: core::default::Default::default(),
         }
     }
 }
 
-pub struct CodepipelineWebhookAuthenticationConfigurationElRef {
+#[allow(dead_code)]
+pub struct CodepipelineWebhook_AuthenticationConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodepipelineWebhookAuthenticationConfigurationElRef {
+impl terrars::Ref for CodepipelineWebhook_AuthenticationConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodepipelineWebhookAuthenticationConfigurationElRef {
-        CodepipelineWebhookAuthenticationConfigurationElRef {
+    ) -> CodepipelineWebhook_AuthenticationConfigurationRef {
+        CodepipelineWebhook_AuthenticationConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodepipelineWebhookAuthenticationConfigurationElRef {
+impl CodepipelineWebhook_AuthenticationConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -466,15 +500,15 @@ impl CodepipelineWebhookAuthenticationConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodepipelineWebhookFilterEl {
+pub struct CodepipelineWebhook_Filter {
     json_path: terrars::PrimField<std::string::String>,
     match_equals: terrars::PrimField<std::string::String>,
 }
 
-impl CodepipelineWebhookFilterEl { }
+impl CodepipelineWebhook_Filter { }
 
-impl terrars::ToListMappable for CodepipelineWebhookFilterEl {
-    type O = terrars::BlockAssignable<CodepipelineWebhookFilterEl>;
+impl terrars::ToListMappable for CodepipelineWebhook_Filter {
+    type O = terrars::BlockAssignable<CodepipelineWebhook_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -485,37 +519,39 @@ impl terrars::ToListMappable for CodepipelineWebhookFilterEl {
     }
 }
 
-pub struct BuildCodepipelineWebhookFilterEl {
+pub struct BuildCodepipelineWebhook_Filter {
     #[doc = ""]
     pub json_path: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub match_equals: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodepipelineWebhookFilterEl {
-    pub fn build(self) -> CodepipelineWebhookFilterEl {
-        CodepipelineWebhookFilterEl {
+impl BuildCodepipelineWebhook_Filter {
+    pub fn build(self) -> CodepipelineWebhook_Filter {
+        CodepipelineWebhook_Filter {
             json_path: self.json_path,
             match_equals: self.match_equals,
         }
     }
 }
 
-pub struct CodepipelineWebhookFilterElRef {
+#[allow(dead_code)]
+pub struct CodepipelineWebhook_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodepipelineWebhookFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodepipelineWebhookFilterElRef {
-        CodepipelineWebhookFilterElRef {
+impl terrars::Ref for CodepipelineWebhook_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodepipelineWebhook_FilterRef {
+        CodepipelineWebhook_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodepipelineWebhookFilterElRef {
+impl CodepipelineWebhook_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -529,12 +565,4 @@ impl CodepipelineWebhookFilterElRef {
     pub fn match_equals(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.match_equals", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CodepipelineWebhookDynamic {
-    authentication_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<CodepipelineWebhookAuthenticationConfigurationEl>>,
-    filter: std::option::Option<terrars::DynamicBlock<CodepipelineWebhookFilterEl>>,
 }

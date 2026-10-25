@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LbListenerData {
+struct LbListenerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,22 +32,96 @@ struct LbListenerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocol: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_request_x_amzn_mtls_clientcert_header_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_request_x_amzn_mtls_clientcert_issuer_header_name: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_request_x_amzn_mtls_clientcert_leaf_header_name: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_request_x_amzn_mtls_clientcert_subject_header_name: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_request_x_amzn_mtls_clientcert_validity_header_name: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_request_x_amzn_tls_cipher_suite_header_name: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_request_x_amzn_tls_version_header_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_access_control_allow_credentials_header_value: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_access_control_allow_headers_header_value: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_access_control_allow_methods_header_value: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_access_control_allow_origin_header_value: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_access_control_expose_headers_header_value: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_access_control_max_age_header_value: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_content_security_policy_header_value: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_server_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_strict_transport_security_header_value: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_x_content_type_options_header_value: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_http_response_x_frame_options_header_value: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ssl_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_action: std::option::Option<std::vec::Vec<LbListenerDefaultActionEl>>,
+    tcp_idle_timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LbListenerTimeoutsEl>,
+    default_action: std::option::Option<std::vec::Vec<LbListener_DefaultAction>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mutual_authentication: std::option::Option<std::vec::Vec<LbListener_MutualAuthentication>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<LbListener_Timeouts>,
     dynamic: LbListenerDynamic,
 }
 
 struct LbListener_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LbListenerData>,
+    data: std::cell::RefCell<LbListenerData_>,
 }
 
 #[derive(Clone)]
@@ -175,6 +251,199 @@ impl LbListener {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_request_x_amzn_mtls_clientcert_header_name`.\n"]
+    pub fn set_routing_http_request_x_amzn_mtls_clientcert_header_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_request_x_amzn_mtls_clientcert_header_name =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_request_x_amzn_mtls_clientcert_issuer_header_name`.\n"]
+    pub fn set_routing_http_request_x_amzn_mtls_clientcert_issuer_header_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_request_x_amzn_mtls_clientcert_issuer_header_name =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_request_x_amzn_mtls_clientcert_leaf_header_name`.\n"]
+    pub fn set_routing_http_request_x_amzn_mtls_clientcert_leaf_header_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_request_x_amzn_mtls_clientcert_leaf_header_name =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name`.\n"]
+    pub fn set_routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_request_x_amzn_mtls_clientcert_subject_header_name`.\n"]
+    pub fn set_routing_http_request_x_amzn_mtls_clientcert_subject_header_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_request_x_amzn_mtls_clientcert_subject_header_name =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_request_x_amzn_mtls_clientcert_validity_header_name`.\n"]
+    pub fn set_routing_http_request_x_amzn_mtls_clientcert_validity_header_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_request_x_amzn_mtls_clientcert_validity_header_name =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_request_x_amzn_tls_cipher_suite_header_name`.\n"]
+    pub fn set_routing_http_request_x_amzn_tls_cipher_suite_header_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_request_x_amzn_tls_cipher_suite_header_name =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_request_x_amzn_tls_version_header_name`.\n"]
+    pub fn set_routing_http_request_x_amzn_tls_version_header_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_request_x_amzn_tls_version_header_name =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_access_control_allow_credentials_header_value`.\n"]
+    pub fn set_routing_http_response_access_control_allow_credentials_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_access_control_allow_credentials_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_access_control_allow_headers_header_value`.\n"]
+    pub fn set_routing_http_response_access_control_allow_headers_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_access_control_allow_headers_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_access_control_allow_methods_header_value`.\n"]
+    pub fn set_routing_http_response_access_control_allow_methods_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_access_control_allow_methods_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_access_control_allow_origin_header_value`.\n"]
+    pub fn set_routing_http_response_access_control_allow_origin_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_access_control_allow_origin_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_access_control_expose_headers_header_value`.\n"]
+    pub fn set_routing_http_response_access_control_expose_headers_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_access_control_expose_headers_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_access_control_max_age_header_value`.\n"]
+    pub fn set_routing_http_response_access_control_max_age_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_access_control_max_age_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_content_security_policy_header_value`.\n"]
+    pub fn set_routing_http_response_content_security_policy_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_content_security_policy_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_server_enabled`.\n"]
+    pub fn set_routing_http_response_server_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().routing_http_response_server_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_strict_transport_security_header_value`.\n"]
+    pub fn set_routing_http_response_strict_transport_security_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_strict_transport_security_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_x_content_type_options_header_value`.\n"]
+    pub fn set_routing_http_response_x_content_type_options_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_x_content_type_options_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_http_response_x_frame_options_header_value`.\n"]
+    pub fn set_routing_http_response_x_frame_options_header_value(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().routing_http_response_x_frame_options_header_value =
+            std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `ssl_policy`.\n"]
     pub fn set_ssl_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().ssl_policy = std::option::Option::Some(v.into());
@@ -199,10 +468,16 @@ impl LbListener {
         self
     }
 
+    #[doc = "Set the field `tcp_idle_timeout_seconds`.\n"]
+    pub fn set_tcp_idle_timeout_seconds(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().tcp_idle_timeout_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `default_action`.\n"]
     pub fn set_default_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbListenerDefaultActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,8 +490,24 @@ impl LbListener {
         self
     }
 
+    #[doc = "Set the field `mutual_authentication`.\n"]
+    pub fn set_mutual_authentication(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_MutualAuthentication>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().mutual_authentication = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.mutual_authentication = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LbListenerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LbListener_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -256,6 +547,200 @@ impl LbListener {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_issuer_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_issuer_header_name(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_issuer_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_leaf_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_leaf_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_leaf_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_subject_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_subject_header_name(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_subject_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_validity_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_validity_header_name(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_validity_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_tls_cipher_suite_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_tls_cipher_suite_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_tls_cipher_suite_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_tls_version_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_tls_version_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_tls_version_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_allow_credentials_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_allow_credentials_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_allow_credentials_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_allow_headers_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_allow_headers_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_allow_headers_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_allow_methods_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_allow_methods_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_allow_methods_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_allow_origin_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_allow_origin_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_allow_origin_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_expose_headers_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_expose_headers_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_expose_headers_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_max_age_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_max_age_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_max_age_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_content_security_policy_header_value` after provisioning.\n"]
+    pub fn routing_http_response_content_security_policy_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_content_security_policy_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `routing_http_response_server_enabled` after provisioning.\n"]
+    pub fn routing_http_response_server_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_server_enabled", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_strict_transport_security_header_value` after provisioning.\n"]
+    pub fn routing_http_response_strict_transport_security_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_strict_transport_security_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_x_content_type_options_header_value` after provisioning.\n"]
+    pub fn routing_http_response_x_content_type_options_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_x_content_type_options_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_x_frame_options_header_value` after provisioning.\n"]
+    pub fn routing_http_response_x_frame_options_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_x_frame_options_header_value", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `ssl_policy` after provisioning.\n"]
     pub fn ssl_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssl_policy", self.extract_ref()))
@@ -271,14 +756,24 @@ impl LbListener {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tcp_idle_timeout_seconds` after provisioning.\n"]
+    pub fn tcp_idle_timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tcp_idle_timeout_seconds", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `default_action` after provisioning.\n"]
-    pub fn default_action(&self) -> terrars::ListRef<LbListenerDefaultActionElRef> {
+    pub fn default_action(&self) -> terrars::ListRef<LbListener_DefaultActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_action", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `mutual_authentication` after provisioning.\n"]
+    pub fn mutual_authentication(&self) -> terrars::ListRef<LbListener_MutualAuthenticationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mutual_authentication", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LbListenerTimeoutsElRef {
-        LbListenerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LbListener_TimeoutsRef {
+        LbListener_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -324,7 +819,7 @@ impl BuildLbListener {
         let out = LbListener(std::rc::Rc::new(LbListener_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LbListenerData {
+            data: std::cell::RefCell::new(LbListenerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,10 +831,35 @@ impl BuildLbListener {
                 load_balancer_arn: self.load_balancer_arn,
                 port: core::default::Default::default(),
                 protocol: core::default::Default::default(),
+                region: core::default::Default::default(),
+                routing_http_request_x_amzn_mtls_clientcert_header_name: core::default::Default::default(),
+                routing_http_request_x_amzn_mtls_clientcert_issuer_header_name: core::default::Default::default(),
+                routing_http_request_x_amzn_mtls_clientcert_leaf_header_name: core::default::Default::default(),
+                routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name: core
+                ::default
+                ::Default
+                ::default(),
+                routing_http_request_x_amzn_mtls_clientcert_subject_header_name: core::default::Default::default(),
+                routing_http_request_x_amzn_mtls_clientcert_validity_header_name: core::default::Default::default(),
+                routing_http_request_x_amzn_tls_cipher_suite_header_name: core::default::Default::default(),
+                routing_http_request_x_amzn_tls_version_header_name: core::default::Default::default(),
+                routing_http_response_access_control_allow_credentials_header_value: core::default::Default::default(),
+                routing_http_response_access_control_allow_headers_header_value: core::default::Default::default(),
+                routing_http_response_access_control_allow_methods_header_value: core::default::Default::default(),
+                routing_http_response_access_control_allow_origin_header_value: core::default::Default::default(),
+                routing_http_response_access_control_expose_headers_header_value: core::default::Default::default(),
+                routing_http_response_access_control_max_age_header_value: core::default::Default::default(),
+                routing_http_response_content_security_policy_header_value: core::default::Default::default(),
+                routing_http_response_server_enabled: core::default::Default::default(),
+                routing_http_response_strict_transport_security_header_value: core::default::Default::default(),
+                routing_http_response_x_content_type_options_header_value: core::default::Default::default(),
+                routing_http_response_x_frame_options_header_value: core::default::Default::default(),
                 ssl_policy: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                tcp_idle_timeout_seconds: core::default::Default::default(),
                 default_action: core::default::Default::default(),
+                mutual_authentication: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -407,6 +927,200 @@ impl LbListenerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_issuer_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_issuer_header_name(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_issuer_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_leaf_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_leaf_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_leaf_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_serial_number_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_subject_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_subject_header_name(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_subject_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_mtls_clientcert_validity_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_mtls_clientcert_validity_header_name(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_mtls_clientcert_validity_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_tls_cipher_suite_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_tls_cipher_suite_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_tls_cipher_suite_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_request_x_amzn_tls_version_header_name` after provisioning.\n"]
+    pub fn routing_http_request_x_amzn_tls_version_header_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_request_x_amzn_tls_version_header_name", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_allow_credentials_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_allow_credentials_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_allow_credentials_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_allow_headers_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_allow_headers_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_allow_headers_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_allow_methods_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_allow_methods_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_allow_methods_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_allow_origin_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_allow_origin_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_allow_origin_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_expose_headers_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_expose_headers_header_value(
+        &self,
+    ) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_expose_headers_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_access_control_max_age_header_value` after provisioning.\n"]
+    pub fn routing_http_response_access_control_max_age_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_access_control_max_age_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_content_security_policy_header_value` after provisioning.\n"]
+    pub fn routing_http_response_content_security_policy_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_content_security_policy_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `routing_http_response_server_enabled` after provisioning.\n"]
+    pub fn routing_http_response_server_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_server_enabled", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_strict_transport_security_header_value` after provisioning.\n"]
+    pub fn routing_http_response_strict_transport_security_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_strict_transport_security_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_x_content_type_options_header_value` after provisioning.\n"]
+    pub fn routing_http_response_x_content_type_options_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_x_content_type_options_header_value", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `routing_http_response_x_frame_options_header_value` after provisioning.\n"]
+    pub fn routing_http_response_x_frame_options_header_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.routing_http_response_x_frame_options_header_value", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `ssl_policy` after provisioning.\n"]
     pub fn ssl_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ssl_policy", self.extract_ref()))
@@ -422,19 +1136,35 @@ impl LbListenerRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tcp_idle_timeout_seconds` after provisioning.\n"]
+    pub fn tcp_idle_timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tcp_idle_timeout_seconds", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `default_action` after provisioning.\n"]
-    pub fn default_action(&self) -> terrars::ListRef<LbListenerDefaultActionElRef> {
+    pub fn default_action(&self) -> terrars::ListRef<LbListener_DefaultActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_action", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `mutual_authentication` after provisioning.\n"]
+    pub fn mutual_authentication(&self) -> terrars::ListRef<LbListener_MutualAuthenticationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mutual_authentication", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LbListenerTimeoutsElRef {
-        LbListenerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LbListener_TimeoutsRef {
+        LbListener_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LbListenerDynamic {
+    default_action: std::option::Option<terrars::DynamicBlock<LbListener_DefaultAction>>,
+    mutual_authentication: std::option::Option<terrars::DynamicBlock<LbListener_MutualAuthentication>>,
+}
+
 #[derive(Serialize)]
-pub struct LbListenerDefaultActionElAuthenticateCognitoEl {
+pub struct LbListener_DefaultAction_AuthenticateCognito {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authentication_request_extra_params: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -450,7 +1180,7 @@ pub struct LbListenerDefaultActionElAuthenticateCognitoEl {
     user_pool_domain: terrars::PrimField<std::string::String>,
 }
 
-impl LbListenerDefaultActionElAuthenticateCognitoEl {
+impl LbListener_DefaultAction_AuthenticateCognito {
     #[doc = "Set the field `authentication_request_extra_params`.\n"]
     pub fn set_authentication_request_extra_params(
         mut self,
@@ -491,8 +1221,8 @@ impl LbListenerDefaultActionElAuthenticateCognitoEl {
     }
 }
 
-impl terrars::ToListMappable for LbListenerDefaultActionElAuthenticateCognitoEl {
-    type O = terrars::BlockAssignable<LbListenerDefaultActionElAuthenticateCognitoEl>;
+impl terrars::ToListMappable for LbListener_DefaultAction_AuthenticateCognito {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction_AuthenticateCognito>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -503,7 +1233,7 @@ impl terrars::ToListMappable for LbListenerDefaultActionElAuthenticateCognitoEl 
     }
 }
 
-pub struct BuildLbListenerDefaultActionElAuthenticateCognitoEl {
+pub struct BuildLbListener_DefaultAction_AuthenticateCognito {
     #[doc = ""]
     pub user_pool_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -512,9 +1242,9 @@ pub struct BuildLbListenerDefaultActionElAuthenticateCognitoEl {
     pub user_pool_domain: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbListenerDefaultActionElAuthenticateCognitoEl {
-    pub fn build(self) -> LbListenerDefaultActionElAuthenticateCognitoEl {
-        LbListenerDefaultActionElAuthenticateCognitoEl {
+impl BuildLbListener_DefaultAction_AuthenticateCognito {
+    pub fn build(self) -> LbListener_DefaultAction_AuthenticateCognito {
+        LbListener_DefaultAction_AuthenticateCognito {
             authentication_request_extra_params: core::default::Default::default(),
             on_unauthenticated_request: core::default::Default::default(),
             scope: core::default::Default::default(),
@@ -527,24 +1257,26 @@ impl BuildLbListenerDefaultActionElAuthenticateCognitoEl {
     }
 }
 
-pub struct LbListenerDefaultActionElAuthenticateCognitoElRef {
+#[allow(dead_code)]
+pub struct LbListener_DefaultAction_AuthenticateCognitoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbListenerDefaultActionElAuthenticateCognitoElRef {
+impl terrars::Ref for LbListener_DefaultAction_AuthenticateCognitoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LbListenerDefaultActionElAuthenticateCognitoElRef {
-        LbListenerDefaultActionElAuthenticateCognitoElRef {
+    ) -> LbListener_DefaultAction_AuthenticateCognitoRef {
+        LbListener_DefaultAction_AuthenticateCognitoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbListenerDefaultActionElAuthenticateCognitoElRef {
+impl LbListener_DefaultAction_AuthenticateCognitoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -591,7 +1323,7 @@ impl LbListenerDefaultActionElAuthenticateCognitoElRef {
 }
 
 #[derive(Serialize)]
-pub struct LbListenerDefaultActionElAuthenticateOidcEl {
+pub struct LbListener_DefaultAction_AuthenticateOidc {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authentication_request_extra_params: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     authorization_endpoint: terrars::PrimField<std::string::String>,
@@ -610,7 +1342,7 @@ pub struct LbListenerDefaultActionElAuthenticateOidcEl {
     user_info_endpoint: terrars::PrimField<std::string::String>,
 }
 
-impl LbListenerDefaultActionElAuthenticateOidcEl {
+impl LbListener_DefaultAction_AuthenticateOidc {
     #[doc = "Set the field `authentication_request_extra_params`.\n"]
     pub fn set_authentication_request_extra_params(
         mut self,
@@ -651,8 +1383,8 @@ impl LbListenerDefaultActionElAuthenticateOidcEl {
     }
 }
 
-impl terrars::ToListMappable for LbListenerDefaultActionElAuthenticateOidcEl {
-    type O = terrars::BlockAssignable<LbListenerDefaultActionElAuthenticateOidcEl>;
+impl terrars::ToListMappable for LbListener_DefaultAction_AuthenticateOidc {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction_AuthenticateOidc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -663,7 +1395,7 @@ impl terrars::ToListMappable for LbListenerDefaultActionElAuthenticateOidcEl {
     }
 }
 
-pub struct BuildLbListenerDefaultActionElAuthenticateOidcEl {
+pub struct BuildLbListener_DefaultAction_AuthenticateOidc {
     #[doc = ""]
     pub authorization_endpoint: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -678,9 +1410,9 @@ pub struct BuildLbListenerDefaultActionElAuthenticateOidcEl {
     pub user_info_endpoint: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbListenerDefaultActionElAuthenticateOidcEl {
-    pub fn build(self) -> LbListenerDefaultActionElAuthenticateOidcEl {
-        LbListenerDefaultActionElAuthenticateOidcEl {
+impl BuildLbListener_DefaultAction_AuthenticateOidc {
+    pub fn build(self) -> LbListener_DefaultAction_AuthenticateOidc {
+        LbListener_DefaultAction_AuthenticateOidc {
             authentication_request_extra_params: core::default::Default::default(),
             authorization_endpoint: self.authorization_endpoint,
             client_id: self.client_id,
@@ -696,24 +1428,23 @@ impl BuildLbListenerDefaultActionElAuthenticateOidcEl {
     }
 }
 
-pub struct LbListenerDefaultActionElAuthenticateOidcElRef {
+#[allow(dead_code)]
+pub struct LbListener_DefaultAction_AuthenticateOidcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbListenerDefaultActionElAuthenticateOidcElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> LbListenerDefaultActionElAuthenticateOidcElRef {
-        LbListenerDefaultActionElAuthenticateOidcElRef {
+impl terrars::Ref for LbListener_DefaultAction_AuthenticateOidcRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListener_DefaultAction_AuthenticateOidcRef {
+        LbListener_DefaultAction_AuthenticateOidcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbListenerDefaultActionElAuthenticateOidcElRef {
+impl LbListener_DefaultAction_AuthenticateOidcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -775,7 +1506,7 @@ impl LbListenerDefaultActionElAuthenticateOidcElRef {
 }
 
 #[derive(Serialize)]
-pub struct LbListenerDefaultActionElFixedResponseEl {
+pub struct LbListener_DefaultAction_FixedResponse {
     content_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     message_body: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -783,7 +1514,7 @@ pub struct LbListenerDefaultActionElFixedResponseEl {
     status_code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LbListenerDefaultActionElFixedResponseEl {
+impl LbListener_DefaultAction_FixedResponse {
     #[doc = "Set the field `message_body`.\n"]
     pub fn set_message_body(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.message_body = std::option::Option::Some(v.into());
@@ -797,8 +1528,8 @@ impl LbListenerDefaultActionElFixedResponseEl {
     }
 }
 
-impl terrars::ToListMappable for LbListenerDefaultActionElFixedResponseEl {
-    type O = terrars::BlockAssignable<LbListenerDefaultActionElFixedResponseEl>;
+impl terrars::ToListMappable for LbListener_DefaultAction_FixedResponse {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction_FixedResponse>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -809,14 +1540,14 @@ impl terrars::ToListMappable for LbListenerDefaultActionElFixedResponseEl {
     }
 }
 
-pub struct BuildLbListenerDefaultActionElFixedResponseEl {
+pub struct BuildLbListener_DefaultAction_FixedResponse {
     #[doc = ""]
     pub content_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbListenerDefaultActionElFixedResponseEl {
-    pub fn build(self) -> LbListenerDefaultActionElFixedResponseEl {
-        LbListenerDefaultActionElFixedResponseEl {
+impl BuildLbListener_DefaultAction_FixedResponse {
+    pub fn build(self) -> LbListener_DefaultAction_FixedResponse {
+        LbListener_DefaultAction_FixedResponse {
             content_type: self.content_type,
             message_body: core::default::Default::default(),
             status_code: core::default::Default::default(),
@@ -824,21 +1555,23 @@ impl BuildLbListenerDefaultActionElFixedResponseEl {
     }
 }
 
-pub struct LbListenerDefaultActionElFixedResponseElRef {
+#[allow(dead_code)]
+pub struct LbListener_DefaultAction_FixedResponseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbListenerDefaultActionElFixedResponseElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListenerDefaultActionElFixedResponseElRef {
-        LbListenerDefaultActionElFixedResponseElRef {
+impl terrars::Ref for LbListener_DefaultAction_FixedResponseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListener_DefaultAction_FixedResponseRef {
+        LbListener_DefaultAction_FixedResponseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbListenerDefaultActionElFixedResponseElRef {
+impl LbListener_DefaultAction_FixedResponseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -860,13 +1593,13 @@ impl LbListenerDefaultActionElFixedResponseElRef {
 }
 
 #[derive(Serialize)]
-pub struct LbListenerDefaultActionElForwardElStickinessEl {
+pub struct LbListener_DefaultAction_Forward_Stickiness {
     duration: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl LbListenerDefaultActionElForwardElStickinessEl {
+impl LbListener_DefaultAction_Forward_Stickiness {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -874,8 +1607,8 @@ impl LbListenerDefaultActionElForwardElStickinessEl {
     }
 }
 
-impl terrars::ToListMappable for LbListenerDefaultActionElForwardElStickinessEl {
-    type O = terrars::BlockAssignable<LbListenerDefaultActionElForwardElStickinessEl>;
+impl terrars::ToListMappable for LbListener_DefaultAction_Forward_Stickiness {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction_Forward_Stickiness>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -886,38 +1619,40 @@ impl terrars::ToListMappable for LbListenerDefaultActionElForwardElStickinessEl 
     }
 }
 
-pub struct BuildLbListenerDefaultActionElForwardElStickinessEl {
+pub struct BuildLbListener_DefaultAction_Forward_Stickiness {
     #[doc = ""]
     pub duration: terrars::PrimField<f64>,
 }
 
-impl BuildLbListenerDefaultActionElForwardElStickinessEl {
-    pub fn build(self) -> LbListenerDefaultActionElForwardElStickinessEl {
-        LbListenerDefaultActionElForwardElStickinessEl {
+impl BuildLbListener_DefaultAction_Forward_Stickiness {
+    pub fn build(self) -> LbListener_DefaultAction_Forward_Stickiness {
+        LbListener_DefaultAction_Forward_Stickiness {
             duration: self.duration,
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct LbListenerDefaultActionElForwardElStickinessElRef {
+#[allow(dead_code)]
+pub struct LbListener_DefaultAction_Forward_StickinessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbListenerDefaultActionElForwardElStickinessElRef {
+impl terrars::Ref for LbListener_DefaultAction_Forward_StickinessRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LbListenerDefaultActionElForwardElStickinessElRef {
-        LbListenerDefaultActionElForwardElStickinessElRef {
+    ) -> LbListener_DefaultAction_Forward_StickinessRef {
+        LbListener_DefaultAction_Forward_StickinessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbListenerDefaultActionElForwardElStickinessElRef {
+impl LbListener_DefaultAction_Forward_StickinessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -934,13 +1669,13 @@ impl LbListenerDefaultActionElForwardElStickinessElRef {
 }
 
 #[derive(Serialize)]
-pub struct LbListenerDefaultActionElForwardElTargetGroupEl {
+pub struct LbListener_DefaultAction_Forward_TargetGroup {
     arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weight: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LbListenerDefaultActionElForwardElTargetGroupEl {
+impl LbListener_DefaultAction_Forward_TargetGroup {
     #[doc = "Set the field `weight`.\n"]
     pub fn set_weight(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.weight = std::option::Option::Some(v.into());
@@ -948,8 +1683,8 @@ impl LbListenerDefaultActionElForwardElTargetGroupEl {
     }
 }
 
-impl terrars::ToListMappable for LbListenerDefaultActionElForwardElTargetGroupEl {
-    type O = terrars::BlockAssignable<LbListenerDefaultActionElForwardElTargetGroupEl>;
+impl terrars::ToListMappable for LbListener_DefaultAction_Forward_TargetGroup {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction_Forward_TargetGroup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -960,38 +1695,40 @@ impl terrars::ToListMappable for LbListenerDefaultActionElForwardElTargetGroupEl
     }
 }
 
-pub struct BuildLbListenerDefaultActionElForwardElTargetGroupEl {
+pub struct BuildLbListener_DefaultAction_Forward_TargetGroup {
     #[doc = ""]
     pub arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbListenerDefaultActionElForwardElTargetGroupEl {
-    pub fn build(self) -> LbListenerDefaultActionElForwardElTargetGroupEl {
-        LbListenerDefaultActionElForwardElTargetGroupEl {
+impl BuildLbListener_DefaultAction_Forward_TargetGroup {
+    pub fn build(self) -> LbListener_DefaultAction_Forward_TargetGroup {
+        LbListener_DefaultAction_Forward_TargetGroup {
             arn: self.arn,
             weight: core::default::Default::default(),
         }
     }
 }
 
-pub struct LbListenerDefaultActionElForwardElTargetGroupElRef {
+#[allow(dead_code)]
+pub struct LbListener_DefaultAction_Forward_TargetGroupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbListenerDefaultActionElForwardElTargetGroupElRef {
+impl terrars::Ref for LbListener_DefaultAction_Forward_TargetGroupRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LbListenerDefaultActionElForwardElTargetGroupElRef {
-        LbListenerDefaultActionElForwardElTargetGroupElRef {
+    ) -> LbListener_DefaultAction_Forward_TargetGroupRef {
+        LbListener_DefaultAction_Forward_TargetGroupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbListenerDefaultActionElForwardElTargetGroupElRef {
+impl LbListener_DefaultAction_Forward_TargetGroupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1008,25 +1745,25 @@ impl LbListenerDefaultActionElForwardElTargetGroupElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LbListenerDefaultActionElForwardElDynamic {
-    stickiness: std::option::Option<terrars::DynamicBlock<LbListenerDefaultActionElForwardElStickinessEl>>,
-    target_group: std::option::Option<terrars::DynamicBlock<LbListenerDefaultActionElForwardElTargetGroupEl>>,
+struct LbListener_DefaultAction_ForwardDynamic {
+    stickiness: std::option::Option<terrars::DynamicBlock<LbListener_DefaultAction_Forward_Stickiness>>,
+    target_group: std::option::Option<terrars::DynamicBlock<LbListener_DefaultAction_Forward_TargetGroup>>,
 }
 
 #[derive(Serialize)]
-pub struct LbListenerDefaultActionElForwardEl {
+pub struct LbListener_DefaultAction_Forward {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stickiness: std::option::Option<std::vec::Vec<LbListenerDefaultActionElForwardElStickinessEl>>,
+    stickiness: std::option::Option<std::vec::Vec<LbListener_DefaultAction_Forward_Stickiness>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_group: std::option::Option<std::vec::Vec<LbListenerDefaultActionElForwardElTargetGroupEl>>,
-    dynamic: LbListenerDefaultActionElForwardElDynamic,
+    target_group: std::option::Option<std::vec::Vec<LbListener_DefaultAction_Forward_TargetGroup>>,
+    dynamic: LbListener_DefaultAction_ForwardDynamic,
 }
 
-impl LbListenerDefaultActionElForwardEl {
+impl LbListener_DefaultAction_Forward {
     #[doc = "Set the field `stickiness`.\n"]
     pub fn set_stickiness(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbListenerDefaultActionElForwardElStickinessEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction_Forward_Stickiness>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1042,7 +1779,7 @@ impl LbListenerDefaultActionElForwardEl {
     #[doc = "Set the field `target_group`.\n"]
     pub fn set_target_group(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbListenerDefaultActionElForwardElTargetGroupEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction_Forward_TargetGroup>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1056,8 +1793,8 @@ impl LbListenerDefaultActionElForwardEl {
     }
 }
 
-impl terrars::ToListMappable for LbListenerDefaultActionElForwardEl {
-    type O = terrars::BlockAssignable<LbListenerDefaultActionElForwardEl>;
+impl terrars::ToListMappable for LbListener_DefaultAction_Forward {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction_Forward>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1068,11 +1805,11 @@ impl terrars::ToListMappable for LbListenerDefaultActionElForwardEl {
     }
 }
 
-pub struct BuildLbListenerDefaultActionElForwardEl {}
+pub struct BuildLbListener_DefaultAction_Forward {}
 
-impl BuildLbListenerDefaultActionElForwardEl {
-    pub fn build(self) -> LbListenerDefaultActionElForwardEl {
-        LbListenerDefaultActionElForwardEl {
+impl BuildLbListener_DefaultAction_Forward {
+    pub fn build(self) -> LbListener_DefaultAction_Forward {
+        LbListener_DefaultAction_Forward {
             stickiness: core::default::Default::default(),
             target_group: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1080,33 +1817,211 @@ impl BuildLbListenerDefaultActionElForwardEl {
     }
 }
 
-pub struct LbListenerDefaultActionElForwardElRef {
+#[allow(dead_code)]
+pub struct LbListener_DefaultAction_ForwardRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbListenerDefaultActionElForwardElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListenerDefaultActionElForwardElRef {
-        LbListenerDefaultActionElForwardElRef {
+impl terrars::Ref for LbListener_DefaultAction_ForwardRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListener_DefaultAction_ForwardRef {
+        LbListener_DefaultAction_ForwardRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbListenerDefaultActionElForwardElRef {
+impl LbListener_DefaultAction_ForwardRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `stickiness` after provisioning.\n"]
-    pub fn stickiness(&self) -> terrars::ListRef<LbListenerDefaultActionElForwardElStickinessElRef> {
+    pub fn stickiness(&self) -> terrars::ListRef<LbListener_DefaultAction_Forward_StickinessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stickiness", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LbListenerDefaultActionElRedirectEl {
+pub struct LbListener_DefaultAction_JwtValidation_AdditionalClaim {
+    format: terrars::PrimField<std::string::String>,
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl LbListener_DefaultAction_JwtValidation_AdditionalClaim { }
+
+impl terrars::ToListMappable for LbListener_DefaultAction_JwtValidation_AdditionalClaim {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction_JwtValidation_AdditionalClaim>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLbListener_DefaultAction_JwtValidation_AdditionalClaim {
+    #[doc = ""]
+    pub format: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildLbListener_DefaultAction_JwtValidation_AdditionalClaim {
+    pub fn build(self) -> LbListener_DefaultAction_JwtValidation_AdditionalClaim {
+        LbListener_DefaultAction_JwtValidation_AdditionalClaim {
+            format: self.format,
+            name: self.name,
+            values: self.values,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> LbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+        LbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `format` after provisioning.\n"]
+    pub fn format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.format", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct LbListener_DefaultAction_JwtValidationDynamic {
+    additional_claim: std
+    ::option
+    ::Option<terrars::DynamicBlock<LbListener_DefaultAction_JwtValidation_AdditionalClaim>>,
+}
+
+#[derive(Serialize)]
+pub struct LbListener_DefaultAction_JwtValidation {
+    issuer: terrars::PrimField<std::string::String>,
+    jwks_endpoint: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    additional_claim: std::option::Option<std::vec::Vec<LbListener_DefaultAction_JwtValidation_AdditionalClaim>>,
+    dynamic: LbListener_DefaultAction_JwtValidationDynamic,
+}
+
+impl LbListener_DefaultAction_JwtValidation {
+    #[doc = "Set the field `additional_claim`.\n"]
+    pub fn set_additional_claim(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction_JwtValidation_AdditionalClaim>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.additional_claim = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.additional_claim = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for LbListener_DefaultAction_JwtValidation {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction_JwtValidation>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLbListener_DefaultAction_JwtValidation {
+    #[doc = ""]
+    pub issuer: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub jwks_endpoint: terrars::PrimField<std::string::String>,
+}
+
+impl BuildLbListener_DefaultAction_JwtValidation {
+    pub fn build(self) -> LbListener_DefaultAction_JwtValidation {
+        LbListener_DefaultAction_JwtValidation {
+            issuer: self.issuer,
+            jwks_endpoint: self.jwks_endpoint,
+            additional_claim: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LbListener_DefaultAction_JwtValidationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LbListener_DefaultAction_JwtValidationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListener_DefaultAction_JwtValidationRef {
+        LbListener_DefaultAction_JwtValidationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LbListener_DefaultAction_JwtValidationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `issuer` after provisioning.\n"]
+    pub fn issuer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `jwks_endpoint` after provisioning.\n"]
+    pub fn jwks_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.jwks_endpoint", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct LbListener_DefaultAction_Redirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1120,7 +2035,7 @@ pub struct LbListenerDefaultActionElRedirectEl {
     status_code: terrars::PrimField<std::string::String>,
 }
 
-impl LbListenerDefaultActionElRedirectEl {
+impl LbListener_DefaultAction_Redirect {
     #[doc = "Set the field `host`.\n"]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host = std::option::Option::Some(v.into());
@@ -1152,8 +2067,8 @@ impl LbListenerDefaultActionElRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for LbListenerDefaultActionElRedirectEl {
-    type O = terrars::BlockAssignable<LbListenerDefaultActionElRedirectEl>;
+impl terrars::ToListMappable for LbListener_DefaultAction_Redirect {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction_Redirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1164,14 +2079,14 @@ impl terrars::ToListMappable for LbListenerDefaultActionElRedirectEl {
     }
 }
 
-pub struct BuildLbListenerDefaultActionElRedirectEl {
+pub struct BuildLbListener_DefaultAction_Redirect {
     #[doc = ""]
     pub status_code: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbListenerDefaultActionElRedirectEl {
-    pub fn build(self) -> LbListenerDefaultActionElRedirectEl {
-        LbListenerDefaultActionElRedirectEl {
+impl BuildLbListener_DefaultAction_Redirect {
+    pub fn build(self) -> LbListener_DefaultAction_Redirect {
+        LbListener_DefaultAction_Redirect {
             host: core::default::Default::default(),
             path: core::default::Default::default(),
             port: core::default::Default::default(),
@@ -1182,21 +2097,23 @@ impl BuildLbListenerDefaultActionElRedirectEl {
     }
 }
 
-pub struct LbListenerDefaultActionElRedirectElRef {
+#[allow(dead_code)]
+pub struct LbListener_DefaultAction_RedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbListenerDefaultActionElRedirectElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListenerDefaultActionElRedirectElRef {
-        LbListenerDefaultActionElRedirectElRef {
+impl terrars::Ref for LbListener_DefaultAction_RedirectRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListener_DefaultAction_RedirectRef {
+        LbListener_DefaultAction_RedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbListenerDefaultActionElRedirectElRef {
+impl LbListener_DefaultAction_RedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1233,16 +2150,17 @@ impl LbListenerDefaultActionElRedirectElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LbListenerDefaultActionElDynamic {
-    authenticate_cognito: std::option::Option<terrars::DynamicBlock<LbListenerDefaultActionElAuthenticateCognitoEl>>,
-    authenticate_oidc: std::option::Option<terrars::DynamicBlock<LbListenerDefaultActionElAuthenticateOidcEl>>,
-    fixed_response: std::option::Option<terrars::DynamicBlock<LbListenerDefaultActionElFixedResponseEl>>,
-    forward: std::option::Option<terrars::DynamicBlock<LbListenerDefaultActionElForwardEl>>,
-    redirect: std::option::Option<terrars::DynamicBlock<LbListenerDefaultActionElRedirectEl>>,
+struct LbListener_DefaultActionDynamic {
+    authenticate_cognito: std::option::Option<terrars::DynamicBlock<LbListener_DefaultAction_AuthenticateCognito>>,
+    authenticate_oidc: std::option::Option<terrars::DynamicBlock<LbListener_DefaultAction_AuthenticateOidc>>,
+    fixed_response: std::option::Option<terrars::DynamicBlock<LbListener_DefaultAction_FixedResponse>>,
+    forward: std::option::Option<terrars::DynamicBlock<LbListener_DefaultAction_Forward>>,
+    jwt_validation: std::option::Option<terrars::DynamicBlock<LbListener_DefaultAction_JwtValidation>>,
+    redirect: std::option::Option<terrars::DynamicBlock<LbListener_DefaultAction_Redirect>>,
 }
 
 #[derive(Serialize)]
-pub struct LbListenerDefaultActionEl {
+pub struct LbListener_DefaultAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     order: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1250,19 +2168,21 @@ pub struct LbListenerDefaultActionEl {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authenticate_cognito: std::option::Option<std::vec::Vec<LbListenerDefaultActionElAuthenticateCognitoEl>>,
+    authenticate_cognito: std::option::Option<std::vec::Vec<LbListener_DefaultAction_AuthenticateCognito>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authenticate_oidc: std::option::Option<std::vec::Vec<LbListenerDefaultActionElAuthenticateOidcEl>>,
+    authenticate_oidc: std::option::Option<std::vec::Vec<LbListener_DefaultAction_AuthenticateOidc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fixed_response: std::option::Option<std::vec::Vec<LbListenerDefaultActionElFixedResponseEl>>,
+    fixed_response: std::option::Option<std::vec::Vec<LbListener_DefaultAction_FixedResponse>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    forward: std::option::Option<std::vec::Vec<LbListenerDefaultActionElForwardEl>>,
+    forward: std::option::Option<std::vec::Vec<LbListener_DefaultAction_Forward>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect: std::option::Option<std::vec::Vec<LbListenerDefaultActionElRedirectEl>>,
-    dynamic: LbListenerDefaultActionElDynamic,
+    jwt_validation: std::option::Option<std::vec::Vec<LbListener_DefaultAction_JwtValidation>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    redirect: std::option::Option<std::vec::Vec<LbListener_DefaultAction_Redirect>>,
+    dynamic: LbListener_DefaultActionDynamic,
 }
 
-impl LbListenerDefaultActionEl {
+impl LbListener_DefaultAction {
     #[doc = "Set the field `order`.\n"]
     pub fn set_order(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.order = std::option::Option::Some(v.into());
@@ -1278,7 +2198,7 @@ impl LbListenerDefaultActionEl {
     #[doc = "Set the field `authenticate_cognito`.\n"]
     pub fn set_authenticate_cognito(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbListenerDefaultActionElAuthenticateCognitoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction_AuthenticateCognito>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1294,7 +2214,7 @@ impl LbListenerDefaultActionEl {
     #[doc = "Set the field `authenticate_oidc`.\n"]
     pub fn set_authenticate_oidc(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbListenerDefaultActionElAuthenticateOidcEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction_AuthenticateOidc>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1310,7 +2230,7 @@ impl LbListenerDefaultActionEl {
     #[doc = "Set the field `fixed_response`.\n"]
     pub fn set_fixed_response(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbListenerDefaultActionElFixedResponseEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction_FixedResponse>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1326,7 +2246,7 @@ impl LbListenerDefaultActionEl {
     #[doc = "Set the field `forward`.\n"]
     pub fn set_forward(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbListenerDefaultActionElForwardEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction_Forward>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1339,10 +2259,26 @@ impl LbListenerDefaultActionEl {
         self
     }
 
+    #[doc = "Set the field `jwt_validation`.\n"]
+    pub fn set_jwt_validation(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction_JwtValidation>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.jwt_validation = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.jwt_validation = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `redirect`.\n"]
     pub fn set_redirect(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbListenerDefaultActionElRedirectEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbListener_DefaultAction_Redirect>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1356,8 +2292,8 @@ impl LbListenerDefaultActionEl {
     }
 }
 
-impl terrars::ToListMappable for LbListenerDefaultActionEl {
-    type O = terrars::BlockAssignable<LbListenerDefaultActionEl>;
+impl terrars::ToListMappable for LbListener_DefaultAction {
+    type O = terrars::BlockAssignable<LbListener_DefaultAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1368,14 +2304,14 @@ impl terrars::ToListMappable for LbListenerDefaultActionEl {
     }
 }
 
-pub struct BuildLbListenerDefaultActionEl {
+pub struct BuildLbListener_DefaultAction {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbListenerDefaultActionEl {
-    pub fn build(self) -> LbListenerDefaultActionEl {
-        LbListenerDefaultActionEl {
+impl BuildLbListener_DefaultAction {
+    pub fn build(self) -> LbListener_DefaultAction {
+        LbListener_DefaultAction {
             order: core::default::Default::default(),
             target_group_arn: core::default::Default::default(),
             type_: self.type_,
@@ -1383,27 +2319,30 @@ impl BuildLbListenerDefaultActionEl {
             authenticate_oidc: core::default::Default::default(),
             fixed_response: core::default::Default::default(),
             forward: core::default::Default::default(),
+            jwt_validation: core::default::Default::default(),
             redirect: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct LbListenerDefaultActionElRef {
+#[allow(dead_code)]
+pub struct LbListener_DefaultActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbListenerDefaultActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListenerDefaultActionElRef {
-        LbListenerDefaultActionElRef {
+impl terrars::Ref for LbListener_DefaultActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListener_DefaultActionRef {
+        LbListener_DefaultActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbListenerDefaultActionElRef {
+impl LbListener_DefaultActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1424,47 +2363,72 @@ impl LbListenerDefaultActionElRef {
     }
 
     #[doc = "Get a reference to the value of field `authenticate_cognito` after provisioning.\n"]
-    pub fn authenticate_cognito(&self) -> terrars::ListRef<LbListenerDefaultActionElAuthenticateCognitoElRef> {
+    pub fn authenticate_cognito(&self) -> terrars::ListRef<LbListener_DefaultAction_AuthenticateCognitoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authenticate_cognito", self.base))
     }
 
     #[doc = "Get a reference to the value of field `authenticate_oidc` after provisioning.\n"]
-    pub fn authenticate_oidc(&self) -> terrars::ListRef<LbListenerDefaultActionElAuthenticateOidcElRef> {
+    pub fn authenticate_oidc(&self) -> terrars::ListRef<LbListener_DefaultAction_AuthenticateOidcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authenticate_oidc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `fixed_response` after provisioning.\n"]
-    pub fn fixed_response(&self) -> terrars::ListRef<LbListenerDefaultActionElFixedResponseElRef> {
+    pub fn fixed_response(&self) -> terrars::ListRef<LbListener_DefaultAction_FixedResponseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fixed_response", self.base))
     }
 
     #[doc = "Get a reference to the value of field `forward` after provisioning.\n"]
-    pub fn forward(&self) -> terrars::ListRef<LbListenerDefaultActionElForwardElRef> {
+    pub fn forward(&self) -> terrars::ListRef<LbListener_DefaultAction_ForwardRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.forward", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `jwt_validation` after provisioning.\n"]
+    pub fn jwt_validation(&self) -> terrars::ListRef<LbListener_DefaultAction_JwtValidationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.jwt_validation", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `redirect` after provisioning.\n"]
-    pub fn redirect(&self) -> terrars::ListRef<LbListenerDefaultActionElRedirectElRef> {
+    pub fn redirect(&self) -> terrars::ListRef<LbListener_DefaultAction_RedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redirect", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LbListenerTimeoutsEl {
+pub struct LbListener_MutualAuthentication {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    read: std::option::Option<terrars::PrimField<std::string::String>>,
+    advertise_trust_store_ca_names: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ignore_client_certificate_expiry: std::option::Option<terrars::PrimField<bool>>,
+    mode: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trust_store_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LbListenerTimeoutsEl {
-    #[doc = "Set the field `read`.\n"]
-    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.read = std::option::Option::Some(v.into());
+impl LbListener_MutualAuthentication {
+    #[doc = "Set the field `advertise_trust_store_ca_names`.\n"]
+    pub fn set_advertise_trust_store_ca_names(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.advertise_trust_store_ca_names = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ignore_client_certificate_expiry`.\n"]
+    pub fn set_ignore_client_certificate_expiry(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.ignore_client_certificate_expiry = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `trust_store_arn`.\n"]
+    pub fn set_trust_store_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.trust_store_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for LbListenerTimeoutsEl {
-    type O = terrars::BlockAssignable<LbListenerTimeoutsEl>;
+impl terrars::ToListMappable for LbListener_MutualAuthentication {
+    type O = terrars::BlockAssignable<LbListener_MutualAuthentication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1475,40 +2439,137 @@ impl terrars::ToListMappable for LbListenerTimeoutsEl {
     }
 }
 
-pub struct BuildLbListenerTimeoutsEl {}
+pub struct BuildLbListener_MutualAuthentication {
+    #[doc = ""]
+    pub mode: terrars::PrimField<std::string::String>,
+}
 
-impl BuildLbListenerTimeoutsEl {
-    pub fn build(self) -> LbListenerTimeoutsEl {
-        LbListenerTimeoutsEl { read: core::default::Default::default() }
+impl BuildLbListener_MutualAuthentication {
+    pub fn build(self) -> LbListener_MutualAuthentication {
+        LbListener_MutualAuthentication {
+            advertise_trust_store_ca_names: core::default::Default::default(),
+            ignore_client_certificate_expiry: core::default::Default::default(),
+            mode: self.mode,
+            trust_store_arn: core::default::Default::default(),
+        }
     }
 }
 
-pub struct LbListenerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LbListener_MutualAuthenticationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbListenerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListenerTimeoutsElRef {
-        LbListenerTimeoutsElRef {
+impl terrars::Ref for LbListener_MutualAuthenticationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListener_MutualAuthenticationRef {
+        LbListener_MutualAuthenticationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbListenerTimeoutsElRef {
+impl LbListener_MutualAuthenticationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
-    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
+    #[doc = "Get a reference to the value of field `advertise_trust_store_ca_names` after provisioning.\n"]
+    pub fn advertise_trust_store_ca_names(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.advertise_trust_store_ca_names", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ignore_client_certificate_expiry` after provisioning.\n"]
+    pub fn ignore_client_certificate_expiry(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_client_certificate_expiry", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `trust_store_arn` after provisioning.\n"]
+    pub fn trust_store_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.trust_store_arn", self.base))
     }
 }
 
-#[derive(Serialize, Default)]
-struct LbListenerDynamic {
-    default_action: std::option::Option<terrars::DynamicBlock<LbListenerDefaultActionEl>>,
+#[derive(Serialize)]
+pub struct LbListener_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl LbListener_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LbListener_Timeouts {
+    type O = terrars::BlockAssignable<LbListener_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLbListener_Timeouts {}
+
+impl BuildLbListener_Timeouts {
+    pub fn build(self) -> LbListener_Timeouts {
+        LbListener_Timeouts {
+            create: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LbListener_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LbListener_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbListener_TimeoutsRef {
+        LbListener_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LbListener_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

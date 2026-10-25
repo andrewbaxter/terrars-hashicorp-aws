@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CeCostCategoryData {
+struct CeCostCategoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,16 +33,16 @@ struct CeCostCategoryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<CeCostCategoryRuleEl>>,
+    rule: std::option::Option<std::vec::Vec<CeCostCategory_Rule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    split_charge_rule: std::option::Option<std::vec::Vec<CeCostCategorySplitChargeRuleEl>>,
+    split_charge_rule: std::option::Option<std::vec::Vec<CeCostCategory_SplitChargeRule>>,
     dynamic: CeCostCategoryDynamic,
 }
 
 struct CeCostCategory_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CeCostCategoryData>,
+    data: std::cell::RefCell<CeCostCategoryData_>,
 }
 
 #[derive(Clone)]
@@ -177,7 +179,7 @@ impl CeCostCategory {
     }
 
     #[doc = "Set the field `rule`.\n"]
-    pub fn set_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleEl>>) -> Self {
+    pub fn set_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().rule = std::option::Option::Some(v);
@@ -192,7 +194,7 @@ impl CeCostCategory {
     #[doc = "Set the field `split_charge_rule`.\n"]
     pub fn set_split_charge_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategorySplitChargeRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_SplitChargeRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -249,6 +251,11 @@ impl CeCostCategory {
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
+    pub fn rule(&self) -> terrars::ListRef<CeCostCategory_RuleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
+    }
 }
 
 impl terrars::Referable for CeCostCategory {
@@ -295,7 +302,7 @@ impl BuildCeCostCategory {
         let out = CeCostCategory(std::rc::Rc::new(CeCostCategory_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CeCostCategoryData {
+            data: std::cell::RefCell::new(CeCostCategoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -385,17 +392,28 @@ impl CeCostCategoryRef {
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
+    pub fn rule(&self) -> terrars::ListRef<CeCostCategory_RuleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CeCostCategoryDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule>>,
+    split_charge_rule: std::option::Option<terrars::DynamicBlock<CeCostCategory_SplitChargeRule>>,
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategoryRuleElInheritedValueEl {
+pub struct CeCostCategory_Rule_InheritedValue {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dimension_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dimension_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CeCostCategoryRuleElInheritedValueEl {
+impl CeCostCategory_Rule_InheritedValue {
     #[doc = "Set the field `dimension_key`.\n"]
     pub fn set_dimension_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dimension_key = std::option::Option::Some(v.into());
@@ -409,8 +427,8 @@ impl CeCostCategoryRuleElInheritedValueEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategoryRuleElInheritedValueEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElInheritedValueEl>;
+impl terrars::ToListMappable for CeCostCategory_Rule_InheritedValue {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_InheritedValue>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -421,32 +439,34 @@ impl terrars::ToListMappable for CeCostCategoryRuleElInheritedValueEl {
     }
 }
 
-pub struct BuildCeCostCategoryRuleElInheritedValueEl {}
+pub struct BuildCeCostCategory_Rule_InheritedValue {}
 
-impl BuildCeCostCategoryRuleElInheritedValueEl {
-    pub fn build(self) -> CeCostCategoryRuleElInheritedValueEl {
-        CeCostCategoryRuleElInheritedValueEl {
+impl BuildCeCostCategory_Rule_InheritedValue {
+    pub fn build(self) -> CeCostCategory_Rule_InheritedValue {
+        CeCostCategory_Rule_InheritedValue {
             dimension_key: core::default::Default::default(),
             dimension_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct CeCostCategoryRuleElInheritedValueElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_InheritedValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategoryRuleElInheritedValueElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElInheritedValueElRef {
-        CeCostCategoryRuleElInheritedValueElRef {
+impl terrars::Ref for CeCostCategory_Rule_InheritedValueRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_InheritedValueRef {
+        CeCostCategory_Rule_InheritedValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategoryRuleElInheritedValueElRef {
+impl CeCostCategory_Rule_InheritedValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -463,7 +483,7 @@ impl CeCostCategoryRuleElInheritedValueElRef {
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElAndElCostCategoryEl {
+pub struct CeCostCategory_Rule_Rule_CostCategory {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -472,7 +492,7 @@ pub struct CeCostCategoryRuleElRuleElAndElCostCategoryEl {
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CeCostCategoryRuleElRuleElAndElCostCategoryEl {
+impl CeCostCategory_Rule_Rule_CostCategory {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -498,8 +518,8 @@ impl CeCostCategoryRuleElRuleElAndElCostCategoryEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElAndElCostCategoryEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElAndElCostCategoryEl>;
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule_CostCategory {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule_CostCategory>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -510,11 +530,11 @@ impl terrars::ToListMappable for CeCostCategoryRuleElRuleElAndElCostCategoryEl {
     }
 }
 
-pub struct BuildCeCostCategoryRuleElRuleElAndElCostCategoryEl {}
+pub struct BuildCeCostCategory_Rule_Rule_CostCategory {}
 
-impl BuildCeCostCategoryRuleElRuleElAndElCostCategoryEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElAndElCostCategoryEl {
-        CeCostCategoryRuleElRuleElAndElCostCategoryEl {
+impl BuildCeCostCategory_Rule_Rule_CostCategory {
+    pub fn build(self) -> CeCostCategory_Rule_Rule_CostCategory {
+        CeCostCategory_Rule_Rule_CostCategory {
             key: core::default::Default::default(),
             match_options: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -522,24 +542,23 @@ impl BuildCeCostCategoryRuleElRuleElAndElCostCategoryEl {
     }
 }
 
-pub struct CeCostCategoryRuleElRuleElAndElCostCategoryElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_Rule_CostCategoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategoryRuleElRuleElAndElCostCategoryElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CeCostCategoryRuleElRuleElAndElCostCategoryElRef {
-        CeCostCategoryRuleElRuleElAndElCostCategoryElRef {
+impl terrars::Ref for CeCostCategory_Rule_Rule_CostCategoryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_Rule_CostCategoryRef {
+        CeCostCategory_Rule_Rule_CostCategoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategoryRuleElRuleElAndElCostCategoryElRef {
+impl CeCostCategory_Rule_Rule_CostCategoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,7 +580,7 @@ impl CeCostCategoryRuleElRuleElAndElCostCategoryElRef {
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElAndElDimensionEl {
+pub struct CeCostCategory_Rule_Rule_Dimension {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -570,7 +589,7 @@ pub struct CeCostCategoryRuleElRuleElAndElDimensionEl {
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CeCostCategoryRuleElRuleElAndElDimensionEl {
+impl CeCostCategory_Rule_Rule_Dimension {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -596,8 +615,8 @@ impl CeCostCategoryRuleElRuleElAndElDimensionEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElAndElDimensionEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElAndElDimensionEl>;
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule_Dimension {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule_Dimension>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -608,11 +627,11 @@ impl terrars::ToListMappable for CeCostCategoryRuleElRuleElAndElDimensionEl {
     }
 }
 
-pub struct BuildCeCostCategoryRuleElRuleElAndElDimensionEl {}
+pub struct BuildCeCostCategory_Rule_Rule_Dimension {}
 
-impl BuildCeCostCategoryRuleElRuleElAndElDimensionEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElAndElDimensionEl {
-        CeCostCategoryRuleElRuleElAndElDimensionEl {
+impl BuildCeCostCategory_Rule_Rule_Dimension {
+    pub fn build(self) -> CeCostCategory_Rule_Rule_Dimension {
+        CeCostCategory_Rule_Rule_Dimension {
             key: core::default::Default::default(),
             match_options: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -620,21 +639,23 @@ impl BuildCeCostCategoryRuleElRuleElAndElDimensionEl {
     }
 }
 
-pub struct CeCostCategoryRuleElRuleElAndElDimensionElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_Rule_DimensionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategoryRuleElRuleElAndElDimensionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElAndElDimensionElRef {
-        CeCostCategoryRuleElRuleElAndElDimensionElRef {
+impl terrars::Ref for CeCostCategory_Rule_Rule_DimensionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_Rule_DimensionRef {
+        CeCostCategory_Rule_Rule_DimensionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategoryRuleElRuleElAndElDimensionElRef {
+impl CeCostCategory_Rule_Rule_DimensionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -656,7 +677,7 @@ impl CeCostCategoryRuleElRuleElAndElDimensionElRef {
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElAndElTagsEl {
+pub struct CeCostCategory_Rule_Rule_Tags {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -665,7 +686,7 @@ pub struct CeCostCategoryRuleElRuleElAndElTagsEl {
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CeCostCategoryRuleElRuleElAndElTagsEl {
+impl CeCostCategory_Rule_Rule_Tags {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -691,8 +712,8 @@ impl CeCostCategoryRuleElRuleElAndElTagsEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElAndElTagsEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElAndElTagsEl>;
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule_Tags {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule_Tags>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -703,11 +724,11 @@ impl terrars::ToListMappable for CeCostCategoryRuleElRuleElAndElTagsEl {
     }
 }
 
-pub struct BuildCeCostCategoryRuleElRuleElAndElTagsEl {}
+pub struct BuildCeCostCategory_Rule_Rule_Tags {}
 
-impl BuildCeCostCategoryRuleElRuleElAndElTagsEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElAndElTagsEl {
-        CeCostCategoryRuleElRuleElAndElTagsEl {
+impl BuildCeCostCategory_Rule_Rule_Tags {
+    pub fn build(self) -> CeCostCategory_Rule_Rule_Tags {
+        CeCostCategory_Rule_Rule_Tags {
             key: core::default::Default::default(),
             match_options: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -715,21 +736,23 @@ impl BuildCeCostCategoryRuleElRuleElAndElTagsEl {
     }
 }
 
-pub struct CeCostCategoryRuleElRuleElAndElTagsElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_Rule_TagsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategoryRuleElRuleElAndElTagsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElAndElTagsElRef {
-        CeCostCategoryRuleElRuleElAndElTagsElRef {
+impl terrars::Ref for CeCostCategory_Rule_Rule_TagsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_Rule_TagsRef {
+        CeCostCategory_Rule_Rule_TagsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategoryRuleElRuleElAndElTagsElRef {
+impl CeCostCategory_Rule_Rule_TagsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -751,28 +774,28 @@ impl CeCostCategoryRuleElRuleElAndElTagsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CeCostCategoryRuleElRuleElAndElDynamic {
-    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElAndElCostCategoryEl>>,
-    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElAndElDimensionEl>>,
-    tags: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElAndElTagsEl>>,
+struct CeCostCategory_Rule_Rule_Or_AndDynamic {
+    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Dimension>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElAndEl {
+pub struct CeCostCategory_Rule_Rule_Or_And {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cost_category: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElAndElCostCategoryEl>>,
+    cost_category: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_CostCategory>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dimension: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElAndElDimensionEl>>,
+    dimension: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Dimension>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElAndElTagsEl>>,
-    dynamic: CeCostCategoryRuleElRuleElAndElDynamic,
+    tags: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Tags>>,
+    dynamic: CeCostCategory_Rule_Rule_Or_AndDynamic,
 }
 
-impl CeCostCategoryRuleElRuleElAndEl {
+impl CeCostCategory_Rule_Rule_Or_And {
     #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElAndElCostCategoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_CostCategory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -788,7 +811,7 @@ impl CeCostCategoryRuleElRuleElAndEl {
     #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElAndElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Dimension>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -804,7 +827,7 @@ impl CeCostCategoryRuleElRuleElAndEl {
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElAndElTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Tags>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -818,8 +841,8 @@ impl CeCostCategoryRuleElRuleElAndEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElAndEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElAndEl>;
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule_Or_And {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_And>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -830,11 +853,11 @@ impl terrars::ToListMappable for CeCostCategoryRuleElRuleElAndEl {
     }
 }
 
-pub struct BuildCeCostCategoryRuleElRuleElAndEl {}
+pub struct BuildCeCostCategory_Rule_Rule_Or_And {}
 
-impl BuildCeCostCategoryRuleElRuleElAndEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElAndEl {
-        CeCostCategoryRuleElRuleElAndEl {
+impl BuildCeCostCategory_Rule_Rule_Or_And {
+    pub fn build(self) -> CeCostCategory_Rule_Rule_Or_And {
+        CeCostCategory_Rule_Rule_Or_And {
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
             tags: core::default::Default::default(),
@@ -843,542 +866,66 @@ impl BuildCeCostCategoryRuleElRuleElAndEl {
     }
 }
 
-pub struct CeCostCategoryRuleElRuleElAndElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_Rule_Or_AndRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategoryRuleElRuleElAndElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElAndElRef {
-        CeCostCategoryRuleElRuleElAndElRef {
+impl terrars::Ref for CeCostCategory_Rule_Rule_Or_AndRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_Rule_Or_AndRef {
+        CeCostCategory_Rule_Rule_Or_AndRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategoryRuleElRuleElAndElRef {
+impl CeCostCategory_Rule_Rule_Or_AndRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElAndElCostCategoryElRef> {
+    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_CostCategoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElAndElDimensionElRef> {
+    pub fn dimension(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_DimensionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElAndElTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElCostCategoryEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CeCostCategoryRuleElRuleElCostCategoryEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElCostCategoryEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElCostCategoryEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCeCostCategoryRuleElRuleElCostCategoryEl {}
-
-impl BuildCeCostCategoryRuleElRuleElCostCategoryEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElCostCategoryEl {
-        CeCostCategoryRuleElRuleElCostCategoryEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CeCostCategoryRuleElRuleElCostCategoryElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CeCostCategoryRuleElRuleElCostCategoryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElCostCategoryElRef {
-        CeCostCategoryRuleElRuleElCostCategoryElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CeCostCategoryRuleElRuleElCostCategoryElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElDimensionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CeCostCategoryRuleElRuleElDimensionEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElDimensionEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElDimensionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCeCostCategoryRuleElRuleElDimensionEl {}
-
-impl BuildCeCostCategoryRuleElRuleElDimensionEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElDimensionEl {
-        CeCostCategoryRuleElRuleElDimensionEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CeCostCategoryRuleElRuleElDimensionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CeCostCategoryRuleElRuleElDimensionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElDimensionElRef {
-        CeCostCategoryRuleElRuleElDimensionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CeCostCategoryRuleElRuleElDimensionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElNotElCostCategoryEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CeCostCategoryRuleElRuleElNotElCostCategoryEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElNotElCostCategoryEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElNotElCostCategoryEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCeCostCategoryRuleElRuleElNotElCostCategoryEl {}
-
-impl BuildCeCostCategoryRuleElRuleElNotElCostCategoryEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElNotElCostCategoryEl {
-        CeCostCategoryRuleElRuleElNotElCostCategoryEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CeCostCategoryRuleElRuleElNotElCostCategoryElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CeCostCategoryRuleElRuleElNotElCostCategoryElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CeCostCategoryRuleElRuleElNotElCostCategoryElRef {
-        CeCostCategoryRuleElRuleElNotElCostCategoryElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CeCostCategoryRuleElRuleElNotElCostCategoryElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElNotElDimensionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CeCostCategoryRuleElRuleElNotElDimensionEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElNotElDimensionEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElNotElDimensionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCeCostCategoryRuleElRuleElNotElDimensionEl {}
-
-impl BuildCeCostCategoryRuleElRuleElNotElDimensionEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElNotElDimensionEl {
-        CeCostCategoryRuleElRuleElNotElDimensionEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CeCostCategoryRuleElRuleElNotElDimensionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CeCostCategoryRuleElRuleElNotElDimensionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElNotElDimensionElRef {
-        CeCostCategoryRuleElRuleElNotElDimensionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CeCostCategoryRuleElRuleElNotElDimensionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElNotElTagsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CeCostCategoryRuleElRuleElNotElTagsEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElNotElTagsEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElNotElTagsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCeCostCategoryRuleElRuleElNotElTagsEl {}
-
-impl BuildCeCostCategoryRuleElRuleElNotElTagsEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElNotElTagsEl {
-        CeCostCategoryRuleElRuleElNotElTagsEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CeCostCategoryRuleElRuleElNotElTagsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CeCostCategoryRuleElRuleElNotElTagsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElNotElTagsElRef {
-        CeCostCategoryRuleElRuleElNotElTagsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CeCostCategoryRuleElRuleElNotElTagsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct CeCostCategoryRuleElRuleElNotElDynamic {
-    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElNotElCostCategoryEl>>,
-    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElNotElDimensionEl>>,
-    tags: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElNotElTagsEl>>,
+struct CeCostCategory_Rule_Rule_Or_NotDynamic {
+    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Dimension>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElNotEl {
+pub struct CeCostCategory_Rule_Rule_Or_Not {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cost_category: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElNotElCostCategoryEl>>,
+    cost_category: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_CostCategory>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dimension: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElNotElDimensionEl>>,
+    dimension: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Dimension>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElNotElTagsEl>>,
-    dynamic: CeCostCategoryRuleElRuleElNotElDynamic,
+    tags: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Tags>>,
+    dynamic: CeCostCategory_Rule_Rule_Or_NotDynamic,
 }
 
-impl CeCostCategoryRuleElRuleElNotEl {
+impl CeCostCategory_Rule_Rule_Or_Not {
     #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElNotElCostCategoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_CostCategory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1394,7 +941,7 @@ impl CeCostCategoryRuleElRuleElNotEl {
     #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElNotElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Dimension>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1410,7 +957,7 @@ impl CeCostCategoryRuleElRuleElNotEl {
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElNotElTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Tags>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1424,8 +971,8 @@ impl CeCostCategoryRuleElRuleElNotEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElNotEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElNotEl>;
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule_Or_Not {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_Not>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1436,11 +983,11 @@ impl terrars::ToListMappable for CeCostCategoryRuleElRuleElNotEl {
     }
 }
 
-pub struct BuildCeCostCategoryRuleElRuleElNotEl {}
+pub struct BuildCeCostCategory_Rule_Rule_Or_Not {}
 
-impl BuildCeCostCategoryRuleElRuleElNotEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElNotEl {
-        CeCostCategoryRuleElRuleElNotEl {
+impl BuildCeCostCategory_Rule_Rule_Or_Not {
+    pub fn build(self) -> CeCostCategory_Rule_Rule_Or_Not {
+        CeCostCategory_Rule_Rule_Or_Not {
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
             tags: core::default::Default::default(),
@@ -1449,352 +996,66 @@ impl BuildCeCostCategoryRuleElRuleElNotEl {
     }
 }
 
-pub struct CeCostCategoryRuleElRuleElNotElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_Rule_Or_NotRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategoryRuleElRuleElNotElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElNotElRef {
-        CeCostCategoryRuleElRuleElNotElRef {
+impl terrars::Ref for CeCostCategory_Rule_Rule_Or_NotRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_Rule_Or_NotRef {
+        CeCostCategory_Rule_Rule_Or_NotRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategoryRuleElRuleElNotElRef {
+impl CeCostCategory_Rule_Rule_Or_NotRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElNotElCostCategoryElRef> {
+    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_CostCategoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElNotElDimensionElRef> {
+    pub fn dimension(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_DimensionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElNotElTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElOrElCostCategoryEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CeCostCategoryRuleElRuleElOrElCostCategoryEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElOrElCostCategoryEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElOrElCostCategoryEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCeCostCategoryRuleElRuleElOrElCostCategoryEl {}
-
-impl BuildCeCostCategoryRuleElRuleElOrElCostCategoryEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElOrElCostCategoryEl {
-        CeCostCategoryRuleElRuleElOrElCostCategoryEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CeCostCategoryRuleElRuleElOrElCostCategoryElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CeCostCategoryRuleElRuleElOrElCostCategoryElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CeCostCategoryRuleElRuleElOrElCostCategoryElRef {
-        CeCostCategoryRuleElRuleElOrElCostCategoryElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CeCostCategoryRuleElRuleElOrElCostCategoryElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElOrElDimensionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CeCostCategoryRuleElRuleElOrElDimensionEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElOrElDimensionEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElOrElDimensionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCeCostCategoryRuleElRuleElOrElDimensionEl {}
-
-impl BuildCeCostCategoryRuleElRuleElOrElDimensionEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElOrElDimensionEl {
-        CeCostCategoryRuleElRuleElOrElDimensionEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CeCostCategoryRuleElRuleElOrElDimensionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CeCostCategoryRuleElRuleElOrElDimensionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElOrElDimensionElRef {
-        CeCostCategoryRuleElRuleElOrElDimensionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CeCostCategoryRuleElRuleElOrElDimensionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElOrElTagsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CeCostCategoryRuleElRuleElOrElTagsEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElOrElTagsEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElOrElTagsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCeCostCategoryRuleElRuleElOrElTagsEl {}
-
-impl BuildCeCostCategoryRuleElRuleElOrElTagsEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElOrElTagsEl {
-        CeCostCategoryRuleElRuleElOrElTagsEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CeCostCategoryRuleElRuleElOrElTagsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CeCostCategoryRuleElRuleElOrElTagsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElOrElTagsElRef {
-        CeCostCategoryRuleElRuleElOrElTagsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CeCostCategoryRuleElRuleElOrElTagsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct CeCostCategoryRuleElRuleElOrElDynamic {
-    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElOrElCostCategoryEl>>,
-    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElOrElDimensionEl>>,
-    tags: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElOrElTagsEl>>,
+struct CeCostCategory_Rule_Rule_Or_OrDynamic {
+    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Dimension>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElOrEl {
+pub struct CeCostCategory_Rule_Rule_Or_Or {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cost_category: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElOrElCostCategoryEl>>,
+    cost_category: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_CostCategory>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dimension: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElOrElDimensionEl>>,
+    dimension: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Dimension>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElOrElTagsEl>>,
-    dynamic: CeCostCategoryRuleElRuleElOrElDynamic,
+    tags: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Tags>>,
+    dynamic: CeCostCategory_Rule_Rule_Or_OrDynamic,
 }
 
-impl CeCostCategoryRuleElRuleElOrEl {
+impl CeCostCategory_Rule_Rule_Or_Or {
     #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElOrElCostCategoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_CostCategory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1810,7 +1071,7 @@ impl CeCostCategoryRuleElRuleElOrEl {
     #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElOrElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Dimension>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1826,7 +1087,7 @@ impl CeCostCategoryRuleElRuleElOrEl {
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElOrElTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Tags>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1840,8 +1101,8 @@ impl CeCostCategoryRuleElRuleElOrEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElOrEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElOrEl>;
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule_Or_Or {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_Or>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1852,11 +1113,11 @@ impl terrars::ToListMappable for CeCostCategoryRuleElRuleElOrEl {
     }
 }
 
-pub struct BuildCeCostCategoryRuleElRuleElOrEl {}
+pub struct BuildCeCostCategory_Rule_Rule_Or_Or {}
 
-impl BuildCeCostCategoryRuleElRuleElOrEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElOrEl {
-        CeCostCategoryRuleElRuleElOrEl {
+impl BuildCeCostCategory_Rule_Rule_Or_Or {
+    pub fn build(self) -> CeCostCategory_Rule_Rule_Or_Or {
+        CeCostCategory_Rule_Rule_Or_Or {
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
             tags: core::default::Default::default(),
@@ -1865,168 +1126,75 @@ impl BuildCeCostCategoryRuleElRuleElOrEl {
     }
 }
 
-pub struct CeCostCategoryRuleElRuleElOrElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_Rule_Or_OrRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategoryRuleElRuleElOrElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElOrElRef {
-        CeCostCategoryRuleElRuleElOrElRef {
+impl terrars::Ref for CeCostCategory_Rule_Rule_Or_OrRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_Rule_Or_OrRef {
+        CeCostCategory_Rule_Rule_Or_OrRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategoryRuleElRuleElOrElRef {
+impl CeCostCategory_Rule_Rule_Or_OrRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElOrElCostCategoryElRef> {
+    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_CostCategoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElOrElDimensionElRef> {
+    pub fn dimension(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_DimensionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElOrElTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleElTagsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl CeCostCategoryRuleElRuleElTagsEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleElTagsEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleElTagsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCeCostCategoryRuleElRuleElTagsEl {}
-
-impl BuildCeCostCategoryRuleElRuleElTagsEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleElTagsEl {
-        CeCostCategoryRuleElRuleElTagsEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CeCostCategoryRuleElRuleElTagsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CeCostCategoryRuleElRuleElTagsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElTagsElRef {
-        CeCostCategoryRuleElRuleElTagsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CeCostCategoryRuleElRuleElTagsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct CeCostCategoryRuleElRuleElDynamic {
-    and: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElAndEl>>,
-    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElCostCategoryEl>>,
-    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElDimensionEl>>,
-    not: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElNotEl>>,
-    or: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElOrEl>>,
-    tags: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleElTagsEl>>,
+struct CeCostCategory_Rule_Rule_AndDynamic {
+    and: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or_And>>,
+    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Dimension>>,
+    not: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or_Not>>,
+    or: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or_Or>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategoryRuleElRuleEl {
+pub struct CeCostCategory_Rule_Rule_And {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    and: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElAndEl>>,
+    and: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or_And>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cost_category: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElCostCategoryEl>>,
+    cost_category: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_CostCategory>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dimension: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElDimensionEl>>,
+    dimension: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Dimension>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    not: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElNotEl>>,
+    not: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or_Not>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    or: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElOrEl>>,
+    or: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or_Or>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleElTagsEl>>,
-    dynamic: CeCostCategoryRuleElRuleElDynamic,
+    tags: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Tags>>,
+    dynamic: CeCostCategory_Rule_Rule_AndDynamic,
 }
 
-impl CeCostCategoryRuleElRuleEl {
+impl CeCostCategory_Rule_Rule_And {
     #[doc = "Set the field `and`.\n"]
     pub fn set_and(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElAndEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_And>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2042,7 +1210,7 @@ impl CeCostCategoryRuleElRuleEl {
     #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElCostCategoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_CostCategory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2058,7 +1226,7 @@ impl CeCostCategoryRuleElRuleEl {
     #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Dimension>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2074,7 +1242,7 @@ impl CeCostCategoryRuleElRuleEl {
     #[doc = "Set the field `not`.\n"]
     pub fn set_not(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElNotEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_Not>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2090,7 +1258,7 @@ impl CeCostCategoryRuleElRuleEl {
     #[doc = "Set the field `or`.\n"]
     pub fn set_or(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElOrEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_Or>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2106,7 +1274,7 @@ impl CeCostCategoryRuleElRuleEl {
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleElTagsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Tags>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2120,8 +1288,8 @@ impl CeCostCategoryRuleElRuleEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategoryRuleElRuleEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleElRuleEl>;
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule_And {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule_And>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2132,11 +1300,11 @@ impl terrars::ToListMappable for CeCostCategoryRuleElRuleEl {
     }
 }
 
-pub struct BuildCeCostCategoryRuleElRuleEl {}
+pub struct BuildCeCostCategory_Rule_Rule_And {}
 
-impl BuildCeCostCategoryRuleElRuleEl {
-    pub fn build(self) -> CeCostCategoryRuleElRuleEl {
-        CeCostCategoryRuleElRuleEl {
+impl BuildCeCostCategory_Rule_Rule_And {
+    pub fn build(self) -> CeCostCategory_Rule_Rule_And {
+        CeCostCategory_Rule_Rule_And {
             and: core::default::Default::default(),
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
@@ -2148,66 +1316,650 @@ impl BuildCeCostCategoryRuleElRuleEl {
     }
 }
 
-pub struct CeCostCategoryRuleElRuleElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_Rule_AndRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategoryRuleElRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRuleElRef {
-        CeCostCategoryRuleElRuleElRef {
+impl terrars::Ref for CeCostCategory_Rule_Rule_AndRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_Rule_AndRef {
+        CeCostCategory_Rule_Rule_AndRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategoryRuleElRuleElRef {
+impl CeCostCategory_Rule_Rule_AndRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElCostCategoryElRef> {
+    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_CostCategoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElDimensionElRef> {
+    pub fn dimension(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_DimensionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
     #[doc = "Get a reference to the value of field `not` after provisioning.\n"]
-    pub fn not(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElNotElRef> {
+    pub fn not(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_Or_NotRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.not", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct CeCostCategoryRuleElDynamic {
-    inherited_value: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElInheritedValueEl>>,
-    rule: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleElRuleEl>>,
+struct CeCostCategory_Rule_Rule_NotDynamic {
+    and: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or_And>>,
+    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Dimension>>,
+    not: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or_Not>>,
+    or: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or_Or>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategoryRuleEl {
+pub struct CeCostCategory_Rule_Rule_Not {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    and: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or_And>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cost_category: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_CostCategory>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Dimension>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    not: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or_Not>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    or: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or_Or>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Tags>>,
+    dynamic: CeCostCategory_Rule_Rule_NotDynamic,
+}
+
+impl CeCostCategory_Rule_Rule_Not {
+    #[doc = "Set the field `and`.\n"]
+    pub fn set_and(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_And>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.and = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.and = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `cost_category`.\n"]
+    pub fn set_cost_category(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_CostCategory>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cost_category = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cost_category = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `dimension`.\n"]
+    pub fn set_dimension(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Dimension>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `not`.\n"]
+    pub fn set_not(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_Not>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.not = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.not = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `or`.\n"]
+    pub fn set_or(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_Or>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.or = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.or = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Tags>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule_Not {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule_Not>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCeCostCategory_Rule_Rule_Not {}
+
+impl BuildCeCostCategory_Rule_Rule_Not {
+    pub fn build(self) -> CeCostCategory_Rule_Rule_Not {
+        CeCostCategory_Rule_Rule_Not {
+            and: core::default::Default::default(),
+            cost_category: core::default::Default::default(),
+            dimension: core::default::Default::default(),
+            not: core::default::Default::default(),
+            or: core::default::Default::default(),
+            tags: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_Rule_NotRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CeCostCategory_Rule_Rule_NotRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_Rule_NotRef {
+        CeCostCategory_Rule_Rule_NotRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CeCostCategory_Rule_Rule_NotRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
+    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_CostCategoryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
+    pub fn dimension(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_DimensionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `not` after provisioning.\n"]
+    pub fn not(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_Or_NotRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.not", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_TagsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CeCostCategory_Rule_Rule_OrDynamic {
+    and: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or_And>>,
+    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Dimension>>,
+    not: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or_Not>>,
+    or: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or_Or>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Tags>>,
+}
+
+#[derive(Serialize)]
+pub struct CeCostCategory_Rule_Rule_Or {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    and: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or_And>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cost_category: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_CostCategory>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Dimension>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    not: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or_Not>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    or: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or_Or>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Tags>>,
+    dynamic: CeCostCategory_Rule_Rule_OrDynamic,
+}
+
+impl CeCostCategory_Rule_Rule_Or {
+    #[doc = "Set the field `and`.\n"]
+    pub fn set_and(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_And>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.and = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.and = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `cost_category`.\n"]
+    pub fn set_cost_category(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_CostCategory>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cost_category = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cost_category = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `dimension`.\n"]
+    pub fn set_dimension(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Dimension>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `not`.\n"]
+    pub fn set_not(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_Not>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.not = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.not = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `or`.\n"]
+    pub fn set_or(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or_Or>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.or = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.or = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Tags>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule_Or {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCeCostCategory_Rule_Rule_Or {}
+
+impl BuildCeCostCategory_Rule_Rule_Or {
+    pub fn build(self) -> CeCostCategory_Rule_Rule_Or {
+        CeCostCategory_Rule_Rule_Or {
+            and: core::default::Default::default(),
+            cost_category: core::default::Default::default(),
+            dimension: core::default::Default::default(),
+            not: core::default::Default::default(),
+            or: core::default::Default::default(),
+            tags: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_Rule_OrRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CeCostCategory_Rule_Rule_OrRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_Rule_OrRef {
+        CeCostCategory_Rule_Rule_OrRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CeCostCategory_Rule_Rule_OrRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
+    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_CostCategoryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
+    pub fn dimension(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_DimensionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `not` after provisioning.\n"]
+    pub fn not(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_Or_NotRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.not", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_TagsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CeCostCategory_Rule_RuleDynamic {
+    and: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_And>>,
+    cost_category: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Dimension>>,
+    not: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Not>>,
+    or: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Or>>,
+    tags: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule_Tags>>,
+}
+
+#[derive(Serialize)]
+pub struct CeCostCategory_Rule_Rule {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    and: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_And>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cost_category: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_CostCategory>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dimension: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Dimension>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    not: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Not>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    or: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Or>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule_Tags>>,
+    dynamic: CeCostCategory_Rule_RuleDynamic,
+}
+
+impl CeCostCategory_Rule_Rule {
+    #[doc = "Set the field `and`.\n"]
+    pub fn set_and(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_And>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.and = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.and = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `cost_category`.\n"]
+    pub fn set_cost_category(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_CostCategory>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cost_category = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cost_category = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `dimension`.\n"]
+    pub fn set_dimension(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Dimension>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dimension = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dimension = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `not`.\n"]
+    pub fn set_not(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Not>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.not = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.not = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `or`.\n"]
+    pub fn set_or(mut self, v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Or>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.or = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.or = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule_Tags>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.tags = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.tags = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CeCostCategory_Rule_Rule {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule_Rule>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCeCostCategory_Rule_Rule {}
+
+impl BuildCeCostCategory_Rule_Rule {
+    pub fn build(self) -> CeCostCategory_Rule_Rule {
+        CeCostCategory_Rule_Rule {
+            and: core::default::Default::default(),
+            cost_category: core::default::Default::default(),
+            dimension: core::default::Default::default(),
+            not: core::default::Default::default(),
+            or: core::default::Default::default(),
+            tags: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CeCostCategory_Rule_RuleRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CeCostCategory_Rule_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_Rule_RuleRef {
+        CeCostCategory_Rule_RuleRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CeCostCategory_Rule_RuleRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
+    pub fn cost_category(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_CostCategoryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
+    pub fn dimension(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_DimensionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `not` after provisioning.\n"]
+    pub fn not(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_NotRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.not", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::ListRef<CeCostCategory_Rule_Rule_TagsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CeCostCategory_RuleDynamic {
+    inherited_value: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_InheritedValue>>,
+    rule: std::option::Option<terrars::DynamicBlock<CeCostCategory_Rule_Rule>>,
+}
+
+#[derive(Serialize)]
+pub struct CeCostCategory_Rule {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    inherited_value: std::option::Option<std::vec::Vec<CeCostCategoryRuleElInheritedValueEl>>,
+    inherited_value: std::option::Option<std::vec::Vec<CeCostCategory_Rule_InheritedValue>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<CeCostCategoryRuleElRuleEl>>,
-    dynamic: CeCostCategoryRuleElDynamic,
+    rule: std::option::Option<std::vec::Vec<CeCostCategory_Rule_Rule>>,
+    dynamic: CeCostCategory_RuleDynamic,
 }
 
-impl CeCostCategoryRuleEl {
+impl CeCostCategory_Rule {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -2223,7 +1975,7 @@ impl CeCostCategoryRuleEl {
     #[doc = "Set the field `inherited_value`.\n"]
     pub fn set_inherited_value(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElInheritedValueEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_InheritedValue>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2237,7 +1989,7 @@ impl CeCostCategoryRuleEl {
     }
 
     #[doc = "Set the field `rule`.\n"]
-    pub fn set_rule(mut self, v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategoryRuleElRuleEl>>) -> Self {
+    pub fn set_rule(mut self, v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_Rule_Rule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.rule = std::option::Option::Some(v);
@@ -2250,8 +2002,8 @@ impl CeCostCategoryRuleEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategoryRuleEl {
-    type O = terrars::BlockAssignable<CeCostCategoryRuleEl>;
+impl terrars::ToListMappable for CeCostCategory_Rule {
+    type O = terrars::BlockAssignable<CeCostCategory_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2262,11 +2014,11 @@ impl terrars::ToListMappable for CeCostCategoryRuleEl {
     }
 }
 
-pub struct BuildCeCostCategoryRuleEl {}
+pub struct BuildCeCostCategory_Rule {}
 
-impl BuildCeCostCategoryRuleEl {
-    pub fn build(self) -> CeCostCategoryRuleEl {
-        CeCostCategoryRuleEl {
+impl BuildCeCostCategory_Rule {
+    pub fn build(self) -> CeCostCategory_Rule {
+        CeCostCategory_Rule {
             type_: core::default::Default::default(),
             value: core::default::Default::default(),
             inherited_value: core::default::Default::default(),
@@ -2276,21 +2028,23 @@ impl BuildCeCostCategoryRuleEl {
     }
 }
 
-pub struct CeCostCategoryRuleElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategoryRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategoryRuleElRef {
-        CeCostCategoryRuleElRef {
+impl terrars::Ref for CeCostCategory_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_RuleRef {
+        CeCostCategory_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategoryRuleElRef {
+impl CeCostCategory_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2306,25 +2060,25 @@ impl CeCostCategoryRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `inherited_value` after provisioning.\n"]
-    pub fn inherited_value(&self) -> terrars::ListRef<CeCostCategoryRuleElInheritedValueElRef> {
+    pub fn inherited_value(&self) -> terrars::ListRef<CeCostCategory_Rule_InheritedValueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inherited_value", self.base))
     }
 
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<CeCostCategoryRuleElRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<CeCostCategory_Rule_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategorySplitChargeRuleElParameterEl {
+pub struct CeCostCategory_SplitChargeRule_Parameter {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CeCostCategorySplitChargeRuleElParameterEl {
+impl CeCostCategory_SplitChargeRule_Parameter {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -2341,8 +2095,8 @@ impl CeCostCategorySplitChargeRuleElParameterEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategorySplitChargeRuleElParameterEl {
-    type O = terrars::BlockAssignable<CeCostCategorySplitChargeRuleElParameterEl>;
+impl terrars::ToListMappable for CeCostCategory_SplitChargeRule_Parameter {
+    type O = terrars::BlockAssignable<CeCostCategory_SplitChargeRule_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2353,32 +2107,34 @@ impl terrars::ToListMappable for CeCostCategorySplitChargeRuleElParameterEl {
     }
 }
 
-pub struct BuildCeCostCategorySplitChargeRuleElParameterEl {}
+pub struct BuildCeCostCategory_SplitChargeRule_Parameter {}
 
-impl BuildCeCostCategorySplitChargeRuleElParameterEl {
-    pub fn build(self) -> CeCostCategorySplitChargeRuleElParameterEl {
-        CeCostCategorySplitChargeRuleElParameterEl {
+impl BuildCeCostCategory_SplitChargeRule_Parameter {
+    pub fn build(self) -> CeCostCategory_SplitChargeRule_Parameter {
+        CeCostCategory_SplitChargeRule_Parameter {
             type_: core::default::Default::default(),
             values: core::default::Default::default(),
         }
     }
 }
 
-pub struct CeCostCategorySplitChargeRuleElParameterElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_SplitChargeRule_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategorySplitChargeRuleElParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategorySplitChargeRuleElParameterElRef {
-        CeCostCategorySplitChargeRuleElParameterElRef {
+impl terrars::Ref for CeCostCategory_SplitChargeRule_ParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_SplitChargeRule_ParameterRef {
+        CeCostCategory_SplitChargeRule_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategorySplitChargeRuleElParameterElRef {
+impl CeCostCategory_SplitChargeRule_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2395,25 +2151,25 @@ impl CeCostCategorySplitChargeRuleElParameterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CeCostCategorySplitChargeRuleElDynamic {
-    parameter: std::option::Option<terrars::DynamicBlock<CeCostCategorySplitChargeRuleElParameterEl>>,
+struct CeCostCategory_SplitChargeRuleDynamic {
+    parameter: std::option::Option<terrars::DynamicBlock<CeCostCategory_SplitChargeRule_Parameter>>,
 }
 
 #[derive(Serialize)]
-pub struct CeCostCategorySplitChargeRuleEl {
+pub struct CeCostCategory_SplitChargeRule {
     method: terrars::PrimField<std::string::String>,
     source: terrars::PrimField<std::string::String>,
-    targets: terrars::SetField<terrars::PrimField<std::string::String>>,
+    targets: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<std::vec::Vec<CeCostCategorySplitChargeRuleElParameterEl>>,
-    dynamic: CeCostCategorySplitChargeRuleElDynamic,
+    parameter: std::option::Option<std::vec::Vec<CeCostCategory_SplitChargeRule_Parameter>>,
+    dynamic: CeCostCategory_SplitChargeRuleDynamic,
 }
 
-impl CeCostCategorySplitChargeRuleEl {
+impl CeCostCategory_SplitChargeRule {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategorySplitChargeRuleElParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CeCostCategory_SplitChargeRule_Parameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2427,8 +2183,8 @@ impl CeCostCategorySplitChargeRuleEl {
     }
 }
 
-impl terrars::ToListMappable for CeCostCategorySplitChargeRuleEl {
-    type O = terrars::BlockAssignable<CeCostCategorySplitChargeRuleEl>;
+impl terrars::ToListMappable for CeCostCategory_SplitChargeRule {
+    type O = terrars::BlockAssignable<CeCostCategory_SplitChargeRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2439,18 +2195,18 @@ impl terrars::ToListMappable for CeCostCategorySplitChargeRuleEl {
     }
 }
 
-pub struct BuildCeCostCategorySplitChargeRuleEl {
+pub struct BuildCeCostCategory_SplitChargeRule {
     #[doc = ""]
     pub method: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub source: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub targets: terrars::SetField<terrars::PrimField<std::string::String>>,
+    pub targets: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildCeCostCategorySplitChargeRuleEl {
-    pub fn build(self) -> CeCostCategorySplitChargeRuleEl {
-        CeCostCategorySplitChargeRuleEl {
+impl BuildCeCostCategory_SplitChargeRule {
+    pub fn build(self) -> CeCostCategory_SplitChargeRule {
+        CeCostCategory_SplitChargeRule {
             method: self.method,
             source: self.source,
             targets: self.targets,
@@ -2460,21 +2216,23 @@ impl BuildCeCostCategorySplitChargeRuleEl {
     }
 }
 
-pub struct CeCostCategorySplitChargeRuleElRef {
+#[allow(dead_code)]
+pub struct CeCostCategory_SplitChargeRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CeCostCategorySplitChargeRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategorySplitChargeRuleElRef {
-        CeCostCategorySplitChargeRuleElRef {
+impl terrars::Ref for CeCostCategory_SplitChargeRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CeCostCategory_SplitChargeRuleRef {
+        CeCostCategory_SplitChargeRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CeCostCategorySplitChargeRuleElRef {
+impl CeCostCategory_SplitChargeRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2490,13 +2248,7 @@ impl CeCostCategorySplitChargeRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `targets` after provisioning.\n"]
-    pub fn targets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.targets", self.base))
+    pub fn targets(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.targets", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CeCostCategoryDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<CeCostCategoryRuleEl>>,
-    split_charge_rule: std::option::Option<terrars::DynamicBlock<CeCostCategorySplitChargeRuleEl>>,
 }

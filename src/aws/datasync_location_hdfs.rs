@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DatasyncLocationHdfsData {
+struct DatasyncLocationHdfsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,11 +30,17 @@ struct DatasyncLocationHdfsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kerberos_keytab: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kerberos_keytab_base64: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kerberos_krb5_conf: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kerberos_krb5_conf_base64: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kerberos_principal: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_provider_uri: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replication_factor: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -44,16 +52,16 @@ struct DatasyncLocationHdfsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name_node: std::option::Option<std::vec::Vec<DatasyncLocationHdfsNameNodeEl>>,
+    name_node: std::option::Option<std::vec::Vec<DatasyncLocationHdfs_NameNode>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    qop_configuration: std::option::Option<std::vec::Vec<DatasyncLocationHdfsQopConfigurationEl>>,
+    qop_configuration: std::option::Option<std::vec::Vec<DatasyncLocationHdfs_QopConfiguration>>,
     dynamic: DatasyncLocationHdfsDynamic,
 }
 
 struct DatasyncLocationHdfs_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatasyncLocationHdfsData>,
+    data: std::cell::RefCell<DatasyncLocationHdfsData_>,
 }
 
 #[derive(Clone)]
@@ -177,9 +185,27 @@ impl DatasyncLocationHdfs {
         self
     }
 
+    #[doc = "Set the field `kerberos_keytab_base64`.\n"]
+    pub fn set_kerberos_keytab_base64(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().kerberos_keytab_base64 = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `kerberos_krb5_conf`.\n"]
     pub fn set_kerberos_krb5_conf(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().kerberos_krb5_conf = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kerberos_krb5_conf_base64`.\n"]
+    pub fn set_kerberos_krb5_conf_base64(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().kerberos_krb5_conf_base64 = std::option::Option::Some(v.into());
         self
     }
 
@@ -192,6 +218,13 @@ impl DatasyncLocationHdfs {
     #[doc = "Set the field `kms_key_provider_uri`.\n"]
     pub fn set_kms_key_provider_uri(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().kms_key_provider_uri = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -234,7 +267,7 @@ impl DatasyncLocationHdfs {
     #[doc = "Set the field `name_node`.\n"]
     pub fn set_name_node(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationHdfsNameNodeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationHdfs_NameNode>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -250,7 +283,7 @@ impl DatasyncLocationHdfs {
     #[doc = "Set the field `qop_configuration`.\n"]
     pub fn set_qop_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationHdfsQopConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationHdfs_QopConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -293,9 +326,19 @@ impl DatasyncLocationHdfs {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kerberos_keytab", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kerberos_keytab_base64` after provisioning.\n"]
+    pub fn kerberos_keytab_base64(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kerberos_keytab_base64", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `kerberos_krb5_conf` after provisioning.\n"]
     pub fn kerberos_krb5_conf(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kerberos_krb5_conf", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `kerberos_krb5_conf_base64` after provisioning.\n"]
+    pub fn kerberos_krb5_conf_base64(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kerberos_krb5_conf_base64", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `kerberos_principal` after provisioning.\n"]
@@ -306,6 +349,12 @@ impl DatasyncLocationHdfs {
     #[doc = "Get a reference to the value of field `kms_key_provider_uri` after provisioning.\n"]
     pub fn kms_key_provider_uri(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_provider_uri", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_factor` after provisioning.\n"]
@@ -339,7 +388,7 @@ impl DatasyncLocationHdfs {
     }
 
     #[doc = "Get a reference to the value of field `qop_configuration` after provisioning.\n"]
-    pub fn qop_configuration(&self) -> terrars::ListRef<DatasyncLocationHdfsQopConfigurationElRef> {
+    pub fn qop_configuration(&self) -> terrars::ListRef<DatasyncLocationHdfs_QopConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.qop_configuration", self.extract_ref()))
     }
 }
@@ -386,7 +435,7 @@ impl BuildDatasyncLocationHdfs {
         let out = DatasyncLocationHdfs(std::rc::Rc::new(DatasyncLocationHdfs_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatasyncLocationHdfsData {
+            data: std::cell::RefCell::new(DatasyncLocationHdfsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -397,9 +446,12 @@ impl BuildDatasyncLocationHdfs {
                 block_size: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kerberos_keytab: core::default::Default::default(),
+                kerberos_keytab_base64: core::default::Default::default(),
                 kerberos_krb5_conf: core::default::Default::default(),
+                kerberos_krb5_conf_base64: core::default::Default::default(),
                 kerberos_principal: core::default::Default::default(),
                 kms_key_provider_uri: core::default::Default::default(),
+                region: core::default::Default::default(),
                 replication_factor: core::default::Default::default(),
                 simple_user: core::default::Default::default(),
                 subdirectory: core::default::Default::default(),
@@ -468,9 +520,19 @@ impl DatasyncLocationHdfsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kerberos_keytab", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kerberos_keytab_base64` after provisioning.\n"]
+    pub fn kerberos_keytab_base64(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kerberos_keytab_base64", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `kerberos_krb5_conf` after provisioning.\n"]
     pub fn kerberos_krb5_conf(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kerberos_krb5_conf", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `kerberos_krb5_conf_base64` after provisioning.\n"]
+    pub fn kerberos_krb5_conf_base64(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kerberos_krb5_conf_base64", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `kerberos_principal` after provisioning.\n"]
@@ -481,6 +543,12 @@ impl DatasyncLocationHdfsRef {
     #[doc = "Get a reference to the value of field `kms_key_provider_uri` after provisioning.\n"]
     pub fn kms_key_provider_uri(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_provider_uri", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_factor` after provisioning.\n"]
@@ -514,21 +582,27 @@ impl DatasyncLocationHdfsRef {
     }
 
     #[doc = "Get a reference to the value of field `qop_configuration` after provisioning.\n"]
-    pub fn qop_configuration(&self) -> terrars::ListRef<DatasyncLocationHdfsQopConfigurationElRef> {
+    pub fn qop_configuration(&self) -> terrars::ListRef<DatasyncLocationHdfs_QopConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.qop_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatasyncLocationHdfsDynamic {
+    name_node: std::option::Option<terrars::DynamicBlock<DatasyncLocationHdfs_NameNode>>,
+    qop_configuration: std::option::Option<terrars::DynamicBlock<DatasyncLocationHdfs_QopConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct DatasyncLocationHdfsNameNodeEl {
+pub struct DatasyncLocationHdfs_NameNode {
     hostname: terrars::PrimField<std::string::String>,
     port: terrars::PrimField<f64>,
 }
 
-impl DatasyncLocationHdfsNameNodeEl { }
+impl DatasyncLocationHdfs_NameNode { }
 
-impl terrars::ToListMappable for DatasyncLocationHdfsNameNodeEl {
-    type O = terrars::BlockAssignable<DatasyncLocationHdfsNameNodeEl>;
+impl terrars::ToListMappable for DatasyncLocationHdfs_NameNode {
+    type O = terrars::BlockAssignable<DatasyncLocationHdfs_NameNode>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -539,37 +613,39 @@ impl terrars::ToListMappable for DatasyncLocationHdfsNameNodeEl {
     }
 }
 
-pub struct BuildDatasyncLocationHdfsNameNodeEl {
+pub struct BuildDatasyncLocationHdfs_NameNode {
     #[doc = ""]
     pub hostname: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub port: terrars::PrimField<f64>,
 }
 
-impl BuildDatasyncLocationHdfsNameNodeEl {
-    pub fn build(self) -> DatasyncLocationHdfsNameNodeEl {
-        DatasyncLocationHdfsNameNodeEl {
+impl BuildDatasyncLocationHdfs_NameNode {
+    pub fn build(self) -> DatasyncLocationHdfs_NameNode {
+        DatasyncLocationHdfs_NameNode {
             hostname: self.hostname,
             port: self.port,
         }
     }
 }
 
-pub struct DatasyncLocationHdfsNameNodeElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationHdfs_NameNodeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationHdfsNameNodeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationHdfsNameNodeElRef {
-        DatasyncLocationHdfsNameNodeElRef {
+impl terrars::Ref for DatasyncLocationHdfs_NameNodeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationHdfs_NameNodeRef {
+        DatasyncLocationHdfs_NameNodeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationHdfsNameNodeElRef {
+impl DatasyncLocationHdfs_NameNodeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -586,14 +662,14 @@ impl DatasyncLocationHdfsNameNodeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DatasyncLocationHdfsQopConfigurationEl {
+pub struct DatasyncLocationHdfs_QopConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_transfer_protection: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rpc_protection: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncLocationHdfsQopConfigurationEl {
+impl DatasyncLocationHdfs_QopConfiguration {
     #[doc = "Set the field `data_transfer_protection`.\n"]
     pub fn set_data_transfer_protection(
         mut self,
@@ -610,8 +686,8 @@ impl DatasyncLocationHdfsQopConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncLocationHdfsQopConfigurationEl {
-    type O = terrars::BlockAssignable<DatasyncLocationHdfsQopConfigurationEl>;
+impl terrars::ToListMappable for DatasyncLocationHdfs_QopConfiguration {
+    type O = terrars::BlockAssignable<DatasyncLocationHdfs_QopConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -622,32 +698,34 @@ impl terrars::ToListMappable for DatasyncLocationHdfsQopConfigurationEl {
     }
 }
 
-pub struct BuildDatasyncLocationHdfsQopConfigurationEl {}
+pub struct BuildDatasyncLocationHdfs_QopConfiguration {}
 
-impl BuildDatasyncLocationHdfsQopConfigurationEl {
-    pub fn build(self) -> DatasyncLocationHdfsQopConfigurationEl {
-        DatasyncLocationHdfsQopConfigurationEl {
+impl BuildDatasyncLocationHdfs_QopConfiguration {
+    pub fn build(self) -> DatasyncLocationHdfs_QopConfiguration {
+        DatasyncLocationHdfs_QopConfiguration {
             data_transfer_protection: core::default::Default::default(),
             rpc_protection: core::default::Default::default(),
         }
     }
 }
 
-pub struct DatasyncLocationHdfsQopConfigurationElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationHdfs_QopConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationHdfsQopConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationHdfsQopConfigurationElRef {
-        DatasyncLocationHdfsQopConfigurationElRef {
+impl terrars::Ref for DatasyncLocationHdfs_QopConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationHdfs_QopConfigurationRef {
+        DatasyncLocationHdfs_QopConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationHdfsQopConfigurationElRef {
+impl DatasyncLocationHdfs_QopConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -661,10 +739,4 @@ impl DatasyncLocationHdfsQopConfigurationElRef {
     pub fn rpc_protection(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rpc_protection", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatasyncLocationHdfsDynamic {
-    name_node: std::option::Option<terrars::DynamicBlock<DatasyncLocationHdfsNameNodeEl>>,
-    qop_configuration: std::option::Option<terrars::DynamicBlock<DatasyncLocationHdfsQopConfigurationEl>>,
 }

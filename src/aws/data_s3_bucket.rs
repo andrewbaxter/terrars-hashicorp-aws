@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataS3BucketData {
+struct DataS3BucketData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,12 +21,14 @@ struct DataS3BucketData {
     bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataS3Bucket_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataS3BucketData>,
+    data: std::cell::RefCell<DataS3BucketData_>,
 }
 
 #[derive(Clone)]
@@ -75,6 +79,13 @@ impl DataS3Bucket {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -88,6 +99,11 @@ impl DataS3Bucket {
     #[doc = "Get a reference to the value of field `bucket_domain_name` after provisioning.\n"]
     pub fn bucket_domain_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_domain_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bucket_region` after provisioning.\n"]
+    pub fn bucket_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `bucket_regional_domain_name` after provisioning.\n"]
@@ -105,7 +121,8 @@ impl DataS3Bucket {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
     pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
@@ -163,13 +180,14 @@ impl BuildDataS3Bucket {
         let out = DataS3Bucket(std::rc::Rc::new(DataS3Bucket_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataS3BucketData {
+            data: std::cell::RefCell::new(DataS3BucketData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 bucket: self.bucket,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -215,6 +233,11 @@ impl DataS3BucketRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_domain_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bucket_region` after provisioning.\n"]
+    pub fn bucket_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `bucket_regional_domain_name` after provisioning.\n"]
     pub fn bucket_regional_domain_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_regional_domain_name", self.extract_ref()))
@@ -230,7 +253,8 @@ impl DataS3BucketRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
     pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }

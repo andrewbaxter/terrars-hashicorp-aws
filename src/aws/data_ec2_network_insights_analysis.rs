@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2NetworkInsightsAnalysisData {
+struct DataEc2NetworkInsightsAnalysisData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,16 +23,18 @@ struct DataEc2NetworkInsightsAnalysisData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_insights_analysis_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2NetworkInsightsAnalysisFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEc2NetworkInsightsAnalysis_Filter>>,
     dynamic: DataEc2NetworkInsightsAnalysisDynamic,
 }
 
 struct DataEc2NetworkInsightsAnalysis_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2NetworkInsightsAnalysisData>,
+    data: std::cell::RefCell<DataEc2NetworkInsightsAnalysisData_>,
 }
 
 #[derive(Clone)]
@@ -90,6 +94,13 @@ impl DataEc2NetworkInsightsAnalysis {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -102,7 +113,7 @@ impl DataEc2NetworkInsightsAnalysis {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -116,7 +127,7 @@ impl DataEc2NetworkInsightsAnalysis {
     }
 
     #[doc = "Get a reference to the value of field `alternate_path_hints` after provisioning.\n"]
-    pub fn alternate_path_hints(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisAlternatePathHintsElRef> {
+    pub fn alternate_path_hints(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_AlternatePathHintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alternate_path_hints", self.extract_ref()))
     }
 
@@ -126,7 +137,7 @@ impl DataEc2NetworkInsightsAnalysis {
     }
 
     #[doc = "Get a reference to the value of field `explanations` after provisioning.\n"]
-    pub fn explanations(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElRef> {
+    pub fn explanations(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ExplanationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.explanations", self.extract_ref()))
     }
 
@@ -136,7 +147,7 @@ impl DataEc2NetworkInsightsAnalysis {
     }
 
     #[doc = "Get a reference to the value of field `forward_path_components` after provisioning.\n"]
-    pub fn forward_path_components(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElRef> {
+    pub fn forward_path_components(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ForwardPathComponentsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.forward_path_components", self.extract_ref()))
     }
 
@@ -160,8 +171,14 @@ impl DataEc2NetworkInsightsAnalysis {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.path_found", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `return_path_components` after provisioning.\n"]
-    pub fn return_path_components(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElRef> {
+    pub fn return_path_components(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponentsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.return_path_components", self.extract_ref()))
     }
 
@@ -231,13 +248,14 @@ impl BuildDataEc2NetworkInsightsAnalysis {
         let out = DataEc2NetworkInsightsAnalysis(std::rc::Rc::new(DataEc2NetworkInsightsAnalysis_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2NetworkInsightsAnalysisData {
+            data: std::cell::RefCell::new(DataEc2NetworkInsightsAnalysisData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 network_insights_analysis_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -272,7 +290,7 @@ impl DataEc2NetworkInsightsAnalysisRef {
     }
 
     #[doc = "Get a reference to the value of field `alternate_path_hints` after provisioning.\n"]
-    pub fn alternate_path_hints(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisAlternatePathHintsElRef> {
+    pub fn alternate_path_hints(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_AlternatePathHintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alternate_path_hints", self.extract_ref()))
     }
 
@@ -282,7 +300,7 @@ impl DataEc2NetworkInsightsAnalysisRef {
     }
 
     #[doc = "Get a reference to the value of field `explanations` after provisioning.\n"]
-    pub fn explanations(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElRef> {
+    pub fn explanations(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ExplanationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.explanations", self.extract_ref()))
     }
 
@@ -292,7 +310,7 @@ impl DataEc2NetworkInsightsAnalysisRef {
     }
 
     #[doc = "Get a reference to the value of field `forward_path_components` after provisioning.\n"]
-    pub fn forward_path_components(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElRef> {
+    pub fn forward_path_components(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ForwardPathComponentsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.forward_path_components", self.extract_ref()))
     }
 
@@ -316,8 +334,14 @@ impl DataEc2NetworkInsightsAnalysisRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.path_found", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `return_path_components` after provisioning.\n"]
-    pub fn return_path_components(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElRef> {
+    pub fn return_path_components(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponentsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.return_path_components", self.extract_ref()))
     }
 
@@ -347,15 +371,20 @@ impl DataEc2NetworkInsightsAnalysisRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataEc2NetworkInsightsAnalysisDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2NetworkInsightsAnalysis_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisAlternatePathHintsEl {
+pub struct DataEc2NetworkInsightsAnalysis_AlternatePathHints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     component_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     component_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisAlternatePathHintsEl {
+impl DataEc2NetworkInsightsAnalysis_AlternatePathHints {
     #[doc = "Set the field `component_arn`.\n"]
     pub fn set_component_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.component_arn = std::option::Option::Some(v.into());
@@ -369,8 +398,8 @@ impl DataEc2NetworkInsightsAnalysisAlternatePathHintsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisAlternatePathHintsEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisAlternatePathHintsEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_AlternatePathHints {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_AlternatePathHints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,35 +410,37 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisAlternatePathHint
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisAlternatePathHintsEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_AlternatePathHints {}
 
-impl BuildDataEc2NetworkInsightsAnalysisAlternatePathHintsEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisAlternatePathHintsEl {
-        DataEc2NetworkInsightsAnalysisAlternatePathHintsEl {
+impl BuildDataEc2NetworkInsightsAnalysis_AlternatePathHints {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_AlternatePathHints {
+        DataEc2NetworkInsightsAnalysis_AlternatePathHints {
             component_arn: core::default::Default::default(),
             component_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisAlternatePathHintsElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_AlternatePathHintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisAlternatePathHintsElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_AlternatePathHintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisAlternatePathHintsElRef {
-        DataEc2NetworkInsightsAnalysisAlternatePathHintsElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_AlternatePathHintsRef {
+        DataEc2NetworkInsightsAnalysis_AlternatePathHintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisAlternatePathHintsElRef {
+impl DataEc2NetworkInsightsAnalysis_AlternatePathHintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -426,7 +457,7 @@ impl DataEc2NetworkInsightsAnalysisAlternatePathHintsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElAclEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_Acl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -435,7 +466,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElAclEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElAclEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_Acl {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -455,8 +486,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAclEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElAclEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElAclEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_Acl {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_Acl>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -467,11 +498,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElAcl
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElAclEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_Acl {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElAclEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElAclEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElAclEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_Acl {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_Acl {
+        DataEc2NetworkInsightsAnalysis_Explanations_Acl {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -479,24 +510,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElAclEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElAclElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_AclRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElAclElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_AclRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElAclElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElAclElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_AclRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_AclRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElAclElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_AclRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -518,14 +551,14 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAclElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     from: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     to: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange {
     #[doc = "Set the field `from`.\n"]
     pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.from = std::option::Option::Some(v.into());
@@ -539,8 +572,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -551,35 +584,37 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElAcl
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange {
+        DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange {
             from: core::default::Default::default(),
             to: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRangeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRangeRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -596,13 +631,13 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_AclRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     egress: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_range: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl>>,
+    port_range: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocol: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -611,7 +646,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
     rule_number: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_AclRule {
     #[doc = "Set the field `cidr`.\n"]
     pub fn set_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cidr = std::option::Option::Some(v.into());
@@ -632,7 +667,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeEl>>,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange>>,
     ) -> Self {
         self.port_range = std::option::Option::Some(v.into());
         self
@@ -657,8 +692,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_AclRule {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_AclRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -669,11 +704,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElAcl
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_AclRule {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_AclRule {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_AclRule {
+        DataEc2NetworkInsightsAnalysis_Explanations_AclRule {
             cidr: core::default::Default::default(),
             egress: core::default::Default::default(),
             port_range: core::default::Default::default(),
@@ -684,24 +719,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_AclRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_AclRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_AclRuleRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_AclRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_AclRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -717,7 +754,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `port_range` after provisioning.\n"]
-    pub fn port_range(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElPortRangeElRef> {
+    pub fn port_range(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.port_range", self.base))
     }
 
@@ -738,7 +775,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -747,7 +784,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -767,8 +804,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -779,11 +816,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElAtt
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_AttachedTo {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_AttachedTo {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo {
+        DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -791,24 +828,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElAttachedToElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_AttachedToRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElAttachedToElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_AttachedToRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElAttachedToElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElAttachedToElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_AttachedToRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_AttachedToRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElAttachedToElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_AttachedToRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -830,14 +869,14 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElAttachedToElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     load_balancer_port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener {
     #[doc = "Set the field `instance_port`.\n"]
     pub fn set_instance_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.instance_port = std::option::Option::Some(v.into());
@@ -851,8 +890,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -863,35 +902,37 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElCla
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener {
+        DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener {
             instance_port: core::default::Default::default(),
             load_balancer_port: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListenerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListenerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListenerRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListenerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListenerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -908,7 +949,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerElRe
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElComponentEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_Component {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -917,7 +958,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElComponentEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElComponentEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_Component {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -937,8 +978,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElComponentEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElComponentEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElComponentEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_Component {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_Component>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -949,11 +990,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElCom
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElComponentEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_Component {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElComponentEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElComponentEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElComponentEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_Component {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_Component {
+        DataEc2NetworkInsightsAnalysis_Explanations_Component {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -961,24 +1002,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElComponentEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElComponentElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_ComponentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElComponentElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_ComponentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElComponentElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElComponentElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_ComponentRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_ComponentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElComponentElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_ComponentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1000,7 +1043,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElComponentElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1009,7 +1052,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1029,8 +1072,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1041,11 +1084,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElCus
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway {
+        DataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1053,24 +1096,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_CustomerGatewayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_CustomerGatewayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_CustomerGatewayRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_CustomerGatewayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_CustomerGatewayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1092,7 +1137,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1101,7 +1146,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_Destination {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1121,8 +1166,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_Destination {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1133,11 +1178,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElDes
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_Destination {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_Destination {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_Destination {
+        DataEc2NetworkInsightsAnalysis_Explanations_Destination {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1145,24 +1190,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElDestinationEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElDestinationElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElDestinationElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElDestinationElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElDestinationElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_DestinationRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElDestinationElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1184,7 +1231,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElDestinationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1193,7 +1240,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1213,8 +1260,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1225,11 +1272,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElDes
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc {
+        DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1237,24 +1284,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpcRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpcRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1276,7 +1325,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1285,7 +1334,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListen
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1305,8 +1354,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1317,11 +1366,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElEla
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener {
+        DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1329,24 +1378,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListene
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListenerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListenerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListenerRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListenerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListenerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1368,7 +1419,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerElRe
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1377,7 +1428,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1397,8 +1448,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1409,11 +1460,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElIng
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable {
+        DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1421,24 +1472,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTableRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1460,7 +1513,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_InternetGateway {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1469,7 +1522,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_InternetGateway {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1489,8 +1542,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_InternetGateway {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_InternetGateway>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1501,11 +1554,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElInt
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_InternetGateway {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_InternetGateway {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_InternetGateway {
+        DataEc2NetworkInsightsAnalysis_Explanations_InternetGateway {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1513,24 +1566,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_InternetGatewayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_InternetGatewayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_InternetGatewayRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_InternetGatewayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_InternetGatewayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1552,7 +1607,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1561,7 +1616,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1581,8 +1636,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1593,11 +1648,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElLoa
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup {
+        DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1605,24 +1660,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl 
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1644,7 +1701,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1653,7 +1710,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsE
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1673,8 +1730,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1685,11 +1742,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElLoa
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups {
+        DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1697,24 +1754,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupsRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1736,7 +1795,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_NatGateway {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1745,7 +1804,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_NatGateway {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1765,8 +1824,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_NatGateway {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_NatGateway>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1777,11 +1836,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElNat
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_NatGateway {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_NatGateway {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_NatGateway {
+        DataEc2NetworkInsightsAnalysis_Explanations_NatGateway {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1789,24 +1848,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_NatGatewayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_NatGatewayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_NatGatewayRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_NatGatewayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_NatGatewayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1828,7 +1889,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1837,7 +1898,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -1857,8 +1918,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1869,11 +1930,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElNet
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface {
+        DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -1881,24 +1942,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterfaceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterfaceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterfaceRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterfaceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterfaceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1920,14 +1983,14 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_PortRanges {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     from: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     to: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_PortRanges {
     #[doc = "Set the field `from`.\n"]
     pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.from = std::option::Option::Some(v.into());
@@ -1941,8 +2004,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_PortRanges {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_PortRanges>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1953,35 +2016,37 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElPor
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_PortRanges {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_PortRanges {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_PortRanges {
+        DataEc2NetworkInsightsAnalysis_Explanations_PortRanges {
             from: core::default::Default::default(),
             to: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElPortRangesElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_PortRangesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElPortRangesElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_PortRangesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElPortRangesElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElPortRangesElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_PortRangesRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_PortRangesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElPortRangesElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_PortRangesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1998,7 +2063,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElPortRangesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_PrefixList {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2007,7 +2072,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_PrefixList {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -2027,8 +2092,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_PrefixList {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_PrefixList>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2039,11 +2104,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElPre
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_PrefixList {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_PrefixList {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_PrefixList {
+        DataEc2NetworkInsightsAnalysis_Explanations_PrefixList {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -2051,24 +2116,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElPrefixListElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_PrefixListRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElPrefixListElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_PrefixListRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElPrefixListElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElPrefixListElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_PrefixListRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_PrefixListRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElPrefixListElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_PrefixListRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2090,7 +2157,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElPrefixListElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_RouteTable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2099,7 +2166,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_RouteTable {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -2119,8 +2186,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_RouteTable {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_RouteTable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2131,11 +2198,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElRou
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_RouteTable {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_RouteTable {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_RouteTable {
+        DataEc2NetworkInsightsAnalysis_Explanations_RouteTable {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -2143,24 +2210,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElRouteTableElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElRouteTableElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElRouteTableElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElRouteTableElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElRouteTableElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2182,7 +2251,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRouteTableElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2205,7 +2274,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {
     vpc_peering_connection_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute {
     #[doc = "Set the field `destination_cidr`.\n"]
     pub fn set_destination_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.destination_cidr = std::option::Option::Some(v.into());
@@ -2282,8 +2351,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2294,11 +2363,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElRou
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute {
+        DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute {
             destination_cidr: core::default::Default::default(),
             destination_prefix_list_id: core::default::Default::default(),
             egress_only_internet_gateway_id: core::default::Default::default(),
@@ -2313,24 +2382,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRouteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRouteRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2387,7 +2458,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2396,7 +2467,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -2416,8 +2487,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2428,11 +2499,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSec
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup {
+        DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -2440,24 +2511,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2479,93 +2552,13 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_range: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl>>,
+    port_range: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2574,7 +2567,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
     security_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule {
     #[doc = "Set the field `cidr`.\n"]
     pub fn set_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cidr = std::option::Option::Some(v.into());
@@ -2595,9 +2588,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeEl>,
-                    >,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRange>>,
     ) -> Self {
         self.port_range = std::option::Option::Some(v.into());
         self
@@ -2622,8 +2613,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2634,11 +2625,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSec
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule {
+        DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule {
             cidr: core::default::Default::default(),
             direction: core::default::Default::default(),
             port_range: core::default::Default::default(),
@@ -2649,24 +2640,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRuleRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2682,9 +2675,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `port_range` after provisioning.\n"]
-    pub fn port_range(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElPortRangeElRef> {
+    pub fn port_range(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_AclRule_PortRangeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.port_range", self.base))
     }
 
@@ -2705,7 +2696,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2714,7 +2705,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -2734,8 +2725,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2746,11 +2737,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSec
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups {
+        DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -2758,24 +2749,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupsRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2797,7 +2790,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2806,7 +2799,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -2826,8 +2819,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2838,11 +2831,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSou
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_SourceVpc {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_SourceVpc {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc {
+        DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -2850,24 +2843,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SourceVpcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_SourceVpcRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_SourceVpcRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_SourceVpcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SourceVpcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2889,7 +2884,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_Subnet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2898,7 +2893,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_Subnet {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -2918,8 +2913,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_Subnet {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_Subnet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2930,11 +2925,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSub
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_Subnet {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_Subnet {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_Subnet {
+        DataEc2NetworkInsightsAnalysis_Explanations_Subnet {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -2942,24 +2937,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSubnetEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSubnetElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SubnetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElSubnetElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_SubnetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElSubnetElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElSubnetElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_SubnetRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_SubnetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSubnetElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SubnetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2981,7 +2978,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSubnetElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2990,7 +2987,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -3010,8 +3007,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3022,11 +3019,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElSub
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable {
+        DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -3034,24 +3031,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTableRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3073,7 +3072,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3082,7 +3081,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -3102,8 +3101,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3114,11 +3113,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElTra
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_TransitGateway {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_TransitGateway {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway {
+        DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -3126,24 +3125,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3165,7 +3166,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3174,7 +3175,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentE
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -3194,8 +3195,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3206,11 +3207,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElTra
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment {
+        DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -3218,24 +3219,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachmentRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3257,7 +3260,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3266,7 +3269,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableE
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -3286,8 +3289,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3298,11 +3301,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElTra
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable {
+        DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -3310,24 +3313,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3349,7 +3354,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     attachment_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3366,7 +3371,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableR
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute {
     #[doc = "Set the field `attachment_id`.\n"]
     pub fn set_attachment_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.attachment_id = std::option::Option::Some(v.into());
@@ -3410,8 +3415,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3422,11 +3427,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElTra
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute {
+        DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute {
             attachment_id: core::default::Default::default(),
             destination_cidr: core::default::Default::default(),
             prefix_list_id: core::default::Default::default(),
@@ -3438,24 +3443,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRo
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRouteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRouteRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3497,7 +3504,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpcEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_Vpc {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3506,7 +3513,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpcEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpcEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_Vpc {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -3526,8 +3533,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpcEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpcEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElVpcEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_Vpc {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_Vpc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3538,11 +3545,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpc
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElVpcEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_Vpc {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpcEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElVpcEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpcEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_Vpc {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_Vpc {
+        DataEc2NetworkInsightsAnalysis_Explanations_Vpc {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -3550,24 +3557,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpcEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpcElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_VpcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElVpcElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_VpcRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElVpcElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpcElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_VpcRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_VpcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpcElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_VpcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3589,7 +3598,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpcElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3598,7 +3607,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -3618,8 +3627,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3630,11 +3639,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpc
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint {
+        DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -3642,24 +3651,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpointRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpointRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3681,7 +3692,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3690,7 +3701,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -3710,8 +3721,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3722,11 +3733,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpc
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection {
+        DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -3734,24 +3745,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnectionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnectionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnectionRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnectionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnectionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3773,7 +3786,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_VpnConnection {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3782,7 +3795,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_VpnConnection {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -3802,8 +3815,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_VpnConnection {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_VpnConnection>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3814,11 +3827,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpn
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_VpnConnection {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_VpnConnection {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_VpnConnection {
+        DataEc2NetworkInsightsAnalysis_Explanations_VpnConnection {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -3826,24 +3839,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_VpnConnectionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_VpnConnectionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_VpnConnectionRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_VpnConnectionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_VpnConnectionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3865,7 +3880,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_VpnGateway {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3874,7 +3889,7 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations_VpnGateway {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -3894,8 +3909,8 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations_VpnGateway {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations_VpnGateway>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3906,11 +3921,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsElVpn
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations_VpnGateway {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations_VpnGateway {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations_VpnGateway {
+        DataEc2NetworkInsightsAnalysis_Explanations_VpnGateway {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -3918,24 +3933,26 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_Explanations_VpnGatewayRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_Explanations_VpnGatewayRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_Explanations_VpnGatewayRef {
+        DataEc2NetworkInsightsAnalysis_Explanations_VpnGatewayRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayElRef {
+impl DataEc2NetworkInsightsAnalysis_Explanations_VpnGatewayRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3957,17 +3974,17 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisExplanationsEl {
+pub struct DataEc2NetworkInsightsAnalysis_Explanations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    acl: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElAclEl>>,
+    acl: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Acl>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    acl_rule: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl>>,
+    acl_rule: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     addresses: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attached_to: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl>>,
+    attached_to: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zones: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3975,35 +3992,33 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     classic_load_balancer_listener: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    component: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElComponentEl>>,
+    component: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Component>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customer_gateway: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl>>,
+    destination: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Destination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_vpc: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl>>,
+    destination_vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     direction: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     elastic_load_balancer_listener: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     explanation_code: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ingress_route_table: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     internet_gateway: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_InternetGateway>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     load_balancer_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -4011,92 +4026,88 @@ pub struct DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     load_balancer_target_group: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     load_balancer_target_groups: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     load_balancer_target_port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     missing_component: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nat_gateway: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl>>,
+    nat_gateway: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_NatGateway>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     packet_field: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_ranges: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl>>,
+    port_ranges: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_PortRanges>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix_list: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl>>,
+    prefix_list: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_PrefixList>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocols: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route_table: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl>>,
+    route_table: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_RouteTable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     route_table_route: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    security_group: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl>>,
+    security_group: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_rule: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    security_groups: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl>>,
+    security_groups: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl>>,
+    source_vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subnet: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl>>,
+    subnet: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Subnet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_route_table: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    transit_gateway: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl>>,
+    transit_gateway: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transit_gateway_attachment: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transit_gateway_route_table: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transit_gateway_route_table_route: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpcEl>>,
+    vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Vpc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_endpoint: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl>>,
+    vpc_endpoint: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_peering_connection: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpn_connection: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl>>,
+    vpn_connection: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_VpnConnection>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpn_gateway: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl>>,
+    vpn_gateway: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_VpnGateway>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsEl {
+impl DataEc2NetworkInsightsAnalysis_Explanations {
     #[doc = "Set the field `acl`.\n"]
     pub fn set_acl(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElAclEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Acl>>,
     ) -> Self {
         self.acl = std::option::Option::Some(v.into());
         self
@@ -4105,7 +4116,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `acl_rule`.\n"]
     pub fn set_acl_rule(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElAclRuleEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule>>,
     ) -> Self {
         self.acl_rule = std::option::Option::Some(v.into());
         self
@@ -4129,7 +4140,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `attached_to`.\n"]
     pub fn set_attached_to(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElAttachedToEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo>>,
     ) -> Self {
         self.attached_to = std::option::Option::Some(v.into());
         self
@@ -4162,7 +4173,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerEl>,
+                        terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListener>,
                     >,
     ) -> Self {
         self.classic_load_balancer_listener = std::option::Option::Some(v.into());
@@ -4172,7 +4183,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `component`.\n"]
     pub fn set_component(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElComponentEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Component>>,
     ) -> Self {
         self.component = std::option::Option::Some(v.into());
         self
@@ -4181,12 +4192,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `customer_gateway`.\n"]
     pub fn set_customer_gateway(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_CustomerGateway>>,
     ) -> Self {
         self.customer_gateway = std::option::Option::Some(v.into());
         self
@@ -4195,7 +4201,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElDestinationEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Destination>>,
     ) -> Self {
         self.destination = std::option::Option::Some(v.into());
         self
@@ -4204,7 +4210,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `destination_vpc`.\n"]
     pub fn set_destination_vpc(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc>>,
     ) -> Self {
         self.destination_vpc = std::option::Option::Some(v.into());
         self
@@ -4225,7 +4231,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerEl>,
+                        terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListener>,
                     >,
     ) -> Self {
         self.elastic_load_balancer_listener = std::option::Option::Some(v.into());
@@ -4246,7 +4252,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableEl>>,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTable>>,
     ) -> Self {
         self.ingress_route_table = std::option::Option::Some(v.into());
         self
@@ -4255,12 +4261,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `internet_gateway`.\n"]
     pub fn set_internet_gateway(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_InternetGateway>>,
     ) -> Self {
         self.internet_gateway = std::option::Option::Some(v.into());
         self
@@ -4286,7 +4287,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupEl>>,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroup>>,
     ) -> Self {
         self.load_balancer_target_group = std::option::Option::Some(v.into());
         self
@@ -4300,9 +4301,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsEl>,
-                    >,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroups>>,
     ) -> Self {
         self.load_balancer_target_groups = std::option::Option::Some(v.into());
         self
@@ -4323,7 +4322,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `nat_gateway`.\n"]
     pub fn set_nat_gateway(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_NatGateway>>,
     ) -> Self {
         self.nat_gateway = std::option::Option::Some(v.into());
         self
@@ -4332,12 +4331,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `network_interface`.\n"]
     pub fn set_network_interface(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterface>>,
     ) -> Self {
         self.network_interface = std::option::Option::Some(v.into());
         self
@@ -4358,7 +4352,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `port_ranges`.\n"]
     pub fn set_port_ranges(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElPortRangesEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_PortRanges>>,
     ) -> Self {
         self.port_ranges = std::option::Option::Some(v.into());
         self
@@ -4367,7 +4361,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `prefix_list`.\n"]
     pub fn set_prefix_list(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElPrefixListEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_PrefixList>>,
     ) -> Self {
         self.prefix_list = std::option::Option::Some(v.into());
         self
@@ -4385,7 +4379,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `route_table`.\n"]
     pub fn set_route_table(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElRouteTableEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_RouteTable>>,
     ) -> Self {
         self.route_table = std::option::Option::Some(v.into());
         self
@@ -4394,12 +4388,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `route_table_route`.\n"]
     pub fn set_route_table_route(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute>>,
     ) -> Self {
         self.route_table_route = std::option::Option::Some(v.into());
         self
@@ -4408,7 +4397,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `security_group`.\n"]
     pub fn set_security_group(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroup>>,
     ) -> Self {
         self.security_group = std::option::Option::Some(v.into());
         self
@@ -4422,7 +4411,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleEl>>,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule>>,
     ) -> Self {
         self.security_group_rule = std::option::Option::Some(v.into());
         self
@@ -4431,7 +4420,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `security_groups`.\n"]
     pub fn set_security_groups(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroups>>,
     ) -> Self {
         self.security_groups = std::option::Option::Some(v.into());
         self
@@ -4440,7 +4429,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `source_vpc`.\n"]
     pub fn set_source_vpc(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc>>,
     ) -> Self {
         self.source_vpc = std::option::Option::Some(v.into());
         self
@@ -4455,7 +4444,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `subnet`.\n"]
     pub fn set_subnet(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSubnetEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Subnet>>,
     ) -> Self {
         self.subnet = std::option::Option::Some(v.into());
         self
@@ -4464,12 +4453,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `subnet_route_table`.\n"]
     pub fn set_subnet_route_table(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTable>>,
     ) -> Self {
         self.subnet_route_table = std::option::Option::Some(v.into());
         self
@@ -4478,7 +4462,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `transit_gateway`.\n"]
     pub fn set_transit_gateway(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway>>,
     ) -> Self {
         self.transit_gateway = std::option::Option::Some(v.into());
         self
@@ -4492,9 +4476,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentEl>,
-                    >,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachment>>,
     ) -> Self {
         self.transit_gateway_attachment = std::option::Option::Some(v.into());
         self
@@ -4508,9 +4490,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableEl>,
-                    >,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTable>>,
     ) -> Self {
         self.transit_gateway_route_table = std::option::Option::Some(v.into());
         self
@@ -4525,8 +4505,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::ListField<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteEl>,
+                        terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute>,
                     >,
     ) -> Self {
         self.transit_gateway_route_table_route = std::option::Option::Some(v.into());
@@ -4536,7 +4515,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `vpc`.\n"]
     pub fn set_vpc(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Vpc>>,
     ) -> Self {
         self.vpc = std::option::Option::Some(v.into());
         self
@@ -4545,7 +4524,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `vpc_endpoint`.\n"]
     pub fn set_vpc_endpoint(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpoint>>,
     ) -> Self {
         self.vpc_endpoint = std::option::Option::Some(v.into());
         self
@@ -4559,7 +4538,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionEl>>,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnection>>,
     ) -> Self {
         self.vpc_peering_connection = std::option::Option::Some(v.into());
         self
@@ -4568,7 +4547,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `vpn_connection`.\n"]
     pub fn set_vpn_connection(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_VpnConnection>>,
     ) -> Self {
         self.vpn_connection = std::option::Option::Some(v.into());
         self
@@ -4577,15 +4556,15 @@ impl DataEc2NetworkInsightsAnalysisExplanationsEl {
     #[doc = "Set the field `vpn_gateway`.\n"]
     pub fn set_vpn_gateway(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_VpnGateway>>,
     ) -> Self {
         self.vpn_gateway = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisExplanationsEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Explanations {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Explanations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -4596,11 +4575,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisExplanationsEl {
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisExplanationsEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_Explanations {}
 
-impl BuildDataEc2NetworkInsightsAnalysisExplanationsEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisExplanationsEl {
-        DataEc2NetworkInsightsAnalysisExplanationsEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Explanations {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Explanations {
+        DataEc2NetworkInsightsAnalysis_Explanations {
             acl: core::default::Default::default(),
             acl_rule: core::default::Default::default(),
             address: core::default::Default::default(),
@@ -4653,35 +4632,37 @@ impl BuildDataEc2NetworkInsightsAnalysisExplanationsEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisExplanationsElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_ExplanationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisExplanationsElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_ExplanationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisExplanationsElRef {
-        DataEc2NetworkInsightsAnalysisExplanationsElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_ExplanationsRef {
+        DataEc2NetworkInsightsAnalysis_ExplanationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
+impl DataEc2NetworkInsightsAnalysis_ExplanationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `acl` after provisioning.\n"]
-    pub fn acl(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElAclElRef> {
+    pub fn acl(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_AclRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.acl", self.base))
     }
 
     #[doc = "Get a reference to the value of field `acl_rule` after provisioning.\n"]
-    pub fn acl_rule(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElAclRuleElRef> {
+    pub fn acl_rule(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_AclRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.acl_rule", self.base))
     }
 
@@ -4696,7 +4677,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
     }
 
     #[doc = "Get a reference to the value of field `attached_to` after provisioning.\n"]
-    pub fn attached_to(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElAttachedToElRef> {
+    pub fn attached_to(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_AttachedToRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attached_to", self.base))
     }
 
@@ -4713,27 +4694,27 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
     #[doc = "Get a reference to the value of field `classic_load_balancer_listener` after provisioning.\n"]
     pub fn classic_load_balancer_listener(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElClassicLoadBalancerListenerElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_ClassicLoadBalancerListenerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.classic_load_balancer_listener", self.base))
     }
 
     #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElComponentElRef> {
+    pub fn component(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_ComponentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.base))
     }
 
     #[doc = "Get a reference to the value of field `customer_gateway` after provisioning.\n"]
-    pub fn customer_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElCustomerGatewayElRef> {
+    pub fn customer_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_CustomerGatewayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.customer_gateway", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination_vpc` after provisioning.\n"]
-    pub fn destination_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElDestinationVpcElRef> {
+    pub fn destination_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_vpc", self.base))
     }
 
@@ -4745,7 +4726,7 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
     #[doc = "Get a reference to the value of field `elastic_load_balancer_listener` after provisioning.\n"]
     pub fn elastic_load_balancer_listener(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElElasticLoadBalancerListenerElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_ElasticLoadBalancerListenerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.elastic_load_balancer_listener", self.base))
     }
 
@@ -4757,12 +4738,12 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
     #[doc = "Get a reference to the value of field `ingress_route_table` after provisioning.\n"]
     pub fn ingress_route_table(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElIngressRouteTableElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_IngressRouteTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingress_route_table", self.base))
     }
 
     #[doc = "Get a reference to the value of field `internet_gateway` after provisioning.\n"]
-    pub fn internet_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElInternetGatewayElRef> {
+    pub fn internet_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_InternetGatewayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.internet_gateway", self.base))
     }
 
@@ -4779,14 +4760,14 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
     #[doc = "Get a reference to the value of field `load_balancer_target_group` after provisioning.\n"]
     pub fn load_balancer_target_group(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancer_target_group", self.base))
     }
 
     #[doc = "Get a reference to the value of field `load_balancer_target_groups` after provisioning.\n"]
     pub fn load_balancer_target_groups(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElLoadBalancerTargetGroupsElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_LoadBalancerTargetGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancer_target_groups", self.base))
     }
 
@@ -4801,14 +4782,12 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
     }
 
     #[doc = "Get a reference to the value of field `nat_gateway` after provisioning.\n"]
-    pub fn nat_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElNatGatewayElRef> {
+    pub fn nat_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_NatGatewayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nat_gateway", self.base))
     }
 
     #[doc = "Get a reference to the value of field `network_interface` after provisioning.\n"]
-    pub fn network_interface(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElNetworkInterfaceElRef> {
+    pub fn network_interface(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_NetworkInterfaceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface", self.base))
     }
 
@@ -4823,12 +4802,12 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
     }
 
     #[doc = "Get a reference to the value of field `port_ranges` after provisioning.\n"]
-    pub fn port_ranges(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElPortRangesElRef> {
+    pub fn port_ranges(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_PortRangesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.port_ranges", self.base))
     }
 
     #[doc = "Get a reference to the value of field `prefix_list` after provisioning.\n"]
-    pub fn prefix_list(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElPrefixListElRef> {
+    pub fn prefix_list(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_PrefixListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.prefix_list", self.base))
     }
 
@@ -4838,36 +4817,34 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
     }
 
     #[doc = "Get a reference to the value of field `route_table` after provisioning.\n"]
-    pub fn route_table(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElRouteTableElRef> {
+    pub fn route_table(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.route_table", self.base))
     }
 
     #[doc = "Get a reference to the value of field `route_table_route` after provisioning.\n"]
-    pub fn route_table_route(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElRouteTableRouteElRef> {
+    pub fn route_table_route(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.route_table_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `security_group` after provisioning.\n"]
-    pub fn security_group(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupElRef> {
+    pub fn security_group(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.security_group", self.base))
     }
 
     #[doc = "Get a reference to the value of field `security_group_rule` after provisioning.\n"]
     pub fn security_group_rule(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupRuleElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.security_group_rule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
-    pub fn security_groups(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElSecurityGroupsElRef> {
+    pub fn security_groups(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.security_groups", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source_vpc` after provisioning.\n"]
-    pub fn source_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElSourceVpcElRef> {
+    pub fn source_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_vpc", self.base))
     }
 
@@ -4877,404 +4854,80 @@ impl DataEc2NetworkInsightsAnalysisExplanationsElRef {
     }
 
     #[doc = "Get a reference to the value of field `subnet` after provisioning.\n"]
-    pub fn subnet(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElSubnetElRef> {
+    pub fn subnet(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SubnetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subnet", self.base))
     }
 
     #[doc = "Get a reference to the value of field `subnet_route_table` after provisioning.\n"]
     pub fn subnet_route_table(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElSubnetRouteTableElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SubnetRouteTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subnet_route_table", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway` after provisioning.\n"]
-    pub fn transit_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayElRef> {
+    pub fn transit_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway_attachment` after provisioning.\n"]
     pub fn transit_gateway_attachment(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayAttachmentElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayAttachmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway_attachment", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway_route_table` after provisioning.\n"]
     pub fn transit_gateway_route_table(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway_route_table", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway_route_table_route` after provisioning.\n"]
     pub fn transit_gateway_route_table_route(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElTransitGatewayRouteTableRouteElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway_route_table_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
-    pub fn vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElVpcElRef> {
+    pub fn vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_VpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc_endpoint` after provisioning.\n"]
-    pub fn vpc_endpoint(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElVpcEndpointElRef> {
+    pub fn vpc_endpoint(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_VpcEndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_endpoint", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc_peering_connection` after provisioning.\n"]
     pub fn vpc_peering_connection(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElVpcPeeringConnectionElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_VpcPeeringConnectionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_peering_connection", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpn_connection` after provisioning.\n"]
-    pub fn vpn_connection(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElVpnConnectionElRef> {
+    pub fn vpn_connection(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_VpnConnectionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpn_connection", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpn_gateway` after provisioning.\n"]
-    pub fn vpn_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisExplanationsElVpnGatewayElRef> {
+    pub fn vpn_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_VpnGatewayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpn_gateway", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cidr: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_range: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule_action: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule_number: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl {
-    #[doc = "Set the field `cidr`.\n"]
-    pub fn set_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cidr = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `egress`.\n"]
-    pub fn set_egress(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.egress = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `port_range`.\n"]
-    pub fn set_port_range(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeEl>,
-                    >,
-    ) -> Self {
-        self.port_range = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `protocol`.\n"]
-    pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.protocol = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `rule_action`.\n"]
-    pub fn set_rule_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.rule_action = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `rule_number`.\n"]
-    pub fn set_rule_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.rule_number = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl {
-            cidr: core::default::Default::default(),
-            egress: core::default::Default::default(),
-            port_range: core::default::Default::default(),
-            protocol: core::default::Default::default(),
-            rule_action: core::default::Default::default(),
-            rule_number: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `egress` after provisioning.\n"]
-    pub fn egress(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.egress", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `port_range` after provisioning.\n"]
-    pub fn port_range(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElPortRangeElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.port_range", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `rule_action` after provisioning.\n"]
-    pub fn rule_action(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_action", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `rule_number` after provisioning.\n"]
-    pub fn rule_number(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_number", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl {
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_detail_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    component: std
-    ::option
-    ::Option<
-        terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl>,
-    >,
+    component: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Component>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails {
     #[doc = "Set the field `additional_detail_type`.\n"]
     pub fn set_additional_detail_type(
         mut self,
@@ -5287,25 +4940,15 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl {
     #[doc = "Set the field `component`.\n"]
     pub fn set_component(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentEl,
-                        >,
-                    >,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Component>>,
     ) -> Self {
         self.component = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5316,35 +4959,37 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathCompon
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails {}
 
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl {
+impl BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails {
             additional_detail_type: core::default::Default::default(),
             component: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetailsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetailsRef {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElRef {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5355,298 +5000,20 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElRef
     }
 
     #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElComponentElRef> {
+    pub fn component(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_ComponentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl {
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     from: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     to: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges {
     #[doc = "Set the field `from`.\n"]
     pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.from = std::option::Option::Some(v.into());
@@ -5661,12 +5028,10 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestina
 }
 
 impl terrars
-::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl {
+::ToListMappable for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges {
     type O =
         terrars
-        ::BlockAssignable<
-            DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl,
-        >;
+        ::BlockAssignable<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5677,37 +5042,37 @@ impl terrars
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges {}
 
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl {
-    pub fn build(
-        self,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl {
+impl BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges {
             from: core::default::Default::default(),
             to: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRangesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRangesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRangesRef {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRangesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesElRef {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRangesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5724,14 +5089,14 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestina
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl {
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     from: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     to: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges {
     #[doc = "Set the field `from`.\n"]
     pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.from = std::option::Option::Some(v.into());
@@ -5745,11 +5110,9 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourceP
     }
 }
 
-impl terrars
-::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl {
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges {
     type O =
-        terrars
-        ::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl>;
+        terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5760,35 +5123,37 @@ impl terrars
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges {}
 
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl {
+impl BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges {
             from: core::default::Default::default(),
             to: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRangesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRangesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRangesRef {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRangesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesElRef {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRangesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5805,15 +5170,14 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourceP
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_addresses: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_port_ranges: std
     ::option
     ::Option<
-        terrars
-        ::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl>,
+        terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocol: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -5822,12 +5186,10 @@ pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl 
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_port_ranges: std
     ::option
-    ::Option<
-        terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl>,
-    >,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader {
     #[doc = "Set the field `destination_addresses`.\n"]
     pub fn set_destination_addresses(
         mut self,
@@ -5848,7 +5210,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
                     ::Into<
                         terrars
                         ::ListField<
-                            DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesEl,
+                            DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges,
                         >,
                     >,
     ) -> Self {
@@ -5882,7 +5244,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
                     ::Into<
                         terrars
                         ::ListField<
-                            DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesEl,
+                            DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges,
                         >,
                     >,
     ) -> Self {
@@ -5891,8 +5253,8 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -5903,11 +5265,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathCompon
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader {}
 
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
+impl BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader {
             destination_addresses: core::default::Default::default(),
             destination_port_ranges: core::default::Default::default(),
             protocol: core::default::Default::default(),
@@ -5917,24 +5279,26 @@ impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeaderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeaderRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeaderRef {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeaderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElRef {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeaderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -5947,8 +5311,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElRef {
     #[doc = "Get a reference to the value of field `destination_port_ranges` after provisioning.\n"]
     pub fn destination_port_ranges(
         &self,
-    ) -> terrars
-    ::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElDestinationPortRangesElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRangesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_port_ranges", self.base))
     }
 
@@ -5965,187 +5328,20 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElRef {
     #[doc = "Get a reference to the value of field `source_port_ranges` after provisioning.\n"]
     pub fn source_port_ranges(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElSourcePortRangesElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRangesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_port_ranges", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-    pub fn build(
-        self,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_addresses: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_port_ranges: std
     ::option
     ::Option<
-        terrars
-        ::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl>,
+        terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocol: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -6154,12 +5350,10 @@ pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_port_ranges: std
     ::option
-    ::Option<
-        terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl>,
-    >,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader {
     #[doc = "Set the field `destination_addresses`.\n"]
     pub fn set_destination_addresses(
         mut self,
@@ -6180,7 +5374,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {
                     ::Into<
                         terrars
                         ::ListField<
-                            DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesEl,
+                            DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRanges,
                         >,
                     >,
     ) -> Self {
@@ -6214,7 +5408,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {
                     ::Into<
                         terrars
                         ::ListField<
-                            DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesEl,
+                            DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRanges,
                         >,
                     >,
     ) -> Self {
@@ -6223,8 +5417,8 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -6235,11 +5429,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathCompon
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader {}
 
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl {
+impl BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader {
             destination_addresses: core::default::Default::default(),
             destination_port_ranges: core::default::Default::default(),
             protocol: core::default::Default::default(),
@@ -6249,24 +5443,26 @@ impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl 
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeaderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeaderRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeaderRef {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeaderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElRef {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeaderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -6279,8 +5475,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElRef {
     #[doc = "Get a reference to the value of field `destination_port_ranges` after provisioning.\n"]
     pub fn destination_port_ranges(
         &self,
-    ) -> terrars
-    ::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElDestinationPortRangesElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_DestinationPortRangesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_port_ranges", self.base))
     }
 
@@ -6297,1029 +5492,62 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElRef {
     #[doc = "Get a reference to the value of field `source_port_ranges` after provisioning.\n"]
     pub fn source_port_ranges(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElSourcePortRangesElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader_SourcePortRangesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_port_ranges", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl {
+pub struct DataEc2NetworkInsightsAnalysis_ForwardPathComponents {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_prefix_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress_only_internet_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nat_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    origin: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    transit_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_peering_connection_id: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl {
-    #[doc = "Set the field `destination_cidr`.\n"]
-    pub fn set_destination_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.destination_cidr = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `destination_prefix_list_id`.\n"]
-    pub fn set_destination_prefix_list_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.destination_prefix_list_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `egress_only_internet_gateway_id`.\n"]
-    pub fn set_egress_only_internet_gateway_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.egress_only_internet_gateway_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `gateway_id`.\n"]
-    pub fn set_gateway_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.gateway_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `instance_id`.\n"]
-    pub fn set_instance_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.instance_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `nat_gateway_id`.\n"]
-    pub fn set_nat_gateway_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.nat_gateway_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `network_interface_id`.\n"]
-    pub fn set_network_interface_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.network_interface_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `origin`.\n"]
-    pub fn set_origin(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.origin = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `transit_gateway_id`.\n"]
-    pub fn set_transit_gateway_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.transit_gateway_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `vpc_peering_connection_id`.\n"]
-    pub fn set_vpc_peering_connection_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.vpc_peering_connection_id = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl {
-            destination_cidr: core::default::Default::default(),
-            destination_prefix_list_id: core::default::Default::default(),
-            egress_only_internet_gateway_id: core::default::Default::default(),
-            gateway_id: core::default::Default::default(),
-            instance_id: core::default::Default::default(),
-            nat_gateway_id: core::default::Default::default(),
-            network_interface_id: core::default::Default::default(),
-            origin: core::default::Default::default(),
-            transit_gateway_id: core::default::Default::default(),
-            vpc_peering_connection_id: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `destination_cidr` after provisioning.\n"]
-    pub fn destination_cidr(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_cidr", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `destination_prefix_list_id` after provisioning.\n"]
-    pub fn destination_prefix_list_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_prefix_list_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `egress_only_internet_gateway_id` after provisioning.\n"]
-    pub fn egress_only_internet_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.egress_only_internet_gateway_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `gateway_id` after provisioning.\n"]
-    pub fn gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `nat_gateway_id` after provisioning.\n"]
-    pub fn nat_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nat_gateway_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
-    pub fn network_interface_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `origin` after provisioning.\n"]
-    pub fn origin(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
-    pub fn transit_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `vpc_peering_connection_id` after provisioning.\n"]
-    pub fn vpc_peering_connection_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_peering_connection_id", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cidr: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    direction: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_range: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    security_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl {
-    #[doc = "Set the field `cidr`.\n"]
-    pub fn set_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cidr = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `direction`.\n"]
-    pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.direction = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `port_range`.\n"]
-    pub fn set_port_range(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeEl,
-                        >,
-                    >,
-    ) -> Self {
-        self.port_range = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `prefix_list_id`.\n"]
-    pub fn set_prefix_list_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.prefix_list_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `protocol`.\n"]
-    pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.protocol = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `security_group_id`.\n"]
-    pub fn set_security_group_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.security_group_id = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl {
-            cidr: core::default::Default::default(),
-            direction: core::default::Default::default(),
-            port_range: core::default::Default::default(),
-            prefix_list_id: core::default::Default::default(),
-            protocol: core::default::Default::default(),
-            security_group_id: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `direction` after provisioning.\n"]
-    pub fn direction(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.direction", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `port_range` after provisioning.\n"]
-    pub fn port_range(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElPortRangeElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.port_range", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `prefix_list_id` after provisioning.\n"]
-    pub fn prefix_list_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_list_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
-    pub fn security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attachment_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route_origin: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    state: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl {
-    #[doc = "Set the field `attachment_id`.\n"]
-    pub fn set_attachment_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.attachment_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `destination_cidr`.\n"]
-    pub fn set_destination_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.destination_cidr = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `prefix_list_id`.\n"]
-    pub fn set_prefix_list_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.prefix_list_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `resource_id`.\n"]
-    pub fn set_resource_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.resource_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `resource_type`.\n"]
-    pub fn set_resource_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.resource_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `route_origin`.\n"]
-    pub fn set_route_origin(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.route_origin = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `state`.\n"]
-    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.state = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl {
-            attachment_id: core::default::Default::default(),
-            destination_cidr: core::default::Default::default(),
-            prefix_list_id: core::default::Default::default(),
-            resource_id: core::default::Default::default(),
-            resource_type: core::default::Default::default(),
-            route_origin: core::default::Default::default(),
-            state: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `attachment_id` after provisioning.\n"]
-    pub fn attachment_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attachment_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `destination_cidr` after provisioning.\n"]
-    pub fn destination_cidr(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_cidr", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `prefix_list_id` after provisioning.\n"]
-    pub fn prefix_list_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_list_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
-    pub fn resource_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
-    pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `route_origin` after provisioning.\n"]
-    pub fn route_origin(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_origin", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    acl_rule: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl>>,
+    acl_rule: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_details: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attached_to: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl>>,
+    attached_to: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    component: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl>>,
+    component: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Component>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_vpc: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl>>,
+    destination_vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     inbound_header: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     outbound_header: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     route_table_route: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_rule: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sequence_number: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl>>,
+    source_vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subnet: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl>>,
+    subnet: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Subnet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    transit_gateway: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl>>,
+    transit_gateway: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transit_gateway_route_table_route: std
     ::option
-    ::Option<
-        terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl>,
-    >,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl>>,
+    vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Vpc>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
+impl DataEc2NetworkInsightsAnalysis_ForwardPathComponents {
     #[doc = "Set the field `acl_rule`.\n"]
     pub fn set_acl_rule(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule>>,
     ) -> Self {
         self.acl_rule = std::option::Option::Some(v.into());
         self
@@ -7333,9 +5561,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsEl>,
-                    >,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails>>,
     ) -> Self {
         self.additional_details = std::option::Option::Some(v.into());
         self
@@ -7344,12 +5570,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
     #[doc = "Set the field `attached_to`.\n"]
     pub fn set_attached_to(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo>>,
     ) -> Self {
         self.attached_to = std::option::Option::Some(v.into());
         self
@@ -7358,12 +5579,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
     #[doc = "Set the field `component`.\n"]
     pub fn set_component(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Component>>,
     ) -> Self {
         self.component = std::option::Option::Some(v.into());
         self
@@ -7372,12 +5588,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
     #[doc = "Set the field `destination_vpc`.\n"]
     pub fn set_destination_vpc(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc>>,
     ) -> Self {
         self.destination_vpc = std::option::Option::Some(v.into());
         self
@@ -7391,7 +5602,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderEl>>,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader>>,
     ) -> Self {
         self.inbound_header = std::option::Option::Some(v.into());
         self
@@ -7405,7 +5616,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderEl>>,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader>>,
     ) -> Self {
         self.outbound_header = std::option::Option::Some(v.into());
         self
@@ -7414,14 +5625,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
     #[doc = "Set the field `route_table_route`.\n"]
     pub fn set_route_table_route(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteEl>,
-                    >,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute>>,
     ) -> Self {
         self.route_table_route = std::option::Option::Some(v.into());
         self
@@ -7435,9 +5639,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleEl>,
-                    >,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule>>,
     ) -> Self {
         self.security_group_rule = std::option::Option::Some(v.into());
         self
@@ -7452,12 +5654,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
     #[doc = "Set the field `source_vpc`.\n"]
     pub fn set_source_vpc(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc>>,
     ) -> Self {
         self.source_vpc = std::option::Option::Some(v.into());
         self
@@ -7466,12 +5663,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
     #[doc = "Set the field `subnet`.\n"]
     pub fn set_subnet(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Subnet>>,
     ) -> Self {
         self.subnet = std::option::Option::Some(v.into());
         self
@@ -7480,12 +5672,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
     #[doc = "Set the field `transit_gateway`.\n"]
     pub fn set_transit_gateway(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway>>,
     ) -> Self {
         self.transit_gateway = std::option::Option::Some(v.into());
         self
@@ -7500,10 +5687,7 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteEl,
-                        >,
+                        terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute>,
                     >,
     ) -> Self {
         self.transit_gateway_route_table_route = std::option::Option::Some(v.into());
@@ -7513,15 +5697,15 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
     #[doc = "Set the field `vpc`.\n"]
     pub fn set_vpc(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Vpc>>,
     ) -> Self {
         self.vpc = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisForwardPathComponentsEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_ForwardPathComponents {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_ForwardPathComponents>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -7532,11 +5716,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisForwardPathCompon
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_ForwardPathComponents {}
 
-impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
+impl BuildDataEc2NetworkInsightsAnalysis_ForwardPathComponents {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_ForwardPathComponents {
+        DataEc2NetworkInsightsAnalysis_ForwardPathComponents {
             acl_rule: core::default::Default::default(),
             additional_details: core::default::Default::default(),
             attached_to: core::default::Default::default(),
@@ -7556,82 +5740,80 @@ impl BuildDataEc2NetworkInsightsAnalysisForwardPathComponentsEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisForwardPathComponentsElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_ForwardPathComponentsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisForwardPathComponentsElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_ForwardPathComponentsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisForwardPathComponentsElRef {
-        DataEc2NetworkInsightsAnalysisForwardPathComponentsElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_ForwardPathComponentsRef {
+        DataEc2NetworkInsightsAnalysis_ForwardPathComponentsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElRef {
+impl DataEc2NetworkInsightsAnalysis_ForwardPathComponentsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `acl_rule` after provisioning.\n"]
-    pub fn acl_rule(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAclRuleElRef> {
+    pub fn acl_rule(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_AclRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.acl_rule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `additional_details` after provisioning.\n"]
     pub fn additional_details(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAdditionalDetailsElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_details", self.base))
     }
 
     #[doc = "Get a reference to the value of field `attached_to` after provisioning.\n"]
-    pub fn attached_to(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElAttachedToElRef> {
+    pub fn attached_to(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_AttachedToRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attached_to", self.base))
     }
 
     #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElComponentElRef> {
+    pub fn component(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_ComponentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination_vpc` after provisioning.\n"]
-    pub fn destination_vpc(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElDestinationVpcElRef> {
+    pub fn destination_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_vpc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `inbound_header` after provisioning.\n"]
     pub fn inbound_header(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElInboundHeaderElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeaderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inbound_header", self.base))
     }
 
     #[doc = "Get a reference to the value of field `outbound_header` after provisioning.\n"]
     pub fn outbound_header(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElOutboundHeaderElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeaderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.outbound_header", self.base))
     }
 
     #[doc = "Get a reference to the value of field `route_table_route` after provisioning.\n"]
-    pub fn route_table_route(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElRouteTableRouteElRef> {
+    pub fn route_table_route(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.route_table_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `security_group_rule` after provisioning.\n"]
     pub fn security_group_rule(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSecurityGroupRuleElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.security_group_rule", self.base))
     }
 
@@ -7641,2401 +5823,84 @@ impl DataEc2NetworkInsightsAnalysisForwardPathComponentsElRef {
     }
 
     #[doc = "Get a reference to the value of field `source_vpc` after provisioning.\n"]
-    pub fn source_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSourceVpcElRef> {
+    pub fn source_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_vpc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `subnet` after provisioning.\n"]
-    pub fn subnet(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElSubnetElRef> {
+    pub fn subnet(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SubnetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subnet", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway` after provisioning.\n"]
-    pub fn transit_gateway(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayElRef> {
+    pub fn transit_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway_route_table_route` after provisioning.\n"]
     pub fn transit_gateway_route_table_route(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElTransitGatewayRouteTableRouteElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway_route_table_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
-    pub fn vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisForwardPathComponentsElVpcElRef> {
+    pub fn vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_VpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl {
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponents {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cidr: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_range: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule_action: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule_number: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl {
-    #[doc = "Set the field `cidr`.\n"]
-    pub fn set_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cidr = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `egress`.\n"]
-    pub fn set_egress(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.egress = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `port_range`.\n"]
-    pub fn set_port_range(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeEl>,
-                    >,
-    ) -> Self {
-        self.port_range = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `protocol`.\n"]
-    pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.protocol = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `rule_action`.\n"]
-    pub fn set_rule_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.rule_action = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `rule_number`.\n"]
-    pub fn set_rule_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.rule_number = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl {
-            cidr: core::default::Default::default(),
-            egress: core::default::Default::default(),
-            port_range: core::default::Default::default(),
-            protocol: core::default::Default::default(),
-            rule_action: core::default::Default::default(),
-            rule_number: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `egress` after provisioning.\n"]
-    pub fn egress(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.egress", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `port_range` after provisioning.\n"]
-    pub fn port_range(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElPortRangeElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.port_range", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `rule_action` after provisioning.\n"]
-    pub fn rule_action(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_action", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `rule_number` after provisioning.\n"]
-    pub fn rule_number(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_number", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl {
-    type O =
-        terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    additional_detail_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    component: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl {
-    #[doc = "Set the field `additional_detail_type`.\n"]
-    pub fn set_additional_detail_type(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.additional_detail_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `component`.\n"]
-    pub fn set_component(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentEl,
-                        >,
-                    >,
-    ) -> Self {
-        self.component = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl {
-            additional_detail_type: core::default::Default::default(),
-            component: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `additional_detail_type` after provisioning.\n"]
-    pub fn additional_detail_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.additional_detail_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElComponentElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_addresses: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_port_ranges: std
-    ::option
-    ::Option<
-        terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl>,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_addresses: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_port_ranges: std
-    ::option
-    ::Option<
-        terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl>,
-    >,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl {
-    #[doc = "Set the field `destination_addresses`.\n"]
-    pub fn set_destination_addresses(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.destination_addresses = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `destination_port_ranges`.\n"]
-    pub fn set_destination_port_ranges(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesEl,
-                        >,
-                    >,
-    ) -> Self {
-        self.destination_port_ranges = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `protocol`.\n"]
-    pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.protocol = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `source_addresses`.\n"]
-    pub fn set_source_addresses(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.source_addresses = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `source_port_ranges`.\n"]
-    pub fn set_source_port_ranges(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesEl,
-                        >,
-                    >,
-    ) -> Self {
-        self.source_port_ranges = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl {
-            destination_addresses: core::default::Default::default(),
-            destination_port_ranges: core::default::Default::default(),
-            protocol: core::default::Default::default(),
-            source_addresses: core::default::Default::default(),
-            source_port_ranges: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `destination_addresses` after provisioning.\n"]
-    pub fn destination_addresses(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_addresses", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `destination_port_ranges` after provisioning.\n"]
-    pub fn destination_port_ranges(
-        &self,
-    ) -> terrars
-    ::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElDestinationPortRangesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_port_ranges", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `source_addresses` after provisioning.\n"]
-    pub fn source_addresses(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.source_addresses", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `source_port_ranges` after provisioning.\n"]
-    pub fn source_port_ranges(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElSourcePortRangesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.source_port_ranges", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-    pub fn build(
-        self,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_addresses: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_port_ranges: std
-    ::option
-    ::Option<
-        terrars
-        ::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl>,
-    >,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_addresses: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_port_ranges: std
-    ::option
-    ::Option<
-        terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl>,
-    >,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl {
-    #[doc = "Set the field `destination_addresses`.\n"]
-    pub fn set_destination_addresses(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.destination_addresses = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `destination_port_ranges`.\n"]
-    pub fn set_destination_port_ranges(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesEl,
-                        >,
-                    >,
-    ) -> Self {
-        self.destination_port_ranges = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `protocol`.\n"]
-    pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.protocol = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `source_addresses`.\n"]
-    pub fn set_source_addresses(
-        mut self,
-        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.source_addresses = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `source_port_ranges`.\n"]
-    pub fn set_source_port_ranges(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesEl,
-                        >,
-                    >,
-    ) -> Self {
-        self.source_port_ranges = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl {
-            destination_addresses: core::default::Default::default(),
-            destination_port_ranges: core::default::Default::default(),
-            protocol: core::default::Default::default(),
-            source_addresses: core::default::Default::default(),
-            source_port_ranges: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `destination_addresses` after provisioning.\n"]
-    pub fn destination_addresses(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_addresses", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `destination_port_ranges` after provisioning.\n"]
-    pub fn destination_port_ranges(
-        &self,
-    ) -> terrars
-    ::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElDestinationPortRangesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_port_ranges", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `source_addresses` after provisioning.\n"]
-    pub fn source_addresses(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.source_addresses", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `source_port_ranges` after provisioning.\n"]
-    pub fn source_port_ranges(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElSourcePortRangesElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.source_port_ranges", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_prefix_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress_only_internet_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nat_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    origin: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    transit_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_peering_connection_id: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl {
-    #[doc = "Set the field `destination_cidr`.\n"]
-    pub fn set_destination_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.destination_cidr = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `destination_prefix_list_id`.\n"]
-    pub fn set_destination_prefix_list_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.destination_prefix_list_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `egress_only_internet_gateway_id`.\n"]
-    pub fn set_egress_only_internet_gateway_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.egress_only_internet_gateway_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `gateway_id`.\n"]
-    pub fn set_gateway_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.gateway_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `instance_id`.\n"]
-    pub fn set_instance_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.instance_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `nat_gateway_id`.\n"]
-    pub fn set_nat_gateway_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.nat_gateway_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `network_interface_id`.\n"]
-    pub fn set_network_interface_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.network_interface_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `origin`.\n"]
-    pub fn set_origin(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.origin = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `transit_gateway_id`.\n"]
-    pub fn set_transit_gateway_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.transit_gateway_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `vpc_peering_connection_id`.\n"]
-    pub fn set_vpc_peering_connection_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.vpc_peering_connection_id = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl {
-            destination_cidr: core::default::Default::default(),
-            destination_prefix_list_id: core::default::Default::default(),
-            egress_only_internet_gateway_id: core::default::Default::default(),
-            gateway_id: core::default::Default::default(),
-            instance_id: core::default::Default::default(),
-            nat_gateway_id: core::default::Default::default(),
-            network_interface_id: core::default::Default::default(),
-            origin: core::default::Default::default(),
-            transit_gateway_id: core::default::Default::default(),
-            vpc_peering_connection_id: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `destination_cidr` after provisioning.\n"]
-    pub fn destination_cidr(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_cidr", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `destination_prefix_list_id` after provisioning.\n"]
-    pub fn destination_prefix_list_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_prefix_list_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `egress_only_internet_gateway_id` after provisioning.\n"]
-    pub fn egress_only_internet_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.egress_only_internet_gateway_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `gateway_id` after provisioning.\n"]
-    pub fn gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `nat_gateway_id` after provisioning.\n"]
-    pub fn nat_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.nat_gateway_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
-    pub fn network_interface_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `origin` after provisioning.\n"]
-    pub fn origin(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
-    pub fn transit_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `vpc_peering_connection_id` after provisioning.\n"]
-    pub fn vpc_peering_connection_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_peering_connection_id", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    from: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    to: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl {
-    #[doc = "Set the field `from`.\n"]
-    pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.from = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `to`.\n"]
-    pub fn set_to(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.to = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl {
-    type O =
-        terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl {
-            from: core::default::Default::default(),
-            to: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `from` after provisioning.\n"]
-    pub fn from(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to` after provisioning.\n"]
-    pub fn to(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cidr: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    direction: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_range: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    protocol: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    security_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl {
-    #[doc = "Set the field `cidr`.\n"]
-    pub fn set_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cidr = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `direction`.\n"]
-    pub fn set_direction(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.direction = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `port_range`.\n"]
-    pub fn set_port_range(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeEl,
-                        >,
-                    >,
-    ) -> Self {
-        self.port_range = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `prefix_list_id`.\n"]
-    pub fn set_prefix_list_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.prefix_list_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `protocol`.\n"]
-    pub fn set_protocol(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.protocol = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `security_group_id`.\n"]
-    pub fn set_security_group_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.security_group_id = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl {
-            cidr: core::default::Default::default(),
-            direction: core::default::Default::default(),
-            port_range: core::default::Default::default(),
-            prefix_list_id: core::default::Default::default(),
-            protocol: core::default::Default::default(),
-            security_group_id: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `cidr` after provisioning.\n"]
-    pub fn cidr(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `direction` after provisioning.\n"]
-    pub fn direction(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.direction", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `port_range` after provisioning.\n"]
-    pub fn port_range(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElPortRangeElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.port_range", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `prefix_list_id` after provisioning.\n"]
-    pub fn prefix_list_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_list_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
-    pub fn security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_group_id", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attachment_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prefix_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route_origin: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    state: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl {
-    #[doc = "Set the field `attachment_id`.\n"]
-    pub fn set_attachment_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.attachment_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `destination_cidr`.\n"]
-    pub fn set_destination_cidr(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.destination_cidr = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `prefix_list_id`.\n"]
-    pub fn set_prefix_list_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.prefix_list_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `resource_id`.\n"]
-    pub fn set_resource_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.resource_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `resource_type`.\n"]
-    pub fn set_resource_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.resource_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `route_origin`.\n"]
-    pub fn set_route_origin(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.route_origin = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `state`.\n"]
-    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.state = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl {
-    type O =
-        terrars
-        ::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl {
-            attachment_id: core::default::Default::default(),
-            destination_cidr: core::default::Default::default(),
-            prefix_list_id: core::default::Default::default(),
-            resource_id: core::default::Default::default(),
-            resource_type: core::default::Default::default(),
-            route_origin: core::default::Default::default(),
-            state: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `attachment_id` after provisioning.\n"]
-    pub fn attachment_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attachment_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `destination_cidr` after provisioning.\n"]
-    pub fn destination_cidr(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_cidr", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `prefix_list_id` after provisioning.\n"]
-    pub fn prefix_list_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_list_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
-    pub fn resource_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
-    pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `route_origin` after provisioning.\n"]
-    pub fn route_origin(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_origin", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
-    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl {}
-
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl {
-            arn: core::default::Default::default(),
-            id: core::default::Default::default(),
-            name: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
-    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
-    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    acl_rule: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl>>,
+    acl_rule: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_details: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attached_to: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl>>,
+    attached_to: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    component: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl>>,
+    component: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Component>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_vpc: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl>>,
+    destination_vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     inbound_header: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     outbound_header: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     route_table_route: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_rule: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sequence_number: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl>>,
+    source_vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subnet: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl>>,
+    subnet: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Subnet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    transit_gateway: std
-    ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl>>,
+    transit_gateway: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transit_gateway_route_table_route: std
     ::option
-    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl>>,
+    ::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl>>,
+    vpc: std::option::Option<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Vpc>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponents {
     #[doc = "Set the field `acl_rule`.\n"]
     pub fn set_acl_rule(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AclRule>>,
     ) -> Self {
         self.acl_rule = std::option::Option::Some(v.into());
         self
@@ -10049,9 +5914,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsEl>,
-                    >,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetails>>,
     ) -> Self {
         self.additional_details = std::option::Option::Some(v.into());
         self
@@ -10060,12 +5923,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
     #[doc = "Set the field `attached_to`.\n"]
     pub fn set_attached_to(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_AttachedTo>>,
     ) -> Self {
         self.attached_to = std::option::Option::Some(v.into());
         self
@@ -10074,12 +5932,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
     #[doc = "Set the field `component`.\n"]
     pub fn set_component(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Component>>,
     ) -> Self {
         self.component = std::option::Option::Some(v.into());
         self
@@ -10088,12 +5941,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
     #[doc = "Set the field `destination_vpc`.\n"]
     pub fn set_destination_vpc(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpc>>,
     ) -> Self {
         self.destination_vpc = std::option::Option::Some(v.into());
         self
@@ -10107,7 +5955,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderEl>>,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeader>>,
     ) -> Self {
         self.inbound_header = std::option::Option::Some(v.into());
         self
@@ -10121,7 +5969,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderEl>>,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeader>>,
     ) -> Self {
         self.outbound_header = std::option::Option::Some(v.into());
         self
@@ -10130,12 +5978,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
     #[doc = "Set the field `route_table_route`.\n"]
     pub fn set_route_table_route(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRoute>>,
     ) -> Self {
         self.route_table_route = std::option::Option::Some(v.into());
         self
@@ -10149,9 +5992,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleEl>,
-                    >,
+                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRule>>,
     ) -> Self {
         self.security_group_rule = std::option::Option::Some(v.into());
         self
@@ -10166,12 +6007,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
     #[doc = "Set the field `source_vpc`.\n"]
     pub fn set_source_vpc(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpc>>,
     ) -> Self {
         self.source_vpc = std::option::Option::Some(v.into());
         self
@@ -10180,7 +6016,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
     #[doc = "Set the field `subnet`.\n"]
     pub fn set_subnet(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Subnet>>,
     ) -> Self {
         self.subnet = std::option::Option::Some(v.into());
         self
@@ -10189,12 +6025,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
     #[doc = "Set the field `transit_gateway`.\n"]
     pub fn set_transit_gateway(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGateway>>,
     ) -> Self {
         self.transit_gateway = std::option::Option::Some(v.into());
         self
@@ -10209,10 +6040,7 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::ListField<
-                            DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteEl,
-                        >,
+                        terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRoute>,
                     >,
     ) -> Self {
         self.transit_gateway_route_table_route = std::option::Option::Some(v.into());
@@ -10222,15 +6050,15 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
     #[doc = "Set the field `vpc`.\n"]
     pub fn set_vpc(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEc2NetworkInsightsAnalysis_Explanations_Vpc>>,
     ) -> Self {
         self.vpc = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisReturnPathComponentsEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_ReturnPathComponents {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_ReturnPathComponents>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -10241,11 +6069,11 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisReturnPathCompone
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsEl {}
+pub struct BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents {}
 
-impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
+impl BuildDataEc2NetworkInsightsAnalysis_ReturnPathComponents {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponents {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponents {
             acl_rule: core::default::Default::default(),
             additional_details: core::default::Default::default(),
             attached_to: core::default::Default::default(),
@@ -10265,82 +6093,80 @@ impl BuildDataEc2NetworkInsightsAnalysisReturnPathComponentsEl {
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisReturnPathComponentsElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_ReturnPathComponentsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisReturnPathComponentsElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_ReturnPathComponentsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2NetworkInsightsAnalysisReturnPathComponentsElRef {
-        DataEc2NetworkInsightsAnalysisReturnPathComponentsElRef {
+    ) -> DataEc2NetworkInsightsAnalysis_ReturnPathComponentsRef {
+        DataEc2NetworkInsightsAnalysis_ReturnPathComponentsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElRef {
+impl DataEc2NetworkInsightsAnalysis_ReturnPathComponentsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `acl_rule` after provisioning.\n"]
-    pub fn acl_rule(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAclRuleElRef> {
+    pub fn acl_rule(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_AclRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.acl_rule", self.base))
     }
 
     #[doc = "Get a reference to the value of field `additional_details` after provisioning.\n"]
     pub fn additional_details(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAdditionalDetailsElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_AdditionalDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.additional_details", self.base))
     }
 
     #[doc = "Get a reference to the value of field `attached_to` after provisioning.\n"]
-    pub fn attached_to(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElAttachedToElRef> {
+    pub fn attached_to(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_AttachedToRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attached_to", self.base))
     }
 
     #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElComponentElRef> {
+    pub fn component(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_ComponentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.base))
     }
 
     #[doc = "Get a reference to the value of field `destination_vpc` after provisioning.\n"]
-    pub fn destination_vpc(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElDestinationVpcElRef> {
+    pub fn destination_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_DestinationVpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_vpc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `inbound_header` after provisioning.\n"]
     pub fn inbound_header(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElInboundHeaderElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_InboundHeaderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.inbound_header", self.base))
     }
 
     #[doc = "Get a reference to the value of field `outbound_header` after provisioning.\n"]
     pub fn outbound_header(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElOutboundHeaderElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_ReturnPathComponents_OutboundHeaderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.outbound_header", self.base))
     }
 
     #[doc = "Get a reference to the value of field `route_table_route` after provisioning.\n"]
-    pub fn route_table_route(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElRouteTableRouteElRef> {
+    pub fn route_table_route(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_RouteTableRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.route_table_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `security_group_rule` after provisioning.\n"]
     pub fn security_group_rule(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSecurityGroupRuleElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SecurityGroupRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.security_group_rule", self.base))
     }
 
@@ -10350,45 +6176,43 @@ impl DataEc2NetworkInsightsAnalysisReturnPathComponentsElRef {
     }
 
     #[doc = "Get a reference to the value of field `source_vpc` after provisioning.\n"]
-    pub fn source_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSourceVpcElRef> {
+    pub fn source_vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SourceVpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_vpc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `subnet` after provisioning.\n"]
-    pub fn subnet(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElSubnetElRef> {
+    pub fn subnet(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_SubnetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subnet", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway` after provisioning.\n"]
-    pub fn transit_gateway(
-        &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayElRef> {
+    pub fn transit_gateway(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transit_gateway_route_table_route` after provisioning.\n"]
     pub fn transit_gateway_route_table_route(
         &self,
-    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElTransitGatewayRouteTableRouteElRef> {
+    ) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_TransitGatewayRouteTableRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway_route_table_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
-    pub fn vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysisReturnPathComponentsElVpcElRef> {
+    pub fn vpc(&self) -> terrars::ListRef<DataEc2NetworkInsightsAnalysis_Explanations_VpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2NetworkInsightsAnalysisFilterEl {
+pub struct DataEc2NetworkInsightsAnalysis_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2NetworkInsightsAnalysisFilterEl { }
+impl DataEc2NetworkInsightsAnalysis_Filter { }
 
-impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisFilterEl {
-    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysisFilterEl>;
+impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysis_Filter {
+    type O = terrars::BlockAssignable<DataEc2NetworkInsightsAnalysis_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -10399,37 +6223,39 @@ impl terrars::ToListMappable for DataEc2NetworkInsightsAnalysisFilterEl {
     }
 }
 
-pub struct BuildDataEc2NetworkInsightsAnalysisFilterEl {
+pub struct BuildDataEc2NetworkInsightsAnalysis_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEc2NetworkInsightsAnalysisFilterEl {
-    pub fn build(self) -> DataEc2NetworkInsightsAnalysisFilterEl {
-        DataEc2NetworkInsightsAnalysisFilterEl {
+impl BuildDataEc2NetworkInsightsAnalysis_Filter {
+    pub fn build(self) -> DataEc2NetworkInsightsAnalysis_Filter {
+        DataEc2NetworkInsightsAnalysis_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEc2NetworkInsightsAnalysisFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2NetworkInsightsAnalysis_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2NetworkInsightsAnalysisFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2NetworkInsightsAnalysisFilterElRef {
-        DataEc2NetworkInsightsAnalysisFilterElRef {
+impl terrars::Ref for DataEc2NetworkInsightsAnalysis_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2NetworkInsightsAnalysis_FilterRef {
+        DataEc2NetworkInsightsAnalysis_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2NetworkInsightsAnalysisFilterElRef {
+impl DataEc2NetworkInsightsAnalysis_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -10443,9 +6269,4 @@ impl DataEc2NetworkInsightsAnalysisFilterElRef {
     pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2NetworkInsightsAnalysisDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2NetworkInsightsAnalysisFilterEl>>,
 }

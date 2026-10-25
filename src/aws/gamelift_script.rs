@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GameliftScriptData {
+struct GameliftScriptData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct GameliftScriptData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -30,14 +34,14 @@ struct GameliftScriptData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zip_file: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage_location: std::option::Option<std::vec::Vec<GameliftScriptStorageLocationEl>>,
+    storage_location: std::option::Option<std::vec::Vec<GameliftScript_StorageLocation>>,
     dynamic: GameliftScriptDynamic,
 }
 
 struct GameliftScript_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GameliftScriptData>,
+    data: std::cell::RefCell<GameliftScriptData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl GameliftScript {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -176,7 +187,7 @@ impl GameliftScript {
     #[doc = "Set the field `storage_location`.\n"]
     pub fn set_storage_location(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftScriptStorageLocationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftScript_StorageLocation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -204,6 +215,12 @@ impl GameliftScript {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -225,7 +242,7 @@ impl GameliftScript {
     }
 
     #[doc = "Get a reference to the value of field `storage_location` after provisioning.\n"]
-    pub fn storage_location(&self) -> terrars::ListRef<GameliftScriptStorageLocationElRef> {
+    pub fn storage_location(&self) -> terrars::ListRef<GameliftScript_StorageLocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_location", self.extract_ref()))
     }
 }
@@ -272,7 +289,7 @@ impl BuildGameliftScript {
         let out = GameliftScript(std::rc::Rc::new(GameliftScript_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GameliftScriptData {
+            data: std::cell::RefCell::new(GameliftScriptData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -280,6 +297,7 @@ impl BuildGameliftScript {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 version: core::default::Default::default(),
@@ -331,6 +349,12 @@ impl GameliftScriptRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -352,13 +376,18 @@ impl GameliftScriptRef {
     }
 
     #[doc = "Get a reference to the value of field `storage_location` after provisioning.\n"]
-    pub fn storage_location(&self) -> terrars::ListRef<GameliftScriptStorageLocationElRef> {
+    pub fn storage_location(&self) -> terrars::ListRef<GameliftScript_StorageLocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_location", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GameliftScriptDynamic {
+    storage_location: std::option::Option<terrars::DynamicBlock<GameliftScript_StorageLocation>>,
+}
+
 #[derive(Serialize)]
-pub struct GameliftScriptStorageLocationEl {
+pub struct GameliftScript_StorageLocation {
     bucket: terrars::PrimField<std::string::String>,
     key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -366,7 +395,7 @@ pub struct GameliftScriptStorageLocationEl {
     role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl GameliftScriptStorageLocationEl {
+impl GameliftScript_StorageLocation {
     #[doc = "Set the field `object_version`.\n"]
     pub fn set_object_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.object_version = std::option::Option::Some(v.into());
@@ -374,8 +403,8 @@ impl GameliftScriptStorageLocationEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftScriptStorageLocationEl {
-    type O = terrars::BlockAssignable<GameliftScriptStorageLocationEl>;
+impl terrars::ToListMappable for GameliftScript_StorageLocation {
+    type O = terrars::BlockAssignable<GameliftScript_StorageLocation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -386,7 +415,7 @@ impl terrars::ToListMappable for GameliftScriptStorageLocationEl {
     }
 }
 
-pub struct BuildGameliftScriptStorageLocationEl {
+pub struct BuildGameliftScript_StorageLocation {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -395,9 +424,9 @@ pub struct BuildGameliftScriptStorageLocationEl {
     pub role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGameliftScriptStorageLocationEl {
-    pub fn build(self) -> GameliftScriptStorageLocationEl {
-        GameliftScriptStorageLocationEl {
+impl BuildGameliftScript_StorageLocation {
+    pub fn build(self) -> GameliftScript_StorageLocation {
+        GameliftScript_StorageLocation {
             bucket: self.bucket,
             key: self.key,
             object_version: core::default::Default::default(),
@@ -406,21 +435,23 @@ impl BuildGameliftScriptStorageLocationEl {
     }
 }
 
-pub struct GameliftScriptStorageLocationElRef {
+#[allow(dead_code)]
+pub struct GameliftScript_StorageLocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftScriptStorageLocationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftScriptStorageLocationElRef {
-        GameliftScriptStorageLocationElRef {
+impl terrars::Ref for GameliftScript_StorageLocationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftScript_StorageLocationRef {
+        GameliftScript_StorageLocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftScriptStorageLocationElRef {
+impl GameliftScript_StorageLocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -444,9 +475,4 @@ impl GameliftScriptStorageLocationElRef {
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GameliftScriptDynamic {
-    storage_location: std::option::Option<terrars::DynamicBlock<GameliftScriptStorageLocationEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LambdaLayerVersionData {
+struct LambdaLayerVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,6 +34,8 @@ struct LambdaLayerVersionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     license_info: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_key: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -46,7 +50,7 @@ struct LambdaLayerVersionData {
 struct LambdaLayerVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LambdaLayerVersionData>,
+    data: std::cell::RefCell<LambdaLayerVersionData_>,
 }
 
 #[derive(Clone)]
@@ -188,6 +192,13 @@ impl LambdaLayerVersion {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `s3_bucket`.\n"]
     pub fn set_s3_bucket(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().s3_bucket = std::option::Option::Some(v.into());
@@ -221,6 +232,11 @@ impl LambdaLayerVersion {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `code_sha256` after provisioning.\n"]
+    pub fn code_sha256(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code_sha256", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `compatible_architectures` after provisioning.\n"]
@@ -266,6 +282,12 @@ impl LambdaLayerVersion {
     #[doc = "Get a reference to the value of field `license_info` after provisioning.\n"]
     pub fn license_info(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_info", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
@@ -356,7 +378,7 @@ impl BuildLambdaLayerVersion {
         let out = LambdaLayerVersion(std::rc::Rc::new(LambdaLayerVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LambdaLayerVersionData {
+            data: std::cell::RefCell::new(LambdaLayerVersionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -369,6 +391,7 @@ impl BuildLambdaLayerVersion {
                 id: core::default::Default::default(),
                 layer_name: self.layer_name,
                 license_info: core::default::Default::default(),
+                region: core::default::Default::default(),
                 s3_bucket: core::default::Default::default(),
                 s3_key: core::default::Default::default(),
                 s3_object_version: core::default::Default::default(),
@@ -407,6 +430,11 @@ impl LambdaLayerVersionRef {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `code_sha256` after provisioning.\n"]
+    pub fn code_sha256(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code_sha256", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `compatible_architectures` after provisioning.\n"]
@@ -452,6 +480,12 @@ impl LambdaLayerVersionRef {
     #[doc = "Get a reference to the value of field `license_info` after provisioning.\n"]
     pub fn license_info(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_info", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_bucket` after provisioning.\n"]

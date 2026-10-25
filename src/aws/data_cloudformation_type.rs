@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataCloudformationTypeData {
+struct DataCloudformationTypeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,6 +22,8 @@ struct DataCloudformationTypeData {
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,7 +35,7 @@ struct DataCloudformationTypeData {
 struct DataCloudformationType_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudformationTypeData>,
+    data: std::cell::RefCell<DataCloudformationTypeData_>,
 }
 
 #[derive(Clone)]
@@ -85,6 +89,13 @@ impl DataCloudformationType {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -147,13 +158,19 @@ impl DataCloudformationType {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataCloudformationTypeLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataCloudformationType_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `provisioning_type` after provisioning.\n"]
     pub fn provisioning_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioning_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
@@ -232,13 +249,14 @@ impl BuildDataCloudformationType {
         let out = DataCloudformationType(std::rc::Rc::new(DataCloudformationType_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudformationTypeData {
+            data: std::cell::RefCell::new(DataCloudformationTypeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 arn: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 type_: core::default::Default::default(),
                 type_name: core::default::Default::default(),
                 version_id: core::default::Default::default(),
@@ -313,13 +331,19 @@ impl DataCloudformationTypeRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<DataCloudformationTypeLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<DataCloudformationType_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `provisioning_type` after provisioning.\n"]
     pub fn provisioning_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioning_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
@@ -359,14 +383,14 @@ impl DataCloudformationTypeRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudformationTypeLoggingConfigEl {
+pub struct DataCloudformationType_LoggingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudformationTypeLoggingConfigEl {
+impl DataCloudformationType_LoggingConfig {
     #[doc = "Set the field `log_group_name`.\n"]
     pub fn set_log_group_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.log_group_name = std::option::Option::Some(v.into());
@@ -380,8 +404,8 @@ impl DataCloudformationTypeLoggingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudformationTypeLoggingConfigEl {
-    type O = terrars::BlockAssignable<DataCloudformationTypeLoggingConfigEl>;
+impl terrars::ToListMappable for DataCloudformationType_LoggingConfig {
+    type O = terrars::BlockAssignable<DataCloudformationType_LoggingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -392,32 +416,34 @@ impl terrars::ToListMappable for DataCloudformationTypeLoggingConfigEl {
     }
 }
 
-pub struct BuildDataCloudformationTypeLoggingConfigEl {}
+pub struct BuildDataCloudformationType_LoggingConfig {}
 
-impl BuildDataCloudformationTypeLoggingConfigEl {
-    pub fn build(self) -> DataCloudformationTypeLoggingConfigEl {
-        DataCloudformationTypeLoggingConfigEl {
+impl BuildDataCloudformationType_LoggingConfig {
+    pub fn build(self) -> DataCloudformationType_LoggingConfig {
+        DataCloudformationType_LoggingConfig {
             log_group_name: core::default::Default::default(),
             log_role_arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudformationTypeLoggingConfigElRef {
+#[allow(dead_code)]
+pub struct DataCloudformationType_LoggingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudformationTypeLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudformationTypeLoggingConfigElRef {
-        DataCloudformationTypeLoggingConfigElRef {
+impl terrars::Ref for DataCloudformationType_LoggingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudformationType_LoggingConfigRef {
+        DataCloudformationType_LoggingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudformationTypeLoggingConfigElRef {
+impl DataCloudformationType_LoggingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

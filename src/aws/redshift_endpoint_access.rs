@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RedshiftEndpointAccessData {
+struct RedshiftEndpointAccessData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct RedshiftEndpointAccessData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_owner: std::option::Option<terrars::PrimField<std::string::String>>,
     subnet_group_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,7 +36,7 @@ struct RedshiftEndpointAccessData {
 struct RedshiftEndpointAccess_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RedshiftEndpointAccessData>,
+    data: std::cell::RefCell<RedshiftEndpointAccessData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +142,13 @@ impl RedshiftEndpointAccess {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resource_owner`.\n"]
     pub fn set_resource_owner(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().resource_owner = std::option::Option::Some(v.into());
@@ -178,6 +189,12 @@ impl RedshiftEndpointAccess {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -189,7 +206,7 @@ impl RedshiftEndpointAccess {
     }
 
     #[doc = "Get a reference to the value of field `vpc_endpoint` after provisioning.\n"]
-    pub fn vpc_endpoint(&self) -> terrars::ListRef<RedshiftEndpointAccessVpcEndpointElRef> {
+    pub fn vpc_endpoint(&self) -> terrars::ListRef<RedshiftEndpointAccess_VpcEndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_endpoint", self.extract_ref()))
     }
 
@@ -245,7 +262,7 @@ impl BuildRedshiftEndpointAccess {
         let out = RedshiftEndpointAccess(std::rc::Rc::new(RedshiftEndpointAccess_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RedshiftEndpointAccessData {
+            data: std::cell::RefCell::new(RedshiftEndpointAccessData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -254,6 +271,7 @@ impl BuildRedshiftEndpointAccess {
                 cluster_identifier: self.cluster_identifier,
                 endpoint_name: self.endpoint_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resource_owner: core::default::Default::default(),
                 subnet_group_name: self.subnet_group_name,
                 vpc_security_group_ids: core::default::Default::default(),
@@ -312,6 +330,12 @@ impl RedshiftEndpointAccessRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -323,7 +347,7 @@ impl RedshiftEndpointAccessRef {
     }
 
     #[doc = "Get a reference to the value of field `vpc_endpoint` after provisioning.\n"]
-    pub fn vpc_endpoint(&self) -> terrars::ListRef<RedshiftEndpointAccessVpcEndpointElRef> {
+    pub fn vpc_endpoint(&self) -> terrars::ListRef<RedshiftEndpointAccess_VpcEndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_endpoint", self.extract_ref()))
     }
 
@@ -334,7 +358,7 @@ impl RedshiftEndpointAccessRef {
 }
 
 #[derive(Serialize)]
-pub struct RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
+pub struct RedshiftEndpointAccess_VpcEndpoint_NetworkInterface {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -345,7 +369,7 @@ pub struct RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
+impl RedshiftEndpointAccess_VpcEndpoint_NetworkInterface {
     #[doc = "Set the field `availability_zone`.\n"]
     pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.availability_zone = std::option::Option::Some(v.into());
@@ -377,8 +401,8 @@ impl RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
-    type O = terrars::BlockAssignable<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl>;
+impl terrars::ToListMappable for RedshiftEndpointAccess_VpcEndpoint_NetworkInterface {
+    type O = terrars::BlockAssignable<RedshiftEndpointAccess_VpcEndpoint_NetworkInterface>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -389,11 +413,11 @@ impl terrars::ToListMappable for RedshiftEndpointAccessVpcEndpointElNetworkInter
     }
 }
 
-pub struct BuildRedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {}
+pub struct BuildRedshiftEndpointAccess_VpcEndpoint_NetworkInterface {}
 
-impl BuildRedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
-    pub fn build(self) -> RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
-        RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
+impl BuildRedshiftEndpointAccess_VpcEndpoint_NetworkInterface {
+    pub fn build(self) -> RedshiftEndpointAccess_VpcEndpoint_NetworkInterface {
+        RedshiftEndpointAccess_VpcEndpoint_NetworkInterface {
             availability_zone: core::default::Default::default(),
             network_interface_id: core::default::Default::default(),
             private_ip_address: core::default::Default::default(),
@@ -402,24 +426,26 @@ impl BuildRedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl {
     }
 }
 
-pub struct RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
+#[allow(dead_code)]
+pub struct RedshiftEndpointAccess_VpcEndpoint_NetworkInterfaceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
+impl terrars::Ref for RedshiftEndpointAccess_VpcEndpoint_NetworkInterfaceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
-        RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
+    ) -> RedshiftEndpointAccess_VpcEndpoint_NetworkInterfaceRef {
+        RedshiftEndpointAccess_VpcEndpoint_NetworkInterfaceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
+impl RedshiftEndpointAccess_VpcEndpoint_NetworkInterfaceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -446,20 +472,20 @@ impl RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef {
 }
 
 #[derive(Serialize)]
-pub struct RedshiftEndpointAccessVpcEndpointEl {
+pub struct RedshiftEndpointAccess_VpcEndpoint {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_interface: std::option::Option<terrars::ListField<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl>>,
+    network_interface: std::option::Option<terrars::ListField<RedshiftEndpointAccess_VpcEndpoint_NetworkInterface>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RedshiftEndpointAccessVpcEndpointEl {
+impl RedshiftEndpointAccess_VpcEndpoint {
     #[doc = "Set the field `network_interface`.\n"]
     pub fn set_network_interface(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceEl>>,
+        v: impl std::convert::Into<terrars::ListField<RedshiftEndpointAccess_VpcEndpoint_NetworkInterface>>,
     ) -> Self {
         self.network_interface = std::option::Option::Some(v.into());
         self
@@ -478,8 +504,8 @@ impl RedshiftEndpointAccessVpcEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftEndpointAccessVpcEndpointEl {
-    type O = terrars::BlockAssignable<RedshiftEndpointAccessVpcEndpointEl>;
+impl terrars::ToListMappable for RedshiftEndpointAccess_VpcEndpoint {
+    type O = terrars::BlockAssignable<RedshiftEndpointAccess_VpcEndpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,11 +516,11 @@ impl terrars::ToListMappable for RedshiftEndpointAccessVpcEndpointEl {
     }
 }
 
-pub struct BuildRedshiftEndpointAccessVpcEndpointEl {}
+pub struct BuildRedshiftEndpointAccess_VpcEndpoint {}
 
-impl BuildRedshiftEndpointAccessVpcEndpointEl {
-    pub fn build(self) -> RedshiftEndpointAccessVpcEndpointEl {
-        RedshiftEndpointAccessVpcEndpointEl {
+impl BuildRedshiftEndpointAccess_VpcEndpoint {
+    pub fn build(self) -> RedshiftEndpointAccess_VpcEndpoint {
+        RedshiftEndpointAccess_VpcEndpoint {
             network_interface: core::default::Default::default(),
             vpc_endpoint_id: core::default::Default::default(),
             vpc_id: core::default::Default::default(),
@@ -502,27 +528,29 @@ impl BuildRedshiftEndpointAccessVpcEndpointEl {
     }
 }
 
-pub struct RedshiftEndpointAccessVpcEndpointElRef {
+#[allow(dead_code)]
+pub struct RedshiftEndpointAccess_VpcEndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftEndpointAccessVpcEndpointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftEndpointAccessVpcEndpointElRef {
-        RedshiftEndpointAccessVpcEndpointElRef {
+impl terrars::Ref for RedshiftEndpointAccess_VpcEndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftEndpointAccess_VpcEndpointRef {
+        RedshiftEndpointAccess_VpcEndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftEndpointAccessVpcEndpointElRef {
+impl RedshiftEndpointAccess_VpcEndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `network_interface` after provisioning.\n"]
-    pub fn network_interface(&self) -> terrars::ListRef<RedshiftEndpointAccessVpcEndpointElNetworkInterfaceElRef> {
+    pub fn network_interface(&self) -> terrars::ListRef<RedshiftEndpointAccess_VpcEndpoint_NetworkInterfaceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface", self.base))
     }
 

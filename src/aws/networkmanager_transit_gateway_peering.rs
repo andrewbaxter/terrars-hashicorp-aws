@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerTransitGatewayPeeringData {
+struct NetworkmanagerTransitGatewayPeeringData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,13 +29,13 @@ struct NetworkmanagerTransitGatewayPeeringData {
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     transit_gateway_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerTransitGatewayPeeringTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerTransitGatewayPeering_Timeouts>,
 }
 
 struct NetworkmanagerTransitGatewayPeering_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerTransitGatewayPeeringData>,
+    data: std::cell::RefCell<NetworkmanagerTransitGatewayPeeringData_>,
 }
 
 #[derive(Clone)]
@@ -158,7 +160,7 @@ impl NetworkmanagerTransitGatewayPeering {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerTransitGatewayPeeringTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerTransitGatewayPeering_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -227,8 +229,8 @@ impl NetworkmanagerTransitGatewayPeering {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayPeeringTimeoutsElRef {
-        NetworkmanagerTransitGatewayPeeringTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayPeering_TimeoutsRef {
+        NetworkmanagerTransitGatewayPeering_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -279,7 +281,7 @@ impl BuildNetworkmanagerTransitGatewayPeering {
         let out = NetworkmanagerTransitGatewayPeering(std::rc::Rc::new(NetworkmanagerTransitGatewayPeering_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkmanagerTransitGatewayPeeringData {
+            data: std::cell::RefCell::new(NetworkmanagerTransitGatewayPeeringData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -385,8 +387,8 @@ impl NetworkmanagerTransitGatewayPeeringRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayPeeringTimeoutsElRef {
-        NetworkmanagerTransitGatewayPeeringTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayPeering_TimeoutsRef {
+        NetworkmanagerTransitGatewayPeering_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -394,14 +396,14 @@ impl NetworkmanagerTransitGatewayPeeringRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerTransitGatewayPeeringTimeoutsEl {
+pub struct NetworkmanagerTransitGatewayPeering_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerTransitGatewayPeeringTimeoutsEl {
+impl NetworkmanagerTransitGatewayPeering_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -415,8 +417,8 @@ impl NetworkmanagerTransitGatewayPeeringTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerTransitGatewayPeeringTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerTransitGatewayPeeringTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerTransitGatewayPeering_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerTransitGatewayPeering_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -427,35 +429,37 @@ impl terrars::ToListMappable for NetworkmanagerTransitGatewayPeeringTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkmanagerTransitGatewayPeeringTimeoutsEl {}
+pub struct BuildNetworkmanagerTransitGatewayPeering_Timeouts {}
 
-impl BuildNetworkmanagerTransitGatewayPeeringTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerTransitGatewayPeeringTimeoutsEl {
-        NetworkmanagerTransitGatewayPeeringTimeoutsEl {
+impl BuildNetworkmanagerTransitGatewayPeering_Timeouts {
+    pub fn build(self) -> NetworkmanagerTransitGatewayPeering_Timeouts {
+        NetworkmanagerTransitGatewayPeering_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkmanagerTransitGatewayPeeringTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerTransitGatewayPeering_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerTransitGatewayPeeringTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerTransitGatewayPeering_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkmanagerTransitGatewayPeeringTimeoutsElRef {
-        NetworkmanagerTransitGatewayPeeringTimeoutsElRef {
+    ) -> NetworkmanagerTransitGatewayPeering_TimeoutsRef {
+        NetworkmanagerTransitGatewayPeering_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerTransitGatewayPeeringTimeoutsElRef {
+impl NetworkmanagerTransitGatewayPeering_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

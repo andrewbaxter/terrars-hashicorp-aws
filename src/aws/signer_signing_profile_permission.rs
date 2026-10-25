@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SignerSigningProfilePermissionData {
+struct SignerSigningProfilePermissionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,6 +28,8 @@ struct SignerSigningProfilePermissionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     profile_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     statement_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     statement_id_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -34,7 +38,7 @@ struct SignerSigningProfilePermissionData {
 struct SignerSigningProfilePermission_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SignerSigningProfilePermissionData>,
+    data: std::cell::RefCell<SignerSigningProfilePermissionData_>,
 }
 
 #[derive(Clone)]
@@ -146,6 +150,13 @@ impl SignerSigningProfilePermission {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `statement_id`.\n"]
     pub fn set_statement_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().statement_id = std::option::Option::Some(v.into());
@@ -181,6 +192,12 @@ impl SignerSigningProfilePermission {
     #[doc = "Get a reference to the value of field `profile_version` after provisioning.\n"]
     pub fn profile_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `statement_id` after provisioning.\n"]
@@ -240,7 +257,7 @@ impl BuildSignerSigningProfilePermission {
         let out = SignerSigningProfilePermission(std::rc::Rc::new(SignerSigningProfilePermission_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SignerSigningProfilePermissionData {
+            data: std::cell::RefCell::new(SignerSigningProfilePermissionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -251,6 +268,7 @@ impl BuildSignerSigningProfilePermission {
                 principal: self.principal,
                 profile_name: self.profile_name,
                 profile_version: core::default::Default::default(),
+                region: core::default::Default::default(),
                 statement_id: core::default::Default::default(),
                 statement_id_prefix: core::default::Default::default(),
             }),
@@ -306,6 +324,12 @@ impl SignerSigningProfilePermissionRef {
     #[doc = "Get a reference to the value of field `profile_version` after provisioning.\n"]
     pub fn profile_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `statement_id` after provisioning.\n"]

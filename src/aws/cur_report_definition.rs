@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CurReportDefinitionData {
+struct CurReportDefinitionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,16 +33,19 @@ struct CurReportDefinitionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     report_versioning: std::option::Option<terrars::PrimField<std::string::String>>,
     s3_bucket: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    s3_prefix: terrars::PrimField<std::string::String>,
     s3_region: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     time_unit: terrars::PrimField<std::string::String>,
 }
 
 struct CurReportDefinition_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CurReportDefinitionData>,
+    data: std::cell::RefCell<CurReportDefinitionData_>,
 }
 
 #[derive(Clone)]
@@ -167,9 +172,21 @@ impl CurReportDefinition {
         self
     }
 
-    #[doc = "Set the field `s3_prefix`.\n"]
-    pub fn set_s3_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().s3_prefix = std::option::Option::Some(v.into());
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
         self
     }
 
@@ -233,6 +250,16 @@ impl CurReportDefinition {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_region", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `time_unit` after provisioning.\n"]
     pub fn time_unit(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.time_unit", self.extract_ref()))
@@ -283,6 +310,8 @@ pub struct BuildCurReportDefinition {
     #[doc = ""]
     pub s3_bucket: terrars::PrimField<std::string::String>,
     #[doc = ""]
+    pub s3_prefix: terrars::PrimField<std::string::String>,
+    #[doc = ""]
     pub s3_region: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub time_unit: terrars::PrimField<std::string::String>,
@@ -293,7 +322,7 @@ impl BuildCurReportDefinition {
         let out = CurReportDefinition(std::rc::Rc::new(CurReportDefinition_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CurReportDefinitionData {
+            data: std::cell::RefCell::new(CurReportDefinitionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -308,8 +337,10 @@ impl BuildCurReportDefinition {
                 report_name: self.report_name,
                 report_versioning: core::default::Default::default(),
                 s3_bucket: self.s3_bucket,
-                s3_prefix: core::default::Default::default(),
+                s3_prefix: self.s3_prefix,
                 s3_region: self.s3_region,
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
                 time_unit: self.time_unit,
             }),
         }));
@@ -399,6 +430,16 @@ impl CurReportDefinitionRef {
     #[doc = "Get a reference to the value of field `s3_region` after provisioning.\n"]
     pub fn s3_region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `time_unit` after provisioning.\n"]

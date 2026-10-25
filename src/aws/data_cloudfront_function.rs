@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataCloudfrontFunctionData {
+struct DataCloudfrontFunctionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,7 +27,7 @@ struct DataCloudfrontFunctionData {
 struct DataCloudfrontFunction_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudfrontFunctionData>,
+    data: std::cell::RefCell<DataCloudfrontFunctionData_>,
 }
 
 #[derive(Clone)]
@@ -101,6 +103,11 @@ impl DataCloudfrontFunction {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `key_value_store_associations` after provisioning.\n"]
+    pub fn key_value_store_associations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.key_value_store_associations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `last_modified_time` after provisioning.\n"]
     pub fn last_modified_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_time", self.extract_ref()))
@@ -171,7 +178,7 @@ impl BuildDataCloudfrontFunction {
         let out = DataCloudfrontFunction(std::rc::Rc::new(DataCloudfrontFunction_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudfrontFunctionData {
+            data: std::cell::RefCell::new(DataCloudfrontFunctionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -232,6 +239,11 @@ impl DataCloudfrontFunctionRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `key_value_store_associations` after provisioning.\n"]
+    pub fn key_value_store_associations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.key_value_store_associations", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `last_modified_time` after provisioning.\n"]

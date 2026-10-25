@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataCloudfrontDistributionData {
+struct DataCloudfrontDistributionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataCloudfrontDistributionData {
 struct DataCloudfrontDistribution_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudfrontDistributionData>,
+    data: std::cell::RefCell<DataCloudfrontDistributionData_>,
 }
 
 #[derive(Clone)]
@@ -83,6 +85,11 @@ impl DataCloudfrontDistribution {
         terrars::SetRef::new(self.shared().clone(), format!("{}.aliases", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `anycast_ip_list_id` after provisioning.\n"]
+    pub fn anycast_ip_list_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.anycast_ip_list_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -134,6 +141,11 @@ impl DataCloudfrontDistribution {
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `web_acl_id` after provisioning.\n"]
+    pub fn web_acl_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.web_acl_id", self.extract_ref()))
     }
 }
 
@@ -179,7 +191,7 @@ impl BuildDataCloudfrontDistribution {
         let out = DataCloudfrontDistribution(std::rc::Rc::new(DataCloudfrontDistribution_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudfrontDistributionData {
+            data: std::cell::RefCell::new(DataCloudfrontDistributionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -219,6 +231,11 @@ impl DataCloudfrontDistributionRef {
     #[doc = "Get a reference to the value of field `aliases` after provisioning.\n"]
     pub fn aliases(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.aliases", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `anycast_ip_list_id` after provisioning.\n"]
+    pub fn anycast_ip_list_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.anycast_ip_list_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -272,5 +289,10 @@ impl DataCloudfrontDistributionRef {
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `web_acl_id` after provisioning.\n"]
+    pub fn web_acl_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.web_acl_id", self.extract_ref()))
     }
 }

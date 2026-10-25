@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EcsTaskSetData {
+struct EcsTaskSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,6 +31,8 @@ struct EcsTaskSetData {
     launch_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     platform_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     service: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -40,22 +44,22 @@ struct EcsTaskSetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_until_stable_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    capacity_provider_strategy: std::option::Option<std::vec::Vec<EcsTaskSetCapacityProviderStrategyEl>>,
+    capacity_provider_strategy: std::option::Option<std::vec::Vec<EcsTaskSet_CapacityProviderStrategy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    load_balancer: std::option::Option<std::vec::Vec<EcsTaskSetLoadBalancerEl>>,
+    load_balancer: std::option::Option<std::vec::Vec<EcsTaskSet_LoadBalancer>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_configuration: std::option::Option<std::vec::Vec<EcsTaskSetNetworkConfigurationEl>>,
+    network_configuration: std::option::Option<std::vec::Vec<EcsTaskSet_NetworkConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scale: std::option::Option<std::vec::Vec<EcsTaskSetScaleEl>>,
+    scale: std::option::Option<std::vec::Vec<EcsTaskSet_Scale>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    service_registries: std::option::Option<std::vec::Vec<EcsTaskSetServiceRegistriesEl>>,
+    service_registries: std::option::Option<std::vec::Vec<EcsTaskSet_ServiceRegistries>>,
     dynamic: EcsTaskSetDynamic,
 }
 
 struct EcsTaskSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EcsTaskSetData>,
+    data: std::cell::RefCell<EcsTaskSetData_>,
 }
 
 #[derive(Clone)]
@@ -185,6 +189,13 @@ impl EcsTaskSet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -221,7 +232,7 @@ impl EcsTaskSet {
     #[doc = "Set the field `capacity_provider_strategy`.\n"]
     pub fn set_capacity_provider_strategy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSetCapacityProviderStrategyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSet_CapacityProviderStrategy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -237,7 +248,7 @@ impl EcsTaskSet {
     #[doc = "Set the field `load_balancer`.\n"]
     pub fn set_load_balancer(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSetLoadBalancerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSet_LoadBalancer>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -253,7 +264,7 @@ impl EcsTaskSet {
     #[doc = "Set the field `network_configuration`.\n"]
     pub fn set_network_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSetNetworkConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSet_NetworkConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -267,7 +278,7 @@ impl EcsTaskSet {
     }
 
     #[doc = "Set the field `scale`.\n"]
-    pub fn set_scale(self, v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSetScaleEl>>) -> Self {
+    pub fn set_scale(self, v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSet_Scale>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().scale = std::option::Option::Some(v);
@@ -282,7 +293,7 @@ impl EcsTaskSet {
     #[doc = "Set the field `service_registries`.\n"]
     pub fn set_service_registries(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSetServiceRegistriesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskSet_ServiceRegistries>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -328,6 +339,12 @@ impl EcsTaskSet {
     #[doc = "Get a reference to the value of field `platform_version` after provisioning.\n"]
     pub fn platform_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service` after provisioning.\n"]
@@ -376,17 +393,17 @@ impl EcsTaskSet {
     }
 
     #[doc = "Get a reference to the value of field `network_configuration` after provisioning.\n"]
-    pub fn network_configuration(&self) -> terrars::ListRef<EcsTaskSetNetworkConfigurationElRef> {
+    pub fn network_configuration(&self) -> terrars::ListRef<EcsTaskSet_NetworkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scale` after provisioning.\n"]
-    pub fn scale(&self) -> terrars::ListRef<EcsTaskSetScaleElRef> {
+    pub fn scale(&self) -> terrars::ListRef<EcsTaskSet_ScaleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scale", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_registries` after provisioning.\n"]
-    pub fn service_registries(&self) -> terrars::ListRef<EcsTaskSetServiceRegistriesElRef> {
+    pub fn service_registries(&self) -> terrars::ListRef<EcsTaskSet_ServiceRegistriesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_registries", self.extract_ref()))
     }
 }
@@ -437,7 +454,7 @@ impl BuildEcsTaskSet {
         let out = EcsTaskSet(std::rc::Rc::new(EcsTaskSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EcsTaskSetData {
+            data: std::cell::RefCell::new(EcsTaskSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -449,6 +466,7 @@ impl BuildEcsTaskSet {
                 id: core::default::Default::default(),
                 launch_type: core::default::Default::default(),
                 platform_version: core::default::Default::default(),
+                region: core::default::Default::default(),
                 service: self.service,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -526,6 +544,12 @@ impl EcsTaskSetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_version", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service` after provisioning.\n"]
     pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.extract_ref()))
@@ -572,30 +596,39 @@ impl EcsTaskSetRef {
     }
 
     #[doc = "Get a reference to the value of field `network_configuration` after provisioning.\n"]
-    pub fn network_configuration(&self) -> terrars::ListRef<EcsTaskSetNetworkConfigurationElRef> {
+    pub fn network_configuration(&self) -> terrars::ListRef<EcsTaskSet_NetworkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scale` after provisioning.\n"]
-    pub fn scale(&self) -> terrars::ListRef<EcsTaskSetScaleElRef> {
+    pub fn scale(&self) -> terrars::ListRef<EcsTaskSet_ScaleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scale", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_registries` after provisioning.\n"]
-    pub fn service_registries(&self) -> terrars::ListRef<EcsTaskSetServiceRegistriesElRef> {
+    pub fn service_registries(&self) -> terrars::ListRef<EcsTaskSet_ServiceRegistriesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_registries", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EcsTaskSetDynamic {
+    capacity_provider_strategy: std::option::Option<terrars::DynamicBlock<EcsTaskSet_CapacityProviderStrategy>>,
+    load_balancer: std::option::Option<terrars::DynamicBlock<EcsTaskSet_LoadBalancer>>,
+    network_configuration: std::option::Option<terrars::DynamicBlock<EcsTaskSet_NetworkConfiguration>>,
+    scale: std::option::Option<terrars::DynamicBlock<EcsTaskSet_Scale>>,
+    service_registries: std::option::Option<terrars::DynamicBlock<EcsTaskSet_ServiceRegistries>>,
+}
+
 #[derive(Serialize)]
-pub struct EcsTaskSetCapacityProviderStrategyEl {
+pub struct EcsTaskSet_CapacityProviderStrategy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     base: std::option::Option<terrars::PrimField<f64>>,
     capacity_provider: terrars::PrimField<std::string::String>,
     weight: terrars::PrimField<f64>,
 }
 
-impl EcsTaskSetCapacityProviderStrategyEl {
+impl EcsTaskSet_CapacityProviderStrategy {
     #[doc = "Set the field `base`.\n"]
     pub fn set_base(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.base = std::option::Option::Some(v.into());
@@ -603,8 +636,8 @@ impl EcsTaskSetCapacityProviderStrategyEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskSetCapacityProviderStrategyEl {
-    type O = terrars::BlockAssignable<EcsTaskSetCapacityProviderStrategyEl>;
+impl terrars::ToListMappable for EcsTaskSet_CapacityProviderStrategy {
+    type O = terrars::BlockAssignable<EcsTaskSet_CapacityProviderStrategy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -615,16 +648,16 @@ impl terrars::ToListMappable for EcsTaskSetCapacityProviderStrategyEl {
     }
 }
 
-pub struct BuildEcsTaskSetCapacityProviderStrategyEl {
+pub struct BuildEcsTaskSet_CapacityProviderStrategy {
     #[doc = ""]
     pub capacity_provider: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub weight: terrars::PrimField<f64>,
 }
 
-impl BuildEcsTaskSetCapacityProviderStrategyEl {
-    pub fn build(self) -> EcsTaskSetCapacityProviderStrategyEl {
-        EcsTaskSetCapacityProviderStrategyEl {
+impl BuildEcsTaskSet_CapacityProviderStrategy {
+    pub fn build(self) -> EcsTaskSet_CapacityProviderStrategy {
+        EcsTaskSet_CapacityProviderStrategy {
             base: core::default::Default::default(),
             capacity_provider: self.capacity_provider,
             weight: self.weight,
@@ -632,21 +665,23 @@ impl BuildEcsTaskSetCapacityProviderStrategyEl {
     }
 }
 
-pub struct EcsTaskSetCapacityProviderStrategyElRef {
+#[allow(dead_code)]
+pub struct EcsTaskSet_CapacityProviderStrategyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskSetCapacityProviderStrategyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSetCapacityProviderStrategyElRef {
-        EcsTaskSetCapacityProviderStrategyElRef {
+impl terrars::Ref for EcsTaskSet_CapacityProviderStrategyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSet_CapacityProviderStrategyRef {
+        EcsTaskSet_CapacityProviderStrategyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskSetCapacityProviderStrategyElRef {
+impl EcsTaskSet_CapacityProviderStrategyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -668,7 +703,7 @@ impl EcsTaskSetCapacityProviderStrategyElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskSetLoadBalancerEl {
+pub struct EcsTaskSet_LoadBalancer {
     container_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     container_port: std::option::Option<terrars::PrimField<f64>>,
@@ -678,7 +713,7 @@ pub struct EcsTaskSetLoadBalancerEl {
     target_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EcsTaskSetLoadBalancerEl {
+impl EcsTaskSet_LoadBalancer {
     #[doc = "Set the field `container_port`.\n"]
     pub fn set_container_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.container_port = std::option::Option::Some(v.into());
@@ -701,8 +736,8 @@ impl EcsTaskSetLoadBalancerEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskSetLoadBalancerEl {
-    type O = terrars::BlockAssignable<EcsTaskSetLoadBalancerEl>;
+impl terrars::ToListMappable for EcsTaskSet_LoadBalancer {
+    type O = terrars::BlockAssignable<EcsTaskSet_LoadBalancer>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -713,14 +748,14 @@ impl terrars::ToListMappable for EcsTaskSetLoadBalancerEl {
     }
 }
 
-pub struct BuildEcsTaskSetLoadBalancerEl {
+pub struct BuildEcsTaskSet_LoadBalancer {
     #[doc = ""]
     pub container_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcsTaskSetLoadBalancerEl {
-    pub fn build(self) -> EcsTaskSetLoadBalancerEl {
-        EcsTaskSetLoadBalancerEl {
+impl BuildEcsTaskSet_LoadBalancer {
+    pub fn build(self) -> EcsTaskSet_LoadBalancer {
+        EcsTaskSet_LoadBalancer {
             container_name: self.container_name,
             container_port: core::default::Default::default(),
             load_balancer_name: core::default::Default::default(),
@@ -729,21 +764,23 @@ impl BuildEcsTaskSetLoadBalancerEl {
     }
 }
 
-pub struct EcsTaskSetLoadBalancerElRef {
+#[allow(dead_code)]
+pub struct EcsTaskSet_LoadBalancerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskSetLoadBalancerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSetLoadBalancerElRef {
-        EcsTaskSetLoadBalancerElRef {
+impl terrars::Ref for EcsTaskSet_LoadBalancerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSet_LoadBalancerRef {
+        EcsTaskSet_LoadBalancerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskSetLoadBalancerElRef {
+impl EcsTaskSet_LoadBalancerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -770,7 +807,7 @@ impl EcsTaskSetLoadBalancerElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskSetNetworkConfigurationEl {
+pub struct EcsTaskSet_NetworkConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     assign_public_ip: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -778,7 +815,7 @@ pub struct EcsTaskSetNetworkConfigurationEl {
     subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl EcsTaskSetNetworkConfigurationEl {
+impl EcsTaskSet_NetworkConfiguration {
     #[doc = "Set the field `assign_public_ip`.\n"]
     pub fn set_assign_public_ip(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.assign_public_ip = std::option::Option::Some(v.into());
@@ -795,8 +832,8 @@ impl EcsTaskSetNetworkConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskSetNetworkConfigurationEl {
-    type O = terrars::BlockAssignable<EcsTaskSetNetworkConfigurationEl>;
+impl terrars::ToListMappable for EcsTaskSet_NetworkConfiguration {
+    type O = terrars::BlockAssignable<EcsTaskSet_NetworkConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -807,14 +844,14 @@ impl terrars::ToListMappable for EcsTaskSetNetworkConfigurationEl {
     }
 }
 
-pub struct BuildEcsTaskSetNetworkConfigurationEl {
+pub struct BuildEcsTaskSet_NetworkConfiguration {
     #[doc = ""]
     pub subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildEcsTaskSetNetworkConfigurationEl {
-    pub fn build(self) -> EcsTaskSetNetworkConfigurationEl {
-        EcsTaskSetNetworkConfigurationEl {
+impl BuildEcsTaskSet_NetworkConfiguration {
+    pub fn build(self) -> EcsTaskSet_NetworkConfiguration {
+        EcsTaskSet_NetworkConfiguration {
             assign_public_ip: core::default::Default::default(),
             security_groups: core::default::Default::default(),
             subnets: self.subnets,
@@ -822,21 +859,23 @@ impl BuildEcsTaskSetNetworkConfigurationEl {
     }
 }
 
-pub struct EcsTaskSetNetworkConfigurationElRef {
+#[allow(dead_code)]
+pub struct EcsTaskSet_NetworkConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskSetNetworkConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSetNetworkConfigurationElRef {
-        EcsTaskSetNetworkConfigurationElRef {
+impl terrars::Ref for EcsTaskSet_NetworkConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSet_NetworkConfigurationRef {
+        EcsTaskSet_NetworkConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskSetNetworkConfigurationElRef {
+impl EcsTaskSet_NetworkConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -858,14 +897,14 @@ impl EcsTaskSetNetworkConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskSetScaleEl {
+pub struct EcsTaskSet_Scale {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     unit: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl EcsTaskSetScaleEl {
+impl EcsTaskSet_Scale {
     #[doc = "Set the field `unit`.\n"]
     pub fn set_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.unit = std::option::Option::Some(v.into());
@@ -879,8 +918,8 @@ impl EcsTaskSetScaleEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskSetScaleEl {
-    type O = terrars::BlockAssignable<EcsTaskSetScaleEl>;
+impl terrars::ToListMappable for EcsTaskSet_Scale {
+    type O = terrars::BlockAssignable<EcsTaskSet_Scale>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -891,32 +930,34 @@ impl terrars::ToListMappable for EcsTaskSetScaleEl {
     }
 }
 
-pub struct BuildEcsTaskSetScaleEl {}
+pub struct BuildEcsTaskSet_Scale {}
 
-impl BuildEcsTaskSetScaleEl {
-    pub fn build(self) -> EcsTaskSetScaleEl {
-        EcsTaskSetScaleEl {
+impl BuildEcsTaskSet_Scale {
+    pub fn build(self) -> EcsTaskSet_Scale {
+        EcsTaskSet_Scale {
             unit: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct EcsTaskSetScaleElRef {
+#[allow(dead_code)]
+pub struct EcsTaskSet_ScaleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskSetScaleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSetScaleElRef {
-        EcsTaskSetScaleElRef {
+impl terrars::Ref for EcsTaskSet_ScaleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSet_ScaleRef {
+        EcsTaskSet_ScaleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskSetScaleElRef {
+impl EcsTaskSet_ScaleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -933,7 +974,7 @@ impl EcsTaskSetScaleElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskSetServiceRegistriesEl {
+pub struct EcsTaskSet_ServiceRegistries {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     container_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -943,7 +984,7 @@ pub struct EcsTaskSetServiceRegistriesEl {
     registry_arn: terrars::PrimField<std::string::String>,
 }
 
-impl EcsTaskSetServiceRegistriesEl {
+impl EcsTaskSet_ServiceRegistries {
     #[doc = "Set the field `container_name`.\n"]
     pub fn set_container_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.container_name = std::option::Option::Some(v.into());
@@ -963,8 +1004,8 @@ impl EcsTaskSetServiceRegistriesEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskSetServiceRegistriesEl {
-    type O = terrars::BlockAssignable<EcsTaskSetServiceRegistriesEl>;
+impl terrars::ToListMappable for EcsTaskSet_ServiceRegistries {
+    type O = terrars::BlockAssignable<EcsTaskSet_ServiceRegistries>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -975,14 +1016,14 @@ impl terrars::ToListMappable for EcsTaskSetServiceRegistriesEl {
     }
 }
 
-pub struct BuildEcsTaskSetServiceRegistriesEl {
+pub struct BuildEcsTaskSet_ServiceRegistries {
     #[doc = ""]
     pub registry_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcsTaskSetServiceRegistriesEl {
-    pub fn build(self) -> EcsTaskSetServiceRegistriesEl {
-        EcsTaskSetServiceRegistriesEl {
+impl BuildEcsTaskSet_ServiceRegistries {
+    pub fn build(self) -> EcsTaskSet_ServiceRegistries {
+        EcsTaskSet_ServiceRegistries {
             container_name: core::default::Default::default(),
             container_port: core::default::Default::default(),
             port: core::default::Default::default(),
@@ -991,21 +1032,23 @@ impl BuildEcsTaskSetServiceRegistriesEl {
     }
 }
 
-pub struct EcsTaskSetServiceRegistriesElRef {
+#[allow(dead_code)]
+pub struct EcsTaskSet_ServiceRegistriesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskSetServiceRegistriesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSetServiceRegistriesElRef {
-        EcsTaskSetServiceRegistriesElRef {
+impl terrars::Ref for EcsTaskSet_ServiceRegistriesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskSet_ServiceRegistriesRef {
+        EcsTaskSet_ServiceRegistriesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskSetServiceRegistriesElRef {
+impl EcsTaskSet_ServiceRegistriesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1029,13 +1072,4 @@ impl EcsTaskSetServiceRegistriesElRef {
     pub fn registry_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EcsTaskSetDynamic {
-    capacity_provider_strategy: std::option::Option<terrars::DynamicBlock<EcsTaskSetCapacityProviderStrategyEl>>,
-    load_balancer: std::option::Option<terrars::DynamicBlock<EcsTaskSetLoadBalancerEl>>,
-    network_configuration: std::option::Option<terrars::DynamicBlock<EcsTaskSetNetworkConfigurationEl>>,
-    scale: std::option::Option<terrars::DynamicBlock<EcsTaskSetScaleEl>>,
-    service_registries: std::option::Option<terrars::DynamicBlock<EcsTaskSetServiceRegistriesEl>>,
 }

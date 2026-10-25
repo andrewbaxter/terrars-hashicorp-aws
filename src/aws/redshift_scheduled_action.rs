@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RedshiftScheduledActionData {
+struct RedshiftScheduledActionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,18 +30,20 @@ struct RedshiftScheduledActionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     schedule: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_action: std::option::Option<std::vec::Vec<RedshiftScheduledActionTargetActionEl>>,
+    target_action: std::option::Option<std::vec::Vec<RedshiftScheduledAction_TargetAction>>,
     dynamic: RedshiftScheduledActionDynamic,
 }
 
 struct RedshiftScheduledAction_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RedshiftScheduledActionData>,
+    data: std::cell::RefCell<RedshiftScheduledActionData_>,
 }
 
 #[derive(Clone)]
@@ -163,6 +167,13 @@ impl RedshiftScheduledAction {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `start_time`.\n"]
     pub fn set_start_time(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().start_time = std::option::Option::Some(v.into());
@@ -172,7 +183,7 @@ impl RedshiftScheduledAction {
     #[doc = "Set the field `target_action`.\n"]
     pub fn set_target_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftScheduledActionTargetActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftScheduledAction_TargetAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,6 +226,12 @@ impl RedshiftScheduledAction {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
     pub fn schedule(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
@@ -226,7 +243,7 @@ impl RedshiftScheduledAction {
     }
 
     #[doc = "Get a reference to the value of field `target_action` after provisioning.\n"]
-    pub fn target_action(&self) -> terrars::ListRef<RedshiftScheduledActionTargetActionElRef> {
+    pub fn target_action(&self) -> terrars::ListRef<RedshiftScheduledAction_TargetActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_action", self.extract_ref()))
     }
 }
@@ -277,7 +294,7 @@ impl BuildRedshiftScheduledAction {
         let out = RedshiftScheduledAction(std::rc::Rc::new(RedshiftScheduledAction_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RedshiftScheduledActionData {
+            data: std::cell::RefCell::new(RedshiftScheduledActionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -289,6 +306,7 @@ impl BuildRedshiftScheduledAction {
                 iam_role: self.iam_role,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 schedule: self.schedule,
                 start_time: core::default::Default::default(),
                 target_action: core::default::Default::default(),
@@ -353,6 +371,12 @@ impl RedshiftScheduledActionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
     pub fn schedule(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
@@ -364,20 +388,25 @@ impl RedshiftScheduledActionRef {
     }
 
     #[doc = "Get a reference to the value of field `target_action` after provisioning.\n"]
-    pub fn target_action(&self) -> terrars::ListRef<RedshiftScheduledActionTargetActionElRef> {
+    pub fn target_action(&self) -> terrars::ListRef<RedshiftScheduledAction_TargetActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_action", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct RedshiftScheduledActionDynamic {
+    target_action: std::option::Option<terrars::DynamicBlock<RedshiftScheduledAction_TargetAction>>,
+}
+
 #[derive(Serialize)]
-pub struct RedshiftScheduledActionTargetActionElPauseClusterEl {
+pub struct RedshiftScheduledAction_TargetAction_PauseCluster {
     cluster_identifier: terrars::PrimField<std::string::String>,
 }
 
-impl RedshiftScheduledActionTargetActionElPauseClusterEl { }
+impl RedshiftScheduledAction_TargetAction_PauseCluster { }
 
-impl terrars::ToListMappable for RedshiftScheduledActionTargetActionElPauseClusterEl {
-    type O = terrars::BlockAssignable<RedshiftScheduledActionTargetActionElPauseClusterEl>;
+impl terrars::ToListMappable for RedshiftScheduledAction_TargetAction_PauseCluster {
+    type O = terrars::BlockAssignable<RedshiftScheduledAction_TargetAction_PauseCluster>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -388,35 +417,37 @@ impl terrars::ToListMappable for RedshiftScheduledActionTargetActionElPauseClust
     }
 }
 
-pub struct BuildRedshiftScheduledActionTargetActionElPauseClusterEl {
+pub struct BuildRedshiftScheduledAction_TargetAction_PauseCluster {
     #[doc = ""]
     pub cluster_identifier: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRedshiftScheduledActionTargetActionElPauseClusterEl {
-    pub fn build(self) -> RedshiftScheduledActionTargetActionElPauseClusterEl {
-        RedshiftScheduledActionTargetActionElPauseClusterEl { cluster_identifier: self.cluster_identifier }
+impl BuildRedshiftScheduledAction_TargetAction_PauseCluster {
+    pub fn build(self) -> RedshiftScheduledAction_TargetAction_PauseCluster {
+        RedshiftScheduledAction_TargetAction_PauseCluster { cluster_identifier: self.cluster_identifier }
     }
 }
 
-pub struct RedshiftScheduledActionTargetActionElPauseClusterElRef {
+#[allow(dead_code)]
+pub struct RedshiftScheduledAction_TargetAction_PauseClusterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftScheduledActionTargetActionElPauseClusterElRef {
+impl terrars::Ref for RedshiftScheduledAction_TargetAction_PauseClusterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> RedshiftScheduledActionTargetActionElPauseClusterElRef {
-        RedshiftScheduledActionTargetActionElPauseClusterElRef {
+    ) -> RedshiftScheduledAction_TargetAction_PauseClusterRef {
+        RedshiftScheduledAction_TargetAction_PauseClusterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftScheduledActionTargetActionElPauseClusterElRef {
+impl RedshiftScheduledAction_TargetAction_PauseClusterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -428,7 +459,7 @@ impl RedshiftScheduledActionTargetActionElPauseClusterElRef {
 }
 
 #[derive(Serialize)]
-pub struct RedshiftScheduledActionTargetActionElResizeClusterEl {
+pub struct RedshiftScheduledAction_TargetAction_ResizeCluster {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     classic: std::option::Option<terrars::PrimField<bool>>,
     cluster_identifier: terrars::PrimField<std::string::String>,
@@ -440,7 +471,7 @@ pub struct RedshiftScheduledActionTargetActionElResizeClusterEl {
     number_of_nodes: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl RedshiftScheduledActionTargetActionElResizeClusterEl {
+impl RedshiftScheduledAction_TargetAction_ResizeCluster {
     #[doc = "Set the field `classic`.\n"]
     pub fn set_classic(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.classic = std::option::Option::Some(v.into());
@@ -466,8 +497,8 @@ impl RedshiftScheduledActionTargetActionElResizeClusterEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftScheduledActionTargetActionElResizeClusterEl {
-    type O = terrars::BlockAssignable<RedshiftScheduledActionTargetActionElResizeClusterEl>;
+impl terrars::ToListMappable for RedshiftScheduledAction_TargetAction_ResizeCluster {
+    type O = terrars::BlockAssignable<RedshiftScheduledAction_TargetAction_ResizeCluster>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -478,14 +509,14 @@ impl terrars::ToListMappable for RedshiftScheduledActionTargetActionElResizeClus
     }
 }
 
-pub struct BuildRedshiftScheduledActionTargetActionElResizeClusterEl {
+pub struct BuildRedshiftScheduledAction_TargetAction_ResizeCluster {
     #[doc = ""]
     pub cluster_identifier: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRedshiftScheduledActionTargetActionElResizeClusterEl {
-    pub fn build(self) -> RedshiftScheduledActionTargetActionElResizeClusterEl {
-        RedshiftScheduledActionTargetActionElResizeClusterEl {
+impl BuildRedshiftScheduledAction_TargetAction_ResizeCluster {
+    pub fn build(self) -> RedshiftScheduledAction_TargetAction_ResizeCluster {
+        RedshiftScheduledAction_TargetAction_ResizeCluster {
             classic: core::default::Default::default(),
             cluster_identifier: self.cluster_identifier,
             cluster_type: core::default::Default::default(),
@@ -495,24 +526,26 @@ impl BuildRedshiftScheduledActionTargetActionElResizeClusterEl {
     }
 }
 
-pub struct RedshiftScheduledActionTargetActionElResizeClusterElRef {
+#[allow(dead_code)]
+pub struct RedshiftScheduledAction_TargetAction_ResizeClusterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftScheduledActionTargetActionElResizeClusterElRef {
+impl terrars::Ref for RedshiftScheduledAction_TargetAction_ResizeClusterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> RedshiftScheduledActionTargetActionElResizeClusterElRef {
-        RedshiftScheduledActionTargetActionElResizeClusterElRef {
+    ) -> RedshiftScheduledAction_TargetAction_ResizeClusterRef {
+        RedshiftScheduledAction_TargetAction_ResizeClusterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftScheduledActionTargetActionElResizeClusterElRef {
+impl RedshiftScheduledAction_TargetAction_ResizeClusterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -544,14 +577,14 @@ impl RedshiftScheduledActionTargetActionElResizeClusterElRef {
 }
 
 #[derive(Serialize)]
-pub struct RedshiftScheduledActionTargetActionElResumeClusterEl {
+pub struct RedshiftScheduledAction_TargetAction_ResumeCluster {
     cluster_identifier: terrars::PrimField<std::string::String>,
 }
 
-impl RedshiftScheduledActionTargetActionElResumeClusterEl { }
+impl RedshiftScheduledAction_TargetAction_ResumeCluster { }
 
-impl terrars::ToListMappable for RedshiftScheduledActionTargetActionElResumeClusterEl {
-    type O = terrars::BlockAssignable<RedshiftScheduledActionTargetActionElResumeClusterEl>;
+impl terrars::ToListMappable for RedshiftScheduledAction_TargetAction_ResumeCluster {
+    type O = terrars::BlockAssignable<RedshiftScheduledAction_TargetAction_ResumeCluster>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -562,35 +595,37 @@ impl terrars::ToListMappable for RedshiftScheduledActionTargetActionElResumeClus
     }
 }
 
-pub struct BuildRedshiftScheduledActionTargetActionElResumeClusterEl {
+pub struct BuildRedshiftScheduledAction_TargetAction_ResumeCluster {
     #[doc = ""]
     pub cluster_identifier: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRedshiftScheduledActionTargetActionElResumeClusterEl {
-    pub fn build(self) -> RedshiftScheduledActionTargetActionElResumeClusterEl {
-        RedshiftScheduledActionTargetActionElResumeClusterEl { cluster_identifier: self.cluster_identifier }
+impl BuildRedshiftScheduledAction_TargetAction_ResumeCluster {
+    pub fn build(self) -> RedshiftScheduledAction_TargetAction_ResumeCluster {
+        RedshiftScheduledAction_TargetAction_ResumeCluster { cluster_identifier: self.cluster_identifier }
     }
 }
 
-pub struct RedshiftScheduledActionTargetActionElResumeClusterElRef {
+#[allow(dead_code)]
+pub struct RedshiftScheduledAction_TargetAction_ResumeClusterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftScheduledActionTargetActionElResumeClusterElRef {
+impl terrars::Ref for RedshiftScheduledAction_TargetAction_ResumeClusterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> RedshiftScheduledActionTargetActionElResumeClusterElRef {
-        RedshiftScheduledActionTargetActionElResumeClusterElRef {
+    ) -> RedshiftScheduledAction_TargetAction_ResumeClusterRef {
+        RedshiftScheduledAction_TargetAction_ResumeClusterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftScheduledActionTargetActionElResumeClusterElRef {
+impl RedshiftScheduledAction_TargetAction_ResumeClusterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -602,30 +637,28 @@ impl RedshiftScheduledActionTargetActionElResumeClusterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct RedshiftScheduledActionTargetActionElDynamic {
-    pause_cluster: std::option::Option<terrars::DynamicBlock<RedshiftScheduledActionTargetActionElPauseClusterEl>>,
-    resize_cluster: std::option::Option<terrars::DynamicBlock<RedshiftScheduledActionTargetActionElResizeClusterEl>>,
-    resume_cluster: std
-    ::option
-    ::Option<terrars::DynamicBlock<RedshiftScheduledActionTargetActionElResumeClusterEl>>,
+struct RedshiftScheduledAction_TargetActionDynamic {
+    pause_cluster: std::option::Option<terrars::DynamicBlock<RedshiftScheduledAction_TargetAction_PauseCluster>>,
+    resize_cluster: std::option::Option<terrars::DynamicBlock<RedshiftScheduledAction_TargetAction_ResizeCluster>>,
+    resume_cluster: std::option::Option<terrars::DynamicBlock<RedshiftScheduledAction_TargetAction_ResumeCluster>>,
 }
 
 #[derive(Serialize)]
-pub struct RedshiftScheduledActionTargetActionEl {
+pub struct RedshiftScheduledAction_TargetAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pause_cluster: std::option::Option<std::vec::Vec<RedshiftScheduledActionTargetActionElPauseClusterEl>>,
+    pause_cluster: std::option::Option<std::vec::Vec<RedshiftScheduledAction_TargetAction_PauseCluster>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resize_cluster: std::option::Option<std::vec::Vec<RedshiftScheduledActionTargetActionElResizeClusterEl>>,
+    resize_cluster: std::option::Option<std::vec::Vec<RedshiftScheduledAction_TargetAction_ResizeCluster>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resume_cluster: std::option::Option<std::vec::Vec<RedshiftScheduledActionTargetActionElResumeClusterEl>>,
-    dynamic: RedshiftScheduledActionTargetActionElDynamic,
+    resume_cluster: std::option::Option<std::vec::Vec<RedshiftScheduledAction_TargetAction_ResumeCluster>>,
+    dynamic: RedshiftScheduledAction_TargetActionDynamic,
 }
 
-impl RedshiftScheduledActionTargetActionEl {
+impl RedshiftScheduledAction_TargetAction {
     #[doc = "Set the field `pause_cluster`.\n"]
     pub fn set_pause_cluster(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftScheduledActionTargetActionElPauseClusterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftScheduledAction_TargetAction_PauseCluster>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -641,7 +674,7 @@ impl RedshiftScheduledActionTargetActionEl {
     #[doc = "Set the field `resize_cluster`.\n"]
     pub fn set_resize_cluster(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftScheduledActionTargetActionElResizeClusterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftScheduledAction_TargetAction_ResizeCluster>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -657,7 +690,7 @@ impl RedshiftScheduledActionTargetActionEl {
     #[doc = "Set the field `resume_cluster`.\n"]
     pub fn set_resume_cluster(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftScheduledActionTargetActionElResumeClusterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftScheduledAction_TargetAction_ResumeCluster>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -671,8 +704,8 @@ impl RedshiftScheduledActionTargetActionEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftScheduledActionTargetActionEl {
-    type O = terrars::BlockAssignable<RedshiftScheduledActionTargetActionEl>;
+impl terrars::ToListMappable for RedshiftScheduledAction_TargetAction {
+    type O = terrars::BlockAssignable<RedshiftScheduledAction_TargetAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -683,11 +716,11 @@ impl terrars::ToListMappable for RedshiftScheduledActionTargetActionEl {
     }
 }
 
-pub struct BuildRedshiftScheduledActionTargetActionEl {}
+pub struct BuildRedshiftScheduledAction_TargetAction {}
 
-impl BuildRedshiftScheduledActionTargetActionEl {
-    pub fn build(self) -> RedshiftScheduledActionTargetActionEl {
-        RedshiftScheduledActionTargetActionEl {
+impl BuildRedshiftScheduledAction_TargetAction {
+    pub fn build(self) -> RedshiftScheduledAction_TargetAction {
+        RedshiftScheduledAction_TargetAction {
             pause_cluster: core::default::Default::default(),
             resize_cluster: core::default::Default::default(),
             resume_cluster: core::default::Default::default(),
@@ -696,42 +729,39 @@ impl BuildRedshiftScheduledActionTargetActionEl {
     }
 }
 
-pub struct RedshiftScheduledActionTargetActionElRef {
+#[allow(dead_code)]
+pub struct RedshiftScheduledAction_TargetActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftScheduledActionTargetActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftScheduledActionTargetActionElRef {
-        RedshiftScheduledActionTargetActionElRef {
+impl terrars::Ref for RedshiftScheduledAction_TargetActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftScheduledAction_TargetActionRef {
+        RedshiftScheduledAction_TargetActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftScheduledActionTargetActionElRef {
+impl RedshiftScheduledAction_TargetActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `pause_cluster` after provisioning.\n"]
-    pub fn pause_cluster(&self) -> terrars::ListRef<RedshiftScheduledActionTargetActionElPauseClusterElRef> {
+    pub fn pause_cluster(&self) -> terrars::ListRef<RedshiftScheduledAction_TargetAction_PauseClusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pause_cluster", self.base))
     }
 
     #[doc = "Get a reference to the value of field `resize_cluster` after provisioning.\n"]
-    pub fn resize_cluster(&self) -> terrars::ListRef<RedshiftScheduledActionTargetActionElResizeClusterElRef> {
+    pub fn resize_cluster(&self) -> terrars::ListRef<RedshiftScheduledAction_TargetAction_ResizeClusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resize_cluster", self.base))
     }
 
     #[doc = "Get a reference to the value of field `resume_cluster` after provisioning.\n"]
-    pub fn resume_cluster(&self) -> terrars::ListRef<RedshiftScheduledActionTargetActionElResumeClusterElRef> {
+    pub fn resume_cluster(&self) -> terrars::ListRef<RedshiftScheduledAction_TargetAction_ResumeClusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resume_cluster", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct RedshiftScheduledActionDynamic {
-    target_action: std::option::Option<terrars::DynamicBlock<RedshiftScheduledActionTargetActionEl>>,
 }

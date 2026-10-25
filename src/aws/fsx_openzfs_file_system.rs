@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FsxOpenzfsFileSystemData {
+struct FsxOpenzfsFileSystemData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,13 +30,29 @@ struct FsxOpenzfsFileSystemData {
     copy_tags_to_volumes: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     daily_automatic_backup_start_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     deployment_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint_ip_address_range: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    final_backup_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preferred_subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route_table_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_final_backup: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_capacity: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -48,18 +66,20 @@ struct FsxOpenzfsFileSystemData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weekly_maintenance_start_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disk_iops_configuration: std::option::Option<std::vec::Vec<FsxOpenzfsFileSystemDiskIopsConfigurationEl>>,
+    disk_iops_configuration: std::option::Option<std::vec::Vec<FsxOpenzfsFileSystem_DiskIopsConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    root_volume_configuration: std::option::Option<std::vec::Vec<FsxOpenzfsFileSystemRootVolumeConfigurationEl>>,
+    read_cache_configuration: std::option::Option<std::vec::Vec<FsxOpenzfsFileSystem_ReadCacheConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FsxOpenzfsFileSystemTimeoutsEl>,
+    root_volume_configuration: std::option::Option<std::vec::Vec<FsxOpenzfsFileSystem_RootVolumeConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<FsxOpenzfsFileSystem_Timeouts>,
     dynamic: FsxOpenzfsFileSystemDynamic,
 }
 
 struct FsxOpenzfsFileSystem_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FsxOpenzfsFileSystemData>,
+    data: std::cell::RefCell<FsxOpenzfsFileSystemData_>,
 }
 
 #[derive(Clone)]
@@ -192,6 +212,33 @@ impl FsxOpenzfsFileSystem {
         self
     }
 
+    #[doc = "Set the field `delete_options`.\n"]
+    pub fn set_delete_options(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().delete_options = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `endpoint_ip_address_range`.\n"]
+    pub fn set_endpoint_ip_address_range(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().endpoint_ip_address_range = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `final_backup_tags`.\n"]
+    pub fn set_final_backup_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().final_backup_tags = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -204,12 +251,46 @@ impl FsxOpenzfsFileSystem {
         self
     }
 
+    #[doc = "Set the field `network_type`.\n"]
+    pub fn set_network_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().network_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `preferred_subnet_id`.\n"]
+    pub fn set_preferred_subnet_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().preferred_subnet_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `route_table_ids`.\n"]
+    pub fn set_route_table_ids(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().route_table_ids = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().security_group_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `skip_final_backup`.\n"]
+    pub fn set_skip_final_backup(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_final_backup = std::option::Option::Some(v.into());
         self
     }
 
@@ -255,7 +336,7 @@ impl FsxOpenzfsFileSystem {
     #[doc = "Set the field `disk_iops_configuration`.\n"]
     pub fn set_disk_iops_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsFileSystemDiskIopsConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsFileSystem_DiskIopsConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -268,10 +349,26 @@ impl FsxOpenzfsFileSystem {
         self
     }
 
+    #[doc = "Set the field `read_cache_configuration`.\n"]
+    pub fn set_read_cache_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsFileSystem_ReadCacheConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().read_cache_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.read_cache_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `root_volume_configuration`.\n"]
     pub fn set_root_volume_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsFileSystemRootVolumeConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxOpenzfsFileSystem_RootVolumeConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -285,7 +382,7 @@ impl FsxOpenzfsFileSystem {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FsxOpenzfsFileSystemTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FsxOpenzfsFileSystem_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -326,6 +423,11 @@ impl FsxOpenzfsFileSystem {
         )
     }
 
+    #[doc = "Get a reference to the value of field `delete_options` after provisioning.\n"]
+    pub fn delete_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.delete_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `deployment_type` after provisioning.\n"]
     pub fn deployment_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deployment_type", self.extract_ref()))
@@ -334,6 +436,21 @@ impl FsxOpenzfsFileSystem {
     #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_ip_address` after provisioning.\n"]
+    pub fn endpoint_ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_ip_address", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_ip_address_range` after provisioning.\n"]
+    pub fn endpoint_ip_address_range(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_ip_address_range", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `final_backup_tags` after provisioning.\n"]
+    pub fn final_backup_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.final_backup_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -351,9 +468,25 @@ impl FsxOpenzfsFileSystem {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `preferred_subnet_id` after provisioning.\n"]
+    pub fn preferred_subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_subnet_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_volume_id` after provisioning.\n"]
@@ -361,9 +494,19 @@ impl FsxOpenzfsFileSystem {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_volume_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `route_table_ids` after provisioning.\n"]
+    pub fn route_table_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.route_table_ids", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_final_backup` after provisioning.\n"]
+    pub fn skip_final_backup(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_final_backup", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_capacity` after provisioning.\n"]
@@ -410,18 +553,23 @@ impl FsxOpenzfsFileSystem {
     }
 
     #[doc = "Get a reference to the value of field `disk_iops_configuration` after provisioning.\n"]
-    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystemDiskIopsConfigurationElRef> {
+    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystem_DiskIopsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_iops_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `read_cache_configuration` after provisioning.\n"]
+    pub fn read_cache_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystem_ReadCacheConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.read_cache_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_volume_configuration` after provisioning.\n"]
-    pub fn root_volume_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystemRootVolumeConfigurationElRef> {
+    pub fn root_volume_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystem_RootVolumeConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_volume_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxOpenzfsFileSystemTimeoutsElRef {
-        FsxOpenzfsFileSystemTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxOpenzfsFileSystem_TimeoutsRef {
+        FsxOpenzfsFileSystem_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -471,7 +619,7 @@ impl BuildFsxOpenzfsFileSystem {
         let out = FsxOpenzfsFileSystem(std::rc::Rc::new(FsxOpenzfsFileSystem_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FsxOpenzfsFileSystemData {
+            data: std::cell::RefCell::new(FsxOpenzfsFileSystemData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -482,10 +630,18 @@ impl BuildFsxOpenzfsFileSystem {
                 copy_tags_to_backups: core::default::Default::default(),
                 copy_tags_to_volumes: core::default::Default::default(),
                 daily_automatic_backup_start_time: core::default::Default::default(),
+                delete_options: core::default::Default::default(),
                 deployment_type: self.deployment_type,
+                endpoint_ip_address_range: core::default::Default::default(),
+                final_backup_tags: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
+                network_type: core::default::Default::default(),
+                preferred_subnet_id: core::default::Default::default(),
+                region: core::default::Default::default(),
+                route_table_ids: core::default::Default::default(),
                 security_group_ids: core::default::Default::default(),
+                skip_final_backup: core::default::Default::default(),
                 storage_capacity: core::default::Default::default(),
                 storage_type: core::default::Default::default(),
                 subnet_ids: self.subnet_ids,
@@ -494,6 +650,7 @@ impl BuildFsxOpenzfsFileSystem {
                 throughput_capacity: self.throughput_capacity,
                 weekly_maintenance_start_time: core::default::Default::default(),
                 disk_iops_configuration: core::default::Default::default(),
+                read_cache_configuration: core::default::Default::default(),
                 root_volume_configuration: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -563,6 +720,11 @@ impl FsxOpenzfsFileSystemRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `delete_options` after provisioning.\n"]
+    pub fn delete_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.delete_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `deployment_type` after provisioning.\n"]
     pub fn deployment_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deployment_type", self.extract_ref()))
@@ -571,6 +733,21 @@ impl FsxOpenzfsFileSystemRef {
     #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_ip_address` after provisioning.\n"]
+    pub fn endpoint_ip_address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_ip_address", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_ip_address_range` after provisioning.\n"]
+    pub fn endpoint_ip_address_range(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_ip_address_range", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `final_backup_tags` after provisioning.\n"]
+    pub fn final_backup_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.final_backup_tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -588,9 +765,25 @@ impl FsxOpenzfsFileSystemRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `preferred_subnet_id` after provisioning.\n"]
+    pub fn preferred_subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_subnet_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_volume_id` after provisioning.\n"]
@@ -598,9 +791,19 @@ impl FsxOpenzfsFileSystemRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_volume_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `route_table_ids` after provisioning.\n"]
+    pub fn route_table_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.route_table_ids", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_final_backup` after provisioning.\n"]
+    pub fn skip_final_backup(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_final_backup", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_capacity` after provisioning.\n"]
@@ -647,30 +850,46 @@ impl FsxOpenzfsFileSystemRef {
     }
 
     #[doc = "Get a reference to the value of field `disk_iops_configuration` after provisioning.\n"]
-    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystemDiskIopsConfigurationElRef> {
+    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystem_DiskIopsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_iops_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `read_cache_configuration` after provisioning.\n"]
+    pub fn read_cache_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystem_ReadCacheConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.read_cache_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_volume_configuration` after provisioning.\n"]
-    pub fn root_volume_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystemRootVolumeConfigurationElRef> {
+    pub fn root_volume_configuration(&self) -> terrars::ListRef<FsxOpenzfsFileSystem_RootVolumeConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_volume_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxOpenzfsFileSystemTimeoutsElRef {
-        FsxOpenzfsFileSystemTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxOpenzfsFileSystem_TimeoutsRef {
+        FsxOpenzfsFileSystem_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FsxOpenzfsFileSystemDynamic {
+    disk_iops_configuration: std::option::Option<terrars::DynamicBlock<FsxOpenzfsFileSystem_DiskIopsConfiguration>>,
+    read_cache_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<FsxOpenzfsFileSystem_ReadCacheConfiguration>>,
+    root_volume_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<FsxOpenzfsFileSystem_RootVolumeConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct FsxOpenzfsFileSystemDiskIopsConfigurationEl {
+pub struct FsxOpenzfsFileSystem_DiskIopsConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     iops: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxOpenzfsFileSystemDiskIopsConfigurationEl {
+impl FsxOpenzfsFileSystem_DiskIopsConfiguration {
     #[doc = "Set the field `iops`.\n"]
     pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.iops = std::option::Option::Some(v.into());
@@ -684,8 +903,8 @@ impl FsxOpenzfsFileSystemDiskIopsConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOpenzfsFileSystemDiskIopsConfigurationEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsFileSystemDiskIopsConfigurationEl>;
+impl terrars::ToListMappable for FsxOpenzfsFileSystem_DiskIopsConfiguration {
+    type O = terrars::BlockAssignable<FsxOpenzfsFileSystem_DiskIopsConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -696,35 +915,34 @@ impl terrars::ToListMappable for FsxOpenzfsFileSystemDiskIopsConfigurationEl {
     }
 }
 
-pub struct BuildFsxOpenzfsFileSystemDiskIopsConfigurationEl {}
+pub struct BuildFsxOpenzfsFileSystem_DiskIopsConfiguration {}
 
-impl BuildFsxOpenzfsFileSystemDiskIopsConfigurationEl {
-    pub fn build(self) -> FsxOpenzfsFileSystemDiskIopsConfigurationEl {
-        FsxOpenzfsFileSystemDiskIopsConfigurationEl {
+impl BuildFsxOpenzfsFileSystem_DiskIopsConfiguration {
+    pub fn build(self) -> FsxOpenzfsFileSystem_DiskIopsConfiguration {
+        FsxOpenzfsFileSystem_DiskIopsConfiguration {
             iops: core::default::Default::default(),
             mode: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOpenzfsFileSystemDiskIopsConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsFileSystem_DiskIopsConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsFileSystemDiskIopsConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> FsxOpenzfsFileSystemDiskIopsConfigurationElRef {
-        FsxOpenzfsFileSystemDiskIopsConfigurationElRef {
+impl terrars::Ref for FsxOpenzfsFileSystem_DiskIopsConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsFileSystem_DiskIopsConfigurationRef {
+        FsxOpenzfsFileSystem_DiskIopsConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsFileSystemDiskIopsConfigurationElRef {
+impl FsxOpenzfsFileSystem_DiskIopsConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -741,16 +959,29 @@ impl FsxOpenzfsFileSystemDiskIopsConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl {
-    clients: terrars::PrimField<std::string::String>,
-    options: terrars::ListField<terrars::PrimField<std::string::String>>,
+pub struct FsxOpenzfsFileSystem_ReadCacheConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sizing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl { }
+impl FsxOpenzfsFileSystem_ReadCacheConfiguration {
+    #[doc = "Set the field `size`.\n"]
+    pub fn set_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.size = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl {
-    type O =
-        terrars::BlockAssignable<FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl>;
+    #[doc = "Set the field `sizing_mode`.\n"]
+    pub fn set_sizing_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.sizing_mode = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for FsxOpenzfsFileSystem_ReadCacheConfiguration {
+    type O = terrars::BlockAssignable<FsxOpenzfsFileSystem_ReadCacheConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -761,40 +992,108 @@ impl terrars::ToListMappable for FsxOpenzfsFileSystemRootVolumeConfigurationElNf
     }
 }
 
-pub struct BuildFsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl {
-    #[doc = ""]
-    pub clients: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub options: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
+pub struct BuildFsxOpenzfsFileSystem_ReadCacheConfiguration {}
 
-impl BuildFsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl {
-    pub fn build(self) -> FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl {
-        FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl {
-            clients: self.clients,
-            options: self.options,
+impl BuildFsxOpenzfsFileSystem_ReadCacheConfiguration {
+    pub fn build(self) -> FsxOpenzfsFileSystem_ReadCacheConfiguration {
+        FsxOpenzfsFileSystem_ReadCacheConfiguration {
+            size: core::default::Default::default(),
+            sizing_mode: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsFileSystem_ReadCacheConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsElRef {
+impl terrars::Ref for FsxOpenzfsFileSystem_ReadCacheConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsElRef {
-        FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsElRef {
+    ) -> FsxOpenzfsFileSystem_ReadCacheConfigurationRef {
+        FsxOpenzfsFileSystem_ReadCacheConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsElRef {
+impl FsxOpenzfsFileSystem_ReadCacheConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `size` after provisioning.\n"]
+    pub fn size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `sizing_mode` after provisioning.\n"]
+    pub fn sizing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sizing_mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations {
+    clients: terrars::PrimField<std::string::String>,
+    options: terrars::ListField<terrars::PrimField<std::string::String>>,
+}
+
+impl FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations { }
+
+impl terrars::ToListMappable for FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations {
+    type O = terrars::BlockAssignable<FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations {
+    #[doc = ""]
+    pub clients: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub options: terrars::ListField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildFsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations {
+    pub fn build(self) -> FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations {
+        FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations {
+            clients: self.clients,
+            options: self.options,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurationsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurationsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurationsRef {
+        FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurationsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -811,22 +1110,22 @@ impl FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfiguratio
 }
 
 #[derive(Serialize, Default)]
-struct FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElDynamic {
+struct FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExportsDynamic {
     client_configurations: std
     ::option
-    ::Option<terrars::DynamicBlock<FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl>>,
+    ::Option<terrars::DynamicBlock<FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations>>,
 }
 
 #[derive(Serialize)]
-pub struct FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl {
+pub struct FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_configurations: std
     ::option
-    ::Option<std::vec::Vec<FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl>>,
-    dynamic: FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElDynamic,
+    ::Option<std::vec::Vec<FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations>>,
+    dynamic: FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExportsDynamic,
 }
 
-impl FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl {
+impl FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports {
     #[doc = "Set the field `client_configurations`.\n"]
     pub fn set_client_configurations(
         mut self,
@@ -838,7 +1137,7 @@ impl FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElClientConfigurationsEl,
+                            FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports_ClientConfigurations,
                         >,
                     >,
     ) -> Self {
@@ -854,8 +1153,8 @@ impl FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl>;
+impl terrars::ToListMappable for FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports {
+    type O = terrars::BlockAssignable<FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -866,52 +1165,54 @@ impl terrars::ToListMappable for FsxOpenzfsFileSystemRootVolumeConfigurationElNf
     }
 }
 
-pub struct BuildFsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl {}
+pub struct BuildFsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports {}
 
-impl BuildFsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl {
-    pub fn build(self) -> FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl {
-        FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl {
+impl BuildFsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports {
+    pub fn build(self) -> FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports {
+        FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports {
             client_configurations: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExportsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElRef {
+impl terrars::Ref for FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExportsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElRef {
-        FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElRef {
+    ) -> FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExportsRef {
+        FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExportsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElRef {
+impl FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExportsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl {
+pub struct FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas {
     id: terrars::PrimField<f64>,
     storage_capacity_quota_gib: terrars::PrimField<f64>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl { }
+impl FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas { }
 
-impl terrars::ToListMappable for FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl>;
+impl terrars::ToListMappable for FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas {
+    type O = terrars::BlockAssignable<FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -922,7 +1223,7 @@ impl terrars::ToListMappable for FsxOpenzfsFileSystemRootVolumeConfigurationElUs
     }
 }
 
-pub struct BuildFsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl {
+pub struct BuildFsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas {
     #[doc = ""]
     pub id: terrars::PrimField<f64>,
     #[doc = ""]
@@ -931,9 +1232,9 @@ pub struct BuildFsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasE
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl {
-    pub fn build(self) -> FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl {
-        FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl {
+impl BuildFsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas {
+    pub fn build(self) -> FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas {
+        FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas {
             id: self.id,
             storage_capacity_quota_gib: self.storage_capacity_quota_gib,
             type_: self.type_,
@@ -941,24 +1242,26 @@ impl BuildFsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl {
     }
 }
 
-pub struct FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotasRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasElRef {
+impl terrars::Ref for FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotasRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasElRef {
-        FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasElRef {
+    ) -> FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotasRef {
+        FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotasRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasElRef {
+impl FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotasRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -980,17 +1283,15 @@ impl FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasElRef {
 }
 
 #[derive(Serialize, Default)]
-struct FsxOpenzfsFileSystemRootVolumeConfigurationElDynamic {
-    nfs_exports: std
-    ::option
-    ::Option<terrars::DynamicBlock<FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl>>,
+struct FsxOpenzfsFileSystem_RootVolumeConfigurationDynamic {
+    nfs_exports: std::option::Option<terrars::DynamicBlock<FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports>>,
     user_and_group_quotas: std
     ::option
-    ::Option<terrars::DynamicBlock<FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl>>,
+    ::Option<terrars::DynamicBlock<FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas>>,
 }
 
 #[derive(Serialize)]
-pub struct FsxOpenzfsFileSystemRootVolumeConfigurationEl {
+pub struct FsxOpenzfsFileSystem_RootVolumeConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     copy_tags_to_snapshots: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1000,15 +1301,15 @@ pub struct FsxOpenzfsFileSystemRootVolumeConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     record_size_kib: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nfs_exports: std::option::Option<std::vec::Vec<FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl>>,
+    nfs_exports: std::option::Option<std::vec::Vec<FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_and_group_quotas: std
     ::option
-    ::Option<std::vec::Vec<FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl>>,
-    dynamic: FsxOpenzfsFileSystemRootVolumeConfigurationElDynamic,
+    ::Option<std::vec::Vec<FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas>>,
+    dynamic: FsxOpenzfsFileSystem_RootVolumeConfigurationDynamic,
 }
 
-impl FsxOpenzfsFileSystemRootVolumeConfigurationEl {
+impl FsxOpenzfsFileSystem_RootVolumeConfiguration {
     #[doc = "Set the field `copy_tags_to_snapshots`.\n"]
     pub fn set_copy_tags_to_snapshots(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.copy_tags_to_snapshots = std::option::Option::Some(v.into());
@@ -1044,7 +1345,7 @@ impl FsxOpenzfsFileSystemRootVolumeConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsEl>>,
+                    ::Into<terrars::BlockAssignable<FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExports>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1065,9 +1366,7 @@ impl FsxOpenzfsFileSystemRootVolumeConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<FsxOpenzfsFileSystemRootVolumeConfigurationElUserAndGroupQuotasEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<FsxOpenzfsFileSystem_RootVolumeConfiguration_UserAndGroupQuotas>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1081,8 +1380,8 @@ impl FsxOpenzfsFileSystemRootVolumeConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOpenzfsFileSystemRootVolumeConfigurationEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsFileSystemRootVolumeConfigurationEl>;
+impl terrars::ToListMappable for FsxOpenzfsFileSystem_RootVolumeConfiguration {
+    type O = terrars::BlockAssignable<FsxOpenzfsFileSystem_RootVolumeConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1093,11 +1392,11 @@ impl terrars::ToListMappable for FsxOpenzfsFileSystemRootVolumeConfigurationEl {
     }
 }
 
-pub struct BuildFsxOpenzfsFileSystemRootVolumeConfigurationEl {}
+pub struct BuildFsxOpenzfsFileSystem_RootVolumeConfiguration {}
 
-impl BuildFsxOpenzfsFileSystemRootVolumeConfigurationEl {
-    pub fn build(self) -> FsxOpenzfsFileSystemRootVolumeConfigurationEl {
-        FsxOpenzfsFileSystemRootVolumeConfigurationEl {
+impl BuildFsxOpenzfsFileSystem_RootVolumeConfiguration {
+    pub fn build(self) -> FsxOpenzfsFileSystem_RootVolumeConfiguration {
+        FsxOpenzfsFileSystem_RootVolumeConfiguration {
             copy_tags_to_snapshots: core::default::Default::default(),
             data_compression_type: core::default::Default::default(),
             read_only: core::default::Default::default(),
@@ -1109,24 +1408,26 @@ impl BuildFsxOpenzfsFileSystemRootVolumeConfigurationEl {
     }
 }
 
-pub struct FsxOpenzfsFileSystemRootVolumeConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsFileSystem_RootVolumeConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsFileSystemRootVolumeConfigurationElRef {
+impl terrars::Ref for FsxOpenzfsFileSystem_RootVolumeConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxOpenzfsFileSystemRootVolumeConfigurationElRef {
-        FsxOpenzfsFileSystemRootVolumeConfigurationElRef {
+    ) -> FsxOpenzfsFileSystem_RootVolumeConfigurationRef {
+        FsxOpenzfsFileSystem_RootVolumeConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsFileSystemRootVolumeConfigurationElRef {
+impl FsxOpenzfsFileSystem_RootVolumeConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1152,13 +1453,13 @@ impl FsxOpenzfsFileSystemRootVolumeConfigurationElRef {
     }
 
     #[doc = "Get a reference to the value of field `nfs_exports` after provisioning.\n"]
-    pub fn nfs_exports(&self) -> terrars::ListRef<FsxOpenzfsFileSystemRootVolumeConfigurationElNfsExportsElRef> {
+    pub fn nfs_exports(&self) -> terrars::ListRef<FsxOpenzfsFileSystem_RootVolumeConfiguration_NfsExportsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nfs_exports", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct FsxOpenzfsFileSystemTimeoutsEl {
+pub struct FsxOpenzfsFileSystem_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1167,7 +1468,7 @@ pub struct FsxOpenzfsFileSystemTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxOpenzfsFileSystemTimeoutsEl {
+impl FsxOpenzfsFileSystem_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1187,8 +1488,8 @@ impl FsxOpenzfsFileSystemTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOpenzfsFileSystemTimeoutsEl {
-    type O = terrars::BlockAssignable<FsxOpenzfsFileSystemTimeoutsEl>;
+impl terrars::ToListMappable for FsxOpenzfsFileSystem_Timeouts {
+    type O = terrars::BlockAssignable<FsxOpenzfsFileSystem_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1199,11 +1500,11 @@ impl terrars::ToListMappable for FsxOpenzfsFileSystemTimeoutsEl {
     }
 }
 
-pub struct BuildFsxOpenzfsFileSystemTimeoutsEl {}
+pub struct BuildFsxOpenzfsFileSystem_Timeouts {}
 
-impl BuildFsxOpenzfsFileSystemTimeoutsEl {
-    pub fn build(self) -> FsxOpenzfsFileSystemTimeoutsEl {
-        FsxOpenzfsFileSystemTimeoutsEl {
+impl BuildFsxOpenzfsFileSystem_Timeouts {
+    pub fn build(self) -> FsxOpenzfsFileSystem_Timeouts {
+        FsxOpenzfsFileSystem_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1211,21 +1512,23 @@ impl BuildFsxOpenzfsFileSystemTimeoutsEl {
     }
 }
 
-pub struct FsxOpenzfsFileSystemTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FsxOpenzfsFileSystem_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOpenzfsFileSystemTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsFileSystemTimeoutsElRef {
-        FsxOpenzfsFileSystemTimeoutsElRef {
+impl terrars::Ref for FsxOpenzfsFileSystem_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOpenzfsFileSystem_TimeoutsRef {
+        FsxOpenzfsFileSystem_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOpenzfsFileSystemTimeoutsElRef {
+impl FsxOpenzfsFileSystem_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1244,12 +1547,4 @@ impl FsxOpenzfsFileSystemTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FsxOpenzfsFileSystemDynamic {
-    disk_iops_configuration: std::option::Option<terrars::DynamicBlock<FsxOpenzfsFileSystemDiskIopsConfigurationEl>>,
-    root_volume_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<FsxOpenzfsFileSystemRootVolumeConfigurationEl>>,
 }

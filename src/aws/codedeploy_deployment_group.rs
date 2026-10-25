@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodedeployDeploymentGroupData {
+struct CodedeployDeploymentGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,42 +28,46 @@ struct CodedeployDeploymentGroupData {
     deployment_group_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    outdated_instances_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     service_role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alarm_configuration: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupAlarmConfigurationEl>>,
+    termination_hook_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_rollback_configuration: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupAutoRollbackConfigurationEl>>,
+    alarm_configuration: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_AlarmConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    blue_green_deployment_config: std
-    ::option
-    ::Option<std::vec::Vec<CodedeployDeploymentGroupBlueGreenDeploymentConfigEl>>,
+    auto_rollback_configuration: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_AutoRollbackConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    deployment_style: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupDeploymentStyleEl>>,
+    blue_green_deployment_config: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_BlueGreenDeploymentConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ec2_tag_filter: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupEc2TagFilterEl>>,
+    deployment_style: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_DeploymentStyle>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ec2_tag_set: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupEc2TagSetEl>>,
+    ec2_tag_filter: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_Ec2TagFilter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ecs_service: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupEcsServiceEl>>,
+    ec2_tag_set: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_Ec2TagSet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    load_balancer_info: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupLoadBalancerInfoEl>>,
+    ecs_service: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_EcsService>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_balancer_info: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_LoadBalancerInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     on_premises_instance_tag_filter: std
     ::option
-    ::Option<std::vec::Vec<CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl>>,
+    ::Option<std::vec::Vec<CodedeployDeploymentGroup_OnPremisesInstanceTagFilter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trigger_configuration: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupTriggerConfigurationEl>>,
+    trigger_configuration: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_TriggerConfiguration>>,
     dynamic: CodedeployDeploymentGroupDynamic,
 }
 
 struct CodedeployDeploymentGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodedeployDeploymentGroupData>,
+    data: std::cell::RefCell<CodedeployDeploymentGroupData_>,
 }
 
 #[derive(Clone)]
@@ -185,6 +191,22 @@ impl CodedeployDeploymentGroup {
         self
     }
 
+    #[doc = "Set the field `outdated_instances_strategy`.\n"]
+    pub fn set_outdated_instances_strategy(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().outdated_instances_strategy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -203,10 +225,16 @@ impl CodedeployDeploymentGroup {
         self
     }
 
+    #[doc = "Set the field `termination_hook_enabled`.\n"]
+    pub fn set_termination_hook_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().termination_hook_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `alarm_configuration`.\n"]
     pub fn set_alarm_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupAlarmConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_AlarmConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -222,7 +250,7 @@ impl CodedeployDeploymentGroup {
     #[doc = "Set the field `auto_rollback_configuration`.\n"]
     pub fn set_auto_rollback_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupAutoRollbackConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_AutoRollbackConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -238,7 +266,7 @@ impl CodedeployDeploymentGroup {
     #[doc = "Set the field `blue_green_deployment_config`.\n"]
     pub fn set_blue_green_deployment_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupBlueGreenDeploymentConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_BlueGreenDeploymentConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -254,7 +282,7 @@ impl CodedeployDeploymentGroup {
     #[doc = "Set the field `deployment_style`.\n"]
     pub fn set_deployment_style(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupDeploymentStyleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_DeploymentStyle>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -270,7 +298,7 @@ impl CodedeployDeploymentGroup {
     #[doc = "Set the field `ec2_tag_filter`.\n"]
     pub fn set_ec2_tag_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupEc2TagFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_Ec2TagFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -286,7 +314,7 @@ impl CodedeployDeploymentGroup {
     #[doc = "Set the field `ec2_tag_set`.\n"]
     pub fn set_ec2_tag_set(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupEc2TagSetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_Ec2TagSet>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -302,7 +330,7 @@ impl CodedeployDeploymentGroup {
     #[doc = "Set the field `ecs_service`.\n"]
     pub fn set_ecs_service(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupEcsServiceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_EcsService>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -318,7 +346,7 @@ impl CodedeployDeploymentGroup {
     #[doc = "Set the field `load_balancer_info`.\n"]
     pub fn set_load_balancer_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -334,7 +362,7 @@ impl CodedeployDeploymentGroup {
     #[doc = "Set the field `on_premises_instance_tag_filter`.\n"]
     pub fn set_on_premises_instance_tag_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_OnPremisesInstanceTagFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -350,7 +378,7 @@ impl CodedeployDeploymentGroup {
     #[doc = "Set the field `trigger_configuration`.\n"]
     pub fn set_trigger_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupTriggerConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_TriggerConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -403,6 +431,17 @@ impl CodedeployDeploymentGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `outdated_instances_strategy` after provisioning.\n"]
+    pub fn outdated_instances_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.outdated_instances_strategy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_role_arn` after provisioning.\n"]
     pub fn service_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role_arn", self.extract_ref()))
@@ -418,37 +457,42 @@ impl CodedeployDeploymentGroup {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `termination_hook_enabled` after provisioning.\n"]
+    pub fn termination_hook_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.termination_hook_enabled", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `alarm_configuration` after provisioning.\n"]
-    pub fn alarm_configuration(&self) -> terrars::ListRef<CodedeployDeploymentGroupAlarmConfigurationElRef> {
+    pub fn alarm_configuration(&self) -> terrars::ListRef<CodedeployDeploymentGroup_AlarmConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alarm_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `auto_rollback_configuration` after provisioning.\n"]
     pub fn auto_rollback_configuration(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupAutoRollbackConfigurationElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_AutoRollbackConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_rollback_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `blue_green_deployment_config` after provisioning.\n"]
     pub fn blue_green_deployment_config(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_BlueGreenDeploymentConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.blue_green_deployment_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `deployment_style` after provisioning.\n"]
-    pub fn deployment_style(&self) -> terrars::ListRef<CodedeployDeploymentGroupDeploymentStyleElRef> {
+    pub fn deployment_style(&self) -> terrars::ListRef<CodedeployDeploymentGroup_DeploymentStyleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployment_style", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ecs_service` after provisioning.\n"]
-    pub fn ecs_service(&self) -> terrars::ListRef<CodedeployDeploymentGroupEcsServiceElRef> {
+    pub fn ecs_service(&self) -> terrars::ListRef<CodedeployDeploymentGroup_EcsServiceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ecs_service", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `load_balancer_info` after provisioning.\n"]
-    pub fn load_balancer_info(&self) -> terrars::ListRef<CodedeployDeploymentGroupLoadBalancerInfoElRef> {
+    pub fn load_balancer_info(&self) -> terrars::ListRef<CodedeployDeploymentGroup_LoadBalancerInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancer_info", self.extract_ref()))
     }
 }
@@ -499,7 +543,7 @@ impl BuildCodedeployDeploymentGroup {
         let out = CodedeployDeploymentGroup(std::rc::Rc::new(CodedeployDeploymentGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodedeployDeploymentGroupData {
+            data: std::cell::RefCell::new(CodedeployDeploymentGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -510,9 +554,12 @@ impl BuildCodedeployDeploymentGroup {
                 deployment_config_name: core::default::Default::default(),
                 deployment_group_name: self.deployment_group_name,
                 id: core::default::Default::default(),
+                outdated_instances_strategy: core::default::Default::default(),
+                region: core::default::Default::default(),
                 service_role_arn: self.service_role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                termination_hook_enabled: core::default::Default::default(),
                 alarm_configuration: core::default::Default::default(),
                 auto_rollback_configuration: core::default::Default::default(),
                 blue_green_deployment_config: core::default::Default::default(),
@@ -594,6 +641,17 @@ impl CodedeployDeploymentGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `outdated_instances_strategy` after provisioning.\n"]
+    pub fn outdated_instances_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.outdated_instances_strategy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_role_arn` after provisioning.\n"]
     pub fn service_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role_arn", self.extract_ref()))
@@ -609,43 +667,70 @@ impl CodedeployDeploymentGroupRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `termination_hook_enabled` after provisioning.\n"]
+    pub fn termination_hook_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.termination_hook_enabled", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `alarm_configuration` after provisioning.\n"]
-    pub fn alarm_configuration(&self) -> terrars::ListRef<CodedeployDeploymentGroupAlarmConfigurationElRef> {
+    pub fn alarm_configuration(&self) -> terrars::ListRef<CodedeployDeploymentGroup_AlarmConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alarm_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `auto_rollback_configuration` after provisioning.\n"]
     pub fn auto_rollback_configuration(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupAutoRollbackConfigurationElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_AutoRollbackConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_rollback_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `blue_green_deployment_config` after provisioning.\n"]
     pub fn blue_green_deployment_config(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_BlueGreenDeploymentConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.blue_green_deployment_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `deployment_style` after provisioning.\n"]
-    pub fn deployment_style(&self) -> terrars::ListRef<CodedeployDeploymentGroupDeploymentStyleElRef> {
+    pub fn deployment_style(&self) -> terrars::ListRef<CodedeployDeploymentGroup_DeploymentStyleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployment_style", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ecs_service` after provisioning.\n"]
-    pub fn ecs_service(&self) -> terrars::ListRef<CodedeployDeploymentGroupEcsServiceElRef> {
+    pub fn ecs_service(&self) -> terrars::ListRef<CodedeployDeploymentGroup_EcsServiceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ecs_service", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `load_balancer_info` after provisioning.\n"]
-    pub fn load_balancer_info(&self) -> terrars::ListRef<CodedeployDeploymentGroupLoadBalancerInfoElRef> {
+    pub fn load_balancer_info(&self) -> terrars::ListRef<CodedeployDeploymentGroup_LoadBalancerInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.load_balancer_info", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CodedeployDeploymentGroupDynamic {
+    alarm_configuration: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_AlarmConfiguration>>,
+    auto_rollback_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_AutoRollbackConfiguration>>,
+    blue_green_deployment_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_BlueGreenDeploymentConfig>>,
+    deployment_style: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_DeploymentStyle>>,
+    ec2_tag_filter: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_Ec2TagFilter>>,
+    ec2_tag_set: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_Ec2TagSet>>,
+    ecs_service: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_EcsService>>,
+    load_balancer_info: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_LoadBalancerInfo>>,
+    on_premises_instance_tag_filter: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_OnPremisesInstanceTagFilter>>,
+    trigger_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_TriggerConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupAlarmConfigurationEl {
+pub struct CodedeployDeploymentGroup_AlarmConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     alarms: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -654,7 +739,7 @@ pub struct CodedeployDeploymentGroupAlarmConfigurationEl {
     ignore_poll_alarm_failure: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl CodedeployDeploymentGroupAlarmConfigurationEl {
+impl CodedeployDeploymentGroup_AlarmConfiguration {
     #[doc = "Set the field `alarms`.\n"]
     pub fn set_alarms(
         mut self,
@@ -677,8 +762,8 @@ impl CodedeployDeploymentGroupAlarmConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupAlarmConfigurationEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupAlarmConfigurationEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_AlarmConfiguration {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_AlarmConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -689,11 +774,11 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupAlarmConfigurationEl {
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupAlarmConfigurationEl {}
+pub struct BuildCodedeployDeploymentGroup_AlarmConfiguration {}
 
-impl BuildCodedeployDeploymentGroupAlarmConfigurationEl {
-    pub fn build(self) -> CodedeployDeploymentGroupAlarmConfigurationEl {
-        CodedeployDeploymentGroupAlarmConfigurationEl {
+impl BuildCodedeployDeploymentGroup_AlarmConfiguration {
+    pub fn build(self) -> CodedeployDeploymentGroup_AlarmConfiguration {
+        CodedeployDeploymentGroup_AlarmConfiguration {
             alarms: core::default::Default::default(),
             enabled: core::default::Default::default(),
             ignore_poll_alarm_failure: core::default::Default::default(),
@@ -701,24 +786,26 @@ impl BuildCodedeployDeploymentGroupAlarmConfigurationEl {
     }
 }
 
-pub struct CodedeployDeploymentGroupAlarmConfigurationElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_AlarmConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupAlarmConfigurationElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_AlarmConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupAlarmConfigurationElRef {
-        CodedeployDeploymentGroupAlarmConfigurationElRef {
+    ) -> CodedeployDeploymentGroup_AlarmConfigurationRef {
+        CodedeployDeploymentGroup_AlarmConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupAlarmConfigurationElRef {
+impl CodedeployDeploymentGroup_AlarmConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -740,14 +827,14 @@ impl CodedeployDeploymentGroupAlarmConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupAutoRollbackConfigurationEl {
+pub struct CodedeployDeploymentGroup_AutoRollbackConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     events: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CodedeployDeploymentGroupAutoRollbackConfigurationEl {
+impl CodedeployDeploymentGroup_AutoRollbackConfiguration {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -764,8 +851,8 @@ impl CodedeployDeploymentGroupAutoRollbackConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupAutoRollbackConfigurationEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupAutoRollbackConfigurationEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_AutoRollbackConfiguration {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_AutoRollbackConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -776,35 +863,37 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupAutoRollbackConfigurat
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupAutoRollbackConfigurationEl {}
+pub struct BuildCodedeployDeploymentGroup_AutoRollbackConfiguration {}
 
-impl BuildCodedeployDeploymentGroupAutoRollbackConfigurationEl {
-    pub fn build(self) -> CodedeployDeploymentGroupAutoRollbackConfigurationEl {
-        CodedeployDeploymentGroupAutoRollbackConfigurationEl {
+impl BuildCodedeployDeploymentGroup_AutoRollbackConfiguration {
+    pub fn build(self) -> CodedeployDeploymentGroup_AutoRollbackConfiguration {
+        CodedeployDeploymentGroup_AutoRollbackConfiguration {
             enabled: core::default::Default::default(),
             events: core::default::Default::default(),
         }
     }
 }
 
-pub struct CodedeployDeploymentGroupAutoRollbackConfigurationElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_AutoRollbackConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupAutoRollbackConfigurationElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_AutoRollbackConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupAutoRollbackConfigurationElRef {
-        CodedeployDeploymentGroupAutoRollbackConfigurationElRef {
+    ) -> CodedeployDeploymentGroup_AutoRollbackConfigurationRef {
+        CodedeployDeploymentGroup_AutoRollbackConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupAutoRollbackConfigurationElRef {
+impl CodedeployDeploymentGroup_AutoRollbackConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -821,14 +910,14 @@ impl CodedeployDeploymentGroupAutoRollbackConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl {
+pub struct CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action_on_timeout: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_time_in_minutes: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl {
+impl CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption {
     #[doc = "Set the field `action_on_timeout`.\n"]
     pub fn set_action_on_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.action_on_timeout = std::option::Option::Some(v.into());
@@ -842,8 +931,8 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -854,35 +943,37 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupBlueGreenDeploymentCon
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl {}
+pub struct BuildCodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption {}
 
-impl BuildCodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl {
-    pub fn build(self) -> CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl {
-        CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl {
+impl BuildCodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption {
+    pub fn build(self) -> CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption {
+        CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption {
             action_on_timeout: core::default::Default::default(),
             wait_time_in_minutes: core::default::Default::default(),
         }
     }
 }
 
-pub struct CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionElRef {
-        CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionElRef {
+    ) -> CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOptionRef {
+        CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionElRef {
+impl CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -899,12 +990,12 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl {
+pub struct CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl {
+impl CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.action = std::option::Option::Some(v.into());
@@ -912,9 +1003,9 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningO
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl {
+impl terrars::ToListMappable for CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption {
     type O =
-        terrars::BlockAssignable<CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl>;
+        terrars::BlockAssignable<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -925,34 +1016,36 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupBlueGreenDeploymentCon
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl {}
+pub struct BuildCodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption {}
 
-impl BuildCodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl {
-    pub fn build(self) -> CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl {
-        CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl {
+impl BuildCodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption {
+    pub fn build(self) -> CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption {
+        CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption {
             action: core::default::Default::default(),
         }
     }
 }
 
-pub struct CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionElRef {
-        CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionElRef {
+    ) -> CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOptionRef {
+        CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionElRef {
+impl CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -964,14 +1057,14 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningO
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl {
+pub struct CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     termination_wait_time_in_minutes: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl {
+impl CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.action = std::option::Option::Some(v.into());
@@ -986,11 +1079,11 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesO
 }
 
 impl terrars
-::ToListMappable for CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl {
+::ToListMappable for CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess {
     type O =
         terrars
         ::BlockAssignable<
-            CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl,
+            CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1002,38 +1095,40 @@ impl terrars
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl {}
+pub struct BuildCodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess {}
 
-impl BuildCodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl {
+impl BuildCodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess {
     pub fn build(
         self,
-    ) -> CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl {
-        CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl {
+    ) -> CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess {
+        CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess {
             action: core::default::Default::default(),
             termination_wait_time_in_minutes: core::default::Default::default(),
         }
     }
 }
 
-pub struct CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessElRef {
+::Ref for CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccessRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessElRef {
-        CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessElRef {
+    ) -> CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccessRef {
+        CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessElRef {
+impl CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1050,45 +1145,41 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesO
 }
 
 #[derive(Serialize, Default)]
-struct CodedeployDeploymentGroupBlueGreenDeploymentConfigElDynamic {
+struct CodedeployDeploymentGroup_BlueGreenDeploymentConfigDynamic {
     deployment_ready_option: std
     ::option
-    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl>>,
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption>>,
     green_fleet_provisioning_option: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl>,
-    >,
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption>>,
     terminate_blue_instances_on_deployment_success: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl,
-        >,
+        ::DynamicBlock<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
+pub struct CodedeployDeploymentGroup_BlueGreenDeploymentConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deployment_ready_option: std
     ::option
-    ::Option<std::vec::Vec<CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl>>,
+    ::Option<std::vec::Vec<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     green_fleet_provisioning_option: std
     ::option
-    ::Option<std::vec::Vec<CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl>>,
+    ::Option<std::vec::Vec<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     terminate_blue_instances_on_deployment_success: std
     ::option
     ::Option<
-        std::vec::Vec<CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl>,
+        std::vec::Vec<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess>,
     >,
-    dynamic: CodedeployDeploymentGroupBlueGreenDeploymentConfigElDynamic,
+    dynamic: CodedeployDeploymentGroup_BlueGreenDeploymentConfigDynamic,
 }
 
-impl CodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
+impl CodedeployDeploymentGroup_BlueGreenDeploymentConfig {
     #[doc = "Set the field `deployment_ready_option`.\n"]
     pub fn set_deployment_ready_option(
         mut self,
@@ -1099,7 +1190,7 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionEl>,
+                        ::BlockAssignable<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOption>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1124,7 +1215,7 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionEl,
+                            CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOption,
                         >,
                     >,
     ) -> Self {
@@ -1150,7 +1241,7 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessEl,
+                            CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccess,
                         >,
                     >,
     ) -> Self {
@@ -1166,8 +1257,8 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupBlueGreenDeploymentConfigEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_BlueGreenDeploymentConfig {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_BlueGreenDeploymentConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1178,11 +1269,11 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupBlueGreenDeploymentCon
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupBlueGreenDeploymentConfigEl {}
+pub struct BuildCodedeployDeploymentGroup_BlueGreenDeploymentConfig {}
 
-impl BuildCodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
-    pub fn build(self) -> CodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
-        CodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
+impl BuildCodedeployDeploymentGroup_BlueGreenDeploymentConfig {
+    pub fn build(self) -> CodedeployDeploymentGroup_BlueGreenDeploymentConfig {
+        CodedeployDeploymentGroup_BlueGreenDeploymentConfig {
             deployment_ready_option: core::default::Default::default(),
             green_fleet_provisioning_option: core::default::Default::default(),
             terminate_blue_instances_on_deployment_success: core::default::Default::default(),
@@ -1191,24 +1282,26 @@ impl BuildCodedeployDeploymentGroupBlueGreenDeploymentConfigEl {
     }
 }
 
-pub struct CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_BlueGreenDeploymentConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_BlueGreenDeploymentConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef {
-        CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef {
+    ) -> CodedeployDeploymentGroup_BlueGreenDeploymentConfigRef {
+        CodedeployDeploymentGroup_BlueGreenDeploymentConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef {
+impl CodedeployDeploymentGroup_BlueGreenDeploymentConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1216,14 +1309,14 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef {
     #[doc = "Get a reference to the value of field `deployment_ready_option` after provisioning.\n"]
     pub fn deployment_ready_option(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupBlueGreenDeploymentConfigElDeploymentReadyOptionElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_DeploymentReadyOptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deployment_ready_option", self.base))
     }
 
     #[doc = "Get a reference to the value of field `green_fleet_provisioning_option` after provisioning.\n"]
     pub fn green_fleet_provisioning_option(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupBlueGreenDeploymentConfigElGreenFleetProvisioningOptionElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_GreenFleetProvisioningOptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.green_fleet_provisioning_option", self.base))
     }
 
@@ -1232,7 +1325,7 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef {
     pub fn terminate_blue_instances_on_deployment_success(
         &self,
     ) -> terrars
-    ::ListRef<CodedeployDeploymentGroupBlueGreenDeploymentConfigElTerminateBlueInstancesOnDeploymentSuccessElRef> {
+    ::ListRef<CodedeployDeploymentGroup_BlueGreenDeploymentConfig_TerminateBlueInstancesOnDeploymentSuccessRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.terminate_blue_instances_on_deployment_success", self.base),
@@ -1241,14 +1334,14 @@ impl CodedeployDeploymentGroupBlueGreenDeploymentConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupDeploymentStyleEl {
+pub struct CodedeployDeploymentGroup_DeploymentStyle {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deployment_option: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deployment_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodedeployDeploymentGroupDeploymentStyleEl {
+impl CodedeployDeploymentGroup_DeploymentStyle {
     #[doc = "Set the field `deployment_option`.\n"]
     pub fn set_deployment_option(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.deployment_option = std::option::Option::Some(v.into());
@@ -1262,8 +1355,8 @@ impl CodedeployDeploymentGroupDeploymentStyleEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupDeploymentStyleEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupDeploymentStyleEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_DeploymentStyle {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_DeploymentStyle>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1274,32 +1367,34 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupDeploymentStyleEl {
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupDeploymentStyleEl {}
+pub struct BuildCodedeployDeploymentGroup_DeploymentStyle {}
 
-impl BuildCodedeployDeploymentGroupDeploymentStyleEl {
-    pub fn build(self) -> CodedeployDeploymentGroupDeploymentStyleEl {
-        CodedeployDeploymentGroupDeploymentStyleEl {
+impl BuildCodedeployDeploymentGroup_DeploymentStyle {
+    pub fn build(self) -> CodedeployDeploymentGroup_DeploymentStyle {
+        CodedeployDeploymentGroup_DeploymentStyle {
             deployment_option: core::default::Default::default(),
             deployment_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct CodedeployDeploymentGroupDeploymentStyleElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_DeploymentStyleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupDeploymentStyleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodedeployDeploymentGroupDeploymentStyleElRef {
-        CodedeployDeploymentGroupDeploymentStyleElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_DeploymentStyleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodedeployDeploymentGroup_DeploymentStyleRef {
+        CodedeployDeploymentGroup_DeploymentStyleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupDeploymentStyleElRef {
+impl CodedeployDeploymentGroup_DeploymentStyleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1316,7 +1411,7 @@ impl CodedeployDeploymentGroupDeploymentStyleElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupEc2TagFilterEl {
+pub struct CodedeployDeploymentGroup_Ec2TagFilter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
@@ -1325,7 +1420,7 @@ pub struct CodedeployDeploymentGroupEc2TagFilterEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodedeployDeploymentGroupEc2TagFilterEl {
+impl CodedeployDeploymentGroup_Ec2TagFilter {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -1345,8 +1440,8 @@ impl CodedeployDeploymentGroupEc2TagFilterEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupEc2TagFilterEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupEc2TagFilterEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_Ec2TagFilter {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_Ec2TagFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1357,11 +1452,11 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupEc2TagFilterEl {
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupEc2TagFilterEl {}
+pub struct BuildCodedeployDeploymentGroup_Ec2TagFilter {}
 
-impl BuildCodedeployDeploymentGroupEc2TagFilterEl {
-    pub fn build(self) -> CodedeployDeploymentGroupEc2TagFilterEl {
-        CodedeployDeploymentGroupEc2TagFilterEl {
+impl BuildCodedeployDeploymentGroup_Ec2TagFilter {
+    pub fn build(self) -> CodedeployDeploymentGroup_Ec2TagFilter {
+        CodedeployDeploymentGroup_Ec2TagFilter {
             key: core::default::Default::default(),
             type_: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -1369,113 +1464,23 @@ impl BuildCodedeployDeploymentGroupEc2TagFilterEl {
     }
 }
 
-pub struct CodedeployDeploymentGroupEc2TagFilterElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_Ec2TagFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupEc2TagFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodedeployDeploymentGroupEc2TagFilterElRef {
-        CodedeployDeploymentGroupEc2TagFilterElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_Ec2TagFilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodedeployDeploymentGroup_Ec2TagFilterRef {
+        CodedeployDeploymentGroup_Ec2TagFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupEc2TagFilterElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct CodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
-    type_: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl CodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.type_ = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.value = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for CodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildCodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl {}
-
-impl BuildCodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl {
-    pub fn build(self) -> CodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl {
-        CodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl {
-            key: core::default::Default::default(),
-            type_: core::default::Default::default(),
-            value: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct CodedeployDeploymentGroupEc2TagSetElEc2TagFilterElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for CodedeployDeploymentGroupEc2TagSetElEc2TagFilterElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CodedeployDeploymentGroupEc2TagSetElEc2TagFilterElRef {
-        CodedeployDeploymentGroupEc2TagSetElEc2TagFilterElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl CodedeployDeploymentGroupEc2TagSetElEc2TagFilterElRef {
+impl CodedeployDeploymentGroup_Ec2TagFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1497,22 +1502,22 @@ impl CodedeployDeploymentGroupEc2TagSetElEc2TagFilterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CodedeployDeploymentGroupEc2TagSetElDynamic {
-    ec2_tag_filter: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl>>,
+struct CodedeployDeploymentGroup_Ec2TagSetDynamic {
+    ec2_tag_filter: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_Ec2TagFilter>>,
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupEc2TagSetEl {
+pub struct CodedeployDeploymentGroup_Ec2TagSet {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ec2_tag_filter: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl>>,
-    dynamic: CodedeployDeploymentGroupEc2TagSetElDynamic,
+    ec2_tag_filter: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_Ec2TagFilter>>,
+    dynamic: CodedeployDeploymentGroup_Ec2TagSetDynamic,
 }
 
-impl CodedeployDeploymentGroupEc2TagSetEl {
+impl CodedeployDeploymentGroup_Ec2TagSet {
     #[doc = "Set the field `ec2_tag_filter`.\n"]
     pub fn set_ec2_tag_filter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupEc2TagSetElEc2TagFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_Ec2TagFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1526,8 +1531,8 @@ impl CodedeployDeploymentGroupEc2TagSetEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupEc2TagSetEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupEc2TagSetEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_Ec2TagSet {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_Ec2TagSet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1538,47 +1543,49 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupEc2TagSetEl {
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupEc2TagSetEl {}
+pub struct BuildCodedeployDeploymentGroup_Ec2TagSet {}
 
-impl BuildCodedeployDeploymentGroupEc2TagSetEl {
-    pub fn build(self) -> CodedeployDeploymentGroupEc2TagSetEl {
-        CodedeployDeploymentGroupEc2TagSetEl {
+impl BuildCodedeployDeploymentGroup_Ec2TagSet {
+    pub fn build(self) -> CodedeployDeploymentGroup_Ec2TagSet {
+        CodedeployDeploymentGroup_Ec2TagSet {
             ec2_tag_filter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CodedeployDeploymentGroupEc2TagSetElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_Ec2TagSetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupEc2TagSetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodedeployDeploymentGroupEc2TagSetElRef {
-        CodedeployDeploymentGroupEc2TagSetElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_Ec2TagSetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodedeployDeploymentGroup_Ec2TagSetRef {
+        CodedeployDeploymentGroup_Ec2TagSetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupEc2TagSetElRef {
+impl CodedeployDeploymentGroup_Ec2TagSetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupEcsServiceEl {
+pub struct CodedeployDeploymentGroup_EcsService {
     cluster_name: terrars::PrimField<std::string::String>,
     service_name: terrars::PrimField<std::string::String>,
 }
 
-impl CodedeployDeploymentGroupEcsServiceEl { }
+impl CodedeployDeploymentGroup_EcsService { }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupEcsServiceEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupEcsServiceEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_EcsService {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_EcsService>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1589,37 +1596,39 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupEcsServiceEl {
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupEcsServiceEl {
+pub struct BuildCodedeployDeploymentGroup_EcsService {
     #[doc = ""]
     pub cluster_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub service_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodedeployDeploymentGroupEcsServiceEl {
-    pub fn build(self) -> CodedeployDeploymentGroupEcsServiceEl {
-        CodedeployDeploymentGroupEcsServiceEl {
+impl BuildCodedeployDeploymentGroup_EcsService {
+    pub fn build(self) -> CodedeployDeploymentGroup_EcsService {
+        CodedeployDeploymentGroup_EcsService {
             cluster_name: self.cluster_name,
             service_name: self.service_name,
         }
     }
 }
 
-pub struct CodedeployDeploymentGroupEcsServiceElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_EcsServiceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupEcsServiceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodedeployDeploymentGroupEcsServiceElRef {
-        CodedeployDeploymentGroupEcsServiceElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_EcsServiceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodedeployDeploymentGroup_EcsServiceRef {
+        CodedeployDeploymentGroup_EcsServiceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupEcsServiceElRef {
+impl CodedeployDeploymentGroup_EcsServiceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1636,12 +1645,12 @@ impl CodedeployDeploymentGroupEcsServiceElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl {
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl {
+impl CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -1649,8 +1658,8 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1661,32 +1670,34 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElElbI
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl {}
+pub struct BuildCodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo {}
 
-impl BuildCodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl {
-    pub fn build(self) -> CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl {
-        CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl { name: core::default::Default::default() }
+impl BuildCodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo {
+    pub fn build(self) -> CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo {
+        CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo { name: core::default::Default::default() }
     }
 }
 
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElElbInfoElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupLoadBalancerInfoElElbInfoElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupLoadBalancerInfoElElbInfoElRef {
-        CodedeployDeploymentGroupLoadBalancerInfoElElbInfoElRef {
+    ) -> CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfoRef {
+        CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElElbInfoElRef {
+impl CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1698,12 +1709,12 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElElbInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl {
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl {
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -1711,8 +1722,8 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1723,32 +1734,34 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTarg
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl {}
+pub struct BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo {}
 
-impl BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl {
-    pub fn build(self) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl { name: core::default::Default::default() }
+impl BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo {
+    pub fn build(self) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo { name: core::default::Default::default() }
     }
 }
 
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoElRef {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoElRef {
+    ) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfoRef {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoElRef {
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1760,15 +1773,15 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl {
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute {
     listener_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl { }
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute { }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl {
+impl terrars::ToListMappable for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute {
     type O =
-        terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl>;
+        terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1779,37 +1792,39 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTarg
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl {
+pub struct BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute {
     #[doc = ""]
     pub listener_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl {
-    pub fn build(self) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl {
+impl BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute {
+    pub fn build(self) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute {
             listener_arns: self.listener_arns,
         }
     }
 }
 
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRouteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteElRef {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteElRef {
+    ) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRouteRef {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteElRef {
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1821,14 +1836,14 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTraffic
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl {
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl { }
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup { }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1839,35 +1854,37 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTarg
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl {
+pub struct BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl {
-    pub fn build(self) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl { name: self.name }
+impl BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup {
+    pub fn build(self) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup { name: self.name }
     }
 }
 
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroupRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupElRef {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupElRef {
+    ) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroupRef {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupElRef {
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1879,15 +1896,15 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroup
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl {
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute {
     listener_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl { }
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute { }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl {
+impl terrars::ToListMappable for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute {
     type O =
-        terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl>;
+        terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1898,37 +1915,39 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTarg
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl {
+pub struct BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute {
     #[doc = ""]
     pub listener_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl {
-    pub fn build(self) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl {
+impl BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute {
+    pub fn build(self) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute {
             listener_arns: self.listener_arns,
         }
     }
 }
 
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRouteRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteElRef {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteElRef {
+    ) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRouteRef {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteElRef {
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1940,40 +1959,36 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTraffic
 }
 
 #[derive(Serialize, Default)]
-struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElDynamic {
+struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfoDynamic {
     prod_traffic_route: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl>,
-    >,
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute>>,
     target_group: std
     ::option
-    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl>>,
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup>>,
     test_traffic_route: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl>,
-    >,
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute>>,
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prod_traffic_route: std
     ::option
-    ::Option<std::vec::Vec<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl>>,
+    ::Option<std::vec::Vec<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_group: std
     ::option
-    ::Option<std::vec::Vec<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl>>,
+    ::Option<std::vec::Vec<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     test_traffic_route: std
     ::option
-    ::Option<std::vec::Vec<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl>>,
-    dynamic: CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElDynamic,
+    ::Option<std::vec::Vec<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute>>,
+    dynamic: CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfoDynamic,
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo {
     #[doc = "Set the field `prod_traffic_route`.\n"]
     pub fn set_prod_traffic_route(
         mut self,
@@ -1985,7 +2000,7 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteEl,
+                            CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRoute,
                         >,
                     >,
     ) -> Self {
@@ -2010,9 +2025,7 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupEl,
-                        >,
+                        ::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroup>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2037,7 +2050,7 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteEl,
+                            CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRoute,
                         >,
                     >,
     ) -> Self {
@@ -2053,8 +2066,8 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2065,11 +2078,11 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoElTarg
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {}
+pub struct BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo {}
 
-impl BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
-    pub fn build(self) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
+impl BuildCodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo {
+    pub fn build(self) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo {
             prod_traffic_route: core::default::Default::default(),
             target_group: core::default::Default::default(),
             test_traffic_route: core::default::Default::default(),
@@ -2078,24 +2091,26 @@ impl BuildCodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl {
     }
 }
 
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElRef {
-        CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElRef {
+    ) -> CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfoRef {
+        CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElRef {
+impl CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2103,54 +2118,54 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElRef {
     #[doc = "Get a reference to the value of field `prod_traffic_route` after provisioning.\n"]
     pub fn prod_traffic_route(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElProdTrafficRouteElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_ProdTrafficRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.prod_traffic_route", self.base))
     }
 
     #[doc = "Get a reference to the value of field `target_group` after provisioning.\n"]
     pub fn target_group(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTargetGroupElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TargetGroupRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_group", self.base))
     }
 
     #[doc = "Get a reference to the value of field `test_traffic_route` after provisioning.\n"]
     pub fn test_traffic_route(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElTestTrafficRouteElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo_TestTrafficRouteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.test_traffic_route", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct CodedeployDeploymentGroupLoadBalancerInfoElDynamic {
-    elb_info: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl>>,
+struct CodedeployDeploymentGroup_LoadBalancerInfoDynamic {
+    elb_info: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo>>,
     target_group_info: std
     ::option
-    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl>>,
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo>>,
     target_group_pair_info: std
     ::option
-    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl>>,
+    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo>>,
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupLoadBalancerInfoEl {
+pub struct CodedeployDeploymentGroup_LoadBalancerInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    elb_info: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl>>,
+    elb_info: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_group_info: std::option::Option<std::vec::Vec<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl>>,
+    target_group_info: std::option::Option<std::vec::Vec<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_group_pair_info: std
     ::option
-    ::Option<std::vec::Vec<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl>>,
-    dynamic: CodedeployDeploymentGroupLoadBalancerInfoElDynamic,
+    ::Option<std::vec::Vec<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo>>,
+    dynamic: CodedeployDeploymentGroup_LoadBalancerInfoDynamic,
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoEl {
+impl CodedeployDeploymentGroup_LoadBalancerInfo {
     #[doc = "Set the field `elb_info`.\n"]
     pub fn set_elb_info(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoElElbInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_ElbInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2171,7 +2186,7 @@ impl CodedeployDeploymentGroupLoadBalancerInfoEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupInfoEl>>,
+                    ::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2192,9 +2207,7 @@ impl CodedeployDeploymentGroupLoadBalancerInfoEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2208,8 +2221,8 @@ impl CodedeployDeploymentGroupLoadBalancerInfoEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupLoadBalancerInfoEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_LoadBalancerInfo {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_LoadBalancerInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2220,11 +2233,11 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupLoadBalancerInfoEl {
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupLoadBalancerInfoEl {}
+pub struct BuildCodedeployDeploymentGroup_LoadBalancerInfo {}
 
-impl BuildCodedeployDeploymentGroupLoadBalancerInfoEl {
-    pub fn build(self) -> CodedeployDeploymentGroupLoadBalancerInfoEl {
-        CodedeployDeploymentGroupLoadBalancerInfoEl {
+impl BuildCodedeployDeploymentGroup_LoadBalancerInfo {
+    pub fn build(self) -> CodedeployDeploymentGroup_LoadBalancerInfo {
+        CodedeployDeploymentGroup_LoadBalancerInfo {
             elb_info: core::default::Default::default(),
             target_group_info: core::default::Default::default(),
             target_group_pair_info: core::default::Default::default(),
@@ -2233,24 +2246,23 @@ impl BuildCodedeployDeploymentGroupLoadBalancerInfoEl {
     }
 }
 
-pub struct CodedeployDeploymentGroupLoadBalancerInfoElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_LoadBalancerInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupLoadBalancerInfoElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CodedeployDeploymentGroupLoadBalancerInfoElRef {
-        CodedeployDeploymentGroupLoadBalancerInfoElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_LoadBalancerInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodedeployDeploymentGroup_LoadBalancerInfoRef {
+        CodedeployDeploymentGroup_LoadBalancerInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupLoadBalancerInfoElRef {
+impl CodedeployDeploymentGroup_LoadBalancerInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2258,13 +2270,13 @@ impl CodedeployDeploymentGroupLoadBalancerInfoElRef {
     #[doc = "Get a reference to the value of field `target_group_pair_info` after provisioning.\n"]
     pub fn target_group_pair_info(
         &self,
-    ) -> terrars::ListRef<CodedeployDeploymentGroupLoadBalancerInfoElTargetGroupPairInfoElRef> {
+    ) -> terrars::ListRef<CodedeployDeploymentGroup_LoadBalancerInfo_TargetGroupPairInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_group_pair_info", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {
+pub struct CodedeployDeploymentGroup_OnPremisesInstanceTagFilter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
@@ -2273,7 +2285,7 @@ pub struct CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {
+impl CodedeployDeploymentGroup_OnPremisesInstanceTagFilter {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -2293,8 +2305,8 @@ impl CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {
     }
 }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_OnPremisesInstanceTagFilter {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_OnPremisesInstanceTagFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2305,11 +2317,11 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupOnPremisesInstanceTagF
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {}
+pub struct BuildCodedeployDeploymentGroup_OnPremisesInstanceTagFilter {}
 
-impl BuildCodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {
-    pub fn build(self) -> CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {
-        CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {
+impl BuildCodedeployDeploymentGroup_OnPremisesInstanceTagFilter {
+    pub fn build(self) -> CodedeployDeploymentGroup_OnPremisesInstanceTagFilter {
+        CodedeployDeploymentGroup_OnPremisesInstanceTagFilter {
             key: core::default::Default::default(),
             type_: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -2317,24 +2329,26 @@ impl BuildCodedeployDeploymentGroupOnPremisesInstanceTagFilterEl {
     }
 }
 
-pub struct CodedeployDeploymentGroupOnPremisesInstanceTagFilterElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_OnPremisesInstanceTagFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupOnPremisesInstanceTagFilterElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_OnPremisesInstanceTagFilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupOnPremisesInstanceTagFilterElRef {
-        CodedeployDeploymentGroupOnPremisesInstanceTagFilterElRef {
+    ) -> CodedeployDeploymentGroup_OnPremisesInstanceTagFilterRef {
+        CodedeployDeploymentGroup_OnPremisesInstanceTagFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupOnPremisesInstanceTagFilterElRef {
+impl CodedeployDeploymentGroup_OnPremisesInstanceTagFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2356,16 +2370,16 @@ impl CodedeployDeploymentGroupOnPremisesInstanceTagFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodedeployDeploymentGroupTriggerConfigurationEl {
+pub struct CodedeployDeploymentGroup_TriggerConfiguration {
     trigger_events: terrars::SetField<terrars::PrimField<std::string::String>>,
     trigger_name: terrars::PrimField<std::string::String>,
     trigger_target_arn: terrars::PrimField<std::string::String>,
 }
 
-impl CodedeployDeploymentGroupTriggerConfigurationEl { }
+impl CodedeployDeploymentGroup_TriggerConfiguration { }
 
-impl terrars::ToListMappable for CodedeployDeploymentGroupTriggerConfigurationEl {
-    type O = terrars::BlockAssignable<CodedeployDeploymentGroupTriggerConfigurationEl>;
+impl terrars::ToListMappable for CodedeployDeploymentGroup_TriggerConfiguration {
+    type O = terrars::BlockAssignable<CodedeployDeploymentGroup_TriggerConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2376,7 +2390,7 @@ impl terrars::ToListMappable for CodedeployDeploymentGroupTriggerConfigurationEl
     }
 }
 
-pub struct BuildCodedeployDeploymentGroupTriggerConfigurationEl {
+pub struct BuildCodedeployDeploymentGroup_TriggerConfiguration {
     #[doc = ""]
     pub trigger_events: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
@@ -2385,9 +2399,9 @@ pub struct BuildCodedeployDeploymentGroupTriggerConfigurationEl {
     pub trigger_target_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodedeployDeploymentGroupTriggerConfigurationEl {
-    pub fn build(self) -> CodedeployDeploymentGroupTriggerConfigurationEl {
-        CodedeployDeploymentGroupTriggerConfigurationEl {
+impl BuildCodedeployDeploymentGroup_TriggerConfiguration {
+    pub fn build(self) -> CodedeployDeploymentGroup_TriggerConfiguration {
+        CodedeployDeploymentGroup_TriggerConfiguration {
             trigger_events: self.trigger_events,
             trigger_name: self.trigger_name,
             trigger_target_arn: self.trigger_target_arn,
@@ -2395,24 +2409,26 @@ impl BuildCodedeployDeploymentGroupTriggerConfigurationEl {
     }
 }
 
-pub struct CodedeployDeploymentGroupTriggerConfigurationElRef {
+#[allow(dead_code)]
+pub struct CodedeployDeploymentGroup_TriggerConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodedeployDeploymentGroupTriggerConfigurationElRef {
+impl terrars::Ref for CodedeployDeploymentGroup_TriggerConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodedeployDeploymentGroupTriggerConfigurationElRef {
-        CodedeployDeploymentGroupTriggerConfigurationElRef {
+    ) -> CodedeployDeploymentGroup_TriggerConfigurationRef {
+        CodedeployDeploymentGroup_TriggerConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodedeployDeploymentGroupTriggerConfigurationElRef {
+impl CodedeployDeploymentGroup_TriggerConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2431,26 +2447,4 @@ impl CodedeployDeploymentGroupTriggerConfigurationElRef {
     pub fn trigger_target_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.trigger_target_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CodedeployDeploymentGroupDynamic {
-    alarm_configuration: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroupAlarmConfigurationEl>>,
-    auto_rollback_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroupAutoRollbackConfigurationEl>>,
-    blue_green_deployment_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroupBlueGreenDeploymentConfigEl>>,
-    deployment_style: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroupDeploymentStyleEl>>,
-    ec2_tag_filter: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroupEc2TagFilterEl>>,
-    ec2_tag_set: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroupEc2TagSetEl>>,
-    ecs_service: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroupEcsServiceEl>>,
-    load_balancer_info: std::option::Option<terrars::DynamicBlock<CodedeployDeploymentGroupLoadBalancerInfoEl>>,
-    on_premises_instance_tag_filter: std
-    ::option
-    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroupOnPremisesInstanceTagFilterEl>>,
-    trigger_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<CodedeployDeploymentGroupTriggerConfigurationEl>>,
 }

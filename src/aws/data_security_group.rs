@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataSecurityGroupData {
+struct DataSecurityGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,20 +23,22 @@ struct DataSecurityGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataSecurityGroupFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataSecurityGroup_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataSecurityGroupTimeoutsEl>,
+    timeouts: std::option::Option<DataSecurityGroup_Timeouts>,
     dynamic: DataSecurityGroupDynamic,
 }
 
 struct DataSecurityGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSecurityGroupData>,
+    data: std::cell::RefCell<DataSecurityGroupData_>,
 }
 
 #[derive(Clone)]
@@ -91,6 +95,13 @@ impl DataSecurityGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -107,7 +118,7 @@ impl DataSecurityGroup {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSecurityGroupFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataSecurityGroup_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -120,7 +131,7 @@ impl DataSecurityGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataSecurityGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataSecurityGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -145,6 +156,12 @@ impl DataSecurityGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -156,8 +173,8 @@ impl DataSecurityGroup {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataSecurityGroupTimeoutsElRef {
-        DataSecurityGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataSecurityGroup_TimeoutsRef {
+        DataSecurityGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -201,13 +218,14 @@ impl BuildDataSecurityGroup {
         let out = DataSecurityGroup(std::rc::Rc::new(DataSecurityGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSecurityGroupData {
+            data: std::cell::RefCell::new(DataSecurityGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 vpc_id: core::default::Default::default(),
                 filter: core::default::Default::default(),
@@ -263,6 +281,12 @@ impl DataSecurityGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -274,21 +298,26 @@ impl DataSecurityGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataSecurityGroupTimeoutsElRef {
-        DataSecurityGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataSecurityGroup_TimeoutsRef {
+        DataSecurityGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataSecurityGroupDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataSecurityGroup_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataSecurityGroupFilterEl {
+pub struct DataSecurityGroup_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSecurityGroupFilterEl { }
+impl DataSecurityGroup_Filter { }
 
-impl terrars::ToListMappable for DataSecurityGroupFilterEl {
-    type O = terrars::BlockAssignable<DataSecurityGroupFilterEl>;
+impl terrars::ToListMappable for DataSecurityGroup_Filter {
+    type O = terrars::BlockAssignable<DataSecurityGroup_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -299,37 +328,39 @@ impl terrars::ToListMappable for DataSecurityGroupFilterEl {
     }
 }
 
-pub struct BuildDataSecurityGroupFilterEl {
+pub struct BuildDataSecurityGroup_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataSecurityGroupFilterEl {
-    pub fn build(self) -> DataSecurityGroupFilterEl {
-        DataSecurityGroupFilterEl {
+impl BuildDataSecurityGroup_Filter {
+    pub fn build(self) -> DataSecurityGroup_Filter {
+        DataSecurityGroup_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataSecurityGroupFilterElRef {
+#[allow(dead_code)]
+pub struct DataSecurityGroup_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecurityGroupFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecurityGroupFilterElRef {
-        DataSecurityGroupFilterElRef {
+impl terrars::Ref for DataSecurityGroup_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecurityGroup_FilterRef {
+        DataSecurityGroup_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecurityGroupFilterElRef {
+impl DataSecurityGroup_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -346,12 +377,12 @@ impl DataSecurityGroupFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSecurityGroupTimeoutsEl {
+pub struct DataSecurityGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSecurityGroupTimeoutsEl {
+impl DataSecurityGroup_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -359,8 +390,8 @@ impl DataSecurityGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataSecurityGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<DataSecurityGroupTimeoutsEl>;
+impl terrars::ToListMappable for DataSecurityGroup_Timeouts {
+    type O = terrars::BlockAssignable<DataSecurityGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -371,29 +402,31 @@ impl terrars::ToListMappable for DataSecurityGroupTimeoutsEl {
     }
 }
 
-pub struct BuildDataSecurityGroupTimeoutsEl {}
+pub struct BuildDataSecurityGroup_Timeouts {}
 
-impl BuildDataSecurityGroupTimeoutsEl {
-    pub fn build(self) -> DataSecurityGroupTimeoutsEl {
-        DataSecurityGroupTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataSecurityGroup_Timeouts {
+    pub fn build(self) -> DataSecurityGroup_Timeouts {
+        DataSecurityGroup_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataSecurityGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataSecurityGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecurityGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecurityGroupTimeoutsElRef {
-        DataSecurityGroupTimeoutsElRef {
+impl terrars::Ref for DataSecurityGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecurityGroup_TimeoutsRef {
+        DataSecurityGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecurityGroupTimeoutsElRef {
+impl DataSecurityGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -402,9 +435,4 @@ impl DataSecurityGroupTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataSecurityGroupDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataSecurityGroupFilterEl>>,
 }

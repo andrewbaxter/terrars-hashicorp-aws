@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Inspector2DelegatedAdminAccountData {
+struct Inspector2DelegatedAdminAccountData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,13 +24,15 @@ struct Inspector2DelegatedAdminAccountData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Inspector2DelegatedAdminAccountTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Inspector2DelegatedAdminAccount_Timeouts>,
 }
 
 struct Inspector2DelegatedAdminAccount_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Inspector2DelegatedAdminAccountData>,
+    data: std::cell::RefCell<Inspector2DelegatedAdminAccountData_>,
 }
 
 #[derive(Clone)]
@@ -134,8 +138,15 @@ impl Inspector2DelegatedAdminAccount {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Inspector2DelegatedAdminAccountTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Inspector2DelegatedAdminAccount_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -150,14 +161,20 @@ impl Inspector2DelegatedAdminAccount {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `relationship_status` after provisioning.\n"]
     pub fn relationship_status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.relationship_status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Inspector2DelegatedAdminAccountTimeoutsElRef {
-        Inspector2DelegatedAdminAccountTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Inspector2DelegatedAdminAccount_TimeoutsRef {
+        Inspector2DelegatedAdminAccount_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -206,7 +223,7 @@ impl BuildInspector2DelegatedAdminAccount {
         let out = Inspector2DelegatedAdminAccount(std::rc::Rc::new(Inspector2DelegatedAdminAccount_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Inspector2DelegatedAdminAccountData {
+            data: std::cell::RefCell::new(Inspector2DelegatedAdminAccountData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -214,6 +231,7 @@ impl BuildInspector2DelegatedAdminAccount {
                 provisioner: core::default::Default::default(),
                 account_id: self.account_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -255,14 +273,20 @@ impl Inspector2DelegatedAdminAccountRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `relationship_status` after provisioning.\n"]
     pub fn relationship_status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.relationship_status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Inspector2DelegatedAdminAccountTimeoutsElRef {
-        Inspector2DelegatedAdminAccountTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Inspector2DelegatedAdminAccount_TimeoutsRef {
+        Inspector2DelegatedAdminAccount_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -270,14 +294,14 @@ impl Inspector2DelegatedAdminAccountRef {
 }
 
 #[derive(Serialize)]
-pub struct Inspector2DelegatedAdminAccountTimeoutsEl {
+pub struct Inspector2DelegatedAdminAccount_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Inspector2DelegatedAdminAccountTimeoutsEl {
+impl Inspector2DelegatedAdminAccount_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -291,8 +315,8 @@ impl Inspector2DelegatedAdminAccountTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Inspector2DelegatedAdminAccountTimeoutsEl {
-    type O = terrars::BlockAssignable<Inspector2DelegatedAdminAccountTimeoutsEl>;
+impl terrars::ToListMappable for Inspector2DelegatedAdminAccount_Timeouts {
+    type O = terrars::BlockAssignable<Inspector2DelegatedAdminAccount_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -303,32 +327,34 @@ impl terrars::ToListMappable for Inspector2DelegatedAdminAccountTimeoutsEl {
     }
 }
 
-pub struct BuildInspector2DelegatedAdminAccountTimeoutsEl {}
+pub struct BuildInspector2DelegatedAdminAccount_Timeouts {}
 
-impl BuildInspector2DelegatedAdminAccountTimeoutsEl {
-    pub fn build(self) -> Inspector2DelegatedAdminAccountTimeoutsEl {
-        Inspector2DelegatedAdminAccountTimeoutsEl {
+impl BuildInspector2DelegatedAdminAccount_Timeouts {
+    pub fn build(self) -> Inspector2DelegatedAdminAccount_Timeouts {
+        Inspector2DelegatedAdminAccount_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct Inspector2DelegatedAdminAccountTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Inspector2DelegatedAdminAccount_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Inspector2DelegatedAdminAccountTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Inspector2DelegatedAdminAccountTimeoutsElRef {
-        Inspector2DelegatedAdminAccountTimeoutsElRef {
+impl terrars::Ref for Inspector2DelegatedAdminAccount_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Inspector2DelegatedAdminAccount_TimeoutsRef {
+        Inspector2DelegatedAdminAccount_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Inspector2DelegatedAdminAccountTimeoutsElRef {
+impl Inspector2DelegatedAdminAccount_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

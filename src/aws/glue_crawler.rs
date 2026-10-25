@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlueCrawlerData {
+struct GlueCrawlerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,6 +30,8 @@ struct GlueCrawlerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schedule: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -40,32 +44,36 @@ struct GlueCrawlerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    catalog_target: std::option::Option<std::vec::Vec<GlueCrawlerCatalogTargetEl>>,
+    catalog_target: std::option::Option<std::vec::Vec<GlueCrawler_CatalogTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delta_target: std::option::Option<std::vec::Vec<GlueCrawlerDeltaTargetEl>>,
+    delta_target: std::option::Option<std::vec::Vec<GlueCrawler_DeltaTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dynamodb_target: std::option::Option<std::vec::Vec<GlueCrawlerDynamodbTargetEl>>,
+    dynamodb_target: std::option::Option<std::vec::Vec<GlueCrawler_DynamodbTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    jdbc_target: std::option::Option<std::vec::Vec<GlueCrawlerJdbcTargetEl>>,
+    hudi_target: std::option::Option<std::vec::Vec<GlueCrawler_HudiTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lake_formation_configuration: std::option::Option<std::vec::Vec<GlueCrawlerLakeFormationConfigurationEl>>,
+    iceberg_target: std::option::Option<std::vec::Vec<GlueCrawler_IcebergTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lineage_configuration: std::option::Option<std::vec::Vec<GlueCrawlerLineageConfigurationEl>>,
+    jdbc_target: std::option::Option<std::vec::Vec<GlueCrawler_JdbcTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    mongodb_target: std::option::Option<std::vec::Vec<GlueCrawlerMongodbTargetEl>>,
+    lake_formation_configuration: std::option::Option<std::vec::Vec<GlueCrawler_LakeFormationConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    recrawl_policy: std::option::Option<std::vec::Vec<GlueCrawlerRecrawlPolicyEl>>,
+    lineage_configuration: std::option::Option<std::vec::Vec<GlueCrawler_LineageConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_target: std::option::Option<std::vec::Vec<GlueCrawlerS3TargetEl>>,
+    mongodb_target: std::option::Option<std::vec::Vec<GlueCrawler_MongodbTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schema_change_policy: std::option::Option<std::vec::Vec<GlueCrawlerSchemaChangePolicyEl>>,
+    recrawl_policy: std::option::Option<std::vec::Vec<GlueCrawler_RecrawlPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_target: std::option::Option<std::vec::Vec<GlueCrawler_S3Target>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schema_change_policy: std::option::Option<std::vec::Vec<GlueCrawler_SchemaChangePolicy>>,
     dynamic: GlueCrawlerDynamic,
 }
 
 struct GlueCrawler_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlueCrawlerData>,
+    data: std::cell::RefCell<GlueCrawlerData_>,
 }
 
 #[derive(Clone)]
@@ -192,6 +200,13 @@ impl GlueCrawler {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `schedule`.\n"]
     pub fn set_schedule(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().schedule = std::option::Option::Some(v.into());
@@ -234,7 +249,7 @@ impl GlueCrawler {
     #[doc = "Set the field `catalog_target`.\n"]
     pub fn set_catalog_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerCatalogTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_CatalogTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -250,7 +265,7 @@ impl GlueCrawler {
     #[doc = "Set the field `delta_target`.\n"]
     pub fn set_delta_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerDeltaTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_DeltaTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -266,7 +281,7 @@ impl GlueCrawler {
     #[doc = "Set the field `dynamodb_target`.\n"]
     pub fn set_dynamodb_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerDynamodbTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_DynamodbTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -279,8 +294,37 @@ impl GlueCrawler {
         self
     }
 
+    #[doc = "Set the field `hudi_target`.\n"]
+    pub fn set_hudi_target(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_HudiTarget>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().hudi_target = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.hudi_target = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `iceberg_target`.\n"]
+    pub fn set_iceberg_target(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_IcebergTarget>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().iceberg_target = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.iceberg_target = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `jdbc_target`.\n"]
-    pub fn set_jdbc_target(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerJdbcTargetEl>>) -> Self {
+    pub fn set_jdbc_target(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_JdbcTarget>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().jdbc_target = std::option::Option::Some(v);
@@ -295,7 +339,7 @@ impl GlueCrawler {
     #[doc = "Set the field `lake_formation_configuration`.\n"]
     pub fn set_lake_formation_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerLakeFormationConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_LakeFormationConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -311,7 +355,7 @@ impl GlueCrawler {
     #[doc = "Set the field `lineage_configuration`.\n"]
     pub fn set_lineage_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerLineageConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_LineageConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -327,7 +371,7 @@ impl GlueCrawler {
     #[doc = "Set the field `mongodb_target`.\n"]
     pub fn set_mongodb_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerMongodbTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_MongodbTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -343,7 +387,7 @@ impl GlueCrawler {
     #[doc = "Set the field `recrawl_policy`.\n"]
     pub fn set_recrawl_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerRecrawlPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_RecrawlPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -357,7 +401,7 @@ impl GlueCrawler {
     }
 
     #[doc = "Set the field `s3_target`.\n"]
-    pub fn set_s3_target(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerS3TargetEl>>) -> Self {
+    pub fn set_s3_target(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_S3Target>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().s3_target = std::option::Option::Some(v);
@@ -372,7 +416,7 @@ impl GlueCrawler {
     #[doc = "Set the field `schema_change_policy`.\n"]
     pub fn set_schema_change_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawlerSchemaChangePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueCrawler_SchemaChangePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -420,6 +464,12 @@ impl GlueCrawler {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
     pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
@@ -451,52 +501,62 @@ impl GlueCrawler {
     }
 
     #[doc = "Get a reference to the value of field `catalog_target` after provisioning.\n"]
-    pub fn catalog_target(&self) -> terrars::ListRef<GlueCrawlerCatalogTargetElRef> {
+    pub fn catalog_target(&self) -> terrars::ListRef<GlueCrawler_CatalogTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.catalog_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `delta_target` after provisioning.\n"]
-    pub fn delta_target(&self) -> terrars::ListRef<GlueCrawlerDeltaTargetElRef> {
+    pub fn delta_target(&self) -> terrars::ListRef<GlueCrawler_DeltaTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delta_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dynamodb_target` after provisioning.\n"]
-    pub fn dynamodb_target(&self) -> terrars::ListRef<GlueCrawlerDynamodbTargetElRef> {
+    pub fn dynamodb_target(&self) -> terrars::ListRef<GlueCrawler_DynamodbTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dynamodb_target", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `hudi_target` after provisioning.\n"]
+    pub fn hudi_target(&self) -> terrars::ListRef<GlueCrawler_HudiTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.hudi_target", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `iceberg_target` after provisioning.\n"]
+    pub fn iceberg_target(&self) -> terrars::ListRef<GlueCrawler_IcebergTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.iceberg_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `jdbc_target` after provisioning.\n"]
-    pub fn jdbc_target(&self) -> terrars::ListRef<GlueCrawlerJdbcTargetElRef> {
+    pub fn jdbc_target(&self) -> terrars::ListRef<GlueCrawler_JdbcTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.jdbc_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lake_formation_configuration` after provisioning.\n"]
-    pub fn lake_formation_configuration(&self) -> terrars::ListRef<GlueCrawlerLakeFormationConfigurationElRef> {
+    pub fn lake_formation_configuration(&self) -> terrars::ListRef<GlueCrawler_LakeFormationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lake_formation_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lineage_configuration` after provisioning.\n"]
-    pub fn lineage_configuration(&self) -> terrars::ListRef<GlueCrawlerLineageConfigurationElRef> {
+    pub fn lineage_configuration(&self) -> terrars::ListRef<GlueCrawler_LineageConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lineage_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `mongodb_target` after provisioning.\n"]
-    pub fn mongodb_target(&self) -> terrars::ListRef<GlueCrawlerMongodbTargetElRef> {
+    pub fn mongodb_target(&self) -> terrars::ListRef<GlueCrawler_MongodbTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mongodb_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `recrawl_policy` after provisioning.\n"]
-    pub fn recrawl_policy(&self) -> terrars::ListRef<GlueCrawlerRecrawlPolicyElRef> {
+    pub fn recrawl_policy(&self) -> terrars::ListRef<GlueCrawler_RecrawlPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.recrawl_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_target` after provisioning.\n"]
-    pub fn s3_target(&self) -> terrars::ListRef<GlueCrawlerS3TargetElRef> {
+    pub fn s3_target(&self) -> terrars::ListRef<GlueCrawler_S3TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema_change_policy` after provisioning.\n"]
-    pub fn schema_change_policy(&self) -> terrars::ListRef<GlueCrawlerSchemaChangePolicyElRef> {
+    pub fn schema_change_policy(&self) -> terrars::ListRef<GlueCrawler_SchemaChangePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_change_policy", self.extract_ref()))
     }
 }
@@ -547,7 +607,7 @@ impl BuildGlueCrawler {
         let out = GlueCrawler(std::rc::Rc::new(GlueCrawler_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlueCrawlerData {
+            data: std::cell::RefCell::new(GlueCrawlerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -559,6 +619,7 @@ impl BuildGlueCrawler {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 role: self.role,
                 schedule: core::default::Default::default(),
                 security_configuration: core::default::Default::default(),
@@ -568,6 +629,8 @@ impl BuildGlueCrawler {
                 catalog_target: core::default::Default::default(),
                 delta_target: core::default::Default::default(),
                 dynamodb_target: core::default::Default::default(),
+                hudi_target: core::default::Default::default(),
+                iceberg_target: core::default::Default::default(),
                 jdbc_target: core::default::Default::default(),
                 lake_formation_configuration: core::default::Default::default(),
                 lineage_configuration: core::default::Default::default(),
@@ -641,6 +704,12 @@ impl GlueCrawlerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
     pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
@@ -672,58 +741,84 @@ impl GlueCrawlerRef {
     }
 
     #[doc = "Get a reference to the value of field `catalog_target` after provisioning.\n"]
-    pub fn catalog_target(&self) -> terrars::ListRef<GlueCrawlerCatalogTargetElRef> {
+    pub fn catalog_target(&self) -> terrars::ListRef<GlueCrawler_CatalogTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.catalog_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `delta_target` after provisioning.\n"]
-    pub fn delta_target(&self) -> terrars::ListRef<GlueCrawlerDeltaTargetElRef> {
+    pub fn delta_target(&self) -> terrars::ListRef<GlueCrawler_DeltaTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delta_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dynamodb_target` after provisioning.\n"]
-    pub fn dynamodb_target(&self) -> terrars::ListRef<GlueCrawlerDynamodbTargetElRef> {
+    pub fn dynamodb_target(&self) -> terrars::ListRef<GlueCrawler_DynamodbTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dynamodb_target", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `hudi_target` after provisioning.\n"]
+    pub fn hudi_target(&self) -> terrars::ListRef<GlueCrawler_HudiTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.hudi_target", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `iceberg_target` after provisioning.\n"]
+    pub fn iceberg_target(&self) -> terrars::ListRef<GlueCrawler_IcebergTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.iceberg_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `jdbc_target` after provisioning.\n"]
-    pub fn jdbc_target(&self) -> terrars::ListRef<GlueCrawlerJdbcTargetElRef> {
+    pub fn jdbc_target(&self) -> terrars::ListRef<GlueCrawler_JdbcTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.jdbc_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lake_formation_configuration` after provisioning.\n"]
-    pub fn lake_formation_configuration(&self) -> terrars::ListRef<GlueCrawlerLakeFormationConfigurationElRef> {
+    pub fn lake_formation_configuration(&self) -> terrars::ListRef<GlueCrawler_LakeFormationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lake_formation_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lineage_configuration` after provisioning.\n"]
-    pub fn lineage_configuration(&self) -> terrars::ListRef<GlueCrawlerLineageConfigurationElRef> {
+    pub fn lineage_configuration(&self) -> terrars::ListRef<GlueCrawler_LineageConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lineage_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `mongodb_target` after provisioning.\n"]
-    pub fn mongodb_target(&self) -> terrars::ListRef<GlueCrawlerMongodbTargetElRef> {
+    pub fn mongodb_target(&self) -> terrars::ListRef<GlueCrawler_MongodbTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mongodb_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `recrawl_policy` after provisioning.\n"]
-    pub fn recrawl_policy(&self) -> terrars::ListRef<GlueCrawlerRecrawlPolicyElRef> {
+    pub fn recrawl_policy(&self) -> terrars::ListRef<GlueCrawler_RecrawlPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.recrawl_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_target` after provisioning.\n"]
-    pub fn s3_target(&self) -> terrars::ListRef<GlueCrawlerS3TargetElRef> {
+    pub fn s3_target(&self) -> terrars::ListRef<GlueCrawler_S3TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema_change_policy` after provisioning.\n"]
-    pub fn schema_change_policy(&self) -> terrars::ListRef<GlueCrawlerSchemaChangePolicyElRef> {
+    pub fn schema_change_policy(&self) -> terrars::ListRef<GlueCrawler_SchemaChangePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_change_policy", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlueCrawlerDynamic {
+    catalog_target: std::option::Option<terrars::DynamicBlock<GlueCrawler_CatalogTarget>>,
+    delta_target: std::option::Option<terrars::DynamicBlock<GlueCrawler_DeltaTarget>>,
+    dynamodb_target: std::option::Option<terrars::DynamicBlock<GlueCrawler_DynamodbTarget>>,
+    hudi_target: std::option::Option<terrars::DynamicBlock<GlueCrawler_HudiTarget>>,
+    iceberg_target: std::option::Option<terrars::DynamicBlock<GlueCrawler_IcebergTarget>>,
+    jdbc_target: std::option::Option<terrars::DynamicBlock<GlueCrawler_JdbcTarget>>,
+    lake_formation_configuration: std::option::Option<terrars::DynamicBlock<GlueCrawler_LakeFormationConfiguration>>,
+    lineage_configuration: std::option::Option<terrars::DynamicBlock<GlueCrawler_LineageConfiguration>>,
+    mongodb_target: std::option::Option<terrars::DynamicBlock<GlueCrawler_MongodbTarget>>,
+    recrawl_policy: std::option::Option<terrars::DynamicBlock<GlueCrawler_RecrawlPolicy>>,
+    s3_target: std::option::Option<terrars::DynamicBlock<GlueCrawler_S3Target>>,
+    schema_change_policy: std::option::Option<terrars::DynamicBlock<GlueCrawler_SchemaChangePolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct GlueCrawlerCatalogTargetEl {
+pub struct GlueCrawler_CatalogTarget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connection_name: std::option::Option<terrars::PrimField<std::string::String>>,
     database_name: terrars::PrimField<std::string::String>,
@@ -734,7 +829,7 @@ pub struct GlueCrawlerCatalogTargetEl {
     tables: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueCrawlerCatalogTargetEl {
+impl GlueCrawler_CatalogTarget {
     #[doc = "Set the field `connection_name`.\n"]
     pub fn set_connection_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.connection_name = std::option::Option::Some(v.into());
@@ -757,8 +852,8 @@ impl GlueCrawlerCatalogTargetEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCrawlerCatalogTargetEl {
-    type O = terrars::BlockAssignable<GlueCrawlerCatalogTargetEl>;
+impl terrars::ToListMappable for GlueCrawler_CatalogTarget {
+    type O = terrars::BlockAssignable<GlueCrawler_CatalogTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -769,16 +864,16 @@ impl terrars::ToListMappable for GlueCrawlerCatalogTargetEl {
     }
 }
 
-pub struct BuildGlueCrawlerCatalogTargetEl {
+pub struct BuildGlueCrawler_CatalogTarget {
     #[doc = ""]
     pub database_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub tables: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildGlueCrawlerCatalogTargetEl {
-    pub fn build(self) -> GlueCrawlerCatalogTargetEl {
-        GlueCrawlerCatalogTargetEl {
+impl BuildGlueCrawler_CatalogTarget {
+    pub fn build(self) -> GlueCrawler_CatalogTarget {
+        GlueCrawler_CatalogTarget {
             connection_name: core::default::Default::default(),
             database_name: self.database_name,
             dlq_event_queue_arn: core::default::Default::default(),
@@ -788,21 +883,23 @@ impl BuildGlueCrawlerCatalogTargetEl {
     }
 }
 
-pub struct GlueCrawlerCatalogTargetElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_CatalogTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerCatalogTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerCatalogTargetElRef {
-        GlueCrawlerCatalogTargetElRef {
+impl terrars::Ref for GlueCrawler_CatalogTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_CatalogTargetRef {
+        GlueCrawler_CatalogTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerCatalogTargetElRef {
+impl GlueCrawler_CatalogTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -834,23 +931,31 @@ impl GlueCrawlerCatalogTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueCrawlerDeltaTargetEl {
+pub struct GlueCrawler_DeltaTarget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connection_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create_native_delta_table: std::option::Option<terrars::PrimField<bool>>,
     delta_tables: terrars::SetField<terrars::PrimField<std::string::String>>,
     write_manifest: terrars::PrimField<bool>,
 }
 
-impl GlueCrawlerDeltaTargetEl {
+impl GlueCrawler_DeltaTarget {
     #[doc = "Set the field `connection_name`.\n"]
     pub fn set_connection_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.connection_name = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `create_native_delta_table`.\n"]
+    pub fn set_create_native_delta_table(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.create_native_delta_table = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for GlueCrawlerDeltaTargetEl {
-    type O = terrars::BlockAssignable<GlueCrawlerDeltaTargetEl>;
+impl terrars::ToListMappable for GlueCrawler_DeltaTarget {
+    type O = terrars::BlockAssignable<GlueCrawler_DeltaTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -861,38 +966,41 @@ impl terrars::ToListMappable for GlueCrawlerDeltaTargetEl {
     }
 }
 
-pub struct BuildGlueCrawlerDeltaTargetEl {
+pub struct BuildGlueCrawler_DeltaTarget {
     #[doc = ""]
     pub delta_tables: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub write_manifest: terrars::PrimField<bool>,
 }
 
-impl BuildGlueCrawlerDeltaTargetEl {
-    pub fn build(self) -> GlueCrawlerDeltaTargetEl {
-        GlueCrawlerDeltaTargetEl {
+impl BuildGlueCrawler_DeltaTarget {
+    pub fn build(self) -> GlueCrawler_DeltaTarget {
+        GlueCrawler_DeltaTarget {
             connection_name: core::default::Default::default(),
+            create_native_delta_table: core::default::Default::default(),
             delta_tables: self.delta_tables,
             write_manifest: self.write_manifest,
         }
     }
 }
 
-pub struct GlueCrawlerDeltaTargetElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_DeltaTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerDeltaTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerDeltaTargetElRef {
-        GlueCrawlerDeltaTargetElRef {
+impl terrars::Ref for GlueCrawler_DeltaTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_DeltaTargetRef {
+        GlueCrawler_DeltaTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerDeltaTargetElRef {
+impl GlueCrawler_DeltaTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -900,6 +1008,11 @@ impl GlueCrawlerDeltaTargetElRef {
     #[doc = "Get a reference to the value of field `connection_name` after provisioning.\n"]
     pub fn connection_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `create_native_delta_table` after provisioning.\n"]
+    pub fn create_native_delta_table(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_native_delta_table", self.base))
     }
 
     #[doc = "Get a reference to the value of field `delta_tables` after provisioning.\n"]
@@ -914,7 +1027,7 @@ impl GlueCrawlerDeltaTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueCrawlerDynamodbTargetEl {
+pub struct GlueCrawler_DynamodbTarget {
     path: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scan_all: std::option::Option<terrars::PrimField<bool>>,
@@ -922,7 +1035,7 @@ pub struct GlueCrawlerDynamodbTargetEl {
     scan_rate: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GlueCrawlerDynamodbTargetEl {
+impl GlueCrawler_DynamodbTarget {
     #[doc = "Set the field `scan_all`.\n"]
     pub fn set_scan_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.scan_all = std::option::Option::Some(v.into());
@@ -936,8 +1049,8 @@ impl GlueCrawlerDynamodbTargetEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCrawlerDynamodbTargetEl {
-    type O = terrars::BlockAssignable<GlueCrawlerDynamodbTargetEl>;
+impl terrars::ToListMappable for GlueCrawler_DynamodbTarget {
+    type O = terrars::BlockAssignable<GlueCrawler_DynamodbTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -948,14 +1061,14 @@ impl terrars::ToListMappable for GlueCrawlerDynamodbTargetEl {
     }
 }
 
-pub struct BuildGlueCrawlerDynamodbTargetEl {
+pub struct BuildGlueCrawler_DynamodbTarget {
     #[doc = ""]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueCrawlerDynamodbTargetEl {
-    pub fn build(self) -> GlueCrawlerDynamodbTargetEl {
-        GlueCrawlerDynamodbTargetEl {
+impl BuildGlueCrawler_DynamodbTarget {
+    pub fn build(self) -> GlueCrawler_DynamodbTarget {
+        GlueCrawler_DynamodbTarget {
             path: self.path,
             scan_all: core::default::Default::default(),
             scan_rate: core::default::Default::default(),
@@ -963,21 +1076,23 @@ impl BuildGlueCrawlerDynamodbTargetEl {
     }
 }
 
-pub struct GlueCrawlerDynamodbTargetElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_DynamodbTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerDynamodbTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerDynamodbTargetElRef {
-        GlueCrawlerDynamodbTargetElRef {
+impl terrars::Ref for GlueCrawler_DynamodbTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_DynamodbTargetRef {
+        GlueCrawler_DynamodbTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerDynamodbTargetElRef {
+impl GlueCrawler_DynamodbTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -999,7 +1114,205 @@ impl GlueCrawlerDynamodbTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueCrawlerJdbcTargetEl {
+pub struct GlueCrawler_HudiTarget {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclusions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    maximum_traversal_depth: terrars::PrimField<f64>,
+    paths: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl GlueCrawler_HudiTarget {
+    #[doc = "Set the field `connection_name`.\n"]
+    pub fn set_connection_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.connection_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `exclusions`.\n"]
+    pub fn set_exclusions(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.exclusions = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GlueCrawler_HudiTarget {
+    type O = terrars::BlockAssignable<GlueCrawler_HudiTarget>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueCrawler_HudiTarget {
+    #[doc = ""]
+    pub maximum_traversal_depth: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub paths: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildGlueCrawler_HudiTarget {
+    pub fn build(self) -> GlueCrawler_HudiTarget {
+        GlueCrawler_HudiTarget {
+            connection_name: core::default::Default::default(),
+            exclusions: core::default::Default::default(),
+            maximum_traversal_depth: self.maximum_traversal_depth,
+            paths: self.paths,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueCrawler_HudiTargetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueCrawler_HudiTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_HudiTargetRef {
+        GlueCrawler_HudiTargetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueCrawler_HudiTargetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `connection_name` after provisioning.\n"]
+    pub fn connection_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `exclusions` after provisioning.\n"]
+    pub fn exclusions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `maximum_traversal_depth` after provisioning.\n"]
+    pub fn maximum_traversal_depth(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_traversal_depth", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `paths` after provisioning.\n"]
+    pub fn paths(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.paths", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GlueCrawler_IcebergTarget {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclusions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    maximum_traversal_depth: terrars::PrimField<f64>,
+    paths: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl GlueCrawler_IcebergTarget {
+    #[doc = "Set the field `connection_name`.\n"]
+    pub fn set_connection_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.connection_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `exclusions`.\n"]
+    pub fn set_exclusions(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.exclusions = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GlueCrawler_IcebergTarget {
+    type O = terrars::BlockAssignable<GlueCrawler_IcebergTarget>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueCrawler_IcebergTarget {
+    #[doc = ""]
+    pub maximum_traversal_depth: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub paths: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildGlueCrawler_IcebergTarget {
+    pub fn build(self) -> GlueCrawler_IcebergTarget {
+        GlueCrawler_IcebergTarget {
+            connection_name: core::default::Default::default(),
+            exclusions: core::default::Default::default(),
+            maximum_traversal_depth: self.maximum_traversal_depth,
+            paths: self.paths,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueCrawler_IcebergTargetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueCrawler_IcebergTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_IcebergTargetRef {
+        GlueCrawler_IcebergTargetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueCrawler_IcebergTargetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `connection_name` after provisioning.\n"]
+    pub fn connection_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.connection_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `exclusions` after provisioning.\n"]
+    pub fn exclusions(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclusions", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `maximum_traversal_depth` after provisioning.\n"]
+    pub fn maximum_traversal_depth(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_traversal_depth", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `paths` after provisioning.\n"]
+    pub fn paths(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.paths", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GlueCrawler_JdbcTarget {
     connection_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_additional_metadata: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
@@ -1008,7 +1321,7 @@ pub struct GlueCrawlerJdbcTargetEl {
     path: terrars::PrimField<std::string::String>,
 }
 
-impl GlueCrawlerJdbcTargetEl {
+impl GlueCrawler_JdbcTarget {
     #[doc = "Set the field `enable_additional_metadata`.\n"]
     pub fn set_enable_additional_metadata(
         mut self,
@@ -1028,8 +1341,8 @@ impl GlueCrawlerJdbcTargetEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCrawlerJdbcTargetEl {
-    type O = terrars::BlockAssignable<GlueCrawlerJdbcTargetEl>;
+impl terrars::ToListMappable for GlueCrawler_JdbcTarget {
+    type O = terrars::BlockAssignable<GlueCrawler_JdbcTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1040,16 +1353,16 @@ impl terrars::ToListMappable for GlueCrawlerJdbcTargetEl {
     }
 }
 
-pub struct BuildGlueCrawlerJdbcTargetEl {
+pub struct BuildGlueCrawler_JdbcTarget {
     #[doc = ""]
     pub connection_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueCrawlerJdbcTargetEl {
-    pub fn build(self) -> GlueCrawlerJdbcTargetEl {
-        GlueCrawlerJdbcTargetEl {
+impl BuildGlueCrawler_JdbcTarget {
+    pub fn build(self) -> GlueCrawler_JdbcTarget {
+        GlueCrawler_JdbcTarget {
             connection_name: self.connection_name,
             enable_additional_metadata: core::default::Default::default(),
             exclusions: core::default::Default::default(),
@@ -1058,21 +1371,23 @@ impl BuildGlueCrawlerJdbcTargetEl {
     }
 }
 
-pub struct GlueCrawlerJdbcTargetElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_JdbcTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerJdbcTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerJdbcTargetElRef {
-        GlueCrawlerJdbcTargetElRef {
+impl terrars::Ref for GlueCrawler_JdbcTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_JdbcTargetRef {
+        GlueCrawler_JdbcTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerJdbcTargetElRef {
+impl GlueCrawler_JdbcTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1099,14 +1414,14 @@ impl GlueCrawlerJdbcTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueCrawlerLakeFormationConfigurationEl {
+pub struct GlueCrawler_LakeFormationConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_lake_formation_credentials: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl GlueCrawlerLakeFormationConfigurationEl {
+impl GlueCrawler_LakeFormationConfiguration {
     #[doc = "Set the field `account_id`.\n"]
     pub fn set_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.account_id = std::option::Option::Some(v.into());
@@ -1120,8 +1435,8 @@ impl GlueCrawlerLakeFormationConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCrawlerLakeFormationConfigurationEl {
-    type O = terrars::BlockAssignable<GlueCrawlerLakeFormationConfigurationEl>;
+impl terrars::ToListMappable for GlueCrawler_LakeFormationConfiguration {
+    type O = terrars::BlockAssignable<GlueCrawler_LakeFormationConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1132,32 +1447,34 @@ impl terrars::ToListMappable for GlueCrawlerLakeFormationConfigurationEl {
     }
 }
 
-pub struct BuildGlueCrawlerLakeFormationConfigurationEl {}
+pub struct BuildGlueCrawler_LakeFormationConfiguration {}
 
-impl BuildGlueCrawlerLakeFormationConfigurationEl {
-    pub fn build(self) -> GlueCrawlerLakeFormationConfigurationEl {
-        GlueCrawlerLakeFormationConfigurationEl {
+impl BuildGlueCrawler_LakeFormationConfiguration {
+    pub fn build(self) -> GlueCrawler_LakeFormationConfiguration {
+        GlueCrawler_LakeFormationConfiguration {
             account_id: core::default::Default::default(),
             use_lake_formation_credentials: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlueCrawlerLakeFormationConfigurationElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_LakeFormationConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerLakeFormationConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerLakeFormationConfigurationElRef {
-        GlueCrawlerLakeFormationConfigurationElRef {
+impl terrars::Ref for GlueCrawler_LakeFormationConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_LakeFormationConfigurationRef {
+        GlueCrawler_LakeFormationConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerLakeFormationConfigurationElRef {
+impl GlueCrawler_LakeFormationConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1174,12 +1491,12 @@ impl GlueCrawlerLakeFormationConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueCrawlerLineageConfigurationEl {
+pub struct GlueCrawler_LineageConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     crawler_lineage_settings: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueCrawlerLineageConfigurationEl {
+impl GlueCrawler_LineageConfiguration {
     #[doc = "Set the field `crawler_lineage_settings`.\n"]
     pub fn set_crawler_lineage_settings(
         mut self,
@@ -1190,8 +1507,8 @@ impl GlueCrawlerLineageConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCrawlerLineageConfigurationEl {
-    type O = terrars::BlockAssignable<GlueCrawlerLineageConfigurationEl>;
+impl terrars::ToListMappable for GlueCrawler_LineageConfiguration {
+    type O = terrars::BlockAssignable<GlueCrawler_LineageConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1202,29 +1519,31 @@ impl terrars::ToListMappable for GlueCrawlerLineageConfigurationEl {
     }
 }
 
-pub struct BuildGlueCrawlerLineageConfigurationEl {}
+pub struct BuildGlueCrawler_LineageConfiguration {}
 
-impl BuildGlueCrawlerLineageConfigurationEl {
-    pub fn build(self) -> GlueCrawlerLineageConfigurationEl {
-        GlueCrawlerLineageConfigurationEl { crawler_lineage_settings: core::default::Default::default() }
+impl BuildGlueCrawler_LineageConfiguration {
+    pub fn build(self) -> GlueCrawler_LineageConfiguration {
+        GlueCrawler_LineageConfiguration { crawler_lineage_settings: core::default::Default::default() }
     }
 }
 
-pub struct GlueCrawlerLineageConfigurationElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_LineageConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerLineageConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerLineageConfigurationElRef {
-        GlueCrawlerLineageConfigurationElRef {
+impl terrars::Ref for GlueCrawler_LineageConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_LineageConfigurationRef {
+        GlueCrawler_LineageConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerLineageConfigurationElRef {
+impl GlueCrawler_LineageConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1236,14 +1555,14 @@ impl GlueCrawlerLineageConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueCrawlerMongodbTargetEl {
+pub struct GlueCrawler_MongodbTarget {
     connection_name: terrars::PrimField<std::string::String>,
     path: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scan_all: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl GlueCrawlerMongodbTargetEl {
+impl GlueCrawler_MongodbTarget {
     #[doc = "Set the field `scan_all`.\n"]
     pub fn set_scan_all(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.scan_all = std::option::Option::Some(v.into());
@@ -1251,8 +1570,8 @@ impl GlueCrawlerMongodbTargetEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCrawlerMongodbTargetEl {
-    type O = terrars::BlockAssignable<GlueCrawlerMongodbTargetEl>;
+impl terrars::ToListMappable for GlueCrawler_MongodbTarget {
+    type O = terrars::BlockAssignable<GlueCrawler_MongodbTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1263,16 +1582,16 @@ impl terrars::ToListMappable for GlueCrawlerMongodbTargetEl {
     }
 }
 
-pub struct BuildGlueCrawlerMongodbTargetEl {
+pub struct BuildGlueCrawler_MongodbTarget {
     #[doc = ""]
     pub connection_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueCrawlerMongodbTargetEl {
-    pub fn build(self) -> GlueCrawlerMongodbTargetEl {
-        GlueCrawlerMongodbTargetEl {
+impl BuildGlueCrawler_MongodbTarget {
+    pub fn build(self) -> GlueCrawler_MongodbTarget {
+        GlueCrawler_MongodbTarget {
             connection_name: self.connection_name,
             path: self.path,
             scan_all: core::default::Default::default(),
@@ -1280,21 +1599,23 @@ impl BuildGlueCrawlerMongodbTargetEl {
     }
 }
 
-pub struct GlueCrawlerMongodbTargetElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_MongodbTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerMongodbTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerMongodbTargetElRef {
-        GlueCrawlerMongodbTargetElRef {
+impl terrars::Ref for GlueCrawler_MongodbTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_MongodbTargetRef {
+        GlueCrawler_MongodbTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerMongodbTargetElRef {
+impl GlueCrawler_MongodbTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1316,12 +1637,12 @@ impl GlueCrawlerMongodbTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueCrawlerRecrawlPolicyEl {
+pub struct GlueCrawler_RecrawlPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     recrawl_behavior: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueCrawlerRecrawlPolicyEl {
+impl GlueCrawler_RecrawlPolicy {
     #[doc = "Set the field `recrawl_behavior`.\n"]
     pub fn set_recrawl_behavior(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.recrawl_behavior = std::option::Option::Some(v.into());
@@ -1329,8 +1650,8 @@ impl GlueCrawlerRecrawlPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCrawlerRecrawlPolicyEl {
-    type O = terrars::BlockAssignable<GlueCrawlerRecrawlPolicyEl>;
+impl terrars::ToListMappable for GlueCrawler_RecrawlPolicy {
+    type O = terrars::BlockAssignable<GlueCrawler_RecrawlPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1341,29 +1662,31 @@ impl terrars::ToListMappable for GlueCrawlerRecrawlPolicyEl {
     }
 }
 
-pub struct BuildGlueCrawlerRecrawlPolicyEl {}
+pub struct BuildGlueCrawler_RecrawlPolicy {}
 
-impl BuildGlueCrawlerRecrawlPolicyEl {
-    pub fn build(self) -> GlueCrawlerRecrawlPolicyEl {
-        GlueCrawlerRecrawlPolicyEl { recrawl_behavior: core::default::Default::default() }
+impl BuildGlueCrawler_RecrawlPolicy {
+    pub fn build(self) -> GlueCrawler_RecrawlPolicy {
+        GlueCrawler_RecrawlPolicy { recrawl_behavior: core::default::Default::default() }
     }
 }
 
-pub struct GlueCrawlerRecrawlPolicyElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_RecrawlPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerRecrawlPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerRecrawlPolicyElRef {
-        GlueCrawlerRecrawlPolicyElRef {
+impl terrars::Ref for GlueCrawler_RecrawlPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_RecrawlPolicyRef {
+        GlueCrawler_RecrawlPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerRecrawlPolicyElRef {
+impl GlueCrawler_RecrawlPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1375,7 +1698,7 @@ impl GlueCrawlerRecrawlPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueCrawlerS3TargetEl {
+pub struct GlueCrawler_S3Target {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connection_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1389,7 +1712,7 @@ pub struct GlueCrawlerS3TargetEl {
     sample_size: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GlueCrawlerS3TargetEl {
+impl GlueCrawler_S3Target {
     #[doc = "Set the field `connection_name`.\n"]
     pub fn set_connection_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.connection_name = std::option::Option::Some(v.into());
@@ -1427,8 +1750,8 @@ impl GlueCrawlerS3TargetEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCrawlerS3TargetEl {
-    type O = terrars::BlockAssignable<GlueCrawlerS3TargetEl>;
+impl terrars::ToListMappable for GlueCrawler_S3Target {
+    type O = terrars::BlockAssignable<GlueCrawler_S3Target>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1439,14 +1762,14 @@ impl terrars::ToListMappable for GlueCrawlerS3TargetEl {
     }
 }
 
-pub struct BuildGlueCrawlerS3TargetEl {
+pub struct BuildGlueCrawler_S3Target {
     #[doc = ""]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueCrawlerS3TargetEl {
-    pub fn build(self) -> GlueCrawlerS3TargetEl {
-        GlueCrawlerS3TargetEl {
+impl BuildGlueCrawler_S3Target {
+    pub fn build(self) -> GlueCrawler_S3Target {
+        GlueCrawler_S3Target {
             connection_name: core::default::Default::default(),
             dlq_event_queue_arn: core::default::Default::default(),
             event_queue_arn: core::default::Default::default(),
@@ -1457,21 +1780,23 @@ impl BuildGlueCrawlerS3TargetEl {
     }
 }
 
-pub struct GlueCrawlerS3TargetElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_S3TargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerS3TargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerS3TargetElRef {
-        GlueCrawlerS3TargetElRef {
+impl terrars::Ref for GlueCrawler_S3TargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_S3TargetRef {
+        GlueCrawler_S3TargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerS3TargetElRef {
+impl GlueCrawler_S3TargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1508,14 +1833,14 @@ impl GlueCrawlerS3TargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueCrawlerSchemaChangePolicyEl {
+pub struct GlueCrawler_SchemaChangePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_behavior: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update_behavior: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueCrawlerSchemaChangePolicyEl {
+impl GlueCrawler_SchemaChangePolicy {
     #[doc = "Set the field `delete_behavior`.\n"]
     pub fn set_delete_behavior(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete_behavior = std::option::Option::Some(v.into());
@@ -1529,8 +1854,8 @@ impl GlueCrawlerSchemaChangePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for GlueCrawlerSchemaChangePolicyEl {
-    type O = terrars::BlockAssignable<GlueCrawlerSchemaChangePolicyEl>;
+impl terrars::ToListMappable for GlueCrawler_SchemaChangePolicy {
+    type O = terrars::BlockAssignable<GlueCrawler_SchemaChangePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1541,32 +1866,34 @@ impl terrars::ToListMappable for GlueCrawlerSchemaChangePolicyEl {
     }
 }
 
-pub struct BuildGlueCrawlerSchemaChangePolicyEl {}
+pub struct BuildGlueCrawler_SchemaChangePolicy {}
 
-impl BuildGlueCrawlerSchemaChangePolicyEl {
-    pub fn build(self) -> GlueCrawlerSchemaChangePolicyEl {
-        GlueCrawlerSchemaChangePolicyEl {
+impl BuildGlueCrawler_SchemaChangePolicy {
+    pub fn build(self) -> GlueCrawler_SchemaChangePolicy {
+        GlueCrawler_SchemaChangePolicy {
             delete_behavior: core::default::Default::default(),
             update_behavior: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlueCrawlerSchemaChangePolicyElRef {
+#[allow(dead_code)]
+pub struct GlueCrawler_SchemaChangePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueCrawlerSchemaChangePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawlerSchemaChangePolicyElRef {
-        GlueCrawlerSchemaChangePolicyElRef {
+impl terrars::Ref for GlueCrawler_SchemaChangePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueCrawler_SchemaChangePolicyRef {
+        GlueCrawler_SchemaChangePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueCrawlerSchemaChangePolicyElRef {
+impl GlueCrawler_SchemaChangePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1580,20 +1907,4 @@ impl GlueCrawlerSchemaChangePolicyElRef {
     pub fn update_behavior(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_behavior", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GlueCrawlerDynamic {
-    catalog_target: std::option::Option<terrars::DynamicBlock<GlueCrawlerCatalogTargetEl>>,
-    delta_target: std::option::Option<terrars::DynamicBlock<GlueCrawlerDeltaTargetEl>>,
-    dynamodb_target: std::option::Option<terrars::DynamicBlock<GlueCrawlerDynamodbTargetEl>>,
-    jdbc_target: std::option::Option<terrars::DynamicBlock<GlueCrawlerJdbcTargetEl>>,
-    lake_formation_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<GlueCrawlerLakeFormationConfigurationEl>>,
-    lineage_configuration: std::option::Option<terrars::DynamicBlock<GlueCrawlerLineageConfigurationEl>>,
-    mongodb_target: std::option::Option<terrars::DynamicBlock<GlueCrawlerMongodbTargetEl>>,
-    recrawl_policy: std::option::Option<terrars::DynamicBlock<GlueCrawlerRecrawlPolicyEl>>,
-    s3_target: std::option::Option<terrars::DynamicBlock<GlueCrawlerS3TargetEl>>,
-    schema_change_policy: std::option::Option<terrars::DynamicBlock<GlueCrawlerSchemaChangePolicyEl>>,
 }

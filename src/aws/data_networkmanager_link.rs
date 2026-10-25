@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataNetworkmanagerLinkData {
+struct DataNetworkmanagerLinkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataNetworkmanagerLinkData {
 struct DataNetworkmanagerLink_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataNetworkmanagerLinkData>,
+    data: std::cell::RefCell<DataNetworkmanagerLinkData_>,
 }
 
 #[derive(Clone)]
@@ -93,7 +95,7 @@ impl DataNetworkmanagerLink {
     }
 
     #[doc = "Get a reference to the value of field `bandwidth` after provisioning.\n"]
-    pub fn bandwidth(&self) -> terrars::ListRef<DataNetworkmanagerLinkBandwidthElRef> {
+    pub fn bandwidth(&self) -> terrars::ListRef<DataNetworkmanagerLink_BandwidthRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bandwidth", self.extract_ref()))
     }
 
@@ -182,7 +184,7 @@ impl BuildDataNetworkmanagerLink {
         let out = DataNetworkmanagerLink(std::rc::Rc::new(DataNetworkmanagerLink_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataNetworkmanagerLinkData {
+            data: std::cell::RefCell::new(DataNetworkmanagerLinkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -227,7 +229,7 @@ impl DataNetworkmanagerLinkRef {
     }
 
     #[doc = "Get a reference to the value of field `bandwidth` after provisioning.\n"]
-    pub fn bandwidth(&self) -> terrars::ListRef<DataNetworkmanagerLinkBandwidthElRef> {
+    pub fn bandwidth(&self) -> terrars::ListRef<DataNetworkmanagerLink_BandwidthRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.bandwidth", self.extract_ref()))
     }
 
@@ -273,14 +275,14 @@ impl DataNetworkmanagerLinkRef {
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkmanagerLinkBandwidthEl {
+pub struct DataNetworkmanagerLink_Bandwidth {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     download_speed: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     upload_speed: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataNetworkmanagerLinkBandwidthEl {
+impl DataNetworkmanagerLink_Bandwidth {
     #[doc = "Set the field `download_speed`.\n"]
     pub fn set_download_speed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.download_speed = std::option::Option::Some(v.into());
@@ -294,8 +296,8 @@ impl DataNetworkmanagerLinkBandwidthEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkmanagerLinkBandwidthEl {
-    type O = terrars::BlockAssignable<DataNetworkmanagerLinkBandwidthEl>;
+impl terrars::ToListMappable for DataNetworkmanagerLink_Bandwidth {
+    type O = terrars::BlockAssignable<DataNetworkmanagerLink_Bandwidth>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -306,32 +308,34 @@ impl terrars::ToListMappable for DataNetworkmanagerLinkBandwidthEl {
     }
 }
 
-pub struct BuildDataNetworkmanagerLinkBandwidthEl {}
+pub struct BuildDataNetworkmanagerLink_Bandwidth {}
 
-impl BuildDataNetworkmanagerLinkBandwidthEl {
-    pub fn build(self) -> DataNetworkmanagerLinkBandwidthEl {
-        DataNetworkmanagerLinkBandwidthEl {
+impl BuildDataNetworkmanagerLink_Bandwidth {
+    pub fn build(self) -> DataNetworkmanagerLink_Bandwidth {
+        DataNetworkmanagerLink_Bandwidth {
             download_speed: core::default::Default::default(),
             upload_speed: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataNetworkmanagerLinkBandwidthElRef {
+#[allow(dead_code)]
+pub struct DataNetworkmanagerLink_BandwidthRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkmanagerLinkBandwidthElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkmanagerLinkBandwidthElRef {
-        DataNetworkmanagerLinkBandwidthElRef {
+impl terrars::Ref for DataNetworkmanagerLink_BandwidthRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkmanagerLink_BandwidthRef {
+        DataNetworkmanagerLink_BandwidthRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkmanagerLinkBandwidthElRef {
+impl DataNetworkmanagerLink_BandwidthRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

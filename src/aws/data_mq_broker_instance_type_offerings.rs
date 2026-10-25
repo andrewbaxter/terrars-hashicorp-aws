@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataMqBrokerInstanceTypeOfferingsData {
+struct DataMqBrokerInstanceTypeOfferingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,13 +25,15 @@ struct DataMqBrokerInstanceTypeOfferingsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataMqBrokerInstanceTypeOfferings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMqBrokerInstanceTypeOfferingsData>,
+    data: std::cell::RefCell<DataMqBrokerInstanceTypeOfferingsData_>,
 }
 
 #[derive(Clone)]
@@ -92,6 +96,13 @@ impl DataMqBrokerInstanceTypeOfferings {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `storage_type`.\n"]
     pub fn set_storage_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().storage_type = std::option::Option::Some(v.into());
@@ -101,7 +112,7 @@ impl DataMqBrokerInstanceTypeOfferings {
     #[doc = "Get a reference to the value of field `broker_instance_options` after provisioning.\n"]
     pub fn broker_instance_options(
         &self,
-    ) -> terrars::ListRef<DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElRef> {
+    ) -> terrars::ListRef<DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.broker_instance_options", self.extract_ref()))
     }
 
@@ -118,6 +129,12 @@ impl DataMqBrokerInstanceTypeOfferings {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
@@ -166,7 +183,7 @@ impl BuildDataMqBrokerInstanceTypeOfferings {
         let out = DataMqBrokerInstanceTypeOfferings(std::rc::Rc::new(DataMqBrokerInstanceTypeOfferings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMqBrokerInstanceTypeOfferingsData {
+            data: std::cell::RefCell::new(DataMqBrokerInstanceTypeOfferingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -174,6 +191,7 @@ impl BuildDataMqBrokerInstanceTypeOfferings {
                 engine_type: core::default::Default::default(),
                 host_instance_type: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 storage_type: core::default::Default::default(),
             }),
         }));
@@ -208,7 +226,7 @@ impl DataMqBrokerInstanceTypeOfferingsRef {
     #[doc = "Get a reference to the value of field `broker_instance_options` after provisioning.\n"]
     pub fn broker_instance_options(
         &self,
-    ) -> terrars::ListRef<DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElRef> {
+    ) -> terrars::ListRef<DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.broker_instance_options", self.extract_ref()))
     }
 
@@ -227,6 +245,12 @@ impl DataMqBrokerInstanceTypeOfferingsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
     pub fn storage_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_type", self.extract_ref()))
@@ -234,12 +258,12 @@ impl DataMqBrokerInstanceTypeOfferingsRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl {
+pub struct DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl {
+impl DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -247,8 +271,8 @@ impl DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl
     }
 }
 
-impl terrars::ToListMappable for DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl {
-    type O = terrars::BlockAssignable<DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl>;
+impl terrars::ToListMappable for DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones {
+    type O = terrars::BlockAssignable<DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -259,34 +283,36 @@ impl terrars::ToListMappable for DataMqBrokerInstanceTypeOfferingsBrokerInstance
     }
 }
 
-pub struct BuildDataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl {}
+pub struct BuildDataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones {}
 
-impl BuildDataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl {
-    pub fn build(self) -> DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl {
-        DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl {
+impl BuildDataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones {
+    pub fn build(self) -> DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones {
+        DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones {
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesElRef {
+#[allow(dead_code)]
+pub struct DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZonesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesElRef {
+impl terrars::Ref for DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZonesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesElRef {
-        DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesElRef {
+    ) -> DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZonesRef {
+        DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZonesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesElRef {
+impl DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZonesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -298,11 +324,11 @@ impl DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl
 }
 
 #[derive(Serialize)]
-pub struct DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
+pub struct DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zones: std
     ::option
-    ::Option<terrars::SetField<DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl>>,
+    ::Option<terrars::SetField<DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -315,7 +341,7 @@ pub struct DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
     supported_engine_versions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
+impl DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions {
     #[doc = "Set the field `availability_zones`.\n"]
     pub fn set_availability_zones(
         mut self,
@@ -325,7 +351,7 @@ impl DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::SetField<DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesEl>,
+                        terrars::SetField<DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZones>,
                     >,
     ) -> Self {
         self.availability_zones = std::option::Option::Some(v.into());
@@ -372,8 +398,8 @@ impl DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
-    type O = terrars::BlockAssignable<DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl>;
+impl terrars::ToListMappable for DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions {
+    type O = terrars::BlockAssignable<DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -384,11 +410,11 @@ impl terrars::ToListMappable for DataMqBrokerInstanceTypeOfferingsBrokerInstance
     }
 }
 
-pub struct BuildDataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {}
+pub struct BuildDataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions {}
 
-impl BuildDataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
-    pub fn build(self) -> DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
-        DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
+impl BuildDataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions {
+    pub fn build(self) -> DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions {
+        DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions {
             availability_zones: core::default::Default::default(),
             engine_type: core::default::Default::default(),
             host_instance_type: core::default::Default::default(),
@@ -399,24 +425,26 @@ impl BuildDataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsEl {
     }
 }
 
-pub struct DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElRef {
+#[allow(dead_code)]
+pub struct DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElRef {
+impl terrars::Ref for DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElRef {
-        DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElRef {
+    ) -> DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptionsRef {
+        DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElRef {
+impl DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -424,7 +452,7 @@ impl DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElRef {
     #[doc = "Get a reference to the value of field `availability_zones` after provisioning.\n"]
     pub fn availability_zones(
         &self,
-    ) -> terrars::SetRef<DataMqBrokerInstanceTypeOfferingsBrokerInstanceOptionsElAvailabilityZonesElRef> {
+    ) -> terrars::SetRef<DataMqBrokerInstanceTypeOfferings_BrokerInstanceOptions_AvailabilityZonesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.availability_zones", self.base))
     }
 

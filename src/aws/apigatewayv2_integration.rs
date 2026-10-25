@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Apigatewayv2IntegrationData {
+struct Apigatewayv2IntegrationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -43,6 +45,8 @@ struct Apigatewayv2IntegrationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     payload_format_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_templates: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -51,16 +55,16 @@ struct Apigatewayv2IntegrationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timeout_milliseconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    response_parameters: std::option::Option<std::vec::Vec<Apigatewayv2IntegrationResponseParametersEl>>,
+    response_parameters: std::option::Option<std::vec::Vec<Apigatewayv2Integration_ResponseParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tls_config: std::option::Option<std::vec::Vec<Apigatewayv2IntegrationTlsConfigEl>>,
+    tls_config: std::option::Option<std::vec::Vec<Apigatewayv2Integration_TlsConfig>>,
     dynamic: Apigatewayv2IntegrationDynamic,
 }
 
 struct Apigatewayv2Integration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Apigatewayv2IntegrationData>,
+    data: std::cell::RefCell<Apigatewayv2IntegrationData_>,
 }
 
 #[derive(Clone)]
@@ -232,6 +236,13 @@ impl Apigatewayv2Integration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `request_parameters`.\n"]
     pub fn set_request_parameters(
         self,
@@ -268,7 +279,7 @@ impl Apigatewayv2Integration {
     #[doc = "Set the field `response_parameters`.\n"]
     pub fn set_response_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2IntegrationResponseParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2Integration_ResponseParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -284,7 +295,7 @@ impl Apigatewayv2Integration {
     #[doc = "Set the field `tls_config`.\n"]
     pub fn set_tls_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2IntegrationTlsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Apigatewayv2Integration_TlsConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -370,6 +381,12 @@ impl Apigatewayv2Integration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload_format_version", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `request_parameters` after provisioning.\n"]
     pub fn request_parameters(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.request_parameters", self.extract_ref()))
@@ -394,7 +411,7 @@ impl Apigatewayv2Integration {
     }
 
     #[doc = "Get a reference to the value of field `tls_config` after provisioning.\n"]
-    pub fn tls_config(&self) -> terrars::ListRef<Apigatewayv2IntegrationTlsConfigElRef> {
+    pub fn tls_config(&self) -> terrars::ListRef<Apigatewayv2Integration_TlsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tls_config", self.extract_ref()))
     }
 }
@@ -443,7 +460,7 @@ impl BuildApigatewayv2Integration {
         let out = Apigatewayv2Integration(std::rc::Rc::new(Apigatewayv2Integration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Apigatewayv2IntegrationData {
+            data: std::cell::RefCell::new(Apigatewayv2IntegrationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -462,6 +479,7 @@ impl BuildApigatewayv2Integration {
                 integration_uri: core::default::Default::default(),
                 passthrough_behavior: core::default::Default::default(),
                 payload_format_version: core::default::Default::default(),
+                region: core::default::Default::default(),
                 request_parameters: core::default::Default::default(),
                 request_templates: core::default::Default::default(),
                 template_selection_expression: core::default::Default::default(),
@@ -572,6 +590,12 @@ impl Apigatewayv2IntegrationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload_format_version", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `request_parameters` after provisioning.\n"]
     pub fn request_parameters(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.request_parameters", self.extract_ref()))
@@ -596,21 +620,27 @@ impl Apigatewayv2IntegrationRef {
     }
 
     #[doc = "Get a reference to the value of field `tls_config` after provisioning.\n"]
-    pub fn tls_config(&self) -> terrars::ListRef<Apigatewayv2IntegrationTlsConfigElRef> {
+    pub fn tls_config(&self) -> terrars::ListRef<Apigatewayv2Integration_TlsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tls_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Apigatewayv2IntegrationDynamic {
+    response_parameters: std::option::Option<terrars::DynamicBlock<Apigatewayv2Integration_ResponseParameters>>,
+    tls_config: std::option::Option<terrars::DynamicBlock<Apigatewayv2Integration_TlsConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct Apigatewayv2IntegrationResponseParametersEl {
+pub struct Apigatewayv2Integration_ResponseParameters {
     mappings: terrars::RecField<terrars::PrimField<std::string::String>>,
     status_code: terrars::PrimField<std::string::String>,
 }
 
-impl Apigatewayv2IntegrationResponseParametersEl { }
+impl Apigatewayv2Integration_ResponseParameters { }
 
-impl terrars::ToListMappable for Apigatewayv2IntegrationResponseParametersEl {
-    type O = terrars::BlockAssignable<Apigatewayv2IntegrationResponseParametersEl>;
+impl terrars::ToListMappable for Apigatewayv2Integration_ResponseParameters {
+    type O = terrars::BlockAssignable<Apigatewayv2Integration_ResponseParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -621,40 +651,39 @@ impl terrars::ToListMappable for Apigatewayv2IntegrationResponseParametersEl {
     }
 }
 
-pub struct BuildApigatewayv2IntegrationResponseParametersEl {
+pub struct BuildApigatewayv2Integration_ResponseParameters {
     #[doc = ""]
     pub mappings: terrars::RecField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub status_code: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApigatewayv2IntegrationResponseParametersEl {
-    pub fn build(self) -> Apigatewayv2IntegrationResponseParametersEl {
-        Apigatewayv2IntegrationResponseParametersEl {
+impl BuildApigatewayv2Integration_ResponseParameters {
+    pub fn build(self) -> Apigatewayv2Integration_ResponseParameters {
+        Apigatewayv2Integration_ResponseParameters {
             mappings: self.mappings,
             status_code: self.status_code,
         }
     }
 }
 
-pub struct Apigatewayv2IntegrationResponseParametersElRef {
+#[allow(dead_code)]
+pub struct Apigatewayv2Integration_ResponseParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Apigatewayv2IntegrationResponseParametersElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Apigatewayv2IntegrationResponseParametersElRef {
-        Apigatewayv2IntegrationResponseParametersElRef {
+impl terrars::Ref for Apigatewayv2Integration_ResponseParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2Integration_ResponseParametersRef {
+        Apigatewayv2Integration_ResponseParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Apigatewayv2IntegrationResponseParametersElRef {
+impl Apigatewayv2Integration_ResponseParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -671,12 +700,12 @@ impl Apigatewayv2IntegrationResponseParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct Apigatewayv2IntegrationTlsConfigEl {
+pub struct Apigatewayv2Integration_TlsConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     server_name_to_verify: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Apigatewayv2IntegrationTlsConfigEl {
+impl Apigatewayv2Integration_TlsConfig {
     #[doc = "Set the field `server_name_to_verify`.\n"]
     pub fn set_server_name_to_verify(
         mut self,
@@ -687,8 +716,8 @@ impl Apigatewayv2IntegrationTlsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for Apigatewayv2IntegrationTlsConfigEl {
-    type O = terrars::BlockAssignable<Apigatewayv2IntegrationTlsConfigEl>;
+impl terrars::ToListMappable for Apigatewayv2Integration_TlsConfig {
+    type O = terrars::BlockAssignable<Apigatewayv2Integration_TlsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -699,29 +728,31 @@ impl terrars::ToListMappable for Apigatewayv2IntegrationTlsConfigEl {
     }
 }
 
-pub struct BuildApigatewayv2IntegrationTlsConfigEl {}
+pub struct BuildApigatewayv2Integration_TlsConfig {}
 
-impl BuildApigatewayv2IntegrationTlsConfigEl {
-    pub fn build(self) -> Apigatewayv2IntegrationTlsConfigEl {
-        Apigatewayv2IntegrationTlsConfigEl { server_name_to_verify: core::default::Default::default() }
+impl BuildApigatewayv2Integration_TlsConfig {
+    pub fn build(self) -> Apigatewayv2Integration_TlsConfig {
+        Apigatewayv2Integration_TlsConfig { server_name_to_verify: core::default::Default::default() }
     }
 }
 
-pub struct Apigatewayv2IntegrationTlsConfigElRef {
+#[allow(dead_code)]
+pub struct Apigatewayv2Integration_TlsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Apigatewayv2IntegrationTlsConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2IntegrationTlsConfigElRef {
-        Apigatewayv2IntegrationTlsConfigElRef {
+impl terrars::Ref for Apigatewayv2Integration_TlsConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Apigatewayv2Integration_TlsConfigRef {
+        Apigatewayv2Integration_TlsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Apigatewayv2IntegrationTlsConfigElRef {
+impl Apigatewayv2Integration_TlsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -730,10 +761,4 @@ impl Apigatewayv2IntegrationTlsConfigElRef {
     pub fn server_name_to_verify(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_name_to_verify", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Apigatewayv2IntegrationDynamic {
-    response_parameters: std::option::Option<terrars::DynamicBlock<Apigatewayv2IntegrationResponseParametersEl>>,
-    tls_config: std::option::Option<terrars::DynamicBlock<Apigatewayv2IntegrationTlsConfigEl>>,
 }

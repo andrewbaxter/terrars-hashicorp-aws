@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SignerSigningJobData {
+struct SignerSigningJobData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,16 +26,18 @@ struct SignerSigningJobData {
     ignore_signing_job_failure: std::option::Option<terrars::PrimField<bool>>,
     profile_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination: std::option::Option<std::vec::Vec<SignerSigningJobDestinationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source: std::option::Option<std::vec::Vec<SignerSigningJobSourceEl>>,
+    destination: std::option::Option<std::vec::Vec<SignerSigningJob_Destination>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source: std::option::Option<std::vec::Vec<SignerSigningJob_Source>>,
     dynamic: SignerSigningJobDynamic,
 }
 
 struct SignerSigningJob_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SignerSigningJobData>,
+    data: std::cell::RefCell<SignerSigningJobData_>,
 }
 
 #[derive(Clone)]
@@ -145,10 +149,17 @@ impl SignerSigningJob {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJobDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJob_Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -162,7 +173,7 @@ impl SignerSigningJob {
     }
 
     #[doc = "Set the field `source`.\n"]
-    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJobSourceEl>>) -> Self {
+    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJob_Source>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().source = std::option::Option::Some(v);
@@ -229,13 +240,19 @@ impl SignerSigningJob {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_version", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `requested_by` after provisioning.\n"]
     pub fn requested_by(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.requested_by", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `revocation_record` after provisioning.\n"]
-    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningJobRevocationRecordElRef> {
+    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningJob_RevocationRecordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.revocation_record", self.extract_ref()))
     }
 
@@ -245,7 +262,7 @@ impl SignerSigningJob {
     }
 
     #[doc = "Get a reference to the value of field `signed_object` after provisioning.\n"]
-    pub fn signed_object(&self) -> terrars::ListRef<SignerSigningJobSignedObjectElRef> {
+    pub fn signed_object(&self) -> terrars::ListRef<SignerSigningJob_SignedObjectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.signed_object", self.extract_ref()))
     }
 
@@ -260,12 +277,12 @@ impl SignerSigningJob {
     }
 
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<SignerSigningJobDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<SignerSigningJob_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<SignerSigningJobSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<SignerSigningJob_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
@@ -312,7 +329,7 @@ impl BuildSignerSigningJob {
         let out = SignerSigningJob(std::rc::Rc::new(SignerSigningJob_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SignerSigningJobData {
+            data: std::cell::RefCell::new(SignerSigningJobData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -321,6 +338,7 @@ impl BuildSignerSigningJob {
                 id: core::default::Default::default(),
                 ignore_signing_job_failure: core::default::Default::default(),
                 profile_name: self.profile_name,
+                region: core::default::Default::default(),
                 destination: core::default::Default::default(),
                 source: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -409,13 +427,19 @@ impl SignerSigningJobRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_version", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `requested_by` after provisioning.\n"]
     pub fn requested_by(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.requested_by", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `revocation_record` after provisioning.\n"]
-    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningJobRevocationRecordElRef> {
+    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningJob_RevocationRecordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.revocation_record", self.extract_ref()))
     }
 
@@ -425,7 +449,7 @@ impl SignerSigningJobRef {
     }
 
     #[doc = "Get a reference to the value of field `signed_object` after provisioning.\n"]
-    pub fn signed_object(&self) -> terrars::ListRef<SignerSigningJobSignedObjectElRef> {
+    pub fn signed_object(&self) -> terrars::ListRef<SignerSigningJob_SignedObjectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.signed_object", self.extract_ref()))
     }
 
@@ -440,18 +464,24 @@ impl SignerSigningJobRef {
     }
 
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<SignerSigningJobDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<SignerSigningJob_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<SignerSigningJobSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<SignerSigningJob_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SignerSigningJobDynamic {
+    destination: std::option::Option<terrars::DynamicBlock<SignerSigningJob_Destination>>,
+    source: std::option::Option<terrars::DynamicBlock<SignerSigningJob_Source>>,
+}
+
 #[derive(Serialize)]
-pub struct SignerSigningJobRevocationRecordEl {
+pub struct SignerSigningJob_RevocationRecord {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     reason: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -460,7 +490,7 @@ pub struct SignerSigningJobRevocationRecordEl {
     revoked_by: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SignerSigningJobRevocationRecordEl {
+impl SignerSigningJob_RevocationRecord {
     #[doc = "Set the field `reason`.\n"]
     pub fn set_reason(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.reason = std::option::Option::Some(v.into());
@@ -480,8 +510,8 @@ impl SignerSigningJobRevocationRecordEl {
     }
 }
 
-impl terrars::ToListMappable for SignerSigningJobRevocationRecordEl {
-    type O = terrars::BlockAssignable<SignerSigningJobRevocationRecordEl>;
+impl terrars::ToListMappable for SignerSigningJob_RevocationRecord {
+    type O = terrars::BlockAssignable<SignerSigningJob_RevocationRecord>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -492,11 +522,11 @@ impl terrars::ToListMappable for SignerSigningJobRevocationRecordEl {
     }
 }
 
-pub struct BuildSignerSigningJobRevocationRecordEl {}
+pub struct BuildSignerSigningJob_RevocationRecord {}
 
-impl BuildSignerSigningJobRevocationRecordEl {
-    pub fn build(self) -> SignerSigningJobRevocationRecordEl {
-        SignerSigningJobRevocationRecordEl {
+impl BuildSignerSigningJob_RevocationRecord {
+    pub fn build(self) -> SignerSigningJob_RevocationRecord {
+        SignerSigningJob_RevocationRecord {
             reason: core::default::Default::default(),
             revoked_at: core::default::Default::default(),
             revoked_by: core::default::Default::default(),
@@ -504,21 +534,23 @@ impl BuildSignerSigningJobRevocationRecordEl {
     }
 }
 
-pub struct SignerSigningJobRevocationRecordElRef {
+#[allow(dead_code)]
+pub struct SignerSigningJob_RevocationRecordRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SignerSigningJobRevocationRecordElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobRevocationRecordElRef {
-        SignerSigningJobRevocationRecordElRef {
+impl terrars::Ref for SignerSigningJob_RevocationRecordRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJob_RevocationRecordRef {
+        SignerSigningJob_RevocationRecordRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SignerSigningJobRevocationRecordElRef {
+impl SignerSigningJob_RevocationRecordRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -540,14 +572,14 @@ impl SignerSigningJobRevocationRecordElRef {
 }
 
 #[derive(Serialize)]
-pub struct SignerSigningJobSignedObjectElS3El {
+pub struct SignerSigningJob_SignedObject_S3 {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SignerSigningJobSignedObjectElS3El {
+impl SignerSigningJob_SignedObject_S3 {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -561,8 +593,8 @@ impl SignerSigningJobSignedObjectElS3El {
     }
 }
 
-impl terrars::ToListMappable for SignerSigningJobSignedObjectElS3El {
-    type O = terrars::BlockAssignable<SignerSigningJobSignedObjectElS3El>;
+impl terrars::ToListMappable for SignerSigningJob_SignedObject_S3 {
+    type O = terrars::BlockAssignable<SignerSigningJob_SignedObject_S3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -573,32 +605,34 @@ impl terrars::ToListMappable for SignerSigningJobSignedObjectElS3El {
     }
 }
 
-pub struct BuildSignerSigningJobSignedObjectElS3El {}
+pub struct BuildSignerSigningJob_SignedObject_S3 {}
 
-impl BuildSignerSigningJobSignedObjectElS3El {
-    pub fn build(self) -> SignerSigningJobSignedObjectElS3El {
-        SignerSigningJobSignedObjectElS3El {
+impl BuildSignerSigningJob_SignedObject_S3 {
+    pub fn build(self) -> SignerSigningJob_SignedObject_S3 {
+        SignerSigningJob_SignedObject_S3 {
             bucket: core::default::Default::default(),
             key: core::default::Default::default(),
         }
     }
 }
 
-pub struct SignerSigningJobSignedObjectElS3ElRef {
+#[allow(dead_code)]
+pub struct SignerSigningJob_SignedObject_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SignerSigningJobSignedObjectElS3ElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobSignedObjectElS3ElRef {
-        SignerSigningJobSignedObjectElS3ElRef {
+impl terrars::Ref for SignerSigningJob_SignedObject_S3Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJob_SignedObject_S3Ref {
+        SignerSigningJob_SignedObject_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SignerSigningJobSignedObjectElS3ElRef {
+impl SignerSigningJob_SignedObject_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -615,21 +649,21 @@ impl SignerSigningJobSignedObjectElS3ElRef {
 }
 
 #[derive(Serialize)]
-pub struct SignerSigningJobSignedObjectEl {
+pub struct SignerSigningJob_SignedObject {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3: std::option::Option<terrars::ListField<SignerSigningJobSignedObjectElS3El>>,
+    s3: std::option::Option<terrars::ListField<SignerSigningJob_SignedObject_S3>>,
 }
 
-impl SignerSigningJobSignedObjectEl {
+impl SignerSigningJob_SignedObject {
     #[doc = "Set the field `s3`.\n"]
-    pub fn set_s3(mut self, v: impl std::convert::Into<terrars::ListField<SignerSigningJobSignedObjectElS3El>>) -> Self {
+    pub fn set_s3(mut self, v: impl std::convert::Into<terrars::ListField<SignerSigningJob_SignedObject_S3>>) -> Self {
         self.s3 = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for SignerSigningJobSignedObjectEl {
-    type O = terrars::BlockAssignable<SignerSigningJobSignedObjectEl>;
+impl terrars::ToListMappable for SignerSigningJob_SignedObject {
+    type O = terrars::BlockAssignable<SignerSigningJob_SignedObject>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -640,47 +674,49 @@ impl terrars::ToListMappable for SignerSigningJobSignedObjectEl {
     }
 }
 
-pub struct BuildSignerSigningJobSignedObjectEl {}
+pub struct BuildSignerSigningJob_SignedObject {}
 
-impl BuildSignerSigningJobSignedObjectEl {
-    pub fn build(self) -> SignerSigningJobSignedObjectEl {
-        SignerSigningJobSignedObjectEl { s3: core::default::Default::default() }
+impl BuildSignerSigningJob_SignedObject {
+    pub fn build(self) -> SignerSigningJob_SignedObject {
+        SignerSigningJob_SignedObject { s3: core::default::Default::default() }
     }
 }
 
-pub struct SignerSigningJobSignedObjectElRef {
+#[allow(dead_code)]
+pub struct SignerSigningJob_SignedObjectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SignerSigningJobSignedObjectElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobSignedObjectElRef {
-        SignerSigningJobSignedObjectElRef {
+impl terrars::Ref for SignerSigningJob_SignedObjectRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJob_SignedObjectRef {
+        SignerSigningJob_SignedObjectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SignerSigningJobSignedObjectElRef {
+impl SignerSigningJob_SignedObjectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<SignerSigningJobSignedObjectElS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<SignerSigningJob_SignedObject_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SignerSigningJobDestinationElS3El {
+pub struct SignerSigningJob_Destination_S3 {
     bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SignerSigningJobDestinationElS3El {
+impl SignerSigningJob_Destination_S3 {
     #[doc = "Set the field `prefix`.\n"]
     pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix = std::option::Option::Some(v.into());
@@ -688,8 +724,8 @@ impl SignerSigningJobDestinationElS3El {
     }
 }
 
-impl terrars::ToListMappable for SignerSigningJobDestinationElS3El {
-    type O = terrars::BlockAssignable<SignerSigningJobDestinationElS3El>;
+impl terrars::ToListMappable for SignerSigningJob_Destination_S3 {
+    type O = terrars::BlockAssignable<SignerSigningJob_Destination_S3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -700,35 +736,37 @@ impl terrars::ToListMappable for SignerSigningJobDestinationElS3El {
     }
 }
 
-pub struct BuildSignerSigningJobDestinationElS3El {
+pub struct BuildSignerSigningJob_Destination_S3 {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSignerSigningJobDestinationElS3El {
-    pub fn build(self) -> SignerSigningJobDestinationElS3El {
-        SignerSigningJobDestinationElS3El {
+impl BuildSignerSigningJob_Destination_S3 {
+    pub fn build(self) -> SignerSigningJob_Destination_S3 {
+        SignerSigningJob_Destination_S3 {
             bucket: self.bucket,
             prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct SignerSigningJobDestinationElS3ElRef {
+#[allow(dead_code)]
+pub struct SignerSigningJob_Destination_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SignerSigningJobDestinationElS3ElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobDestinationElS3ElRef {
-        SignerSigningJobDestinationElS3ElRef {
+impl terrars::Ref for SignerSigningJob_Destination_S3Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJob_Destination_S3Ref {
+        SignerSigningJob_Destination_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SignerSigningJobDestinationElS3ElRef {
+impl SignerSigningJob_Destination_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -745,22 +783,22 @@ impl SignerSigningJobDestinationElS3ElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SignerSigningJobDestinationElDynamic {
-    s3: std::option::Option<terrars::DynamicBlock<SignerSigningJobDestinationElS3El>>,
+struct SignerSigningJob_DestinationDynamic {
+    s3: std::option::Option<terrars::DynamicBlock<SignerSigningJob_Destination_S3>>,
 }
 
 #[derive(Serialize)]
-pub struct SignerSigningJobDestinationEl {
+pub struct SignerSigningJob_Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3: std::option::Option<std::vec::Vec<SignerSigningJobDestinationElS3El>>,
-    dynamic: SignerSigningJobDestinationElDynamic,
+    s3: std::option::Option<std::vec::Vec<SignerSigningJob_Destination_S3>>,
+    dynamic: SignerSigningJob_DestinationDynamic,
 }
 
-impl SignerSigningJobDestinationEl {
+impl SignerSigningJob_Destination {
     #[doc = "Set the field `s3`.\n"]
     pub fn set_s3(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJobDestinationElS3El>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJob_Destination_S3>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -774,8 +812,8 @@ impl SignerSigningJobDestinationEl {
     }
 }
 
-impl terrars::ToListMappable for SignerSigningJobDestinationEl {
-    type O = terrars::BlockAssignable<SignerSigningJobDestinationEl>;
+impl terrars::ToListMappable for SignerSigningJob_Destination {
+    type O = terrars::BlockAssignable<SignerSigningJob_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -786,53 +824,55 @@ impl terrars::ToListMappable for SignerSigningJobDestinationEl {
     }
 }
 
-pub struct BuildSignerSigningJobDestinationEl {}
+pub struct BuildSignerSigningJob_Destination {}
 
-impl BuildSignerSigningJobDestinationEl {
-    pub fn build(self) -> SignerSigningJobDestinationEl {
-        SignerSigningJobDestinationEl {
+impl BuildSignerSigningJob_Destination {
+    pub fn build(self) -> SignerSigningJob_Destination {
+        SignerSigningJob_Destination {
             s3: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SignerSigningJobDestinationElRef {
+#[allow(dead_code)]
+pub struct SignerSigningJob_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SignerSigningJobDestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobDestinationElRef {
-        SignerSigningJobDestinationElRef {
+impl terrars::Ref for SignerSigningJob_DestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJob_DestinationRef {
+        SignerSigningJob_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SignerSigningJobDestinationElRef {
+impl SignerSigningJob_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<SignerSigningJobDestinationElS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<SignerSigningJob_Destination_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SignerSigningJobSourceElS3El {
+pub struct SignerSigningJob_Source_S3 {
     bucket: terrars::PrimField<std::string::String>,
     key: terrars::PrimField<std::string::String>,
     version: terrars::PrimField<std::string::String>,
 }
 
-impl SignerSigningJobSourceElS3El { }
+impl SignerSigningJob_Source_S3 { }
 
-impl terrars::ToListMappable for SignerSigningJobSourceElS3El {
-    type O = terrars::BlockAssignable<SignerSigningJobSourceElS3El>;
+impl terrars::ToListMappable for SignerSigningJob_Source_S3 {
+    type O = terrars::BlockAssignable<SignerSigningJob_Source_S3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -843,7 +883,7 @@ impl terrars::ToListMappable for SignerSigningJobSourceElS3El {
     }
 }
 
-pub struct BuildSignerSigningJobSourceElS3El {
+pub struct BuildSignerSigningJob_Source_S3 {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -852,9 +892,9 @@ pub struct BuildSignerSigningJobSourceElS3El {
     pub version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSignerSigningJobSourceElS3El {
-    pub fn build(self) -> SignerSigningJobSourceElS3El {
-        SignerSigningJobSourceElS3El {
+impl BuildSignerSigningJob_Source_S3 {
+    pub fn build(self) -> SignerSigningJob_Source_S3 {
+        SignerSigningJob_Source_S3 {
             bucket: self.bucket,
             key: self.key,
             version: self.version,
@@ -862,21 +902,23 @@ impl BuildSignerSigningJobSourceElS3El {
     }
 }
 
-pub struct SignerSigningJobSourceElS3ElRef {
+#[allow(dead_code)]
+pub struct SignerSigningJob_Source_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SignerSigningJobSourceElS3ElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobSourceElS3ElRef {
-        SignerSigningJobSourceElS3ElRef {
+impl terrars::Ref for SignerSigningJob_Source_S3Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJob_Source_S3Ref {
+        SignerSigningJob_Source_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SignerSigningJobSourceElS3ElRef {
+impl SignerSigningJob_Source_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -898,20 +940,20 @@ impl SignerSigningJobSourceElS3ElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SignerSigningJobSourceElDynamic {
-    s3: std::option::Option<terrars::DynamicBlock<SignerSigningJobSourceElS3El>>,
+struct SignerSigningJob_SourceDynamic {
+    s3: std::option::Option<terrars::DynamicBlock<SignerSigningJob_Source_S3>>,
 }
 
 #[derive(Serialize)]
-pub struct SignerSigningJobSourceEl {
+pub struct SignerSigningJob_Source {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3: std::option::Option<std::vec::Vec<SignerSigningJobSourceElS3El>>,
-    dynamic: SignerSigningJobSourceElDynamic,
+    s3: std::option::Option<std::vec::Vec<SignerSigningJob_Source_S3>>,
+    dynamic: SignerSigningJob_SourceDynamic,
 }
 
-impl SignerSigningJobSourceEl {
+impl SignerSigningJob_Source {
     #[doc = "Set the field `s3`.\n"]
-    pub fn set_s3(mut self, v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJobSourceElS3El>>) -> Self {
+    pub fn set_s3(mut self, v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningJob_Source_S3>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.s3 = std::option::Option::Some(v);
@@ -924,8 +966,8 @@ impl SignerSigningJobSourceEl {
     }
 }
 
-impl terrars::ToListMappable for SignerSigningJobSourceEl {
-    type O = terrars::BlockAssignable<SignerSigningJobSourceEl>;
+impl terrars::ToListMappable for SignerSigningJob_Source {
+    type O = terrars::BlockAssignable<SignerSigningJob_Source>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -936,44 +978,40 @@ impl terrars::ToListMappable for SignerSigningJobSourceEl {
     }
 }
 
-pub struct BuildSignerSigningJobSourceEl {}
+pub struct BuildSignerSigningJob_Source {}
 
-impl BuildSignerSigningJobSourceEl {
-    pub fn build(self) -> SignerSigningJobSourceEl {
-        SignerSigningJobSourceEl {
+impl BuildSignerSigningJob_Source {
+    pub fn build(self) -> SignerSigningJob_Source {
+        SignerSigningJob_Source {
             s3: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SignerSigningJobSourceElRef {
+#[allow(dead_code)]
+pub struct SignerSigningJob_SourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SignerSigningJobSourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJobSourceElRef {
-        SignerSigningJobSourceElRef {
+impl terrars::Ref for SignerSigningJob_SourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningJob_SourceRef {
+        SignerSigningJob_SourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SignerSigningJobSourceElRef {
+impl SignerSigningJob_SourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<SignerSigningJobSourceElS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<SignerSigningJob_Source_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SignerSigningJobDynamic {
-    destination: std::option::Option<terrars::DynamicBlock<SignerSigningJobDestinationEl>>,
-    source: std::option::Option<terrars::DynamicBlock<SignerSigningJobSourceEl>>,
 }

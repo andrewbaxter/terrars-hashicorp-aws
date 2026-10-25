@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbSnapshotCopyData {
+struct DbSnapshotCopyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,6 +32,10 @@ struct DbSnapshotCopyData {
     option_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     presigned_url: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    shared_accounts: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     source_db_snapshot_identifier: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -39,13 +45,13 @@ struct DbSnapshotCopyData {
     target_custom_availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     target_db_snapshot_identifier: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DbSnapshotCopyTimeoutsEl>,
+    timeouts: std::option::Option<DbSnapshotCopy_Timeouts>,
 }
 
 struct DbSnapshotCopy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbSnapshotCopyData>,
+    data: std::cell::RefCell<DbSnapshotCopyData_>,
 }
 
 #[derive(Clone)]
@@ -181,6 +187,22 @@ impl DbSnapshotCopy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `shared_accounts`.\n"]
+    pub fn set_shared_accounts(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().shared_accounts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -209,7 +231,7 @@ impl DbSnapshotCopy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DbSnapshotCopyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DbSnapshotCopy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -289,6 +311,17 @@ impl DbSnapshotCopy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.presigned_url", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `shared_accounts` after provisioning.\n"]
+    pub fn shared_accounts(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.shared_accounts", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_type` after provisioning.\n"]
     pub fn snapshot_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_type", self.extract_ref()))
@@ -344,8 +377,8 @@ impl DbSnapshotCopy {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbSnapshotCopyTimeoutsElRef {
-        DbSnapshotCopyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbSnapshotCopy_TimeoutsRef {
+        DbSnapshotCopy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -393,7 +426,7 @@ impl BuildDbSnapshotCopy {
         let out = DbSnapshotCopy(std::rc::Rc::new(DbSnapshotCopy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbSnapshotCopyData {
+            data: std::cell::RefCell::new(DbSnapshotCopyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -405,6 +438,8 @@ impl BuildDbSnapshotCopy {
                 kms_key_id: core::default::Default::default(),
                 option_group_name: core::default::Default::default(),
                 presigned_url: core::default::Default::default(),
+                region: core::default::Default::default(),
+                shared_accounts: core::default::Default::default(),
                 source_db_snapshot_identifier: self.source_db_snapshot_identifier,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -516,6 +551,17 @@ impl DbSnapshotCopyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.presigned_url", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `shared_accounts` after provisioning.\n"]
+    pub fn shared_accounts(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.shared_accounts", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_type` after provisioning.\n"]
     pub fn snapshot_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_type", self.extract_ref()))
@@ -571,18 +617,18 @@ impl DbSnapshotCopyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbSnapshotCopyTimeoutsElRef {
-        DbSnapshotCopyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbSnapshotCopy_TimeoutsRef {
+        DbSnapshotCopy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DbSnapshotCopyTimeoutsEl {
+pub struct DbSnapshotCopy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DbSnapshotCopyTimeoutsEl {
+impl DbSnapshotCopy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -590,8 +636,8 @@ impl DbSnapshotCopyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DbSnapshotCopyTimeoutsEl {
-    type O = terrars::BlockAssignable<DbSnapshotCopyTimeoutsEl>;
+impl terrars::ToListMappable for DbSnapshotCopy_Timeouts {
+    type O = terrars::BlockAssignable<DbSnapshotCopy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -602,29 +648,31 @@ impl terrars::ToListMappable for DbSnapshotCopyTimeoutsEl {
     }
 }
 
-pub struct BuildDbSnapshotCopyTimeoutsEl {}
+pub struct BuildDbSnapshotCopy_Timeouts {}
 
-impl BuildDbSnapshotCopyTimeoutsEl {
-    pub fn build(self) -> DbSnapshotCopyTimeoutsEl {
-        DbSnapshotCopyTimeoutsEl { create: core::default::Default::default() }
+impl BuildDbSnapshotCopy_Timeouts {
+    pub fn build(self) -> DbSnapshotCopy_Timeouts {
+        DbSnapshotCopy_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct DbSnapshotCopyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DbSnapshotCopy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbSnapshotCopyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbSnapshotCopyTimeoutsElRef {
-        DbSnapshotCopyTimeoutsElRef {
+impl terrars::Ref for DbSnapshotCopy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbSnapshotCopy_TimeoutsRef {
+        DbSnapshotCopy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbSnapshotCopyTimeoutsElRef {
+impl DbSnapshotCopy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

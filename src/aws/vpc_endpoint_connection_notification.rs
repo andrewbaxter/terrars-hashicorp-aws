@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct VpcEndpointConnectionNotificationData {
+struct VpcEndpointConnectionNotificationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct VpcEndpointConnectionNotificationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_service_id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -31,7 +35,7 @@ struct VpcEndpointConnectionNotificationData {
 struct VpcEndpointConnectionNotification_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpcEndpointConnectionNotificationData>,
+    data: std::cell::RefCell<VpcEndpointConnectionNotificationData_>,
 }
 
 #[derive(Clone)]
@@ -137,6 +141,13 @@ impl VpcEndpointConnectionNotification {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `vpc_endpoint_id`.\n"]
     pub fn set_vpc_endpoint_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().vpc_endpoint_id = std::option::Option::Some(v.into());
@@ -170,6 +181,12 @@ impl VpcEndpointConnectionNotification {
     #[doc = "Get a reference to the value of field `notification_type` after provisioning.\n"]
     pub fn notification_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.notification_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -232,7 +249,7 @@ impl BuildVpcEndpointConnectionNotification {
         let out = VpcEndpointConnectionNotification(std::rc::Rc::new(VpcEndpointConnectionNotification_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpcEndpointConnectionNotificationData {
+            data: std::cell::RefCell::new(VpcEndpointConnectionNotificationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -241,6 +258,7 @@ impl BuildVpcEndpointConnectionNotification {
                 connection_events: self.connection_events,
                 connection_notification_arn: self.connection_notification_arn,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 vpc_endpoint_id: core::default::Default::default(),
                 vpc_endpoint_service_id: core::default::Default::default(),
             }),
@@ -291,6 +309,12 @@ impl VpcEndpointConnectionNotificationRef {
     #[doc = "Get a reference to the value of field `notification_type` after provisioning.\n"]
     pub fn notification_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.notification_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]

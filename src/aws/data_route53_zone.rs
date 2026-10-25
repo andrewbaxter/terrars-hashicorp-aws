@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataRoute53ZoneData {
+struct DataRoute53ZoneData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -17,13 +19,13 @@ struct DataRoute53ZoneData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_accelerated_recovery: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_zone: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_record_set_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,7 +37,7 @@ struct DataRoute53ZoneData {
 struct DataRoute53Zone_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRoute53ZoneData>,
+    data: std::cell::RefCell<DataRoute53ZoneData_>,
 }
 
 #[derive(Clone)]
@@ -80,6 +82,12 @@ impl DataRoute53Zone {
         self
     }
 
+    #[doc = "Set the field `enable_accelerated_recovery`.\n"]
+    pub fn set_enable_accelerated_recovery(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_accelerated_recovery = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -95,12 +103,6 @@ impl DataRoute53Zone {
     #[doc = "Set the field `private_zone`.\n"]
     pub fn set_private_zone(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().private_zone = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `resource_record_set_count`.\n"]
-    pub fn set_resource_record_set_count(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().resource_record_set_count = std::option::Option::Some(v.into());
         self
     }
 
@@ -138,6 +140,11 @@ impl DataRoute53Zone {
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
     pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_accelerated_recovery` after provisioning.\n"]
+    pub fn enable_accelerated_recovery(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_accelerated_recovery", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -236,15 +243,15 @@ impl BuildDataRoute53Zone {
         let out = DataRoute53Zone(std::rc::Rc::new(DataRoute53Zone_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRoute53ZoneData {
+            data: std::cell::RefCell::new(DataRoute53ZoneData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
+                enable_accelerated_recovery: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 private_zone: core::default::Default::default(),
-                resource_record_set_count: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 vpc_id: core::default::Default::default(),
                 zone_id: core::default::Default::default(),
@@ -291,6 +298,11 @@ impl DataRoute53ZoneRef {
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
     pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_accelerated_recovery` after provisioning.\n"]
+    pub fn enable_accelerated_recovery(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_accelerated_recovery", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]

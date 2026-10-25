@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlueMlTransformData {
+struct GlueMlTransformData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,6 +33,8 @@ struct GlueMlTransformData {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     number_of_workers: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -41,16 +45,16 @@ struct GlueMlTransformData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     worker_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input_record_tables: std::option::Option<std::vec::Vec<GlueMlTransformInputRecordTablesEl>>,
+    input_record_tables: std::option::Option<std::vec::Vec<GlueMlTransform_InputRecordTables>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std::option::Option<std::vec::Vec<GlueMlTransformParametersEl>>,
+    parameters: std::option::Option<std::vec::Vec<GlueMlTransform_Parameters>>,
     dynamic: GlueMlTransformDynamic,
 }
 
 struct GlueMlTransform_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlueMlTransformData>,
+    data: std::cell::RefCell<GlueMlTransformData_>,
 }
 
 #[derive(Clone)]
@@ -186,6 +190,13 @@ impl GlueMlTransform {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -219,7 +230,7 @@ impl GlueMlTransform {
     #[doc = "Set the field `input_record_tables`.\n"]
     pub fn set_input_record_tables(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueMlTransformInputRecordTablesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueMlTransform_InputRecordTables>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -235,7 +246,7 @@ impl GlueMlTransform {
     #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueMlTransformParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueMlTransform_Parameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -293,13 +304,19 @@ impl GlueMlTransform {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_workers", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
-    pub fn schema(&self) -> terrars::ListRef<GlueMlTransformSchemaElRef> {
+    pub fn schema(&self) -> terrars::ListRef<GlueMlTransform_SchemaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema", self.extract_ref()))
     }
 
@@ -324,12 +341,12 @@ impl GlueMlTransform {
     }
 
     #[doc = "Get a reference to the value of field `input_record_tables` after provisioning.\n"]
-    pub fn input_record_tables(&self) -> terrars::ListRef<GlueMlTransformInputRecordTablesElRef> {
+    pub fn input_record_tables(&self) -> terrars::ListRef<GlueMlTransform_InputRecordTablesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_record_tables", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> terrars::ListRef<GlueMlTransformParametersElRef> {
+    pub fn parameters(&self) -> terrars::ListRef<GlueMlTransform_ParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 }
@@ -378,7 +395,7 @@ impl BuildGlueMlTransform {
         let out = GlueMlTransform(std::rc::Rc::new(GlueMlTransform_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlueMlTransformData {
+            data: std::cell::RefCell::new(GlueMlTransformData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -391,6 +408,7 @@ impl BuildGlueMlTransform {
                 max_retries: core::default::Default::default(),
                 name: self.name,
                 number_of_workers: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -474,13 +492,19 @@ impl GlueMlTransformRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_workers", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
-    pub fn schema(&self) -> terrars::ListRef<GlueMlTransformSchemaElRef> {
+    pub fn schema(&self) -> terrars::ListRef<GlueMlTransform_SchemaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema", self.extract_ref()))
     }
 
@@ -505,25 +529,31 @@ impl GlueMlTransformRef {
     }
 
     #[doc = "Get a reference to the value of field `input_record_tables` after provisioning.\n"]
-    pub fn input_record_tables(&self) -> terrars::ListRef<GlueMlTransformInputRecordTablesElRef> {
+    pub fn input_record_tables(&self) -> terrars::ListRef<GlueMlTransform_InputRecordTablesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_record_tables", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> terrars::ListRef<GlueMlTransformParametersElRef> {
+    pub fn parameters(&self) -> terrars::ListRef<GlueMlTransform_ParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlueMlTransformDynamic {
+    input_record_tables: std::option::Option<terrars::DynamicBlock<GlueMlTransform_InputRecordTables>>,
+    parameters: std::option::Option<terrars::DynamicBlock<GlueMlTransform_Parameters>>,
+}
+
 #[derive(Serialize)]
-pub struct GlueMlTransformSchemaEl {
+pub struct GlueMlTransform_Schema {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueMlTransformSchemaEl {
+impl GlueMlTransform_Schema {
     #[doc = "Set the field `data_type`.\n"]
     pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data_type = std::option::Option::Some(v.into());
@@ -537,8 +567,8 @@ impl GlueMlTransformSchemaEl {
     }
 }
 
-impl terrars::ToListMappable for GlueMlTransformSchemaEl {
-    type O = terrars::BlockAssignable<GlueMlTransformSchemaEl>;
+impl terrars::ToListMappable for GlueMlTransform_Schema {
+    type O = terrars::BlockAssignable<GlueMlTransform_Schema>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -549,32 +579,34 @@ impl terrars::ToListMappable for GlueMlTransformSchemaEl {
     }
 }
 
-pub struct BuildGlueMlTransformSchemaEl {}
+pub struct BuildGlueMlTransform_Schema {}
 
-impl BuildGlueMlTransformSchemaEl {
-    pub fn build(self) -> GlueMlTransformSchemaEl {
-        GlueMlTransformSchemaEl {
+impl BuildGlueMlTransform_Schema {
+    pub fn build(self) -> GlueMlTransform_Schema {
+        GlueMlTransform_Schema {
             data_type: core::default::Default::default(),
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlueMlTransformSchemaElRef {
+#[allow(dead_code)]
+pub struct GlueMlTransform_SchemaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueMlTransformSchemaElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueMlTransformSchemaElRef {
-        GlueMlTransformSchemaElRef {
+impl terrars::Ref for GlueMlTransform_SchemaRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueMlTransform_SchemaRef {
+        GlueMlTransform_SchemaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueMlTransformSchemaElRef {
+impl GlueMlTransform_SchemaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -591,7 +623,7 @@ impl GlueMlTransformSchemaElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueMlTransformInputRecordTablesEl {
+pub struct GlueMlTransform_InputRecordTables {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -600,7 +632,7 @@ pub struct GlueMlTransformInputRecordTablesEl {
     table_name: terrars::PrimField<std::string::String>,
 }
 
-impl GlueMlTransformInputRecordTablesEl {
+impl GlueMlTransform_InputRecordTables {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -614,8 +646,8 @@ impl GlueMlTransformInputRecordTablesEl {
     }
 }
 
-impl terrars::ToListMappable for GlueMlTransformInputRecordTablesEl {
-    type O = terrars::BlockAssignable<GlueMlTransformInputRecordTablesEl>;
+impl terrars::ToListMappable for GlueMlTransform_InputRecordTables {
+    type O = terrars::BlockAssignable<GlueMlTransform_InputRecordTables>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -626,16 +658,16 @@ impl terrars::ToListMappable for GlueMlTransformInputRecordTablesEl {
     }
 }
 
-pub struct BuildGlueMlTransformInputRecordTablesEl {
+pub struct BuildGlueMlTransform_InputRecordTables {
     #[doc = ""]
     pub database_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub table_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueMlTransformInputRecordTablesEl {
-    pub fn build(self) -> GlueMlTransformInputRecordTablesEl {
-        GlueMlTransformInputRecordTablesEl {
+impl BuildGlueMlTransform_InputRecordTables {
+    pub fn build(self) -> GlueMlTransform_InputRecordTables {
+        GlueMlTransform_InputRecordTables {
             catalog_id: core::default::Default::default(),
             connection_name: core::default::Default::default(),
             database_name: self.database_name,
@@ -644,21 +676,23 @@ impl BuildGlueMlTransformInputRecordTablesEl {
     }
 }
 
-pub struct GlueMlTransformInputRecordTablesElRef {
+#[allow(dead_code)]
+pub struct GlueMlTransform_InputRecordTablesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueMlTransformInputRecordTablesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueMlTransformInputRecordTablesElRef {
-        GlueMlTransformInputRecordTablesElRef {
+impl terrars::Ref for GlueMlTransform_InputRecordTablesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueMlTransform_InputRecordTablesRef {
+        GlueMlTransform_InputRecordTablesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueMlTransformInputRecordTablesElRef {
+impl GlueMlTransform_InputRecordTablesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -685,7 +719,7 @@ impl GlueMlTransformInputRecordTablesElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueMlTransformParametersElFindMatchesParametersEl {
+pub struct GlueMlTransform_Parameters_FindMatchesParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accuracy_cost_trade_off: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -696,7 +730,7 @@ pub struct GlueMlTransformParametersElFindMatchesParametersEl {
     primary_key_column_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlueMlTransformParametersElFindMatchesParametersEl {
+impl GlueMlTransform_Parameters_FindMatchesParameters {
     #[doc = "Set the field `accuracy_cost_trade_off`.\n"]
     pub fn set_accuracy_cost_trade_off(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.accuracy_cost_trade_off = std::option::Option::Some(v.into());
@@ -725,8 +759,8 @@ impl GlueMlTransformParametersElFindMatchesParametersEl {
     }
 }
 
-impl terrars::ToListMappable for GlueMlTransformParametersElFindMatchesParametersEl {
-    type O = terrars::BlockAssignable<GlueMlTransformParametersElFindMatchesParametersEl>;
+impl terrars::ToListMappable for GlueMlTransform_Parameters_FindMatchesParameters {
+    type O = terrars::BlockAssignable<GlueMlTransform_Parameters_FindMatchesParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -737,11 +771,11 @@ impl terrars::ToListMappable for GlueMlTransformParametersElFindMatchesParameter
     }
 }
 
-pub struct BuildGlueMlTransformParametersElFindMatchesParametersEl {}
+pub struct BuildGlueMlTransform_Parameters_FindMatchesParameters {}
 
-impl BuildGlueMlTransformParametersElFindMatchesParametersEl {
-    pub fn build(self) -> GlueMlTransformParametersElFindMatchesParametersEl {
-        GlueMlTransformParametersElFindMatchesParametersEl {
+impl BuildGlueMlTransform_Parameters_FindMatchesParameters {
+    pub fn build(self) -> GlueMlTransform_Parameters_FindMatchesParameters {
+        GlueMlTransform_Parameters_FindMatchesParameters {
             accuracy_cost_trade_off: core::default::Default::default(),
             enforce_provided_labels: core::default::Default::default(),
             precision_recall_trade_off: core::default::Default::default(),
@@ -750,24 +784,26 @@ impl BuildGlueMlTransformParametersElFindMatchesParametersEl {
     }
 }
 
-pub struct GlueMlTransformParametersElFindMatchesParametersElRef {
+#[allow(dead_code)]
+pub struct GlueMlTransform_Parameters_FindMatchesParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueMlTransformParametersElFindMatchesParametersElRef {
+impl terrars::Ref for GlueMlTransform_Parameters_FindMatchesParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GlueMlTransformParametersElFindMatchesParametersElRef {
-        GlueMlTransformParametersElFindMatchesParametersElRef {
+    ) -> GlueMlTransform_Parameters_FindMatchesParametersRef {
+        GlueMlTransform_Parameters_FindMatchesParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueMlTransformParametersElFindMatchesParametersElRef {
+impl GlueMlTransform_Parameters_FindMatchesParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -794,25 +830,25 @@ impl GlueMlTransformParametersElFindMatchesParametersElRef {
 }
 
 #[derive(Serialize, Default)]
-struct GlueMlTransformParametersElDynamic {
+struct GlueMlTransform_ParametersDynamic {
     find_matches_parameters: std
     ::option
-    ::Option<terrars::DynamicBlock<GlueMlTransformParametersElFindMatchesParametersEl>>,
+    ::Option<terrars::DynamicBlock<GlueMlTransform_Parameters_FindMatchesParameters>>,
 }
 
 #[derive(Serialize)]
-pub struct GlueMlTransformParametersEl {
+pub struct GlueMlTransform_Parameters {
     transform_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    find_matches_parameters: std::option::Option<std::vec::Vec<GlueMlTransformParametersElFindMatchesParametersEl>>,
-    dynamic: GlueMlTransformParametersElDynamic,
+    find_matches_parameters: std::option::Option<std::vec::Vec<GlueMlTransform_Parameters_FindMatchesParameters>>,
+    dynamic: GlueMlTransform_ParametersDynamic,
 }
 
-impl GlueMlTransformParametersEl {
+impl GlueMlTransform_Parameters {
     #[doc = "Set the field `find_matches_parameters`.\n"]
     pub fn set_find_matches_parameters(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueMlTransformParametersElFindMatchesParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueMlTransform_Parameters_FindMatchesParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -826,8 +862,8 @@ impl GlueMlTransformParametersEl {
     }
 }
 
-impl terrars::ToListMappable for GlueMlTransformParametersEl {
-    type O = terrars::BlockAssignable<GlueMlTransformParametersEl>;
+impl terrars::ToListMappable for GlueMlTransform_Parameters {
+    type O = terrars::BlockAssignable<GlueMlTransform_Parameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -838,14 +874,14 @@ impl terrars::ToListMappable for GlueMlTransformParametersEl {
     }
 }
 
-pub struct BuildGlueMlTransformParametersEl {
+pub struct BuildGlueMlTransform_Parameters {
     #[doc = ""]
     pub transform_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueMlTransformParametersEl {
-    pub fn build(self) -> GlueMlTransformParametersEl {
-        GlueMlTransformParametersEl {
+impl BuildGlueMlTransform_Parameters {
+    pub fn build(self) -> GlueMlTransform_Parameters {
+        GlueMlTransform_Parameters {
             transform_type: self.transform_type,
             find_matches_parameters: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -853,21 +889,23 @@ impl BuildGlueMlTransformParametersEl {
     }
 }
 
-pub struct GlueMlTransformParametersElRef {
+#[allow(dead_code)]
+pub struct GlueMlTransform_ParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueMlTransformParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueMlTransformParametersElRef {
-        GlueMlTransformParametersElRef {
+impl terrars::Ref for GlueMlTransform_ParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueMlTransform_ParametersRef {
+        GlueMlTransform_ParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueMlTransformParametersElRef {
+impl GlueMlTransform_ParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -878,13 +916,7 @@ impl GlueMlTransformParametersElRef {
     }
 
     #[doc = "Get a reference to the value of field `find_matches_parameters` after provisioning.\n"]
-    pub fn find_matches_parameters(&self) -> terrars::ListRef<GlueMlTransformParametersElFindMatchesParametersElRef> {
+    pub fn find_matches_parameters(&self) -> terrars::ListRef<GlueMlTransform_Parameters_FindMatchesParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.find_matches_parameters", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GlueMlTransformDynamic {
-    input_record_tables: std::option::Option<terrars::DynamicBlock<GlueMlTransformInputRecordTablesEl>>,
-    parameters: std::option::Option<terrars::DynamicBlock<GlueMlTransformParametersEl>>,
 }

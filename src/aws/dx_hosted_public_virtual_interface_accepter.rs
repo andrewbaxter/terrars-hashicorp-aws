@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DxHostedPublicVirtualInterfaceAccepterData {
+struct DxHostedPublicVirtualInterfaceAccepterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,18 +23,20 @@ struct DxHostedPublicVirtualInterfaceAccepterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     virtual_interface_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DxHostedPublicVirtualInterfaceAccepterTimeoutsEl>,
+    timeouts: std::option::Option<DxHostedPublicVirtualInterfaceAccepter_Timeouts>,
 }
 
 struct DxHostedPublicVirtualInterfaceAccepter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DxHostedPublicVirtualInterfaceAccepterData>,
+    data: std::cell::RefCell<DxHostedPublicVirtualInterfaceAccepterData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +142,13 @@ impl DxHostedPublicVirtualInterfaceAccepter {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -157,7 +168,7 @@ impl DxHostedPublicVirtualInterfaceAccepter {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DxHostedPublicVirtualInterfaceAccepterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DxHostedPublicVirtualInterfaceAccepter_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -170,6 +181,12 @@ impl DxHostedPublicVirtualInterfaceAccepter {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -188,8 +205,8 @@ impl DxHostedPublicVirtualInterfaceAccepter {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DxHostedPublicVirtualInterfaceAccepterTimeoutsElRef {
-        DxHostedPublicVirtualInterfaceAccepterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DxHostedPublicVirtualInterfaceAccepter_TimeoutsRef {
+        DxHostedPublicVirtualInterfaceAccepter_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -238,13 +255,14 @@ impl BuildDxHostedPublicVirtualInterfaceAccepter {
         let out = DxHostedPublicVirtualInterfaceAccepter(std::rc::Rc::new(DxHostedPublicVirtualInterfaceAccepter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DxHostedPublicVirtualInterfaceAccepterData {
+            data: std::cell::RefCell::new(DxHostedPublicVirtualInterfaceAccepterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 virtual_interface_id: self.virtual_interface_id,
@@ -289,6 +307,12 @@ impl DxHostedPublicVirtualInterfaceAccepterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -305,8 +329,8 @@ impl DxHostedPublicVirtualInterfaceAccepterRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DxHostedPublicVirtualInterfaceAccepterTimeoutsElRef {
-        DxHostedPublicVirtualInterfaceAccepterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DxHostedPublicVirtualInterfaceAccepter_TimeoutsRef {
+        DxHostedPublicVirtualInterfaceAccepter_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -314,14 +338,14 @@ impl DxHostedPublicVirtualInterfaceAccepterRef {
 }
 
 #[derive(Serialize)]
-pub struct DxHostedPublicVirtualInterfaceAccepterTimeoutsEl {
+pub struct DxHostedPublicVirtualInterfaceAccepter_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DxHostedPublicVirtualInterfaceAccepterTimeoutsEl {
+impl DxHostedPublicVirtualInterfaceAccepter_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -335,8 +359,8 @@ impl DxHostedPublicVirtualInterfaceAccepterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DxHostedPublicVirtualInterfaceAccepterTimeoutsEl {
-    type O = terrars::BlockAssignable<DxHostedPublicVirtualInterfaceAccepterTimeoutsEl>;
+impl terrars::ToListMappable for DxHostedPublicVirtualInterfaceAccepter_Timeouts {
+    type O = terrars::BlockAssignable<DxHostedPublicVirtualInterfaceAccepter_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -347,35 +371,37 @@ impl terrars::ToListMappable for DxHostedPublicVirtualInterfaceAccepterTimeoutsE
     }
 }
 
-pub struct BuildDxHostedPublicVirtualInterfaceAccepterTimeoutsEl {}
+pub struct BuildDxHostedPublicVirtualInterfaceAccepter_Timeouts {}
 
-impl BuildDxHostedPublicVirtualInterfaceAccepterTimeoutsEl {
-    pub fn build(self) -> DxHostedPublicVirtualInterfaceAccepterTimeoutsEl {
-        DxHostedPublicVirtualInterfaceAccepterTimeoutsEl {
+impl BuildDxHostedPublicVirtualInterfaceAccepter_Timeouts {
+    pub fn build(self) -> DxHostedPublicVirtualInterfaceAccepter_Timeouts {
+        DxHostedPublicVirtualInterfaceAccepter_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct DxHostedPublicVirtualInterfaceAccepterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DxHostedPublicVirtualInterfaceAccepter_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DxHostedPublicVirtualInterfaceAccepterTimeoutsElRef {
+impl terrars::Ref for DxHostedPublicVirtualInterfaceAccepter_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DxHostedPublicVirtualInterfaceAccepterTimeoutsElRef {
-        DxHostedPublicVirtualInterfaceAccepterTimeoutsElRef {
+    ) -> DxHostedPublicVirtualInterfaceAccepter_TimeoutsRef {
+        DxHostedPublicVirtualInterfaceAccepter_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DxHostedPublicVirtualInterfaceAccepterTimeoutsElRef {
+impl DxHostedPublicVirtualInterfaceAccepter_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

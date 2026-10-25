@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppsyncDatasourceData {
+struct AppsyncDatasourceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,26 +27,32 @@ struct AppsyncDatasourceData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dynamodb_config: std::option::Option<std::vec::Vec<AppsyncDatasourceDynamodbConfigEl>>,
+    dynamodb_config: std::option::Option<std::vec::Vec<AppsyncDatasource_DynamodbConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    elasticsearch_config: std::option::Option<std::vec::Vec<AppsyncDatasourceElasticsearchConfigEl>>,
+    elasticsearch_config: std::option::Option<std::vec::Vec<AppsyncDatasource_ElasticsearchConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http_config: std::option::Option<std::vec::Vec<AppsyncDatasourceHttpConfigEl>>,
+    event_bridge_config: std::option::Option<std::vec::Vec<AppsyncDatasource_EventBridgeConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lambda_config: std::option::Option<std::vec::Vec<AppsyncDatasourceLambdaConfigEl>>,
+    http_config: std::option::Option<std::vec::Vec<AppsyncDatasource_HttpConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    relational_database_config: std::option::Option<std::vec::Vec<AppsyncDatasourceRelationalDatabaseConfigEl>>,
+    lambda_config: std::option::Option<std::vec::Vec<AppsyncDatasource_LambdaConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    opensearchservice_config: std::option::Option<std::vec::Vec<AppsyncDatasource_OpensearchserviceConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    relational_database_config: std::option::Option<std::vec::Vec<AppsyncDatasource_RelationalDatabaseConfig>>,
     dynamic: AppsyncDatasourceDynamic,
 }
 
 struct AppsyncDatasource_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppsyncDatasourceData>,
+    data: std::cell::RefCell<AppsyncDatasourceData_>,
 }
 
 #[derive(Clone)]
@@ -156,6 +164,13 @@ impl AppsyncDatasource {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `service_role_arn`.\n"]
     pub fn set_service_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().service_role_arn = std::option::Option::Some(v.into());
@@ -165,7 +180,7 @@ impl AppsyncDatasource {
     #[doc = "Set the field `dynamodb_config`.\n"]
     pub fn set_dynamodb_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasourceDynamodbConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasource_DynamodbConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,7 +196,7 @@ impl AppsyncDatasource {
     #[doc = "Set the field `elasticsearch_config`.\n"]
     pub fn set_elasticsearch_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasourceElasticsearchConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasource_ElasticsearchConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -194,10 +209,26 @@ impl AppsyncDatasource {
         self
     }
 
+    #[doc = "Set the field `event_bridge_config`.\n"]
+    pub fn set_event_bridge_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasource_EventBridgeConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().event_bridge_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.event_bridge_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `http_config`.\n"]
     pub fn set_http_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasourceHttpConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasource_HttpConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -213,7 +244,7 @@ impl AppsyncDatasource {
     #[doc = "Set the field `lambda_config`.\n"]
     pub fn set_lambda_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasourceLambdaConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasource_LambdaConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -226,10 +257,26 @@ impl AppsyncDatasource {
         self
     }
 
+    #[doc = "Set the field `opensearchservice_config`.\n"]
+    pub fn set_opensearchservice_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasource_OpensearchserviceConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().opensearchservice_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.opensearchservice_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `relational_database_config`.\n"]
     pub fn set_relational_database_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasourceRelationalDatabaseConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasource_RelationalDatabaseConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -267,6 +314,12 @@ impl AppsyncDatasource {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_role_arn` after provisioning.\n"]
     pub fn service_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role_arn", self.extract_ref()))
@@ -278,27 +331,37 @@ impl AppsyncDatasource {
     }
 
     #[doc = "Get a reference to the value of field `dynamodb_config` after provisioning.\n"]
-    pub fn dynamodb_config(&self) -> terrars::ListRef<AppsyncDatasourceDynamodbConfigElRef> {
+    pub fn dynamodb_config(&self) -> terrars::ListRef<AppsyncDatasource_DynamodbConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dynamodb_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `elasticsearch_config` after provisioning.\n"]
-    pub fn elasticsearch_config(&self) -> terrars::ListRef<AppsyncDatasourceElasticsearchConfigElRef> {
+    pub fn elasticsearch_config(&self) -> terrars::ListRef<AppsyncDatasource_ElasticsearchConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.elasticsearch_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `event_bridge_config` after provisioning.\n"]
+    pub fn event_bridge_config(&self) -> terrars::ListRef<AppsyncDatasource_EventBridgeConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.event_bridge_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `http_config` after provisioning.\n"]
-    pub fn http_config(&self) -> terrars::ListRef<AppsyncDatasourceHttpConfigElRef> {
+    pub fn http_config(&self) -> terrars::ListRef<AppsyncDatasource_HttpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lambda_config` after provisioning.\n"]
-    pub fn lambda_config(&self) -> terrars::ListRef<AppsyncDatasourceLambdaConfigElRef> {
+    pub fn lambda_config(&self) -> terrars::ListRef<AppsyncDatasource_LambdaConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `opensearchservice_config` after provisioning.\n"]
+    pub fn opensearchservice_config(&self) -> terrars::ListRef<AppsyncDatasource_OpensearchserviceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.opensearchservice_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `relational_database_config` after provisioning.\n"]
-    pub fn relational_database_config(&self) -> terrars::ListRef<AppsyncDatasourceRelationalDatabaseConfigElRef> {
+    pub fn relational_database_config(&self) -> terrars::ListRef<AppsyncDatasource_RelationalDatabaseConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.relational_database_config", self.extract_ref()))
     }
 }
@@ -349,7 +412,7 @@ impl BuildAppsyncDatasource {
         let out = AppsyncDatasource(std::rc::Rc::new(AppsyncDatasource_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppsyncDatasourceData {
+            data: std::cell::RefCell::new(AppsyncDatasourceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -359,12 +422,15 @@ impl BuildAppsyncDatasource {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 service_role_arn: core::default::Default::default(),
                 type_: self.type_,
                 dynamodb_config: core::default::Default::default(),
                 elasticsearch_config: core::default::Default::default(),
+                event_bridge_config: core::default::Default::default(),
                 http_config: core::default::Default::default(),
                 lambda_config: core::default::Default::default(),
+                opensearchservice_config: core::default::Default::default(),
                 relational_database_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -422,6 +488,12 @@ impl AppsyncDatasourceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_role_arn` after provisioning.\n"]
     pub fn service_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role_arn", self.extract_ref()))
@@ -433,33 +505,56 @@ impl AppsyncDatasourceRef {
     }
 
     #[doc = "Get a reference to the value of field `dynamodb_config` after provisioning.\n"]
-    pub fn dynamodb_config(&self) -> terrars::ListRef<AppsyncDatasourceDynamodbConfigElRef> {
+    pub fn dynamodb_config(&self) -> terrars::ListRef<AppsyncDatasource_DynamodbConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dynamodb_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `elasticsearch_config` after provisioning.\n"]
-    pub fn elasticsearch_config(&self) -> terrars::ListRef<AppsyncDatasourceElasticsearchConfigElRef> {
+    pub fn elasticsearch_config(&self) -> terrars::ListRef<AppsyncDatasource_ElasticsearchConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.elasticsearch_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `event_bridge_config` after provisioning.\n"]
+    pub fn event_bridge_config(&self) -> terrars::ListRef<AppsyncDatasource_EventBridgeConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.event_bridge_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `http_config` after provisioning.\n"]
-    pub fn http_config(&self) -> terrars::ListRef<AppsyncDatasourceHttpConfigElRef> {
+    pub fn http_config(&self) -> terrars::ListRef<AppsyncDatasource_HttpConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lambda_config` after provisioning.\n"]
-    pub fn lambda_config(&self) -> terrars::ListRef<AppsyncDatasourceLambdaConfigElRef> {
+    pub fn lambda_config(&self) -> terrars::ListRef<AppsyncDatasource_LambdaConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `opensearchservice_config` after provisioning.\n"]
+    pub fn opensearchservice_config(&self) -> terrars::ListRef<AppsyncDatasource_OpensearchserviceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.opensearchservice_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `relational_database_config` after provisioning.\n"]
-    pub fn relational_database_config(&self) -> terrars::ListRef<AppsyncDatasourceRelationalDatabaseConfigElRef> {
+    pub fn relational_database_config(&self) -> terrars::ListRef<AppsyncDatasource_RelationalDatabaseConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.relational_database_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppsyncDatasourceDynamic {
+    dynamodb_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasource_DynamodbConfig>>,
+    elasticsearch_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasource_ElasticsearchConfig>>,
+    event_bridge_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasource_EventBridgeConfig>>,
+    http_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasource_HttpConfig>>,
+    lambda_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasource_LambdaConfig>>,
+    opensearchservice_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasource_OpensearchserviceConfig>>,
+    relational_database_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppsyncDatasource_RelationalDatabaseConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
+pub struct AppsyncDatasource_DynamodbConfig_DeltaSyncConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     base_table_ttl: std::option::Option<terrars::PrimField<f64>>,
     delta_sync_table_name: terrars::PrimField<std::string::String>,
@@ -467,7 +562,7 @@ pub struct AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
     delta_sync_table_ttl: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
+impl AppsyncDatasource_DynamodbConfig_DeltaSyncConfig {
     #[doc = "Set the field `base_table_ttl`.\n"]
     pub fn set_base_table_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.base_table_ttl = std::option::Option::Some(v.into());
@@ -481,8 +576,8 @@ impl AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
-    type O = terrars::BlockAssignable<AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl>;
+impl terrars::ToListMappable for AppsyncDatasource_DynamodbConfig_DeltaSyncConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_DynamodbConfig_DeltaSyncConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -493,14 +588,14 @@ impl terrars::ToListMappable for AppsyncDatasourceDynamodbConfigElDeltaSyncConfi
     }
 }
 
-pub struct BuildAppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
+pub struct BuildAppsyncDatasource_DynamodbConfig_DeltaSyncConfig {
     #[doc = ""]
     pub delta_sync_table_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
-    pub fn build(self) -> AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
-        AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
+impl BuildAppsyncDatasource_DynamodbConfig_DeltaSyncConfig {
+    pub fn build(self) -> AppsyncDatasource_DynamodbConfig_DeltaSyncConfig {
+        AppsyncDatasource_DynamodbConfig_DeltaSyncConfig {
             base_table_ttl: core::default::Default::default(),
             delta_sync_table_name: self.delta_sync_table_name,
             delta_sync_table_ttl: core::default::Default::default(),
@@ -508,24 +603,26 @@ impl BuildAppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl {
     }
 }
 
-pub struct AppsyncDatasourceDynamodbConfigElDeltaSyncConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncDatasource_DynamodbConfig_DeltaSyncConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncDatasourceDynamodbConfigElDeltaSyncConfigElRef {
+impl terrars::Ref for AppsyncDatasource_DynamodbConfig_DeltaSyncConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppsyncDatasourceDynamodbConfigElDeltaSyncConfigElRef {
-        AppsyncDatasourceDynamodbConfigElDeltaSyncConfigElRef {
+    ) -> AppsyncDatasource_DynamodbConfig_DeltaSyncConfigRef {
+        AppsyncDatasource_DynamodbConfig_DeltaSyncConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncDatasourceDynamodbConfigElDeltaSyncConfigElRef {
+impl AppsyncDatasource_DynamodbConfig_DeltaSyncConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -547,14 +644,12 @@ impl AppsyncDatasourceDynamodbConfigElDeltaSyncConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppsyncDatasourceDynamodbConfigElDynamic {
-    delta_sync_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl>>,
+struct AppsyncDatasource_DynamodbConfigDynamic {
+    delta_sync_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasource_DynamodbConfig_DeltaSyncConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct AppsyncDatasourceDynamodbConfigEl {
+pub struct AppsyncDatasource_DynamodbConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
     table_name: terrars::PrimField<std::string::String>,
@@ -563,11 +658,11 @@ pub struct AppsyncDatasourceDynamodbConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     versioned: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delta_sync_config: std::option::Option<std::vec::Vec<AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl>>,
-    dynamic: AppsyncDatasourceDynamodbConfigElDynamic,
+    delta_sync_config: std::option::Option<std::vec::Vec<AppsyncDatasource_DynamodbConfig_DeltaSyncConfig>>,
+    dynamic: AppsyncDatasource_DynamodbConfigDynamic,
 }
 
-impl AppsyncDatasourceDynamodbConfigEl {
+impl AppsyncDatasource_DynamodbConfig {
     #[doc = "Set the field `region`.\n"]
     pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.region = std::option::Option::Some(v.into());
@@ -589,7 +684,7 @@ impl AppsyncDatasourceDynamodbConfigEl {
     #[doc = "Set the field `delta_sync_config`.\n"]
     pub fn set_delta_sync_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasourceDynamodbConfigElDeltaSyncConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasource_DynamodbConfig_DeltaSyncConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -603,8 +698,8 @@ impl AppsyncDatasourceDynamodbConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncDatasourceDynamodbConfigEl {
-    type O = terrars::BlockAssignable<AppsyncDatasourceDynamodbConfigEl>;
+impl terrars::ToListMappable for AppsyncDatasource_DynamodbConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_DynamodbConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -615,14 +710,14 @@ impl terrars::ToListMappable for AppsyncDatasourceDynamodbConfigEl {
     }
 }
 
-pub struct BuildAppsyncDatasourceDynamodbConfigEl {
+pub struct BuildAppsyncDatasource_DynamodbConfig {
     #[doc = ""]
     pub table_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncDatasourceDynamodbConfigEl {
-    pub fn build(self) -> AppsyncDatasourceDynamodbConfigEl {
-        AppsyncDatasourceDynamodbConfigEl {
+impl BuildAppsyncDatasource_DynamodbConfig {
+    pub fn build(self) -> AppsyncDatasource_DynamodbConfig {
+        AppsyncDatasource_DynamodbConfig {
             region: core::default::Default::default(),
             table_name: self.table_name,
             use_caller_credentials: core::default::Default::default(),
@@ -633,21 +728,23 @@ impl BuildAppsyncDatasourceDynamodbConfigEl {
     }
 }
 
-pub struct AppsyncDatasourceDynamodbConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncDatasource_DynamodbConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncDatasourceDynamodbConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasourceDynamodbConfigElRef {
-        AppsyncDatasourceDynamodbConfigElRef {
+impl terrars::Ref for AppsyncDatasource_DynamodbConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasource_DynamodbConfigRef {
+        AppsyncDatasource_DynamodbConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncDatasourceDynamodbConfigElRef {
+impl AppsyncDatasource_DynamodbConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -673,19 +770,19 @@ impl AppsyncDatasourceDynamodbConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `delta_sync_config` after provisioning.\n"]
-    pub fn delta_sync_config(&self) -> terrars::ListRef<AppsyncDatasourceDynamodbConfigElDeltaSyncConfigElRef> {
+    pub fn delta_sync_config(&self) -> terrars::ListRef<AppsyncDatasource_DynamodbConfig_DeltaSyncConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delta_sync_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppsyncDatasourceElasticsearchConfigEl {
+pub struct AppsyncDatasource_ElasticsearchConfig {
     endpoint: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppsyncDatasourceElasticsearchConfigEl {
+impl AppsyncDatasource_ElasticsearchConfig {
     #[doc = "Set the field `region`.\n"]
     pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.region = std::option::Option::Some(v.into());
@@ -693,8 +790,8 @@ impl AppsyncDatasourceElasticsearchConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncDatasourceElasticsearchConfigEl {
-    type O = terrars::BlockAssignable<AppsyncDatasourceElasticsearchConfigEl>;
+impl terrars::ToListMappable for AppsyncDatasource_ElasticsearchConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_ElasticsearchConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -705,35 +802,37 @@ impl terrars::ToListMappable for AppsyncDatasourceElasticsearchConfigEl {
     }
 }
 
-pub struct BuildAppsyncDatasourceElasticsearchConfigEl {
+pub struct BuildAppsyncDatasource_ElasticsearchConfig {
     #[doc = ""]
     pub endpoint: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncDatasourceElasticsearchConfigEl {
-    pub fn build(self) -> AppsyncDatasourceElasticsearchConfigEl {
-        AppsyncDatasourceElasticsearchConfigEl {
+impl BuildAppsyncDatasource_ElasticsearchConfig {
+    pub fn build(self) -> AppsyncDatasource_ElasticsearchConfig {
+        AppsyncDatasource_ElasticsearchConfig {
             endpoint: self.endpoint,
             region: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppsyncDatasourceElasticsearchConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncDatasource_ElasticsearchConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncDatasourceElasticsearchConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasourceElasticsearchConfigElRef {
-        AppsyncDatasourceElasticsearchConfigElRef {
+impl terrars::Ref for AppsyncDatasource_ElasticsearchConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasource_ElasticsearchConfigRef {
+        AppsyncDatasource_ElasticsearchConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncDatasourceElasticsearchConfigElRef {
+impl AppsyncDatasource_ElasticsearchConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -750,14 +849,71 @@ impl AppsyncDatasourceElasticsearchConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl {
+pub struct AppsyncDatasource_EventBridgeConfig {
+    event_bus_arn: terrars::PrimField<std::string::String>,
+}
+
+impl AppsyncDatasource_EventBridgeConfig { }
+
+impl terrars::ToListMappable for AppsyncDatasource_EventBridgeConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_EventBridgeConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppsyncDatasource_EventBridgeConfig {
+    #[doc = ""]
+    pub event_bus_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppsyncDatasource_EventBridgeConfig {
+    pub fn build(self) -> AppsyncDatasource_EventBridgeConfig {
+        AppsyncDatasource_EventBridgeConfig { event_bus_arn: self.event_bus_arn }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppsyncDatasource_EventBridgeConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppsyncDatasource_EventBridgeConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasource_EventBridgeConfigRef {
+        AppsyncDatasource_EventBridgeConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppsyncDatasource_EventBridgeConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `event_bus_arn` after provisioning.\n"]
+    pub fn event_bus_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_bus_arn", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     signing_region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     signing_service_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl {
+impl AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig {
     #[doc = "Set the field `signing_region`.\n"]
     pub fn set_signing_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.signing_region = std::option::Option::Some(v.into());
@@ -774,8 +930,8 @@ impl AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl {
-    type O = terrars::BlockAssignable<AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl>;
+impl terrars::ToListMappable for AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -786,35 +942,37 @@ impl terrars::ToListMappable for AppsyncDatasourceHttpConfigElAuthorizationConfi
     }
 }
 
-pub struct BuildAppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl {}
+pub struct BuildAppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig {}
 
-impl BuildAppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl {
-    pub fn build(self) -> AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl {
-        AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl {
+impl BuildAppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig {
+    pub fn build(self) -> AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig {
+        AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig {
             signing_region: core::default::Default::default(),
             signing_service_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigElRef {
+impl terrars::Ref for AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigElRef {
-        AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigElRef {
+    ) -> AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfigRef {
+        AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigElRef {
+impl AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -831,22 +989,22 @@ impl AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppsyncDatasourceHttpConfigElAuthorizationConfigElDynamic {
+struct AppsyncDatasource_HttpConfig_AuthorizationConfigDynamic {
     aws_iam_config: std
     ::option
-    ::Option<terrars::DynamicBlock<AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl>>,
+    ::Option<terrars::DynamicBlock<AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct AppsyncDatasourceHttpConfigElAuthorizationConfigEl {
+pub struct AppsyncDatasource_HttpConfig_AuthorizationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authorization_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    aws_iam_config: std::option::Option<std::vec::Vec<AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl>>,
-    dynamic: AppsyncDatasourceHttpConfigElAuthorizationConfigElDynamic,
+    aws_iam_config: std::option::Option<std::vec::Vec<AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig>>,
+    dynamic: AppsyncDatasource_HttpConfig_AuthorizationConfigDynamic,
 }
 
-impl AppsyncDatasourceHttpConfigElAuthorizationConfigEl {
+impl AppsyncDatasource_HttpConfig_AuthorizationConfig {
     #[doc = "Set the field `authorization_type`.\n"]
     pub fn set_authorization_type(
         mut self,
@@ -864,9 +1022,7 @@ impl AppsyncDatasourceHttpConfigElAuthorizationConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -880,8 +1036,8 @@ impl AppsyncDatasourceHttpConfigElAuthorizationConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncDatasourceHttpConfigElAuthorizationConfigEl {
-    type O = terrars::BlockAssignable<AppsyncDatasourceHttpConfigElAuthorizationConfigEl>;
+impl terrars::ToListMappable for AppsyncDatasource_HttpConfig_AuthorizationConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_HttpConfig_AuthorizationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -892,11 +1048,11 @@ impl terrars::ToListMappable for AppsyncDatasourceHttpConfigElAuthorizationConfi
     }
 }
 
-pub struct BuildAppsyncDatasourceHttpConfigElAuthorizationConfigEl {}
+pub struct BuildAppsyncDatasource_HttpConfig_AuthorizationConfig {}
 
-impl BuildAppsyncDatasourceHttpConfigElAuthorizationConfigEl {
-    pub fn build(self) -> AppsyncDatasourceHttpConfigElAuthorizationConfigEl {
-        AppsyncDatasourceHttpConfigElAuthorizationConfigEl {
+impl BuildAppsyncDatasource_HttpConfig_AuthorizationConfig {
+    pub fn build(self) -> AppsyncDatasource_HttpConfig_AuthorizationConfig {
+        AppsyncDatasource_HttpConfig_AuthorizationConfig {
             authorization_type: core::default::Default::default(),
             aws_iam_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -904,24 +1060,26 @@ impl BuildAppsyncDatasourceHttpConfigElAuthorizationConfigEl {
     }
 }
 
-pub struct AppsyncDatasourceHttpConfigElAuthorizationConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncDatasource_HttpConfig_AuthorizationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncDatasourceHttpConfigElAuthorizationConfigElRef {
+impl terrars::Ref for AppsyncDatasource_HttpConfig_AuthorizationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppsyncDatasourceHttpConfigElAuthorizationConfigElRef {
-        AppsyncDatasourceHttpConfigElAuthorizationConfigElRef {
+    ) -> AppsyncDatasource_HttpConfig_AuthorizationConfigRef {
+        AppsyncDatasource_HttpConfig_AuthorizationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncDatasourceHttpConfigElAuthorizationConfigElRef {
+impl AppsyncDatasource_HttpConfig_AuthorizationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -932,33 +1090,31 @@ impl AppsyncDatasourceHttpConfigElAuthorizationConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `aws_iam_config` after provisioning.\n"]
-    pub fn aws_iam_config(
-        &self,
-    ) -> terrars::ListRef<AppsyncDatasourceHttpConfigElAuthorizationConfigElAwsIamConfigElRef> {
+    pub fn aws_iam_config(&self) -> terrars::ListRef<AppsyncDatasource_HttpConfig_AuthorizationConfig_AwsIamConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_iam_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AppsyncDatasourceHttpConfigElDynamic {
+struct AppsyncDatasource_HttpConfigDynamic {
     authorization_config: std
     ::option
-    ::Option<terrars::DynamicBlock<AppsyncDatasourceHttpConfigElAuthorizationConfigEl>>,
+    ::Option<terrars::DynamicBlock<AppsyncDatasource_HttpConfig_AuthorizationConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct AppsyncDatasourceHttpConfigEl {
+pub struct AppsyncDatasource_HttpConfig {
     endpoint: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorization_config: std::option::Option<std::vec::Vec<AppsyncDatasourceHttpConfigElAuthorizationConfigEl>>,
-    dynamic: AppsyncDatasourceHttpConfigElDynamic,
+    authorization_config: std::option::Option<std::vec::Vec<AppsyncDatasource_HttpConfig_AuthorizationConfig>>,
+    dynamic: AppsyncDatasource_HttpConfigDynamic,
 }
 
-impl AppsyncDatasourceHttpConfigEl {
+impl AppsyncDatasource_HttpConfig {
     #[doc = "Set the field `authorization_config`.\n"]
     pub fn set_authorization_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasourceHttpConfigElAuthorizationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncDatasource_HttpConfig_AuthorizationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -972,8 +1128,8 @@ impl AppsyncDatasourceHttpConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncDatasourceHttpConfigEl {
-    type O = terrars::BlockAssignable<AppsyncDatasourceHttpConfigEl>;
+impl terrars::ToListMappable for AppsyncDatasource_HttpConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_HttpConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -984,14 +1140,14 @@ impl terrars::ToListMappable for AppsyncDatasourceHttpConfigEl {
     }
 }
 
-pub struct BuildAppsyncDatasourceHttpConfigEl {
+pub struct BuildAppsyncDatasource_HttpConfig {
     #[doc = ""]
     pub endpoint: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncDatasourceHttpConfigEl {
-    pub fn build(self) -> AppsyncDatasourceHttpConfigEl {
-        AppsyncDatasourceHttpConfigEl {
+impl BuildAppsyncDatasource_HttpConfig {
+    pub fn build(self) -> AppsyncDatasource_HttpConfig {
+        AppsyncDatasource_HttpConfig {
             endpoint: self.endpoint,
             authorization_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -999,21 +1155,23 @@ impl BuildAppsyncDatasourceHttpConfigEl {
     }
 }
 
-pub struct AppsyncDatasourceHttpConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncDatasource_HttpConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncDatasourceHttpConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasourceHttpConfigElRef {
-        AppsyncDatasourceHttpConfigElRef {
+impl terrars::Ref for AppsyncDatasource_HttpConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasource_HttpConfigRef {
+        AppsyncDatasource_HttpConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncDatasourceHttpConfigElRef {
+impl AppsyncDatasource_HttpConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1024,20 +1182,20 @@ impl AppsyncDatasourceHttpConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `authorization_config` after provisioning.\n"]
-    pub fn authorization_config(&self) -> terrars::ListRef<AppsyncDatasourceHttpConfigElAuthorizationConfigElRef> {
+    pub fn authorization_config(&self) -> terrars::ListRef<AppsyncDatasource_HttpConfig_AuthorizationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppsyncDatasourceLambdaConfigEl {
+pub struct AppsyncDatasource_LambdaConfig {
     function_arn: terrars::PrimField<std::string::String>,
 }
 
-impl AppsyncDatasourceLambdaConfigEl { }
+impl AppsyncDatasource_LambdaConfig { }
 
-impl terrars::ToListMappable for AppsyncDatasourceLambdaConfigEl {
-    type O = terrars::BlockAssignable<AppsyncDatasourceLambdaConfigEl>;
+impl terrars::ToListMappable for AppsyncDatasource_LambdaConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_LambdaConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1048,32 +1206,34 @@ impl terrars::ToListMappable for AppsyncDatasourceLambdaConfigEl {
     }
 }
 
-pub struct BuildAppsyncDatasourceLambdaConfigEl {
+pub struct BuildAppsyncDatasource_LambdaConfig {
     #[doc = ""]
     pub function_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncDatasourceLambdaConfigEl {
-    pub fn build(self) -> AppsyncDatasourceLambdaConfigEl {
-        AppsyncDatasourceLambdaConfigEl { function_arn: self.function_arn }
+impl BuildAppsyncDatasource_LambdaConfig {
+    pub fn build(self) -> AppsyncDatasource_LambdaConfig {
+        AppsyncDatasource_LambdaConfig { function_arn: self.function_arn }
     }
 }
 
-pub struct AppsyncDatasourceLambdaConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncDatasource_LambdaConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncDatasourceLambdaConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasourceLambdaConfigElRef {
-        AppsyncDatasourceLambdaConfigElRef {
+impl terrars::Ref for AppsyncDatasource_LambdaConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasource_LambdaConfigRef {
+        AppsyncDatasource_LambdaConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncDatasourceLambdaConfigElRef {
+impl AppsyncDatasource_LambdaConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1085,7 +1245,80 @@ impl AppsyncDatasourceLambdaConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
+pub struct AppsyncDatasource_OpensearchserviceConfig {
+    endpoint: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AppsyncDatasource_OpensearchserviceConfig {
+    #[doc = "Set the field `region`.\n"]
+    pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.region = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppsyncDatasource_OpensearchserviceConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_OpensearchserviceConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppsyncDatasource_OpensearchserviceConfig {
+    #[doc = ""]
+    pub endpoint: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppsyncDatasource_OpensearchserviceConfig {
+    pub fn build(self) -> AppsyncDatasource_OpensearchserviceConfig {
+        AppsyncDatasource_OpensearchserviceConfig {
+            endpoint: self.endpoint,
+            region: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppsyncDatasource_OpensearchserviceConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppsyncDatasource_OpensearchserviceConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasource_OpensearchserviceConfigRef {
+        AppsyncDatasource_OpensearchserviceConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppsyncDatasource_OpensearchserviceConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig {
     aws_secret_store_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     database_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -1096,7 +1329,7 @@ pub struct AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
     schema: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
+impl AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig {
     #[doc = "Set the field `database_name`.\n"]
     pub fn set_database_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.database_name = std::option::Option::Some(v.into());
@@ -1116,8 +1349,8 @@ impl AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
-    type O = terrars::BlockAssignable<AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl>;
+impl terrars::ToListMappable for AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1128,16 +1361,16 @@ impl terrars::ToListMappable for AppsyncDatasourceRelationalDatabaseConfigElHttp
     }
 }
 
-pub struct BuildAppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
+pub struct BuildAppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig {
     #[doc = ""]
     pub aws_secret_store_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub db_cluster_identifier: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
-    pub fn build(self) -> AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
-        AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
+impl BuildAppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig {
+    pub fn build(self) -> AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig {
+        AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig {
             aws_secret_store_arn: self.aws_secret_store_arn,
             database_name: core::default::Default::default(),
             db_cluster_identifier: self.db_cluster_identifier,
@@ -1147,24 +1380,26 @@ impl BuildAppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl {
     }
 }
 
-pub struct AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigElRef {
+impl terrars::Ref for AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigElRef {
-        AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigElRef {
+    ) -> AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfigRef {
+        AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigElRef {
+impl AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1196,24 +1431,24 @@ impl AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppsyncDatasourceRelationalDatabaseConfigElDynamic {
+struct AppsyncDatasource_RelationalDatabaseConfigDynamic {
     http_endpoint_config: std
     ::option
-    ::Option<terrars::DynamicBlock<AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl>>,
+    ::Option<terrars::DynamicBlock<AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct AppsyncDatasourceRelationalDatabaseConfigEl {
+pub struct AppsyncDatasource_RelationalDatabaseConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_endpoint_config: std
     ::option
-    ::Option<std::vec::Vec<AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl>>,
-    dynamic: AppsyncDatasourceRelationalDatabaseConfigElDynamic,
+    ::Option<std::vec::Vec<AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig>>,
+    dynamic: AppsyncDatasource_RelationalDatabaseConfigDynamic,
 }
 
-impl AppsyncDatasourceRelationalDatabaseConfigEl {
+impl AppsyncDatasource_RelationalDatabaseConfig {
     #[doc = "Set the field `source_type`.\n"]
     pub fn set_source_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.source_type = std::option::Option::Some(v.into());
@@ -1228,7 +1463,7 @@ impl AppsyncDatasourceRelationalDatabaseConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigEl>>,
+                    ::Into<terrars::BlockAssignable<AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1242,8 +1477,8 @@ impl AppsyncDatasourceRelationalDatabaseConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncDatasourceRelationalDatabaseConfigEl {
-    type O = terrars::BlockAssignable<AppsyncDatasourceRelationalDatabaseConfigEl>;
+impl terrars::ToListMappable for AppsyncDatasource_RelationalDatabaseConfig {
+    type O = terrars::BlockAssignable<AppsyncDatasource_RelationalDatabaseConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1254,11 +1489,11 @@ impl terrars::ToListMappable for AppsyncDatasourceRelationalDatabaseConfigEl {
     }
 }
 
-pub struct BuildAppsyncDatasourceRelationalDatabaseConfigEl {}
+pub struct BuildAppsyncDatasource_RelationalDatabaseConfig {}
 
-impl BuildAppsyncDatasourceRelationalDatabaseConfigEl {
-    pub fn build(self) -> AppsyncDatasourceRelationalDatabaseConfigEl {
-        AppsyncDatasourceRelationalDatabaseConfigEl {
+impl BuildAppsyncDatasource_RelationalDatabaseConfig {
+    pub fn build(self) -> AppsyncDatasource_RelationalDatabaseConfig {
+        AppsyncDatasource_RelationalDatabaseConfig {
             source_type: core::default::Default::default(),
             http_endpoint_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1266,24 +1501,23 @@ impl BuildAppsyncDatasourceRelationalDatabaseConfigEl {
     }
 }
 
-pub struct AppsyncDatasourceRelationalDatabaseConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncDatasource_RelationalDatabaseConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncDatasourceRelationalDatabaseConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppsyncDatasourceRelationalDatabaseConfigElRef {
-        AppsyncDatasourceRelationalDatabaseConfigElRef {
+impl terrars::Ref for AppsyncDatasource_RelationalDatabaseConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncDatasource_RelationalDatabaseConfigRef {
+        AppsyncDatasource_RelationalDatabaseConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncDatasourceRelationalDatabaseConfigElRef {
+impl AppsyncDatasource_RelationalDatabaseConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1296,18 +1530,7 @@ impl AppsyncDatasourceRelationalDatabaseConfigElRef {
     #[doc = "Get a reference to the value of field `http_endpoint_config` after provisioning.\n"]
     pub fn http_endpoint_config(
         &self,
-    ) -> terrars::ListRef<AppsyncDatasourceRelationalDatabaseConfigElHttpEndpointConfigElRef> {
+    ) -> terrars::ListRef<AppsyncDatasource_RelationalDatabaseConfig_HttpEndpointConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_endpoint_config", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppsyncDatasourceDynamic {
-    dynamodb_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasourceDynamodbConfigEl>>,
-    elasticsearch_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasourceElasticsearchConfigEl>>,
-    http_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasourceHttpConfigEl>>,
-    lambda_config: std::option::Option<terrars::DynamicBlock<AppsyncDatasourceLambdaConfigEl>>,
-    relational_database_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppsyncDatasourceRelationalDatabaseConfigEl>>,
 }

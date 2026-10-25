@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DirectoryServiceSharedDirectoryData {
+struct DirectoryServiceSharedDirectoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,16 +28,18 @@ struct DirectoryServiceSharedDirectoryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notes: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target: std::option::Option<std::vec::Vec<DirectoryServiceSharedDirectoryTargetEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DirectoryServiceSharedDirectoryTimeoutsEl>,
+    target: std::option::Option<std::vec::Vec<DirectoryServiceSharedDirectory_Target>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DirectoryServiceSharedDirectory_Timeouts>,
     dynamic: DirectoryServiceSharedDirectoryDynamic,
 }
 
 struct DirectoryServiceSharedDirectory_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DirectoryServiceSharedDirectoryData>,
+    data: std::cell::RefCell<DirectoryServiceSharedDirectoryData_>,
 }
 
 #[derive(Clone)]
@@ -153,10 +157,17 @@ impl DirectoryServiceSharedDirectory {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `target`.\n"]
     pub fn set_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DirectoryServiceSharedDirectoryTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DirectoryServiceSharedDirectory_Target>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -170,7 +181,7 @@ impl DirectoryServiceSharedDirectory {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DirectoryServiceSharedDirectoryTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DirectoryServiceSharedDirectory_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -195,19 +206,25 @@ impl DirectoryServiceSharedDirectory {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.notes", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `shared_directory_id` after provisioning.\n"]
     pub fn shared_directory_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_directory_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> terrars::ListRef<DirectoryServiceSharedDirectoryTargetElRef> {
+    pub fn target(&self) -> terrars::ListRef<DirectoryServiceSharedDirectory_TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DirectoryServiceSharedDirectoryTimeoutsElRef {
-        DirectoryServiceSharedDirectoryTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DirectoryServiceSharedDirectory_TimeoutsRef {
+        DirectoryServiceSharedDirectory_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -256,7 +273,7 @@ impl BuildDirectoryServiceSharedDirectory {
         let out = DirectoryServiceSharedDirectory(std::rc::Rc::new(DirectoryServiceSharedDirectory_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DirectoryServiceSharedDirectoryData {
+            data: std::cell::RefCell::new(DirectoryServiceSharedDirectoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -266,6 +283,7 @@ impl BuildDirectoryServiceSharedDirectory {
                 id: core::default::Default::default(),
                 method: core::default::Default::default(),
                 notes: core::default::Default::default(),
+                region: core::default::Default::default(),
                 target: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -319,33 +337,44 @@ impl DirectoryServiceSharedDirectoryRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.notes", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `shared_directory_id` after provisioning.\n"]
     pub fn shared_directory_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_directory_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> terrars::ListRef<DirectoryServiceSharedDirectoryTargetElRef> {
+    pub fn target(&self) -> terrars::ListRef<DirectoryServiceSharedDirectory_TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DirectoryServiceSharedDirectoryTimeoutsElRef {
-        DirectoryServiceSharedDirectoryTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DirectoryServiceSharedDirectory_TimeoutsRef {
+        DirectoryServiceSharedDirectory_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct DirectoryServiceSharedDirectoryDynamic {
+    target: std::option::Option<terrars::DynamicBlock<DirectoryServiceSharedDirectory_Target>>,
+}
+
 #[derive(Serialize)]
-pub struct DirectoryServiceSharedDirectoryTargetEl {
+pub struct DirectoryServiceSharedDirectory_Target {
     id: terrars::PrimField<std::string::String>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DirectoryServiceSharedDirectoryTargetEl {
+impl DirectoryServiceSharedDirectory_Target {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -353,8 +382,8 @@ impl DirectoryServiceSharedDirectoryTargetEl {
     }
 }
 
-impl terrars::ToListMappable for DirectoryServiceSharedDirectoryTargetEl {
-    type O = terrars::BlockAssignable<DirectoryServiceSharedDirectoryTargetEl>;
+impl terrars::ToListMappable for DirectoryServiceSharedDirectory_Target {
+    type O = terrars::BlockAssignable<DirectoryServiceSharedDirectory_Target>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -365,35 +394,37 @@ impl terrars::ToListMappable for DirectoryServiceSharedDirectoryTargetEl {
     }
 }
 
-pub struct BuildDirectoryServiceSharedDirectoryTargetEl {
+pub struct BuildDirectoryServiceSharedDirectory_Target {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDirectoryServiceSharedDirectoryTargetEl {
-    pub fn build(self) -> DirectoryServiceSharedDirectoryTargetEl {
-        DirectoryServiceSharedDirectoryTargetEl {
+impl BuildDirectoryServiceSharedDirectory_Target {
+    pub fn build(self) -> DirectoryServiceSharedDirectory_Target {
+        DirectoryServiceSharedDirectory_Target {
             id: self.id,
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DirectoryServiceSharedDirectoryTargetElRef {
+#[allow(dead_code)]
+pub struct DirectoryServiceSharedDirectory_TargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DirectoryServiceSharedDirectoryTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceSharedDirectoryTargetElRef {
-        DirectoryServiceSharedDirectoryTargetElRef {
+impl terrars::Ref for DirectoryServiceSharedDirectory_TargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceSharedDirectory_TargetRef {
+        DirectoryServiceSharedDirectory_TargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DirectoryServiceSharedDirectoryTargetElRef {
+impl DirectoryServiceSharedDirectory_TargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -410,12 +441,12 @@ impl DirectoryServiceSharedDirectoryTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct DirectoryServiceSharedDirectoryTimeoutsEl {
+pub struct DirectoryServiceSharedDirectory_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DirectoryServiceSharedDirectoryTimeoutsEl {
+impl DirectoryServiceSharedDirectory_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -423,8 +454,8 @@ impl DirectoryServiceSharedDirectoryTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DirectoryServiceSharedDirectoryTimeoutsEl {
-    type O = terrars::BlockAssignable<DirectoryServiceSharedDirectoryTimeoutsEl>;
+impl terrars::ToListMappable for DirectoryServiceSharedDirectory_Timeouts {
+    type O = terrars::BlockAssignable<DirectoryServiceSharedDirectory_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -435,29 +466,31 @@ impl terrars::ToListMappable for DirectoryServiceSharedDirectoryTimeoutsEl {
     }
 }
 
-pub struct BuildDirectoryServiceSharedDirectoryTimeoutsEl {}
+pub struct BuildDirectoryServiceSharedDirectory_Timeouts {}
 
-impl BuildDirectoryServiceSharedDirectoryTimeoutsEl {
-    pub fn build(self) -> DirectoryServiceSharedDirectoryTimeoutsEl {
-        DirectoryServiceSharedDirectoryTimeoutsEl { delete: core::default::Default::default() }
+impl BuildDirectoryServiceSharedDirectory_Timeouts {
+    pub fn build(self) -> DirectoryServiceSharedDirectory_Timeouts {
+        DirectoryServiceSharedDirectory_Timeouts { delete: core::default::Default::default() }
     }
 }
 
-pub struct DirectoryServiceSharedDirectoryTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DirectoryServiceSharedDirectory_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DirectoryServiceSharedDirectoryTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceSharedDirectoryTimeoutsElRef {
-        DirectoryServiceSharedDirectoryTimeoutsElRef {
+impl terrars::Ref for DirectoryServiceSharedDirectory_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceSharedDirectory_TimeoutsRef {
+        DirectoryServiceSharedDirectory_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DirectoryServiceSharedDirectoryTimeoutsElRef {
+impl DirectoryServiceSharedDirectory_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -466,9 +499,4 @@ impl DirectoryServiceSharedDirectoryTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DirectoryServiceSharedDirectoryDynamic {
-    target: std::option::Option<terrars::DynamicBlock<DirectoryServiceSharedDirectoryTargetEl>>,
 }

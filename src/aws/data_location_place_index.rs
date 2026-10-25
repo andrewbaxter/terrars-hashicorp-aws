@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataLocationPlaceIndexData {
+struct DataLocationPlaceIndexData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataLocationPlaceIndexData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     index_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataLocationPlaceIndex_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLocationPlaceIndexData>,
+    data: std::cell::RefCell<DataLocationPlaceIndexData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataLocationPlaceIndex {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -97,7 +108,7 @@ impl DataLocationPlaceIndex {
     }
 
     #[doc = "Get a reference to the value of field `data_source_configuration` after provisioning.\n"]
-    pub fn data_source_configuration(&self) -> terrars::ListRef<DataLocationPlaceIndexDataSourceConfigurationElRef> {
+    pub fn data_source_configuration(&self) -> terrars::ListRef<DataLocationPlaceIndex_DataSourceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_source_configuration", self.extract_ref()))
     }
 
@@ -119,6 +130,12 @@ impl DataLocationPlaceIndex {
     #[doc = "Get a reference to the value of field `index_name` after provisioning.\n"]
     pub fn index_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -174,13 +191,14 @@ impl BuildDataLocationPlaceIndex {
         let out = DataLocationPlaceIndex(std::rc::Rc::new(DataLocationPlaceIndex_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLocationPlaceIndexData {
+            data: std::cell::RefCell::new(DataLocationPlaceIndexData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 index_name: self.index_name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -223,7 +241,7 @@ impl DataLocationPlaceIndexRef {
     }
 
     #[doc = "Get a reference to the value of field `data_source_configuration` after provisioning.\n"]
-    pub fn data_source_configuration(&self) -> terrars::ListRef<DataLocationPlaceIndexDataSourceConfigurationElRef> {
+    pub fn data_source_configuration(&self) -> terrars::ListRef<DataLocationPlaceIndex_DataSourceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_source_configuration", self.extract_ref()))
     }
 
@@ -247,6 +265,12 @@ impl DataLocationPlaceIndexRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.index_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -259,12 +283,12 @@ impl DataLocationPlaceIndexRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLocationPlaceIndexDataSourceConfigurationEl {
+pub struct DataLocationPlaceIndex_DataSourceConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     intended_use: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLocationPlaceIndexDataSourceConfigurationEl {
+impl DataLocationPlaceIndex_DataSourceConfiguration {
     #[doc = "Set the field `intended_use`.\n"]
     pub fn set_intended_use(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.intended_use = std::option::Option::Some(v.into());
@@ -272,8 +296,8 @@ impl DataLocationPlaceIndexDataSourceConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataLocationPlaceIndexDataSourceConfigurationEl {
-    type O = terrars::BlockAssignable<DataLocationPlaceIndexDataSourceConfigurationEl>;
+impl terrars::ToListMappable for DataLocationPlaceIndex_DataSourceConfiguration {
+    type O = terrars::BlockAssignable<DataLocationPlaceIndex_DataSourceConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -284,32 +308,34 @@ impl terrars::ToListMappable for DataLocationPlaceIndexDataSourceConfigurationEl
     }
 }
 
-pub struct BuildDataLocationPlaceIndexDataSourceConfigurationEl {}
+pub struct BuildDataLocationPlaceIndex_DataSourceConfiguration {}
 
-impl BuildDataLocationPlaceIndexDataSourceConfigurationEl {
-    pub fn build(self) -> DataLocationPlaceIndexDataSourceConfigurationEl {
-        DataLocationPlaceIndexDataSourceConfigurationEl { intended_use: core::default::Default::default() }
+impl BuildDataLocationPlaceIndex_DataSourceConfiguration {
+    pub fn build(self) -> DataLocationPlaceIndex_DataSourceConfiguration {
+        DataLocationPlaceIndex_DataSourceConfiguration { intended_use: core::default::Default::default() }
     }
 }
 
-pub struct DataLocationPlaceIndexDataSourceConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataLocationPlaceIndex_DataSourceConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLocationPlaceIndexDataSourceConfigurationElRef {
+impl terrars::Ref for DataLocationPlaceIndex_DataSourceConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLocationPlaceIndexDataSourceConfigurationElRef {
-        DataLocationPlaceIndexDataSourceConfigurationElRef {
+    ) -> DataLocationPlaceIndex_DataSourceConfigurationRef {
+        DataLocationPlaceIndex_DataSourceConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLocationPlaceIndexDataSourceConfigurationElRef {
+impl DataLocationPlaceIndex_DataSourceConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

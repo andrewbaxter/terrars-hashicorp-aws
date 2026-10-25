@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbSubnetGroupData {
+struct DbSubnetGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,6 +28,8 @@ struct DbSubnetGroupData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -36,7 +40,7 @@ struct DbSubnetGroupData {
 struct DbSubnetGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbSubnetGroupData>,
+    data: std::cell::RefCell<DbSubnetGroupData_>,
 }
 
 #[derive(Clone)]
@@ -160,6 +164,13 @@ impl DbSubnetGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -203,6 +214,12 @@ impl DbSubnetGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
     pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
@@ -221,6 +238,11 @@ impl DbSubnetGroup {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 }
 
@@ -266,7 +288,7 @@ impl BuildDbSubnetGroup {
         let out = DbSubnetGroup(std::rc::Rc::new(DbSubnetGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbSubnetGroupData {
+            data: std::cell::RefCell::new(DbSubnetGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -276,6 +298,7 @@ impl BuildDbSubnetGroup {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 subnet_ids: self.subnet_ids,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -334,6 +357,12 @@ impl DbSubnetGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
     pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
@@ -352,5 +381,10 @@ impl DbSubnetGroupRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 }

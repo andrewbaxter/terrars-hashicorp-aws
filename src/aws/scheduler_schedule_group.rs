@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SchedulerScheduleGroupData {
+struct SchedulerScheduleGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,17 +27,19 @@ struct SchedulerScheduleGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SchedulerScheduleGroupTimeoutsEl>,
+    timeouts: std::option::Option<SchedulerScheduleGroup_Timeouts>,
 }
 
 struct SchedulerScheduleGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SchedulerScheduleGroupData>,
+    data: std::cell::RefCell<SchedulerScheduleGroupData_>,
 }
 
 #[derive(Clone)]
@@ -153,6 +157,13 @@ impl SchedulerScheduleGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -172,7 +183,7 @@ impl SchedulerScheduleGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SchedulerScheduleGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SchedulerScheduleGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -207,6 +218,12 @@ impl SchedulerScheduleGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -223,8 +240,8 @@ impl SchedulerScheduleGroup {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SchedulerScheduleGroupTimeoutsElRef {
-        SchedulerScheduleGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SchedulerScheduleGroup_TimeoutsRef {
+        SchedulerScheduleGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -268,7 +285,7 @@ impl BuildSchedulerScheduleGroup {
         let out = SchedulerScheduleGroup(std::rc::Rc::new(SchedulerScheduleGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SchedulerScheduleGroupData {
+            data: std::cell::RefCell::new(SchedulerScheduleGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -277,6 +294,7 @@ impl BuildSchedulerScheduleGroup {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -340,6 +358,12 @@ impl SchedulerScheduleGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -356,20 +380,20 @@ impl SchedulerScheduleGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SchedulerScheduleGroupTimeoutsElRef {
-        SchedulerScheduleGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> SchedulerScheduleGroup_TimeoutsRef {
+        SchedulerScheduleGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleGroupTimeoutsEl {
+pub struct SchedulerScheduleGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SchedulerScheduleGroupTimeoutsEl {
+impl SchedulerScheduleGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -383,8 +407,8 @@ impl SchedulerScheduleGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleGroupTimeoutsEl>;
+impl terrars::ToListMappable for SchedulerScheduleGroup_Timeouts {
+    type O = terrars::BlockAssignable<SchedulerScheduleGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -395,32 +419,34 @@ impl terrars::ToListMappable for SchedulerScheduleGroupTimeoutsEl {
     }
 }
 
-pub struct BuildSchedulerScheduleGroupTimeoutsEl {}
+pub struct BuildSchedulerScheduleGroup_Timeouts {}
 
-impl BuildSchedulerScheduleGroupTimeoutsEl {
-    pub fn build(self) -> SchedulerScheduleGroupTimeoutsEl {
-        SchedulerScheduleGroupTimeoutsEl {
+impl BuildSchedulerScheduleGroup_Timeouts {
+    pub fn build(self) -> SchedulerScheduleGroup_Timeouts {
+        SchedulerScheduleGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct SchedulerScheduleGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SchedulerScheduleGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerScheduleGroupTimeoutsElRef {
-        SchedulerScheduleGroupTimeoutsElRef {
+impl terrars::Ref for SchedulerScheduleGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerScheduleGroup_TimeoutsRef {
+        SchedulerScheduleGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleGroupTimeoutsElRef {
+impl SchedulerScheduleGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

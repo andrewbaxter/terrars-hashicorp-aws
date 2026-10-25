@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudwatchMetricStreamData {
+struct CloudwatchMetricStreamData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,30 +24,34 @@ struct CloudwatchMetricStreamData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_linked_accounts_metrics: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     output_format: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    exclude_filter: std::option::Option<std::vec::Vec<CloudwatchMetricStreamExcludeFilterEl>>,
+    exclude_filter: std::option::Option<std::vec::Vec<CloudwatchMetricStream_ExcludeFilter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    include_filter: std::option::Option<std::vec::Vec<CloudwatchMetricStreamIncludeFilterEl>>,
+    include_filter: std::option::Option<std::vec::Vec<CloudwatchMetricStream_IncludeFilter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    statistics_configuration: std::option::Option<std::vec::Vec<CloudwatchMetricStreamStatisticsConfigurationEl>>,
+    statistics_configuration: std::option::Option<std::vec::Vec<CloudwatchMetricStream_StatisticsConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudwatchMetricStreamTimeoutsEl>,
+    timeouts: std::option::Option<CloudwatchMetricStream_Timeouts>,
     dynamic: CloudwatchMetricStreamDynamic,
 }
 
 struct CloudwatchMetricStream_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudwatchMetricStreamData>,
+    data: std::cell::RefCell<CloudwatchMetricStreamData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +157,12 @@ impl CloudwatchMetricStream {
         self
     }
 
+    #[doc = "Set the field `include_linked_accounts_metrics`.\n"]
+    pub fn set_include_linked_accounts_metrics(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().include_linked_accounts_metrics = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
@@ -160,6 +172,13 @@ impl CloudwatchMetricStream {
     #[doc = "Set the field `name_prefix`.\n"]
     pub fn set_name_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().name_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -184,7 +203,7 @@ impl CloudwatchMetricStream {
     #[doc = "Set the field `exclude_filter`.\n"]
     pub fn set_exclude_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricStreamExcludeFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricStream_ExcludeFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,7 +219,7 @@ impl CloudwatchMetricStream {
     #[doc = "Set the field `include_filter`.\n"]
     pub fn set_include_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricStreamIncludeFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricStream_IncludeFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,7 +235,7 @@ impl CloudwatchMetricStream {
     #[doc = "Set the field `statistics_configuration`.\n"]
     pub fn set_statistics_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricStreamStatisticsConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchMetricStream_StatisticsConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -230,7 +249,7 @@ impl CloudwatchMetricStream {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudwatchMetricStreamTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudwatchMetricStream_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -255,6 +274,14 @@ impl CloudwatchMetricStream {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `include_linked_accounts_metrics` after provisioning.\n"]
+    pub fn include_linked_accounts_metrics(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.include_linked_accounts_metrics", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `last_update_date` after provisioning.\n"]
     pub fn last_update_date(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_update_date", self.extract_ref()))
@@ -273,6 +300,12 @@ impl CloudwatchMetricStream {
     #[doc = "Get a reference to the value of field `output_format` after provisioning.\n"]
     pub fn output_format(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_format", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -296,8 +329,8 @@ impl CloudwatchMetricStream {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudwatchMetricStreamTimeoutsElRef {
-        CloudwatchMetricStreamTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudwatchMetricStream_TimeoutsRef {
+        CloudwatchMetricStream_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -347,7 +380,7 @@ impl BuildCloudwatchMetricStream {
         let out = CloudwatchMetricStream(std::rc::Rc::new(CloudwatchMetricStream_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudwatchMetricStreamData {
+            data: std::cell::RefCell::new(CloudwatchMetricStreamData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -355,9 +388,11 @@ impl BuildCloudwatchMetricStream {
                 provisioner: core::default::Default::default(),
                 firehose_arn: self.firehose_arn,
                 id: core::default::Default::default(),
+                include_linked_accounts_metrics: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
                 output_format: self.output_format,
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -416,6 +451,14 @@ impl CloudwatchMetricStreamRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `include_linked_accounts_metrics` after provisioning.\n"]
+    pub fn include_linked_accounts_metrics(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.include_linked_accounts_metrics", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `last_update_date` after provisioning.\n"]
     pub fn last_update_date(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_update_date", self.extract_ref()))
@@ -434,6 +477,12 @@ impl CloudwatchMetricStreamRef {
     #[doc = "Get a reference to the value of field `output_format` after provisioning.\n"]
     pub fn output_format(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_format", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -457,20 +506,40 @@ impl CloudwatchMetricStreamRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudwatchMetricStreamTimeoutsElRef {
-        CloudwatchMetricStreamTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudwatchMetricStream_TimeoutsRef {
+        CloudwatchMetricStream_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudwatchMetricStreamDynamic {
+    exclude_filter: std::option::Option<terrars::DynamicBlock<CloudwatchMetricStream_ExcludeFilter>>,
+    include_filter: std::option::Option<terrars::DynamicBlock<CloudwatchMetricStream_IncludeFilter>>,
+    statistics_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudwatchMetricStream_StatisticsConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudwatchMetricStreamExcludeFilterEl {
+pub struct CloudwatchMetricStream_ExcludeFilter {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     namespace: terrars::PrimField<std::string::String>,
 }
 
-impl CloudwatchMetricStreamExcludeFilterEl { }
+impl CloudwatchMetricStream_ExcludeFilter {
+    #[doc = "Set the field `metric_names`.\n"]
+    pub fn set_metric_names(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.metric_names = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for CloudwatchMetricStreamExcludeFilterEl {
-    type O = terrars::BlockAssignable<CloudwatchMetricStreamExcludeFilterEl>;
+impl terrars::ToListMappable for CloudwatchMetricStream_ExcludeFilter {
+    type O = terrars::BlockAssignable<CloudwatchMetricStream_ExcludeFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -481,34 +550,44 @@ impl terrars::ToListMappable for CloudwatchMetricStreamExcludeFilterEl {
     }
 }
 
-pub struct BuildCloudwatchMetricStreamExcludeFilterEl {
+pub struct BuildCloudwatchMetricStream_ExcludeFilter {
     #[doc = ""]
     pub namespace: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchMetricStreamExcludeFilterEl {
-    pub fn build(self) -> CloudwatchMetricStreamExcludeFilterEl {
-        CloudwatchMetricStreamExcludeFilterEl { namespace: self.namespace }
+impl BuildCloudwatchMetricStream_ExcludeFilter {
+    pub fn build(self) -> CloudwatchMetricStream_ExcludeFilter {
+        CloudwatchMetricStream_ExcludeFilter {
+            metric_names: core::default::Default::default(),
+            namespace: self.namespace,
+        }
     }
 }
 
-pub struct CloudwatchMetricStreamExcludeFilterElRef {
+#[allow(dead_code)]
+pub struct CloudwatchMetricStream_ExcludeFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchMetricStreamExcludeFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricStreamExcludeFilterElRef {
-        CloudwatchMetricStreamExcludeFilterElRef {
+impl terrars::Ref for CloudwatchMetricStream_ExcludeFilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricStream_ExcludeFilterRef {
+        CloudwatchMetricStream_ExcludeFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchMetricStreamExcludeFilterElRef {
+impl CloudwatchMetricStream_ExcludeFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `metric_names` after provisioning.\n"]
+    pub fn metric_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.metric_names", self.base))
     }
 
     #[doc = "Get a reference to the value of field `namespace` after provisioning.\n"]
@@ -518,14 +597,25 @@ impl CloudwatchMetricStreamExcludeFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchMetricStreamIncludeFilterEl {
+pub struct CloudwatchMetricStream_IncludeFilter {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     namespace: terrars::PrimField<std::string::String>,
 }
 
-impl CloudwatchMetricStreamIncludeFilterEl { }
+impl CloudwatchMetricStream_IncludeFilter {
+    #[doc = "Set the field `metric_names`.\n"]
+    pub fn set_metric_names(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.metric_names = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for CloudwatchMetricStreamIncludeFilterEl {
-    type O = terrars::BlockAssignable<CloudwatchMetricStreamIncludeFilterEl>;
+impl terrars::ToListMappable for CloudwatchMetricStream_IncludeFilter {
+    type O = terrars::BlockAssignable<CloudwatchMetricStream_IncludeFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -536,34 +626,44 @@ impl terrars::ToListMappable for CloudwatchMetricStreamIncludeFilterEl {
     }
 }
 
-pub struct BuildCloudwatchMetricStreamIncludeFilterEl {
+pub struct BuildCloudwatchMetricStream_IncludeFilter {
     #[doc = ""]
     pub namespace: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchMetricStreamIncludeFilterEl {
-    pub fn build(self) -> CloudwatchMetricStreamIncludeFilterEl {
-        CloudwatchMetricStreamIncludeFilterEl { namespace: self.namespace }
+impl BuildCloudwatchMetricStream_IncludeFilter {
+    pub fn build(self) -> CloudwatchMetricStream_IncludeFilter {
+        CloudwatchMetricStream_IncludeFilter {
+            metric_names: core::default::Default::default(),
+            namespace: self.namespace,
+        }
     }
 }
 
-pub struct CloudwatchMetricStreamIncludeFilterElRef {
+#[allow(dead_code)]
+pub struct CloudwatchMetricStream_IncludeFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchMetricStreamIncludeFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricStreamIncludeFilterElRef {
-        CloudwatchMetricStreamIncludeFilterElRef {
+impl terrars::Ref for CloudwatchMetricStream_IncludeFilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricStream_IncludeFilterRef {
+        CloudwatchMetricStream_IncludeFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchMetricStreamIncludeFilterElRef {
+impl CloudwatchMetricStream_IncludeFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `metric_names` after provisioning.\n"]
+    pub fn metric_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.metric_names", self.base))
     }
 
     #[doc = "Get a reference to the value of field `namespace` after provisioning.\n"]
@@ -573,15 +673,15 @@ impl CloudwatchMetricStreamIncludeFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl {
+pub struct CloudwatchMetricStream_StatisticsConfiguration_IncludeMetric {
     metric_name: terrars::PrimField<std::string::String>,
     namespace: terrars::PrimField<std::string::String>,
 }
 
-impl CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl { }
+impl CloudwatchMetricStream_StatisticsConfiguration_IncludeMetric { }
 
-impl terrars::ToListMappable for CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl {
-    type O = terrars::BlockAssignable<CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl>;
+impl terrars::ToListMappable for CloudwatchMetricStream_StatisticsConfiguration_IncludeMetric {
+    type O = terrars::BlockAssignable<CloudwatchMetricStream_StatisticsConfiguration_IncludeMetric>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -592,40 +692,42 @@ impl terrars::ToListMappable for CloudwatchMetricStreamStatisticsConfigurationEl
     }
 }
 
-pub struct BuildCloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl {
+pub struct BuildCloudwatchMetricStream_StatisticsConfiguration_IncludeMetric {
     #[doc = ""]
     pub metric_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub namespace: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl {
-    pub fn build(self) -> CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl {
-        CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl {
+impl BuildCloudwatchMetricStream_StatisticsConfiguration_IncludeMetric {
+    pub fn build(self) -> CloudwatchMetricStream_StatisticsConfiguration_IncludeMetric {
+        CloudwatchMetricStream_StatisticsConfiguration_IncludeMetric {
             metric_name: self.metric_name,
             namespace: self.namespace,
         }
     }
 }
 
-pub struct CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricElRef {
+#[allow(dead_code)]
+pub struct CloudwatchMetricStream_StatisticsConfiguration_IncludeMetricRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricElRef {
+impl terrars::Ref for CloudwatchMetricStream_StatisticsConfiguration_IncludeMetricRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricElRef {
-        CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricElRef {
+    ) -> CloudwatchMetricStream_StatisticsConfiguration_IncludeMetricRef {
+        CloudwatchMetricStream_StatisticsConfiguration_IncludeMetricRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricElRef {
+impl CloudwatchMetricStream_StatisticsConfiguration_IncludeMetricRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -642,21 +744,21 @@ impl CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudwatchMetricStreamStatisticsConfigurationElDynamic {
+struct CloudwatchMetricStream_StatisticsConfigurationDynamic {
     include_metric: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl>>,
+    ::Option<terrars::DynamicBlock<CloudwatchMetricStream_StatisticsConfiguration_IncludeMetric>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchMetricStreamStatisticsConfigurationEl {
+pub struct CloudwatchMetricStream_StatisticsConfiguration {
     additional_statistics: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    include_metric: std::option::Option<std::vec::Vec<CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl>>,
-    dynamic: CloudwatchMetricStreamStatisticsConfigurationElDynamic,
+    include_metric: std::option::Option<std::vec::Vec<CloudwatchMetricStream_StatisticsConfiguration_IncludeMetric>>,
+    dynamic: CloudwatchMetricStream_StatisticsConfigurationDynamic,
 }
 
-impl CloudwatchMetricStreamStatisticsConfigurationEl {
+impl CloudwatchMetricStream_StatisticsConfiguration {
     #[doc = "Set the field `include_metric`.\n"]
     pub fn set_include_metric(
         mut self,
@@ -665,7 +767,7 @@ impl CloudwatchMetricStreamStatisticsConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudwatchMetricStreamStatisticsConfigurationElIncludeMetricEl>>,
+                    ::Into<terrars::BlockAssignable<CloudwatchMetricStream_StatisticsConfiguration_IncludeMetric>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -679,8 +781,8 @@ impl CloudwatchMetricStreamStatisticsConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchMetricStreamStatisticsConfigurationEl {
-    type O = terrars::BlockAssignable<CloudwatchMetricStreamStatisticsConfigurationEl>;
+impl terrars::ToListMappable for CloudwatchMetricStream_StatisticsConfiguration {
+    type O = terrars::BlockAssignable<CloudwatchMetricStream_StatisticsConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -691,14 +793,14 @@ impl terrars::ToListMappable for CloudwatchMetricStreamStatisticsConfigurationEl
     }
 }
 
-pub struct BuildCloudwatchMetricStreamStatisticsConfigurationEl {
+pub struct BuildCloudwatchMetricStream_StatisticsConfiguration {
     #[doc = ""]
     pub additional_statistics: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildCloudwatchMetricStreamStatisticsConfigurationEl {
-    pub fn build(self) -> CloudwatchMetricStreamStatisticsConfigurationEl {
-        CloudwatchMetricStreamStatisticsConfigurationEl {
+impl BuildCloudwatchMetricStream_StatisticsConfiguration {
+    pub fn build(self) -> CloudwatchMetricStream_StatisticsConfiguration {
+        CloudwatchMetricStream_StatisticsConfiguration {
             additional_statistics: self.additional_statistics,
             include_metric: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -706,24 +808,26 @@ impl BuildCloudwatchMetricStreamStatisticsConfigurationEl {
     }
 }
 
-pub struct CloudwatchMetricStreamStatisticsConfigurationElRef {
+#[allow(dead_code)]
+pub struct CloudwatchMetricStream_StatisticsConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchMetricStreamStatisticsConfigurationElRef {
+impl terrars::Ref for CloudwatchMetricStream_StatisticsConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudwatchMetricStreamStatisticsConfigurationElRef {
-        CloudwatchMetricStreamStatisticsConfigurationElRef {
+    ) -> CloudwatchMetricStream_StatisticsConfigurationRef {
+        CloudwatchMetricStream_StatisticsConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchMetricStreamStatisticsConfigurationElRef {
+impl CloudwatchMetricStream_StatisticsConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -735,7 +839,7 @@ impl CloudwatchMetricStreamStatisticsConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchMetricStreamTimeoutsEl {
+pub struct CloudwatchMetricStream_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -744,7 +848,7 @@ pub struct CloudwatchMetricStreamTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudwatchMetricStreamTimeoutsEl {
+impl CloudwatchMetricStream_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -764,8 +868,8 @@ impl CloudwatchMetricStreamTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchMetricStreamTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudwatchMetricStreamTimeoutsEl>;
+impl terrars::ToListMappable for CloudwatchMetricStream_Timeouts {
+    type O = terrars::BlockAssignable<CloudwatchMetricStream_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -776,11 +880,11 @@ impl terrars::ToListMappable for CloudwatchMetricStreamTimeoutsEl {
     }
 }
 
-pub struct BuildCloudwatchMetricStreamTimeoutsEl {}
+pub struct BuildCloudwatchMetricStream_Timeouts {}
 
-impl BuildCloudwatchMetricStreamTimeoutsEl {
-    pub fn build(self) -> CloudwatchMetricStreamTimeoutsEl {
-        CloudwatchMetricStreamTimeoutsEl {
+impl BuildCloudwatchMetricStream_Timeouts {
+    pub fn build(self) -> CloudwatchMetricStream_Timeouts {
+        CloudwatchMetricStream_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -788,21 +892,23 @@ impl BuildCloudwatchMetricStreamTimeoutsEl {
     }
 }
 
-pub struct CloudwatchMetricStreamTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudwatchMetricStream_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchMetricStreamTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricStreamTimeoutsElRef {
-        CloudwatchMetricStreamTimeoutsElRef {
+impl terrars::Ref for CloudwatchMetricStream_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchMetricStream_TimeoutsRef {
+        CloudwatchMetricStream_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchMetricStreamTimeoutsElRef {
+impl CloudwatchMetricStream_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -821,13 +927,4 @@ impl CloudwatchMetricStreamTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudwatchMetricStreamDynamic {
-    exclude_filter: std::option::Option<terrars::DynamicBlock<CloudwatchMetricStreamExcludeFilterEl>>,
-    include_filter: std::option::Option<terrars::DynamicBlock<CloudwatchMetricStreamIncludeFilterEl>>,
-    statistics_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudwatchMetricStreamStatisticsConfigurationEl>>,
 }

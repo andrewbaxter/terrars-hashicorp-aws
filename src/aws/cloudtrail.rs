@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudtrailData {
+struct CloudtrailData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,6 +39,8 @@ struct CloudtrailData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     s3_bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_key_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -47,18 +51,18 @@ struct CloudtrailData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    advanced_event_selector: std::option::Option<std::vec::Vec<CloudtrailAdvancedEventSelectorEl>>,
+    advanced_event_selector: std::option::Option<std::vec::Vec<Cloudtrail_AdvancedEventSelector>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    event_selector: std::option::Option<std::vec::Vec<CloudtrailEventSelectorEl>>,
+    event_selector: std::option::Option<std::vec::Vec<Cloudtrail_EventSelector>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    insight_selector: std::option::Option<std::vec::Vec<CloudtrailInsightSelectorEl>>,
+    insight_selector: std::option::Option<std::vec::Vec<Cloudtrail_InsightSelector>>,
     dynamic: CloudtrailDynamic,
 }
 
 struct Cloudtrail_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudtrailData>,
+    data: std::cell::RefCell<CloudtrailData_>,
 }
 
 #[derive(Clone)]
@@ -218,6 +222,13 @@ impl Cloudtrail {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `s3_key_prefix`.\n"]
     pub fn set_s3_key_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().s3_key_prefix = std::option::Option::Some(v.into());
@@ -251,7 +262,7 @@ impl Cloudtrail {
     #[doc = "Set the field `advanced_event_selector`.\n"]
     pub fn set_advanced_event_selector(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudtrailAdvancedEventSelectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudtrail_AdvancedEventSelector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -267,7 +278,7 @@ impl Cloudtrail {
     #[doc = "Set the field `event_selector`.\n"]
     pub fn set_event_selector(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudtrailEventSelectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudtrail_EventSelector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -283,7 +294,7 @@ impl Cloudtrail {
     #[doc = "Set the field `insight_selector`.\n"]
     pub fn set_insight_selector(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudtrailInsightSelectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudtrail_InsightSelector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -359,6 +370,12 @@ impl Cloudtrail {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `s3_bucket_name` after provisioning.\n"]
     pub fn s3_bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket_name", self.extract_ref()))
@@ -367,6 +384,11 @@ impl Cloudtrail {
     #[doc = "Get a reference to the value of field `s3_key_prefix` after provisioning.\n"]
     pub fn s3_key_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_key_prefix", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `sns_topic_arn` after provisioning.\n"]
+    pub fn sns_topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sns_topic_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sns_topic_name` after provisioning.\n"]
@@ -385,18 +407,13 @@ impl Cloudtrail {
     }
 
     #[doc = "Get a reference to the value of field `advanced_event_selector` after provisioning.\n"]
-    pub fn advanced_event_selector(&self) -> terrars::ListRef<CloudtrailAdvancedEventSelectorElRef> {
+    pub fn advanced_event_selector(&self) -> terrars::ListRef<Cloudtrail_AdvancedEventSelectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_event_selector", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `event_selector` after provisioning.\n"]
-    pub fn event_selector(&self) -> terrars::ListRef<CloudtrailEventSelectorElRef> {
+    pub fn event_selector(&self) -> terrars::ListRef<Cloudtrail_EventSelectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_selector", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `insight_selector` after provisioning.\n"]
-    pub fn insight_selector(&self) -> terrars::ListRef<CloudtrailInsightSelectorElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.insight_selector", self.extract_ref()))
     }
 }
 
@@ -444,7 +461,7 @@ impl BuildCloudtrail {
         let out = Cloudtrail(std::rc::Rc::new(Cloudtrail_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudtrailData {
+            data: std::cell::RefCell::new(CloudtrailData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -460,6 +477,7 @@ impl BuildCloudtrail {
                 is_organization_trail: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 s3_bucket_name: self.s3_bucket_name,
                 s3_key_prefix: core::default::Default::default(),
                 sns_topic_name: core::default::Default::default(),
@@ -562,6 +580,12 @@ impl CloudtrailRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `s3_bucket_name` after provisioning.\n"]
     pub fn s3_bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket_name", self.extract_ref()))
@@ -570,6 +594,11 @@ impl CloudtrailRef {
     #[doc = "Get a reference to the value of field `s3_key_prefix` after provisioning.\n"]
     pub fn s3_key_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_key_prefix", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `sns_topic_arn` after provisioning.\n"]
+    pub fn sns_topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sns_topic_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sns_topic_name` after provisioning.\n"]
@@ -588,23 +617,25 @@ impl CloudtrailRef {
     }
 
     #[doc = "Get a reference to the value of field `advanced_event_selector` after provisioning.\n"]
-    pub fn advanced_event_selector(&self) -> terrars::ListRef<CloudtrailAdvancedEventSelectorElRef> {
+    pub fn advanced_event_selector(&self) -> terrars::ListRef<Cloudtrail_AdvancedEventSelectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_event_selector", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `event_selector` after provisioning.\n"]
-    pub fn event_selector(&self) -> terrars::ListRef<CloudtrailEventSelectorElRef> {
+    pub fn event_selector(&self) -> terrars::ListRef<Cloudtrail_EventSelectorRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.event_selector", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `insight_selector` after provisioning.\n"]
-    pub fn insight_selector(&self) -> terrars::ListRef<CloudtrailInsightSelectorElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.insight_selector", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudtrailDynamic {
+    advanced_event_selector: std::option::Option<terrars::DynamicBlock<Cloudtrail_AdvancedEventSelector>>,
+    event_selector: std::option::Option<terrars::DynamicBlock<Cloudtrail_EventSelector>>,
+    insight_selector: std::option::Option<terrars::DynamicBlock<Cloudtrail_InsightSelector>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudtrailAdvancedEventSelectorElFieldSelectorEl {
+pub struct Cloudtrail_AdvancedEventSelector_FieldSelector {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ends_with: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -620,7 +651,7 @@ pub struct CloudtrailAdvancedEventSelectorElFieldSelectorEl {
     starts_with: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudtrailAdvancedEventSelectorElFieldSelectorEl {
+impl Cloudtrail_AdvancedEventSelector_FieldSelector {
     #[doc = "Set the field `ends_with`.\n"]
     pub fn set_ends_with(
         mut self,
@@ -676,8 +707,8 @@ impl CloudtrailAdvancedEventSelectorElFieldSelectorEl {
     }
 }
 
-impl terrars::ToListMappable for CloudtrailAdvancedEventSelectorElFieldSelectorEl {
-    type O = terrars::BlockAssignable<CloudtrailAdvancedEventSelectorElFieldSelectorEl>;
+impl terrars::ToListMappable for Cloudtrail_AdvancedEventSelector_FieldSelector {
+    type O = terrars::BlockAssignable<Cloudtrail_AdvancedEventSelector_FieldSelector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -688,14 +719,14 @@ impl terrars::ToListMappable for CloudtrailAdvancedEventSelectorElFieldSelectorE
     }
 }
 
-pub struct BuildCloudtrailAdvancedEventSelectorElFieldSelectorEl {
+pub struct BuildCloudtrail_AdvancedEventSelector_FieldSelector {
     #[doc = ""]
     pub field: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudtrailAdvancedEventSelectorElFieldSelectorEl {
-    pub fn build(self) -> CloudtrailAdvancedEventSelectorElFieldSelectorEl {
-        CloudtrailAdvancedEventSelectorElFieldSelectorEl {
+impl BuildCloudtrail_AdvancedEventSelector_FieldSelector {
+    pub fn build(self) -> Cloudtrail_AdvancedEventSelector_FieldSelector {
+        Cloudtrail_AdvancedEventSelector_FieldSelector {
             ends_with: core::default::Default::default(),
             equals: core::default::Default::default(),
             field: self.field,
@@ -707,24 +738,26 @@ impl BuildCloudtrailAdvancedEventSelectorElFieldSelectorEl {
     }
 }
 
-pub struct CloudtrailAdvancedEventSelectorElFieldSelectorElRef {
+#[allow(dead_code)]
+pub struct Cloudtrail_AdvancedEventSelector_FieldSelectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudtrailAdvancedEventSelectorElFieldSelectorElRef {
+impl terrars::Ref for Cloudtrail_AdvancedEventSelector_FieldSelectorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudtrailAdvancedEventSelectorElFieldSelectorElRef {
-        CloudtrailAdvancedEventSelectorElFieldSelectorElRef {
+    ) -> Cloudtrail_AdvancedEventSelector_FieldSelectorRef {
+        Cloudtrail_AdvancedEventSelector_FieldSelectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudtrailAdvancedEventSelectorElFieldSelectorElRef {
+impl Cloudtrail_AdvancedEventSelector_FieldSelectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -766,20 +799,20 @@ impl CloudtrailAdvancedEventSelectorElFieldSelectorElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudtrailAdvancedEventSelectorElDynamic {
-    field_selector: std::option::Option<terrars::DynamicBlock<CloudtrailAdvancedEventSelectorElFieldSelectorEl>>,
+struct Cloudtrail_AdvancedEventSelectorDynamic {
+    field_selector: std::option::Option<terrars::DynamicBlock<Cloudtrail_AdvancedEventSelector_FieldSelector>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudtrailAdvancedEventSelectorEl {
+pub struct Cloudtrail_AdvancedEventSelector {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_selector: std::option::Option<std::vec::Vec<CloudtrailAdvancedEventSelectorElFieldSelectorEl>>,
-    dynamic: CloudtrailAdvancedEventSelectorElDynamic,
+    field_selector: std::option::Option<std::vec::Vec<Cloudtrail_AdvancedEventSelector_FieldSelector>>,
+    dynamic: Cloudtrail_AdvancedEventSelectorDynamic,
 }
 
-impl CloudtrailAdvancedEventSelectorEl {
+impl Cloudtrail_AdvancedEventSelector {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -789,7 +822,7 @@ impl CloudtrailAdvancedEventSelectorEl {
     #[doc = "Set the field `field_selector`.\n"]
     pub fn set_field_selector(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudtrailAdvancedEventSelectorElFieldSelectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudtrail_AdvancedEventSelector_FieldSelector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -803,8 +836,8 @@ impl CloudtrailAdvancedEventSelectorEl {
     }
 }
 
-impl terrars::ToListMappable for CloudtrailAdvancedEventSelectorEl {
-    type O = terrars::BlockAssignable<CloudtrailAdvancedEventSelectorEl>;
+impl terrars::ToListMappable for Cloudtrail_AdvancedEventSelector {
+    type O = terrars::BlockAssignable<Cloudtrail_AdvancedEventSelector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -815,11 +848,11 @@ impl terrars::ToListMappable for CloudtrailAdvancedEventSelectorEl {
     }
 }
 
-pub struct BuildCloudtrailAdvancedEventSelectorEl {}
+pub struct BuildCloudtrail_AdvancedEventSelector {}
 
-impl BuildCloudtrailAdvancedEventSelectorEl {
-    pub fn build(self) -> CloudtrailAdvancedEventSelectorEl {
-        CloudtrailAdvancedEventSelectorEl {
+impl BuildCloudtrail_AdvancedEventSelector {
+    pub fn build(self) -> Cloudtrail_AdvancedEventSelector {
+        Cloudtrail_AdvancedEventSelector {
             name: core::default::Default::default(),
             field_selector: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -827,21 +860,23 @@ impl BuildCloudtrailAdvancedEventSelectorEl {
     }
 }
 
-pub struct CloudtrailAdvancedEventSelectorElRef {
+#[allow(dead_code)]
+pub struct Cloudtrail_AdvancedEventSelectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudtrailAdvancedEventSelectorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudtrailAdvancedEventSelectorElRef {
-        CloudtrailAdvancedEventSelectorElRef {
+impl terrars::Ref for Cloudtrail_AdvancedEventSelectorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudtrail_AdvancedEventSelectorRef {
+        Cloudtrail_AdvancedEventSelectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudtrailAdvancedEventSelectorElRef {
+impl Cloudtrail_AdvancedEventSelectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -853,16 +888,16 @@ impl CloudtrailAdvancedEventSelectorElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudtrailEventSelectorElDataResourceEl {
+pub struct Cloudtrail_EventSelector_DataResource {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudtrailEventSelectorElDataResourceEl { }
+impl Cloudtrail_EventSelector_DataResource { }
 
-impl terrars::ToListMappable for CloudtrailEventSelectorElDataResourceEl {
-    type O = terrars::BlockAssignable<CloudtrailEventSelectorElDataResourceEl>;
+impl terrars::ToListMappable for Cloudtrail_EventSelector_DataResource {
+    type O = terrars::BlockAssignable<Cloudtrail_EventSelector_DataResource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -873,37 +908,39 @@ impl terrars::ToListMappable for CloudtrailEventSelectorElDataResourceEl {
     }
 }
 
-pub struct BuildCloudtrailEventSelectorElDataResourceEl {
+pub struct BuildCloudtrail_EventSelector_DataResource {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildCloudtrailEventSelectorElDataResourceEl {
-    pub fn build(self) -> CloudtrailEventSelectorElDataResourceEl {
-        CloudtrailEventSelectorElDataResourceEl {
+impl BuildCloudtrail_EventSelector_DataResource {
+    pub fn build(self) -> Cloudtrail_EventSelector_DataResource {
+        Cloudtrail_EventSelector_DataResource {
             type_: self.type_,
             values: self.values,
         }
     }
 }
 
-pub struct CloudtrailEventSelectorElDataResourceElRef {
+#[allow(dead_code)]
+pub struct Cloudtrail_EventSelector_DataResourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudtrailEventSelectorElDataResourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudtrailEventSelectorElDataResourceElRef {
-        CloudtrailEventSelectorElDataResourceElRef {
+impl terrars::Ref for Cloudtrail_EventSelector_DataResourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudtrail_EventSelector_DataResourceRef {
+        Cloudtrail_EventSelector_DataResourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudtrailEventSelectorElDataResourceElRef {
+impl Cloudtrail_EventSelector_DataResourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -920,12 +957,12 @@ impl CloudtrailEventSelectorElDataResourceElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudtrailEventSelectorElDynamic {
-    data_resource: std::option::Option<terrars::DynamicBlock<CloudtrailEventSelectorElDataResourceEl>>,
+struct Cloudtrail_EventSelectorDynamic {
+    data_resource: std::option::Option<terrars::DynamicBlock<Cloudtrail_EventSelector_DataResource>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudtrailEventSelectorEl {
+pub struct Cloudtrail_EventSelector {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclude_management_event_sources: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -933,11 +970,11 @@ pub struct CloudtrailEventSelectorEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read_write_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_resource: std::option::Option<std::vec::Vec<CloudtrailEventSelectorElDataResourceEl>>,
-    dynamic: CloudtrailEventSelectorElDynamic,
+    data_resource: std::option::Option<std::vec::Vec<Cloudtrail_EventSelector_DataResource>>,
+    dynamic: Cloudtrail_EventSelectorDynamic,
 }
 
-impl CloudtrailEventSelectorEl {
+impl Cloudtrail_EventSelector {
     #[doc = "Set the field `exclude_management_event_sources`.\n"]
     pub fn set_exclude_management_event_sources(
         mut self,
@@ -962,7 +999,7 @@ impl CloudtrailEventSelectorEl {
     #[doc = "Set the field `data_resource`.\n"]
     pub fn set_data_resource(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudtrailEventSelectorElDataResourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Cloudtrail_EventSelector_DataResource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -976,8 +1013,8 @@ impl CloudtrailEventSelectorEl {
     }
 }
 
-impl terrars::ToListMappable for CloudtrailEventSelectorEl {
-    type O = terrars::BlockAssignable<CloudtrailEventSelectorEl>;
+impl terrars::ToListMappable for Cloudtrail_EventSelector {
+    type O = terrars::BlockAssignable<Cloudtrail_EventSelector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -988,11 +1025,11 @@ impl terrars::ToListMappable for CloudtrailEventSelectorEl {
     }
 }
 
-pub struct BuildCloudtrailEventSelectorEl {}
+pub struct BuildCloudtrail_EventSelector {}
 
-impl BuildCloudtrailEventSelectorEl {
-    pub fn build(self) -> CloudtrailEventSelectorEl {
-        CloudtrailEventSelectorEl {
+impl BuildCloudtrail_EventSelector {
+    pub fn build(self) -> Cloudtrail_EventSelector {
+        Cloudtrail_EventSelector {
             exclude_management_event_sources: core::default::Default::default(),
             include_management_events: core::default::Default::default(),
             read_write_type: core::default::Default::default(),
@@ -1002,21 +1039,23 @@ impl BuildCloudtrailEventSelectorEl {
     }
 }
 
-pub struct CloudtrailEventSelectorElRef {
+#[allow(dead_code)]
+pub struct Cloudtrail_EventSelectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudtrailEventSelectorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudtrailEventSelectorElRef {
-        CloudtrailEventSelectorElRef {
+impl terrars::Ref for Cloudtrail_EventSelectorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudtrail_EventSelectorRef {
+        Cloudtrail_EventSelectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudtrailEventSelectorElRef {
+impl Cloudtrail_EventSelectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1037,20 +1076,20 @@ impl CloudtrailEventSelectorElRef {
     }
 
     #[doc = "Get a reference to the value of field `data_resource` after provisioning.\n"]
-    pub fn data_resource(&self) -> terrars::ListRef<CloudtrailEventSelectorElDataResourceElRef> {
+    pub fn data_resource(&self) -> terrars::ListRef<Cloudtrail_EventSelector_DataResourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_resource", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudtrailInsightSelectorEl {
+pub struct Cloudtrail_InsightSelector {
     insight_type: terrars::PrimField<std::string::String>,
 }
 
-impl CloudtrailInsightSelectorEl { }
+impl Cloudtrail_InsightSelector { }
 
-impl terrars::ToListMappable for CloudtrailInsightSelectorEl {
-    type O = terrars::BlockAssignable<CloudtrailInsightSelectorEl>;
+impl terrars::ToListMappable for Cloudtrail_InsightSelector {
+    type O = terrars::BlockAssignable<Cloudtrail_InsightSelector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1061,32 +1100,34 @@ impl terrars::ToListMappable for CloudtrailInsightSelectorEl {
     }
 }
 
-pub struct BuildCloudtrailInsightSelectorEl {
+pub struct BuildCloudtrail_InsightSelector {
     #[doc = ""]
     pub insight_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudtrailInsightSelectorEl {
-    pub fn build(self) -> CloudtrailInsightSelectorEl {
-        CloudtrailInsightSelectorEl { insight_type: self.insight_type }
+impl BuildCloudtrail_InsightSelector {
+    pub fn build(self) -> Cloudtrail_InsightSelector {
+        Cloudtrail_InsightSelector { insight_type: self.insight_type }
     }
 }
 
-pub struct CloudtrailInsightSelectorElRef {
+#[allow(dead_code)]
+pub struct Cloudtrail_InsightSelectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudtrailInsightSelectorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudtrailInsightSelectorElRef {
-        CloudtrailInsightSelectorElRef {
+impl terrars::Ref for Cloudtrail_InsightSelectorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Cloudtrail_InsightSelectorRef {
+        Cloudtrail_InsightSelectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudtrailInsightSelectorElRef {
+impl Cloudtrail_InsightSelectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1095,11 +1136,4 @@ impl CloudtrailInsightSelectorElRef {
     pub fn insight_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.insight_type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudtrailDynamic {
-    advanced_event_selector: std::option::Option<terrars::DynamicBlock<CloudtrailAdvancedEventSelectorEl>>,
-    event_selector: std::option::Option<terrars::DynamicBlock<CloudtrailEventSelectorEl>>,
-    insight_selector: std::option::Option<terrars::DynamicBlock<CloudtrailInsightSelectorEl>>,
 }

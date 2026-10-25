@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApprunnerObservabilityConfigurationData {
+struct ApprunnerObservabilityConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,20 @@ struct ApprunnerObservabilityConfigurationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     observability_configuration_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    trace_configuration: std::option::Option<std::vec::Vec<ApprunnerObservabilityConfigurationTraceConfigurationEl>>,
+    trace_configuration: std::option::Option<std::vec::Vec<ApprunnerObservabilityConfiguration_TraceConfiguration>>,
     dynamic: ApprunnerObservabilityConfigurationDynamic,
 }
 
 struct ApprunnerObservabilityConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApprunnerObservabilityConfigurationData>,
+    data: std::cell::RefCell<ApprunnerObservabilityConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl ApprunnerObservabilityConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -160,12 +171,7 @@ impl ApprunnerObservabilityConfiguration {
     #[doc = "Set the field `trace_configuration`.\n"]
     pub fn set_trace_configuration(
         self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ApprunnerObservabilityConfigurationTraceConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApprunnerObservabilityConfiguration_TraceConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,6 +215,12 @@ impl ApprunnerObservabilityConfiguration {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -225,7 +237,7 @@ impl ApprunnerObservabilityConfiguration {
     }
 
     #[doc = "Get a reference to the value of field `trace_configuration` after provisioning.\n"]
-    pub fn trace_configuration(&self) -> terrars::ListRef<ApprunnerObservabilityConfigurationTraceConfigurationElRef> {
+    pub fn trace_configuration(&self) -> terrars::ListRef<ApprunnerObservabilityConfiguration_TraceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trace_configuration", self.extract_ref()))
     }
 }
@@ -272,7 +284,7 @@ impl BuildApprunnerObservabilityConfiguration {
         let out = ApprunnerObservabilityConfiguration(std::rc::Rc::new(ApprunnerObservabilityConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApprunnerObservabilityConfigurationData {
+            data: std::cell::RefCell::new(ApprunnerObservabilityConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -280,6 +292,7 @@ impl BuildApprunnerObservabilityConfiguration {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 observability_configuration_name: self.observability_configuration_name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 trace_configuration: core::default::Default::default(),
@@ -345,6 +358,12 @@ impl ApprunnerObservabilityConfigurationRef {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -361,18 +380,25 @@ impl ApprunnerObservabilityConfigurationRef {
     }
 
     #[doc = "Get a reference to the value of field `trace_configuration` after provisioning.\n"]
-    pub fn trace_configuration(&self) -> terrars::ListRef<ApprunnerObservabilityConfigurationTraceConfigurationElRef> {
+    pub fn trace_configuration(&self) -> terrars::ListRef<ApprunnerObservabilityConfiguration_TraceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.trace_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApprunnerObservabilityConfigurationDynamic {
+    trace_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ApprunnerObservabilityConfiguration_TraceConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct ApprunnerObservabilityConfigurationTraceConfigurationEl {
+pub struct ApprunnerObservabilityConfiguration_TraceConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vendor: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApprunnerObservabilityConfigurationTraceConfigurationEl {
+impl ApprunnerObservabilityConfiguration_TraceConfiguration {
     #[doc = "Set the field `vendor`.\n"]
     pub fn set_vendor(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.vendor = std::option::Option::Some(v.into());
@@ -380,8 +406,8 @@ impl ApprunnerObservabilityConfigurationTraceConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApprunnerObservabilityConfigurationTraceConfigurationEl {
-    type O = terrars::BlockAssignable<ApprunnerObservabilityConfigurationTraceConfigurationEl>;
+impl terrars::ToListMappable for ApprunnerObservabilityConfiguration_TraceConfiguration {
+    type O = terrars::BlockAssignable<ApprunnerObservabilityConfiguration_TraceConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -392,32 +418,34 @@ impl terrars::ToListMappable for ApprunnerObservabilityConfigurationTraceConfigu
     }
 }
 
-pub struct BuildApprunnerObservabilityConfigurationTraceConfigurationEl {}
+pub struct BuildApprunnerObservabilityConfiguration_TraceConfiguration {}
 
-impl BuildApprunnerObservabilityConfigurationTraceConfigurationEl {
-    pub fn build(self) -> ApprunnerObservabilityConfigurationTraceConfigurationEl {
-        ApprunnerObservabilityConfigurationTraceConfigurationEl { vendor: core::default::Default::default() }
+impl BuildApprunnerObservabilityConfiguration_TraceConfiguration {
+    pub fn build(self) -> ApprunnerObservabilityConfiguration_TraceConfiguration {
+        ApprunnerObservabilityConfiguration_TraceConfiguration { vendor: core::default::Default::default() }
     }
 }
 
-pub struct ApprunnerObservabilityConfigurationTraceConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApprunnerObservabilityConfiguration_TraceConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApprunnerObservabilityConfigurationTraceConfigurationElRef {
+impl terrars::Ref for ApprunnerObservabilityConfiguration_TraceConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApprunnerObservabilityConfigurationTraceConfigurationElRef {
-        ApprunnerObservabilityConfigurationTraceConfigurationElRef {
+    ) -> ApprunnerObservabilityConfiguration_TraceConfigurationRef {
+        ApprunnerObservabilityConfiguration_TraceConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApprunnerObservabilityConfigurationTraceConfigurationElRef {
+impl ApprunnerObservabilityConfiguration_TraceConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -426,11 +454,4 @@ impl ApprunnerObservabilityConfigurationTraceConfigurationElRef {
     pub fn vendor(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vendor", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApprunnerObservabilityConfigurationDynamic {
-    trace_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<ApprunnerObservabilityConfigurationTraceConfigurationEl>>,
 }

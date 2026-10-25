@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LightsailContainerServiceDeploymentVersionData {
+struct LightsailContainerServiceDeploymentVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,20 +22,22 @@ struct LightsailContainerServiceDeploymentVersionData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     service_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    container: std::option::Option<std::vec::Vec<LightsailContainerServiceDeploymentVersionContainerEl>>,
+    container: std::option::Option<std::vec::Vec<LightsailContainerServiceDeploymentVersion_Container>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    public_endpoint: std::option::Option<std::vec::Vec<LightsailContainerServiceDeploymentVersionPublicEndpointEl>>,
+    public_endpoint: std::option::Option<std::vec::Vec<LightsailContainerServiceDeploymentVersion_PublicEndpoint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LightsailContainerServiceDeploymentVersionTimeoutsEl>,
+    timeouts: std::option::Option<LightsailContainerServiceDeploymentVersion_Timeouts>,
     dynamic: LightsailContainerServiceDeploymentVersionDynamic,
 }
 
 struct LightsailContainerServiceDeploymentVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LightsailContainerServiceDeploymentVersionData>,
+    data: std::cell::RefCell<LightsailContainerServiceDeploymentVersionData_>,
 }
 
 #[derive(Clone)]
@@ -139,10 +143,17 @@ impl LightsailContainerServiceDeploymentVersion {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `container`.\n"]
     pub fn set_container(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LightsailContainerServiceDeploymentVersionContainerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LightsailContainerServiceDeploymentVersion_Container>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -163,7 +174,7 @@ impl LightsailContainerServiceDeploymentVersion {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<LightsailContainerServiceDeploymentVersionPublicEndpointEl>>,
+                    ::Into<terrars::BlockAssignable<LightsailContainerServiceDeploymentVersion_PublicEndpoint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -177,7 +188,7 @@ impl LightsailContainerServiceDeploymentVersion {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LightsailContainerServiceDeploymentVersionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LightsailContainerServiceDeploymentVersion_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -190,6 +201,12 @@ impl LightsailContainerServiceDeploymentVersion {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_name` after provisioning.\n"]
@@ -208,13 +225,13 @@ impl LightsailContainerServiceDeploymentVersion {
     }
 
     #[doc = "Get a reference to the value of field `public_endpoint` after provisioning.\n"]
-    pub fn public_endpoint(&self) -> terrars::ListRef<LightsailContainerServiceDeploymentVersionPublicEndpointElRef> {
+    pub fn public_endpoint(&self) -> terrars::ListRef<LightsailContainerServiceDeploymentVersion_PublicEndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_endpoint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LightsailContainerServiceDeploymentVersionTimeoutsElRef {
-        LightsailContainerServiceDeploymentVersionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> LightsailContainerServiceDeploymentVersion_TimeoutsRef {
+        LightsailContainerServiceDeploymentVersion_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -264,13 +281,14 @@ impl BuildLightsailContainerServiceDeploymentVersion {
             LightsailContainerServiceDeploymentVersion(std::rc::Rc::new(LightsailContainerServiceDeploymentVersion_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(LightsailContainerServiceDeploymentVersionData {
+                data: std::cell::RefCell::new(LightsailContainerServiceDeploymentVersionData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
                     for_each: std::option::Option::None,
                     provisioner: core::default::Default::default(),
                     id: core::default::Default::default(),
+                    region: core::default::Default::default(),
                     service_name: self.service_name,
                     container: core::default::Default::default(),
                     public_endpoint: core::default::Default::default(),
@@ -316,6 +334,12 @@ impl LightsailContainerServiceDeploymentVersionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_name` after provisioning.\n"]
     pub fn service_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_name", self.extract_ref()))
@@ -332,21 +356,29 @@ impl LightsailContainerServiceDeploymentVersionRef {
     }
 
     #[doc = "Get a reference to the value of field `public_endpoint` after provisioning.\n"]
-    pub fn public_endpoint(&self) -> terrars::ListRef<LightsailContainerServiceDeploymentVersionPublicEndpointElRef> {
+    pub fn public_endpoint(&self) -> terrars::ListRef<LightsailContainerServiceDeploymentVersion_PublicEndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_endpoint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LightsailContainerServiceDeploymentVersionTimeoutsElRef {
-        LightsailContainerServiceDeploymentVersionTimeoutsElRef::new(
+    pub fn timeouts(&self) -> LightsailContainerServiceDeploymentVersion_TimeoutsRef {
+        LightsailContainerServiceDeploymentVersion_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct LightsailContainerServiceDeploymentVersionDynamic {
+    container: std::option::Option<terrars::DynamicBlock<LightsailContainerServiceDeploymentVersion_Container>>,
+    public_endpoint: std
+    ::option
+    ::Option<terrars::DynamicBlock<LightsailContainerServiceDeploymentVersion_PublicEndpoint>>,
+}
+
 #[derive(Serialize)]
-pub struct LightsailContainerServiceDeploymentVersionContainerEl {
+pub struct LightsailContainerServiceDeploymentVersion_Container {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     command: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     container_name: terrars::PrimField<std::string::String>,
@@ -357,7 +389,7 @@ pub struct LightsailContainerServiceDeploymentVersionContainerEl {
     ports: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl LightsailContainerServiceDeploymentVersionContainerEl {
+impl LightsailContainerServiceDeploymentVersion_Container {
     #[doc = "Set the field `command`.\n"]
     pub fn set_command(
         mut self,
@@ -386,8 +418,8 @@ impl LightsailContainerServiceDeploymentVersionContainerEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersionContainerEl {
-    type O = terrars::BlockAssignable<LightsailContainerServiceDeploymentVersionContainerEl>;
+impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersion_Container {
+    type O = terrars::BlockAssignable<LightsailContainerServiceDeploymentVersion_Container>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -398,16 +430,16 @@ impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersionConta
     }
 }
 
-pub struct BuildLightsailContainerServiceDeploymentVersionContainerEl {
+pub struct BuildLightsailContainerServiceDeploymentVersion_Container {
     #[doc = ""]
     pub container_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub image: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLightsailContainerServiceDeploymentVersionContainerEl {
-    pub fn build(self) -> LightsailContainerServiceDeploymentVersionContainerEl {
-        LightsailContainerServiceDeploymentVersionContainerEl {
+impl BuildLightsailContainerServiceDeploymentVersion_Container {
+    pub fn build(self) -> LightsailContainerServiceDeploymentVersion_Container {
+        LightsailContainerServiceDeploymentVersion_Container {
             command: core::default::Default::default(),
             container_name: self.container_name,
             environment: core::default::Default::default(),
@@ -417,24 +449,26 @@ impl BuildLightsailContainerServiceDeploymentVersionContainerEl {
     }
 }
 
-pub struct LightsailContainerServiceDeploymentVersionContainerElRef {
+#[allow(dead_code)]
+pub struct LightsailContainerServiceDeploymentVersion_ContainerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailContainerServiceDeploymentVersionContainerElRef {
+impl terrars::Ref for LightsailContainerServiceDeploymentVersion_ContainerRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LightsailContainerServiceDeploymentVersionContainerElRef {
-        LightsailContainerServiceDeploymentVersionContainerElRef {
+    ) -> LightsailContainerServiceDeploymentVersion_ContainerRef {
+        LightsailContainerServiceDeploymentVersion_ContainerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailContainerServiceDeploymentVersionContainerElRef {
+impl LightsailContainerServiceDeploymentVersion_ContainerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -466,7 +500,7 @@ impl LightsailContainerServiceDeploymentVersionContainerElRef {
 }
 
 #[derive(Serialize)]
-pub struct LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl {
+pub struct LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     healthy_threshold: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -481,7 +515,7 @@ pub struct LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheck
     unhealthy_threshold: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl {
+impl LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck {
     #[doc = "Set the field `healthy_threshold`.\n"]
     pub fn set_healthy_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.healthy_threshold = std::option::Option::Some(v.into());
@@ -519,8 +553,8 @@ impl LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl {
-    type O = terrars::BlockAssignable<LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl>;
+impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck {
+    type O = terrars::BlockAssignable<LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -531,11 +565,11 @@ impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersionPubli
     }
 }
 
-pub struct BuildLightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl {}
+pub struct BuildLightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck {}
 
-impl BuildLightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl {
-    pub fn build(self) -> LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl {
-        LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl {
+impl BuildLightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck {
+    pub fn build(self) -> LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck {
+        LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck {
             healthy_threshold: core::default::Default::default(),
             interval_seconds: core::default::Default::default(),
             path: core::default::Default::default(),
@@ -546,24 +580,26 @@ impl BuildLightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckE
     }
 }
 
-pub struct LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckElRef {
+#[allow(dead_code)]
+pub struct LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckElRef {
+impl terrars::Ref for LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheckRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckElRef {
-        LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckElRef {
+    ) -> LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheckRef {
+        LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckElRef {
+impl LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -600,24 +636,24 @@ impl LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckElRef 
 }
 
 #[derive(Serialize, Default)]
-struct LightsailContainerServiceDeploymentVersionPublicEndpointElDynamic {
+struct LightsailContainerServiceDeploymentVersion_PublicEndpointDynamic {
     health_check: std
     ::option
-    ::Option<terrars::DynamicBlock<LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl>>,
+    ::Option<terrars::DynamicBlock<LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck>>,
 }
 
 #[derive(Serialize)]
-pub struct LightsailContainerServiceDeploymentVersionPublicEndpointEl {
+pub struct LightsailContainerServiceDeploymentVersion_PublicEndpoint {
     container_name: terrars::PrimField<std::string::String>,
     container_port: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     health_check: std
     ::option
-    ::Option<std::vec::Vec<LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl>>,
-    dynamic: LightsailContainerServiceDeploymentVersionPublicEndpointElDynamic,
+    ::Option<std::vec::Vec<LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck>>,
+    dynamic: LightsailContainerServiceDeploymentVersion_PublicEndpointDynamic,
 }
 
-impl LightsailContainerServiceDeploymentVersionPublicEndpointEl {
+impl LightsailContainerServiceDeploymentVersion_PublicEndpoint {
     #[doc = "Set the field `health_check`.\n"]
     pub fn set_health_check(
         mut self,
@@ -628,7 +664,7 @@ impl LightsailContainerServiceDeploymentVersionPublicEndpointEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckEl>,
+                        ::BlockAssignable<LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheck>,
                     >,
     ) -> Self {
         match v.into() {
@@ -643,8 +679,8 @@ impl LightsailContainerServiceDeploymentVersionPublicEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersionPublicEndpointEl {
-    type O = terrars::BlockAssignable<LightsailContainerServiceDeploymentVersionPublicEndpointEl>;
+impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersion_PublicEndpoint {
+    type O = terrars::BlockAssignable<LightsailContainerServiceDeploymentVersion_PublicEndpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -655,16 +691,16 @@ impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersionPubli
     }
 }
 
-pub struct BuildLightsailContainerServiceDeploymentVersionPublicEndpointEl {
+pub struct BuildLightsailContainerServiceDeploymentVersion_PublicEndpoint {
     #[doc = ""]
     pub container_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub container_port: terrars::PrimField<f64>,
 }
 
-impl BuildLightsailContainerServiceDeploymentVersionPublicEndpointEl {
-    pub fn build(self) -> LightsailContainerServiceDeploymentVersionPublicEndpointEl {
-        LightsailContainerServiceDeploymentVersionPublicEndpointEl {
+impl BuildLightsailContainerServiceDeploymentVersion_PublicEndpoint {
+    pub fn build(self) -> LightsailContainerServiceDeploymentVersion_PublicEndpoint {
+        LightsailContainerServiceDeploymentVersion_PublicEndpoint {
             container_name: self.container_name,
             container_port: self.container_port,
             health_check: core::default::Default::default(),
@@ -673,24 +709,26 @@ impl BuildLightsailContainerServiceDeploymentVersionPublicEndpointEl {
     }
 }
 
-pub struct LightsailContainerServiceDeploymentVersionPublicEndpointElRef {
+#[allow(dead_code)]
+pub struct LightsailContainerServiceDeploymentVersion_PublicEndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailContainerServiceDeploymentVersionPublicEndpointElRef {
+impl terrars::Ref for LightsailContainerServiceDeploymentVersion_PublicEndpointRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LightsailContainerServiceDeploymentVersionPublicEndpointElRef {
-        LightsailContainerServiceDeploymentVersionPublicEndpointElRef {
+    ) -> LightsailContainerServiceDeploymentVersion_PublicEndpointRef {
+        LightsailContainerServiceDeploymentVersion_PublicEndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailContainerServiceDeploymentVersionPublicEndpointElRef {
+impl LightsailContainerServiceDeploymentVersion_PublicEndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -708,18 +746,18 @@ impl LightsailContainerServiceDeploymentVersionPublicEndpointElRef {
     #[doc = "Get a reference to the value of field `health_check` after provisioning.\n"]
     pub fn health_check(
         &self,
-    ) -> terrars::ListRef<LightsailContainerServiceDeploymentVersionPublicEndpointElHealthCheckElRef> {
+    ) -> terrars::ListRef<LightsailContainerServiceDeploymentVersion_PublicEndpoint_HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LightsailContainerServiceDeploymentVersionTimeoutsEl {
+pub struct LightsailContainerServiceDeploymentVersion_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LightsailContainerServiceDeploymentVersionTimeoutsEl {
+impl LightsailContainerServiceDeploymentVersion_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -727,8 +765,8 @@ impl LightsailContainerServiceDeploymentVersionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersionTimeoutsEl {
-    type O = terrars::BlockAssignable<LightsailContainerServiceDeploymentVersionTimeoutsEl>;
+impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersion_Timeouts {
+    type O = terrars::BlockAssignable<LightsailContainerServiceDeploymentVersion_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -739,32 +777,34 @@ impl terrars::ToListMappable for LightsailContainerServiceDeploymentVersionTimeo
     }
 }
 
-pub struct BuildLightsailContainerServiceDeploymentVersionTimeoutsEl {}
+pub struct BuildLightsailContainerServiceDeploymentVersion_Timeouts {}
 
-impl BuildLightsailContainerServiceDeploymentVersionTimeoutsEl {
-    pub fn build(self) -> LightsailContainerServiceDeploymentVersionTimeoutsEl {
-        LightsailContainerServiceDeploymentVersionTimeoutsEl { create: core::default::Default::default() }
+impl BuildLightsailContainerServiceDeploymentVersion_Timeouts {
+    pub fn build(self) -> LightsailContainerServiceDeploymentVersion_Timeouts {
+        LightsailContainerServiceDeploymentVersion_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct LightsailContainerServiceDeploymentVersionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LightsailContainerServiceDeploymentVersion_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailContainerServiceDeploymentVersionTimeoutsElRef {
+impl terrars::Ref for LightsailContainerServiceDeploymentVersion_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LightsailContainerServiceDeploymentVersionTimeoutsElRef {
-        LightsailContainerServiceDeploymentVersionTimeoutsElRef {
+    ) -> LightsailContainerServiceDeploymentVersion_TimeoutsRef {
+        LightsailContainerServiceDeploymentVersion_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailContainerServiceDeploymentVersionTimeoutsElRef {
+impl LightsailContainerServiceDeploymentVersion_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -773,12 +813,4 @@ impl LightsailContainerServiceDeploymentVersionTimeoutsElRef {
     pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LightsailContainerServiceDeploymentVersionDynamic {
-    container: std::option::Option<terrars::DynamicBlock<LightsailContainerServiceDeploymentVersionContainerEl>>,
-    public_endpoint: std
-    ::option
-    ::Option<terrars::DynamicBlock<LightsailContainerServiceDeploymentVersionPublicEndpointEl>>,
 }

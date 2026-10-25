@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IdentitystoreUserData {
+struct IdentitystoreUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,6 +33,8 @@ struct IdentitystoreUserData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     profile_url: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timezone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     title: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -38,20 +42,20 @@ struct IdentitystoreUserData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    addresses: std::option::Option<std::vec::Vec<IdentitystoreUserAddressesEl>>,
+    addresses: std::option::Option<std::vec::Vec<IdentitystoreUser_Addresses>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    emails: std::option::Option<std::vec::Vec<IdentitystoreUserEmailsEl>>,
+    emails: std::option::Option<std::vec::Vec<IdentitystoreUser_Emails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<std::vec::Vec<IdentitystoreUserNameEl>>,
+    name: std::option::Option<std::vec::Vec<IdentitystoreUser_Name>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    phone_numbers: std::option::Option<std::vec::Vec<IdentitystoreUserPhoneNumbersEl>>,
+    phone_numbers: std::option::Option<std::vec::Vec<IdentitystoreUser_PhoneNumbers>>,
     dynamic: IdentitystoreUserDynamic,
 }
 
 struct IdentitystoreUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IdentitystoreUserData>,
+    data: std::cell::RefCell<IdentitystoreUserData_>,
 }
 
 #[derive(Clone)]
@@ -181,6 +185,13 @@ impl IdentitystoreUser {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timezone`.\n"]
     pub fn set_timezone(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().timezone = std::option::Option::Some(v.into());
@@ -202,7 +213,7 @@ impl IdentitystoreUser {
     #[doc = "Set the field `addresses`.\n"]
     pub fn set_addresses(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IdentitystoreUserAddressesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IdentitystoreUser_Addresses>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,7 +227,7 @@ impl IdentitystoreUser {
     }
 
     #[doc = "Set the field `emails`.\n"]
-    pub fn set_emails(self, v: impl std::convert::Into<terrars::BlockAssignable<IdentitystoreUserEmailsEl>>) -> Self {
+    pub fn set_emails(self, v: impl std::convert::Into<terrars::BlockAssignable<IdentitystoreUser_Emails>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().emails = std::option::Option::Some(v);
@@ -229,7 +240,7 @@ impl IdentitystoreUser {
     }
 
     #[doc = "Set the field `name`.\n"]
-    pub fn set_name(self, v: impl std::convert::Into<terrars::BlockAssignable<IdentitystoreUserNameEl>>) -> Self {
+    pub fn set_name(self, v: impl std::convert::Into<terrars::BlockAssignable<IdentitystoreUser_Name>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().name = std::option::Option::Some(v);
@@ -244,7 +255,7 @@ impl IdentitystoreUser {
     #[doc = "Set the field `phone_numbers`.\n"]
     pub fn set_phone_numbers(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IdentitystoreUserPhoneNumbersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IdentitystoreUser_PhoneNumbers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -263,7 +274,7 @@ impl IdentitystoreUser {
     }
 
     #[doc = "Get a reference to the value of field `external_ids` after provisioning.\n"]
-    pub fn external_ids(&self) -> terrars::ListRef<IdentitystoreUserExternalIdsElRef> {
+    pub fn external_ids(&self) -> terrars::ListRef<IdentitystoreUser_ExternalIdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
     }
 
@@ -297,6 +308,12 @@ impl IdentitystoreUser {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_url", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timezone` after provisioning.\n"]
     pub fn timezone(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.timezone", self.extract_ref()))
@@ -317,28 +334,33 @@ impl IdentitystoreUser {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `user_status` after provisioning.\n"]
+    pub fn user_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_status", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_type` after provisioning.\n"]
     pub fn user_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `addresses` after provisioning.\n"]
-    pub fn addresses(&self) -> terrars::ListRef<IdentitystoreUserAddressesElRef> {
+    pub fn addresses(&self) -> terrars::ListRef<IdentitystoreUser_AddressesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.addresses", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `emails` after provisioning.\n"]
-    pub fn emails(&self) -> terrars::ListRef<IdentitystoreUserEmailsElRef> {
+    pub fn emails(&self) -> terrars::ListRef<IdentitystoreUser_EmailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.emails", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::ListRef<IdentitystoreUserNameElRef> {
+    pub fn name(&self) -> terrars::ListRef<IdentitystoreUser_NameRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `phone_numbers` after provisioning.\n"]
-    pub fn phone_numbers(&self) -> terrars::ListRef<IdentitystoreUserPhoneNumbersElRef> {
+    pub fn phone_numbers(&self) -> terrars::ListRef<IdentitystoreUser_PhoneNumbersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phone_numbers", self.extract_ref()))
     }
 }
@@ -389,7 +411,7 @@ impl BuildIdentitystoreUser {
         let out = IdentitystoreUser(std::rc::Rc::new(IdentitystoreUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IdentitystoreUserData {
+            data: std::cell::RefCell::new(IdentitystoreUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -402,6 +424,7 @@ impl BuildIdentitystoreUser {
                 nickname: core::default::Default::default(),
                 preferred_language: core::default::Default::default(),
                 profile_url: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timezone: core::default::Default::default(),
                 title: core::default::Default::default(),
                 user_name: self.user_name,
@@ -447,7 +470,7 @@ impl IdentitystoreUserRef {
     }
 
     #[doc = "Get a reference to the value of field `external_ids` after provisioning.\n"]
-    pub fn external_ids(&self) -> terrars::ListRef<IdentitystoreUserExternalIdsElRef> {
+    pub fn external_ids(&self) -> terrars::ListRef<IdentitystoreUser_ExternalIdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
     }
 
@@ -481,6 +504,12 @@ impl IdentitystoreUserRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_url", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timezone` after provisioning.\n"]
     pub fn timezone(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.timezone", self.extract_ref()))
@@ -501,41 +530,54 @@ impl IdentitystoreUserRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `user_status` after provisioning.\n"]
+    pub fn user_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_status", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_type` after provisioning.\n"]
     pub fn user_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `addresses` after provisioning.\n"]
-    pub fn addresses(&self) -> terrars::ListRef<IdentitystoreUserAddressesElRef> {
+    pub fn addresses(&self) -> terrars::ListRef<IdentitystoreUser_AddressesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.addresses", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `emails` after provisioning.\n"]
-    pub fn emails(&self) -> terrars::ListRef<IdentitystoreUserEmailsElRef> {
+    pub fn emails(&self) -> terrars::ListRef<IdentitystoreUser_EmailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.emails", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::ListRef<IdentitystoreUserNameElRef> {
+    pub fn name(&self) -> terrars::ListRef<IdentitystoreUser_NameRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `phone_numbers` after provisioning.\n"]
-    pub fn phone_numbers(&self) -> terrars::ListRef<IdentitystoreUserPhoneNumbersElRef> {
+    pub fn phone_numbers(&self) -> terrars::ListRef<IdentitystoreUser_PhoneNumbersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phone_numbers", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IdentitystoreUserDynamic {
+    addresses: std::option::Option<terrars::DynamicBlock<IdentitystoreUser_Addresses>>,
+    emails: std::option::Option<terrars::DynamicBlock<IdentitystoreUser_Emails>>,
+    name: std::option::Option<terrars::DynamicBlock<IdentitystoreUser_Name>>,
+    phone_numbers: std::option::Option<terrars::DynamicBlock<IdentitystoreUser_PhoneNumbers>>,
+}
+
 #[derive(Serialize)]
-pub struct IdentitystoreUserExternalIdsEl {
+pub struct IdentitystoreUser_ExternalIds {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     issuer: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentitystoreUserExternalIdsEl {
+impl IdentitystoreUser_ExternalIds {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -549,8 +591,8 @@ impl IdentitystoreUserExternalIdsEl {
     }
 }
 
-impl terrars::ToListMappable for IdentitystoreUserExternalIdsEl {
-    type O = terrars::BlockAssignable<IdentitystoreUserExternalIdsEl>;
+impl terrars::ToListMappable for IdentitystoreUser_ExternalIds {
+    type O = terrars::BlockAssignable<IdentitystoreUser_ExternalIds>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -561,32 +603,34 @@ impl terrars::ToListMappable for IdentitystoreUserExternalIdsEl {
     }
 }
 
-pub struct BuildIdentitystoreUserExternalIdsEl {}
+pub struct BuildIdentitystoreUser_ExternalIds {}
 
-impl BuildIdentitystoreUserExternalIdsEl {
-    pub fn build(self) -> IdentitystoreUserExternalIdsEl {
-        IdentitystoreUserExternalIdsEl {
+impl BuildIdentitystoreUser_ExternalIds {
+    pub fn build(self) -> IdentitystoreUser_ExternalIds {
+        IdentitystoreUser_ExternalIds {
             id: core::default::Default::default(),
             issuer: core::default::Default::default(),
         }
     }
 }
 
-pub struct IdentitystoreUserExternalIdsElRef {
+#[allow(dead_code)]
+pub struct IdentitystoreUser_ExternalIdsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentitystoreUserExternalIdsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUserExternalIdsElRef {
-        IdentitystoreUserExternalIdsElRef {
+impl terrars::Ref for IdentitystoreUser_ExternalIdsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUser_ExternalIdsRef {
+        IdentitystoreUser_ExternalIdsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentitystoreUserExternalIdsElRef {
+impl IdentitystoreUser_ExternalIdsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -603,7 +647,7 @@ impl IdentitystoreUserExternalIdsElRef {
 }
 
 #[derive(Serialize)]
-pub struct IdentitystoreUserAddressesEl {
+pub struct IdentitystoreUser_Addresses {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     country: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -622,7 +666,7 @@ pub struct IdentitystoreUserAddressesEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentitystoreUserAddressesEl {
+impl IdentitystoreUser_Addresses {
     #[doc = "Set the field `country`.\n"]
     pub fn set_country(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.country = std::option::Option::Some(v.into());
@@ -672,8 +716,8 @@ impl IdentitystoreUserAddressesEl {
     }
 }
 
-impl terrars::ToListMappable for IdentitystoreUserAddressesEl {
-    type O = terrars::BlockAssignable<IdentitystoreUserAddressesEl>;
+impl terrars::ToListMappable for IdentitystoreUser_Addresses {
+    type O = terrars::BlockAssignable<IdentitystoreUser_Addresses>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -684,11 +728,11 @@ impl terrars::ToListMappable for IdentitystoreUserAddressesEl {
     }
 }
 
-pub struct BuildIdentitystoreUserAddressesEl {}
+pub struct BuildIdentitystoreUser_Addresses {}
 
-impl BuildIdentitystoreUserAddressesEl {
-    pub fn build(self) -> IdentitystoreUserAddressesEl {
-        IdentitystoreUserAddressesEl {
+impl BuildIdentitystoreUser_Addresses {
+    pub fn build(self) -> IdentitystoreUser_Addresses {
+        IdentitystoreUser_Addresses {
             country: core::default::Default::default(),
             formatted: core::default::Default::default(),
             locality: core::default::Default::default(),
@@ -701,21 +745,23 @@ impl BuildIdentitystoreUserAddressesEl {
     }
 }
 
-pub struct IdentitystoreUserAddressesElRef {
+#[allow(dead_code)]
+pub struct IdentitystoreUser_AddressesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentitystoreUserAddressesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUserAddressesElRef {
-        IdentitystoreUserAddressesElRef {
+impl terrars::Ref for IdentitystoreUser_AddressesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUser_AddressesRef {
+        IdentitystoreUser_AddressesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentitystoreUserAddressesElRef {
+impl IdentitystoreUser_AddressesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -762,7 +808,7 @@ impl IdentitystoreUserAddressesElRef {
 }
 
 #[derive(Serialize)]
-pub struct IdentitystoreUserEmailsEl {
+pub struct IdentitystoreUser_Emails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     primary: std::option::Option<terrars::PrimField<bool>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
@@ -771,7 +817,7 @@ pub struct IdentitystoreUserEmailsEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentitystoreUserEmailsEl {
+impl IdentitystoreUser_Emails {
     #[doc = "Set the field `primary`.\n"]
     pub fn set_primary(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.primary = std::option::Option::Some(v.into());
@@ -791,8 +837,8 @@ impl IdentitystoreUserEmailsEl {
     }
 }
 
-impl terrars::ToListMappable for IdentitystoreUserEmailsEl {
-    type O = terrars::BlockAssignable<IdentitystoreUserEmailsEl>;
+impl terrars::ToListMappable for IdentitystoreUser_Emails {
+    type O = terrars::BlockAssignable<IdentitystoreUser_Emails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -803,11 +849,11 @@ impl terrars::ToListMappable for IdentitystoreUserEmailsEl {
     }
 }
 
-pub struct BuildIdentitystoreUserEmailsEl {}
+pub struct BuildIdentitystoreUser_Emails {}
 
-impl BuildIdentitystoreUserEmailsEl {
-    pub fn build(self) -> IdentitystoreUserEmailsEl {
-        IdentitystoreUserEmailsEl {
+impl BuildIdentitystoreUser_Emails {
+    pub fn build(self) -> IdentitystoreUser_Emails {
+        IdentitystoreUser_Emails {
             primary: core::default::Default::default(),
             type_: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -815,21 +861,23 @@ impl BuildIdentitystoreUserEmailsEl {
     }
 }
 
-pub struct IdentitystoreUserEmailsElRef {
+#[allow(dead_code)]
+pub struct IdentitystoreUser_EmailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentitystoreUserEmailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUserEmailsElRef {
-        IdentitystoreUserEmailsElRef {
+impl terrars::Ref for IdentitystoreUser_EmailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUser_EmailsRef {
+        IdentitystoreUser_EmailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentitystoreUserEmailsElRef {
+impl IdentitystoreUser_EmailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -851,7 +899,7 @@ impl IdentitystoreUserEmailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct IdentitystoreUserNameEl {
+pub struct IdentitystoreUser_Name {
     family_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     formatted: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -864,7 +912,7 @@ pub struct IdentitystoreUserNameEl {
     middle_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentitystoreUserNameEl {
+impl IdentitystoreUser_Name {
     #[doc = "Set the field `formatted`.\n"]
     pub fn set_formatted(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.formatted = std::option::Option::Some(v.into());
@@ -890,8 +938,8 @@ impl IdentitystoreUserNameEl {
     }
 }
 
-impl terrars::ToListMappable for IdentitystoreUserNameEl {
-    type O = terrars::BlockAssignable<IdentitystoreUserNameEl>;
+impl terrars::ToListMappable for IdentitystoreUser_Name {
+    type O = terrars::BlockAssignable<IdentitystoreUser_Name>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -902,16 +950,16 @@ impl terrars::ToListMappable for IdentitystoreUserNameEl {
     }
 }
 
-pub struct BuildIdentitystoreUserNameEl {
+pub struct BuildIdentitystoreUser_Name {
     #[doc = ""]
     pub family_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub given_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIdentitystoreUserNameEl {
-    pub fn build(self) -> IdentitystoreUserNameEl {
-        IdentitystoreUserNameEl {
+impl BuildIdentitystoreUser_Name {
+    pub fn build(self) -> IdentitystoreUser_Name {
+        IdentitystoreUser_Name {
             family_name: self.family_name,
             formatted: core::default::Default::default(),
             given_name: self.given_name,
@@ -922,21 +970,23 @@ impl BuildIdentitystoreUserNameEl {
     }
 }
 
-pub struct IdentitystoreUserNameElRef {
+#[allow(dead_code)]
+pub struct IdentitystoreUser_NameRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentitystoreUserNameElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUserNameElRef {
-        IdentitystoreUserNameElRef {
+impl terrars::Ref for IdentitystoreUser_NameRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUser_NameRef {
+        IdentitystoreUser_NameRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentitystoreUserNameElRef {
+impl IdentitystoreUser_NameRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -973,7 +1023,7 @@ impl IdentitystoreUserNameElRef {
 }
 
 #[derive(Serialize)]
-pub struct IdentitystoreUserPhoneNumbersEl {
+pub struct IdentitystoreUser_PhoneNumbers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     primary: std::option::Option<terrars::PrimField<bool>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
@@ -982,7 +1032,7 @@ pub struct IdentitystoreUserPhoneNumbersEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentitystoreUserPhoneNumbersEl {
+impl IdentitystoreUser_PhoneNumbers {
     #[doc = "Set the field `primary`.\n"]
     pub fn set_primary(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.primary = std::option::Option::Some(v.into());
@@ -1002,8 +1052,8 @@ impl IdentitystoreUserPhoneNumbersEl {
     }
 }
 
-impl terrars::ToListMappable for IdentitystoreUserPhoneNumbersEl {
-    type O = terrars::BlockAssignable<IdentitystoreUserPhoneNumbersEl>;
+impl terrars::ToListMappable for IdentitystoreUser_PhoneNumbers {
+    type O = terrars::BlockAssignable<IdentitystoreUser_PhoneNumbers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1014,11 +1064,11 @@ impl terrars::ToListMappable for IdentitystoreUserPhoneNumbersEl {
     }
 }
 
-pub struct BuildIdentitystoreUserPhoneNumbersEl {}
+pub struct BuildIdentitystoreUser_PhoneNumbers {}
 
-impl BuildIdentitystoreUserPhoneNumbersEl {
-    pub fn build(self) -> IdentitystoreUserPhoneNumbersEl {
-        IdentitystoreUserPhoneNumbersEl {
+impl BuildIdentitystoreUser_PhoneNumbers {
+    pub fn build(self) -> IdentitystoreUser_PhoneNumbers {
+        IdentitystoreUser_PhoneNumbers {
             primary: core::default::Default::default(),
             type_: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -1026,21 +1076,23 @@ impl BuildIdentitystoreUserPhoneNumbersEl {
     }
 }
 
-pub struct IdentitystoreUserPhoneNumbersElRef {
+#[allow(dead_code)]
+pub struct IdentitystoreUser_PhoneNumbersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentitystoreUserPhoneNumbersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUserPhoneNumbersElRef {
-        IdentitystoreUserPhoneNumbersElRef {
+impl terrars::Ref for IdentitystoreUser_PhoneNumbersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreUser_PhoneNumbersRef {
+        IdentitystoreUser_PhoneNumbersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentitystoreUserPhoneNumbersElRef {
+impl IdentitystoreUser_PhoneNumbersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1059,12 +1111,4 @@ impl IdentitystoreUserPhoneNumbersElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IdentitystoreUserDynamic {
-    addresses: std::option::Option<terrars::DynamicBlock<IdentitystoreUserAddressesEl>>,
-    emails: std::option::Option<terrars::DynamicBlock<IdentitystoreUserEmailsEl>>,
-    name: std::option::Option<terrars::DynamicBlock<IdentitystoreUserNameEl>>,
-    phone_numbers: std::option::Option<terrars::DynamicBlock<IdentitystoreUserPhoneNumbersEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IdentitystoreGroupData {
+struct IdentitystoreGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,12 +26,14 @@ struct IdentitystoreGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     identity_store_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct IdentitystoreGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IdentitystoreGroupData>,
+    data: std::cell::RefCell<IdentitystoreGroupData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,18 @@ impl IdentitystoreGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -152,7 +168,7 @@ impl IdentitystoreGroup {
     }
 
     #[doc = "Get a reference to the value of field `external_ids` after provisioning.\n"]
-    pub fn external_ids(&self) -> terrars::ListRef<IdentitystoreGroupExternalIdsElRef> {
+    pub fn external_ids(&self) -> terrars::ListRef<IdentitystoreGroup_ExternalIdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
     }
 
@@ -169,6 +185,12 @@ impl IdentitystoreGroup {
     #[doc = "Get a reference to the value of field `identity_store_id` after provisioning.\n"]
     pub fn identity_store_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_store_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -216,7 +238,7 @@ impl BuildIdentitystoreGroup {
         let out = IdentitystoreGroup(std::rc::Rc::new(IdentitystoreGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IdentitystoreGroupData {
+            data: std::cell::RefCell::new(IdentitystoreGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -226,6 +248,7 @@ impl BuildIdentitystoreGroup {
                 display_name: self.display_name,
                 id: core::default::Default::default(),
                 identity_store_id: self.identity_store_id,
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -256,6 +279,11 @@ impl IdentitystoreGroupRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -267,7 +295,7 @@ impl IdentitystoreGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `external_ids` after provisioning.\n"]
-    pub fn external_ids(&self) -> terrars::ListRef<IdentitystoreGroupExternalIdsElRef> {
+    pub fn external_ids(&self) -> terrars::ListRef<IdentitystoreGroup_ExternalIdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
     }
 
@@ -285,17 +313,23 @@ impl IdentitystoreGroupRef {
     pub fn identity_store_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_store_id", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct IdentitystoreGroupExternalIdsEl {
+pub struct IdentitystoreGroup_ExternalIds {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     issuer: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IdentitystoreGroupExternalIdsEl {
+impl IdentitystoreGroup_ExternalIds {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -309,8 +343,8 @@ impl IdentitystoreGroupExternalIdsEl {
     }
 }
 
-impl terrars::ToListMappable for IdentitystoreGroupExternalIdsEl {
-    type O = terrars::BlockAssignable<IdentitystoreGroupExternalIdsEl>;
+impl terrars::ToListMappable for IdentitystoreGroup_ExternalIds {
+    type O = terrars::BlockAssignable<IdentitystoreGroup_ExternalIds>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -321,32 +355,34 @@ impl terrars::ToListMappable for IdentitystoreGroupExternalIdsEl {
     }
 }
 
-pub struct BuildIdentitystoreGroupExternalIdsEl {}
+pub struct BuildIdentitystoreGroup_ExternalIds {}
 
-impl BuildIdentitystoreGroupExternalIdsEl {
-    pub fn build(self) -> IdentitystoreGroupExternalIdsEl {
-        IdentitystoreGroupExternalIdsEl {
+impl BuildIdentitystoreGroup_ExternalIds {
+    pub fn build(self) -> IdentitystoreGroup_ExternalIds {
+        IdentitystoreGroup_ExternalIds {
             id: core::default::Default::default(),
             issuer: core::default::Default::default(),
         }
     }
 }
 
-pub struct IdentitystoreGroupExternalIdsElRef {
+#[allow(dead_code)]
+pub struct IdentitystoreGroup_ExternalIdsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IdentitystoreGroupExternalIdsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreGroupExternalIdsElRef {
-        IdentitystoreGroupExternalIdsElRef {
+impl terrars::Ref for IdentitystoreGroup_ExternalIdsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IdentitystoreGroup_ExternalIdsRef {
+        IdentitystoreGroup_ExternalIdsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IdentitystoreGroupExternalIdsElRef {
+impl IdentitystoreGroup_ExternalIdsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

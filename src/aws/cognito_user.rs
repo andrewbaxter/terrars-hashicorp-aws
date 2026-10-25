@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CognitoUserData {
+struct CognitoUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,6 +37,8 @@ struct CognitoUserData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     temporary_password: std::option::Option<terrars::PrimField<std::string::String>>,
     user_pool_id: terrars::PrimField<std::string::String>,
     username: terrars::PrimField<std::string::String>,
@@ -45,7 +49,7 @@ struct CognitoUserData {
 struct CognitoUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CognitoUserData>,
+    data: std::cell::RefCell<CognitoUserData_>,
 }
 
 #[derive(Clone)]
@@ -202,6 +206,13 @@ impl CognitoUser {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `temporary_password`.\n"]
     pub fn set_temporary_password(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().temporary_password = std::option::Option::Some(v.into());
@@ -275,6 +286,12 @@ impl CognitoUser {
     #[doc = "Get a reference to the value of field `preferred_mfa_setting` after provisioning.\n"]
     pub fn preferred_mfa_setting(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_mfa_setting", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -352,7 +369,7 @@ impl BuildCognitoUser {
         let out = CognitoUser(std::rc::Rc::new(CognitoUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CognitoUserData {
+            data: std::cell::RefCell::new(CognitoUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -366,6 +383,7 @@ impl BuildCognitoUser {
                 id: core::default::Default::default(),
                 message_action: core::default::Default::default(),
                 password: core::default::Default::default(),
+                region: core::default::Default::default(),
                 temporary_password: core::default::Default::default(),
                 user_pool_id: self.user_pool_id,
                 username: self.username,
@@ -458,6 +476,12 @@ impl CognitoUserRef {
     #[doc = "Get a reference to the value of field `preferred_mfa_setting` after provisioning.\n"]
     pub fn preferred_mfa_setting(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_mfa_setting", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]

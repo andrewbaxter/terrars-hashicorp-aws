@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IotIndexingConfigurationData {
+struct IotIndexingConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,20 +23,20 @@ struct IotIndexingConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     thing_group_indexing_configuration: std
     ::option
-    ::Option<std::vec::Vec<IotIndexingConfigurationThingGroupIndexingConfigurationEl>>,
+    ::Option<std::vec::Vec<IotIndexingConfiguration_ThingGroupIndexingConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    thing_indexing_configuration: std
-    ::option
-    ::Option<std::vec::Vec<IotIndexingConfigurationThingIndexingConfigurationEl>>,
+    thing_indexing_configuration: std::option::Option<std::vec::Vec<IotIndexingConfiguration_ThingIndexingConfiguration>>,
     dynamic: IotIndexingConfigurationDynamic,
 }
 
 struct IotIndexingConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IotIndexingConfigurationData>,
+    data: std::cell::RefCell<IotIndexingConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +142,13 @@ impl IotIndexingConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `thing_group_indexing_configuration`.\n"]
     pub fn set_thing_group_indexing_configuration(
         self,
@@ -148,7 +157,7 @@ impl IotIndexingConfiguration {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<IotIndexingConfigurationThingGroupIndexingConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<IotIndexingConfiguration_ThingGroupIndexingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -164,7 +173,7 @@ impl IotIndexingConfiguration {
     #[doc = "Set the field `thing_indexing_configuration`.\n"]
     pub fn set_thing_indexing_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IotIndexingConfigurationThingIndexingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -182,10 +191,16 @@ impl IotIndexingConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `thing_group_indexing_configuration` after provisioning.\n"]
     pub fn thing_group_indexing_configuration(
         &self,
-    ) -> terrars::ListRef<IotIndexingConfigurationThingGroupIndexingConfigurationElRef> {
+    ) -> terrars::ListRef<IotIndexingConfiguration_ThingGroupIndexingConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.thing_group_indexing_configuration", self.extract_ref()),
@@ -195,7 +210,7 @@ impl IotIndexingConfiguration {
     #[doc = "Get a reference to the value of field `thing_indexing_configuration` after provisioning.\n"]
     pub fn thing_indexing_configuration(
         &self,
-    ) -> terrars::ListRef<IotIndexingConfigurationThingIndexingConfigurationElRef> {
+    ) -> terrars::ListRef<IotIndexingConfiguration_ThingIndexingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.thing_indexing_configuration", self.extract_ref()))
     }
 }
@@ -240,13 +255,14 @@ impl BuildIotIndexingConfiguration {
         let out = IotIndexingConfiguration(std::rc::Rc::new(IotIndexingConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IotIndexingConfigurationData {
+            data: std::cell::RefCell::new(IotIndexingConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 thing_group_indexing_configuration: core::default::Default::default(),
                 thing_indexing_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -285,10 +301,16 @@ impl IotIndexingConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `thing_group_indexing_configuration` after provisioning.\n"]
     pub fn thing_group_indexing_configuration(
         &self,
-    ) -> terrars::ListRef<IotIndexingConfigurationThingGroupIndexingConfigurationElRef> {
+    ) -> terrars::ListRef<IotIndexingConfiguration_ThingGroupIndexingConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.thing_group_indexing_configuration", self.extract_ref()),
@@ -298,20 +320,30 @@ impl IotIndexingConfigurationRef {
     #[doc = "Get a reference to the value of field `thing_indexing_configuration` after provisioning.\n"]
     pub fn thing_indexing_configuration(
         &self,
-    ) -> terrars::ListRef<IotIndexingConfigurationThingIndexingConfigurationElRef> {
+    ) -> terrars::ListRef<IotIndexingConfiguration_ThingIndexingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.thing_indexing_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IotIndexingConfigurationDynamic {
+    thing_group_indexing_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<IotIndexingConfiguration_ThingGroupIndexingConfiguration>>,
+    thing_indexing_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<IotIndexingConfiguration_ThingIndexingConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl {
+pub struct IotIndexingConfiguration_ThingIndexingConfiguration_CustomField {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl {
+impl IotIndexingConfiguration_ThingIndexingConfiguration_CustomField {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -325,8 +357,8 @@ impl IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl {
     }
 }
 
-impl terrars::ToListMappable for IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl {
-    type O = terrars::BlockAssignable<IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl>;
+impl terrars::ToListMappable for IotIndexingConfiguration_ThingIndexingConfiguration_CustomField {
+    type O = terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration_CustomField>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -337,35 +369,37 @@ impl terrars::ToListMappable for IotIndexingConfigurationThingGroupIndexingConfi
     }
 }
 
-pub struct BuildIotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl {}
+pub struct BuildIotIndexingConfiguration_ThingIndexingConfiguration_CustomField {}
 
-impl BuildIotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl {
-    pub fn build(self) -> IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl {
-        IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl {
+impl BuildIotIndexingConfiguration_ThingIndexingConfiguration_CustomField {
+    pub fn build(self) -> IotIndexingConfiguration_ThingIndexingConfiguration_CustomField {
+        IotIndexingConfiguration_ThingIndexingConfiguration_CustomField {
             name: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldElRef {
+#[allow(dead_code)]
+pub struct IotIndexingConfiguration_ThingIndexingConfiguration_CustomFieldRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldElRef {
+impl terrars::Ref for IotIndexingConfiguration_ThingIndexingConfiguration_CustomFieldRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldElRef {
-        IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldElRef {
+    ) -> IotIndexingConfiguration_ThingIndexingConfiguration_CustomFieldRef {
+        IotIndexingConfiguration_ThingIndexingConfiguration_CustomFieldRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldElRef {
+impl IotIndexingConfiguration_ThingIndexingConfiguration_CustomFieldRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -382,14 +416,14 @@ impl IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldElRef {
 }
 
 #[derive(Serialize)]
-pub struct IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl {
+pub struct IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl {
+impl IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -403,8 +437,8 @@ impl IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl {
     }
 }
 
-impl terrars::ToListMappable for IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl {
-    type O = terrars::BlockAssignable<IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl>;
+impl terrars::ToListMappable for IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField {
+    type O = terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -415,35 +449,37 @@ impl terrars::ToListMappable for IotIndexingConfigurationThingGroupIndexingConfi
     }
 }
 
-pub struct BuildIotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl {}
+pub struct BuildIotIndexingConfiguration_ThingIndexingConfiguration_ManagedField {}
 
-impl BuildIotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl {
-    pub fn build(self) -> IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl {
-        IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl {
+impl BuildIotIndexingConfiguration_ThingIndexingConfiguration_ManagedField {
+    pub fn build(self) -> IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField {
+        IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField {
             name: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldElRef {
+#[allow(dead_code)]
+pub struct IotIndexingConfiguration_ThingIndexingConfiguration_ManagedFieldRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldElRef {
+impl terrars::Ref for IotIndexingConfiguration_ThingIndexingConfiguration_ManagedFieldRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldElRef {
-        IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldElRef {
+    ) -> IotIndexingConfiguration_ThingIndexingConfiguration_ManagedFieldRef {
+        IotIndexingConfiguration_ThingIndexingConfiguration_ManagedFieldRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldElRef {
+impl IotIndexingConfiguration_ThingIndexingConfiguration_ManagedFieldRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -460,30 +496,26 @@ impl IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldElRef 
 }
 
 #[derive(Serialize, Default)]
-struct IotIndexingConfigurationThingGroupIndexingConfigurationElDynamic {
+struct IotIndexingConfiguration_ThingGroupIndexingConfigurationDynamic {
     custom_field: std
     ::option
-    ::Option<terrars::DynamicBlock<IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl>>,
+    ::Option<terrars::DynamicBlock<IotIndexingConfiguration_ThingIndexingConfiguration_CustomField>>,
     managed_field: std
     ::option
-    ::Option<terrars::DynamicBlock<IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl>>,
+    ::Option<terrars::DynamicBlock<IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField>>,
 }
 
 #[derive(Serialize)]
-pub struct IotIndexingConfigurationThingGroupIndexingConfigurationEl {
+pub struct IotIndexingConfiguration_ThingGroupIndexingConfiguration {
     thing_group_indexing_mode: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_field: std
-    ::option
-    ::Option<std::vec::Vec<IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl>>,
+    custom_field: std::option::Option<std::vec::Vec<IotIndexingConfiguration_ThingIndexingConfiguration_CustomField>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    managed_field: std
-    ::option
-    ::Option<std::vec::Vec<IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl>>,
-    dynamic: IotIndexingConfigurationThingGroupIndexingConfigurationElDynamic,
+    managed_field: std::option::Option<std::vec::Vec<IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField>>,
+    dynamic: IotIndexingConfiguration_ThingGroupIndexingConfigurationDynamic,
 }
 
-impl IotIndexingConfigurationThingGroupIndexingConfigurationEl {
+impl IotIndexingConfiguration_ThingGroupIndexingConfiguration {
     #[doc = "Set the field `custom_field`.\n"]
     pub fn set_custom_field(
         mut self,
@@ -492,10 +524,7 @@ impl IotIndexingConfigurationThingGroupIndexingConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<IotIndexingConfigurationThingGroupIndexingConfigurationElCustomFieldEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration_CustomField>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -517,8 +546,7 @@ impl IotIndexingConfigurationThingGroupIndexingConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<IotIndexingConfigurationThingGroupIndexingConfigurationElManagedFieldEl>,
+                        terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField>,
                     >,
     ) -> Self {
         match v.into() {
@@ -533,8 +561,8 @@ impl IotIndexingConfigurationThingGroupIndexingConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for IotIndexingConfigurationThingGroupIndexingConfigurationEl {
-    type O = terrars::BlockAssignable<IotIndexingConfigurationThingGroupIndexingConfigurationEl>;
+impl terrars::ToListMappable for IotIndexingConfiguration_ThingGroupIndexingConfiguration {
+    type O = terrars::BlockAssignable<IotIndexingConfiguration_ThingGroupIndexingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -545,14 +573,14 @@ impl terrars::ToListMappable for IotIndexingConfigurationThingGroupIndexingConfi
     }
 }
 
-pub struct BuildIotIndexingConfigurationThingGroupIndexingConfigurationEl {
+pub struct BuildIotIndexingConfiguration_ThingGroupIndexingConfiguration {
     #[doc = ""]
     pub thing_group_indexing_mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIotIndexingConfigurationThingGroupIndexingConfigurationEl {
-    pub fn build(self) -> IotIndexingConfigurationThingGroupIndexingConfigurationEl {
-        IotIndexingConfigurationThingGroupIndexingConfigurationEl {
+impl BuildIotIndexingConfiguration_ThingGroupIndexingConfiguration {
+    pub fn build(self) -> IotIndexingConfiguration_ThingGroupIndexingConfiguration {
+        IotIndexingConfiguration_ThingGroupIndexingConfiguration {
             thing_group_indexing_mode: self.thing_group_indexing_mode,
             custom_field: core::default::Default::default(),
             managed_field: core::default::Default::default(),
@@ -561,24 +589,26 @@ impl BuildIotIndexingConfigurationThingGroupIndexingConfigurationEl {
     }
 }
 
-pub struct IotIndexingConfigurationThingGroupIndexingConfigurationElRef {
+#[allow(dead_code)]
+pub struct IotIndexingConfiguration_ThingGroupIndexingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotIndexingConfigurationThingGroupIndexingConfigurationElRef {
+impl terrars::Ref for IotIndexingConfiguration_ThingGroupIndexingConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IotIndexingConfigurationThingGroupIndexingConfigurationElRef {
-        IotIndexingConfigurationThingGroupIndexingConfigurationElRef {
+    ) -> IotIndexingConfiguration_ThingGroupIndexingConfigurationRef {
+        IotIndexingConfiguration_ThingGroupIndexingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotIndexingConfigurationThingGroupIndexingConfigurationElRef {
+impl IotIndexingConfiguration_ThingGroupIndexingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -590,29 +620,24 @@ impl IotIndexingConfigurationThingGroupIndexingConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct IotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl {
+pub struct IotIndexingConfiguration_ThingIndexingConfiguration_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
-    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+    named_shadow_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl IotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl {
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.type_ = std::option::Option::Some(v.into());
+impl IotIndexingConfiguration_ThingIndexingConfiguration_Filter {
+    #[doc = "Set the field `named_shadow_names`.\n"]
+    pub fn set_named_shadow_names(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.named_shadow_names = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for IotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl {
-    type O = terrars::BlockAssignable<IotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl>;
+impl terrars::ToListMappable for IotIndexingConfiguration_ThingIndexingConfiguration_Filter {
+    type O = terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -623,140 +648,59 @@ impl terrars::ToListMappable for IotIndexingConfigurationThingIndexingConfigurat
     }
 }
 
-pub struct BuildIotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl {}
+pub struct BuildIotIndexingConfiguration_ThingIndexingConfiguration_Filter {}
 
-impl BuildIotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl {
-    pub fn build(self) -> IotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl {
-        IotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl {
-            name: core::default::Default::default(),
-            type_: core::default::Default::default(),
+impl BuildIotIndexingConfiguration_ThingIndexingConfiguration_Filter {
+    pub fn build(self) -> IotIndexingConfiguration_ThingIndexingConfiguration_Filter {
+        IotIndexingConfiguration_ThingIndexingConfiguration_Filter {
+            named_shadow_names: core::default::Default::default(),
         }
     }
 }
 
-pub struct IotIndexingConfigurationThingIndexingConfigurationElCustomFieldElRef {
+#[allow(dead_code)]
+pub struct IotIndexingConfiguration_ThingIndexingConfiguration_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotIndexingConfigurationThingIndexingConfigurationElCustomFieldElRef {
+impl terrars::Ref for IotIndexingConfiguration_ThingIndexingConfiguration_FilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IotIndexingConfigurationThingIndexingConfigurationElCustomFieldElRef {
-        IotIndexingConfigurationThingIndexingConfigurationElCustomFieldElRef {
+    ) -> IotIndexingConfiguration_ThingIndexingConfiguration_FilterRef {
+        IotIndexingConfiguration_ThingIndexingConfiguration_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotIndexingConfigurationThingIndexingConfigurationElCustomFieldElRef {
+impl IotIndexingConfiguration_ThingIndexingConfiguration_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct IotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
-    type_: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl IotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl {
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `type_`.\n"]
-    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.type_ = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for IotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl {
-    type O = terrars::BlockAssignable<IotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildIotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl {}
-
-impl BuildIotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl {
-    pub fn build(self) -> IotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl {
-        IotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl {
-            name: core::default::Default::default(),
-            type_: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct IotIndexingConfigurationThingIndexingConfigurationElManagedFieldElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for IotIndexingConfigurationThingIndexingConfigurationElManagedFieldElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IotIndexingConfigurationThingIndexingConfigurationElManagedFieldElRef {
-        IotIndexingConfigurationThingIndexingConfigurationElManagedFieldElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl IotIndexingConfigurationThingIndexingConfigurationElManagedFieldElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
-    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    #[doc = "Get a reference to the value of field `named_shadow_names` after provisioning.\n"]
+    pub fn named_shadow_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.named_shadow_names", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct IotIndexingConfigurationThingIndexingConfigurationElDynamic {
+struct IotIndexingConfiguration_ThingIndexingConfigurationDynamic {
     custom_field: std
     ::option
-    ::Option<terrars::DynamicBlock<IotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl>>,
+    ::Option<terrars::DynamicBlock<IotIndexingConfiguration_ThingIndexingConfiguration_CustomField>>,
+    filter: std::option::Option<terrars::DynamicBlock<IotIndexingConfiguration_ThingIndexingConfiguration_Filter>>,
     managed_field: std
     ::option
-    ::Option<terrars::DynamicBlock<IotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl>>,
+    ::Option<terrars::DynamicBlock<IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField>>,
 }
 
 #[derive(Serialize)]
-pub struct IotIndexingConfigurationThingIndexingConfigurationEl {
+pub struct IotIndexingConfiguration_ThingIndexingConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_defender_indexing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -765,13 +709,15 @@ pub struct IotIndexingConfigurationThingIndexingConfigurationEl {
     thing_connectivity_indexing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     thing_indexing_mode: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_field: std::option::Option<std::vec::Vec<IotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl>>,
+    custom_field: std::option::Option<std::vec::Vec<IotIndexingConfiguration_ThingIndexingConfiguration_CustomField>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    managed_field: std::option::Option<std::vec::Vec<IotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl>>,
-    dynamic: IotIndexingConfigurationThingIndexingConfigurationElDynamic,
+    filter: std::option::Option<std::vec::Vec<IotIndexingConfiguration_ThingIndexingConfiguration_Filter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    managed_field: std::option::Option<std::vec::Vec<IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField>>,
+    dynamic: IotIndexingConfiguration_ThingIndexingConfigurationDynamic,
 }
 
-impl IotIndexingConfigurationThingIndexingConfigurationEl {
+impl IotIndexingConfiguration_ThingIndexingConfiguration {
     #[doc = "Set the field `device_defender_indexing_mode`.\n"]
     pub fn set_device_defender_indexing_mode(
         mut self,
@@ -807,9 +753,7 @@ impl IotIndexingConfigurationThingIndexingConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<IotIndexingConfigurationThingIndexingConfigurationElCustomFieldEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration_CustomField>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -817,6 +761,27 @@ impl IotIndexingConfigurationThingIndexingConfigurationEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.custom_field = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `filter`.\n"]
+    pub fn set_filter(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration_Filter>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.filter = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.filter = std::option::Option::Some(d);
             },
         }
         self
@@ -831,7 +796,7 @@ impl IotIndexingConfigurationThingIndexingConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<IotIndexingConfigurationThingIndexingConfigurationElManagedFieldEl>,
+                        terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration_ManagedField>,
                     >,
     ) -> Self {
         match v.into() {
@@ -846,8 +811,8 @@ impl IotIndexingConfigurationThingIndexingConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for IotIndexingConfigurationThingIndexingConfigurationEl {
-    type O = terrars::BlockAssignable<IotIndexingConfigurationThingIndexingConfigurationEl>;
+impl terrars::ToListMappable for IotIndexingConfiguration_ThingIndexingConfiguration {
+    type O = terrars::BlockAssignable<IotIndexingConfiguration_ThingIndexingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -858,43 +823,46 @@ impl terrars::ToListMappable for IotIndexingConfigurationThingIndexingConfigurat
     }
 }
 
-pub struct BuildIotIndexingConfigurationThingIndexingConfigurationEl {
+pub struct BuildIotIndexingConfiguration_ThingIndexingConfiguration {
     #[doc = ""]
     pub thing_indexing_mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIotIndexingConfigurationThingIndexingConfigurationEl {
-    pub fn build(self) -> IotIndexingConfigurationThingIndexingConfigurationEl {
-        IotIndexingConfigurationThingIndexingConfigurationEl {
+impl BuildIotIndexingConfiguration_ThingIndexingConfiguration {
+    pub fn build(self) -> IotIndexingConfiguration_ThingIndexingConfiguration {
+        IotIndexingConfiguration_ThingIndexingConfiguration {
             device_defender_indexing_mode: core::default::Default::default(),
             named_shadow_indexing_mode: core::default::Default::default(),
             thing_connectivity_indexing_mode: core::default::Default::default(),
             thing_indexing_mode: self.thing_indexing_mode,
             custom_field: core::default::Default::default(),
+            filter: core::default::Default::default(),
             managed_field: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct IotIndexingConfigurationThingIndexingConfigurationElRef {
+#[allow(dead_code)]
+pub struct IotIndexingConfiguration_ThingIndexingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotIndexingConfigurationThingIndexingConfigurationElRef {
+impl terrars::Ref for IotIndexingConfiguration_ThingIndexingConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IotIndexingConfigurationThingIndexingConfigurationElRef {
-        IotIndexingConfigurationThingIndexingConfigurationElRef {
+    ) -> IotIndexingConfiguration_ThingIndexingConfigurationRef {
+        IotIndexingConfiguration_ThingIndexingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotIndexingConfigurationThingIndexingConfigurationElRef {
+impl IotIndexingConfiguration_ThingIndexingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -918,14 +886,9 @@ impl IotIndexingConfigurationThingIndexingConfigurationElRef {
     pub fn thing_indexing_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.thing_indexing_mode", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct IotIndexingConfigurationDynamic {
-    thing_group_indexing_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<IotIndexingConfigurationThingGroupIndexingConfigurationEl>>,
-    thing_indexing_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<IotIndexingConfigurationThingIndexingConfigurationEl>>,
+    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
+    pub fn filter(&self) -> terrars::ListRef<IotIndexingConfiguration_ThingIndexingConfiguration_FilterRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct TranscribeLanguageModelData {
+struct TranscribeLanguageModelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,22 @@ struct TranscribeLanguageModelData {
     language_code: terrars::PrimField<std::string::String>,
     model_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input_data_config: std::option::Option<std::vec::Vec<TranscribeLanguageModelInputDataConfigEl>>,
+    input_data_config: std::option::Option<std::vec::Vec<TranscribeLanguageModel_InputDataConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<TranscribeLanguageModelTimeoutsEl>,
+    timeouts: std::option::Option<TranscribeLanguageModel_Timeouts>,
     dynamic: TranscribeLanguageModelDynamic,
 }
 
 struct TranscribeLanguageModel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<TranscribeLanguageModelData>,
+    data: std::cell::RefCell<TranscribeLanguageModelData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl TranscribeLanguageModel {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -164,7 +175,7 @@ impl TranscribeLanguageModel {
     #[doc = "Set the field `input_data_config`.\n"]
     pub fn set_input_data_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<TranscribeLanguageModelInputDataConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TranscribeLanguageModel_InputDataConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -178,7 +189,7 @@ impl TranscribeLanguageModel {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<TranscribeLanguageModelTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<TranscribeLanguageModel_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -208,6 +219,12 @@ impl TranscribeLanguageModel {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.model_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -219,13 +236,13 @@ impl TranscribeLanguageModel {
     }
 
     #[doc = "Get a reference to the value of field `input_data_config` after provisioning.\n"]
-    pub fn input_data_config(&self) -> terrars::ListRef<TranscribeLanguageModelInputDataConfigElRef> {
+    pub fn input_data_config(&self) -> terrars::ListRef<TranscribeLanguageModel_InputDataConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> TranscribeLanguageModelTimeoutsElRef {
-        TranscribeLanguageModelTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> TranscribeLanguageModel_TimeoutsRef {
+        TranscribeLanguageModel_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -275,7 +292,7 @@ impl BuildTranscribeLanguageModel {
         let out = TranscribeLanguageModel(std::rc::Rc::new(TranscribeLanguageModel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(TranscribeLanguageModelData {
+            data: std::cell::RefCell::new(TranscribeLanguageModelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -285,6 +302,7 @@ impl BuildTranscribeLanguageModel {
                 id: core::default::Default::default(),
                 language_code: self.language_code,
                 model_name: self.model_name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 input_data_config: core::default::Default::default(),
@@ -345,6 +363,12 @@ impl TranscribeLanguageModelRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.model_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -356,25 +380,30 @@ impl TranscribeLanguageModelRef {
     }
 
     #[doc = "Get a reference to the value of field `input_data_config` after provisioning.\n"]
-    pub fn input_data_config(&self) -> terrars::ListRef<TranscribeLanguageModelInputDataConfigElRef> {
+    pub fn input_data_config(&self) -> terrars::ListRef<TranscribeLanguageModel_InputDataConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> TranscribeLanguageModelTimeoutsElRef {
-        TranscribeLanguageModelTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> TranscribeLanguageModel_TimeoutsRef {
+        TranscribeLanguageModel_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct TranscribeLanguageModelDynamic {
+    input_data_config: std::option::Option<terrars::DynamicBlock<TranscribeLanguageModel_InputDataConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct TranscribeLanguageModelInputDataConfigEl {
+pub struct TranscribeLanguageModel_InputDataConfig {
     data_access_role_arn: terrars::PrimField<std::string::String>,
     s3_uri: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tuning_data_s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl TranscribeLanguageModelInputDataConfigEl {
+impl TranscribeLanguageModel_InputDataConfig {
     #[doc = "Set the field `tuning_data_s3_uri`.\n"]
     pub fn set_tuning_data_s3_uri(
         mut self,
@@ -385,8 +414,8 @@ impl TranscribeLanguageModelInputDataConfigEl {
     }
 }
 
-impl terrars::ToListMappable for TranscribeLanguageModelInputDataConfigEl {
-    type O = terrars::BlockAssignable<TranscribeLanguageModelInputDataConfigEl>;
+impl terrars::ToListMappable for TranscribeLanguageModel_InputDataConfig {
+    type O = terrars::BlockAssignable<TranscribeLanguageModel_InputDataConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -397,16 +426,16 @@ impl terrars::ToListMappable for TranscribeLanguageModelInputDataConfigEl {
     }
 }
 
-pub struct BuildTranscribeLanguageModelInputDataConfigEl {
+pub struct BuildTranscribeLanguageModel_InputDataConfig {
     #[doc = ""]
     pub data_access_role_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildTranscribeLanguageModelInputDataConfigEl {
-    pub fn build(self) -> TranscribeLanguageModelInputDataConfigEl {
-        TranscribeLanguageModelInputDataConfigEl {
+impl BuildTranscribeLanguageModel_InputDataConfig {
+    pub fn build(self) -> TranscribeLanguageModel_InputDataConfig {
+        TranscribeLanguageModel_InputDataConfig {
             data_access_role_arn: self.data_access_role_arn,
             s3_uri: self.s3_uri,
             tuning_data_s3_uri: core::default::Default::default(),
@@ -414,21 +443,23 @@ impl BuildTranscribeLanguageModelInputDataConfigEl {
     }
 }
 
-pub struct TranscribeLanguageModelInputDataConfigElRef {
+#[allow(dead_code)]
+pub struct TranscribeLanguageModel_InputDataConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TranscribeLanguageModelInputDataConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TranscribeLanguageModelInputDataConfigElRef {
-        TranscribeLanguageModelInputDataConfigElRef {
+impl terrars::Ref for TranscribeLanguageModel_InputDataConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TranscribeLanguageModel_InputDataConfigRef {
+        TranscribeLanguageModel_InputDataConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TranscribeLanguageModelInputDataConfigElRef {
+impl TranscribeLanguageModel_InputDataConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -450,12 +481,12 @@ impl TranscribeLanguageModelInputDataConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct TranscribeLanguageModelTimeoutsEl {
+pub struct TranscribeLanguageModel_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl TranscribeLanguageModelTimeoutsEl {
+impl TranscribeLanguageModel_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -463,8 +494,8 @@ impl TranscribeLanguageModelTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for TranscribeLanguageModelTimeoutsEl {
-    type O = terrars::BlockAssignable<TranscribeLanguageModelTimeoutsEl>;
+impl terrars::ToListMappable for TranscribeLanguageModel_Timeouts {
+    type O = terrars::BlockAssignable<TranscribeLanguageModel_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -475,29 +506,31 @@ impl terrars::ToListMappable for TranscribeLanguageModelTimeoutsEl {
     }
 }
 
-pub struct BuildTranscribeLanguageModelTimeoutsEl {}
+pub struct BuildTranscribeLanguageModel_Timeouts {}
 
-impl BuildTranscribeLanguageModelTimeoutsEl {
-    pub fn build(self) -> TranscribeLanguageModelTimeoutsEl {
-        TranscribeLanguageModelTimeoutsEl { create: core::default::Default::default() }
+impl BuildTranscribeLanguageModel_Timeouts {
+    pub fn build(self) -> TranscribeLanguageModel_Timeouts {
+        TranscribeLanguageModel_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct TranscribeLanguageModelTimeoutsElRef {
+#[allow(dead_code)]
+pub struct TranscribeLanguageModel_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TranscribeLanguageModelTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TranscribeLanguageModelTimeoutsElRef {
-        TranscribeLanguageModelTimeoutsElRef {
+impl terrars::Ref for TranscribeLanguageModel_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TranscribeLanguageModel_TimeoutsRef {
+        TranscribeLanguageModel_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TranscribeLanguageModelTimeoutsElRef {
+impl TranscribeLanguageModel_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -506,9 +539,4 @@ impl TranscribeLanguageModelTimeoutsElRef {
     pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct TranscribeLanguageModelDynamic {
-    input_data_config: std::option::Option<terrars::DynamicBlock<TranscribeLanguageModelInputDataConfigEl>>,
 }

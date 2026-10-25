@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataLbListenerData {
+struct DataLbListenerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,15 +27,17 @@ struct DataLbListenerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataLbListenerTimeoutsEl>,
+    timeouts: std::option::Option<DataLbListener_Timeouts>,
 }
 
 struct DataLbListener_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLbListenerData>,
+    data: std::cell::RefCell<DataLbListenerData_>,
 }
 
 #[derive(Clone)]
@@ -102,6 +106,13 @@ impl DataLbListener {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -112,7 +123,7 @@ impl DataLbListener {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataLbListenerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataLbListener_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -133,7 +144,7 @@ impl DataLbListener {
     }
 
     #[doc = "Get a reference to the value of field `default_action` after provisioning.\n"]
-    pub fn default_action(&self) -> terrars::ListRef<DataLbListenerDefaultActionElRef> {
+    pub fn default_action(&self) -> terrars::ListRef<DataLbListener_DefaultActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_action", self.extract_ref()))
     }
 
@@ -147,6 +158,11 @@ impl DataLbListener {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `mutual_authentication` after provisioning.\n"]
+    pub fn mutual_authentication(&self) -> terrars::ListRef<DataLbListener_MutualAuthenticationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mutual_authentication", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
     pub fn port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
@@ -155,6 +171,12 @@ impl DataLbListener {
     #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
     pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ssl_policy` after provisioning.\n"]
@@ -168,8 +190,8 @@ impl DataLbListener {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataLbListenerTimeoutsElRef {
-        DataLbListenerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataLbListener_TimeoutsRef {
+        DataLbListener_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -213,7 +235,7 @@ impl BuildDataLbListener {
         let out = DataLbListener(std::rc::Rc::new(DataLbListener_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLbListenerData {
+            data: std::cell::RefCell::new(DataLbListenerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -222,6 +244,7 @@ impl BuildDataLbListener {
                 id: core::default::Default::default(),
                 load_balancer_arn: core::default::Default::default(),
                 port: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
@@ -270,7 +293,7 @@ impl DataLbListenerRef {
     }
 
     #[doc = "Get a reference to the value of field `default_action` after provisioning.\n"]
-    pub fn default_action(&self) -> terrars::ListRef<DataLbListenerDefaultActionElRef> {
+    pub fn default_action(&self) -> terrars::ListRef<DataLbListener_DefaultActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_action", self.extract_ref()))
     }
 
@@ -284,6 +307,11 @@ impl DataLbListenerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.load_balancer_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `mutual_authentication` after provisioning.\n"]
+    pub fn mutual_authentication(&self) -> terrars::ListRef<DataLbListener_MutualAuthenticationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.mutual_authentication", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
     pub fn port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
@@ -292,6 +320,12 @@ impl DataLbListenerRef {
     #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
     pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ssl_policy` after provisioning.\n"]
@@ -305,13 +339,13 @@ impl DataLbListenerRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataLbListenerTimeoutsElRef {
-        DataLbListenerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataLbListener_TimeoutsRef {
+        DataLbListener_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLbListenerDefaultActionElAuthenticateCognitoEl {
+pub struct DataLbListener_DefaultAction_AuthenticateCognito {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authentication_request_extra_params: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -330,7 +364,7 @@ pub struct DataLbListenerDefaultActionElAuthenticateCognitoEl {
     user_pool_domain: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLbListenerDefaultActionElAuthenticateCognitoEl {
+impl DataLbListener_DefaultAction_AuthenticateCognito {
     #[doc = "Set the field `authentication_request_extra_params`.\n"]
     pub fn set_authentication_request_extra_params(
         mut self,
@@ -392,8 +426,8 @@ impl DataLbListenerDefaultActionElAuthenticateCognitoEl {
     }
 }
 
-impl terrars::ToListMappable for DataLbListenerDefaultActionElAuthenticateCognitoEl {
-    type O = terrars::BlockAssignable<DataLbListenerDefaultActionElAuthenticateCognitoEl>;
+impl terrars::ToListMappable for DataLbListener_DefaultAction_AuthenticateCognito {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction_AuthenticateCognito>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -404,11 +438,11 @@ impl terrars::ToListMappable for DataLbListenerDefaultActionElAuthenticateCognit
     }
 }
 
-pub struct BuildDataLbListenerDefaultActionElAuthenticateCognitoEl {}
+pub struct BuildDataLbListener_DefaultAction_AuthenticateCognito {}
 
-impl BuildDataLbListenerDefaultActionElAuthenticateCognitoEl {
-    pub fn build(self) -> DataLbListenerDefaultActionElAuthenticateCognitoEl {
-        DataLbListenerDefaultActionElAuthenticateCognitoEl {
+impl BuildDataLbListener_DefaultAction_AuthenticateCognito {
+    pub fn build(self) -> DataLbListener_DefaultAction_AuthenticateCognito {
+        DataLbListener_DefaultAction_AuthenticateCognito {
             authentication_request_extra_params: core::default::Default::default(),
             on_unauthenticated_request: core::default::Default::default(),
             scope: core::default::Default::default(),
@@ -421,24 +455,26 @@ impl BuildDataLbListenerDefaultActionElAuthenticateCognitoEl {
     }
 }
 
-pub struct DataLbListenerDefaultActionElAuthenticateCognitoElRef {
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultAction_AuthenticateCognitoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLbListenerDefaultActionElAuthenticateCognitoElRef {
+impl terrars::Ref for DataLbListener_DefaultAction_AuthenticateCognitoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLbListenerDefaultActionElAuthenticateCognitoElRef {
-        DataLbListenerDefaultActionElAuthenticateCognitoElRef {
+    ) -> DataLbListener_DefaultAction_AuthenticateCognitoRef {
+        DataLbListener_DefaultAction_AuthenticateCognitoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLbListenerDefaultActionElAuthenticateCognitoElRef {
+impl DataLbListener_DefaultAction_AuthenticateCognitoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -485,7 +521,7 @@ impl DataLbListenerDefaultActionElAuthenticateCognitoElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLbListenerDefaultActionElAuthenticateOidcEl {
+pub struct DataLbListener_DefaultAction_AuthenticateOidc {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authentication_request_extra_params: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -510,7 +546,7 @@ pub struct DataLbListenerDefaultActionElAuthenticateOidcEl {
     user_info_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLbListenerDefaultActionElAuthenticateOidcEl {
+impl DataLbListener_DefaultAction_AuthenticateOidc {
     #[doc = "Set the field `authentication_request_extra_params`.\n"]
     pub fn set_authentication_request_extra_params(
         mut self,
@@ -593,8 +629,8 @@ impl DataLbListenerDefaultActionElAuthenticateOidcEl {
     }
 }
 
-impl terrars::ToListMappable for DataLbListenerDefaultActionElAuthenticateOidcEl {
-    type O = terrars::BlockAssignable<DataLbListenerDefaultActionElAuthenticateOidcEl>;
+impl terrars::ToListMappable for DataLbListener_DefaultAction_AuthenticateOidc {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction_AuthenticateOidc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -605,11 +641,11 @@ impl terrars::ToListMappable for DataLbListenerDefaultActionElAuthenticateOidcEl
     }
 }
 
-pub struct BuildDataLbListenerDefaultActionElAuthenticateOidcEl {}
+pub struct BuildDataLbListener_DefaultAction_AuthenticateOidc {}
 
-impl BuildDataLbListenerDefaultActionElAuthenticateOidcEl {
-    pub fn build(self) -> DataLbListenerDefaultActionElAuthenticateOidcEl {
-        DataLbListenerDefaultActionElAuthenticateOidcEl {
+impl BuildDataLbListener_DefaultAction_AuthenticateOidc {
+    pub fn build(self) -> DataLbListener_DefaultAction_AuthenticateOidc {
+        DataLbListener_DefaultAction_AuthenticateOidc {
             authentication_request_extra_params: core::default::Default::default(),
             authorization_endpoint: core::default::Default::default(),
             client_id: core::default::Default::default(),
@@ -625,24 +661,26 @@ impl BuildDataLbListenerDefaultActionElAuthenticateOidcEl {
     }
 }
 
-pub struct DataLbListenerDefaultActionElAuthenticateOidcElRef {
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultAction_AuthenticateOidcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLbListenerDefaultActionElAuthenticateOidcElRef {
+impl terrars::Ref for DataLbListener_DefaultAction_AuthenticateOidcRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLbListenerDefaultActionElAuthenticateOidcElRef {
-        DataLbListenerDefaultActionElAuthenticateOidcElRef {
+    ) -> DataLbListener_DefaultAction_AuthenticateOidcRef {
+        DataLbListener_DefaultAction_AuthenticateOidcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLbListenerDefaultActionElAuthenticateOidcElRef {
+impl DataLbListener_DefaultAction_AuthenticateOidcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -704,7 +742,7 @@ impl DataLbListenerDefaultActionElAuthenticateOidcElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLbListenerDefaultActionElFixedResponseEl {
+pub struct DataLbListener_DefaultAction_FixedResponse {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -713,7 +751,7 @@ pub struct DataLbListenerDefaultActionElFixedResponseEl {
     status_code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLbListenerDefaultActionElFixedResponseEl {
+impl DataLbListener_DefaultAction_FixedResponse {
     #[doc = "Set the field `content_type`.\n"]
     pub fn set_content_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.content_type = std::option::Option::Some(v.into());
@@ -733,8 +771,8 @@ impl DataLbListenerDefaultActionElFixedResponseEl {
     }
 }
 
-impl terrars::ToListMappable for DataLbListenerDefaultActionElFixedResponseEl {
-    type O = terrars::BlockAssignable<DataLbListenerDefaultActionElFixedResponseEl>;
+impl terrars::ToListMappable for DataLbListener_DefaultAction_FixedResponse {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction_FixedResponse>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -745,11 +783,11 @@ impl terrars::ToListMappable for DataLbListenerDefaultActionElFixedResponseEl {
     }
 }
 
-pub struct BuildDataLbListenerDefaultActionElFixedResponseEl {}
+pub struct BuildDataLbListener_DefaultAction_FixedResponse {}
 
-impl BuildDataLbListenerDefaultActionElFixedResponseEl {
-    pub fn build(self) -> DataLbListenerDefaultActionElFixedResponseEl {
-        DataLbListenerDefaultActionElFixedResponseEl {
+impl BuildDataLbListener_DefaultAction_FixedResponse {
+    pub fn build(self) -> DataLbListener_DefaultAction_FixedResponse {
+        DataLbListener_DefaultAction_FixedResponse {
             content_type: core::default::Default::default(),
             message_body: core::default::Default::default(),
             status_code: core::default::Default::default(),
@@ -757,24 +795,23 @@ impl BuildDataLbListenerDefaultActionElFixedResponseEl {
     }
 }
 
-pub struct DataLbListenerDefaultActionElFixedResponseElRef {
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultAction_FixedResponseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLbListenerDefaultActionElFixedResponseElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataLbListenerDefaultActionElFixedResponseElRef {
-        DataLbListenerDefaultActionElFixedResponseElRef {
+impl terrars::Ref for DataLbListener_DefaultAction_FixedResponseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListener_DefaultAction_FixedResponseRef {
+        DataLbListener_DefaultAction_FixedResponseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLbListenerDefaultActionElFixedResponseElRef {
+impl DataLbListener_DefaultAction_FixedResponseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -796,14 +833,14 @@ impl DataLbListenerDefaultActionElFixedResponseElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLbListenerDefaultActionElForwardElStickinessEl {
+pub struct DataLbListener_DefaultAction_Forward_Stickiness {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     duration: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataLbListenerDefaultActionElForwardElStickinessEl {
+impl DataLbListener_DefaultAction_Forward_Stickiness {
     #[doc = "Set the field `duration`.\n"]
     pub fn set_duration(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.duration = std::option::Option::Some(v.into());
@@ -817,8 +854,8 @@ impl DataLbListenerDefaultActionElForwardElStickinessEl {
     }
 }
 
-impl terrars::ToListMappable for DataLbListenerDefaultActionElForwardElStickinessEl {
-    type O = terrars::BlockAssignable<DataLbListenerDefaultActionElForwardElStickinessEl>;
+impl terrars::ToListMappable for DataLbListener_DefaultAction_Forward_Stickiness {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction_Forward_Stickiness>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -829,35 +866,37 @@ impl terrars::ToListMappable for DataLbListenerDefaultActionElForwardElStickines
     }
 }
 
-pub struct BuildDataLbListenerDefaultActionElForwardElStickinessEl {}
+pub struct BuildDataLbListener_DefaultAction_Forward_Stickiness {}
 
-impl BuildDataLbListenerDefaultActionElForwardElStickinessEl {
-    pub fn build(self) -> DataLbListenerDefaultActionElForwardElStickinessEl {
-        DataLbListenerDefaultActionElForwardElStickinessEl {
+impl BuildDataLbListener_DefaultAction_Forward_Stickiness {
+    pub fn build(self) -> DataLbListener_DefaultAction_Forward_Stickiness {
+        DataLbListener_DefaultAction_Forward_Stickiness {
             duration: core::default::Default::default(),
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLbListenerDefaultActionElForwardElStickinessElRef {
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultAction_Forward_StickinessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLbListenerDefaultActionElForwardElStickinessElRef {
+impl terrars::Ref for DataLbListener_DefaultAction_Forward_StickinessRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLbListenerDefaultActionElForwardElStickinessElRef {
-        DataLbListenerDefaultActionElForwardElStickinessElRef {
+    ) -> DataLbListener_DefaultAction_Forward_StickinessRef {
+        DataLbListener_DefaultAction_Forward_StickinessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLbListenerDefaultActionElForwardElStickinessElRef {
+impl DataLbListener_DefaultAction_Forward_StickinessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -874,14 +913,14 @@ impl DataLbListenerDefaultActionElForwardElStickinessElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLbListenerDefaultActionElForwardElTargetGroupEl {
+pub struct DataLbListener_DefaultAction_Forward_TargetGroup {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weight: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataLbListenerDefaultActionElForwardElTargetGroupEl {
+impl DataLbListener_DefaultAction_Forward_TargetGroup {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -895,8 +934,8 @@ impl DataLbListenerDefaultActionElForwardElTargetGroupEl {
     }
 }
 
-impl terrars::ToListMappable for DataLbListenerDefaultActionElForwardElTargetGroupEl {
-    type O = terrars::BlockAssignable<DataLbListenerDefaultActionElForwardElTargetGroupEl>;
+impl terrars::ToListMappable for DataLbListener_DefaultAction_Forward_TargetGroup {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction_Forward_TargetGroup>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -907,35 +946,37 @@ impl terrars::ToListMappable for DataLbListenerDefaultActionElForwardElTargetGro
     }
 }
 
-pub struct BuildDataLbListenerDefaultActionElForwardElTargetGroupEl {}
+pub struct BuildDataLbListener_DefaultAction_Forward_TargetGroup {}
 
-impl BuildDataLbListenerDefaultActionElForwardElTargetGroupEl {
-    pub fn build(self) -> DataLbListenerDefaultActionElForwardElTargetGroupEl {
-        DataLbListenerDefaultActionElForwardElTargetGroupEl {
+impl BuildDataLbListener_DefaultAction_Forward_TargetGroup {
+    pub fn build(self) -> DataLbListener_DefaultAction_Forward_TargetGroup {
+        DataLbListener_DefaultAction_Forward_TargetGroup {
             arn: core::default::Default::default(),
             weight: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLbListenerDefaultActionElForwardElTargetGroupElRef {
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultAction_Forward_TargetGroupRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLbListenerDefaultActionElForwardElTargetGroupElRef {
+impl terrars::Ref for DataLbListener_DefaultAction_Forward_TargetGroupRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLbListenerDefaultActionElForwardElTargetGroupElRef {
-        DataLbListenerDefaultActionElForwardElTargetGroupElRef {
+    ) -> DataLbListener_DefaultAction_Forward_TargetGroupRef {
+        DataLbListener_DefaultAction_Forward_TargetGroupRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLbListenerDefaultActionElForwardElTargetGroupElRef {
+impl DataLbListener_DefaultAction_Forward_TargetGroupRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -952,18 +993,18 @@ impl DataLbListenerDefaultActionElForwardElTargetGroupElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLbListenerDefaultActionElForwardEl {
+pub struct DataLbListener_DefaultAction_Forward {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stickiness: std::option::Option<terrars::ListField<DataLbListenerDefaultActionElForwardElStickinessEl>>,
+    stickiness: std::option::Option<terrars::ListField<DataLbListener_DefaultAction_Forward_Stickiness>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_group: std::option::Option<terrars::SetField<DataLbListenerDefaultActionElForwardElTargetGroupEl>>,
+    target_group: std::option::Option<terrars::SetField<DataLbListener_DefaultAction_Forward_TargetGroup>>,
 }
 
-impl DataLbListenerDefaultActionElForwardEl {
+impl DataLbListener_DefaultAction_Forward {
     #[doc = "Set the field `stickiness`.\n"]
     pub fn set_stickiness(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataLbListenerDefaultActionElForwardElStickinessEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataLbListener_DefaultAction_Forward_Stickiness>>,
     ) -> Self {
         self.stickiness = std::option::Option::Some(v.into());
         self
@@ -972,15 +1013,15 @@ impl DataLbListenerDefaultActionElForwardEl {
     #[doc = "Set the field `target_group`.\n"]
     pub fn set_target_group(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataLbListenerDefaultActionElForwardElTargetGroupEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataLbListener_DefaultAction_Forward_TargetGroup>>,
     ) -> Self {
         self.target_group = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataLbListenerDefaultActionElForwardEl {
-    type O = terrars::BlockAssignable<DataLbListenerDefaultActionElForwardEl>;
+impl terrars::ToListMappable for DataLbListener_DefaultAction_Forward {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction_Forward>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -991,49 +1032,242 @@ impl terrars::ToListMappable for DataLbListenerDefaultActionElForwardEl {
     }
 }
 
-pub struct BuildDataLbListenerDefaultActionElForwardEl {}
+pub struct BuildDataLbListener_DefaultAction_Forward {}
 
-impl BuildDataLbListenerDefaultActionElForwardEl {
-    pub fn build(self) -> DataLbListenerDefaultActionElForwardEl {
-        DataLbListenerDefaultActionElForwardEl {
+impl BuildDataLbListener_DefaultAction_Forward {
+    pub fn build(self) -> DataLbListener_DefaultAction_Forward {
+        DataLbListener_DefaultAction_Forward {
             stickiness: core::default::Default::default(),
             target_group: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLbListenerDefaultActionElForwardElRef {
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultAction_ForwardRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLbListenerDefaultActionElForwardElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListenerDefaultActionElForwardElRef {
-        DataLbListenerDefaultActionElForwardElRef {
+impl terrars::Ref for DataLbListener_DefaultAction_ForwardRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListener_DefaultAction_ForwardRef {
+        DataLbListener_DefaultAction_ForwardRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLbListenerDefaultActionElForwardElRef {
+impl DataLbListener_DefaultAction_ForwardRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `stickiness` after provisioning.\n"]
-    pub fn stickiness(&self) -> terrars::ListRef<DataLbListenerDefaultActionElForwardElStickinessElRef> {
+    pub fn stickiness(&self) -> terrars::ListRef<DataLbListener_DefaultAction_Forward_StickinessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stickiness", self.base))
     }
 
     #[doc = "Get a reference to the value of field `target_group` after provisioning.\n"]
-    pub fn target_group(&self) -> terrars::SetRef<DataLbListenerDefaultActionElForwardElTargetGroupElRef> {
+    pub fn target_group(&self) -> terrars::SetRef<DataLbListener_DefaultAction_Forward_TargetGroupRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.target_group", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLbListenerDefaultActionElRedirectEl {
+pub struct DataLbListener_DefaultAction_JwtValidation_AdditionalClaim {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    format: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+}
+
+impl DataLbListener_DefaultAction_JwtValidation_AdditionalClaim {
+    #[doc = "Set the field `format`.\n"]
+    pub fn set_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.format = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `values`.\n"]
+    pub fn set_values(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.values = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataLbListener_DefaultAction_JwtValidation_AdditionalClaim {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction_JwtValidation_AdditionalClaim>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataLbListener_DefaultAction_JwtValidation_AdditionalClaim {}
+
+impl BuildDataLbListener_DefaultAction_JwtValidation_AdditionalClaim {
+    pub fn build(self) -> DataLbListener_DefaultAction_JwtValidation_AdditionalClaim {
+        DataLbListener_DefaultAction_JwtValidation_AdditionalClaim {
+            format: core::default::Default::default(),
+            name: core::default::Default::default(),
+            values: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataLbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataLbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+        DataLbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataLbListener_DefaultAction_JwtValidation_AdditionalClaimRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `format` after provisioning.\n"]
+    pub fn format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.format", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataLbListener_DefaultAction_JwtValidation {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    additional_claim: std::option::Option<terrars::SetField<DataLbListener_DefaultAction_JwtValidation_AdditionalClaim>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    issuer: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    jwks_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataLbListener_DefaultAction_JwtValidation {
+    #[doc = "Set the field `additional_claim`.\n"]
+    pub fn set_additional_claim(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<DataLbListener_DefaultAction_JwtValidation_AdditionalClaim>>,
+    ) -> Self {
+        self.additional_claim = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `issuer`.\n"]
+    pub fn set_issuer(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.issuer = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `jwks_endpoint`.\n"]
+    pub fn set_jwks_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.jwks_endpoint = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataLbListener_DefaultAction_JwtValidation {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction_JwtValidation>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataLbListener_DefaultAction_JwtValidation {}
+
+impl BuildDataLbListener_DefaultAction_JwtValidation {
+    pub fn build(self) -> DataLbListener_DefaultAction_JwtValidation {
+        DataLbListener_DefaultAction_JwtValidation {
+            additional_claim: core::default::Default::default(),
+            issuer: core::default::Default::default(),
+            jwks_endpoint: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultAction_JwtValidationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataLbListener_DefaultAction_JwtValidationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListener_DefaultAction_JwtValidationRef {
+        DataLbListener_DefaultAction_JwtValidationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataLbListener_DefaultAction_JwtValidationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `additional_claim` after provisioning.\n"]
+    pub fn additional_claim(&self) -> terrars::SetRef<DataLbListener_DefaultAction_JwtValidation_AdditionalClaimRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.additional_claim", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `issuer` after provisioning.\n"]
+    pub fn issuer(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `jwks_endpoint` after provisioning.\n"]
+    pub fn jwks_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.jwks_endpoint", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataLbListener_DefaultAction_Redirect {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1048,7 +1282,7 @@ pub struct DataLbListenerDefaultActionElRedirectEl {
     status_code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLbListenerDefaultActionElRedirectEl {
+impl DataLbListener_DefaultAction_Redirect {
     #[doc = "Set the field `host`.\n"]
     pub fn set_host(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host = std::option::Option::Some(v.into());
@@ -1086,8 +1320,8 @@ impl DataLbListenerDefaultActionElRedirectEl {
     }
 }
 
-impl terrars::ToListMappable for DataLbListenerDefaultActionElRedirectEl {
-    type O = terrars::BlockAssignable<DataLbListenerDefaultActionElRedirectEl>;
+impl terrars::ToListMappable for DataLbListener_DefaultAction_Redirect {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction_Redirect>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1098,11 +1332,11 @@ impl terrars::ToListMappable for DataLbListenerDefaultActionElRedirectEl {
     }
 }
 
-pub struct BuildDataLbListenerDefaultActionElRedirectEl {}
+pub struct BuildDataLbListener_DefaultAction_Redirect {}
 
-impl BuildDataLbListenerDefaultActionElRedirectEl {
-    pub fn build(self) -> DataLbListenerDefaultActionElRedirectEl {
-        DataLbListenerDefaultActionElRedirectEl {
+impl BuildDataLbListener_DefaultAction_Redirect {
+    pub fn build(self) -> DataLbListener_DefaultAction_Redirect {
+        DataLbListener_DefaultAction_Redirect {
             host: core::default::Default::default(),
             path: core::default::Default::default(),
             port: core::default::Default::default(),
@@ -1113,21 +1347,23 @@ impl BuildDataLbListenerDefaultActionElRedirectEl {
     }
 }
 
-pub struct DataLbListenerDefaultActionElRedirectElRef {
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultAction_RedirectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLbListenerDefaultActionElRedirectElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListenerDefaultActionElRedirectElRef {
-        DataLbListenerDefaultActionElRedirectElRef {
+impl terrars::Ref for DataLbListener_DefaultAction_RedirectRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListener_DefaultAction_RedirectRef {
+        DataLbListener_DefaultAction_RedirectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLbListenerDefaultActionElRedirectElRef {
+impl DataLbListener_DefaultAction_RedirectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1164,30 +1400,32 @@ impl DataLbListenerDefaultActionElRedirectElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLbListenerDefaultActionEl {
+pub struct DataLbListener_DefaultAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authenticate_cognito: std::option::Option<terrars::ListField<DataLbListenerDefaultActionElAuthenticateCognitoEl>>,
+    authenticate_cognito: std::option::Option<terrars::ListField<DataLbListener_DefaultAction_AuthenticateCognito>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authenticate_oidc: std::option::Option<terrars::ListField<DataLbListenerDefaultActionElAuthenticateOidcEl>>,
+    authenticate_oidc: std::option::Option<terrars::ListField<DataLbListener_DefaultAction_AuthenticateOidc>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fixed_response: std::option::Option<terrars::ListField<DataLbListenerDefaultActionElFixedResponseEl>>,
+    fixed_response: std::option::Option<terrars::ListField<DataLbListener_DefaultAction_FixedResponse>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    forward: std::option::Option<terrars::ListField<DataLbListenerDefaultActionElForwardEl>>,
+    forward: std::option::Option<terrars::ListField<DataLbListener_DefaultAction_Forward>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    jwt_validation: std::option::Option<terrars::ListField<DataLbListener_DefaultAction_JwtValidation>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     order: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redirect: std::option::Option<terrars::ListField<DataLbListenerDefaultActionElRedirectEl>>,
+    redirect: std::option::Option<terrars::ListField<DataLbListener_DefaultAction_Redirect>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLbListenerDefaultActionEl {
+impl DataLbListener_DefaultAction {
     #[doc = "Set the field `authenticate_cognito`.\n"]
     pub fn set_authenticate_cognito(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataLbListenerDefaultActionElAuthenticateCognitoEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataLbListener_DefaultAction_AuthenticateCognito>>,
     ) -> Self {
         self.authenticate_cognito = std::option::Option::Some(v.into());
         self
@@ -1196,7 +1434,7 @@ impl DataLbListenerDefaultActionEl {
     #[doc = "Set the field `authenticate_oidc`.\n"]
     pub fn set_authenticate_oidc(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataLbListenerDefaultActionElAuthenticateOidcEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataLbListener_DefaultAction_AuthenticateOidc>>,
     ) -> Self {
         self.authenticate_oidc = std::option::Option::Some(v.into());
         self
@@ -1205,7 +1443,7 @@ impl DataLbListenerDefaultActionEl {
     #[doc = "Set the field `fixed_response`.\n"]
     pub fn set_fixed_response(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataLbListenerDefaultActionElFixedResponseEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataLbListener_DefaultAction_FixedResponse>>,
     ) -> Self {
         self.fixed_response = std::option::Option::Some(v.into());
         self
@@ -1214,9 +1452,18 @@ impl DataLbListenerDefaultActionEl {
     #[doc = "Set the field `forward`.\n"]
     pub fn set_forward(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataLbListenerDefaultActionElForwardEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataLbListener_DefaultAction_Forward>>,
     ) -> Self {
         self.forward = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `jwt_validation`.\n"]
+    pub fn set_jwt_validation(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataLbListener_DefaultAction_JwtValidation>>,
+    ) -> Self {
+        self.jwt_validation = std::option::Option::Some(v.into());
         self
     }
 
@@ -1229,7 +1476,7 @@ impl DataLbListenerDefaultActionEl {
     #[doc = "Set the field `redirect`.\n"]
     pub fn set_redirect(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataLbListenerDefaultActionElRedirectEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataLbListener_DefaultAction_Redirect>>,
     ) -> Self {
         self.redirect = std::option::Option::Some(v.into());
         self
@@ -1248,8 +1495,8 @@ impl DataLbListenerDefaultActionEl {
     }
 }
 
-impl terrars::ToListMappable for DataLbListenerDefaultActionEl {
-    type O = terrars::BlockAssignable<DataLbListenerDefaultActionEl>;
+impl terrars::ToListMappable for DataLbListener_DefaultAction {
+    type O = terrars::BlockAssignable<DataLbListener_DefaultAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1260,15 +1507,16 @@ impl terrars::ToListMappable for DataLbListenerDefaultActionEl {
     }
 }
 
-pub struct BuildDataLbListenerDefaultActionEl {}
+pub struct BuildDataLbListener_DefaultAction {}
 
-impl BuildDataLbListenerDefaultActionEl {
-    pub fn build(self) -> DataLbListenerDefaultActionEl {
-        DataLbListenerDefaultActionEl {
+impl BuildDataLbListener_DefaultAction {
+    pub fn build(self) -> DataLbListener_DefaultAction {
+        DataLbListener_DefaultAction {
             authenticate_cognito: core::default::Default::default(),
             authenticate_oidc: core::default::Default::default(),
             fixed_response: core::default::Default::default(),
             forward: core::default::Default::default(),
+            jwt_validation: core::default::Default::default(),
             order: core::default::Default::default(),
             redirect: core::default::Default::default(),
             target_group_arn: core::default::Default::default(),
@@ -1277,43 +1525,50 @@ impl BuildDataLbListenerDefaultActionEl {
     }
 }
 
-pub struct DataLbListenerDefaultActionElRef {
+#[allow(dead_code)]
+pub struct DataLbListener_DefaultActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLbListenerDefaultActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListenerDefaultActionElRef {
-        DataLbListenerDefaultActionElRef {
+impl terrars::Ref for DataLbListener_DefaultActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListener_DefaultActionRef {
+        DataLbListener_DefaultActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLbListenerDefaultActionElRef {
+impl DataLbListener_DefaultActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `authenticate_cognito` after provisioning.\n"]
-    pub fn authenticate_cognito(&self) -> terrars::ListRef<DataLbListenerDefaultActionElAuthenticateCognitoElRef> {
+    pub fn authenticate_cognito(&self) -> terrars::ListRef<DataLbListener_DefaultAction_AuthenticateCognitoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authenticate_cognito", self.base))
     }
 
     #[doc = "Get a reference to the value of field `authenticate_oidc` after provisioning.\n"]
-    pub fn authenticate_oidc(&self) -> terrars::ListRef<DataLbListenerDefaultActionElAuthenticateOidcElRef> {
+    pub fn authenticate_oidc(&self) -> terrars::ListRef<DataLbListener_DefaultAction_AuthenticateOidcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authenticate_oidc", self.base))
     }
 
     #[doc = "Get a reference to the value of field `fixed_response` after provisioning.\n"]
-    pub fn fixed_response(&self) -> terrars::ListRef<DataLbListenerDefaultActionElFixedResponseElRef> {
+    pub fn fixed_response(&self) -> terrars::ListRef<DataLbListener_DefaultAction_FixedResponseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fixed_response", self.base))
     }
 
     #[doc = "Get a reference to the value of field `forward` after provisioning.\n"]
-    pub fn forward(&self) -> terrars::ListRef<DataLbListenerDefaultActionElForwardElRef> {
+    pub fn forward(&self) -> terrars::ListRef<DataLbListener_DefaultAction_ForwardRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.forward", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `jwt_validation` after provisioning.\n"]
+    pub fn jwt_validation(&self) -> terrars::ListRef<DataLbListener_DefaultAction_JwtValidationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.jwt_validation", self.base))
     }
 
     #[doc = "Get a reference to the value of field `order` after provisioning.\n"]
@@ -1322,7 +1577,7 @@ impl DataLbListenerDefaultActionElRef {
     }
 
     #[doc = "Get a reference to the value of field `redirect` after provisioning.\n"]
-    pub fn redirect(&self) -> terrars::ListRef<DataLbListenerDefaultActionElRedirectElRef> {
+    pub fn redirect(&self) -> terrars::ListRef<DataLbListener_DefaultAction_RedirectRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redirect", self.base))
     }
 
@@ -1338,21 +1593,48 @@ impl DataLbListenerDefaultActionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLbListenerTimeoutsEl {
+pub struct DataLbListener_MutualAuthentication {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    read: std::option::Option<terrars::PrimField<std::string::String>>,
+    advertise_trust_store_ca_names: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ignore_client_certificate_expiry: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trust_store_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLbListenerTimeoutsEl {
-    #[doc = "Set the field `read`.\n"]
-    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.read = std::option::Option::Some(v.into());
+impl DataLbListener_MutualAuthentication {
+    #[doc = "Set the field `advertise_trust_store_ca_names`.\n"]
+    pub fn set_advertise_trust_store_ca_names(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.advertise_trust_store_ca_names = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ignore_client_certificate_expiry`.\n"]
+    pub fn set_ignore_client_certificate_expiry(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.ignore_client_certificate_expiry = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `trust_store_arn`.\n"]
+    pub fn set_trust_store_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.trust_store_arn = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataLbListenerTimeoutsEl {
-    type O = terrars::BlockAssignable<DataLbListenerTimeoutsEl>;
+impl terrars::ToListMappable for DataLbListener_MutualAuthentication {
+    type O = terrars::BlockAssignable<DataLbListener_MutualAuthentication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1363,29 +1645,112 @@ impl terrars::ToListMappable for DataLbListenerTimeoutsEl {
     }
 }
 
-pub struct BuildDataLbListenerTimeoutsEl {}
+pub struct BuildDataLbListener_MutualAuthentication {}
 
-impl BuildDataLbListenerTimeoutsEl {
-    pub fn build(self) -> DataLbListenerTimeoutsEl {
-        DataLbListenerTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataLbListener_MutualAuthentication {
+    pub fn build(self) -> DataLbListener_MutualAuthentication {
+        DataLbListener_MutualAuthentication {
+            advertise_trust_store_ca_names: core::default::Default::default(),
+            ignore_client_certificate_expiry: core::default::Default::default(),
+            mode: core::default::Default::default(),
+            trust_store_arn: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataLbListenerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataLbListener_MutualAuthenticationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLbListenerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListenerTimeoutsElRef {
-        DataLbListenerTimeoutsElRef {
+impl terrars::Ref for DataLbListener_MutualAuthenticationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListener_MutualAuthenticationRef {
+        DataLbListener_MutualAuthenticationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLbListenerTimeoutsElRef {
+impl DataLbListener_MutualAuthenticationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `advertise_trust_store_ca_names` after provisioning.\n"]
+    pub fn advertise_trust_store_ca_names(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.advertise_trust_store_ca_names", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ignore_client_certificate_expiry` after provisioning.\n"]
+    pub fn ignore_client_certificate_expiry(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ignore_client_certificate_expiry", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `trust_store_arn` after provisioning.\n"]
+    pub fn trust_store_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.trust_store_arn", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataLbListener_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataLbListener_Timeouts {
+    #[doc = "Set the field `read`.\n"]
+    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.read = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataLbListener_Timeouts {
+    type O = terrars::BlockAssignable<DataLbListener_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataLbListener_Timeouts {}
+
+impl BuildDataLbListener_Timeouts {
+    pub fn build(self) -> DataLbListener_Timeouts {
+        DataLbListener_Timeouts { read: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataLbListener_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataLbListener_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLbListener_TimeoutsRef {
+        DataLbListener_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataLbListener_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

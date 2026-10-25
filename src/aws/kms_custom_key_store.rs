@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KmsCustomKeyStoreData {
+struct KmsCustomKeyStoreData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,20 +20,40 @@ struct KmsCustomKeyStoreData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
-    cloud_hsm_cluster_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloud_hsm_cluster_id: std::option::Option<terrars::PrimField<std::string::String>>,
     custom_key_store_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
-    key_store_password: terrars::PrimField<std::string::String>,
-    trust_anchor_certificate: terrars::PrimField<std::string::String>,
+    custom_key_store_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KmsCustomKeyStoreTimeoutsEl>,
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_store_password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    trust_anchor_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    xks_proxy_connectivity: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    xks_proxy_uri_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    xks_proxy_uri_path: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    xks_proxy_vpc_endpoint_service_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<KmsCustomKeyStore_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    xks_proxy_authentication_credential: std
+    ::option
+    ::Option<std::vec::Vec<KmsCustomKeyStore_XksProxyAuthenticationCredential>>,
+    dynamic: KmsCustomKeyStoreDynamic,
 }
 
 struct KmsCustomKeyStore_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KmsCustomKeyStoreData>,
+    data: std::cell::RefCell<KmsCustomKeyStoreData_>,
 }
 
 #[derive(Clone)]
@@ -131,15 +153,98 @@ impl KmsCustomKeyStore {
         self
     }
 
+    #[doc = "Set the field `cloud_hsm_cluster_id`.\n"]
+    pub fn set_cloud_hsm_cluster_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().cloud_hsm_cluster_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `custom_key_store_type`.\n"]
+    pub fn set_custom_key_store_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().custom_key_store_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `key_store_password`.\n"]
+    pub fn set_key_store_password(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().key_store_password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `trust_anchor_certificate`.\n"]
+    pub fn set_trust_anchor_certificate(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().trust_anchor_certificate = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `xks_proxy_connectivity`.\n"]
+    pub fn set_xks_proxy_connectivity(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().xks_proxy_connectivity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `xks_proxy_uri_endpoint`.\n"]
+    pub fn set_xks_proxy_uri_endpoint(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().xks_proxy_uri_endpoint = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `xks_proxy_uri_path`.\n"]
+    pub fn set_xks_proxy_uri_path(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().xks_proxy_uri_path = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `xks_proxy_vpc_endpoint_service_name`.\n"]
+    pub fn set_xks_proxy_vpc_endpoint_service_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().xks_proxy_vpc_endpoint_service_name = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KmsCustomKeyStoreTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KmsCustomKeyStore_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `xks_proxy_authentication_credential`.\n"]
+    pub fn set_xks_proxy_authentication_credential(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<KmsCustomKeyStore_XksProxyAuthenticationCredential>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().xks_proxy_authentication_credential = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.xks_proxy_authentication_credential = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -153,6 +258,11 @@ impl KmsCustomKeyStore {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_key_store_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `custom_key_store_type` after provisioning.\n"]
+    pub fn custom_key_store_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_key_store_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -163,14 +273,53 @@ impl KmsCustomKeyStore {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_store_password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `trust_anchor_certificate` after provisioning.\n"]
     pub fn trust_anchor_certificate(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.trust_anchor_certificate", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `xks_proxy_connectivity` after provisioning.\n"]
+    pub fn xks_proxy_connectivity(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xks_proxy_connectivity", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `xks_proxy_uri_endpoint` after provisioning.\n"]
+    pub fn xks_proxy_uri_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xks_proxy_uri_endpoint", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `xks_proxy_uri_path` after provisioning.\n"]
+    pub fn xks_proxy_uri_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xks_proxy_uri_path", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `xks_proxy_vpc_endpoint_service_name` after provisioning.\n"]
+    pub fn xks_proxy_vpc_endpoint_service_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.xks_proxy_vpc_endpoint_service_name", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KmsCustomKeyStoreTimeoutsElRef {
-        KmsCustomKeyStoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KmsCustomKeyStore_TimeoutsRef {
+        KmsCustomKeyStore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `xks_proxy_authentication_credential` after provisioning.\n"]
+    pub fn xks_proxy_authentication_credential(
+        &self,
+    ) -> terrars::ListRef<KmsCustomKeyStore_XksProxyAuthenticationCredentialRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.xks_proxy_authentication_credential", self.extract_ref()),
+        )
     }
 }
 
@@ -208,13 +357,7 @@ impl terrars::Resource_ for KmsCustomKeyStore_ {
 pub struct BuildKmsCustomKeyStore {
     pub tf_id: std::string::String,
     #[doc = ""]
-    pub cloud_hsm_cluster_id: terrars::PrimField<std::string::String>,
-    #[doc = ""]
     pub custom_key_store_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub key_store_password: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub trust_anchor_certificate: terrars::PrimField<std::string::String>,
 }
 
 impl BuildKmsCustomKeyStore {
@@ -222,18 +365,26 @@ impl BuildKmsCustomKeyStore {
         let out = KmsCustomKeyStore(std::rc::Rc::new(KmsCustomKeyStore_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KmsCustomKeyStoreData {
+            data: std::cell::RefCell::new(KmsCustomKeyStoreData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                cloud_hsm_cluster_id: self.cloud_hsm_cluster_id,
+                cloud_hsm_cluster_id: core::default::Default::default(),
                 custom_key_store_name: self.custom_key_store_name,
+                custom_key_store_type: core::default::Default::default(),
                 id: core::default::Default::default(),
-                key_store_password: self.key_store_password,
-                trust_anchor_certificate: self.trust_anchor_certificate,
+                key_store_password: core::default::Default::default(),
+                region: core::default::Default::default(),
+                trust_anchor_certificate: core::default::Default::default(),
+                xks_proxy_connectivity: core::default::Default::default(),
+                xks_proxy_uri_endpoint: core::default::Default::default(),
+                xks_proxy_uri_path: core::default::Default::default(),
+                xks_proxy_vpc_endpoint_service_name: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                xks_proxy_authentication_credential: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -274,6 +425,11 @@ impl KmsCustomKeyStoreRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_key_store_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `custom_key_store_type` after provisioning.\n"]
+    pub fn custom_key_store_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_key_store_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -284,19 +440,65 @@ impl KmsCustomKeyStoreRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_store_password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `trust_anchor_certificate` after provisioning.\n"]
     pub fn trust_anchor_certificate(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.trust_anchor_certificate", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `xks_proxy_connectivity` after provisioning.\n"]
+    pub fn xks_proxy_connectivity(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xks_proxy_connectivity", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `xks_proxy_uri_endpoint` after provisioning.\n"]
+    pub fn xks_proxy_uri_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xks_proxy_uri_endpoint", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `xks_proxy_uri_path` after provisioning.\n"]
+    pub fn xks_proxy_uri_path(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xks_proxy_uri_path", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `xks_proxy_vpc_endpoint_service_name` after provisioning.\n"]
+    pub fn xks_proxy_vpc_endpoint_service_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.xks_proxy_vpc_endpoint_service_name", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KmsCustomKeyStoreTimeoutsElRef {
-        KmsCustomKeyStoreTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KmsCustomKeyStore_TimeoutsRef {
+        KmsCustomKeyStore_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `xks_proxy_authentication_credential` after provisioning.\n"]
+    pub fn xks_proxy_authentication_credential(
+        &self,
+    ) -> terrars::ListRef<KmsCustomKeyStore_XksProxyAuthenticationCredentialRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.xks_proxy_authentication_credential", self.extract_ref()),
+        )
     }
 }
 
+#[derive(Serialize, Default)]
+struct KmsCustomKeyStoreDynamic {
+    xks_proxy_authentication_credential: std
+    ::option
+    ::Option<terrars::DynamicBlock<KmsCustomKeyStore_XksProxyAuthenticationCredential>>,
+}
+
 #[derive(Serialize)]
-pub struct KmsCustomKeyStoreTimeoutsEl {
+pub struct KmsCustomKeyStore_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -305,7 +507,7 @@ pub struct KmsCustomKeyStoreTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KmsCustomKeyStoreTimeoutsEl {
+impl KmsCustomKeyStore_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -325,8 +527,8 @@ impl KmsCustomKeyStoreTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KmsCustomKeyStoreTimeoutsEl {
-    type O = terrars::BlockAssignable<KmsCustomKeyStoreTimeoutsEl>;
+impl terrars::ToListMappable for KmsCustomKeyStore_Timeouts {
+    type O = terrars::BlockAssignable<KmsCustomKeyStore_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -337,11 +539,11 @@ impl terrars::ToListMappable for KmsCustomKeyStoreTimeoutsEl {
     }
 }
 
-pub struct BuildKmsCustomKeyStoreTimeoutsEl {}
+pub struct BuildKmsCustomKeyStore_Timeouts {}
 
-impl BuildKmsCustomKeyStoreTimeoutsEl {
-    pub fn build(self) -> KmsCustomKeyStoreTimeoutsEl {
-        KmsCustomKeyStoreTimeoutsEl {
+impl BuildKmsCustomKeyStore_Timeouts {
+    pub fn build(self) -> KmsCustomKeyStore_Timeouts {
+        KmsCustomKeyStore_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -349,21 +551,23 @@ impl BuildKmsCustomKeyStoreTimeoutsEl {
     }
 }
 
-pub struct KmsCustomKeyStoreTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KmsCustomKeyStore_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KmsCustomKeyStoreTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsCustomKeyStoreTimeoutsElRef {
-        KmsCustomKeyStoreTimeoutsElRef {
+impl terrars::Ref for KmsCustomKeyStore_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KmsCustomKeyStore_TimeoutsRef {
+        KmsCustomKeyStore_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KmsCustomKeyStoreTimeoutsElRef {
+impl KmsCustomKeyStore_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,5 +585,76 @@ impl KmsCustomKeyStoreTimeoutsElRef {
     #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct KmsCustomKeyStore_XksProxyAuthenticationCredential {
+    access_key_id: terrars::PrimField<std::string::String>,
+    raw_secret_access_key: terrars::PrimField<std::string::String>,
+}
+
+impl KmsCustomKeyStore_XksProxyAuthenticationCredential { }
+
+impl terrars::ToListMappable for KmsCustomKeyStore_XksProxyAuthenticationCredential {
+    type O = terrars::BlockAssignable<KmsCustomKeyStore_XksProxyAuthenticationCredential>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKmsCustomKeyStore_XksProxyAuthenticationCredential {
+    #[doc = ""]
+    pub access_key_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub raw_secret_access_key: terrars::PrimField<std::string::String>,
+}
+
+impl BuildKmsCustomKeyStore_XksProxyAuthenticationCredential {
+    pub fn build(self) -> KmsCustomKeyStore_XksProxyAuthenticationCredential {
+        KmsCustomKeyStore_XksProxyAuthenticationCredential {
+            access_key_id: self.access_key_id,
+            raw_secret_access_key: self.raw_secret_access_key,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KmsCustomKeyStore_XksProxyAuthenticationCredentialRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KmsCustomKeyStore_XksProxyAuthenticationCredentialRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> KmsCustomKeyStore_XksProxyAuthenticationCredentialRef {
+        KmsCustomKeyStore_XksProxyAuthenticationCredentialRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KmsCustomKeyStore_XksProxyAuthenticationCredentialRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `access_key_id` after provisioning.\n"]
+    pub fn access_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_key_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `raw_secret_access_key` after provisioning.\n"]
+    pub fn raw_secret_access_key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.raw_secret_access_key", self.base))
     }
 }

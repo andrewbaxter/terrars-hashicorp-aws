@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FsxDataRepositoryAssociationData {
+struct FsxDataRepositoryAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,20 +32,22 @@ struct FsxDataRepositoryAssociationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     imported_file_chunk_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3: std::option::Option<std::vec::Vec<FsxDataRepositoryAssociationS3El>>,
+    s3: std::option::Option<std::vec::Vec<FsxDataRepositoryAssociation_S3>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FsxDataRepositoryAssociationTimeoutsEl>,
+    timeouts: std::option::Option<FsxDataRepositoryAssociation_Timeouts>,
     dynamic: FsxDataRepositoryAssociationDynamic,
 }
 
 struct FsxDataRepositoryAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FsxDataRepositoryAssociationData>,
+    data: std::cell::RefCell<FsxDataRepositoryAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -167,6 +171,13 @@ impl FsxDataRepositoryAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -186,7 +197,7 @@ impl FsxDataRepositoryAssociation {
     }
 
     #[doc = "Set the field `s3`.\n"]
-    pub fn set_s3(self, v: impl std::convert::Into<terrars::BlockAssignable<FsxDataRepositoryAssociationS3El>>) -> Self {
+    pub fn set_s3(self, v: impl std::convert::Into<terrars::BlockAssignable<FsxDataRepositoryAssociation_S3>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().s3 = std::option::Option::Some(v);
@@ -199,7 +210,7 @@ impl FsxDataRepositoryAssociation {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FsxDataRepositoryAssociationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FsxDataRepositoryAssociation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -252,6 +263,12 @@ impl FsxDataRepositoryAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.imported_file_chunk_size", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -263,13 +280,13 @@ impl FsxDataRepositoryAssociation {
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<FsxDataRepositoryAssociationS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<FsxDataRepositoryAssociation_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxDataRepositoryAssociationTimeoutsElRef {
-        FsxDataRepositoryAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> FsxDataRepositoryAssociation_TimeoutsRef {
+        FsxDataRepositoryAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -322,7 +339,7 @@ impl BuildFsxDataRepositoryAssociation {
         let out = FsxDataRepositoryAssociation(std::rc::Rc::new(FsxDataRepositoryAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FsxDataRepositoryAssociationData {
+            data: std::cell::RefCell::new(FsxDataRepositoryAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -335,6 +352,7 @@ impl BuildFsxDataRepositoryAssociation {
                 file_system_path: self.file_system_path,
                 id: core::default::Default::default(),
                 imported_file_chunk_size: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 s3: core::default::Default::default(),
@@ -418,6 +436,12 @@ impl FsxDataRepositoryAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.imported_file_chunk_size", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -429,26 +453,31 @@ impl FsxDataRepositoryAssociationRef {
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<FsxDataRepositoryAssociationS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<FsxDataRepositoryAssociation_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxDataRepositoryAssociationTimeoutsElRef {
-        FsxDataRepositoryAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> FsxDataRepositoryAssociation_TimeoutsRef {
+        FsxDataRepositoryAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct FsxDataRepositoryAssociationDynamic {
+    s3: std::option::Option<terrars::DynamicBlock<FsxDataRepositoryAssociation_S3>>,
+}
+
 #[derive(Serialize)]
-pub struct FsxDataRepositoryAssociationS3ElAutoExportPolicyEl {
+pub struct FsxDataRepositoryAssociation_S3_AutoExportPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     events: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl FsxDataRepositoryAssociationS3ElAutoExportPolicyEl {
+impl FsxDataRepositoryAssociation_S3_AutoExportPolicy {
     #[doc = "Set the field `events`.\n"]
     pub fn set_events(
         mut self,
@@ -459,8 +488,8 @@ impl FsxDataRepositoryAssociationS3ElAutoExportPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for FsxDataRepositoryAssociationS3ElAutoExportPolicyEl {
-    type O = terrars::BlockAssignable<FsxDataRepositoryAssociationS3ElAutoExportPolicyEl>;
+impl terrars::ToListMappable for FsxDataRepositoryAssociation_S3_AutoExportPolicy {
+    type O = terrars::BlockAssignable<FsxDataRepositoryAssociation_S3_AutoExportPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -471,32 +500,34 @@ impl terrars::ToListMappable for FsxDataRepositoryAssociationS3ElAutoExportPolic
     }
 }
 
-pub struct BuildFsxDataRepositoryAssociationS3ElAutoExportPolicyEl {}
+pub struct BuildFsxDataRepositoryAssociation_S3_AutoExportPolicy {}
 
-impl BuildFsxDataRepositoryAssociationS3ElAutoExportPolicyEl {
-    pub fn build(self) -> FsxDataRepositoryAssociationS3ElAutoExportPolicyEl {
-        FsxDataRepositoryAssociationS3ElAutoExportPolicyEl { events: core::default::Default::default() }
+impl BuildFsxDataRepositoryAssociation_S3_AutoExportPolicy {
+    pub fn build(self) -> FsxDataRepositoryAssociation_S3_AutoExportPolicy {
+        FsxDataRepositoryAssociation_S3_AutoExportPolicy { events: core::default::Default::default() }
     }
 }
 
-pub struct FsxDataRepositoryAssociationS3ElAutoExportPolicyElRef {
+#[allow(dead_code)]
+pub struct FsxDataRepositoryAssociation_S3_AutoExportPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxDataRepositoryAssociationS3ElAutoExportPolicyElRef {
+impl terrars::Ref for FsxDataRepositoryAssociation_S3_AutoExportPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxDataRepositoryAssociationS3ElAutoExportPolicyElRef {
-        FsxDataRepositoryAssociationS3ElAutoExportPolicyElRef {
+    ) -> FsxDataRepositoryAssociation_S3_AutoExportPolicyRef {
+        FsxDataRepositoryAssociation_S3_AutoExportPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxDataRepositoryAssociationS3ElAutoExportPolicyElRef {
+impl FsxDataRepositoryAssociation_S3_AutoExportPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -508,12 +539,12 @@ impl FsxDataRepositoryAssociationS3ElAutoExportPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxDataRepositoryAssociationS3ElAutoImportPolicyEl {
+pub struct FsxDataRepositoryAssociation_S3_AutoImportPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     events: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl FsxDataRepositoryAssociationS3ElAutoImportPolicyEl {
+impl FsxDataRepositoryAssociation_S3_AutoImportPolicy {
     #[doc = "Set the field `events`.\n"]
     pub fn set_events(
         mut self,
@@ -524,8 +555,8 @@ impl FsxDataRepositoryAssociationS3ElAutoImportPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for FsxDataRepositoryAssociationS3ElAutoImportPolicyEl {
-    type O = terrars::BlockAssignable<FsxDataRepositoryAssociationS3ElAutoImportPolicyEl>;
+impl terrars::ToListMappable for FsxDataRepositoryAssociation_S3_AutoImportPolicy {
+    type O = terrars::BlockAssignable<FsxDataRepositoryAssociation_S3_AutoImportPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -536,32 +567,34 @@ impl terrars::ToListMappable for FsxDataRepositoryAssociationS3ElAutoImportPolic
     }
 }
 
-pub struct BuildFsxDataRepositoryAssociationS3ElAutoImportPolicyEl {}
+pub struct BuildFsxDataRepositoryAssociation_S3_AutoImportPolicy {}
 
-impl BuildFsxDataRepositoryAssociationS3ElAutoImportPolicyEl {
-    pub fn build(self) -> FsxDataRepositoryAssociationS3ElAutoImportPolicyEl {
-        FsxDataRepositoryAssociationS3ElAutoImportPolicyEl { events: core::default::Default::default() }
+impl BuildFsxDataRepositoryAssociation_S3_AutoImportPolicy {
+    pub fn build(self) -> FsxDataRepositoryAssociation_S3_AutoImportPolicy {
+        FsxDataRepositoryAssociation_S3_AutoImportPolicy { events: core::default::Default::default() }
     }
 }
 
-pub struct FsxDataRepositoryAssociationS3ElAutoImportPolicyElRef {
+#[allow(dead_code)]
+pub struct FsxDataRepositoryAssociation_S3_AutoImportPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxDataRepositoryAssociationS3ElAutoImportPolicyElRef {
+impl terrars::Ref for FsxDataRepositoryAssociation_S3_AutoImportPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxDataRepositoryAssociationS3ElAutoImportPolicyElRef {
-        FsxDataRepositoryAssociationS3ElAutoImportPolicyElRef {
+    ) -> FsxDataRepositoryAssociation_S3_AutoImportPolicyRef {
+        FsxDataRepositoryAssociation_S3_AutoImportPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxDataRepositoryAssociationS3ElAutoImportPolicyElRef {
+impl FsxDataRepositoryAssociation_S3_AutoImportPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -573,29 +606,27 @@ impl FsxDataRepositoryAssociationS3ElAutoImportPolicyElRef {
 }
 
 #[derive(Serialize, Default)]
-struct FsxDataRepositoryAssociationS3ElDynamic {
-    auto_export_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<FsxDataRepositoryAssociationS3ElAutoExportPolicyEl>>,
+struct FsxDataRepositoryAssociation_S3Dynamic {
+    auto_export_policy: std::option::Option<terrars::DynamicBlock<FsxDataRepositoryAssociation_S3_AutoExportPolicy>>,
     auto_import_policy: std
     ::option
-    ::Option<terrars::DynamicBlock<FsxDataRepositoryAssociationS3ElAutoImportPolicyEl>>,
+    ::Option<terrars::DynamicBlock<FsxDataRepositoryAssociation_S3_AutoImportPolicy>>,
 }
 
 #[derive(Serialize)]
-pub struct FsxDataRepositoryAssociationS3El {
+pub struct FsxDataRepositoryAssociation_S3 {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_export_policy: std::option::Option<std::vec::Vec<FsxDataRepositoryAssociationS3ElAutoExportPolicyEl>>,
+    auto_export_policy: std::option::Option<std::vec::Vec<FsxDataRepositoryAssociation_S3_AutoExportPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_import_policy: std::option::Option<std::vec::Vec<FsxDataRepositoryAssociationS3ElAutoImportPolicyEl>>,
-    dynamic: FsxDataRepositoryAssociationS3ElDynamic,
+    auto_import_policy: std::option::Option<std::vec::Vec<FsxDataRepositoryAssociation_S3_AutoImportPolicy>>,
+    dynamic: FsxDataRepositoryAssociation_S3Dynamic,
 }
 
-impl FsxDataRepositoryAssociationS3El {
+impl FsxDataRepositoryAssociation_S3 {
     #[doc = "Set the field `auto_export_policy`.\n"]
     pub fn set_auto_export_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxDataRepositoryAssociationS3ElAutoExportPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxDataRepositoryAssociation_S3_AutoExportPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -611,7 +642,7 @@ impl FsxDataRepositoryAssociationS3El {
     #[doc = "Set the field `auto_import_policy`.\n"]
     pub fn set_auto_import_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxDataRepositoryAssociationS3ElAutoImportPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxDataRepositoryAssociation_S3_AutoImportPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -625,8 +656,8 @@ impl FsxDataRepositoryAssociationS3El {
     }
 }
 
-impl terrars::ToListMappable for FsxDataRepositoryAssociationS3El {
-    type O = terrars::BlockAssignable<FsxDataRepositoryAssociationS3El>;
+impl terrars::ToListMappable for FsxDataRepositoryAssociation_S3 {
+    type O = terrars::BlockAssignable<FsxDataRepositoryAssociation_S3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -637,11 +668,11 @@ impl terrars::ToListMappable for FsxDataRepositoryAssociationS3El {
     }
 }
 
-pub struct BuildFsxDataRepositoryAssociationS3El {}
+pub struct BuildFsxDataRepositoryAssociation_S3 {}
 
-impl BuildFsxDataRepositoryAssociationS3El {
-    pub fn build(self) -> FsxDataRepositoryAssociationS3El {
-        FsxDataRepositoryAssociationS3El {
+impl BuildFsxDataRepositoryAssociation_S3 {
+    pub fn build(self) -> FsxDataRepositoryAssociation_S3 {
+        FsxDataRepositoryAssociation_S3 {
             auto_export_policy: core::default::Default::default(),
             auto_import_policy: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -649,38 +680,40 @@ impl BuildFsxDataRepositoryAssociationS3El {
     }
 }
 
-pub struct FsxDataRepositoryAssociationS3ElRef {
+#[allow(dead_code)]
+pub struct FsxDataRepositoryAssociation_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxDataRepositoryAssociationS3ElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxDataRepositoryAssociationS3ElRef {
-        FsxDataRepositoryAssociationS3ElRef {
+impl terrars::Ref for FsxDataRepositoryAssociation_S3Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxDataRepositoryAssociation_S3Ref {
+        FsxDataRepositoryAssociation_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxDataRepositoryAssociationS3ElRef {
+impl FsxDataRepositoryAssociation_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `auto_export_policy` after provisioning.\n"]
-    pub fn auto_export_policy(&self) -> terrars::ListRef<FsxDataRepositoryAssociationS3ElAutoExportPolicyElRef> {
+    pub fn auto_export_policy(&self) -> terrars::ListRef<FsxDataRepositoryAssociation_S3_AutoExportPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_export_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `auto_import_policy` after provisioning.\n"]
-    pub fn auto_import_policy(&self) -> terrars::ListRef<FsxDataRepositoryAssociationS3ElAutoImportPolicyElRef> {
+    pub fn auto_import_policy(&self) -> terrars::ListRef<FsxDataRepositoryAssociation_S3_AutoImportPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_import_policy", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct FsxDataRepositoryAssociationTimeoutsEl {
+pub struct FsxDataRepositoryAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -689,7 +722,7 @@ pub struct FsxDataRepositoryAssociationTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxDataRepositoryAssociationTimeoutsEl {
+impl FsxDataRepositoryAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -709,8 +742,8 @@ impl FsxDataRepositoryAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxDataRepositoryAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<FsxDataRepositoryAssociationTimeoutsEl>;
+impl terrars::ToListMappable for FsxDataRepositoryAssociation_Timeouts {
+    type O = terrars::BlockAssignable<FsxDataRepositoryAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -721,11 +754,11 @@ impl terrars::ToListMappable for FsxDataRepositoryAssociationTimeoutsEl {
     }
 }
 
-pub struct BuildFsxDataRepositoryAssociationTimeoutsEl {}
+pub struct BuildFsxDataRepositoryAssociation_Timeouts {}
 
-impl BuildFsxDataRepositoryAssociationTimeoutsEl {
-    pub fn build(self) -> FsxDataRepositoryAssociationTimeoutsEl {
-        FsxDataRepositoryAssociationTimeoutsEl {
+impl BuildFsxDataRepositoryAssociation_Timeouts {
+    pub fn build(self) -> FsxDataRepositoryAssociation_Timeouts {
+        FsxDataRepositoryAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -733,21 +766,23 @@ impl BuildFsxDataRepositoryAssociationTimeoutsEl {
     }
 }
 
-pub struct FsxDataRepositoryAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FsxDataRepositoryAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxDataRepositoryAssociationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxDataRepositoryAssociationTimeoutsElRef {
-        FsxDataRepositoryAssociationTimeoutsElRef {
+impl terrars::Ref for FsxDataRepositoryAssociation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxDataRepositoryAssociation_TimeoutsRef {
+        FsxDataRepositoryAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxDataRepositoryAssociationTimeoutsElRef {
+impl FsxDataRepositoryAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -766,9 +801,4 @@ impl FsxDataRepositoryAssociationTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FsxDataRepositoryAssociationDynamic {
-    s3: std::option::Option<terrars::DynamicBlock<FsxDataRepositoryAssociationS3El>>,
 }

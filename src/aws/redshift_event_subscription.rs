@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RedshiftEventSubscriptionData {
+struct RedshiftEventSubscriptionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,6 +28,8 @@ struct RedshiftEventSubscriptionData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     severity: std::option::Option<terrars::PrimField<std::string::String>>,
     sns_topic_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,13 +41,13 @@ struct RedshiftEventSubscriptionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RedshiftEventSubscriptionTimeoutsEl>,
+    timeouts: std::option::Option<RedshiftEventSubscription_Timeouts>,
 }
 
 struct RedshiftEventSubscription_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RedshiftEventSubscriptionData>,
+    data: std::cell::RefCell<RedshiftEventSubscriptionData_>,
 }
 
 #[derive(Clone)]
@@ -164,6 +168,13 @@ impl RedshiftEventSubscription {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `severity`.\n"]
     pub fn set_severity(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().severity = std::option::Option::Some(v.into());
@@ -204,7 +215,7 @@ impl RedshiftEventSubscription {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RedshiftEventSubscriptionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RedshiftEventSubscription_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -237,6 +248,12 @@ impl RedshiftEventSubscription {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `severity` after provisioning.\n"]
@@ -275,11 +292,8 @@ impl RedshiftEventSubscription {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RedshiftEventSubscriptionTimeoutsElRef {
-        RedshiftEventSubscriptionTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> RedshiftEventSubscription_TimeoutsRef {
+        RedshiftEventSubscription_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -327,7 +341,7 @@ impl BuildRedshiftEventSubscription {
         let out = RedshiftEventSubscription(std::rc::Rc::new(RedshiftEventSubscription_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RedshiftEventSubscriptionData {
+            data: std::cell::RefCell::new(RedshiftEventSubscriptionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -337,6 +351,7 @@ impl BuildRedshiftEventSubscription {
                 event_categories: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 severity: core::default::Default::default(),
                 sns_topic_arn: self.sns_topic_arn,
                 source_ids: core::default::Default::default(),
@@ -404,6 +419,12 @@ impl RedshiftEventSubscriptionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `severity` after provisioning.\n"]
     pub fn severity(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.severity", self.extract_ref()))
@@ -440,16 +461,13 @@ impl RedshiftEventSubscriptionRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RedshiftEventSubscriptionTimeoutsElRef {
-        RedshiftEventSubscriptionTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> RedshiftEventSubscription_TimeoutsRef {
+        RedshiftEventSubscription_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct RedshiftEventSubscriptionTimeoutsEl {
+pub struct RedshiftEventSubscription_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -458,7 +476,7 @@ pub struct RedshiftEventSubscriptionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RedshiftEventSubscriptionTimeoutsEl {
+impl RedshiftEventSubscription_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -478,8 +496,8 @@ impl RedshiftEventSubscriptionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftEventSubscriptionTimeoutsEl {
-    type O = terrars::BlockAssignable<RedshiftEventSubscriptionTimeoutsEl>;
+impl terrars::ToListMappable for RedshiftEventSubscription_Timeouts {
+    type O = terrars::BlockAssignable<RedshiftEventSubscription_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,11 +508,11 @@ impl terrars::ToListMappable for RedshiftEventSubscriptionTimeoutsEl {
     }
 }
 
-pub struct BuildRedshiftEventSubscriptionTimeoutsEl {}
+pub struct BuildRedshiftEventSubscription_Timeouts {}
 
-impl BuildRedshiftEventSubscriptionTimeoutsEl {
-    pub fn build(self) -> RedshiftEventSubscriptionTimeoutsEl {
-        RedshiftEventSubscriptionTimeoutsEl {
+impl BuildRedshiftEventSubscription_Timeouts {
+    pub fn build(self) -> RedshiftEventSubscription_Timeouts {
+        RedshiftEventSubscription_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -502,21 +520,23 @@ impl BuildRedshiftEventSubscriptionTimeoutsEl {
     }
 }
 
-pub struct RedshiftEventSubscriptionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RedshiftEventSubscription_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftEventSubscriptionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftEventSubscriptionTimeoutsElRef {
-        RedshiftEventSubscriptionTimeoutsElRef {
+impl terrars::Ref for RedshiftEventSubscription_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftEventSubscription_TimeoutsRef {
+        RedshiftEventSubscription_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftEventSubscriptionTimeoutsElRef {
+impl RedshiftEventSubscription_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

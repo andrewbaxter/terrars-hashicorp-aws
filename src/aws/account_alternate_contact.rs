@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AccountAlternateContactData {
+struct AccountAlternateContactData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,13 +30,13 @@ struct AccountAlternateContactData {
     phone_number: terrars::PrimField<std::string::String>,
     title: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AccountAlternateContactTimeoutsEl>,
+    timeouts: std::option::Option<AccountAlternateContact_Timeouts>,
 }
 
 struct AccountAlternateContact_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AccountAlternateContactData>,
+    data: std::cell::RefCell<AccountAlternateContactData_>,
 }
 
 #[derive(Clone)]
@@ -147,7 +149,7 @@ impl AccountAlternateContact {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AccountAlternateContactTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AccountAlternateContact_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -188,8 +190,8 @@ impl AccountAlternateContact {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccountAlternateContactTimeoutsElRef {
-        AccountAlternateContactTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AccountAlternateContact_TimeoutsRef {
+        AccountAlternateContact_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -243,7 +245,7 @@ impl BuildAccountAlternateContact {
         let out = AccountAlternateContact(std::rc::Rc::new(AccountAlternateContact_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AccountAlternateContactData {
+            data: std::cell::RefCell::new(AccountAlternateContactData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -323,13 +325,13 @@ impl AccountAlternateContactRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AccountAlternateContactTimeoutsElRef {
-        AccountAlternateContactTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AccountAlternateContact_TimeoutsRef {
+        AccountAlternateContact_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct AccountAlternateContactTimeoutsEl {
+pub struct AccountAlternateContact_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -338,7 +340,7 @@ pub struct AccountAlternateContactTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AccountAlternateContactTimeoutsEl {
+impl AccountAlternateContact_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -358,8 +360,8 @@ impl AccountAlternateContactTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AccountAlternateContactTimeoutsEl {
-    type O = terrars::BlockAssignable<AccountAlternateContactTimeoutsEl>;
+impl terrars::ToListMappable for AccountAlternateContact_Timeouts {
+    type O = terrars::BlockAssignable<AccountAlternateContact_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -370,11 +372,11 @@ impl terrars::ToListMappable for AccountAlternateContactTimeoutsEl {
     }
 }
 
-pub struct BuildAccountAlternateContactTimeoutsEl {}
+pub struct BuildAccountAlternateContact_Timeouts {}
 
-impl BuildAccountAlternateContactTimeoutsEl {
-    pub fn build(self) -> AccountAlternateContactTimeoutsEl {
-        AccountAlternateContactTimeoutsEl {
+impl BuildAccountAlternateContact_Timeouts {
+    pub fn build(self) -> AccountAlternateContact_Timeouts {
+        AccountAlternateContact_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -382,21 +384,23 @@ impl BuildAccountAlternateContactTimeoutsEl {
     }
 }
 
-pub struct AccountAlternateContactTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AccountAlternateContact_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AccountAlternateContactTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AccountAlternateContactTimeoutsElRef {
-        AccountAlternateContactTimeoutsElRef {
+impl terrars::Ref for AccountAlternateContact_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AccountAlternateContact_TimeoutsRef {
+        AccountAlternateContact_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AccountAlternateContactTimeoutsElRef {
+impl AccountAlternateContact_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

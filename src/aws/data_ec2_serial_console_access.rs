@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2SerialConsoleAccessData {
+struct DataEc2SerialConsoleAccessData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,13 +21,15 @@ struct DataEc2SerialConsoleAccessData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEc2SerialConsoleAccessTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataEc2SerialConsoleAccess_Timeouts>,
 }
 
 struct DataEc2SerialConsoleAccess_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2SerialConsoleAccessData>,
+    data: std::cell::RefCell<DataEc2SerialConsoleAccessData_>,
 }
 
 #[derive(Clone)]
@@ -76,8 +80,15 @@ impl DataEc2SerialConsoleAccess {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2SerialConsoleAccessTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2SerialConsoleAccess_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -92,9 +103,15 @@ impl DataEc2SerialConsoleAccess {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2SerialConsoleAccessTimeoutsElRef {
-        DataEc2SerialConsoleAccessTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2SerialConsoleAccess_TimeoutsRef {
+        DataEc2SerialConsoleAccess_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -141,12 +158,13 @@ impl BuildDataEc2SerialConsoleAccess {
         let out = DataEc2SerialConsoleAccess(std::rc::Rc::new(DataEc2SerialConsoleAccess_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2SerialConsoleAccessData {
+            data: std::cell::RefCell::new(DataEc2SerialConsoleAccessData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -188,9 +206,15 @@ impl DataEc2SerialConsoleAccessRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2SerialConsoleAccessTimeoutsElRef {
-        DataEc2SerialConsoleAccessTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2SerialConsoleAccess_TimeoutsRef {
+        DataEc2SerialConsoleAccess_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -198,12 +222,12 @@ impl DataEc2SerialConsoleAccessRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2SerialConsoleAccessTimeoutsEl {
+pub struct DataEc2SerialConsoleAccess_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2SerialConsoleAccessTimeoutsEl {
+impl DataEc2SerialConsoleAccess_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -211,8 +235,8 @@ impl DataEc2SerialConsoleAccessTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2SerialConsoleAccessTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEc2SerialConsoleAccessTimeoutsEl>;
+impl terrars::ToListMappable for DataEc2SerialConsoleAccess_Timeouts {
+    type O = terrars::BlockAssignable<DataEc2SerialConsoleAccess_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -223,29 +247,31 @@ impl terrars::ToListMappable for DataEc2SerialConsoleAccessTimeoutsEl {
     }
 }
 
-pub struct BuildDataEc2SerialConsoleAccessTimeoutsEl {}
+pub struct BuildDataEc2SerialConsoleAccess_Timeouts {}
 
-impl BuildDataEc2SerialConsoleAccessTimeoutsEl {
-    pub fn build(self) -> DataEc2SerialConsoleAccessTimeoutsEl {
-        DataEc2SerialConsoleAccessTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEc2SerialConsoleAccess_Timeouts {
+    pub fn build(self) -> DataEc2SerialConsoleAccess_Timeouts {
+        DataEc2SerialConsoleAccess_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEc2SerialConsoleAccessTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEc2SerialConsoleAccess_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2SerialConsoleAccessTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2SerialConsoleAccessTimeoutsElRef {
-        DataEc2SerialConsoleAccessTimeoutsElRef {
+impl terrars::Ref for DataEc2SerialConsoleAccess_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2SerialConsoleAccess_TimeoutsRef {
+        DataEc2SerialConsoleAccess_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2SerialConsoleAccessTimeoutsElRef {
+impl DataEc2SerialConsoleAccess_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LightsailInstanceData {
+struct LightsailInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,20 +31,22 @@ struct LightsailInstanceData {
     key_pair_name: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    add_on: std::option::Option<std::vec::Vec<LightsailInstanceAddOnEl>>,
+    add_on: std::option::Option<std::vec::Vec<LightsailInstance_AddOn>>,
     dynamic: LightsailInstanceDynamic,
 }
 
 struct LightsailInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LightsailInstanceData>,
+    data: std::cell::RefCell<LightsailInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -160,6 +164,13 @@ impl LightsailInstance {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -185,7 +196,7 @@ impl LightsailInstance {
     }
 
     #[doc = "Set the field `add_on`.\n"]
-    pub fn set_add_on(self, v: impl std::convert::Into<terrars::BlockAssignable<LightsailInstanceAddOnEl>>) -> Self {
+    pub fn set_add_on(self, v: impl std::convert::Into<terrars::BlockAssignable<LightsailInstance_AddOn>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().add_on = std::option::Option::Some(v);
@@ -237,11 +248,6 @@ impl LightsailInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `ipv6_address` after provisioning.\n"]
-    pub fn ipv6_address(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_address", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `ipv6_addresses` after provisioning.\n"]
     pub fn ipv6_addresses(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ipv6_addresses", self.extract_ref()))
@@ -277,6 +283,12 @@ impl LightsailInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ram_size", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -298,7 +310,7 @@ impl LightsailInstance {
     }
 
     #[doc = "Get a reference to the value of field `add_on` after provisioning.\n"]
-    pub fn add_on(&self) -> terrars::ListRef<LightsailInstanceAddOnElRef> {
+    pub fn add_on(&self) -> terrars::ListRef<LightsailInstance_AddOnRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.add_on", self.extract_ref()))
     }
 }
@@ -351,7 +363,7 @@ impl BuildLightsailInstance {
         let out = LightsailInstance(std::rc::Rc::new(LightsailInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LightsailInstanceData {
+            data: std::cell::RefCell::new(LightsailInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -364,6 +376,7 @@ impl BuildLightsailInstance {
                 ip_address_type: core::default::Default::default(),
                 key_pair_name: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 user_data: core::default::Default::default(),
@@ -439,11 +452,6 @@ impl LightsailInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `ipv6_address` after provisioning.\n"]
-    pub fn ipv6_address(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_address", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `ipv6_addresses` after provisioning.\n"]
     pub fn ipv6_addresses(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ipv6_addresses", self.extract_ref()))
@@ -479,6 +487,12 @@ impl LightsailInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ram_size", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -500,23 +514,28 @@ impl LightsailInstanceRef {
     }
 
     #[doc = "Get a reference to the value of field `add_on` after provisioning.\n"]
-    pub fn add_on(&self) -> terrars::ListRef<LightsailInstanceAddOnElRef> {
+    pub fn add_on(&self) -> terrars::ListRef<LightsailInstance_AddOnRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.add_on", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LightsailInstanceDynamic {
+    add_on: std::option::Option<terrars::DynamicBlock<LightsailInstance_AddOn>>,
+}
+
 #[derive(Serialize)]
-pub struct LightsailInstanceAddOnEl {
+pub struct LightsailInstance_AddOn {
     snapshot_time: terrars::PrimField<std::string::String>,
     status: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl LightsailInstanceAddOnEl { }
+impl LightsailInstance_AddOn { }
 
-impl terrars::ToListMappable for LightsailInstanceAddOnEl {
-    type O = terrars::BlockAssignable<LightsailInstanceAddOnEl>;
+impl terrars::ToListMappable for LightsailInstance_AddOn {
+    type O = terrars::BlockAssignable<LightsailInstance_AddOn>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -527,7 +546,7 @@ impl terrars::ToListMappable for LightsailInstanceAddOnEl {
     }
 }
 
-pub struct BuildLightsailInstanceAddOnEl {
+pub struct BuildLightsailInstance_AddOn {
     #[doc = ""]
     pub snapshot_time: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -536,9 +555,9 @@ pub struct BuildLightsailInstanceAddOnEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLightsailInstanceAddOnEl {
-    pub fn build(self) -> LightsailInstanceAddOnEl {
-        LightsailInstanceAddOnEl {
+impl BuildLightsailInstance_AddOn {
+    pub fn build(self) -> LightsailInstance_AddOn {
+        LightsailInstance_AddOn {
             snapshot_time: self.snapshot_time,
             status: self.status,
             type_: self.type_,
@@ -546,21 +565,23 @@ impl BuildLightsailInstanceAddOnEl {
     }
 }
 
-pub struct LightsailInstanceAddOnElRef {
+#[allow(dead_code)]
+pub struct LightsailInstance_AddOnRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailInstanceAddOnElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LightsailInstanceAddOnElRef {
-        LightsailInstanceAddOnElRef {
+impl terrars::Ref for LightsailInstance_AddOnRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LightsailInstance_AddOnRef {
+        LightsailInstance_AddOnRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailInstanceAddOnElRef {
+impl LightsailInstance_AddOnRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -579,9 +600,4 @@ impl LightsailInstanceAddOnElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LightsailInstanceDynamic {
-    add_on: std::option::Option<terrars::DynamicBlock<LightsailInstanceAddOnEl>>,
 }

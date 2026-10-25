@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEcsClusterData {
+struct DataEcsClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,12 +21,16 @@ struct DataEcsClusterData {
     cluster_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataEcsCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEcsClusterData>,
+    data: std::cell::RefCell<DataEcsClusterData_>,
 }
 
 #[derive(Clone)]
@@ -75,6 +81,22 @@ impl DataEcsCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -95,6 +117,12 @@ impl DataEcsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pending_tasks_count", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registered_container_instances_count` after provisioning.\n"]
     pub fn registered_container_instances_count(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(
@@ -109,18 +137,23 @@ impl DataEcsCluster {
     }
 
     #[doc = "Get a reference to the value of field `service_connect_defaults` after provisioning.\n"]
-    pub fn service_connect_defaults(&self) -> terrars::ListRef<DataEcsClusterServiceConnectDefaultsElRef> {
+    pub fn service_connect_defaults(&self) -> terrars::ListRef<DataEcsCluster_ServiceConnectDefaultsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_connect_defaults", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `setting` after provisioning.\n"]
-    pub fn setting(&self) -> terrars::SetRef<DataEcsClusterSettingElRef> {
+    pub fn setting(&self) -> terrars::SetRef<DataEcsCluster_SettingRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.setting", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 }
 
@@ -166,13 +199,15 @@ impl BuildDataEcsCluster {
         let out = DataEcsCluster(std::rc::Rc::new(DataEcsCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEcsClusterData {
+            data: std::cell::RefCell::new(DataEcsClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 cluster_name: self.cluster_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
+                tags: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -223,6 +258,12 @@ impl DataEcsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pending_tasks_count", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registered_container_instances_count` after provisioning.\n"]
     pub fn registered_container_instances_count(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(
@@ -237,12 +278,12 @@ impl DataEcsClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `service_connect_defaults` after provisioning.\n"]
-    pub fn service_connect_defaults(&self) -> terrars::ListRef<DataEcsClusterServiceConnectDefaultsElRef> {
+    pub fn service_connect_defaults(&self) -> terrars::ListRef<DataEcsCluster_ServiceConnectDefaultsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_connect_defaults", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `setting` after provisioning.\n"]
-    pub fn setting(&self) -> terrars::SetRef<DataEcsClusterSettingElRef> {
+    pub fn setting(&self) -> terrars::SetRef<DataEcsCluster_SettingRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.setting", self.extract_ref()))
     }
 
@@ -250,15 +291,20 @@ impl DataEcsClusterRef {
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataEcsClusterServiceConnectDefaultsEl {
+pub struct DataEcsCluster_ServiceConnectDefaults {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEcsClusterServiceConnectDefaultsEl {
+impl DataEcsCluster_ServiceConnectDefaults {
     #[doc = "Set the field `namespace`.\n"]
     pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.namespace = std::option::Option::Some(v.into());
@@ -266,8 +312,8 @@ impl DataEcsClusterServiceConnectDefaultsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEcsClusterServiceConnectDefaultsEl {
-    type O = terrars::BlockAssignable<DataEcsClusterServiceConnectDefaultsEl>;
+impl terrars::ToListMappable for DataEcsCluster_ServiceConnectDefaults {
+    type O = terrars::BlockAssignable<DataEcsCluster_ServiceConnectDefaults>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -278,29 +324,31 @@ impl terrars::ToListMappable for DataEcsClusterServiceConnectDefaultsEl {
     }
 }
 
-pub struct BuildDataEcsClusterServiceConnectDefaultsEl {}
+pub struct BuildDataEcsCluster_ServiceConnectDefaults {}
 
-impl BuildDataEcsClusterServiceConnectDefaultsEl {
-    pub fn build(self) -> DataEcsClusterServiceConnectDefaultsEl {
-        DataEcsClusterServiceConnectDefaultsEl { namespace: core::default::Default::default() }
+impl BuildDataEcsCluster_ServiceConnectDefaults {
+    pub fn build(self) -> DataEcsCluster_ServiceConnectDefaults {
+        DataEcsCluster_ServiceConnectDefaults { namespace: core::default::Default::default() }
     }
 }
 
-pub struct DataEcsClusterServiceConnectDefaultsElRef {
+#[allow(dead_code)]
+pub struct DataEcsCluster_ServiceConnectDefaultsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEcsClusterServiceConnectDefaultsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEcsClusterServiceConnectDefaultsElRef {
-        DataEcsClusterServiceConnectDefaultsElRef {
+impl terrars::Ref for DataEcsCluster_ServiceConnectDefaultsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEcsCluster_ServiceConnectDefaultsRef {
+        DataEcsCluster_ServiceConnectDefaultsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEcsClusterServiceConnectDefaultsElRef {
+impl DataEcsCluster_ServiceConnectDefaultsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -312,14 +360,14 @@ impl DataEcsClusterServiceConnectDefaultsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEcsClusterSettingEl {
+pub struct DataEcsCluster_Setting {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEcsClusterSettingEl {
+impl DataEcsCluster_Setting {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -333,8 +381,8 @@ impl DataEcsClusterSettingEl {
     }
 }
 
-impl terrars::ToListMappable for DataEcsClusterSettingEl {
-    type O = terrars::BlockAssignable<DataEcsClusterSettingEl>;
+impl terrars::ToListMappable for DataEcsCluster_Setting {
+    type O = terrars::BlockAssignable<DataEcsCluster_Setting>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -345,32 +393,34 @@ impl terrars::ToListMappable for DataEcsClusterSettingEl {
     }
 }
 
-pub struct BuildDataEcsClusterSettingEl {}
+pub struct BuildDataEcsCluster_Setting {}
 
-impl BuildDataEcsClusterSettingEl {
-    pub fn build(self) -> DataEcsClusterSettingEl {
-        DataEcsClusterSettingEl {
+impl BuildDataEcsCluster_Setting {
+    pub fn build(self) -> DataEcsCluster_Setting {
+        DataEcsCluster_Setting {
             name: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEcsClusterSettingElRef {
+#[allow(dead_code)]
+pub struct DataEcsCluster_SettingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEcsClusterSettingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEcsClusterSettingElRef {
-        DataEcsClusterSettingElRef {
+impl terrars::Ref for DataEcsCluster_SettingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEcsCluster_SettingRef {
+        DataEcsCluster_SettingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEcsClusterSettingElRef {
+impl DataEcsCluster_SettingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

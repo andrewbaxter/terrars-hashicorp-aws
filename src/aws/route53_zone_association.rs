@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53ZoneAssociationData {
+struct Route53ZoneAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,12 +26,14 @@ struct Route53ZoneAssociationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_region: std::option::Option<terrars::PrimField<std::string::String>>,
     zone_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Route53ZoneAssociation_Timeouts>,
 }
 
 struct Route53ZoneAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53ZoneAssociationData>,
+    data: std::cell::RefCell<Route53ZoneAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,12 @@ impl Route53ZoneAssociation {
         self
     }
 
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<Route53ZoneAssociation_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -164,6 +174,11 @@ impl Route53ZoneAssociation {
     #[doc = "Get a reference to the value of field `zone_id` after provisioning.\n"]
     pub fn zone_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Route53ZoneAssociation_TimeoutsRef {
+        Route53ZoneAssociation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -211,7 +226,7 @@ impl BuildRoute53ZoneAssociation {
         let out = Route53ZoneAssociation(std::rc::Rc::new(Route53ZoneAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53ZoneAssociationData {
+            data: std::cell::RefCell::new(Route53ZoneAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -221,6 +236,7 @@ impl BuildRoute53ZoneAssociation {
                 vpc_id: self.vpc_id,
                 vpc_region: core::default::Default::default(),
                 zone_id: self.zone_id,
+                timeouts: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -274,5 +290,87 @@ impl Route53ZoneAssociationRef {
     #[doc = "Get a reference to the value of field `zone_id` after provisioning.\n"]
     pub fn zone_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Route53ZoneAssociation_TimeoutsRef {
+        Route53ZoneAssociation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Route53ZoneAssociation_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Route53ZoneAssociation_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Route53ZoneAssociation_Timeouts {
+    type O = terrars::BlockAssignable<Route53ZoneAssociation_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRoute53ZoneAssociation_Timeouts {}
+
+impl BuildRoute53ZoneAssociation_Timeouts {
+    pub fn build(self) -> Route53ZoneAssociation_Timeouts {
+        Route53ZoneAssociation_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Route53ZoneAssociation_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Route53ZoneAssociation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53ZoneAssociation_TimeoutsRef {
+        Route53ZoneAssociation_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Route53ZoneAssociation_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }

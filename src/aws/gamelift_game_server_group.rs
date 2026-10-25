@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GameliftGameServerGroupData {
+struct GameliftGameServerGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,6 +29,8 @@ struct GameliftGameServerGroupData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     max_size: terrars::PrimField<f64>,
     min_size: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -35,20 +39,20 @@ struct GameliftGameServerGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_subnets: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_scaling_policy: std::option::Option<std::vec::Vec<GameliftGameServerGroupAutoScalingPolicyEl>>,
+    auto_scaling_policy: std::option::Option<std::vec::Vec<GameliftGameServerGroup_AutoScalingPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_definition: std::option::Option<std::vec::Vec<GameliftGameServerGroupInstanceDefinitionEl>>,
+    instance_definition: std::option::Option<std::vec::Vec<GameliftGameServerGroup_InstanceDefinition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    launch_template: std::option::Option<std::vec::Vec<GameliftGameServerGroupLaunchTemplateEl>>,
+    launch_template: std::option::Option<std::vec::Vec<GameliftGameServerGroup_LaunchTemplate>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GameliftGameServerGroupTimeoutsEl>,
+    timeouts: std::option::Option<GameliftGameServerGroup_Timeouts>,
     dynamic: GameliftGameServerGroupDynamic,
 }
 
 struct GameliftGameServerGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GameliftGameServerGroupData>,
+    data: std::cell::RefCell<GameliftGameServerGroupData_>,
 }
 
 #[derive(Clone)]
@@ -169,6 +173,13 @@ impl GameliftGameServerGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -199,7 +210,7 @@ impl GameliftGameServerGroup {
     #[doc = "Set the field `auto_scaling_policy`.\n"]
     pub fn set_auto_scaling_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftGameServerGroupAutoScalingPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftGameServerGroup_AutoScalingPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,7 +226,7 @@ impl GameliftGameServerGroup {
     #[doc = "Set the field `instance_definition`.\n"]
     pub fn set_instance_definition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftGameServerGroupInstanceDefinitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftGameServerGroup_InstanceDefinition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -231,7 +242,7 @@ impl GameliftGameServerGroup {
     #[doc = "Set the field `launch_template`.\n"]
     pub fn set_launch_template(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GameliftGameServerGroupLaunchTemplateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GameliftGameServerGroup_LaunchTemplate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -245,7 +256,7 @@ impl GameliftGameServerGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GameliftGameServerGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GameliftGameServerGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -293,6 +304,12 @@ impl GameliftGameServerGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_size", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -314,18 +331,18 @@ impl GameliftGameServerGroup {
     }
 
     #[doc = "Get a reference to the value of field `auto_scaling_policy` after provisioning.\n"]
-    pub fn auto_scaling_policy(&self) -> terrars::ListRef<GameliftGameServerGroupAutoScalingPolicyElRef> {
+    pub fn auto_scaling_policy(&self) -> terrars::ListRef<GameliftGameServerGroup_AutoScalingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_scaling_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `launch_template` after provisioning.\n"]
-    pub fn launch_template(&self) -> terrars::ListRef<GameliftGameServerGroupLaunchTemplateElRef> {
+    pub fn launch_template(&self) -> terrars::ListRef<GameliftGameServerGroup_LaunchTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GameliftGameServerGroupTimeoutsElRef {
-        GameliftGameServerGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GameliftGameServerGroup_TimeoutsRef {
+        GameliftGameServerGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -377,7 +394,7 @@ impl BuildGameliftGameServerGroup {
         let out = GameliftGameServerGroup(std::rc::Rc::new(GameliftGameServerGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GameliftGameServerGroupData {
+            data: std::cell::RefCell::new(GameliftGameServerGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -389,6 +406,7 @@ impl BuildGameliftGameServerGroup {
                 id: core::default::Default::default(),
                 max_size: self.max_size,
                 min_size: self.min_size,
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -471,6 +489,12 @@ impl GameliftGameServerGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_size", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -492,30 +516,37 @@ impl GameliftGameServerGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `auto_scaling_policy` after provisioning.\n"]
-    pub fn auto_scaling_policy(&self) -> terrars::ListRef<GameliftGameServerGroupAutoScalingPolicyElRef> {
+    pub fn auto_scaling_policy(&self) -> terrars::ListRef<GameliftGameServerGroup_AutoScalingPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_scaling_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `launch_template` after provisioning.\n"]
-    pub fn launch_template(&self) -> terrars::ListRef<GameliftGameServerGroupLaunchTemplateElRef> {
+    pub fn launch_template(&self) -> terrars::ListRef<GameliftGameServerGroup_LaunchTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GameliftGameServerGroupTimeoutsElRef {
-        GameliftGameServerGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GameliftGameServerGroup_TimeoutsRef {
+        GameliftGameServerGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GameliftGameServerGroupDynamic {
+    auto_scaling_policy: std::option::Option<terrars::DynamicBlock<GameliftGameServerGroup_AutoScalingPolicy>>,
+    instance_definition: std::option::Option<terrars::DynamicBlock<GameliftGameServerGroup_InstanceDefinition>>,
+    launch_template: std::option::Option<terrars::DynamicBlock<GameliftGameServerGroup_LaunchTemplate>>,
+}
+
 #[derive(Serialize)]
-pub struct GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl {
+pub struct GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration {
     target_value: terrars::PrimField<f64>,
 }
 
-impl GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl { }
+impl GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration { }
 
-impl terrars::ToListMappable for GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl {
-    type O = terrars::BlockAssignable<GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl>;
+impl terrars::ToListMappable for GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration {
+    type O = terrars::BlockAssignable<GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -526,35 +557,37 @@ impl terrars::ToListMappable for GameliftGameServerGroupAutoScalingPolicyElTarge
     }
 }
 
-pub struct BuildGameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl {
+pub struct BuildGameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration {
     #[doc = ""]
     pub target_value: terrars::PrimField<f64>,
 }
 
-impl BuildGameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl {
-    pub fn build(self) -> GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl {
-        GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl { target_value: self.target_value }
+impl BuildGameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration {
+    pub fn build(self) -> GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration {
+        GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration { target_value: self.target_value }
     }
 }
 
-pub struct GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationElRef {
+#[allow(dead_code)]
+pub struct GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationElRef {
+impl terrars::Ref for GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationElRef {
-        GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationElRef {
+    ) -> GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfigurationRef {
+        GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationElRef {
+impl GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -566,24 +599,24 @@ impl GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationElRef 
 }
 
 #[derive(Serialize, Default)]
-struct GameliftGameServerGroupAutoScalingPolicyElDynamic {
+struct GameliftGameServerGroup_AutoScalingPolicyDynamic {
     target_tracking_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct GameliftGameServerGroupAutoScalingPolicyEl {
+pub struct GameliftGameServerGroup_AutoScalingPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     estimated_instance_warmup: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_tracking_configuration: std
     ::option
-    ::Option<std::vec::Vec<GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl>>,
-    dynamic: GameliftGameServerGroupAutoScalingPolicyElDynamic,
+    ::Option<std::vec::Vec<GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration>>,
+    dynamic: GameliftGameServerGroup_AutoScalingPolicyDynamic,
 }
 
-impl GameliftGameServerGroupAutoScalingPolicyEl {
+impl GameliftGameServerGroup_AutoScalingPolicy {
     #[doc = "Set the field `estimated_instance_warmup`.\n"]
     pub fn set_estimated_instance_warmup(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.estimated_instance_warmup = std::option::Option::Some(v.into());
@@ -600,7 +633,7 @@ impl GameliftGameServerGroupAutoScalingPolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationEl>,
+                        ::BlockAssignable<GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -615,8 +648,8 @@ impl GameliftGameServerGroupAutoScalingPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftGameServerGroupAutoScalingPolicyEl {
-    type O = terrars::BlockAssignable<GameliftGameServerGroupAutoScalingPolicyEl>;
+impl terrars::ToListMappable for GameliftGameServerGroup_AutoScalingPolicy {
+    type O = terrars::BlockAssignable<GameliftGameServerGroup_AutoScalingPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -627,11 +660,11 @@ impl terrars::ToListMappable for GameliftGameServerGroupAutoScalingPolicyEl {
     }
 }
 
-pub struct BuildGameliftGameServerGroupAutoScalingPolicyEl {}
+pub struct BuildGameliftGameServerGroup_AutoScalingPolicy {}
 
-impl BuildGameliftGameServerGroupAutoScalingPolicyEl {
-    pub fn build(self) -> GameliftGameServerGroupAutoScalingPolicyEl {
-        GameliftGameServerGroupAutoScalingPolicyEl {
+impl BuildGameliftGameServerGroup_AutoScalingPolicy {
+    pub fn build(self) -> GameliftGameServerGroup_AutoScalingPolicy {
+        GameliftGameServerGroup_AutoScalingPolicy {
             estimated_instance_warmup: core::default::Default::default(),
             target_tracking_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -639,21 +672,23 @@ impl BuildGameliftGameServerGroupAutoScalingPolicyEl {
     }
 }
 
-pub struct GameliftGameServerGroupAutoScalingPolicyElRef {
+#[allow(dead_code)]
+pub struct GameliftGameServerGroup_AutoScalingPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftGameServerGroupAutoScalingPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftGameServerGroupAutoScalingPolicyElRef {
-        GameliftGameServerGroupAutoScalingPolicyElRef {
+impl terrars::Ref for GameliftGameServerGroup_AutoScalingPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftGameServerGroup_AutoScalingPolicyRef {
+        GameliftGameServerGroup_AutoScalingPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftGameServerGroupAutoScalingPolicyElRef {
+impl GameliftGameServerGroup_AutoScalingPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -666,19 +701,19 @@ impl GameliftGameServerGroupAutoScalingPolicyElRef {
     #[doc = "Get a reference to the value of field `target_tracking_configuration` after provisioning.\n"]
     pub fn target_tracking_configuration(
         &self,
-    ) -> terrars::ListRef<GameliftGameServerGroupAutoScalingPolicyElTargetTrackingConfigurationElRef> {
+    ) -> terrars::ListRef<GameliftGameServerGroup_AutoScalingPolicy_TargetTrackingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_tracking_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct GameliftGameServerGroupInstanceDefinitionEl {
+pub struct GameliftGameServerGroup_InstanceDefinition {
     instance_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weighted_capacity: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GameliftGameServerGroupInstanceDefinitionEl {
+impl GameliftGameServerGroup_InstanceDefinition {
     #[doc = "Set the field `weighted_capacity`.\n"]
     pub fn set_weighted_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.weighted_capacity = std::option::Option::Some(v.into());
@@ -686,8 +721,8 @@ impl GameliftGameServerGroupInstanceDefinitionEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftGameServerGroupInstanceDefinitionEl {
-    type O = terrars::BlockAssignable<GameliftGameServerGroupInstanceDefinitionEl>;
+impl terrars::ToListMappable for GameliftGameServerGroup_InstanceDefinition {
+    type O = terrars::BlockAssignable<GameliftGameServerGroup_InstanceDefinition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -698,38 +733,37 @@ impl terrars::ToListMappable for GameliftGameServerGroupInstanceDefinitionEl {
     }
 }
 
-pub struct BuildGameliftGameServerGroupInstanceDefinitionEl {
+pub struct BuildGameliftGameServerGroup_InstanceDefinition {
     #[doc = ""]
     pub instance_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGameliftGameServerGroupInstanceDefinitionEl {
-    pub fn build(self) -> GameliftGameServerGroupInstanceDefinitionEl {
-        GameliftGameServerGroupInstanceDefinitionEl {
+impl BuildGameliftGameServerGroup_InstanceDefinition {
+    pub fn build(self) -> GameliftGameServerGroup_InstanceDefinition {
+        GameliftGameServerGroup_InstanceDefinition {
             instance_type: self.instance_type,
             weighted_capacity: core::default::Default::default(),
         }
     }
 }
 
-pub struct GameliftGameServerGroupInstanceDefinitionElRef {
+#[allow(dead_code)]
+pub struct GameliftGameServerGroup_InstanceDefinitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftGameServerGroupInstanceDefinitionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> GameliftGameServerGroupInstanceDefinitionElRef {
-        GameliftGameServerGroupInstanceDefinitionElRef {
+impl terrars::Ref for GameliftGameServerGroup_InstanceDefinitionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftGameServerGroup_InstanceDefinitionRef {
+        GameliftGameServerGroup_InstanceDefinitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftGameServerGroupInstanceDefinitionElRef {
+impl GameliftGameServerGroup_InstanceDefinitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -746,7 +780,7 @@ impl GameliftGameServerGroupInstanceDefinitionElRef {
 }
 
 #[derive(Serialize)]
-pub struct GameliftGameServerGroupLaunchTemplateEl {
+pub struct GameliftGameServerGroup_LaunchTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -755,7 +789,7 @@ pub struct GameliftGameServerGroupLaunchTemplateEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GameliftGameServerGroupLaunchTemplateEl {
+impl GameliftGameServerGroup_LaunchTemplate {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -775,8 +809,8 @@ impl GameliftGameServerGroupLaunchTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftGameServerGroupLaunchTemplateEl {
-    type O = terrars::BlockAssignable<GameliftGameServerGroupLaunchTemplateEl>;
+impl terrars::ToListMappable for GameliftGameServerGroup_LaunchTemplate {
+    type O = terrars::BlockAssignable<GameliftGameServerGroup_LaunchTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -787,11 +821,11 @@ impl terrars::ToListMappable for GameliftGameServerGroupLaunchTemplateEl {
     }
 }
 
-pub struct BuildGameliftGameServerGroupLaunchTemplateEl {}
+pub struct BuildGameliftGameServerGroup_LaunchTemplate {}
 
-impl BuildGameliftGameServerGroupLaunchTemplateEl {
-    pub fn build(self) -> GameliftGameServerGroupLaunchTemplateEl {
-        GameliftGameServerGroupLaunchTemplateEl {
+impl BuildGameliftGameServerGroup_LaunchTemplate {
+    pub fn build(self) -> GameliftGameServerGroup_LaunchTemplate {
+        GameliftGameServerGroup_LaunchTemplate {
             id: core::default::Default::default(),
             name: core::default::Default::default(),
             version: core::default::Default::default(),
@@ -799,21 +833,23 @@ impl BuildGameliftGameServerGroupLaunchTemplateEl {
     }
 }
 
-pub struct GameliftGameServerGroupLaunchTemplateElRef {
+#[allow(dead_code)]
+pub struct GameliftGameServerGroup_LaunchTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftGameServerGroupLaunchTemplateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftGameServerGroupLaunchTemplateElRef {
-        GameliftGameServerGroupLaunchTemplateElRef {
+impl terrars::Ref for GameliftGameServerGroup_LaunchTemplateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftGameServerGroup_LaunchTemplateRef {
+        GameliftGameServerGroup_LaunchTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftGameServerGroupLaunchTemplateElRef {
+impl GameliftGameServerGroup_LaunchTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -835,14 +871,14 @@ impl GameliftGameServerGroupLaunchTemplateElRef {
 }
 
 #[derive(Serialize)]
-pub struct GameliftGameServerGroupTimeoutsEl {
+pub struct GameliftGameServerGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GameliftGameServerGroupTimeoutsEl {
+impl GameliftGameServerGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -856,8 +892,8 @@ impl GameliftGameServerGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GameliftGameServerGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<GameliftGameServerGroupTimeoutsEl>;
+impl terrars::ToListMappable for GameliftGameServerGroup_Timeouts {
+    type O = terrars::BlockAssignable<GameliftGameServerGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -868,32 +904,34 @@ impl terrars::ToListMappable for GameliftGameServerGroupTimeoutsEl {
     }
 }
 
-pub struct BuildGameliftGameServerGroupTimeoutsEl {}
+pub struct BuildGameliftGameServerGroup_Timeouts {}
 
-impl BuildGameliftGameServerGroupTimeoutsEl {
-    pub fn build(self) -> GameliftGameServerGroupTimeoutsEl {
-        GameliftGameServerGroupTimeoutsEl {
+impl BuildGameliftGameServerGroup_Timeouts {
+    pub fn build(self) -> GameliftGameServerGroup_Timeouts {
+        GameliftGameServerGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct GameliftGameServerGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GameliftGameServerGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GameliftGameServerGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftGameServerGroupTimeoutsElRef {
-        GameliftGameServerGroupTimeoutsElRef {
+impl terrars::Ref for GameliftGameServerGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GameliftGameServerGroup_TimeoutsRef {
+        GameliftGameServerGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GameliftGameServerGroupTimeoutsElRef {
+impl GameliftGameServerGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -907,11 +945,4 @@ impl GameliftGameServerGroupTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GameliftGameServerGroupDynamic {
-    auto_scaling_policy: std::option::Option<terrars::DynamicBlock<GameliftGameServerGroupAutoScalingPolicyEl>>,
-    instance_definition: std::option::Option<terrars::DynamicBlock<GameliftGameServerGroupInstanceDefinitionEl>>,
-    launch_template: std::option::Option<terrars::DynamicBlock<GameliftGameServerGroupLaunchTemplateEl>>,
 }

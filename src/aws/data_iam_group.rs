@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataIamGroupData {
+struct DataIamGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataIamGroupData {
 struct DataIamGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataIamGroupData>,
+    data: std::cell::RefCell<DataIamGroupData_>,
 }
 
 #[derive(Clone)]
@@ -101,7 +103,7 @@ impl DataIamGroup {
     }
 
     #[doc = "Get a reference to the value of field `users` after provisioning.\n"]
-    pub fn users(&self) -> terrars::ListRef<DataIamGroupUsersElRef> {
+    pub fn users(&self) -> terrars::ListRef<DataIamGroup_UsersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.users", self.extract_ref()))
     }
 }
@@ -148,7 +150,7 @@ impl BuildDataIamGroup {
         let out = DataIamGroup(std::rc::Rc::new(DataIamGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataIamGroupData {
+            data: std::cell::RefCell::new(DataIamGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -211,13 +213,13 @@ impl DataIamGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `users` after provisioning.\n"]
-    pub fn users(&self) -> terrars::ListRef<DataIamGroupUsersElRef> {
+    pub fn users(&self) -> terrars::ListRef<DataIamGroup_UsersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.users", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataIamGroupUsersEl {
+pub struct DataIamGroup_Users {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -228,7 +230,7 @@ pub struct DataIamGroupUsersEl {
     user_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataIamGroupUsersEl {
+impl DataIamGroup_Users {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -254,8 +256,8 @@ impl DataIamGroupUsersEl {
     }
 }
 
-impl terrars::ToListMappable for DataIamGroupUsersEl {
-    type O = terrars::BlockAssignable<DataIamGroupUsersEl>;
+impl terrars::ToListMappable for DataIamGroup_Users {
+    type O = terrars::BlockAssignable<DataIamGroup_Users>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -266,11 +268,11 @@ impl terrars::ToListMappable for DataIamGroupUsersEl {
     }
 }
 
-pub struct BuildDataIamGroupUsersEl {}
+pub struct BuildDataIamGroup_Users {}
 
-impl BuildDataIamGroupUsersEl {
-    pub fn build(self) -> DataIamGroupUsersEl {
-        DataIamGroupUsersEl {
+impl BuildDataIamGroup_Users {
+    pub fn build(self) -> DataIamGroup_Users {
+        DataIamGroup_Users {
             arn: core::default::Default::default(),
             path: core::default::Default::default(),
             user_id: core::default::Default::default(),
@@ -279,21 +281,23 @@ impl BuildDataIamGroupUsersEl {
     }
 }
 
-pub struct DataIamGroupUsersElRef {
+#[allow(dead_code)]
+pub struct DataIamGroup_UsersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIamGroupUsersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIamGroupUsersElRef {
-        DataIamGroupUsersElRef {
+impl terrars::Ref for DataIamGroup_UsersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIamGroup_UsersRef {
+        DataIamGroup_UsersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIamGroupUsersElRef {
+impl DataIamGroup_UsersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

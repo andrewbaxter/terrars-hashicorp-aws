@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct PinpointGcmChannelData {
+struct PinpointGcmChannelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,18 +20,25 @@ struct PinpointGcmChannelData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
-    api_key: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    api_key: std::option::Option<terrars::PrimField<std::string::String>>,
     application_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_authentication_method: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_json: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct PinpointGcmChannel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PinpointGcmChannelData>,
+    data: std::cell::RefCell<PinpointGcmChannelData_>,
 }
 
 #[derive(Clone)]
@@ -129,6 +138,21 @@ impl PinpointGcmChannel {
         self
     }
 
+    #[doc = "Set the field `api_key`.\n"]
+    pub fn set_api_key(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().api_key = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `default_authentication_method`.\n"]
+    pub fn set_default_authentication_method(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().default_authentication_method = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enabled = std::option::Option::Some(v.into());
@@ -138,6 +162,19 @@ impl PinpointGcmChannel {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `service_json`.\n"]
+    pub fn set_service_json(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().service_json = std::option::Option::Some(v.into());
         self
     }
 
@@ -151,6 +188,14 @@ impl PinpointGcmChannel {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.application_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_authentication_method` after provisioning.\n"]
+    pub fn default_authentication_method(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.default_authentication_method", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
@@ -159,6 +204,17 @@ impl PinpointGcmChannel {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_json` after provisioning.\n"]
+    pub fn service_json(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_json", self.extract_ref()))
     }
 }
 
@@ -196,8 +252,6 @@ impl terrars::Resource_ for PinpointGcmChannel_ {
 pub struct BuildPinpointGcmChannel {
     pub tf_id: std::string::String,
     #[doc = ""]
-    pub api_key: terrars::PrimField<std::string::String>,
-    #[doc = ""]
     pub application_id: terrars::PrimField<std::string::String>,
 }
 
@@ -206,16 +260,19 @@ impl BuildPinpointGcmChannel {
         let out = PinpointGcmChannel(std::rc::Rc::new(PinpointGcmChannel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PinpointGcmChannelData {
+            data: std::cell::RefCell::new(PinpointGcmChannelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                api_key: self.api_key,
+                api_key: core::default::Default::default(),
                 application_id: self.application_id,
+                default_authentication_method: core::default::Default::default(),
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
+                service_json: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -256,6 +313,14 @@ impl PinpointGcmChannelRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.application_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_authentication_method` after provisioning.\n"]
+    pub fn default_authentication_method(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.default_authentication_method", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.extract_ref()))
@@ -264,5 +329,16 @@ impl PinpointGcmChannelRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_json` after provisioning.\n"]
+    pub fn service_json(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_json", self.extract_ref()))
     }
 }

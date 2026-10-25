@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApiGatewayDomainNameData {
+struct ApiGatewayDomainNameData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,13 +32,21 @@ struct ApiGatewayDomainNameData {
     certificate_private_key: std::option::Option<terrars::PrimField<std::string::String>>,
     domain_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint_access_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ownership_verification_certificate_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     regional_certificate_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     regional_certificate_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -44,16 +54,18 @@ struct ApiGatewayDomainNameData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint_configuration: std::option::Option<std::vec::Vec<ApiGatewayDomainNameEndpointConfigurationEl>>,
+    endpoint_configuration: std::option::Option<std::vec::Vec<ApiGatewayDomainName_EndpointConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    mutual_tls_authentication: std::option::Option<std::vec::Vec<ApiGatewayDomainNameMutualTlsAuthenticationEl>>,
+    mutual_tls_authentication: std::option::Option<std::vec::Vec<ApiGatewayDomainName_MutualTlsAuthentication>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ApiGatewayDomainName_Timeouts>,
     dynamic: ApiGatewayDomainNameDynamic,
 }
 
 struct ApiGatewayDomainName_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApiGatewayDomainNameData>,
+    data: std::cell::RefCell<ApiGatewayDomainNameData_>,
 }
 
 #[derive(Clone)]
@@ -186,6 +198,12 @@ impl ApiGatewayDomainName {
         self
     }
 
+    #[doc = "Set the field `endpoint_access_mode`.\n"]
+    pub fn set_endpoint_access_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().endpoint_access_mode = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -198,6 +216,19 @@ impl ApiGatewayDomainName {
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().ownership_verification_certificate_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `policy`.\n"]
+    pub fn set_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -216,6 +247,12 @@ impl ApiGatewayDomainName {
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().regional_certificate_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `routing_mode`.\n"]
+    pub fn set_routing_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().routing_mode = std::option::Option::Some(v.into());
         self
     }
 
@@ -246,7 +283,7 @@ impl ApiGatewayDomainName {
     #[doc = "Set the field `endpoint_configuration`.\n"]
     pub fn set_endpoint_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayDomainNameEndpointConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayDomainName_EndpointConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -262,7 +299,7 @@ impl ApiGatewayDomainName {
     #[doc = "Set the field `mutual_tls_authentication`.\n"]
     pub fn set_mutual_tls_authentication(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayDomainNameMutualTlsAuthenticationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayDomainName_MutualTlsAuthentication>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -272,6 +309,12 @@ impl ApiGatewayDomainName {
                 self.0.data.borrow_mut().dynamic.mutual_tls_authentication = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApiGatewayDomainName_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -325,6 +368,16 @@ impl ApiGatewayDomainName {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `domain_name_id` after provisioning.\n"]
+    pub fn domain_name_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_access_mode` after provisioning.\n"]
+    pub fn endpoint_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_access_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -336,6 +389,17 @@ impl ApiGatewayDomainName {
             self.shared().clone(),
             format!("{}.ownership_verification_certificate_arn", self.extract_ref()),
         )
+    }
+
+    #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
+    pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `regional_certificate_arn` after provisioning.\n"]
@@ -358,6 +422,11 @@ impl ApiGatewayDomainName {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.regional_zone_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_mode` after provisioning.\n"]
+    pub fn routing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_policy` after provisioning.\n"]
     pub fn security_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
@@ -374,13 +443,18 @@ impl ApiGatewayDomainName {
     }
 
     #[doc = "Get a reference to the value of field `endpoint_configuration` after provisioning.\n"]
-    pub fn endpoint_configuration(&self) -> terrars::ListRef<ApiGatewayDomainNameEndpointConfigurationElRef> {
+    pub fn endpoint_configuration(&self) -> terrars::ListRef<ApiGatewayDomainName_EndpointConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `mutual_tls_authentication` after provisioning.\n"]
-    pub fn mutual_tls_authentication(&self) -> terrars::ListRef<ApiGatewayDomainNameMutualTlsAuthenticationElRef> {
+    pub fn mutual_tls_authentication(&self) -> terrars::ListRef<ApiGatewayDomainName_MutualTlsAuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mutual_tls_authentication", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ApiGatewayDomainName_TimeoutsRef {
+        ApiGatewayDomainName_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -426,7 +500,7 @@ impl BuildApiGatewayDomainName {
         let out = ApiGatewayDomainName(std::rc::Rc::new(ApiGatewayDomainName_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApiGatewayDomainNameData {
+            data: std::cell::RefCell::new(ApiGatewayDomainNameData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -438,15 +512,20 @@ impl BuildApiGatewayDomainName {
                 certificate_name: core::default::Default::default(),
                 certificate_private_key: core::default::Default::default(),
                 domain_name: self.domain_name,
+                endpoint_access_mode: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ownership_verification_certificate_arn: core::default::Default::default(),
+                policy: core::default::Default::default(),
+                region: core::default::Default::default(),
                 regional_certificate_arn: core::default::Default::default(),
                 regional_certificate_name: core::default::Default::default(),
+                routing_mode: core::default::Default::default(),
                 security_policy: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 endpoint_configuration: core::default::Default::default(),
                 mutual_tls_authentication: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -528,6 +607,16 @@ impl ApiGatewayDomainNameRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `domain_name_id` after provisioning.\n"]
+    pub fn domain_name_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `endpoint_access_mode` after provisioning.\n"]
+    pub fn endpoint_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_access_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -539,6 +628,17 @@ impl ApiGatewayDomainNameRef {
             self.shared().clone(),
             format!("{}.ownership_verification_certificate_arn", self.extract_ref()),
         )
+    }
+
+    #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
+    pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `regional_certificate_arn` after provisioning.\n"]
@@ -561,6 +661,11 @@ impl ApiGatewayDomainNameRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.regional_zone_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_mode` after provisioning.\n"]
+    pub fn routing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_policy` after provisioning.\n"]
     pub fn security_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
@@ -577,25 +682,46 @@ impl ApiGatewayDomainNameRef {
     }
 
     #[doc = "Get a reference to the value of field `endpoint_configuration` after provisioning.\n"]
-    pub fn endpoint_configuration(&self) -> terrars::ListRef<ApiGatewayDomainNameEndpointConfigurationElRef> {
+    pub fn endpoint_configuration(&self) -> terrars::ListRef<ApiGatewayDomainName_EndpointConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `mutual_tls_authentication` after provisioning.\n"]
-    pub fn mutual_tls_authentication(&self) -> terrars::ListRef<ApiGatewayDomainNameMutualTlsAuthenticationElRef> {
+    pub fn mutual_tls_authentication(&self) -> terrars::ListRef<ApiGatewayDomainName_MutualTlsAuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mutual_tls_authentication", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ApiGatewayDomainName_TimeoutsRef {
+        ApiGatewayDomainName_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApiGatewayDomainNameDynamic {
+    endpoint_configuration: std::option::Option<terrars::DynamicBlock<ApiGatewayDomainName_EndpointConfiguration>>,
+    mutual_tls_authentication: std
+    ::option
+    ::Option<terrars::DynamicBlock<ApiGatewayDomainName_MutualTlsAuthentication>>,
+}
+
 #[derive(Serialize)]
-pub struct ApiGatewayDomainNameEndpointConfigurationEl {
+pub struct ApiGatewayDomainName_EndpointConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address_type: std::option::Option<terrars::PrimField<std::string::String>>,
     types: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl ApiGatewayDomainNameEndpointConfigurationEl { }
+impl ApiGatewayDomainName_EndpointConfiguration {
+    #[doc = "Set the field `ip_address_type`.\n"]
+    pub fn set_ip_address_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address_type = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for ApiGatewayDomainNameEndpointConfigurationEl {
-    type O = terrars::BlockAssignable<ApiGatewayDomainNameEndpointConfigurationEl>;
+impl terrars::ToListMappable for ApiGatewayDomainName_EndpointConfiguration {
+    type O = terrars::BlockAssignable<ApiGatewayDomainName_EndpointConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -606,37 +732,44 @@ impl terrars::ToListMappable for ApiGatewayDomainNameEndpointConfigurationEl {
     }
 }
 
-pub struct BuildApiGatewayDomainNameEndpointConfigurationEl {
+pub struct BuildApiGatewayDomainName_EndpointConfiguration {
     #[doc = ""]
     pub types: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildApiGatewayDomainNameEndpointConfigurationEl {
-    pub fn build(self) -> ApiGatewayDomainNameEndpointConfigurationEl {
-        ApiGatewayDomainNameEndpointConfigurationEl { types: self.types }
+impl BuildApiGatewayDomainName_EndpointConfiguration {
+    pub fn build(self) -> ApiGatewayDomainName_EndpointConfiguration {
+        ApiGatewayDomainName_EndpointConfiguration {
+            ip_address_type: core::default::Default::default(),
+            types: self.types,
+        }
     }
 }
 
-pub struct ApiGatewayDomainNameEndpointConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayDomainName_EndpointConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayDomainNameEndpointConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ApiGatewayDomainNameEndpointConfigurationElRef {
-        ApiGatewayDomainNameEndpointConfigurationElRef {
+impl terrars::Ref for ApiGatewayDomainName_EndpointConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayDomainName_EndpointConfigurationRef {
+        ApiGatewayDomainName_EndpointConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayDomainNameEndpointConfigurationElRef {
+impl ApiGatewayDomainName_EndpointConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `types` after provisioning.\n"]
@@ -646,13 +779,13 @@ impl ApiGatewayDomainNameEndpointConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApiGatewayDomainNameMutualTlsAuthenticationEl {
+pub struct ApiGatewayDomainName_MutualTlsAuthentication {
     truststore_uri: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     truststore_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApiGatewayDomainNameMutualTlsAuthenticationEl {
+impl ApiGatewayDomainName_MutualTlsAuthentication {
     #[doc = "Set the field `truststore_version`.\n"]
     pub fn set_truststore_version(
         mut self,
@@ -663,8 +796,8 @@ impl ApiGatewayDomainNameMutualTlsAuthenticationEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayDomainNameMutualTlsAuthenticationEl {
-    type O = terrars::BlockAssignable<ApiGatewayDomainNameMutualTlsAuthenticationEl>;
+impl terrars::ToListMappable for ApiGatewayDomainName_MutualTlsAuthentication {
+    type O = terrars::BlockAssignable<ApiGatewayDomainName_MutualTlsAuthentication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -675,38 +808,40 @@ impl terrars::ToListMappable for ApiGatewayDomainNameMutualTlsAuthenticationEl {
     }
 }
 
-pub struct BuildApiGatewayDomainNameMutualTlsAuthenticationEl {
+pub struct BuildApiGatewayDomainName_MutualTlsAuthentication {
     #[doc = ""]
     pub truststore_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApiGatewayDomainNameMutualTlsAuthenticationEl {
-    pub fn build(self) -> ApiGatewayDomainNameMutualTlsAuthenticationEl {
-        ApiGatewayDomainNameMutualTlsAuthenticationEl {
+impl BuildApiGatewayDomainName_MutualTlsAuthentication {
+    pub fn build(self) -> ApiGatewayDomainName_MutualTlsAuthentication {
+        ApiGatewayDomainName_MutualTlsAuthentication {
             truststore_uri: self.truststore_uri,
             truststore_version: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApiGatewayDomainNameMutualTlsAuthenticationElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayDomainName_MutualTlsAuthenticationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayDomainNameMutualTlsAuthenticationElRef {
+impl terrars::Ref for ApiGatewayDomainName_MutualTlsAuthenticationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ApiGatewayDomainNameMutualTlsAuthenticationElRef {
-        ApiGatewayDomainNameMutualTlsAuthenticationElRef {
+    ) -> ApiGatewayDomainName_MutualTlsAuthenticationRef {
+        ApiGatewayDomainName_MutualTlsAuthenticationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayDomainNameMutualTlsAuthenticationElRef {
+impl ApiGatewayDomainName_MutualTlsAuthenticationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -722,10 +857,79 @@ impl ApiGatewayDomainNameMutualTlsAuthenticationElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct ApiGatewayDomainNameDynamic {
-    endpoint_configuration: std::option::Option<terrars::DynamicBlock<ApiGatewayDomainNameEndpointConfigurationEl>>,
-    mutual_tls_authentication: std
-    ::option
-    ::Option<terrars::DynamicBlock<ApiGatewayDomainNameMutualTlsAuthenticationEl>>,
+#[derive(Serialize)]
+pub struct ApiGatewayDomainName_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ApiGatewayDomainName_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ApiGatewayDomainName_Timeouts {
+    type O = terrars::BlockAssignable<ApiGatewayDomainName_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildApiGatewayDomainName_Timeouts {}
+
+impl BuildApiGatewayDomainName_Timeouts {
+    pub fn build(self) -> ApiGatewayDomainName_Timeouts {
+        ApiGatewayDomainName_Timeouts {
+            create: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ApiGatewayDomainName_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ApiGatewayDomainName_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayDomainName_TimeoutsRef {
+        ApiGatewayDomainName_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ApiGatewayDomainName_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

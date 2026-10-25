@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataLambdaCodeSigningConfigData {
+struct DataLambdaCodeSigningConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,12 +21,14 @@ struct DataLambdaCodeSigningConfigData {
     arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataLambdaCodeSigningConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLambdaCodeSigningConfigData>,
+    data: std::cell::RefCell<DataLambdaCodeSigningConfigData_>,
 }
 
 #[derive(Clone)]
@@ -75,8 +79,15 @@ impl DataLambdaCodeSigningConfig {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `allowed_publishers` after provisioning.\n"]
-    pub fn allowed_publishers(&self) -> terrars::ListRef<DataLambdaCodeSigningConfigAllowedPublishersElRef> {
+    pub fn allowed_publishers(&self) -> terrars::ListRef<DataLambdaCodeSigningConfig_AllowedPublishersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_publishers", self.extract_ref()))
     }
 
@@ -106,8 +117,14 @@ impl DataLambdaCodeSigningConfig {
     }
 
     #[doc = "Get a reference to the value of field `policies` after provisioning.\n"]
-    pub fn policies(&self) -> terrars::ListRef<DataLambdaCodeSigningConfigPoliciesElRef> {
+    pub fn policies(&self) -> terrars::ListRef<DataLambdaCodeSigningConfig_PoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.policies", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -153,13 +170,14 @@ impl BuildDataLambdaCodeSigningConfig {
         let out = DataLambdaCodeSigningConfig(std::rc::Rc::new(DataLambdaCodeSigningConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLambdaCodeSigningConfigData {
+            data: std::cell::RefCell::new(DataLambdaCodeSigningConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 arn: self.arn,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -191,7 +209,7 @@ impl DataLambdaCodeSigningConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `allowed_publishers` after provisioning.\n"]
-    pub fn allowed_publishers(&self) -> terrars::ListRef<DataLambdaCodeSigningConfigAllowedPublishersElRef> {
+    pub fn allowed_publishers(&self) -> terrars::ListRef<DataLambdaCodeSigningConfig_AllowedPublishersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.allowed_publishers", self.extract_ref()))
     }
 
@@ -221,18 +239,24 @@ impl DataLambdaCodeSigningConfigRef {
     }
 
     #[doc = "Get a reference to the value of field `policies` after provisioning.\n"]
-    pub fn policies(&self) -> terrars::ListRef<DataLambdaCodeSigningConfigPoliciesElRef> {
+    pub fn policies(&self) -> terrars::ListRef<DataLambdaCodeSigningConfig_PoliciesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.policies", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataLambdaCodeSigningConfigAllowedPublishersEl {
+pub struct DataLambdaCodeSigningConfig_AllowedPublishers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     signing_profile_version_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataLambdaCodeSigningConfigAllowedPublishersEl {
+impl DataLambdaCodeSigningConfig_AllowedPublishers {
     #[doc = "Set the field `signing_profile_version_arns`.\n"]
     pub fn set_signing_profile_version_arns(
         mut self,
@@ -243,8 +267,8 @@ impl DataLambdaCodeSigningConfigAllowedPublishersEl {
     }
 }
 
-impl terrars::ToListMappable for DataLambdaCodeSigningConfigAllowedPublishersEl {
-    type O = terrars::BlockAssignable<DataLambdaCodeSigningConfigAllowedPublishersEl>;
+impl terrars::ToListMappable for DataLambdaCodeSigningConfig_AllowedPublishers {
+    type O = terrars::BlockAssignable<DataLambdaCodeSigningConfig_AllowedPublishers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -255,34 +279,36 @@ impl terrars::ToListMappable for DataLambdaCodeSigningConfigAllowedPublishersEl 
     }
 }
 
-pub struct BuildDataLambdaCodeSigningConfigAllowedPublishersEl {}
+pub struct BuildDataLambdaCodeSigningConfig_AllowedPublishers {}
 
-impl BuildDataLambdaCodeSigningConfigAllowedPublishersEl {
-    pub fn build(self) -> DataLambdaCodeSigningConfigAllowedPublishersEl {
-        DataLambdaCodeSigningConfigAllowedPublishersEl {
+impl BuildDataLambdaCodeSigningConfig_AllowedPublishers {
+    pub fn build(self) -> DataLambdaCodeSigningConfig_AllowedPublishers {
+        DataLambdaCodeSigningConfig_AllowedPublishers {
             signing_profile_version_arns: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLambdaCodeSigningConfigAllowedPublishersElRef {
+#[allow(dead_code)]
+pub struct DataLambdaCodeSigningConfig_AllowedPublishersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLambdaCodeSigningConfigAllowedPublishersElRef {
+impl terrars::Ref for DataLambdaCodeSigningConfig_AllowedPublishersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataLambdaCodeSigningConfigAllowedPublishersElRef {
-        DataLambdaCodeSigningConfigAllowedPublishersElRef {
+    ) -> DataLambdaCodeSigningConfig_AllowedPublishersRef {
+        DataLambdaCodeSigningConfig_AllowedPublishersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLambdaCodeSigningConfigAllowedPublishersElRef {
+impl DataLambdaCodeSigningConfig_AllowedPublishersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -294,12 +320,12 @@ impl DataLambdaCodeSigningConfigAllowedPublishersElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLambdaCodeSigningConfigPoliciesEl {
+pub struct DataLambdaCodeSigningConfig_Policies {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     untrusted_artifact_on_deployment: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLambdaCodeSigningConfigPoliciesEl {
+impl DataLambdaCodeSigningConfig_Policies {
     #[doc = "Set the field `untrusted_artifact_on_deployment`.\n"]
     pub fn set_untrusted_artifact_on_deployment(
         mut self,
@@ -310,8 +336,8 @@ impl DataLambdaCodeSigningConfigPoliciesEl {
     }
 }
 
-impl terrars::ToListMappable for DataLambdaCodeSigningConfigPoliciesEl {
-    type O = terrars::BlockAssignable<DataLambdaCodeSigningConfigPoliciesEl>;
+impl terrars::ToListMappable for DataLambdaCodeSigningConfig_Policies {
+    type O = terrars::BlockAssignable<DataLambdaCodeSigningConfig_Policies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -322,29 +348,31 @@ impl terrars::ToListMappable for DataLambdaCodeSigningConfigPoliciesEl {
     }
 }
 
-pub struct BuildDataLambdaCodeSigningConfigPoliciesEl {}
+pub struct BuildDataLambdaCodeSigningConfig_Policies {}
 
-impl BuildDataLambdaCodeSigningConfigPoliciesEl {
-    pub fn build(self) -> DataLambdaCodeSigningConfigPoliciesEl {
-        DataLambdaCodeSigningConfigPoliciesEl { untrusted_artifact_on_deployment: core::default::Default::default() }
+impl BuildDataLambdaCodeSigningConfig_Policies {
+    pub fn build(self) -> DataLambdaCodeSigningConfig_Policies {
+        DataLambdaCodeSigningConfig_Policies { untrusted_artifact_on_deployment: core::default::Default::default() }
     }
 }
 
-pub struct DataLambdaCodeSigningConfigPoliciesElRef {
+#[allow(dead_code)]
+pub struct DataLambdaCodeSigningConfig_PoliciesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLambdaCodeSigningConfigPoliciesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLambdaCodeSigningConfigPoliciesElRef {
-        DataLambdaCodeSigningConfigPoliciesElRef {
+impl terrars::Ref for DataLambdaCodeSigningConfig_PoliciesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLambdaCodeSigningConfig_PoliciesRef {
+        DataLambdaCodeSigningConfig_PoliciesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLambdaCodeSigningConfigPoliciesElRef {
+impl DataLambdaCodeSigningConfig_PoliciesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

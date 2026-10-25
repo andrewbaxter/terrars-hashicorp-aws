@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ElasticacheUserGroupAssociationData {
+struct ElasticacheUserGroupAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,14 +22,18 @@ struct ElasticacheUserGroupAssociationData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     user_group_id: terrars::PrimField<std::string::String>,
     user_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ElasticacheUserGroupAssociation_Timeouts>,
 }
 
 struct ElasticacheUserGroupAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ElasticacheUserGroupAssociationData>,
+    data: std::cell::RefCell<ElasticacheUserGroupAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -133,9 +139,28 @@ impl ElasticacheUserGroupAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ElasticacheUserGroupAssociation_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_group_id` after provisioning.\n"]
@@ -146,6 +171,14 @@ impl ElasticacheUserGroupAssociation {
     #[doc = "Get a reference to the value of field `user_id` after provisioning.\n"]
     pub fn user_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ElasticacheUserGroupAssociation_TimeoutsRef {
+        ElasticacheUserGroupAssociation_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
@@ -193,15 +226,17 @@ impl BuildElasticacheUserGroupAssociation {
         let out = ElasticacheUserGroupAssociation(std::rc::Rc::new(ElasticacheUserGroupAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ElasticacheUserGroupAssociationData {
+            data: std::cell::RefCell::new(ElasticacheUserGroupAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 user_group_id: self.user_group_id,
                 user_id: self.user_id,
+                timeouts: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -237,6 +272,12 @@ impl ElasticacheUserGroupAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_group_id` after provisioning.\n"]
     pub fn user_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_group_id", self.extract_ref()))
@@ -245,5 +286,90 @@ impl ElasticacheUserGroupAssociationRef {
     #[doc = "Get a reference to the value of field `user_id` after provisioning.\n"]
     pub fn user_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ElasticacheUserGroupAssociation_TimeoutsRef {
+        ElasticacheUserGroupAssociation_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
+    }
+}
+
+#[derive(Serialize)]
+pub struct ElasticacheUserGroupAssociation_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ElasticacheUserGroupAssociation_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ElasticacheUserGroupAssociation_Timeouts {
+    type O = terrars::BlockAssignable<ElasticacheUserGroupAssociation_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildElasticacheUserGroupAssociation_Timeouts {}
+
+impl BuildElasticacheUserGroupAssociation_Timeouts {
+    pub fn build(self) -> ElasticacheUserGroupAssociation_Timeouts {
+        ElasticacheUserGroupAssociation_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ElasticacheUserGroupAssociation_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ElasticacheUserGroupAssociation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticacheUserGroupAssociation_TimeoutsRef {
+        ElasticacheUserGroupAssociation_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ElasticacheUserGroupAssociation_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }

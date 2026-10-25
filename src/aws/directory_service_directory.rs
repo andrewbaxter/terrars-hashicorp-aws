@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DirectoryServiceDirectoryData {
+struct DirectoryServiceDirectoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,11 +29,15 @@ struct DirectoryServiceDirectoryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     edition: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_directory_data_access: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_sso: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     password: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     short_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -43,18 +49,18 @@ struct DirectoryServiceDirectoryData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    connect_settings: std::option::Option<std::vec::Vec<DirectoryServiceDirectoryConnectSettingsEl>>,
+    connect_settings: std::option::Option<std::vec::Vec<DirectoryServiceDirectory_ConnectSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DirectoryServiceDirectoryTimeoutsEl>,
+    timeouts: std::option::Option<DirectoryServiceDirectory_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_settings: std::option::Option<std::vec::Vec<DirectoryServiceDirectoryVpcSettingsEl>>,
+    vpc_settings: std::option::Option<std::vec::Vec<DirectoryServiceDirectory_VpcSettings>>,
     dynamic: DirectoryServiceDirectoryDynamic,
 }
 
 struct DirectoryServiceDirectory_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DirectoryServiceDirectoryData>,
+    data: std::cell::RefCell<DirectoryServiceDirectoryData_>,
 }
 
 #[derive(Clone)]
@@ -178,6 +184,12 @@ impl DirectoryServiceDirectory {
         self
     }
 
+    #[doc = "Set the field `enable_directory_data_access`.\n"]
+    pub fn set_enable_directory_data_access(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_directory_data_access = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enable_sso`.\n"]
     pub fn set_enable_sso(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enable_sso = std::option::Option::Some(v.into());
@@ -187,6 +199,13 @@ impl DirectoryServiceDirectory {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -229,7 +248,7 @@ impl DirectoryServiceDirectory {
     #[doc = "Set the field `connect_settings`.\n"]
     pub fn set_connect_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DirectoryServiceDirectoryConnectSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DirectoryServiceDirectory_ConnectSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -243,7 +262,7 @@ impl DirectoryServiceDirectory {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DirectoryServiceDirectoryTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DirectoryServiceDirectory_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -251,7 +270,7 @@ impl DirectoryServiceDirectory {
     #[doc = "Set the field `vpc_settings`.\n"]
     pub fn set_vpc_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DirectoryServiceDirectoryVpcSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DirectoryServiceDirectory_VpcSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -297,6 +316,11 @@ impl DirectoryServiceDirectory {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_directory_data_access` after provisioning.\n"]
+    pub fn enable_directory_data_access(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_directory_data_access", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `enable_sso` after provisioning.\n"]
     pub fn enable_sso(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_sso", self.extract_ref()))
@@ -315,6 +339,12 @@ impl DirectoryServiceDirectory {
     #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
     pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -348,20 +378,17 @@ impl DirectoryServiceDirectory {
     }
 
     #[doc = "Get a reference to the value of field `connect_settings` after provisioning.\n"]
-    pub fn connect_settings(&self) -> terrars::ListRef<DirectoryServiceDirectoryConnectSettingsElRef> {
+    pub fn connect_settings(&self) -> terrars::ListRef<DirectoryServiceDirectory_ConnectSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connect_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DirectoryServiceDirectoryTimeoutsElRef {
-        DirectoryServiceDirectoryTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> DirectoryServiceDirectory_TimeoutsRef {
+        DirectoryServiceDirectory_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_settings` after provisioning.\n"]
-    pub fn vpc_settings(&self) -> terrars::ListRef<DirectoryServiceDirectoryVpcSettingsElRef> {
+    pub fn vpc_settings(&self) -> terrars::ListRef<DirectoryServiceDirectory_VpcSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_settings", self.extract_ref()))
     }
 }
@@ -410,7 +437,7 @@ impl BuildDirectoryServiceDirectory {
         let out = DirectoryServiceDirectory(std::rc::Rc::new(DirectoryServiceDirectory_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DirectoryServiceDirectoryData {
+            data: std::cell::RefCell::new(DirectoryServiceDirectoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -420,10 +447,12 @@ impl BuildDirectoryServiceDirectory {
                 description: core::default::Default::default(),
                 desired_number_of_domain_controllers: core::default::Default::default(),
                 edition: core::default::Default::default(),
+                enable_directory_data_access: core::default::Default::default(),
                 enable_sso: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 password: self.password,
+                region: core::default::Default::default(),
                 short_name: core::default::Default::default(),
                 size: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -496,6 +525,11 @@ impl DirectoryServiceDirectoryRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.edition", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_directory_data_access` after provisioning.\n"]
+    pub fn enable_directory_data_access(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_directory_data_access", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `enable_sso` after provisioning.\n"]
     pub fn enable_sso(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_sso", self.extract_ref()))
@@ -514,6 +548,12 @@ impl DirectoryServiceDirectoryRef {
     #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
     pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -547,36 +587,39 @@ impl DirectoryServiceDirectoryRef {
     }
 
     #[doc = "Get a reference to the value of field `connect_settings` after provisioning.\n"]
-    pub fn connect_settings(&self) -> terrars::ListRef<DirectoryServiceDirectoryConnectSettingsElRef> {
+    pub fn connect_settings(&self) -> terrars::ListRef<DirectoryServiceDirectory_ConnectSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connect_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DirectoryServiceDirectoryTimeoutsElRef {
-        DirectoryServiceDirectoryTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> DirectoryServiceDirectory_TimeoutsRef {
+        DirectoryServiceDirectory_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_settings` after provisioning.\n"]
-    pub fn vpc_settings(&self) -> terrars::ListRef<DirectoryServiceDirectoryVpcSettingsElRef> {
+    pub fn vpc_settings(&self) -> terrars::ListRef<DirectoryServiceDirectory_VpcSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DirectoryServiceDirectoryDynamic {
+    connect_settings: std::option::Option<terrars::DynamicBlock<DirectoryServiceDirectory_ConnectSettings>>,
+    vpc_settings: std::option::Option<terrars::DynamicBlock<DirectoryServiceDirectory_VpcSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct DirectoryServiceDirectoryConnectSettingsEl {
+pub struct DirectoryServiceDirectory_ConnectSettings {
     customer_dns_ips: terrars::SetField<terrars::PrimField<std::string::String>>,
     customer_username: terrars::PrimField<std::string::String>,
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl DirectoryServiceDirectoryConnectSettingsEl { }
+impl DirectoryServiceDirectory_ConnectSettings { }
 
-impl terrars::ToListMappable for DirectoryServiceDirectoryConnectSettingsEl {
-    type O = terrars::BlockAssignable<DirectoryServiceDirectoryConnectSettingsEl>;
+impl terrars::ToListMappable for DirectoryServiceDirectory_ConnectSettings {
+    type O = terrars::BlockAssignable<DirectoryServiceDirectory_ConnectSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -587,7 +630,7 @@ impl terrars::ToListMappable for DirectoryServiceDirectoryConnectSettingsEl {
     }
 }
 
-pub struct BuildDirectoryServiceDirectoryConnectSettingsEl {
+pub struct BuildDirectoryServiceDirectory_ConnectSettings {
     #[doc = ""]
     pub customer_dns_ips: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
@@ -598,9 +641,9 @@ pub struct BuildDirectoryServiceDirectoryConnectSettingsEl {
     pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDirectoryServiceDirectoryConnectSettingsEl {
-    pub fn build(self) -> DirectoryServiceDirectoryConnectSettingsEl {
-        DirectoryServiceDirectoryConnectSettingsEl {
+impl BuildDirectoryServiceDirectory_ConnectSettings {
+    pub fn build(self) -> DirectoryServiceDirectory_ConnectSettings {
+        DirectoryServiceDirectory_ConnectSettings {
             customer_dns_ips: self.customer_dns_ips,
             customer_username: self.customer_username,
             subnet_ids: self.subnet_ids,
@@ -609,21 +652,23 @@ impl BuildDirectoryServiceDirectoryConnectSettingsEl {
     }
 }
 
-pub struct DirectoryServiceDirectoryConnectSettingsElRef {
+#[allow(dead_code)]
+pub struct DirectoryServiceDirectory_ConnectSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DirectoryServiceDirectoryConnectSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceDirectoryConnectSettingsElRef {
-        DirectoryServiceDirectoryConnectSettingsElRef {
+impl terrars::Ref for DirectoryServiceDirectory_ConnectSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceDirectory_ConnectSettingsRef {
+        DirectoryServiceDirectory_ConnectSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DirectoryServiceDirectoryConnectSettingsElRef {
+impl DirectoryServiceDirectory_ConnectSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -660,7 +705,7 @@ impl DirectoryServiceDirectoryConnectSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DirectoryServiceDirectoryTimeoutsEl {
+pub struct DirectoryServiceDirectory_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -669,7 +714,7 @@ pub struct DirectoryServiceDirectoryTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DirectoryServiceDirectoryTimeoutsEl {
+impl DirectoryServiceDirectory_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -689,8 +734,8 @@ impl DirectoryServiceDirectoryTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DirectoryServiceDirectoryTimeoutsEl {
-    type O = terrars::BlockAssignable<DirectoryServiceDirectoryTimeoutsEl>;
+impl terrars::ToListMappable for DirectoryServiceDirectory_Timeouts {
+    type O = terrars::BlockAssignable<DirectoryServiceDirectory_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -701,11 +746,11 @@ impl terrars::ToListMappable for DirectoryServiceDirectoryTimeoutsEl {
     }
 }
 
-pub struct BuildDirectoryServiceDirectoryTimeoutsEl {}
+pub struct BuildDirectoryServiceDirectory_Timeouts {}
 
-impl BuildDirectoryServiceDirectoryTimeoutsEl {
-    pub fn build(self) -> DirectoryServiceDirectoryTimeoutsEl {
-        DirectoryServiceDirectoryTimeoutsEl {
+impl BuildDirectoryServiceDirectory_Timeouts {
+    pub fn build(self) -> DirectoryServiceDirectory_Timeouts {
+        DirectoryServiceDirectory_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -713,21 +758,23 @@ impl BuildDirectoryServiceDirectoryTimeoutsEl {
     }
 }
 
-pub struct DirectoryServiceDirectoryTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DirectoryServiceDirectory_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DirectoryServiceDirectoryTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceDirectoryTimeoutsElRef {
-        DirectoryServiceDirectoryTimeoutsElRef {
+impl terrars::Ref for DirectoryServiceDirectory_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceDirectory_TimeoutsRef {
+        DirectoryServiceDirectory_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DirectoryServiceDirectoryTimeoutsElRef {
+impl DirectoryServiceDirectory_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -749,15 +796,15 @@ impl DirectoryServiceDirectoryTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DirectoryServiceDirectoryVpcSettingsEl {
+pub struct DirectoryServiceDirectory_VpcSettings {
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl DirectoryServiceDirectoryVpcSettingsEl { }
+impl DirectoryServiceDirectory_VpcSettings { }
 
-impl terrars::ToListMappable for DirectoryServiceDirectoryVpcSettingsEl {
-    type O = terrars::BlockAssignable<DirectoryServiceDirectoryVpcSettingsEl>;
+impl terrars::ToListMappable for DirectoryServiceDirectory_VpcSettings {
+    type O = terrars::BlockAssignable<DirectoryServiceDirectory_VpcSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -768,37 +815,39 @@ impl terrars::ToListMappable for DirectoryServiceDirectoryVpcSettingsEl {
     }
 }
 
-pub struct BuildDirectoryServiceDirectoryVpcSettingsEl {
+pub struct BuildDirectoryServiceDirectory_VpcSettings {
     #[doc = ""]
     pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDirectoryServiceDirectoryVpcSettingsEl {
-    pub fn build(self) -> DirectoryServiceDirectoryVpcSettingsEl {
-        DirectoryServiceDirectoryVpcSettingsEl {
+impl BuildDirectoryServiceDirectory_VpcSettings {
+    pub fn build(self) -> DirectoryServiceDirectory_VpcSettings {
+        DirectoryServiceDirectory_VpcSettings {
             subnet_ids: self.subnet_ids,
             vpc_id: self.vpc_id,
         }
     }
 }
 
-pub struct DirectoryServiceDirectoryVpcSettingsElRef {
+#[allow(dead_code)]
+pub struct DirectoryServiceDirectory_VpcSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DirectoryServiceDirectoryVpcSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceDirectoryVpcSettingsElRef {
-        DirectoryServiceDirectoryVpcSettingsElRef {
+impl terrars::Ref for DirectoryServiceDirectory_VpcSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceDirectory_VpcSettingsRef {
+        DirectoryServiceDirectory_VpcSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DirectoryServiceDirectoryVpcSettingsElRef {
+impl DirectoryServiceDirectory_VpcSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -817,10 +866,4 @@ impl DirectoryServiceDirectoryVpcSettingsElRef {
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DirectoryServiceDirectoryDynamic {
-    connect_settings: std::option::Option<terrars::DynamicBlock<DirectoryServiceDirectoryConnectSettingsEl>>,
-    vpc_settings: std::option::Option<terrars::DynamicBlock<DirectoryServiceDirectoryVpcSettingsEl>>,
 }

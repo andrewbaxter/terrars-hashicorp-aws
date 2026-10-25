@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafRegexMatchSetData {
+struct WafRegexMatchSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,14 @@ struct WafRegexMatchSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    regex_match_tuple: std::option::Option<std::vec::Vec<WafRegexMatchSetRegexMatchTupleEl>>,
+    regex_match_tuple: std::option::Option<std::vec::Vec<WafRegexMatchSet_RegexMatchTuple>>,
     dynamic: WafRegexMatchSetDynamic,
 }
 
 struct WafRegexMatchSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafRegexMatchSetData>,
+    data: std::cell::RefCell<WafRegexMatchSetData_>,
 }
 
 #[derive(Clone)]
@@ -138,7 +140,7 @@ impl WafRegexMatchSet {
     #[doc = "Set the field `regex_match_tuple`.\n"]
     pub fn set_regex_match_tuple(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafRegexMatchSetRegexMatchTupleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafRegexMatchSet_RegexMatchTuple>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,7 +211,7 @@ impl BuildWafRegexMatchSet {
         let out = WafRegexMatchSet(std::rc::Rc::new(WafRegexMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafRegexMatchSetData {
+            data: std::cell::RefCell::new(WafRegexMatchSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -265,15 +267,20 @@ impl WafRegexMatchSetRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafRegexMatchSetDynamic {
+    regex_match_tuple: std::option::Option<terrars::DynamicBlock<WafRegexMatchSet_RegexMatchTuple>>,
+}
+
 #[derive(Serialize)]
-pub struct WafRegexMatchSetRegexMatchTupleElFieldToMatchEl {
+pub struct WafRegexMatchSet_RegexMatchTuple_FieldToMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafRegexMatchSetRegexMatchTupleElFieldToMatchEl {
+impl WafRegexMatchSet_RegexMatchTuple_FieldToMatch {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -281,8 +288,8 @@ impl WafRegexMatchSetRegexMatchTupleElFieldToMatchEl {
     }
 }
 
-impl terrars::ToListMappable for WafRegexMatchSetRegexMatchTupleElFieldToMatchEl {
-    type O = terrars::BlockAssignable<WafRegexMatchSetRegexMatchTupleElFieldToMatchEl>;
+impl terrars::ToListMappable for WafRegexMatchSet_RegexMatchTuple_FieldToMatch {
+    type O = terrars::BlockAssignable<WafRegexMatchSet_RegexMatchTuple_FieldToMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -293,38 +300,40 @@ impl terrars::ToListMappable for WafRegexMatchSetRegexMatchTupleElFieldToMatchEl
     }
 }
 
-pub struct BuildWafRegexMatchSetRegexMatchTupleElFieldToMatchEl {
+pub struct BuildWafRegexMatchSet_RegexMatchTuple_FieldToMatch {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafRegexMatchSetRegexMatchTupleElFieldToMatchEl {
-    pub fn build(self) -> WafRegexMatchSetRegexMatchTupleElFieldToMatchEl {
-        WafRegexMatchSetRegexMatchTupleElFieldToMatchEl {
+impl BuildWafRegexMatchSet_RegexMatchTuple_FieldToMatch {
+    pub fn build(self) -> WafRegexMatchSet_RegexMatchTuple_FieldToMatch {
+        WafRegexMatchSet_RegexMatchTuple_FieldToMatch {
             data: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct WafRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
+#[allow(dead_code)]
+pub struct WafRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
+impl terrars::Ref for WafRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
-        WafRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
+    ) -> WafRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
+        WafRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
+impl WafRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -341,24 +350,24 @@ impl WafRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafRegexMatchSetRegexMatchTupleElDynamic {
-    field_to_match: std::option::Option<terrars::DynamicBlock<WafRegexMatchSetRegexMatchTupleElFieldToMatchEl>>,
+struct WafRegexMatchSet_RegexMatchTupleDynamic {
+    field_to_match: std::option::Option<terrars::DynamicBlock<WafRegexMatchSet_RegexMatchTuple_FieldToMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct WafRegexMatchSetRegexMatchTupleEl {
+pub struct WafRegexMatchSet_RegexMatchTuple {
     regex_pattern_set_id: terrars::PrimField<std::string::String>,
     text_transformation: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_to_match: std::option::Option<std::vec::Vec<WafRegexMatchSetRegexMatchTupleElFieldToMatchEl>>,
-    dynamic: WafRegexMatchSetRegexMatchTupleElDynamic,
+    field_to_match: std::option::Option<std::vec::Vec<WafRegexMatchSet_RegexMatchTuple_FieldToMatch>>,
+    dynamic: WafRegexMatchSet_RegexMatchTupleDynamic,
 }
 
-impl WafRegexMatchSetRegexMatchTupleEl {
+impl WafRegexMatchSet_RegexMatchTuple {
     #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafRegexMatchSetRegexMatchTupleElFieldToMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafRegexMatchSet_RegexMatchTuple_FieldToMatch>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -372,8 +381,8 @@ impl WafRegexMatchSetRegexMatchTupleEl {
     }
 }
 
-impl terrars::ToListMappable for WafRegexMatchSetRegexMatchTupleEl {
-    type O = terrars::BlockAssignable<WafRegexMatchSetRegexMatchTupleEl>;
+impl terrars::ToListMappable for WafRegexMatchSet_RegexMatchTuple {
+    type O = terrars::BlockAssignable<WafRegexMatchSet_RegexMatchTuple>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -384,16 +393,16 @@ impl terrars::ToListMappable for WafRegexMatchSetRegexMatchTupleEl {
     }
 }
 
-pub struct BuildWafRegexMatchSetRegexMatchTupleEl {
+pub struct BuildWafRegexMatchSet_RegexMatchTuple {
     #[doc = ""]
     pub regex_pattern_set_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub text_transformation: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafRegexMatchSetRegexMatchTupleEl {
-    pub fn build(self) -> WafRegexMatchSetRegexMatchTupleEl {
-        WafRegexMatchSetRegexMatchTupleEl {
+impl BuildWafRegexMatchSet_RegexMatchTuple {
+    pub fn build(self) -> WafRegexMatchSet_RegexMatchTuple {
+        WafRegexMatchSet_RegexMatchTuple {
             regex_pattern_set_id: self.regex_pattern_set_id,
             text_transformation: self.text_transformation,
             field_to_match: core::default::Default::default(),
@@ -402,21 +411,23 @@ impl BuildWafRegexMatchSetRegexMatchTupleEl {
     }
 }
 
-pub struct WafRegexMatchSetRegexMatchTupleElRef {
+#[allow(dead_code)]
+pub struct WafRegexMatchSet_RegexMatchTupleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafRegexMatchSetRegexMatchTupleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafRegexMatchSetRegexMatchTupleElRef {
-        WafRegexMatchSetRegexMatchTupleElRef {
+impl terrars::Ref for WafRegexMatchSet_RegexMatchTupleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafRegexMatchSet_RegexMatchTupleRef {
+        WafRegexMatchSet_RegexMatchTupleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafRegexMatchSetRegexMatchTupleElRef {
+impl WafRegexMatchSet_RegexMatchTupleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -432,12 +443,7 @@ impl WafRegexMatchSetRegexMatchTupleElRef {
     }
 
     #[doc = "Get a reference to the value of field `field_to_match` after provisioning.\n"]
-    pub fn field_to_match(&self) -> terrars::ListRef<WafRegexMatchSetRegexMatchTupleElFieldToMatchElRef> {
+    pub fn field_to_match(&self) -> terrars::ListRef<WafRegexMatchSet_RegexMatchTuple_FieldToMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafRegexMatchSetDynamic {
-    regex_match_tuple: std::option::Option<terrars::DynamicBlock<WafRegexMatchSetRegexMatchTupleEl>>,
 }

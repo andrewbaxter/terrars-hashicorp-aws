@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudformationTypeData {
+struct CloudformationTypeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,19 +24,21 @@ struct CloudformationTypeData {
     execution_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     schema_handler_package: terrars::PrimField<std::string::String>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     type_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_config: std::option::Option<std::vec::Vec<CloudformationTypeLoggingConfigEl>>,
+    logging_config: std::option::Option<std::vec::Vec<CloudformationType_LoggingConfig>>,
     dynamic: CloudformationTypeDynamic,
 }
 
 struct CloudformationType_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudformationTypeData>,
+    data: std::cell::RefCell<CloudformationTypeData_>,
 }
 
 #[derive(Clone)]
@@ -146,6 +150,13 @@ impl CloudformationType {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().type_ = std::option::Option::Some(v.into());
@@ -155,7 +166,7 @@ impl CloudformationType {
     #[doc = "Set the field `logging_config`.\n"]
     pub fn set_logging_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudformationTypeLoggingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudformationType_LoggingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -213,6 +224,12 @@ impl CloudformationType {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioning_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
     pub fn schema(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema", self.extract_ref()))
@@ -254,7 +271,7 @@ impl CloudformationType {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<CloudformationTypeLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<CloudformationType_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 }
@@ -303,7 +320,7 @@ impl BuildCloudformationType {
         let out = CloudformationType(std::rc::Rc::new(CloudformationType_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudformationTypeData {
+            data: std::cell::RefCell::new(CloudformationTypeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -311,6 +328,7 @@ impl BuildCloudformationType {
                 provisioner: core::default::Default::default(),
                 execution_role_arn: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 schema_handler_package: self.schema_handler_package,
                 type_: core::default::Default::default(),
                 type_name: self.type_name,
@@ -391,6 +409,12 @@ impl CloudformationTypeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioning_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
     pub fn schema(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schema", self.extract_ref()))
@@ -432,21 +456,26 @@ impl CloudformationTypeRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_config` after provisioning.\n"]
-    pub fn logging_config(&self) -> terrars::ListRef<CloudformationTypeLoggingConfigElRef> {
+    pub fn logging_config(&self) -> terrars::ListRef<CloudformationType_LoggingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudformationTypeDynamic {
+    logging_config: std::option::Option<terrars::DynamicBlock<CloudformationType_LoggingConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudformationTypeLoggingConfigEl {
+pub struct CloudformationType_LoggingConfig {
     log_group_name: terrars::PrimField<std::string::String>,
     log_role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl CloudformationTypeLoggingConfigEl { }
+impl CloudformationType_LoggingConfig { }
 
-impl terrars::ToListMappable for CloudformationTypeLoggingConfigEl {
-    type O = terrars::BlockAssignable<CloudformationTypeLoggingConfigEl>;
+impl terrars::ToListMappable for CloudformationType_LoggingConfig {
+    type O = terrars::BlockAssignable<CloudformationType_LoggingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -457,37 +486,39 @@ impl terrars::ToListMappable for CloudformationTypeLoggingConfigEl {
     }
 }
 
-pub struct BuildCloudformationTypeLoggingConfigEl {
+pub struct BuildCloudformationType_LoggingConfig {
     #[doc = ""]
     pub log_group_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub log_role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudformationTypeLoggingConfigEl {
-    pub fn build(self) -> CloudformationTypeLoggingConfigEl {
-        CloudformationTypeLoggingConfigEl {
+impl BuildCloudformationType_LoggingConfig {
+    pub fn build(self) -> CloudformationType_LoggingConfig {
+        CloudformationType_LoggingConfig {
             log_group_name: self.log_group_name,
             log_role_arn: self.log_role_arn,
         }
     }
 }
 
-pub struct CloudformationTypeLoggingConfigElRef {
+#[allow(dead_code)]
+pub struct CloudformationType_LoggingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudformationTypeLoggingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudformationTypeLoggingConfigElRef {
-        CloudformationTypeLoggingConfigElRef {
+impl terrars::Ref for CloudformationType_LoggingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudformationType_LoggingConfigRef {
+        CloudformationType_LoggingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudformationTypeLoggingConfigElRef {
+impl CloudformationType_LoggingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -501,9 +532,4 @@ impl CloudformationTypeLoggingConfigElRef {
     pub fn log_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_role_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudformationTypeDynamic {
-    logging_config: std::option::Option<terrars::DynamicBlock<CloudformationTypeLoggingConfigEl>>,
 }

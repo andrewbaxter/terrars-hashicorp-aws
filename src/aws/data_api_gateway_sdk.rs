@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataApiGatewaySdkData {
+struct DataApiGatewaySdkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,6 +22,8 @@ struct DataApiGatewaySdkData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     rest_api_id: terrars::PrimField<std::string::String>,
     sdk_type: terrars::PrimField<std::string::String>,
     stage_name: terrars::PrimField<std::string::String>,
@@ -28,7 +32,7 @@ struct DataApiGatewaySdkData {
 struct DataApiGatewaySdk_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataApiGatewaySdkData>,
+    data: std::cell::RefCell<DataApiGatewaySdkData_>,
 }
 
 #[derive(Clone)]
@@ -88,6 +92,13 @@ impl DataApiGatewaySdk {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `body` after provisioning.\n"]
     pub fn body(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.body", self.extract_ref()))
@@ -111,6 +122,12 @@ impl DataApiGatewaySdk {
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
     pub fn parameters(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]
@@ -175,13 +192,14 @@ impl BuildDataApiGatewaySdk {
         let out = DataApiGatewaySdk(std::rc::Rc::new(DataApiGatewaySdk_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataApiGatewaySdkData {
+            data: std::cell::RefCell::new(DataApiGatewaySdkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 parameters: core::default::Default::default(),
+                region: core::default::Default::default(),
                 rest_api_id: self.rest_api_id,
                 sdk_type: self.sdk_type,
                 stage_name: self.stage_name,
@@ -238,6 +256,12 @@ impl DataApiGatewaySdkRef {
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
     pub fn parameters(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]

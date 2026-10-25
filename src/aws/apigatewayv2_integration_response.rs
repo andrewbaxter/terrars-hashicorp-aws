@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Apigatewayv2IntegrationResponseData {
+struct Apigatewayv2IntegrationResponseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,6 +28,8 @@ struct Apigatewayv2IntegrationResponseData {
     integration_id: terrars::PrimField<std::string::String>,
     integration_response_key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_templates: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     template_selection_expression: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -34,7 +38,7 @@ struct Apigatewayv2IntegrationResponseData {
 struct Apigatewayv2IntegrationResponse_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Apigatewayv2IntegrationResponseData>,
+    data: std::cell::RefCell<Apigatewayv2IntegrationResponseData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl Apigatewayv2IntegrationResponse {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `response_templates`.\n"]
     pub fn set_response_templates(
         self,
@@ -190,6 +201,12 @@ impl Apigatewayv2IntegrationResponse {
     #[doc = "Get a reference to the value of field `integration_response_key` after provisioning.\n"]
     pub fn integration_response_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.integration_response_key", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `response_templates` after provisioning.\n"]
@@ -252,7 +269,7 @@ impl BuildApigatewayv2IntegrationResponse {
         let out = Apigatewayv2IntegrationResponse(std::rc::Rc::new(Apigatewayv2IntegrationResponse_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Apigatewayv2IntegrationResponseData {
+            data: std::cell::RefCell::new(Apigatewayv2IntegrationResponseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -263,6 +280,7 @@ impl BuildApigatewayv2IntegrationResponse {
                 id: core::default::Default::default(),
                 integration_id: self.integration_id,
                 integration_response_key: self.integration_response_key,
+                region: core::default::Default::default(),
                 response_templates: core::default::Default::default(),
                 template_selection_expression: core::default::Default::default(),
             }),
@@ -318,6 +336,12 @@ impl Apigatewayv2IntegrationResponseRef {
     #[doc = "Get a reference to the value of field `integration_response_key` after provisioning.\n"]
     pub fn integration_response_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.integration_response_key", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `response_templates` after provisioning.\n"]

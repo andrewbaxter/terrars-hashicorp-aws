@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CognitoUserPoolDomainData {
+struct CognitoUserPoolDomainData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,13 +25,17 @@ struct CognitoUserPoolDomainData {
     domain: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    managed_login_version: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     user_pool_id: terrars::PrimField<std::string::String>,
 }
 
 struct CognitoUserPoolDomain_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CognitoUserPoolDomainData>,
+    data: std::cell::RefCell<CognitoUserPoolDomainData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +147,19 @@ impl CognitoUserPoolDomain {
         self
     }
 
+    #[doc = "Set the field `managed_login_version`.\n"]
+    pub fn set_managed_login_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().managed_login_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `aws_account_id` after provisioning.\n"]
     pub fn aws_account_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.aws_account_id", self.extract_ref()))
@@ -151,9 +170,22 @@ impl CognitoUserPoolDomain {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cloudfront_distribution` after provisioning.\n"]
+    pub fn cloudfront_distribution(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloudfront_distribution", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cloudfront_distribution_arn` after provisioning.\n"]
     pub fn cloudfront_distribution_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloudfront_distribution_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `cloudfront_distribution_zone_id` after provisioning.\n"]
+    pub fn cloudfront_distribution_zone_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.cloudfront_distribution_zone_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `domain` after provisioning.\n"]
@@ -164,6 +196,17 @@ impl CognitoUserPoolDomain {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `managed_login_version` after provisioning.\n"]
+    pub fn managed_login_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.managed_login_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
@@ -226,7 +269,7 @@ impl BuildCognitoUserPoolDomain {
         let out = CognitoUserPoolDomain(std::rc::Rc::new(CognitoUserPoolDomain_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CognitoUserPoolDomainData {
+            data: std::cell::RefCell::new(CognitoUserPoolDomainData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -235,6 +278,8 @@ impl BuildCognitoUserPoolDomain {
                 certificate_arn: core::default::Default::default(),
                 domain: self.domain,
                 id: core::default::Default::default(),
+                managed_login_version: core::default::Default::default(),
+                region: core::default::Default::default(),
                 user_pool_id: self.user_pool_id,
             }),
         }));
@@ -276,9 +321,22 @@ impl CognitoUserPoolDomainRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cloudfront_distribution` after provisioning.\n"]
+    pub fn cloudfront_distribution(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloudfront_distribution", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cloudfront_distribution_arn` after provisioning.\n"]
     pub fn cloudfront_distribution_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloudfront_distribution_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `cloudfront_distribution_zone_id` after provisioning.\n"]
+    pub fn cloudfront_distribution_zone_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.cloudfront_distribution_zone_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `domain` after provisioning.\n"]
@@ -289,6 +347,17 @@ impl CognitoUserPoolDomainRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `managed_login_version` after provisioning.\n"]
+    pub fn managed_login_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.managed_login_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_bucket` after provisioning.\n"]

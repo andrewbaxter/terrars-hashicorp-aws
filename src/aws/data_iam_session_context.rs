@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataIamSessionContextData {
+struct DataIamSessionContextData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataIamSessionContextData {
 struct DataIamSessionContext_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataIamSessionContextData>,
+    data: std::cell::RefCell<DataIamSessionContextData_>,
 }
 
 #[derive(Clone)]
@@ -148,7 +150,7 @@ impl BuildDataIamSessionContext {
         let out = DataIamSessionContext(std::rc::Rc::new(DataIamSessionContext_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataIamSessionContextData {
+            data: std::cell::RefCell::new(DataIamSessionContextData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

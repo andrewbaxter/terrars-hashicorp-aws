@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2TransitGatewayMulticastDomainData {
+struct DataEc2TransitGatewayMulticastDomainData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,20 +21,22 @@ struct DataEc2TransitGatewayMulticastDomainData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transit_gateway_multicast_domain_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2TransitGatewayMulticastDomainFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEc2TransitGatewayMulticastDomain_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEc2TransitGatewayMulticastDomainTimeoutsEl>,
+    timeouts: std::option::Option<DataEc2TransitGatewayMulticastDomain_Timeouts>,
     dynamic: DataEc2TransitGatewayMulticastDomainDynamic,
 }
 
 struct DataEc2TransitGatewayMulticastDomain_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2TransitGatewayMulticastDomainData>,
+    data: std::cell::RefCell<DataEc2TransitGatewayMulticastDomainData_>,
 }
 
 #[derive(Clone)]
@@ -83,6 +87,13 @@ impl DataEc2TransitGatewayMulticastDomain {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -104,7 +115,7 @@ impl DataEc2TransitGatewayMulticastDomain {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomainFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomain_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -118,7 +129,7 @@ impl DataEc2TransitGatewayMulticastDomain {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2TransitGatewayMulticastDomainTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2TransitGatewayMulticastDomain_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -129,7 +140,7 @@ impl DataEc2TransitGatewayMulticastDomain {
     }
 
     #[doc = "Get a reference to the value of field `associations` after provisioning.\n"]
-    pub fn associations(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomainAssociationsElRef> {
+    pub fn associations(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomain_AssociationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.associations", self.extract_ref()))
     }
 
@@ -152,7 +163,7 @@ impl DataEc2TransitGatewayMulticastDomain {
     }
 
     #[doc = "Get a reference to the value of field `members` after provisioning.\n"]
-    pub fn members(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomainMembersElRef> {
+    pub fn members(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomain_MembersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.members", self.extract_ref()))
     }
 
@@ -161,8 +172,14 @@ impl DataEc2TransitGatewayMulticastDomain {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sources` after provisioning.\n"]
-    pub fn sources(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomainSourcesElRef> {
+    pub fn sources(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomain_SourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sources", self.extract_ref()))
     }
 
@@ -203,8 +220,8 @@ impl DataEc2TransitGatewayMulticastDomain {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2TransitGatewayMulticastDomainTimeoutsElRef {
-        DataEc2TransitGatewayMulticastDomainTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2TransitGatewayMulticastDomain_TimeoutsRef {
+        DataEc2TransitGatewayMulticastDomain_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -251,12 +268,13 @@ impl BuildDataEc2TransitGatewayMulticastDomain {
         let out = DataEc2TransitGatewayMulticastDomain(std::rc::Rc::new(DataEc2TransitGatewayMulticastDomain_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2TransitGatewayMulticastDomainData {
+            data: std::cell::RefCell::new(DataEc2TransitGatewayMulticastDomainData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 transit_gateway_multicast_domain_id: core::default::Default::default(),
                 filter: core::default::Default::default(),
@@ -298,7 +316,7 @@ impl DataEc2TransitGatewayMulticastDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `associations` after provisioning.\n"]
-    pub fn associations(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomainAssociationsElRef> {
+    pub fn associations(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomain_AssociationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.associations", self.extract_ref()))
     }
 
@@ -321,7 +339,7 @@ impl DataEc2TransitGatewayMulticastDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `members` after provisioning.\n"]
-    pub fn members(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomainMembersElRef> {
+    pub fn members(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomain_MembersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.members", self.extract_ref()))
     }
 
@@ -330,8 +348,14 @@ impl DataEc2TransitGatewayMulticastDomainRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sources` after provisioning.\n"]
-    pub fn sources(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomainSourcesElRef> {
+    pub fn sources(&self) -> terrars::ListRef<DataEc2TransitGatewayMulticastDomain_SourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sources", self.extract_ref()))
     }
 
@@ -372,23 +396,28 @@ impl DataEc2TransitGatewayMulticastDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2TransitGatewayMulticastDomainTimeoutsElRef {
-        DataEc2TransitGatewayMulticastDomainTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2TransitGatewayMulticastDomain_TimeoutsRef {
+        DataEc2TransitGatewayMulticastDomain_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataEc2TransitGatewayMulticastDomainDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2TransitGatewayMulticastDomain_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayMulticastDomainAssociationsEl {
+pub struct DataEc2TransitGatewayMulticastDomain_Associations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transit_gateway_attachment_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayMulticastDomainAssociationsEl {
+impl DataEc2TransitGatewayMulticastDomain_Associations {
     #[doc = "Set the field `subnet_id`.\n"]
     pub fn set_subnet_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.subnet_id = std::option::Option::Some(v.into());
@@ -405,8 +434,8 @@ impl DataEc2TransitGatewayMulticastDomainAssociationsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainAssociationsEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomainAssociationsEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomain_Associations {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomain_Associations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -417,35 +446,37 @@ impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainAssociation
     }
 }
 
-pub struct BuildDataEc2TransitGatewayMulticastDomainAssociationsEl {}
+pub struct BuildDataEc2TransitGatewayMulticastDomain_Associations {}
 
-impl BuildDataEc2TransitGatewayMulticastDomainAssociationsEl {
-    pub fn build(self) -> DataEc2TransitGatewayMulticastDomainAssociationsEl {
-        DataEc2TransitGatewayMulticastDomainAssociationsEl {
+impl BuildDataEc2TransitGatewayMulticastDomain_Associations {
+    pub fn build(self) -> DataEc2TransitGatewayMulticastDomain_Associations {
+        DataEc2TransitGatewayMulticastDomain_Associations {
             subnet_id: core::default::Default::default(),
             transit_gateway_attachment_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2TransitGatewayMulticastDomainAssociationsElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayMulticastDomain_AssociationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayMulticastDomainAssociationsElRef {
+impl terrars::Ref for DataEc2TransitGatewayMulticastDomain_AssociationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2TransitGatewayMulticastDomainAssociationsElRef {
-        DataEc2TransitGatewayMulticastDomainAssociationsElRef {
+    ) -> DataEc2TransitGatewayMulticastDomain_AssociationsRef {
+        DataEc2TransitGatewayMulticastDomain_AssociationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayMulticastDomainAssociationsElRef {
+impl DataEc2TransitGatewayMulticastDomain_AssociationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -462,14 +493,14 @@ impl DataEc2TransitGatewayMulticastDomainAssociationsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayMulticastDomainMembersEl {
+pub struct DataEc2TransitGatewayMulticastDomain_Members {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayMulticastDomainMembersEl {
+impl DataEc2TransitGatewayMulticastDomain_Members {
     #[doc = "Set the field `group_ip_address`.\n"]
     pub fn set_group_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.group_ip_address = std::option::Option::Some(v.into());
@@ -486,8 +517,8 @@ impl DataEc2TransitGatewayMulticastDomainMembersEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainMembersEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomainMembersEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomain_Members {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomain_Members>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -498,35 +529,37 @@ impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainMembersEl {
     }
 }
 
-pub struct BuildDataEc2TransitGatewayMulticastDomainMembersEl {}
+pub struct BuildDataEc2TransitGatewayMulticastDomain_Members {}
 
-impl BuildDataEc2TransitGatewayMulticastDomainMembersEl {
-    pub fn build(self) -> DataEc2TransitGatewayMulticastDomainMembersEl {
-        DataEc2TransitGatewayMulticastDomainMembersEl {
+impl BuildDataEc2TransitGatewayMulticastDomain_Members {
+    pub fn build(self) -> DataEc2TransitGatewayMulticastDomain_Members {
+        DataEc2TransitGatewayMulticastDomain_Members {
             group_ip_address: core::default::Default::default(),
             network_interface_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2TransitGatewayMulticastDomainMembersElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayMulticastDomain_MembersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayMulticastDomainMembersElRef {
+impl terrars::Ref for DataEc2TransitGatewayMulticastDomain_MembersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2TransitGatewayMulticastDomainMembersElRef {
-        DataEc2TransitGatewayMulticastDomainMembersElRef {
+    ) -> DataEc2TransitGatewayMulticastDomain_MembersRef {
+        DataEc2TransitGatewayMulticastDomain_MembersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayMulticastDomainMembersElRef {
+impl DataEc2TransitGatewayMulticastDomain_MembersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -543,14 +576,14 @@ impl DataEc2TransitGatewayMulticastDomainMembersElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayMulticastDomainSourcesEl {
+pub struct DataEc2TransitGatewayMulticastDomain_Sources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayMulticastDomainSourcesEl {
+impl DataEc2TransitGatewayMulticastDomain_Sources {
     #[doc = "Set the field `group_ip_address`.\n"]
     pub fn set_group_ip_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.group_ip_address = std::option::Option::Some(v.into());
@@ -567,8 +600,8 @@ impl DataEc2TransitGatewayMulticastDomainSourcesEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainSourcesEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomainSourcesEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomain_Sources {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomain_Sources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -579,35 +612,37 @@ impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainSourcesEl {
     }
 }
 
-pub struct BuildDataEc2TransitGatewayMulticastDomainSourcesEl {}
+pub struct BuildDataEc2TransitGatewayMulticastDomain_Sources {}
 
-impl BuildDataEc2TransitGatewayMulticastDomainSourcesEl {
-    pub fn build(self) -> DataEc2TransitGatewayMulticastDomainSourcesEl {
-        DataEc2TransitGatewayMulticastDomainSourcesEl {
+impl BuildDataEc2TransitGatewayMulticastDomain_Sources {
+    pub fn build(self) -> DataEc2TransitGatewayMulticastDomain_Sources {
+        DataEc2TransitGatewayMulticastDomain_Sources {
             group_ip_address: core::default::Default::default(),
             network_interface_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2TransitGatewayMulticastDomainSourcesElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayMulticastDomain_SourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayMulticastDomainSourcesElRef {
+impl terrars::Ref for DataEc2TransitGatewayMulticastDomain_SourcesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2TransitGatewayMulticastDomainSourcesElRef {
-        DataEc2TransitGatewayMulticastDomainSourcesElRef {
+    ) -> DataEc2TransitGatewayMulticastDomain_SourcesRef {
+        DataEc2TransitGatewayMulticastDomain_SourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayMulticastDomainSourcesElRef {
+impl DataEc2TransitGatewayMulticastDomain_SourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -624,15 +659,15 @@ impl DataEc2TransitGatewayMulticastDomainSourcesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayMulticastDomainFilterEl {
+pub struct DataEc2TransitGatewayMulticastDomain_Filter {
     name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayMulticastDomainFilterEl { }
+impl DataEc2TransitGatewayMulticastDomain_Filter { }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainFilterEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomainFilterEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomain_Filter {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomain_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -643,40 +678,42 @@ impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainFilterEl {
     }
 }
 
-pub struct BuildDataEc2TransitGatewayMulticastDomainFilterEl {
+pub struct BuildDataEc2TransitGatewayMulticastDomain_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEc2TransitGatewayMulticastDomainFilterEl {
-    pub fn build(self) -> DataEc2TransitGatewayMulticastDomainFilterEl {
-        DataEc2TransitGatewayMulticastDomainFilterEl {
+impl BuildDataEc2TransitGatewayMulticastDomain_Filter {
+    pub fn build(self) -> DataEc2TransitGatewayMulticastDomain_Filter {
+        DataEc2TransitGatewayMulticastDomain_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEc2TransitGatewayMulticastDomainFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayMulticastDomain_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayMulticastDomainFilterElRef {
+impl terrars::Ref for DataEc2TransitGatewayMulticastDomain_FilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2TransitGatewayMulticastDomainFilterElRef {
-        DataEc2TransitGatewayMulticastDomainFilterElRef {
+    ) -> DataEc2TransitGatewayMulticastDomain_FilterRef {
+        DataEc2TransitGatewayMulticastDomain_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayMulticastDomainFilterElRef {
+impl DataEc2TransitGatewayMulticastDomain_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -687,18 +724,18 @@ impl DataEc2TransitGatewayMulticastDomainFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayMulticastDomainTimeoutsEl {
+pub struct DataEc2TransitGatewayMulticastDomain_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayMulticastDomainTimeoutsEl {
+impl DataEc2TransitGatewayMulticastDomain_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -706,8 +743,8 @@ impl DataEc2TransitGatewayMulticastDomainTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomainTimeoutsEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomain_Timeouts {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayMulticastDomain_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -718,32 +755,34 @@ impl terrars::ToListMappable for DataEc2TransitGatewayMulticastDomainTimeoutsEl 
     }
 }
 
-pub struct BuildDataEc2TransitGatewayMulticastDomainTimeoutsEl {}
+pub struct BuildDataEc2TransitGatewayMulticastDomain_Timeouts {}
 
-impl BuildDataEc2TransitGatewayMulticastDomainTimeoutsEl {
-    pub fn build(self) -> DataEc2TransitGatewayMulticastDomainTimeoutsEl {
-        DataEc2TransitGatewayMulticastDomainTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEc2TransitGatewayMulticastDomain_Timeouts {
+    pub fn build(self) -> DataEc2TransitGatewayMulticastDomain_Timeouts {
+        DataEc2TransitGatewayMulticastDomain_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEc2TransitGatewayMulticastDomainTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayMulticastDomain_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayMulticastDomainTimeoutsElRef {
+impl terrars::Ref for DataEc2TransitGatewayMulticastDomain_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2TransitGatewayMulticastDomainTimeoutsElRef {
-        DataEc2TransitGatewayMulticastDomainTimeoutsElRef {
+    ) -> DataEc2TransitGatewayMulticastDomain_TimeoutsRef {
+        DataEc2TransitGatewayMulticastDomain_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayMulticastDomainTimeoutsElRef {
+impl DataEc2TransitGatewayMulticastDomain_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -752,9 +791,4 @@ impl DataEc2TransitGatewayMulticastDomainTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2TransitGatewayMulticastDomainDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2TransitGatewayMulticastDomainFilterEl>>,
 }

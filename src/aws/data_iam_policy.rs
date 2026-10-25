@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataIamPolicyData {
+struct DataIamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -31,7 +33,7 @@ struct DataIamPolicyData {
 struct DataIamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataIamPolicyData>,
+    data: std::cell::RefCell<DataIamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -112,6 +114,11 @@ impl DataIamPolicy {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `attachment_count` after provisioning.\n"]
+    pub fn attachment_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attachment_count", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
@@ -195,7 +202,7 @@ impl BuildDataIamPolicy {
         let out = DataIamPolicy(std::rc::Rc::new(DataIamPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataIamPolicyData {
+            data: std::cell::RefCell::new(DataIamPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -238,6 +245,11 @@ impl DataIamPolicyRef {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `attachment_count` after provisioning.\n"]
+    pub fn attachment_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attachment_count", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]

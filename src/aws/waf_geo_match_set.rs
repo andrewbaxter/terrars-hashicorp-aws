@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafGeoMatchSetData {
+struct WafGeoMatchSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,14 @@ struct WafGeoMatchSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    geo_match_constraint: std::option::Option<std::vec::Vec<WafGeoMatchSetGeoMatchConstraintEl>>,
+    geo_match_constraint: std::option::Option<std::vec::Vec<WafGeoMatchSet_GeoMatchConstraint>>,
     dynamic: WafGeoMatchSetDynamic,
 }
 
 struct WafGeoMatchSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafGeoMatchSetData>,
+    data: std::cell::RefCell<WafGeoMatchSetData_>,
 }
 
 #[derive(Clone)]
@@ -138,7 +140,7 @@ impl WafGeoMatchSet {
     #[doc = "Set the field `geo_match_constraint`.\n"]
     pub fn set_geo_match_constraint(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafGeoMatchSetGeoMatchConstraintEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafGeoMatchSet_GeoMatchConstraint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,7 +211,7 @@ impl BuildWafGeoMatchSet {
         let out = WafGeoMatchSet(std::rc::Rc::new(WafGeoMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafGeoMatchSetData {
+            data: std::cell::RefCell::new(WafGeoMatchSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -265,17 +267,22 @@ impl WafGeoMatchSetRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafGeoMatchSetDynamic {
+    geo_match_constraint: std::option::Option<terrars::DynamicBlock<WafGeoMatchSet_GeoMatchConstraint>>,
+}
+
 #[derive(Serialize)]
-pub struct WafGeoMatchSetGeoMatchConstraintEl {
+pub struct WafGeoMatchSet_GeoMatchConstraint {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl WafGeoMatchSetGeoMatchConstraintEl { }
+impl WafGeoMatchSet_GeoMatchConstraint { }
 
-impl terrars::ToListMappable for WafGeoMatchSetGeoMatchConstraintEl {
-    type O = terrars::BlockAssignable<WafGeoMatchSetGeoMatchConstraintEl>;
+impl terrars::ToListMappable for WafGeoMatchSet_GeoMatchConstraint {
+    type O = terrars::BlockAssignable<WafGeoMatchSet_GeoMatchConstraint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -286,37 +293,39 @@ impl terrars::ToListMappable for WafGeoMatchSetGeoMatchConstraintEl {
     }
 }
 
-pub struct BuildWafGeoMatchSetGeoMatchConstraintEl {
+pub struct BuildWafGeoMatchSet_GeoMatchConstraint {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafGeoMatchSetGeoMatchConstraintEl {
-    pub fn build(self) -> WafGeoMatchSetGeoMatchConstraintEl {
-        WafGeoMatchSetGeoMatchConstraintEl {
+impl BuildWafGeoMatchSet_GeoMatchConstraint {
+    pub fn build(self) -> WafGeoMatchSet_GeoMatchConstraint {
+        WafGeoMatchSet_GeoMatchConstraint {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct WafGeoMatchSetGeoMatchConstraintElRef {
+#[allow(dead_code)]
+pub struct WafGeoMatchSet_GeoMatchConstraintRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafGeoMatchSetGeoMatchConstraintElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafGeoMatchSetGeoMatchConstraintElRef {
-        WafGeoMatchSetGeoMatchConstraintElRef {
+impl terrars::Ref for WafGeoMatchSet_GeoMatchConstraintRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafGeoMatchSet_GeoMatchConstraintRef {
+        WafGeoMatchSet_GeoMatchConstraintRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafGeoMatchSetGeoMatchConstraintElRef {
+impl WafGeoMatchSet_GeoMatchConstraintRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -330,9 +339,4 @@ impl WafGeoMatchSetGeoMatchConstraintElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafGeoMatchSetDynamic {
-    geo_match_constraint: std::option::Option<terrars::DynamicBlock<WafGeoMatchSetGeoMatchConstraintEl>>,
 }

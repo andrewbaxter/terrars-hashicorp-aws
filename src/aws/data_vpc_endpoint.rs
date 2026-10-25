@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataVpcEndpointData {
+struct DataVpcEndpointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,24 +21,30 @@ struct DataVpcEndpointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_endpoint_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataVpcEndpointFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataVpcEndpoint_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataVpcEndpointTimeoutsEl>,
+    timeouts: std::option::Option<DataVpcEndpoint_Timeouts>,
     dynamic: DataVpcEndpointDynamic,
 }
 
 struct DataVpcEndpoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVpcEndpointData>,
+    data: std::cell::RefCell<DataVpcEndpointData_>,
 }
 
 #[derive(Clone)]
@@ -87,9 +95,22 @@ impl DataVpcEndpoint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `service_name`.\n"]
     pub fn set_service_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().service_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `service_region`.\n"]
+    pub fn set_service_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().service_region = std::option::Option::Some(v.into());
         self
     }
 
@@ -108,6 +129,12 @@ impl DataVpcEndpoint {
         self
     }
 
+    #[doc = "Set the field `vpc_endpoint_type`.\n"]
+    pub fn set_vpc_endpoint_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().vpc_endpoint_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `vpc_id`.\n"]
     pub fn set_vpc_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().vpc_id = std::option::Option::Some(v.into());
@@ -115,7 +142,7 @@ impl DataVpcEndpoint {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataVpcEndpointFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataVpcEndpoint_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -128,7 +155,7 @@ impl DataVpcEndpoint {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcEndpointTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcEndpoint_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -144,12 +171,12 @@ impl DataVpcEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `dns_entry` after provisioning.\n"]
-    pub fn dns_entry(&self) -> terrars::ListRef<DataVpcEndpointDnsEntryElRef> {
+    pub fn dns_entry(&self) -> terrars::ListRef<DataVpcEndpoint_DnsEntryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_entry", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dns_options` after provisioning.\n"]
-    pub fn dns_options(&self) -> terrars::ListRef<DataVpcEndpointDnsOptionsElRef> {
+    pub fn dns_options(&self) -> terrars::ListRef<DataVpcEndpoint_DnsOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_options", self.extract_ref()))
     }
 
@@ -188,6 +215,12 @@ impl DataVpcEndpoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_dns_enabled", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `requester_managed` after provisioning.\n"]
     pub fn requester_managed(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.requester_managed", self.extract_ref()))
@@ -206,6 +239,11 @@ impl DataVpcEndpoint {
     #[doc = "Get a reference to the value of field `service_name` after provisioning.\n"]
     pub fn service_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_region` after provisioning.\n"]
+    pub fn service_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -234,8 +272,8 @@ impl DataVpcEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcEndpointTimeoutsElRef {
-        DataVpcEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpcEndpoint_TimeoutsRef {
+        DataVpcEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -279,15 +317,18 @@ impl BuildDataVpcEndpoint {
         let out = DataVpcEndpoint(std::rc::Rc::new(DataVpcEndpoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVpcEndpointData {
+            data: std::cell::RefCell::new(DataVpcEndpointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 service_name: core::default::Default::default(),
+                service_region: core::default::Default::default(),
                 state: core::default::Default::default(),
                 tags: core::default::Default::default(),
+                vpc_endpoint_type: core::default::Default::default(),
                 vpc_id: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -333,12 +374,12 @@ impl DataVpcEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `dns_entry` after provisioning.\n"]
-    pub fn dns_entry(&self) -> terrars::ListRef<DataVpcEndpointDnsEntryElRef> {
+    pub fn dns_entry(&self) -> terrars::ListRef<DataVpcEndpoint_DnsEntryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_entry", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dns_options` after provisioning.\n"]
-    pub fn dns_options(&self) -> terrars::ListRef<DataVpcEndpointDnsOptionsElRef> {
+    pub fn dns_options(&self) -> terrars::ListRef<DataVpcEndpoint_DnsOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_options", self.extract_ref()))
     }
 
@@ -377,6 +418,12 @@ impl DataVpcEndpointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_dns_enabled", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `requester_managed` after provisioning.\n"]
     pub fn requester_managed(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.requester_managed", self.extract_ref()))
@@ -395,6 +442,11 @@ impl DataVpcEndpointRef {
     #[doc = "Get a reference to the value of field `service_name` after provisioning.\n"]
     pub fn service_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_region` after provisioning.\n"]
+    pub fn service_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -423,20 +475,25 @@ impl DataVpcEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcEndpointTimeoutsElRef {
-        DataVpcEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpcEndpoint_TimeoutsRef {
+        DataVpcEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataVpcEndpointDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataVpcEndpoint_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataVpcEndpointDnsEntryEl {
+pub struct DataVpcEndpoint_DnsEntry {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hosted_zone_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcEndpointDnsEntryEl {
+impl DataVpcEndpoint_DnsEntry {
     #[doc = "Set the field `dns_name`.\n"]
     pub fn set_dns_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dns_name = std::option::Option::Some(v.into());
@@ -450,8 +507,8 @@ impl DataVpcEndpointDnsEntryEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcEndpointDnsEntryEl {
-    type O = terrars::BlockAssignable<DataVpcEndpointDnsEntryEl>;
+impl terrars::ToListMappable for DataVpcEndpoint_DnsEntry {
+    type O = terrars::BlockAssignable<DataVpcEndpoint_DnsEntry>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -462,32 +519,34 @@ impl terrars::ToListMappable for DataVpcEndpointDnsEntryEl {
     }
 }
 
-pub struct BuildDataVpcEndpointDnsEntryEl {}
+pub struct BuildDataVpcEndpoint_DnsEntry {}
 
-impl BuildDataVpcEndpointDnsEntryEl {
-    pub fn build(self) -> DataVpcEndpointDnsEntryEl {
-        DataVpcEndpointDnsEntryEl {
+impl BuildDataVpcEndpoint_DnsEntry {
+    pub fn build(self) -> DataVpcEndpoint_DnsEntry {
+        DataVpcEndpoint_DnsEntry {
             dns_name: core::default::Default::default(),
             hosted_zone_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataVpcEndpointDnsEntryElRef {
+#[allow(dead_code)]
+pub struct DataVpcEndpoint_DnsEntryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcEndpointDnsEntryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpointDnsEntryElRef {
-        DataVpcEndpointDnsEntryElRef {
+impl terrars::Ref for DataVpcEndpoint_DnsEntryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpoint_DnsEntryRef {
+        DataVpcEndpoint_DnsEntryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcEndpointDnsEntryElRef {
+impl DataVpcEndpoint_DnsEntryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -504,12 +563,18 @@ impl DataVpcEndpointDnsEntryElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcEndpointDnsOptionsEl {
+pub struct DataVpcEndpoint_DnsOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_record_ip_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_dns_only_for_inbound_resolver_endpoint: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_dns_preference: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_dns_specified_domains: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataVpcEndpointDnsOptionsEl {
+impl DataVpcEndpoint_DnsOptions {
     #[doc = "Set the field `dns_record_ip_type`.\n"]
     pub fn set_dns_record_ip_type(
         mut self,
@@ -518,10 +583,37 @@ impl DataVpcEndpointDnsOptionsEl {
         self.dns_record_ip_type = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `private_dns_only_for_inbound_resolver_endpoint`.\n"]
+    pub fn set_private_dns_only_for_inbound_resolver_endpoint(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.private_dns_only_for_inbound_resolver_endpoint = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `private_dns_preference`.\n"]
+    pub fn set_private_dns_preference(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.private_dns_preference = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `private_dns_specified_domains`.\n"]
+    pub fn set_private_dns_specified_domains(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.private_dns_specified_domains = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataVpcEndpointDnsOptionsEl {
-    type O = terrars::BlockAssignable<DataVpcEndpointDnsOptionsEl>;
+impl terrars::ToListMappable for DataVpcEndpoint_DnsOptions {
+    type O = terrars::BlockAssignable<DataVpcEndpoint_DnsOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -532,29 +624,36 @@ impl terrars::ToListMappable for DataVpcEndpointDnsOptionsEl {
     }
 }
 
-pub struct BuildDataVpcEndpointDnsOptionsEl {}
+pub struct BuildDataVpcEndpoint_DnsOptions {}
 
-impl BuildDataVpcEndpointDnsOptionsEl {
-    pub fn build(self) -> DataVpcEndpointDnsOptionsEl {
-        DataVpcEndpointDnsOptionsEl { dns_record_ip_type: core::default::Default::default() }
+impl BuildDataVpcEndpoint_DnsOptions {
+    pub fn build(self) -> DataVpcEndpoint_DnsOptions {
+        DataVpcEndpoint_DnsOptions {
+            dns_record_ip_type: core::default::Default::default(),
+            private_dns_only_for_inbound_resolver_endpoint: core::default::Default::default(),
+            private_dns_preference: core::default::Default::default(),
+            private_dns_specified_domains: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DataVpcEndpointDnsOptionsElRef {
+#[allow(dead_code)]
+pub struct DataVpcEndpoint_DnsOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcEndpointDnsOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpointDnsOptionsElRef {
-        DataVpcEndpointDnsOptionsElRef {
+impl terrars::Ref for DataVpcEndpoint_DnsOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpoint_DnsOptionsRef {
+        DataVpcEndpoint_DnsOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcEndpointDnsOptionsElRef {
+impl DataVpcEndpoint_DnsOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -563,18 +662,37 @@ impl DataVpcEndpointDnsOptionsElRef {
     pub fn dns_record_ip_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_record_ip_type", self.base))
     }
+
+    #[doc =
+        "Get a reference to the value of field `private_dns_only_for_inbound_resolver_endpoint` after provisioning.\n"]
+    pub fn private_dns_only_for_inbound_resolver_endpoint(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.private_dns_only_for_inbound_resolver_endpoint", self.base),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `private_dns_preference` after provisioning.\n"]
+    pub fn private_dns_preference(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_dns_preference", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `private_dns_specified_domains` after provisioning.\n"]
+    pub fn private_dns_specified_domains(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.private_dns_specified_domains", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataVpcEndpointFilterEl {
+pub struct DataVpcEndpoint_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcEndpointFilterEl { }
+impl DataVpcEndpoint_Filter { }
 
-impl terrars::ToListMappable for DataVpcEndpointFilterEl {
-    type O = terrars::BlockAssignable<DataVpcEndpointFilterEl>;
+impl terrars::ToListMappable for DataVpcEndpoint_Filter {
+    type O = terrars::BlockAssignable<DataVpcEndpoint_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -585,37 +703,39 @@ impl terrars::ToListMappable for DataVpcEndpointFilterEl {
     }
 }
 
-pub struct BuildDataVpcEndpointFilterEl {
+pub struct BuildDataVpcEndpoint_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataVpcEndpointFilterEl {
-    pub fn build(self) -> DataVpcEndpointFilterEl {
-        DataVpcEndpointFilterEl {
+impl BuildDataVpcEndpoint_Filter {
+    pub fn build(self) -> DataVpcEndpoint_Filter {
+        DataVpcEndpoint_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataVpcEndpointFilterElRef {
+#[allow(dead_code)]
+pub struct DataVpcEndpoint_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcEndpointFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpointFilterElRef {
-        DataVpcEndpointFilterElRef {
+impl terrars::Ref for DataVpcEndpoint_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpoint_FilterRef {
+        DataVpcEndpoint_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcEndpointFilterElRef {
+impl DataVpcEndpoint_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -632,12 +752,12 @@ impl DataVpcEndpointFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcEndpointTimeoutsEl {
+pub struct DataVpcEndpoint_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcEndpointTimeoutsEl {
+impl DataVpcEndpoint_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -645,8 +765,8 @@ impl DataVpcEndpointTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcEndpointTimeoutsEl {
-    type O = terrars::BlockAssignable<DataVpcEndpointTimeoutsEl>;
+impl terrars::ToListMappable for DataVpcEndpoint_Timeouts {
+    type O = terrars::BlockAssignable<DataVpcEndpoint_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -657,29 +777,31 @@ impl terrars::ToListMappable for DataVpcEndpointTimeoutsEl {
     }
 }
 
-pub struct BuildDataVpcEndpointTimeoutsEl {}
+pub struct BuildDataVpcEndpoint_Timeouts {}
 
-impl BuildDataVpcEndpointTimeoutsEl {
-    pub fn build(self) -> DataVpcEndpointTimeoutsEl {
-        DataVpcEndpointTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataVpcEndpoint_Timeouts {
+    pub fn build(self) -> DataVpcEndpoint_Timeouts {
+        DataVpcEndpoint_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataVpcEndpointTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataVpcEndpoint_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcEndpointTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpointTimeoutsElRef {
-        DataVpcEndpointTimeoutsElRef {
+impl terrars::Ref for DataVpcEndpoint_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpoint_TimeoutsRef {
+        DataVpcEndpoint_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcEndpointTimeoutsElRef {
+impl DataVpcEndpoint_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -688,9 +810,4 @@ impl DataVpcEndpointTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataVpcEndpointDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataVpcEndpointFilterEl>>,
 }

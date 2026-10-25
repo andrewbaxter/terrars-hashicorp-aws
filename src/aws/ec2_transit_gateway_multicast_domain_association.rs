@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2TransitGatewayMulticastDomainAssociationData {
+struct Ec2TransitGatewayMulticastDomainAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,17 +22,19 @@ struct Ec2TransitGatewayMulticastDomainAssociationData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     subnet_id: terrars::PrimField<std::string::String>,
     transit_gateway_attachment_id: terrars::PrimField<std::string::String>,
     transit_gateway_multicast_domain_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Ec2TransitGatewayMulticastDomainAssociationTimeoutsEl>,
+    timeouts: std::option::Option<Ec2TransitGatewayMulticastDomainAssociation_Timeouts>,
 }
 
 struct Ec2TransitGatewayMulticastDomainAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2TransitGatewayMulticastDomainAssociationData>,
+    data: std::cell::RefCell<Ec2TransitGatewayMulticastDomainAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -136,8 +140,15 @@ impl Ec2TransitGatewayMulticastDomainAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Ec2TransitGatewayMulticastDomainAssociationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Ec2TransitGatewayMulticastDomainAssociation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -145,6 +156,12 @@ impl Ec2TransitGatewayMulticastDomainAssociation {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
@@ -169,8 +186,8 @@ impl Ec2TransitGatewayMulticastDomainAssociation {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Ec2TransitGatewayMulticastDomainAssociationTimeoutsElRef {
-        Ec2TransitGatewayMulticastDomainAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Ec2TransitGatewayMulticastDomainAssociation_TimeoutsRef {
+        Ec2TransitGatewayMulticastDomainAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -225,13 +242,14 @@ impl BuildEc2TransitGatewayMulticastDomainAssociation {
                 std::rc::Rc::new(Ec2TransitGatewayMulticastDomainAssociation_ {
                     shared: stack.shared.clone(),
                     tf_id: self.tf_id,
-                    data: std::cell::RefCell::new(Ec2TransitGatewayMulticastDomainAssociationData {
+                    data: std::cell::RefCell::new(Ec2TransitGatewayMulticastDomainAssociationData_ {
                         depends_on: core::default::Default::default(),
                         provider: std::option::Option::None,
                         lifecycle: core::default::Default::default(),
                         for_each: std::option::Option::None,
                         provisioner: core::default::Default::default(),
                         id: core::default::Default::default(),
+                        region: core::default::Default::default(),
                         subnet_id: self.subnet_id,
                         transit_gateway_attachment_id: self.transit_gateway_attachment_id,
                         transit_gateway_multicast_domain_id: self.transit_gateway_multicast_domain_id,
@@ -272,6 +290,12 @@ impl Ec2TransitGatewayMulticastDomainAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
     pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.extract_ref()))
@@ -294,8 +318,8 @@ impl Ec2TransitGatewayMulticastDomainAssociationRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Ec2TransitGatewayMulticastDomainAssociationTimeoutsElRef {
-        Ec2TransitGatewayMulticastDomainAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Ec2TransitGatewayMulticastDomainAssociation_TimeoutsRef {
+        Ec2TransitGatewayMulticastDomainAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -303,14 +327,14 @@ impl Ec2TransitGatewayMulticastDomainAssociationRef {
 }
 
 #[derive(Serialize)]
-pub struct Ec2TransitGatewayMulticastDomainAssociationTimeoutsEl {
+pub struct Ec2TransitGatewayMulticastDomainAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Ec2TransitGatewayMulticastDomainAssociationTimeoutsEl {
+impl Ec2TransitGatewayMulticastDomainAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -324,8 +348,8 @@ impl Ec2TransitGatewayMulticastDomainAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2TransitGatewayMulticastDomainAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<Ec2TransitGatewayMulticastDomainAssociationTimeoutsEl>;
+impl terrars::ToListMappable for Ec2TransitGatewayMulticastDomainAssociation_Timeouts {
+    type O = terrars::BlockAssignable<Ec2TransitGatewayMulticastDomainAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -336,35 +360,37 @@ impl terrars::ToListMappable for Ec2TransitGatewayMulticastDomainAssociationTime
     }
 }
 
-pub struct BuildEc2TransitGatewayMulticastDomainAssociationTimeoutsEl {}
+pub struct BuildEc2TransitGatewayMulticastDomainAssociation_Timeouts {}
 
-impl BuildEc2TransitGatewayMulticastDomainAssociationTimeoutsEl {
-    pub fn build(self) -> Ec2TransitGatewayMulticastDomainAssociationTimeoutsEl {
-        Ec2TransitGatewayMulticastDomainAssociationTimeoutsEl {
+impl BuildEc2TransitGatewayMulticastDomainAssociation_Timeouts {
+    pub fn build(self) -> Ec2TransitGatewayMulticastDomainAssociation_Timeouts {
+        Ec2TransitGatewayMulticastDomainAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2TransitGatewayMulticastDomainAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Ec2TransitGatewayMulticastDomainAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2TransitGatewayMulticastDomainAssociationTimeoutsElRef {
+impl terrars::Ref for Ec2TransitGatewayMulticastDomainAssociation_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2TransitGatewayMulticastDomainAssociationTimeoutsElRef {
-        Ec2TransitGatewayMulticastDomainAssociationTimeoutsElRef {
+    ) -> Ec2TransitGatewayMulticastDomainAssociation_TimeoutsRef {
+        Ec2TransitGatewayMulticastDomainAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2TransitGatewayMulticastDomainAssociationTimeoutsElRef {
+impl Ec2TransitGatewayMulticastDomainAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LbTargetGroupData {
+struct LbTargetGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,6 +33,10 @@ struct LbTargetGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     load_balancing_algorithm_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_balancing_anomaly_mitigation: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_balancing_cross_zone_enabled: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -45,28 +51,36 @@ struct LbTargetGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     proxy_protocol_v2: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     slow_start: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_control_port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    health_check: std::option::Option<std::vec::Vec<LbTargetGroupHealthCheckEl>>,
+    health_check: std::option::Option<std::vec::Vec<LbTargetGroup_HealthCheck>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stickiness: std::option::Option<std::vec::Vec<LbTargetGroupStickinessEl>>,
+    stickiness: std::option::Option<std::vec::Vec<LbTargetGroup_Stickiness>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_failover: std::option::Option<std::vec::Vec<LbTargetGroupTargetFailoverEl>>,
+    target_failover: std::option::Option<std::vec::Vec<LbTargetGroup_TargetFailover>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_group_health: std::option::Option<std::vec::Vec<LbTargetGroup_TargetGroupHealth>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_health_state: std::option::Option<std::vec::Vec<LbTargetGroup_TargetHealthState>>,
     dynamic: LbTargetGroupDynamic,
 }
 
 struct LbTargetGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LbTargetGroupData>,
+    data: std::cell::RefCell<LbTargetGroupData_>,
 }
 
 #[derive(Clone)]
@@ -205,6 +219,24 @@ impl LbTargetGroup {
         self
     }
 
+    #[doc = "Set the field `load_balancing_anomaly_mitigation`.\n"]
+    pub fn set_load_balancing_anomaly_mitigation(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().load_balancing_anomaly_mitigation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `load_balancing_cross_zone_enabled`.\n"]
+    pub fn set_load_balancing_cross_zone_enabled(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().load_balancing_cross_zone_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
@@ -247,6 +279,13 @@ impl LbTargetGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `slow_start`.\n"]
     pub fn set_slow_start(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().slow_start = std::option::Option::Some(v.into());
@@ -271,6 +310,12 @@ impl LbTargetGroup {
         self
     }
 
+    #[doc = "Set the field `target_control_port`.\n"]
+    pub fn set_target_control_port(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().target_control_port = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `target_type`.\n"]
     pub fn set_target_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().target_type = std::option::Option::Some(v.into());
@@ -286,7 +331,7 @@ impl LbTargetGroup {
     #[doc = "Set the field `health_check`.\n"]
     pub fn set_health_check(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroupHealthCheckEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroup_HealthCheck>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -300,10 +345,7 @@ impl LbTargetGroup {
     }
 
     #[doc = "Set the field `stickiness`.\n"]
-    pub fn set_stickiness(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroupStickinessEl>>,
-    ) -> Self {
+    pub fn set_stickiness(self, v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroup_Stickiness>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().stickiness = std::option::Option::Some(v);
@@ -318,7 +360,7 @@ impl LbTargetGroup {
     #[doc = "Set the field `target_failover`.\n"]
     pub fn set_target_failover(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroupTargetFailoverEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroup_TargetFailover>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -326,6 +368,38 @@ impl LbTargetGroup {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.target_failover = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `target_group_health`.\n"]
+    pub fn set_target_group_health(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroup_TargetGroupHealth>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().target_group_health = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.target_group_health = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `target_health_state`.\n"]
+    pub fn set_target_health_state(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroup_TargetHealthState>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().target_health_state = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.target_health_state = std::option::Option::Some(d);
             },
         }
         self
@@ -369,11 +443,32 @@ impl LbTargetGroup {
         )
     }
 
+    #[doc = "Get a reference to the value of field `load_balancer_arns` after provisioning.\n"]
+    pub fn load_balancer_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.load_balancer_arns", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `load_balancing_algorithm_type` after provisioning.\n"]
     pub fn load_balancing_algorithm_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.load_balancing_algorithm_type", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `load_balancing_anomaly_mitigation` after provisioning.\n"]
+    pub fn load_balancing_anomaly_mitigation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.load_balancing_anomaly_mitigation", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `load_balancing_cross_zone_enabled` after provisioning.\n"]
+    pub fn load_balancing_cross_zone_enabled(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.load_balancing_cross_zone_enabled", self.extract_ref()),
         )
     }
 
@@ -412,6 +507,12 @@ impl LbTargetGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.proxy_protocol_v2", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `slow_start` after provisioning.\n"]
     pub fn slow_start(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.slow_start", self.extract_ref()))
@@ -427,6 +528,11 @@ impl LbTargetGroup {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `target_control_port` after provisioning.\n"]
+    pub fn target_control_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_control_port", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_type` after provisioning.\n"]
     pub fn target_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_type", self.extract_ref()))
@@ -438,18 +544,28 @@ impl LbTargetGroup {
     }
 
     #[doc = "Get a reference to the value of field `health_check` after provisioning.\n"]
-    pub fn health_check(&self) -> terrars::ListRef<LbTargetGroupHealthCheckElRef> {
+    pub fn health_check(&self) -> terrars::ListRef<LbTargetGroup_HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `stickiness` after provisioning.\n"]
-    pub fn stickiness(&self) -> terrars::ListRef<LbTargetGroupStickinessElRef> {
+    pub fn stickiness(&self) -> terrars::ListRef<LbTargetGroup_StickinessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stickiness", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_failover` after provisioning.\n"]
-    pub fn target_failover(&self) -> terrars::ListRef<LbTargetGroupTargetFailoverElRef> {
+    pub fn target_failover(&self) -> terrars::ListRef<LbTargetGroup_TargetFailoverRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_failover", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_group_health` after provisioning.\n"]
+    pub fn target_group_health(&self) -> terrars::ListRef<LbTargetGroup_TargetGroupHealthRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_group_health", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_health_state` after provisioning.\n"]
+    pub fn target_health_state(&self) -> terrars::ListRef<LbTargetGroup_TargetHealthStateRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_health_state", self.extract_ref()))
     }
 }
 
@@ -493,7 +609,7 @@ impl BuildLbTargetGroup {
         let out = LbTargetGroup(std::rc::Rc::new(LbTargetGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LbTargetGroupData {
+            data: std::cell::RefCell::new(LbTargetGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -505,6 +621,8 @@ impl BuildLbTargetGroup {
                 ip_address_type: core::default::Default::default(),
                 lambda_multi_value_headers_enabled: core::default::Default::default(),
                 load_balancing_algorithm_type: core::default::Default::default(),
+                load_balancing_anomaly_mitigation: core::default::Default::default(),
+                load_balancing_cross_zone_enabled: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
                 port: core::default::Default::default(),
@@ -512,14 +630,18 @@ impl BuildLbTargetGroup {
                 protocol: core::default::Default::default(),
                 protocol_version: core::default::Default::default(),
                 proxy_protocol_v2: core::default::Default::default(),
+                region: core::default::Default::default(),
                 slow_start: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                target_control_port: core::default::Default::default(),
                 target_type: core::default::Default::default(),
                 vpc_id: core::default::Default::default(),
                 health_check: core::default::Default::default(),
                 stickiness: core::default::Default::default(),
                 target_failover: core::default::Default::default(),
+                target_group_health: core::default::Default::default(),
+                target_health_state: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -589,11 +711,32 @@ impl LbTargetGroupRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `load_balancer_arns` after provisioning.\n"]
+    pub fn load_balancer_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.load_balancer_arns", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `load_balancing_algorithm_type` after provisioning.\n"]
     pub fn load_balancing_algorithm_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.load_balancing_algorithm_type", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `load_balancing_anomaly_mitigation` after provisioning.\n"]
+    pub fn load_balancing_anomaly_mitigation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.load_balancing_anomaly_mitigation", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `load_balancing_cross_zone_enabled` after provisioning.\n"]
+    pub fn load_balancing_cross_zone_enabled(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.load_balancing_cross_zone_enabled", self.extract_ref()),
         )
     }
 
@@ -632,6 +775,12 @@ impl LbTargetGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.proxy_protocol_v2", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `slow_start` after provisioning.\n"]
     pub fn slow_start(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.slow_start", self.extract_ref()))
@@ -647,6 +796,11 @@ impl LbTargetGroupRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `target_control_port` after provisioning.\n"]
+    pub fn target_control_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_control_port", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_type` after provisioning.\n"]
     pub fn target_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_type", self.extract_ref()))
@@ -658,23 +812,42 @@ impl LbTargetGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `health_check` after provisioning.\n"]
-    pub fn health_check(&self) -> terrars::ListRef<LbTargetGroupHealthCheckElRef> {
+    pub fn health_check(&self) -> terrars::ListRef<LbTargetGroup_HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `stickiness` after provisioning.\n"]
-    pub fn stickiness(&self) -> terrars::ListRef<LbTargetGroupStickinessElRef> {
+    pub fn stickiness(&self) -> terrars::ListRef<LbTargetGroup_StickinessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stickiness", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_failover` after provisioning.\n"]
-    pub fn target_failover(&self) -> terrars::ListRef<LbTargetGroupTargetFailoverElRef> {
+    pub fn target_failover(&self) -> terrars::ListRef<LbTargetGroup_TargetFailoverRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_failover", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_group_health` after provisioning.\n"]
+    pub fn target_group_health(&self) -> terrars::ListRef<LbTargetGroup_TargetGroupHealthRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_group_health", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_health_state` after provisioning.\n"]
+    pub fn target_health_state(&self) -> terrars::ListRef<LbTargetGroup_TargetHealthStateRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.target_health_state", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LbTargetGroupDynamic {
+    health_check: std::option::Option<terrars::DynamicBlock<LbTargetGroup_HealthCheck>>,
+    stickiness: std::option::Option<terrars::DynamicBlock<LbTargetGroup_Stickiness>>,
+    target_failover: std::option::Option<terrars::DynamicBlock<LbTargetGroup_TargetFailover>>,
+    target_group_health: std::option::Option<terrars::DynamicBlock<LbTargetGroup_TargetGroupHealth>>,
+    target_health_state: std::option::Option<terrars::DynamicBlock<LbTargetGroup_TargetHealthState>>,
+}
+
 #[derive(Serialize)]
-pub struct LbTargetGroupHealthCheckEl {
+pub struct LbTargetGroup_HealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -695,7 +868,7 @@ pub struct LbTargetGroupHealthCheckEl {
     unhealthy_threshold: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LbTargetGroupHealthCheckEl {
+impl LbTargetGroup_HealthCheck {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -751,8 +924,8 @@ impl LbTargetGroupHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for LbTargetGroupHealthCheckEl {
-    type O = terrars::BlockAssignable<LbTargetGroupHealthCheckEl>;
+impl terrars::ToListMappable for LbTargetGroup_HealthCheck {
+    type O = terrars::BlockAssignable<LbTargetGroup_HealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -763,11 +936,11 @@ impl terrars::ToListMappable for LbTargetGroupHealthCheckEl {
     }
 }
 
-pub struct BuildLbTargetGroupHealthCheckEl {}
+pub struct BuildLbTargetGroup_HealthCheck {}
 
-impl BuildLbTargetGroupHealthCheckEl {
-    pub fn build(self) -> LbTargetGroupHealthCheckEl {
-        LbTargetGroupHealthCheckEl {
+impl BuildLbTargetGroup_HealthCheck {
+    pub fn build(self) -> LbTargetGroup_HealthCheck {
+        LbTargetGroup_HealthCheck {
             enabled: core::default::Default::default(),
             healthy_threshold: core::default::Default::default(),
             interval: core::default::Default::default(),
@@ -781,21 +954,23 @@ impl BuildLbTargetGroupHealthCheckEl {
     }
 }
 
-pub struct LbTargetGroupHealthCheckElRef {
+#[allow(dead_code)]
+pub struct LbTargetGroup_HealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbTargetGroupHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbTargetGroupHealthCheckElRef {
-        LbTargetGroupHealthCheckElRef {
+impl terrars::Ref for LbTargetGroup_HealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbTargetGroup_HealthCheckRef {
+        LbTargetGroup_HealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbTargetGroupHealthCheckElRef {
+impl LbTargetGroup_HealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -847,7 +1022,7 @@ impl LbTargetGroupHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct LbTargetGroupStickinessEl {
+pub struct LbTargetGroup_Stickiness {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cookie_duration: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -858,7 +1033,7 @@ pub struct LbTargetGroupStickinessEl {
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl LbTargetGroupStickinessEl {
+impl LbTargetGroup_Stickiness {
     #[doc = "Set the field `cookie_duration`.\n"]
     pub fn set_cookie_duration(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.cookie_duration = std::option::Option::Some(v.into());
@@ -878,8 +1053,8 @@ impl LbTargetGroupStickinessEl {
     }
 }
 
-impl terrars::ToListMappable for LbTargetGroupStickinessEl {
-    type O = terrars::BlockAssignable<LbTargetGroupStickinessEl>;
+impl terrars::ToListMappable for LbTargetGroup_Stickiness {
+    type O = terrars::BlockAssignable<LbTargetGroup_Stickiness>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -890,14 +1065,14 @@ impl terrars::ToListMappable for LbTargetGroupStickinessEl {
     }
 }
 
-pub struct BuildLbTargetGroupStickinessEl {
+pub struct BuildLbTargetGroup_Stickiness {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbTargetGroupStickinessEl {
-    pub fn build(self) -> LbTargetGroupStickinessEl {
-        LbTargetGroupStickinessEl {
+impl BuildLbTargetGroup_Stickiness {
+    pub fn build(self) -> LbTargetGroup_Stickiness {
+        LbTargetGroup_Stickiness {
             cookie_duration: core::default::Default::default(),
             cookie_name: core::default::Default::default(),
             enabled: core::default::Default::default(),
@@ -906,21 +1081,23 @@ impl BuildLbTargetGroupStickinessEl {
     }
 }
 
-pub struct LbTargetGroupStickinessElRef {
+#[allow(dead_code)]
+pub struct LbTargetGroup_StickinessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbTargetGroupStickinessElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbTargetGroupStickinessElRef {
-        LbTargetGroupStickinessElRef {
+impl terrars::Ref for LbTargetGroup_StickinessRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbTargetGroup_StickinessRef {
+        LbTargetGroup_StickinessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbTargetGroupStickinessElRef {
+impl LbTargetGroup_StickinessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -947,15 +1124,15 @@ impl LbTargetGroupStickinessElRef {
 }
 
 #[derive(Serialize)]
-pub struct LbTargetGroupTargetFailoverEl {
+pub struct LbTargetGroup_TargetFailover {
     on_deregistration: terrars::PrimField<std::string::String>,
     on_unhealthy: terrars::PrimField<std::string::String>,
 }
 
-impl LbTargetGroupTargetFailoverEl { }
+impl LbTargetGroup_TargetFailover { }
 
-impl terrars::ToListMappable for LbTargetGroupTargetFailoverEl {
-    type O = terrars::BlockAssignable<LbTargetGroupTargetFailoverEl>;
+impl terrars::ToListMappable for LbTargetGroup_TargetFailover {
+    type O = terrars::BlockAssignable<LbTargetGroup_TargetFailover>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -966,37 +1143,39 @@ impl terrars::ToListMappable for LbTargetGroupTargetFailoverEl {
     }
 }
 
-pub struct BuildLbTargetGroupTargetFailoverEl {
+pub struct BuildLbTargetGroup_TargetFailover {
     #[doc = ""]
     pub on_deregistration: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub on_unhealthy: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbTargetGroupTargetFailoverEl {
-    pub fn build(self) -> LbTargetGroupTargetFailoverEl {
-        LbTargetGroupTargetFailoverEl {
+impl BuildLbTargetGroup_TargetFailover {
+    pub fn build(self) -> LbTargetGroup_TargetFailover {
+        LbTargetGroup_TargetFailover {
             on_deregistration: self.on_deregistration,
             on_unhealthy: self.on_unhealthy,
         }
     }
 }
 
-pub struct LbTargetGroupTargetFailoverElRef {
+#[allow(dead_code)]
+pub struct LbTargetGroup_TargetFailoverRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbTargetGroupTargetFailoverElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbTargetGroupTargetFailoverElRef {
-        LbTargetGroupTargetFailoverElRef {
+impl terrars::Ref for LbTargetGroup_TargetFailoverRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbTargetGroup_TargetFailoverRef {
+        LbTargetGroup_TargetFailoverRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbTargetGroupTargetFailoverElRef {
+impl LbTargetGroup_TargetFailoverRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1012,9 +1191,354 @@ impl LbTargetGroupTargetFailoverElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct LbTargetGroup_TargetGroupHealth_DnsFailover {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    minimum_healthy_targets_count: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    minimum_healthy_targets_percentage: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl LbTargetGroup_TargetGroupHealth_DnsFailover {
+    #[doc = "Set the field `minimum_healthy_targets_count`.\n"]
+    pub fn set_minimum_healthy_targets_count(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.minimum_healthy_targets_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `minimum_healthy_targets_percentage`.\n"]
+    pub fn set_minimum_healthy_targets_percentage(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.minimum_healthy_targets_percentage = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LbTargetGroup_TargetGroupHealth_DnsFailover {
+    type O = terrars::BlockAssignable<LbTargetGroup_TargetGroupHealth_DnsFailover>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLbTargetGroup_TargetGroupHealth_DnsFailover {}
+
+impl BuildLbTargetGroup_TargetGroupHealth_DnsFailover {
+    pub fn build(self) -> LbTargetGroup_TargetGroupHealth_DnsFailover {
+        LbTargetGroup_TargetGroupHealth_DnsFailover {
+            minimum_healthy_targets_count: core::default::Default::default(),
+            minimum_healthy_targets_percentage: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LbTargetGroup_TargetGroupHealth_DnsFailoverRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LbTargetGroup_TargetGroupHealth_DnsFailoverRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> LbTargetGroup_TargetGroupHealth_DnsFailoverRef {
+        LbTargetGroup_TargetGroupHealth_DnsFailoverRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LbTargetGroup_TargetGroupHealth_DnsFailoverRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `minimum_healthy_targets_count` after provisioning.\n"]
+    pub fn minimum_healthy_targets_count(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_healthy_targets_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `minimum_healthy_targets_percentage` after provisioning.\n"]
+    pub fn minimum_healthy_targets_percentage(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_healthy_targets_percentage", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct LbTargetGroup_TargetGroupHealth_UnhealthyStateRouting {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    minimum_healthy_targets_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    minimum_healthy_targets_percentage: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl LbTargetGroup_TargetGroupHealth_UnhealthyStateRouting {
+    #[doc = "Set the field `minimum_healthy_targets_count`.\n"]
+    pub fn set_minimum_healthy_targets_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.minimum_healthy_targets_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `minimum_healthy_targets_percentage`.\n"]
+    pub fn set_minimum_healthy_targets_percentage(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.minimum_healthy_targets_percentage = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LbTargetGroup_TargetGroupHealth_UnhealthyStateRouting {
+    type O = terrars::BlockAssignable<LbTargetGroup_TargetGroupHealth_UnhealthyStateRouting>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLbTargetGroup_TargetGroupHealth_UnhealthyStateRouting {}
+
+impl BuildLbTargetGroup_TargetGroupHealth_UnhealthyStateRouting {
+    pub fn build(self) -> LbTargetGroup_TargetGroupHealth_UnhealthyStateRouting {
+        LbTargetGroup_TargetGroupHealth_UnhealthyStateRouting {
+            minimum_healthy_targets_count: core::default::Default::default(),
+            minimum_healthy_targets_percentage: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LbTargetGroup_TargetGroupHealth_UnhealthyStateRoutingRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LbTargetGroup_TargetGroupHealth_UnhealthyStateRoutingRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> LbTargetGroup_TargetGroupHealth_UnhealthyStateRoutingRef {
+        LbTargetGroup_TargetGroupHealth_UnhealthyStateRoutingRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LbTargetGroup_TargetGroupHealth_UnhealthyStateRoutingRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `minimum_healthy_targets_count` after provisioning.\n"]
+    pub fn minimum_healthy_targets_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_healthy_targets_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `minimum_healthy_targets_percentage` after provisioning.\n"]
+    pub fn minimum_healthy_targets_percentage(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_healthy_targets_percentage", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct LbTargetGroupDynamic {
-    health_check: std::option::Option<terrars::DynamicBlock<LbTargetGroupHealthCheckEl>>,
-    stickiness: std::option::Option<terrars::DynamicBlock<LbTargetGroupStickinessEl>>,
-    target_failover: std::option::Option<terrars::DynamicBlock<LbTargetGroupTargetFailoverEl>>,
+struct LbTargetGroup_TargetGroupHealthDynamic {
+    dns_failover: std::option::Option<terrars::DynamicBlock<LbTargetGroup_TargetGroupHealth_DnsFailover>>,
+    unhealthy_state_routing: std
+    ::option
+    ::Option<terrars::DynamicBlock<LbTargetGroup_TargetGroupHealth_UnhealthyStateRouting>>,
+}
+
+#[derive(Serialize)]
+pub struct LbTargetGroup_TargetGroupHealth {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_failover: std::option::Option<std::vec::Vec<LbTargetGroup_TargetGroupHealth_DnsFailover>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unhealthy_state_routing: std::option::Option<std::vec::Vec<LbTargetGroup_TargetGroupHealth_UnhealthyStateRouting>>,
+    dynamic: LbTargetGroup_TargetGroupHealthDynamic,
+}
+
+impl LbTargetGroup_TargetGroupHealth {
+    #[doc = "Set the field `dns_failover`.\n"]
+    pub fn set_dns_failover(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroup_TargetGroupHealth_DnsFailover>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dns_failover = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dns_failover = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `unhealthy_state_routing`.\n"]
+    pub fn set_unhealthy_state_routing(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbTargetGroup_TargetGroupHealth_UnhealthyStateRouting>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.unhealthy_state_routing = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.unhealthy_state_routing = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for LbTargetGroup_TargetGroupHealth {
+    type O = terrars::BlockAssignable<LbTargetGroup_TargetGroupHealth>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLbTargetGroup_TargetGroupHealth {}
+
+impl BuildLbTargetGroup_TargetGroupHealth {
+    pub fn build(self) -> LbTargetGroup_TargetGroupHealth {
+        LbTargetGroup_TargetGroupHealth {
+            dns_failover: core::default::Default::default(),
+            unhealthy_state_routing: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LbTargetGroup_TargetGroupHealthRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LbTargetGroup_TargetGroupHealthRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbTargetGroup_TargetGroupHealthRef {
+        LbTargetGroup_TargetGroupHealthRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LbTargetGroup_TargetGroupHealthRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `dns_failover` after provisioning.\n"]
+    pub fn dns_failover(&self) -> terrars::ListRef<LbTargetGroup_TargetGroupHealth_DnsFailoverRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns_failover", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `unhealthy_state_routing` after provisioning.\n"]
+    pub fn unhealthy_state_routing(&self) -> terrars::ListRef<LbTargetGroup_TargetGroupHealth_UnhealthyStateRoutingRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.unhealthy_state_routing", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct LbTargetGroup_TargetHealthState {
+    enable_unhealthy_connection_termination: terrars::PrimField<bool>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unhealthy_draining_interval: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl LbTargetGroup_TargetHealthState {
+    #[doc = "Set the field `unhealthy_draining_interval`.\n"]
+    pub fn set_unhealthy_draining_interval(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.unhealthy_draining_interval = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for LbTargetGroup_TargetHealthState {
+    type O = terrars::BlockAssignable<LbTargetGroup_TargetHealthState>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLbTargetGroup_TargetHealthState {
+    #[doc = ""]
+    pub enable_unhealthy_connection_termination: terrars::PrimField<bool>,
+}
+
+impl BuildLbTargetGroup_TargetHealthState {
+    pub fn build(self) -> LbTargetGroup_TargetHealthState {
+        LbTargetGroup_TargetHealthState {
+            enable_unhealthy_connection_termination: self.enable_unhealthy_connection_termination,
+            unhealthy_draining_interval: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct LbTargetGroup_TargetHealthStateRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for LbTargetGroup_TargetHealthStateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbTargetGroup_TargetHealthStateRef {
+        LbTargetGroup_TargetHealthStateRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl LbTargetGroup_TargetHealthStateRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enable_unhealthy_connection_termination` after provisioning.\n"]
+    pub fn enable_unhealthy_connection_termination(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_unhealthy_connection_termination", self.base),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `unhealthy_draining_interval` after provisioning.\n"]
+    pub fn unhealthy_draining_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unhealthy_draining_interval", self.base))
+    }
 }

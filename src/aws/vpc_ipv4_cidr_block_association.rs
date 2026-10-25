@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct VpcIpv4CidrBlockAssociationData {
+struct VpcIpv4CidrBlockAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,15 +28,17 @@ struct VpcIpv4CidrBlockAssociationData {
     ipv4_ipam_pool_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv4_netmask_length: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     vpc_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VpcIpv4CidrBlockAssociationTimeoutsEl>,
+    timeouts: std::option::Option<VpcIpv4CidrBlockAssociation_Timeouts>,
 }
 
 struct VpcIpv4CidrBlockAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpcIpv4CidrBlockAssociationData>,
+    data: std::cell::RefCell<VpcIpv4CidrBlockAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -158,8 +162,15 @@ impl VpcIpv4CidrBlockAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VpcIpv4CidrBlockAssociationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VpcIpv4CidrBlockAssociation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -184,14 +195,20 @@ impl VpcIpv4CidrBlockAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_netmask_length", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcIpv4CidrBlockAssociationTimeoutsElRef {
-        VpcIpv4CidrBlockAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VpcIpv4CidrBlockAssociation_TimeoutsRef {
+        VpcIpv4CidrBlockAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -240,7 +257,7 @@ impl BuildVpcIpv4CidrBlockAssociation {
         let out = VpcIpv4CidrBlockAssociation(std::rc::Rc::new(VpcIpv4CidrBlockAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpcIpv4CidrBlockAssociationData {
+            data: std::cell::RefCell::new(VpcIpv4CidrBlockAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -250,6 +267,7 @@ impl BuildVpcIpv4CidrBlockAssociation {
                 id: core::default::Default::default(),
                 ipv4_ipam_pool_id: core::default::Default::default(),
                 ipv4_netmask_length: core::default::Default::default(),
+                region: core::default::Default::default(),
                 vpc_id: self.vpc_id,
                 timeouts: core::default::Default::default(),
             }),
@@ -302,14 +320,20 @@ impl VpcIpv4CidrBlockAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_netmask_length", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcIpv4CidrBlockAssociationTimeoutsElRef {
-        VpcIpv4CidrBlockAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VpcIpv4CidrBlockAssociation_TimeoutsRef {
+        VpcIpv4CidrBlockAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -317,14 +341,14 @@ impl VpcIpv4CidrBlockAssociationRef {
 }
 
 #[derive(Serialize)]
-pub struct VpcIpv4CidrBlockAssociationTimeoutsEl {
+pub struct VpcIpv4CidrBlockAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpcIpv4CidrBlockAssociationTimeoutsEl {
+impl VpcIpv4CidrBlockAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -338,8 +362,8 @@ impl VpcIpv4CidrBlockAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VpcIpv4CidrBlockAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<VpcIpv4CidrBlockAssociationTimeoutsEl>;
+impl terrars::ToListMappable for VpcIpv4CidrBlockAssociation_Timeouts {
+    type O = terrars::BlockAssignable<VpcIpv4CidrBlockAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -350,32 +374,34 @@ impl terrars::ToListMappable for VpcIpv4CidrBlockAssociationTimeoutsEl {
     }
 }
 
-pub struct BuildVpcIpv4CidrBlockAssociationTimeoutsEl {}
+pub struct BuildVpcIpv4CidrBlockAssociation_Timeouts {}
 
-impl BuildVpcIpv4CidrBlockAssociationTimeoutsEl {
-    pub fn build(self) -> VpcIpv4CidrBlockAssociationTimeoutsEl {
-        VpcIpv4CidrBlockAssociationTimeoutsEl {
+impl BuildVpcIpv4CidrBlockAssociation_Timeouts {
+    pub fn build(self) -> VpcIpv4CidrBlockAssociation_Timeouts {
+        VpcIpv4CidrBlockAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct VpcIpv4CidrBlockAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VpcIpv4CidrBlockAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpcIpv4CidrBlockAssociationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpv4CidrBlockAssociationTimeoutsElRef {
-        VpcIpv4CidrBlockAssociationTimeoutsElRef {
+impl terrars::Ref for VpcIpv4CidrBlockAssociation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpv4CidrBlockAssociation_TimeoutsRef {
+        VpcIpv4CidrBlockAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpcIpv4CidrBlockAssociationTimeoutsElRef {
+impl VpcIpv4CidrBlockAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

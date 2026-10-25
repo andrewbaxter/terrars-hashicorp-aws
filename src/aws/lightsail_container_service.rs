@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LightsailContainerServiceData {
+struct LightsailContainerServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,24 +26,26 @@ struct LightsailContainerServiceData {
     is_disabled: std::option::Option<terrars::PrimField<bool>>,
     name: terrars::PrimField<std::string::String>,
     power: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     scale: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    private_registry_access: std::option::Option<std::vec::Vec<LightsailContainerServicePrivateRegistryAccessEl>>,
+    private_registry_access: std::option::Option<std::vec::Vec<LightsailContainerService_PrivateRegistryAccess>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    public_domain_names: std::option::Option<std::vec::Vec<LightsailContainerServicePublicDomainNamesEl>>,
+    public_domain_names: std::option::Option<std::vec::Vec<LightsailContainerService_PublicDomainNames>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LightsailContainerServiceTimeoutsEl>,
+    timeouts: std::option::Option<LightsailContainerService_Timeouts>,
     dynamic: LightsailContainerServiceDynamic,
 }
 
 struct LightsailContainerService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LightsailContainerServiceData>,
+    data: std::cell::RefCell<LightsailContainerServiceData_>,
 }
 
 #[derive(Clone)]
@@ -153,6 +157,13 @@ impl LightsailContainerService {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -174,7 +185,7 @@ impl LightsailContainerService {
     #[doc = "Set the field `private_registry_access`.\n"]
     pub fn set_private_registry_access(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LightsailContainerServicePrivateRegistryAccessEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LightsailContainerService_PrivateRegistryAccess>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,7 +201,7 @@ impl LightsailContainerService {
     #[doc = "Set the field `public_domain_names`.\n"]
     pub fn set_public_domain_names(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LightsailContainerServicePublicDomainNamesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LightsailContainerService_PublicDomainNames>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -204,7 +215,7 @@ impl LightsailContainerService {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LightsailContainerServiceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LightsailContainerService_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -259,6 +270,12 @@ impl LightsailContainerService {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_domain_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
     pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
@@ -290,21 +307,18 @@ impl LightsailContainerService {
     }
 
     #[doc = "Get a reference to the value of field `private_registry_access` after provisioning.\n"]
-    pub fn private_registry_access(&self) -> terrars::ListRef<LightsailContainerServicePrivateRegistryAccessElRef> {
+    pub fn private_registry_access(&self) -> terrars::ListRef<LightsailContainerService_PrivateRegistryAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.private_registry_access", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `public_domain_names` after provisioning.\n"]
-    pub fn public_domain_names(&self) -> terrars::ListRef<LightsailContainerServicePublicDomainNamesElRef> {
+    pub fn public_domain_names(&self) -> terrars::ListRef<LightsailContainerService_PublicDomainNamesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_domain_names", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LightsailContainerServiceTimeoutsElRef {
-        LightsailContainerServiceTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> LightsailContainerService_TimeoutsRef {
+        LightsailContainerService_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -354,7 +368,7 @@ impl BuildLightsailContainerService {
         let out = LightsailContainerService(std::rc::Rc::new(LightsailContainerService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LightsailContainerServiceData {
+            data: std::cell::RefCell::new(LightsailContainerServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -364,6 +378,7 @@ impl BuildLightsailContainerService {
                 is_disabled: core::default::Default::default(),
                 name: self.name,
                 power: self.power,
+                region: core::default::Default::default(),
                 scale: self.scale,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -451,6 +466,12 @@ impl LightsailContainerServiceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_domain_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
     pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
@@ -482,31 +503,36 @@ impl LightsailContainerServiceRef {
     }
 
     #[doc = "Get a reference to the value of field `private_registry_access` after provisioning.\n"]
-    pub fn private_registry_access(&self) -> terrars::ListRef<LightsailContainerServicePrivateRegistryAccessElRef> {
+    pub fn private_registry_access(&self) -> terrars::ListRef<LightsailContainerService_PrivateRegistryAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.private_registry_access", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `public_domain_names` after provisioning.\n"]
-    pub fn public_domain_names(&self) -> terrars::ListRef<LightsailContainerServicePublicDomainNamesElRef> {
+    pub fn public_domain_names(&self) -> terrars::ListRef<LightsailContainerService_PublicDomainNamesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_domain_names", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LightsailContainerServiceTimeoutsElRef {
-        LightsailContainerServiceTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> LightsailContainerService_TimeoutsRef {
+        LightsailContainerService_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LightsailContainerServiceDynamic {
+    private_registry_access: std
+    ::option
+    ::Option<terrars::DynamicBlock<LightsailContainerService_PrivateRegistryAccess>>,
+    public_domain_names: std::option::Option<terrars::DynamicBlock<LightsailContainerService_PublicDomainNames>>,
+}
+
 #[derive(Serialize)]
-pub struct LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl {
+pub struct LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_active: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl {
+impl LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole {
     #[doc = "Set the field `is_active`.\n"]
     pub fn set_is_active(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.is_active = std::option::Option::Some(v.into());
@@ -514,8 +540,8 @@ impl LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl {
-    type O = terrars::BlockAssignable<LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl>;
+impl terrars::ToListMappable for LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole {
+    type O = terrars::BlockAssignable<LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -526,34 +552,36 @@ impl terrars::ToListMappable for LightsailContainerServicePrivateRegistryAccessE
     }
 }
 
-pub struct BuildLightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl {}
+pub struct BuildLightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole {}
 
-impl BuildLightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl {
-    pub fn build(self) -> LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl {
-        LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl {
+impl BuildLightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole {
+    pub fn build(self) -> LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole {
+        LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole {
             is_active: core::default::Default::default(),
         }
     }
 }
 
-pub struct LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleElRef {
+#[allow(dead_code)]
+pub struct LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRoleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleElRef {
+impl terrars::Ref for LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRoleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleElRef {
-        LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleElRef {
+    ) -> LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRoleRef {
+        LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRoleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleElRef {
+impl LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRoleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -570,22 +598,22 @@ impl LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LightsailContainerServicePrivateRegistryAccessElDynamic {
+struct LightsailContainerService_PrivateRegistryAccessDynamic {
     ecr_image_puller_role: std
     ::option
-    ::Option<terrars::DynamicBlock<LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl>>,
+    ::Option<terrars::DynamicBlock<LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole>>,
 }
 
 #[derive(Serialize)]
-pub struct LightsailContainerServicePrivateRegistryAccessEl {
+pub struct LightsailContainerService_PrivateRegistryAccess {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ecr_image_puller_role: std
     ::option
-    ::Option<std::vec::Vec<LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl>>,
-    dynamic: LightsailContainerServicePrivateRegistryAccessElDynamic,
+    ::Option<std::vec::Vec<LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole>>,
+    dynamic: LightsailContainerService_PrivateRegistryAccessDynamic,
 }
 
-impl LightsailContainerServicePrivateRegistryAccessEl {
+impl LightsailContainerService_PrivateRegistryAccess {
     #[doc = "Set the field `ecr_image_puller_role`.\n"]
     pub fn set_ecr_image_puller_role(
         mut self,
@@ -595,7 +623,7 @@ impl LightsailContainerServicePrivateRegistryAccessEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleEl>,
+                        terrars::BlockAssignable<LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRole>,
                     >,
     ) -> Self {
         match v.into() {
@@ -610,8 +638,8 @@ impl LightsailContainerServicePrivateRegistryAccessEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailContainerServicePrivateRegistryAccessEl {
-    type O = terrars::BlockAssignable<LightsailContainerServicePrivateRegistryAccessEl>;
+impl terrars::ToListMappable for LightsailContainerService_PrivateRegistryAccess {
+    type O = terrars::BlockAssignable<LightsailContainerService_PrivateRegistryAccess>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -622,35 +650,37 @@ impl terrars::ToListMappable for LightsailContainerServicePrivateRegistryAccessE
     }
 }
 
-pub struct BuildLightsailContainerServicePrivateRegistryAccessEl {}
+pub struct BuildLightsailContainerService_PrivateRegistryAccess {}
 
-impl BuildLightsailContainerServicePrivateRegistryAccessEl {
-    pub fn build(self) -> LightsailContainerServicePrivateRegistryAccessEl {
-        LightsailContainerServicePrivateRegistryAccessEl {
+impl BuildLightsailContainerService_PrivateRegistryAccess {
+    pub fn build(self) -> LightsailContainerService_PrivateRegistryAccess {
+        LightsailContainerService_PrivateRegistryAccess {
             ecr_image_puller_role: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct LightsailContainerServicePrivateRegistryAccessElRef {
+#[allow(dead_code)]
+pub struct LightsailContainerService_PrivateRegistryAccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailContainerServicePrivateRegistryAccessElRef {
+impl terrars::Ref for LightsailContainerService_PrivateRegistryAccessRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LightsailContainerServicePrivateRegistryAccessElRef {
-        LightsailContainerServicePrivateRegistryAccessElRef {
+    ) -> LightsailContainerService_PrivateRegistryAccessRef {
+        LightsailContainerService_PrivateRegistryAccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailContainerServicePrivateRegistryAccessElRef {
+impl LightsailContainerService_PrivateRegistryAccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -658,21 +688,21 @@ impl LightsailContainerServicePrivateRegistryAccessElRef {
     #[doc = "Get a reference to the value of field `ecr_image_puller_role` after provisioning.\n"]
     pub fn ecr_image_puller_role(
         &self,
-    ) -> terrars::ListRef<LightsailContainerServicePrivateRegistryAccessElEcrImagePullerRoleElRef> {
+    ) -> terrars::ListRef<LightsailContainerService_PrivateRegistryAccess_EcrImagePullerRoleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ecr_image_puller_role", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct LightsailContainerServicePublicDomainNamesElCertificateEl {
+pub struct LightsailContainerService_PublicDomainNames_Certificate {
     certificate_name: terrars::PrimField<std::string::String>,
     domain_names: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl LightsailContainerServicePublicDomainNamesElCertificateEl { }
+impl LightsailContainerService_PublicDomainNames_Certificate { }
 
-impl terrars::ToListMappable for LightsailContainerServicePublicDomainNamesElCertificateEl {
-    type O = terrars::BlockAssignable<LightsailContainerServicePublicDomainNamesElCertificateEl>;
+impl terrars::ToListMappable for LightsailContainerService_PublicDomainNames_Certificate {
+    type O = terrars::BlockAssignable<LightsailContainerService_PublicDomainNames_Certificate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -683,40 +713,42 @@ impl terrars::ToListMappable for LightsailContainerServicePublicDomainNamesElCer
     }
 }
 
-pub struct BuildLightsailContainerServicePublicDomainNamesElCertificateEl {
+pub struct BuildLightsailContainerService_PublicDomainNames_Certificate {
     #[doc = ""]
     pub certificate_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub domain_names: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildLightsailContainerServicePublicDomainNamesElCertificateEl {
-    pub fn build(self) -> LightsailContainerServicePublicDomainNamesElCertificateEl {
-        LightsailContainerServicePublicDomainNamesElCertificateEl {
+impl BuildLightsailContainerService_PublicDomainNames_Certificate {
+    pub fn build(self) -> LightsailContainerService_PublicDomainNames_Certificate {
+        LightsailContainerService_PublicDomainNames_Certificate {
             certificate_name: self.certificate_name,
             domain_names: self.domain_names,
         }
     }
 }
 
-pub struct LightsailContainerServicePublicDomainNamesElCertificateElRef {
+#[allow(dead_code)]
+pub struct LightsailContainerService_PublicDomainNames_CertificateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailContainerServicePublicDomainNamesElCertificateElRef {
+impl terrars::Ref for LightsailContainerService_PublicDomainNames_CertificateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LightsailContainerServicePublicDomainNamesElCertificateElRef {
-        LightsailContainerServicePublicDomainNamesElCertificateElRef {
+    ) -> LightsailContainerService_PublicDomainNames_CertificateRef {
+        LightsailContainerService_PublicDomainNames_CertificateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailContainerServicePublicDomainNamesElCertificateElRef {
+impl LightsailContainerService_PublicDomainNames_CertificateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -733,20 +765,18 @@ impl LightsailContainerServicePublicDomainNamesElCertificateElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LightsailContainerServicePublicDomainNamesElDynamic {
-    certificate: std
-    ::option
-    ::Option<terrars::DynamicBlock<LightsailContainerServicePublicDomainNamesElCertificateEl>>,
+struct LightsailContainerService_PublicDomainNamesDynamic {
+    certificate: std::option::Option<terrars::DynamicBlock<LightsailContainerService_PublicDomainNames_Certificate>>,
 }
 
 #[derive(Serialize)]
-pub struct LightsailContainerServicePublicDomainNamesEl {
+pub struct LightsailContainerService_PublicDomainNames {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    certificate: std::option::Option<std::vec::Vec<LightsailContainerServicePublicDomainNamesElCertificateEl>>,
-    dynamic: LightsailContainerServicePublicDomainNamesElDynamic,
+    certificate: std::option::Option<std::vec::Vec<LightsailContainerService_PublicDomainNames_Certificate>>,
+    dynamic: LightsailContainerService_PublicDomainNamesDynamic,
 }
 
-impl LightsailContainerServicePublicDomainNamesEl {
+impl LightsailContainerService_PublicDomainNames {
     #[doc = "Set the field `certificate`.\n"]
     pub fn set_certificate(
         mut self,
@@ -755,7 +785,7 @@ impl LightsailContainerServicePublicDomainNamesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<LightsailContainerServicePublicDomainNamesElCertificateEl>>,
+                    ::Into<terrars::BlockAssignable<LightsailContainerService_PublicDomainNames_Certificate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -769,8 +799,8 @@ impl LightsailContainerServicePublicDomainNamesEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailContainerServicePublicDomainNamesEl {
-    type O = terrars::BlockAssignable<LightsailContainerServicePublicDomainNamesEl>;
+impl terrars::ToListMappable for LightsailContainerService_PublicDomainNames {
+    type O = terrars::BlockAssignable<LightsailContainerService_PublicDomainNames>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -781,42 +811,44 @@ impl terrars::ToListMappable for LightsailContainerServicePublicDomainNamesEl {
     }
 }
 
-pub struct BuildLightsailContainerServicePublicDomainNamesEl {}
+pub struct BuildLightsailContainerService_PublicDomainNames {}
 
-impl BuildLightsailContainerServicePublicDomainNamesEl {
-    pub fn build(self) -> LightsailContainerServicePublicDomainNamesEl {
-        LightsailContainerServicePublicDomainNamesEl {
+impl BuildLightsailContainerService_PublicDomainNames {
+    pub fn build(self) -> LightsailContainerService_PublicDomainNames {
+        LightsailContainerService_PublicDomainNames {
             certificate: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct LightsailContainerServicePublicDomainNamesElRef {
+#[allow(dead_code)]
+pub struct LightsailContainerService_PublicDomainNamesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailContainerServicePublicDomainNamesElRef {
+impl terrars::Ref for LightsailContainerService_PublicDomainNamesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LightsailContainerServicePublicDomainNamesElRef {
-        LightsailContainerServicePublicDomainNamesElRef {
+    ) -> LightsailContainerService_PublicDomainNamesRef {
+        LightsailContainerService_PublicDomainNamesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailContainerServicePublicDomainNamesElRef {
+impl LightsailContainerService_PublicDomainNamesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct LightsailContainerServiceTimeoutsEl {
+pub struct LightsailContainerService_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -825,7 +857,7 @@ pub struct LightsailContainerServiceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LightsailContainerServiceTimeoutsEl {
+impl LightsailContainerService_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -845,8 +877,8 @@ impl LightsailContainerServiceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailContainerServiceTimeoutsEl {
-    type O = terrars::BlockAssignable<LightsailContainerServiceTimeoutsEl>;
+impl terrars::ToListMappable for LightsailContainerService_Timeouts {
+    type O = terrars::BlockAssignable<LightsailContainerService_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -857,11 +889,11 @@ impl terrars::ToListMappable for LightsailContainerServiceTimeoutsEl {
     }
 }
 
-pub struct BuildLightsailContainerServiceTimeoutsEl {}
+pub struct BuildLightsailContainerService_Timeouts {}
 
-impl BuildLightsailContainerServiceTimeoutsEl {
-    pub fn build(self) -> LightsailContainerServiceTimeoutsEl {
-        LightsailContainerServiceTimeoutsEl {
+impl BuildLightsailContainerService_Timeouts {
+    pub fn build(self) -> LightsailContainerService_Timeouts {
+        LightsailContainerService_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -869,21 +901,23 @@ impl BuildLightsailContainerServiceTimeoutsEl {
     }
 }
 
-pub struct LightsailContainerServiceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LightsailContainerService_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailContainerServiceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LightsailContainerServiceTimeoutsElRef {
-        LightsailContainerServiceTimeoutsElRef {
+impl terrars::Ref for LightsailContainerService_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LightsailContainerService_TimeoutsRef {
+        LightsailContainerService_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailContainerServiceTimeoutsElRef {
+impl LightsailContainerService_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -902,12 +936,4 @@ impl LightsailContainerServiceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LightsailContainerServiceDynamic {
-    private_registry_access: std
-    ::option
-    ::Option<terrars::DynamicBlock<LightsailContainerServicePrivateRegistryAccessEl>>,
-    public_domain_names: std::option::Option<terrars::DynamicBlock<LightsailContainerServicePublicDomainNamesEl>>,
 }

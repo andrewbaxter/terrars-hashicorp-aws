@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsoadminAccountAssignmentData {
+struct SsoadminAccountAssignmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,15 +26,18 @@ struct SsoadminAccountAssignmentData {
     permission_set_arn: terrars::PrimField<std::string::String>,
     principal_id: terrars::PrimField<std::string::String>,
     principal_type: terrars::PrimField<std::string::String>,
-    target_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    target_id: terrars::PrimField<std::string::String>,
+    target_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<SsoadminAccountAssignment_Timeouts>,
 }
 
 struct SsoadminAccountAssignment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsoadminAccountAssignmentData>,
+    data: std::cell::RefCell<SsoadminAccountAssignmentData_>,
 }
 
 #[derive(Clone)]
@@ -138,9 +143,16 @@ impl SsoadminAccountAssignment {
         self
     }
 
-    #[doc = "Set the field `target_type`.\n"]
-    pub fn set_target_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().target_type = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<SsoadminAccountAssignment_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -169,6 +181,12 @@ impl SsoadminAccountAssignment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_id` after provisioning.\n"]
     pub fn target_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_id", self.extract_ref()))
@@ -177,6 +195,11 @@ impl SsoadminAccountAssignment {
     #[doc = "Get a reference to the value of field `target_type` after provisioning.\n"]
     pub fn target_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> SsoadminAccountAssignment_TimeoutsRef {
+        SsoadminAccountAssignment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -223,6 +246,8 @@ pub struct BuildSsoadminAccountAssignment {
     pub principal_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub target_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub target_type: terrars::PrimField<std::string::String>,
 }
 
 impl BuildSsoadminAccountAssignment {
@@ -230,7 +255,7 @@ impl BuildSsoadminAccountAssignment {
         let out = SsoadminAccountAssignment(std::rc::Rc::new(SsoadminAccountAssignment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsoadminAccountAssignmentData {
+            data: std::cell::RefCell::new(SsoadminAccountAssignmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -241,8 +266,10 @@ impl BuildSsoadminAccountAssignment {
                 permission_set_arn: self.permission_set_arn,
                 principal_id: self.principal_id,
                 principal_type: self.principal_type,
+                region: core::default::Default::default(),
                 target_id: self.target_id,
-                target_type: core::default::Default::default(),
+                target_type: self.target_type,
+                timeouts: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -298,6 +325,12 @@ impl SsoadminAccountAssignmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_id` after provisioning.\n"]
     pub fn target_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_id", self.extract_ref()))
@@ -306,5 +339,87 @@ impl SsoadminAccountAssignmentRef {
     #[doc = "Get a reference to the value of field `target_type` after provisioning.\n"]
     pub fn target_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> SsoadminAccountAssignment_TimeoutsRef {
+        SsoadminAccountAssignment_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct SsoadminAccountAssignment_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl SsoadminAccountAssignment_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SsoadminAccountAssignment_Timeouts {
+    type O = terrars::BlockAssignable<SsoadminAccountAssignment_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSsoadminAccountAssignment_Timeouts {}
+
+impl BuildSsoadminAccountAssignment_Timeouts {
+    pub fn build(self) -> SsoadminAccountAssignment_Timeouts {
+        SsoadminAccountAssignment_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SsoadminAccountAssignment_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SsoadminAccountAssignment_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsoadminAccountAssignment_TimeoutsRef {
+        SsoadminAccountAssignment_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SsoadminAccountAssignment_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
 }

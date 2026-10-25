@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53HealthCheckData {
+struct Route53HealthCheckData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -62,6 +64,8 @@ struct Route53HealthCheckData {
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    triggers: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
@@ -69,7 +73,7 @@ struct Route53HealthCheckData {
 struct Route53HealthCheck_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53HealthCheckData>,
+    data: std::cell::RefCell<Route53HealthCheckData_>,
 }
 
 #[derive(Clone)]
@@ -319,6 +323,15 @@ impl Route53HealthCheck {
         self
     }
 
+    #[doc = "Set the field `triggers`.\n"]
+    pub fn set_triggers(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().triggers = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -437,6 +450,11 @@ impl Route53HealthCheck {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `triggers` after provisioning.\n"]
+    pub fn triggers(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.triggers", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
@@ -485,7 +503,7 @@ impl BuildRoute53HealthCheck {
         let out = Route53HealthCheck(std::rc::Rc::new(Route53HealthCheck_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53HealthCheckData {
+            data: std::cell::RefCell::new(Route53HealthCheckData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -513,6 +531,7 @@ impl BuildRoute53HealthCheck {
                 search_string: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                triggers: core::default::Default::default(),
                 type_: self.type_,
             }),
         }));
@@ -660,6 +679,11 @@ impl Route53HealthCheckRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `triggers` after provisioning.\n"]
+    pub fn triggers(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.triggers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConfigConfigurationAggregatorData {
+struct ConfigConfigurationAggregatorData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,24 +24,26 @@ struct ConfigConfigurationAggregatorData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account_aggregation_source: std
     ::option
-    ::Option<std::vec::Vec<ConfigConfigurationAggregatorAccountAggregationSourceEl>>,
+    ::Option<std::vec::Vec<ConfigConfigurationAggregator_AccountAggregationSource>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     organization_aggregation_source: std
     ::option
-    ::Option<std::vec::Vec<ConfigConfigurationAggregatorOrganizationAggregationSourceEl>>,
+    ::Option<std::vec::Vec<ConfigConfigurationAggregator_OrganizationAggregationSource>>,
     dynamic: ConfigConfigurationAggregatorDynamic,
 }
 
 struct ConfigConfigurationAggregator_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConfigConfigurationAggregatorData>,
+    data: std::cell::RefCell<ConfigConfigurationAggregatorData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +149,13 @@ impl ConfigConfigurationAggregator {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -166,12 +177,7 @@ impl ConfigConfigurationAggregator {
     #[doc = "Set the field `account_aggregation_source`.\n"]
     pub fn set_account_aggregation_source(
         self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ConfigConfigurationAggregatorAccountAggregationSourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigurationAggregator_AccountAggregationSource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -192,7 +198,7 @@ impl ConfigConfigurationAggregator {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ConfigConfigurationAggregatorOrganizationAggregationSourceEl>>,
+                    ::Into<terrars::BlockAssignable<ConfigConfigurationAggregator_OrganizationAggregationSource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -220,6 +226,12 @@ impl ConfigConfigurationAggregator {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -233,14 +245,14 @@ impl ConfigConfigurationAggregator {
     #[doc = "Get a reference to the value of field `account_aggregation_source` after provisioning.\n"]
     pub fn account_aggregation_source(
         &self,
-    ) -> terrars::ListRef<ConfigConfigurationAggregatorAccountAggregationSourceElRef> {
+    ) -> terrars::ListRef<ConfigConfigurationAggregator_AccountAggregationSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.account_aggregation_source", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `organization_aggregation_source` after provisioning.\n"]
     pub fn organization_aggregation_source(
         &self,
-    ) -> terrars::ListRef<ConfigConfigurationAggregatorOrganizationAggregationSourceElRef> {
+    ) -> terrars::ListRef<ConfigConfigurationAggregator_OrganizationAggregationSourceRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.organization_aggregation_source", self.extract_ref()),
@@ -290,7 +302,7 @@ impl BuildConfigConfigurationAggregator {
         let out = ConfigConfigurationAggregator(std::rc::Rc::new(ConfigConfigurationAggregator_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConfigConfigurationAggregatorData {
+            data: std::cell::RefCell::new(ConfigConfigurationAggregatorData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,6 +310,7 @@ impl BuildConfigConfigurationAggregator {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 account_aggregation_source: core::default::Default::default(),
@@ -348,6 +361,12 @@ impl ConfigConfigurationAggregatorRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -361,14 +380,14 @@ impl ConfigConfigurationAggregatorRef {
     #[doc = "Get a reference to the value of field `account_aggregation_source` after provisioning.\n"]
     pub fn account_aggregation_source(
         &self,
-    ) -> terrars::ListRef<ConfigConfigurationAggregatorAccountAggregationSourceElRef> {
+    ) -> terrars::ListRef<ConfigConfigurationAggregator_AccountAggregationSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.account_aggregation_source", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `organization_aggregation_source` after provisioning.\n"]
     pub fn organization_aggregation_source(
         &self,
-    ) -> terrars::ListRef<ConfigConfigurationAggregatorOrganizationAggregationSourceElRef> {
+    ) -> terrars::ListRef<ConfigConfigurationAggregator_OrganizationAggregationSourceRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.organization_aggregation_source", self.extract_ref()),
@@ -376,8 +395,18 @@ impl ConfigConfigurationAggregatorRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct ConfigConfigurationAggregatorDynamic {
+    account_aggregation_source: std
+    ::option
+    ::Option<terrars::DynamicBlock<ConfigConfigurationAggregator_AccountAggregationSource>>,
+    organization_aggregation_source: std
+    ::option
+    ::Option<terrars::DynamicBlock<ConfigConfigurationAggregator_OrganizationAggregationSource>>,
+}
+
 #[derive(Serialize)]
-pub struct ConfigConfigurationAggregatorAccountAggregationSourceEl {
+pub struct ConfigConfigurationAggregator_AccountAggregationSource {
     account_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all_regions: std::option::Option<terrars::PrimField<bool>>,
@@ -385,7 +414,7 @@ pub struct ConfigConfigurationAggregatorAccountAggregationSourceEl {
     regions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ConfigConfigurationAggregatorAccountAggregationSourceEl {
+impl ConfigConfigurationAggregator_AccountAggregationSource {
     #[doc = "Set the field `all_regions`.\n"]
     pub fn set_all_regions(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all_regions = std::option::Option::Some(v.into());
@@ -402,8 +431,8 @@ impl ConfigConfigurationAggregatorAccountAggregationSourceEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigConfigurationAggregatorAccountAggregationSourceEl {
-    type O = terrars::BlockAssignable<ConfigConfigurationAggregatorAccountAggregationSourceEl>;
+impl terrars::ToListMappable for ConfigConfigurationAggregator_AccountAggregationSource {
+    type O = terrars::BlockAssignable<ConfigConfigurationAggregator_AccountAggregationSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -414,14 +443,14 @@ impl terrars::ToListMappable for ConfigConfigurationAggregatorAccountAggregation
     }
 }
 
-pub struct BuildConfigConfigurationAggregatorAccountAggregationSourceEl {
+pub struct BuildConfigConfigurationAggregator_AccountAggregationSource {
     #[doc = ""]
     pub account_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildConfigConfigurationAggregatorAccountAggregationSourceEl {
-    pub fn build(self) -> ConfigConfigurationAggregatorAccountAggregationSourceEl {
-        ConfigConfigurationAggregatorAccountAggregationSourceEl {
+impl BuildConfigConfigurationAggregator_AccountAggregationSource {
+    pub fn build(self) -> ConfigConfigurationAggregator_AccountAggregationSource {
+        ConfigConfigurationAggregator_AccountAggregationSource {
             account_ids: self.account_ids,
             all_regions: core::default::Default::default(),
             regions: core::default::Default::default(),
@@ -429,24 +458,26 @@ impl BuildConfigConfigurationAggregatorAccountAggregationSourceEl {
     }
 }
 
-pub struct ConfigConfigurationAggregatorAccountAggregationSourceElRef {
+#[allow(dead_code)]
+pub struct ConfigConfigurationAggregator_AccountAggregationSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigConfigurationAggregatorAccountAggregationSourceElRef {
+impl terrars::Ref for ConfigConfigurationAggregator_AccountAggregationSourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConfigConfigurationAggregatorAccountAggregationSourceElRef {
-        ConfigConfigurationAggregatorAccountAggregationSourceElRef {
+    ) -> ConfigConfigurationAggregator_AccountAggregationSourceRef {
+        ConfigConfigurationAggregator_AccountAggregationSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigConfigurationAggregatorAccountAggregationSourceElRef {
+impl ConfigConfigurationAggregator_AccountAggregationSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -468,7 +499,7 @@ impl ConfigConfigurationAggregatorAccountAggregationSourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConfigConfigurationAggregatorOrganizationAggregationSourceEl {
+pub struct ConfigConfigurationAggregator_OrganizationAggregationSource {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     all_regions: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -476,7 +507,7 @@ pub struct ConfigConfigurationAggregatorOrganizationAggregationSourceEl {
     role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl ConfigConfigurationAggregatorOrganizationAggregationSourceEl {
+impl ConfigConfigurationAggregator_OrganizationAggregationSource {
     #[doc = "Set the field `all_regions`.\n"]
     pub fn set_all_regions(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.all_regions = std::option::Option::Some(v.into());
@@ -493,8 +524,8 @@ impl ConfigConfigurationAggregatorOrganizationAggregationSourceEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigConfigurationAggregatorOrganizationAggregationSourceEl {
-    type O = terrars::BlockAssignable<ConfigConfigurationAggregatorOrganizationAggregationSourceEl>;
+impl terrars::ToListMappable for ConfigConfigurationAggregator_OrganizationAggregationSource {
+    type O = terrars::BlockAssignable<ConfigConfigurationAggregator_OrganizationAggregationSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -505,14 +536,14 @@ impl terrars::ToListMappable for ConfigConfigurationAggregatorOrganizationAggreg
     }
 }
 
-pub struct BuildConfigConfigurationAggregatorOrganizationAggregationSourceEl {
+pub struct BuildConfigConfigurationAggregator_OrganizationAggregationSource {
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConfigConfigurationAggregatorOrganizationAggregationSourceEl {
-    pub fn build(self) -> ConfigConfigurationAggregatorOrganizationAggregationSourceEl {
-        ConfigConfigurationAggregatorOrganizationAggregationSourceEl {
+impl BuildConfigConfigurationAggregator_OrganizationAggregationSource {
+    pub fn build(self) -> ConfigConfigurationAggregator_OrganizationAggregationSource {
+        ConfigConfigurationAggregator_OrganizationAggregationSource {
             all_regions: core::default::Default::default(),
             regions: core::default::Default::default(),
             role_arn: self.role_arn,
@@ -520,24 +551,26 @@ impl BuildConfigConfigurationAggregatorOrganizationAggregationSourceEl {
     }
 }
 
-pub struct ConfigConfigurationAggregatorOrganizationAggregationSourceElRef {
+#[allow(dead_code)]
+pub struct ConfigConfigurationAggregator_OrganizationAggregationSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigConfigurationAggregatorOrganizationAggregationSourceElRef {
+impl terrars::Ref for ConfigConfigurationAggregator_OrganizationAggregationSourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConfigConfigurationAggregatorOrganizationAggregationSourceElRef {
-        ConfigConfigurationAggregatorOrganizationAggregationSourceElRef {
+    ) -> ConfigConfigurationAggregator_OrganizationAggregationSourceRef {
+        ConfigConfigurationAggregator_OrganizationAggregationSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigConfigurationAggregatorOrganizationAggregationSourceElRef {
+impl ConfigConfigurationAggregator_OrganizationAggregationSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -556,14 +589,4 @@ impl ConfigConfigurationAggregatorOrganizationAggregationSourceElRef {
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ConfigConfigurationAggregatorDynamic {
-    account_aggregation_source: std
-    ::option
-    ::Option<terrars::DynamicBlock<ConfigConfigurationAggregatorAccountAggregationSourceEl>>,
-    organization_aggregation_source: std
-    ::option
-    ::Option<terrars::DynamicBlock<ConfigConfigurationAggregatorOrganizationAggregationSourceEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AutoscalingAttachmentData {
+struct AutoscalingAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,8 +20,6 @@ struct AutoscalingAttachmentData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alb_target_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     autoscaling_group_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     elb: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -27,12 +27,14 @@ struct AutoscalingAttachmentData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lb_target_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct AutoscalingAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AutoscalingAttachmentData>,
+    data: std::cell::RefCell<AutoscalingAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -132,12 +134,6 @@ impl AutoscalingAttachment {
         self
     }
 
-    #[doc = "Set the field `alb_target_group_arn`.\n"]
-    pub fn set_alb_target_group_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().alb_target_group_arn = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `elb`.\n"]
     pub fn set_elb(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().elb = std::option::Option::Some(v.into());
@@ -156,9 +152,11 @@ impl AutoscalingAttachment {
         self
     }
 
-    #[doc = "Get a reference to the value of field `alb_target_group_arn` after provisioning.\n"]
-    pub fn alb_target_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.alb_target_group_arn", self.extract_ref()))
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
     }
 
     #[doc = "Get a reference to the value of field `autoscaling_group_name` after provisioning.\n"]
@@ -179,6 +177,12 @@ impl AutoscalingAttachment {
     #[doc = "Get a reference to the value of field `lb_target_group_arn` after provisioning.\n"]
     pub fn lb_target_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.lb_target_group_arn", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -224,17 +228,17 @@ impl BuildAutoscalingAttachment {
         let out = AutoscalingAttachment(std::rc::Rc::new(AutoscalingAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AutoscalingAttachmentData {
+            data: std::cell::RefCell::new(AutoscalingAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                alb_target_group_arn: core::default::Default::default(),
                 autoscaling_group_name: self.autoscaling_group_name,
                 elb: core::default::Default::default(),
                 id: core::default::Default::default(),
                 lb_target_group_arn: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -265,11 +269,6 @@ impl AutoscalingAttachmentRef {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `alb_target_group_arn` after provisioning.\n"]
-    pub fn alb_target_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.alb_target_group_arn", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `autoscaling_group_name` after provisioning.\n"]
     pub fn autoscaling_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.autoscaling_group_name", self.extract_ref()))
@@ -288,5 +287,11 @@ impl AutoscalingAttachmentRef {
     #[doc = "Get a reference to the value of field `lb_target_group_arn` after provisioning.\n"]
     pub fn lb_target_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.lb_target_group_arn", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }

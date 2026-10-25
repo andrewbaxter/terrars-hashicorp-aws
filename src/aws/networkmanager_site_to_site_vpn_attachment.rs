@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerSiteToSiteVpnAttachmentData {
+struct NetworkmanagerSiteToSiteVpnAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,20 @@ struct NetworkmanagerSiteToSiteVpnAttachmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    routing_policy_label: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     vpn_connection_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerSiteToSiteVpnAttachment_Timeouts>,
 }
 
 struct NetworkmanagerSiteToSiteVpnAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerSiteToSiteVpnAttachmentData>,
+    data: std::cell::RefCell<NetworkmanagerSiteToSiteVpnAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,12 @@ impl NetworkmanagerSiteToSiteVpnAttachment {
         self
     }
 
+    #[doc = "Set the field `routing_policy_label`.\n"]
+    pub fn set_routing_policy_label(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().routing_policy_label = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -158,7 +168,7 @@ impl NetworkmanagerSiteToSiteVpnAttachment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerSiteToSiteVpnAttachment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -211,6 +221,11 @@ impl NetworkmanagerSiteToSiteVpnAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_policy_label` after provisioning.\n"]
+    pub fn routing_policy_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_policy_label", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `segment_name` after provisioning.\n"]
     pub fn segment_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_name", self.extract_ref()))
@@ -237,8 +252,8 @@ impl NetworkmanagerSiteToSiteVpnAttachment {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerSiteToSiteVpnAttachmentTimeoutsElRef {
-        NetworkmanagerSiteToSiteVpnAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerSiteToSiteVpnAttachment_TimeoutsRef {
+        NetworkmanagerSiteToSiteVpnAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -289,7 +304,7 @@ impl BuildNetworkmanagerSiteToSiteVpnAttachment {
         let out = NetworkmanagerSiteToSiteVpnAttachment(std::rc::Rc::new(NetworkmanagerSiteToSiteVpnAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkmanagerSiteToSiteVpnAttachmentData {
+            data: std::cell::RefCell::new(NetworkmanagerSiteToSiteVpnAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -297,6 +312,7 @@ impl BuildNetworkmanagerSiteToSiteVpnAttachment {
                 provisioner: core::default::Default::default(),
                 core_network_id: self.core_network_id,
                 id: core::default::Default::default(),
+                routing_policy_label: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 vpn_connection_arn: self.vpn_connection_arn,
@@ -379,6 +395,11 @@ impl NetworkmanagerSiteToSiteVpnAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `routing_policy_label` after provisioning.\n"]
+    pub fn routing_policy_label(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_policy_label", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `segment_name` after provisioning.\n"]
     pub fn segment_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.segment_name", self.extract_ref()))
@@ -405,8 +426,8 @@ impl NetworkmanagerSiteToSiteVpnAttachmentRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerSiteToSiteVpnAttachmentTimeoutsElRef {
-        NetworkmanagerSiteToSiteVpnAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerSiteToSiteVpnAttachment_TimeoutsRef {
+        NetworkmanagerSiteToSiteVpnAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -414,7 +435,7 @@ impl NetworkmanagerSiteToSiteVpnAttachmentRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {
+pub struct NetworkmanagerSiteToSiteVpnAttachment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -423,7 +444,7 @@ pub struct NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {
+impl NetworkmanagerSiteToSiteVpnAttachment_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -443,8 +464,8 @@ impl NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerSiteToSiteVpnAttachment_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerSiteToSiteVpnAttachment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -455,11 +476,11 @@ impl terrars::ToListMappable for NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl
     }
 }
 
-pub struct BuildNetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {}
+pub struct BuildNetworkmanagerSiteToSiteVpnAttachment_Timeouts {}
 
-impl BuildNetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {
-        NetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {
+impl BuildNetworkmanagerSiteToSiteVpnAttachment_Timeouts {
+    pub fn build(self) -> NetworkmanagerSiteToSiteVpnAttachment_Timeouts {
+        NetworkmanagerSiteToSiteVpnAttachment_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -467,24 +488,26 @@ impl BuildNetworkmanagerSiteToSiteVpnAttachmentTimeoutsEl {
     }
 }
 
-pub struct NetworkmanagerSiteToSiteVpnAttachmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerSiteToSiteVpnAttachment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerSiteToSiteVpnAttachmentTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerSiteToSiteVpnAttachment_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkmanagerSiteToSiteVpnAttachmentTimeoutsElRef {
-        NetworkmanagerSiteToSiteVpnAttachmentTimeoutsElRef {
+    ) -> NetworkmanagerSiteToSiteVpnAttachment_TimeoutsRef {
+        NetworkmanagerSiteToSiteVpnAttachment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerSiteToSiteVpnAttachmentTimeoutsElRef {
+impl NetworkmanagerSiteToSiteVpnAttachment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

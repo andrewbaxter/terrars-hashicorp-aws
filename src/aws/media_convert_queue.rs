@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MediaConvertQueueData {
+struct MediaConvertQueueData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct MediaConvertQueueData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    concurrent_jobs: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -26,20 +30,22 @@ struct MediaConvertQueueData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pricing_plan: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    reservation_plan_settings: std::option::Option<std::vec::Vec<MediaConvertQueueReservationPlanSettingsEl>>,
+    reservation_plan_settings: std::option::Option<std::vec::Vec<MediaConvertQueue_ReservationPlanSettings>>,
     dynamic: MediaConvertQueueDynamic,
 }
 
 struct MediaConvertQueue_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MediaConvertQueueData>,
+    data: std::cell::RefCell<MediaConvertQueueData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +145,12 @@ impl MediaConvertQueue {
         self
     }
 
+    #[doc = "Set the field `concurrent_jobs`.\n"]
+    pub fn set_concurrent_jobs(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().concurrent_jobs = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -154,6 +166,13 @@ impl MediaConvertQueue {
     #[doc = "Set the field `pricing_plan`.\n"]
     pub fn set_pricing_plan(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().pricing_plan = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -184,7 +203,7 @@ impl MediaConvertQueue {
     #[doc = "Set the field `reservation_plan_settings`.\n"]
     pub fn set_reservation_plan_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MediaConvertQueueReservationPlanSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MediaConvertQueue_ReservationPlanSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,6 +219,11 @@ impl MediaConvertQueue {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `concurrent_jobs` after provisioning.\n"]
+    pub fn concurrent_jobs(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.concurrent_jobs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
@@ -222,6 +246,12 @@ impl MediaConvertQueue {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pricing_plan", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -238,7 +268,7 @@ impl MediaConvertQueue {
     }
 
     #[doc = "Get a reference to the value of field `reservation_plan_settings` after provisioning.\n"]
-    pub fn reservation_plan_settings(&self) -> terrars::ListRef<MediaConvertQueueReservationPlanSettingsElRef> {
+    pub fn reservation_plan_settings(&self) -> terrars::ListRef<MediaConvertQueue_ReservationPlanSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_plan_settings", self.extract_ref()))
     }
 }
@@ -285,16 +315,18 @@ impl BuildMediaConvertQueue {
         let out = MediaConvertQueue(std::rc::Rc::new(MediaConvertQueue_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MediaConvertQueueData {
+            data: std::cell::RefCell::new(MediaConvertQueueData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                concurrent_jobs: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 pricing_plan: core::default::Default::default(),
+                region: core::default::Default::default(),
                 status: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -335,6 +367,11 @@ impl MediaConvertQueueRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `concurrent_jobs` after provisioning.\n"]
+    pub fn concurrent_jobs(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.concurrent_jobs", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -355,6 +392,12 @@ impl MediaConvertQueueRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pricing_plan", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -371,22 +414,27 @@ impl MediaConvertQueueRef {
     }
 
     #[doc = "Get a reference to the value of field `reservation_plan_settings` after provisioning.\n"]
-    pub fn reservation_plan_settings(&self) -> terrars::ListRef<MediaConvertQueueReservationPlanSettingsElRef> {
+    pub fn reservation_plan_settings(&self) -> terrars::ListRef<MediaConvertQueue_ReservationPlanSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reservation_plan_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MediaConvertQueueDynamic {
+    reservation_plan_settings: std::option::Option<terrars::DynamicBlock<MediaConvertQueue_ReservationPlanSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct MediaConvertQueueReservationPlanSettingsEl {
+pub struct MediaConvertQueue_ReservationPlanSettings {
     commitment: terrars::PrimField<std::string::String>,
     renewal_type: terrars::PrimField<std::string::String>,
     reserved_slots: terrars::PrimField<f64>,
 }
 
-impl MediaConvertQueueReservationPlanSettingsEl { }
+impl MediaConvertQueue_ReservationPlanSettings { }
 
-impl terrars::ToListMappable for MediaConvertQueueReservationPlanSettingsEl {
-    type O = terrars::BlockAssignable<MediaConvertQueueReservationPlanSettingsEl>;
+impl terrars::ToListMappable for MediaConvertQueue_ReservationPlanSettings {
+    type O = terrars::BlockAssignable<MediaConvertQueue_ReservationPlanSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -397,7 +445,7 @@ impl terrars::ToListMappable for MediaConvertQueueReservationPlanSettingsEl {
     }
 }
 
-pub struct BuildMediaConvertQueueReservationPlanSettingsEl {
+pub struct BuildMediaConvertQueue_ReservationPlanSettings {
     #[doc = ""]
     pub commitment: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -406,9 +454,9 @@ pub struct BuildMediaConvertQueueReservationPlanSettingsEl {
     pub reserved_slots: terrars::PrimField<f64>,
 }
 
-impl BuildMediaConvertQueueReservationPlanSettingsEl {
-    pub fn build(self) -> MediaConvertQueueReservationPlanSettingsEl {
-        MediaConvertQueueReservationPlanSettingsEl {
+impl BuildMediaConvertQueue_ReservationPlanSettings {
+    pub fn build(self) -> MediaConvertQueue_ReservationPlanSettings {
+        MediaConvertQueue_ReservationPlanSettings {
             commitment: self.commitment,
             renewal_type: self.renewal_type,
             reserved_slots: self.reserved_slots,
@@ -416,21 +464,23 @@ impl BuildMediaConvertQueueReservationPlanSettingsEl {
     }
 }
 
-pub struct MediaConvertQueueReservationPlanSettingsElRef {
+#[allow(dead_code)]
+pub struct MediaConvertQueue_ReservationPlanSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MediaConvertQueueReservationPlanSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MediaConvertQueueReservationPlanSettingsElRef {
-        MediaConvertQueueReservationPlanSettingsElRef {
+impl terrars::Ref for MediaConvertQueue_ReservationPlanSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MediaConvertQueue_ReservationPlanSettingsRef {
+        MediaConvertQueue_ReservationPlanSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MediaConvertQueueReservationPlanSettingsElRef {
+impl MediaConvertQueue_ReservationPlanSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -449,11 +499,4 @@ impl MediaConvertQueueReservationPlanSettingsElRef {
     pub fn reserved_slots(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reserved_slots", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MediaConvertQueueDynamic {
-    reservation_plan_settings: std
-    ::option
-    ::Option<terrars::DynamicBlock<MediaConvertQueueReservationPlanSettingsEl>>,
 }

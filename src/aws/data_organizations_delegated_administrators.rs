@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataOrganizationsDelegatedAdministratorsData {
+struct DataOrganizationsDelegatedAdministratorsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,7 +27,7 @@ struct DataOrganizationsDelegatedAdministratorsData {
 struct DataOrganizationsDelegatedAdministrators_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataOrganizationsDelegatedAdministratorsData>,
+    data: std::cell::RefCell<DataOrganizationsDelegatedAdministratorsData_>,
 }
 
 #[derive(Clone)]
@@ -85,7 +87,7 @@ impl DataOrganizationsDelegatedAdministrators {
     #[doc = "Get a reference to the value of field `delegated_administrators` after provisioning.\n"]
     pub fn delegated_administrators(
         &self,
-    ) -> terrars::SetRef<DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsElRef> {
+    ) -> terrars::SetRef<DataOrganizationsDelegatedAdministrators_DelegatedAdministratorsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.delegated_administrators", self.extract_ref()))
     }
 
@@ -141,7 +143,7 @@ impl BuildDataOrganizationsDelegatedAdministrators {
             DataOrganizationsDelegatedAdministrators(std::rc::Rc::new(DataOrganizationsDelegatedAdministrators_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(DataOrganizationsDelegatedAdministratorsData {
+                data: std::cell::RefCell::new(DataOrganizationsDelegatedAdministratorsData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
@@ -181,7 +183,7 @@ impl DataOrganizationsDelegatedAdministratorsRef {
     #[doc = "Get a reference to the value of field `delegated_administrators` after provisioning.\n"]
     pub fn delegated_administrators(
         &self,
-    ) -> terrars::SetRef<DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsElRef> {
+    ) -> terrars::SetRef<DataOrganizationsDelegatedAdministrators_DelegatedAdministratorsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.delegated_administrators", self.extract_ref()))
     }
 
@@ -197,7 +199,7 @@ impl DataOrganizationsDelegatedAdministratorsRef {
 }
 
 #[derive(Serialize)]
-pub struct DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {
+pub struct DataOrganizationsDelegatedAdministrators_DelegatedAdministrators {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -216,7 +218,7 @@ pub struct DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {
+impl DataOrganizationsDelegatedAdministrators_DelegatedAdministrators {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -269,8 +271,8 @@ impl DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {
     }
 }
 
-impl terrars::ToListMappable for DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {
-    type O = terrars::BlockAssignable<DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl>;
+impl terrars::ToListMappable for DataOrganizationsDelegatedAdministrators_DelegatedAdministrators {
+    type O = terrars::BlockAssignable<DataOrganizationsDelegatedAdministrators_DelegatedAdministrators>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -281,11 +283,11 @@ impl terrars::ToListMappable for DataOrganizationsDelegatedAdministratorsDelegat
     }
 }
 
-pub struct BuildDataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {}
+pub struct BuildDataOrganizationsDelegatedAdministrators_DelegatedAdministrators {}
 
-impl BuildDataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {
-    pub fn build(self) -> DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {
-        DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {
+impl BuildDataOrganizationsDelegatedAdministrators_DelegatedAdministrators {
+    pub fn build(self) -> DataOrganizationsDelegatedAdministrators_DelegatedAdministrators {
+        DataOrganizationsDelegatedAdministrators_DelegatedAdministrators {
             arn: core::default::Default::default(),
             delegation_enabled_date: core::default::Default::default(),
             email: core::default::Default::default(),
@@ -298,24 +300,26 @@ impl BuildDataOrganizationsDelegatedAdministratorsDelegatedAdministratorsEl {
     }
 }
 
-pub struct DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsElRef {
+#[allow(dead_code)]
+pub struct DataOrganizationsDelegatedAdministrators_DelegatedAdministratorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsElRef {
+impl terrars::Ref for DataOrganizationsDelegatedAdministrators_DelegatedAdministratorsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsElRef {
-        DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsElRef {
+    ) -> DataOrganizationsDelegatedAdministrators_DelegatedAdministratorsRef {
+        DataOrganizationsDelegatedAdministrators_DelegatedAdministratorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataOrganizationsDelegatedAdministratorsDelegatedAdministratorsElRef {
+impl DataOrganizationsDelegatedAdministrators_DelegatedAdministratorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

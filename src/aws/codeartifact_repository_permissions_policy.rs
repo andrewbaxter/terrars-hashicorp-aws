@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodeartifactRepositoryPermissionsPolicyData {
+struct CodeartifactRepositoryPermissionsPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,13 +28,15 @@ struct CodeartifactRepositoryPermissionsPolicyData {
     policy_document: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy_revision: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     repository: terrars::PrimField<std::string::String>,
 }
 
 struct CodeartifactRepositoryPermissionsPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodeartifactRepositoryPermissionsPolicyData>,
+    data: std::cell::RefCell<CodeartifactRepositoryPermissionsPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl CodeartifactRepositoryPermissionsPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `domain` after provisioning.\n"]
     pub fn domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.extract_ref()))
@@ -173,6 +184,12 @@ impl CodeartifactRepositoryPermissionsPolicy {
     #[doc = "Get a reference to the value of field `policy_revision` after provisioning.\n"]
     pub fn policy_revision(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_revision", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `repository` after provisioning.\n"]
@@ -232,7 +249,7 @@ impl BuildCodeartifactRepositoryPermissionsPolicy {
         let out = CodeartifactRepositoryPermissionsPolicy(std::rc::Rc::new(CodeartifactRepositoryPermissionsPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodeartifactRepositoryPermissionsPolicyData {
+            data: std::cell::RefCell::new(CodeartifactRepositoryPermissionsPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -243,6 +260,7 @@ impl BuildCodeartifactRepositoryPermissionsPolicy {
                 id: core::default::Default::default(),
                 policy_document: self.policy_document,
                 policy_revision: core::default::Default::default(),
+                region: core::default::Default::default(),
                 repository: self.repository,
             }),
         }));
@@ -297,6 +315,12 @@ impl CodeartifactRepositoryPermissionsPolicyRef {
     #[doc = "Get a reference to the value of field `policy_revision` after provisioning.\n"]
     pub fn policy_revision(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_revision", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `repository` after provisioning.\n"]

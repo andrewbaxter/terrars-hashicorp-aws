@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AcmCertificateData {
+struct AcmCertificateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,6 +37,12 @@ struct AcmCertificateData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_key_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    private_key_wo_version: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subject_alternative_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -43,16 +51,16 @@ struct AcmCertificateData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     validation_method: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    options: std::option::Option<std::vec::Vec<AcmCertificateOptionsEl>>,
+    options: std::option::Option<std::vec::Vec<AcmCertificate_Options>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    validation_option: std::option::Option<std::vec::Vec<AcmCertificateValidationOptionEl>>,
+    validation_option: std::option::Option<std::vec::Vec<AcmCertificate_ValidationOption>>,
     dynamic: AcmCertificateDynamic,
 }
 
 struct AcmCertificate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AcmCertificateData>,
+    data: std::cell::RefCell<AcmCertificateData_>,
 }
 
 #[derive(Clone)]
@@ -206,6 +214,25 @@ impl AcmCertificate {
         self
     }
 
+    #[doc = "Set the field `private_key_wo`.\n"]
+    pub fn set_private_key_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().private_key_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `private_key_wo_version`.\n"]
+    pub fn set_private_key_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().private_key_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `subject_alternative_names`.\n"]
     pub fn set_subject_alternative_names(
         self,
@@ -240,7 +267,7 @@ impl AcmCertificate {
     }
 
     #[doc = "Set the field `options`.\n"]
-    pub fn set_options(self, v: impl std::convert::Into<terrars::BlockAssignable<AcmCertificateOptionsEl>>) -> Self {
+    pub fn set_options(self, v: impl std::convert::Into<terrars::BlockAssignable<AcmCertificate_Options>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().options = std::option::Option::Some(v);
@@ -255,7 +282,7 @@ impl AcmCertificate {
     #[doc = "Set the field `validation_option`.\n"]
     pub fn set_validation_option(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AcmCertificateValidationOptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AcmCertificate_ValidationOption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -294,7 +321,7 @@ impl AcmCertificate {
     }
 
     #[doc = "Get a reference to the value of field `domain_validation_options` after provisioning.\n"]
-    pub fn domain_validation_options(&self) -> terrars::SetRef<AcmCertificateDomainValidationOptionsElRef> {
+    pub fn domain_validation_options(&self) -> terrars::SetRef<AcmCertificate_DomainValidationOptionsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.domain_validation_options", self.extract_ref()))
     }
 
@@ -333,13 +360,29 @@ impl AcmCertificate {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `private_key_wo` after provisioning.\n"]
+    pub fn private_key_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `private_key_wo_version` after provisioning.\n"]
+    pub fn private_key_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key_wo_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `renewal_eligibility` after provisioning.\n"]
     pub fn renewal_eligibility(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.renewal_eligibility", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `renewal_summary` after provisioning.\n"]
-    pub fn renewal_summary(&self) -> terrars::ListRef<AcmCertificateRenewalSummaryElRef> {
+    pub fn renewal_summary(&self) -> terrars::ListRef<AcmCertificate_RenewalSummaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.renewal_summary", self.extract_ref()))
     }
 
@@ -379,7 +422,7 @@ impl AcmCertificate {
     }
 
     #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
-    pub fn options(&self) -> terrars::ListRef<AcmCertificateOptionsElRef> {
+    pub fn options(&self) -> terrars::ListRef<AcmCertificate_OptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
     }
 }
@@ -424,7 +467,7 @@ impl BuildAcmCertificate {
         let out = AcmCertificate(std::rc::Rc::new(AcmCertificate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AcmCertificateData {
+            data: std::cell::RefCell::new(AcmCertificateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -438,6 +481,9 @@ impl BuildAcmCertificate {
                 id: core::default::Default::default(),
                 key_algorithm: core::default::Default::default(),
                 private_key: core::default::Default::default(),
+                private_key_wo: core::default::Default::default(),
+                private_key_wo_version: core::default::Default::default(),
+                region: core::default::Default::default(),
                 subject_alternative_names: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -501,7 +547,7 @@ impl AcmCertificateRef {
     }
 
     #[doc = "Get a reference to the value of field `domain_validation_options` after provisioning.\n"]
-    pub fn domain_validation_options(&self) -> terrars::SetRef<AcmCertificateDomainValidationOptionsElRef> {
+    pub fn domain_validation_options(&self) -> terrars::SetRef<AcmCertificate_DomainValidationOptionsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.domain_validation_options", self.extract_ref()))
     }
 
@@ -540,13 +586,29 @@ impl AcmCertificateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `private_key_wo` after provisioning.\n"]
+    pub fn private_key_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `private_key_wo_version` after provisioning.\n"]
+    pub fn private_key_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_key_wo_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `renewal_eligibility` after provisioning.\n"]
     pub fn renewal_eligibility(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.renewal_eligibility", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `renewal_summary` after provisioning.\n"]
-    pub fn renewal_summary(&self) -> terrars::ListRef<AcmCertificateRenewalSummaryElRef> {
+    pub fn renewal_summary(&self) -> terrars::ListRef<AcmCertificate_RenewalSummaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.renewal_summary", self.extract_ref()))
     }
 
@@ -586,13 +648,19 @@ impl AcmCertificateRef {
     }
 
     #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
-    pub fn options(&self) -> terrars::ListRef<AcmCertificateOptionsElRef> {
+    pub fn options(&self) -> terrars::ListRef<AcmCertificate_OptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AcmCertificateDynamic {
+    options: std::option::Option<terrars::DynamicBlock<AcmCertificate_Options>>,
+    validation_option: std::option::Option<terrars::DynamicBlock<AcmCertificate_ValidationOption>>,
+}
+
 #[derive(Serialize)]
-pub struct AcmCertificateDomainValidationOptionsEl {
+pub struct AcmCertificate_DomainValidationOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -603,7 +671,7 @@ pub struct AcmCertificateDomainValidationOptionsEl {
     resource_record_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AcmCertificateDomainValidationOptionsEl {
+impl AcmCertificate_DomainValidationOptions {
     #[doc = "Set the field `domain_name`.\n"]
     pub fn set_domain_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.domain_name = std::option::Option::Some(v.into());
@@ -638,8 +706,8 @@ impl AcmCertificateDomainValidationOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for AcmCertificateDomainValidationOptionsEl {
-    type O = terrars::BlockAssignable<AcmCertificateDomainValidationOptionsEl>;
+impl terrars::ToListMappable for AcmCertificate_DomainValidationOptions {
+    type O = terrars::BlockAssignable<AcmCertificate_DomainValidationOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -650,11 +718,11 @@ impl terrars::ToListMappable for AcmCertificateDomainValidationOptionsEl {
     }
 }
 
-pub struct BuildAcmCertificateDomainValidationOptionsEl {}
+pub struct BuildAcmCertificate_DomainValidationOptions {}
 
-impl BuildAcmCertificateDomainValidationOptionsEl {
-    pub fn build(self) -> AcmCertificateDomainValidationOptionsEl {
-        AcmCertificateDomainValidationOptionsEl {
+impl BuildAcmCertificate_DomainValidationOptions {
+    pub fn build(self) -> AcmCertificate_DomainValidationOptions {
+        AcmCertificate_DomainValidationOptions {
             domain_name: core::default::Default::default(),
             resource_record_name: core::default::Default::default(),
             resource_record_type: core::default::Default::default(),
@@ -663,21 +731,23 @@ impl BuildAcmCertificateDomainValidationOptionsEl {
     }
 }
 
-pub struct AcmCertificateDomainValidationOptionsElRef {
+#[allow(dead_code)]
+pub struct AcmCertificate_DomainValidationOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AcmCertificateDomainValidationOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificateDomainValidationOptionsElRef {
-        AcmCertificateDomainValidationOptionsElRef {
+impl terrars::Ref for AcmCertificate_DomainValidationOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificate_DomainValidationOptionsRef {
+        AcmCertificate_DomainValidationOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AcmCertificateDomainValidationOptionsElRef {
+impl AcmCertificate_DomainValidationOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -704,7 +774,7 @@ impl AcmCertificateDomainValidationOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AcmCertificateRenewalSummaryEl {
+pub struct AcmCertificate_RenewalSummary {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     renewal_status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -713,7 +783,7 @@ pub struct AcmCertificateRenewalSummaryEl {
     updated_at: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AcmCertificateRenewalSummaryEl {
+impl AcmCertificate_RenewalSummary {
     #[doc = "Set the field `renewal_status`.\n"]
     pub fn set_renewal_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.renewal_status = std::option::Option::Some(v.into());
@@ -736,8 +806,8 @@ impl AcmCertificateRenewalSummaryEl {
     }
 }
 
-impl terrars::ToListMappable for AcmCertificateRenewalSummaryEl {
-    type O = terrars::BlockAssignable<AcmCertificateRenewalSummaryEl>;
+impl terrars::ToListMappable for AcmCertificate_RenewalSummary {
+    type O = terrars::BlockAssignable<AcmCertificate_RenewalSummary>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -748,11 +818,11 @@ impl terrars::ToListMappable for AcmCertificateRenewalSummaryEl {
     }
 }
 
-pub struct BuildAcmCertificateRenewalSummaryEl {}
+pub struct BuildAcmCertificate_RenewalSummary {}
 
-impl BuildAcmCertificateRenewalSummaryEl {
-    pub fn build(self) -> AcmCertificateRenewalSummaryEl {
-        AcmCertificateRenewalSummaryEl {
+impl BuildAcmCertificate_RenewalSummary {
+    pub fn build(self) -> AcmCertificate_RenewalSummary {
+        AcmCertificate_RenewalSummary {
             renewal_status: core::default::Default::default(),
             renewal_status_reason: core::default::Default::default(),
             updated_at: core::default::Default::default(),
@@ -760,21 +830,23 @@ impl BuildAcmCertificateRenewalSummaryEl {
     }
 }
 
-pub struct AcmCertificateRenewalSummaryElRef {
+#[allow(dead_code)]
+pub struct AcmCertificate_RenewalSummaryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AcmCertificateRenewalSummaryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificateRenewalSummaryElRef {
-        AcmCertificateRenewalSummaryElRef {
+impl terrars::Ref for AcmCertificate_RenewalSummaryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificate_RenewalSummaryRef {
+        AcmCertificate_RenewalSummaryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AcmCertificateRenewalSummaryElRef {
+impl AcmCertificate_RenewalSummaryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -796,12 +868,14 @@ impl AcmCertificateRenewalSummaryElRef {
 }
 
 #[derive(Serialize)]
-pub struct AcmCertificateOptionsEl {
+pub struct AcmCertificate_Options {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_transparency_logging_preference: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    export: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AcmCertificateOptionsEl {
+impl AcmCertificate_Options {
     #[doc = "Set the field `certificate_transparency_logging_preference`.\n"]
     pub fn set_certificate_transparency_logging_preference(
         mut self,
@@ -810,10 +884,16 @@ impl AcmCertificateOptionsEl {
         self.certificate_transparency_logging_preference = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `export`.\n"]
+    pub fn set_export(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.export = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for AcmCertificateOptionsEl {
-    type O = terrars::BlockAssignable<AcmCertificateOptionsEl>;
+impl terrars::ToListMappable for AcmCertificate_Options {
+    type O = terrars::BlockAssignable<AcmCertificate_Options>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -824,29 +904,34 @@ impl terrars::ToListMappable for AcmCertificateOptionsEl {
     }
 }
 
-pub struct BuildAcmCertificateOptionsEl {}
+pub struct BuildAcmCertificate_Options {}
 
-impl BuildAcmCertificateOptionsEl {
-    pub fn build(self) -> AcmCertificateOptionsEl {
-        AcmCertificateOptionsEl { certificate_transparency_logging_preference: core::default::Default::default() }
+impl BuildAcmCertificate_Options {
+    pub fn build(self) -> AcmCertificate_Options {
+        AcmCertificate_Options {
+            certificate_transparency_logging_preference: core::default::Default::default(),
+            export: core::default::Default::default(),
+        }
     }
 }
 
-pub struct AcmCertificateOptionsElRef {
+#[allow(dead_code)]
+pub struct AcmCertificate_OptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AcmCertificateOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificateOptionsElRef {
-        AcmCertificateOptionsElRef {
+impl terrars::Ref for AcmCertificate_OptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificate_OptionsRef {
+        AcmCertificate_OptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AcmCertificateOptionsElRef {
+impl AcmCertificate_OptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -858,18 +943,23 @@ impl AcmCertificateOptionsElRef {
             format!("{}.certificate_transparency_logging_preference", self.base),
         )
     }
+
+    #[doc = "Get a reference to the value of field `export` after provisioning.\n"]
+    pub fn export(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.export", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct AcmCertificateValidationOptionEl {
+pub struct AcmCertificate_ValidationOption {
     domain_name: terrars::PrimField<std::string::String>,
     validation_domain: terrars::PrimField<std::string::String>,
 }
 
-impl AcmCertificateValidationOptionEl { }
+impl AcmCertificate_ValidationOption { }
 
-impl terrars::ToListMappable for AcmCertificateValidationOptionEl {
-    type O = terrars::BlockAssignable<AcmCertificateValidationOptionEl>;
+impl terrars::ToListMappable for AcmCertificate_ValidationOption {
+    type O = terrars::BlockAssignable<AcmCertificate_ValidationOption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -880,37 +970,39 @@ impl terrars::ToListMappable for AcmCertificateValidationOptionEl {
     }
 }
 
-pub struct BuildAcmCertificateValidationOptionEl {
+pub struct BuildAcmCertificate_ValidationOption {
     #[doc = ""]
     pub domain_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub validation_domain: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAcmCertificateValidationOptionEl {
-    pub fn build(self) -> AcmCertificateValidationOptionEl {
-        AcmCertificateValidationOptionEl {
+impl BuildAcmCertificate_ValidationOption {
+    pub fn build(self) -> AcmCertificate_ValidationOption {
+        AcmCertificate_ValidationOption {
             domain_name: self.domain_name,
             validation_domain: self.validation_domain,
         }
     }
 }
 
-pub struct AcmCertificateValidationOptionElRef {
+#[allow(dead_code)]
+pub struct AcmCertificate_ValidationOptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AcmCertificateValidationOptionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificateValidationOptionElRef {
-        AcmCertificateValidationOptionElRef {
+impl terrars::Ref for AcmCertificate_ValidationOptionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificate_ValidationOptionRef {
+        AcmCertificate_ValidationOptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AcmCertificateValidationOptionElRef {
+impl AcmCertificate_ValidationOptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -924,10 +1016,4 @@ impl AcmCertificateValidationOptionElRef {
     pub fn validation_domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.validation_domain", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AcmCertificateDynamic {
-    options: std::option::Option<terrars::DynamicBlock<AcmCertificateOptionsEl>>,
-    validation_option: std::option::Option<terrars::DynamicBlock<AcmCertificateValidationOptionEl>>,
 }

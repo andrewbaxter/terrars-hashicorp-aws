@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Wafv2WebAclLoggingConfigurationData {
+struct Wafv2WebAclLoggingConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,18 +23,20 @@ struct Wafv2WebAclLoggingConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     log_destination_configs: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     resource_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_filter: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationLoggingFilterEl>>,
+    logging_filter: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_LoggingFilter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redacted_fields: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationRedactedFieldsEl>>,
+    redacted_fields: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_RedactedFields>>,
     dynamic: Wafv2WebAclLoggingConfigurationDynamic,
 }
 
 struct Wafv2WebAclLoggingConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Wafv2WebAclLoggingConfigurationData>,
+    data: std::cell::RefCell<Wafv2WebAclLoggingConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -138,10 +142,17 @@ impl Wafv2WebAclLoggingConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `logging_filter`.\n"]
     pub fn set_logging_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationLoggingFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_LoggingFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -157,7 +168,7 @@ impl Wafv2WebAclLoggingConfiguration {
     #[doc = "Set the field `redacted_fields`.\n"]
     pub fn set_redacted_fields(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,18 +192,24 @@ impl Wafv2WebAclLoggingConfiguration {
         terrars::SetRef::new(self.shared().clone(), format!("{}.log_destination_configs", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\nAWS WebACL ARN"]
     pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_filter` after provisioning.\n"]
-    pub fn logging_filter(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationLoggingFilterElRef> {
+    pub fn logging_filter(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_LoggingFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `redacted_fields` after provisioning.\n"]
-    pub fn redacted_fields(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationRedactedFieldsElRef> {
+    pub fn redacted_fields(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_RedactedFieldsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redacted_fields", self.extract_ref()))
     }
 }
@@ -241,7 +258,7 @@ impl BuildWafv2WebAclLoggingConfiguration {
         let out = Wafv2WebAclLoggingConfiguration(std::rc::Rc::new(Wafv2WebAclLoggingConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Wafv2WebAclLoggingConfigurationData {
+            data: std::cell::RefCell::new(Wafv2WebAclLoggingConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -249,6 +266,7 @@ impl BuildWafv2WebAclLoggingConfiguration {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 log_destination_configs: self.log_destination_configs,
+                region: core::default::Default::default(),
                 resource_arn: self.resource_arn,
                 logging_filter: core::default::Default::default(),
                 redacted_fields: core::default::Default::default(),
@@ -294,32 +312,44 @@ impl Wafv2WebAclLoggingConfigurationRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.log_destination_configs", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\nAWS WebACL ARN"]
     pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_filter` after provisioning.\n"]
-    pub fn logging_filter(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationLoggingFilterElRef> {
+    pub fn logging_filter(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_LoggingFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `redacted_fields` after provisioning.\n"]
-    pub fn redacted_fields(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationRedactedFieldsElRef> {
+    pub fn redacted_fields(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_RedactedFieldsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redacted_fields", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Wafv2WebAclLoggingConfigurationDynamic {
+    logging_filter: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_LoggingFilter>>,
+    redacted_fields: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_RedactedFields>>,
+}
+
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl {
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition {
     action: terrars::PrimField<std::string::String>,
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl { }
+impl Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition { }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl {
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition {
     type O =
-        terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl>;
+        terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -330,35 +360,37 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterElF
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl {
+pub struct BuildWafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition {
     #[doc = ""]
     pub action: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl {
-        Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl { action: self.action }
+impl BuildWafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition {
+        Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition { action: self.action }
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionElRef {
-        Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionConditionRef {
+        Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionElRef {
+impl Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -370,16 +402,15 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionCond
 }
 
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl {
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition {
     label_name: terrars::PrimField<std::string::String>,
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl { }
+impl Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition { }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl {
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition {
     type O =
-        terrars
-        ::BlockAssignable<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl>;
+        terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -390,37 +421,39 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterElF
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl {
+pub struct BuildWafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition {
     #[doc = ""]
     pub label_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl {
-        Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl {
+impl BuildWafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition {
+        Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition {
             label_name: self.label_name,
         }
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionElRef {
-        Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameConditionRef {
+        Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionElRef {
+impl Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -432,33 +465,31 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameC
 }
 
 #[derive(Serialize, Default)]
-struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElDynamic {
+struct Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_ConditionDynamic {
     action_condition: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl>,
-    >,
+    ::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition>>,
     label_name_condition: std
     ::option
     ::Option<
-        terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl>,
+        terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action_condition: std
     ::option
-    ::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl>>,
+    ::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     label_name_condition: std
     ::option
-    ::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl>>,
-    dynamic: Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElDynamic,
+    ::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition>>,
+    dynamic: Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_ConditionDynamic,
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
+impl Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition {
     #[doc = "Set the field `action_condition`.\n"]
     pub fn set_action_condition(
         mut self,
@@ -470,7 +501,7 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionEl,
+                            Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionCondition,
                         >,
                     >,
     ) -> Self {
@@ -496,7 +527,7 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionEl,
+                            Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameCondition,
                         >,
                     >,
     ) -> Self {
@@ -512,8 +543,8 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
     }
 }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl>;
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition {
+    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -524,11 +555,11 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterElF
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {}
+pub struct BuildWafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition {}
 
-impl BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
-        Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
+impl BuildWafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition {
+        Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition {
             action_condition: core::default::Default::default(),
             label_name_condition: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -536,24 +567,26 @@ impl BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl {
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_ConditionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElRef {
-        Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_ConditionRef {
+        Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElRef {
+impl Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,35 +594,35 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElRef {
     #[doc = "Get a reference to the value of field `action_condition` after provisioning.\n"]
     pub fn action_condition(
         &self,
-    ) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElActionConditionElRef> {
+    ) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_ActionConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action_condition", self.base))
     }
 
     #[doc = "Get a reference to the value of field `label_name_condition` after provisioning.\n"]
     pub fn label_name_condition(
         &self,
-    ) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionElLabelNameConditionElRef> {
+    ) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition_LabelNameConditionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.label_name_condition", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElDynamic {
+struct Wafv2WebAclLoggingConfiguration_LoggingFilter_FilterDynamic {
     condition: std
     ::option
-    ::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl>>,
+    ::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition>>,
 }
 
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter {
     behavior: terrars::PrimField<std::string::String>,
     requirement: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl>>,
-    dynamic: Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElDynamic,
+    condition: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition>>,
+    dynamic: Wafv2WebAclLoggingConfiguration_LoggingFilter_FilterDynamic,
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
+impl Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         mut self,
@@ -598,9 +631,7 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElConditionEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -614,8 +645,8 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
     }
 }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl>;
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter {
+    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -626,16 +657,16 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterElF
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
+pub struct BuildWafv2WebAclLoggingConfiguration_LoggingFilter_Filter {
     #[doc = ""]
     pub behavior: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub requirement: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
-        Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
+impl BuildWafv2WebAclLoggingConfiguration_LoggingFilter_Filter {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter {
+        Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter {
             behavior: self.behavior,
             requirement: self.requirement,
             condition: core::default::Default::default(),
@@ -644,24 +675,26 @@ impl BuildWafv2WebAclLoggingConfigurationLoggingFilterElFilterEl {
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilter_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_LoggingFilter_FilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElRef {
-        Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_LoggingFilter_FilterRef {
+        Wafv2WebAclLoggingConfiguration_LoggingFilter_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElRef {
+impl Wafv2WebAclLoggingConfiguration_LoggingFilter_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -678,23 +711,23 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElFilterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct Wafv2WebAclLoggingConfigurationLoggingFilterElDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl>>,
+struct Wafv2WebAclLoggingConfiguration_LoggingFilterDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter>>,
 }
 
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterEl {
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilter {
     default_behavior: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl>>,
-    dynamic: Wafv2WebAclLoggingConfigurationLoggingFilterElDynamic,
+    filter: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter>>,
+    dynamic: Wafv2WebAclLoggingConfiguration_LoggingFilterDynamic,
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterEl {
+impl Wafv2WebAclLoggingConfiguration_LoggingFilter {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationLoggingFilterElFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_LoggingFilter_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -708,8 +741,8 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterEl {
     }
 }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationLoggingFilterEl>;
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_LoggingFilter {
+    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_LoggingFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -720,14 +753,14 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationLoggingFilterEl 
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationLoggingFilterEl {
+pub struct BuildWafv2WebAclLoggingConfiguration_LoggingFilter {
     #[doc = ""]
     pub default_behavior: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafv2WebAclLoggingConfigurationLoggingFilterEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationLoggingFilterEl {
-        Wafv2WebAclLoggingConfigurationLoggingFilterEl {
+impl BuildWafv2WebAclLoggingConfiguration_LoggingFilter {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_LoggingFilter {
+        Wafv2WebAclLoggingConfiguration_LoggingFilter {
             default_behavior: self.default_behavior,
             filter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -735,24 +768,26 @@ impl BuildWafv2WebAclLoggingConfigurationLoggingFilterEl {
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationLoggingFilterElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_LoggingFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationLoggingFilterElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_LoggingFilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationLoggingFilterElRef {
-        Wafv2WebAclLoggingConfigurationLoggingFilterElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_LoggingFilterRef {
+        Wafv2WebAclLoggingConfiguration_LoggingFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationLoggingFilterElRef {
+impl Wafv2WebAclLoggingConfiguration_LoggingFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -764,60 +799,12 @@ impl Wafv2WebAclLoggingConfigurationLoggingFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl {}
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFields_Method {}
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl { }
+impl Wafv2WebAclLoggingConfiguration_RedactedFields_Method { }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildWafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl {}
-
-impl BuildWafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl {}
-    }
-}
-
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsElRef {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl {}
-
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl { }
-
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl>;
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_RedactedFields_Method {
+    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields_Method>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -828,44 +815,46 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsEl
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl {}
+pub struct BuildWafv2WebAclLoggingConfiguration_RedactedFields_Method {}
 
-impl BuildWafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl {}
+impl BuildWafv2WebAclLoggingConfiguration_RedactedFields_Method {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_RedactedFields_Method {
+        Wafv2WebAclLoggingConfiguration_RedactedFields_Method {}
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFields_MethodRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_RedactedFields_MethodRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyElRef {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_RedactedFields_MethodRef {
+        Wafv2WebAclLoggingConfiguration_RedactedFields_MethodRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyElRef {
+impl Wafv2WebAclLoggingConfiguration_RedactedFields_MethodRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl {}
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFields_QueryString {}
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl { }
+impl Wafv2WebAclLoggingConfiguration_RedactedFields_QueryString { }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl>;
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_RedactedFields_QueryString {
+    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields_QueryString>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -876,94 +865,48 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsEl
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl {}
+pub struct BuildWafv2WebAclLoggingConfiguration_RedactedFields_QueryString {}
 
-impl BuildWafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl {}
+impl BuildWafv2WebAclLoggingConfiguration_RedactedFields_QueryString {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_RedactedFields_QueryString {
+        Wafv2WebAclLoggingConfiguration_RedactedFields_QueryString {}
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFields_QueryStringRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_RedactedFields_QueryStringRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodElRef {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_RedactedFields_QueryStringRef {
+        Wafv2WebAclLoggingConfiguration_RedactedFields_QueryStringRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodElRef {
+impl Wafv2WebAclLoggingConfiguration_RedactedFields_QueryStringRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl {}
-
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl { }
-
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildWafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl {}
-
-impl BuildWafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl {}
-    }
-}
-
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringElRef {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-}
-
-#[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl {
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl { }
+impl Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader { }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl>;
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader {
+    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -974,35 +917,37 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsEl
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl {
+pub struct BuildWafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl { name: self.name }
+impl BuildWafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader {
+        Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader { name: self.name }
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeaderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeaderRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderElRef {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeaderRef {
+        Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeaderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderElRef {
+impl Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeaderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1014,14 +959,12 @@ impl Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderElRef {
 }
 
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl {
-    name: terrars::PrimField<std::string::String>,
-}
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFields_UriPath {}
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl { }
+impl Wafv2WebAclLoggingConfiguration_RedactedFields_UriPath { }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl>;
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_RedactedFields_UriPath {
+    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields_UriPath>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1032,184 +975,69 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsEl
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl {
-    #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
-}
+pub struct BuildWafv2WebAclLoggingConfiguration_RedactedFields_UriPath {}
 
-impl BuildWafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl { name: self.name }
+impl BuildWafv2WebAclLoggingConfiguration_RedactedFields_UriPath {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_RedactedFields_UriPath {
+        Wafv2WebAclLoggingConfiguration_RedactedFields_UriPath {}
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFields_UriPathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_RedactedFields_UriPathRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentElRef {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_RedactedFields_UriPathRef {
+        Wafv2WebAclLoggingConfiguration_RedactedFields_UriPathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl {}
-
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl { }
-
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildWafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl {}
-
-impl BuildWafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl {}
-    }
-}
-
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathElRef {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathElRef {
+impl Wafv2WebAclLoggingConfiguration_RedactedFields_UriPathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct Wafv2WebAclLoggingConfigurationRedactedFieldsElDynamic {
-    all_query_arguments: std
-    ::option
-    ::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl>>,
-    body: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl>>,
-    method: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl>>,
+struct Wafv2WebAclLoggingConfiguration_RedactedFieldsDynamic {
+    method: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_RedactedFields_Method>>,
     query_string: std
     ::option
-    ::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl>>,
+    ::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_RedactedFields_QueryString>>,
     single_header: std
     ::option
-    ::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl>>,
-    single_query_argument: std
-    ::option
-    ::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl>>,
-    uri_path: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl>>,
+    ::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader>>,
+    uri_path: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfiguration_RedactedFields_UriPath>>,
 }
 
 #[derive(Serialize)]
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsEl {
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFields {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    all_query_arguments: std
-    ::option
-    ::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl>>,
+    method: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_RedactedFields_Method>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    body: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl>>,
+    query_string: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_RedactedFields_QueryString>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    method: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl>>,
+    single_header: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query_string: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    single_header: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    single_query_argument: std
-    ::option
-    ::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    uri_path: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl>>,
-    dynamic: Wafv2WebAclLoggingConfigurationRedactedFieldsElDynamic,
+    uri_path: std::option::Option<std::vec::Vec<Wafv2WebAclLoggingConfiguration_RedactedFields_UriPath>>,
+    dynamic: Wafv2WebAclLoggingConfiguration_RedactedFieldsDynamic,
 }
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsEl {
-    #[doc = "Set the field `all_query_arguments`.\n"]
-    pub fn set_all_query_arguments(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.all_query_arguments = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.all_query_arguments = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `body`.\n"]
-    pub fn set_body(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.body = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.body = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
+impl Wafv2WebAclLoggingConfiguration_RedactedFields {
     #[doc = "Set the field `method`.\n"]
     pub fn set_method(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields_Method>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1230,7 +1058,7 @@ impl Wafv2WebAclLoggingConfigurationRedactedFieldsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringEl>>,
+                    ::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields_QueryString>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1251,7 +1079,7 @@ impl Wafv2WebAclLoggingConfigurationRedactedFieldsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderEl>>,
+                    ::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeader>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1264,38 +1092,10 @@ impl Wafv2WebAclLoggingConfigurationRedactedFieldsEl {
         self
     }
 
-    #[doc = "Set the field `single_query_argument`.\n"]
-    pub fn set_single_query_argument(
-        mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentEl>,
-                    >,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.single_query_argument = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.dynamic.single_query_argument = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
     #[doc = "Set the field `uri_path`.\n"]
     pub fn set_uri_path(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields_UriPath>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1309,8 +1109,8 @@ impl Wafv2WebAclLoggingConfigurationRedactedFieldsEl {
     }
 }
 
-impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsEl {
-    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfigurationRedactedFieldsEl>;
+impl terrars::ToListMappable for Wafv2WebAclLoggingConfiguration_RedactedFields {
+    type O = terrars::BlockAssignable<Wafv2WebAclLoggingConfiguration_RedactedFields>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1321,87 +1121,61 @@ impl terrars::ToListMappable for Wafv2WebAclLoggingConfigurationRedactedFieldsEl
     }
 }
 
-pub struct BuildWafv2WebAclLoggingConfigurationRedactedFieldsEl {}
+pub struct BuildWafv2WebAclLoggingConfiguration_RedactedFields {}
 
-impl BuildWafv2WebAclLoggingConfigurationRedactedFieldsEl {
-    pub fn build(self) -> Wafv2WebAclLoggingConfigurationRedactedFieldsEl {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsEl {
-            all_query_arguments: core::default::Default::default(),
-            body: core::default::Default::default(),
+impl BuildWafv2WebAclLoggingConfiguration_RedactedFields {
+    pub fn build(self) -> Wafv2WebAclLoggingConfiguration_RedactedFields {
+        Wafv2WebAclLoggingConfiguration_RedactedFields {
             method: core::default::Default::default(),
             query_string: core::default::Default::default(),
             single_header: core::default::Default::default(),
-            single_query_argument: core::default::Default::default(),
             uri_path: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct Wafv2WebAclLoggingConfigurationRedactedFieldsElRef {
+#[allow(dead_code)]
+pub struct Wafv2WebAclLoggingConfiguration_RedactedFieldsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Wafv2WebAclLoggingConfigurationRedactedFieldsElRef {
+impl terrars::Ref for Wafv2WebAclLoggingConfiguration_RedactedFieldsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Wafv2WebAclLoggingConfigurationRedactedFieldsElRef {
-        Wafv2WebAclLoggingConfigurationRedactedFieldsElRef {
+    ) -> Wafv2WebAclLoggingConfiguration_RedactedFieldsRef {
+        Wafv2WebAclLoggingConfiguration_RedactedFieldsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Wafv2WebAclLoggingConfigurationRedactedFieldsElRef {
+impl Wafv2WebAclLoggingConfiguration_RedactedFieldsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `all_query_arguments` after provisioning.\n"]
-    pub fn all_query_arguments(
-        &self,
-    ) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationRedactedFieldsElAllQueryArgumentsElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.all_query_arguments", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `body` after provisioning.\n"]
-    pub fn body(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationRedactedFieldsElBodyElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.body", self.base))
-    }
-
     #[doc = "Get a reference to the value of field `method` after provisioning.\n"]
-    pub fn method(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationRedactedFieldsElMethodElRef> {
+    pub fn method(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_RedactedFields_MethodRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.method", self.base))
     }
 
     #[doc = "Get a reference to the value of field `query_string` after provisioning.\n"]
-    pub fn query_string(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationRedactedFieldsElQueryStringElRef> {
+    pub fn query_string(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_RedactedFields_QueryStringRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_string", self.base))
     }
 
     #[doc = "Get a reference to the value of field `single_header` after provisioning.\n"]
-    pub fn single_header(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleHeaderElRef> {
+    pub fn single_header(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_RedactedFields_SingleHeaderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.single_header", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `single_query_argument` after provisioning.\n"]
-    pub fn single_query_argument(
-        &self,
-    ) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationRedactedFieldsElSingleQueryArgumentElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.single_query_argument", self.base))
-    }
-
     #[doc = "Get a reference to the value of field `uri_path` after provisioning.\n"]
-    pub fn uri_path(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfigurationRedactedFieldsElUriPathElRef> {
+    pub fn uri_path(&self) -> terrars::ListRef<Wafv2WebAclLoggingConfiguration_RedactedFields_UriPathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.uri_path", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Wafv2WebAclLoggingConfigurationDynamic {
-    logging_filter: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationLoggingFilterEl>>,
-    redacted_fields: std::option::Option<terrars::DynamicBlock<Wafv2WebAclLoggingConfigurationRedactedFieldsEl>>,
 }

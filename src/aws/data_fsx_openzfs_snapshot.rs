@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataFsxOpenzfsSnapshotData {
+struct DataFsxOpenzfsSnapshotData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,18 +25,20 @@ struct DataFsxOpenzfsSnapshotData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snapshot_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataFsxOpenzfsSnapshotFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataFsxOpenzfsSnapshot_Filter>>,
     dynamic: DataFsxOpenzfsSnapshotDynamic,
 }
 
 struct DataFsxOpenzfsSnapshot_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataFsxOpenzfsSnapshotData>,
+    data: std::cell::RefCell<DataFsxOpenzfsSnapshotData_>,
 }
 
 #[derive(Clone)]
@@ -97,6 +101,13 @@ impl DataFsxOpenzfsSnapshot {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `snapshot_ids`.\n"]
     pub fn set_snapshot_ids(
         self,
@@ -118,7 +129,7 @@ impl DataFsxOpenzfsSnapshot {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataFsxOpenzfsSnapshotFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataFsxOpenzfsSnapshot_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -154,6 +165,12 @@ impl DataFsxOpenzfsSnapshot {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_id` after provisioning.\n"]
@@ -217,7 +234,7 @@ impl BuildDataFsxOpenzfsSnapshot {
         let out = DataFsxOpenzfsSnapshot(std::rc::Rc::new(DataFsxOpenzfsSnapshot_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataFsxOpenzfsSnapshotData {
+            data: std::cell::RefCell::new(DataFsxOpenzfsSnapshotData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -225,6 +242,7 @@ impl BuildDataFsxOpenzfsSnapshot {
                 id: core::default::Default::default(),
                 most_recent: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 snapshot_ids: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
@@ -284,6 +302,12 @@ impl DataFsxOpenzfsSnapshotRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_id` after provisioning.\n"]
     pub fn snapshot_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_id", self.extract_ref()))
@@ -305,16 +329,21 @@ impl DataFsxOpenzfsSnapshotRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataFsxOpenzfsSnapshotDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataFsxOpenzfsSnapshot_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataFsxOpenzfsSnapshotFilterEl {
+pub struct DataFsxOpenzfsSnapshot_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataFsxOpenzfsSnapshotFilterEl { }
+impl DataFsxOpenzfsSnapshot_Filter { }
 
-impl terrars::ToListMappable for DataFsxOpenzfsSnapshotFilterEl {
-    type O = terrars::BlockAssignable<DataFsxOpenzfsSnapshotFilterEl>;
+impl terrars::ToListMappable for DataFsxOpenzfsSnapshot_Filter {
+    type O = terrars::BlockAssignable<DataFsxOpenzfsSnapshot_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -325,37 +354,39 @@ impl terrars::ToListMappable for DataFsxOpenzfsSnapshotFilterEl {
     }
 }
 
-pub struct BuildDataFsxOpenzfsSnapshotFilterEl {
+pub struct BuildDataFsxOpenzfsSnapshot_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataFsxOpenzfsSnapshotFilterEl {
-    pub fn build(self) -> DataFsxOpenzfsSnapshotFilterEl {
-        DataFsxOpenzfsSnapshotFilterEl {
+impl BuildDataFsxOpenzfsSnapshot_Filter {
+    pub fn build(self) -> DataFsxOpenzfsSnapshot_Filter {
+        DataFsxOpenzfsSnapshot_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataFsxOpenzfsSnapshotFilterElRef {
+#[allow(dead_code)]
+pub struct DataFsxOpenzfsSnapshot_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataFsxOpenzfsSnapshotFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFsxOpenzfsSnapshotFilterElRef {
-        DataFsxOpenzfsSnapshotFilterElRef {
+impl terrars::Ref for DataFsxOpenzfsSnapshot_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataFsxOpenzfsSnapshot_FilterRef {
+        DataFsxOpenzfsSnapshot_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataFsxOpenzfsSnapshotFilterElRef {
+impl DataFsxOpenzfsSnapshot_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -369,9 +400,4 @@ impl DataFsxOpenzfsSnapshotFilterElRef {
     pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataFsxOpenzfsSnapshotDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataFsxOpenzfsSnapshotFilterEl>>,
 }

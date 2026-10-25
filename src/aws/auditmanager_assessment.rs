@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AuditmanagerAssessmentData {
+struct AuditmanagerAssessmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,22 +24,25 @@ struct AuditmanagerAssessmentData {
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     framework_id: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
-    roles: terrars::SetField<AuditmanagerAssessmentRolesEl>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     assessment_reports_destination: std
     ::option
-    ::Option<std::vec::Vec<AuditmanagerAssessmentAssessmentReportsDestinationEl>>,
+    ::Option<std::vec::Vec<AuditmanagerAssessment_AssessmentReportsDestination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scope: std::option::Option<std::vec::Vec<AuditmanagerAssessmentScopeEl>>,
+    roles: std::option::Option<std::vec::Vec<AuditmanagerAssessment_Roles>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scope: std::option::Option<std::vec::Vec<AuditmanagerAssessment_Scope>>,
     dynamic: AuditmanagerAssessmentDynamic,
 }
 
 struct AuditmanagerAssessment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AuditmanagerAssessmentData>,
+    data: std::cell::RefCell<AuditmanagerAssessmentData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +148,13 @@ impl AuditmanagerAssessment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -155,7 +167,7 @@ impl AuditmanagerAssessment {
     #[doc = "Set the field `assessment_reports_destination`.\n"]
     pub fn set_assessment_reports_destination(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerAssessmentAssessmentReportsDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerAssessment_AssessmentReportsDestination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -168,8 +180,21 @@ impl AuditmanagerAssessment {
         self
     }
 
+    #[doc = "Set the field `roles`.\n"]
+    pub fn set_roles(self, v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerAssessment_Roles>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().roles = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.roles = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `scope`.\n"]
-    pub fn set_scope(self, v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerAssessmentScopeEl>>) -> Self {
+    pub fn set_scope(self, v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerAssessment_Scope>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().scope = std::option::Option::Some(v);
@@ -206,14 +231,15 @@ impl AuditmanagerAssessment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `roles` after provisioning.\n"]
-    pub fn roles(&self) -> terrars::SetRef<AuditmanagerAssessmentRolesElRef> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.roles", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `roles_all` after provisioning.\n"]
-    pub fn roles_all(&self) -> terrars::SetRef<AuditmanagerAssessmentRolesAllElRef> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.roles_all", self.extract_ref()))
+    pub fn roles_all(&self) -> terrars::ListRef<AuditmanagerAssessment_RolesAllRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.roles_all", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -234,7 +260,7 @@ impl AuditmanagerAssessment {
     #[doc = "Get a reference to the value of field `assessment_reports_destination` after provisioning.\n"]
     pub fn assessment_reports_destination(
         &self,
-    ) -> terrars::ListRef<AuditmanagerAssessmentAssessmentReportsDestinationElRef> {
+    ) -> terrars::ListRef<AuditmanagerAssessment_AssessmentReportsDestinationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.assessment_reports_destination", self.extract_ref()),
@@ -242,7 +268,7 @@ impl AuditmanagerAssessment {
     }
 
     #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
-    pub fn scope(&self) -> terrars::ListRef<AuditmanagerAssessmentScopeElRef> {
+    pub fn scope(&self) -> terrars::ListRef<AuditmanagerAssessment_ScopeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
     }
 }
@@ -284,8 +310,6 @@ pub struct BuildAuditmanagerAssessment {
     pub framework_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub roles: terrars::SetField<AuditmanagerAssessmentRolesEl>,
 }
 
 impl BuildAuditmanagerAssessment {
@@ -293,7 +317,7 @@ impl BuildAuditmanagerAssessment {
         let out = AuditmanagerAssessment(std::rc::Rc::new(AuditmanagerAssessment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AuditmanagerAssessmentData {
+            data: std::cell::RefCell::new(AuditmanagerAssessmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -302,9 +326,10 @@ impl BuildAuditmanagerAssessment {
                 description: core::default::Default::default(),
                 framework_id: self.framework_id,
                 name: self.name,
-                roles: self.roles,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 assessment_reports_destination: core::default::Default::default(),
+                roles: core::default::Default::default(),
                 scope: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -362,14 +387,15 @@ impl AuditmanagerAssessmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `roles` after provisioning.\n"]
-    pub fn roles(&self) -> terrars::SetRef<AuditmanagerAssessmentRolesElRef> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.roles", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `roles_all` after provisioning.\n"]
-    pub fn roles_all(&self) -> terrars::SetRef<AuditmanagerAssessmentRolesAllElRef> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.roles_all", self.extract_ref()))
+    pub fn roles_all(&self) -> terrars::ListRef<AuditmanagerAssessment_RolesAllRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.roles_all", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -390,7 +416,7 @@ impl AuditmanagerAssessmentRef {
     #[doc = "Get a reference to the value of field `assessment_reports_destination` after provisioning.\n"]
     pub fn assessment_reports_destination(
         &self,
-    ) -> terrars::ListRef<AuditmanagerAssessmentAssessmentReportsDestinationElRef> {
+    ) -> terrars::ListRef<AuditmanagerAssessment_AssessmentReportsDestinationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.assessment_reports_destination", self.extract_ref()),
@@ -398,20 +424,29 @@ impl AuditmanagerAssessmentRef {
     }
 
     #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
-    pub fn scope(&self) -> terrars::ListRef<AuditmanagerAssessmentScopeElRef> {
+    pub fn scope(&self) -> terrars::ListRef<AuditmanagerAssessment_ScopeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AuditmanagerAssessmentDynamic {
+    assessment_reports_destination: std
+    ::option
+    ::Option<terrars::DynamicBlock<AuditmanagerAssessment_AssessmentReportsDestination>>,
+    roles: std::option::Option<terrars::DynamicBlock<AuditmanagerAssessment_Roles>>,
+    scope: std::option::Option<terrars::DynamicBlock<AuditmanagerAssessment_Scope>>,
+}
+
 #[derive(Serialize)]
-pub struct AuditmanagerAssessmentRolesEl {
+pub struct AuditmanagerAssessment_RolesAll {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AuditmanagerAssessmentRolesEl {
+impl AuditmanagerAssessment_RolesAll {
     #[doc = "Set the field `role_arn`.\n"]
     pub fn set_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.role_arn = std::option::Option::Some(v.into());
@@ -425,8 +460,8 @@ impl AuditmanagerAssessmentRolesEl {
     }
 }
 
-impl terrars::ToListMappable for AuditmanagerAssessmentRolesEl {
-    type O = terrars::BlockAssignable<AuditmanagerAssessmentRolesEl>;
+impl terrars::ToListMappable for AuditmanagerAssessment_RolesAll {
+    type O = terrars::BlockAssignable<AuditmanagerAssessment_RolesAll>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -437,32 +472,34 @@ impl terrars::ToListMappable for AuditmanagerAssessmentRolesEl {
     }
 }
 
-pub struct BuildAuditmanagerAssessmentRolesEl {}
+pub struct BuildAuditmanagerAssessment_RolesAll {}
 
-impl BuildAuditmanagerAssessmentRolesEl {
-    pub fn build(self) -> AuditmanagerAssessmentRolesEl {
-        AuditmanagerAssessmentRolesEl {
+impl BuildAuditmanagerAssessment_RolesAll {
+    pub fn build(self) -> AuditmanagerAssessment_RolesAll {
+        AuditmanagerAssessment_RolesAll {
             role_arn: core::default::Default::default(),
             role_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct AuditmanagerAssessmentRolesElRef {
+#[allow(dead_code)]
+pub struct AuditmanagerAssessment_RolesAllRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AuditmanagerAssessmentRolesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessmentRolesElRef {
-        AuditmanagerAssessmentRolesElRef {
+impl terrars::Ref for AuditmanagerAssessment_RolesAllRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessment_RolesAllRef {
+        AuditmanagerAssessment_RolesAllRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AuditmanagerAssessmentRolesElRef {
+impl AuditmanagerAssessment_RolesAllRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -479,90 +516,15 @@ impl AuditmanagerAssessmentRolesElRef {
 }
 
 #[derive(Serialize)]
-pub struct AuditmanagerAssessmentRolesAllEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    role_type: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AuditmanagerAssessmentRolesAllEl {
-    #[doc = "Set the field `role_arn`.\n"]
-    pub fn set_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.role_arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `role_type`.\n"]
-    pub fn set_role_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.role_type = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for AuditmanagerAssessmentRolesAllEl {
-    type O = terrars::BlockAssignable<AuditmanagerAssessmentRolesAllEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAuditmanagerAssessmentRolesAllEl {}
-
-impl BuildAuditmanagerAssessmentRolesAllEl {
-    pub fn build(self) -> AuditmanagerAssessmentRolesAllEl {
-        AuditmanagerAssessmentRolesAllEl {
-            role_arn: core::default::Default::default(),
-            role_type: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AuditmanagerAssessmentRolesAllElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AuditmanagerAssessmentRolesAllElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessmentRolesAllElRef {
-        AuditmanagerAssessmentRolesAllElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AuditmanagerAssessmentRolesAllElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
-    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `role_type` after provisioning.\n"]
-    pub fn role_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AuditmanagerAssessmentAssessmentReportsDestinationEl {
+pub struct AuditmanagerAssessment_AssessmentReportsDestination {
     destination: terrars::PrimField<std::string::String>,
     destination_type: terrars::PrimField<std::string::String>,
 }
 
-impl AuditmanagerAssessmentAssessmentReportsDestinationEl { }
+impl AuditmanagerAssessment_AssessmentReportsDestination { }
 
-impl terrars::ToListMappable for AuditmanagerAssessmentAssessmentReportsDestinationEl {
-    type O = terrars::BlockAssignable<AuditmanagerAssessmentAssessmentReportsDestinationEl>;
+impl terrars::ToListMappable for AuditmanagerAssessment_AssessmentReportsDestination {
+    type O = terrars::BlockAssignable<AuditmanagerAssessment_AssessmentReportsDestination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -573,40 +535,42 @@ impl terrars::ToListMappable for AuditmanagerAssessmentAssessmentReportsDestinat
     }
 }
 
-pub struct BuildAuditmanagerAssessmentAssessmentReportsDestinationEl {
+pub struct BuildAuditmanagerAssessment_AssessmentReportsDestination {
     #[doc = ""]
     pub destination: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub destination_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAuditmanagerAssessmentAssessmentReportsDestinationEl {
-    pub fn build(self) -> AuditmanagerAssessmentAssessmentReportsDestinationEl {
-        AuditmanagerAssessmentAssessmentReportsDestinationEl {
+impl BuildAuditmanagerAssessment_AssessmentReportsDestination {
+    pub fn build(self) -> AuditmanagerAssessment_AssessmentReportsDestination {
+        AuditmanagerAssessment_AssessmentReportsDestination {
             destination: self.destination,
             destination_type: self.destination_type,
         }
     }
 }
 
-pub struct AuditmanagerAssessmentAssessmentReportsDestinationElRef {
+#[allow(dead_code)]
+pub struct AuditmanagerAssessment_AssessmentReportsDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AuditmanagerAssessmentAssessmentReportsDestinationElRef {
+impl terrars::Ref for AuditmanagerAssessment_AssessmentReportsDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AuditmanagerAssessmentAssessmentReportsDestinationElRef {
-        AuditmanagerAssessmentAssessmentReportsDestinationElRef {
+    ) -> AuditmanagerAssessment_AssessmentReportsDestinationRef {
+        AuditmanagerAssessment_AssessmentReportsDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AuditmanagerAssessmentAssessmentReportsDestinationElRef {
+impl AuditmanagerAssessment_AssessmentReportsDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -623,14 +587,15 @@ impl AuditmanagerAssessmentAssessmentReportsDestinationElRef {
 }
 
 #[derive(Serialize)]
-pub struct AuditmanagerAssessmentScopeElAwsAccountsEl {
-    id: terrars::PrimField<std::string::String>,
+pub struct AuditmanagerAssessment_Roles {
+    role_arn: terrars::PrimField<std::string::String>,
+    role_type: terrars::PrimField<std::string::String>,
 }
 
-impl AuditmanagerAssessmentScopeElAwsAccountsEl { }
+impl AuditmanagerAssessment_Roles { }
 
-impl terrars::ToListMappable for AuditmanagerAssessmentScopeElAwsAccountsEl {
-    type O = terrars::BlockAssignable<AuditmanagerAssessmentScopeElAwsAccountsEl>;
+impl terrars::ToListMappable for AuditmanagerAssessment_Roles {
+    type O = terrars::BlockAssignable<AuditmanagerAssessment_Roles>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -641,32 +606,101 @@ impl terrars::ToListMappable for AuditmanagerAssessmentScopeElAwsAccountsEl {
     }
 }
 
-pub struct BuildAuditmanagerAssessmentScopeElAwsAccountsEl {
+pub struct BuildAuditmanagerAssessment_Roles {
     #[doc = ""]
-    pub id: terrars::PrimField<std::string::String>,
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAuditmanagerAssessmentScopeElAwsAccountsEl {
-    pub fn build(self) -> AuditmanagerAssessmentScopeElAwsAccountsEl {
-        AuditmanagerAssessmentScopeElAwsAccountsEl { id: self.id }
+impl BuildAuditmanagerAssessment_Roles {
+    pub fn build(self) -> AuditmanagerAssessment_Roles {
+        AuditmanagerAssessment_Roles {
+            role_arn: self.role_arn,
+            role_type: self.role_type,
+        }
     }
 }
 
-pub struct AuditmanagerAssessmentScopeElAwsAccountsElRef {
+#[allow(dead_code)]
+pub struct AuditmanagerAssessment_RolesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AuditmanagerAssessmentScopeElAwsAccountsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessmentScopeElAwsAccountsElRef {
-        AuditmanagerAssessmentScopeElAwsAccountsElRef {
+impl terrars::Ref for AuditmanagerAssessment_RolesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessment_RolesRef {
+        AuditmanagerAssessment_RolesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AuditmanagerAssessmentScopeElAwsAccountsElRef {
+impl AuditmanagerAssessment_RolesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_type` after provisioning.\n"]
+    pub fn role_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AuditmanagerAssessment_Scope_AwsAccounts {
+    id: terrars::PrimField<std::string::String>,
+}
+
+impl AuditmanagerAssessment_Scope_AwsAccounts { }
+
+impl terrars::ToListMappable for AuditmanagerAssessment_Scope_AwsAccounts {
+    type O = terrars::BlockAssignable<AuditmanagerAssessment_Scope_AwsAccounts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAuditmanagerAssessment_Scope_AwsAccounts {
+    #[doc = ""]
+    pub id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAuditmanagerAssessment_Scope_AwsAccounts {
+    pub fn build(self) -> AuditmanagerAssessment_Scope_AwsAccounts {
+        AuditmanagerAssessment_Scope_AwsAccounts { id: self.id }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AuditmanagerAssessment_Scope_AwsAccountsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AuditmanagerAssessment_Scope_AwsAccountsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessment_Scope_AwsAccountsRef {
+        AuditmanagerAssessment_Scope_AwsAccountsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AuditmanagerAssessment_Scope_AwsAccountsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -678,14 +712,14 @@ impl AuditmanagerAssessmentScopeElAwsAccountsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AuditmanagerAssessmentScopeElAwsServicesEl {
+pub struct AuditmanagerAssessment_Scope_AwsServices {
     service_name: terrars::PrimField<std::string::String>,
 }
 
-impl AuditmanagerAssessmentScopeElAwsServicesEl { }
+impl AuditmanagerAssessment_Scope_AwsServices { }
 
-impl terrars::ToListMappable for AuditmanagerAssessmentScopeElAwsServicesEl {
-    type O = terrars::BlockAssignable<AuditmanagerAssessmentScopeElAwsServicesEl>;
+impl terrars::ToListMappable for AuditmanagerAssessment_Scope_AwsServices {
+    type O = terrars::BlockAssignable<AuditmanagerAssessment_Scope_AwsServices>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -696,32 +730,34 @@ impl terrars::ToListMappable for AuditmanagerAssessmentScopeElAwsServicesEl {
     }
 }
 
-pub struct BuildAuditmanagerAssessmentScopeElAwsServicesEl {
+pub struct BuildAuditmanagerAssessment_Scope_AwsServices {
     #[doc = ""]
     pub service_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAuditmanagerAssessmentScopeElAwsServicesEl {
-    pub fn build(self) -> AuditmanagerAssessmentScopeElAwsServicesEl {
-        AuditmanagerAssessmentScopeElAwsServicesEl { service_name: self.service_name }
+impl BuildAuditmanagerAssessment_Scope_AwsServices {
+    pub fn build(self) -> AuditmanagerAssessment_Scope_AwsServices {
+        AuditmanagerAssessment_Scope_AwsServices { service_name: self.service_name }
     }
 }
 
-pub struct AuditmanagerAssessmentScopeElAwsServicesElRef {
+#[allow(dead_code)]
+pub struct AuditmanagerAssessment_Scope_AwsServicesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AuditmanagerAssessmentScopeElAwsServicesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessmentScopeElAwsServicesElRef {
-        AuditmanagerAssessmentScopeElAwsServicesElRef {
+impl terrars::Ref for AuditmanagerAssessment_Scope_AwsServicesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessment_Scope_AwsServicesRef {
+        AuditmanagerAssessment_Scope_AwsServicesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AuditmanagerAssessmentScopeElAwsServicesElRef {
+impl AuditmanagerAssessment_Scope_AwsServicesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -733,25 +769,25 @@ impl AuditmanagerAssessmentScopeElAwsServicesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AuditmanagerAssessmentScopeElDynamic {
-    aws_accounts: std::option::Option<terrars::DynamicBlock<AuditmanagerAssessmentScopeElAwsAccountsEl>>,
-    aws_services: std::option::Option<terrars::DynamicBlock<AuditmanagerAssessmentScopeElAwsServicesEl>>,
+struct AuditmanagerAssessment_ScopeDynamic {
+    aws_accounts: std::option::Option<terrars::DynamicBlock<AuditmanagerAssessment_Scope_AwsAccounts>>,
+    aws_services: std::option::Option<terrars::DynamicBlock<AuditmanagerAssessment_Scope_AwsServices>>,
 }
 
 #[derive(Serialize)]
-pub struct AuditmanagerAssessmentScopeEl {
+pub struct AuditmanagerAssessment_Scope {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    aws_accounts: std::option::Option<std::vec::Vec<AuditmanagerAssessmentScopeElAwsAccountsEl>>,
+    aws_accounts: std::option::Option<std::vec::Vec<AuditmanagerAssessment_Scope_AwsAccounts>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    aws_services: std::option::Option<std::vec::Vec<AuditmanagerAssessmentScopeElAwsServicesEl>>,
-    dynamic: AuditmanagerAssessmentScopeElDynamic,
+    aws_services: std::option::Option<std::vec::Vec<AuditmanagerAssessment_Scope_AwsServices>>,
+    dynamic: AuditmanagerAssessment_ScopeDynamic,
 }
 
-impl AuditmanagerAssessmentScopeEl {
+impl AuditmanagerAssessment_Scope {
     #[doc = "Set the field `aws_accounts`.\n"]
     pub fn set_aws_accounts(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerAssessmentScopeElAwsAccountsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerAssessment_Scope_AwsAccounts>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -767,7 +803,7 @@ impl AuditmanagerAssessmentScopeEl {
     #[doc = "Set the field `aws_services`.\n"]
     pub fn set_aws_services(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerAssessmentScopeElAwsServicesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerAssessment_Scope_AwsServices>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -781,8 +817,8 @@ impl AuditmanagerAssessmentScopeEl {
     }
 }
 
-impl terrars::ToListMappable for AuditmanagerAssessmentScopeEl {
-    type O = terrars::BlockAssignable<AuditmanagerAssessmentScopeEl>;
+impl terrars::ToListMappable for AuditmanagerAssessment_Scope {
+    type O = terrars::BlockAssignable<AuditmanagerAssessment_Scope>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -793,11 +829,11 @@ impl terrars::ToListMappable for AuditmanagerAssessmentScopeEl {
     }
 }
 
-pub struct BuildAuditmanagerAssessmentScopeEl {}
+pub struct BuildAuditmanagerAssessment_Scope {}
 
-impl BuildAuditmanagerAssessmentScopeEl {
-    pub fn build(self) -> AuditmanagerAssessmentScopeEl {
-        AuditmanagerAssessmentScopeEl {
+impl BuildAuditmanagerAssessment_Scope {
+    pub fn build(self) -> AuditmanagerAssessment_Scope {
+        AuditmanagerAssessment_Scope {
             aws_accounts: core::default::Default::default(),
             aws_services: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -805,30 +841,24 @@ impl BuildAuditmanagerAssessmentScopeEl {
     }
 }
 
-pub struct AuditmanagerAssessmentScopeElRef {
+#[allow(dead_code)]
+pub struct AuditmanagerAssessment_ScopeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AuditmanagerAssessmentScopeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessmentScopeElRef {
-        AuditmanagerAssessmentScopeElRef {
+impl terrars::Ref for AuditmanagerAssessment_ScopeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerAssessment_ScopeRef {
+        AuditmanagerAssessment_ScopeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AuditmanagerAssessmentScopeElRef {
+impl AuditmanagerAssessment_ScopeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
-}
-
-#[derive(Serialize, Default)]
-struct AuditmanagerAssessmentDynamic {
-    assessment_reports_destination: std
-    ::option
-    ::Option<terrars::DynamicBlock<AuditmanagerAssessmentAssessmentReportsDestinationEl>>,
-    scope: std::option::Option<terrars::DynamicBlock<AuditmanagerAssessmentScopeEl>>,
 }

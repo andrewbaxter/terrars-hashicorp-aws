@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct StoragegatewayCachedIscsiVolumeData {
+struct StoragegatewayCachedIscsiVolumeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,6 +29,8 @@ struct StoragegatewayCachedIscsiVolumeData {
     kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
     network_interface_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snapshot_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_volume_arn: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -41,7 +45,7 @@ struct StoragegatewayCachedIscsiVolumeData {
 struct StoragegatewayCachedIscsiVolume_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<StoragegatewayCachedIscsiVolumeData>,
+    data: std::cell::RefCell<StoragegatewayCachedIscsiVolumeData_>,
 }
 
 #[derive(Clone)]
@@ -159,6 +163,13 @@ impl StoragegatewayCachedIscsiVolume {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `snapshot_id`.\n"]
     pub fn set_snapshot_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().snapshot_id = std::option::Option::Some(v.into());
@@ -232,6 +243,12 @@ impl StoragegatewayCachedIscsiVolume {
     #[doc = "Get a reference to the value of field `network_interface_port` after provisioning.\n"]
     pub fn network_interface_port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_port", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_id` after provisioning.\n"]
@@ -328,7 +345,7 @@ impl BuildStoragegatewayCachedIscsiVolume {
         let out = StoragegatewayCachedIscsiVolume(std::rc::Rc::new(StoragegatewayCachedIscsiVolume_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(StoragegatewayCachedIscsiVolumeData {
+            data: std::cell::RefCell::new(StoragegatewayCachedIscsiVolumeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -339,6 +356,7 @@ impl BuildStoragegatewayCachedIscsiVolume {
                 kms_encrypted: core::default::Default::default(),
                 kms_key: core::default::Default::default(),
                 network_interface_id: self.network_interface_id,
+                region: core::default::Default::default(),
                 snapshot_id: core::default::Default::default(),
                 source_volume_arn: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -418,6 +436,12 @@ impl StoragegatewayCachedIscsiVolumeRef {
     #[doc = "Get a reference to the value of field `network_interface_port` after provisioning.\n"]
     pub fn network_interface_port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_port", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_id` after provisioning.\n"]

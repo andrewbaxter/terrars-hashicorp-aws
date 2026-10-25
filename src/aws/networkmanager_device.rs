@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerDeviceData {
+struct NetworkmanagerDeviceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -38,18 +40,18 @@ struct NetworkmanagerDeviceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vendor: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    aws_location: std::option::Option<std::vec::Vec<NetworkmanagerDeviceAwsLocationEl>>,
+    aws_location: std::option::Option<std::vec::Vec<NetworkmanagerDevice_AwsLocation>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    location: std::option::Option<std::vec::Vec<NetworkmanagerDeviceLocationEl>>,
+    location: std::option::Option<std::vec::Vec<NetworkmanagerDevice_Location>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerDeviceTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerDevice_Timeouts>,
     dynamic: NetworkmanagerDeviceDynamic,
 }
 
 struct NetworkmanagerDevice_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerDeviceData>,
+    data: std::cell::RefCell<NetworkmanagerDeviceData_>,
 }
 
 #[derive(Clone)]
@@ -212,7 +214,7 @@ impl NetworkmanagerDevice {
     #[doc = "Set the field `aws_location`.\n"]
     pub fn set_aws_location(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerDeviceAwsLocationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerDevice_AwsLocation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -228,7 +230,7 @@ impl NetworkmanagerDevice {
     #[doc = "Set the field `location`.\n"]
     pub fn set_location(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerDeviceLocationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkmanagerDevice_Location>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -242,7 +244,7 @@ impl NetworkmanagerDevice {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerDeviceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerDevice_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -303,18 +305,18 @@ impl NetworkmanagerDevice {
     }
 
     #[doc = "Get a reference to the value of field `aws_location` after provisioning.\n"]
-    pub fn aws_location(&self) -> terrars::ListRef<NetworkmanagerDeviceAwsLocationElRef> {
+    pub fn aws_location(&self) -> terrars::ListRef<NetworkmanagerDevice_AwsLocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_location", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> terrars::ListRef<NetworkmanagerDeviceLocationElRef> {
+    pub fn location(&self) -> terrars::ListRef<NetworkmanagerDevice_LocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerDeviceTimeoutsElRef {
-        NetworkmanagerDeviceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NetworkmanagerDevice_TimeoutsRef {
+        NetworkmanagerDevice_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -360,7 +362,7 @@ impl BuildNetworkmanagerDevice {
         let out = NetworkmanagerDevice(std::rc::Rc::new(NetworkmanagerDevice_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkmanagerDeviceData {
+            data: std::cell::RefCell::new(NetworkmanagerDeviceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -466,30 +468,36 @@ impl NetworkmanagerDeviceRef {
     }
 
     #[doc = "Get a reference to the value of field `aws_location` after provisioning.\n"]
-    pub fn aws_location(&self) -> terrars::ListRef<NetworkmanagerDeviceAwsLocationElRef> {
+    pub fn aws_location(&self) -> terrars::ListRef<NetworkmanagerDevice_AwsLocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_location", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> terrars::ListRef<NetworkmanagerDeviceLocationElRef> {
+    pub fn location(&self) -> terrars::ListRef<NetworkmanagerDevice_LocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerDeviceTimeoutsElRef {
-        NetworkmanagerDeviceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NetworkmanagerDevice_TimeoutsRef {
+        NetworkmanagerDevice_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkmanagerDeviceDynamic {
+    aws_location: std::option::Option<terrars::DynamicBlock<NetworkmanagerDevice_AwsLocation>>,
+    location: std::option::Option<terrars::DynamicBlock<NetworkmanagerDevice_Location>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkmanagerDeviceAwsLocationEl {
+pub struct NetworkmanagerDevice_AwsLocation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerDeviceAwsLocationEl {
+impl NetworkmanagerDevice_AwsLocation {
     #[doc = "Set the field `subnet_arn`.\n"]
     pub fn set_subnet_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.subnet_arn = std::option::Option::Some(v.into());
@@ -503,8 +511,8 @@ impl NetworkmanagerDeviceAwsLocationEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerDeviceAwsLocationEl {
-    type O = terrars::BlockAssignable<NetworkmanagerDeviceAwsLocationEl>;
+impl terrars::ToListMappable for NetworkmanagerDevice_AwsLocation {
+    type O = terrars::BlockAssignable<NetworkmanagerDevice_AwsLocation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -515,32 +523,34 @@ impl terrars::ToListMappable for NetworkmanagerDeviceAwsLocationEl {
     }
 }
 
-pub struct BuildNetworkmanagerDeviceAwsLocationEl {}
+pub struct BuildNetworkmanagerDevice_AwsLocation {}
 
-impl BuildNetworkmanagerDeviceAwsLocationEl {
-    pub fn build(self) -> NetworkmanagerDeviceAwsLocationEl {
-        NetworkmanagerDeviceAwsLocationEl {
+impl BuildNetworkmanagerDevice_AwsLocation {
+    pub fn build(self) -> NetworkmanagerDevice_AwsLocation {
+        NetworkmanagerDevice_AwsLocation {
             subnet_arn: core::default::Default::default(),
             zone: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkmanagerDeviceAwsLocationElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerDevice_AwsLocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerDeviceAwsLocationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerDeviceAwsLocationElRef {
-        NetworkmanagerDeviceAwsLocationElRef {
+impl terrars::Ref for NetworkmanagerDevice_AwsLocationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerDevice_AwsLocationRef {
+        NetworkmanagerDevice_AwsLocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerDeviceAwsLocationElRef {
+impl NetworkmanagerDevice_AwsLocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -557,7 +567,7 @@ impl NetworkmanagerDeviceAwsLocationElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerDeviceLocationEl {
+pub struct NetworkmanagerDevice_Location {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -566,7 +576,7 @@ pub struct NetworkmanagerDeviceLocationEl {
     longitude: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerDeviceLocationEl {
+impl NetworkmanagerDevice_Location {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -586,8 +596,8 @@ impl NetworkmanagerDeviceLocationEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerDeviceLocationEl {
-    type O = terrars::BlockAssignable<NetworkmanagerDeviceLocationEl>;
+impl terrars::ToListMappable for NetworkmanagerDevice_Location {
+    type O = terrars::BlockAssignable<NetworkmanagerDevice_Location>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -598,11 +608,11 @@ impl terrars::ToListMappable for NetworkmanagerDeviceLocationEl {
     }
 }
 
-pub struct BuildNetworkmanagerDeviceLocationEl {}
+pub struct BuildNetworkmanagerDevice_Location {}
 
-impl BuildNetworkmanagerDeviceLocationEl {
-    pub fn build(self) -> NetworkmanagerDeviceLocationEl {
-        NetworkmanagerDeviceLocationEl {
+impl BuildNetworkmanagerDevice_Location {
+    pub fn build(self) -> NetworkmanagerDevice_Location {
+        NetworkmanagerDevice_Location {
             address: core::default::Default::default(),
             latitude: core::default::Default::default(),
             longitude: core::default::Default::default(),
@@ -610,21 +620,23 @@ impl BuildNetworkmanagerDeviceLocationEl {
     }
 }
 
-pub struct NetworkmanagerDeviceLocationElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerDevice_LocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerDeviceLocationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerDeviceLocationElRef {
-        NetworkmanagerDeviceLocationElRef {
+impl terrars::Ref for NetworkmanagerDevice_LocationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerDevice_LocationRef {
+        NetworkmanagerDevice_LocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerDeviceLocationElRef {
+impl NetworkmanagerDevice_LocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -646,7 +658,7 @@ impl NetworkmanagerDeviceLocationElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerDeviceTimeoutsEl {
+pub struct NetworkmanagerDevice_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -655,7 +667,7 @@ pub struct NetworkmanagerDeviceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerDeviceTimeoutsEl {
+impl NetworkmanagerDevice_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -675,8 +687,8 @@ impl NetworkmanagerDeviceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerDeviceTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerDeviceTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerDevice_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerDevice_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -687,11 +699,11 @@ impl terrars::ToListMappable for NetworkmanagerDeviceTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkmanagerDeviceTimeoutsEl {}
+pub struct BuildNetworkmanagerDevice_Timeouts {}
 
-impl BuildNetworkmanagerDeviceTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerDeviceTimeoutsEl {
-        NetworkmanagerDeviceTimeoutsEl {
+impl BuildNetworkmanagerDevice_Timeouts {
+    pub fn build(self) -> NetworkmanagerDevice_Timeouts {
+        NetworkmanagerDevice_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -699,21 +711,23 @@ impl BuildNetworkmanagerDeviceTimeoutsEl {
     }
 }
 
-pub struct NetworkmanagerDeviceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerDevice_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerDeviceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerDeviceTimeoutsElRef {
-        NetworkmanagerDeviceTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerDevice_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerDevice_TimeoutsRef {
+        NetworkmanagerDevice_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerDeviceTimeoutsElRef {
+impl NetworkmanagerDevice_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -732,10 +746,4 @@ impl NetworkmanagerDeviceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkmanagerDeviceDynamic {
-    aws_location: std::option::Option<terrars::DynamicBlock<NetworkmanagerDeviceAwsLocationEl>>,
-    location: std::option::Option<terrars::DynamicBlock<NetworkmanagerDeviceLocationEl>>,
 }

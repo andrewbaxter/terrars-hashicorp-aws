@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataCeTagsData {
+struct DataCeTagsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,18 +25,18 @@ struct DataCeTagsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tag_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataCeTagsFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataCeTags_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sort_by: std::option::Option<std::vec::Vec<DataCeTagsSortByEl>>,
+    sort_by: std::option::Option<std::vec::Vec<DataCeTags_SortBy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    time_period: std::option::Option<std::vec::Vec<DataCeTagsTimePeriodEl>>,
+    time_period: std::option::Option<std::vec::Vec<DataCeTags_TimePeriod>>,
     dynamic: DataCeTagsDynamic,
 }
 
 struct DataCeTags_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCeTagsData>,
+    data: std::cell::RefCell<DataCeTagsData_>,
 }
 
 #[derive(Clone)]
@@ -98,7 +100,7 @@ impl DataCeTags {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -111,7 +113,7 @@ impl DataCeTags {
     }
 
     #[doc = "Set the field `sort_by`.\n"]
-    pub fn set_sort_by(self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsSortByEl>>) -> Self {
+    pub fn set_sort_by(self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_SortBy>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sort_by = std::option::Option::Some(v);
@@ -124,7 +126,7 @@ impl DataCeTags {
     }
 
     #[doc = "Set the field `time_period`.\n"]
-    pub fn set_time_period(self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsTimePeriodEl>>) -> Self {
+    pub fn set_time_period(self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_TimePeriod>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().time_period = std::option::Option::Some(v);
@@ -157,17 +159,17 @@ impl DataCeTags {
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<DataCeTagsFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<DataCeTags_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort_by` after provisioning.\n"]
-    pub fn sort_by(&self) -> terrars::ListRef<DataCeTagsSortByElRef> {
+    pub fn sort_by(&self) -> terrars::ListRef<DataCeTags_SortByRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort_by", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `time_period` after provisioning.\n"]
-    pub fn time_period(&self) -> terrars::ListRef<DataCeTagsTimePeriodElRef> {
+    pub fn time_period(&self) -> terrars::ListRef<DataCeTags_TimePeriodRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.time_period", self.extract_ref()))
     }
 }
@@ -212,7 +214,7 @@ impl BuildDataCeTags {
         let out = DataCeTags(std::rc::Rc::new(DataCeTags_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCeTagsData {
+            data: std::cell::RefCell::new(DataCeTagsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -275,23 +277,30 @@ impl DataCeTagsRef {
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<DataCeTagsFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<DataCeTags_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sort_by` after provisioning.\n"]
-    pub fn sort_by(&self) -> terrars::ListRef<DataCeTagsSortByElRef> {
+    pub fn sort_by(&self) -> terrars::ListRef<DataCeTags_SortByRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sort_by", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `time_period` after provisioning.\n"]
-    pub fn time_period(&self) -> terrars::ListRef<DataCeTagsTimePeriodElRef> {
+    pub fn time_period(&self) -> terrars::ListRef<DataCeTags_TimePeriodRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.time_period", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCeTagsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter>>,
+    sort_by: std::option::Option<terrars::DynamicBlock<DataCeTags_SortBy>>,
+    time_period: std::option::Option<terrars::DynamicBlock<DataCeTags_TimePeriod>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCeTagsFilterElAndElCostCategoryEl {
+pub struct DataCeTags_Filter_CostCategory {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -300,7 +309,7 @@ pub struct DataCeTagsFilterElAndElCostCategoryEl {
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataCeTagsFilterElAndElCostCategoryEl {
+impl DataCeTags_Filter_CostCategory {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -326,8 +335,8 @@ impl DataCeTagsFilterElAndElCostCategoryEl {
     }
 }
 
-impl terrars::ToListMappable for DataCeTagsFilterElAndElCostCategoryEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElAndElCostCategoryEl>;
+impl terrars::ToListMappable for DataCeTags_Filter_CostCategory {
+    type O = terrars::BlockAssignable<DataCeTags_Filter_CostCategory>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -338,11 +347,11 @@ impl terrars::ToListMappable for DataCeTagsFilterElAndElCostCategoryEl {
     }
 }
 
-pub struct BuildDataCeTagsFilterElAndElCostCategoryEl {}
+pub struct BuildDataCeTags_Filter_CostCategory {}
 
-impl BuildDataCeTagsFilterElAndElCostCategoryEl {
-    pub fn build(self) -> DataCeTagsFilterElAndElCostCategoryEl {
-        DataCeTagsFilterElAndElCostCategoryEl {
+impl BuildDataCeTags_Filter_CostCategory {
+    pub fn build(self) -> DataCeTags_Filter_CostCategory {
+        DataCeTags_Filter_CostCategory {
             key: core::default::Default::default(),
             match_options: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -350,21 +359,23 @@ impl BuildDataCeTagsFilterElAndElCostCategoryEl {
     }
 }
 
-pub struct DataCeTagsFilterElAndElCostCategoryElRef {
+#[allow(dead_code)]
+pub struct DataCeTags_Filter_CostCategoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCeTagsFilterElAndElCostCategoryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElAndElCostCategoryElRef {
-        DataCeTagsFilterElAndElCostCategoryElRef {
+impl terrars::Ref for DataCeTags_Filter_CostCategoryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTags_Filter_CostCategoryRef {
+        DataCeTags_Filter_CostCategoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCeTagsFilterElAndElCostCategoryElRef {
+impl DataCeTags_Filter_CostCategoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -386,7 +397,7 @@ impl DataCeTagsFilterElAndElCostCategoryElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCeTagsFilterElAndElDimensionEl {
+pub struct DataCeTags_Filter_Dimension {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -395,7 +406,7 @@ pub struct DataCeTagsFilterElAndElDimensionEl {
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataCeTagsFilterElAndElDimensionEl {
+impl DataCeTags_Filter_Dimension {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -421,8 +432,8 @@ impl DataCeTagsFilterElAndElDimensionEl {
     }
 }
 
-impl terrars::ToListMappable for DataCeTagsFilterElAndElDimensionEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElAndElDimensionEl>;
+impl terrars::ToListMappable for DataCeTags_Filter_Dimension {
+    type O = terrars::BlockAssignable<DataCeTags_Filter_Dimension>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -433,11 +444,11 @@ impl terrars::ToListMappable for DataCeTagsFilterElAndElDimensionEl {
     }
 }
 
-pub struct BuildDataCeTagsFilterElAndElDimensionEl {}
+pub struct BuildDataCeTags_Filter_Dimension {}
 
-impl BuildDataCeTagsFilterElAndElDimensionEl {
-    pub fn build(self) -> DataCeTagsFilterElAndElDimensionEl {
-        DataCeTagsFilterElAndElDimensionEl {
+impl BuildDataCeTags_Filter_Dimension {
+    pub fn build(self) -> DataCeTags_Filter_Dimension {
+        DataCeTags_Filter_Dimension {
             key: core::default::Default::default(),
             match_options: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -445,21 +456,23 @@ impl BuildDataCeTagsFilterElAndElDimensionEl {
     }
 }
 
-pub struct DataCeTagsFilterElAndElDimensionElRef {
+#[allow(dead_code)]
+pub struct DataCeTags_Filter_DimensionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCeTagsFilterElAndElDimensionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElAndElDimensionElRef {
-        DataCeTagsFilterElAndElDimensionElRef {
+impl terrars::Ref for DataCeTags_Filter_DimensionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTags_Filter_DimensionRef {
+        DataCeTags_Filter_DimensionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCeTagsFilterElAndElDimensionElRef {
+impl DataCeTags_Filter_DimensionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -481,7 +494,7 @@ impl DataCeTagsFilterElAndElDimensionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCeTagsFilterElAndElTagsEl {
+pub struct DataCeTags_Filter_Tags {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -490,7 +503,7 @@ pub struct DataCeTagsFilterElAndElTagsEl {
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataCeTagsFilterElAndElTagsEl {
+impl DataCeTags_Filter_Tags {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -516,8 +529,8 @@ impl DataCeTagsFilterElAndElTagsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCeTagsFilterElAndElTagsEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElAndElTagsEl>;
+impl terrars::ToListMappable for DataCeTags_Filter_Tags {
+    type O = terrars::BlockAssignable<DataCeTags_Filter_Tags>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -528,11 +541,11 @@ impl terrars::ToListMappable for DataCeTagsFilterElAndElTagsEl {
     }
 }
 
-pub struct BuildDataCeTagsFilterElAndElTagsEl {}
+pub struct BuildDataCeTags_Filter_Tags {}
 
-impl BuildDataCeTagsFilterElAndElTagsEl {
-    pub fn build(self) -> DataCeTagsFilterElAndElTagsEl {
-        DataCeTagsFilterElAndElTagsEl {
+impl BuildDataCeTags_Filter_Tags {
+    pub fn build(self) -> DataCeTags_Filter_Tags {
+        DataCeTags_Filter_Tags {
             key: core::default::Default::default(),
             match_options: core::default::Default::default(),
             values: core::default::Default::default(),
@@ -540,21 +553,23 @@ impl BuildDataCeTagsFilterElAndElTagsEl {
     }
 }
 
-pub struct DataCeTagsFilterElAndElTagsElRef {
+#[allow(dead_code)]
+pub struct DataCeTags_Filter_TagsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCeTagsFilterElAndElTagsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElAndElTagsElRef {
-        DataCeTagsFilterElAndElTagsElRef {
+impl terrars::Ref for DataCeTags_Filter_TagsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTags_Filter_TagsRef {
+        DataCeTags_Filter_TagsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCeTagsFilterElAndElTagsElRef {
+impl DataCeTags_Filter_TagsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -576,28 +591,28 @@ impl DataCeTagsFilterElAndElTagsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataCeTagsFilterElAndElDynamic {
-    cost_category: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElAndElCostCategoryEl>>,
-    dimension: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElAndElDimensionEl>>,
-    tags: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElAndElTagsEl>>,
+struct DataCeTags_Filter_AndDynamic {
+    cost_category: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Dimension>>,
+    tags: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct DataCeTagsFilterElAndEl {
+pub struct DataCeTags_Filter_And {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cost_category: std::option::Option<std::vec::Vec<DataCeTagsFilterElAndElCostCategoryEl>>,
+    cost_category: std::option::Option<std::vec::Vec<DataCeTags_Filter_CostCategory>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dimension: std::option::Option<std::vec::Vec<DataCeTagsFilterElAndElDimensionEl>>,
+    dimension: std::option::Option<std::vec::Vec<DataCeTags_Filter_Dimension>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<std::vec::Vec<DataCeTagsFilterElAndElTagsEl>>,
-    dynamic: DataCeTagsFilterElAndElDynamic,
+    tags: std::option::Option<std::vec::Vec<DataCeTags_Filter_Tags>>,
+    dynamic: DataCeTags_Filter_AndDynamic,
 }
 
-impl DataCeTagsFilterElAndEl {
+impl DataCeTags_Filter_And {
     #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElAndElCostCategoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_CostCategory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -613,7 +628,7 @@ impl DataCeTagsFilterElAndEl {
     #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElAndElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Dimension>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -627,10 +642,7 @@ impl DataCeTagsFilterElAndEl {
     }
 
     #[doc = "Set the field `tags`.\n"]
-    pub fn set_tags(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElAndElTagsEl>>,
-    ) -> Self {
+    pub fn set_tags(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Tags>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.tags = std::option::Option::Some(v);
@@ -643,8 +655,8 @@ impl DataCeTagsFilterElAndEl {
     }
 }
 
-impl terrars::ToListMappable for DataCeTagsFilterElAndEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElAndEl>;
+impl terrars::ToListMappable for DataCeTags_Filter_And {
+    type O = terrars::BlockAssignable<DataCeTags_Filter_And>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -655,11 +667,11 @@ impl terrars::ToListMappable for DataCeTagsFilterElAndEl {
     }
 }
 
-pub struct BuildDataCeTagsFilterElAndEl {}
+pub struct BuildDataCeTags_Filter_And {}
 
-impl BuildDataCeTagsFilterElAndEl {
-    pub fn build(self) -> DataCeTagsFilterElAndEl {
-        DataCeTagsFilterElAndEl {
+impl BuildDataCeTags_Filter_And {
+    pub fn build(self) -> DataCeTags_Filter_And {
+        DataCeTags_Filter_And {
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
             tags: core::default::Default::default(),
@@ -668,539 +680,66 @@ impl BuildDataCeTagsFilterElAndEl {
     }
 }
 
-pub struct DataCeTagsFilterElAndElRef {
+#[allow(dead_code)]
+pub struct DataCeTags_Filter_AndRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCeTagsFilterElAndElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElAndElRef {
-        DataCeTagsFilterElAndElRef {
+impl terrars::Ref for DataCeTags_Filter_AndRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTags_Filter_AndRef {
+        DataCeTags_Filter_AndRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCeTagsFilterElAndElRef {
+impl DataCeTags_Filter_AndRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> terrars::ListRef<DataCeTagsFilterElAndElCostCategoryElRef> {
+    pub fn cost_category(&self) -> terrars::ListRef<DataCeTags_Filter_CostCategoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> terrars::ListRef<DataCeTagsFilterElAndElDimensionElRef> {
+    pub fn dimension(&self) -> terrars::ListRef<DataCeTags_Filter_DimensionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<DataCeTagsFilterElAndElTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<DataCeTags_Filter_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataCeTagsFilterElCostCategoryEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataCeTagsFilterElCostCategoryEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCeTagsFilterElCostCategoryEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElCostCategoryEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCeTagsFilterElCostCategoryEl {}
-
-impl BuildDataCeTagsFilterElCostCategoryEl {
-    pub fn build(self) -> DataCeTagsFilterElCostCategoryEl {
-        DataCeTagsFilterElCostCategoryEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCeTagsFilterElCostCategoryElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCeTagsFilterElCostCategoryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElCostCategoryElRef {
-        DataCeTagsFilterElCostCategoryElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCeTagsFilterElCostCategoryElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCeTagsFilterElDimensionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataCeTagsFilterElDimensionEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCeTagsFilterElDimensionEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElDimensionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCeTagsFilterElDimensionEl {}
-
-impl BuildDataCeTagsFilterElDimensionEl {
-    pub fn build(self) -> DataCeTagsFilterElDimensionEl {
-        DataCeTagsFilterElDimensionEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCeTagsFilterElDimensionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCeTagsFilterElDimensionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElDimensionElRef {
-        DataCeTagsFilterElDimensionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCeTagsFilterElDimensionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCeTagsFilterElNotElCostCategoryEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataCeTagsFilterElNotElCostCategoryEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCeTagsFilterElNotElCostCategoryEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElNotElCostCategoryEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCeTagsFilterElNotElCostCategoryEl {}
-
-impl BuildDataCeTagsFilterElNotElCostCategoryEl {
-    pub fn build(self) -> DataCeTagsFilterElNotElCostCategoryEl {
-        DataCeTagsFilterElNotElCostCategoryEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCeTagsFilterElNotElCostCategoryElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCeTagsFilterElNotElCostCategoryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElNotElCostCategoryElRef {
-        DataCeTagsFilterElNotElCostCategoryElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCeTagsFilterElNotElCostCategoryElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCeTagsFilterElNotElDimensionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataCeTagsFilterElNotElDimensionEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCeTagsFilterElNotElDimensionEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElNotElDimensionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCeTagsFilterElNotElDimensionEl {}
-
-impl BuildDataCeTagsFilterElNotElDimensionEl {
-    pub fn build(self) -> DataCeTagsFilterElNotElDimensionEl {
-        DataCeTagsFilterElNotElDimensionEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCeTagsFilterElNotElDimensionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCeTagsFilterElNotElDimensionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElNotElDimensionElRef {
-        DataCeTagsFilterElNotElDimensionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCeTagsFilterElNotElDimensionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCeTagsFilterElNotElTagsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataCeTagsFilterElNotElTagsEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCeTagsFilterElNotElTagsEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElNotElTagsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCeTagsFilterElNotElTagsEl {}
-
-impl BuildDataCeTagsFilterElNotElTagsEl {
-    pub fn build(self) -> DataCeTagsFilterElNotElTagsEl {
-        DataCeTagsFilterElNotElTagsEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCeTagsFilterElNotElTagsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCeTagsFilterElNotElTagsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElNotElTagsElRef {
-        DataCeTagsFilterElNotElTagsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCeTagsFilterElNotElTagsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataCeTagsFilterElNotElDynamic {
-    cost_category: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElNotElCostCategoryEl>>,
-    dimension: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElNotElDimensionEl>>,
-    tags: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElNotElTagsEl>>,
+struct DataCeTags_Filter_NotDynamic {
+    cost_category: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Dimension>>,
+    tags: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct DataCeTagsFilterElNotEl {
+pub struct DataCeTags_Filter_Not {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cost_category: std::option::Option<std::vec::Vec<DataCeTagsFilterElNotElCostCategoryEl>>,
+    cost_category: std::option::Option<std::vec::Vec<DataCeTags_Filter_CostCategory>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dimension: std::option::Option<std::vec::Vec<DataCeTagsFilterElNotElDimensionEl>>,
+    dimension: std::option::Option<std::vec::Vec<DataCeTags_Filter_Dimension>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<std::vec::Vec<DataCeTagsFilterElNotElTagsEl>>,
-    dynamic: DataCeTagsFilterElNotElDynamic,
+    tags: std::option::Option<std::vec::Vec<DataCeTags_Filter_Tags>>,
+    dynamic: DataCeTags_Filter_NotDynamic,
 }
 
-impl DataCeTagsFilterElNotEl {
+impl DataCeTags_Filter_Not {
     #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElNotElCostCategoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_CostCategory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1216,7 +755,7 @@ impl DataCeTagsFilterElNotEl {
     #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElNotElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Dimension>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1230,10 +769,7 @@ impl DataCeTagsFilterElNotEl {
     }
 
     #[doc = "Set the field `tags`.\n"]
-    pub fn set_tags(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElNotElTagsEl>>,
-    ) -> Self {
+    pub fn set_tags(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Tags>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.tags = std::option::Option::Some(v);
@@ -1246,8 +782,8 @@ impl DataCeTagsFilterElNotEl {
     }
 }
 
-impl terrars::ToListMappable for DataCeTagsFilterElNotEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElNotEl>;
+impl terrars::ToListMappable for DataCeTags_Filter_Not {
+    type O = terrars::BlockAssignable<DataCeTags_Filter_Not>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1258,11 +794,11 @@ impl terrars::ToListMappable for DataCeTagsFilterElNotEl {
     }
 }
 
-pub struct BuildDataCeTagsFilterElNotEl {}
+pub struct BuildDataCeTags_Filter_Not {}
 
-impl BuildDataCeTagsFilterElNotEl {
-    pub fn build(self) -> DataCeTagsFilterElNotEl {
-        DataCeTagsFilterElNotEl {
+impl BuildDataCeTags_Filter_Not {
+    pub fn build(self) -> DataCeTags_Filter_Not {
+        DataCeTags_Filter_Not {
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
             tags: core::default::Default::default(),
@@ -1271,349 +807,66 @@ impl BuildDataCeTagsFilterElNotEl {
     }
 }
 
-pub struct DataCeTagsFilterElNotElRef {
+#[allow(dead_code)]
+pub struct DataCeTags_Filter_NotRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCeTagsFilterElNotElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElNotElRef {
-        DataCeTagsFilterElNotElRef {
+impl terrars::Ref for DataCeTags_Filter_NotRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTags_Filter_NotRef {
+        DataCeTags_Filter_NotRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCeTagsFilterElNotElRef {
+impl DataCeTags_Filter_NotRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> terrars::ListRef<DataCeTagsFilterElNotElCostCategoryElRef> {
+    pub fn cost_category(&self) -> terrars::ListRef<DataCeTags_Filter_CostCategoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> terrars::ListRef<DataCeTagsFilterElNotElDimensionElRef> {
+    pub fn dimension(&self) -> terrars::ListRef<DataCeTags_Filter_DimensionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<DataCeTagsFilterElNotElTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<DataCeTags_Filter_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataCeTagsFilterElOrElCostCategoryEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataCeTagsFilterElOrElCostCategoryEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCeTagsFilterElOrElCostCategoryEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElOrElCostCategoryEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCeTagsFilterElOrElCostCategoryEl {}
-
-impl BuildDataCeTagsFilterElOrElCostCategoryEl {
-    pub fn build(self) -> DataCeTagsFilterElOrElCostCategoryEl {
-        DataCeTagsFilterElOrElCostCategoryEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCeTagsFilterElOrElCostCategoryElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCeTagsFilterElOrElCostCategoryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElOrElCostCategoryElRef {
-        DataCeTagsFilterElOrElCostCategoryElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCeTagsFilterElOrElCostCategoryElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCeTagsFilterElOrElDimensionEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataCeTagsFilterElOrElDimensionEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCeTagsFilterElOrElDimensionEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElOrElDimensionEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCeTagsFilterElOrElDimensionEl {}
-
-impl BuildDataCeTagsFilterElOrElDimensionEl {
-    pub fn build(self) -> DataCeTagsFilterElOrElDimensionEl {
-        DataCeTagsFilterElOrElDimensionEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCeTagsFilterElOrElDimensionElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCeTagsFilterElOrElDimensionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElOrElDimensionElRef {
-        DataCeTagsFilterElOrElDimensionElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCeTagsFilterElOrElDimensionElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DataCeTagsFilterElOrElTagsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataCeTagsFilterElOrElTagsEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCeTagsFilterElOrElTagsEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElOrElTagsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCeTagsFilterElOrElTagsEl {}
-
-impl BuildDataCeTagsFilterElOrElTagsEl {
-    pub fn build(self) -> DataCeTagsFilterElOrElTagsEl {
-        DataCeTagsFilterElOrElTagsEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCeTagsFilterElOrElTagsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCeTagsFilterElOrElTagsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElOrElTagsElRef {
-        DataCeTagsFilterElOrElTagsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCeTagsFilterElOrElTagsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataCeTagsFilterElOrElDynamic {
-    cost_category: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElOrElCostCategoryEl>>,
-    dimension: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElOrElDimensionEl>>,
-    tags: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElOrElTagsEl>>,
+struct DataCeTags_Filter_OrDynamic {
+    cost_category: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Dimension>>,
+    tags: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct DataCeTagsFilterElOrEl {
+pub struct DataCeTags_Filter_Or {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cost_category: std::option::Option<std::vec::Vec<DataCeTagsFilterElOrElCostCategoryEl>>,
+    cost_category: std::option::Option<std::vec::Vec<DataCeTags_Filter_CostCategory>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dimension: std::option::Option<std::vec::Vec<DataCeTagsFilterElOrElDimensionEl>>,
+    dimension: std::option::Option<std::vec::Vec<DataCeTags_Filter_Dimension>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<std::vec::Vec<DataCeTagsFilterElOrElTagsEl>>,
-    dynamic: DataCeTagsFilterElOrElDynamic,
+    tags: std::option::Option<std::vec::Vec<DataCeTags_Filter_Tags>>,
+    dynamic: DataCeTags_Filter_OrDynamic,
 }
 
-impl DataCeTagsFilterElOrEl {
+impl DataCeTags_Filter_Or {
     #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElOrElCostCategoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_CostCategory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1629,7 +882,7 @@ impl DataCeTagsFilterElOrEl {
     #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElOrElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Dimension>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1643,10 +896,7 @@ impl DataCeTagsFilterElOrEl {
     }
 
     #[doc = "Set the field `tags`.\n"]
-    pub fn set_tags(
-        mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElOrElTagsEl>>,
-    ) -> Self {
+    pub fn set_tags(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Tags>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.tags = std::option::Option::Some(v);
@@ -1659,8 +909,8 @@ impl DataCeTagsFilterElOrEl {
     }
 }
 
-impl terrars::ToListMappable for DataCeTagsFilterElOrEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElOrEl>;
+impl terrars::ToListMappable for DataCeTags_Filter_Or {
+    type O = terrars::BlockAssignable<DataCeTags_Filter_Or>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1671,11 +921,11 @@ impl terrars::ToListMappable for DataCeTagsFilterElOrEl {
     }
 }
 
-pub struct BuildDataCeTagsFilterElOrEl {}
+pub struct BuildDataCeTags_Filter_Or {}
 
-impl BuildDataCeTagsFilterElOrEl {
-    pub fn build(self) -> DataCeTagsFilterElOrEl {
-        DataCeTagsFilterElOrEl {
+impl BuildDataCeTags_Filter_Or {
+    pub fn build(self) -> DataCeTags_Filter_Or {
+        DataCeTags_Filter_Or {
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
             tags: core::default::Default::default(),
@@ -1684,166 +934,73 @@ impl BuildDataCeTagsFilterElOrEl {
     }
 }
 
-pub struct DataCeTagsFilterElOrElRef {
+#[allow(dead_code)]
+pub struct DataCeTags_Filter_OrRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCeTagsFilterElOrElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElOrElRef {
-        DataCeTagsFilterElOrElRef {
+impl terrars::Ref for DataCeTags_Filter_OrRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTags_Filter_OrRef {
+        DataCeTags_Filter_OrRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCeTagsFilterElOrElRef {
+impl DataCeTags_Filter_OrRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> terrars::ListRef<DataCeTagsFilterElOrElCostCategoryElRef> {
+    pub fn cost_category(&self) -> terrars::ListRef<DataCeTags_Filter_CostCategoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> terrars::ListRef<DataCeTagsFilterElOrElDimensionElRef> {
+    pub fn dimension(&self) -> terrars::ListRef<DataCeTags_Filter_DimensionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<DataCeTagsFilterElOrElTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<DataCeTags_Filter_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataCeTagsFilterElTagsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    match_options: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-}
-
-impl DataCeTagsFilterElTagsEl {
-    #[doc = "Set the field `key`.\n"]
-    pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `match_options`.\n"]
-    pub fn set_match_options(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.match_options = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `values`.\n"]
-    pub fn set_values(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.values = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DataCeTagsFilterElTagsEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterElTagsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataCeTagsFilterElTagsEl {}
-
-impl BuildDataCeTagsFilterElTagsEl {
-    pub fn build(self) -> DataCeTagsFilterElTagsEl {
-        DataCeTagsFilterElTagsEl {
-            key: core::default::Default::default(),
-            match_options: core::default::Default::default(),
-            values: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct DataCeTagsFilterElTagsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataCeTagsFilterElTagsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElTagsElRef {
-        DataCeTagsFilterElTagsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataCeTagsFilterElTagsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
-    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `match_options` after provisioning.\n"]
-    pub fn match_options(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.match_options", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct DataCeTagsFilterElDynamic {
-    and: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElAndEl>>,
-    cost_category: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElCostCategoryEl>>,
-    dimension: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElDimensionEl>>,
-    not: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElNotEl>>,
-    or: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElOrEl>>,
-    tags: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterElTagsEl>>,
+struct DataCeTags_FilterDynamic {
+    and: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_And>>,
+    cost_category: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_CostCategory>>,
+    dimension: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Dimension>>,
+    not: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Not>>,
+    or: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Or>>,
+    tags: std::option::Option<terrars::DynamicBlock<DataCeTags_Filter_Tags>>,
 }
 
 #[derive(Serialize)]
-pub struct DataCeTagsFilterEl {
+pub struct DataCeTags_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    and: std::option::Option<std::vec::Vec<DataCeTagsFilterElAndEl>>,
+    and: std::option::Option<std::vec::Vec<DataCeTags_Filter_And>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cost_category: std::option::Option<std::vec::Vec<DataCeTagsFilterElCostCategoryEl>>,
+    cost_category: std::option::Option<std::vec::Vec<DataCeTags_Filter_CostCategory>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dimension: std::option::Option<std::vec::Vec<DataCeTagsFilterElDimensionEl>>,
+    dimension: std::option::Option<std::vec::Vec<DataCeTags_Filter_Dimension>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    not: std::option::Option<std::vec::Vec<DataCeTagsFilterElNotEl>>,
+    not: std::option::Option<std::vec::Vec<DataCeTags_Filter_Not>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    or: std::option::Option<std::vec::Vec<DataCeTagsFilterElOrEl>>,
+    or: std::option::Option<std::vec::Vec<DataCeTags_Filter_Or>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<std::vec::Vec<DataCeTagsFilterElTagsEl>>,
-    dynamic: DataCeTagsFilterElDynamic,
+    tags: std::option::Option<std::vec::Vec<DataCeTags_Filter_Tags>>,
+    dynamic: DataCeTags_FilterDynamic,
 }
 
-impl DataCeTagsFilterEl {
+impl DataCeTags_Filter {
     #[doc = "Set the field `and`.\n"]
-    pub fn set_and(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElAndEl>>) -> Self {
+    pub fn set_and(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_And>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.and = std::option::Option::Some(v);
@@ -1858,7 +1015,7 @@ impl DataCeTagsFilterEl {
     #[doc = "Set the field `cost_category`.\n"]
     pub fn set_cost_category(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElCostCategoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_CostCategory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1874,7 +1031,7 @@ impl DataCeTagsFilterEl {
     #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElDimensionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Dimension>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1888,7 +1045,7 @@ impl DataCeTagsFilterEl {
     }
 
     #[doc = "Set the field `not`.\n"]
-    pub fn set_not(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElNotEl>>) -> Self {
+    pub fn set_not(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Not>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.not = std::option::Option::Some(v);
@@ -1901,7 +1058,7 @@ impl DataCeTagsFilterEl {
     }
 
     #[doc = "Set the field `or`.\n"]
-    pub fn set_or(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElOrEl>>) -> Self {
+    pub fn set_or(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Or>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.or = std::option::Option::Some(v);
@@ -1914,7 +1071,7 @@ impl DataCeTagsFilterEl {
     }
 
     #[doc = "Set the field `tags`.\n"]
-    pub fn set_tags(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTagsFilterElTagsEl>>) -> Self {
+    pub fn set_tags(mut self, v: impl std::convert::Into<terrars::BlockAssignable<DataCeTags_Filter_Tags>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.tags = std::option::Option::Some(v);
@@ -1927,8 +1084,8 @@ impl DataCeTagsFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataCeTagsFilterEl {
-    type O = terrars::BlockAssignable<DataCeTagsFilterEl>;
+impl terrars::ToListMappable for DataCeTags_Filter {
+    type O = terrars::BlockAssignable<DataCeTags_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1939,11 +1096,11 @@ impl terrars::ToListMappable for DataCeTagsFilterEl {
     }
 }
 
-pub struct BuildDataCeTagsFilterEl {}
+pub struct BuildDataCeTags_Filter {}
 
-impl BuildDataCeTagsFilterEl {
-    pub fn build(self) -> DataCeTagsFilterEl {
-        DataCeTagsFilterEl {
+impl BuildDataCeTags_Filter {
+    pub fn build(self) -> DataCeTags_Filter {
+        DataCeTags_Filter {
             and: core::default::Default::default(),
             cost_category: core::default::Default::default(),
             dimension: core::default::Default::default(),
@@ -1955,55 +1112,57 @@ impl BuildDataCeTagsFilterEl {
     }
 }
 
-pub struct DataCeTagsFilterElRef {
+#[allow(dead_code)]
+pub struct DataCeTags_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCeTagsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsFilterElRef {
-        DataCeTagsFilterElRef {
+impl terrars::Ref for DataCeTags_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTags_FilterRef {
+        DataCeTags_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCeTagsFilterElRef {
+impl DataCeTags_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cost_category` after provisioning.\n"]
-    pub fn cost_category(&self) -> terrars::ListRef<DataCeTagsFilterElCostCategoryElRef> {
+    pub fn cost_category(&self) -> terrars::ListRef<DataCeTags_Filter_CostCategoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cost_category", self.base))
     }
 
     #[doc = "Get a reference to the value of field `dimension` after provisioning.\n"]
-    pub fn dimension(&self) -> terrars::ListRef<DataCeTagsFilterElDimensionElRef> {
+    pub fn dimension(&self) -> terrars::ListRef<DataCeTags_Filter_DimensionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dimension", self.base))
     }
 
     #[doc = "Get a reference to the value of field `not` after provisioning.\n"]
-    pub fn not(&self) -> terrars::ListRef<DataCeTagsFilterElNotElRef> {
+    pub fn not(&self) -> terrars::ListRef<DataCeTags_Filter_NotRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.not", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::ListRef<DataCeTagsFilterElTagsElRef> {
+    pub fn tags(&self) -> terrars::ListRef<DataCeTags_Filter_TagsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tags", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCeTagsSortByEl {
+pub struct DataCeTags_SortBy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sort_order: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCeTagsSortByEl {
+impl DataCeTags_SortBy {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -2017,8 +1176,8 @@ impl DataCeTagsSortByEl {
     }
 }
 
-impl terrars::ToListMappable for DataCeTagsSortByEl {
-    type O = terrars::BlockAssignable<DataCeTagsSortByEl>;
+impl terrars::ToListMappable for DataCeTags_SortBy {
+    type O = terrars::BlockAssignable<DataCeTags_SortBy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2029,32 +1188,34 @@ impl terrars::ToListMappable for DataCeTagsSortByEl {
     }
 }
 
-pub struct BuildDataCeTagsSortByEl {}
+pub struct BuildDataCeTags_SortBy {}
 
-impl BuildDataCeTagsSortByEl {
-    pub fn build(self) -> DataCeTagsSortByEl {
-        DataCeTagsSortByEl {
+impl BuildDataCeTags_SortBy {
+    pub fn build(self) -> DataCeTags_SortBy {
+        DataCeTags_SortBy {
             key: core::default::Default::default(),
             sort_order: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCeTagsSortByElRef {
+#[allow(dead_code)]
+pub struct DataCeTags_SortByRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCeTagsSortByElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsSortByElRef {
-        DataCeTagsSortByElRef {
+impl terrars::Ref for DataCeTags_SortByRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTags_SortByRef {
+        DataCeTags_SortByRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCeTagsSortByElRef {
+impl DataCeTags_SortByRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2071,15 +1232,15 @@ impl DataCeTagsSortByElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCeTagsTimePeriodEl {
+pub struct DataCeTags_TimePeriod {
     end: terrars::PrimField<std::string::String>,
     start: terrars::PrimField<std::string::String>,
 }
 
-impl DataCeTagsTimePeriodEl { }
+impl DataCeTags_TimePeriod { }
 
-impl terrars::ToListMappable for DataCeTagsTimePeriodEl {
-    type O = terrars::BlockAssignable<DataCeTagsTimePeriodEl>;
+impl terrars::ToListMappable for DataCeTags_TimePeriod {
+    type O = terrars::BlockAssignable<DataCeTags_TimePeriod>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2090,37 +1251,39 @@ impl terrars::ToListMappable for DataCeTagsTimePeriodEl {
     }
 }
 
-pub struct BuildDataCeTagsTimePeriodEl {
+pub struct BuildDataCeTags_TimePeriod {
     #[doc = ""]
     pub end: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub start: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCeTagsTimePeriodEl {
-    pub fn build(self) -> DataCeTagsTimePeriodEl {
-        DataCeTagsTimePeriodEl {
+impl BuildDataCeTags_TimePeriod {
+    pub fn build(self) -> DataCeTags_TimePeriod {
+        DataCeTags_TimePeriod {
             end: self.end,
             start: self.start,
         }
     }
 }
 
-pub struct DataCeTagsTimePeriodElRef {
+#[allow(dead_code)]
+pub struct DataCeTags_TimePeriodRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCeTagsTimePeriodElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTagsTimePeriodElRef {
-        DataCeTagsTimePeriodElRef {
+impl terrars::Ref for DataCeTags_TimePeriodRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCeTags_TimePeriodRef {
+        DataCeTags_TimePeriodRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCeTagsTimePeriodElRef {
+impl DataCeTags_TimePeriodRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2134,11 +1297,4 @@ impl DataCeTagsTimePeriodElRef {
     pub fn start(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.start", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCeTagsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataCeTagsFilterEl>>,
-    sort_by: std::option::Option<terrars::DynamicBlock<DataCeTagsSortByEl>>,
-    time_period: std::option::Option<terrars::DynamicBlock<DataCeTagsTimePeriodEl>>,
 }

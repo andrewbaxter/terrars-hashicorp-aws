@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppautoscalingScheduledActionData {
+struct AppautoscalingScheduledActionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct AppautoscalingScheduledActionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     resource_id: terrars::PrimField<std::string::String>,
     scalable_dimension: terrars::PrimField<std::string::String>,
     schedule: terrars::PrimField<std::string::String>,
@@ -32,14 +36,14 @@ struct AppautoscalingScheduledActionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timezone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scalable_target_action: std::option::Option<std::vec::Vec<AppautoscalingScheduledActionScalableTargetActionEl>>,
+    scalable_target_action: std::option::Option<std::vec::Vec<AppautoscalingScheduledAction_ScalableTargetAction>>,
     dynamic: AppautoscalingScheduledActionDynamic,
 }
 
 struct AppautoscalingScheduledAction_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppautoscalingScheduledActionData>,
+    data: std::cell::RefCell<AppautoscalingScheduledActionData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl AppautoscalingScheduledAction {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `start_time`.\n"]
     pub fn set_start_time(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().start_time = std::option::Option::Some(v.into());
@@ -166,7 +177,7 @@ impl AppautoscalingScheduledAction {
     #[doc = "Set the field `scalable_target_action`.\n"]
     pub fn set_scalable_target_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppautoscalingScheduledActionScalableTargetActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppautoscalingScheduledAction_ScalableTargetAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -197,6 +208,12 @@ impl AppautoscalingScheduledAction {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
@@ -230,7 +247,7 @@ impl AppautoscalingScheduledAction {
     }
 
     #[doc = "Get a reference to the value of field `scalable_target_action` after provisioning.\n"]
-    pub fn scalable_target_action(&self) -> terrars::ListRef<AppautoscalingScheduledActionScalableTargetActionElRef> {
+    pub fn scalable_target_action(&self) -> terrars::ListRef<AppautoscalingScheduledAction_ScalableTargetActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scalable_target_action", self.extract_ref()))
     }
 }
@@ -285,7 +302,7 @@ impl BuildAppautoscalingScheduledAction {
         let out = AppautoscalingScheduledAction(std::rc::Rc::new(AppautoscalingScheduledAction_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppautoscalingScheduledActionData {
+            data: std::cell::RefCell::new(AppautoscalingScheduledActionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -294,6 +311,7 @@ impl BuildAppautoscalingScheduledAction {
                 end_time: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 resource_id: self.resource_id,
                 scalable_dimension: self.scalable_dimension,
                 schedule: self.schedule,
@@ -352,6 +370,12 @@ impl AppautoscalingScheduledActionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
     pub fn resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id", self.extract_ref()))
@@ -383,20 +407,27 @@ impl AppautoscalingScheduledActionRef {
     }
 
     #[doc = "Get a reference to the value of field `scalable_target_action` after provisioning.\n"]
-    pub fn scalable_target_action(&self) -> terrars::ListRef<AppautoscalingScheduledActionScalableTargetActionElRef> {
+    pub fn scalable_target_action(&self) -> terrars::ListRef<AppautoscalingScheduledAction_ScalableTargetActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scalable_target_action", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppautoscalingScheduledActionDynamic {
+    scalable_target_action: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppautoscalingScheduledAction_ScalableTargetAction>>,
+}
+
 #[derive(Serialize)]
-pub struct AppautoscalingScheduledActionScalableTargetActionEl {
+pub struct AppautoscalingScheduledAction_ScalableTargetAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_capacity: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_capacity: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppautoscalingScheduledActionScalableTargetActionEl {
+impl AppautoscalingScheduledAction_ScalableTargetAction {
     #[doc = "Set the field `max_capacity`.\n"]
     pub fn set_max_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.max_capacity = std::option::Option::Some(v.into());
@@ -410,8 +441,8 @@ impl AppautoscalingScheduledActionScalableTargetActionEl {
     }
 }
 
-impl terrars::ToListMappable for AppautoscalingScheduledActionScalableTargetActionEl {
-    type O = terrars::BlockAssignable<AppautoscalingScheduledActionScalableTargetActionEl>;
+impl terrars::ToListMappable for AppautoscalingScheduledAction_ScalableTargetAction {
+    type O = terrars::BlockAssignable<AppautoscalingScheduledAction_ScalableTargetAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -422,35 +453,37 @@ impl terrars::ToListMappable for AppautoscalingScheduledActionScalableTargetActi
     }
 }
 
-pub struct BuildAppautoscalingScheduledActionScalableTargetActionEl {}
+pub struct BuildAppautoscalingScheduledAction_ScalableTargetAction {}
 
-impl BuildAppautoscalingScheduledActionScalableTargetActionEl {
-    pub fn build(self) -> AppautoscalingScheduledActionScalableTargetActionEl {
-        AppautoscalingScheduledActionScalableTargetActionEl {
+impl BuildAppautoscalingScheduledAction_ScalableTargetAction {
+    pub fn build(self) -> AppautoscalingScheduledAction_ScalableTargetAction {
+        AppautoscalingScheduledAction_ScalableTargetAction {
             max_capacity: core::default::Default::default(),
             min_capacity: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppautoscalingScheduledActionScalableTargetActionElRef {
+#[allow(dead_code)]
+pub struct AppautoscalingScheduledAction_ScalableTargetActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppautoscalingScheduledActionScalableTargetActionElRef {
+impl terrars::Ref for AppautoscalingScheduledAction_ScalableTargetActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppautoscalingScheduledActionScalableTargetActionElRef {
-        AppautoscalingScheduledActionScalableTargetActionElRef {
+    ) -> AppautoscalingScheduledAction_ScalableTargetActionRef {
+        AppautoscalingScheduledAction_ScalableTargetActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppautoscalingScheduledActionScalableTargetActionElRef {
+impl AppautoscalingScheduledAction_ScalableTargetActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -464,11 +497,4 @@ impl AppautoscalingScheduledActionScalableTargetActionElRef {
     pub fn min_capacity(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_capacity", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppautoscalingScheduledActionDynamic {
-    scalable_target_action: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppautoscalingScheduledActionScalableTargetActionEl>>,
 }

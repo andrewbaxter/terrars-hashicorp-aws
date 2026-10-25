@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataNetworkmanagerGlobalNetworkData {
+struct DataNetworkmanagerGlobalNetworkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,7 +28,7 @@ struct DataNetworkmanagerGlobalNetworkData {
 struct DataNetworkmanagerGlobalNetwork_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataNetworkmanagerGlobalNetworkData>,
+    data: std::cell::RefCell<DataNetworkmanagerGlobalNetworkData_>,
 }
 
 #[derive(Clone)]
@@ -154,7 +156,7 @@ impl BuildDataNetworkmanagerGlobalNetwork {
         let out = DataNetworkmanagerGlobalNetwork(std::rc::Rc::new(DataNetworkmanagerGlobalNetwork_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataNetworkmanagerGlobalNetworkData {
+            data: std::cell::RefCell::new(DataNetworkmanagerGlobalNetworkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

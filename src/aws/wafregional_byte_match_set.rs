@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafregionalByteMatchSetData {
+struct WafregionalByteMatchSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct WafregionalByteMatchSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    byte_match_tuples: std::option::Option<std::vec::Vec<WafregionalByteMatchSetByteMatchTuplesEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    byte_match_tuples: std::option::Option<std::vec::Vec<WafregionalByteMatchSet_ByteMatchTuples>>,
     dynamic: WafregionalByteMatchSetDynamic,
 }
 
 struct WafregionalByteMatchSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafregionalByteMatchSetData>,
+    data: std::cell::RefCell<WafregionalByteMatchSetData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl WafregionalByteMatchSet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `byte_match_tuples`.\n"]
     pub fn set_byte_match_tuples(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalByteMatchSetByteMatchTuplesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalByteMatchSet_ByteMatchTuples>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -159,6 +170,12 @@ impl WafregionalByteMatchSet {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -204,7 +221,7 @@ impl BuildWafregionalByteMatchSet {
         let out = WafregionalByteMatchSet(std::rc::Rc::new(WafregionalByteMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafregionalByteMatchSetData {
+            data: std::cell::RefCell::new(WafregionalByteMatchSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -212,6 +229,7 @@ impl BuildWafregionalByteMatchSet {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 byte_match_tuples: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -253,17 +271,28 @@ impl WafregionalByteMatchSetRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct WafregionalByteMatchSetDynamic {
+    byte_match_tuples: std::option::Option<terrars::DynamicBlock<WafregionalByteMatchSet_ByteMatchTuples>>,
 }
 
 #[derive(Serialize)]
-pub struct WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl {
+pub struct WafregionalByteMatchSet_ByteMatchTuples_FieldToMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl {
+impl WafregionalByteMatchSet_ByteMatchTuples_FieldToMatch {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -271,8 +300,8 @@ impl WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl {
     }
 }
 
-impl terrars::ToListMappable for WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl {
-    type O = terrars::BlockAssignable<WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl>;
+impl terrars::ToListMappable for WafregionalByteMatchSet_ByteMatchTuples_FieldToMatch {
+    type O = terrars::BlockAssignable<WafregionalByteMatchSet_ByteMatchTuples_FieldToMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -283,38 +312,40 @@ impl terrars::ToListMappable for WafregionalByteMatchSetByteMatchTuplesElFieldTo
     }
 }
 
-pub struct BuildWafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl {
+pub struct BuildWafregionalByteMatchSet_ByteMatchTuples_FieldToMatch {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl {
-    pub fn build(self) -> WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl {
-        WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl {
+impl BuildWafregionalByteMatchSet_ByteMatchTuples_FieldToMatch {
+    pub fn build(self) -> WafregionalByteMatchSet_ByteMatchTuples_FieldToMatch {
+        WafregionalByteMatchSet_ByteMatchTuples_FieldToMatch {
             data: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct WafregionalByteMatchSetByteMatchTuplesElFieldToMatchElRef {
+#[allow(dead_code)]
+pub struct WafregionalByteMatchSet_ByteMatchTuples_FieldToMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafregionalByteMatchSetByteMatchTuplesElFieldToMatchElRef {
+impl terrars::Ref for WafregionalByteMatchSet_ByteMatchTuples_FieldToMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafregionalByteMatchSetByteMatchTuplesElFieldToMatchElRef {
-        WafregionalByteMatchSetByteMatchTuplesElFieldToMatchElRef {
+    ) -> WafregionalByteMatchSet_ByteMatchTuples_FieldToMatchRef {
+        WafregionalByteMatchSet_ByteMatchTuples_FieldToMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafregionalByteMatchSetByteMatchTuplesElFieldToMatchElRef {
+impl WafregionalByteMatchSet_ByteMatchTuples_FieldToMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -331,24 +362,22 @@ impl WafregionalByteMatchSetByteMatchTuplesElFieldToMatchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafregionalByteMatchSetByteMatchTuplesElDynamic {
-    field_to_match: std
-    ::option
-    ::Option<terrars::DynamicBlock<WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl>>,
+struct WafregionalByteMatchSet_ByteMatchTuplesDynamic {
+    field_to_match: std::option::Option<terrars::DynamicBlock<WafregionalByteMatchSet_ByteMatchTuples_FieldToMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct WafregionalByteMatchSetByteMatchTuplesEl {
+pub struct WafregionalByteMatchSet_ByteMatchTuples {
     positional_constraint: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_string: std::option::Option<terrars::PrimField<std::string::String>>,
     text_transformation: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_to_match: std::option::Option<std::vec::Vec<WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl>>,
-    dynamic: WafregionalByteMatchSetByteMatchTuplesElDynamic,
+    field_to_match: std::option::Option<std::vec::Vec<WafregionalByteMatchSet_ByteMatchTuples_FieldToMatch>>,
+    dynamic: WafregionalByteMatchSet_ByteMatchTuplesDynamic,
 }
 
-impl WafregionalByteMatchSetByteMatchTuplesEl {
+impl WafregionalByteMatchSet_ByteMatchTuples {
     #[doc = "Set the field `target_string`.\n"]
     pub fn set_target_string(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.target_string = std::option::Option::Some(v.into());
@@ -358,7 +387,7 @@ impl WafregionalByteMatchSetByteMatchTuplesEl {
     #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalByteMatchSetByteMatchTuplesElFieldToMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalByteMatchSet_ByteMatchTuples_FieldToMatch>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -372,8 +401,8 @@ impl WafregionalByteMatchSetByteMatchTuplesEl {
     }
 }
 
-impl terrars::ToListMappable for WafregionalByteMatchSetByteMatchTuplesEl {
-    type O = terrars::BlockAssignable<WafregionalByteMatchSetByteMatchTuplesEl>;
+impl terrars::ToListMappable for WafregionalByteMatchSet_ByteMatchTuples {
+    type O = terrars::BlockAssignable<WafregionalByteMatchSet_ByteMatchTuples>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -384,16 +413,16 @@ impl terrars::ToListMappable for WafregionalByteMatchSetByteMatchTuplesEl {
     }
 }
 
-pub struct BuildWafregionalByteMatchSetByteMatchTuplesEl {
+pub struct BuildWafregionalByteMatchSet_ByteMatchTuples {
     #[doc = ""]
     pub positional_constraint: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub text_transformation: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafregionalByteMatchSetByteMatchTuplesEl {
-    pub fn build(self) -> WafregionalByteMatchSetByteMatchTuplesEl {
-        WafregionalByteMatchSetByteMatchTuplesEl {
+impl BuildWafregionalByteMatchSet_ByteMatchTuples {
+    pub fn build(self) -> WafregionalByteMatchSet_ByteMatchTuples {
+        WafregionalByteMatchSet_ByteMatchTuples {
             positional_constraint: self.positional_constraint,
             target_string: core::default::Default::default(),
             text_transformation: self.text_transformation,
@@ -403,21 +432,23 @@ impl BuildWafregionalByteMatchSetByteMatchTuplesEl {
     }
 }
 
-pub struct WafregionalByteMatchSetByteMatchTuplesElRef {
+#[allow(dead_code)]
+pub struct WafregionalByteMatchSet_ByteMatchTuplesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafregionalByteMatchSetByteMatchTuplesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalByteMatchSetByteMatchTuplesElRef {
-        WafregionalByteMatchSetByteMatchTuplesElRef {
+impl terrars::Ref for WafregionalByteMatchSet_ByteMatchTuplesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalByteMatchSet_ByteMatchTuplesRef {
+        WafregionalByteMatchSet_ByteMatchTuplesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafregionalByteMatchSetByteMatchTuplesElRef {
+impl WafregionalByteMatchSet_ByteMatchTuplesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -438,12 +469,7 @@ impl WafregionalByteMatchSetByteMatchTuplesElRef {
     }
 
     #[doc = "Get a reference to the value of field `field_to_match` after provisioning.\n"]
-    pub fn field_to_match(&self) -> terrars::ListRef<WafregionalByteMatchSetByteMatchTuplesElFieldToMatchElRef> {
+    pub fn field_to_match(&self) -> terrars::ListRef<WafregionalByteMatchSet_ByteMatchTuples_FieldToMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafregionalByteMatchSetDynamic {
-    byte_match_tuples: std::option::Option<terrars::DynamicBlock<WafregionalByteMatchSetByteMatchTuplesEl>>,
 }

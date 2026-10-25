@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppsyncGraphqlApiData {
+struct AppsyncGraphqlApiData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,10 +20,22 @@ struct AppsyncGraphqlApiData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    api_type: std::option::Option<terrars::PrimField<std::string::String>>,
     authentication_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    introspection_config: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    merged_api_execution_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    query_depth_limit: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resolver_count_limit: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schema: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,26 +43,30 @@ struct AppsyncGraphqlApiData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    visibility: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     xray_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_authentication_provider: std
     ::option
-    ::Option<std::vec::Vec<AppsyncGraphqlApiAdditionalAuthenticationProviderEl>>,
+    ::Option<std::vec::Vec<AppsyncGraphqlApi_AdditionalAuthenticationProvider>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lambda_authorizer_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApiLambdaAuthorizerConfigEl>>,
+    enhanced_metrics_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApi_EnhancedMetricsConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApiLogConfigEl>>,
+    lambda_authorizer_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApi_LambdaAuthorizerConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    openid_connect_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApiOpenidConnectConfigEl>>,
+    log_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApi_LogConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_pool_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApiUserPoolConfigEl>>,
+    openid_connect_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApi_OpenidConnectConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_pool_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApi_UserPoolConfig>>,
     dynamic: AppsyncGraphqlApiDynamic,
 }
 
 struct AppsyncGraphqlApi_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppsyncGraphqlApiData>,
+    data: std::cell::RefCell<AppsyncGraphqlApiData_>,
 }
 
 #[derive(Clone)]
@@ -148,9 +166,49 @@ impl AppsyncGraphqlApi {
         self
     }
 
+    #[doc = "Set the field `api_type`.\n"]
+    pub fn set_api_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().api_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `introspection_config`.\n"]
+    pub fn set_introspection_config(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().introspection_config = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `merged_api_execution_role_arn`.\n"]
+    pub fn set_merged_api_execution_role_arn(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().merged_api_execution_role_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `query_depth_limit`.\n"]
+    pub fn set_query_depth_limit(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().query_depth_limit = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resolver_count_limit`.\n"]
+    pub fn set_resolver_count_limit(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().resolver_count_limit = std::option::Option::Some(v.into());
         self
     }
 
@@ -178,6 +236,12 @@ impl AppsyncGraphqlApi {
         self
     }
 
+    #[doc = "Set the field `visibility`.\n"]
+    pub fn set_visibility(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().visibility = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `xray_enabled`.\n"]
     pub fn set_xray_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().xray_enabled = std::option::Option::Some(v.into());
@@ -187,7 +251,7 @@ impl AppsyncGraphqlApi {
     #[doc = "Set the field `additional_authentication_provider`.\n"]
     pub fn set_additional_authentication_provider(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApiAdditionalAuthenticationProviderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApi_AdditionalAuthenticationProvider>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,10 +264,26 @@ impl AppsyncGraphqlApi {
         self
     }
 
+    #[doc = "Set the field `enhanced_metrics_config`.\n"]
+    pub fn set_enhanced_metrics_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApi_EnhancedMetricsConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().enhanced_metrics_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.enhanced_metrics_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `lambda_authorizer_config`.\n"]
     pub fn set_lambda_authorizer_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApiLambdaAuthorizerConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApi_LambdaAuthorizerConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -219,7 +299,7 @@ impl AppsyncGraphqlApi {
     #[doc = "Set the field `log_config`.\n"]
     pub fn set_log_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApiLogConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApi_LogConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -235,7 +315,7 @@ impl AppsyncGraphqlApi {
     #[doc = "Set the field `openid_connect_config`.\n"]
     pub fn set_openid_connect_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApiOpenidConnectConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApi_OpenidConnectConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -251,7 +331,7 @@ impl AppsyncGraphqlApi {
     #[doc = "Set the field `user_pool_config`.\n"]
     pub fn set_user_pool_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApiUserPoolConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApi_UserPoolConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -262,6 +342,11 @@ impl AppsyncGraphqlApi {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `api_type` after provisioning.\n"]
+    pub fn api_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -279,9 +364,38 @@ impl AppsyncGraphqlApi {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `introspection_config` after provisioning.\n"]
+    pub fn introspection_config(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.introspection_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `merged_api_execution_role_arn` after provisioning.\n"]
+    pub fn merged_api_execution_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.merged_api_execution_role_arn", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `query_depth_limit` after provisioning.\n"]
+    pub fn query_depth_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.query_depth_limit", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resolver_count_limit` after provisioning.\n"]
+    pub fn resolver_count_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolver_count_limit", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
@@ -304,6 +418,11 @@ impl AppsyncGraphqlApi {
         terrars::RecRef::new(self.shared().clone(), format!("{}.uris", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `visibility` after provisioning.\n"]
+    pub fn visibility(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.visibility", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `xray_enabled` after provisioning.\n"]
     pub fn xray_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.xray_enabled", self.extract_ref()))
@@ -312,30 +431,35 @@ impl AppsyncGraphqlApi {
     #[doc = "Get a reference to the value of field `additional_authentication_provider` after provisioning.\n"]
     pub fn additional_authentication_provider(
         &self,
-    ) -> terrars::ListRef<AppsyncGraphqlApiAdditionalAuthenticationProviderElRef> {
+    ) -> terrars::ListRef<AppsyncGraphqlApi_AdditionalAuthenticationProviderRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.additional_authentication_provider", self.extract_ref()),
         )
     }
 
+    #[doc = "Get a reference to the value of field `enhanced_metrics_config` after provisioning.\n"]
+    pub fn enhanced_metrics_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_EnhancedMetricsConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.enhanced_metrics_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `lambda_authorizer_config` after provisioning.\n"]
-    pub fn lambda_authorizer_config(&self) -> terrars::ListRef<AppsyncGraphqlApiLambdaAuthorizerConfigElRef> {
+    pub fn lambda_authorizer_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_LambdaAuthorizerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_authorizer_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<AppsyncGraphqlApiLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `openid_connect_config` after provisioning.\n"]
-    pub fn openid_connect_config(&self) -> terrars::ListRef<AppsyncGraphqlApiOpenidConnectConfigElRef> {
+    pub fn openid_connect_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_OpenidConnectConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.openid_connect_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_pool_config` after provisioning.\n"]
-    pub fn user_pool_config(&self) -> terrars::ListRef<AppsyncGraphqlApiUserPoolConfigElRef> {
+    pub fn user_pool_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_UserPoolConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_pool_config", self.extract_ref()))
     }
 }
@@ -384,20 +508,28 @@ impl BuildAppsyncGraphqlApi {
         let out = AppsyncGraphqlApi(std::rc::Rc::new(AppsyncGraphqlApi_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppsyncGraphqlApiData {
+            data: std::cell::RefCell::new(AppsyncGraphqlApiData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                api_type: core::default::Default::default(),
                 authentication_type: self.authentication_type,
                 id: core::default::Default::default(),
+                introspection_config: core::default::Default::default(),
+                merged_api_execution_role_arn: core::default::Default::default(),
                 name: self.name,
+                query_depth_limit: core::default::Default::default(),
+                region: core::default::Default::default(),
+                resolver_count_limit: core::default::Default::default(),
                 schema: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                visibility: core::default::Default::default(),
                 xray_enabled: core::default::Default::default(),
                 additional_authentication_provider: core::default::Default::default(),
+                enhanced_metrics_config: core::default::Default::default(),
                 lambda_authorizer_config: core::default::Default::default(),
                 log_config: core::default::Default::default(),
                 openid_connect_config: core::default::Default::default(),
@@ -433,6 +565,11 @@ impl AppsyncGraphqlApiRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `api_type` after provisioning.\n"]
+    pub fn api_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -448,9 +585,38 @@ impl AppsyncGraphqlApiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `introspection_config` after provisioning.\n"]
+    pub fn introspection_config(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.introspection_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `merged_api_execution_role_arn` after provisioning.\n"]
+    pub fn merged_api_execution_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.merged_api_execution_role_arn", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `query_depth_limit` after provisioning.\n"]
+    pub fn query_depth_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.query_depth_limit", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resolver_count_limit` after provisioning.\n"]
+    pub fn resolver_count_limit(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolver_count_limit", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
@@ -473,6 +639,11 @@ impl AppsyncGraphqlApiRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.uris", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `visibility` after provisioning.\n"]
+    pub fn visibility(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.visibility", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `xray_enabled` after provisioning.\n"]
     pub fn xray_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.xray_enabled", self.extract_ref()))
@@ -481,36 +652,53 @@ impl AppsyncGraphqlApiRef {
     #[doc = "Get a reference to the value of field `additional_authentication_provider` after provisioning.\n"]
     pub fn additional_authentication_provider(
         &self,
-    ) -> terrars::ListRef<AppsyncGraphqlApiAdditionalAuthenticationProviderElRef> {
+    ) -> terrars::ListRef<AppsyncGraphqlApi_AdditionalAuthenticationProviderRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.additional_authentication_provider", self.extract_ref()),
         )
     }
 
+    #[doc = "Get a reference to the value of field `enhanced_metrics_config` after provisioning.\n"]
+    pub fn enhanced_metrics_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_EnhancedMetricsConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.enhanced_metrics_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `lambda_authorizer_config` after provisioning.\n"]
-    pub fn lambda_authorizer_config(&self) -> terrars::ListRef<AppsyncGraphqlApiLambdaAuthorizerConfigElRef> {
+    pub fn lambda_authorizer_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_LambdaAuthorizerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_authorizer_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `log_config` after provisioning.\n"]
-    pub fn log_config(&self) -> terrars::ListRef<AppsyncGraphqlApiLogConfigElRef> {
+    pub fn log_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_LogConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.log_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `openid_connect_config` after provisioning.\n"]
-    pub fn openid_connect_config(&self) -> terrars::ListRef<AppsyncGraphqlApiOpenidConnectConfigElRef> {
+    pub fn openid_connect_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_OpenidConnectConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.openid_connect_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_pool_config` after provisioning.\n"]
-    pub fn user_pool_config(&self) -> terrars::ListRef<AppsyncGraphqlApiUserPoolConfigElRef> {
+    pub fn user_pool_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_UserPoolConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_pool_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppsyncGraphqlApiDynamic {
+    additional_authentication_provider: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppsyncGraphqlApi_AdditionalAuthenticationProvider>>,
+    enhanced_metrics_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApi_EnhancedMetricsConfig>>,
+    lambda_authorizer_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApi_LambdaAuthorizerConfig>>,
+    log_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApi_LogConfig>>,
+    openid_connect_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApi_OpenidConnectConfig>>,
+    user_pool_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApi_UserPoolConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl {
+pub struct AppsyncGraphqlApi_LambdaAuthorizerConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authorizer_result_ttl_in_seconds: std::option::Option<terrars::PrimField<f64>>,
     authorizer_uri: terrars::PrimField<std::string::String>,
@@ -518,7 +706,7 @@ pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerCo
     identity_validation_expression: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl {
+impl AppsyncGraphqlApi_LambdaAuthorizerConfig {
     #[doc = "Set the field `authorizer_result_ttl_in_seconds`.\n"]
     pub fn set_authorizer_result_ttl_in_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.authorizer_result_ttl_in_seconds = std::option::Option::Some(v.into());
@@ -535,8 +723,8 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl
     }
 }
 
-impl terrars::ToListMappable for AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl {
-    type O = terrars::BlockAssignable<AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl>;
+impl terrars::ToListMappable for AppsyncGraphqlApi_LambdaAuthorizerConfig {
+    type O = terrars::BlockAssignable<AppsyncGraphqlApi_LambdaAuthorizerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -547,14 +735,14 @@ impl terrars::ToListMappable for AppsyncGraphqlApiAdditionalAuthenticationProvid
     }
 }
 
-pub struct BuildAppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl {
+pub struct BuildAppsyncGraphqlApi_LambdaAuthorizerConfig {
     #[doc = ""]
     pub authorizer_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl {
-    pub fn build(self) -> AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl {
-        AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl {
+impl BuildAppsyncGraphqlApi_LambdaAuthorizerConfig {
+    pub fn build(self) -> AppsyncGraphqlApi_LambdaAuthorizerConfig {
+        AppsyncGraphqlApi_LambdaAuthorizerConfig {
             authorizer_result_ttl_in_seconds: core::default::Default::default(),
             authorizer_uri: self.authorizer_uri,
             identity_validation_expression: core::default::Default::default(),
@@ -562,24 +750,23 @@ impl BuildAppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerCon
     }
 }
 
-pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncGraphqlApi_LambdaAuthorizerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigElRef {
-        AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigElRef {
+impl terrars::Ref for AppsyncGraphqlApi_LambdaAuthorizerConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncGraphqlApi_LambdaAuthorizerConfigRef {
+        AppsyncGraphqlApi_LambdaAuthorizerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigElRef {
+impl AppsyncGraphqlApi_LambdaAuthorizerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -601,7 +788,7 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl
 }
 
 #[derive(Serialize)]
-pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl {
+pub struct AppsyncGraphqlApi_OpenidConnectConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auth_ttl: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -611,7 +798,7 @@ pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfi
     issuer: terrars::PrimField<std::string::String>,
 }
 
-impl AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl {
+impl AppsyncGraphqlApi_OpenidConnectConfig {
     #[doc = "Set the field `auth_ttl`.\n"]
     pub fn set_auth_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.auth_ttl = std::option::Option::Some(v.into());
@@ -631,8 +818,8 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl {
-    type O = terrars::BlockAssignable<AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl>;
+impl terrars::ToListMappable for AppsyncGraphqlApi_OpenidConnectConfig {
+    type O = terrars::BlockAssignable<AppsyncGraphqlApi_OpenidConnectConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -643,14 +830,14 @@ impl terrars::ToListMappable for AppsyncGraphqlApiAdditionalAuthenticationProvid
     }
 }
 
-pub struct BuildAppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl {
+pub struct BuildAppsyncGraphqlApi_OpenidConnectConfig {
     #[doc = ""]
     pub issuer: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl {
-    pub fn build(self) -> AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl {
-        AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl {
+impl BuildAppsyncGraphqlApi_OpenidConnectConfig {
+    pub fn build(self) -> AppsyncGraphqlApi_OpenidConnectConfig {
+        AppsyncGraphqlApi_OpenidConnectConfig {
             auth_ttl: core::default::Default::default(),
             client_id: core::default::Default::default(),
             iat_ttl: core::default::Default::default(),
@@ -659,24 +846,23 @@ impl BuildAppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfig
     }
 }
 
-pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncGraphqlApi_OpenidConnectConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigElRef {
-        AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigElRef {
+impl terrars::Ref for AppsyncGraphqlApi_OpenidConnectConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncGraphqlApi_OpenidConnectConfigRef {
+        AppsyncGraphqlApi_OpenidConnectConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigElRef {
+impl AppsyncGraphqlApi_OpenidConnectConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -703,7 +889,7 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigElRef
 }
 
 #[derive(Serialize)]
-pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
+pub struct AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     app_id_client_regex: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -711,7 +897,7 @@ pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
     user_pool_id: terrars::PrimField<std::string::String>,
 }
 
-impl AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
+impl AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig {
     #[doc = "Set the field `app_id_client_regex`.\n"]
     pub fn set_app_id_client_regex(
         mut self,
@@ -728,8 +914,8 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
-    type O = terrars::BlockAssignable<AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl>;
+impl terrars::ToListMappable for AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig {
+    type O = terrars::BlockAssignable<AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -740,14 +926,14 @@ impl terrars::ToListMappable for AppsyncGraphqlApiAdditionalAuthenticationProvid
     }
 }
 
-pub struct BuildAppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
+pub struct BuildAppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig {
     #[doc = ""]
     pub user_pool_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
-    pub fn build(self) -> AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
-        AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
+impl BuildAppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig {
+    pub fn build(self) -> AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig {
+        AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig {
             app_id_client_regex: core::default::Default::default(),
             aws_region: core::default::Default::default(),
             user_pool_id: self.user_pool_id,
@@ -755,24 +941,26 @@ impl BuildAppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl {
     }
 }
 
-pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigElRef {
+impl terrars::Ref for AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigElRef {
-        AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigElRef {
+    ) -> AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfigRef {
+        AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigElRef {
+impl AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -794,49 +982,33 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppsyncGraphqlApiAdditionalAuthenticationProviderElDynamic {
-    lambda_authorizer_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl>>,
-    openid_connect_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl>>,
+struct AppsyncGraphqlApi_AdditionalAuthenticationProviderDynamic {
+    lambda_authorizer_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApi_LambdaAuthorizerConfig>>,
+    openid_connect_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApi_OpenidConnectConfig>>,
     user_pool_config: std
     ::option
-    ::Option<terrars::DynamicBlock<AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl>>,
+    ::Option<terrars::DynamicBlock<AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderEl {
+pub struct AppsyncGraphqlApi_AdditionalAuthenticationProvider {
     authentication_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lambda_authorizer_config: std
-    ::option
-    ::Option<std::vec::Vec<AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl>>,
+    lambda_authorizer_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApi_LambdaAuthorizerConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    openid_connect_config: std
-    ::option
-    ::Option<std::vec::Vec<AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl>>,
+    openid_connect_config: std::option::Option<std::vec::Vec<AppsyncGraphqlApi_OpenidConnectConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_pool_config: std
     ::option
-    ::Option<std::vec::Vec<AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl>>,
-    dynamic: AppsyncGraphqlApiAdditionalAuthenticationProviderElDynamic,
+    ::Option<std::vec::Vec<AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig>>,
+    dynamic: AppsyncGraphqlApi_AdditionalAuthenticationProviderDynamic,
 }
 
-impl AppsyncGraphqlApiAdditionalAuthenticationProviderEl {
+impl AppsyncGraphqlApi_AdditionalAuthenticationProvider {
     #[doc = "Set the field `lambda_authorizer_config`.\n"]
     pub fn set_lambda_authorizer_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigEl>,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApi_LambdaAuthorizerConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -852,15 +1024,7 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderEl {
     #[doc = "Set the field `openid_connect_config`.\n"]
     pub fn set_openid_connect_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<
-                        terrars
-                        ::BlockAssignable<AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigEl>,
-                    >,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncGraphqlApi_OpenidConnectConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -882,7 +1046,7 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigEl>,
+                        terrars::BlockAssignable<AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -897,8 +1061,8 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncGraphqlApiAdditionalAuthenticationProviderEl {
-    type O = terrars::BlockAssignable<AppsyncGraphqlApiAdditionalAuthenticationProviderEl>;
+impl terrars::ToListMappable for AppsyncGraphqlApi_AdditionalAuthenticationProvider {
+    type O = terrars::BlockAssignable<AppsyncGraphqlApi_AdditionalAuthenticationProvider>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -909,14 +1073,14 @@ impl terrars::ToListMappable for AppsyncGraphqlApiAdditionalAuthenticationProvid
     }
 }
 
-pub struct BuildAppsyncGraphqlApiAdditionalAuthenticationProviderEl {
+pub struct BuildAppsyncGraphqlApi_AdditionalAuthenticationProvider {
     #[doc = ""]
     pub authentication_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncGraphqlApiAdditionalAuthenticationProviderEl {
-    pub fn build(self) -> AppsyncGraphqlApiAdditionalAuthenticationProviderEl {
-        AppsyncGraphqlApiAdditionalAuthenticationProviderEl {
+impl BuildAppsyncGraphqlApi_AdditionalAuthenticationProvider {
+    pub fn build(self) -> AppsyncGraphqlApi_AdditionalAuthenticationProvider {
+        AppsyncGraphqlApi_AdditionalAuthenticationProvider {
             authentication_type: self.authentication_type,
             lambda_authorizer_config: core::default::Default::default(),
             openid_connect_config: core::default::Default::default(),
@@ -926,24 +1090,26 @@ impl BuildAppsyncGraphqlApiAdditionalAuthenticationProviderEl {
     }
 }
 
-pub struct AppsyncGraphqlApiAdditionalAuthenticationProviderElRef {
+#[allow(dead_code)]
+pub struct AppsyncGraphqlApi_AdditionalAuthenticationProviderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncGraphqlApiAdditionalAuthenticationProviderElRef {
+impl terrars::Ref for AppsyncGraphqlApi_AdditionalAuthenticationProviderRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppsyncGraphqlApiAdditionalAuthenticationProviderElRef {
-        AppsyncGraphqlApiAdditionalAuthenticationProviderElRef {
+    ) -> AppsyncGraphqlApi_AdditionalAuthenticationProviderRef {
+        AppsyncGraphqlApi_AdditionalAuthenticationProviderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncGraphqlApiAdditionalAuthenticationProviderElRef {
+impl AppsyncGraphqlApi_AdditionalAuthenticationProviderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -954,55 +1120,34 @@ impl AppsyncGraphqlApiAdditionalAuthenticationProviderElRef {
     }
 
     #[doc = "Get a reference to the value of field `lambda_authorizer_config` after provisioning.\n"]
-    pub fn lambda_authorizer_config(
-        &self,
-    ) -> terrars::ListRef<AppsyncGraphqlApiAdditionalAuthenticationProviderElLambdaAuthorizerConfigElRef> {
+    pub fn lambda_authorizer_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_LambdaAuthorizerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_authorizer_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `openid_connect_config` after provisioning.\n"]
-    pub fn openid_connect_config(
-        &self,
-    ) -> terrars::ListRef<AppsyncGraphqlApiAdditionalAuthenticationProviderElOpenidConnectConfigElRef> {
+    pub fn openid_connect_config(&self) -> terrars::ListRef<AppsyncGraphqlApi_OpenidConnectConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.openid_connect_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `user_pool_config` after provisioning.\n"]
     pub fn user_pool_config(
         &self,
-    ) -> terrars::ListRef<AppsyncGraphqlApiAdditionalAuthenticationProviderElUserPoolConfigElRef> {
+    ) -> terrars::ListRef<AppsyncGraphqlApi_AdditionalAuthenticationProvider_UserPoolConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_pool_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppsyncGraphqlApiLambdaAuthorizerConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authorizer_result_ttl_in_seconds: std::option::Option<terrars::PrimField<f64>>,
-    authorizer_uri: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    identity_validation_expression: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct AppsyncGraphqlApi_EnhancedMetricsConfig {
+    data_source_level_metrics_behavior: terrars::PrimField<std::string::String>,
+    operation_level_metrics_config: terrars::PrimField<std::string::String>,
+    resolver_level_metrics_behavior: terrars::PrimField<std::string::String>,
 }
 
-impl AppsyncGraphqlApiLambdaAuthorizerConfigEl {
-    #[doc = "Set the field `authorizer_result_ttl_in_seconds`.\n"]
-    pub fn set_authorizer_result_ttl_in_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.authorizer_result_ttl_in_seconds = std::option::Option::Some(v.into());
-        self
-    }
+impl AppsyncGraphqlApi_EnhancedMetricsConfig { }
 
-    #[doc = "Set the field `identity_validation_expression`.\n"]
-    pub fn set_identity_validation_expression(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.identity_validation_expression = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppsyncGraphqlApiLambdaAuthorizerConfigEl {
-    type O = terrars::BlockAssignable<AppsyncGraphqlApiLambdaAuthorizerConfigEl>;
+impl terrars::ToListMappable for AppsyncGraphqlApi_EnhancedMetricsConfig {
+    type O = terrars::BlockAssignable<AppsyncGraphqlApi_EnhancedMetricsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1013,65 +1158,71 @@ impl terrars::ToListMappable for AppsyncGraphqlApiLambdaAuthorizerConfigEl {
     }
 }
 
-pub struct BuildAppsyncGraphqlApiLambdaAuthorizerConfigEl {
+pub struct BuildAppsyncGraphqlApi_EnhancedMetricsConfig {
     #[doc = ""]
-    pub authorizer_uri: terrars::PrimField<std::string::String>,
+    pub data_source_level_metrics_behavior: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub operation_level_metrics_config: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub resolver_level_metrics_behavior: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncGraphqlApiLambdaAuthorizerConfigEl {
-    pub fn build(self) -> AppsyncGraphqlApiLambdaAuthorizerConfigEl {
-        AppsyncGraphqlApiLambdaAuthorizerConfigEl {
-            authorizer_result_ttl_in_seconds: core::default::Default::default(),
-            authorizer_uri: self.authorizer_uri,
-            identity_validation_expression: core::default::Default::default(),
+impl BuildAppsyncGraphqlApi_EnhancedMetricsConfig {
+    pub fn build(self) -> AppsyncGraphqlApi_EnhancedMetricsConfig {
+        AppsyncGraphqlApi_EnhancedMetricsConfig {
+            data_source_level_metrics_behavior: self.data_source_level_metrics_behavior,
+            operation_level_metrics_config: self.operation_level_metrics_config,
+            resolver_level_metrics_behavior: self.resolver_level_metrics_behavior,
         }
     }
 }
 
-pub struct AppsyncGraphqlApiLambdaAuthorizerConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncGraphqlApi_EnhancedMetricsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncGraphqlApiLambdaAuthorizerConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncGraphqlApiLambdaAuthorizerConfigElRef {
-        AppsyncGraphqlApiLambdaAuthorizerConfigElRef {
+impl terrars::Ref for AppsyncGraphqlApi_EnhancedMetricsConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncGraphqlApi_EnhancedMetricsConfigRef {
+        AppsyncGraphqlApi_EnhancedMetricsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncGraphqlApiLambdaAuthorizerConfigElRef {
+impl AppsyncGraphqlApi_EnhancedMetricsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `authorizer_result_ttl_in_seconds` after provisioning.\n"]
-    pub fn authorizer_result_ttl_in_seconds(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorizer_result_ttl_in_seconds", self.base))
+    #[doc = "Get a reference to the value of field `data_source_level_metrics_behavior` after provisioning.\n"]
+    pub fn data_source_level_metrics_behavior(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_source_level_metrics_behavior", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `authorizer_uri` after provisioning.\n"]
-    pub fn authorizer_uri(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorizer_uri", self.base))
+    #[doc = "Get a reference to the value of field `operation_level_metrics_config` after provisioning.\n"]
+    pub fn operation_level_metrics_config(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.operation_level_metrics_config", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `identity_validation_expression` after provisioning.\n"]
-    pub fn identity_validation_expression(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identity_validation_expression", self.base))
+    #[doc = "Get a reference to the value of field `resolver_level_metrics_behavior` after provisioning.\n"]
+    pub fn resolver_level_metrics_behavior(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolver_level_metrics_behavior", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AppsyncGraphqlApiLogConfigEl {
+pub struct AppsyncGraphqlApi_LogConfig {
     cloudwatch_logs_role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     exclude_verbose_content: std::option::Option<terrars::PrimField<bool>>,
     field_log_level: terrars::PrimField<std::string::String>,
 }
 
-impl AppsyncGraphqlApiLogConfigEl {
+impl AppsyncGraphqlApi_LogConfig {
     #[doc = "Set the field `exclude_verbose_content`.\n"]
     pub fn set_exclude_verbose_content(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.exclude_verbose_content = std::option::Option::Some(v.into());
@@ -1079,8 +1230,8 @@ impl AppsyncGraphqlApiLogConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncGraphqlApiLogConfigEl {
-    type O = terrars::BlockAssignable<AppsyncGraphqlApiLogConfigEl>;
+impl terrars::ToListMappable for AppsyncGraphqlApi_LogConfig {
+    type O = terrars::BlockAssignable<AppsyncGraphqlApi_LogConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1091,16 +1242,16 @@ impl terrars::ToListMappable for AppsyncGraphqlApiLogConfigEl {
     }
 }
 
-pub struct BuildAppsyncGraphqlApiLogConfigEl {
+pub struct BuildAppsyncGraphqlApi_LogConfig {
     #[doc = ""]
     pub cloudwatch_logs_role_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub field_log_level: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncGraphqlApiLogConfigEl {
-    pub fn build(self) -> AppsyncGraphqlApiLogConfigEl {
-        AppsyncGraphqlApiLogConfigEl {
+impl BuildAppsyncGraphqlApi_LogConfig {
+    pub fn build(self) -> AppsyncGraphqlApi_LogConfig {
+        AppsyncGraphqlApi_LogConfig {
             cloudwatch_logs_role_arn: self.cloudwatch_logs_role_arn,
             exclude_verbose_content: core::default::Default::default(),
             field_log_level: self.field_log_level,
@@ -1108,21 +1259,23 @@ impl BuildAppsyncGraphqlApiLogConfigEl {
     }
 }
 
-pub struct AppsyncGraphqlApiLogConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncGraphqlApi_LogConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncGraphqlApiLogConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncGraphqlApiLogConfigElRef {
-        AppsyncGraphqlApiLogConfigElRef {
+impl terrars::Ref for AppsyncGraphqlApi_LogConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncGraphqlApi_LogConfigRef {
+        AppsyncGraphqlApi_LogConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncGraphqlApiLogConfigElRef {
+impl AppsyncGraphqlApi_LogConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1144,106 +1297,7 @@ impl AppsyncGraphqlApiLogConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppsyncGraphqlApiOpenidConnectConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auth_ttl: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    client_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    iat_ttl: std::option::Option<terrars::PrimField<f64>>,
-    issuer: terrars::PrimField<std::string::String>,
-}
-
-impl AppsyncGraphqlApiOpenidConnectConfigEl {
-    #[doc = "Set the field `auth_ttl`.\n"]
-    pub fn set_auth_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.auth_ttl = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `client_id`.\n"]
-    pub fn set_client_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.client_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `iat_ttl`.\n"]
-    pub fn set_iat_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.iat_ttl = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for AppsyncGraphqlApiOpenidConnectConfigEl {
-    type O = terrars::BlockAssignable<AppsyncGraphqlApiOpenidConnectConfigEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAppsyncGraphqlApiOpenidConnectConfigEl {
-    #[doc = ""]
-    pub issuer: terrars::PrimField<std::string::String>,
-}
-
-impl BuildAppsyncGraphqlApiOpenidConnectConfigEl {
-    pub fn build(self) -> AppsyncGraphqlApiOpenidConnectConfigEl {
-        AppsyncGraphqlApiOpenidConnectConfigEl {
-            auth_ttl: core::default::Default::default(),
-            client_id: core::default::Default::default(),
-            iat_ttl: core::default::Default::default(),
-            issuer: self.issuer,
-        }
-    }
-}
-
-pub struct AppsyncGraphqlApiOpenidConnectConfigElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AppsyncGraphqlApiOpenidConnectConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncGraphqlApiOpenidConnectConfigElRef {
-        AppsyncGraphqlApiOpenidConnectConfigElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AppsyncGraphqlApiOpenidConnectConfigElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `auth_ttl` after provisioning.\n"]
-    pub fn auth_ttl(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_ttl", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `client_id` after provisioning.\n"]
-    pub fn client_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `iat_ttl` after provisioning.\n"]
-    pub fn iat_ttl(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.iat_ttl", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `issuer` after provisioning.\n"]
-    pub fn issuer(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.issuer", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct AppsyncGraphqlApiUserPoolConfigEl {
+pub struct AppsyncGraphqlApi_UserPoolConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     app_id_client_regex: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1252,7 +1306,7 @@ pub struct AppsyncGraphqlApiUserPoolConfigEl {
     user_pool_id: terrars::PrimField<std::string::String>,
 }
 
-impl AppsyncGraphqlApiUserPoolConfigEl {
+impl AppsyncGraphqlApi_UserPoolConfig {
     #[doc = "Set the field `app_id_client_regex`.\n"]
     pub fn set_app_id_client_regex(
         mut self,
@@ -1269,8 +1323,8 @@ impl AppsyncGraphqlApiUserPoolConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncGraphqlApiUserPoolConfigEl {
-    type O = terrars::BlockAssignable<AppsyncGraphqlApiUserPoolConfigEl>;
+impl terrars::ToListMappable for AppsyncGraphqlApi_UserPoolConfig {
+    type O = terrars::BlockAssignable<AppsyncGraphqlApi_UserPoolConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1281,16 +1335,16 @@ impl terrars::ToListMappable for AppsyncGraphqlApiUserPoolConfigEl {
     }
 }
 
-pub struct BuildAppsyncGraphqlApiUserPoolConfigEl {
+pub struct BuildAppsyncGraphqlApi_UserPoolConfig {
     #[doc = ""]
     pub default_action: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub user_pool_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncGraphqlApiUserPoolConfigEl {
-    pub fn build(self) -> AppsyncGraphqlApiUserPoolConfigEl {
-        AppsyncGraphqlApiUserPoolConfigEl {
+impl BuildAppsyncGraphqlApi_UserPoolConfig {
+    pub fn build(self) -> AppsyncGraphqlApi_UserPoolConfig {
+        AppsyncGraphqlApi_UserPoolConfig {
             app_id_client_regex: core::default::Default::default(),
             aws_region: core::default::Default::default(),
             default_action: self.default_action,
@@ -1299,21 +1353,23 @@ impl BuildAppsyncGraphqlApiUserPoolConfigEl {
     }
 }
 
-pub struct AppsyncGraphqlApiUserPoolConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncGraphqlApi_UserPoolConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncGraphqlApiUserPoolConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncGraphqlApiUserPoolConfigElRef {
-        AppsyncGraphqlApiUserPoolConfigElRef {
+impl terrars::Ref for AppsyncGraphqlApi_UserPoolConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncGraphqlApi_UserPoolConfigRef {
+        AppsyncGraphqlApi_UserPoolConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncGraphqlApiUserPoolConfigElRef {
+impl AppsyncGraphqlApi_UserPoolConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1337,15 +1393,4 @@ impl AppsyncGraphqlApiUserPoolConfigElRef {
     pub fn user_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_pool_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppsyncGraphqlApiDynamic {
-    additional_authentication_provider: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppsyncGraphqlApiAdditionalAuthenticationProviderEl>>,
-    lambda_authorizer_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApiLambdaAuthorizerConfigEl>>,
-    log_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApiLogConfigEl>>,
-    openid_connect_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApiOpenidConnectConfigEl>>,
-    user_pool_config: std::option::Option<terrars::DynamicBlock<AppsyncGraphqlApiUserPoolConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53TrafficPolicyData {
+struct Route53TrafficPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,7 +31,7 @@ struct Route53TrafficPolicyData {
 struct Route53TrafficPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53TrafficPolicyData>,
+    data: std::cell::RefCell<Route53TrafficPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +143,11 @@ impl Route53TrafficPolicy {
         self
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
     pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
@@ -216,7 +223,7 @@ impl BuildRoute53TrafficPolicy {
         let out = Route53TrafficPolicy(std::rc::Rc::new(Route53TrafficPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53TrafficPolicyData {
+            data: std::cell::RefCell::new(Route53TrafficPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -254,6 +261,11 @@ impl Route53TrafficPolicyRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]

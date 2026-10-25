@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ImagebuilderComponentData {
+struct ImagebuilderComponentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,6 +33,8 @@ struct ImagebuilderComponentData {
     name: terrars::PrimField<std::string::String>,
     platform: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skip_destroy: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     supported_os_versions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -46,7 +50,7 @@ struct ImagebuilderComponentData {
 struct ImagebuilderComponent_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ImagebuilderComponentData>,
+    data: std::cell::RefCell<ImagebuilderComponentData_>,
 }
 
 #[derive(Clone)]
@@ -176,6 +180,13 @@ impl ImagebuilderComponent {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `skip_destroy`.\n"]
     pub fn set_skip_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().skip_destroy = std::option::Option::Some(v.into());
@@ -270,6 +281,12 @@ impl ImagebuilderComponent {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
     pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
@@ -352,7 +369,7 @@ impl BuildImagebuilderComponent {
         let out = ImagebuilderComponent(std::rc::Rc::new(ImagebuilderComponent_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ImagebuilderComponentData {
+            data: std::cell::RefCell::new(ImagebuilderComponentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -365,6 +382,7 @@ impl BuildImagebuilderComponent {
                 kms_key_id: core::default::Default::default(),
                 name: self.name,
                 platform: self.platform,
+                region: core::default::Default::default(),
                 skip_destroy: core::default::Default::default(),
                 supported_os_versions: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -454,6 +472,12 @@ impl ImagebuilderComponentRef {
     #[doc = "Get a reference to the value of field `platform` after provisioning.\n"]
     pub fn platform(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]

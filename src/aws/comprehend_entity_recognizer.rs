@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ComprehendEntityRecognizerData {
+struct ComprehendEntityRecognizerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,6 +28,8 @@ struct ComprehendEntityRecognizerData {
     model_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -36,18 +40,18 @@ struct ComprehendEntityRecognizerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     volume_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input_data_config: std::option::Option<std::vec::Vec<ComprehendEntityRecognizerInputDataConfigEl>>,
+    input_data_config: std::option::Option<std::vec::Vec<ComprehendEntityRecognizer_InputDataConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComprehendEntityRecognizerTimeoutsEl>,
+    timeouts: std::option::Option<ComprehendEntityRecognizer_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_config: std::option::Option<std::vec::Vec<ComprehendEntityRecognizerVpcConfigEl>>,
+    vpc_config: std::option::Option<std::vec::Vec<ComprehendEntityRecognizer_VpcConfig>>,
     dynamic: ComprehendEntityRecognizerDynamic,
 }
 
 struct ComprehendEntityRecognizer_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComprehendEntityRecognizerData>,
+    data: std::cell::RefCell<ComprehendEntityRecognizerData_>,
 }
 
 #[derive(Clone)]
@@ -159,6 +163,13 @@ impl ComprehendEntityRecognizer {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -198,7 +209,7 @@ impl ComprehendEntityRecognizer {
     #[doc = "Set the field `input_data_config`.\n"]
     pub fn set_input_data_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -212,7 +223,7 @@ impl ComprehendEntityRecognizer {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComprehendEntityRecognizerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComprehendEntityRecognizer_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -220,7 +231,7 @@ impl ComprehendEntityRecognizer {
     #[doc = "Set the field `vpc_config`.\n"]
     pub fn set_vpc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendEntityRecognizerVpcConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendEntityRecognizer_VpcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -263,6 +274,12 @@ impl ComprehendEntityRecognizer {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -289,20 +306,20 @@ impl ComprehendEntityRecognizer {
     }
 
     #[doc = "Get a reference to the value of field `input_data_config` after provisioning.\n"]
-    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendEntityRecognizerInputDataConfigElRef> {
+    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendEntityRecognizer_InputDataConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComprehendEntityRecognizerTimeoutsElRef {
-        ComprehendEntityRecognizerTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComprehendEntityRecognizer_TimeoutsRef {
+        ComprehendEntityRecognizer_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendEntityRecognizerVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendEntityRecognizer_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
@@ -353,7 +370,7 @@ impl BuildComprehendEntityRecognizer {
         let out = ComprehendEntityRecognizer(std::rc::Rc::new(ComprehendEntityRecognizer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComprehendEntityRecognizerData {
+            data: std::cell::RefCell::new(ComprehendEntityRecognizerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -364,6 +381,7 @@ impl BuildComprehendEntityRecognizer {
                 language_code: self.language_code,
                 model_kms_key_id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 version_name: core::default::Default::default(),
@@ -433,6 +451,12 @@ impl ComprehendEntityRecognizerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -459,32 +483,38 @@ impl ComprehendEntityRecognizerRef {
     }
 
     #[doc = "Get a reference to the value of field `input_data_config` after provisioning.\n"]
-    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendEntityRecognizerInputDataConfigElRef> {
+    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendEntityRecognizer_InputDataConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComprehendEntityRecognizerTimeoutsElRef {
-        ComprehendEntityRecognizerTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComprehendEntityRecognizer_TimeoutsRef {
+        ComprehendEntityRecognizer_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendEntityRecognizerVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendEntityRecognizer_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComprehendEntityRecognizerDynamic {
+    input_data_config: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizer_InputDataConfig>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizer_VpcConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct ComprehendEntityRecognizerInputDataConfigElAnnotationsEl {
+pub struct ComprehendEntityRecognizer_InputDataConfig_Annotations {
     s3_uri: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     test_s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElAnnotationsEl {
+impl ComprehendEntityRecognizer_InputDataConfig_Annotations {
     #[doc = "Set the field `test_s3_uri`.\n"]
     pub fn set_test_s3_uri(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.test_s3_uri = std::option::Option::Some(v.into());
@@ -492,8 +522,8 @@ impl ComprehendEntityRecognizerInputDataConfigElAnnotationsEl {
     }
 }
 
-impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElAnnotationsEl {
-    type O = terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElAnnotationsEl>;
+impl terrars::ToListMappable for ComprehendEntityRecognizer_InputDataConfig_Annotations {
+    type O = terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_Annotations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -504,38 +534,40 @@ impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElAnno
     }
 }
 
-pub struct BuildComprehendEntityRecognizerInputDataConfigElAnnotationsEl {
+pub struct BuildComprehendEntityRecognizer_InputDataConfig_Annotations {
     #[doc = ""]
     pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComprehendEntityRecognizerInputDataConfigElAnnotationsEl {
-    pub fn build(self) -> ComprehendEntityRecognizerInputDataConfigElAnnotationsEl {
-        ComprehendEntityRecognizerInputDataConfigElAnnotationsEl {
+impl BuildComprehendEntityRecognizer_InputDataConfig_Annotations {
+    pub fn build(self) -> ComprehendEntityRecognizer_InputDataConfig_Annotations {
+        ComprehendEntityRecognizer_InputDataConfig_Annotations {
             s3_uri: self.s3_uri,
             test_s3_uri: core::default::Default::default(),
         }
     }
 }
 
-pub struct ComprehendEntityRecognizerInputDataConfigElAnnotationsElRef {
+#[allow(dead_code)]
+pub struct ComprehendEntityRecognizer_InputDataConfig_AnnotationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendEntityRecognizerInputDataConfigElAnnotationsElRef {
+impl terrars::Ref for ComprehendEntityRecognizer_InputDataConfig_AnnotationsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComprehendEntityRecognizerInputDataConfigElAnnotationsElRef {
-        ComprehendEntityRecognizerInputDataConfigElAnnotationsElRef {
+    ) -> ComprehendEntityRecognizer_InputDataConfig_AnnotationsRef {
+        ComprehendEntityRecognizer_InputDataConfig_AnnotationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElAnnotationsElRef {
+impl ComprehendEntityRecognizer_InputDataConfig_AnnotationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -552,7 +584,7 @@ impl ComprehendEntityRecognizerInputDataConfigElAnnotationsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
+pub struct ComprehendEntityRecognizer_InputDataConfig_AugmentedManifests {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     annotation_data_s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     attribute_names: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -565,7 +597,7 @@ pub struct ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
     split: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
+impl ComprehendEntityRecognizer_InputDataConfig_AugmentedManifests {
     #[doc = "Set the field `annotation_data_s3_uri`.\n"]
     pub fn set_annotation_data_s3_uri(
         mut self,
@@ -597,8 +629,8 @@ impl ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
     }
 }
 
-impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
-    type O = terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl>;
+impl terrars::ToListMappable for ComprehendEntityRecognizer_InputDataConfig_AugmentedManifests {
+    type O = terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_AugmentedManifests>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -609,16 +641,16 @@ impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElAugm
     }
 }
 
-pub struct BuildComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
+pub struct BuildComprehendEntityRecognizer_InputDataConfig_AugmentedManifests {
     #[doc = ""]
     pub attribute_names: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
-    pub fn build(self) -> ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
-        ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
+impl BuildComprehendEntityRecognizer_InputDataConfig_AugmentedManifests {
+    pub fn build(self) -> ComprehendEntityRecognizer_InputDataConfig_AugmentedManifests {
+        ComprehendEntityRecognizer_InputDataConfig_AugmentedManifests {
             annotation_data_s3_uri: core::default::Default::default(),
             attribute_names: self.attribute_names,
             document_type: core::default::Default::default(),
@@ -629,24 +661,26 @@ impl BuildComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl {
     }
 }
 
-pub struct ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsElRef {
+#[allow(dead_code)]
+pub struct ComprehendEntityRecognizer_InputDataConfig_AugmentedManifestsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsElRef {
+impl terrars::Ref for ComprehendEntityRecognizer_InputDataConfig_AugmentedManifestsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsElRef {
-        ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsElRef {
+    ) -> ComprehendEntityRecognizer_InputDataConfig_AugmentedManifestsRef {
+        ComprehendEntityRecognizer_InputDataConfig_AugmentedManifestsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsElRef {
+impl ComprehendEntityRecognizer_InputDataConfig_AugmentedManifestsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -683,7 +717,7 @@ impl ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComprehendEntityRecognizerInputDataConfigElDocumentsEl {
+pub struct ComprehendEntityRecognizer_InputDataConfig_Documents {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     input_format: std::option::Option<terrars::PrimField<std::string::String>>,
     s3_uri: terrars::PrimField<std::string::String>,
@@ -691,7 +725,7 @@ pub struct ComprehendEntityRecognizerInputDataConfigElDocumentsEl {
     test_s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElDocumentsEl {
+impl ComprehendEntityRecognizer_InputDataConfig_Documents {
     #[doc = "Set the field `input_format`.\n"]
     pub fn set_input_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.input_format = std::option::Option::Some(v.into());
@@ -705,8 +739,8 @@ impl ComprehendEntityRecognizerInputDataConfigElDocumentsEl {
     }
 }
 
-impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElDocumentsEl {
-    type O = terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElDocumentsEl>;
+impl terrars::ToListMappable for ComprehendEntityRecognizer_InputDataConfig_Documents {
+    type O = terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_Documents>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -717,14 +751,14 @@ impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElDocu
     }
 }
 
-pub struct BuildComprehendEntityRecognizerInputDataConfigElDocumentsEl {
+pub struct BuildComprehendEntityRecognizer_InputDataConfig_Documents {
     #[doc = ""]
     pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComprehendEntityRecognizerInputDataConfigElDocumentsEl {
-    pub fn build(self) -> ComprehendEntityRecognizerInputDataConfigElDocumentsEl {
-        ComprehendEntityRecognizerInputDataConfigElDocumentsEl {
+impl BuildComprehendEntityRecognizer_InputDataConfig_Documents {
+    pub fn build(self) -> ComprehendEntityRecognizer_InputDataConfig_Documents {
+        ComprehendEntityRecognizer_InputDataConfig_Documents {
             input_format: core::default::Default::default(),
             s3_uri: self.s3_uri,
             test_s3_uri: core::default::Default::default(),
@@ -732,24 +766,26 @@ impl BuildComprehendEntityRecognizerInputDataConfigElDocumentsEl {
     }
 }
 
-pub struct ComprehendEntityRecognizerInputDataConfigElDocumentsElRef {
+#[allow(dead_code)]
+pub struct ComprehendEntityRecognizer_InputDataConfig_DocumentsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendEntityRecognizerInputDataConfigElDocumentsElRef {
+impl terrars::Ref for ComprehendEntityRecognizer_InputDataConfig_DocumentsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComprehendEntityRecognizerInputDataConfigElDocumentsElRef {
-        ComprehendEntityRecognizerInputDataConfigElDocumentsElRef {
+    ) -> ComprehendEntityRecognizer_InputDataConfig_DocumentsRef {
+        ComprehendEntityRecognizer_InputDataConfig_DocumentsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElDocumentsElRef {
+impl ComprehendEntityRecognizer_InputDataConfig_DocumentsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -771,14 +807,14 @@ impl ComprehendEntityRecognizerInputDataConfigElDocumentsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComprehendEntityRecognizerInputDataConfigElEntityListEl {
+pub struct ComprehendEntityRecognizer_InputDataConfig_EntityList {
     s3_uri: terrars::PrimField<std::string::String>,
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElEntityListEl { }
+impl ComprehendEntityRecognizer_InputDataConfig_EntityList { }
 
-impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElEntityListEl {
-    type O = terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElEntityListEl>;
+impl terrars::ToListMappable for ComprehendEntityRecognizer_InputDataConfig_EntityList {
+    type O = terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_EntityList>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -789,35 +825,37 @@ impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElEnti
     }
 }
 
-pub struct BuildComprehendEntityRecognizerInputDataConfigElEntityListEl {
+pub struct BuildComprehendEntityRecognizer_InputDataConfig_EntityList {
     #[doc = ""]
     pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComprehendEntityRecognizerInputDataConfigElEntityListEl {
-    pub fn build(self) -> ComprehendEntityRecognizerInputDataConfigElEntityListEl {
-        ComprehendEntityRecognizerInputDataConfigElEntityListEl { s3_uri: self.s3_uri }
+impl BuildComprehendEntityRecognizer_InputDataConfig_EntityList {
+    pub fn build(self) -> ComprehendEntityRecognizer_InputDataConfig_EntityList {
+        ComprehendEntityRecognizer_InputDataConfig_EntityList { s3_uri: self.s3_uri }
     }
 }
 
-pub struct ComprehendEntityRecognizerInputDataConfigElEntityListElRef {
+#[allow(dead_code)]
+pub struct ComprehendEntityRecognizer_InputDataConfig_EntityListRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendEntityRecognizerInputDataConfigElEntityListElRef {
+impl terrars::Ref for ComprehendEntityRecognizer_InputDataConfig_EntityListRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComprehendEntityRecognizerInputDataConfigElEntityListElRef {
-        ComprehendEntityRecognizerInputDataConfigElEntityListElRef {
+    ) -> ComprehendEntityRecognizer_InputDataConfig_EntityListRef {
+        ComprehendEntityRecognizer_InputDataConfig_EntityListRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElEntityListElRef {
+impl ComprehendEntityRecognizer_InputDataConfig_EntityListRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -829,15 +867,15 @@ impl ComprehendEntityRecognizerInputDataConfigElEntityListElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComprehendEntityRecognizerInputDataConfigElEntityTypesEl {
+pub struct ComprehendEntityRecognizer_InputDataConfig_EntityTypes {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElEntityTypesEl { }
+impl ComprehendEntityRecognizer_InputDataConfig_EntityTypes { }
 
-impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElEntityTypesEl {
-    type O = terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElEntityTypesEl>;
+impl terrars::ToListMappable for ComprehendEntityRecognizer_InputDataConfig_EntityTypes {
+    type O = terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_EntityTypes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -848,35 +886,37 @@ impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigElEnti
     }
 }
 
-pub struct BuildComprehendEntityRecognizerInputDataConfigElEntityTypesEl {
+pub struct BuildComprehendEntityRecognizer_InputDataConfig_EntityTypes {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComprehendEntityRecognizerInputDataConfigElEntityTypesEl {
-    pub fn build(self) -> ComprehendEntityRecognizerInputDataConfigElEntityTypesEl {
-        ComprehendEntityRecognizerInputDataConfigElEntityTypesEl { type_: self.type_ }
+impl BuildComprehendEntityRecognizer_InputDataConfig_EntityTypes {
+    pub fn build(self) -> ComprehendEntityRecognizer_InputDataConfig_EntityTypes {
+        ComprehendEntityRecognizer_InputDataConfig_EntityTypes { type_: self.type_ }
     }
 }
 
-pub struct ComprehendEntityRecognizerInputDataConfigElEntityTypesElRef {
+#[allow(dead_code)]
+pub struct ComprehendEntityRecognizer_InputDataConfig_EntityTypesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendEntityRecognizerInputDataConfigElEntityTypesElRef {
+impl terrars::Ref for ComprehendEntityRecognizer_InputDataConfig_EntityTypesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComprehendEntityRecognizerInputDataConfigElEntityTypesElRef {
-        ComprehendEntityRecognizerInputDataConfigElEntityTypesElRef {
+    ) -> ComprehendEntityRecognizer_InputDataConfig_EntityTypesRef {
+        ComprehendEntityRecognizer_InputDataConfig_EntityTypesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElEntityTypesElRef {
+impl ComprehendEntityRecognizer_InputDataConfig_EntityTypesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -888,38 +928,38 @@ impl ComprehendEntityRecognizerInputDataConfigElEntityTypesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComprehendEntityRecognizerInputDataConfigElDynamic {
-    annotations: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizerInputDataConfigElAnnotationsEl>>,
+struct ComprehendEntityRecognizer_InputDataConfigDynamic {
+    annotations: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizer_InputDataConfig_Annotations>>,
     augmented_manifests: std
     ::option
-    ::Option<terrars::DynamicBlock<ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl>>,
-    documents: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizerInputDataConfigElDocumentsEl>>,
-    entity_list: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizerInputDataConfigElEntityListEl>>,
+    ::Option<terrars::DynamicBlock<ComprehendEntityRecognizer_InputDataConfig_AugmentedManifests>>,
+    documents: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizer_InputDataConfig_Documents>>,
+    entity_list: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizer_InputDataConfig_EntityList>>,
     entity_types: std
     ::option
-    ::Option<terrars::DynamicBlock<ComprehendEntityRecognizerInputDataConfigElEntityTypesEl>>,
+    ::Option<terrars::DynamicBlock<ComprehendEntityRecognizer_InputDataConfig_EntityTypes>>,
 }
 
 #[derive(Serialize)]
-pub struct ComprehendEntityRecognizerInputDataConfigEl {
+pub struct ComprehendEntityRecognizer_InputDataConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    annotations: std::option::Option<std::vec::Vec<ComprehendEntityRecognizerInputDataConfigElAnnotationsEl>>,
+    annotations: std::option::Option<std::vec::Vec<ComprehendEntityRecognizer_InputDataConfig_Annotations>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     augmented_manifests: std
     ::option
-    ::Option<std::vec::Vec<ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl>>,
+    ::Option<std::vec::Vec<ComprehendEntityRecognizer_InputDataConfig_AugmentedManifests>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    documents: std::option::Option<std::vec::Vec<ComprehendEntityRecognizerInputDataConfigElDocumentsEl>>,
+    documents: std::option::Option<std::vec::Vec<ComprehendEntityRecognizer_InputDataConfig_Documents>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    entity_list: std::option::Option<std::vec::Vec<ComprehendEntityRecognizerInputDataConfigElEntityListEl>>,
+    entity_list: std::option::Option<std::vec::Vec<ComprehendEntityRecognizer_InputDataConfig_EntityList>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    entity_types: std::option::Option<std::vec::Vec<ComprehendEntityRecognizerInputDataConfigElEntityTypesEl>>,
-    dynamic: ComprehendEntityRecognizerInputDataConfigElDynamic,
+    entity_types: std::option::Option<std::vec::Vec<ComprehendEntityRecognizer_InputDataConfig_EntityTypes>>,
+    dynamic: ComprehendEntityRecognizer_InputDataConfigDynamic,
 }
 
-impl ComprehendEntityRecognizerInputDataConfigEl {
+impl ComprehendEntityRecognizer_InputDataConfig {
     #[doc = "Set the field `data_format`.\n"]
     pub fn set_data_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data_format = std::option::Option::Some(v.into());
@@ -929,12 +969,7 @@ impl ComprehendEntityRecognizerInputDataConfigEl {
     #[doc = "Set the field `annotations`.\n"]
     pub fn set_annotations(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElAnnotationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_Annotations>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -955,7 +990,7 @@ impl ComprehendEntityRecognizerInputDataConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElAugmentedManifestsEl>>,
+                    ::Into<terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_AugmentedManifests>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -971,7 +1006,7 @@ impl ComprehendEntityRecognizerInputDataConfigEl {
     #[doc = "Set the field `documents`.\n"]
     pub fn set_documents(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElDocumentsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_Documents>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -987,12 +1022,7 @@ impl ComprehendEntityRecognizerInputDataConfigEl {
     #[doc = "Set the field `entity_list`.\n"]
     pub fn set_entity_list(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElEntityListEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_EntityList>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1008,12 +1038,7 @@ impl ComprehendEntityRecognizerInputDataConfigEl {
     #[doc = "Set the field `entity_types`.\n"]
     pub fn set_entity_types(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigElEntityTypesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig_EntityTypes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1027,8 +1052,8 @@ impl ComprehendEntityRecognizerInputDataConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigEl {
-    type O = terrars::BlockAssignable<ComprehendEntityRecognizerInputDataConfigEl>;
+impl terrars::ToListMappable for ComprehendEntityRecognizer_InputDataConfig {
+    type O = terrars::BlockAssignable<ComprehendEntityRecognizer_InputDataConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1039,11 +1064,11 @@ impl terrars::ToListMappable for ComprehendEntityRecognizerInputDataConfigEl {
     }
 }
 
-pub struct BuildComprehendEntityRecognizerInputDataConfigEl {}
+pub struct BuildComprehendEntityRecognizer_InputDataConfig {}
 
-impl BuildComprehendEntityRecognizerInputDataConfigEl {
-    pub fn build(self) -> ComprehendEntityRecognizerInputDataConfigEl {
-        ComprehendEntityRecognizerInputDataConfigEl {
+impl BuildComprehendEntityRecognizer_InputDataConfig {
+    pub fn build(self) -> ComprehendEntityRecognizer_InputDataConfig {
+        ComprehendEntityRecognizer_InputDataConfig {
             data_format: core::default::Default::default(),
             annotations: core::default::Default::default(),
             augmented_manifests: core::default::Default::default(),
@@ -1055,24 +1080,23 @@ impl BuildComprehendEntityRecognizerInputDataConfigEl {
     }
 }
 
-pub struct ComprehendEntityRecognizerInputDataConfigElRef {
+#[allow(dead_code)]
+pub struct ComprehendEntityRecognizer_InputDataConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendEntityRecognizerInputDataConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ComprehendEntityRecognizerInputDataConfigElRef {
-        ComprehendEntityRecognizerInputDataConfigElRef {
+impl terrars::Ref for ComprehendEntityRecognizer_InputDataConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendEntityRecognizer_InputDataConfigRef {
+        ComprehendEntityRecognizer_InputDataConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendEntityRecognizerInputDataConfigElRef {
+impl ComprehendEntityRecognizer_InputDataConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1083,23 +1107,23 @@ impl ComprehendEntityRecognizerInputDataConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `annotations` after provisioning.\n"]
-    pub fn annotations(&self) -> terrars::ListRef<ComprehendEntityRecognizerInputDataConfigElAnnotationsElRef> {
+    pub fn annotations(&self) -> terrars::ListRef<ComprehendEntityRecognizer_InputDataConfig_AnnotationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.annotations", self.base))
     }
 
     #[doc = "Get a reference to the value of field `documents` after provisioning.\n"]
-    pub fn documents(&self) -> terrars::ListRef<ComprehendEntityRecognizerInputDataConfigElDocumentsElRef> {
+    pub fn documents(&self) -> terrars::ListRef<ComprehendEntityRecognizer_InputDataConfig_DocumentsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.documents", self.base))
     }
 
     #[doc = "Get a reference to the value of field `entity_list` after provisioning.\n"]
-    pub fn entity_list(&self) -> terrars::ListRef<ComprehendEntityRecognizerInputDataConfigElEntityListElRef> {
+    pub fn entity_list(&self) -> terrars::ListRef<ComprehendEntityRecognizer_InputDataConfig_EntityListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.entity_list", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ComprehendEntityRecognizerTimeoutsEl {
+pub struct ComprehendEntityRecognizer_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1108,7 +1132,7 @@ pub struct ComprehendEntityRecognizerTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComprehendEntityRecognizerTimeoutsEl {
+impl ComprehendEntityRecognizer_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1128,8 +1152,8 @@ impl ComprehendEntityRecognizerTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComprehendEntityRecognizerTimeoutsEl {
-    type O = terrars::BlockAssignable<ComprehendEntityRecognizerTimeoutsEl>;
+impl terrars::ToListMappable for ComprehendEntityRecognizer_Timeouts {
+    type O = terrars::BlockAssignable<ComprehendEntityRecognizer_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1140,11 +1164,11 @@ impl terrars::ToListMappable for ComprehendEntityRecognizerTimeoutsEl {
     }
 }
 
-pub struct BuildComprehendEntityRecognizerTimeoutsEl {}
+pub struct BuildComprehendEntityRecognizer_Timeouts {}
 
-impl BuildComprehendEntityRecognizerTimeoutsEl {
-    pub fn build(self) -> ComprehendEntityRecognizerTimeoutsEl {
-        ComprehendEntityRecognizerTimeoutsEl {
+impl BuildComprehendEntityRecognizer_Timeouts {
+    pub fn build(self) -> ComprehendEntityRecognizer_Timeouts {
+        ComprehendEntityRecognizer_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1152,21 +1176,23 @@ impl BuildComprehendEntityRecognizerTimeoutsEl {
     }
 }
 
-pub struct ComprehendEntityRecognizerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComprehendEntityRecognizer_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendEntityRecognizerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendEntityRecognizerTimeoutsElRef {
-        ComprehendEntityRecognizerTimeoutsElRef {
+impl terrars::Ref for ComprehendEntityRecognizer_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendEntityRecognizer_TimeoutsRef {
+        ComprehendEntityRecognizer_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendEntityRecognizerTimeoutsElRef {
+impl ComprehendEntityRecognizer_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1188,15 +1214,15 @@ impl ComprehendEntityRecognizerTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComprehendEntityRecognizerVpcConfigEl {
+pub struct ComprehendEntityRecognizer_VpcConfig {
     security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl ComprehendEntityRecognizerVpcConfigEl { }
+impl ComprehendEntityRecognizer_VpcConfig { }
 
-impl terrars::ToListMappable for ComprehendEntityRecognizerVpcConfigEl {
-    type O = terrars::BlockAssignable<ComprehendEntityRecognizerVpcConfigEl>;
+impl terrars::ToListMappable for ComprehendEntityRecognizer_VpcConfig {
+    type O = terrars::BlockAssignable<ComprehendEntityRecognizer_VpcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1207,37 +1233,39 @@ impl terrars::ToListMappable for ComprehendEntityRecognizerVpcConfigEl {
     }
 }
 
-pub struct BuildComprehendEntityRecognizerVpcConfigEl {
+pub struct BuildComprehendEntityRecognizer_VpcConfig {
     #[doc = ""]
     pub security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildComprehendEntityRecognizerVpcConfigEl {
-    pub fn build(self) -> ComprehendEntityRecognizerVpcConfigEl {
-        ComprehendEntityRecognizerVpcConfigEl {
+impl BuildComprehendEntityRecognizer_VpcConfig {
+    pub fn build(self) -> ComprehendEntityRecognizer_VpcConfig {
+        ComprehendEntityRecognizer_VpcConfig {
             security_group_ids: self.security_group_ids,
             subnets: self.subnets,
         }
     }
 }
 
-pub struct ComprehendEntityRecognizerVpcConfigElRef {
+#[allow(dead_code)]
+pub struct ComprehendEntityRecognizer_VpcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendEntityRecognizerVpcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendEntityRecognizerVpcConfigElRef {
-        ComprehendEntityRecognizerVpcConfigElRef {
+impl terrars::Ref for ComprehendEntityRecognizer_VpcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendEntityRecognizer_VpcConfigRef {
+        ComprehendEntityRecognizer_VpcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendEntityRecognizerVpcConfigElRef {
+impl ComprehendEntityRecognizer_VpcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1251,10 +1279,4 @@ impl ComprehendEntityRecognizerVpcConfigElRef {
     pub fn subnets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnets", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComprehendEntityRecognizerDynamic {
-    input_data_config: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizerInputDataConfigEl>>,
-    vpc_config: std::option::Option<terrars::DynamicBlock<ComprehendEntityRecognizerVpcConfigEl>>,
 }

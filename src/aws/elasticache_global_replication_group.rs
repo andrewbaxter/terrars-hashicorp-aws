@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ElasticacheGlobalReplicationGroupData {
+struct ElasticacheGlobalReplicationGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct ElasticacheGlobalReplicationGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_node_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    engine: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     global_replication_group_description: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -35,13 +39,15 @@ struct ElasticacheGlobalReplicationGroupData {
     parameter_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     primary_replication_group_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ElasticacheGlobalReplicationGroupTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ElasticacheGlobalReplicationGroup_Timeouts>,
 }
 
 struct ElasticacheGlobalReplicationGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ElasticacheGlobalReplicationGroupData>,
+    data: std::cell::RefCell<ElasticacheGlobalReplicationGroupData_>,
 }
 
 #[derive(Clone)]
@@ -153,6 +159,12 @@ impl ElasticacheGlobalReplicationGroup {
         self
     }
 
+    #[doc = "Set the field `engine`.\n"]
+    pub fn set_engine(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().engine = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `engine_version`.\n"]
     pub fn set_engine_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().engine_version = std::option::Option::Some(v.into());
@@ -186,8 +198,15 @@ impl ElasticacheGlobalReplicationGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ElasticacheGlobalReplicationGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ElasticacheGlobalReplicationGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -238,7 +257,7 @@ impl ElasticacheGlobalReplicationGroup {
     }
 
     #[doc = "Get a reference to the value of field `global_node_groups` after provisioning.\n"]
-    pub fn global_node_groups(&self) -> terrars::SetRef<ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef> {
+    pub fn global_node_groups(&self) -> terrars::SetRef<ElasticacheGlobalReplicationGroup_GlobalNodeGroupsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.global_node_groups", self.extract_ref()))
     }
 
@@ -283,14 +302,20 @@ impl ElasticacheGlobalReplicationGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_replication_group_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `transit_encryption_enabled` after provisioning.\n"]
     pub fn transit_encryption_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_encryption_enabled", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ElasticacheGlobalReplicationGroupTimeoutsElRef {
-        ElasticacheGlobalReplicationGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ElasticacheGlobalReplicationGroup_TimeoutsRef {
+        ElasticacheGlobalReplicationGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -341,7 +366,7 @@ impl BuildElasticacheGlobalReplicationGroup {
         let out = ElasticacheGlobalReplicationGroup(std::rc::Rc::new(ElasticacheGlobalReplicationGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ElasticacheGlobalReplicationGroupData {
+            data: std::cell::RefCell::new(ElasticacheGlobalReplicationGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -349,6 +374,7 @@ impl BuildElasticacheGlobalReplicationGroup {
                 provisioner: core::default::Default::default(),
                 automatic_failover_enabled: core::default::Default::default(),
                 cache_node_type: core::default::Default::default(),
+                engine: core::default::Default::default(),
                 engine_version: core::default::Default::default(),
                 global_replication_group_description: core::default::Default::default(),
                 global_replication_group_id_suffix: self.global_replication_group_id_suffix,
@@ -356,6 +382,7 @@ impl BuildElasticacheGlobalReplicationGroup {
                 num_node_groups: core::default::Default::default(),
                 parameter_group_name: core::default::Default::default(),
                 primary_replication_group_id: self.primary_replication_group_id,
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -433,7 +460,7 @@ impl ElasticacheGlobalReplicationGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `global_node_groups` after provisioning.\n"]
-    pub fn global_node_groups(&self) -> terrars::SetRef<ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef> {
+    pub fn global_node_groups(&self) -> terrars::SetRef<ElasticacheGlobalReplicationGroup_GlobalNodeGroupsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.global_node_groups", self.extract_ref()))
     }
 
@@ -478,14 +505,20 @@ impl ElasticacheGlobalReplicationGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.primary_replication_group_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `transit_encryption_enabled` after provisioning.\n"]
     pub fn transit_encryption_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_encryption_enabled", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ElasticacheGlobalReplicationGroupTimeoutsElRef {
-        ElasticacheGlobalReplicationGroupTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ElasticacheGlobalReplicationGroup_TimeoutsRef {
+        ElasticacheGlobalReplicationGroup_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -493,14 +526,14 @@ impl ElasticacheGlobalReplicationGroupRef {
 }
 
 #[derive(Serialize)]
-pub struct ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
+pub struct ElasticacheGlobalReplicationGroup_GlobalNodeGroups {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     global_node_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     slots: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
+impl ElasticacheGlobalReplicationGroup_GlobalNodeGroups {
     #[doc = "Set the field `global_node_group_id`.\n"]
     pub fn set_global_node_group_id(
         mut self,
@@ -517,8 +550,8 @@ impl ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
     }
 }
 
-impl terrars::ToListMappable for ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
-    type O = terrars::BlockAssignable<ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl>;
+impl terrars::ToListMappable for ElasticacheGlobalReplicationGroup_GlobalNodeGroups {
+    type O = terrars::BlockAssignable<ElasticacheGlobalReplicationGroup_GlobalNodeGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -529,35 +562,37 @@ impl terrars::ToListMappable for ElasticacheGlobalReplicationGroupGlobalNodeGrou
     }
 }
 
-pub struct BuildElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {}
+pub struct BuildElasticacheGlobalReplicationGroup_GlobalNodeGroups {}
 
-impl BuildElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
-    pub fn build(self) -> ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
-        ElasticacheGlobalReplicationGroupGlobalNodeGroupsEl {
+impl BuildElasticacheGlobalReplicationGroup_GlobalNodeGroups {
+    pub fn build(self) -> ElasticacheGlobalReplicationGroup_GlobalNodeGroups {
+        ElasticacheGlobalReplicationGroup_GlobalNodeGroups {
             global_node_group_id: core::default::Default::default(),
             slots: core::default::Default::default(),
         }
     }
 }
 
-pub struct ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
+#[allow(dead_code)]
+pub struct ElasticacheGlobalReplicationGroup_GlobalNodeGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
+impl terrars::Ref for ElasticacheGlobalReplicationGroup_GlobalNodeGroupsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
-        ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
+    ) -> ElasticacheGlobalReplicationGroup_GlobalNodeGroupsRef {
+        ElasticacheGlobalReplicationGroup_GlobalNodeGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
+impl ElasticacheGlobalReplicationGroup_GlobalNodeGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -574,7 +609,7 @@ impl ElasticacheGlobalReplicationGroupGlobalNodeGroupsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElasticacheGlobalReplicationGroupTimeoutsEl {
+pub struct ElasticacheGlobalReplicationGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -583,7 +618,7 @@ pub struct ElasticacheGlobalReplicationGroupTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElasticacheGlobalReplicationGroupTimeoutsEl {
+impl ElasticacheGlobalReplicationGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -603,8 +638,8 @@ impl ElasticacheGlobalReplicationGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ElasticacheGlobalReplicationGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<ElasticacheGlobalReplicationGroupTimeoutsEl>;
+impl terrars::ToListMappable for ElasticacheGlobalReplicationGroup_Timeouts {
+    type O = terrars::BlockAssignable<ElasticacheGlobalReplicationGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -615,11 +650,11 @@ impl terrars::ToListMappable for ElasticacheGlobalReplicationGroupTimeoutsEl {
     }
 }
 
-pub struct BuildElasticacheGlobalReplicationGroupTimeoutsEl {}
+pub struct BuildElasticacheGlobalReplicationGroup_Timeouts {}
 
-impl BuildElasticacheGlobalReplicationGroupTimeoutsEl {
-    pub fn build(self) -> ElasticacheGlobalReplicationGroupTimeoutsEl {
-        ElasticacheGlobalReplicationGroupTimeoutsEl {
+impl BuildElasticacheGlobalReplicationGroup_Timeouts {
+    pub fn build(self) -> ElasticacheGlobalReplicationGroup_Timeouts {
+        ElasticacheGlobalReplicationGroup_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -627,24 +662,23 @@ impl BuildElasticacheGlobalReplicationGroupTimeoutsEl {
     }
 }
 
-pub struct ElasticacheGlobalReplicationGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ElasticacheGlobalReplicationGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElasticacheGlobalReplicationGroupTimeoutsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ElasticacheGlobalReplicationGroupTimeoutsElRef {
-        ElasticacheGlobalReplicationGroupTimeoutsElRef {
+impl terrars::Ref for ElasticacheGlobalReplicationGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticacheGlobalReplicationGroup_TimeoutsRef {
+        ElasticacheGlobalReplicationGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElasticacheGlobalReplicationGroupTimeoutsElRef {
+impl ElasticacheGlobalReplicationGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

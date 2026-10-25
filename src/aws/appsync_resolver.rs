@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppsyncResolverData {
+struct AppsyncResolverData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,26 +33,28 @@ struct AppsyncResolverData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_batch_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_template: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_template: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    caching_config: std::option::Option<std::vec::Vec<AppsyncResolverCachingConfigEl>>,
+    caching_config: std::option::Option<std::vec::Vec<AppsyncResolver_CachingConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pipeline_config: std::option::Option<std::vec::Vec<AppsyncResolverPipelineConfigEl>>,
+    pipeline_config: std::option::Option<std::vec::Vec<AppsyncResolver_PipelineConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    runtime: std::option::Option<std::vec::Vec<AppsyncResolverRuntimeEl>>,
+    runtime: std::option::Option<std::vec::Vec<AppsyncResolver_Runtime>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sync_config: std::option::Option<std::vec::Vec<AppsyncResolverSyncConfigEl>>,
+    sync_config: std::option::Option<std::vec::Vec<AppsyncResolver_SyncConfig>>,
     dynamic: AppsyncResolverDynamic,
 }
 
 struct AppsyncResolver_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppsyncResolverData>,
+    data: std::cell::RefCell<AppsyncResolverData_>,
 }
 
 #[derive(Clone)]
@@ -180,6 +184,13 @@ impl AppsyncResolver {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `request_template`.\n"]
     pub fn set_request_template(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().request_template = std::option::Option::Some(v.into());
@@ -195,7 +206,7 @@ impl AppsyncResolver {
     #[doc = "Set the field `caching_config`.\n"]
     pub fn set_caching_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncResolverCachingConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncResolver_CachingConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -211,7 +222,7 @@ impl AppsyncResolver {
     #[doc = "Set the field `pipeline_config`.\n"]
     pub fn set_pipeline_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncResolverPipelineConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncResolver_PipelineConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -225,7 +236,7 @@ impl AppsyncResolver {
     }
 
     #[doc = "Set the field `runtime`.\n"]
-    pub fn set_runtime(self, v: impl std::convert::Into<terrars::BlockAssignable<AppsyncResolverRuntimeEl>>) -> Self {
+    pub fn set_runtime(self, v: impl std::convert::Into<terrars::BlockAssignable<AppsyncResolver_Runtime>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().runtime = std::option::Option::Some(v);
@@ -240,7 +251,7 @@ impl AppsyncResolver {
     #[doc = "Set the field `sync_config`.\n"]
     pub fn set_sync_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncResolverSyncConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncResolver_SyncConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -293,6 +304,12 @@ impl AppsyncResolver {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_batch_size", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `request_template` after provisioning.\n"]
     pub fn request_template(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.request_template", self.extract_ref()))
@@ -309,22 +326,22 @@ impl AppsyncResolver {
     }
 
     #[doc = "Get a reference to the value of field `caching_config` after provisioning.\n"]
-    pub fn caching_config(&self) -> terrars::ListRef<AppsyncResolverCachingConfigElRef> {
+    pub fn caching_config(&self) -> terrars::ListRef<AppsyncResolver_CachingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.caching_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `pipeline_config` after provisioning.\n"]
-    pub fn pipeline_config(&self) -> terrars::ListRef<AppsyncResolverPipelineConfigElRef> {
+    pub fn pipeline_config(&self) -> terrars::ListRef<AppsyncResolver_PipelineConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pipeline_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `runtime` after provisioning.\n"]
-    pub fn runtime(&self) -> terrars::ListRef<AppsyncResolverRuntimeElRef> {
+    pub fn runtime(&self) -> terrars::ListRef<AppsyncResolver_RuntimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.runtime", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sync_config` after provisioning.\n"]
-    pub fn sync_config(&self) -> terrars::ListRef<AppsyncResolverSyncConfigElRef> {
+    pub fn sync_config(&self) -> terrars::ListRef<AppsyncResolver_SyncConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sync_config", self.extract_ref()))
     }
 }
@@ -375,7 +392,7 @@ impl BuildAppsyncResolver {
         let out = AppsyncResolver(std::rc::Rc::new(AppsyncResolver_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppsyncResolverData {
+            data: std::cell::RefCell::new(AppsyncResolverData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -388,6 +405,7 @@ impl BuildAppsyncResolver {
                 id: core::default::Default::default(),
                 kind: core::default::Default::default(),
                 max_batch_size: core::default::Default::default(),
+                region: core::default::Default::default(),
                 request_template: core::default::Default::default(),
                 response_template: core::default::Default::default(),
                 type_: self.type_,
@@ -466,6 +484,12 @@ impl AppsyncResolverRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_batch_size", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `request_template` after provisioning.\n"]
     pub fn request_template(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.request_template", self.extract_ref()))
@@ -482,35 +506,43 @@ impl AppsyncResolverRef {
     }
 
     #[doc = "Get a reference to the value of field `caching_config` after provisioning.\n"]
-    pub fn caching_config(&self) -> terrars::ListRef<AppsyncResolverCachingConfigElRef> {
+    pub fn caching_config(&self) -> terrars::ListRef<AppsyncResolver_CachingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.caching_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `pipeline_config` after provisioning.\n"]
-    pub fn pipeline_config(&self) -> terrars::ListRef<AppsyncResolverPipelineConfigElRef> {
+    pub fn pipeline_config(&self) -> terrars::ListRef<AppsyncResolver_PipelineConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pipeline_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `runtime` after provisioning.\n"]
-    pub fn runtime(&self) -> terrars::ListRef<AppsyncResolverRuntimeElRef> {
+    pub fn runtime(&self) -> terrars::ListRef<AppsyncResolver_RuntimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.runtime", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sync_config` after provisioning.\n"]
-    pub fn sync_config(&self) -> terrars::ListRef<AppsyncResolverSyncConfigElRef> {
+    pub fn sync_config(&self) -> terrars::ListRef<AppsyncResolver_SyncConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sync_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppsyncResolverDynamic {
+    caching_config: std::option::Option<terrars::DynamicBlock<AppsyncResolver_CachingConfig>>,
+    pipeline_config: std::option::Option<terrars::DynamicBlock<AppsyncResolver_PipelineConfig>>,
+    runtime: std::option::Option<terrars::DynamicBlock<AppsyncResolver_Runtime>>,
+    sync_config: std::option::Option<terrars::DynamicBlock<AppsyncResolver_SyncConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct AppsyncResolverCachingConfigEl {
+pub struct AppsyncResolver_CachingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     caching_keys: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ttl: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AppsyncResolverCachingConfigEl {
+impl AppsyncResolver_CachingConfig {
     #[doc = "Set the field `caching_keys`.\n"]
     pub fn set_caching_keys(
         mut self,
@@ -527,8 +559,8 @@ impl AppsyncResolverCachingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncResolverCachingConfigEl {
-    type O = terrars::BlockAssignable<AppsyncResolverCachingConfigEl>;
+impl terrars::ToListMappable for AppsyncResolver_CachingConfig {
+    type O = terrars::BlockAssignable<AppsyncResolver_CachingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -539,32 +571,34 @@ impl terrars::ToListMappable for AppsyncResolverCachingConfigEl {
     }
 }
 
-pub struct BuildAppsyncResolverCachingConfigEl {}
+pub struct BuildAppsyncResolver_CachingConfig {}
 
-impl BuildAppsyncResolverCachingConfigEl {
-    pub fn build(self) -> AppsyncResolverCachingConfigEl {
-        AppsyncResolverCachingConfigEl {
+impl BuildAppsyncResolver_CachingConfig {
+    pub fn build(self) -> AppsyncResolver_CachingConfig {
+        AppsyncResolver_CachingConfig {
             caching_keys: core::default::Default::default(),
             ttl: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppsyncResolverCachingConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncResolver_CachingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncResolverCachingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncResolverCachingConfigElRef {
-        AppsyncResolverCachingConfigElRef {
+impl terrars::Ref for AppsyncResolver_CachingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncResolver_CachingConfigRef {
+        AppsyncResolver_CachingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncResolverCachingConfigElRef {
+impl AppsyncResolver_CachingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -581,12 +615,12 @@ impl AppsyncResolverCachingConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppsyncResolverPipelineConfigEl {
+pub struct AppsyncResolver_PipelineConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     functions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AppsyncResolverPipelineConfigEl {
+impl AppsyncResolver_PipelineConfig {
     #[doc = "Set the field `functions`.\n"]
     pub fn set_functions(
         mut self,
@@ -597,8 +631,8 @@ impl AppsyncResolverPipelineConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncResolverPipelineConfigEl {
-    type O = terrars::BlockAssignable<AppsyncResolverPipelineConfigEl>;
+impl terrars::ToListMappable for AppsyncResolver_PipelineConfig {
+    type O = terrars::BlockAssignable<AppsyncResolver_PipelineConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -609,29 +643,31 @@ impl terrars::ToListMappable for AppsyncResolverPipelineConfigEl {
     }
 }
 
-pub struct BuildAppsyncResolverPipelineConfigEl {}
+pub struct BuildAppsyncResolver_PipelineConfig {}
 
-impl BuildAppsyncResolverPipelineConfigEl {
-    pub fn build(self) -> AppsyncResolverPipelineConfigEl {
-        AppsyncResolverPipelineConfigEl { functions: core::default::Default::default() }
+impl BuildAppsyncResolver_PipelineConfig {
+    pub fn build(self) -> AppsyncResolver_PipelineConfig {
+        AppsyncResolver_PipelineConfig { functions: core::default::Default::default() }
     }
 }
 
-pub struct AppsyncResolverPipelineConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncResolver_PipelineConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncResolverPipelineConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncResolverPipelineConfigElRef {
-        AppsyncResolverPipelineConfigElRef {
+impl terrars::Ref for AppsyncResolver_PipelineConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncResolver_PipelineConfigRef {
+        AppsyncResolver_PipelineConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncResolverPipelineConfigElRef {
+impl AppsyncResolver_PipelineConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -643,15 +679,15 @@ impl AppsyncResolverPipelineConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppsyncResolverRuntimeEl {
+pub struct AppsyncResolver_Runtime {
     name: terrars::PrimField<std::string::String>,
     runtime_version: terrars::PrimField<std::string::String>,
 }
 
-impl AppsyncResolverRuntimeEl { }
+impl AppsyncResolver_Runtime { }
 
-impl terrars::ToListMappable for AppsyncResolverRuntimeEl {
-    type O = terrars::BlockAssignable<AppsyncResolverRuntimeEl>;
+impl terrars::ToListMappable for AppsyncResolver_Runtime {
+    type O = terrars::BlockAssignable<AppsyncResolver_Runtime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -662,37 +698,39 @@ impl terrars::ToListMappable for AppsyncResolverRuntimeEl {
     }
 }
 
-pub struct BuildAppsyncResolverRuntimeEl {
+pub struct BuildAppsyncResolver_Runtime {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub runtime_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppsyncResolverRuntimeEl {
-    pub fn build(self) -> AppsyncResolverRuntimeEl {
-        AppsyncResolverRuntimeEl {
+impl BuildAppsyncResolver_Runtime {
+    pub fn build(self) -> AppsyncResolver_Runtime {
+        AppsyncResolver_Runtime {
             name: self.name,
             runtime_version: self.runtime_version,
         }
     }
 }
 
-pub struct AppsyncResolverRuntimeElRef {
+#[allow(dead_code)]
+pub struct AppsyncResolver_RuntimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncResolverRuntimeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncResolverRuntimeElRef {
-        AppsyncResolverRuntimeElRef {
+impl terrars::Ref for AppsyncResolver_RuntimeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncResolver_RuntimeRef {
+        AppsyncResolver_RuntimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncResolverRuntimeElRef {
+impl AppsyncResolver_RuntimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -709,12 +747,12 @@ impl AppsyncResolverRuntimeElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl {
+pub struct AppsyncResolver_SyncConfig_LambdaConflictHandlerConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lambda_conflict_handler_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl {
+impl AppsyncResolver_SyncConfig_LambdaConflictHandlerConfig {
     #[doc = "Set the field `lambda_conflict_handler_arn`.\n"]
     pub fn set_lambda_conflict_handler_arn(
         mut self,
@@ -725,8 +763,8 @@ impl AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl {
-    type O = terrars::BlockAssignable<AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl>;
+impl terrars::ToListMappable for AppsyncResolver_SyncConfig_LambdaConflictHandlerConfig {
+    type O = terrars::BlockAssignable<AppsyncResolver_SyncConfig_LambdaConflictHandlerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -737,34 +775,36 @@ impl terrars::ToListMappable for AppsyncResolverSyncConfigElLambdaConflictHandle
     }
 }
 
-pub struct BuildAppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl {}
+pub struct BuildAppsyncResolver_SyncConfig_LambdaConflictHandlerConfig {}
 
-impl BuildAppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl {
-    pub fn build(self) -> AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl {
-        AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl {
+impl BuildAppsyncResolver_SyncConfig_LambdaConflictHandlerConfig {
+    pub fn build(self) -> AppsyncResolver_SyncConfig_LambdaConflictHandlerConfig {
+        AppsyncResolver_SyncConfig_LambdaConflictHandlerConfig {
             lambda_conflict_handler_arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppsyncResolverSyncConfigElLambdaConflictHandlerConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncResolver_SyncConfig_LambdaConflictHandlerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncResolverSyncConfigElLambdaConflictHandlerConfigElRef {
+impl terrars::Ref for AppsyncResolver_SyncConfig_LambdaConflictHandlerConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppsyncResolverSyncConfigElLambdaConflictHandlerConfigElRef {
-        AppsyncResolverSyncConfigElLambdaConflictHandlerConfigElRef {
+    ) -> AppsyncResolver_SyncConfig_LambdaConflictHandlerConfigRef {
+        AppsyncResolver_SyncConfig_LambdaConflictHandlerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncResolverSyncConfigElLambdaConflictHandlerConfigElRef {
+impl AppsyncResolver_SyncConfig_LambdaConflictHandlerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -776,14 +816,14 @@ impl AppsyncResolverSyncConfigElLambdaConflictHandlerConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AppsyncResolverSyncConfigElDynamic {
+struct AppsyncResolver_SyncConfigDynamic {
     lambda_conflict_handler_config: std
     ::option
-    ::Option<terrars::DynamicBlock<AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl>>,
+    ::Option<terrars::DynamicBlock<AppsyncResolver_SyncConfig_LambdaConflictHandlerConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct AppsyncResolverSyncConfigEl {
+pub struct AppsyncResolver_SyncConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     conflict_detection: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -791,11 +831,11 @@ pub struct AppsyncResolverSyncConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lambda_conflict_handler_config: std
     ::option
-    ::Option<std::vec::Vec<AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl>>,
-    dynamic: AppsyncResolverSyncConfigElDynamic,
+    ::Option<std::vec::Vec<AppsyncResolver_SyncConfig_LambdaConflictHandlerConfig>>,
+    dynamic: AppsyncResolver_SyncConfigDynamic,
 }
 
-impl AppsyncResolverSyncConfigEl {
+impl AppsyncResolver_SyncConfig {
     #[doc = "Set the field `conflict_detection`.\n"]
     pub fn set_conflict_detection(
         mut self,
@@ -814,12 +854,7 @@ impl AppsyncResolverSyncConfigEl {
     #[doc = "Set the field `lambda_conflict_handler_config`.\n"]
     pub fn set_lambda_conflict_handler_config(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<AppsyncResolverSyncConfigElLambdaConflictHandlerConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppsyncResolver_SyncConfig_LambdaConflictHandlerConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -833,8 +868,8 @@ impl AppsyncResolverSyncConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppsyncResolverSyncConfigEl {
-    type O = terrars::BlockAssignable<AppsyncResolverSyncConfigEl>;
+impl terrars::ToListMappable for AppsyncResolver_SyncConfig {
+    type O = terrars::BlockAssignable<AppsyncResolver_SyncConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -845,11 +880,11 @@ impl terrars::ToListMappable for AppsyncResolverSyncConfigEl {
     }
 }
 
-pub struct BuildAppsyncResolverSyncConfigEl {}
+pub struct BuildAppsyncResolver_SyncConfig {}
 
-impl BuildAppsyncResolverSyncConfigEl {
-    pub fn build(self) -> AppsyncResolverSyncConfigEl {
-        AppsyncResolverSyncConfigEl {
+impl BuildAppsyncResolver_SyncConfig {
+    pub fn build(self) -> AppsyncResolver_SyncConfig {
+        AppsyncResolver_SyncConfig {
             conflict_detection: core::default::Default::default(),
             conflict_handler: core::default::Default::default(),
             lambda_conflict_handler_config: core::default::Default::default(),
@@ -858,21 +893,23 @@ impl BuildAppsyncResolverSyncConfigEl {
     }
 }
 
-pub struct AppsyncResolverSyncConfigElRef {
+#[allow(dead_code)]
+pub struct AppsyncResolver_SyncConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppsyncResolverSyncConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncResolverSyncConfigElRef {
-        AppsyncResolverSyncConfigElRef {
+impl terrars::Ref for AppsyncResolver_SyncConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppsyncResolver_SyncConfigRef {
+        AppsyncResolver_SyncConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppsyncResolverSyncConfigElRef {
+impl AppsyncResolver_SyncConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -890,15 +927,7 @@ impl AppsyncResolverSyncConfigElRef {
     #[doc = "Get a reference to the value of field `lambda_conflict_handler_config` after provisioning.\n"]
     pub fn lambda_conflict_handler_config(
         &self,
-    ) -> terrars::ListRef<AppsyncResolverSyncConfigElLambdaConflictHandlerConfigElRef> {
+    ) -> terrars::ListRef<AppsyncResolver_SyncConfig_LambdaConflictHandlerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_conflict_handler_config", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppsyncResolverDynamic {
-    caching_config: std::option::Option<terrars::DynamicBlock<AppsyncResolverCachingConfigEl>>,
-    pipeline_config: std::option::Option<terrars::DynamicBlock<AppsyncResolverPipelineConfigEl>>,
-    runtime: std::option::Option<terrars::DynamicBlock<AppsyncResolverRuntimeEl>>,
-    sync_config: std::option::Option<terrars::DynamicBlock<AppsyncResolverSyncConfigEl>>,
 }

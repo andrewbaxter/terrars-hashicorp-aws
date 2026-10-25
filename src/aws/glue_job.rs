@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlueJobData {
+struct GlueJobData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,6 +33,12 @@ struct GlueJobData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    job_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    job_run_queuing_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maintenance_window: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_capacity: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_retries: std::option::Option<terrars::PrimField<f64>>,
@@ -39,6 +47,8 @@ struct GlueJobData {
     non_overridable_arguments: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     number_of_workers: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_configuration: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -51,18 +61,20 @@ struct GlueJobData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     worker_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    command: std::option::Option<std::vec::Vec<GlueJobCommandEl>>,
+    command: std::option::Option<std::vec::Vec<GlueJob_Command>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    execution_property: std::option::Option<std::vec::Vec<GlueJobExecutionPropertyEl>>,
+    execution_property: std::option::Option<std::vec::Vec<GlueJob_ExecutionProperty>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notification_property: std::option::Option<std::vec::Vec<GlueJobNotificationPropertyEl>>,
+    notification_property: std::option::Option<std::vec::Vec<GlueJob_NotificationProperty>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_control_details: std::option::Option<std::vec::Vec<GlueJob_SourceControlDetails>>,
     dynamic: GlueJobDynamic,
 }
 
 struct GlueJob_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlueJobData>,
+    data: std::cell::RefCell<GlueJobData_>,
 }
 
 #[derive(Clone)]
@@ -204,6 +216,24 @@ impl GlueJob {
         self
     }
 
+    #[doc = "Set the field `job_mode`.\n"]
+    pub fn set_job_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().job_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `job_run_queuing_enabled`.\n"]
+    pub fn set_job_run_queuing_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().job_run_queuing_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `maintenance_window`.\n"]
+    pub fn set_maintenance_window(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().maintenance_window = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `max_capacity`.\n"]
     pub fn set_max_capacity(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().max_capacity = std::option::Option::Some(v.into());
@@ -228,6 +258,13 @@ impl GlueJob {
     #[doc = "Set the field `number_of_workers`.\n"]
     pub fn set_number_of_workers(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().number_of_workers = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -271,7 +308,7 @@ impl GlueJob {
     }
 
     #[doc = "Set the field `command`.\n"]
-    pub fn set_command(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueJobCommandEl>>) -> Self {
+    pub fn set_command(self, v: impl std::convert::Into<terrars::BlockAssignable<GlueJob_Command>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().command = std::option::Option::Some(v);
@@ -286,7 +323,7 @@ impl GlueJob {
     #[doc = "Set the field `execution_property`.\n"]
     pub fn set_execution_property(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueJobExecutionPropertyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueJob_ExecutionProperty>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -302,7 +339,7 @@ impl GlueJob {
     #[doc = "Set the field `notification_property`.\n"]
     pub fn set_notification_property(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueJobNotificationPropertyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueJob_NotificationProperty>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -310,6 +347,22 @@ impl GlueJob {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.notification_property = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `source_control_details`.\n"]
+    pub fn set_source_control_details(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueJob_SourceControlDetails>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().source_control_details = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.source_control_details = std::option::Option::Some(d);
             },
         }
         self
@@ -350,6 +403,21 @@ impl GlueJob {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `job_mode` after provisioning.\n"]
+    pub fn job_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_mode", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `job_run_queuing_enabled` after provisioning.\n"]
+    pub fn job_run_queuing_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_run_queuing_enabled", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
+    pub fn maintenance_window(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_window", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `max_capacity` after provisioning.\n"]
     pub fn max_capacity(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_capacity", self.extract_ref()))
@@ -373,6 +441,12 @@ impl GlueJob {
     #[doc = "Get a reference to the value of field `number_of_workers` after provisioning.\n"]
     pub fn number_of_workers(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_workers", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -406,18 +480,23 @@ impl GlueJob {
     }
 
     #[doc = "Get a reference to the value of field `command` after provisioning.\n"]
-    pub fn command(&self) -> terrars::ListRef<GlueJobCommandElRef> {
+    pub fn command(&self) -> terrars::ListRef<GlueJob_CommandRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.command", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `execution_property` after provisioning.\n"]
-    pub fn execution_property(&self) -> terrars::ListRef<GlueJobExecutionPropertyElRef> {
+    pub fn execution_property(&self) -> terrars::ListRef<GlueJob_ExecutionPropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.execution_property", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `notification_property` after provisioning.\n"]
-    pub fn notification_property(&self) -> terrars::ListRef<GlueJobNotificationPropertyElRef> {
+    pub fn notification_property(&self) -> terrars::ListRef<GlueJob_NotificationPropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_property", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `source_control_details` after provisioning.\n"]
+    pub fn source_control_details(&self) -> terrars::ListRef<GlueJob_SourceControlDetailsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_control_details", self.extract_ref()))
     }
 }
 
@@ -465,7 +544,7 @@ impl BuildGlueJob {
         let out = GlueJob(std::rc::Rc::new(GlueJob_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlueJobData {
+            data: std::cell::RefCell::new(GlueJobData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -477,11 +556,15 @@ impl BuildGlueJob {
                 execution_class: core::default::Default::default(),
                 glue_version: core::default::Default::default(),
                 id: core::default::Default::default(),
+                job_mode: core::default::Default::default(),
+                job_run_queuing_enabled: core::default::Default::default(),
+                maintenance_window: core::default::Default::default(),
                 max_capacity: core::default::Default::default(),
                 max_retries: core::default::Default::default(),
                 name: self.name,
                 non_overridable_arguments: core::default::Default::default(),
                 number_of_workers: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 security_configuration: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -491,6 +574,7 @@ impl BuildGlueJob {
                 command: core::default::Default::default(),
                 execution_property: core::default::Default::default(),
                 notification_property: core::default::Default::default(),
+                source_control_details: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -557,6 +641,21 @@ impl GlueJobRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `job_mode` after provisioning.\n"]
+    pub fn job_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_mode", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `job_run_queuing_enabled` after provisioning.\n"]
+    pub fn job_run_queuing_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_run_queuing_enabled", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
+    pub fn maintenance_window(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_window", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `max_capacity` after provisioning.\n"]
     pub fn max_capacity(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_capacity", self.extract_ref()))
@@ -580,6 +679,12 @@ impl GlueJobRef {
     #[doc = "Get a reference to the value of field `number_of_workers` after provisioning.\n"]
     pub fn number_of_workers(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_workers", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -613,31 +718,46 @@ impl GlueJobRef {
     }
 
     #[doc = "Get a reference to the value of field `command` after provisioning.\n"]
-    pub fn command(&self) -> terrars::ListRef<GlueJobCommandElRef> {
+    pub fn command(&self) -> terrars::ListRef<GlueJob_CommandRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.command", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `execution_property` after provisioning.\n"]
-    pub fn execution_property(&self) -> terrars::ListRef<GlueJobExecutionPropertyElRef> {
+    pub fn execution_property(&self) -> terrars::ListRef<GlueJob_ExecutionPropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.execution_property", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `notification_property` after provisioning.\n"]
-    pub fn notification_property(&self) -> terrars::ListRef<GlueJobNotificationPropertyElRef> {
+    pub fn notification_property(&self) -> terrars::ListRef<GlueJob_NotificationPropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_property", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `source_control_details` after provisioning.\n"]
+    pub fn source_control_details(&self) -> terrars::ListRef<GlueJob_SourceControlDetailsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.source_control_details", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlueJobDynamic {
+    command: std::option::Option<terrars::DynamicBlock<GlueJob_Command>>,
+    execution_property: std::option::Option<terrars::DynamicBlock<GlueJob_ExecutionProperty>>,
+    notification_property: std::option::Option<terrars::DynamicBlock<GlueJob_NotificationProperty>>,
+    source_control_details: std::option::Option<terrars::DynamicBlock<GlueJob_SourceControlDetails>>,
+}
+
 #[derive(Serialize)]
-pub struct GlueJobCommandEl {
+pub struct GlueJob_Command {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     python_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    runtime: std::option::Option<terrars::PrimField<std::string::String>>,
     script_location: terrars::PrimField<std::string::String>,
 }
 
-impl GlueJobCommandEl {
+impl GlueJob_Command {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -649,10 +769,16 @@ impl GlueJobCommandEl {
         self.python_version = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `runtime`.\n"]
+    pub fn set_runtime(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.runtime = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for GlueJobCommandEl {
-    type O = terrars::BlockAssignable<GlueJobCommandEl>;
+impl terrars::ToListMappable for GlueJob_Command {
+    type O = terrars::BlockAssignable<GlueJob_Command>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -663,36 +789,39 @@ impl terrars::ToListMappable for GlueJobCommandEl {
     }
 }
 
-pub struct BuildGlueJobCommandEl {
+pub struct BuildGlueJob_Command {
     #[doc = ""]
     pub script_location: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueJobCommandEl {
-    pub fn build(self) -> GlueJobCommandEl {
-        GlueJobCommandEl {
+impl BuildGlueJob_Command {
+    pub fn build(self) -> GlueJob_Command {
+        GlueJob_Command {
             name: core::default::Default::default(),
             python_version: core::default::Default::default(),
+            runtime: core::default::Default::default(),
             script_location: self.script_location,
         }
     }
 }
 
-pub struct GlueJobCommandElRef {
+#[allow(dead_code)]
+pub struct GlueJob_CommandRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueJobCommandElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueJobCommandElRef {
-        GlueJobCommandElRef {
+impl terrars::Ref for GlueJob_CommandRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueJob_CommandRef {
+        GlueJob_CommandRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueJobCommandElRef {
+impl GlueJob_CommandRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -707,6 +836,11 @@ impl GlueJobCommandElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.python_version", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `runtime` after provisioning.\n"]
+    pub fn runtime(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.runtime", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `script_location` after provisioning.\n"]
     pub fn script_location(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.script_location", self.base))
@@ -714,12 +848,12 @@ impl GlueJobCommandElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueJobExecutionPropertyEl {
+pub struct GlueJob_ExecutionProperty {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_concurrent_runs: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GlueJobExecutionPropertyEl {
+impl GlueJob_ExecutionProperty {
     #[doc = "Set the field `max_concurrent_runs`.\n"]
     pub fn set_max_concurrent_runs(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_concurrent_runs = std::option::Option::Some(v.into());
@@ -727,8 +861,8 @@ impl GlueJobExecutionPropertyEl {
     }
 }
 
-impl terrars::ToListMappable for GlueJobExecutionPropertyEl {
-    type O = terrars::BlockAssignable<GlueJobExecutionPropertyEl>;
+impl terrars::ToListMappable for GlueJob_ExecutionProperty {
+    type O = terrars::BlockAssignable<GlueJob_ExecutionProperty>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -739,29 +873,31 @@ impl terrars::ToListMappable for GlueJobExecutionPropertyEl {
     }
 }
 
-pub struct BuildGlueJobExecutionPropertyEl {}
+pub struct BuildGlueJob_ExecutionProperty {}
 
-impl BuildGlueJobExecutionPropertyEl {
-    pub fn build(self) -> GlueJobExecutionPropertyEl {
-        GlueJobExecutionPropertyEl { max_concurrent_runs: core::default::Default::default() }
+impl BuildGlueJob_ExecutionProperty {
+    pub fn build(self) -> GlueJob_ExecutionProperty {
+        GlueJob_ExecutionProperty { max_concurrent_runs: core::default::Default::default() }
     }
 }
 
-pub struct GlueJobExecutionPropertyElRef {
+#[allow(dead_code)]
+pub struct GlueJob_ExecutionPropertyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueJobExecutionPropertyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueJobExecutionPropertyElRef {
-        GlueJobExecutionPropertyElRef {
+impl terrars::Ref for GlueJob_ExecutionPropertyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueJob_ExecutionPropertyRef {
+        GlueJob_ExecutionPropertyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueJobExecutionPropertyElRef {
+impl GlueJob_ExecutionPropertyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -773,12 +909,12 @@ impl GlueJobExecutionPropertyElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlueJobNotificationPropertyEl {
+pub struct GlueJob_NotificationProperty {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notify_delay_after: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GlueJobNotificationPropertyEl {
+impl GlueJob_NotificationProperty {
     #[doc = "Set the field `notify_delay_after`.\n"]
     pub fn set_notify_delay_after(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.notify_delay_after = std::option::Option::Some(v.into());
@@ -786,8 +922,8 @@ impl GlueJobNotificationPropertyEl {
     }
 }
 
-impl terrars::ToListMappable for GlueJobNotificationPropertyEl {
-    type O = terrars::BlockAssignable<GlueJobNotificationPropertyEl>;
+impl terrars::ToListMappable for GlueJob_NotificationProperty {
+    type O = terrars::BlockAssignable<GlueJob_NotificationProperty>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -798,29 +934,31 @@ impl terrars::ToListMappable for GlueJobNotificationPropertyEl {
     }
 }
 
-pub struct BuildGlueJobNotificationPropertyEl {}
+pub struct BuildGlueJob_NotificationProperty {}
 
-impl BuildGlueJobNotificationPropertyEl {
-    pub fn build(self) -> GlueJobNotificationPropertyEl {
-        GlueJobNotificationPropertyEl { notify_delay_after: core::default::Default::default() }
+impl BuildGlueJob_NotificationProperty {
+    pub fn build(self) -> GlueJob_NotificationProperty {
+        GlueJob_NotificationProperty { notify_delay_after: core::default::Default::default() }
     }
 }
 
-pub struct GlueJobNotificationPropertyElRef {
+#[allow(dead_code)]
+pub struct GlueJob_NotificationPropertyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueJobNotificationPropertyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueJobNotificationPropertyElRef {
-        GlueJobNotificationPropertyElRef {
+impl terrars::Ref for GlueJob_NotificationPropertyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueJob_NotificationPropertyRef {
+        GlueJob_NotificationPropertyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueJobNotificationPropertyElRef {
+impl GlueJob_NotificationPropertyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -831,9 +969,163 @@ impl GlueJobNotificationPropertyElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct GlueJobDynamic {
-    command: std::option::Option<terrars::DynamicBlock<GlueJobCommandEl>>,
-    execution_property: std::option::Option<terrars::DynamicBlock<GlueJobExecutionPropertyEl>>,
-    notification_property: std::option::Option<terrars::DynamicBlock<GlueJobNotificationPropertyEl>>,
+#[derive(Serialize)]
+pub struct GlueJob_SourceControlDetails {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auth_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auth_token: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    branch: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    folder: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    last_commit_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    owner: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    provider: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    repository: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl GlueJob_SourceControlDetails {
+    #[doc = "Set the field `auth_strategy`.\n"]
+    pub fn set_auth_strategy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.auth_strategy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `auth_token`.\n"]
+    pub fn set_auth_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.auth_token = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `branch`.\n"]
+    pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.branch = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `folder`.\n"]
+    pub fn set_folder(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.folder = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `last_commit_id`.\n"]
+    pub fn set_last_commit_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.last_commit_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `owner`.\n"]
+    pub fn set_owner(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.owner = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `provider`.\n"]
+    pub fn set_provider(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.provider = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `repository`.\n"]
+    pub fn set_repository(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.repository = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for GlueJob_SourceControlDetails {
+    type O = terrars::BlockAssignable<GlueJob_SourceControlDetails>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGlueJob_SourceControlDetails {}
+
+impl BuildGlueJob_SourceControlDetails {
+    pub fn build(self) -> GlueJob_SourceControlDetails {
+        GlueJob_SourceControlDetails {
+            auth_strategy: core::default::Default::default(),
+            auth_token: core::default::Default::default(),
+            branch: core::default::Default::default(),
+            folder: core::default::Default::default(),
+            last_commit_id: core::default::Default::default(),
+            owner: core::default::Default::default(),
+            provider: core::default::Default::default(),
+            repository: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GlueJob_SourceControlDetailsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GlueJob_SourceControlDetailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueJob_SourceControlDetailsRef {
+        GlueJob_SourceControlDetailsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GlueJob_SourceControlDetailsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `auth_strategy` after provisioning.\n"]
+    pub fn auth_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_strategy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `auth_token` after provisioning.\n"]
+    pub fn auth_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auth_token", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `branch` after provisioning.\n"]
+    pub fn branch(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.branch", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `folder` after provisioning.\n"]
+    pub fn folder(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.folder", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `last_commit_id` after provisioning.\n"]
+    pub fn last_commit_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_commit_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `owner` after provisioning.\n"]
+    pub fn owner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `provider` after provisioning.\n"]
+    pub fn provider(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `repository` after provisioning.\n"]
+    pub fn repository(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository", self.base))
+    }
 }

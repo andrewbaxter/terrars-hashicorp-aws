@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataElbData {
+struct DataElbData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataElbData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataElb_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataElbData>,
+    data: std::cell::RefCell<DataElbData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataElb {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -87,7 +98,7 @@ impl DataElb {
     }
 
     #[doc = "Get a reference to the value of field `access_logs` after provisioning.\n"]
-    pub fn access_logs(&self) -> terrars::ListRef<DataElbAccessLogsElRef> {
+    pub fn access_logs(&self) -> terrars::ListRef<DataElb_AccessLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_logs", self.extract_ref()))
     }
 
@@ -127,7 +138,7 @@ impl DataElb {
     }
 
     #[doc = "Get a reference to the value of field `health_check` after provisioning.\n"]
-    pub fn health_check(&self) -> terrars::ListRef<DataElbHealthCheckElRef> {
+    pub fn health_check(&self) -> terrars::ListRef<DataElb_HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check", self.extract_ref()))
     }
 
@@ -152,13 +163,19 @@ impl DataElb {
     }
 
     #[doc = "Get a reference to the value of field `listener` after provisioning.\n"]
-    pub fn listener(&self) -> terrars::SetRef<DataElbListenerElRef> {
+    pub fn listener(&self) -> terrars::SetRef<DataElb_ListenerRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.listener", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
@@ -234,13 +251,14 @@ impl BuildDataElb {
         let out = DataElb(std::rc::Rc::new(DataElb_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataElbData {
+            data: std::cell::RefCell::new(DataElbData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -273,7 +291,7 @@ impl DataElbRef {
     }
 
     #[doc = "Get a reference to the value of field `access_logs` after provisioning.\n"]
-    pub fn access_logs(&self) -> terrars::ListRef<DataElbAccessLogsElRef> {
+    pub fn access_logs(&self) -> terrars::ListRef<DataElb_AccessLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_logs", self.extract_ref()))
     }
 
@@ -313,7 +331,7 @@ impl DataElbRef {
     }
 
     #[doc = "Get a reference to the value of field `health_check` after provisioning.\n"]
-    pub fn health_check(&self) -> terrars::ListRef<DataElbHealthCheckElRef> {
+    pub fn health_check(&self) -> terrars::ListRef<DataElb_HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check", self.extract_ref()))
     }
 
@@ -338,13 +356,19 @@ impl DataElbRef {
     }
 
     #[doc = "Get a reference to the value of field `listener` after provisioning.\n"]
-    pub fn listener(&self) -> terrars::SetRef<DataElbListenerElRef> {
+    pub fn listener(&self) -> terrars::SetRef<DataElb_ListenerRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.listener", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
@@ -379,7 +403,7 @@ impl DataElbRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElbAccessLogsEl {
+pub struct DataElb_AccessLogs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -390,7 +414,7 @@ pub struct DataElbAccessLogsEl {
     interval: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataElbAccessLogsEl {
+impl DataElb_AccessLogs {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -416,8 +440,8 @@ impl DataElbAccessLogsEl {
     }
 }
 
-impl terrars::ToListMappable for DataElbAccessLogsEl {
-    type O = terrars::BlockAssignable<DataElbAccessLogsEl>;
+impl terrars::ToListMappable for DataElb_AccessLogs {
+    type O = terrars::BlockAssignable<DataElb_AccessLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -428,11 +452,11 @@ impl terrars::ToListMappable for DataElbAccessLogsEl {
     }
 }
 
-pub struct BuildDataElbAccessLogsEl {}
+pub struct BuildDataElb_AccessLogs {}
 
-impl BuildDataElbAccessLogsEl {
-    pub fn build(self) -> DataElbAccessLogsEl {
-        DataElbAccessLogsEl {
+impl BuildDataElb_AccessLogs {
+    pub fn build(self) -> DataElb_AccessLogs {
+        DataElb_AccessLogs {
             bucket: core::default::Default::default(),
             bucket_prefix: core::default::Default::default(),
             enabled: core::default::Default::default(),
@@ -441,21 +465,23 @@ impl BuildDataElbAccessLogsEl {
     }
 }
 
-pub struct DataElbAccessLogsElRef {
+#[allow(dead_code)]
+pub struct DataElb_AccessLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElbAccessLogsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElbAccessLogsElRef {
-        DataElbAccessLogsElRef {
+impl terrars::Ref for DataElb_AccessLogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElb_AccessLogsRef {
+        DataElb_AccessLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElbAccessLogsElRef {
+impl DataElb_AccessLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -482,7 +508,7 @@ impl DataElbAccessLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElbHealthCheckEl {
+pub struct DataElb_HealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     healthy_threshold: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -495,7 +521,7 @@ pub struct DataElbHealthCheckEl {
     unhealthy_threshold: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataElbHealthCheckEl {
+impl DataElb_HealthCheck {
     #[doc = "Set the field `healthy_threshold`.\n"]
     pub fn set_healthy_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.healthy_threshold = std::option::Option::Some(v.into());
@@ -527,8 +553,8 @@ impl DataElbHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for DataElbHealthCheckEl {
-    type O = terrars::BlockAssignable<DataElbHealthCheckEl>;
+impl terrars::ToListMappable for DataElb_HealthCheck {
+    type O = terrars::BlockAssignable<DataElb_HealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -539,11 +565,11 @@ impl terrars::ToListMappable for DataElbHealthCheckEl {
     }
 }
 
-pub struct BuildDataElbHealthCheckEl {}
+pub struct BuildDataElb_HealthCheck {}
 
-impl BuildDataElbHealthCheckEl {
-    pub fn build(self) -> DataElbHealthCheckEl {
-        DataElbHealthCheckEl {
+impl BuildDataElb_HealthCheck {
+    pub fn build(self) -> DataElb_HealthCheck {
+        DataElb_HealthCheck {
             healthy_threshold: core::default::Default::default(),
             interval: core::default::Default::default(),
             target: core::default::Default::default(),
@@ -553,21 +579,23 @@ impl BuildDataElbHealthCheckEl {
     }
 }
 
-pub struct DataElbHealthCheckElRef {
+#[allow(dead_code)]
+pub struct DataElb_HealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElbHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElbHealthCheckElRef {
-        DataElbHealthCheckElRef {
+impl terrars::Ref for DataElb_HealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElb_HealthCheckRef {
+        DataElb_HealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElbHealthCheckElRef {
+impl DataElb_HealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -599,7 +627,7 @@ impl DataElbHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElbListenerEl {
+pub struct DataElb_Listener {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -612,7 +640,7 @@ pub struct DataElbListenerEl {
     ssl_certificate_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataElbListenerEl {
+impl DataElb_Listener {
     #[doc = "Set the field `instance_port`.\n"]
     pub fn set_instance_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.instance_port = std::option::Option::Some(v.into());
@@ -647,8 +675,8 @@ impl DataElbListenerEl {
     }
 }
 
-impl terrars::ToListMappable for DataElbListenerEl {
-    type O = terrars::BlockAssignable<DataElbListenerEl>;
+impl terrars::ToListMappable for DataElb_Listener {
+    type O = terrars::BlockAssignable<DataElb_Listener>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -659,11 +687,11 @@ impl terrars::ToListMappable for DataElbListenerEl {
     }
 }
 
-pub struct BuildDataElbListenerEl {}
+pub struct BuildDataElb_Listener {}
 
-impl BuildDataElbListenerEl {
-    pub fn build(self) -> DataElbListenerEl {
-        DataElbListenerEl {
+impl BuildDataElb_Listener {
+    pub fn build(self) -> DataElb_Listener {
+        DataElb_Listener {
             instance_port: core::default::Default::default(),
             instance_protocol: core::default::Default::default(),
             lb_port: core::default::Default::default(),
@@ -673,21 +701,23 @@ impl BuildDataElbListenerEl {
     }
 }
 
-pub struct DataElbListenerElRef {
+#[allow(dead_code)]
+pub struct DataElb_ListenerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElbListenerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElbListenerElRef {
-        DataElbListenerElRef {
+impl terrars::Ref for DataElb_ListenerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElb_ListenerRef {
+        DataElb_ListenerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElbListenerElRef {
+impl DataElb_ListenerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

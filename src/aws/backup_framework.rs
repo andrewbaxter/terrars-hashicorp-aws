@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct BackupFrameworkData {
+struct BackupFrameworkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,22 @@ struct BackupFrameworkData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    control: std::option::Option<std::vec::Vec<BackupFrameworkControlEl>>,
+    control: std::option::Option<std::vec::Vec<BackupFramework_Control>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BackupFrameworkTimeoutsEl>,
+    timeouts: std::option::Option<BackupFramework_Timeouts>,
     dynamic: BackupFrameworkDynamic,
 }
 
 struct BackupFramework_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BackupFrameworkData>,
+    data: std::cell::RefCell<BackupFrameworkData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl BackupFramework {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl BackupFramework {
     }
 
     #[doc = "Set the field `control`.\n"]
-    pub fn set_control(self, v: impl std::convert::Into<terrars::BlockAssignable<BackupFrameworkControlEl>>) -> Self {
+    pub fn set_control(self, v: impl std::convert::Into<terrars::BlockAssignable<BackupFramework_Control>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().control = std::option::Option::Some(v);
@@ -181,7 +192,7 @@ impl BackupFramework {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BackupFrameworkTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BackupFramework_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -216,6 +227,12 @@ impl BackupFramework {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -232,8 +249,8 @@ impl BackupFramework {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BackupFrameworkTimeoutsElRef {
-        BackupFrameworkTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BackupFramework_TimeoutsRef {
+        BackupFramework_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -279,7 +296,7 @@ impl BuildBackupFramework {
         let out = BackupFramework(std::rc::Rc::new(BackupFramework_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BackupFrameworkData {
+            data: std::cell::RefCell::new(BackupFrameworkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -288,6 +305,7 @@ impl BuildBackupFramework {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 control: core::default::Default::default(),
@@ -353,6 +371,12 @@ impl BackupFrameworkRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -369,20 +393,25 @@ impl BackupFrameworkRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BackupFrameworkTimeoutsElRef {
-        BackupFrameworkTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BackupFramework_TimeoutsRef {
+        BackupFramework_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BackupFrameworkDynamic {
+    control: std::option::Option<terrars::DynamicBlock<BackupFramework_Control>>,
+}
+
 #[derive(Serialize)]
-pub struct BackupFrameworkControlElInputParameterEl {
+pub struct BackupFramework_Control_InputParameter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BackupFrameworkControlElInputParameterEl {
+impl BackupFramework_Control_InputParameter {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -396,8 +425,8 @@ impl BackupFrameworkControlElInputParameterEl {
     }
 }
 
-impl terrars::ToListMappable for BackupFrameworkControlElInputParameterEl {
-    type O = terrars::BlockAssignable<BackupFrameworkControlElInputParameterEl>;
+impl terrars::ToListMappable for BackupFramework_Control_InputParameter {
+    type O = terrars::BlockAssignable<BackupFramework_Control_InputParameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -408,32 +437,34 @@ impl terrars::ToListMappable for BackupFrameworkControlElInputParameterEl {
     }
 }
 
-pub struct BuildBackupFrameworkControlElInputParameterEl {}
+pub struct BuildBackupFramework_Control_InputParameter {}
 
-impl BuildBackupFrameworkControlElInputParameterEl {
-    pub fn build(self) -> BackupFrameworkControlElInputParameterEl {
-        BackupFrameworkControlElInputParameterEl {
+impl BuildBackupFramework_Control_InputParameter {
+    pub fn build(self) -> BackupFramework_Control_InputParameter {
+        BackupFramework_Control_InputParameter {
             name: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct BackupFrameworkControlElInputParameterElRef {
+#[allow(dead_code)]
+pub struct BackupFramework_Control_InputParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupFrameworkControlElInputParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupFrameworkControlElInputParameterElRef {
-        BackupFrameworkControlElInputParameterElRef {
+impl terrars::Ref for BackupFramework_Control_InputParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupFramework_Control_InputParameterRef {
+        BackupFramework_Control_InputParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupFrameworkControlElInputParameterElRef {
+impl BackupFramework_Control_InputParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -450,7 +481,7 @@ impl BackupFrameworkControlElInputParameterElRef {
 }
 
 #[derive(Serialize)]
-pub struct BackupFrameworkControlElScopeEl {
+pub struct BackupFramework_Control_Scope {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compliance_resource_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -459,7 +490,7 @@ pub struct BackupFrameworkControlElScopeEl {
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl BackupFrameworkControlElScopeEl {
+impl BackupFramework_Control_Scope {
     #[doc = "Set the field `compliance_resource_ids`.\n"]
     pub fn set_compliance_resource_ids(
         mut self,
@@ -488,8 +519,8 @@ impl BackupFrameworkControlElScopeEl {
     }
 }
 
-impl terrars::ToListMappable for BackupFrameworkControlElScopeEl {
-    type O = terrars::BlockAssignable<BackupFrameworkControlElScopeEl>;
+impl terrars::ToListMappable for BackupFramework_Control_Scope {
+    type O = terrars::BlockAssignable<BackupFramework_Control_Scope>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -500,11 +531,11 @@ impl terrars::ToListMappable for BackupFrameworkControlElScopeEl {
     }
 }
 
-pub struct BuildBackupFrameworkControlElScopeEl {}
+pub struct BuildBackupFramework_Control_Scope {}
 
-impl BuildBackupFrameworkControlElScopeEl {
-    pub fn build(self) -> BackupFrameworkControlElScopeEl {
-        BackupFrameworkControlElScopeEl {
+impl BuildBackupFramework_Control_Scope {
+    pub fn build(self) -> BackupFramework_Control_Scope {
+        BackupFramework_Control_Scope {
             compliance_resource_ids: core::default::Default::default(),
             compliance_resource_types: core::default::Default::default(),
             tags: core::default::Default::default(),
@@ -512,21 +543,23 @@ impl BuildBackupFrameworkControlElScopeEl {
     }
 }
 
-pub struct BackupFrameworkControlElScopeElRef {
+#[allow(dead_code)]
+pub struct BackupFramework_Control_ScopeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupFrameworkControlElScopeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupFrameworkControlElScopeElRef {
-        BackupFrameworkControlElScopeElRef {
+impl terrars::Ref for BackupFramework_Control_ScopeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupFramework_Control_ScopeRef {
+        BackupFramework_Control_ScopeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupFrameworkControlElScopeElRef {
+impl BackupFramework_Control_ScopeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -548,26 +581,26 @@ impl BackupFrameworkControlElScopeElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BackupFrameworkControlElDynamic {
-    input_parameter: std::option::Option<terrars::DynamicBlock<BackupFrameworkControlElInputParameterEl>>,
-    scope: std::option::Option<terrars::DynamicBlock<BackupFrameworkControlElScopeEl>>,
+struct BackupFramework_ControlDynamic {
+    input_parameter: std::option::Option<terrars::DynamicBlock<BackupFramework_Control_InputParameter>>,
+    scope: std::option::Option<terrars::DynamicBlock<BackupFramework_Control_Scope>>,
 }
 
 #[derive(Serialize)]
-pub struct BackupFrameworkControlEl {
+pub struct BackupFramework_Control {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input_parameter: std::option::Option<std::vec::Vec<BackupFrameworkControlElInputParameterEl>>,
+    input_parameter: std::option::Option<std::vec::Vec<BackupFramework_Control_InputParameter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scope: std::option::Option<std::vec::Vec<BackupFrameworkControlElScopeEl>>,
-    dynamic: BackupFrameworkControlElDynamic,
+    scope: std::option::Option<std::vec::Vec<BackupFramework_Control_Scope>>,
+    dynamic: BackupFramework_ControlDynamic,
 }
 
-impl BackupFrameworkControlEl {
+impl BackupFramework_Control {
     #[doc = "Set the field `input_parameter`.\n"]
     pub fn set_input_parameter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupFrameworkControlElInputParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupFramework_Control_InputParameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -583,7 +616,7 @@ impl BackupFrameworkControlEl {
     #[doc = "Set the field `scope`.\n"]
     pub fn set_scope(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupFrameworkControlElScopeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupFramework_Control_Scope>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -597,8 +630,8 @@ impl BackupFrameworkControlEl {
     }
 }
 
-impl terrars::ToListMappable for BackupFrameworkControlEl {
-    type O = terrars::BlockAssignable<BackupFrameworkControlEl>;
+impl terrars::ToListMappable for BackupFramework_Control {
+    type O = terrars::BlockAssignable<BackupFramework_Control>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -609,14 +642,14 @@ impl terrars::ToListMappable for BackupFrameworkControlEl {
     }
 }
 
-pub struct BuildBackupFrameworkControlEl {
+pub struct BuildBackupFramework_Control {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBackupFrameworkControlEl {
-    pub fn build(self) -> BackupFrameworkControlEl {
-        BackupFrameworkControlEl {
+impl BuildBackupFramework_Control {
+    pub fn build(self) -> BackupFramework_Control {
+        BackupFramework_Control {
             name: self.name,
             input_parameter: core::default::Default::default(),
             scope: core::default::Default::default(),
@@ -625,21 +658,23 @@ impl BuildBackupFrameworkControlEl {
     }
 }
 
-pub struct BackupFrameworkControlElRef {
+#[allow(dead_code)]
+pub struct BackupFramework_ControlRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupFrameworkControlElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupFrameworkControlElRef {
-        BackupFrameworkControlElRef {
+impl terrars::Ref for BackupFramework_ControlRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupFramework_ControlRef {
+        BackupFramework_ControlRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupFrameworkControlElRef {
+impl BackupFramework_ControlRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -650,13 +685,13 @@ impl BackupFrameworkControlElRef {
     }
 
     #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
-    pub fn scope(&self) -> terrars::ListRef<BackupFrameworkControlElScopeElRef> {
+    pub fn scope(&self) -> terrars::ListRef<BackupFramework_Control_ScopeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scope", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BackupFrameworkTimeoutsEl {
+pub struct BackupFramework_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -665,7 +700,7 @@ pub struct BackupFrameworkTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BackupFrameworkTimeoutsEl {
+impl BackupFramework_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -685,8 +720,8 @@ impl BackupFrameworkTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BackupFrameworkTimeoutsEl {
-    type O = terrars::BlockAssignable<BackupFrameworkTimeoutsEl>;
+impl terrars::ToListMappable for BackupFramework_Timeouts {
+    type O = terrars::BlockAssignable<BackupFramework_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -697,11 +732,11 @@ impl terrars::ToListMappable for BackupFrameworkTimeoutsEl {
     }
 }
 
-pub struct BuildBackupFrameworkTimeoutsEl {}
+pub struct BuildBackupFramework_Timeouts {}
 
-impl BuildBackupFrameworkTimeoutsEl {
-    pub fn build(self) -> BackupFrameworkTimeoutsEl {
-        BackupFrameworkTimeoutsEl {
+impl BuildBackupFramework_Timeouts {
+    pub fn build(self) -> BackupFramework_Timeouts {
+        BackupFramework_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -709,21 +744,23 @@ impl BuildBackupFrameworkTimeoutsEl {
     }
 }
 
-pub struct BackupFrameworkTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BackupFramework_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupFrameworkTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupFrameworkTimeoutsElRef {
-        BackupFrameworkTimeoutsElRef {
+impl terrars::Ref for BackupFramework_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupFramework_TimeoutsRef {
+        BackupFramework_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupFrameworkTimeoutsElRef {
+impl BackupFramework_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -742,9 +779,4 @@ impl BackupFrameworkTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BackupFrameworkDynamic {
-    control: std::option::Option<terrars::DynamicBlock<BackupFrameworkControlEl>>,
 }

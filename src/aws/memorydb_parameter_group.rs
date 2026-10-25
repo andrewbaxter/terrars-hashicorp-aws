@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MemorydbParameterGroupData {
+struct MemorydbParameterGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,18 +30,20 @@ struct MemorydbParameterGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<std::vec::Vec<MemorydbParameterGroupParameterEl>>,
+    parameter: std::option::Option<std::vec::Vec<MemorydbParameterGroup_Parameter>>,
     dynamic: MemorydbParameterGroupDynamic,
 }
 
 struct MemorydbParameterGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MemorydbParameterGroupData>,
+    data: std::cell::RefCell<MemorydbParameterGroupData_>,
 }
 
 #[derive(Clone)]
@@ -163,6 +167,13 @@ impl MemorydbParameterGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -184,7 +195,7 @@ impl MemorydbParameterGroup {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MemorydbParameterGroupParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MemorydbParameterGroup_Parameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -225,6 +236,12 @@ impl MemorydbParameterGroup {
     #[doc = "Get a reference to the value of field `name_prefix` after provisioning.\n"]
     pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -280,7 +297,7 @@ impl BuildMemorydbParameterGroup {
         let out = MemorydbParameterGroup(std::rc::Rc::new(MemorydbParameterGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MemorydbParameterGroupData {
+            data: std::cell::RefCell::new(MemorydbParameterGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -291,6 +308,7 @@ impl BuildMemorydbParameterGroup {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 parameter: core::default::Default::default(),
@@ -355,6 +373,12 @@ impl MemorydbParameterGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -366,16 +390,21 @@ impl MemorydbParameterGroupRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct MemorydbParameterGroupDynamic {
+    parameter: std::option::Option<terrars::DynamicBlock<MemorydbParameterGroup_Parameter>>,
+}
+
 #[derive(Serialize)]
-pub struct MemorydbParameterGroupParameterEl {
+pub struct MemorydbParameterGroup_Parameter {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl MemorydbParameterGroupParameterEl { }
+impl MemorydbParameterGroup_Parameter { }
 
-impl terrars::ToListMappable for MemorydbParameterGroupParameterEl {
-    type O = terrars::BlockAssignable<MemorydbParameterGroupParameterEl>;
+impl terrars::ToListMappable for MemorydbParameterGroup_Parameter {
+    type O = terrars::BlockAssignable<MemorydbParameterGroup_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -386,37 +415,39 @@ impl terrars::ToListMappable for MemorydbParameterGroupParameterEl {
     }
 }
 
-pub struct BuildMemorydbParameterGroupParameterEl {
+pub struct BuildMemorydbParameterGroup_Parameter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMemorydbParameterGroupParameterEl {
-    pub fn build(self) -> MemorydbParameterGroupParameterEl {
-        MemorydbParameterGroupParameterEl {
+impl BuildMemorydbParameterGroup_Parameter {
+    pub fn build(self) -> MemorydbParameterGroup_Parameter {
+        MemorydbParameterGroup_Parameter {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct MemorydbParameterGroupParameterElRef {
+#[allow(dead_code)]
+pub struct MemorydbParameterGroup_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemorydbParameterGroupParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MemorydbParameterGroupParameterElRef {
-        MemorydbParameterGroupParameterElRef {
+impl terrars::Ref for MemorydbParameterGroup_ParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MemorydbParameterGroup_ParameterRef {
+        MemorydbParameterGroup_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemorydbParameterGroupParameterElRef {
+impl MemorydbParameterGroup_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -430,9 +461,4 @@ impl MemorydbParameterGroupParameterElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MemorydbParameterGroupDynamic {
-    parameter: std::option::Option<terrars::DynamicBlock<MemorydbParameterGroupParameterEl>>,
 }

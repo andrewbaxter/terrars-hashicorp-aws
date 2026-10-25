@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataMqBrokerData {
+struct DataMqBrokerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,13 +25,15 @@ struct DataMqBrokerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataMqBroker_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMqBrokerData>,
+    data: std::cell::RefCell<DataMqBrokerData_>,
 }
 
 #[derive(Clone)]
@@ -92,6 +96,13 @@ impl DataMqBroker {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -127,7 +138,7 @@ impl DataMqBroker {
     }
 
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<DataMqBrokerConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<DataMqBroker_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 
@@ -137,7 +148,7 @@ impl DataMqBroker {
     }
 
     #[doc = "Get a reference to the value of field `encryption_options` after provisioning.\n"]
-    pub fn encryption_options(&self) -> terrars::ListRef<DataMqBrokerEncryptionOptionsElRef> {
+    pub fn encryption_options(&self) -> terrars::ListRef<DataMqBroker_EncryptionOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_options", self.extract_ref()))
     }
 
@@ -162,22 +173,22 @@ impl DataMqBroker {
     }
 
     #[doc = "Get a reference to the value of field `instances` after provisioning.\n"]
-    pub fn instances(&self) -> terrars::ListRef<DataMqBrokerInstancesElRef> {
+    pub fn instances(&self) -> terrars::ListRef<DataMqBroker_InstancesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instances", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ldap_server_metadata` after provisioning.\n"]
-    pub fn ldap_server_metadata(&self) -> terrars::ListRef<DataMqBrokerLdapServerMetadataElRef> {
+    pub fn ldap_server_metadata(&self) -> terrars::ListRef<DataMqBroker_LdapServerMetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ldap_server_metadata", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logs` after provisioning.\n"]
-    pub fn logs(&self) -> terrars::ListRef<DataMqBrokerLogsElRef> {
+    pub fn logs(&self) -> terrars::ListRef<DataMqBroker_LogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `maintenance_window_start_time` after provisioning.\n"]
-    pub fn maintenance_window_start_time(&self) -> terrars::ListRef<DataMqBrokerMaintenanceWindowStartTimeElRef> {
+    pub fn maintenance_window_start_time(&self) -> terrars::ListRef<DataMqBroker_MaintenanceWindowStartTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_window_start_time", self.extract_ref()))
     }
 
@@ -186,9 +197,25 @@ impl DataMqBroker {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_share_arns` after provisioning.\n"]
+    pub fn resource_share_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.resource_share_arns", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `shared_resources` after provisioning.\n"]
+    pub fn shared_resources(&self) -> terrars::ListRef<DataMqBroker_SharedResourcesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.shared_resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
@@ -207,7 +234,7 @@ impl DataMqBroker {
     }
 
     #[doc = "Get a reference to the value of field `user` after provisioning.\n"]
-    pub fn user(&self) -> terrars::SetRef<DataMqBrokerUserElRef> {
+    pub fn user(&self) -> terrars::SetRef<DataMqBroker_UserRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.user", self.extract_ref()))
     }
 }
@@ -252,7 +279,7 @@ impl BuildDataMqBroker {
         let out = DataMqBroker(std::rc::Rc::new(DataMqBroker_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMqBrokerData {
+            data: std::cell::RefCell::new(DataMqBrokerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -260,6 +287,7 @@ impl BuildDataMqBroker {
                 broker_id: core::default::Default::default(),
                 broker_name: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -317,7 +345,7 @@ impl DataMqBrokerRef {
     }
 
     #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
-    pub fn configuration(&self) -> terrars::ListRef<DataMqBrokerConfigurationElRef> {
+    pub fn configuration(&self) -> terrars::ListRef<DataMqBroker_ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 
@@ -327,7 +355,7 @@ impl DataMqBrokerRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_options` after provisioning.\n"]
-    pub fn encryption_options(&self) -> terrars::ListRef<DataMqBrokerEncryptionOptionsElRef> {
+    pub fn encryption_options(&self) -> terrars::ListRef<DataMqBroker_EncryptionOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_options", self.extract_ref()))
     }
 
@@ -352,22 +380,22 @@ impl DataMqBrokerRef {
     }
 
     #[doc = "Get a reference to the value of field `instances` after provisioning.\n"]
-    pub fn instances(&self) -> terrars::ListRef<DataMqBrokerInstancesElRef> {
+    pub fn instances(&self) -> terrars::ListRef<DataMqBroker_InstancesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instances", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ldap_server_metadata` after provisioning.\n"]
-    pub fn ldap_server_metadata(&self) -> terrars::ListRef<DataMqBrokerLdapServerMetadataElRef> {
+    pub fn ldap_server_metadata(&self) -> terrars::ListRef<DataMqBroker_LdapServerMetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ldap_server_metadata", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logs` after provisioning.\n"]
-    pub fn logs(&self) -> terrars::ListRef<DataMqBrokerLogsElRef> {
+    pub fn logs(&self) -> terrars::ListRef<DataMqBroker_LogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `maintenance_window_start_time` after provisioning.\n"]
-    pub fn maintenance_window_start_time(&self) -> terrars::ListRef<DataMqBrokerMaintenanceWindowStartTimeElRef> {
+    pub fn maintenance_window_start_time(&self) -> terrars::ListRef<DataMqBroker_MaintenanceWindowStartTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_window_start_time", self.extract_ref()))
     }
 
@@ -376,9 +404,25 @@ impl DataMqBrokerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_share_arns` after provisioning.\n"]
+    pub fn resource_share_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.resource_share_arns", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `shared_resources` after provisioning.\n"]
+    pub fn shared_resources(&self) -> terrars::ListRef<DataMqBroker_SharedResourcesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.shared_resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
@@ -397,20 +441,20 @@ impl DataMqBrokerRef {
     }
 
     #[doc = "Get a reference to the value of field `user` after provisioning.\n"]
-    pub fn user(&self) -> terrars::SetRef<DataMqBrokerUserElRef> {
+    pub fn user(&self) -> terrars::SetRef<DataMqBroker_UserRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.user", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataMqBrokerConfigurationEl {
+pub struct DataMqBroker_Configuration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     revision: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataMqBrokerConfigurationEl {
+impl DataMqBroker_Configuration {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -424,8 +468,8 @@ impl DataMqBrokerConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataMqBrokerConfigurationEl {
-    type O = terrars::BlockAssignable<DataMqBrokerConfigurationEl>;
+impl terrars::ToListMappable for DataMqBroker_Configuration {
+    type O = terrars::BlockAssignable<DataMqBroker_Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -436,32 +480,34 @@ impl terrars::ToListMappable for DataMqBrokerConfigurationEl {
     }
 }
 
-pub struct BuildDataMqBrokerConfigurationEl {}
+pub struct BuildDataMqBroker_Configuration {}
 
-impl BuildDataMqBrokerConfigurationEl {
-    pub fn build(self) -> DataMqBrokerConfigurationEl {
-        DataMqBrokerConfigurationEl {
+impl BuildDataMqBroker_Configuration {
+    pub fn build(self) -> DataMqBroker_Configuration {
+        DataMqBroker_Configuration {
             id: core::default::Default::default(),
             revision: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataMqBrokerConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataMqBroker_ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMqBrokerConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBrokerConfigurationElRef {
-        DataMqBrokerConfigurationElRef {
+impl terrars::Ref for DataMqBroker_ConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBroker_ConfigurationRef {
+        DataMqBroker_ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMqBrokerConfigurationElRef {
+impl DataMqBroker_ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -478,14 +524,14 @@ impl DataMqBrokerConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMqBrokerEncryptionOptionsEl {
+pub struct DataMqBroker_EncryptionOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_aws_owned_key: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataMqBrokerEncryptionOptionsEl {
+impl DataMqBroker_EncryptionOptions {
     #[doc = "Set the field `kms_key_id`.\n"]
     pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_id = std::option::Option::Some(v.into());
@@ -499,8 +545,8 @@ impl DataMqBrokerEncryptionOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataMqBrokerEncryptionOptionsEl {
-    type O = terrars::BlockAssignable<DataMqBrokerEncryptionOptionsEl>;
+impl terrars::ToListMappable for DataMqBroker_EncryptionOptions {
+    type O = terrars::BlockAssignable<DataMqBroker_EncryptionOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -511,32 +557,34 @@ impl terrars::ToListMappable for DataMqBrokerEncryptionOptionsEl {
     }
 }
 
-pub struct BuildDataMqBrokerEncryptionOptionsEl {}
+pub struct BuildDataMqBroker_EncryptionOptions {}
 
-impl BuildDataMqBrokerEncryptionOptionsEl {
-    pub fn build(self) -> DataMqBrokerEncryptionOptionsEl {
-        DataMqBrokerEncryptionOptionsEl {
+impl BuildDataMqBroker_EncryptionOptions {
+    pub fn build(self) -> DataMqBroker_EncryptionOptions {
+        DataMqBroker_EncryptionOptions {
             kms_key_id: core::default::Default::default(),
             use_aws_owned_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataMqBrokerEncryptionOptionsElRef {
+#[allow(dead_code)]
+pub struct DataMqBroker_EncryptionOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMqBrokerEncryptionOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBrokerEncryptionOptionsElRef {
-        DataMqBrokerEncryptionOptionsElRef {
+impl terrars::Ref for DataMqBroker_EncryptionOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBroker_EncryptionOptionsRef {
+        DataMqBroker_EncryptionOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMqBrokerEncryptionOptionsElRef {
+impl DataMqBroker_EncryptionOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -553,7 +601,7 @@ impl DataMqBrokerEncryptionOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMqBrokerInstancesEl {
+pub struct DataMqBroker_Instances {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     console_url: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -562,7 +610,7 @@ pub struct DataMqBrokerInstancesEl {
     ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMqBrokerInstancesEl {
+impl DataMqBroker_Instances {
     #[doc = "Set the field `console_url`.\n"]
     pub fn set_console_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.console_url = std::option::Option::Some(v.into());
@@ -585,8 +633,8 @@ impl DataMqBrokerInstancesEl {
     }
 }
 
-impl terrars::ToListMappable for DataMqBrokerInstancesEl {
-    type O = terrars::BlockAssignable<DataMqBrokerInstancesEl>;
+impl terrars::ToListMappable for DataMqBroker_Instances {
+    type O = terrars::BlockAssignable<DataMqBroker_Instances>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -597,11 +645,11 @@ impl terrars::ToListMappable for DataMqBrokerInstancesEl {
     }
 }
 
-pub struct BuildDataMqBrokerInstancesEl {}
+pub struct BuildDataMqBroker_Instances {}
 
-impl BuildDataMqBrokerInstancesEl {
-    pub fn build(self) -> DataMqBrokerInstancesEl {
-        DataMqBrokerInstancesEl {
+impl BuildDataMqBroker_Instances {
+    pub fn build(self) -> DataMqBroker_Instances {
+        DataMqBroker_Instances {
             console_url: core::default::Default::default(),
             endpoints: core::default::Default::default(),
             ip_address: core::default::Default::default(),
@@ -609,21 +657,23 @@ impl BuildDataMqBrokerInstancesEl {
     }
 }
 
-pub struct DataMqBrokerInstancesElRef {
+#[allow(dead_code)]
+pub struct DataMqBroker_InstancesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMqBrokerInstancesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBrokerInstancesElRef {
-        DataMqBrokerInstancesElRef {
+impl terrars::Ref for DataMqBroker_InstancesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBroker_InstancesRef {
+        DataMqBroker_InstancesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMqBrokerInstancesElRef {
+impl DataMqBroker_InstancesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -645,7 +695,7 @@ impl DataMqBrokerInstancesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMqBrokerLdapServerMetadataEl {
+pub struct DataMqBroker_LdapServerMetadata {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hosts: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -670,7 +720,7 @@ pub struct DataMqBrokerLdapServerMetadataEl {
     user_search_subtree: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataMqBrokerLdapServerMetadataEl {
+impl DataMqBroker_LdapServerMetadata {
     #[doc = "Set the field `hosts`.\n"]
     pub fn set_hosts(
         mut self,
@@ -753,8 +803,8 @@ impl DataMqBrokerLdapServerMetadataEl {
     }
 }
 
-impl terrars::ToListMappable for DataMqBrokerLdapServerMetadataEl {
-    type O = terrars::BlockAssignable<DataMqBrokerLdapServerMetadataEl>;
+impl terrars::ToListMappable for DataMqBroker_LdapServerMetadata {
+    type O = terrars::BlockAssignable<DataMqBroker_LdapServerMetadata>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -765,11 +815,11 @@ impl terrars::ToListMappable for DataMqBrokerLdapServerMetadataEl {
     }
 }
 
-pub struct BuildDataMqBrokerLdapServerMetadataEl {}
+pub struct BuildDataMqBroker_LdapServerMetadata {}
 
-impl BuildDataMqBrokerLdapServerMetadataEl {
-    pub fn build(self) -> DataMqBrokerLdapServerMetadataEl {
-        DataMqBrokerLdapServerMetadataEl {
+impl BuildDataMqBroker_LdapServerMetadata {
+    pub fn build(self) -> DataMqBroker_LdapServerMetadata {
+        DataMqBroker_LdapServerMetadata {
             hosts: core::default::Default::default(),
             role_base: core::default::Default::default(),
             role_name: core::default::Default::default(),
@@ -785,21 +835,23 @@ impl BuildDataMqBrokerLdapServerMetadataEl {
     }
 }
 
-pub struct DataMqBrokerLdapServerMetadataElRef {
+#[allow(dead_code)]
+pub struct DataMqBroker_LdapServerMetadataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMqBrokerLdapServerMetadataElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBrokerLdapServerMetadataElRef {
-        DataMqBrokerLdapServerMetadataElRef {
+impl terrars::Ref for DataMqBroker_LdapServerMetadataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBroker_LdapServerMetadataRef {
+        DataMqBroker_LdapServerMetadataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMqBrokerLdapServerMetadataElRef {
+impl DataMqBroker_LdapServerMetadataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -861,14 +913,14 @@ impl DataMqBrokerLdapServerMetadataElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMqBrokerLogsEl {
+pub struct DataMqBroker_Logs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     audit: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     general: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataMqBrokerLogsEl {
+impl DataMqBroker_Logs {
     #[doc = "Set the field `audit`.\n"]
     pub fn set_audit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.audit = std::option::Option::Some(v.into());
@@ -882,8 +934,8 @@ impl DataMqBrokerLogsEl {
     }
 }
 
-impl terrars::ToListMappable for DataMqBrokerLogsEl {
-    type O = terrars::BlockAssignable<DataMqBrokerLogsEl>;
+impl terrars::ToListMappable for DataMqBroker_Logs {
+    type O = terrars::BlockAssignable<DataMqBroker_Logs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -894,32 +946,34 @@ impl terrars::ToListMappable for DataMqBrokerLogsEl {
     }
 }
 
-pub struct BuildDataMqBrokerLogsEl {}
+pub struct BuildDataMqBroker_Logs {}
 
-impl BuildDataMqBrokerLogsEl {
-    pub fn build(self) -> DataMqBrokerLogsEl {
-        DataMqBrokerLogsEl {
+impl BuildDataMqBroker_Logs {
+    pub fn build(self) -> DataMqBroker_Logs {
+        DataMqBroker_Logs {
             audit: core::default::Default::default(),
             general: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataMqBrokerLogsElRef {
+#[allow(dead_code)]
+pub struct DataMqBroker_LogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMqBrokerLogsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBrokerLogsElRef {
-        DataMqBrokerLogsElRef {
+impl terrars::Ref for DataMqBroker_LogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBroker_LogsRef {
+        DataMqBroker_LogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMqBrokerLogsElRef {
+impl DataMqBroker_LogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -936,7 +990,7 @@ impl DataMqBrokerLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMqBrokerMaintenanceWindowStartTimeEl {
+pub struct DataMqBroker_MaintenanceWindowStartTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     day_of_week: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -945,7 +999,7 @@ pub struct DataMqBrokerMaintenanceWindowStartTimeEl {
     time_zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMqBrokerMaintenanceWindowStartTimeEl {
+impl DataMqBroker_MaintenanceWindowStartTime {
     #[doc = "Set the field `day_of_week`.\n"]
     pub fn set_day_of_week(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.day_of_week = std::option::Option::Some(v.into());
@@ -965,8 +1019,8 @@ impl DataMqBrokerMaintenanceWindowStartTimeEl {
     }
 }
 
-impl terrars::ToListMappable for DataMqBrokerMaintenanceWindowStartTimeEl {
-    type O = terrars::BlockAssignable<DataMqBrokerMaintenanceWindowStartTimeEl>;
+impl terrars::ToListMappable for DataMqBroker_MaintenanceWindowStartTime {
+    type O = terrars::BlockAssignable<DataMqBroker_MaintenanceWindowStartTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -977,11 +1031,11 @@ impl terrars::ToListMappable for DataMqBrokerMaintenanceWindowStartTimeEl {
     }
 }
 
-pub struct BuildDataMqBrokerMaintenanceWindowStartTimeEl {}
+pub struct BuildDataMqBroker_MaintenanceWindowStartTime {}
 
-impl BuildDataMqBrokerMaintenanceWindowStartTimeEl {
-    pub fn build(self) -> DataMqBrokerMaintenanceWindowStartTimeEl {
-        DataMqBrokerMaintenanceWindowStartTimeEl {
+impl BuildDataMqBroker_MaintenanceWindowStartTime {
+    pub fn build(self) -> DataMqBroker_MaintenanceWindowStartTime {
+        DataMqBroker_MaintenanceWindowStartTime {
             day_of_week: core::default::Default::default(),
             time_of_day: core::default::Default::default(),
             time_zone: core::default::Default::default(),
@@ -989,21 +1043,23 @@ impl BuildDataMqBrokerMaintenanceWindowStartTimeEl {
     }
 }
 
-pub struct DataMqBrokerMaintenanceWindowStartTimeElRef {
+#[allow(dead_code)]
+pub struct DataMqBroker_MaintenanceWindowStartTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMqBrokerMaintenanceWindowStartTimeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBrokerMaintenanceWindowStartTimeElRef {
-        DataMqBrokerMaintenanceWindowStartTimeElRef {
+impl terrars::Ref for DataMqBroker_MaintenanceWindowStartTimeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBroker_MaintenanceWindowStartTimeRef {
+        DataMqBroker_MaintenanceWindowStartTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMqBrokerMaintenanceWindowStartTimeElRef {
+impl DataMqBroker_MaintenanceWindowStartTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1025,16 +1081,126 @@ impl DataMqBrokerMaintenanceWindowStartTimeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMqBrokerUserEl {
+pub struct DataMqBroker_SharedResources {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_names: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataMqBroker_SharedResources {
+    #[doc = "Set the field `dns_names`.\n"]
+    pub fn set_dns_names(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.dns_names = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resource_arn`.\n"]
+    pub fn set_resource_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.resource_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataMqBroker_SharedResources {
+    type O = terrars::BlockAssignable<DataMqBroker_SharedResources>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataMqBroker_SharedResources {}
+
+impl BuildDataMqBroker_SharedResources {
+    pub fn build(self) -> DataMqBroker_SharedResources {
+        DataMqBroker_SharedResources {
+            dns_names: core::default::Default::default(),
+            resource_arn: core::default::Default::default(),
+            status: core::default::Default::default(),
+            type_: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataMqBroker_SharedResourcesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataMqBroker_SharedResourcesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBroker_SharedResourcesRef {
+        DataMqBroker_SharedResourcesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataMqBroker_SharedResourcesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `dns_names` after provisioning.\n"]
+    pub fn dns_names(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dns_names", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
+    pub fn resource_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataMqBroker_User {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     console_access: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replication_user: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     username: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMqBrokerUserEl {
+impl DataMqBroker_User {
     #[doc = "Set the field `console_access`.\n"]
     pub fn set_console_access(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.console_access = std::option::Option::Some(v.into());
@@ -1050,6 +1216,12 @@ impl DataMqBrokerUserEl {
         self
     }
 
+    #[doc = "Set the field `replication_user`.\n"]
+    pub fn set_replication_user(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.replication_user = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `username`.\n"]
     pub fn set_username(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.username = std::option::Option::Some(v.into());
@@ -1057,8 +1229,8 @@ impl DataMqBrokerUserEl {
     }
 }
 
-impl terrars::ToListMappable for DataMqBrokerUserEl {
-    type O = terrars::BlockAssignable<DataMqBrokerUserEl>;
+impl terrars::ToListMappable for DataMqBroker_User {
+    type O = terrars::BlockAssignable<DataMqBroker_User>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1069,33 +1241,36 @@ impl terrars::ToListMappable for DataMqBrokerUserEl {
     }
 }
 
-pub struct BuildDataMqBrokerUserEl {}
+pub struct BuildDataMqBroker_User {}
 
-impl BuildDataMqBrokerUserEl {
-    pub fn build(self) -> DataMqBrokerUserEl {
-        DataMqBrokerUserEl {
+impl BuildDataMqBroker_User {
+    pub fn build(self) -> DataMqBroker_User {
+        DataMqBroker_User {
             console_access: core::default::Default::default(),
             groups: core::default::Default::default(),
+            replication_user: core::default::Default::default(),
             username: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataMqBrokerUserElRef {
+#[allow(dead_code)]
+pub struct DataMqBroker_UserRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMqBrokerUserElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBrokerUserElRef {
-        DataMqBrokerUserElRef {
+impl terrars::Ref for DataMqBroker_UserRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMqBroker_UserRef {
+        DataMqBroker_UserRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMqBrokerUserElRef {
+impl DataMqBroker_UserRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1108,6 +1283,11 @@ impl DataMqBrokerUserElRef {
     #[doc = "Get a reference to the value of field `groups` after provisioning.\n"]
     pub fn groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.groups", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `replication_user` after provisioning.\n"]
+    pub fn replication_user(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_user", self.base))
     }
 
     #[doc = "Get a reference to the value of field `username` after provisioning.\n"]

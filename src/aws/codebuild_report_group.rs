@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodebuildReportGroupData {
+struct CodebuildReportGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,22 @@ struct CodebuildReportGroupData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    export_config: std::option::Option<std::vec::Vec<CodebuildReportGroupExportConfigEl>>,
+    export_config: std::option::Option<std::vec::Vec<CodebuildReportGroup_ExportConfig>>,
     dynamic: CodebuildReportGroupDynamic,
 }
 
 struct CodebuildReportGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodebuildReportGroupData>,
+    data: std::cell::RefCell<CodebuildReportGroupData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl CodebuildReportGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -170,7 +181,7 @@ impl CodebuildReportGroup {
     #[doc = "Set the field `export_config`.\n"]
     pub fn set_export_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildReportGroupExportConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildReportGroup_ExportConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -208,6 +219,12 @@ impl CodebuildReportGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -224,7 +241,7 @@ impl CodebuildReportGroup {
     }
 
     #[doc = "Get a reference to the value of field `export_config` after provisioning.\n"]
-    pub fn export_config(&self) -> terrars::ListRef<CodebuildReportGroupExportConfigElRef> {
+    pub fn export_config(&self) -> terrars::ListRef<CodebuildReportGroup_ExportConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.export_config", self.extract_ref()))
     }
 }
@@ -273,7 +290,7 @@ impl BuildCodebuildReportGroup {
         let out = CodebuildReportGroup(std::rc::Rc::new(CodebuildReportGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodebuildReportGroupData {
+            data: std::cell::RefCell::new(CodebuildReportGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -282,6 +299,7 @@ impl BuildCodebuildReportGroup {
                 delete_reports: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 type_: self.type_,
@@ -342,6 +360,12 @@ impl CodebuildReportGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -358,13 +382,18 @@ impl CodebuildReportGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `export_config` after provisioning.\n"]
-    pub fn export_config(&self) -> terrars::ListRef<CodebuildReportGroupExportConfigElRef> {
+    pub fn export_config(&self) -> terrars::ListRef<CodebuildReportGroup_ExportConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.export_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CodebuildReportGroupDynamic {
+    export_config: std::option::Option<terrars::DynamicBlock<CodebuildReportGroup_ExportConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct CodebuildReportGroupExportConfigElS3DestinationEl {
+pub struct CodebuildReportGroup_ExportConfig_S3Destination {
     bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_disabled: std::option::Option<terrars::PrimField<bool>>,
@@ -375,7 +404,7 @@ pub struct CodebuildReportGroupExportConfigElS3DestinationEl {
     path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodebuildReportGroupExportConfigElS3DestinationEl {
+impl CodebuildReportGroup_ExportConfig_S3Destination {
     #[doc = "Set the field `encryption_disabled`.\n"]
     pub fn set_encryption_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.encryption_disabled = std::option::Option::Some(v.into());
@@ -395,8 +424,8 @@ impl CodebuildReportGroupExportConfigElS3DestinationEl {
     }
 }
 
-impl terrars::ToListMappable for CodebuildReportGroupExportConfigElS3DestinationEl {
-    type O = terrars::BlockAssignable<CodebuildReportGroupExportConfigElS3DestinationEl>;
+impl terrars::ToListMappable for CodebuildReportGroup_ExportConfig_S3Destination {
+    type O = terrars::BlockAssignable<CodebuildReportGroup_ExportConfig_S3Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -407,16 +436,16 @@ impl terrars::ToListMappable for CodebuildReportGroupExportConfigElS3Destination
     }
 }
 
-pub struct BuildCodebuildReportGroupExportConfigElS3DestinationEl {
+pub struct BuildCodebuildReportGroup_ExportConfig_S3Destination {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub encryption_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodebuildReportGroupExportConfigElS3DestinationEl {
-    pub fn build(self) -> CodebuildReportGroupExportConfigElS3DestinationEl {
-        CodebuildReportGroupExportConfigElS3DestinationEl {
+impl BuildCodebuildReportGroup_ExportConfig_S3Destination {
+    pub fn build(self) -> CodebuildReportGroup_ExportConfig_S3Destination {
+        CodebuildReportGroup_ExportConfig_S3Destination {
             bucket: self.bucket,
             encryption_disabled: core::default::Default::default(),
             encryption_key: self.encryption_key,
@@ -426,24 +455,26 @@ impl BuildCodebuildReportGroupExportConfigElS3DestinationEl {
     }
 }
 
-pub struct CodebuildReportGroupExportConfigElS3DestinationElRef {
+#[allow(dead_code)]
+pub struct CodebuildReportGroup_ExportConfig_S3DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodebuildReportGroupExportConfigElS3DestinationElRef {
+impl terrars::Ref for CodebuildReportGroup_ExportConfig_S3DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CodebuildReportGroupExportConfigElS3DestinationElRef {
-        CodebuildReportGroupExportConfigElS3DestinationElRef {
+    ) -> CodebuildReportGroup_ExportConfig_S3DestinationRef {
+        CodebuildReportGroup_ExportConfig_S3DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodebuildReportGroupExportConfigElS3DestinationElRef {
+impl CodebuildReportGroup_ExportConfig_S3DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -475,24 +506,24 @@ impl CodebuildReportGroupExportConfigElS3DestinationElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CodebuildReportGroupExportConfigElDynamic {
-    s3_destination: std::option::Option<terrars::DynamicBlock<CodebuildReportGroupExportConfigElS3DestinationEl>>,
+struct CodebuildReportGroup_ExportConfigDynamic {
+    s3_destination: std::option::Option<terrars::DynamicBlock<CodebuildReportGroup_ExportConfig_S3Destination>>,
 }
 
 #[derive(Serialize)]
-pub struct CodebuildReportGroupExportConfigEl {
+pub struct CodebuildReportGroup_ExportConfig {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_destination: std::option::Option<std::vec::Vec<CodebuildReportGroupExportConfigElS3DestinationEl>>,
-    dynamic: CodebuildReportGroupExportConfigElDynamic,
+    s3_destination: std::option::Option<std::vec::Vec<CodebuildReportGroup_ExportConfig_S3Destination>>,
+    dynamic: CodebuildReportGroup_ExportConfigDynamic,
 }
 
-impl CodebuildReportGroupExportConfigEl {
+impl CodebuildReportGroup_ExportConfig {
     #[doc = "Set the field `s3_destination`.\n"]
     pub fn set_s3_destination(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildReportGroupExportConfigElS3DestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodebuildReportGroup_ExportConfig_S3Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -506,8 +537,8 @@ impl CodebuildReportGroupExportConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CodebuildReportGroupExportConfigEl {
-    type O = terrars::BlockAssignable<CodebuildReportGroupExportConfigEl>;
+impl terrars::ToListMappable for CodebuildReportGroup_ExportConfig {
+    type O = terrars::BlockAssignable<CodebuildReportGroup_ExportConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -518,14 +549,14 @@ impl terrars::ToListMappable for CodebuildReportGroupExportConfigEl {
     }
 }
 
-pub struct BuildCodebuildReportGroupExportConfigEl {
+pub struct BuildCodebuildReportGroup_ExportConfig {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodebuildReportGroupExportConfigEl {
-    pub fn build(self) -> CodebuildReportGroupExportConfigEl {
-        CodebuildReportGroupExportConfigEl {
+impl BuildCodebuildReportGroup_ExportConfig {
+    pub fn build(self) -> CodebuildReportGroup_ExportConfig {
+        CodebuildReportGroup_ExportConfig {
             type_: self.type_,
             s3_destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -533,21 +564,23 @@ impl BuildCodebuildReportGroupExportConfigEl {
     }
 }
 
-pub struct CodebuildReportGroupExportConfigElRef {
+#[allow(dead_code)]
+pub struct CodebuildReportGroup_ExportConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodebuildReportGroupExportConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildReportGroupExportConfigElRef {
-        CodebuildReportGroupExportConfigElRef {
+impl terrars::Ref for CodebuildReportGroup_ExportConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodebuildReportGroup_ExportConfigRef {
+        CodebuildReportGroup_ExportConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodebuildReportGroupExportConfigElRef {
+impl CodebuildReportGroup_ExportConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -558,12 +591,7 @@ impl CodebuildReportGroupExportConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `s3_destination` after provisioning.\n"]
-    pub fn s3_destination(&self) -> terrars::ListRef<CodebuildReportGroupExportConfigElS3DestinationElRef> {
+    pub fn s3_destination(&self) -> terrars::ListRef<CodebuildReportGroup_ExportConfig_S3DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_destination", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CodebuildReportGroupDynamic {
-    export_config: std::option::Option<terrars::DynamicBlock<CodebuildReportGroupExportConfigEl>>,
 }

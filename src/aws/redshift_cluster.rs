@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RedshiftClusterData {
+struct RedshiftClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,12 +36,6 @@ struct RedshiftClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_parameter_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cluster_public_key: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cluster_revision_number: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cluster_security_groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_subnet_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_type: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -52,9 +48,7 @@ struct RedshiftClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     elastic_ip: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encrypted: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
+    encrypted: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enhanced_vpc_routing: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -68,11 +62,21 @@ struct RedshiftClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maintenance_track_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    manage_master_password: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     manual_snapshot_retention_period: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     master_password: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_password_secret_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_password_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_password_wo_version: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     master_username: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    multi_az: std::option::Option<terrars::PrimField<bool>>,
     node_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     number_of_nodes: std::option::Option<terrars::PrimField<f64>>,
@@ -85,7 +89,11 @@ struct RedshiftClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publicly_accessible: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skip_final_snapshot: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    snapshot_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snapshot_cluster_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -97,18 +105,13 @@ struct RedshiftClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging: std::option::Option<std::vec::Vec<RedshiftClusterLoggingEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    snapshot_copy: std::option::Option<std::vec::Vec<RedshiftClusterSnapshotCopyEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RedshiftClusterTimeoutsEl>,
-    dynamic: RedshiftClusterDynamic,
+    timeouts: std::option::Option<RedshiftCluster_Timeouts>,
 }
 
 struct RedshiftCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RedshiftClusterData>,
+    data: std::cell::RefCell<RedshiftClusterData_>,
 }
 
 #[derive(Clone)]
@@ -256,30 +259,6 @@ impl RedshiftCluster {
         self
     }
 
-    #[doc = "Set the field `cluster_public_key`.\n"]
-    pub fn set_cluster_public_key(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().cluster_public_key = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `cluster_revision_number`.\n"]
-    pub fn set_cluster_revision_number(
-        self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.0.data.borrow_mut().cluster_revision_number = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `cluster_security_groups`.\n"]
-    pub fn set_cluster_security_groups(
-        self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.0.data.borrow_mut().cluster_security_groups = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `cluster_subnet_group_name`.\n"]
     pub fn set_cluster_subnet_group_name(
         self,
@@ -320,14 +299,8 @@ impl RedshiftCluster {
     }
 
     #[doc = "Set the field `encrypted`.\n"]
-    pub fn set_encrypted(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+    pub fn set_encrypted(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().encrypted = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `endpoint`.\n"]
-    pub fn set_endpoint(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().endpoint = std::option::Option::Some(v.into());
         self
     }
 
@@ -376,6 +349,12 @@ impl RedshiftCluster {
         self
     }
 
+    #[doc = "Set the field `manage_master_password`.\n"]
+    pub fn set_manage_master_password(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().manage_master_password = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `manual_snapshot_retention_period`.\n"]
     pub fn set_manual_snapshot_retention_period(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().manual_snapshot_retention_period = std::option::Option::Some(v.into());
@@ -388,9 +367,36 @@ impl RedshiftCluster {
         self
     }
 
+    #[doc = "Set the field `master_password_secret_kms_key_id`.\n"]
+    pub fn set_master_password_secret_kms_key_id(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().master_password_secret_kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `master_password_wo`.\n"]
+    pub fn set_master_password_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().master_password_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `master_password_wo_version`.\n"]
+    pub fn set_master_password_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().master_password_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `master_username`.\n"]
     pub fn set_master_username(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().master_username = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `multi_az`.\n"]
+    pub fn set_multi_az(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().multi_az = std::option::Option::Some(v.into());
         self
     }
 
@@ -427,9 +433,22 @@ impl RedshiftCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `skip_final_snapshot`.\n"]
     pub fn set_skip_final_snapshot(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().skip_final_snapshot = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `snapshot_arn`.\n"]
+    pub fn set_snapshot_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().snapshot_arn = std::option::Option::Some(v.into());
         self
     }
 
@@ -475,37 +494,8 @@ impl RedshiftCluster {
         self
     }
 
-    #[doc = "Set the field `logging`.\n"]
-    pub fn set_logging(self, v: impl std::convert::Into<terrars::BlockAssignable<RedshiftClusterLoggingEl>>) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().logging = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.logging = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
-    #[doc = "Set the field `snapshot_copy`.\n"]
-    pub fn set_snapshot_copy(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftClusterSnapshotCopyEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().snapshot_copy = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.snapshot_copy = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RedshiftClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RedshiftCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -556,8 +546,13 @@ impl RedshiftCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_identifier", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_namespace_arn` after provisioning.\n"]
+    pub fn cluster_namespace_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_namespace_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cluster_nodes` after provisioning.\n"]
-    pub fn cluster_nodes(&self) -> terrars::ListRef<RedshiftClusterClusterNodesElRef> {
+    pub fn cluster_nodes(&self) -> terrars::ListRef<RedshiftCluster_ClusterNodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_nodes", self.extract_ref()))
     }
 
@@ -574,11 +569,6 @@ impl RedshiftCluster {
     #[doc = "Get a reference to the value of field `cluster_revision_number` after provisioning.\n"]
     pub fn cluster_revision_number(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_revision_number", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `cluster_security_groups` after provisioning.\n"]
-    pub fn cluster_security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.cluster_security_groups", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster_subnet_group_name` after provisioning.\n"]
@@ -617,7 +607,7 @@ impl RedshiftCluster {
     }
 
     #[doc = "Get a reference to the value of field `encrypted` after provisioning.\n"]
-    pub fn encrypted(&self) -> terrars::PrimExpr<bool> {
+    pub fn encrypted(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.encrypted", self.extract_ref()))
     }
 
@@ -656,6 +646,11 @@ impl RedshiftCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_track_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `manage_master_password` after provisioning.\n"]
+    pub fn manage_master_password(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_master_password", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `manual_snapshot_retention_period` after provisioning.\n"]
     pub fn manual_snapshot_retention_period(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(
@@ -669,9 +664,37 @@ impl RedshiftCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `master_password_secret_arn` after provisioning.\n"]
+    pub fn master_password_secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_secret_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_secret_kms_key_id` after provisioning.\n"]
+    pub fn master_password_secret_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.master_password_secret_kms_key_id", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_wo` after provisioning.\n"]
+    pub fn master_password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_wo_version` after provisioning.\n"]
+    pub fn master_password_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `master_username` after provisioning.\n"]
     pub fn master_username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_username", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `multi_az` after provisioning.\n"]
+    pub fn multi_az(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.multi_az", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_type` after provisioning.\n"]
@@ -704,9 +727,20 @@ impl RedshiftCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `skip_final_snapshot` after provisioning.\n"]
     pub fn skip_final_snapshot(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_final_snapshot", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `snapshot_arn` after provisioning.\n"]
+    pub fn snapshot_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_cluster_identifier` after provisioning.\n"]
@@ -734,19 +768,9 @@ impl RedshiftCluster {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `logging` after provisioning.\n"]
-    pub fn logging(&self) -> terrars::ListRef<RedshiftClusterLoggingElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.logging", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `snapshot_copy` after provisioning.\n"]
-    pub fn snapshot_copy(&self) -> terrars::ListRef<RedshiftClusterSnapshotCopyElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_copy", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RedshiftClusterTimeoutsElRef {
-        RedshiftClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RedshiftCluster_TimeoutsRef {
+        RedshiftCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -794,7 +818,7 @@ impl BuildRedshiftCluster {
         let out = RedshiftCluster(std::rc::Rc::new(RedshiftCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RedshiftClusterData {
+            data: std::cell::RefCell::new(RedshiftClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -808,9 +832,6 @@ impl BuildRedshiftCluster {
                 availability_zone_relocation_enabled: core::default::Default::default(),
                 cluster_identifier: self.cluster_identifier,
                 cluster_parameter_group_name: core::default::Default::default(),
-                cluster_public_key: core::default::Default::default(),
-                cluster_revision_number: core::default::Default::default(),
-                cluster_security_groups: core::default::Default::default(),
                 cluster_subnet_group_name: core::default::Default::default(),
                 cluster_type: core::default::Default::default(),
                 cluster_version: core::default::Default::default(),
@@ -818,32 +839,35 @@ impl BuildRedshiftCluster {
                 default_iam_role_arn: core::default::Default::default(),
                 elastic_ip: core::default::Default::default(),
                 encrypted: core::default::Default::default(),
-                endpoint: core::default::Default::default(),
                 enhanced_vpc_routing: core::default::Default::default(),
                 final_snapshot_identifier: core::default::Default::default(),
                 iam_roles: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
                 maintenance_track_name: core::default::Default::default(),
+                manage_master_password: core::default::Default::default(),
                 manual_snapshot_retention_period: core::default::Default::default(),
                 master_password: core::default::Default::default(),
+                master_password_secret_kms_key_id: core::default::Default::default(),
+                master_password_wo: core::default::Default::default(),
+                master_password_wo_version: core::default::Default::default(),
                 master_username: core::default::Default::default(),
+                multi_az: core::default::Default::default(),
                 node_type: self.node_type,
                 number_of_nodes: core::default::Default::default(),
                 owner_account: core::default::Default::default(),
                 port: core::default::Default::default(),
                 preferred_maintenance_window: core::default::Default::default(),
                 publicly_accessible: core::default::Default::default(),
+                region: core::default::Default::default(),
                 skip_final_snapshot: core::default::Default::default(),
+                snapshot_arn: core::default::Default::default(),
                 snapshot_cluster_identifier: core::default::Default::default(),
                 snapshot_identifier: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 vpc_security_group_ids: core::default::Default::default(),
-                logging: core::default::Default::default(),
-                snapshot_copy: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
-                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -920,8 +944,13 @@ impl RedshiftClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_identifier", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_namespace_arn` after provisioning.\n"]
+    pub fn cluster_namespace_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_namespace_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cluster_nodes` after provisioning.\n"]
-    pub fn cluster_nodes(&self) -> terrars::ListRef<RedshiftClusterClusterNodesElRef> {
+    pub fn cluster_nodes(&self) -> terrars::ListRef<RedshiftCluster_ClusterNodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_nodes", self.extract_ref()))
     }
 
@@ -938,11 +967,6 @@ impl RedshiftClusterRef {
     #[doc = "Get a reference to the value of field `cluster_revision_number` after provisioning.\n"]
     pub fn cluster_revision_number(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_revision_number", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `cluster_security_groups` after provisioning.\n"]
-    pub fn cluster_security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.cluster_security_groups", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster_subnet_group_name` after provisioning.\n"]
@@ -981,7 +1005,7 @@ impl RedshiftClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `encrypted` after provisioning.\n"]
-    pub fn encrypted(&self) -> terrars::PrimExpr<bool> {
+    pub fn encrypted(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.encrypted", self.extract_ref()))
     }
 
@@ -1020,6 +1044,11 @@ impl RedshiftClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_track_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `manage_master_password` after provisioning.\n"]
+    pub fn manage_master_password(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_master_password", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `manual_snapshot_retention_period` after provisioning.\n"]
     pub fn manual_snapshot_retention_period(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(
@@ -1033,9 +1062,37 @@ impl RedshiftClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `master_password_secret_arn` after provisioning.\n"]
+    pub fn master_password_secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_secret_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_secret_kms_key_id` after provisioning.\n"]
+    pub fn master_password_secret_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.master_password_secret_kms_key_id", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_wo` after provisioning.\n"]
+    pub fn master_password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_wo_version` after provisioning.\n"]
+    pub fn master_password_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `master_username` after provisioning.\n"]
     pub fn master_username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_username", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `multi_az` after provisioning.\n"]
+    pub fn multi_az(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.multi_az", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_type` after provisioning.\n"]
@@ -1068,9 +1125,20 @@ impl RedshiftClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `skip_final_snapshot` after provisioning.\n"]
     pub fn skip_final_snapshot(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_final_snapshot", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `snapshot_arn` after provisioning.\n"]
+    pub fn snapshot_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.snapshot_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_cluster_identifier` after provisioning.\n"]
@@ -1098,24 +1166,14 @@ impl RedshiftClusterRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `logging` after provisioning.\n"]
-    pub fn logging(&self) -> terrars::ListRef<RedshiftClusterLoggingElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.logging", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `snapshot_copy` after provisioning.\n"]
-    pub fn snapshot_copy(&self) -> terrars::ListRef<RedshiftClusterSnapshotCopyElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_copy", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RedshiftClusterTimeoutsElRef {
-        RedshiftClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RedshiftCluster_TimeoutsRef {
+        RedshiftCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct RedshiftClusterClusterNodesEl {
+pub struct RedshiftCluster_ClusterNodes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     node_role: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1124,7 +1182,7 @@ pub struct RedshiftClusterClusterNodesEl {
     public_ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RedshiftClusterClusterNodesEl {
+impl RedshiftCluster_ClusterNodes {
     #[doc = "Set the field `node_role`.\n"]
     pub fn set_node_role(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.node_role = std::option::Option::Some(v.into());
@@ -1147,8 +1205,8 @@ impl RedshiftClusterClusterNodesEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftClusterClusterNodesEl {
-    type O = terrars::BlockAssignable<RedshiftClusterClusterNodesEl>;
+impl terrars::ToListMappable for RedshiftCluster_ClusterNodes {
+    type O = terrars::BlockAssignable<RedshiftCluster_ClusterNodes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1159,11 +1217,11 @@ impl terrars::ToListMappable for RedshiftClusterClusterNodesEl {
     }
 }
 
-pub struct BuildRedshiftClusterClusterNodesEl {}
+pub struct BuildRedshiftCluster_ClusterNodes {}
 
-impl BuildRedshiftClusterClusterNodesEl {
-    pub fn build(self) -> RedshiftClusterClusterNodesEl {
-        RedshiftClusterClusterNodesEl {
+impl BuildRedshiftCluster_ClusterNodes {
+    pub fn build(self) -> RedshiftCluster_ClusterNodes {
+        RedshiftCluster_ClusterNodes {
             node_role: core::default::Default::default(),
             private_ip_address: core::default::Default::default(),
             public_ip_address: core::default::Default::default(),
@@ -1171,21 +1229,23 @@ impl BuildRedshiftClusterClusterNodesEl {
     }
 }
 
-pub struct RedshiftClusterClusterNodesElRef {
+#[allow(dead_code)]
+pub struct RedshiftCluster_ClusterNodesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftClusterClusterNodesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftClusterClusterNodesElRef {
-        RedshiftClusterClusterNodesElRef {
+impl terrars::Ref for RedshiftCluster_ClusterNodesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftCluster_ClusterNodesRef {
+        RedshiftCluster_ClusterNodesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftClusterClusterNodesElRef {
+impl RedshiftCluster_ClusterNodesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1207,211 +1267,7 @@ impl RedshiftClusterClusterNodesElRef {
 }
 
 #[derive(Serialize)]
-pub struct RedshiftClusterLoggingEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    enable: terrars::PrimField<bool>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_destination_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_exports: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_key_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl RedshiftClusterLoggingEl {
-    #[doc = "Set the field `bucket_name`.\n"]
-    pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.bucket_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_destination_type`.\n"]
-    pub fn set_log_destination_type(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.log_destination_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_exports`.\n"]
-    pub fn set_log_exports(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.log_exports = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `s3_key_prefix`.\n"]
-    pub fn set_s3_key_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.s3_key_prefix = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for RedshiftClusterLoggingEl {
-    type O = terrars::BlockAssignable<RedshiftClusterLoggingEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildRedshiftClusterLoggingEl {
-    #[doc = ""]
-    pub enable: terrars::PrimField<bool>,
-}
-
-impl BuildRedshiftClusterLoggingEl {
-    pub fn build(self) -> RedshiftClusterLoggingEl {
-        RedshiftClusterLoggingEl {
-            bucket_name: core::default::Default::default(),
-            enable: self.enable,
-            log_destination_type: core::default::Default::default(),
-            log_exports: core::default::Default::default(),
-            s3_key_prefix: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct RedshiftClusterLoggingElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for RedshiftClusterLoggingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftClusterLoggingElRef {
-        RedshiftClusterLoggingElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl RedshiftClusterLoggingElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
-    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `enable` after provisioning.\n"]
-    pub fn enable(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_destination_type` after provisioning.\n"]
-    pub fn log_destination_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_destination_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_exports` after provisioning.\n"]
-    pub fn log_exports(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.log_exports", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `s3_key_prefix` after provisioning.\n"]
-    pub fn s3_key_prefix(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_key_prefix", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct RedshiftClusterSnapshotCopyEl {
-    destination_region: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    grant_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retention_period: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl RedshiftClusterSnapshotCopyEl {
-    #[doc = "Set the field `grant_name`.\n"]
-    pub fn set_grant_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.grant_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `retention_period`.\n"]
-    pub fn set_retention_period(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.retention_period = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for RedshiftClusterSnapshotCopyEl {
-    type O = terrars::BlockAssignable<RedshiftClusterSnapshotCopyEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildRedshiftClusterSnapshotCopyEl {
-    #[doc = ""]
-    pub destination_region: terrars::PrimField<std::string::String>,
-}
-
-impl BuildRedshiftClusterSnapshotCopyEl {
-    pub fn build(self) -> RedshiftClusterSnapshotCopyEl {
-        RedshiftClusterSnapshotCopyEl {
-            destination_region: self.destination_region,
-            grant_name: core::default::Default::default(),
-            retention_period: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct RedshiftClusterSnapshotCopyElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for RedshiftClusterSnapshotCopyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftClusterSnapshotCopyElRef {
-        RedshiftClusterSnapshotCopyElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl RedshiftClusterSnapshotCopyElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `destination_region` after provisioning.\n"]
-    pub fn destination_region(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_region", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `grant_name` after provisioning.\n"]
-    pub fn grant_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.grant_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `retention_period` after provisioning.\n"]
-    pub fn retention_period(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retention_period", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct RedshiftClusterTimeoutsEl {
+pub struct RedshiftCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1420,7 +1276,7 @@ pub struct RedshiftClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RedshiftClusterTimeoutsEl {
+impl RedshiftCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1440,8 +1296,8 @@ impl RedshiftClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<RedshiftClusterTimeoutsEl>;
+impl terrars::ToListMappable for RedshiftCluster_Timeouts {
+    type O = terrars::BlockAssignable<RedshiftCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1452,11 +1308,11 @@ impl terrars::ToListMappable for RedshiftClusterTimeoutsEl {
     }
 }
 
-pub struct BuildRedshiftClusterTimeoutsEl {}
+pub struct BuildRedshiftCluster_Timeouts {}
 
-impl BuildRedshiftClusterTimeoutsEl {
-    pub fn build(self) -> RedshiftClusterTimeoutsEl {
-        RedshiftClusterTimeoutsEl {
+impl BuildRedshiftCluster_Timeouts {
+    pub fn build(self) -> RedshiftCluster_Timeouts {
+        RedshiftCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1464,21 +1320,23 @@ impl BuildRedshiftClusterTimeoutsEl {
     }
 }
 
-pub struct RedshiftClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RedshiftCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftClusterTimeoutsElRef {
-        RedshiftClusterTimeoutsElRef {
+impl terrars::Ref for RedshiftCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftCluster_TimeoutsRef {
+        RedshiftCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftClusterTimeoutsElRef {
+impl RedshiftCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1497,10 +1355,4 @@ impl RedshiftClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct RedshiftClusterDynamic {
-    logging: std::option::Option<terrars::DynamicBlock<RedshiftClusterLoggingEl>>,
-    snapshot_copy: std::option::Option<terrars::DynamicBlock<RedshiftClusterSnapshotCopyEl>>,
 }

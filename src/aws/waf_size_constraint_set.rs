@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafSizeConstraintSetData {
+struct WafSizeConstraintSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,14 @@ struct WafSizeConstraintSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    size_constraints: std::option::Option<std::vec::Vec<WafSizeConstraintSetSizeConstraintsEl>>,
+    size_constraints: std::option::Option<std::vec::Vec<WafSizeConstraintSet_SizeConstraints>>,
     dynamic: WafSizeConstraintSetDynamic,
 }
 
 struct WafSizeConstraintSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafSizeConstraintSetData>,
+    data: std::cell::RefCell<WafSizeConstraintSetData_>,
 }
 
 #[derive(Clone)]
@@ -138,7 +140,7 @@ impl WafSizeConstraintSet {
     #[doc = "Set the field `size_constraints`.\n"]
     pub fn set_size_constraints(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafSizeConstraintSetSizeConstraintsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafSizeConstraintSet_SizeConstraints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,7 +211,7 @@ impl BuildWafSizeConstraintSet {
         let out = WafSizeConstraintSet(std::rc::Rc::new(WafSizeConstraintSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafSizeConstraintSetData {
+            data: std::cell::RefCell::new(WafSizeConstraintSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -265,15 +267,20 @@ impl WafSizeConstraintSetRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafSizeConstraintSetDynamic {
+    size_constraints: std::option::Option<terrars::DynamicBlock<WafSizeConstraintSet_SizeConstraints>>,
+}
+
 #[derive(Serialize)]
-pub struct WafSizeConstraintSetSizeConstraintsElFieldToMatchEl {
+pub struct WafSizeConstraintSet_SizeConstraints_FieldToMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafSizeConstraintSetSizeConstraintsElFieldToMatchEl {
+impl WafSizeConstraintSet_SizeConstraints_FieldToMatch {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -281,8 +288,8 @@ impl WafSizeConstraintSetSizeConstraintsElFieldToMatchEl {
     }
 }
 
-impl terrars::ToListMappable for WafSizeConstraintSetSizeConstraintsElFieldToMatchEl {
-    type O = terrars::BlockAssignable<WafSizeConstraintSetSizeConstraintsElFieldToMatchEl>;
+impl terrars::ToListMappable for WafSizeConstraintSet_SizeConstraints_FieldToMatch {
+    type O = terrars::BlockAssignable<WafSizeConstraintSet_SizeConstraints_FieldToMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -293,38 +300,40 @@ impl terrars::ToListMappable for WafSizeConstraintSetSizeConstraintsElFieldToMat
     }
 }
 
-pub struct BuildWafSizeConstraintSetSizeConstraintsElFieldToMatchEl {
+pub struct BuildWafSizeConstraintSet_SizeConstraints_FieldToMatch {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafSizeConstraintSetSizeConstraintsElFieldToMatchEl {
-    pub fn build(self) -> WafSizeConstraintSetSizeConstraintsElFieldToMatchEl {
-        WafSizeConstraintSetSizeConstraintsElFieldToMatchEl {
+impl BuildWafSizeConstraintSet_SizeConstraints_FieldToMatch {
+    pub fn build(self) -> WafSizeConstraintSet_SizeConstraints_FieldToMatch {
+        WafSizeConstraintSet_SizeConstraints_FieldToMatch {
             data: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct WafSizeConstraintSetSizeConstraintsElFieldToMatchElRef {
+#[allow(dead_code)]
+pub struct WafSizeConstraintSet_SizeConstraints_FieldToMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafSizeConstraintSetSizeConstraintsElFieldToMatchElRef {
+impl terrars::Ref for WafSizeConstraintSet_SizeConstraints_FieldToMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafSizeConstraintSetSizeConstraintsElFieldToMatchElRef {
-        WafSizeConstraintSetSizeConstraintsElFieldToMatchElRef {
+    ) -> WafSizeConstraintSet_SizeConstraints_FieldToMatchRef {
+        WafSizeConstraintSet_SizeConstraints_FieldToMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafSizeConstraintSetSizeConstraintsElFieldToMatchElRef {
+impl WafSizeConstraintSet_SizeConstraints_FieldToMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -341,25 +350,25 @@ impl WafSizeConstraintSetSizeConstraintsElFieldToMatchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafSizeConstraintSetSizeConstraintsElDynamic {
-    field_to_match: std::option::Option<terrars::DynamicBlock<WafSizeConstraintSetSizeConstraintsElFieldToMatchEl>>,
+struct WafSizeConstraintSet_SizeConstraintsDynamic {
+    field_to_match: std::option::Option<terrars::DynamicBlock<WafSizeConstraintSet_SizeConstraints_FieldToMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct WafSizeConstraintSetSizeConstraintsEl {
+pub struct WafSizeConstraintSet_SizeConstraints {
     comparison_operator: terrars::PrimField<std::string::String>,
     size: terrars::PrimField<f64>,
     text_transformation: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_to_match: std::option::Option<std::vec::Vec<WafSizeConstraintSetSizeConstraintsElFieldToMatchEl>>,
-    dynamic: WafSizeConstraintSetSizeConstraintsElDynamic,
+    field_to_match: std::option::Option<std::vec::Vec<WafSizeConstraintSet_SizeConstraints_FieldToMatch>>,
+    dynamic: WafSizeConstraintSet_SizeConstraintsDynamic,
 }
 
-impl WafSizeConstraintSetSizeConstraintsEl {
+impl WafSizeConstraintSet_SizeConstraints {
     #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafSizeConstraintSetSizeConstraintsElFieldToMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafSizeConstraintSet_SizeConstraints_FieldToMatch>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -373,8 +382,8 @@ impl WafSizeConstraintSetSizeConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for WafSizeConstraintSetSizeConstraintsEl {
-    type O = terrars::BlockAssignable<WafSizeConstraintSetSizeConstraintsEl>;
+impl terrars::ToListMappable for WafSizeConstraintSet_SizeConstraints {
+    type O = terrars::BlockAssignable<WafSizeConstraintSet_SizeConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -385,7 +394,7 @@ impl terrars::ToListMappable for WafSizeConstraintSetSizeConstraintsEl {
     }
 }
 
-pub struct BuildWafSizeConstraintSetSizeConstraintsEl {
+pub struct BuildWafSizeConstraintSet_SizeConstraints {
     #[doc = ""]
     pub comparison_operator: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -394,9 +403,9 @@ pub struct BuildWafSizeConstraintSetSizeConstraintsEl {
     pub text_transformation: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafSizeConstraintSetSizeConstraintsEl {
-    pub fn build(self) -> WafSizeConstraintSetSizeConstraintsEl {
-        WafSizeConstraintSetSizeConstraintsEl {
+impl BuildWafSizeConstraintSet_SizeConstraints {
+    pub fn build(self) -> WafSizeConstraintSet_SizeConstraints {
+        WafSizeConstraintSet_SizeConstraints {
             comparison_operator: self.comparison_operator,
             size: self.size,
             text_transformation: self.text_transformation,
@@ -406,21 +415,23 @@ impl BuildWafSizeConstraintSetSizeConstraintsEl {
     }
 }
 
-pub struct WafSizeConstraintSetSizeConstraintsElRef {
+#[allow(dead_code)]
+pub struct WafSizeConstraintSet_SizeConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafSizeConstraintSetSizeConstraintsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafSizeConstraintSetSizeConstraintsElRef {
-        WafSizeConstraintSetSizeConstraintsElRef {
+impl terrars::Ref for WafSizeConstraintSet_SizeConstraintsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafSizeConstraintSet_SizeConstraintsRef {
+        WafSizeConstraintSet_SizeConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafSizeConstraintSetSizeConstraintsElRef {
+impl WafSizeConstraintSet_SizeConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -441,12 +452,7 @@ impl WafSizeConstraintSetSizeConstraintsElRef {
     }
 
     #[doc = "Get a reference to the value of field `field_to_match` after provisioning.\n"]
-    pub fn field_to_match(&self) -> terrars::ListRef<WafSizeConstraintSetSizeConstraintsElFieldToMatchElRef> {
+    pub fn field_to_match(&self) -> terrars::ListRef<WafSizeConstraintSet_SizeConstraints_FieldToMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafSizeConstraintSetDynamic {
-    size_constraints: std::option::Option<terrars::DynamicBlock<WafSizeConstraintSetSizeConstraintsEl>>,
 }

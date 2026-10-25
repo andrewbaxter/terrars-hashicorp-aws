@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WorkspacesDirectoryData {
+struct WorkspacesDirectoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,11 +20,14 @@ struct WorkspacesDirectoryData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
-    directory_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    directory_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,18 +35,36 @@ struct WorkspacesDirectoryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    self_service_permissions: std::option::Option<std::vec::Vec<WorkspacesDirectorySelfServicePermissionsEl>>,
+    tenancy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    workspace_access_properties: std::option::Option<std::vec::Vec<WorkspacesDirectoryWorkspaceAccessPropertiesEl>>,
+    user_identity_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    workspace_creation_properties: std::option::Option<std::vec::Vec<WorkspacesDirectoryWorkspaceCreationPropertiesEl>>,
+    workspace_directory_description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workspace_directory_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workspace_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    active_directory_config: std::option::Option<std::vec::Vec<WorkspacesDirectory_ActiveDirectoryConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    certificate_based_auth_properties: std
+    ::option
+    ::Option<std::vec::Vec<WorkspacesDirectory_CertificateBasedAuthProperties>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    saml_properties: std::option::Option<std::vec::Vec<WorkspacesDirectory_SamlProperties>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    self_service_permissions: std::option::Option<std::vec::Vec<WorkspacesDirectory_SelfServicePermissions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workspace_access_properties: std::option::Option<std::vec::Vec<WorkspacesDirectory_WorkspaceAccessProperties>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workspace_creation_properties: std::option::Option<std::vec::Vec<WorkspacesDirectory_WorkspaceCreationProperties>>,
     dynamic: WorkspacesDirectoryDynamic,
 }
 
 struct WorkspacesDirectory_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WorkspacesDirectoryData>,
+    data: std::cell::RefCell<WorkspacesDirectoryData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +164,12 @@ impl WorkspacesDirectory {
         self
     }
 
+    #[doc = "Set the field `directory_id`.\n"]
+    pub fn set_directory_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().directory_id = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -153,6 +182,13 @@ impl WorkspacesDirectory {
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().ip_group_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -183,10 +219,94 @@ impl WorkspacesDirectory {
         self
     }
 
+    #[doc = "Set the field `tenancy`.\n"]
+    pub fn set_tenancy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().tenancy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user_identity_type`.\n"]
+    pub fn set_user_identity_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().user_identity_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `workspace_directory_description`.\n"]
+    pub fn set_workspace_directory_description(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().workspace_directory_description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `workspace_directory_name`.\n"]
+    pub fn set_workspace_directory_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().workspace_directory_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `workspace_type`.\n"]
+    pub fn set_workspace_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().workspace_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `active_directory_config`.\n"]
+    pub fn set_active_directory_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesDirectory_ActiveDirectoryConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().active_directory_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.active_directory_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `certificate_based_auth_properties`.\n"]
+    pub fn set_certificate_based_auth_properties(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesDirectory_CertificateBasedAuthProperties>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().certificate_based_auth_properties = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.certificate_based_auth_properties = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `saml_properties`.\n"]
+    pub fn set_saml_properties(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesDirectory_SamlProperties>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().saml_properties = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.saml_properties = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `self_service_permissions`.\n"]
     pub fn set_self_service_permissions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesDirectorySelfServicePermissionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesDirectory_SelfServicePermissions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -202,7 +322,7 @@ impl WorkspacesDirectory {
     #[doc = "Set the field `workspace_access_properties`.\n"]
     pub fn set_workspace_access_properties(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesDirectoryWorkspaceAccessPropertiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesDirectory_WorkspaceAccessProperties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -218,7 +338,7 @@ impl WorkspacesDirectory {
     #[doc = "Set the field `workspace_creation_properties`.\n"]
     pub fn set_workspace_creation_properties(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesDirectoryWorkspaceCreationPropertiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesDirectory_WorkspaceCreationProperties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -276,6 +396,12 @@ impl WorkspacesDirectory {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ip_group_ids", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registration_code` after provisioning.\n"]
     pub fn registration_code(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registration_code", self.extract_ref()))
@@ -296,23 +422,71 @@ impl WorkspacesDirectory {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tenancy` after provisioning.\n"]
+    pub fn tenancy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenancy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `user_identity_type` after provisioning.\n"]
+    pub fn user_identity_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_identity_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `workspace_directory_description` after provisioning.\n"]
+    pub fn workspace_directory_description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.workspace_directory_description", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `workspace_directory_name` after provisioning.\n"]
+    pub fn workspace_directory_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workspace_directory_name", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `workspace_security_group_id` after provisioning.\n"]
     pub fn workspace_security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.workspace_security_group_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `workspace_type` after provisioning.\n"]
+    pub fn workspace_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workspace_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `active_directory_config` after provisioning.\n"]
+    pub fn active_directory_config(&self) -> terrars::ListRef<WorkspacesDirectory_ActiveDirectoryConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.active_directory_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_based_auth_properties` after provisioning.\n"]
+    pub fn certificate_based_auth_properties(
+        &self,
+    ) -> terrars::ListRef<WorkspacesDirectory_CertificateBasedAuthPropertiesRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.certificate_based_auth_properties", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `saml_properties` after provisioning.\n"]
+    pub fn saml_properties(&self) -> terrars::ListRef<WorkspacesDirectory_SamlPropertiesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.saml_properties", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `self_service_permissions` after provisioning.\n"]
-    pub fn self_service_permissions(&self) -> terrars::ListRef<WorkspacesDirectorySelfServicePermissionsElRef> {
+    pub fn self_service_permissions(&self) -> terrars::ListRef<WorkspacesDirectory_SelfServicePermissionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.self_service_permissions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `workspace_access_properties` after provisioning.\n"]
-    pub fn workspace_access_properties(&self) -> terrars::ListRef<WorkspacesDirectoryWorkspaceAccessPropertiesElRef> {
+    pub fn workspace_access_properties(&self) -> terrars::ListRef<WorkspacesDirectory_WorkspaceAccessPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workspace_access_properties", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `workspace_creation_properties` after provisioning.\n"]
-    pub fn workspace_creation_properties(&self) -> terrars::ListRef<WorkspacesDirectoryWorkspaceCreationPropertiesElRef> {
+    pub fn workspace_creation_properties(&self) -> terrars::ListRef<WorkspacesDirectory_WorkspaceCreationPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workspace_creation_properties", self.extract_ref()))
     }
 }
@@ -350,8 +524,6 @@ impl terrars::Resource_ for WorkspacesDirectory_ {
 
 pub struct BuildWorkspacesDirectory {
     pub tf_id: std::string::String,
-    #[doc = ""]
-    pub directory_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildWorkspacesDirectory {
@@ -359,18 +531,27 @@ impl BuildWorkspacesDirectory {
         let out = WorkspacesDirectory(std::rc::Rc::new(WorkspacesDirectory_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WorkspacesDirectoryData {
+            data: std::cell::RefCell::new(WorkspacesDirectoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                directory_id: self.directory_id,
+                directory_id: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ip_group_ids: core::default::Default::default(),
+                region: core::default::Default::default(),
                 subnet_ids: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                tenancy: core::default::Default::default(),
+                user_identity_type: core::default::Default::default(),
+                workspace_directory_description: core::default::Default::default(),
+                workspace_directory_name: core::default::Default::default(),
+                workspace_type: core::default::Default::default(),
+                active_directory_config: core::default::Default::default(),
+                certificate_based_auth_properties: core::default::Default::default(),
+                saml_properties: core::default::Default::default(),
                 self_service_permissions: core::default::Default::default(),
                 workspace_access_properties: core::default::Default::default(),
                 workspace_creation_properties: core::default::Default::default(),
@@ -450,6 +631,12 @@ impl WorkspacesDirectoryRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ip_group_ids", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registration_code` after provisioning.\n"]
     pub fn registration_code(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registration_code", self.extract_ref()))
@@ -470,29 +657,338 @@ impl WorkspacesDirectoryRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tenancy` after provisioning.\n"]
+    pub fn tenancy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenancy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `user_identity_type` after provisioning.\n"]
+    pub fn user_identity_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_identity_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `workspace_directory_description` after provisioning.\n"]
+    pub fn workspace_directory_description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.workspace_directory_description", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `workspace_directory_name` after provisioning.\n"]
+    pub fn workspace_directory_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workspace_directory_name", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `workspace_security_group_id` after provisioning.\n"]
     pub fn workspace_security_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.workspace_security_group_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `workspace_type` after provisioning.\n"]
+    pub fn workspace_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workspace_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `active_directory_config` after provisioning.\n"]
+    pub fn active_directory_config(&self) -> terrars::ListRef<WorkspacesDirectory_ActiveDirectoryConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.active_directory_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_based_auth_properties` after provisioning.\n"]
+    pub fn certificate_based_auth_properties(
+        &self,
+    ) -> terrars::ListRef<WorkspacesDirectory_CertificateBasedAuthPropertiesRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.certificate_based_auth_properties", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `saml_properties` after provisioning.\n"]
+    pub fn saml_properties(&self) -> terrars::ListRef<WorkspacesDirectory_SamlPropertiesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.saml_properties", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `self_service_permissions` after provisioning.\n"]
-    pub fn self_service_permissions(&self) -> terrars::ListRef<WorkspacesDirectorySelfServicePermissionsElRef> {
+    pub fn self_service_permissions(&self) -> terrars::ListRef<WorkspacesDirectory_SelfServicePermissionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.self_service_permissions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `workspace_access_properties` after provisioning.\n"]
-    pub fn workspace_access_properties(&self) -> terrars::ListRef<WorkspacesDirectoryWorkspaceAccessPropertiesElRef> {
+    pub fn workspace_access_properties(&self) -> terrars::ListRef<WorkspacesDirectory_WorkspaceAccessPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workspace_access_properties", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `workspace_creation_properties` after provisioning.\n"]
-    pub fn workspace_creation_properties(&self) -> terrars::ListRef<WorkspacesDirectoryWorkspaceCreationPropertiesElRef> {
+    pub fn workspace_creation_properties(&self) -> terrars::ListRef<WorkspacesDirectory_WorkspaceCreationPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workspace_creation_properties", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct WorkspacesDirectoryDynamic {
+    active_directory_config: std::option::Option<terrars::DynamicBlock<WorkspacesDirectory_ActiveDirectoryConfig>>,
+    certificate_based_auth_properties: std
+    ::option
+    ::Option<terrars::DynamicBlock<WorkspacesDirectory_CertificateBasedAuthProperties>>,
+    saml_properties: std::option::Option<terrars::DynamicBlock<WorkspacesDirectory_SamlProperties>>,
+    self_service_permissions: std::option::Option<terrars::DynamicBlock<WorkspacesDirectory_SelfServicePermissions>>,
+    workspace_access_properties: std
+    ::option
+    ::Option<terrars::DynamicBlock<WorkspacesDirectory_WorkspaceAccessProperties>>,
+    workspace_creation_properties: std
+    ::option
+    ::Option<terrars::DynamicBlock<WorkspacesDirectory_WorkspaceCreationProperties>>,
+}
+
 #[derive(Serialize)]
-pub struct WorkspacesDirectorySelfServicePermissionsEl {
+pub struct WorkspacesDirectory_ActiveDirectoryConfig {
+    domain_name: terrars::PrimField<std::string::String>,
+    service_account_secret_arn: terrars::PrimField<std::string::String>,
+}
+
+impl WorkspacesDirectory_ActiveDirectoryConfig { }
+
+impl terrars::ToListMappable for WorkspacesDirectory_ActiveDirectoryConfig {
+    type O = terrars::BlockAssignable<WorkspacesDirectory_ActiveDirectoryConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkspacesDirectory_ActiveDirectoryConfig {
+    #[doc = ""]
+    pub domain_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub service_account_secret_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildWorkspacesDirectory_ActiveDirectoryConfig {
+    pub fn build(self) -> WorkspacesDirectory_ActiveDirectoryConfig {
+        WorkspacesDirectory_ActiveDirectoryConfig {
+            domain_name: self.domain_name,
+            service_account_secret_arn: self.service_account_secret_arn,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkspacesDirectory_ActiveDirectoryConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkspacesDirectory_ActiveDirectoryConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkspacesDirectory_ActiveDirectoryConfigRef {
+        WorkspacesDirectory_ActiveDirectoryConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkspacesDirectory_ActiveDirectoryConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
+    pub fn domain_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service_account_secret_arn` after provisioning.\n"]
+    pub fn service_account_secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account_secret_arn", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct WorkspacesDirectory_CertificateBasedAuthProperties {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    certificate_authority_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl WorkspacesDirectory_CertificateBasedAuthProperties {
+    #[doc = "Set the field `certificate_authority_arn`.\n"]
+    pub fn set_certificate_authority_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.certificate_authority_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for WorkspacesDirectory_CertificateBasedAuthProperties {
+    type O = terrars::BlockAssignable<WorkspacesDirectory_CertificateBasedAuthProperties>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkspacesDirectory_CertificateBasedAuthProperties {}
+
+impl BuildWorkspacesDirectory_CertificateBasedAuthProperties {
+    pub fn build(self) -> WorkspacesDirectory_CertificateBasedAuthProperties {
+        WorkspacesDirectory_CertificateBasedAuthProperties {
+            certificate_authority_arn: core::default::Default::default(),
+            status: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkspacesDirectory_CertificateBasedAuthPropertiesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkspacesDirectory_CertificateBasedAuthPropertiesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> WorkspacesDirectory_CertificateBasedAuthPropertiesRef {
+        WorkspacesDirectory_CertificateBasedAuthPropertiesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkspacesDirectory_CertificateBasedAuthPropertiesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_authority_arn` after provisioning.\n"]
+    pub fn certificate_authority_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_authority_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct WorkspacesDirectory_SamlProperties {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    relay_state_parameter_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_access_url: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl WorkspacesDirectory_SamlProperties {
+    #[doc = "Set the field `relay_state_parameter_name`.\n"]
+    pub fn set_relay_state_parameter_name(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.relay_state_parameter_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user_access_url`.\n"]
+    pub fn set_user_access_url(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.user_access_url = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for WorkspacesDirectory_SamlProperties {
+    type O = terrars::BlockAssignable<WorkspacesDirectory_SamlProperties>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkspacesDirectory_SamlProperties {}
+
+impl BuildWorkspacesDirectory_SamlProperties {
+    pub fn build(self) -> WorkspacesDirectory_SamlProperties {
+        WorkspacesDirectory_SamlProperties {
+            relay_state_parameter_name: core::default::Default::default(),
+            status: core::default::Default::default(),
+            user_access_url: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkspacesDirectory_SamlPropertiesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkspacesDirectory_SamlPropertiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkspacesDirectory_SamlPropertiesRef {
+        WorkspacesDirectory_SamlPropertiesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkspacesDirectory_SamlPropertiesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `relay_state_parameter_name` after provisioning.\n"]
+    pub fn relay_state_parameter_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.relay_state_parameter_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `user_access_url` after provisioning.\n"]
+    pub fn user_access_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_access_url", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct WorkspacesDirectory_SelfServicePermissions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     change_compute_type: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -505,7 +1001,7 @@ pub struct WorkspacesDirectorySelfServicePermissionsEl {
     switch_running_mode: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl WorkspacesDirectorySelfServicePermissionsEl {
+impl WorkspacesDirectory_SelfServicePermissions {
     #[doc = "Set the field `change_compute_type`.\n"]
     pub fn set_change_compute_type(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.change_compute_type = std::option::Option::Some(v.into());
@@ -537,8 +1033,8 @@ impl WorkspacesDirectorySelfServicePermissionsEl {
     }
 }
 
-impl terrars::ToListMappable for WorkspacesDirectorySelfServicePermissionsEl {
-    type O = terrars::BlockAssignable<WorkspacesDirectorySelfServicePermissionsEl>;
+impl terrars::ToListMappable for WorkspacesDirectory_SelfServicePermissions {
+    type O = terrars::BlockAssignable<WorkspacesDirectory_SelfServicePermissions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -549,11 +1045,11 @@ impl terrars::ToListMappable for WorkspacesDirectorySelfServicePermissionsEl {
     }
 }
 
-pub struct BuildWorkspacesDirectorySelfServicePermissionsEl {}
+pub struct BuildWorkspacesDirectory_SelfServicePermissions {}
 
-impl BuildWorkspacesDirectorySelfServicePermissionsEl {
-    pub fn build(self) -> WorkspacesDirectorySelfServicePermissionsEl {
-        WorkspacesDirectorySelfServicePermissionsEl {
+impl BuildWorkspacesDirectory_SelfServicePermissions {
+    pub fn build(self) -> WorkspacesDirectory_SelfServicePermissions {
+        WorkspacesDirectory_SelfServicePermissions {
             change_compute_type: core::default::Default::default(),
             increase_volume_size: core::default::Default::default(),
             rebuild_workspace: core::default::Default::default(),
@@ -563,24 +1059,23 @@ impl BuildWorkspacesDirectorySelfServicePermissionsEl {
     }
 }
 
-pub struct WorkspacesDirectorySelfServicePermissionsElRef {
+#[allow(dead_code)]
+pub struct WorkspacesDirectory_SelfServicePermissionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkspacesDirectorySelfServicePermissionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> WorkspacesDirectorySelfServicePermissionsElRef {
-        WorkspacesDirectorySelfServicePermissionsElRef {
+impl terrars::Ref for WorkspacesDirectory_SelfServicePermissionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkspacesDirectory_SelfServicePermissionsRef {
+        WorkspacesDirectory_SelfServicePermissionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkspacesDirectorySelfServicePermissionsElRef {
+impl WorkspacesDirectory_SelfServicePermissionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -612,7 +1107,197 @@ impl WorkspacesDirectorySelfServicePermissionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct WorkspacesDirectoryWorkspaceAccessPropertiesEl {
+pub struct WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints {
+    access_endpoint_type: terrars::PrimField<std::string::String>,
+    vpc_endpoint_id: terrars::PrimField<std::string::String>,
+}
+
+impl WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints { }
+
+impl terrars::ToListMappable for WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints {
+    type O =
+        terrars::BlockAssignable<WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints {
+    #[doc = ""]
+    pub access_endpoint_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub vpc_endpoint_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildWorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints {
+    pub fn build(self) -> WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints {
+        WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints {
+            access_endpoint_type: self.access_endpoint_type,
+            vpc_endpoint_id: self.vpc_endpoint_id,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpointsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpointsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpointsRef {
+        WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpointsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpointsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `access_endpoint_type` after provisioning.\n"]
+    pub fn access_endpoint_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_endpoint_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
+    pub fn vpc_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfigDynamic {
+    access_endpoints: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    internet_fallback_protocols: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_endpoints: std
+    ::option
+    ::Option<std::vec::Vec<WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints>>,
+    dynamic: WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfigDynamic,
+}
+
+impl WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig {
+    #[doc = "Set the field `internet_fallback_protocols`.\n"]
+    pub fn set_internet_fallback_protocols(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.internet_fallback_protocols = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `access_endpoints`.\n"]
+    pub fn set_access_endpoints(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig_AccessEndpoints,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.access_endpoints = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.access_endpoints = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig {
+    type O = terrars::BlockAssignable<WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildWorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig {}
+
+impl BuildWorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig {
+    pub fn build(self) -> WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig {
+        WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig {
+            internet_fallback_protocols: core::default::Default::default(),
+            access_endpoints: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfigRef {
+        WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `internet_fallback_protocols` after provisioning.\n"]
+    pub fn internet_fallback_protocols(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.internet_fallback_protocols", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct WorkspacesDirectory_WorkspaceAccessPropertiesDynamic {
+    access_endpoint_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct WorkspacesDirectory_WorkspaceAccessProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_type_android: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -629,9 +1314,14 @@ pub struct WorkspacesDirectoryWorkspaceAccessPropertiesEl {
     device_type_windows: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_type_zeroclient: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_endpoint_config: std
+    ::option
+    ::Option<std::vec::Vec<WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig>>,
+    dynamic: WorkspacesDirectory_WorkspaceAccessPropertiesDynamic,
 }
 
-impl WorkspacesDirectoryWorkspaceAccessPropertiesEl {
+impl WorkspacesDirectory_WorkspaceAccessProperties {
     #[doc = "Set the field `device_type_android`.\n"]
     pub fn set_device_type_android(
         mut self,
@@ -691,10 +1381,33 @@ impl WorkspacesDirectoryWorkspaceAccessPropertiesEl {
         self.device_type_zeroclient = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `access_endpoint_config`.\n"]
+    pub fn set_access_endpoint_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfig>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.access_endpoint_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.access_endpoint_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for WorkspacesDirectoryWorkspaceAccessPropertiesEl {
-    type O = terrars::BlockAssignable<WorkspacesDirectoryWorkspaceAccessPropertiesEl>;
+impl terrars::ToListMappable for WorkspacesDirectory_WorkspaceAccessProperties {
+    type O = terrars::BlockAssignable<WorkspacesDirectory_WorkspaceAccessProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -705,11 +1418,11 @@ impl terrars::ToListMappable for WorkspacesDirectoryWorkspaceAccessPropertiesEl 
     }
 }
 
-pub struct BuildWorkspacesDirectoryWorkspaceAccessPropertiesEl {}
+pub struct BuildWorkspacesDirectory_WorkspaceAccessProperties {}
 
-impl BuildWorkspacesDirectoryWorkspaceAccessPropertiesEl {
-    pub fn build(self) -> WorkspacesDirectoryWorkspaceAccessPropertiesEl {
-        WorkspacesDirectoryWorkspaceAccessPropertiesEl {
+impl BuildWorkspacesDirectory_WorkspaceAccessProperties {
+    pub fn build(self) -> WorkspacesDirectory_WorkspaceAccessProperties {
+        WorkspacesDirectory_WorkspaceAccessProperties {
             device_type_android: core::default::Default::default(),
             device_type_chromeos: core::default::Default::default(),
             device_type_ios: core::default::Default::default(),
@@ -718,28 +1431,32 @@ impl BuildWorkspacesDirectoryWorkspaceAccessPropertiesEl {
             device_type_web: core::default::Default::default(),
             device_type_windows: core::default::Default::default(),
             device_type_zeroclient: core::default::Default::default(),
+            access_endpoint_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct WorkspacesDirectoryWorkspaceAccessPropertiesElRef {
+#[allow(dead_code)]
+pub struct WorkspacesDirectory_WorkspaceAccessPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkspacesDirectoryWorkspaceAccessPropertiesElRef {
+impl terrars::Ref for WorkspacesDirectory_WorkspaceAccessPropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WorkspacesDirectoryWorkspaceAccessPropertiesElRef {
-        WorkspacesDirectoryWorkspaceAccessPropertiesElRef {
+    ) -> WorkspacesDirectory_WorkspaceAccessPropertiesRef {
+        WorkspacesDirectory_WorkspaceAccessPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkspacesDirectoryWorkspaceAccessPropertiesElRef {
+impl WorkspacesDirectory_WorkspaceAccessPropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -783,10 +1500,17 @@ impl WorkspacesDirectoryWorkspaceAccessPropertiesElRef {
     pub fn device_type_zeroclient(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.device_type_zeroclient", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `access_endpoint_config` after provisioning.\n"]
+    pub fn access_endpoint_config(
+        &self,
+    ) -> terrars::ListRef<WorkspacesDirectory_WorkspaceAccessProperties_AccessEndpointConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.access_endpoint_config", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct WorkspacesDirectoryWorkspaceCreationPropertiesEl {
+pub struct WorkspacesDirectory_WorkspaceCreationProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_security_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -799,7 +1523,7 @@ pub struct WorkspacesDirectoryWorkspaceCreationPropertiesEl {
     user_enabled_as_local_administrator: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl WorkspacesDirectoryWorkspaceCreationPropertiesEl {
+impl WorkspacesDirectory_WorkspaceCreationProperties {
     #[doc = "Set the field `custom_security_group_id`.\n"]
     pub fn set_custom_security_group_id(
         mut self,
@@ -837,8 +1561,8 @@ impl WorkspacesDirectoryWorkspaceCreationPropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for WorkspacesDirectoryWorkspaceCreationPropertiesEl {
-    type O = terrars::BlockAssignable<WorkspacesDirectoryWorkspaceCreationPropertiesEl>;
+impl terrars::ToListMappable for WorkspacesDirectory_WorkspaceCreationProperties {
+    type O = terrars::BlockAssignable<WorkspacesDirectory_WorkspaceCreationProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -849,11 +1573,11 @@ impl terrars::ToListMappable for WorkspacesDirectoryWorkspaceCreationPropertiesE
     }
 }
 
-pub struct BuildWorkspacesDirectoryWorkspaceCreationPropertiesEl {}
+pub struct BuildWorkspacesDirectory_WorkspaceCreationProperties {}
 
-impl BuildWorkspacesDirectoryWorkspaceCreationPropertiesEl {
-    pub fn build(self) -> WorkspacesDirectoryWorkspaceCreationPropertiesEl {
-        WorkspacesDirectoryWorkspaceCreationPropertiesEl {
+impl BuildWorkspacesDirectory_WorkspaceCreationProperties {
+    pub fn build(self) -> WorkspacesDirectory_WorkspaceCreationProperties {
+        WorkspacesDirectory_WorkspaceCreationProperties {
             custom_security_group_id: core::default::Default::default(),
             default_ou: core::default::Default::default(),
             enable_internet_access: core::default::Default::default(),
@@ -863,24 +1587,26 @@ impl BuildWorkspacesDirectoryWorkspaceCreationPropertiesEl {
     }
 }
 
-pub struct WorkspacesDirectoryWorkspaceCreationPropertiesElRef {
+#[allow(dead_code)]
+pub struct WorkspacesDirectory_WorkspaceCreationPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkspacesDirectoryWorkspaceCreationPropertiesElRef {
+impl terrars::Ref for WorkspacesDirectory_WorkspaceCreationPropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WorkspacesDirectoryWorkspaceCreationPropertiesElRef {
-        WorkspacesDirectoryWorkspaceCreationPropertiesElRef {
+    ) -> WorkspacesDirectory_WorkspaceCreationPropertiesRef {
+        WorkspacesDirectory_WorkspaceCreationPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkspacesDirectoryWorkspaceCreationPropertiesElRef {
+impl WorkspacesDirectory_WorkspaceCreationPropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -909,15 +1635,4 @@ impl WorkspacesDirectoryWorkspaceCreationPropertiesElRef {
     pub fn user_enabled_as_local_administrator(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_enabled_as_local_administrator", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WorkspacesDirectoryDynamic {
-    self_service_permissions: std::option::Option<terrars::DynamicBlock<WorkspacesDirectorySelfServicePermissionsEl>>,
-    workspace_access_properties: std
-    ::option
-    ::Option<terrars::DynamicBlock<WorkspacesDirectoryWorkspaceAccessPropertiesEl>>,
-    workspace_creation_properties: std
-    ::option
-    ::Option<terrars::DynamicBlock<WorkspacesDirectoryWorkspaceCreationPropertiesEl>>,
 }

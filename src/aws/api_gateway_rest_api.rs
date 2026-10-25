@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApiGatewayRestApiData {
+struct ApiGatewayRestApiData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,9 +31,13 @@ struct ApiGatewayRestApiData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     disable_execute_api_endpoint: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    endpoint_access_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fail_on_warnings: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    minimum_compression_size: std::option::Option<terrars::PrimField<f64>>,
+    minimum_compression_size: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -40,18 +46,24 @@ struct ApiGatewayRestApiData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     put_rest_api_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    security_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint_configuration: std::option::Option<std::vec::Vec<ApiGatewayRestApiEndpointConfigurationEl>>,
+    endpoint_configuration: std::option::Option<std::vec::Vec<ApiGatewayRestApi_EndpointConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ApiGatewayRestApi_Timeouts>,
     dynamic: ApiGatewayRestApiDynamic,
 }
 
 struct ApiGatewayRestApi_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApiGatewayRestApiData>,
+    data: std::cell::RefCell<ApiGatewayRestApiData_>,
 }
 
 #[derive(Clone)]
@@ -184,6 +196,18 @@ impl ApiGatewayRestApi {
         self
     }
 
+    #[doc = "Set the field `endpoint_access_mode`.\n"]
+    pub fn set_endpoint_access_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().endpoint_access_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `fail_on_warnings`.\n"]
+    pub fn set_fail_on_warnings(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().fail_on_warnings = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -191,7 +215,10 @@ impl ApiGatewayRestApi {
     }
 
     #[doc = "Set the field `minimum_compression_size`.\n"]
-    pub fn set_minimum_compression_size(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+    pub fn set_minimum_compression_size(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
         self.0.data.borrow_mut().minimum_compression_size = std::option::Option::Some(v.into());
         self
     }
@@ -217,6 +244,19 @@ impl ApiGatewayRestApi {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `security_policy`.\n"]
+    pub fn set_security_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().security_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -238,7 +278,7 @@ impl ApiGatewayRestApi {
     #[doc = "Set the field `endpoint_configuration`.\n"]
     pub fn set_endpoint_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayRestApiEndpointConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayRestApi_EndpointConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -248,6 +288,12 @@ impl ApiGatewayRestApi {
                 self.0.data.borrow_mut().dynamic.endpoint_configuration = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ApiGatewayRestApi_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -286,9 +332,19 @@ impl ApiGatewayRestApi {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_execute_api_endpoint", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `endpoint_access_mode` after provisioning.\n"]
+    pub fn endpoint_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_access_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `execution_arn` after provisioning.\n"]
     pub fn execution_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fail_on_warnings` after provisioning.\n"]
+    pub fn fail_on_warnings(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_warnings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -297,7 +353,7 @@ impl ApiGatewayRestApi {
     }
 
     #[doc = "Get a reference to the value of field `minimum_compression_size` after provisioning.\n"]
-    pub fn minimum_compression_size(&self) -> terrars::PrimExpr<f64> {
+    pub fn minimum_compression_size(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_compression_size", self.extract_ref()))
     }
 
@@ -321,9 +377,20 @@ impl ApiGatewayRestApi {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.put_rest_api_mode", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_resource_id` after provisioning.\n"]
     pub fn root_resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_resource_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `security_policy` after provisioning.\n"]
+    pub fn security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -337,8 +404,13 @@ impl ApiGatewayRestApi {
     }
 
     #[doc = "Get a reference to the value of field `endpoint_configuration` after provisioning.\n"]
-    pub fn endpoint_configuration(&self) -> terrars::ListRef<ApiGatewayRestApiEndpointConfigurationElRef> {
+    pub fn endpoint_configuration(&self) -> terrars::ListRef<ApiGatewayRestApi_EndpointConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ApiGatewayRestApi_TimeoutsRef {
+        ApiGatewayRestApi_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -384,7 +456,7 @@ impl BuildApiGatewayRestApi {
         let out = ApiGatewayRestApi(std::rc::Rc::new(ApiGatewayRestApi_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApiGatewayRestApiData {
+            data: std::cell::RefCell::new(ApiGatewayRestApiData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -395,15 +467,20 @@ impl BuildApiGatewayRestApi {
                 body: core::default::Default::default(),
                 description: core::default::Default::default(),
                 disable_execute_api_endpoint: core::default::Default::default(),
+                endpoint_access_mode: core::default::Default::default(),
+                fail_on_warnings: core::default::Default::default(),
                 id: core::default::Default::default(),
                 minimum_compression_size: core::default::Default::default(),
                 name: self.name,
                 parameters: core::default::Default::default(),
                 policy: core::default::Default::default(),
                 put_rest_api_mode: core::default::Default::default(),
+                region: core::default::Default::default(),
+                security_policy: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 endpoint_configuration: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -470,9 +547,19 @@ impl ApiGatewayRestApiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.disable_execute_api_endpoint", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `endpoint_access_mode` after provisioning.\n"]
+    pub fn endpoint_access_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_access_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `execution_arn` after provisioning.\n"]
     pub fn execution_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fail_on_warnings` after provisioning.\n"]
+    pub fn fail_on_warnings(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fail_on_warnings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -481,7 +568,7 @@ impl ApiGatewayRestApiRef {
     }
 
     #[doc = "Get a reference to the value of field `minimum_compression_size` after provisioning.\n"]
-    pub fn minimum_compression_size(&self) -> terrars::PrimExpr<f64> {
+    pub fn minimum_compression_size(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_compression_size", self.extract_ref()))
     }
 
@@ -505,9 +592,20 @@ impl ApiGatewayRestApiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.put_rest_api_mode", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_resource_id` after provisioning.\n"]
     pub fn root_resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_resource_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `security_policy` after provisioning.\n"]
+    pub fn security_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -521,19 +619,37 @@ impl ApiGatewayRestApiRef {
     }
 
     #[doc = "Get a reference to the value of field `endpoint_configuration` after provisioning.\n"]
-    pub fn endpoint_configuration(&self) -> terrars::ListRef<ApiGatewayRestApiEndpointConfigurationElRef> {
+    pub fn endpoint_configuration(&self) -> terrars::ListRef<ApiGatewayRestApi_EndpointConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_configuration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ApiGatewayRestApi_TimeoutsRef {
+        ApiGatewayRestApi_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApiGatewayRestApiDynamic {
+    endpoint_configuration: std::option::Option<terrars::DynamicBlock<ApiGatewayRestApi_EndpointConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct ApiGatewayRestApiEndpointConfigurationEl {
+pub struct ApiGatewayRestApi_EndpointConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address_type: std::option::Option<terrars::PrimField<std::string::String>>,
     types: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ApiGatewayRestApiEndpointConfigurationEl {
+impl ApiGatewayRestApi_EndpointConfiguration {
+    #[doc = "Set the field `ip_address_type`.\n"]
+    pub fn set_ip_address_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_address_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `vpc_endpoint_ids`.\n"]
     pub fn set_vpc_endpoint_ids(
         mut self,
@@ -544,8 +660,8 @@ impl ApiGatewayRestApiEndpointConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayRestApiEndpointConfigurationEl {
-    type O = terrars::BlockAssignable<ApiGatewayRestApiEndpointConfigurationEl>;
+impl terrars::ToListMappable for ApiGatewayRestApi_EndpointConfiguration {
+    type O = terrars::BlockAssignable<ApiGatewayRestApi_EndpointConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -556,37 +672,45 @@ impl terrars::ToListMappable for ApiGatewayRestApiEndpointConfigurationEl {
     }
 }
 
-pub struct BuildApiGatewayRestApiEndpointConfigurationEl {
+pub struct BuildApiGatewayRestApi_EndpointConfiguration {
     #[doc = ""]
     pub types: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildApiGatewayRestApiEndpointConfigurationEl {
-    pub fn build(self) -> ApiGatewayRestApiEndpointConfigurationEl {
-        ApiGatewayRestApiEndpointConfigurationEl {
+impl BuildApiGatewayRestApi_EndpointConfiguration {
+    pub fn build(self) -> ApiGatewayRestApi_EndpointConfiguration {
+        ApiGatewayRestApi_EndpointConfiguration {
+            ip_address_type: core::default::Default::default(),
             types: self.types,
             vpc_endpoint_ids: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApiGatewayRestApiEndpointConfigurationElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayRestApi_EndpointConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayRestApiEndpointConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayRestApiEndpointConfigurationElRef {
-        ApiGatewayRestApiEndpointConfigurationElRef {
+impl terrars::Ref for ApiGatewayRestApi_EndpointConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayRestApi_EndpointConfigurationRef {
+        ApiGatewayRestApi_EndpointConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayRestApiEndpointConfigurationElRef {
+impl ApiGatewayRestApi_EndpointConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.base))
     }
 
     #[doc = "Get a reference to the value of field `types` after provisioning.\n"]
@@ -600,7 +724,93 @@ impl ApiGatewayRestApiEndpointConfigurationElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct ApiGatewayRestApiDynamic {
-    endpoint_configuration: std::option::Option<terrars::DynamicBlock<ApiGatewayRestApiEndpointConfigurationEl>>,
+#[derive(Serialize)]
+pub struct ApiGatewayRestApi_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ApiGatewayRestApi_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ApiGatewayRestApi_Timeouts {
+    type O = terrars::BlockAssignable<ApiGatewayRestApi_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildApiGatewayRestApi_Timeouts {}
+
+impl BuildApiGatewayRestApi_Timeouts {
+    pub fn build(self) -> ApiGatewayRestApi_Timeouts {
+        ApiGatewayRestApi_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ApiGatewayRestApi_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ApiGatewayRestApi_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayRestApi_TimeoutsRef {
+        ApiGatewayRestApi_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ApiGatewayRestApi_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

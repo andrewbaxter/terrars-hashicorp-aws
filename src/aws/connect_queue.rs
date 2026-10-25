@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConnectQueueData {
+struct ConnectQueueData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,20 +32,22 @@ struct ConnectQueueData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     quick_connect_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    outbound_caller_config: std::option::Option<std::vec::Vec<ConnectQueueOutboundCallerConfigEl>>,
+    outbound_caller_config: std::option::Option<std::vec::Vec<ConnectQueue_OutboundCallerConfig>>,
     dynamic: ConnectQueueDynamic,
 }
 
 struct ConnectQueue_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConnectQueueData>,
+    data: std::cell::RefCell<ConnectQueueData_>,
 }
 
 #[derive(Clone)]
@@ -170,6 +174,13 @@ impl ConnectQueue {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().status = std::option::Option::Some(v.into());
@@ -197,7 +208,7 @@ impl ConnectQueue {
     #[doc = "Set the field `outbound_caller_config`.\n"]
     pub fn set_outbound_caller_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQueueOutboundCallerConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQueue_OutboundCallerConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -255,9 +266,10 @@ impl ConnectQueue {
         terrars::SetRef::new(self.shared().clone(), format!("{}.quick_connect_ids", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `quick_connect_ids_associated` after provisioning.\n"]
-    pub fn quick_connect_ids_associated(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.quick_connect_ids_associated", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -276,7 +288,7 @@ impl ConnectQueue {
     }
 
     #[doc = "Get a reference to the value of field `outbound_caller_config` after provisioning.\n"]
-    pub fn outbound_caller_config(&self) -> terrars::ListRef<ConnectQueueOutboundCallerConfigElRef> {
+    pub fn outbound_caller_config(&self) -> terrars::ListRef<ConnectQueue_OutboundCallerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.outbound_caller_config", self.extract_ref()))
     }
 }
@@ -327,7 +339,7 @@ impl BuildConnectQueue {
         let out = ConnectQueue(std::rc::Rc::new(ConnectQueue_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConnectQueueData {
+            data: std::cell::RefCell::new(ConnectQueueData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -340,6 +352,7 @@ impl BuildConnectQueue {
                 max_contacts: core::default::Default::default(),
                 name: self.name,
                 quick_connect_ids: core::default::Default::default(),
+                region: core::default::Default::default(),
                 status: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -420,9 +433,10 @@ impl ConnectQueueRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.quick_connect_ids", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `quick_connect_ids_associated` after provisioning.\n"]
-    pub fn quick_connect_ids_associated(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.quick_connect_ids_associated", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -441,13 +455,18 @@ impl ConnectQueueRef {
     }
 
     #[doc = "Get a reference to the value of field `outbound_caller_config` after provisioning.\n"]
-    pub fn outbound_caller_config(&self) -> terrars::ListRef<ConnectQueueOutboundCallerConfigElRef> {
+    pub fn outbound_caller_config(&self) -> terrars::ListRef<ConnectQueue_OutboundCallerConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.outbound_caller_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ConnectQueueDynamic {
+    outbound_caller_config: std::option::Option<terrars::DynamicBlock<ConnectQueue_OutboundCallerConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct ConnectQueueOutboundCallerConfigEl {
+pub struct ConnectQueue_OutboundCallerConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     outbound_caller_id_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -456,7 +475,7 @@ pub struct ConnectQueueOutboundCallerConfigEl {
     outbound_flow_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConnectQueueOutboundCallerConfigEl {
+impl ConnectQueue_OutboundCallerConfig {
     #[doc = "Set the field `outbound_caller_id_name`.\n"]
     pub fn set_outbound_caller_id_name(
         mut self,
@@ -482,8 +501,8 @@ impl ConnectQueueOutboundCallerConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectQueueOutboundCallerConfigEl {
-    type O = terrars::BlockAssignable<ConnectQueueOutboundCallerConfigEl>;
+impl terrars::ToListMappable for ConnectQueue_OutboundCallerConfig {
+    type O = terrars::BlockAssignable<ConnectQueue_OutboundCallerConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -494,11 +513,11 @@ impl terrars::ToListMappable for ConnectQueueOutboundCallerConfigEl {
     }
 }
 
-pub struct BuildConnectQueueOutboundCallerConfigEl {}
+pub struct BuildConnectQueue_OutboundCallerConfig {}
 
-impl BuildConnectQueueOutboundCallerConfigEl {
-    pub fn build(self) -> ConnectQueueOutboundCallerConfigEl {
-        ConnectQueueOutboundCallerConfigEl {
+impl BuildConnectQueue_OutboundCallerConfig {
+    pub fn build(self) -> ConnectQueue_OutboundCallerConfig {
+        ConnectQueue_OutboundCallerConfig {
             outbound_caller_id_name: core::default::Default::default(),
             outbound_caller_id_number_id: core::default::Default::default(),
             outbound_flow_id: core::default::Default::default(),
@@ -506,21 +525,23 @@ impl BuildConnectQueueOutboundCallerConfigEl {
     }
 }
 
-pub struct ConnectQueueOutboundCallerConfigElRef {
+#[allow(dead_code)]
+pub struct ConnectQueue_OutboundCallerConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectQueueOutboundCallerConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectQueueOutboundCallerConfigElRef {
-        ConnectQueueOutboundCallerConfigElRef {
+impl terrars::Ref for ConnectQueue_OutboundCallerConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectQueue_OutboundCallerConfigRef {
+        ConnectQueue_OutboundCallerConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectQueueOutboundCallerConfigElRef {
+impl ConnectQueue_OutboundCallerConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -539,9 +560,4 @@ impl ConnectQueueOutboundCallerConfigElRef {
     pub fn outbound_flow_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outbound_flow_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ConnectQueueDynamic {
-    outbound_caller_config: std::option::Option<terrars::DynamicBlock<ConnectQueueOutboundCallerConfigEl>>,
 }

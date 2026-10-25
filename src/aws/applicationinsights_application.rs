@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApplicationinsightsApplicationData {
+struct ApplicationinsightsApplicationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,6 +34,8 @@ struct ApplicationinsightsApplicationData {
     ops_center_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ops_item_sns_topic_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     resource_group_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -42,7 +46,7 @@ struct ApplicationinsightsApplicationData {
 struct ApplicationinsightsApplication_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApplicationinsightsApplicationData>,
+    data: std::cell::RefCell<ApplicationinsightsApplicationData_>,
 }
 
 #[derive(Clone)]
@@ -187,6 +191,13 @@ impl ApplicationinsightsApplication {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -243,6 +254,12 @@ impl ApplicationinsightsApplication {
     #[doc = "Get a reference to the value of field `ops_item_sns_topic_arn` after provisioning.\n"]
     pub fn ops_item_sns_topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ops_item_sns_topic_arn", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_group_name` after provisioning.\n"]
@@ -303,7 +320,7 @@ impl BuildApplicationinsightsApplication {
         let out = ApplicationinsightsApplication(std::rc::Rc::new(ApplicationinsightsApplication_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApplicationinsightsApplicationData {
+            data: std::cell::RefCell::new(ApplicationinsightsApplicationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -316,6 +333,7 @@ impl BuildApplicationinsightsApplication {
                 id: core::default::Default::default(),
                 ops_center_enabled: core::default::Default::default(),
                 ops_item_sns_topic_arn: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resource_group_name: self.resource_group_name,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -387,6 +405,12 @@ impl ApplicationinsightsApplicationRef {
     #[doc = "Get a reference to the value of field `ops_item_sns_topic_arn` after provisioning.\n"]
     pub fn ops_item_sns_topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ops_item_sns_topic_arn", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_group_name` after provisioning.\n"]

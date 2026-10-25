@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EfsFileSystemData {
+struct EfsFileSystemData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,20 +35,24 @@ struct EfsFileSystemData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     provisioned_throughput_in_mibps: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     throughput_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lifecycle_policy: std::option::Option<std::vec::Vec<EfsFileSystemLifecyclePolicyEl>>,
+    lifecycle_policy: std::option::Option<std::vec::Vec<EfsFileSystem_LifecyclePolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    protection: std::option::Option<std::vec::Vec<EfsFileSystem_Protection>>,
     dynamic: EfsFileSystemDynamic,
 }
 
 struct EfsFileSystem_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EfsFileSystemData>,
+    data: std::cell::RefCell<EfsFileSystemData_>,
 }
 
 #[derive(Clone)]
@@ -191,6 +197,13 @@ impl EfsFileSystem {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -218,7 +231,7 @@ impl EfsFileSystem {
     #[doc = "Set the field `lifecycle_policy`.\n"]
     pub fn set_lifecycle_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EfsFileSystemLifecyclePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EfsFileSystem_LifecyclePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -226,6 +239,19 @@ impl EfsFileSystem {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.lifecycle_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `protection`.\n"]
+    pub fn set_protection(self, v: impl std::convert::Into<terrars::BlockAssignable<EfsFileSystem_Protection>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().protection = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.protection = std::option::Option::Some(d);
             },
         }
         self
@@ -271,6 +297,11 @@ impl EfsFileSystem {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `number_of_mount_targets` after provisioning.\n"]
     pub fn number_of_mount_targets(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_mount_targets", self.extract_ref()))
@@ -294,8 +325,14 @@ impl EfsFileSystem {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `size_in_bytes` after provisioning.\n"]
-    pub fn size_in_bytes(&self) -> terrars::ListRef<EfsFileSystemSizeInBytesElRef> {
+    pub fn size_in_bytes(&self) -> terrars::ListRef<EfsFileSystem_SizeInBytesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.size_in_bytes", self.extract_ref()))
     }
 
@@ -315,8 +352,13 @@ impl EfsFileSystem {
     }
 
     #[doc = "Get a reference to the value of field `lifecycle_policy` after provisioning.\n"]
-    pub fn lifecycle_policy(&self) -> terrars::ListRef<EfsFileSystemLifecyclePolicyElRef> {
+    pub fn lifecycle_policy(&self) -> terrars::ListRef<EfsFileSystem_LifecyclePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lifecycle_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `protection` after provisioning.\n"]
+    pub fn protection(&self) -> terrars::ListRef<EfsFileSystem_ProtectionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.protection", self.extract_ref()))
     }
 }
 
@@ -360,7 +402,7 @@ impl BuildEfsFileSystem {
         let out = EfsFileSystem(std::rc::Rc::new(EfsFileSystem_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EfsFileSystemData {
+            data: std::cell::RefCell::new(EfsFileSystemData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -373,10 +415,12 @@ impl BuildEfsFileSystem {
                 kms_key_id: core::default::Default::default(),
                 performance_mode: core::default::Default::default(),
                 provisioned_throughput_in_mibps: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 throughput_mode: core::default::Default::default(),
                 lifecycle_policy: core::default::Default::default(),
+                protection: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -448,6 +492,11 @@ impl EfsFileSystemRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `number_of_mount_targets` after provisioning.\n"]
     pub fn number_of_mount_targets(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_mount_targets", self.extract_ref()))
@@ -471,8 +520,14 @@ impl EfsFileSystemRef {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `size_in_bytes` after provisioning.\n"]
-    pub fn size_in_bytes(&self) -> terrars::ListRef<EfsFileSystemSizeInBytesElRef> {
+    pub fn size_in_bytes(&self) -> terrars::ListRef<EfsFileSystem_SizeInBytesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.size_in_bytes", self.extract_ref()))
     }
 
@@ -492,13 +547,24 @@ impl EfsFileSystemRef {
     }
 
     #[doc = "Get a reference to the value of field `lifecycle_policy` after provisioning.\n"]
-    pub fn lifecycle_policy(&self) -> terrars::ListRef<EfsFileSystemLifecyclePolicyElRef> {
+    pub fn lifecycle_policy(&self) -> terrars::ListRef<EfsFileSystem_LifecyclePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lifecycle_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `protection` after provisioning.\n"]
+    pub fn protection(&self) -> terrars::ListRef<EfsFileSystem_ProtectionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.protection", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EfsFileSystemDynamic {
+    lifecycle_policy: std::option::Option<terrars::DynamicBlock<EfsFileSystem_LifecyclePolicy>>,
+    protection: std::option::Option<terrars::DynamicBlock<EfsFileSystem_Protection>>,
+}
+
 #[derive(Serialize)]
-pub struct EfsFileSystemSizeInBytesEl {
+pub struct EfsFileSystem_SizeInBytes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -507,7 +573,7 @@ pub struct EfsFileSystemSizeInBytesEl {
     value_in_standard: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl EfsFileSystemSizeInBytesEl {
+impl EfsFileSystem_SizeInBytes {
     #[doc = "Set the field `value`.\n"]
     pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.value = std::option::Option::Some(v.into());
@@ -527,8 +593,8 @@ impl EfsFileSystemSizeInBytesEl {
     }
 }
 
-impl terrars::ToListMappable for EfsFileSystemSizeInBytesEl {
-    type O = terrars::BlockAssignable<EfsFileSystemSizeInBytesEl>;
+impl terrars::ToListMappable for EfsFileSystem_SizeInBytes {
+    type O = terrars::BlockAssignable<EfsFileSystem_SizeInBytes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -539,11 +605,11 @@ impl terrars::ToListMappable for EfsFileSystemSizeInBytesEl {
     }
 }
 
-pub struct BuildEfsFileSystemSizeInBytesEl {}
+pub struct BuildEfsFileSystem_SizeInBytes {}
 
-impl BuildEfsFileSystemSizeInBytesEl {
-    pub fn build(self) -> EfsFileSystemSizeInBytesEl {
-        EfsFileSystemSizeInBytesEl {
+impl BuildEfsFileSystem_SizeInBytes {
+    pub fn build(self) -> EfsFileSystem_SizeInBytes {
+        EfsFileSystem_SizeInBytes {
             value: core::default::Default::default(),
             value_in_ia: core::default::Default::default(),
             value_in_standard: core::default::Default::default(),
@@ -551,21 +617,23 @@ impl BuildEfsFileSystemSizeInBytesEl {
     }
 }
 
-pub struct EfsFileSystemSizeInBytesElRef {
+#[allow(dead_code)]
+pub struct EfsFileSystem_SizeInBytesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EfsFileSystemSizeInBytesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsFileSystemSizeInBytesElRef {
-        EfsFileSystemSizeInBytesElRef {
+impl terrars::Ref for EfsFileSystem_SizeInBytesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsFileSystem_SizeInBytesRef {
+        EfsFileSystem_SizeInBytesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EfsFileSystemSizeInBytesElRef {
+impl EfsFileSystem_SizeInBytesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -587,14 +655,25 @@ impl EfsFileSystemSizeInBytesElRef {
 }
 
 #[derive(Serialize)]
-pub struct EfsFileSystemLifecyclePolicyEl {
+pub struct EfsFileSystem_LifecyclePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transition_to_archive: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transition_to_ia: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transition_to_primary_storage_class: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EfsFileSystemLifecyclePolicyEl {
+impl EfsFileSystem_LifecyclePolicy {
+    #[doc = "Set the field `transition_to_archive`.\n"]
+    pub fn set_transition_to_archive(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.transition_to_archive = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `transition_to_ia`.\n"]
     pub fn set_transition_to_ia(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.transition_to_ia = std::option::Option::Some(v.into());
@@ -611,8 +690,8 @@ impl EfsFileSystemLifecyclePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for EfsFileSystemLifecyclePolicyEl {
-    type O = terrars::BlockAssignable<EfsFileSystemLifecyclePolicyEl>;
+impl terrars::ToListMappable for EfsFileSystem_LifecyclePolicy {
+    type O = terrars::BlockAssignable<EfsFileSystem_LifecyclePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -623,34 +702,42 @@ impl terrars::ToListMappable for EfsFileSystemLifecyclePolicyEl {
     }
 }
 
-pub struct BuildEfsFileSystemLifecyclePolicyEl {}
+pub struct BuildEfsFileSystem_LifecyclePolicy {}
 
-impl BuildEfsFileSystemLifecyclePolicyEl {
-    pub fn build(self) -> EfsFileSystemLifecyclePolicyEl {
-        EfsFileSystemLifecyclePolicyEl {
+impl BuildEfsFileSystem_LifecyclePolicy {
+    pub fn build(self) -> EfsFileSystem_LifecyclePolicy {
+        EfsFileSystem_LifecyclePolicy {
+            transition_to_archive: core::default::Default::default(),
             transition_to_ia: core::default::Default::default(),
             transition_to_primary_storage_class: core::default::Default::default(),
         }
     }
 }
 
-pub struct EfsFileSystemLifecyclePolicyElRef {
+#[allow(dead_code)]
+pub struct EfsFileSystem_LifecyclePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EfsFileSystemLifecyclePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsFileSystemLifecyclePolicyElRef {
-        EfsFileSystemLifecyclePolicyElRef {
+impl terrars::Ref for EfsFileSystem_LifecyclePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsFileSystem_LifecyclePolicyRef {
+        EfsFileSystem_LifecyclePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EfsFileSystemLifecyclePolicyElRef {
+impl EfsFileSystem_LifecyclePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `transition_to_archive` after provisioning.\n"]
+    pub fn transition_to_archive(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transition_to_archive", self.base))
     }
 
     #[doc = "Get a reference to the value of field `transition_to_ia` after provisioning.\n"]
@@ -664,7 +751,66 @@ impl EfsFileSystemLifecyclePolicyElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct EfsFileSystemDynamic {
-    lifecycle_policy: std::option::Option<terrars::DynamicBlock<EfsFileSystemLifecyclePolicyEl>>,
+#[derive(Serialize)]
+pub struct EfsFileSystem_Protection {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replication_overwrite: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl EfsFileSystem_Protection {
+    #[doc = "Set the field `replication_overwrite`.\n"]
+    pub fn set_replication_overwrite(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.replication_overwrite = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for EfsFileSystem_Protection {
+    type O = terrars::BlockAssignable<EfsFileSystem_Protection>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEfsFileSystem_Protection {}
+
+impl BuildEfsFileSystem_Protection {
+    pub fn build(self) -> EfsFileSystem_Protection {
+        EfsFileSystem_Protection { replication_overwrite: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct EfsFileSystem_ProtectionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for EfsFileSystem_ProtectionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsFileSystem_ProtectionRef {
+        EfsFileSystem_ProtectionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl EfsFileSystem_ProtectionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `replication_overwrite` after provisioning.\n"]
+    pub fn replication_overwrite(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_overwrite", self.base))
+    }
 }

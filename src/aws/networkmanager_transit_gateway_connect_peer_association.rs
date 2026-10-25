@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerTransitGatewayConnectPeerAssociationData {
+struct NetworkmanagerTransitGatewayConnectPeerAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,13 +28,13 @@ struct NetworkmanagerTransitGatewayConnectPeerAssociationData {
     link_id: std::option::Option<terrars::PrimField<std::string::String>>,
     transit_gateway_connect_peer_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts>,
 }
 
 struct NetworkmanagerTransitGatewayConnectPeerAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerTransitGatewayConnectPeerAssociationData>,
+    data: std::cell::RefCell<NetworkmanagerTransitGatewayConnectPeerAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -149,7 +151,7 @@ impl NetworkmanagerTransitGatewayConnectPeerAssociation {
     #[doc = "Set the field `timeouts`.\n"]
     pub fn set_timeouts(
         self,
-        v: impl std::convert::Into<NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl>,
+        v: impl std::convert::Into<NetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts>,
     ) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
@@ -184,8 +186,8 @@ impl NetworkmanagerTransitGatewayConnectPeerAssociation {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsElRef {
-        NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayConnectPeerAssociation_TimeoutsRef {
+        NetworkmanagerTransitGatewayConnectPeerAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -240,7 +242,7 @@ impl BuildNetworkmanagerTransitGatewayConnectPeerAssociation {
                 std::rc::Rc::new(NetworkmanagerTransitGatewayConnectPeerAssociation_ {
                     shared: stack.shared.clone(),
                     tf_id: self.tf_id,
-                    data: std::cell::RefCell::new(NetworkmanagerTransitGatewayConnectPeerAssociationData {
+                    data: std::cell::RefCell::new(NetworkmanagerTransitGatewayConnectPeerAssociationData_ {
                         depends_on: core::default::Default::default(),
                         provider: std::option::Option::None,
                         lifecycle: core::default::Default::default(),
@@ -312,8 +314,8 @@ impl NetworkmanagerTransitGatewayConnectPeerAssociationRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsElRef {
-        NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerTransitGatewayConnectPeerAssociation_TimeoutsRef {
+        NetworkmanagerTransitGatewayConnectPeerAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -321,14 +323,14 @@ impl NetworkmanagerTransitGatewayConnectPeerAssociationRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl {
+pub struct NetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl {
+impl NetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -342,8 +344,8 @@ impl NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -354,35 +356,37 @@ impl terrars::ToListMappable for NetworkmanagerTransitGatewayConnectPeerAssociat
     }
 }
 
-pub struct BuildNetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl {}
+pub struct BuildNetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts {}
 
-impl BuildNetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl {
-        NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsEl {
+impl BuildNetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts {
+    pub fn build(self) -> NetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts {
+        NetworkmanagerTransitGatewayConnectPeerAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerTransitGatewayConnectPeerAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerTransitGatewayConnectPeerAssociation_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsElRef {
-        NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsElRef {
+    ) -> NetworkmanagerTransitGatewayConnectPeerAssociation_TimeoutsRef {
+        NetworkmanagerTransitGatewayConnectPeerAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerTransitGatewayConnectPeerAssociationTimeoutsElRef {
+impl NetworkmanagerTransitGatewayConnectPeerAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

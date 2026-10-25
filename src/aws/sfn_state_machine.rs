@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SfnStateMachineData {
+struct SfnStateMachineData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,10 @@ struct SfnStateMachineData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    publish: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -33,16 +39,20 @@ struct SfnStateMachineData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_configuration: std::option::Option<std::vec::Vec<SfnStateMachineLoggingConfigurationEl>>,
+    encryption_configuration: std::option::Option<std::vec::Vec<SfnStateMachine_EncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tracing_configuration: std::option::Option<std::vec::Vec<SfnStateMachineTracingConfigurationEl>>,
+    logging_configuration: std::option::Option<std::vec::Vec<SfnStateMachine_LoggingConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<SfnStateMachine_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tracing_configuration: std::option::Option<std::vec::Vec<SfnStateMachine_TracingConfiguration>>,
     dynamic: SfnStateMachineDynamic,
 }
 
 struct SfnStateMachine_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SfnStateMachineData>,
+    data: std::cell::RefCell<SfnStateMachineData_>,
 }
 
 #[derive(Clone)]
@@ -160,6 +170,19 @@ impl SfnStateMachine {
         self
     }
 
+    #[doc = "Set the field `publish`.\n"]
+    pub fn set_publish(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().publish = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -184,10 +207,26 @@ impl SfnStateMachine {
         self
     }
 
+    #[doc = "Set the field `encryption_configuration`.\n"]
+    pub fn set_encryption_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SfnStateMachine_EncryptionConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encryption_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encryption_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `logging_configuration`.\n"]
     pub fn set_logging_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SfnStateMachineLoggingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SfnStateMachine_LoggingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,10 +239,16 @@ impl SfnStateMachine {
         self
     }
 
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<SfnStateMachine_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tracing_configuration`.\n"]
     pub fn set_tracing_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SfnStateMachineTracingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SfnStateMachine_TracingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -231,6 +276,11 @@ impl SfnStateMachine {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.definition", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -246,9 +296,30 @@ impl SfnStateMachine {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `publish` after provisioning.\n"]
+    pub fn publish(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.publish", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `revision_id` after provisioning.\n"]
+    pub fn revision_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state_machine_version_arn` after provisioning.\n"]
+    pub fn state_machine_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_machine_version_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -271,13 +342,28 @@ impl SfnStateMachine {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `version_description` after provisioning.\n"]
+    pub fn version_description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_description", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
+    pub fn encryption_configuration(&self) -> terrars::ListRef<SfnStateMachine_EncryptionConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(&self) -> terrars::ListRef<SfnStateMachineLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<SfnStateMachine_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> SfnStateMachine_TimeoutsRef {
+        SfnStateMachine_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tracing_configuration` after provisioning.\n"]
-    pub fn tracing_configuration(&self) -> terrars::ListRef<SfnStateMachineTracingConfigurationElRef> {
+    pub fn tracing_configuration(&self) -> terrars::ListRef<SfnStateMachine_TracingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tracing_configuration", self.extract_ref()))
     }
 }
@@ -326,7 +412,7 @@ impl BuildSfnStateMachine {
         let out = SfnStateMachine(std::rc::Rc::new(SfnStateMachine_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SfnStateMachineData {
+            data: std::cell::RefCell::new(SfnStateMachineData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -336,11 +422,15 @@ impl BuildSfnStateMachine {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                publish: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 type_: core::default::Default::default(),
+                encryption_configuration: core::default::Default::default(),
                 logging_configuration: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 tracing_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -388,6 +478,11 @@ impl SfnStateMachineRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.definition", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -403,9 +498,30 @@ impl SfnStateMachineRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `publish` after provisioning.\n"]
+    pub fn publish(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.publish", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `revision_id` after provisioning.\n"]
+    pub fn revision_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.revision_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state_machine_version_arn` after provisioning.\n"]
+    pub fn state_machine_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state_machine_version_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -428,19 +544,132 @@ impl SfnStateMachineRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `version_description` after provisioning.\n"]
+    pub fn version_description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_description", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
+    pub fn encryption_configuration(&self) -> terrars::ListRef<SfnStateMachine_EncryptionConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(&self) -> terrars::ListRef<SfnStateMachineLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<SfnStateMachine_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> SfnStateMachine_TimeoutsRef {
+        SfnStateMachine_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tracing_configuration` after provisioning.\n"]
-    pub fn tracing_configuration(&self) -> terrars::ListRef<SfnStateMachineTracingConfigurationElRef> {
+    pub fn tracing_configuration(&self) -> terrars::ListRef<SfnStateMachine_TracingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tracing_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SfnStateMachineDynamic {
+    encryption_configuration: std::option::Option<terrars::DynamicBlock<SfnStateMachine_EncryptionConfiguration>>,
+    logging_configuration: std::option::Option<terrars::DynamicBlock<SfnStateMachine_LoggingConfiguration>>,
+    tracing_configuration: std::option::Option<terrars::DynamicBlock<SfnStateMachine_TracingConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct SfnStateMachineLoggingConfigurationEl {
+pub struct SfnStateMachine_EncryptionConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_data_key_reuse_period_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl SfnStateMachine_EncryptionConfiguration {
+    #[doc = "Set the field `kms_data_key_reuse_period_seconds`.\n"]
+    pub fn set_kms_data_key_reuse_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.kms_data_key_reuse_period_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SfnStateMachine_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<SfnStateMachine_EncryptionConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSfnStateMachine_EncryptionConfiguration {}
+
+impl BuildSfnStateMachine_EncryptionConfiguration {
+    pub fn build(self) -> SfnStateMachine_EncryptionConfiguration {
+        SfnStateMachine_EncryptionConfiguration {
+            kms_data_key_reuse_period_seconds: core::default::Default::default(),
+            kms_key_id: core::default::Default::default(),
+            type_: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SfnStateMachine_EncryptionConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SfnStateMachine_EncryptionConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SfnStateMachine_EncryptionConfigurationRef {
+        SfnStateMachine_EncryptionConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SfnStateMachine_EncryptionConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `kms_data_key_reuse_period_seconds` after provisioning.\n"]
+    pub fn kms_data_key_reuse_period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_data_key_reuse_period_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct SfnStateMachine_LoggingConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     include_execution_data: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -449,7 +678,7 @@ pub struct SfnStateMachineLoggingConfigurationEl {
     log_destination: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SfnStateMachineLoggingConfigurationEl {
+impl SfnStateMachine_LoggingConfiguration {
     #[doc = "Set the field `include_execution_data`.\n"]
     pub fn set_include_execution_data(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.include_execution_data = std::option::Option::Some(v.into());
@@ -469,8 +698,8 @@ impl SfnStateMachineLoggingConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for SfnStateMachineLoggingConfigurationEl {
-    type O = terrars::BlockAssignable<SfnStateMachineLoggingConfigurationEl>;
+impl terrars::ToListMappable for SfnStateMachine_LoggingConfiguration {
+    type O = terrars::BlockAssignable<SfnStateMachine_LoggingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -481,11 +710,11 @@ impl terrars::ToListMappable for SfnStateMachineLoggingConfigurationEl {
     }
 }
 
-pub struct BuildSfnStateMachineLoggingConfigurationEl {}
+pub struct BuildSfnStateMachine_LoggingConfiguration {}
 
-impl BuildSfnStateMachineLoggingConfigurationEl {
-    pub fn build(self) -> SfnStateMachineLoggingConfigurationEl {
-        SfnStateMachineLoggingConfigurationEl {
+impl BuildSfnStateMachine_LoggingConfiguration {
+    pub fn build(self) -> SfnStateMachine_LoggingConfiguration {
+        SfnStateMachine_LoggingConfiguration {
             include_execution_data: core::default::Default::default(),
             level: core::default::Default::default(),
             log_destination: core::default::Default::default(),
@@ -493,21 +722,23 @@ impl BuildSfnStateMachineLoggingConfigurationEl {
     }
 }
 
-pub struct SfnStateMachineLoggingConfigurationElRef {
+#[allow(dead_code)]
+pub struct SfnStateMachine_LoggingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SfnStateMachineLoggingConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SfnStateMachineLoggingConfigurationElRef {
-        SfnStateMachineLoggingConfigurationElRef {
+impl terrars::Ref for SfnStateMachine_LoggingConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SfnStateMachine_LoggingConfigurationRef {
+        SfnStateMachine_LoggingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SfnStateMachineLoggingConfigurationElRef {
+impl SfnStateMachine_LoggingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -529,21 +760,37 @@ impl SfnStateMachineLoggingConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct SfnStateMachineTracingConfigurationEl {
+pub struct SfnStateMachine_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SfnStateMachineTracingConfigurationEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
+impl SfnStateMachine_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for SfnStateMachineTracingConfigurationEl {
-    type O = terrars::BlockAssignable<SfnStateMachineTracingConfigurationEl>;
+impl terrars::ToListMappable for SfnStateMachine_Timeouts {
+    type O = terrars::BlockAssignable<SfnStateMachine_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -554,29 +801,106 @@ impl terrars::ToListMappable for SfnStateMachineTracingConfigurationEl {
     }
 }
 
-pub struct BuildSfnStateMachineTracingConfigurationEl {}
+pub struct BuildSfnStateMachine_Timeouts {}
 
-impl BuildSfnStateMachineTracingConfigurationEl {
-    pub fn build(self) -> SfnStateMachineTracingConfigurationEl {
-        SfnStateMachineTracingConfigurationEl { enabled: core::default::Default::default() }
+impl BuildSfnStateMachine_Timeouts {
+    pub fn build(self) -> SfnStateMachine_Timeouts {
+        SfnStateMachine_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
     }
 }
 
-pub struct SfnStateMachineTracingConfigurationElRef {
+#[allow(dead_code)]
+pub struct SfnStateMachine_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SfnStateMachineTracingConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SfnStateMachineTracingConfigurationElRef {
-        SfnStateMachineTracingConfigurationElRef {
+impl terrars::Ref for SfnStateMachine_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SfnStateMachine_TimeoutsRef {
+        SfnStateMachine_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SfnStateMachineTracingConfigurationElRef {
+impl SfnStateMachine_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct SfnStateMachine_TracingConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl SfnStateMachine_TracingConfiguration {
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SfnStateMachine_TracingConfiguration {
+    type O = terrars::BlockAssignable<SfnStateMachine_TracingConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSfnStateMachine_TracingConfiguration {}
+
+impl BuildSfnStateMachine_TracingConfiguration {
+    pub fn build(self) -> SfnStateMachine_TracingConfiguration {
+        SfnStateMachine_TracingConfiguration { enabled: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SfnStateMachine_TracingConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SfnStateMachine_TracingConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SfnStateMachine_TracingConfigurationRef {
+        SfnStateMachine_TracingConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SfnStateMachine_TracingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -585,10 +909,4 @@ impl SfnStateMachineTracingConfigurationElRef {
     pub fn enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SfnStateMachineDynamic {
-    logging_configuration: std::option::Option<terrars::DynamicBlock<SfnStateMachineLoggingConfigurationEl>>,
-    tracing_configuration: std::option::Option<terrars::DynamicBlock<SfnStateMachineTracingConfigurationEl>>,
 }

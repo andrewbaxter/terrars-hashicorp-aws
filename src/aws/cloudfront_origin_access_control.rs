@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudfrontOriginAccessControlData {
+struct CloudfrontOriginAccessControlData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,7 +33,7 @@ struct CloudfrontOriginAccessControlData {
 struct CloudfrontOriginAccessControl_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudfrontOriginAccessControlData>,
+    data: std::cell::RefCell<CloudfrontOriginAccessControlData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +145,11 @@ impl CloudfrontOriginAccessControl {
         self
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -230,7 +237,7 @@ impl BuildCloudfrontOriginAccessControl {
         let out = CloudfrontOriginAccessControl(std::rc::Rc::new(CloudfrontOriginAccessControl_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudfrontOriginAccessControlData {
+            data: std::cell::RefCell::new(CloudfrontOriginAccessControlData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -270,6 +277,11 @@ impl CloudfrontOriginAccessControlRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]

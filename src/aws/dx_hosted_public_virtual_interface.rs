@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DxHostedPublicVirtualInterfaceData {
+struct DxHostedPublicVirtualInterfaceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,7 +23,10 @@ struct DxHostedPublicVirtualInterfaceData {
     address_family: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     amazon_address: std::option::Option<terrars::PrimField<std::string::String>>,
-    bgp_asn: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_asn: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_asn_long: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bgp_auth_key: std::option::Option<terrars::PrimField<std::string::String>>,
     connection_id: terrars::PrimField<std::string::String>,
@@ -31,16 +36,20 @@ struct DxHostedPublicVirtualInterfaceData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     owner_account_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rate_limit: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     route_filter_prefixes: terrars::SetField<terrars::PrimField<std::string::String>>,
     vlan: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DxHostedPublicVirtualInterfaceTimeoutsEl>,
+    timeouts: std::option::Option<DxHostedPublicVirtualInterface_Timeouts>,
 }
 
 struct DxHostedPublicVirtualInterface_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DxHostedPublicVirtualInterfaceData>,
+    data: std::cell::RefCell<DxHostedPublicVirtualInterfaceData_>,
 }
 
 #[derive(Clone)]
@@ -146,6 +155,18 @@ impl DxHostedPublicVirtualInterface {
         self
     }
 
+    #[doc = "Set the field `bgp_asn`.\n"]
+    pub fn set_bgp_asn(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().bgp_asn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bgp_asn_long`.\n"]
+    pub fn set_bgp_asn_long(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().bgp_asn_long = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `bgp_auth_key`.\n"]
     pub fn set_bgp_auth_key(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().bgp_auth_key = std::option::Option::Some(v.into());
@@ -164,8 +185,21 @@ impl DxHostedPublicVirtualInterface {
         self
     }
 
+    #[doc = "Set the field `rate_limit`.\n"]
+    pub fn set_rate_limit(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().rate_limit = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DxHostedPublicVirtualInterfaceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DxHostedPublicVirtualInterface_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -200,6 +234,11 @@ impl DxHostedPublicVirtualInterface {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_asn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bgp_asn_long` after provisioning.\n"]
+    pub fn bgp_asn_long(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_asn_long", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `bgp_auth_key` after provisioning.\n"]
     pub fn bgp_auth_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_auth_key", self.extract_ref()))
@@ -230,6 +269,17 @@ impl DxHostedPublicVirtualInterface {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `rate_limit` after provisioning.\n"]
+    pub fn rate_limit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rate_limit", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `route_filter_prefixes` after provisioning.\n"]
     pub fn route_filter_prefixes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.route_filter_prefixes", self.extract_ref()))
@@ -241,8 +291,8 @@ impl DxHostedPublicVirtualInterface {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DxHostedPublicVirtualInterfaceTimeoutsElRef {
-        DxHostedPublicVirtualInterfaceTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DxHostedPublicVirtualInterface_TimeoutsRef {
+        DxHostedPublicVirtualInterface_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -285,8 +335,6 @@ pub struct BuildDxHostedPublicVirtualInterface {
     #[doc = ""]
     pub address_family: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub bgp_asn: terrars::PrimField<f64>,
-    #[doc = ""]
     pub connection_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
@@ -303,7 +351,7 @@ impl BuildDxHostedPublicVirtualInterface {
         let out = DxHostedPublicVirtualInterface(std::rc::Rc::new(DxHostedPublicVirtualInterface_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DxHostedPublicVirtualInterfaceData {
+            data: std::cell::RefCell::new(DxHostedPublicVirtualInterfaceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -311,13 +359,16 @@ impl BuildDxHostedPublicVirtualInterface {
                 provisioner: core::default::Default::default(),
                 address_family: self.address_family,
                 amazon_address: core::default::Default::default(),
-                bgp_asn: self.bgp_asn,
+                bgp_asn: core::default::Default::default(),
+                bgp_asn_long: core::default::Default::default(),
                 bgp_auth_key: core::default::Default::default(),
                 connection_id: self.connection_id,
                 customer_address: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 owner_account_id: self.owner_account_id,
+                rate_limit: core::default::Default::default(),
+                region: core::default::Default::default(),
                 route_filter_prefixes: self.route_filter_prefixes,
                 vlan: self.vlan,
                 timeouts: core::default::Default::default(),
@@ -381,6 +432,11 @@ impl DxHostedPublicVirtualInterfaceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_asn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bgp_asn_long` after provisioning.\n"]
+    pub fn bgp_asn_long(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_asn_long", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `bgp_auth_key` after provisioning.\n"]
     pub fn bgp_auth_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_auth_key", self.extract_ref()))
@@ -411,6 +467,17 @@ impl DxHostedPublicVirtualInterfaceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `rate_limit` after provisioning.\n"]
+    pub fn rate_limit(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rate_limit", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `route_filter_prefixes` after provisioning.\n"]
     pub fn route_filter_prefixes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.route_filter_prefixes", self.extract_ref()))
@@ -422,8 +489,8 @@ impl DxHostedPublicVirtualInterfaceRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DxHostedPublicVirtualInterfaceTimeoutsElRef {
-        DxHostedPublicVirtualInterfaceTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DxHostedPublicVirtualInterface_TimeoutsRef {
+        DxHostedPublicVirtualInterface_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -431,14 +498,14 @@ impl DxHostedPublicVirtualInterfaceRef {
 }
 
 #[derive(Serialize)]
-pub struct DxHostedPublicVirtualInterfaceTimeoutsEl {
+pub struct DxHostedPublicVirtualInterface_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DxHostedPublicVirtualInterfaceTimeoutsEl {
+impl DxHostedPublicVirtualInterface_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -452,8 +519,8 @@ impl DxHostedPublicVirtualInterfaceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DxHostedPublicVirtualInterfaceTimeoutsEl {
-    type O = terrars::BlockAssignable<DxHostedPublicVirtualInterfaceTimeoutsEl>;
+impl terrars::ToListMappable for DxHostedPublicVirtualInterface_Timeouts {
+    type O = terrars::BlockAssignable<DxHostedPublicVirtualInterface_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -464,32 +531,34 @@ impl terrars::ToListMappable for DxHostedPublicVirtualInterfaceTimeoutsEl {
     }
 }
 
-pub struct BuildDxHostedPublicVirtualInterfaceTimeoutsEl {}
+pub struct BuildDxHostedPublicVirtualInterface_Timeouts {}
 
-impl BuildDxHostedPublicVirtualInterfaceTimeoutsEl {
-    pub fn build(self) -> DxHostedPublicVirtualInterfaceTimeoutsEl {
-        DxHostedPublicVirtualInterfaceTimeoutsEl {
+impl BuildDxHostedPublicVirtualInterface_Timeouts {
+    pub fn build(self) -> DxHostedPublicVirtualInterface_Timeouts {
+        DxHostedPublicVirtualInterface_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct DxHostedPublicVirtualInterfaceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DxHostedPublicVirtualInterface_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DxHostedPublicVirtualInterfaceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DxHostedPublicVirtualInterfaceTimeoutsElRef {
-        DxHostedPublicVirtualInterfaceTimeoutsElRef {
+impl terrars::Ref for DxHostedPublicVirtualInterface_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DxHostedPublicVirtualInterface_TimeoutsRef {
+        DxHostedPublicVirtualInterface_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DxHostedPublicVirtualInterfaceTimeoutsElRef {
+impl DxHostedPublicVirtualInterface_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

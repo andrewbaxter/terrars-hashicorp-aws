@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafregionalRateBasedRuleData {
+struct WafregionalRateBasedRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,18 +27,20 @@ struct WafregionalRateBasedRuleData {
     rate_key: terrars::PrimField<std::string::String>,
     rate_limit: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    predicate: std::option::Option<std::vec::Vec<WafregionalRateBasedRulePredicateEl>>,
+    predicate: std::option::Option<std::vec::Vec<WafregionalRateBasedRule_Predicate>>,
     dynamic: WafregionalRateBasedRuleDynamic,
 }
 
 struct WafregionalRateBasedRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafregionalRateBasedRuleData>,
+    data: std::cell::RefCell<WafregionalRateBasedRuleData_>,
 }
 
 #[derive(Clone)]
@@ -142,6 +146,13 @@ impl WafregionalRateBasedRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -163,7 +174,7 @@ impl WafregionalRateBasedRule {
     #[doc = "Set the field `predicate`.\n"]
     pub fn set_predicate(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalRateBasedRulePredicateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalRateBasedRule_Predicate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -204,6 +215,12 @@ impl WafregionalRateBasedRule {
     #[doc = "Get a reference to the value of field `rate_limit` after provisioning.\n"]
     pub fn rate_limit(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rate_limit", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -265,7 +282,7 @@ impl BuildWafregionalRateBasedRule {
         let out = WafregionalRateBasedRule(std::rc::Rc::new(WafregionalRateBasedRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafregionalRateBasedRuleData {
+            data: std::cell::RefCell::new(WafregionalRateBasedRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -276,6 +293,7 @@ impl BuildWafregionalRateBasedRule {
                 name: self.name,
                 rate_key: self.rate_key,
                 rate_limit: self.rate_limit,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 predicate: core::default::Default::default(),
@@ -340,6 +358,12 @@ impl WafregionalRateBasedRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rate_limit", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -351,18 +375,23 @@ impl WafregionalRateBasedRuleRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafregionalRateBasedRuleDynamic {
+    predicate: std::option::Option<terrars::DynamicBlock<WafregionalRateBasedRule_Predicate>>,
+}
+
 #[derive(Serialize)]
-pub struct WafregionalRateBasedRulePredicateEl {
+pub struct WafregionalRateBasedRule_Predicate {
     data_id: terrars::PrimField<std::string::String>,
     negated: terrars::PrimField<bool>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafregionalRateBasedRulePredicateEl { }
+impl WafregionalRateBasedRule_Predicate { }
 
-impl terrars::ToListMappable for WafregionalRateBasedRulePredicateEl {
-    type O = terrars::BlockAssignable<WafregionalRateBasedRulePredicateEl>;
+impl terrars::ToListMappable for WafregionalRateBasedRule_Predicate {
+    type O = terrars::BlockAssignable<WafregionalRateBasedRule_Predicate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -373,7 +402,7 @@ impl terrars::ToListMappable for WafregionalRateBasedRulePredicateEl {
     }
 }
 
-pub struct BuildWafregionalRateBasedRulePredicateEl {
+pub struct BuildWafregionalRateBasedRule_Predicate {
     #[doc = ""]
     pub data_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -382,9 +411,9 @@ pub struct BuildWafregionalRateBasedRulePredicateEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafregionalRateBasedRulePredicateEl {
-    pub fn build(self) -> WafregionalRateBasedRulePredicateEl {
-        WafregionalRateBasedRulePredicateEl {
+impl BuildWafregionalRateBasedRule_Predicate {
+    pub fn build(self) -> WafregionalRateBasedRule_Predicate {
+        WafregionalRateBasedRule_Predicate {
             data_id: self.data_id,
             negated: self.negated,
             type_: self.type_,
@@ -392,21 +421,23 @@ impl BuildWafregionalRateBasedRulePredicateEl {
     }
 }
 
-pub struct WafregionalRateBasedRulePredicateElRef {
+#[allow(dead_code)]
+pub struct WafregionalRateBasedRule_PredicateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafregionalRateBasedRulePredicateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalRateBasedRulePredicateElRef {
-        WafregionalRateBasedRulePredicateElRef {
+impl terrars::Ref for WafregionalRateBasedRule_PredicateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalRateBasedRule_PredicateRef {
+        WafregionalRateBasedRule_PredicateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafregionalRateBasedRulePredicateElRef {
+impl WafregionalRateBasedRule_PredicateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -425,9 +456,4 @@ impl WafregionalRateBasedRulePredicateElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafregionalRateBasedRuleDynamic {
-    predicate: std::option::Option<terrars::DynamicBlock<WafregionalRateBasedRulePredicateEl>>,
 }

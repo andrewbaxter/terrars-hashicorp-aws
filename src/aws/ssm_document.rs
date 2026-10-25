@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsmDocumentData {
+struct SsmDocumentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,6 +30,8 @@ struct SsmDocumentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     permissions: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -36,14 +40,14 @@ struct SsmDocumentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attachments_source: std::option::Option<std::vec::Vec<SsmDocumentAttachmentsSourceEl>>,
+    attachments_source: std::option::Option<std::vec::Vec<SsmDocument_AttachmentsSource>>,
     dynamic: SsmDocumentDynamic,
 }
 
 struct SsmDocument_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsmDocumentData>,
+    data: std::cell::RefCell<SsmDocumentData_>,
 }
 
 #[derive(Clone)]
@@ -164,6 +168,13 @@ impl SsmDocument {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -197,7 +208,7 @@ impl SsmDocument {
     #[doc = "Set the field `attachments_source`.\n"]
     pub fn set_attachments_source(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SsmDocumentAttachmentsSourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmDocument_AttachmentsSource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -281,7 +292,7 @@ impl SsmDocument {
     }
 
     #[doc = "Get a reference to the value of field `parameter` after provisioning.\n"]
-    pub fn parameter(&self) -> terrars::ListRef<SsmDocumentParameterElRef> {
+    pub fn parameter(&self) -> terrars::ListRef<SsmDocument_ParameterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameter", self.extract_ref()))
     }
 
@@ -293,6 +304,12 @@ impl SsmDocument {
     #[doc = "Get a reference to the value of field `platform_types` after provisioning.\n"]
     pub fn platform_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.platform_types", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema_version` after provisioning.\n"]
@@ -326,7 +343,7 @@ impl SsmDocument {
     }
 
     #[doc = "Get a reference to the value of field `attachments_source` after provisioning.\n"]
-    pub fn attachments_source(&self) -> terrars::ListRef<SsmDocumentAttachmentsSourceElRef> {
+    pub fn attachments_source(&self) -> terrars::ListRef<SsmDocument_AttachmentsSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attachments_source", self.extract_ref()))
     }
 }
@@ -377,7 +394,7 @@ impl BuildSsmDocument {
         let out = SsmDocument(std::rc::Rc::new(SsmDocument_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsmDocumentData {
+            data: std::cell::RefCell::new(SsmDocumentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -389,6 +406,7 @@ impl BuildSsmDocument {
                 id: core::default::Default::default(),
                 name: self.name,
                 permissions: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 target_type: core::default::Default::default(),
@@ -496,7 +514,7 @@ impl SsmDocumentRef {
     }
 
     #[doc = "Get a reference to the value of field `parameter` after provisioning.\n"]
-    pub fn parameter(&self) -> terrars::ListRef<SsmDocumentParameterElRef> {
+    pub fn parameter(&self) -> terrars::ListRef<SsmDocument_ParameterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameter", self.extract_ref()))
     }
 
@@ -508,6 +526,12 @@ impl SsmDocumentRef {
     #[doc = "Get a reference to the value of field `platform_types` after provisioning.\n"]
     pub fn platform_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.platform_types", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema_version` after provisioning.\n"]
@@ -541,13 +565,18 @@ impl SsmDocumentRef {
     }
 
     #[doc = "Get a reference to the value of field `attachments_source` after provisioning.\n"]
-    pub fn attachments_source(&self) -> terrars::ListRef<SsmDocumentAttachmentsSourceElRef> {
+    pub fn attachments_source(&self) -> terrars::ListRef<SsmDocument_AttachmentsSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attachments_source", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SsmDocumentDynamic {
+    attachments_source: std::option::Option<terrars::DynamicBlock<SsmDocument_AttachmentsSource>>,
+}
+
 #[derive(Serialize)]
-pub struct SsmDocumentParameterEl {
+pub struct SsmDocument_Parameter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -558,7 +587,7 @@ pub struct SsmDocumentParameterEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmDocumentParameterEl {
+impl SsmDocument_Parameter {
     #[doc = "Set the field `default_value`.\n"]
     pub fn set_default_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.default_value = std::option::Option::Some(v.into());
@@ -584,8 +613,8 @@ impl SsmDocumentParameterEl {
     }
 }
 
-impl terrars::ToListMappable for SsmDocumentParameterEl {
-    type O = terrars::BlockAssignable<SsmDocumentParameterEl>;
+impl terrars::ToListMappable for SsmDocument_Parameter {
+    type O = terrars::BlockAssignable<SsmDocument_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -596,11 +625,11 @@ impl terrars::ToListMappable for SsmDocumentParameterEl {
     }
 }
 
-pub struct BuildSsmDocumentParameterEl {}
+pub struct BuildSsmDocument_Parameter {}
 
-impl BuildSsmDocumentParameterEl {
-    pub fn build(self) -> SsmDocumentParameterEl {
-        SsmDocumentParameterEl {
+impl BuildSsmDocument_Parameter {
+    pub fn build(self) -> SsmDocument_Parameter {
+        SsmDocument_Parameter {
             default_value: core::default::Default::default(),
             description: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -609,21 +638,23 @@ impl BuildSsmDocumentParameterEl {
     }
 }
 
-pub struct SsmDocumentParameterElRef {
+#[allow(dead_code)]
+pub struct SsmDocument_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmDocumentParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmDocumentParameterElRef {
-        SsmDocumentParameterElRef {
+impl terrars::Ref for SsmDocument_ParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmDocument_ParameterRef {
+        SsmDocument_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmDocumentParameterElRef {
+impl SsmDocument_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -650,14 +681,14 @@ impl SsmDocumentParameterElRef {
 }
 
 #[derive(Serialize)]
-pub struct SsmDocumentAttachmentsSourceEl {
+pub struct SsmDocument_AttachmentsSource {
     key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmDocumentAttachmentsSourceEl {
+impl SsmDocument_AttachmentsSource {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -665,8 +696,8 @@ impl SsmDocumentAttachmentsSourceEl {
     }
 }
 
-impl terrars::ToListMappable for SsmDocumentAttachmentsSourceEl {
-    type O = terrars::BlockAssignable<SsmDocumentAttachmentsSourceEl>;
+impl terrars::ToListMappable for SsmDocument_AttachmentsSource {
+    type O = terrars::BlockAssignable<SsmDocument_AttachmentsSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -677,16 +708,16 @@ impl terrars::ToListMappable for SsmDocumentAttachmentsSourceEl {
     }
 }
 
-pub struct BuildSsmDocumentAttachmentsSourceEl {
+pub struct BuildSsmDocument_AttachmentsSource {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSsmDocumentAttachmentsSourceEl {
-    pub fn build(self) -> SsmDocumentAttachmentsSourceEl {
-        SsmDocumentAttachmentsSourceEl {
+impl BuildSsmDocument_AttachmentsSource {
+    pub fn build(self) -> SsmDocument_AttachmentsSource {
+        SsmDocument_AttachmentsSource {
             key: self.key,
             name: core::default::Default::default(),
             values: self.values,
@@ -694,21 +725,23 @@ impl BuildSsmDocumentAttachmentsSourceEl {
     }
 }
 
-pub struct SsmDocumentAttachmentsSourceElRef {
+#[allow(dead_code)]
+pub struct SsmDocument_AttachmentsSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmDocumentAttachmentsSourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmDocumentAttachmentsSourceElRef {
-        SsmDocumentAttachmentsSourceElRef {
+impl terrars::Ref for SsmDocument_AttachmentsSourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmDocument_AttachmentsSourceRef {
+        SsmDocument_AttachmentsSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmDocumentAttachmentsSourceElRef {
+impl SsmDocument_AttachmentsSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -727,9 +760,4 @@ impl SsmDocumentAttachmentsSourceElRef {
     pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SsmDocumentDynamic {
-    attachments_source: std::option::Option<terrars::DynamicBlock<SsmDocumentAttachmentsSourceEl>>,
 }

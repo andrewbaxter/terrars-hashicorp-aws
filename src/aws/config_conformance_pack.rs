@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConfigConformancePackData {
+struct ConfigConformancePackData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,18 +28,20 @@ struct ConfigConformancePackData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     template_body: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     template_s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input_parameter: std::option::Option<std::vec::Vec<ConfigConformancePackInputParameterEl>>,
+    input_parameter: std::option::Option<std::vec::Vec<ConfigConformancePack_InputParameter>>,
     dynamic: ConfigConformancePackDynamic,
 }
 
 struct ConfigConformancePack_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConfigConformancePackData>,
+    data: std::cell::RefCell<ConfigConformancePackData_>,
 }
 
 #[derive(Clone)]
@@ -158,6 +162,13 @@ impl ConfigConformancePack {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `template_body`.\n"]
     pub fn set_template_body(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().template_body = std::option::Option::Some(v.into());
@@ -173,7 +184,7 @@ impl ConfigConformancePack {
     #[doc = "Set the field `input_parameter`.\n"]
     pub fn set_input_parameter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConformancePackInputParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConformancePack_InputParameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,6 +220,12 @@ impl ConfigConformancePack {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `template_body` after provisioning.\n"]
@@ -264,7 +281,7 @@ impl BuildConfigConformancePack {
         let out = ConfigConformancePack(std::rc::Rc::new(ConfigConformancePack_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConfigConformancePackData {
+            data: std::cell::RefCell::new(ConfigConformancePackData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -274,6 +291,7 @@ impl BuildConfigConformancePack {
                 delivery_s3_key_prefix: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 template_body: core::default::Default::default(),
                 template_s3_uri: core::default::Default::default(),
                 input_parameter: core::default::Default::default(),
@@ -333,6 +351,12 @@ impl ConfigConformancePackRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `template_body` after provisioning.\n"]
     pub fn template_body(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.template_body", self.extract_ref()))
@@ -344,16 +368,21 @@ impl ConfigConformancePackRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct ConfigConformancePackDynamic {
+    input_parameter: std::option::Option<terrars::DynamicBlock<ConfigConformancePack_InputParameter>>,
+}
+
 #[derive(Serialize)]
-pub struct ConfigConformancePackInputParameterEl {
+pub struct ConfigConformancePack_InputParameter {
     parameter_name: terrars::PrimField<std::string::String>,
     parameter_value: terrars::PrimField<std::string::String>,
 }
 
-impl ConfigConformancePackInputParameterEl { }
+impl ConfigConformancePack_InputParameter { }
 
-impl terrars::ToListMappable for ConfigConformancePackInputParameterEl {
-    type O = terrars::BlockAssignable<ConfigConformancePackInputParameterEl>;
+impl terrars::ToListMappable for ConfigConformancePack_InputParameter {
+    type O = terrars::BlockAssignable<ConfigConformancePack_InputParameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -364,37 +393,39 @@ impl terrars::ToListMappable for ConfigConformancePackInputParameterEl {
     }
 }
 
-pub struct BuildConfigConformancePackInputParameterEl {
+pub struct BuildConfigConformancePack_InputParameter {
     #[doc = ""]
     pub parameter_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub parameter_value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConfigConformancePackInputParameterEl {
-    pub fn build(self) -> ConfigConformancePackInputParameterEl {
-        ConfigConformancePackInputParameterEl {
+impl BuildConfigConformancePack_InputParameter {
+    pub fn build(self) -> ConfigConformancePack_InputParameter {
+        ConfigConformancePack_InputParameter {
             parameter_name: self.parameter_name,
             parameter_value: self.parameter_value,
         }
     }
 }
 
-pub struct ConfigConformancePackInputParameterElRef {
+#[allow(dead_code)]
+pub struct ConfigConformancePack_InputParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigConformancePackInputParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConformancePackInputParameterElRef {
-        ConfigConformancePackInputParameterElRef {
+impl terrars::Ref for ConfigConformancePack_InputParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConformancePack_InputParameterRef {
+        ConfigConformancePack_InputParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigConformancePackInputParameterElRef {
+impl ConfigConformancePack_InputParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -408,9 +439,4 @@ impl ConfigConformancePackInputParameterElRef {
     pub fn parameter_value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ConfigConformancePackDynamic {
-    input_parameter: std::option::Option<terrars::DynamicBlock<ConfigConformancePackInputParameterEl>>,
 }

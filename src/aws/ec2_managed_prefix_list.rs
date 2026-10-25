@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2ManagedPrefixListData {
+struct Ec2ManagedPrefixListData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct Ec2ManagedPrefixListData {
     max_entries: terrars::PrimField<f64>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    entry: std::option::Option<std::vec::Vec<Ec2ManagedPrefixListEntryEl>>,
+    entry: std::option::Option<std::vec::Vec<Ec2ManagedPrefixList_Entry>>,
     dynamic: Ec2ManagedPrefixListDynamic,
 }
 
 struct Ec2ManagedPrefixList_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2ManagedPrefixListData>,
+    data: std::cell::RefCell<Ec2ManagedPrefixListData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl Ec2ManagedPrefixList {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -160,7 +171,7 @@ impl Ec2ManagedPrefixList {
     }
 
     #[doc = "Set the field `entry`.\n"]
-    pub fn set_entry(self, v: impl std::convert::Into<terrars::BlockAssignable<Ec2ManagedPrefixListEntryEl>>) -> Self {
+    pub fn set_entry(self, v: impl std::convert::Into<terrars::BlockAssignable<Ec2ManagedPrefixList_Entry>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().entry = std::option::Option::Some(v);
@@ -200,6 +211,12 @@ impl Ec2ManagedPrefixList {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -264,7 +281,7 @@ impl BuildEc2ManagedPrefixList {
         let out = Ec2ManagedPrefixList(std::rc::Rc::new(Ec2ManagedPrefixList_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2ManagedPrefixListData {
+            data: std::cell::RefCell::new(Ec2ManagedPrefixListData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -274,6 +291,7 @@ impl BuildEc2ManagedPrefixList {
                 id: core::default::Default::default(),
                 max_entries: self.max_entries,
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 entry: core::default::Default::default(),
@@ -338,6 +356,12 @@ impl Ec2ManagedPrefixListRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -354,14 +378,19 @@ impl Ec2ManagedPrefixListRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct Ec2ManagedPrefixListDynamic {
+    entry: std::option::Option<terrars::DynamicBlock<Ec2ManagedPrefixList_Entry>>,
+}
+
 #[derive(Serialize)]
-pub struct Ec2ManagedPrefixListEntryEl {
+pub struct Ec2ManagedPrefixList_Entry {
     cidr: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Ec2ManagedPrefixListEntryEl {
+impl Ec2ManagedPrefixList_Entry {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -369,8 +398,8 @@ impl Ec2ManagedPrefixListEntryEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2ManagedPrefixListEntryEl {
-    type O = terrars::BlockAssignable<Ec2ManagedPrefixListEntryEl>;
+impl terrars::ToListMappable for Ec2ManagedPrefixList_Entry {
+    type O = terrars::BlockAssignable<Ec2ManagedPrefixList_Entry>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,35 +410,37 @@ impl terrars::ToListMappable for Ec2ManagedPrefixListEntryEl {
     }
 }
 
-pub struct BuildEc2ManagedPrefixListEntryEl {
+pub struct BuildEc2ManagedPrefixList_Entry {
     #[doc = ""]
     pub cidr: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEc2ManagedPrefixListEntryEl {
-    pub fn build(self) -> Ec2ManagedPrefixListEntryEl {
-        Ec2ManagedPrefixListEntryEl {
+impl BuildEc2ManagedPrefixList_Entry {
+    pub fn build(self) -> Ec2ManagedPrefixList_Entry {
+        Ec2ManagedPrefixList_Entry {
             cidr: self.cidr,
             description: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2ManagedPrefixListEntryElRef {
+#[allow(dead_code)]
+pub struct Ec2ManagedPrefixList_EntryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2ManagedPrefixListEntryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2ManagedPrefixListEntryElRef {
-        Ec2ManagedPrefixListEntryElRef {
+impl terrars::Ref for Ec2ManagedPrefixList_EntryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2ManagedPrefixList_EntryRef {
+        Ec2ManagedPrefixList_EntryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2ManagedPrefixListEntryElRef {
+impl Ec2ManagedPrefixList_EntryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -423,9 +454,4 @@ impl Ec2ManagedPrefixListEntryElRef {
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Ec2ManagedPrefixListDynamic {
-    entry: std::option::Option<terrars::DynamicBlock<Ec2ManagedPrefixListEntryEl>>,
 }

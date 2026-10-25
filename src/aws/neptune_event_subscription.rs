@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NeptuneEventSubscriptionData {
+struct NeptuneEventSubscriptionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,6 +30,8 @@ struct NeptuneEventSubscriptionData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     sns_topic_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -38,13 +42,13 @@ struct NeptuneEventSubscriptionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NeptuneEventSubscriptionTimeoutsEl>,
+    timeouts: std::option::Option<NeptuneEventSubscription_Timeouts>,
 }
 
 struct NeptuneEventSubscription_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NeptuneEventSubscriptionData>,
+    data: std::cell::RefCell<NeptuneEventSubscriptionData_>,
 }
 
 #[derive(Clone)]
@@ -177,6 +181,13 @@ impl NeptuneEventSubscription {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `source_ids`.\n"]
     pub fn set_source_ids(
         self,
@@ -211,7 +222,7 @@ impl NeptuneEventSubscription {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NeptuneEventSubscriptionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NeptuneEventSubscription_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -251,6 +262,12 @@ impl NeptuneEventSubscription {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sns_topic_arn` after provisioning.\n"]
     pub fn sns_topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sns_topic_arn", self.extract_ref()))
@@ -277,8 +294,8 @@ impl NeptuneEventSubscription {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NeptuneEventSubscriptionTimeoutsElRef {
-        NeptuneEventSubscriptionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NeptuneEventSubscription_TimeoutsRef {
+        NeptuneEventSubscription_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -324,7 +341,7 @@ impl BuildNeptuneEventSubscription {
         let out = NeptuneEventSubscription(std::rc::Rc::new(NeptuneEventSubscription_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NeptuneEventSubscriptionData {
+            data: std::cell::RefCell::new(NeptuneEventSubscriptionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -335,6 +352,7 @@ impl BuildNeptuneEventSubscription {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 sns_topic_arn: self.sns_topic_arn,
                 source_ids: core::default::Default::default(),
                 source_type: core::default::Default::default(),
@@ -406,6 +424,12 @@ impl NeptuneEventSubscriptionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sns_topic_arn` after provisioning.\n"]
     pub fn sns_topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sns_topic_arn", self.extract_ref()))
@@ -432,13 +456,13 @@ impl NeptuneEventSubscriptionRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NeptuneEventSubscriptionTimeoutsElRef {
-        NeptuneEventSubscriptionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NeptuneEventSubscription_TimeoutsRef {
+        NeptuneEventSubscription_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct NeptuneEventSubscriptionTimeoutsEl {
+pub struct NeptuneEventSubscription_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -447,7 +471,7 @@ pub struct NeptuneEventSubscriptionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NeptuneEventSubscriptionTimeoutsEl {
+impl NeptuneEventSubscription_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -467,8 +491,8 @@ impl NeptuneEventSubscriptionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NeptuneEventSubscriptionTimeoutsEl {
-    type O = terrars::BlockAssignable<NeptuneEventSubscriptionTimeoutsEl>;
+impl terrars::ToListMappable for NeptuneEventSubscription_Timeouts {
+    type O = terrars::BlockAssignable<NeptuneEventSubscription_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -479,11 +503,11 @@ impl terrars::ToListMappable for NeptuneEventSubscriptionTimeoutsEl {
     }
 }
 
-pub struct BuildNeptuneEventSubscriptionTimeoutsEl {}
+pub struct BuildNeptuneEventSubscription_Timeouts {}
 
-impl BuildNeptuneEventSubscriptionTimeoutsEl {
-    pub fn build(self) -> NeptuneEventSubscriptionTimeoutsEl {
-        NeptuneEventSubscriptionTimeoutsEl {
+impl BuildNeptuneEventSubscription_Timeouts {
+    pub fn build(self) -> NeptuneEventSubscription_Timeouts {
+        NeptuneEventSubscription_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -491,21 +515,23 @@ impl BuildNeptuneEventSubscriptionTimeoutsEl {
     }
 }
 
-pub struct NeptuneEventSubscriptionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NeptuneEventSubscription_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NeptuneEventSubscriptionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneEventSubscriptionTimeoutsElRef {
-        NeptuneEventSubscriptionTimeoutsElRef {
+impl terrars::Ref for NeptuneEventSubscription_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneEventSubscription_TimeoutsRef {
+        NeptuneEventSubscription_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NeptuneEventSubscriptionTimeoutsElRef {
+impl NeptuneEventSubscription_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

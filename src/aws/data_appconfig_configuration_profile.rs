@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataAppconfigConfigurationProfileData {
+struct DataAppconfigConfigurationProfileData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,13 +23,15 @@ struct DataAppconfigConfigurationProfileData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataAppconfigConfigurationProfile_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAppconfigConfigurationProfileData>,
+    data: std::cell::RefCell<DataAppconfigConfigurationProfileData_>,
 }
 
 #[derive(Clone)]
@@ -78,6 +82,13 @@ impl DataAppconfigConfigurationProfile {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -112,6 +123,11 @@ impl DataAppconfigConfigurationProfile {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_identifier` after provisioning.\n"]
+    pub fn kms_key_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_identifier", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `location_uri` after provisioning.\n"]
     pub fn location_uri(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.location_uri", self.extract_ref()))
@@ -120,6 +136,12 @@ impl DataAppconfigConfigurationProfile {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retrieval_role_arn` after provisioning.\n"]
@@ -138,7 +160,7 @@ impl DataAppconfigConfigurationProfile {
     }
 
     #[doc = "Get a reference to the value of field `validator` after provisioning.\n"]
-    pub fn validator(&self) -> terrars::SetRef<DataAppconfigConfigurationProfileValidatorElRef> {
+    pub fn validator(&self) -> terrars::SetRef<DataAppconfigConfigurationProfile_ValidatorRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.validator", self.extract_ref()))
     }
 }
@@ -187,7 +209,7 @@ impl BuildDataAppconfigConfigurationProfile {
         let out = DataAppconfigConfigurationProfile(std::rc::Rc::new(DataAppconfigConfigurationProfile_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAppconfigConfigurationProfileData {
+            data: std::cell::RefCell::new(DataAppconfigConfigurationProfileData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -195,6 +217,7 @@ impl BuildDataAppconfigConfigurationProfile {
                 application_id: self.application_id,
                 configuration_profile_id: self.configuration_profile_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -251,6 +274,11 @@ impl DataAppconfigConfigurationProfileRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_identifier` after provisioning.\n"]
+    pub fn kms_key_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_identifier", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `location_uri` after provisioning.\n"]
     pub fn location_uri(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.location_uri", self.extract_ref()))
@@ -259,6 +287,12 @@ impl DataAppconfigConfigurationProfileRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retrieval_role_arn` after provisioning.\n"]
@@ -277,20 +311,20 @@ impl DataAppconfigConfigurationProfileRef {
     }
 
     #[doc = "Get a reference to the value of field `validator` after provisioning.\n"]
-    pub fn validator(&self) -> terrars::SetRef<DataAppconfigConfigurationProfileValidatorElRef> {
+    pub fn validator(&self) -> terrars::SetRef<DataAppconfigConfigurationProfile_ValidatorRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.validator", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAppconfigConfigurationProfileValidatorEl {
+pub struct DataAppconfigConfigurationProfile_Validator {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAppconfigConfigurationProfileValidatorEl {
+impl DataAppconfigConfigurationProfile_Validator {
     #[doc = "Set the field `content`.\n"]
     pub fn set_content(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.content = std::option::Option::Some(v.into());
@@ -304,8 +338,8 @@ impl DataAppconfigConfigurationProfileValidatorEl {
     }
 }
 
-impl terrars::ToListMappable for DataAppconfigConfigurationProfileValidatorEl {
-    type O = terrars::BlockAssignable<DataAppconfigConfigurationProfileValidatorEl>;
+impl terrars::ToListMappable for DataAppconfigConfigurationProfile_Validator {
+    type O = terrars::BlockAssignable<DataAppconfigConfigurationProfile_Validator>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -316,35 +350,37 @@ impl terrars::ToListMappable for DataAppconfigConfigurationProfileValidatorEl {
     }
 }
 
-pub struct BuildDataAppconfigConfigurationProfileValidatorEl {}
+pub struct BuildDataAppconfigConfigurationProfile_Validator {}
 
-impl BuildDataAppconfigConfigurationProfileValidatorEl {
-    pub fn build(self) -> DataAppconfigConfigurationProfileValidatorEl {
-        DataAppconfigConfigurationProfileValidatorEl {
+impl BuildDataAppconfigConfigurationProfile_Validator {
+    pub fn build(self) -> DataAppconfigConfigurationProfile_Validator {
+        DataAppconfigConfigurationProfile_Validator {
             content: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAppconfigConfigurationProfileValidatorElRef {
+#[allow(dead_code)]
+pub struct DataAppconfigConfigurationProfile_ValidatorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAppconfigConfigurationProfileValidatorElRef {
+impl terrars::Ref for DataAppconfigConfigurationProfile_ValidatorRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataAppconfigConfigurationProfileValidatorElRef {
-        DataAppconfigConfigurationProfileValidatorElRef {
+    ) -> DataAppconfigConfigurationProfile_ValidatorRef {
+        DataAppconfigConfigurationProfile_ValidatorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAppconfigConfigurationProfileValidatorElRef {
+impl DataAppconfigConfigurationProfile_ValidatorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

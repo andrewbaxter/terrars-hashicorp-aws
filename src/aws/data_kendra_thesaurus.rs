@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataKendraThesaurusData {
+struct DataKendraThesaurusData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,6 +22,8 @@ struct DataKendraThesaurusData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     index_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     thesaurus_id: terrars::PrimField<std::string::String>,
 }
@@ -27,7 +31,7 @@ struct DataKendraThesaurusData {
 struct DataKendraThesaurus_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataKendraThesaurusData>,
+    data: std::cell::RefCell<DataKendraThesaurusData_>,
 }
 
 #[derive(Clone)]
@@ -75,6 +79,13 @@ impl DataKendraThesaurus {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -127,13 +138,19 @@ impl DataKendraThesaurus {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_s3_path` after provisioning.\n"]
-    pub fn source_s3_path(&self) -> terrars::ListRef<DataKendraThesaurusSourceS3PathElRef> {
+    pub fn source_s3_path(&self) -> terrars::ListRef<DataKendraThesaurus_SourceS3PathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_s3_path", self.extract_ref()))
     }
 
@@ -212,13 +229,14 @@ impl BuildDataKendraThesaurus {
         let out = DataKendraThesaurus(std::rc::Rc::new(DataKendraThesaurus_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataKendraThesaurusData {
+            data: std::cell::RefCell::new(DataKendraThesaurusData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 index_id: self.index_id,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 thesaurus_id: self.thesaurus_id,
             }),
@@ -291,13 +309,19 @@ impl DataKendraThesaurusRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_s3_path` after provisioning.\n"]
-    pub fn source_s3_path(&self) -> terrars::ListRef<DataKendraThesaurusSourceS3PathElRef> {
+    pub fn source_s3_path(&self) -> terrars::ListRef<DataKendraThesaurus_SourceS3PathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_s3_path", self.extract_ref()))
     }
 
@@ -333,14 +357,14 @@ impl DataKendraThesaurusRef {
 }
 
 #[derive(Serialize)]
-pub struct DataKendraThesaurusSourceS3PathEl {
+pub struct DataKendraThesaurus_SourceS3Path {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataKendraThesaurusSourceS3PathEl {
+impl DataKendraThesaurus_SourceS3Path {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -354,8 +378,8 @@ impl DataKendraThesaurusSourceS3PathEl {
     }
 }
 
-impl terrars::ToListMappable for DataKendraThesaurusSourceS3PathEl {
-    type O = terrars::BlockAssignable<DataKendraThesaurusSourceS3PathEl>;
+impl terrars::ToListMappable for DataKendraThesaurus_SourceS3Path {
+    type O = terrars::BlockAssignable<DataKendraThesaurus_SourceS3Path>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -366,32 +390,34 @@ impl terrars::ToListMappable for DataKendraThesaurusSourceS3PathEl {
     }
 }
 
-pub struct BuildDataKendraThesaurusSourceS3PathEl {}
+pub struct BuildDataKendraThesaurus_SourceS3Path {}
 
-impl BuildDataKendraThesaurusSourceS3PathEl {
-    pub fn build(self) -> DataKendraThesaurusSourceS3PathEl {
-        DataKendraThesaurusSourceS3PathEl {
+impl BuildDataKendraThesaurus_SourceS3Path {
+    pub fn build(self) -> DataKendraThesaurus_SourceS3Path {
+        DataKendraThesaurus_SourceS3Path {
             bucket: core::default::Default::default(),
             key: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataKendraThesaurusSourceS3PathElRef {
+#[allow(dead_code)]
+pub struct DataKendraThesaurus_SourceS3PathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKendraThesaurusSourceS3PathElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKendraThesaurusSourceS3PathElRef {
-        DataKendraThesaurusSourceS3PathElRef {
+impl terrars::Ref for DataKendraThesaurus_SourceS3PathRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKendraThesaurus_SourceS3PathRef {
+        DataKendraThesaurus_SourceS3PathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKendraThesaurusSourceS3PathElRef {
+impl DataKendraThesaurus_SourceS3PathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

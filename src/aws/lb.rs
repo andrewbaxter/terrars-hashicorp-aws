@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LbData {
+struct LbData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,9 +21,13 @@ struct LbData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_keep_alive: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customer_owned_ipv4_pool: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     desync_mitigation_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_record_client_routing_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     drop_invalid_header_fields: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,7 +37,19 @@ struct LbData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_http2: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_prefix_for_ipv6_source_nat: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_tls_version_and_cipher_suite_headers: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_waf_fail_open: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_xff_client_port: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_zonal_shift: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enforce_security_group_inbound_rules_on_private_link_traffic: std
+    ::option
+    ::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -49,6 +67,10 @@ struct LbData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preserve_host_header: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_ips_auto_assigned_per_subnet: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnets: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -57,18 +79,28 @@ struct LbData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_logs: std::option::Option<std::vec::Vec<LbAccessLogsEl>>,
+    xff_header_processing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subnet_mapping: std::option::Option<std::vec::Vec<LbSubnetMappingEl>>,
+    access_logs: std::option::Option<std::vec::Vec<Lb_AccessLogs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LbTimeoutsEl>,
+    connection_logs: std::option::Option<std::vec::Vec<Lb_ConnectionLogs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    health_check_logs: std::option::Option<std::vec::Vec<Lb_HealthCheckLogs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipam_pools: std::option::Option<std::vec::Vec<Lb_IpamPools>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    minimum_load_balancer_capacity: std::option::Option<std::vec::Vec<Lb_MinimumLoadBalancerCapacity>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subnet_mapping: std::option::Option<std::vec::Vec<Lb_SubnetMapping>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Lb_Timeouts>,
     dynamic: LbDynamic,
 }
 
 struct Lb_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LbData>,
+    data: std::cell::RefCell<LbData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +200,12 @@ impl Lb {
         self
     }
 
+    #[doc = "Set the field `client_keep_alive`.\n"]
+    pub fn set_client_keep_alive(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().client_keep_alive = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `customer_owned_ipv4_pool`.\n"]
     pub fn set_customer_owned_ipv4_pool(
         self,
@@ -183,6 +221,15 @@ impl Lb {
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().desync_mitigation_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `dns_record_client_routing_policy`.\n"]
+    pub fn set_dns_record_client_routing_policy(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().dns_record_client_routing_policy = std::option::Option::Some(v.into());
         self
     }
 
@@ -210,9 +257,49 @@ impl Lb {
         self
     }
 
+    #[doc = "Set the field `enable_prefix_for_ipv6_source_nat`.\n"]
+    pub fn set_enable_prefix_for_ipv6_source_nat(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().enable_prefix_for_ipv6_source_nat = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_tls_version_and_cipher_suite_headers`.\n"]
+    pub fn set_enable_tls_version_and_cipher_suite_headers(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.0.data.borrow_mut().enable_tls_version_and_cipher_suite_headers = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enable_waf_fail_open`.\n"]
     pub fn set_enable_waf_fail_open(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enable_waf_fail_open = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_xff_client_port`.\n"]
+    pub fn set_enable_xff_client_port(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_xff_client_port = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_zonal_shift`.\n"]
+    pub fn set_enable_zonal_shift(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_zonal_shift = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enforce_security_group_inbound_rules_on_private_link_traffic`.\n"]
+    pub fn set_enforce_security_group_inbound_rules_on_private_link_traffic(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().enforce_security_group_inbound_rules_on_private_link_traffic =
+            std::option::Option::Some(v.into());
         self
     }
 
@@ -264,6 +351,22 @@ impl Lb {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secondary_ips_auto_assigned_per_subnet`.\n"]
+    pub fn set_secondary_ips_auto_assigned_per_subnet(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.0.data.borrow_mut().secondary_ips_auto_assigned_per_subnet = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_groups`.\n"]
     pub fn set_security_groups(
         self,
@@ -300,8 +403,17 @@ impl Lb {
         self
     }
 
+    #[doc = "Set the field `xff_header_processing_mode`.\n"]
+    pub fn set_xff_header_processing_mode(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().xff_header_processing_mode = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `access_logs`.\n"]
-    pub fn set_access_logs(self, v: impl std::convert::Into<terrars::BlockAssignable<LbAccessLogsEl>>) -> Self {
+    pub fn set_access_logs(self, v: impl std::convert::Into<terrars::BlockAssignable<Lb_AccessLogs>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().access_logs = std::option::Option::Some(v);
@@ -313,8 +425,66 @@ impl Lb {
         self
     }
 
+    #[doc = "Set the field `connection_logs`.\n"]
+    pub fn set_connection_logs(self, v: impl std::convert::Into<terrars::BlockAssignable<Lb_ConnectionLogs>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().connection_logs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.connection_logs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `health_check_logs`.\n"]
+    pub fn set_health_check_logs(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Lb_HealthCheckLogs>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().health_check_logs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.health_check_logs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `ipam_pools`.\n"]
+    pub fn set_ipam_pools(self, v: impl std::convert::Into<terrars::BlockAssignable<Lb_IpamPools>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().ipam_pools = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.ipam_pools = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `minimum_load_balancer_capacity`.\n"]
+    pub fn set_minimum_load_balancer_capacity(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Lb_MinimumLoadBalancerCapacity>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().minimum_load_balancer_capacity = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.minimum_load_balancer_capacity = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `subnet_mapping`.\n"]
-    pub fn set_subnet_mapping(self, v: impl std::convert::Into<terrars::BlockAssignable<LbSubnetMappingEl>>) -> Self {
+    pub fn set_subnet_mapping(self, v: impl std::convert::Into<terrars::BlockAssignable<Lb_SubnetMapping>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().subnet_mapping = std::option::Option::Some(v);
@@ -327,7 +497,7 @@ impl Lb {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LbTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Lb_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -340,6 +510,11 @@ impl Lb {
     #[doc = "Get a reference to the value of field `arn_suffix` after provisioning.\n"]
     pub fn arn_suffix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn_suffix", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `client_keep_alive` after provisioning.\n"]
+    pub fn client_keep_alive(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_keep_alive", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `customer_owned_ipv4_pool` after provisioning.\n"]
@@ -355,6 +530,14 @@ impl Lb {
     #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dns_record_client_routing_policy` after provisioning.\n"]
+    pub fn dns_record_client_routing_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.dns_record_client_routing_policy", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `drop_invalid_header_fields` after provisioning.\n"]
@@ -380,9 +563,44 @@ impl Lb {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_http2", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_prefix_for_ipv6_source_nat` after provisioning.\n"]
+    pub fn enable_prefix_for_ipv6_source_nat(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_prefix_for_ipv6_source_nat", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `enable_tls_version_and_cipher_suite_headers` after provisioning.\n"]
+    pub fn enable_tls_version_and_cipher_suite_headers(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_tls_version_and_cipher_suite_headers", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `enable_waf_fail_open` after provisioning.\n"]
     pub fn enable_waf_fail_open(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_waf_fail_open", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_xff_client_port` after provisioning.\n"]
+    pub fn enable_xff_client_port(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_xff_client_port", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_zonal_shift` after provisioning.\n"]
+    pub fn enable_zonal_shift(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_zonal_shift", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enforce_security_group_inbound_rules_on_private_link_traffic` after provisioning.\n"]
+    pub fn enforce_security_group_inbound_rules_on_private_link_traffic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enforce_security_group_inbound_rules_on_private_link_traffic", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -425,6 +643,20 @@ impl Lb {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve_host_header", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_ips_auto_assigned_per_subnet` after provisioning.\n"]
+    pub fn secondary_ips_auto_assigned_per_subnet(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.secondary_ips_auto_assigned_per_subnet", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
@@ -450,19 +682,47 @@ impl Lb {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `xff_header_processing_mode` after provisioning.\n"]
+    pub fn xff_header_processing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xff_header_processing_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `zone_id` after provisioning.\n"]
     pub fn zone_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `access_logs` after provisioning.\n"]
-    pub fn access_logs(&self) -> terrars::ListRef<LbAccessLogsElRef> {
+    pub fn access_logs(&self) -> terrars::ListRef<Lb_AccessLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_logs", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `connection_logs` after provisioning.\n"]
+    pub fn connection_logs(&self) -> terrars::ListRef<Lb_ConnectionLogsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.connection_logs", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `health_check_logs` after provisioning.\n"]
+    pub fn health_check_logs(&self) -> terrars::ListRef<Lb_HealthCheckLogsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_logs", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipam_pools` after provisioning.\n"]
+    pub fn ipam_pools(&self) -> terrars::ListRef<Lb_IpamPoolsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ipam_pools", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `minimum_load_balancer_capacity` after provisioning.\n"]
+    pub fn minimum_load_balancer_capacity(&self) -> terrars::ListRef<Lb_MinimumLoadBalancerCapacityRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.minimum_load_balancer_capacity", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LbTimeoutsElRef {
-        LbTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Lb_TimeoutsRef {
+        Lb_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -506,19 +766,26 @@ impl BuildLb {
         let out = Lb(std::rc::Rc::new(Lb_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LbData {
+            data: std::cell::RefCell::new(LbData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                client_keep_alive: core::default::Default::default(),
                 customer_owned_ipv4_pool: core::default::Default::default(),
                 desync_mitigation_mode: core::default::Default::default(),
+                dns_record_client_routing_policy: core::default::Default::default(),
                 drop_invalid_header_fields: core::default::Default::default(),
                 enable_cross_zone_load_balancing: core::default::Default::default(),
                 enable_deletion_protection: core::default::Default::default(),
                 enable_http2: core::default::Default::default(),
+                enable_prefix_for_ipv6_source_nat: core::default::Default::default(),
+                enable_tls_version_and_cipher_suite_headers: core::default::Default::default(),
                 enable_waf_fail_open: core::default::Default::default(),
+                enable_xff_client_port: core::default::Default::default(),
+                enable_zonal_shift: core::default::Default::default(),
+                enforce_security_group_inbound_rules_on_private_link_traffic: core::default::Default::default(),
                 id: core::default::Default::default(),
                 idle_timeout: core::default::Default::default(),
                 internal: core::default::Default::default(),
@@ -527,11 +794,18 @@ impl BuildLb {
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
                 preserve_host_header: core::default::Default::default(),
+                region: core::default::Default::default(),
+                secondary_ips_auto_assigned_per_subnet: core::default::Default::default(),
                 security_groups: core::default::Default::default(),
                 subnets: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                xff_header_processing_mode: core::default::Default::default(),
                 access_logs: core::default::Default::default(),
+                connection_logs: core::default::Default::default(),
+                health_check_logs: core::default::Default::default(),
+                ipam_pools: core::default::Default::default(),
+                minimum_load_balancer_capacity: core::default::Default::default(),
                 subnet_mapping: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -575,6 +849,11 @@ impl LbRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn_suffix", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `client_keep_alive` after provisioning.\n"]
+    pub fn client_keep_alive(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_keep_alive", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `customer_owned_ipv4_pool` after provisioning.\n"]
     pub fn customer_owned_ipv4_pool(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_owned_ipv4_pool", self.extract_ref()))
@@ -588,6 +867,14 @@ impl LbRef {
     #[doc = "Get a reference to the value of field `dns_name` after provisioning.\n"]
     pub fn dns_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dns_record_client_routing_policy` after provisioning.\n"]
+    pub fn dns_record_client_routing_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.dns_record_client_routing_policy", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `drop_invalid_header_fields` after provisioning.\n"]
@@ -613,9 +900,44 @@ impl LbRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_http2", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_prefix_for_ipv6_source_nat` after provisioning.\n"]
+    pub fn enable_prefix_for_ipv6_source_nat(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_prefix_for_ipv6_source_nat", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `enable_tls_version_and_cipher_suite_headers` after provisioning.\n"]
+    pub fn enable_tls_version_and_cipher_suite_headers(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_tls_version_and_cipher_suite_headers", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `enable_waf_fail_open` after provisioning.\n"]
     pub fn enable_waf_fail_open(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_waf_fail_open", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_xff_client_port` after provisioning.\n"]
+    pub fn enable_xff_client_port(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_xff_client_port", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_zonal_shift` after provisioning.\n"]
+    pub fn enable_zonal_shift(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_zonal_shift", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `enforce_security_group_inbound_rules_on_private_link_traffic` after provisioning.\n"]
+    pub fn enforce_security_group_inbound_rules_on_private_link_traffic(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enforce_security_group_inbound_rules_on_private_link_traffic", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -658,6 +980,20 @@ impl LbRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve_host_header", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_ips_auto_assigned_per_subnet` after provisioning.\n"]
+    pub fn secondary_ips_auto_assigned_per_subnet(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.secondary_ips_auto_assigned_per_subnet", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
@@ -683,24 +1019,62 @@ impl LbRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `xff_header_processing_mode` after provisioning.\n"]
+    pub fn xff_header_processing_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.xff_header_processing_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `zone_id` after provisioning.\n"]
     pub fn zone_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `access_logs` after provisioning.\n"]
-    pub fn access_logs(&self) -> terrars::ListRef<LbAccessLogsElRef> {
+    pub fn access_logs(&self) -> terrars::ListRef<Lb_AccessLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_logs", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `connection_logs` after provisioning.\n"]
+    pub fn connection_logs(&self) -> terrars::ListRef<Lb_ConnectionLogsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.connection_logs", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `health_check_logs` after provisioning.\n"]
+    pub fn health_check_logs(&self) -> terrars::ListRef<Lb_HealthCheckLogsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_logs", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ipam_pools` after provisioning.\n"]
+    pub fn ipam_pools(&self) -> terrars::ListRef<Lb_IpamPoolsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ipam_pools", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `minimum_load_balancer_capacity` after provisioning.\n"]
+    pub fn minimum_load_balancer_capacity(&self) -> terrars::ListRef<Lb_MinimumLoadBalancerCapacityRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.minimum_load_balancer_capacity", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LbTimeoutsElRef {
-        LbTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Lb_TimeoutsRef {
+        Lb_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LbDynamic {
+    access_logs: std::option::Option<terrars::DynamicBlock<Lb_AccessLogs>>,
+    connection_logs: std::option::Option<terrars::DynamicBlock<Lb_ConnectionLogs>>,
+    health_check_logs: std::option::Option<terrars::DynamicBlock<Lb_HealthCheckLogs>>,
+    ipam_pools: std::option::Option<terrars::DynamicBlock<Lb_IpamPools>>,
+    minimum_load_balancer_capacity: std::option::Option<terrars::DynamicBlock<Lb_MinimumLoadBalancerCapacity>>,
+    subnet_mapping: std::option::Option<terrars::DynamicBlock<Lb_SubnetMapping>>,
+}
+
 #[derive(Serialize)]
-pub struct LbAccessLogsEl {
+pub struct Lb_AccessLogs {
     bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
@@ -708,7 +1082,7 @@ pub struct LbAccessLogsEl {
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LbAccessLogsEl {
+impl Lb_AccessLogs {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -722,8 +1096,8 @@ impl LbAccessLogsEl {
     }
 }
 
-impl terrars::ToListMappable for LbAccessLogsEl {
-    type O = terrars::BlockAssignable<LbAccessLogsEl>;
+impl terrars::ToListMappable for Lb_AccessLogs {
+    type O = terrars::BlockAssignable<Lb_AccessLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -734,14 +1108,14 @@ impl terrars::ToListMappable for LbAccessLogsEl {
     }
 }
 
-pub struct BuildLbAccessLogsEl {
+pub struct BuildLb_AccessLogs {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbAccessLogsEl {
-    pub fn build(self) -> LbAccessLogsEl {
-        LbAccessLogsEl {
+impl BuildLb_AccessLogs {
+    pub fn build(self) -> Lb_AccessLogs {
+        Lb_AccessLogs {
             bucket: self.bucket,
             enabled: core::default::Default::default(),
             prefix: core::default::Default::default(),
@@ -749,21 +1123,23 @@ impl BuildLbAccessLogsEl {
     }
 }
 
-pub struct LbAccessLogsElRef {
+#[allow(dead_code)]
+pub struct Lb_AccessLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbAccessLogsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbAccessLogsElRef {
-        LbAccessLogsElRef {
+impl terrars::Ref for Lb_AccessLogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Lb_AccessLogsRef {
+        Lb_AccessLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbAccessLogsElRef {
+impl Lb_AccessLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -785,7 +1161,295 @@ impl LbAccessLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LbSubnetMappingEl {
+pub struct Lb_ConnectionLogs {
+    bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Lb_ConnectionLogs {
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Lb_ConnectionLogs {
+    type O = terrars::BlockAssignable<Lb_ConnectionLogs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLb_ConnectionLogs {
+    #[doc = ""]
+    pub bucket: terrars::PrimField<std::string::String>,
+}
+
+impl BuildLb_ConnectionLogs {
+    pub fn build(self) -> Lb_ConnectionLogs {
+        Lb_ConnectionLogs {
+            bucket: self.bucket,
+            enabled: core::default::Default::default(),
+            prefix: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Lb_ConnectionLogsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Lb_ConnectionLogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Lb_ConnectionLogsRef {
+        Lb_ConnectionLogsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Lb_ConnectionLogsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Lb_HealthCheckLogs {
+    bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Lb_HealthCheckLogs {
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Lb_HealthCheckLogs {
+    type O = terrars::BlockAssignable<Lb_HealthCheckLogs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLb_HealthCheckLogs {
+    #[doc = ""]
+    pub bucket: terrars::PrimField<std::string::String>,
+}
+
+impl BuildLb_HealthCheckLogs {
+    pub fn build(self) -> Lb_HealthCheckLogs {
+        Lb_HealthCheckLogs {
+            bucket: self.bucket,
+            enabled: core::default::Default::default(),
+            prefix: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Lb_HealthCheckLogsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Lb_HealthCheckLogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Lb_HealthCheckLogsRef {
+        Lb_HealthCheckLogsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Lb_HealthCheckLogsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
+    pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
+    pub fn enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Lb_IpamPools {
+    ipv4_ipam_pool_id: terrars::PrimField<std::string::String>,
+}
+
+impl Lb_IpamPools { }
+
+impl terrars::ToListMappable for Lb_IpamPools {
+    type O = terrars::BlockAssignable<Lb_IpamPools>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLb_IpamPools {
+    #[doc = ""]
+    pub ipv4_ipam_pool_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildLb_IpamPools {
+    pub fn build(self) -> Lb_IpamPools {
+        Lb_IpamPools { ipv4_ipam_pool_id: self.ipv4_ipam_pool_id }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Lb_IpamPoolsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Lb_IpamPoolsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Lb_IpamPoolsRef {
+        Lb_IpamPoolsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Lb_IpamPoolsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ipv4_ipam_pool_id` after provisioning.\n"]
+    pub fn ipv4_ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv4_ipam_pool_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Lb_MinimumLoadBalancerCapacity {
+    capacity_units: terrars::PrimField<f64>,
+}
+
+impl Lb_MinimumLoadBalancerCapacity { }
+
+impl terrars::ToListMappable for Lb_MinimumLoadBalancerCapacity {
+    type O = terrars::BlockAssignable<Lb_MinimumLoadBalancerCapacity>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildLb_MinimumLoadBalancerCapacity {
+    #[doc = ""]
+    pub capacity_units: terrars::PrimField<f64>,
+}
+
+impl BuildLb_MinimumLoadBalancerCapacity {
+    pub fn build(self) -> Lb_MinimumLoadBalancerCapacity {
+        Lb_MinimumLoadBalancerCapacity { capacity_units: self.capacity_units }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Lb_MinimumLoadBalancerCapacityRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Lb_MinimumLoadBalancerCapacityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Lb_MinimumLoadBalancerCapacityRef {
+        Lb_MinimumLoadBalancerCapacityRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Lb_MinimumLoadBalancerCapacityRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `capacity_units` after provisioning.\n"]
+    pub fn capacity_units(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.capacity_units", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Lb_SubnetMapping {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allocation_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -795,7 +1459,7 @@ pub struct LbSubnetMappingEl {
     subnet_id: terrars::PrimField<std::string::String>,
 }
 
-impl LbSubnetMappingEl {
+impl Lb_SubnetMapping {
     #[doc = "Set the field `allocation_id`.\n"]
     pub fn set_allocation_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.allocation_id = std::option::Option::Some(v.into());
@@ -818,8 +1482,8 @@ impl LbSubnetMappingEl {
     }
 }
 
-impl terrars::ToListMappable for LbSubnetMappingEl {
-    type O = terrars::BlockAssignable<LbSubnetMappingEl>;
+impl terrars::ToListMappable for Lb_SubnetMapping {
+    type O = terrars::BlockAssignable<Lb_SubnetMapping>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -830,14 +1494,14 @@ impl terrars::ToListMappable for LbSubnetMappingEl {
     }
 }
 
-pub struct BuildLbSubnetMappingEl {
+pub struct BuildLb_SubnetMapping {
     #[doc = ""]
     pub subnet_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbSubnetMappingEl {
-    pub fn build(self) -> LbSubnetMappingEl {
-        LbSubnetMappingEl {
+impl BuildLb_SubnetMapping {
+    pub fn build(self) -> Lb_SubnetMapping {
+        Lb_SubnetMapping {
             allocation_id: core::default::Default::default(),
             ipv6_address: core::default::Default::default(),
             private_ipv4_address: core::default::Default::default(),
@@ -846,21 +1510,23 @@ impl BuildLbSubnetMappingEl {
     }
 }
 
-pub struct LbSubnetMappingElRef {
+#[allow(dead_code)]
+pub struct Lb_SubnetMappingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbSubnetMappingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbSubnetMappingElRef {
-        LbSubnetMappingElRef {
+impl terrars::Ref for Lb_SubnetMappingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Lb_SubnetMappingRef {
+        Lb_SubnetMappingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbSubnetMappingElRef {
+impl Lb_SubnetMappingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -892,7 +1558,7 @@ impl LbSubnetMappingElRef {
 }
 
 #[derive(Serialize)]
-pub struct LbTimeoutsEl {
+pub struct Lb_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -901,7 +1567,7 @@ pub struct LbTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LbTimeoutsEl {
+impl Lb_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -921,8 +1587,8 @@ impl LbTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LbTimeoutsEl {
-    type O = terrars::BlockAssignable<LbTimeoutsEl>;
+impl terrars::ToListMappable for Lb_Timeouts {
+    type O = terrars::BlockAssignable<Lb_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -933,11 +1599,11 @@ impl terrars::ToListMappable for LbTimeoutsEl {
     }
 }
 
-pub struct BuildLbTimeoutsEl {}
+pub struct BuildLb_Timeouts {}
 
-impl BuildLbTimeoutsEl {
-    pub fn build(self) -> LbTimeoutsEl {
-        LbTimeoutsEl {
+impl BuildLb_Timeouts {
+    pub fn build(self) -> Lb_Timeouts {
+        Lb_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -945,21 +1611,23 @@ impl BuildLbTimeoutsEl {
     }
 }
 
-pub struct LbTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Lb_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbTimeoutsElRef {
-        LbTimeoutsElRef {
+impl terrars::Ref for Lb_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Lb_TimeoutsRef {
+        Lb_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbTimeoutsElRef {
+impl Lb_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -978,10 +1646,4 @@ impl LbTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LbDynamic {
-    access_logs: std::option::Option<terrars::DynamicBlock<LbAccessLogsEl>>,
-    subnet_mapping: std::option::Option<terrars::DynamicBlock<LbSubnetMappingEl>>,
 }

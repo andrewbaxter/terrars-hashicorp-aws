@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketVersioningData {
+struct S3BucketVersioningData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,14 +28,16 @@ struct S3BucketVersioningData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mfa: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    versioning_configuration: std::option::Option<std::vec::Vec<S3BucketVersioningVersioningConfigurationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    versioning_configuration: std::option::Option<std::vec::Vec<S3BucketVersioning_VersioningConfiguration>>,
     dynamic: S3BucketVersioningDynamic,
 }
 
 struct S3BucketVersioning_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketVersioningData>,
+    data: std::cell::RefCell<S3BucketVersioningData_>,
 }
 
 #[derive(Clone)]
@@ -151,10 +155,17 @@ impl S3BucketVersioning {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `versioning_configuration`.\n"]
     pub fn set_versioning_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketVersioningVersioningConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketVersioning_VersioningConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -187,8 +198,14 @@ impl S3BucketVersioning {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mfa", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `versioning_configuration` after provisioning.\n"]
-    pub fn versioning_configuration(&self) -> terrars::ListRef<S3BucketVersioningVersioningConfigurationElRef> {
+    pub fn versioning_configuration(&self) -> terrars::ListRef<S3BucketVersioning_VersioningConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.versioning_configuration", self.extract_ref()))
     }
 }
@@ -235,7 +252,7 @@ impl BuildS3BucketVersioning {
         let out = S3BucketVersioning(std::rc::Rc::new(S3BucketVersioning_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketVersioningData {
+            data: std::cell::RefCell::new(S3BucketVersioningData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -245,6 +262,7 @@ impl BuildS3BucketVersioning {
                 expected_bucket_owner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 mfa: core::default::Default::default(),
+                region: core::default::Default::default(),
                 versioning_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -297,20 +315,31 @@ impl S3BucketVersioningRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mfa", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `versioning_configuration` after provisioning.\n"]
-    pub fn versioning_configuration(&self) -> terrars::ListRef<S3BucketVersioningVersioningConfigurationElRef> {
+    pub fn versioning_configuration(&self) -> terrars::ListRef<S3BucketVersioning_VersioningConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.versioning_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketVersioningDynamic {
+    versioning_configuration: std::option::Option<terrars::DynamicBlock<S3BucketVersioning_VersioningConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketVersioningVersioningConfigurationEl {
+pub struct S3BucketVersioning_VersioningConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mfa_delete: std::option::Option<terrars::PrimField<std::string::String>>,
     status: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketVersioningVersioningConfigurationEl {
+impl S3BucketVersioning_VersioningConfiguration {
     #[doc = "Set the field `mfa_delete`.\n"]
     pub fn set_mfa_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.mfa_delete = std::option::Option::Some(v.into());
@@ -318,8 +347,8 @@ impl S3BucketVersioningVersioningConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketVersioningVersioningConfigurationEl {
-    type O = terrars::BlockAssignable<S3BucketVersioningVersioningConfigurationEl>;
+impl terrars::ToListMappable for S3BucketVersioning_VersioningConfiguration {
+    type O = terrars::BlockAssignable<S3BucketVersioning_VersioningConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -330,38 +359,37 @@ impl terrars::ToListMappable for S3BucketVersioningVersioningConfigurationEl {
     }
 }
 
-pub struct BuildS3BucketVersioningVersioningConfigurationEl {
+pub struct BuildS3BucketVersioning_VersioningConfiguration {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketVersioningVersioningConfigurationEl {
-    pub fn build(self) -> S3BucketVersioningVersioningConfigurationEl {
-        S3BucketVersioningVersioningConfigurationEl {
+impl BuildS3BucketVersioning_VersioningConfiguration {
+    pub fn build(self) -> S3BucketVersioning_VersioningConfiguration {
+        S3BucketVersioning_VersioningConfiguration {
             mfa_delete: core::default::Default::default(),
             status: self.status,
         }
     }
 }
 
-pub struct S3BucketVersioningVersioningConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3BucketVersioning_VersioningConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketVersioningVersioningConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> S3BucketVersioningVersioningConfigurationElRef {
-        S3BucketVersioningVersioningConfigurationElRef {
+impl terrars::Ref for S3BucketVersioning_VersioningConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketVersioning_VersioningConfigurationRef {
+        S3BucketVersioning_VersioningConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketVersioningVersioningConfigurationElRef {
+impl S3BucketVersioning_VersioningConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -375,11 +403,4 @@ impl S3BucketVersioningVersioningConfigurationElRef {
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketVersioningDynamic {
-    versioning_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3BucketVersioningVersioningConfigurationEl>>,
 }

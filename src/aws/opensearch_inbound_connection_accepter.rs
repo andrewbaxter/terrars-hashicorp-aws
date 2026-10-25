@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct OpensearchInboundConnectionAccepterData {
+struct OpensearchInboundConnectionAccepterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,13 +24,15 @@ struct OpensearchInboundConnectionAccepterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<OpensearchInboundConnectionAccepterTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<OpensearchInboundConnectionAccepter_Timeouts>,
 }
 
 struct OpensearchInboundConnectionAccepter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<OpensearchInboundConnectionAccepterData>,
+    data: std::cell::RefCell<OpensearchInboundConnectionAccepterData_>,
 }
 
 #[derive(Clone)]
@@ -134,8 +138,15 @@ impl OpensearchInboundConnectionAccepter {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<OpensearchInboundConnectionAccepterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<OpensearchInboundConnectionAccepter_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -155,9 +166,15 @@ impl OpensearchInboundConnectionAccepter {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OpensearchInboundConnectionAccepterTimeoutsElRef {
-        OpensearchInboundConnectionAccepterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> OpensearchInboundConnectionAccepter_TimeoutsRef {
+        OpensearchInboundConnectionAccepter_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -206,7 +223,7 @@ impl BuildOpensearchInboundConnectionAccepter {
         let out = OpensearchInboundConnectionAccepter(std::rc::Rc::new(OpensearchInboundConnectionAccepter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(OpensearchInboundConnectionAccepterData {
+            data: std::cell::RefCell::new(OpensearchInboundConnectionAccepterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -214,6 +231,7 @@ impl BuildOpensearchInboundConnectionAccepter {
                 provisioner: core::default::Default::default(),
                 connection_id: self.connection_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -260,9 +278,15 @@ impl OpensearchInboundConnectionAccepterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OpensearchInboundConnectionAccepterTimeoutsElRef {
-        OpensearchInboundConnectionAccepterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> OpensearchInboundConnectionAccepter_TimeoutsRef {
+        OpensearchInboundConnectionAccepter_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -270,14 +294,14 @@ impl OpensearchInboundConnectionAccepterRef {
 }
 
 #[derive(Serialize)]
-pub struct OpensearchInboundConnectionAccepterTimeoutsEl {
+pub struct OpensearchInboundConnectionAccepter_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OpensearchInboundConnectionAccepterTimeoutsEl {
+impl OpensearchInboundConnectionAccepter_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -291,8 +315,8 @@ impl OpensearchInboundConnectionAccepterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for OpensearchInboundConnectionAccepterTimeoutsEl {
-    type O = terrars::BlockAssignable<OpensearchInboundConnectionAccepterTimeoutsEl>;
+impl terrars::ToListMappable for OpensearchInboundConnectionAccepter_Timeouts {
+    type O = terrars::BlockAssignable<OpensearchInboundConnectionAccepter_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -303,35 +327,37 @@ impl terrars::ToListMappable for OpensearchInboundConnectionAccepterTimeoutsEl {
     }
 }
 
-pub struct BuildOpensearchInboundConnectionAccepterTimeoutsEl {}
+pub struct BuildOpensearchInboundConnectionAccepter_Timeouts {}
 
-impl BuildOpensearchInboundConnectionAccepterTimeoutsEl {
-    pub fn build(self) -> OpensearchInboundConnectionAccepterTimeoutsEl {
-        OpensearchInboundConnectionAccepterTimeoutsEl {
+impl BuildOpensearchInboundConnectionAccepter_Timeouts {
+    pub fn build(self) -> OpensearchInboundConnectionAccepter_Timeouts {
+        OpensearchInboundConnectionAccepter_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct OpensearchInboundConnectionAccepterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct OpensearchInboundConnectionAccepter_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OpensearchInboundConnectionAccepterTimeoutsElRef {
+impl terrars::Ref for OpensearchInboundConnectionAccepter_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OpensearchInboundConnectionAccepterTimeoutsElRef {
-        OpensearchInboundConnectionAccepterTimeoutsElRef {
+    ) -> OpensearchInboundConnectionAccepter_TimeoutsRef {
+        OpensearchInboundConnectionAccepter_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OpensearchInboundConnectionAccepterTimeoutsElRef {
+impl OpensearchInboundConnectionAccepter_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

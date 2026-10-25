@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RdsGlobalClusterData {
+struct RdsGlobalClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct RdsGlobalClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    engine_lifecycle_support: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     force_destroy: std::option::Option<terrars::PrimField<bool>>,
@@ -32,17 +36,23 @@ struct RdsGlobalClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_db_cluster_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_encrypted: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RdsGlobalClusterTimeoutsEl>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<RdsGlobalCluster_Timeouts>,
 }
 
 struct RdsGlobalCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RdsGlobalClusterData>,
+    data: std::cell::RefCell<RdsGlobalClusterData_>,
 }
 
 #[derive(Clone)]
@@ -160,6 +170,15 @@ impl RdsGlobalCluster {
         self
     }
 
+    #[doc = "Set the field `engine_lifecycle_support`.\n"]
+    pub fn set_engine_lifecycle_support(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().engine_lifecycle_support = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `engine_version`.\n"]
     pub fn set_engine_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().engine_version = std::option::Option::Some(v.into());
@@ -178,6 +197,13 @@ impl RdsGlobalCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `source_db_cluster_identifier`.\n"]
     pub fn set_source_db_cluster_identifier(
         self,
@@ -193,8 +219,26 @@ impl RdsGlobalCluster {
         self
     }
 
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RdsGlobalClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RdsGlobalCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -214,9 +258,19 @@ impl RdsGlobalCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
     pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine_lifecycle_support` after provisioning.\n"]
+    pub fn engine_lifecycle_support(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_lifecycle_support", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
@@ -240,7 +294,7 @@ impl RdsGlobalCluster {
     }
 
     #[doc = "Get a reference to the value of field `global_cluster_members` after provisioning.\n"]
-    pub fn global_cluster_members(&self) -> terrars::SetRef<RdsGlobalClusterGlobalClusterMembersElRef> {
+    pub fn global_cluster_members(&self) -> terrars::SetRef<RdsGlobalCluster_GlobalClusterMembersRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.global_cluster_members", self.extract_ref()))
     }
 
@@ -254,6 +308,12 @@ impl RdsGlobalCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_db_cluster_identifier` after provisioning.\n"]
     pub fn source_db_cluster_identifier(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_db_cluster_identifier", self.extract_ref()))
@@ -264,9 +324,19 @@ impl RdsGlobalCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_encrypted", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RdsGlobalClusterTimeoutsElRef {
-        RdsGlobalClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RdsGlobalCluster_TimeoutsRef {
+        RdsGlobalCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -312,7 +382,7 @@ impl BuildRdsGlobalCluster {
         let out = RdsGlobalCluster(std::rc::Rc::new(RdsGlobalCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RdsGlobalClusterData {
+            data: std::cell::RefCell::new(RdsGlobalClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -321,12 +391,16 @@ impl BuildRdsGlobalCluster {
                 database_name: core::default::Default::default(),
                 deletion_protection: core::default::Default::default(),
                 engine: core::default::Default::default(),
+                engine_lifecycle_support: core::default::Default::default(),
                 engine_version: core::default::Default::default(),
                 force_destroy: core::default::Default::default(),
                 global_cluster_identifier: self.global_cluster_identifier,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 source_db_cluster_identifier: core::default::Default::default(),
                 storage_encrypted: core::default::Default::default(),
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -373,9 +447,19 @@ impl RdsGlobalClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
+    pub fn endpoint(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
     pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine_lifecycle_support` after provisioning.\n"]
+    pub fn engine_lifecycle_support(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_lifecycle_support", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
@@ -399,7 +483,7 @@ impl RdsGlobalClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `global_cluster_members` after provisioning.\n"]
-    pub fn global_cluster_members(&self) -> terrars::SetRef<RdsGlobalClusterGlobalClusterMembersElRef> {
+    pub fn global_cluster_members(&self) -> terrars::SetRef<RdsGlobalCluster_GlobalClusterMembersRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.global_cluster_members", self.extract_ref()))
     }
 
@@ -413,6 +497,12 @@ impl RdsGlobalClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_db_cluster_identifier` after provisioning.\n"]
     pub fn source_db_cluster_identifier(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_db_cluster_identifier", self.extract_ref()))
@@ -423,21 +513,31 @@ impl RdsGlobalClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_encrypted", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RdsGlobalClusterTimeoutsElRef {
-        RdsGlobalClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RdsGlobalCluster_TimeoutsRef {
+        RdsGlobalCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct RdsGlobalClusterGlobalClusterMembersEl {
+pub struct RdsGlobalCluster_GlobalClusterMembers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     db_cluster_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_writer: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl RdsGlobalClusterGlobalClusterMembersEl {
+impl RdsGlobalCluster_GlobalClusterMembers {
     #[doc = "Set the field `db_cluster_arn`.\n"]
     pub fn set_db_cluster_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.db_cluster_arn = std::option::Option::Some(v.into());
@@ -451,8 +551,8 @@ impl RdsGlobalClusterGlobalClusterMembersEl {
     }
 }
 
-impl terrars::ToListMappable for RdsGlobalClusterGlobalClusterMembersEl {
-    type O = terrars::BlockAssignable<RdsGlobalClusterGlobalClusterMembersEl>;
+impl terrars::ToListMappable for RdsGlobalCluster_GlobalClusterMembers {
+    type O = terrars::BlockAssignable<RdsGlobalCluster_GlobalClusterMembers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -463,32 +563,34 @@ impl terrars::ToListMappable for RdsGlobalClusterGlobalClusterMembersEl {
     }
 }
 
-pub struct BuildRdsGlobalClusterGlobalClusterMembersEl {}
+pub struct BuildRdsGlobalCluster_GlobalClusterMembers {}
 
-impl BuildRdsGlobalClusterGlobalClusterMembersEl {
-    pub fn build(self) -> RdsGlobalClusterGlobalClusterMembersEl {
-        RdsGlobalClusterGlobalClusterMembersEl {
+impl BuildRdsGlobalCluster_GlobalClusterMembers {
+    pub fn build(self) -> RdsGlobalCluster_GlobalClusterMembers {
+        RdsGlobalCluster_GlobalClusterMembers {
             db_cluster_arn: core::default::Default::default(),
             is_writer: core::default::Default::default(),
         }
     }
 }
 
-pub struct RdsGlobalClusterGlobalClusterMembersElRef {
+#[allow(dead_code)]
+pub struct RdsGlobalCluster_GlobalClusterMembersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsGlobalClusterGlobalClusterMembersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsGlobalClusterGlobalClusterMembersElRef {
-        RdsGlobalClusterGlobalClusterMembersElRef {
+impl terrars::Ref for RdsGlobalCluster_GlobalClusterMembersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsGlobalCluster_GlobalClusterMembersRef {
+        RdsGlobalCluster_GlobalClusterMembersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsGlobalClusterGlobalClusterMembersElRef {
+impl RdsGlobalCluster_GlobalClusterMembersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -505,7 +607,7 @@ impl RdsGlobalClusterGlobalClusterMembersElRef {
 }
 
 #[derive(Serialize)]
-pub struct RdsGlobalClusterTimeoutsEl {
+pub struct RdsGlobalCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -514,7 +616,7 @@ pub struct RdsGlobalClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RdsGlobalClusterTimeoutsEl {
+impl RdsGlobalCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -534,8 +636,8 @@ impl RdsGlobalClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RdsGlobalClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<RdsGlobalClusterTimeoutsEl>;
+impl terrars::ToListMappable for RdsGlobalCluster_Timeouts {
+    type O = terrars::BlockAssignable<RdsGlobalCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -546,11 +648,11 @@ impl terrars::ToListMappable for RdsGlobalClusterTimeoutsEl {
     }
 }
 
-pub struct BuildRdsGlobalClusterTimeoutsEl {}
+pub struct BuildRdsGlobalCluster_Timeouts {}
 
-impl BuildRdsGlobalClusterTimeoutsEl {
-    pub fn build(self) -> RdsGlobalClusterTimeoutsEl {
-        RdsGlobalClusterTimeoutsEl {
+impl BuildRdsGlobalCluster_Timeouts {
+    pub fn build(self) -> RdsGlobalCluster_Timeouts {
+        RdsGlobalCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -558,21 +660,23 @@ impl BuildRdsGlobalClusterTimeoutsEl {
     }
 }
 
-pub struct RdsGlobalClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RdsGlobalCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsGlobalClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsGlobalClusterTimeoutsElRef {
-        RdsGlobalClusterTimeoutsElRef {
+impl terrars::Ref for RdsGlobalCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsGlobalCluster_TimeoutsRef {
+        RdsGlobalCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsGlobalClusterTimeoutsElRef {
+impl RdsGlobalCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

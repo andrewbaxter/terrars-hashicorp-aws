@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataMemorydbClusterData {
+struct DataMemorydbClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataMemorydbClusterData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataMemorydbCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMemorydbClusterData>,
+    data: std::cell::RefCell<DataMemorydbClusterData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataMemorydbCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -102,7 +113,7 @@ impl DataMemorydbCluster {
     }
 
     #[doc = "Get a reference to the value of field `cluster_endpoint` after provisioning.\n"]
-    pub fn cluster_endpoint(&self) -> terrars::ListRef<DataMemorydbClusterClusterEndpointElRef> {
+    pub fn cluster_endpoint(&self) -> terrars::ListRef<DataMemorydbCluster_ClusterEndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_endpoint", self.extract_ref()))
     }
 
@@ -114,6 +125,11 @@ impl DataMemorydbCluster {
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
+    pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_patch_version` after provisioning.\n"]
@@ -136,6 +152,11 @@ impl DataMemorydbCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ip_discovery` after provisioning.\n"]
+    pub fn ip_discovery(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_discovery", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
     pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
@@ -149,6 +170,11 @@ impl DataMemorydbCluster {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_type` after provisioning.\n"]
@@ -176,13 +202,19 @@ impl DataMemorydbCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `shards` after provisioning.\n"]
-    pub fn shards(&self) -> terrars::SetRef<DataMemorydbClusterShardsElRef> {
+    pub fn shards(&self) -> terrars::SetRef<DataMemorydbCluster_ShardsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.shards", self.extract_ref()))
     }
 
@@ -259,13 +291,14 @@ impl BuildDataMemorydbCluster {
         let out = DataMemorydbCluster(std::rc::Rc::new(DataMemorydbCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMemorydbClusterData {
+            data: std::cell::RefCell::new(DataMemorydbClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -313,7 +346,7 @@ impl DataMemorydbClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `cluster_endpoint` after provisioning.\n"]
-    pub fn cluster_endpoint(&self) -> terrars::ListRef<DataMemorydbClusterClusterEndpointElRef> {
+    pub fn cluster_endpoint(&self) -> terrars::ListRef<DataMemorydbCluster_ClusterEndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_endpoint", self.extract_ref()))
     }
 
@@ -325,6 +358,11 @@ impl DataMemorydbClusterRef {
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
+    pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_patch_version` after provisioning.\n"]
@@ -347,6 +385,11 @@ impl DataMemorydbClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ip_discovery` after provisioning.\n"]
+    pub fn ip_discovery(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_discovery", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
     pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
@@ -360,6 +403,11 @@ impl DataMemorydbClusterRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_type` after provisioning.\n"]
@@ -387,13 +435,19 @@ impl DataMemorydbClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `shards` after provisioning.\n"]
-    pub fn shards(&self) -> terrars::SetRef<DataMemorydbClusterShardsElRef> {
+    pub fn shards(&self) -> terrars::SetRef<DataMemorydbCluster_ShardsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.shards", self.extract_ref()))
     }
 
@@ -429,14 +483,14 @@ impl DataMemorydbClusterRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMemorydbClusterClusterEndpointEl {
+pub struct DataMemorydbCluster_ClusterEndpoint {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataMemorydbClusterClusterEndpointEl {
+impl DataMemorydbCluster_ClusterEndpoint {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -450,8 +504,8 @@ impl DataMemorydbClusterClusterEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for DataMemorydbClusterClusterEndpointEl {
-    type O = terrars::BlockAssignable<DataMemorydbClusterClusterEndpointEl>;
+impl terrars::ToListMappable for DataMemorydbCluster_ClusterEndpoint {
+    type O = terrars::BlockAssignable<DataMemorydbCluster_ClusterEndpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -462,32 +516,34 @@ impl terrars::ToListMappable for DataMemorydbClusterClusterEndpointEl {
     }
 }
 
-pub struct BuildDataMemorydbClusterClusterEndpointEl {}
+pub struct BuildDataMemorydbCluster_ClusterEndpoint {}
 
-impl BuildDataMemorydbClusterClusterEndpointEl {
-    pub fn build(self) -> DataMemorydbClusterClusterEndpointEl {
-        DataMemorydbClusterClusterEndpointEl {
+impl BuildDataMemorydbCluster_ClusterEndpoint {
+    pub fn build(self) -> DataMemorydbCluster_ClusterEndpoint {
+        DataMemorydbCluster_ClusterEndpoint {
             address: core::default::Default::default(),
             port: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataMemorydbClusterClusterEndpointElRef {
+#[allow(dead_code)]
+pub struct DataMemorydbCluster_ClusterEndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMemorydbClusterClusterEndpointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbClusterClusterEndpointElRef {
-        DataMemorydbClusterClusterEndpointElRef {
+impl terrars::Ref for DataMemorydbCluster_ClusterEndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbCluster_ClusterEndpointRef {
+        DataMemorydbCluster_ClusterEndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMemorydbClusterClusterEndpointElRef {
+impl DataMemorydbCluster_ClusterEndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -504,14 +560,14 @@ impl DataMemorydbClusterClusterEndpointElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMemorydbClusterShardsElNodesElEndpointEl {
+pub struct DataMemorydbCluster_Shards_Nodes_Endpoint {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataMemorydbClusterShardsElNodesElEndpointEl {
+impl DataMemorydbCluster_Shards_Nodes_Endpoint {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -525,8 +581,8 @@ impl DataMemorydbClusterShardsElNodesElEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for DataMemorydbClusterShardsElNodesElEndpointEl {
-    type O = terrars::BlockAssignable<DataMemorydbClusterShardsElNodesElEndpointEl>;
+impl terrars::ToListMappable for DataMemorydbCluster_Shards_Nodes_Endpoint {
+    type O = terrars::BlockAssignable<DataMemorydbCluster_Shards_Nodes_Endpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -537,35 +593,34 @@ impl terrars::ToListMappable for DataMemorydbClusterShardsElNodesElEndpointEl {
     }
 }
 
-pub struct BuildDataMemorydbClusterShardsElNodesElEndpointEl {}
+pub struct BuildDataMemorydbCluster_Shards_Nodes_Endpoint {}
 
-impl BuildDataMemorydbClusterShardsElNodesElEndpointEl {
-    pub fn build(self) -> DataMemorydbClusterShardsElNodesElEndpointEl {
-        DataMemorydbClusterShardsElNodesElEndpointEl {
+impl BuildDataMemorydbCluster_Shards_Nodes_Endpoint {
+    pub fn build(self) -> DataMemorydbCluster_Shards_Nodes_Endpoint {
+        DataMemorydbCluster_Shards_Nodes_Endpoint {
             address: core::default::Default::default(),
             port: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataMemorydbClusterShardsElNodesElEndpointElRef {
+#[allow(dead_code)]
+pub struct DataMemorydbCluster_Shards_Nodes_EndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMemorydbClusterShardsElNodesElEndpointElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataMemorydbClusterShardsElNodesElEndpointElRef {
-        DataMemorydbClusterShardsElNodesElEndpointElRef {
+impl terrars::Ref for DataMemorydbCluster_Shards_Nodes_EndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbCluster_Shards_Nodes_EndpointRef {
+        DataMemorydbCluster_Shards_Nodes_EndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMemorydbClusterShardsElNodesElEndpointElRef {
+impl DataMemorydbCluster_Shards_Nodes_EndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -582,18 +637,18 @@ impl DataMemorydbClusterShardsElNodesElEndpointElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMemorydbClusterShardsElNodesEl {
+pub struct DataMemorydbCluster_Shards_Nodes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint: std::option::Option<terrars::ListField<DataMemorydbClusterShardsElNodesElEndpointEl>>,
+    endpoint: std::option::Option<terrars::ListField<DataMemorydbCluster_Shards_Nodes_Endpoint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMemorydbClusterShardsElNodesEl {
+impl DataMemorydbCluster_Shards_Nodes {
     #[doc = "Set the field `availability_zone`.\n"]
     pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.availability_zone = std::option::Option::Some(v.into());
@@ -609,7 +664,7 @@ impl DataMemorydbClusterShardsElNodesEl {
     #[doc = "Set the field `endpoint`.\n"]
     pub fn set_endpoint(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataMemorydbClusterShardsElNodesElEndpointEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataMemorydbCluster_Shards_Nodes_Endpoint>>,
     ) -> Self {
         self.endpoint = std::option::Option::Some(v.into());
         self
@@ -622,8 +677,8 @@ impl DataMemorydbClusterShardsElNodesEl {
     }
 }
 
-impl terrars::ToListMappable for DataMemorydbClusterShardsElNodesEl {
-    type O = terrars::BlockAssignable<DataMemorydbClusterShardsElNodesEl>;
+impl terrars::ToListMappable for DataMemorydbCluster_Shards_Nodes {
+    type O = terrars::BlockAssignable<DataMemorydbCluster_Shards_Nodes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -634,11 +689,11 @@ impl terrars::ToListMappable for DataMemorydbClusterShardsElNodesEl {
     }
 }
 
-pub struct BuildDataMemorydbClusterShardsElNodesEl {}
+pub struct BuildDataMemorydbCluster_Shards_Nodes {}
 
-impl BuildDataMemorydbClusterShardsElNodesEl {
-    pub fn build(self) -> DataMemorydbClusterShardsElNodesEl {
-        DataMemorydbClusterShardsElNodesEl {
+impl BuildDataMemorydbCluster_Shards_Nodes {
+    pub fn build(self) -> DataMemorydbCluster_Shards_Nodes {
+        DataMemorydbCluster_Shards_Nodes {
             availability_zone: core::default::Default::default(),
             create_time: core::default::Default::default(),
             endpoint: core::default::Default::default(),
@@ -647,21 +702,23 @@ impl BuildDataMemorydbClusterShardsElNodesEl {
     }
 }
 
-pub struct DataMemorydbClusterShardsElNodesElRef {
+#[allow(dead_code)]
+pub struct DataMemorydbCluster_Shards_NodesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMemorydbClusterShardsElNodesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbClusterShardsElNodesElRef {
-        DataMemorydbClusterShardsElNodesElRef {
+impl terrars::Ref for DataMemorydbCluster_Shards_NodesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbCluster_Shards_NodesRef {
+        DataMemorydbCluster_Shards_NodesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMemorydbClusterShardsElNodesElRef {
+impl DataMemorydbCluster_Shards_NodesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -677,7 +734,7 @@ impl DataMemorydbClusterShardsElNodesElRef {
     }
 
     #[doc = "Get a reference to the value of field `endpoint` after provisioning.\n"]
-    pub fn endpoint(&self) -> terrars::ListRef<DataMemorydbClusterShardsElNodesElEndpointElRef> {
+    pub fn endpoint(&self) -> terrars::ListRef<DataMemorydbCluster_Shards_Nodes_EndpointRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint", self.base))
     }
 
@@ -688,18 +745,18 @@ impl DataMemorydbClusterShardsElNodesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMemorydbClusterShardsEl {
+pub struct DataMemorydbCluster_Shards {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nodes: std::option::Option<terrars::SetField<DataMemorydbClusterShardsElNodesEl>>,
+    nodes: std::option::Option<terrars::SetField<DataMemorydbCluster_Shards_Nodes>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     num_nodes: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     slots: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMemorydbClusterShardsEl {
+impl DataMemorydbCluster_Shards {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -707,10 +764,7 @@ impl DataMemorydbClusterShardsEl {
     }
 
     #[doc = "Set the field `nodes`.\n"]
-    pub fn set_nodes(
-        mut self,
-        v: impl std::convert::Into<terrars::SetField<DataMemorydbClusterShardsElNodesEl>>,
-    ) -> Self {
+    pub fn set_nodes(mut self, v: impl std::convert::Into<terrars::SetField<DataMemorydbCluster_Shards_Nodes>>) -> Self {
         self.nodes = std::option::Option::Some(v.into());
         self
     }
@@ -728,8 +782,8 @@ impl DataMemorydbClusterShardsEl {
     }
 }
 
-impl terrars::ToListMappable for DataMemorydbClusterShardsEl {
-    type O = terrars::BlockAssignable<DataMemorydbClusterShardsEl>;
+impl terrars::ToListMappable for DataMemorydbCluster_Shards {
+    type O = terrars::BlockAssignable<DataMemorydbCluster_Shards>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -740,11 +794,11 @@ impl terrars::ToListMappable for DataMemorydbClusterShardsEl {
     }
 }
 
-pub struct BuildDataMemorydbClusterShardsEl {}
+pub struct BuildDataMemorydbCluster_Shards {}
 
-impl BuildDataMemorydbClusterShardsEl {
-    pub fn build(self) -> DataMemorydbClusterShardsEl {
-        DataMemorydbClusterShardsEl {
+impl BuildDataMemorydbCluster_Shards {
+    pub fn build(self) -> DataMemorydbCluster_Shards {
+        DataMemorydbCluster_Shards {
             name: core::default::Default::default(),
             nodes: core::default::Default::default(),
             num_nodes: core::default::Default::default(),
@@ -753,21 +807,23 @@ impl BuildDataMemorydbClusterShardsEl {
     }
 }
 
-pub struct DataMemorydbClusterShardsElRef {
+#[allow(dead_code)]
+pub struct DataMemorydbCluster_ShardsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMemorydbClusterShardsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbClusterShardsElRef {
-        DataMemorydbClusterShardsElRef {
+impl terrars::Ref for DataMemorydbCluster_ShardsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbCluster_ShardsRef {
+        DataMemorydbCluster_ShardsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMemorydbClusterShardsElRef {
+impl DataMemorydbCluster_ShardsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -778,7 +834,7 @@ impl DataMemorydbClusterShardsElRef {
     }
 
     #[doc = "Get a reference to the value of field `nodes` after provisioning.\n"]
-    pub fn nodes(&self) -> terrars::SetRef<DataMemorydbClusterShardsElNodesElRef> {
+    pub fn nodes(&self) -> terrars::SetRef<DataMemorydbCluster_Shards_NodesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.nodes", self.base))
     }
 

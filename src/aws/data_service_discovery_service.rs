@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataServiceDiscoveryServiceData {
+struct DataServiceDiscoveryServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,15 +23,15 @@ struct DataServiceDiscoveryServiceData {
     name: terrars::PrimField<std::string::String>,
     namespace_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataServiceDiscoveryService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataServiceDiscoveryServiceData>,
+    data: std::cell::RefCell<DataServiceDiscoveryServiceData_>,
 }
 
 #[derive(Clone)]
@@ -80,21 +82,19 @@ impl DataServiceDiscoveryService {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(
-        self,
-        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
         self
     }
 
@@ -109,19 +109,17 @@ impl DataServiceDiscoveryService {
     }
 
     #[doc = "Get a reference to the value of field `dns_config` after provisioning.\n"]
-    pub fn dns_config(&self) -> terrars::ListRef<DataServiceDiscoveryServiceDnsConfigElRef> {
+    pub fn dns_config(&self) -> terrars::ListRef<DataServiceDiscoveryService_DnsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `health_check_config` after provisioning.\n"]
-    pub fn health_check_config(&self) -> terrars::ListRef<DataServiceDiscoveryServiceHealthCheckConfigElRef> {
+    pub fn health_check_config(&self) -> terrars::ListRef<DataServiceDiscoveryService_HealthCheckConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `health_check_custom_config` after provisioning.\n"]
-    pub fn health_check_custom_config(
-        &self,
-    ) -> terrars::ListRef<DataServiceDiscoveryServiceHealthCheckCustomConfigElRef> {
+    pub fn health_check_custom_config(&self) -> terrars::ListRef<DataServiceDiscoveryService_HealthCheckCustomConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_custom_config", self.extract_ref()))
     }
 
@@ -140,14 +138,15 @@ impl DataServiceDiscoveryService {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 }
 
@@ -195,7 +194,7 @@ impl BuildDataServiceDiscoveryService {
         let out = DataServiceDiscoveryService(std::rc::Rc::new(DataServiceDiscoveryService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataServiceDiscoveryServiceData {
+            data: std::cell::RefCell::new(DataServiceDiscoveryServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -203,8 +202,8 @@ impl BuildDataServiceDiscoveryService {
                 id: core::default::Default::default(),
                 name: self.name,
                 namespace_id: self.namespace_id,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
-                tags_all: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -246,19 +245,17 @@ impl DataServiceDiscoveryServiceRef {
     }
 
     #[doc = "Get a reference to the value of field `dns_config` after provisioning.\n"]
-    pub fn dns_config(&self) -> terrars::ListRef<DataServiceDiscoveryServiceDnsConfigElRef> {
+    pub fn dns_config(&self) -> terrars::ListRef<DataServiceDiscoveryService_DnsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `health_check_config` after provisioning.\n"]
-    pub fn health_check_config(&self) -> terrars::ListRef<DataServiceDiscoveryServiceHealthCheckConfigElRef> {
+    pub fn health_check_config(&self) -> terrars::ListRef<DataServiceDiscoveryService_HealthCheckConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `health_check_custom_config` after provisioning.\n"]
-    pub fn health_check_custom_config(
-        &self,
-    ) -> terrars::ListRef<DataServiceDiscoveryServiceHealthCheckCustomConfigElRef> {
+    pub fn health_check_custom_config(&self) -> terrars::ListRef<DataServiceDiscoveryService_HealthCheckCustomConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check_custom_config", self.extract_ref()))
     }
 
@@ -277,26 +274,27 @@ impl DataServiceDiscoveryServiceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
-
-    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
-    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
-        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
-    }
 }
 
 #[derive(Serialize)]
-pub struct DataServiceDiscoveryServiceDnsConfigElDnsRecordsEl {
+pub struct DataServiceDiscoveryService_DnsConfig_DnsRecords {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ttl: std::option::Option<terrars::PrimField<f64>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataServiceDiscoveryServiceDnsConfigElDnsRecordsEl {
+impl DataServiceDiscoveryService_DnsConfig_DnsRecords {
     #[doc = "Set the field `ttl`.\n"]
     pub fn set_ttl(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.ttl = std::option::Option::Some(v.into());
@@ -310,8 +308,8 @@ impl DataServiceDiscoveryServiceDnsConfigElDnsRecordsEl {
     }
 }
 
-impl terrars::ToListMappable for DataServiceDiscoveryServiceDnsConfigElDnsRecordsEl {
-    type O = terrars::BlockAssignable<DataServiceDiscoveryServiceDnsConfigElDnsRecordsEl>;
+impl terrars::ToListMappable for DataServiceDiscoveryService_DnsConfig_DnsRecords {
+    type O = terrars::BlockAssignable<DataServiceDiscoveryService_DnsConfig_DnsRecords>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -322,35 +320,37 @@ impl terrars::ToListMappable for DataServiceDiscoveryServiceDnsConfigElDnsRecord
     }
 }
 
-pub struct BuildDataServiceDiscoveryServiceDnsConfigElDnsRecordsEl {}
+pub struct BuildDataServiceDiscoveryService_DnsConfig_DnsRecords {}
 
-impl BuildDataServiceDiscoveryServiceDnsConfigElDnsRecordsEl {
-    pub fn build(self) -> DataServiceDiscoveryServiceDnsConfigElDnsRecordsEl {
-        DataServiceDiscoveryServiceDnsConfigElDnsRecordsEl {
+impl BuildDataServiceDiscoveryService_DnsConfig_DnsRecords {
+    pub fn build(self) -> DataServiceDiscoveryService_DnsConfig_DnsRecords {
+        DataServiceDiscoveryService_DnsConfig_DnsRecords {
             ttl: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataServiceDiscoveryServiceDnsConfigElDnsRecordsElRef {
+#[allow(dead_code)]
+pub struct DataServiceDiscoveryService_DnsConfig_DnsRecordsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataServiceDiscoveryServiceDnsConfigElDnsRecordsElRef {
+impl terrars::Ref for DataServiceDiscoveryService_DnsConfig_DnsRecordsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataServiceDiscoveryServiceDnsConfigElDnsRecordsElRef {
-        DataServiceDiscoveryServiceDnsConfigElDnsRecordsElRef {
+    ) -> DataServiceDiscoveryService_DnsConfig_DnsRecordsRef {
+        DataServiceDiscoveryService_DnsConfig_DnsRecordsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataServiceDiscoveryServiceDnsConfigElDnsRecordsElRef {
+impl DataServiceDiscoveryService_DnsConfig_DnsRecordsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -367,20 +367,20 @@ impl DataServiceDiscoveryServiceDnsConfigElDnsRecordsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataServiceDiscoveryServiceDnsConfigEl {
+pub struct DataServiceDiscoveryService_DnsConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dns_records: std::option::Option<terrars::ListField<DataServiceDiscoveryServiceDnsConfigElDnsRecordsEl>>,
+    dns_records: std::option::Option<terrars::ListField<DataServiceDiscoveryService_DnsConfig_DnsRecords>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     routing_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataServiceDiscoveryServiceDnsConfigEl {
+impl DataServiceDiscoveryService_DnsConfig {
     #[doc = "Set the field `dns_records`.\n"]
     pub fn set_dns_records(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataServiceDiscoveryServiceDnsConfigElDnsRecordsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataServiceDiscoveryService_DnsConfig_DnsRecords>>,
     ) -> Self {
         self.dns_records = std::option::Option::Some(v.into());
         self
@@ -399,8 +399,8 @@ impl DataServiceDiscoveryServiceDnsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataServiceDiscoveryServiceDnsConfigEl {
-    type O = terrars::BlockAssignable<DataServiceDiscoveryServiceDnsConfigEl>;
+impl terrars::ToListMappable for DataServiceDiscoveryService_DnsConfig {
+    type O = terrars::BlockAssignable<DataServiceDiscoveryService_DnsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -411,11 +411,11 @@ impl terrars::ToListMappable for DataServiceDiscoveryServiceDnsConfigEl {
     }
 }
 
-pub struct BuildDataServiceDiscoveryServiceDnsConfigEl {}
+pub struct BuildDataServiceDiscoveryService_DnsConfig {}
 
-impl BuildDataServiceDiscoveryServiceDnsConfigEl {
-    pub fn build(self) -> DataServiceDiscoveryServiceDnsConfigEl {
-        DataServiceDiscoveryServiceDnsConfigEl {
+impl BuildDataServiceDiscoveryService_DnsConfig {
+    pub fn build(self) -> DataServiceDiscoveryService_DnsConfig {
+        DataServiceDiscoveryService_DnsConfig {
             dns_records: core::default::Default::default(),
             namespace_id: core::default::Default::default(),
             routing_policy: core::default::Default::default(),
@@ -423,27 +423,29 @@ impl BuildDataServiceDiscoveryServiceDnsConfigEl {
     }
 }
 
-pub struct DataServiceDiscoveryServiceDnsConfigElRef {
+#[allow(dead_code)]
+pub struct DataServiceDiscoveryService_DnsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataServiceDiscoveryServiceDnsConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataServiceDiscoveryServiceDnsConfigElRef {
-        DataServiceDiscoveryServiceDnsConfigElRef {
+impl terrars::Ref for DataServiceDiscoveryService_DnsConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataServiceDiscoveryService_DnsConfigRef {
+        DataServiceDiscoveryService_DnsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataServiceDiscoveryServiceDnsConfigElRef {
+impl DataServiceDiscoveryService_DnsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `dns_records` after provisioning.\n"]
-    pub fn dns_records(&self) -> terrars::ListRef<DataServiceDiscoveryServiceDnsConfigElDnsRecordsElRef> {
+    pub fn dns_records(&self) -> terrars::ListRef<DataServiceDiscoveryService_DnsConfig_DnsRecordsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_records", self.base))
     }
 
@@ -459,7 +461,7 @@ impl DataServiceDiscoveryServiceDnsConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataServiceDiscoveryServiceHealthCheckConfigEl {
+pub struct DataServiceDiscoveryService_HealthCheckConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     failure_threshold: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -468,7 +470,7 @@ pub struct DataServiceDiscoveryServiceHealthCheckConfigEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataServiceDiscoveryServiceHealthCheckConfigEl {
+impl DataServiceDiscoveryService_HealthCheckConfig {
     #[doc = "Set the field `failure_threshold`.\n"]
     pub fn set_failure_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.failure_threshold = std::option::Option::Some(v.into());
@@ -488,8 +490,8 @@ impl DataServiceDiscoveryServiceHealthCheckConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataServiceDiscoveryServiceHealthCheckConfigEl {
-    type O = terrars::BlockAssignable<DataServiceDiscoveryServiceHealthCheckConfigEl>;
+impl terrars::ToListMappable for DataServiceDiscoveryService_HealthCheckConfig {
+    type O = terrars::BlockAssignable<DataServiceDiscoveryService_HealthCheckConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -500,11 +502,11 @@ impl terrars::ToListMappable for DataServiceDiscoveryServiceHealthCheckConfigEl 
     }
 }
 
-pub struct BuildDataServiceDiscoveryServiceHealthCheckConfigEl {}
+pub struct BuildDataServiceDiscoveryService_HealthCheckConfig {}
 
-impl BuildDataServiceDiscoveryServiceHealthCheckConfigEl {
-    pub fn build(self) -> DataServiceDiscoveryServiceHealthCheckConfigEl {
-        DataServiceDiscoveryServiceHealthCheckConfigEl {
+impl BuildDataServiceDiscoveryService_HealthCheckConfig {
+    pub fn build(self) -> DataServiceDiscoveryService_HealthCheckConfig {
+        DataServiceDiscoveryService_HealthCheckConfig {
             failure_threshold: core::default::Default::default(),
             resource_path: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -512,24 +514,26 @@ impl BuildDataServiceDiscoveryServiceHealthCheckConfigEl {
     }
 }
 
-pub struct DataServiceDiscoveryServiceHealthCheckConfigElRef {
+#[allow(dead_code)]
+pub struct DataServiceDiscoveryService_HealthCheckConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataServiceDiscoveryServiceHealthCheckConfigElRef {
+impl terrars::Ref for DataServiceDiscoveryService_HealthCheckConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataServiceDiscoveryServiceHealthCheckConfigElRef {
-        DataServiceDiscoveryServiceHealthCheckConfigElRef {
+    ) -> DataServiceDiscoveryService_HealthCheckConfigRef {
+        DataServiceDiscoveryService_HealthCheckConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataServiceDiscoveryServiceHealthCheckConfigElRef {
+impl DataServiceDiscoveryService_HealthCheckConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -551,12 +555,12 @@ impl DataServiceDiscoveryServiceHealthCheckConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataServiceDiscoveryServiceHealthCheckCustomConfigEl {
+pub struct DataServiceDiscoveryService_HealthCheckCustomConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     failure_threshold: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataServiceDiscoveryServiceHealthCheckCustomConfigEl {
+impl DataServiceDiscoveryService_HealthCheckCustomConfig {
     #[doc = "Set the field `failure_threshold`.\n"]
     pub fn set_failure_threshold(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.failure_threshold = std::option::Option::Some(v.into());
@@ -564,8 +568,8 @@ impl DataServiceDiscoveryServiceHealthCheckCustomConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataServiceDiscoveryServiceHealthCheckCustomConfigEl {
-    type O = terrars::BlockAssignable<DataServiceDiscoveryServiceHealthCheckCustomConfigEl>;
+impl terrars::ToListMappable for DataServiceDiscoveryService_HealthCheckCustomConfig {
+    type O = terrars::BlockAssignable<DataServiceDiscoveryService_HealthCheckCustomConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -576,32 +580,34 @@ impl terrars::ToListMappable for DataServiceDiscoveryServiceHealthCheckCustomCon
     }
 }
 
-pub struct BuildDataServiceDiscoveryServiceHealthCheckCustomConfigEl {}
+pub struct BuildDataServiceDiscoveryService_HealthCheckCustomConfig {}
 
-impl BuildDataServiceDiscoveryServiceHealthCheckCustomConfigEl {
-    pub fn build(self) -> DataServiceDiscoveryServiceHealthCheckCustomConfigEl {
-        DataServiceDiscoveryServiceHealthCheckCustomConfigEl { failure_threshold: core::default::Default::default() }
+impl BuildDataServiceDiscoveryService_HealthCheckCustomConfig {
+    pub fn build(self) -> DataServiceDiscoveryService_HealthCheckCustomConfig {
+        DataServiceDiscoveryService_HealthCheckCustomConfig { failure_threshold: core::default::Default::default() }
     }
 }
 
-pub struct DataServiceDiscoveryServiceHealthCheckCustomConfigElRef {
+#[allow(dead_code)]
+pub struct DataServiceDiscoveryService_HealthCheckCustomConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataServiceDiscoveryServiceHealthCheckCustomConfigElRef {
+impl terrars::Ref for DataServiceDiscoveryService_HealthCheckCustomConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataServiceDiscoveryServiceHealthCheckCustomConfigElRef {
-        DataServiceDiscoveryServiceHealthCheckCustomConfigElRef {
+    ) -> DataServiceDiscoveryService_HealthCheckCustomConfigRef {
+        DataServiceDiscoveryService_HealthCheckCustomConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataServiceDiscoveryServiceHealthCheckCustomConfigElRef {
+impl DataServiceDiscoveryService_HealthCheckCustomConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudfrontCachePolicyData {
+struct CloudfrontCachePolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,14 +34,14 @@ struct CloudfrontCachePolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameters_in_cache_key_and_forwarded_to_origin: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl>>,
+    ::Option<std::vec::Vec<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin>>,
     dynamic: CloudfrontCachePolicyDynamic,
 }
 
 struct CloudfrontCachePolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudfrontCachePolicyData>,
+    data: std::cell::RefCell<CloudfrontCachePolicyData_>,
 }
 
 #[derive(Clone)]
@@ -177,7 +179,7 @@ impl CloudfrontCachePolicy {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl>>,
+                    ::Into<terrars::BlockAssignable<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -190,6 +192,11 @@ impl CloudfrontCachePolicy {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
@@ -231,7 +238,7 @@ impl CloudfrontCachePolicy {
         "Get a reference to the value of field `parameters_in_cache_key_and_forwarded_to_origin` after provisioning.\n"]
     pub fn parameters_in_cache_key_and_forwarded_to_origin(
         &self,
-    ) -> terrars::ListRef<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElRef> {
+    ) -> terrars::ListRef<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOriginRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.parameters_in_cache_key_and_forwarded_to_origin", self.extract_ref()),
@@ -281,7 +288,7 @@ impl BuildCloudfrontCachePolicy {
         let out = CloudfrontCachePolicy(std::rc::Rc::new(CloudfrontCachePolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudfrontCachePolicyData {
+            data: std::cell::RefCell::new(CloudfrontCachePolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -325,6 +332,11 @@ impl CloudfrontCachePolicyRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
     pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
@@ -364,7 +376,7 @@ impl CloudfrontCachePolicyRef {
         "Get a reference to the value of field `parameters_in_cache_key_and_forwarded_to_origin` after provisioning.\n"]
     pub fn parameters_in_cache_key_and_forwarded_to_origin(
         &self,
-    ) -> terrars::ListRef<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElRef> {
+    ) -> terrars::ListRef<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOriginRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.parameters_in_cache_key_and_forwarded_to_origin", self.extract_ref()),
@@ -372,13 +384,20 @@ impl CloudfrontCachePolicyRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudfrontCachePolicyDynamic {
+    parameters_in_cache_key_and_forwarded_to_origin: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl {
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
@@ -389,11 +408,10 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfi
     }
 }
 
-impl terrars
-::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl {
+impl terrars::ToListMappable for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies {
     type O =
         terrars
-        ::BlockAssignable<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl>;
+        ::BlockAssignable<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -404,34 +422,36 @@ impl terrars
     }
 }
 
-pub struct BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl {}
+pub struct BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies {}
 
-impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl {
-    pub fn build(self) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl {
+impl BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies {
+    pub fn build(self) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies {
             items: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesElRef {
+#[allow(dead_code)]
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_CookiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesElRef {
+impl terrars::Ref for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_CookiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesElRef {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesElRef {
+    ) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_CookiesRef {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_CookiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesElRef {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_CookiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -443,25 +463,25 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfi
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElDynamic {
+struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfigDynamic {
     cookies: std
     ::option
     ::Option<
-        terrars::DynamicBlock<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl>,
+        terrars::DynamicBlock<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl {
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig {
     cookie_behavior: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cookies: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl>>,
-    dynamic: CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElDynamic,
+    ::Option<std::vec::Vec<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies>>,
+    dynamic: CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfigDynamic,
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig {
     #[doc = "Set the field `cookies`.\n"]
     pub fn set_cookies(
         mut self,
@@ -473,7 +493,7 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfi
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesEl,
+                            CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_Cookies,
                         >,
                     >,
     ) -> Self {
@@ -489,9 +509,8 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfi
     }
 }
 
-impl terrars::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl {
-    type O =
-        terrars::BlockAssignable<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl>;
+impl terrars::ToListMappable for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig {
+    type O = terrars::BlockAssignable<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -502,14 +521,14 @@ impl terrars::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndFor
     }
 }
 
-pub struct BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl {
+pub struct BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig {
     #[doc = ""]
     pub cookie_behavior: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl {
-    pub fn build(self) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl {
+impl BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig {
+    pub fn build(self) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig {
             cookie_behavior: self.cookie_behavior,
             cookies: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -517,24 +536,26 @@ impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookies
     }
 }
 
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElRef {
+impl terrars::Ref for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElRef {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElRef {
+    ) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfigRef {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElRef {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -547,18 +568,18 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfi
     #[doc = "Get a reference to the value of field `cookies` after provisioning.\n"]
     pub fn cookies(
         &self,
-    ) -> terrars::ListRef<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElCookiesElRef> {
+    ) -> terrars::ListRef<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig_CookiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cookies", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl {
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
@@ -569,11 +590,10 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfi
     }
 }
 
-impl terrars
-::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl {
+impl terrars::ToListMappable for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers {
     type O =
         terrars
-        ::BlockAssignable<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl>;
+        ::BlockAssignable<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -584,34 +604,36 @@ impl terrars
     }
 }
 
-pub struct BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl {}
+pub struct BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers {}
 
-impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl {
-    pub fn build(self) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl {
+impl BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers {
+    pub fn build(self) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers {
             items: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersElRef {
+#[allow(dead_code)]
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_HeadersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersElRef {
+impl terrars::Ref for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_HeadersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersElRef {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersElRef {
+    ) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_HeadersRef {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_HeadersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersElRef {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_HeadersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -623,26 +645,26 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfi
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElDynamic {
+struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfigDynamic {
     headers: std
     ::option
     ::Option<
-        terrars::DynamicBlock<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl>,
+        terrars::DynamicBlock<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl {
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     header_behavior: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     headers: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl>>,
-    dynamic: CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElDynamic,
+    ::Option<std::vec::Vec<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers>>,
+    dynamic: CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfigDynamic,
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig {
     #[doc = "Set the field `header_behavior`.\n"]
     pub fn set_header_behavior(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.header_behavior = std::option::Option::Some(v.into());
@@ -660,7 +682,7 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfi
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersEl,
+                            CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_Headers,
                         >,
                     >,
     ) -> Self {
@@ -676,9 +698,8 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfi
     }
 }
 
-impl terrars::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl {
-    type O =
-        terrars::BlockAssignable<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl>;
+impl terrars::ToListMappable for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig {
+    type O = terrars::BlockAssignable<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -689,11 +710,11 @@ impl terrars::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndFor
     }
 }
 
-pub struct BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl {}
+pub struct BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig {}
 
-impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl {
-    pub fn build(self) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl {
+impl BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig {
+    pub fn build(self) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig {
             header_behavior: core::default::Default::default(),
             headers: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -701,24 +722,26 @@ impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeaders
     }
 }
 
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElRef {
+impl terrars::Ref for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElRef {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElRef {
+    ) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfigRef {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElRef {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -731,18 +754,18 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfi
     #[doc = "Get a reference to the value of field `headers` after provisioning.\n"]
     pub fn headers(
         &self,
-    ) -> terrars::ListRef<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElHeadersElRef> {
+    ) -> terrars::ListRef<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig_HeadersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.headers", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
@@ -754,11 +777,11 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStrings
 }
 
 impl terrars
-::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {
+::ToListMappable for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings {
     type O =
         terrars
         ::BlockAssignable<
-            CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl,
+            CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -770,37 +793,39 @@ impl terrars
     }
 }
 
-pub struct BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {}
+pub struct BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings {}
 
-impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {
+impl BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings {
     pub fn build(
         self,
-    ) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl {
+    ) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings {
             items: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsElRef {
+#[allow(dead_code)]
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStringsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsElRef {
+::Ref for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStringsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsElRef {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsElRef {
+    ) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStringsRef {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStringsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsElRef {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStringsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -812,32 +837,28 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStrings
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElDynamic {
+struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfigDynamic {
     query_strings: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl,
-        >,
+        ::DynamicBlock<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl {
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig {
     query_string_behavior: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_strings: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl>,
+        std::vec::Vec<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings>,
     >,
-    dynamic: CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElDynamic,
+    dynamic: CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfigDynamic,
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig {
     #[doc = "Set the field `query_strings`.\n"]
     pub fn set_query_strings(
         mut self,
@@ -849,7 +870,7 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStrings
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsEl,
+                            CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStrings,
                         >,
                     >,
     ) -> Self {
@@ -865,10 +886,9 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStrings
     }
 }
 
-impl terrars::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl {
+impl terrars::ToListMappable for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig {
     type O =
-        terrars
-        ::BlockAssignable<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl>;
+        terrars::BlockAssignable<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -879,14 +899,14 @@ impl terrars::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndFor
     }
 }
 
-pub struct BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl {
+pub struct BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig {
     #[doc = ""]
     pub query_string_behavior: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl {
-    pub fn build(self) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl {
+impl BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig {
+    pub fn build(self) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig {
             query_string_behavior: self.query_string_behavior,
             query_strings: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -894,24 +914,26 @@ impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQuerySt
     }
 }
 
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElRef {
+impl terrars::Ref for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElRef {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElRef {
+    ) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfigRef {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElRef {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -925,28 +947,28 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStrings
     pub fn query_strings(
         &self,
     ) -> terrars
-    ::ListRef<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElQueryStringsElRef> {
+    ::ListRef<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig_QueryStringsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_strings", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElDynamic {
+struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOriginDynamic {
     cookies_config: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig>>,
     headers_config: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig>>,
     query_strings_config: std
     ::option
     ::Option<
-        terrars::DynamicBlock<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl>,
+        terrars::DynamicBlock<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_accept_encoding_brotli: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -954,19 +976,19 @@ pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cookies_config: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl>>,
+    ::Option<std::vec::Vec<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     headers_config: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl>>,
+    ::Option<std::vec::Vec<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_strings_config: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl>>,
-    dynamic: CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElDynamic,
+    ::Option<std::vec::Vec<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig>>,
+    dynamic: CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOriginDynamic,
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin {
     #[doc = "Set the field `enable_accept_encoding_brotli`.\n"]
     pub fn set_enable_accept_encoding_brotli(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_accept_encoding_brotli = std::option::Option::Some(v.into());
@@ -990,7 +1012,7 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigEl,
+                            CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfig,
                         >,
                     >,
     ) -> Self {
@@ -1016,7 +1038,7 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigEl,
+                            CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfig,
                         >,
                     >,
     ) -> Self {
@@ -1042,7 +1064,7 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigEl,
+                            CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfig,
                         >,
                     >,
     ) -> Self {
@@ -1058,8 +1080,8 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
-    type O = terrars::BlockAssignable<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl>;
+impl terrars::ToListMappable for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin {
+    type O = terrars::BlockAssignable<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1070,11 +1092,11 @@ impl terrars::ToListMappable for CloudfrontCachePolicyParametersInCacheKeyAndFor
     }
 }
 
-pub struct BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {}
+pub struct BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin {}
 
-impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
-    pub fn build(self) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
+impl BuildCloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin {
+    pub fn build(self) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin {
             enable_accept_encoding_brotli: core::default::Default::default(),
             enable_accept_encoding_gzip: core::default::Default::default(),
             cookies_config: core::default::Default::default(),
@@ -1085,24 +1107,26 @@ impl BuildCloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl {
     }
 }
 
-pub struct CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElRef {
+#[allow(dead_code)]
+pub struct CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOriginRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElRef {
+impl terrars::Ref for CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOriginRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElRef {
-        CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElRef {
+    ) -> CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOriginRef {
+        CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOriginRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElRef {
+impl CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOriginRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1120,28 +1144,21 @@ impl CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElRef {
     #[doc = "Get a reference to the value of field `cookies_config` after provisioning.\n"]
     pub fn cookies_config(
         &self,
-    ) -> terrars::ListRef<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElCookiesConfigElRef> {
+    ) -> terrars::ListRef<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_CookiesConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cookies_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `headers_config` after provisioning.\n"]
     pub fn headers_config(
         &self,
-    ) -> terrars::ListRef<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElHeadersConfigElRef> {
+    ) -> terrars::ListRef<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_HeadersConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.headers_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `query_strings_config` after provisioning.\n"]
     pub fn query_strings_config(
         &self,
-    ) -> terrars::ListRef<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginElQueryStringsConfigElRef> {
+    ) -> terrars::ListRef<CloudfrontCachePolicy_ParametersInCacheKeyAndForwardedToOrigin_QueryStringsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_strings_config", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudfrontCachePolicyDynamic {
-    parameters_in_cache_key_and_forwarded_to_origin: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudfrontCachePolicyParametersInCacheKeyAndForwardedToOriginEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Sesv2ConfigurationSetData {
+struct Sesv2ConfigurationSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,26 +24,30 @@ struct Sesv2ConfigurationSetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delivery_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSetDeliveryOptionsEl>>,
+    delivery_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSet_DeliveryOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    reputation_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSetReputationOptionsEl>>,
+    reputation_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSet_ReputationOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sending_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSetSendingOptionsEl>>,
+    sending_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSet_SendingOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    suppression_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSetSuppressionOptionsEl>>,
+    suppression_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSet_SuppressionOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tracking_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSetTrackingOptionsEl>>,
+    tracking_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSet_TrackingOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vdm_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSet_VdmOptions>>,
     dynamic: Sesv2ConfigurationSetDynamic,
 }
 
 struct Sesv2ConfigurationSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Sesv2ConfigurationSetData>,
+    data: std::cell::RefCell<Sesv2ConfigurationSetData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +153,13 @@ impl Sesv2ConfigurationSet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +181,7 @@ impl Sesv2ConfigurationSet {
     #[doc = "Set the field `delivery_options`.\n"]
     pub fn set_delivery_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSetDeliveryOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSet_DeliveryOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +197,7 @@ impl Sesv2ConfigurationSet {
     #[doc = "Set the field `reputation_options`.\n"]
     pub fn set_reputation_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSetReputationOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSet_ReputationOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,7 +213,7 @@ impl Sesv2ConfigurationSet {
     #[doc = "Set the field `sending_options`.\n"]
     pub fn set_sending_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSetSendingOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSet_SendingOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,7 +229,7 @@ impl Sesv2ConfigurationSet {
     #[doc = "Set the field `suppression_options`.\n"]
     pub fn set_suppression_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSetSuppressionOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSet_SuppressionOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -232,7 +245,7 @@ impl Sesv2ConfigurationSet {
     #[doc = "Set the field `tracking_options`.\n"]
     pub fn set_tracking_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSetTrackingOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSet_TrackingOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -240,6 +253,22 @@ impl Sesv2ConfigurationSet {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.tracking_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `vdm_options`.\n"]
+    pub fn set_vdm_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSet_VdmOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().vdm_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.vdm_options = std::option::Option::Some(d);
             },
         }
         self
@@ -260,6 +289,12 @@ impl Sesv2ConfigurationSet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -271,28 +306,33 @@ impl Sesv2ConfigurationSet {
     }
 
     #[doc = "Get a reference to the value of field `delivery_options` after provisioning.\n"]
-    pub fn delivery_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetDeliveryOptionsElRef> {
+    pub fn delivery_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_DeliveryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delivery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `reputation_options` after provisioning.\n"]
-    pub fn reputation_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetReputationOptionsElRef> {
+    pub fn reputation_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_ReputationOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reputation_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sending_options` after provisioning.\n"]
-    pub fn sending_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetSendingOptionsElRef> {
+    pub fn sending_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_SendingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sending_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `suppression_options` after provisioning.\n"]
-    pub fn suppression_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetSuppressionOptionsElRef> {
+    pub fn suppression_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_SuppressionOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.suppression_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tracking_options` after provisioning.\n"]
-    pub fn tracking_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetTrackingOptionsElRef> {
+    pub fn tracking_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_TrackingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tracking_options", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vdm_options` after provisioning.\n"]
+    pub fn vdm_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_VdmOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vdm_options", self.extract_ref()))
     }
 }
 
@@ -338,7 +378,7 @@ impl BuildSesv2ConfigurationSet {
         let out = Sesv2ConfigurationSet(std::rc::Rc::new(Sesv2ConfigurationSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Sesv2ConfigurationSetData {
+            data: std::cell::RefCell::new(Sesv2ConfigurationSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -346,6 +386,7 @@ impl BuildSesv2ConfigurationSet {
                 provisioner: core::default::Default::default(),
                 configuration_set_name: self.configuration_set_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 delivery_options: core::default::Default::default(),
@@ -353,6 +394,7 @@ impl BuildSesv2ConfigurationSet {
                 sending_options: core::default::Default::default(),
                 suppression_options: core::default::Default::default(),
                 tracking_options: core::default::Default::default(),
+                vdm_options: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -399,6 +441,12 @@ impl Sesv2ConfigurationSetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -410,40 +458,63 @@ impl Sesv2ConfigurationSetRef {
     }
 
     #[doc = "Get a reference to the value of field `delivery_options` after provisioning.\n"]
-    pub fn delivery_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetDeliveryOptionsElRef> {
+    pub fn delivery_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_DeliveryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delivery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `reputation_options` after provisioning.\n"]
-    pub fn reputation_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetReputationOptionsElRef> {
+    pub fn reputation_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_ReputationOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.reputation_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sending_options` after provisioning.\n"]
-    pub fn sending_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetSendingOptionsElRef> {
+    pub fn sending_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_SendingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sending_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `suppression_options` after provisioning.\n"]
-    pub fn suppression_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetSuppressionOptionsElRef> {
+    pub fn suppression_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_SuppressionOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.suppression_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tracking_options` after provisioning.\n"]
-    pub fn tracking_options(&self) -> terrars::ListRef<Sesv2ConfigurationSetTrackingOptionsElRef> {
+    pub fn tracking_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_TrackingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tracking_options", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vdm_options` after provisioning.\n"]
+    pub fn vdm_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_VdmOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vdm_options", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Sesv2ConfigurationSetDynamic {
+    delivery_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSet_DeliveryOptions>>,
+    reputation_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSet_ReputationOptions>>,
+    sending_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSet_SendingOptions>>,
+    suppression_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSet_SuppressionOptions>>,
+    tracking_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSet_TrackingOptions>>,
+    vdm_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSet_VdmOptions>>,
+}
+
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetDeliveryOptionsEl {
+pub struct Sesv2ConfigurationSet_DeliveryOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_delivery_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sending_pool_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tls_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Sesv2ConfigurationSetDeliveryOptionsEl {
+impl Sesv2ConfigurationSet_DeliveryOptions {
+    #[doc = "Set the field `max_delivery_seconds`.\n"]
+    pub fn set_max_delivery_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_delivery_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `sending_pool_name`.\n"]
     pub fn set_sending_pool_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.sending_pool_name = std::option::Option::Some(v.into());
@@ -457,8 +528,8 @@ impl Sesv2ConfigurationSetDeliveryOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetDeliveryOptionsEl {
-    type O = terrars::BlockAssignable<Sesv2ConfigurationSetDeliveryOptionsEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSet_DeliveryOptions {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSet_DeliveryOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -469,34 +540,42 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetDeliveryOptionsEl {
     }
 }
 
-pub struct BuildSesv2ConfigurationSetDeliveryOptionsEl {}
+pub struct BuildSesv2ConfigurationSet_DeliveryOptions {}
 
-impl BuildSesv2ConfigurationSetDeliveryOptionsEl {
-    pub fn build(self) -> Sesv2ConfigurationSetDeliveryOptionsEl {
-        Sesv2ConfigurationSetDeliveryOptionsEl {
+impl BuildSesv2ConfigurationSet_DeliveryOptions {
+    pub fn build(self) -> Sesv2ConfigurationSet_DeliveryOptions {
+        Sesv2ConfigurationSet_DeliveryOptions {
+            max_delivery_seconds: core::default::Default::default(),
             sending_pool_name: core::default::Default::default(),
             tls_policy: core::default::Default::default(),
         }
     }
 }
 
-pub struct Sesv2ConfigurationSetDeliveryOptionsElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSet_DeliveryOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetDeliveryOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSetDeliveryOptionsElRef {
-        Sesv2ConfigurationSetDeliveryOptionsElRef {
+impl terrars::Ref for Sesv2ConfigurationSet_DeliveryOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSet_DeliveryOptionsRef {
+        Sesv2ConfigurationSet_DeliveryOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetDeliveryOptionsElRef {
+impl Sesv2ConfigurationSet_DeliveryOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_delivery_seconds` after provisioning.\n"]
+    pub fn max_delivery_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_delivery_seconds", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sending_pool_name` after provisioning.\n"]
@@ -511,12 +590,12 @@ impl Sesv2ConfigurationSetDeliveryOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetReputationOptionsEl {
+pub struct Sesv2ConfigurationSet_ReputationOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     reputation_metrics_enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl Sesv2ConfigurationSetReputationOptionsEl {
+impl Sesv2ConfigurationSet_ReputationOptions {
     #[doc = "Set the field `reputation_metrics_enabled`.\n"]
     pub fn set_reputation_metrics_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.reputation_metrics_enabled = std::option::Option::Some(v.into());
@@ -524,8 +603,8 @@ impl Sesv2ConfigurationSetReputationOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetReputationOptionsEl {
-    type O = terrars::BlockAssignable<Sesv2ConfigurationSetReputationOptionsEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSet_ReputationOptions {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSet_ReputationOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -536,29 +615,31 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetReputationOptionsEl {
     }
 }
 
-pub struct BuildSesv2ConfigurationSetReputationOptionsEl {}
+pub struct BuildSesv2ConfigurationSet_ReputationOptions {}
 
-impl BuildSesv2ConfigurationSetReputationOptionsEl {
-    pub fn build(self) -> Sesv2ConfigurationSetReputationOptionsEl {
-        Sesv2ConfigurationSetReputationOptionsEl { reputation_metrics_enabled: core::default::Default::default() }
+impl BuildSesv2ConfigurationSet_ReputationOptions {
+    pub fn build(self) -> Sesv2ConfigurationSet_ReputationOptions {
+        Sesv2ConfigurationSet_ReputationOptions { reputation_metrics_enabled: core::default::Default::default() }
     }
 }
 
-pub struct Sesv2ConfigurationSetReputationOptionsElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSet_ReputationOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetReputationOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSetReputationOptionsElRef {
-        Sesv2ConfigurationSetReputationOptionsElRef {
+impl terrars::Ref for Sesv2ConfigurationSet_ReputationOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSet_ReputationOptionsRef {
+        Sesv2ConfigurationSet_ReputationOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetReputationOptionsElRef {
+impl Sesv2ConfigurationSet_ReputationOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -575,12 +656,12 @@ impl Sesv2ConfigurationSetReputationOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetSendingOptionsEl {
+pub struct Sesv2ConfigurationSet_SendingOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sending_enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl Sesv2ConfigurationSetSendingOptionsEl {
+impl Sesv2ConfigurationSet_SendingOptions {
     #[doc = "Set the field `sending_enabled`.\n"]
     pub fn set_sending_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.sending_enabled = std::option::Option::Some(v.into());
@@ -588,8 +669,8 @@ impl Sesv2ConfigurationSetSendingOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetSendingOptionsEl {
-    type O = terrars::BlockAssignable<Sesv2ConfigurationSetSendingOptionsEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSet_SendingOptions {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSet_SendingOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -600,29 +681,31 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetSendingOptionsEl {
     }
 }
 
-pub struct BuildSesv2ConfigurationSetSendingOptionsEl {}
+pub struct BuildSesv2ConfigurationSet_SendingOptions {}
 
-impl BuildSesv2ConfigurationSetSendingOptionsEl {
-    pub fn build(self) -> Sesv2ConfigurationSetSendingOptionsEl {
-        Sesv2ConfigurationSetSendingOptionsEl { sending_enabled: core::default::Default::default() }
+impl BuildSesv2ConfigurationSet_SendingOptions {
+    pub fn build(self) -> Sesv2ConfigurationSet_SendingOptions {
+        Sesv2ConfigurationSet_SendingOptions { sending_enabled: core::default::Default::default() }
     }
 }
 
-pub struct Sesv2ConfigurationSetSendingOptionsElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSet_SendingOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetSendingOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSetSendingOptionsElRef {
-        Sesv2ConfigurationSetSendingOptionsElRef {
+impl terrars::Ref for Sesv2ConfigurationSet_SendingOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSet_SendingOptionsRef {
+        Sesv2ConfigurationSet_SendingOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetSendingOptionsElRef {
+impl Sesv2ConfigurationSet_SendingOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -634,12 +717,12 @@ impl Sesv2ConfigurationSetSendingOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetSuppressionOptionsEl {
+pub struct Sesv2ConfigurationSet_SuppressionOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     suppressed_reasons: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl Sesv2ConfigurationSetSuppressionOptionsEl {
+impl Sesv2ConfigurationSet_SuppressionOptions {
     #[doc = "Set the field `suppressed_reasons`.\n"]
     pub fn set_suppressed_reasons(
         mut self,
@@ -650,8 +733,8 @@ impl Sesv2ConfigurationSetSuppressionOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetSuppressionOptionsEl {
-    type O = terrars::BlockAssignable<Sesv2ConfigurationSetSuppressionOptionsEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSet_SuppressionOptions {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSet_SuppressionOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -662,29 +745,31 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetSuppressionOptionsEl {
     }
 }
 
-pub struct BuildSesv2ConfigurationSetSuppressionOptionsEl {}
+pub struct BuildSesv2ConfigurationSet_SuppressionOptions {}
 
-impl BuildSesv2ConfigurationSetSuppressionOptionsEl {
-    pub fn build(self) -> Sesv2ConfigurationSetSuppressionOptionsEl {
-        Sesv2ConfigurationSetSuppressionOptionsEl { suppressed_reasons: core::default::Default::default() }
+impl BuildSesv2ConfigurationSet_SuppressionOptions {
+    pub fn build(self) -> Sesv2ConfigurationSet_SuppressionOptions {
+        Sesv2ConfigurationSet_SuppressionOptions { suppressed_reasons: core::default::Default::default() }
     }
 }
 
-pub struct Sesv2ConfigurationSetSuppressionOptionsElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSet_SuppressionOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetSuppressionOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSetSuppressionOptionsElRef {
-        Sesv2ConfigurationSetSuppressionOptionsElRef {
+impl terrars::Ref for Sesv2ConfigurationSet_SuppressionOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSet_SuppressionOptionsRef {
+        Sesv2ConfigurationSet_SuppressionOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetSuppressionOptionsElRef {
+impl Sesv2ConfigurationSet_SuppressionOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -696,14 +781,22 @@ impl Sesv2ConfigurationSetSuppressionOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct Sesv2ConfigurationSetTrackingOptionsEl {
+pub struct Sesv2ConfigurationSet_TrackingOptions {
     custom_redirect_domain: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    https_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Sesv2ConfigurationSetTrackingOptionsEl { }
+impl Sesv2ConfigurationSet_TrackingOptions {
+    #[doc = "Set the field `https_policy`.\n"]
+    pub fn set_https_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.https_policy = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for Sesv2ConfigurationSetTrackingOptionsEl {
-    type O = terrars::BlockAssignable<Sesv2ConfigurationSetTrackingOptionsEl>;
+impl terrars::ToListMappable for Sesv2ConfigurationSet_TrackingOptions {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSet_TrackingOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -714,32 +807,37 @@ impl terrars::ToListMappable for Sesv2ConfigurationSetTrackingOptionsEl {
     }
 }
 
-pub struct BuildSesv2ConfigurationSetTrackingOptionsEl {
+pub struct BuildSesv2ConfigurationSet_TrackingOptions {
     #[doc = ""]
     pub custom_redirect_domain: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesv2ConfigurationSetTrackingOptionsEl {
-    pub fn build(self) -> Sesv2ConfigurationSetTrackingOptionsEl {
-        Sesv2ConfigurationSetTrackingOptionsEl { custom_redirect_domain: self.custom_redirect_domain }
+impl BuildSesv2ConfigurationSet_TrackingOptions {
+    pub fn build(self) -> Sesv2ConfigurationSet_TrackingOptions {
+        Sesv2ConfigurationSet_TrackingOptions {
+            custom_redirect_domain: self.custom_redirect_domain,
+            https_policy: core::default::Default::default(),
+        }
     }
 }
 
-pub struct Sesv2ConfigurationSetTrackingOptionsElRef {
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSet_TrackingOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Sesv2ConfigurationSetTrackingOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSetTrackingOptionsElRef {
-        Sesv2ConfigurationSetTrackingOptionsElRef {
+impl terrars::Ref for Sesv2ConfigurationSet_TrackingOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSet_TrackingOptionsRef {
+        Sesv2ConfigurationSet_TrackingOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Sesv2ConfigurationSetTrackingOptionsElRef {
+impl Sesv2ConfigurationSet_TrackingOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -748,13 +846,250 @@ impl Sesv2ConfigurationSetTrackingOptionsElRef {
     pub fn custom_redirect_domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_redirect_domain", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `https_policy` after provisioning.\n"]
+    pub fn https_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.https_policy", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Sesv2ConfigurationSet_VdmOptions_DashboardOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    engagement_metrics: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Sesv2ConfigurationSet_VdmOptions_DashboardOptions {
+    #[doc = "Set the field `engagement_metrics`.\n"]
+    pub fn set_engagement_metrics(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.engagement_metrics = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Sesv2ConfigurationSet_VdmOptions_DashboardOptions {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSet_VdmOptions_DashboardOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSesv2ConfigurationSet_VdmOptions_DashboardOptions {}
+
+impl BuildSesv2ConfigurationSet_VdmOptions_DashboardOptions {
+    pub fn build(self) -> Sesv2ConfigurationSet_VdmOptions_DashboardOptions {
+        Sesv2ConfigurationSet_VdmOptions_DashboardOptions { engagement_metrics: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSet_VdmOptions_DashboardOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Sesv2ConfigurationSet_VdmOptions_DashboardOptionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Sesv2ConfigurationSet_VdmOptions_DashboardOptionsRef {
+        Sesv2ConfigurationSet_VdmOptions_DashboardOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Sesv2ConfigurationSet_VdmOptions_DashboardOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `engagement_metrics` after provisioning.\n"]
+    pub fn engagement_metrics(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engagement_metrics", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Sesv2ConfigurationSet_VdmOptions_GuardianOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    optimized_shared_delivery: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Sesv2ConfigurationSet_VdmOptions_GuardianOptions {
+    #[doc = "Set the field `optimized_shared_delivery`.\n"]
+    pub fn set_optimized_shared_delivery(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.optimized_shared_delivery = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Sesv2ConfigurationSet_VdmOptions_GuardianOptions {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSet_VdmOptions_GuardianOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSesv2ConfigurationSet_VdmOptions_GuardianOptions {}
+
+impl BuildSesv2ConfigurationSet_VdmOptions_GuardianOptions {
+    pub fn build(self) -> Sesv2ConfigurationSet_VdmOptions_GuardianOptions {
+        Sesv2ConfigurationSet_VdmOptions_GuardianOptions {
+            optimized_shared_delivery: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSet_VdmOptions_GuardianOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Sesv2ConfigurationSet_VdmOptions_GuardianOptionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Sesv2ConfigurationSet_VdmOptions_GuardianOptionsRef {
+        Sesv2ConfigurationSet_VdmOptions_GuardianOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Sesv2ConfigurationSet_VdmOptions_GuardianOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `optimized_shared_delivery` after provisioning.\n"]
+    pub fn optimized_shared_delivery(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.optimized_shared_delivery", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct Sesv2ConfigurationSetDynamic {
-    delivery_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSetDeliveryOptionsEl>>,
-    reputation_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSetReputationOptionsEl>>,
-    sending_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSetSendingOptionsEl>>,
-    suppression_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSetSuppressionOptionsEl>>,
-    tracking_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSetTrackingOptionsEl>>,
+struct Sesv2ConfigurationSet_VdmOptionsDynamic {
+    dashboard_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSet_VdmOptions_DashboardOptions>>,
+    guardian_options: std::option::Option<terrars::DynamicBlock<Sesv2ConfigurationSet_VdmOptions_GuardianOptions>>,
+}
+
+#[derive(Serialize)]
+pub struct Sesv2ConfigurationSet_VdmOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dashboard_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSet_VdmOptions_DashboardOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    guardian_options: std::option::Option<std::vec::Vec<Sesv2ConfigurationSet_VdmOptions_GuardianOptions>>,
+    dynamic: Sesv2ConfigurationSet_VdmOptionsDynamic,
+}
+
+impl Sesv2ConfigurationSet_VdmOptions {
+    #[doc = "Set the field `dashboard_options`.\n"]
+    pub fn set_dashboard_options(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSet_VdmOptions_DashboardOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.dashboard_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.dashboard_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `guardian_options`.\n"]
+    pub fn set_guardian_options(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Sesv2ConfigurationSet_VdmOptions_GuardianOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.guardian_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.guardian_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for Sesv2ConfigurationSet_VdmOptions {
+    type O = terrars::BlockAssignable<Sesv2ConfigurationSet_VdmOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSesv2ConfigurationSet_VdmOptions {}
+
+impl BuildSesv2ConfigurationSet_VdmOptions {
+    pub fn build(self) -> Sesv2ConfigurationSet_VdmOptions {
+        Sesv2ConfigurationSet_VdmOptions {
+            dashboard_options: core::default::Default::default(),
+            guardian_options: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Sesv2ConfigurationSet_VdmOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Sesv2ConfigurationSet_VdmOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2ConfigurationSet_VdmOptionsRef {
+        Sesv2ConfigurationSet_VdmOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Sesv2ConfigurationSet_VdmOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `dashboard_options` after provisioning.\n"]
+    pub fn dashboard_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_VdmOptions_DashboardOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.dashboard_options", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `guardian_options` after provisioning.\n"]
+    pub fn guardian_options(&self) -> terrars::ListRef<Sesv2ConfigurationSet_VdmOptions_GuardianOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.guardian_options", self.base))
+    }
 }

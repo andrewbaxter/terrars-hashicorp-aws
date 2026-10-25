@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataImagebuilderComponentsData {
+struct DataImagebuilderComponentsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,14 +23,16 @@ struct DataImagebuilderComponentsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     owner: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataImagebuilderComponentsFilterEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<DataImagebuilderComponents_Filter>>,
     dynamic: DataImagebuilderComponentsDynamic,
 }
 
 struct DataImagebuilderComponents_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataImagebuilderComponentsData>,
+    data: std::cell::RefCell<DataImagebuilderComponentsData_>,
 }
 
 #[derive(Clone)]
@@ -85,10 +89,17 @@ impl DataImagebuilderComponents {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataImagebuilderComponentsFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataImagebuilderComponents_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -119,6 +130,12 @@ impl DataImagebuilderComponents {
     #[doc = "Get a reference to the value of field `owner` after provisioning.\n"]
     pub fn owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -162,13 +179,14 @@ impl BuildDataImagebuilderComponents {
         let out = DataImagebuilderComponents(std::rc::Rc::new(DataImagebuilderComponents_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataImagebuilderComponentsData {
+            data: std::cell::RefCell::new(DataImagebuilderComponentsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 owner: core::default::Default::default(),
+                region: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -220,18 +238,29 @@ impl DataImagebuilderComponentsRef {
     pub fn owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataImagebuilderComponentsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataImagebuilderComponents_Filter>>,
 }
 
 #[derive(Serialize)]
-pub struct DataImagebuilderComponentsFilterEl {
+pub struct DataImagebuilderComponents_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataImagebuilderComponentsFilterEl { }
+impl DataImagebuilderComponents_Filter { }
 
-impl terrars::ToListMappable for DataImagebuilderComponentsFilterEl {
-    type O = terrars::BlockAssignable<DataImagebuilderComponentsFilterEl>;
+impl terrars::ToListMappable for DataImagebuilderComponents_Filter {
+    type O = terrars::BlockAssignable<DataImagebuilderComponents_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -242,37 +271,39 @@ impl terrars::ToListMappable for DataImagebuilderComponentsFilterEl {
     }
 }
 
-pub struct BuildDataImagebuilderComponentsFilterEl {
+pub struct BuildDataImagebuilderComponents_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataImagebuilderComponentsFilterEl {
-    pub fn build(self) -> DataImagebuilderComponentsFilterEl {
-        DataImagebuilderComponentsFilterEl {
+impl BuildDataImagebuilderComponents_Filter {
+    pub fn build(self) -> DataImagebuilderComponents_Filter {
+        DataImagebuilderComponents_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataImagebuilderComponentsFilterElRef {
+#[allow(dead_code)]
+pub struct DataImagebuilderComponents_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagebuilderComponentsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImagebuilderComponentsFilterElRef {
-        DataImagebuilderComponentsFilterElRef {
+impl terrars::Ref for DataImagebuilderComponents_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImagebuilderComponents_FilterRef {
+        DataImagebuilderComponents_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagebuilderComponentsFilterElRef {
+impl DataImagebuilderComponents_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -286,9 +317,4 @@ impl DataImagebuilderComponentsFilterElRef {
     pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataImagebuilderComponentsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataImagebuilderComponentsFilterEl>>,
 }

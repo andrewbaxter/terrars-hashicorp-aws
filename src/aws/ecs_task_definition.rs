@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EcsTaskDefinitionData {
+struct EcsTaskDefinitionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct EcsTaskDefinitionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cpu: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_fault_injection: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     execution_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     family: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,6 +39,8 @@ struct EcsTaskDefinitionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pid_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     requires_compatibilities: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skip_destroy: std::option::Option<terrars::PrimField<bool>>,
@@ -45,24 +51,24 @@ struct EcsTaskDefinitionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     task_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ephemeral_storage: std::option::Option<std::vec::Vec<EcsTaskDefinitionEphemeralStorageEl>>,
+    track_latest: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    inference_accelerator: std::option::Option<std::vec::Vec<EcsTaskDefinitionInferenceAcceleratorEl>>,
+    ephemeral_storage: std::option::Option<std::vec::Vec<EcsTaskDefinition_EphemeralStorage>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    placement_constraints: std::option::Option<std::vec::Vec<EcsTaskDefinitionPlacementConstraintsEl>>,
+    placement_constraints: std::option::Option<std::vec::Vec<EcsTaskDefinition_PlacementConstraints>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    proxy_configuration: std::option::Option<std::vec::Vec<EcsTaskDefinitionProxyConfigurationEl>>,
+    proxy_configuration: std::option::Option<std::vec::Vec<EcsTaskDefinition_ProxyConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    runtime_platform: std::option::Option<std::vec::Vec<EcsTaskDefinitionRuntimePlatformEl>>,
+    runtime_platform: std::option::Option<std::vec::Vec<EcsTaskDefinition_RuntimePlatform>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    volume: std::option::Option<std::vec::Vec<EcsTaskDefinitionVolumeEl>>,
+    volume: std::option::Option<std::vec::Vec<EcsTaskDefinition_Volume>>,
     dynamic: EcsTaskDefinitionDynamic,
 }
 
 struct EcsTaskDefinition_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EcsTaskDefinitionData>,
+    data: std::cell::RefCell<EcsTaskDefinitionData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +174,12 @@ impl EcsTaskDefinition {
         self
     }
 
+    #[doc = "Set the field `enable_fault_injection`.\n"]
+    pub fn set_enable_fault_injection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_fault_injection = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `execution_role_arn`.\n"]
     pub fn set_execution_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().execution_role_arn = std::option::Option::Some(v.into());
@@ -201,6 +213,13 @@ impl EcsTaskDefinition {
     #[doc = "Set the field `pid_mode`.\n"]
     pub fn set_pid_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().pid_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -243,10 +262,16 @@ impl EcsTaskDefinition {
         self
     }
 
+    #[doc = "Set the field `track_latest`.\n"]
+    pub fn set_track_latest(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().track_latest = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `ephemeral_storage`.\n"]
     pub fn set_ephemeral_storage(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinitionEphemeralStorageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinition_EphemeralStorage>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -259,26 +284,10 @@ impl EcsTaskDefinition {
         self
     }
 
-    #[doc = "Set the field `inference_accelerator`.\n"]
-    pub fn set_inference_accelerator(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinitionInferenceAcceleratorEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().inference_accelerator = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.inference_accelerator = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
     #[doc = "Set the field `placement_constraints`.\n"]
     pub fn set_placement_constraints(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinitionPlacementConstraintsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinition_PlacementConstraints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -294,7 +303,7 @@ impl EcsTaskDefinition {
     #[doc = "Set the field `proxy_configuration`.\n"]
     pub fn set_proxy_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinitionProxyConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinition_ProxyConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -310,7 +319,7 @@ impl EcsTaskDefinition {
     #[doc = "Set the field `runtime_platform`.\n"]
     pub fn set_runtime_platform(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinitionRuntimePlatformEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinition_RuntimePlatform>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -324,7 +333,7 @@ impl EcsTaskDefinition {
     }
 
     #[doc = "Set the field `volume`.\n"]
-    pub fn set_volume(self, v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinitionVolumeEl>>) -> Self {
+    pub fn set_volume(self, v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinition_Volume>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().volume = std::option::Option::Some(v);
@@ -341,6 +350,11 @@ impl EcsTaskDefinition {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `arn_without_revision` after provisioning.\n"]
+    pub fn arn_without_revision(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn_without_revision", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `container_definitions` after provisioning.\n"]
     pub fn container_definitions(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.container_definitions", self.extract_ref()))
@@ -349,6 +363,11 @@ impl EcsTaskDefinition {
     #[doc = "Get a reference to the value of field `cpu` after provisioning.\n"]
     pub fn cpu(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_fault_injection` after provisioning.\n"]
+    pub fn enable_fault_injection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_fault_injection", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `execution_role_arn` after provisioning.\n"]
@@ -386,6 +405,12 @@ impl EcsTaskDefinition {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pid_mode", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `requires_compatibilities` after provisioning.\n"]
     pub fn requires_compatibilities(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.requires_compatibilities", self.extract_ref()))
@@ -416,18 +441,23 @@ impl EcsTaskDefinition {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.task_role_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `track_latest` after provisioning.\n"]
+    pub fn track_latest(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.track_latest", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ephemeral_storage` after provisioning.\n"]
-    pub fn ephemeral_storage(&self) -> terrars::ListRef<EcsTaskDefinitionEphemeralStorageElRef> {
+    pub fn ephemeral_storage(&self) -> terrars::ListRef<EcsTaskDefinition_EphemeralStorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ephemeral_storage", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `proxy_configuration` after provisioning.\n"]
-    pub fn proxy_configuration(&self) -> terrars::ListRef<EcsTaskDefinitionProxyConfigurationElRef> {
+    pub fn proxy_configuration(&self) -> terrars::ListRef<EcsTaskDefinition_ProxyConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `runtime_platform` after provisioning.\n"]
-    pub fn runtime_platform(&self) -> terrars::ListRef<EcsTaskDefinitionRuntimePlatformElRef> {
+    pub fn runtime_platform(&self) -> terrars::ListRef<EcsTaskDefinition_RuntimePlatformRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.runtime_platform", self.extract_ref()))
     }
 }
@@ -476,7 +506,7 @@ impl BuildEcsTaskDefinition {
         let out = EcsTaskDefinition(std::rc::Rc::new(EcsTaskDefinition_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EcsTaskDefinitionData {
+            data: std::cell::RefCell::new(EcsTaskDefinitionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -484,6 +514,7 @@ impl BuildEcsTaskDefinition {
                 provisioner: core::default::Default::default(),
                 container_definitions: self.container_definitions,
                 cpu: core::default::Default::default(),
+                enable_fault_injection: core::default::Default::default(),
                 execution_role_arn: core::default::Default::default(),
                 family: self.family,
                 id: core::default::Default::default(),
@@ -491,13 +522,14 @@ impl BuildEcsTaskDefinition {
                 memory: core::default::Default::default(),
                 network_mode: core::default::Default::default(),
                 pid_mode: core::default::Default::default(),
+                region: core::default::Default::default(),
                 requires_compatibilities: core::default::Default::default(),
                 skip_destroy: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 task_role_arn: core::default::Default::default(),
+                track_latest: core::default::Default::default(),
                 ephemeral_storage: core::default::Default::default(),
-                inference_accelerator: core::default::Default::default(),
                 placement_constraints: core::default::Default::default(),
                 proxy_configuration: core::default::Default::default(),
                 runtime_platform: core::default::Default::default(),
@@ -538,6 +570,11 @@ impl EcsTaskDefinitionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `arn_without_revision` after provisioning.\n"]
+    pub fn arn_without_revision(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn_without_revision", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `container_definitions` after provisioning.\n"]
     pub fn container_definitions(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.container_definitions", self.extract_ref()))
@@ -546,6 +583,11 @@ impl EcsTaskDefinitionRef {
     #[doc = "Get a reference to the value of field `cpu` after provisioning.\n"]
     pub fn cpu(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cpu", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_fault_injection` after provisioning.\n"]
+    pub fn enable_fault_injection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_fault_injection", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `execution_role_arn` after provisioning.\n"]
@@ -583,6 +625,12 @@ impl EcsTaskDefinitionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pid_mode", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `requires_compatibilities` after provisioning.\n"]
     pub fn requires_compatibilities(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.requires_compatibilities", self.extract_ref()))
@@ -613,31 +661,45 @@ impl EcsTaskDefinitionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.task_role_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `track_latest` after provisioning.\n"]
+    pub fn track_latest(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.track_latest", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ephemeral_storage` after provisioning.\n"]
-    pub fn ephemeral_storage(&self) -> terrars::ListRef<EcsTaskDefinitionEphemeralStorageElRef> {
+    pub fn ephemeral_storage(&self) -> terrars::ListRef<EcsTaskDefinition_EphemeralStorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ephemeral_storage", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `proxy_configuration` after provisioning.\n"]
-    pub fn proxy_configuration(&self) -> terrars::ListRef<EcsTaskDefinitionProxyConfigurationElRef> {
+    pub fn proxy_configuration(&self) -> terrars::ListRef<EcsTaskDefinition_ProxyConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.proxy_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `runtime_platform` after provisioning.\n"]
-    pub fn runtime_platform(&self) -> terrars::ListRef<EcsTaskDefinitionRuntimePlatformElRef> {
+    pub fn runtime_platform(&self) -> terrars::ListRef<EcsTaskDefinition_RuntimePlatformRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.runtime_platform", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EcsTaskDefinitionDynamic {
+    ephemeral_storage: std::option::Option<terrars::DynamicBlock<EcsTaskDefinition_EphemeralStorage>>,
+    placement_constraints: std::option::Option<terrars::DynamicBlock<EcsTaskDefinition_PlacementConstraints>>,
+    proxy_configuration: std::option::Option<terrars::DynamicBlock<EcsTaskDefinition_ProxyConfiguration>>,
+    runtime_platform: std::option::Option<terrars::DynamicBlock<EcsTaskDefinition_RuntimePlatform>>,
+    volume: std::option::Option<terrars::DynamicBlock<EcsTaskDefinition_Volume>>,
+}
+
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionEphemeralStorageEl {
+pub struct EcsTaskDefinition_EphemeralStorage {
     size_in_gib: terrars::PrimField<f64>,
 }
 
-impl EcsTaskDefinitionEphemeralStorageEl { }
+impl EcsTaskDefinition_EphemeralStorage { }
 
-impl terrars::ToListMappable for EcsTaskDefinitionEphemeralStorageEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionEphemeralStorageEl>;
+impl terrars::ToListMappable for EcsTaskDefinition_EphemeralStorage {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_EphemeralStorage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -648,32 +710,34 @@ impl terrars::ToListMappable for EcsTaskDefinitionEphemeralStorageEl {
     }
 }
 
-pub struct BuildEcsTaskDefinitionEphemeralStorageEl {
+pub struct BuildEcsTaskDefinition_EphemeralStorage {
     #[doc = ""]
     pub size_in_gib: terrars::PrimField<f64>,
 }
 
-impl BuildEcsTaskDefinitionEphemeralStorageEl {
-    pub fn build(self) -> EcsTaskDefinitionEphemeralStorageEl {
-        EcsTaskDefinitionEphemeralStorageEl { size_in_gib: self.size_in_gib }
+impl BuildEcsTaskDefinition_EphemeralStorage {
+    pub fn build(self) -> EcsTaskDefinition_EphemeralStorage {
+        EcsTaskDefinition_EphemeralStorage { size_in_gib: self.size_in_gib }
     }
 }
 
-pub struct EcsTaskDefinitionEphemeralStorageElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_EphemeralStorageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionEphemeralStorageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinitionEphemeralStorageElRef {
-        EcsTaskDefinitionEphemeralStorageElRef {
+impl terrars::Ref for EcsTaskDefinition_EphemeralStorageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinition_EphemeralStorageRef {
+        EcsTaskDefinition_EphemeralStorageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionEphemeralStorageElRef {
+impl EcsTaskDefinition_EphemeralStorageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -685,80 +749,14 @@ impl EcsTaskDefinitionEphemeralStorageElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionInferenceAcceleratorEl {
-    device_name: terrars::PrimField<std::string::String>,
-    device_type: terrars::PrimField<std::string::String>,
-}
-
-impl EcsTaskDefinitionInferenceAcceleratorEl { }
-
-impl terrars::ToListMappable for EcsTaskDefinitionInferenceAcceleratorEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionInferenceAcceleratorEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildEcsTaskDefinitionInferenceAcceleratorEl {
-    #[doc = ""]
-    pub device_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub device_type: terrars::PrimField<std::string::String>,
-}
-
-impl BuildEcsTaskDefinitionInferenceAcceleratorEl {
-    pub fn build(self) -> EcsTaskDefinitionInferenceAcceleratorEl {
-        EcsTaskDefinitionInferenceAcceleratorEl {
-            device_name: self.device_name,
-            device_type: self.device_type,
-        }
-    }
-}
-
-pub struct EcsTaskDefinitionInferenceAcceleratorElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for EcsTaskDefinitionInferenceAcceleratorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinitionInferenceAcceleratorElRef {
-        EcsTaskDefinitionInferenceAcceleratorElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl EcsTaskDefinitionInferenceAcceleratorElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `device_name` after provisioning.\n"]
-    pub fn device_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.device_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `device_type` after provisioning.\n"]
-    pub fn device_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.device_type", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct EcsTaskDefinitionPlacementConstraintsEl {
+pub struct EcsTaskDefinition_PlacementConstraints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expression: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl EcsTaskDefinitionPlacementConstraintsEl {
+impl EcsTaskDefinition_PlacementConstraints {
     #[doc = "Set the field `expression`.\n"]
     pub fn set_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.expression = std::option::Option::Some(v.into());
@@ -766,8 +764,8 @@ impl EcsTaskDefinitionPlacementConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskDefinitionPlacementConstraintsEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionPlacementConstraintsEl>;
+impl terrars::ToListMappable for EcsTaskDefinition_PlacementConstraints {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_PlacementConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -778,35 +776,37 @@ impl terrars::ToListMappable for EcsTaskDefinitionPlacementConstraintsEl {
     }
 }
 
-pub struct BuildEcsTaskDefinitionPlacementConstraintsEl {
+pub struct BuildEcsTaskDefinition_PlacementConstraints {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcsTaskDefinitionPlacementConstraintsEl {
-    pub fn build(self) -> EcsTaskDefinitionPlacementConstraintsEl {
-        EcsTaskDefinitionPlacementConstraintsEl {
+impl BuildEcsTaskDefinition_PlacementConstraints {
+    pub fn build(self) -> EcsTaskDefinition_PlacementConstraints {
+        EcsTaskDefinition_PlacementConstraints {
             expression: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct EcsTaskDefinitionPlacementConstraintsElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_PlacementConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionPlacementConstraintsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinitionPlacementConstraintsElRef {
-        EcsTaskDefinitionPlacementConstraintsElRef {
+impl terrars::Ref for EcsTaskDefinition_PlacementConstraintsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinition_PlacementConstraintsRef {
+        EcsTaskDefinition_PlacementConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionPlacementConstraintsElRef {
+impl EcsTaskDefinition_PlacementConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -823,7 +823,7 @@ impl EcsTaskDefinitionPlacementConstraintsElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionProxyConfigurationEl {
+pub struct EcsTaskDefinition_ProxyConfiguration {
     container_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -831,7 +831,7 @@ pub struct EcsTaskDefinitionProxyConfigurationEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EcsTaskDefinitionProxyConfigurationEl {
+impl EcsTaskDefinition_ProxyConfiguration {
     #[doc = "Set the field `properties`.\n"]
     pub fn set_properties(
         mut self,
@@ -848,8 +848,8 @@ impl EcsTaskDefinitionProxyConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskDefinitionProxyConfigurationEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionProxyConfigurationEl>;
+impl terrars::ToListMappable for EcsTaskDefinition_ProxyConfiguration {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_ProxyConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -860,14 +860,14 @@ impl terrars::ToListMappable for EcsTaskDefinitionProxyConfigurationEl {
     }
 }
 
-pub struct BuildEcsTaskDefinitionProxyConfigurationEl {
+pub struct BuildEcsTaskDefinition_ProxyConfiguration {
     #[doc = ""]
     pub container_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcsTaskDefinitionProxyConfigurationEl {
-    pub fn build(self) -> EcsTaskDefinitionProxyConfigurationEl {
-        EcsTaskDefinitionProxyConfigurationEl {
+impl BuildEcsTaskDefinition_ProxyConfiguration {
+    pub fn build(self) -> EcsTaskDefinition_ProxyConfiguration {
+        EcsTaskDefinition_ProxyConfiguration {
             container_name: self.container_name,
             properties: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -875,21 +875,23 @@ impl BuildEcsTaskDefinitionProxyConfigurationEl {
     }
 }
 
-pub struct EcsTaskDefinitionProxyConfigurationElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_ProxyConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionProxyConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinitionProxyConfigurationElRef {
-        EcsTaskDefinitionProxyConfigurationElRef {
+impl terrars::Ref for EcsTaskDefinition_ProxyConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinition_ProxyConfigurationRef {
+        EcsTaskDefinition_ProxyConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionProxyConfigurationElRef {
+impl EcsTaskDefinition_ProxyConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -911,14 +913,14 @@ impl EcsTaskDefinitionProxyConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionRuntimePlatformEl {
+pub struct EcsTaskDefinition_RuntimePlatform {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cpu_architecture: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     operating_system_family: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EcsTaskDefinitionRuntimePlatformEl {
+impl EcsTaskDefinition_RuntimePlatform {
     #[doc = "Set the field `cpu_architecture`.\n"]
     pub fn set_cpu_architecture(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.cpu_architecture = std::option::Option::Some(v.into());
@@ -935,8 +937,8 @@ impl EcsTaskDefinitionRuntimePlatformEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskDefinitionRuntimePlatformEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionRuntimePlatformEl>;
+impl terrars::ToListMappable for EcsTaskDefinition_RuntimePlatform {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_RuntimePlatform>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -947,32 +949,34 @@ impl terrars::ToListMappable for EcsTaskDefinitionRuntimePlatformEl {
     }
 }
 
-pub struct BuildEcsTaskDefinitionRuntimePlatformEl {}
+pub struct BuildEcsTaskDefinition_RuntimePlatform {}
 
-impl BuildEcsTaskDefinitionRuntimePlatformEl {
-    pub fn build(self) -> EcsTaskDefinitionRuntimePlatformEl {
-        EcsTaskDefinitionRuntimePlatformEl {
+impl BuildEcsTaskDefinition_RuntimePlatform {
+    pub fn build(self) -> EcsTaskDefinition_RuntimePlatform {
+        EcsTaskDefinition_RuntimePlatform {
             cpu_architecture: core::default::Default::default(),
             operating_system_family: core::default::Default::default(),
         }
     }
 }
 
-pub struct EcsTaskDefinitionRuntimePlatformElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_RuntimePlatformRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionRuntimePlatformElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinitionRuntimePlatformElRef {
-        EcsTaskDefinitionRuntimePlatformElRef {
+impl terrars::Ref for EcsTaskDefinition_RuntimePlatformRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinition_RuntimePlatformRef {
+        EcsTaskDefinition_RuntimePlatformRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionRuntimePlatformElRef {
+impl EcsTaskDefinition_RuntimePlatformRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -989,7 +993,7 @@ impl EcsTaskDefinitionRuntimePlatformElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {
+pub struct EcsTaskDefinition_Volume_DockerVolumeConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     autoprovision: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1002,7 +1006,7 @@ pub struct EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {
     scope: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {
+impl EcsTaskDefinition_Volume_DockerVolumeConfiguration {
     #[doc = "Set the field `autoprovision`.\n"]
     pub fn set_autoprovision(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.autoprovision = std::option::Option::Some(v.into());
@@ -1040,8 +1044,8 @@ impl EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl>;
+impl terrars::ToListMappable for EcsTaskDefinition_Volume_DockerVolumeConfiguration {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_Volume_DockerVolumeConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1052,11 +1056,11 @@ impl terrars::ToListMappable for EcsTaskDefinitionVolumeElDockerVolumeConfigurat
     }
 }
 
-pub struct BuildEcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {}
+pub struct BuildEcsTaskDefinition_Volume_DockerVolumeConfiguration {}
 
-impl BuildEcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {
-    pub fn build(self) -> EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {
-        EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {
+impl BuildEcsTaskDefinition_Volume_DockerVolumeConfiguration {
+    pub fn build(self) -> EcsTaskDefinition_Volume_DockerVolumeConfiguration {
+        EcsTaskDefinition_Volume_DockerVolumeConfiguration {
             autoprovision: core::default::Default::default(),
             driver: core::default::Default::default(),
             driver_opts: core::default::Default::default(),
@@ -1066,24 +1070,26 @@ impl BuildEcsTaskDefinitionVolumeElDockerVolumeConfigurationEl {
     }
 }
 
-pub struct EcsTaskDefinitionVolumeElDockerVolumeConfigurationElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_Volume_DockerVolumeConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionVolumeElDockerVolumeConfigurationElRef {
+impl terrars::Ref for EcsTaskDefinition_Volume_DockerVolumeConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcsTaskDefinitionVolumeElDockerVolumeConfigurationElRef {
-        EcsTaskDefinitionVolumeElDockerVolumeConfigurationElRef {
+    ) -> EcsTaskDefinition_Volume_DockerVolumeConfigurationRef {
+        EcsTaskDefinition_Volume_DockerVolumeConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionVolumeElDockerVolumeConfigurationElRef {
+impl EcsTaskDefinition_Volume_DockerVolumeConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1115,14 +1121,14 @@ impl EcsTaskDefinitionVolumeElDockerVolumeConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl {
+pub struct EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_point_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     iam: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl {
+impl EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig {
     #[doc = "Set the field `access_point_id`.\n"]
     pub fn set_access_point_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_point_id = std::option::Option::Some(v.into());
@@ -1136,8 +1142,8 @@ impl EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl>;
+impl terrars::ToListMappable for EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1148,35 +1154,37 @@ impl terrars::ToListMappable for EcsTaskDefinitionVolumeElEfsVolumeConfiguration
     }
 }
 
-pub struct BuildEcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl {}
+pub struct BuildEcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig {}
 
-impl BuildEcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl {
-    pub fn build(self) -> EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl {
-        EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl {
+impl BuildEcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig {
+    pub fn build(self) -> EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig {
+        EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig {
             access_point_id: core::default::Default::default(),
             iam: core::default::Default::default(),
         }
     }
 }
 
-pub struct EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigElRef {
+impl terrars::Ref for EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigElRef {
-        EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigElRef {
+    ) -> EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfigRef {
+        EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigElRef {
+impl EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1193,14 +1201,14 @@ impl EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EcsTaskDefinitionVolumeElEfsVolumeConfigurationElDynamic {
+struct EcsTaskDefinition_Volume_EfsVolumeConfigurationDynamic {
     authorization_config: std
     ::option
-    ::Option<terrars::DynamicBlock<EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl>>,
+    ::Option<terrars::DynamicBlock<EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
+pub struct EcsTaskDefinition_Volume_EfsVolumeConfiguration {
     file_system_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     root_directory: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -1211,11 +1219,11 @@ pub struct EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authorization_config: std
     ::option
-    ::Option<std::vec::Vec<EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl>>,
-    dynamic: EcsTaskDefinitionVolumeElEfsVolumeConfigurationElDynamic,
+    ::Option<std::vec::Vec<EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig>>,
+    dynamic: EcsTaskDefinition_Volume_EfsVolumeConfigurationDynamic,
 }
 
-impl EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
+impl EcsTaskDefinition_Volume_EfsVolumeConfiguration {
     #[doc = "Set the field `root_directory`.\n"]
     pub fn set_root_directory(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.root_directory = std::option::Option::Some(v.into());
@@ -1246,8 +1254,7 @@ impl EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigEl>,
+                        terrars::BlockAssignable<EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfig>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1262,8 +1269,8 @@ impl EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl>;
+impl terrars::ToListMappable for EcsTaskDefinition_Volume_EfsVolumeConfiguration {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_Volume_EfsVolumeConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1274,14 +1281,14 @@ impl terrars::ToListMappable for EcsTaskDefinitionVolumeElEfsVolumeConfiguration
     }
 }
 
-pub struct BuildEcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
+pub struct BuildEcsTaskDefinition_Volume_EfsVolumeConfiguration {
     #[doc = ""]
     pub file_system_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
-    pub fn build(self) -> EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
-        EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
+impl BuildEcsTaskDefinition_Volume_EfsVolumeConfiguration {
+    pub fn build(self) -> EcsTaskDefinition_Volume_EfsVolumeConfiguration {
+        EcsTaskDefinition_Volume_EfsVolumeConfiguration {
             file_system_id: self.file_system_id,
             root_directory: core::default::Default::default(),
             transit_encryption: core::default::Default::default(),
@@ -1292,24 +1299,26 @@ impl BuildEcsTaskDefinitionVolumeElEfsVolumeConfigurationEl {
     }
 }
 
-pub struct EcsTaskDefinitionVolumeElEfsVolumeConfigurationElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_Volume_EfsVolumeConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionVolumeElEfsVolumeConfigurationElRef {
+impl terrars::Ref for EcsTaskDefinition_Volume_EfsVolumeConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcsTaskDefinitionVolumeElEfsVolumeConfigurationElRef {
-        EcsTaskDefinitionVolumeElEfsVolumeConfigurationElRef {
+    ) -> EcsTaskDefinition_Volume_EfsVolumeConfigurationRef {
+        EcsTaskDefinition_Volume_EfsVolumeConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionVolumeElEfsVolumeConfigurationElRef {
+impl EcsTaskDefinition_Volume_EfsVolumeConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1337,24 +1346,23 @@ impl EcsTaskDefinitionVolumeElEfsVolumeConfigurationElRef {
     #[doc = "Get a reference to the value of field `authorization_config` after provisioning.\n"]
     pub fn authorization_config(
         &self,
-    ) -> terrars::ListRef<EcsTaskDefinitionVolumeElEfsVolumeConfigurationElAuthorizationConfigElRef> {
+    ) -> terrars::ListRef<EcsTaskDefinition_Volume_EfsVolumeConfiguration_AuthorizationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl {
+pub struct EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig {
     credentials_parameter: terrars::PrimField<std::string::String>,
     domain: terrars::PrimField<std::string::String>,
 }
 
-impl EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl { }
+impl EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig { }
 
-impl terrars
-::ToListMappable for EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl {
+impl terrars::ToListMappable for EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig {
     type O =
         terrars
-        ::BlockAssignable<EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl>;
+        ::BlockAssignable<EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1365,40 +1373,42 @@ impl terrars
     }
 }
 
-pub struct BuildEcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl {
+pub struct BuildEcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig {
     #[doc = ""]
     pub credentials_parameter: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub domain: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl {
-    pub fn build(self) -> EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl {
-        EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl {
+impl BuildEcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig {
+    pub fn build(self) -> EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig {
+        EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig {
             credentials_parameter: self.credentials_parameter,
             domain: self.domain,
         }
     }
 }
 
-pub struct EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigElRef {
+impl terrars::Ref for EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigElRef {
-        EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigElRef {
+    ) -> EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfigRef {
+        EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigElRef {
+impl EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1415,26 +1425,26 @@ impl EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthoriza
 }
 
 #[derive(Serialize, Default)]
-struct EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElDynamic {
+struct EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfigurationDynamic {
     authorization_config: std
     ::option
     ::Option<
-        terrars::DynamicBlock<EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl>,
+        terrars::DynamicBlock<EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
+pub struct EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration {
     file_system_id: terrars::PrimField<std::string::String>,
     root_directory: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authorization_config: std
     ::option
-    ::Option<std::vec::Vec<EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl>>,
-    dynamic: EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElDynamic,
+    ::Option<std::vec::Vec<EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig>>,
+    dynamic: EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfigurationDynamic,
 }
 
-impl EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
+impl EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration {
     #[doc = "Set the field `authorization_config`.\n"]
     pub fn set_authorization_config(
         mut self,
@@ -1446,7 +1456,7 @@ impl EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigEl,
+                            EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfig,
                         >,
                     >,
     ) -> Self {
@@ -1462,8 +1472,8 @@ impl EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl>;
+impl terrars::ToListMappable for EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1474,16 +1484,16 @@ impl terrars::ToListMappable for EcsTaskDefinitionVolumeElFsxWindowsFileServerVo
     }
 }
 
-pub struct BuildEcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
+pub struct BuildEcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration {
     #[doc = ""]
     pub file_system_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub root_directory: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
-    pub fn build(self) -> EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
-        EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
+impl BuildEcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration {
+    pub fn build(self) -> EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration {
+        EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration {
             file_system_id: self.file_system_id,
             root_directory: self.root_directory,
             authorization_config: core::default::Default::default(),
@@ -1492,24 +1502,26 @@ impl BuildEcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl {
     }
 }
 
-pub struct EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElRef {
+impl terrars::Ref for EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElRef {
-        EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElRef {
+    ) -> EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfigurationRef {
+        EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElRef {
+impl EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1527,41 +1539,158 @@ impl EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElRef {
     #[doc = "Get a reference to the value of field `authorization_config` after provisioning.\n"]
     pub fn authorization_config(
         &self,
-    ) -> terrars::ListRef<EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElAuthorizationConfigElRef> {
+    ) -> terrars::ListRef<EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration_AuthorizationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authorization_config", self.base))
     }
 }
 
+#[derive(Serialize)]
+pub struct EcsTaskDefinition_Volume_S3filesVolumeConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_point_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    file_system_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    root_directory: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transit_encryption_port: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl EcsTaskDefinition_Volume_S3filesVolumeConfiguration {
+    #[doc = "Set the field `access_point_arn`.\n"]
+    pub fn set_access_point_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.access_point_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `root_directory`.\n"]
+    pub fn set_root_directory(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.root_directory = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `transit_encryption_port`.\n"]
+    pub fn set_transit_encryption_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.transit_encryption_port = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for EcsTaskDefinition_Volume_S3filesVolumeConfiguration {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_Volume_S3filesVolumeConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEcsTaskDefinition_Volume_S3filesVolumeConfiguration {
+    #[doc = ""]
+    pub file_system_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildEcsTaskDefinition_Volume_S3filesVolumeConfiguration {
+    pub fn build(self) -> EcsTaskDefinition_Volume_S3filesVolumeConfiguration {
+        EcsTaskDefinition_Volume_S3filesVolumeConfiguration {
+            access_point_arn: core::default::Default::default(),
+            file_system_arn: self.file_system_arn,
+            root_directory: core::default::Default::default(),
+            transit_encryption_port: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_Volume_S3filesVolumeConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for EcsTaskDefinition_Volume_S3filesVolumeConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> EcsTaskDefinition_Volume_S3filesVolumeConfigurationRef {
+        EcsTaskDefinition_Volume_S3filesVolumeConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl EcsTaskDefinition_Volume_S3filesVolumeConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `access_point_arn` after provisioning.\n"]
+    pub fn access_point_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_point_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `file_system_arn` after provisioning.\n"]
+    pub fn file_system_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.file_system_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `root_directory` after provisioning.\n"]
+    pub fn root_directory(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_directory", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_encryption_port` after provisioning.\n"]
+    pub fn transit_encryption_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_encryption_port", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct EcsTaskDefinitionVolumeElDynamic {
+struct EcsTaskDefinition_VolumeDynamic {
     docker_volume_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<EcsTaskDefinition_Volume_DockerVolumeConfiguration>>,
     efs_volume_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<EcsTaskDefinition_Volume_EfsVolumeConfiguration>>,
     fsx_windows_file_server_volume_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration>>,
+    s3files_volume_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<EcsTaskDefinition_Volume_S3filesVolumeConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct EcsTaskDefinitionVolumeEl {
+pub struct EcsTaskDefinition_Volume {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    configure_at_launch: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     host_path: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    docker_volume_configuration: std::option::Option<std::vec::Vec<EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl>>,
+    docker_volume_configuration: std::option::Option<std::vec::Vec<EcsTaskDefinition_Volume_DockerVolumeConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    efs_volume_configuration: std::option::Option<std::vec::Vec<EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl>>,
+    efs_volume_configuration: std::option::Option<std::vec::Vec<EcsTaskDefinition_Volume_EfsVolumeConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fsx_windows_file_server_volume_configuration: std
     ::option
-    ::Option<std::vec::Vec<EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl>>,
-    dynamic: EcsTaskDefinitionVolumeElDynamic,
+    ::Option<std::vec::Vec<EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3files_volume_configuration: std::option::Option<std::vec::Vec<EcsTaskDefinition_Volume_S3filesVolumeConfiguration>>,
+    dynamic: EcsTaskDefinition_VolumeDynamic,
 }
 
-impl EcsTaskDefinitionVolumeEl {
+impl EcsTaskDefinition_Volume {
+    #[doc = "Set the field `configure_at_launch`.\n"]
+    pub fn set_configure_at_launch(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.configure_at_launch = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `host_path`.\n"]
     pub fn set_host_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.host_path = std::option::Option::Some(v.into());
@@ -1571,7 +1700,7 @@ impl EcsTaskDefinitionVolumeEl {
     #[doc = "Set the field `docker_volume_configuration`.\n"]
     pub fn set_docker_volume_configuration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinitionVolumeElDockerVolumeConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinition_Volume_DockerVolumeConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1587,7 +1716,7 @@ impl EcsTaskDefinitionVolumeEl {
     #[doc = "Set the field `efs_volume_configuration`.\n"]
     pub fn set_efs_volume_configuration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinitionVolumeElEfsVolumeConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinition_Volume_EfsVolumeConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1609,7 +1738,7 @@ impl EcsTaskDefinitionVolumeEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationEl>,
+                        terrars::BlockAssignable<EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1622,10 +1751,26 @@ impl EcsTaskDefinitionVolumeEl {
         }
         self
     }
+
+    #[doc = "Set the field `s3files_volume_configuration`.\n"]
+    pub fn set_s3files_volume_configuration(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcsTaskDefinition_Volume_S3filesVolumeConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3files_volume_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3files_volume_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for EcsTaskDefinitionVolumeEl {
-    type O = terrars::BlockAssignable<EcsTaskDefinitionVolumeEl>;
+impl terrars::ToListMappable for EcsTaskDefinition_Volume {
+    type O = terrars::BlockAssignable<EcsTaskDefinition_Volume>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1636,41 +1781,50 @@ impl terrars::ToListMappable for EcsTaskDefinitionVolumeEl {
     }
 }
 
-pub struct BuildEcsTaskDefinitionVolumeEl {
+pub struct BuildEcsTaskDefinition_Volume {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcsTaskDefinitionVolumeEl {
-    pub fn build(self) -> EcsTaskDefinitionVolumeEl {
-        EcsTaskDefinitionVolumeEl {
+impl BuildEcsTaskDefinition_Volume {
+    pub fn build(self) -> EcsTaskDefinition_Volume {
+        EcsTaskDefinition_Volume {
+            configure_at_launch: core::default::Default::default(),
             host_path: core::default::Default::default(),
             name: self.name,
             docker_volume_configuration: core::default::Default::default(),
             efs_volume_configuration: core::default::Default::default(),
             fsx_windows_file_server_volume_configuration: core::default::Default::default(),
+            s3files_volume_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct EcsTaskDefinitionVolumeElRef {
+#[allow(dead_code)]
+pub struct EcsTaskDefinition_VolumeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsTaskDefinitionVolumeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinitionVolumeElRef {
-        EcsTaskDefinitionVolumeElRef {
+impl terrars::Ref for EcsTaskDefinition_VolumeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcsTaskDefinition_VolumeRef {
+        EcsTaskDefinition_VolumeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsTaskDefinitionVolumeElRef {
+impl EcsTaskDefinition_VolumeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `configure_at_launch` after provisioning.\n"]
+    pub fn configure_at_launch(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.configure_at_launch", self.base))
     }
 
     #[doc = "Get a reference to the value of field `host_path` after provisioning.\n"]
@@ -1684,14 +1838,12 @@ impl EcsTaskDefinitionVolumeElRef {
     }
 
     #[doc = "Get a reference to the value of field `docker_volume_configuration` after provisioning.\n"]
-    pub fn docker_volume_configuration(
-        &self,
-    ) -> terrars::ListRef<EcsTaskDefinitionVolumeElDockerVolumeConfigurationElRef> {
+    pub fn docker_volume_configuration(&self) -> terrars::ListRef<EcsTaskDefinition_Volume_DockerVolumeConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.docker_volume_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `efs_volume_configuration` after provisioning.\n"]
-    pub fn efs_volume_configuration(&self) -> terrars::ListRef<EcsTaskDefinitionVolumeElEfsVolumeConfigurationElRef> {
+    pub fn efs_volume_configuration(&self) -> terrars::ListRef<EcsTaskDefinition_Volume_EfsVolumeConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.efs_volume_configuration", self.base))
     }
 
@@ -1699,20 +1851,17 @@ impl EcsTaskDefinitionVolumeElRef {
         "Get a reference to the value of field `fsx_windows_file_server_volume_configuration` after provisioning.\n"]
     pub fn fsx_windows_file_server_volume_configuration(
         &self,
-    ) -> terrars::ListRef<EcsTaskDefinitionVolumeElFsxWindowsFileServerVolumeConfigurationElRef> {
+    ) -> terrars::ListRef<EcsTaskDefinition_Volume_FsxWindowsFileServerVolumeConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.fsx_windows_file_server_volume_configuration", self.base),
         )
     }
-}
 
-#[derive(Serialize, Default)]
-struct EcsTaskDefinitionDynamic {
-    ephemeral_storage: std::option::Option<terrars::DynamicBlock<EcsTaskDefinitionEphemeralStorageEl>>,
-    inference_accelerator: std::option::Option<terrars::DynamicBlock<EcsTaskDefinitionInferenceAcceleratorEl>>,
-    placement_constraints: std::option::Option<terrars::DynamicBlock<EcsTaskDefinitionPlacementConstraintsEl>>,
-    proxy_configuration: std::option::Option<terrars::DynamicBlock<EcsTaskDefinitionProxyConfigurationEl>>,
-    runtime_platform: std::option::Option<terrars::DynamicBlock<EcsTaskDefinitionRuntimePlatformEl>>,
-    volume: std::option::Option<terrars::DynamicBlock<EcsTaskDefinitionVolumeEl>>,
+    #[doc = "Get a reference to the value of field `s3files_volume_configuration` after provisioning.\n"]
+    pub fn s3files_volume_configuration(
+        &self,
+    ) -> terrars::ListRef<EcsTaskDefinition_Volume_S3filesVolumeConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3files_volume_configuration", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KendraQuerySuggestionsBlockListData {
+struct KendraQuerySuggestionsBlockListData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,22 +26,24 @@ struct KendraQuerySuggestionsBlockListData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     index_id: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_s3_path: std::option::Option<std::vec::Vec<KendraQuerySuggestionsBlockListSourceS3PathEl>>,
+    source_s3_path: std::option::Option<std::vec::Vec<KendraQuerySuggestionsBlockList_SourceS3Path>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KendraQuerySuggestionsBlockListTimeoutsEl>,
+    timeouts: std::option::Option<KendraQuerySuggestionsBlockList_Timeouts>,
     dynamic: KendraQuerySuggestionsBlockListDynamic,
 }
 
 struct KendraQuerySuggestionsBlockList_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KendraQuerySuggestionsBlockListData>,
+    data: std::cell::RefCell<KendraQuerySuggestionsBlockListData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl KendraQuerySuggestionsBlockList {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -172,7 +183,7 @@ impl KendraQuerySuggestionsBlockList {
     #[doc = "Set the field `source_s3_path`.\n"]
     pub fn set_source_s3_path(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KendraQuerySuggestionsBlockListSourceS3PathEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraQuerySuggestionsBlockList_SourceS3Path>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -186,7 +197,7 @@ impl KendraQuerySuggestionsBlockList {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KendraQuerySuggestionsBlockListTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KendraQuerySuggestionsBlockList_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -224,6 +235,12 @@ impl KendraQuerySuggestionsBlockList {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -245,13 +262,13 @@ impl KendraQuerySuggestionsBlockList {
     }
 
     #[doc = "Get a reference to the value of field `source_s3_path` after provisioning.\n"]
-    pub fn source_s3_path(&self) -> terrars::ListRef<KendraQuerySuggestionsBlockListSourceS3PathElRef> {
+    pub fn source_s3_path(&self) -> terrars::ListRef<KendraQuerySuggestionsBlockList_SourceS3PathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_s3_path", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KendraQuerySuggestionsBlockListTimeoutsElRef {
-        KendraQuerySuggestionsBlockListTimeoutsElRef::new(
+    pub fn timeouts(&self) -> KendraQuerySuggestionsBlockList_TimeoutsRef {
+        KendraQuerySuggestionsBlockList_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -304,7 +321,7 @@ impl BuildKendraQuerySuggestionsBlockList {
         let out = KendraQuerySuggestionsBlockList(std::rc::Rc::new(KendraQuerySuggestionsBlockList_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KendraQuerySuggestionsBlockListData {
+            data: std::cell::RefCell::new(KendraQuerySuggestionsBlockListData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -314,6 +331,7 @@ impl BuildKendraQuerySuggestionsBlockList {
                 id: core::default::Default::default(),
                 index_id: self.index_id,
                 name: self.name,
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -383,6 +401,12 @@ impl KendraQuerySuggestionsBlockListRef {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -404,29 +428,34 @@ impl KendraQuerySuggestionsBlockListRef {
     }
 
     #[doc = "Get a reference to the value of field `source_s3_path` after provisioning.\n"]
-    pub fn source_s3_path(&self) -> terrars::ListRef<KendraQuerySuggestionsBlockListSourceS3PathElRef> {
+    pub fn source_s3_path(&self) -> terrars::ListRef<KendraQuerySuggestionsBlockList_SourceS3PathRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_s3_path", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KendraQuerySuggestionsBlockListTimeoutsElRef {
-        KendraQuerySuggestionsBlockListTimeoutsElRef::new(
+    pub fn timeouts(&self) -> KendraQuerySuggestionsBlockList_TimeoutsRef {
+        KendraQuerySuggestionsBlockList_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct KendraQuerySuggestionsBlockListDynamic {
+    source_s3_path: std::option::Option<terrars::DynamicBlock<KendraQuerySuggestionsBlockList_SourceS3Path>>,
+}
+
 #[derive(Serialize)]
-pub struct KendraQuerySuggestionsBlockListSourceS3PathEl {
+pub struct KendraQuerySuggestionsBlockList_SourceS3Path {
     bucket: terrars::PrimField<std::string::String>,
     key: terrars::PrimField<std::string::String>,
 }
 
-impl KendraQuerySuggestionsBlockListSourceS3PathEl { }
+impl KendraQuerySuggestionsBlockList_SourceS3Path { }
 
-impl terrars::ToListMappable for KendraQuerySuggestionsBlockListSourceS3PathEl {
-    type O = terrars::BlockAssignable<KendraQuerySuggestionsBlockListSourceS3PathEl>;
+impl terrars::ToListMappable for KendraQuerySuggestionsBlockList_SourceS3Path {
+    type O = terrars::BlockAssignable<KendraQuerySuggestionsBlockList_SourceS3Path>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -437,40 +466,42 @@ impl terrars::ToListMappable for KendraQuerySuggestionsBlockListSourceS3PathEl {
     }
 }
 
-pub struct BuildKendraQuerySuggestionsBlockListSourceS3PathEl {
+pub struct BuildKendraQuerySuggestionsBlockList_SourceS3Path {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraQuerySuggestionsBlockListSourceS3PathEl {
-    pub fn build(self) -> KendraQuerySuggestionsBlockListSourceS3PathEl {
-        KendraQuerySuggestionsBlockListSourceS3PathEl {
+impl BuildKendraQuerySuggestionsBlockList_SourceS3Path {
+    pub fn build(self) -> KendraQuerySuggestionsBlockList_SourceS3Path {
+        KendraQuerySuggestionsBlockList_SourceS3Path {
             bucket: self.bucket,
             key: self.key,
         }
     }
 }
 
-pub struct KendraQuerySuggestionsBlockListSourceS3PathElRef {
+#[allow(dead_code)]
+pub struct KendraQuerySuggestionsBlockList_SourceS3PathRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraQuerySuggestionsBlockListSourceS3PathElRef {
+impl terrars::Ref for KendraQuerySuggestionsBlockList_SourceS3PathRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraQuerySuggestionsBlockListSourceS3PathElRef {
-        KendraQuerySuggestionsBlockListSourceS3PathElRef {
+    ) -> KendraQuerySuggestionsBlockList_SourceS3PathRef {
+        KendraQuerySuggestionsBlockList_SourceS3PathRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraQuerySuggestionsBlockListSourceS3PathElRef {
+impl KendraQuerySuggestionsBlockList_SourceS3PathRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -487,7 +518,7 @@ impl KendraQuerySuggestionsBlockListSourceS3PathElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraQuerySuggestionsBlockListTimeoutsEl {
+pub struct KendraQuerySuggestionsBlockList_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -496,7 +527,7 @@ pub struct KendraQuerySuggestionsBlockListTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraQuerySuggestionsBlockListTimeoutsEl {
+impl KendraQuerySuggestionsBlockList_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -516,8 +547,8 @@ impl KendraQuerySuggestionsBlockListTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KendraQuerySuggestionsBlockListTimeoutsEl {
-    type O = terrars::BlockAssignable<KendraQuerySuggestionsBlockListTimeoutsEl>;
+impl terrars::ToListMappable for KendraQuerySuggestionsBlockList_Timeouts {
+    type O = terrars::BlockAssignable<KendraQuerySuggestionsBlockList_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -528,11 +559,11 @@ impl terrars::ToListMappable for KendraQuerySuggestionsBlockListTimeoutsEl {
     }
 }
 
-pub struct BuildKendraQuerySuggestionsBlockListTimeoutsEl {}
+pub struct BuildKendraQuerySuggestionsBlockList_Timeouts {}
 
-impl BuildKendraQuerySuggestionsBlockListTimeoutsEl {
-    pub fn build(self) -> KendraQuerySuggestionsBlockListTimeoutsEl {
-        KendraQuerySuggestionsBlockListTimeoutsEl {
+impl BuildKendraQuerySuggestionsBlockList_Timeouts {
+    pub fn build(self) -> KendraQuerySuggestionsBlockList_Timeouts {
+        KendraQuerySuggestionsBlockList_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -540,21 +571,23 @@ impl BuildKendraQuerySuggestionsBlockListTimeoutsEl {
     }
 }
 
-pub struct KendraQuerySuggestionsBlockListTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KendraQuerySuggestionsBlockList_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraQuerySuggestionsBlockListTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraQuerySuggestionsBlockListTimeoutsElRef {
-        KendraQuerySuggestionsBlockListTimeoutsElRef {
+impl terrars::Ref for KendraQuerySuggestionsBlockList_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraQuerySuggestionsBlockList_TimeoutsRef {
+        KendraQuerySuggestionsBlockList_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraQuerySuggestionsBlockListTimeoutsElRef {
+impl KendraQuerySuggestionsBlockList_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -573,9 +606,4 @@ impl KendraQuerySuggestionsBlockListTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KendraQuerySuggestionsBlockListDynamic {
-    source_s3_path: std::option::Option<terrars::DynamicBlock<KendraQuerySuggestionsBlockListSourceS3PathEl>>,
 }

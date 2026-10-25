@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53ZoneData {
+struct Route53ZoneData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct Route53ZoneData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delegation_set_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_accelerated_recovery: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     force_destroy: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -32,14 +36,16 @@ struct Route53ZoneData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc: std::option::Option<std::vec::Vec<Route53ZoneVpcEl>>,
+    timeouts: std::option::Option<Route53Zone_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc: std::option::Option<std::vec::Vec<Route53Zone_Vpc>>,
     dynamic: Route53ZoneDynamic,
 }
 
 struct Route53Zone_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53ZoneData>,
+    data: std::cell::RefCell<Route53ZoneData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +157,12 @@ impl Route53Zone {
         self
     }
 
+    #[doc = "Set the field `enable_accelerated_recovery`.\n"]
+    pub fn set_enable_accelerated_recovery(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_accelerated_recovery = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `force_destroy`.\n"]
     pub fn set_force_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().force_destroy = std::option::Option::Some(v.into());
@@ -181,8 +193,14 @@ impl Route53Zone {
         self
     }
 
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<Route53Zone_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `vpc`.\n"]
-    pub fn set_vpc(self, v: impl std::convert::Into<terrars::BlockAssignable<Route53ZoneVpcEl>>) -> Self {
+    pub fn set_vpc(self, v: impl std::convert::Into<terrars::BlockAssignable<Route53Zone_Vpc>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().vpc = std::option::Option::Some(v);
@@ -207,6 +225,11 @@ impl Route53Zone {
     #[doc = "Get a reference to the value of field `delegation_set_id` after provisioning.\n"]
     pub fn delegation_set_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delegation_set_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_accelerated_recovery` after provisioning.\n"]
+    pub fn enable_accelerated_recovery(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_accelerated_recovery", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `force_destroy` after provisioning.\n"]
@@ -247,6 +270,11 @@ impl Route53Zone {
     #[doc = "Get a reference to the value of field `zone_id` after provisioning.\n"]
     pub fn zone_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Route53Zone_TimeoutsRef {
+        Route53Zone_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -292,7 +320,7 @@ impl BuildRoute53Zone {
         let out = Route53Zone(std::rc::Rc::new(Route53Zone_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53ZoneData {
+            data: std::cell::RefCell::new(Route53ZoneData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -300,11 +328,13 @@ impl BuildRoute53Zone {
                 provisioner: core::default::Default::default(),
                 comment: core::default::Default::default(),
                 delegation_set_id: core::default::Default::default(),
+                enable_accelerated_recovery: core::default::Default::default(),
                 force_destroy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 vpc: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -352,6 +382,11 @@ impl Route53ZoneRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delegation_set_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_accelerated_recovery` after provisioning.\n"]
+    pub fn enable_accelerated_recovery(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_accelerated_recovery", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `force_destroy` after provisioning.\n"]
     pub fn force_destroy(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_destroy", self.extract_ref()))
@@ -391,25 +426,50 @@ impl Route53ZoneRef {
     pub fn zone_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.zone_id", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Route53Zone_TimeoutsRef {
+        Route53Zone_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct Route53ZoneDynamic {
+    vpc: std::option::Option<terrars::DynamicBlock<Route53Zone_Vpc>>,
 }
 
 #[derive(Serialize)]
-pub struct Route53ZoneVpcEl {
-    vpc_id: terrars::PrimField<std::string::String>,
+pub struct Route53Zone_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_region: std::option::Option<terrars::PrimField<std::string::String>>,
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53ZoneVpcEl {
-    #[doc = "Set the field `vpc_region`.\n"]
-    pub fn set_vpc_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.vpc_region = std::option::Option::Some(v.into());
+impl Route53Zone_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for Route53ZoneVpcEl {
-    type O = terrars::BlockAssignable<Route53ZoneVpcEl>;
+impl terrars::ToListMappable for Route53Zone_Timeouts {
+    type O = terrars::BlockAssignable<Route53Zone_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -420,35 +480,113 @@ impl terrars::ToListMappable for Route53ZoneVpcEl {
     }
 }
 
-pub struct BuildRoute53ZoneVpcEl {
-    #[doc = ""]
-    pub vpc_id: terrars::PrimField<std::string::String>,
-}
+pub struct BuildRoute53Zone_Timeouts {}
 
-impl BuildRoute53ZoneVpcEl {
-    pub fn build(self) -> Route53ZoneVpcEl {
-        Route53ZoneVpcEl {
-            vpc_id: self.vpc_id,
-            vpc_region: core::default::Default::default(),
+impl BuildRoute53Zone_Timeouts {
+    pub fn build(self) -> Route53Zone_Timeouts {
+        Route53Zone_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
         }
     }
 }
 
-pub struct Route53ZoneVpcElRef {
+#[allow(dead_code)]
+pub struct Route53Zone_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53ZoneVpcElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53ZoneVpcElRef {
-        Route53ZoneVpcElRef {
+impl terrars::Ref for Route53Zone_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Zone_TimeoutsRef {
+        Route53Zone_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53ZoneVpcElRef {
+impl Route53Zone_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Route53Zone_Vpc {
+    vpc_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_region: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Route53Zone_Vpc {
+    #[doc = "Set the field `vpc_region`.\n"]
+    pub fn set_vpc_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.vpc_region = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Route53Zone_Vpc {
+    type O = terrars::BlockAssignable<Route53Zone_Vpc>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRoute53Zone_Vpc {
+    #[doc = ""]
+    pub vpc_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildRoute53Zone_Vpc {
+    pub fn build(self) -> Route53Zone_Vpc {
+        Route53Zone_Vpc {
+            vpc_id: self.vpc_id,
+            vpc_region: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Route53Zone_VpcRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Route53Zone_VpcRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53Zone_VpcRef {
+        Route53Zone_VpcRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Route53Zone_VpcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -462,9 +600,4 @@ impl Route53ZoneVpcElRef {
     pub fn vpc_region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_region", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Route53ZoneDynamic {
-    vpc: std::option::Option<terrars::DynamicBlock<Route53ZoneVpcEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct BatchSchedulingPolicyData {
+struct BatchSchedulingPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,20 @@ struct BatchSchedulingPolicyData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    fair_share_policy: std::option::Option<std::vec::Vec<BatchSchedulingPolicyFairSharePolicyEl>>,
+    fair_share_policy: std::option::Option<std::vec::Vec<BatchSchedulingPolicy_FairSharePolicy>>,
     dynamic: BatchSchedulingPolicyDynamic,
 }
 
 struct BatchSchedulingPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BatchSchedulingPolicyData>,
+    data: std::cell::RefCell<BatchSchedulingPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl BatchSchedulingPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -160,7 +171,7 @@ impl BatchSchedulingPolicy {
     #[doc = "Set the field `fair_share_policy`.\n"]
     pub fn set_fair_share_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BatchSchedulingPolicyFairSharePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BatchSchedulingPolicy_FairSharePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,6 +199,12 @@ impl BatchSchedulingPolicy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -199,7 +216,7 @@ impl BatchSchedulingPolicy {
     }
 
     #[doc = "Get a reference to the value of field `fair_share_policy` after provisioning.\n"]
-    pub fn fair_share_policy(&self) -> terrars::ListRef<BatchSchedulingPolicyFairSharePolicyElRef> {
+    pub fn fair_share_policy(&self) -> terrars::ListRef<BatchSchedulingPolicy_FairSharePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fair_share_policy", self.extract_ref()))
     }
 }
@@ -246,7 +263,7 @@ impl BuildBatchSchedulingPolicy {
         let out = BatchSchedulingPolicy(std::rc::Rc::new(BatchSchedulingPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BatchSchedulingPolicyData {
+            data: std::cell::RefCell::new(BatchSchedulingPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -254,6 +271,7 @@ impl BuildBatchSchedulingPolicy {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 fair_share_policy: core::default::Default::default(),
@@ -303,6 +321,12 @@ impl BatchSchedulingPolicyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -314,19 +338,24 @@ impl BatchSchedulingPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `fair_share_policy` after provisioning.\n"]
-    pub fn fair_share_policy(&self) -> terrars::ListRef<BatchSchedulingPolicyFairSharePolicyElRef> {
+    pub fn fair_share_policy(&self) -> terrars::ListRef<BatchSchedulingPolicy_FairSharePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.fair_share_policy", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BatchSchedulingPolicyDynamic {
+    fair_share_policy: std::option::Option<terrars::DynamicBlock<BatchSchedulingPolicy_FairSharePolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct BatchSchedulingPolicyFairSharePolicyElShareDistributionEl {
+pub struct BatchSchedulingPolicy_FairSharePolicy_ShareDistribution {
     share_identifier: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weight_factor: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl BatchSchedulingPolicyFairSharePolicyElShareDistributionEl {
+impl BatchSchedulingPolicy_FairSharePolicy_ShareDistribution {
     #[doc = "Set the field `weight_factor`.\n"]
     pub fn set_weight_factor(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.weight_factor = std::option::Option::Some(v.into());
@@ -334,8 +363,8 @@ impl BatchSchedulingPolicyFairSharePolicyElShareDistributionEl {
     }
 }
 
-impl terrars::ToListMappable for BatchSchedulingPolicyFairSharePolicyElShareDistributionEl {
-    type O = terrars::BlockAssignable<BatchSchedulingPolicyFairSharePolicyElShareDistributionEl>;
+impl terrars::ToListMappable for BatchSchedulingPolicy_FairSharePolicy_ShareDistribution {
+    type O = terrars::BlockAssignable<BatchSchedulingPolicy_FairSharePolicy_ShareDistribution>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -346,38 +375,40 @@ impl terrars::ToListMappable for BatchSchedulingPolicyFairSharePolicyElShareDist
     }
 }
 
-pub struct BuildBatchSchedulingPolicyFairSharePolicyElShareDistributionEl {
+pub struct BuildBatchSchedulingPolicy_FairSharePolicy_ShareDistribution {
     #[doc = ""]
     pub share_identifier: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBatchSchedulingPolicyFairSharePolicyElShareDistributionEl {
-    pub fn build(self) -> BatchSchedulingPolicyFairSharePolicyElShareDistributionEl {
-        BatchSchedulingPolicyFairSharePolicyElShareDistributionEl {
+impl BuildBatchSchedulingPolicy_FairSharePolicy_ShareDistribution {
+    pub fn build(self) -> BatchSchedulingPolicy_FairSharePolicy_ShareDistribution {
+        BatchSchedulingPolicy_FairSharePolicy_ShareDistribution {
             share_identifier: self.share_identifier,
             weight_factor: core::default::Default::default(),
         }
     }
 }
 
-pub struct BatchSchedulingPolicyFairSharePolicyElShareDistributionElRef {
+#[allow(dead_code)]
+pub struct BatchSchedulingPolicy_FairSharePolicy_ShareDistributionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BatchSchedulingPolicyFairSharePolicyElShareDistributionElRef {
+impl terrars::Ref for BatchSchedulingPolicy_FairSharePolicy_ShareDistributionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BatchSchedulingPolicyFairSharePolicyElShareDistributionElRef {
-        BatchSchedulingPolicyFairSharePolicyElShareDistributionElRef {
+    ) -> BatchSchedulingPolicy_FairSharePolicy_ShareDistributionRef {
+        BatchSchedulingPolicy_FairSharePolicy_ShareDistributionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BatchSchedulingPolicyFairSharePolicyElShareDistributionElRef {
+impl BatchSchedulingPolicy_FairSharePolicy_ShareDistributionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -394,24 +425,24 @@ impl BatchSchedulingPolicyFairSharePolicyElShareDistributionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BatchSchedulingPolicyFairSharePolicyElDynamic {
+struct BatchSchedulingPolicy_FairSharePolicyDynamic {
     share_distribution: std
     ::option
-    ::Option<terrars::DynamicBlock<BatchSchedulingPolicyFairSharePolicyElShareDistributionEl>>,
+    ::Option<terrars::DynamicBlock<BatchSchedulingPolicy_FairSharePolicy_ShareDistribution>>,
 }
 
 #[derive(Serialize)]
-pub struct BatchSchedulingPolicyFairSharePolicyEl {
+pub struct BatchSchedulingPolicy_FairSharePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compute_reservation: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     share_decay_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    share_distribution: std::option::Option<std::vec::Vec<BatchSchedulingPolicyFairSharePolicyElShareDistributionEl>>,
-    dynamic: BatchSchedulingPolicyFairSharePolicyElDynamic,
+    share_distribution: std::option::Option<std::vec::Vec<BatchSchedulingPolicy_FairSharePolicy_ShareDistribution>>,
+    dynamic: BatchSchedulingPolicy_FairSharePolicyDynamic,
 }
 
-impl BatchSchedulingPolicyFairSharePolicyEl {
+impl BatchSchedulingPolicy_FairSharePolicy {
     #[doc = "Set the field `compute_reservation`.\n"]
     pub fn set_compute_reservation(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.compute_reservation = std::option::Option::Some(v.into());
@@ -432,7 +463,7 @@ impl BatchSchedulingPolicyFairSharePolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<BatchSchedulingPolicyFairSharePolicyElShareDistributionEl>>,
+                    ::Into<terrars::BlockAssignable<BatchSchedulingPolicy_FairSharePolicy_ShareDistribution>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -446,8 +477,8 @@ impl BatchSchedulingPolicyFairSharePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for BatchSchedulingPolicyFairSharePolicyEl {
-    type O = terrars::BlockAssignable<BatchSchedulingPolicyFairSharePolicyEl>;
+impl terrars::ToListMappable for BatchSchedulingPolicy_FairSharePolicy {
+    type O = terrars::BlockAssignable<BatchSchedulingPolicy_FairSharePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -458,11 +489,11 @@ impl terrars::ToListMappable for BatchSchedulingPolicyFairSharePolicyEl {
     }
 }
 
-pub struct BuildBatchSchedulingPolicyFairSharePolicyEl {}
+pub struct BuildBatchSchedulingPolicy_FairSharePolicy {}
 
-impl BuildBatchSchedulingPolicyFairSharePolicyEl {
-    pub fn build(self) -> BatchSchedulingPolicyFairSharePolicyEl {
-        BatchSchedulingPolicyFairSharePolicyEl {
+impl BuildBatchSchedulingPolicy_FairSharePolicy {
+    pub fn build(self) -> BatchSchedulingPolicy_FairSharePolicy {
+        BatchSchedulingPolicy_FairSharePolicy {
             compute_reservation: core::default::Default::default(),
             share_decay_seconds: core::default::Default::default(),
             share_distribution: core::default::Default::default(),
@@ -471,21 +502,23 @@ impl BuildBatchSchedulingPolicyFairSharePolicyEl {
     }
 }
 
-pub struct BatchSchedulingPolicyFairSharePolicyElRef {
+#[allow(dead_code)]
+pub struct BatchSchedulingPolicy_FairSharePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BatchSchedulingPolicyFairSharePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BatchSchedulingPolicyFairSharePolicyElRef {
-        BatchSchedulingPolicyFairSharePolicyElRef {
+impl terrars::Ref for BatchSchedulingPolicy_FairSharePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BatchSchedulingPolicy_FairSharePolicyRef {
+        BatchSchedulingPolicy_FairSharePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BatchSchedulingPolicyFairSharePolicyElRef {
+impl BatchSchedulingPolicy_FairSharePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -499,9 +532,4 @@ impl BatchSchedulingPolicyFairSharePolicyElRef {
     pub fn share_decay_seconds(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.share_decay_seconds", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct BatchSchedulingPolicyDynamic {
-    fair_share_policy: std::option::Option<terrars::DynamicBlock<BatchSchedulingPolicyFairSharePolicyEl>>,
 }

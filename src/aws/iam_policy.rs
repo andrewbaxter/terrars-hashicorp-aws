@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IamPolicyData {
+struct IamPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct IamPolicyData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delay_after_policy_creation_in_ms: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -38,7 +42,7 @@ struct IamPolicyData {
 struct IamPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamPolicyData>,
+    data: std::cell::RefCell<IamPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +142,12 @@ impl IamPolicy {
         self
     }
 
+    #[doc = "Set the field `delay_after_policy_creation_in_ms`.\n"]
+    pub fn set_delay_after_policy_creation_in_ms(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().delay_after_policy_creation_in_ms = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -189,6 +199,19 @@ impl IamPolicy {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `attachment_count` after provisioning.\n"]
+    pub fn attachment_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attachment_count", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `delay_after_policy_creation_in_ms` after provisioning.\n"]
+    pub fn delay_after_policy_creation_in_ms(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.delay_after_policy_creation_in_ms", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
@@ -279,12 +302,13 @@ impl BuildIamPolicy {
         let out = IamPolicy(std::rc::Rc::new(IamPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamPolicyData {
+            data: std::cell::RefCell::new(IamPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                delay_after_policy_creation_in_ms: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
@@ -326,6 +350,19 @@ impl IamPolicyRef {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `attachment_count` after provisioning.\n"]
+    pub fn attachment_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attachment_count", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `delay_after_policy_creation_in_ms` after provisioning.\n"]
+    pub fn delay_after_policy_creation_in_ms(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.delay_after_policy_creation_in_ms", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]

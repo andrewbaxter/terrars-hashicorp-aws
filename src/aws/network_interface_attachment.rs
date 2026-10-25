@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkInterfaceAttachmentData {
+struct NetworkInterfaceAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,13 +24,17 @@ struct NetworkInterfaceAttachmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     instance_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_card_index: std::option::Option<terrars::PrimField<f64>>,
     network_interface_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct NetworkInterfaceAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkInterfaceAttachmentData>,
+    data: std::cell::RefCell<NetworkInterfaceAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +140,19 @@ impl NetworkInterfaceAttachment {
         self
     }
 
+    #[doc = "Set the field `network_card_index`.\n"]
+    pub fn set_network_card_index(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().network_card_index = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `attachment_id` after provisioning.\n"]
     pub fn attachment_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.attachment_id", self.extract_ref()))
@@ -154,9 +173,20 @@ impl NetworkInterfaceAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_card_index` after provisioning.\n"]
+    pub fn network_card_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_card_index", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
     pub fn network_interface_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -211,7 +241,7 @@ impl BuildNetworkInterfaceAttachment {
         let out = NetworkInterfaceAttachment(std::rc::Rc::new(NetworkInterfaceAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkInterfaceAttachmentData {
+            data: std::cell::RefCell::new(NetworkInterfaceAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -220,7 +250,9 @@ impl BuildNetworkInterfaceAttachment {
                 device_index: self.device_index,
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
+                network_card_index: core::default::Default::default(),
                 network_interface_id: self.network_interface_id,
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -271,9 +303,20 @@ impl NetworkInterfaceAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_card_index` after provisioning.\n"]
+    pub fn network_card_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_card_index", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
     pub fn network_interface_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]

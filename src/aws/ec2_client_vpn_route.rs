@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2ClientVpnRouteData {
+struct Ec2ClientVpnRouteData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,15 +26,18 @@ struct Ec2ClientVpnRouteData {
     destination_cidr_block: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
-    target_vpc_subnet_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Ec2ClientVpnRouteTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_vpc_subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Ec2ClientVpnRoute_Timeouts>,
 }
 
 struct Ec2ClientVpnRoute_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2ClientVpnRouteData>,
+    data: std::cell::RefCell<Ec2ClientVpnRouteData_>,
 }
 
 #[derive(Clone)]
@@ -144,8 +149,21 @@ impl Ec2ClientVpnRoute {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `target_vpc_subnet_id`.\n"]
+    pub fn set_target_vpc_subnet_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().target_vpc_subnet_id = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Ec2ClientVpnRouteTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Ec2ClientVpnRoute_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -175,9 +193,23 @@ impl Ec2ClientVpnRoute {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_vpc_subnet_id` after provisioning.\n"]
     pub fn target_vpc_subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_vpc_subnet_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_attachment_id` after provisioning.\n"]
+    pub fn transit_gateway_attachment_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.transit_gateway_attachment_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
@@ -186,8 +218,8 @@ impl Ec2ClientVpnRoute {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Ec2ClientVpnRouteTimeoutsElRef {
-        Ec2ClientVpnRouteTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Ec2ClientVpnRoute_TimeoutsRef {
+        Ec2ClientVpnRoute_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -228,8 +260,6 @@ pub struct BuildEc2ClientVpnRoute {
     pub client_vpn_endpoint_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub destination_cidr_block: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub target_vpc_subnet_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildEc2ClientVpnRoute {
@@ -237,7 +267,7 @@ impl BuildEc2ClientVpnRoute {
         let out = Ec2ClientVpnRoute(std::rc::Rc::new(Ec2ClientVpnRoute_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2ClientVpnRouteData {
+            data: std::cell::RefCell::new(Ec2ClientVpnRouteData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -247,7 +277,8 @@ impl BuildEc2ClientVpnRoute {
                 description: core::default::Default::default(),
                 destination_cidr_block: self.destination_cidr_block,
                 id: core::default::Default::default(),
-                target_vpc_subnet_id: self.target_vpc_subnet_id,
+                region: core::default::Default::default(),
+                target_vpc_subnet_id: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -304,9 +335,23 @@ impl Ec2ClientVpnRouteRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_vpc_subnet_id` after provisioning.\n"]
     pub fn target_vpc_subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_vpc_subnet_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_attachment_id` after provisioning.\n"]
+    pub fn transit_gateway_attachment_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.transit_gateway_attachment_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
@@ -315,20 +360,20 @@ impl Ec2ClientVpnRouteRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Ec2ClientVpnRouteTimeoutsElRef {
-        Ec2ClientVpnRouteTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Ec2ClientVpnRoute_TimeoutsRef {
+        Ec2ClientVpnRoute_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct Ec2ClientVpnRouteTimeoutsEl {
+pub struct Ec2ClientVpnRoute_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Ec2ClientVpnRouteTimeoutsEl {
+impl Ec2ClientVpnRoute_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -342,8 +387,8 @@ impl Ec2ClientVpnRouteTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2ClientVpnRouteTimeoutsEl {
-    type O = terrars::BlockAssignable<Ec2ClientVpnRouteTimeoutsEl>;
+impl terrars::ToListMappable for Ec2ClientVpnRoute_Timeouts {
+    type O = terrars::BlockAssignable<Ec2ClientVpnRoute_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -354,32 +399,34 @@ impl terrars::ToListMappable for Ec2ClientVpnRouteTimeoutsEl {
     }
 }
 
-pub struct BuildEc2ClientVpnRouteTimeoutsEl {}
+pub struct BuildEc2ClientVpnRoute_Timeouts {}
 
-impl BuildEc2ClientVpnRouteTimeoutsEl {
-    pub fn build(self) -> Ec2ClientVpnRouteTimeoutsEl {
-        Ec2ClientVpnRouteTimeoutsEl {
+impl BuildEc2ClientVpnRoute_Timeouts {
+    pub fn build(self) -> Ec2ClientVpnRoute_Timeouts {
+        Ec2ClientVpnRoute_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2ClientVpnRouteTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Ec2ClientVpnRoute_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2ClientVpnRouteTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2ClientVpnRouteTimeoutsElRef {
-        Ec2ClientVpnRouteTimeoutsElRef {
+impl terrars::Ref for Ec2ClientVpnRoute_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2ClientVpnRoute_TimeoutsRef {
+        Ec2ClientVpnRoute_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2ClientVpnRouteTimeoutsElRef {
+impl Ec2ClientVpnRoute_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

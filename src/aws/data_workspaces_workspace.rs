@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataWorkspacesWorkspaceData {
+struct DataWorkspacesWorkspaceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,6 +23,8 @@ struct DataWorkspacesWorkspaceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -31,7 +35,7 @@ struct DataWorkspacesWorkspaceData {
 struct DataWorkspacesWorkspace_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataWorkspacesWorkspaceData>,
+    data: std::cell::RefCell<DataWorkspacesWorkspaceData_>,
 }
 
 #[derive(Clone)]
@@ -88,6 +92,13 @@ impl DataWorkspacesWorkspace {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -134,6 +145,12 @@ impl DataWorkspacesWorkspace {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_volume_encryption_enabled` after provisioning.\n"]
     pub fn root_volume_encryption_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
@@ -176,7 +193,7 @@ impl DataWorkspacesWorkspace {
     }
 
     #[doc = "Get a reference to the value of field `workspace_properties` after provisioning.\n"]
-    pub fn workspace_properties(&self) -> terrars::ListRef<DataWorkspacesWorkspaceWorkspacePropertiesElRef> {
+    pub fn workspace_properties(&self) -> terrars::ListRef<DataWorkspacesWorkspace_WorkspacePropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workspace_properties", self.extract_ref()))
     }
 }
@@ -221,13 +238,14 @@ impl BuildDataWorkspacesWorkspace {
         let out = DataWorkspacesWorkspace(std::rc::Rc::new(DataWorkspacesWorkspace_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataWorkspacesWorkspaceData {
+            data: std::cell::RefCell::new(DataWorkspacesWorkspaceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 directory_id: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 user_name: core::default::Default::default(),
                 workspace_id: core::default::Default::default(),
@@ -286,6 +304,12 @@ impl DataWorkspacesWorkspaceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_volume_encryption_enabled` after provisioning.\n"]
     pub fn root_volume_encryption_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(
@@ -328,13 +352,13 @@ impl DataWorkspacesWorkspaceRef {
     }
 
     #[doc = "Get a reference to the value of field `workspace_properties` after provisioning.\n"]
-    pub fn workspace_properties(&self) -> terrars::ListRef<DataWorkspacesWorkspaceWorkspacePropertiesElRef> {
+    pub fn workspace_properties(&self) -> terrars::ListRef<DataWorkspacesWorkspace_WorkspacePropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workspace_properties", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataWorkspacesWorkspaceWorkspacePropertiesEl {
+pub struct DataWorkspacesWorkspace_WorkspaceProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compute_type_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -347,7 +371,7 @@ pub struct DataWorkspacesWorkspaceWorkspacePropertiesEl {
     user_volume_size_gib: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataWorkspacesWorkspaceWorkspacePropertiesEl {
+impl DataWorkspacesWorkspace_WorkspaceProperties {
     #[doc = "Set the field `compute_type_name`.\n"]
     pub fn set_compute_type_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.compute_type_name = std::option::Option::Some(v.into());
@@ -382,8 +406,8 @@ impl DataWorkspacesWorkspaceWorkspacePropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for DataWorkspacesWorkspaceWorkspacePropertiesEl {
-    type O = terrars::BlockAssignable<DataWorkspacesWorkspaceWorkspacePropertiesEl>;
+impl terrars::ToListMappable for DataWorkspacesWorkspace_WorkspaceProperties {
+    type O = terrars::BlockAssignable<DataWorkspacesWorkspace_WorkspaceProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -394,11 +418,11 @@ impl terrars::ToListMappable for DataWorkspacesWorkspaceWorkspacePropertiesEl {
     }
 }
 
-pub struct BuildDataWorkspacesWorkspaceWorkspacePropertiesEl {}
+pub struct BuildDataWorkspacesWorkspace_WorkspaceProperties {}
 
-impl BuildDataWorkspacesWorkspaceWorkspacePropertiesEl {
-    pub fn build(self) -> DataWorkspacesWorkspaceWorkspacePropertiesEl {
-        DataWorkspacesWorkspaceWorkspacePropertiesEl {
+impl BuildDataWorkspacesWorkspace_WorkspaceProperties {
+    pub fn build(self) -> DataWorkspacesWorkspace_WorkspaceProperties {
+        DataWorkspacesWorkspace_WorkspaceProperties {
             compute_type_name: core::default::Default::default(),
             root_volume_size_gib: core::default::Default::default(),
             running_mode: core::default::Default::default(),
@@ -408,24 +432,26 @@ impl BuildDataWorkspacesWorkspaceWorkspacePropertiesEl {
     }
 }
 
-pub struct DataWorkspacesWorkspaceWorkspacePropertiesElRef {
+#[allow(dead_code)]
+pub struct DataWorkspacesWorkspace_WorkspacePropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataWorkspacesWorkspaceWorkspacePropertiesElRef {
+impl terrars::Ref for DataWorkspacesWorkspace_WorkspacePropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataWorkspacesWorkspaceWorkspacePropertiesElRef {
-        DataWorkspacesWorkspaceWorkspacePropertiesElRef {
+    ) -> DataWorkspacesWorkspace_WorkspacePropertiesRef {
+        DataWorkspacesWorkspace_WorkspacePropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataWorkspacesWorkspaceWorkspacePropertiesElRef {
+impl DataWorkspacesWorkspace_WorkspacePropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataElasticacheClusterData {
+struct DataElasticacheClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataElasticacheClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataElasticacheCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataElasticacheClusterData>,
+    data: std::cell::RefCell<DataElasticacheClusterData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataElasticacheCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -97,7 +108,7 @@ impl DataElasticacheCluster {
     }
 
     #[doc = "Get a reference to the value of field `cache_nodes` after provisioning.\n"]
-    pub fn cache_nodes(&self) -> terrars::ListRef<DataElasticacheClusterCacheNodesElRef> {
+    pub fn cache_nodes(&self) -> terrars::ListRef<DataElasticacheCluster_CacheNodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cache_nodes", self.extract_ref()))
     }
 
@@ -137,7 +148,7 @@ impl DataElasticacheCluster {
     }
 
     #[doc = "Get a reference to the value of field `log_delivery_configuration` after provisioning.\n"]
-    pub fn log_delivery_configuration(&self) -> terrars::SetRef<DataElasticacheClusterLogDeliveryConfigurationElRef> {
+    pub fn log_delivery_configuration(&self) -> terrars::SetRef<DataElasticacheCluster_LogDeliveryConfigurationRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.log_delivery_configuration", self.extract_ref()))
     }
 
@@ -181,6 +192,12 @@ impl DataElasticacheCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_outpost_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `replication_group_id` after provisioning.\n"]
     pub fn replication_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_group_id", self.extract_ref()))
@@ -189,11 +206,6 @@ impl DataElasticacheCluster {
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `security_group_names` after provisioning.\n"]
-    pub fn security_group_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_names", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_retention_limit` after provisioning.\n"]
@@ -259,13 +271,14 @@ impl BuildDataElasticacheCluster {
         let out = DataElasticacheCluster(std::rc::Rc::new(DataElasticacheCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataElasticacheClusterData {
+            data: std::cell::RefCell::new(DataElasticacheClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 cluster_id: self.cluster_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -308,7 +321,7 @@ impl DataElasticacheClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `cache_nodes` after provisioning.\n"]
-    pub fn cache_nodes(&self) -> terrars::ListRef<DataElasticacheClusterCacheNodesElRef> {
+    pub fn cache_nodes(&self) -> terrars::ListRef<DataElasticacheCluster_CacheNodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cache_nodes", self.extract_ref()))
     }
 
@@ -348,7 +361,7 @@ impl DataElasticacheClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `log_delivery_configuration` after provisioning.\n"]
-    pub fn log_delivery_configuration(&self) -> terrars::SetRef<DataElasticacheClusterLogDeliveryConfigurationElRef> {
+    pub fn log_delivery_configuration(&self) -> terrars::SetRef<DataElasticacheCluster_LogDeliveryConfigurationRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.log_delivery_configuration", self.extract_ref()))
     }
 
@@ -392,6 +405,12 @@ impl DataElasticacheClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_outpost_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `replication_group_id` after provisioning.\n"]
     pub fn replication_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_group_id", self.extract_ref()))
@@ -400,11 +419,6 @@ impl DataElasticacheClusterRef {
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `security_group_names` after provisioning.\n"]
-    pub fn security_group_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_names", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_retention_limit` after provisioning.\n"]
@@ -429,7 +443,7 @@ impl DataElasticacheClusterRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticacheClusterCacheNodesEl {
+pub struct DataElasticacheCluster_CacheNodes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -442,7 +456,7 @@ pub struct DataElasticacheClusterCacheNodesEl {
     port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataElasticacheClusterCacheNodesEl {
+impl DataElasticacheCluster_CacheNodes {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -474,8 +488,8 @@ impl DataElasticacheClusterCacheNodesEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticacheClusterCacheNodesEl {
-    type O = terrars::BlockAssignable<DataElasticacheClusterCacheNodesEl>;
+impl terrars::ToListMappable for DataElasticacheCluster_CacheNodes {
+    type O = terrars::BlockAssignable<DataElasticacheCluster_CacheNodes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -486,11 +500,11 @@ impl terrars::ToListMappable for DataElasticacheClusterCacheNodesEl {
     }
 }
 
-pub struct BuildDataElasticacheClusterCacheNodesEl {}
+pub struct BuildDataElasticacheCluster_CacheNodes {}
 
-impl BuildDataElasticacheClusterCacheNodesEl {
-    pub fn build(self) -> DataElasticacheClusterCacheNodesEl {
-        DataElasticacheClusterCacheNodesEl {
+impl BuildDataElasticacheCluster_CacheNodes {
+    pub fn build(self) -> DataElasticacheCluster_CacheNodes {
+        DataElasticacheCluster_CacheNodes {
             address: core::default::Default::default(),
             availability_zone: core::default::Default::default(),
             id: core::default::Default::default(),
@@ -500,21 +514,23 @@ impl BuildDataElasticacheClusterCacheNodesEl {
     }
 }
 
-pub struct DataElasticacheClusterCacheNodesElRef {
+#[allow(dead_code)]
+pub struct DataElasticacheCluster_CacheNodesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticacheClusterCacheNodesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticacheClusterCacheNodesElRef {
-        DataElasticacheClusterCacheNodesElRef {
+impl terrars::Ref for DataElasticacheCluster_CacheNodesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticacheCluster_CacheNodesRef {
+        DataElasticacheCluster_CacheNodesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticacheClusterCacheNodesElRef {
+impl DataElasticacheCluster_CacheNodesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -546,7 +562,7 @@ impl DataElasticacheClusterCacheNodesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticacheClusterLogDeliveryConfigurationEl {
+pub struct DataElasticacheCluster_LogDeliveryConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -557,7 +573,7 @@ pub struct DataElasticacheClusterLogDeliveryConfigurationEl {
     log_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataElasticacheClusterLogDeliveryConfigurationEl {
+impl DataElasticacheCluster_LogDeliveryConfiguration {
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.destination = std::option::Option::Some(v.into());
@@ -583,8 +599,8 @@ impl DataElasticacheClusterLogDeliveryConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticacheClusterLogDeliveryConfigurationEl {
-    type O = terrars::BlockAssignable<DataElasticacheClusterLogDeliveryConfigurationEl>;
+impl terrars::ToListMappable for DataElasticacheCluster_LogDeliveryConfiguration {
+    type O = terrars::BlockAssignable<DataElasticacheCluster_LogDeliveryConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -595,11 +611,11 @@ impl terrars::ToListMappable for DataElasticacheClusterLogDeliveryConfigurationE
     }
 }
 
-pub struct BuildDataElasticacheClusterLogDeliveryConfigurationEl {}
+pub struct BuildDataElasticacheCluster_LogDeliveryConfiguration {}
 
-impl BuildDataElasticacheClusterLogDeliveryConfigurationEl {
-    pub fn build(self) -> DataElasticacheClusterLogDeliveryConfigurationEl {
-        DataElasticacheClusterLogDeliveryConfigurationEl {
+impl BuildDataElasticacheCluster_LogDeliveryConfiguration {
+    pub fn build(self) -> DataElasticacheCluster_LogDeliveryConfiguration {
+        DataElasticacheCluster_LogDeliveryConfiguration {
             destination: core::default::Default::default(),
             destination_type: core::default::Default::default(),
             log_format: core::default::Default::default(),
@@ -608,24 +624,26 @@ impl BuildDataElasticacheClusterLogDeliveryConfigurationEl {
     }
 }
 
-pub struct DataElasticacheClusterLogDeliveryConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataElasticacheCluster_LogDeliveryConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticacheClusterLogDeliveryConfigurationElRef {
+impl terrars::Ref for DataElasticacheCluster_LogDeliveryConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataElasticacheClusterLogDeliveryConfigurationElRef {
-        DataElasticacheClusterLogDeliveryConfigurationElRef {
+    ) -> DataElasticacheCluster_LogDeliveryConfigurationRef {
+        DataElasticacheCluster_LogDeliveryConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticacheClusterLogDeliveryConfigurationElRef {
+impl DataElasticacheCluster_LogDeliveryConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

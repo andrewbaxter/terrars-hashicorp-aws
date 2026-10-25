@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbParameterGroupData {
+struct DbParameterGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,18 +30,22 @@ struct DbParameterGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<std::vec::Vec<DbParameterGroupParameterEl>>,
+    parameter: std::option::Option<std::vec::Vec<DbParameterGroup_Parameter>>,
     dynamic: DbParameterGroupDynamic,
 }
 
 struct DbParameterGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbParameterGroupData>,
+    data: std::cell::RefCell<DbParameterGroupData_>,
 }
 
 #[derive(Clone)]
@@ -163,6 +169,19 @@ impl DbParameterGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `skip_destroy`.\n"]
+    pub fn set_skip_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -184,7 +203,7 @@ impl DbParameterGroup {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DbParameterGroupParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DbParameterGroup_Parameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -225,6 +244,17 @@ impl DbParameterGroup {
     #[doc = "Get a reference to the value of field `name_prefix` after provisioning.\n"]
     pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -280,7 +310,7 @@ impl BuildDbParameterGroup {
         let out = DbParameterGroup(std::rc::Rc::new(DbParameterGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbParameterGroupData {
+            data: std::cell::RefCell::new(DbParameterGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -291,6 +321,8 @@ impl BuildDbParameterGroup {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
+                skip_destroy: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 parameter: core::default::Default::default(),
@@ -355,6 +387,17 @@ impl DbParameterGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -366,15 +409,20 @@ impl DbParameterGroupRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DbParameterGroupDynamic {
+    parameter: std::option::Option<terrars::DynamicBlock<DbParameterGroup_Parameter>>,
+}
+
 #[derive(Serialize)]
-pub struct DbParameterGroupParameterEl {
+pub struct DbParameterGroup_Parameter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     apply_method: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl DbParameterGroupParameterEl {
+impl DbParameterGroup_Parameter {
     #[doc = "Set the field `apply_method`.\n"]
     pub fn set_apply_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.apply_method = std::option::Option::Some(v.into());
@@ -382,8 +430,8 @@ impl DbParameterGroupParameterEl {
     }
 }
 
-impl terrars::ToListMappable for DbParameterGroupParameterEl {
-    type O = terrars::BlockAssignable<DbParameterGroupParameterEl>;
+impl terrars::ToListMappable for DbParameterGroup_Parameter {
+    type O = terrars::BlockAssignable<DbParameterGroup_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -394,16 +442,16 @@ impl terrars::ToListMappable for DbParameterGroupParameterEl {
     }
 }
 
-pub struct BuildDbParameterGroupParameterEl {
+pub struct BuildDbParameterGroup_Parameter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDbParameterGroupParameterEl {
-    pub fn build(self) -> DbParameterGroupParameterEl {
-        DbParameterGroupParameterEl {
+impl BuildDbParameterGroup_Parameter {
+    pub fn build(self) -> DbParameterGroup_Parameter {
+        DbParameterGroup_Parameter {
             apply_method: core::default::Default::default(),
             name: self.name,
             value: self.value,
@@ -411,21 +459,23 @@ impl BuildDbParameterGroupParameterEl {
     }
 }
 
-pub struct DbParameterGroupParameterElRef {
+#[allow(dead_code)]
+pub struct DbParameterGroup_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbParameterGroupParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbParameterGroupParameterElRef {
-        DbParameterGroupParameterElRef {
+impl terrars::Ref for DbParameterGroup_ParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbParameterGroup_ParameterRef {
+        DbParameterGroup_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbParameterGroupParameterElRef {
+impl DbParameterGroup_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -444,9 +494,4 @@ impl DbParameterGroupParameterElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DbParameterGroupDynamic {
-    parameter: std::option::Option<terrars::DynamicBlock<DbParameterGroupParameterEl>>,
 }

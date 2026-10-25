@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataIdentitystoreUserData {
+struct DataIdentitystoreUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,18 +22,18 @@ struct DataIdentitystoreUserData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     identity_store_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    alternate_identifier: std::option::Option<std::vec::Vec<DataIdentitystoreUserAlternateIdentifierEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataIdentitystoreUserFilterEl>>,
+    alternate_identifier: std::option::Option<std::vec::Vec<DataIdentitystoreUser_AlternateIdentifier>>,
     dynamic: DataIdentitystoreUserDynamic,
 }
 
 struct DataIdentitystoreUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataIdentitystoreUserData>,
+    data: std::cell::RefCell<DataIdentitystoreUserData_>,
 }
 
 #[derive(Clone)]
@@ -82,6 +84,13 @@ impl DataIdentitystoreUser {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `user_id`.\n"]
     pub fn set_user_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().user_id = std::option::Option::Some(v.into());
@@ -91,7 +100,7 @@ impl DataIdentitystoreUser {
     #[doc = "Set the field `alternate_identifier`.\n"]
     pub fn set_alternate_identifier(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataIdentitystoreUserAlternateIdentifierEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataIdentitystoreUser_AlternateIdentifier>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -104,24 +113,8 @@ impl DataIdentitystoreUser {
         self
     }
 
-    #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataIdentitystoreUserFilterEl>>,
-    ) -> Self {
-        match v.into() {
-            terrars::BlockAssignable::Literal(v) => {
-                self.0.data.borrow_mut().filter = std::option::Option::Some(v);
-            },
-            terrars::BlockAssignable::Dynamic(d) => {
-                self.0.data.borrow_mut().dynamic.filter = std::option::Option::Some(d);
-            },
-        }
-        self
-    }
-
     #[doc = "Get a reference to the value of field `addresses` after provisioning.\n"]
-    pub fn addresses(&self) -> terrars::ListRef<DataIdentitystoreUserAddressesElRef> {
+    pub fn addresses(&self) -> terrars::ListRef<DataIdentitystoreUser_AddressesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.addresses", self.extract_ref()))
     }
 
@@ -131,12 +124,12 @@ impl DataIdentitystoreUser {
     }
 
     #[doc = "Get a reference to the value of field `emails` after provisioning.\n"]
-    pub fn emails(&self) -> terrars::ListRef<DataIdentitystoreUserEmailsElRef> {
+    pub fn emails(&self) -> terrars::ListRef<DataIdentitystoreUser_EmailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.emails", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `external_ids` after provisioning.\n"]
-    pub fn external_ids(&self) -> terrars::ListRef<DataIdentitystoreUserExternalIdsElRef> {
+    pub fn external_ids(&self) -> terrars::ListRef<DataIdentitystoreUser_ExternalIdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
     }
 
@@ -156,7 +149,7 @@ impl DataIdentitystoreUser {
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::ListRef<DataIdentitystoreUserNameElRef> {
+    pub fn name(&self) -> terrars::ListRef<DataIdentitystoreUser_NameRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
@@ -166,7 +159,7 @@ impl DataIdentitystoreUser {
     }
 
     #[doc = "Get a reference to the value of field `phone_numbers` after provisioning.\n"]
-    pub fn phone_numbers(&self) -> terrars::ListRef<DataIdentitystoreUserPhoneNumbersElRef> {
+    pub fn phone_numbers(&self) -> terrars::ListRef<DataIdentitystoreUser_PhoneNumbersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phone_numbers", self.extract_ref()))
     }
 
@@ -178,6 +171,12 @@ impl DataIdentitystoreUser {
     #[doc = "Get a reference to the value of field `profile_url` after provisioning.\n"]
     pub fn profile_url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_url", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timezone` after provisioning.\n"]
@@ -200,19 +199,19 @@ impl DataIdentitystoreUser {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `user_status` after provisioning.\n"]
+    pub fn user_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_status", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_type` after provisioning.\n"]
     pub fn user_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `alternate_identifier` after provisioning.\n"]
-    pub fn alternate_identifier(&self) -> terrars::ListRef<DataIdentitystoreUserAlternateIdentifierElRef> {
+    pub fn alternate_identifier(&self) -> terrars::ListRef<DataIdentitystoreUser_AlternateIdentifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alternate_identifier", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<DataIdentitystoreUserFilterElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 }
 
@@ -258,16 +257,16 @@ impl BuildDataIdentitystoreUser {
         let out = DataIdentitystoreUser(std::rc::Rc::new(DataIdentitystoreUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataIdentitystoreUserData {
+            data: std::cell::RefCell::new(DataIdentitystoreUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 identity_store_id: self.identity_store_id,
+                region: core::default::Default::default(),
                 user_id: core::default::Default::default(),
                 alternate_identifier: core::default::Default::default(),
-                filter: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -300,7 +299,7 @@ impl DataIdentitystoreUserRef {
     }
 
     #[doc = "Get a reference to the value of field `addresses` after provisioning.\n"]
-    pub fn addresses(&self) -> terrars::ListRef<DataIdentitystoreUserAddressesElRef> {
+    pub fn addresses(&self) -> terrars::ListRef<DataIdentitystoreUser_AddressesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.addresses", self.extract_ref()))
     }
 
@@ -310,12 +309,12 @@ impl DataIdentitystoreUserRef {
     }
 
     #[doc = "Get a reference to the value of field `emails` after provisioning.\n"]
-    pub fn emails(&self) -> terrars::ListRef<DataIdentitystoreUserEmailsElRef> {
+    pub fn emails(&self) -> terrars::ListRef<DataIdentitystoreUser_EmailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.emails", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `external_ids` after provisioning.\n"]
-    pub fn external_ids(&self) -> terrars::ListRef<DataIdentitystoreUserExternalIdsElRef> {
+    pub fn external_ids(&self) -> terrars::ListRef<DataIdentitystoreUser_ExternalIdsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_ids", self.extract_ref()))
     }
 
@@ -335,7 +334,7 @@ impl DataIdentitystoreUserRef {
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::ListRef<DataIdentitystoreUserNameElRef> {
+    pub fn name(&self) -> terrars::ListRef<DataIdentitystoreUser_NameRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
@@ -345,7 +344,7 @@ impl DataIdentitystoreUserRef {
     }
 
     #[doc = "Get a reference to the value of field `phone_numbers` after provisioning.\n"]
-    pub fn phone_numbers(&self) -> terrars::ListRef<DataIdentitystoreUserPhoneNumbersElRef> {
+    pub fn phone_numbers(&self) -> terrars::ListRef<DataIdentitystoreUser_PhoneNumbersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phone_numbers", self.extract_ref()))
     }
 
@@ -357,6 +356,12 @@ impl DataIdentitystoreUserRef {
     #[doc = "Get a reference to the value of field `profile_url` after provisioning.\n"]
     pub fn profile_url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.profile_url", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timezone` after provisioning.\n"]
@@ -379,24 +384,29 @@ impl DataIdentitystoreUserRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `user_status` after provisioning.\n"]
+    pub fn user_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_status", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_type` after provisioning.\n"]
     pub fn user_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `alternate_identifier` after provisioning.\n"]
-    pub fn alternate_identifier(&self) -> terrars::ListRef<DataIdentitystoreUserAlternateIdentifierElRef> {
+    pub fn alternate_identifier(&self) -> terrars::ListRef<DataIdentitystoreUser_AlternateIdentifierRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.alternate_identifier", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<DataIdentitystoreUserFilterElRef> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataIdentitystoreUserDynamic {
+    alternate_identifier: std::option::Option<terrars::DynamicBlock<DataIdentitystoreUser_AlternateIdentifier>>,
+}
+
 #[derive(Serialize)]
-pub struct DataIdentitystoreUserAddressesEl {
+pub struct DataIdentitystoreUser_Addresses {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     country: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -415,7 +425,7 @@ pub struct DataIdentitystoreUserAddressesEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataIdentitystoreUserAddressesEl {
+impl DataIdentitystoreUser_Addresses {
     #[doc = "Set the field `country`.\n"]
     pub fn set_country(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.country = std::option::Option::Some(v.into());
@@ -465,8 +475,8 @@ impl DataIdentitystoreUserAddressesEl {
     }
 }
 
-impl terrars::ToListMappable for DataIdentitystoreUserAddressesEl {
-    type O = terrars::BlockAssignable<DataIdentitystoreUserAddressesEl>;
+impl terrars::ToListMappable for DataIdentitystoreUser_Addresses {
+    type O = terrars::BlockAssignable<DataIdentitystoreUser_Addresses>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -477,11 +487,11 @@ impl terrars::ToListMappable for DataIdentitystoreUserAddressesEl {
     }
 }
 
-pub struct BuildDataIdentitystoreUserAddressesEl {}
+pub struct BuildDataIdentitystoreUser_Addresses {}
 
-impl BuildDataIdentitystoreUserAddressesEl {
-    pub fn build(self) -> DataIdentitystoreUserAddressesEl {
-        DataIdentitystoreUserAddressesEl {
+impl BuildDataIdentitystoreUser_Addresses {
+    pub fn build(self) -> DataIdentitystoreUser_Addresses {
+        DataIdentitystoreUser_Addresses {
             country: core::default::Default::default(),
             formatted: core::default::Default::default(),
             locality: core::default::Default::default(),
@@ -494,21 +504,23 @@ impl BuildDataIdentitystoreUserAddressesEl {
     }
 }
 
-pub struct DataIdentitystoreUserAddressesElRef {
+#[allow(dead_code)]
+pub struct DataIdentitystoreUser_AddressesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIdentitystoreUserAddressesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUserAddressesElRef {
-        DataIdentitystoreUserAddressesElRef {
+impl terrars::Ref for DataIdentitystoreUser_AddressesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUser_AddressesRef {
+        DataIdentitystoreUser_AddressesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIdentitystoreUserAddressesElRef {
+impl DataIdentitystoreUser_AddressesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -555,7 +567,7 @@ impl DataIdentitystoreUserAddressesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataIdentitystoreUserEmailsEl {
+pub struct DataIdentitystoreUser_Emails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     primary: std::option::Option<terrars::PrimField<bool>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
@@ -564,7 +576,7 @@ pub struct DataIdentitystoreUserEmailsEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataIdentitystoreUserEmailsEl {
+impl DataIdentitystoreUser_Emails {
     #[doc = "Set the field `primary`.\n"]
     pub fn set_primary(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.primary = std::option::Option::Some(v.into());
@@ -584,8 +596,8 @@ impl DataIdentitystoreUserEmailsEl {
     }
 }
 
-impl terrars::ToListMappable for DataIdentitystoreUserEmailsEl {
-    type O = terrars::BlockAssignable<DataIdentitystoreUserEmailsEl>;
+impl terrars::ToListMappable for DataIdentitystoreUser_Emails {
+    type O = terrars::BlockAssignable<DataIdentitystoreUser_Emails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -596,11 +608,11 @@ impl terrars::ToListMappable for DataIdentitystoreUserEmailsEl {
     }
 }
 
-pub struct BuildDataIdentitystoreUserEmailsEl {}
+pub struct BuildDataIdentitystoreUser_Emails {}
 
-impl BuildDataIdentitystoreUserEmailsEl {
-    pub fn build(self) -> DataIdentitystoreUserEmailsEl {
-        DataIdentitystoreUserEmailsEl {
+impl BuildDataIdentitystoreUser_Emails {
+    pub fn build(self) -> DataIdentitystoreUser_Emails {
+        DataIdentitystoreUser_Emails {
             primary: core::default::Default::default(),
             type_: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -608,21 +620,23 @@ impl BuildDataIdentitystoreUserEmailsEl {
     }
 }
 
-pub struct DataIdentitystoreUserEmailsElRef {
+#[allow(dead_code)]
+pub struct DataIdentitystoreUser_EmailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIdentitystoreUserEmailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUserEmailsElRef {
-        DataIdentitystoreUserEmailsElRef {
+impl terrars::Ref for DataIdentitystoreUser_EmailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUser_EmailsRef {
+        DataIdentitystoreUser_EmailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIdentitystoreUserEmailsElRef {
+impl DataIdentitystoreUser_EmailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -644,14 +658,14 @@ impl DataIdentitystoreUserEmailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataIdentitystoreUserExternalIdsEl {
+pub struct DataIdentitystoreUser_ExternalIds {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     issuer: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataIdentitystoreUserExternalIdsEl {
+impl DataIdentitystoreUser_ExternalIds {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -665,8 +679,8 @@ impl DataIdentitystoreUserExternalIdsEl {
     }
 }
 
-impl terrars::ToListMappable for DataIdentitystoreUserExternalIdsEl {
-    type O = terrars::BlockAssignable<DataIdentitystoreUserExternalIdsEl>;
+impl terrars::ToListMappable for DataIdentitystoreUser_ExternalIds {
+    type O = terrars::BlockAssignable<DataIdentitystoreUser_ExternalIds>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -677,32 +691,34 @@ impl terrars::ToListMappable for DataIdentitystoreUserExternalIdsEl {
     }
 }
 
-pub struct BuildDataIdentitystoreUserExternalIdsEl {}
+pub struct BuildDataIdentitystoreUser_ExternalIds {}
 
-impl BuildDataIdentitystoreUserExternalIdsEl {
-    pub fn build(self) -> DataIdentitystoreUserExternalIdsEl {
-        DataIdentitystoreUserExternalIdsEl {
+impl BuildDataIdentitystoreUser_ExternalIds {
+    pub fn build(self) -> DataIdentitystoreUser_ExternalIds {
+        DataIdentitystoreUser_ExternalIds {
             id: core::default::Default::default(),
             issuer: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataIdentitystoreUserExternalIdsElRef {
+#[allow(dead_code)]
+pub struct DataIdentitystoreUser_ExternalIdsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIdentitystoreUserExternalIdsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUserExternalIdsElRef {
-        DataIdentitystoreUserExternalIdsElRef {
+impl terrars::Ref for DataIdentitystoreUser_ExternalIdsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUser_ExternalIdsRef {
+        DataIdentitystoreUser_ExternalIdsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIdentitystoreUserExternalIdsElRef {
+impl DataIdentitystoreUser_ExternalIdsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -719,7 +735,7 @@ impl DataIdentitystoreUserExternalIdsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataIdentitystoreUserNameEl {
+pub struct DataIdentitystoreUser_Name {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     family_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -734,7 +750,7 @@ pub struct DataIdentitystoreUserNameEl {
     middle_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataIdentitystoreUserNameEl {
+impl DataIdentitystoreUser_Name {
     #[doc = "Set the field `family_name`.\n"]
     pub fn set_family_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.family_name = std::option::Option::Some(v.into());
@@ -772,8 +788,8 @@ impl DataIdentitystoreUserNameEl {
     }
 }
 
-impl terrars::ToListMappable for DataIdentitystoreUserNameEl {
-    type O = terrars::BlockAssignable<DataIdentitystoreUserNameEl>;
+impl terrars::ToListMappable for DataIdentitystoreUser_Name {
+    type O = terrars::BlockAssignable<DataIdentitystoreUser_Name>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -784,11 +800,11 @@ impl terrars::ToListMappable for DataIdentitystoreUserNameEl {
     }
 }
 
-pub struct BuildDataIdentitystoreUserNameEl {}
+pub struct BuildDataIdentitystoreUser_Name {}
 
-impl BuildDataIdentitystoreUserNameEl {
-    pub fn build(self) -> DataIdentitystoreUserNameEl {
-        DataIdentitystoreUserNameEl {
+impl BuildDataIdentitystoreUser_Name {
+    pub fn build(self) -> DataIdentitystoreUser_Name {
+        DataIdentitystoreUser_Name {
             family_name: core::default::Default::default(),
             formatted: core::default::Default::default(),
             given_name: core::default::Default::default(),
@@ -799,21 +815,23 @@ impl BuildDataIdentitystoreUserNameEl {
     }
 }
 
-pub struct DataIdentitystoreUserNameElRef {
+#[allow(dead_code)]
+pub struct DataIdentitystoreUser_NameRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIdentitystoreUserNameElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUserNameElRef {
-        DataIdentitystoreUserNameElRef {
+impl terrars::Ref for DataIdentitystoreUser_NameRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUser_NameRef {
+        DataIdentitystoreUser_NameRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIdentitystoreUserNameElRef {
+impl DataIdentitystoreUser_NameRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -850,7 +868,7 @@ impl DataIdentitystoreUserNameElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataIdentitystoreUserPhoneNumbersEl {
+pub struct DataIdentitystoreUser_PhoneNumbers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     primary: std::option::Option<terrars::PrimField<bool>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
@@ -859,7 +877,7 @@ pub struct DataIdentitystoreUserPhoneNumbersEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataIdentitystoreUserPhoneNumbersEl {
+impl DataIdentitystoreUser_PhoneNumbers {
     #[doc = "Set the field `primary`.\n"]
     pub fn set_primary(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.primary = std::option::Option::Some(v.into());
@@ -879,8 +897,8 @@ impl DataIdentitystoreUserPhoneNumbersEl {
     }
 }
 
-impl terrars::ToListMappable for DataIdentitystoreUserPhoneNumbersEl {
-    type O = terrars::BlockAssignable<DataIdentitystoreUserPhoneNumbersEl>;
+impl terrars::ToListMappable for DataIdentitystoreUser_PhoneNumbers {
+    type O = terrars::BlockAssignable<DataIdentitystoreUser_PhoneNumbers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -891,11 +909,11 @@ impl terrars::ToListMappable for DataIdentitystoreUserPhoneNumbersEl {
     }
 }
 
-pub struct BuildDataIdentitystoreUserPhoneNumbersEl {}
+pub struct BuildDataIdentitystoreUser_PhoneNumbers {}
 
-impl BuildDataIdentitystoreUserPhoneNumbersEl {
-    pub fn build(self) -> DataIdentitystoreUserPhoneNumbersEl {
-        DataIdentitystoreUserPhoneNumbersEl {
+impl BuildDataIdentitystoreUser_PhoneNumbers {
+    pub fn build(self) -> DataIdentitystoreUser_PhoneNumbers {
+        DataIdentitystoreUser_PhoneNumbers {
             primary: core::default::Default::default(),
             type_: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -903,21 +921,23 @@ impl BuildDataIdentitystoreUserPhoneNumbersEl {
     }
 }
 
-pub struct DataIdentitystoreUserPhoneNumbersElRef {
+#[allow(dead_code)]
+pub struct DataIdentitystoreUser_PhoneNumbersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIdentitystoreUserPhoneNumbersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUserPhoneNumbersElRef {
-        DataIdentitystoreUserPhoneNumbersElRef {
+impl terrars::Ref for DataIdentitystoreUser_PhoneNumbersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUser_PhoneNumbersRef {
+        DataIdentitystoreUser_PhoneNumbersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIdentitystoreUserPhoneNumbersElRef {
+impl DataIdentitystoreUser_PhoneNumbersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -939,15 +959,15 @@ impl DataIdentitystoreUserPhoneNumbersElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataIdentitystoreUserAlternateIdentifierElExternalIdEl {
+pub struct DataIdentitystoreUser_AlternateIdentifier_ExternalId {
     id: terrars::PrimField<std::string::String>,
     issuer: terrars::PrimField<std::string::String>,
 }
 
-impl DataIdentitystoreUserAlternateIdentifierElExternalIdEl { }
+impl DataIdentitystoreUser_AlternateIdentifier_ExternalId { }
 
-impl terrars::ToListMappable for DataIdentitystoreUserAlternateIdentifierElExternalIdEl {
-    type O = terrars::BlockAssignable<DataIdentitystoreUserAlternateIdentifierElExternalIdEl>;
+impl terrars::ToListMappable for DataIdentitystoreUser_AlternateIdentifier_ExternalId {
+    type O = terrars::BlockAssignable<DataIdentitystoreUser_AlternateIdentifier_ExternalId>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -958,40 +978,42 @@ impl terrars::ToListMappable for DataIdentitystoreUserAlternateIdentifierElExter
     }
 }
 
-pub struct BuildDataIdentitystoreUserAlternateIdentifierElExternalIdEl {
+pub struct BuildDataIdentitystoreUser_AlternateIdentifier_ExternalId {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub issuer: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataIdentitystoreUserAlternateIdentifierElExternalIdEl {
-    pub fn build(self) -> DataIdentitystoreUserAlternateIdentifierElExternalIdEl {
-        DataIdentitystoreUserAlternateIdentifierElExternalIdEl {
+impl BuildDataIdentitystoreUser_AlternateIdentifier_ExternalId {
+    pub fn build(self) -> DataIdentitystoreUser_AlternateIdentifier_ExternalId {
+        DataIdentitystoreUser_AlternateIdentifier_ExternalId {
             id: self.id,
             issuer: self.issuer,
         }
     }
 }
 
-pub struct DataIdentitystoreUserAlternateIdentifierElExternalIdElRef {
+#[allow(dead_code)]
+pub struct DataIdentitystoreUser_AlternateIdentifier_ExternalIdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIdentitystoreUserAlternateIdentifierElExternalIdElRef {
+impl terrars::Ref for DataIdentitystoreUser_AlternateIdentifier_ExternalIdRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataIdentitystoreUserAlternateIdentifierElExternalIdElRef {
-        DataIdentitystoreUserAlternateIdentifierElExternalIdElRef {
+    ) -> DataIdentitystoreUser_AlternateIdentifier_ExternalIdRef {
+        DataIdentitystoreUser_AlternateIdentifier_ExternalIdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIdentitystoreUserAlternateIdentifierElExternalIdElRef {
+impl DataIdentitystoreUser_AlternateIdentifier_ExternalIdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1008,15 +1030,15 @@ impl DataIdentitystoreUserAlternateIdentifierElExternalIdElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl {
+pub struct DataIdentitystoreUser_AlternateIdentifier_UniqueAttribute {
     attribute_path: terrars::PrimField<std::string::String>,
     attribute_value: terrars::PrimField<std::string::String>,
 }
 
-impl DataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl { }
+impl DataIdentitystoreUser_AlternateIdentifier_UniqueAttribute { }
 
-impl terrars::ToListMappable for DataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl {
-    type O = terrars::BlockAssignable<DataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl>;
+impl terrars::ToListMappable for DataIdentitystoreUser_AlternateIdentifier_UniqueAttribute {
+    type O = terrars::BlockAssignable<DataIdentitystoreUser_AlternateIdentifier_UniqueAttribute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1027,40 +1049,42 @@ impl terrars::ToListMappable for DataIdentitystoreUserAlternateIdentifierElUniqu
     }
 }
 
-pub struct BuildDataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl {
+pub struct BuildDataIdentitystoreUser_AlternateIdentifier_UniqueAttribute {
     #[doc = ""]
     pub attribute_path: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub attribute_value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl {
-    pub fn build(self) -> DataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl {
-        DataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl {
+impl BuildDataIdentitystoreUser_AlternateIdentifier_UniqueAttribute {
+    pub fn build(self) -> DataIdentitystoreUser_AlternateIdentifier_UniqueAttribute {
+        DataIdentitystoreUser_AlternateIdentifier_UniqueAttribute {
             attribute_path: self.attribute_path,
             attribute_value: self.attribute_value,
         }
     }
 }
 
-pub struct DataIdentitystoreUserAlternateIdentifierElUniqueAttributeElRef {
+#[allow(dead_code)]
+pub struct DataIdentitystoreUser_AlternateIdentifier_UniqueAttributeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIdentitystoreUserAlternateIdentifierElUniqueAttributeElRef {
+impl terrars::Ref for DataIdentitystoreUser_AlternateIdentifier_UniqueAttributeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataIdentitystoreUserAlternateIdentifierElUniqueAttributeElRef {
-        DataIdentitystoreUserAlternateIdentifierElUniqueAttributeElRef {
+    ) -> DataIdentitystoreUser_AlternateIdentifier_UniqueAttributeRef {
+        DataIdentitystoreUser_AlternateIdentifier_UniqueAttributeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIdentitystoreUserAlternateIdentifierElUniqueAttributeElRef {
+impl DataIdentitystoreUser_AlternateIdentifier_UniqueAttributeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1077,27 +1101,27 @@ impl DataIdentitystoreUserAlternateIdentifierElUniqueAttributeElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataIdentitystoreUserAlternateIdentifierElDynamic {
-    external_id: std::option::Option<terrars::DynamicBlock<DataIdentitystoreUserAlternateIdentifierElExternalIdEl>>,
+struct DataIdentitystoreUser_AlternateIdentifierDynamic {
+    external_id: std::option::Option<terrars::DynamicBlock<DataIdentitystoreUser_AlternateIdentifier_ExternalId>>,
     unique_attribute: std
     ::option
-    ::Option<terrars::DynamicBlock<DataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl>>,
+    ::Option<terrars::DynamicBlock<DataIdentitystoreUser_AlternateIdentifier_UniqueAttribute>>,
 }
 
 #[derive(Serialize)]
-pub struct DataIdentitystoreUserAlternateIdentifierEl {
+pub struct DataIdentitystoreUser_AlternateIdentifier {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    external_id: std::option::Option<std::vec::Vec<DataIdentitystoreUserAlternateIdentifierElExternalIdEl>>,
+    external_id: std::option::Option<std::vec::Vec<DataIdentitystoreUser_AlternateIdentifier_ExternalId>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    unique_attribute: std::option::Option<std::vec::Vec<DataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl>>,
-    dynamic: DataIdentitystoreUserAlternateIdentifierElDynamic,
+    unique_attribute: std::option::Option<std::vec::Vec<DataIdentitystoreUser_AlternateIdentifier_UniqueAttribute>>,
+    dynamic: DataIdentitystoreUser_AlternateIdentifierDynamic,
 }
 
-impl DataIdentitystoreUserAlternateIdentifierEl {
+impl DataIdentitystoreUser_AlternateIdentifier {
     #[doc = "Set the field `external_id`.\n"]
     pub fn set_external_id(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataIdentitystoreUserAlternateIdentifierElExternalIdEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataIdentitystoreUser_AlternateIdentifier_ExternalId>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1118,7 +1142,7 @@ impl DataIdentitystoreUserAlternateIdentifierEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataIdentitystoreUserAlternateIdentifierElUniqueAttributeEl>>,
+                    ::Into<terrars::BlockAssignable<DataIdentitystoreUser_AlternateIdentifier_UniqueAttribute>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1132,8 +1156,8 @@ impl DataIdentitystoreUserAlternateIdentifierEl {
     }
 }
 
-impl terrars::ToListMappable for DataIdentitystoreUserAlternateIdentifierEl {
-    type O = terrars::BlockAssignable<DataIdentitystoreUserAlternateIdentifierEl>;
+impl terrars::ToListMappable for DataIdentitystoreUser_AlternateIdentifier {
+    type O = terrars::BlockAssignable<DataIdentitystoreUser_AlternateIdentifier>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1144,11 +1168,11 @@ impl terrars::ToListMappable for DataIdentitystoreUserAlternateIdentifierEl {
     }
 }
 
-pub struct BuildDataIdentitystoreUserAlternateIdentifierEl {}
+pub struct BuildDataIdentitystoreUser_AlternateIdentifier {}
 
-impl BuildDataIdentitystoreUserAlternateIdentifierEl {
-    pub fn build(self) -> DataIdentitystoreUserAlternateIdentifierEl {
-        DataIdentitystoreUserAlternateIdentifierEl {
+impl BuildDataIdentitystoreUser_AlternateIdentifier {
+    pub fn build(self) -> DataIdentitystoreUser_AlternateIdentifier {
+        DataIdentitystoreUser_AlternateIdentifier {
             external_id: core::default::Default::default(),
             unique_attribute: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1156,104 +1180,34 @@ impl BuildDataIdentitystoreUserAlternateIdentifierEl {
     }
 }
 
-pub struct DataIdentitystoreUserAlternateIdentifierElRef {
+#[allow(dead_code)]
+pub struct DataIdentitystoreUser_AlternateIdentifierRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIdentitystoreUserAlternateIdentifierElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUserAlternateIdentifierElRef {
-        DataIdentitystoreUserAlternateIdentifierElRef {
+impl terrars::Ref for DataIdentitystoreUser_AlternateIdentifierRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUser_AlternateIdentifierRef {
+        DataIdentitystoreUser_AlternateIdentifierRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIdentitystoreUserAlternateIdentifierElRef {
+impl DataIdentitystoreUser_AlternateIdentifierRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `external_id` after provisioning.\n"]
-    pub fn external_id(&self) -> terrars::ListRef<DataIdentitystoreUserAlternateIdentifierElExternalIdElRef> {
+    pub fn external_id(&self) -> terrars::ListRef<DataIdentitystoreUser_AlternateIdentifier_ExternalIdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_id", self.base))
     }
 
     #[doc = "Get a reference to the value of field `unique_attribute` after provisioning.\n"]
-    pub fn unique_attribute(&self) -> terrars::ListRef<DataIdentitystoreUserAlternateIdentifierElUniqueAttributeElRef> {
+    pub fn unique_attribute(&self) -> terrars::ListRef<DataIdentitystoreUser_AlternateIdentifier_UniqueAttributeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.unique_attribute", self.base))
     }
-}
-
-#[derive(Serialize)]
-pub struct DataIdentitystoreUserFilterEl {
-    attribute_path: terrars::PrimField<std::string::String>,
-    attribute_value: terrars::PrimField<std::string::String>,
-}
-
-impl DataIdentitystoreUserFilterEl { }
-
-impl terrars::ToListMappable for DataIdentitystoreUserFilterEl {
-    type O = terrars::BlockAssignable<DataIdentitystoreUserFilterEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDataIdentitystoreUserFilterEl {
-    #[doc = ""]
-    pub attribute_path: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub attribute_value: terrars::PrimField<std::string::String>,
-}
-
-impl BuildDataIdentitystoreUserFilterEl {
-    pub fn build(self) -> DataIdentitystoreUserFilterEl {
-        DataIdentitystoreUserFilterEl {
-            attribute_path: self.attribute_path,
-            attribute_value: self.attribute_value,
-        }
-    }
-}
-
-pub struct DataIdentitystoreUserFilterElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DataIdentitystoreUserFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIdentitystoreUserFilterElRef {
-        DataIdentitystoreUserFilterElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DataIdentitystoreUserFilterElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `attribute_path` after provisioning.\n"]
-    pub fn attribute_path(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attribute_path", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `attribute_value` after provisioning.\n"]
-    pub fn attribute_value(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attribute_value", self.base))
-    }
-}
-
-#[derive(Serialize, Default)]
-struct DataIdentitystoreUserDynamic {
-    alternate_identifier: std::option::Option<terrars::DynamicBlock<DataIdentitystoreUserAlternateIdentifierEl>>,
-    filter: std::option::Option<terrars::DynamicBlock<DataIdentitystoreUserFilterEl>>,
 }

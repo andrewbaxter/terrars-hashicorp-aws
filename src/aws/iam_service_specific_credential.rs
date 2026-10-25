@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IamServiceSpecificCredentialData {
+struct IamServiceSpecificCredentialData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct IamServiceSpecificCredentialData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    credential_age_days: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     service_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,7 +33,7 @@ struct IamServiceSpecificCredentialData {
 struct IamServiceSpecificCredential_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamServiceSpecificCredentialData>,
+    data: std::cell::RefCell<IamServiceSpecificCredentialData_>,
 }
 
 #[derive(Clone)]
@@ -129,6 +133,12 @@ impl IamServiceSpecificCredential {
         self
     }
 
+    #[doc = "Set the field `credential_age_days`.\n"]
+    pub fn set_credential_age_days(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().credential_age_days = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -141,9 +151,34 @@ impl IamServiceSpecificCredential {
         self
     }
 
+    #[doc = "Get a reference to the value of field `create_date` after provisioning.\n"]
+    pub fn create_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_date", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `credential_age_days` after provisioning.\n"]
+    pub fn credential_age_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.credential_age_days", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `expiration_date` after provisioning.\n"]
+    pub fn expiration_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expiration_date", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_credential_alias` after provisioning.\n"]
+    pub fn service_credential_alias(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_credential_alias", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_credential_secret` after provisioning.\n"]
+    pub fn service_credential_secret(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_credential_secret", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_name` after provisioning.\n"]
@@ -224,12 +259,13 @@ impl BuildIamServiceSpecificCredential {
         let out = IamServiceSpecificCredential(std::rc::Rc::new(IamServiceSpecificCredential_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamServiceSpecificCredentialData {
+            data: std::cell::RefCell::new(IamServiceSpecificCredentialData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                credential_age_days: core::default::Default::default(),
                 id: core::default::Default::default(),
                 service_name: self.service_name,
                 status: core::default::Default::default(),
@@ -264,9 +300,34 @@ impl IamServiceSpecificCredentialRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `create_date` after provisioning.\n"]
+    pub fn create_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_date", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `credential_age_days` after provisioning.\n"]
+    pub fn credential_age_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.credential_age_days", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `expiration_date` after provisioning.\n"]
+    pub fn expiration_date(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.expiration_date", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_credential_alias` after provisioning.\n"]
+    pub fn service_credential_alias(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_credential_alias", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_credential_secret` after provisioning.\n"]
+    pub fn service_credential_secret(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_credential_secret", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_name` after provisioning.\n"]

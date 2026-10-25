@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataImagebuilderContainerRecipeData {
+struct DataImagebuilderContainerRecipeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataImagebuilderContainerRecipeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataImagebuilderContainerRecipe_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataImagebuilderContainerRecipeData>,
+    data: std::cell::RefCell<DataImagebuilderContainerRecipeData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataImagebuilderContainerRecipe {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -92,7 +103,7 @@ impl DataImagebuilderContainerRecipe {
     }
 
     #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(&self) -> terrars::ListRef<DataImagebuilderContainerRecipeComponentElRef> {
+    pub fn component(&self) -> terrars::ListRef<DataImagebuilderContainerRecipe_ComponentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.extract_ref()))
     }
 
@@ -127,7 +138,7 @@ impl DataImagebuilderContainerRecipe {
     }
 
     #[doc = "Get a reference to the value of field `instance_configuration` after provisioning.\n"]
-    pub fn instance_configuration(&self) -> terrars::ListRef<DataImagebuilderContainerRecipeInstanceConfigurationElRef> {
+    pub fn instance_configuration(&self) -> terrars::ListRef<DataImagebuilderContainerRecipe_InstanceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_configuration", self.extract_ref()))
     }
 
@@ -156,13 +167,19 @@ impl DataImagebuilderContainerRecipe {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_repository` after provisioning.\n"]
-    pub fn target_repository(&self) -> terrars::ListRef<DataImagebuilderContainerRecipeTargetRepositoryElRef> {
+    pub fn target_repository(&self) -> terrars::ListRef<DataImagebuilderContainerRecipe_TargetRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_repository", self.extract_ref()))
     }
 
@@ -219,13 +236,14 @@ impl BuildDataImagebuilderContainerRecipe {
         let out = DataImagebuilderContainerRecipe(std::rc::Rc::new(DataImagebuilderContainerRecipe_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataImagebuilderContainerRecipeData {
+            data: std::cell::RefCell::new(DataImagebuilderContainerRecipeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 arn: self.arn,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -263,7 +281,7 @@ impl DataImagebuilderContainerRecipeRef {
     }
 
     #[doc = "Get a reference to the value of field `component` after provisioning.\n"]
-    pub fn component(&self) -> terrars::ListRef<DataImagebuilderContainerRecipeComponentElRef> {
+    pub fn component(&self) -> terrars::ListRef<DataImagebuilderContainerRecipe_ComponentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.component", self.extract_ref()))
     }
 
@@ -298,7 +316,7 @@ impl DataImagebuilderContainerRecipeRef {
     }
 
     #[doc = "Get a reference to the value of field `instance_configuration` after provisioning.\n"]
-    pub fn instance_configuration(&self) -> terrars::ListRef<DataImagebuilderContainerRecipeInstanceConfigurationElRef> {
+    pub fn instance_configuration(&self) -> terrars::ListRef<DataImagebuilderContainerRecipe_InstanceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_configuration", self.extract_ref()))
     }
 
@@ -327,13 +345,19 @@ impl DataImagebuilderContainerRecipeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_repository` after provisioning.\n"]
-    pub fn target_repository(&self) -> terrars::ListRef<DataImagebuilderContainerRecipeTargetRepositoryElRef> {
+    pub fn target_repository(&self) -> terrars::ListRef<DataImagebuilderContainerRecipe_TargetRepositoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_repository", self.extract_ref()))
     }
 
@@ -349,14 +373,14 @@ impl DataImagebuilderContainerRecipeRef {
 }
 
 #[derive(Serialize)]
-pub struct DataImagebuilderContainerRecipeComponentElParameterEl {
+pub struct DataImagebuilderContainerRecipe_Component_Parameter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataImagebuilderContainerRecipeComponentElParameterEl {
+impl DataImagebuilderContainerRecipe_Component_Parameter {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -370,8 +394,8 @@ impl DataImagebuilderContainerRecipeComponentElParameterEl {
     }
 }
 
-impl terrars::ToListMappable for DataImagebuilderContainerRecipeComponentElParameterEl {
-    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipeComponentElParameterEl>;
+impl terrars::ToListMappable for DataImagebuilderContainerRecipe_Component_Parameter {
+    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipe_Component_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -382,35 +406,37 @@ impl terrars::ToListMappable for DataImagebuilderContainerRecipeComponentElParam
     }
 }
 
-pub struct BuildDataImagebuilderContainerRecipeComponentElParameterEl {}
+pub struct BuildDataImagebuilderContainerRecipe_Component_Parameter {}
 
-impl BuildDataImagebuilderContainerRecipeComponentElParameterEl {
-    pub fn build(self) -> DataImagebuilderContainerRecipeComponentElParameterEl {
-        DataImagebuilderContainerRecipeComponentElParameterEl {
+impl BuildDataImagebuilderContainerRecipe_Component_Parameter {
+    pub fn build(self) -> DataImagebuilderContainerRecipe_Component_Parameter {
+        DataImagebuilderContainerRecipe_Component_Parameter {
             name: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataImagebuilderContainerRecipeComponentElParameterElRef {
+#[allow(dead_code)]
+pub struct DataImagebuilderContainerRecipe_Component_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagebuilderContainerRecipeComponentElParameterElRef {
+impl terrars::Ref for DataImagebuilderContainerRecipe_Component_ParameterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataImagebuilderContainerRecipeComponentElParameterElRef {
-        DataImagebuilderContainerRecipeComponentElParameterElRef {
+    ) -> DataImagebuilderContainerRecipe_Component_ParameterRef {
+        DataImagebuilderContainerRecipe_Component_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagebuilderContainerRecipeComponentElParameterElRef {
+impl DataImagebuilderContainerRecipe_Component_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -427,14 +453,14 @@ impl DataImagebuilderContainerRecipeComponentElParameterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataImagebuilderContainerRecipeComponentEl {
+pub struct DataImagebuilderContainerRecipe_Component {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     component_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<terrars::SetField<DataImagebuilderContainerRecipeComponentElParameterEl>>,
+    parameter: std::option::Option<terrars::SetField<DataImagebuilderContainerRecipe_Component_Parameter>>,
 }
 
-impl DataImagebuilderContainerRecipeComponentEl {
+impl DataImagebuilderContainerRecipe_Component {
     #[doc = "Set the field `component_arn`.\n"]
     pub fn set_component_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.component_arn = std::option::Option::Some(v.into());
@@ -444,15 +470,15 @@ impl DataImagebuilderContainerRecipeComponentEl {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataImagebuilderContainerRecipeComponentElParameterEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataImagebuilderContainerRecipe_Component_Parameter>>,
     ) -> Self {
         self.parameter = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataImagebuilderContainerRecipeComponentEl {
-    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipeComponentEl>;
+impl terrars::ToListMappable for DataImagebuilderContainerRecipe_Component {
+    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipe_Component>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -463,32 +489,34 @@ impl terrars::ToListMappable for DataImagebuilderContainerRecipeComponentEl {
     }
 }
 
-pub struct BuildDataImagebuilderContainerRecipeComponentEl {}
+pub struct BuildDataImagebuilderContainerRecipe_Component {}
 
-impl BuildDataImagebuilderContainerRecipeComponentEl {
-    pub fn build(self) -> DataImagebuilderContainerRecipeComponentEl {
-        DataImagebuilderContainerRecipeComponentEl {
+impl BuildDataImagebuilderContainerRecipe_Component {
+    pub fn build(self) -> DataImagebuilderContainerRecipe_Component {
+        DataImagebuilderContainerRecipe_Component {
             component_arn: core::default::Default::default(),
             parameter: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataImagebuilderContainerRecipeComponentElRef {
+#[allow(dead_code)]
+pub struct DataImagebuilderContainerRecipe_ComponentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagebuilderContainerRecipeComponentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImagebuilderContainerRecipeComponentElRef {
-        DataImagebuilderContainerRecipeComponentElRef {
+impl terrars::Ref for DataImagebuilderContainerRecipe_ComponentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataImagebuilderContainerRecipe_ComponentRef {
+        DataImagebuilderContainerRecipe_ComponentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagebuilderContainerRecipeComponentElRef {
+impl DataImagebuilderContainerRecipe_ComponentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -499,13 +527,13 @@ impl DataImagebuilderContainerRecipeComponentElRef {
     }
 
     #[doc = "Get a reference to the value of field `parameter` after provisioning.\n"]
-    pub fn parameter(&self) -> terrars::SetRef<DataImagebuilderContainerRecipeComponentElParameterElRef> {
+    pub fn parameter(&self) -> terrars::SetRef<DataImagebuilderContainerRecipe_Component_ParameterRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.parameter", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl {
+pub struct DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_on_termination: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -524,7 +552,7 @@ pub struct DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMapp
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl {
+impl DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs {
     #[doc = "Set the field `delete_on_termination`.\n"]
     pub fn set_delete_on_termination(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.delete_on_termination = std::option::Option::Some(v.into());
@@ -574,9 +602,8 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElE
     }
 }
 
-impl terrars::ToListMappable for DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl {
-    type O =
-        terrars::BlockAssignable<DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl>;
+impl terrars::ToListMappable for DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs {
+    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -587,11 +614,11 @@ impl terrars::ToListMappable for DataImagebuilderContainerRecipeInstanceConfigur
     }
 }
 
-pub struct BuildDataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl {}
+pub struct BuildDataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs {}
 
-impl BuildDataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl {
-    pub fn build(self) -> DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl {
-        DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl {
+impl BuildDataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs {
+    pub fn build(self) -> DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs {
+        DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs {
             delete_on_termination: core::default::Default::default(),
             encrypted: core::default::Default::default(),
             iops: core::default::Default::default(),
@@ -604,24 +631,26 @@ impl BuildDataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappi
     }
 }
 
-pub struct DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsElRef {
+#[allow(dead_code)]
+pub struct DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_EbsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsElRef {
+impl terrars::Ref for DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_EbsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsElRef {
-        DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsElRef {
+    ) -> DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_EbsRef {
+        DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_EbsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsElRef {
+impl DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_EbsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -668,20 +697,20 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElE
 }
 
 #[derive(Serialize)]
-pub struct DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl {
+pub struct DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ebs: std
     ::option
-    ::Option<terrars::ListField<DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl>>,
+    ::Option<terrars::ListField<DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     no_device: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     virtual_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl {
+impl DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping {
     #[doc = "Set the field `device_name`.\n"]
     pub fn set_device_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.device_name = std::option::Option::Some(v.into());
@@ -698,7 +727,7 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl 
                     ::convert
                     ::Into<
                         terrars
-                        ::ListField<DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsEl>,
+                        ::ListField<DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_Ebs>,
                     >,
     ) -> Self {
         self.ebs = std::option::Option::Some(v.into());
@@ -718,8 +747,8 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl 
     }
 }
 
-impl terrars::ToListMappable for DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl {
-    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl>;
+impl terrars::ToListMappable for DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping {
+    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -730,11 +759,11 @@ impl terrars::ToListMappable for DataImagebuilderContainerRecipeInstanceConfigur
     }
 }
 
-pub struct BuildDataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl {}
+pub struct BuildDataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping {}
 
-impl BuildDataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl {
-    pub fn build(self) -> DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl {
-        DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl {
+impl BuildDataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping {
+    pub fn build(self) -> DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping {
+        DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping {
             device_name: core::default::Default::default(),
             ebs: core::default::Default::default(),
             no_device: core::default::Default::default(),
@@ -743,24 +772,26 @@ impl BuildDataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappi
     }
 }
 
-pub struct DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElRef {
+#[allow(dead_code)]
+pub struct DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMappingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElRef {
+impl terrars::Ref for DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMappingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElRef {
-        DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElRef {
+    ) -> DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMappingRef {
+        DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMappingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElRef {
+impl DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMappingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -773,7 +804,7 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElR
     #[doc = "Get a reference to the value of field `ebs` after provisioning.\n"]
     pub fn ebs(
         &self,
-    ) -> terrars::ListRef<DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElEbsElRef> {
+    ) -> terrars::ListRef<DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping_EbsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ebs", self.base))
     }
 
@@ -789,16 +820,16 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElR
 }
 
 #[derive(Serialize)]
-pub struct DataImagebuilderContainerRecipeInstanceConfigurationEl {
+pub struct DataImagebuilderContainerRecipe_InstanceConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     block_device_mapping: std
     ::option
-    ::Option<terrars::SetField<DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl>>,
+    ::Option<terrars::SetField<DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     image: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataImagebuilderContainerRecipeInstanceConfigurationEl {
+impl DataImagebuilderContainerRecipe_InstanceConfiguration {
     #[doc = "Set the field `block_device_mapping`.\n"]
     pub fn set_block_device_mapping(
         mut self,
@@ -808,7 +839,7 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::SetField<DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingEl>,
+                        terrars::SetField<DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMapping>,
                     >,
     ) -> Self {
         self.block_device_mapping = std::option::Option::Some(v.into());
@@ -822,8 +853,8 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataImagebuilderContainerRecipeInstanceConfigurationEl {
-    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipeInstanceConfigurationEl>;
+impl terrars::ToListMappable for DataImagebuilderContainerRecipe_InstanceConfiguration {
+    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipe_InstanceConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -834,35 +865,37 @@ impl terrars::ToListMappable for DataImagebuilderContainerRecipeInstanceConfigur
     }
 }
 
-pub struct BuildDataImagebuilderContainerRecipeInstanceConfigurationEl {}
+pub struct BuildDataImagebuilderContainerRecipe_InstanceConfiguration {}
 
-impl BuildDataImagebuilderContainerRecipeInstanceConfigurationEl {
-    pub fn build(self) -> DataImagebuilderContainerRecipeInstanceConfigurationEl {
-        DataImagebuilderContainerRecipeInstanceConfigurationEl {
+impl BuildDataImagebuilderContainerRecipe_InstanceConfiguration {
+    pub fn build(self) -> DataImagebuilderContainerRecipe_InstanceConfiguration {
+        DataImagebuilderContainerRecipe_InstanceConfiguration {
             block_device_mapping: core::default::Default::default(),
             image: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataImagebuilderContainerRecipeInstanceConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataImagebuilderContainerRecipe_InstanceConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagebuilderContainerRecipeInstanceConfigurationElRef {
+impl terrars::Ref for DataImagebuilderContainerRecipe_InstanceConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataImagebuilderContainerRecipeInstanceConfigurationElRef {
-        DataImagebuilderContainerRecipeInstanceConfigurationElRef {
+    ) -> DataImagebuilderContainerRecipe_InstanceConfigurationRef {
+        DataImagebuilderContainerRecipe_InstanceConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagebuilderContainerRecipeInstanceConfigurationElRef {
+impl DataImagebuilderContainerRecipe_InstanceConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -870,7 +903,7 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationElRef {
     #[doc = "Get a reference to the value of field `block_device_mapping` after provisioning.\n"]
     pub fn block_device_mapping(
         &self,
-    ) -> terrars::SetRef<DataImagebuilderContainerRecipeInstanceConfigurationElBlockDeviceMappingElRef> {
+    ) -> terrars::SetRef<DataImagebuilderContainerRecipe_InstanceConfiguration_BlockDeviceMappingRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.block_device_mapping", self.base))
     }
 
@@ -881,14 +914,14 @@ impl DataImagebuilderContainerRecipeInstanceConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataImagebuilderContainerRecipeTargetRepositoryEl {
+pub struct DataImagebuilderContainerRecipe_TargetRepository {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repository_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataImagebuilderContainerRecipeTargetRepositoryEl {
+impl DataImagebuilderContainerRecipe_TargetRepository {
     #[doc = "Set the field `repository_name`.\n"]
     pub fn set_repository_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.repository_name = std::option::Option::Some(v.into());
@@ -902,8 +935,8 @@ impl DataImagebuilderContainerRecipeTargetRepositoryEl {
     }
 }
 
-impl terrars::ToListMappable for DataImagebuilderContainerRecipeTargetRepositoryEl {
-    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipeTargetRepositoryEl>;
+impl terrars::ToListMappable for DataImagebuilderContainerRecipe_TargetRepository {
+    type O = terrars::BlockAssignable<DataImagebuilderContainerRecipe_TargetRepository>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -914,35 +947,37 @@ impl terrars::ToListMappable for DataImagebuilderContainerRecipeTargetRepository
     }
 }
 
-pub struct BuildDataImagebuilderContainerRecipeTargetRepositoryEl {}
+pub struct BuildDataImagebuilderContainerRecipe_TargetRepository {}
 
-impl BuildDataImagebuilderContainerRecipeTargetRepositoryEl {
-    pub fn build(self) -> DataImagebuilderContainerRecipeTargetRepositoryEl {
-        DataImagebuilderContainerRecipeTargetRepositoryEl {
+impl BuildDataImagebuilderContainerRecipe_TargetRepository {
+    pub fn build(self) -> DataImagebuilderContainerRecipe_TargetRepository {
+        DataImagebuilderContainerRecipe_TargetRepository {
             repository_name: core::default::Default::default(),
             service: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataImagebuilderContainerRecipeTargetRepositoryElRef {
+#[allow(dead_code)]
+pub struct DataImagebuilderContainerRecipe_TargetRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataImagebuilderContainerRecipeTargetRepositoryElRef {
+impl terrars::Ref for DataImagebuilderContainerRecipe_TargetRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataImagebuilderContainerRecipeTargetRepositoryElRef {
-        DataImagebuilderContainerRecipeTargetRepositoryElRef {
+    ) -> DataImagebuilderContainerRecipe_TargetRepositoryRef {
+        DataImagebuilderContainerRecipe_TargetRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataImagebuilderContainerRecipeTargetRepositoryElRef {
+impl DataImagebuilderContainerRecipe_TargetRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

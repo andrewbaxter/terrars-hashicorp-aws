@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudwatchEventTargetData {
+struct CloudwatchEventTargetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,43 +24,51 @@ struct CloudwatchEventTargetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event_bus_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    force_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     input: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     input_path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     rule: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    batch_target: std::option::Option<std::vec::Vec<CloudwatchEventTargetBatchTargetEl>>,
+    appsync_target: std::option::Option<std::vec::Vec<CloudwatchEventTarget_AppsyncTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dead_letter_config: std::option::Option<std::vec::Vec<CloudwatchEventTargetDeadLetterConfigEl>>,
+    batch_target: std::option::Option<std::vec::Vec<CloudwatchEventTarget_BatchTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ecs_target: std::option::Option<std::vec::Vec<CloudwatchEventTargetEcsTargetEl>>,
+    dead_letter_config: std::option::Option<std::vec::Vec<CloudwatchEventTarget_DeadLetterConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    http_target: std::option::Option<std::vec::Vec<CloudwatchEventTargetHttpTargetEl>>,
+    ecs_target: std::option::Option<std::vec::Vec<CloudwatchEventTarget_EcsTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input_transformer: std::option::Option<std::vec::Vec<CloudwatchEventTargetInputTransformerEl>>,
+    http_target: std::option::Option<std::vec::Vec<CloudwatchEventTarget_HttpTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kinesis_target: std::option::Option<std::vec::Vec<CloudwatchEventTargetKinesisTargetEl>>,
+    input_transformer: std::option::Option<std::vec::Vec<CloudwatchEventTarget_InputTransformer>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redshift_target: std::option::Option<std::vec::Vec<CloudwatchEventTargetRedshiftTargetEl>>,
+    kinesis_target: std::option::Option<std::vec::Vec<CloudwatchEventTarget_KinesisTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_policy: std::option::Option<std::vec::Vec<CloudwatchEventTargetRetryPolicyEl>>,
+    redshift_target: std::option::Option<std::vec::Vec<CloudwatchEventTarget_RedshiftTarget>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    run_command_targets: std::option::Option<std::vec::Vec<CloudwatchEventTargetRunCommandTargetsEl>>,
+    retry_policy: std::option::Option<std::vec::Vec<CloudwatchEventTarget_RetryPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sqs_target: std::option::Option<std::vec::Vec<CloudwatchEventTargetSqsTargetEl>>,
+    run_command_targets: std::option::Option<std::vec::Vec<CloudwatchEventTarget_RunCommandTargets>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_pipeline_target: std::option::Option<std::vec::Vec<CloudwatchEventTarget_SagemakerPipelineTarget>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sqs_target: std::option::Option<std::vec::Vec<CloudwatchEventTarget_SqsTarget>>,
     dynamic: CloudwatchEventTargetDynamic,
 }
 
 struct CloudwatchEventTarget_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudwatchEventTargetData>,
+    data: std::cell::RefCell<CloudwatchEventTargetData_>,
 }
 
 #[derive(Clone)]
@@ -164,6 +174,12 @@ impl CloudwatchEventTarget {
         self
     }
 
+    #[doc = "Set the field `force_destroy`.\n"]
+    pub fn set_force_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().force_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -182,6 +198,13 @@ impl CloudwatchEventTarget {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `role_arn`.\n"]
     pub fn set_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().role_arn = std::option::Option::Some(v.into());
@@ -194,10 +217,26 @@ impl CloudwatchEventTarget {
         self
     }
 
+    #[doc = "Set the field `appsync_target`.\n"]
+    pub fn set_appsync_target(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_AppsyncTarget>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().appsync_target = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.appsync_target = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `batch_target`.\n"]
     pub fn set_batch_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetBatchTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_BatchTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -213,7 +252,7 @@ impl CloudwatchEventTarget {
     #[doc = "Set the field `dead_letter_config`.\n"]
     pub fn set_dead_letter_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetDeadLetterConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_DeadLetterConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -229,7 +268,7 @@ impl CloudwatchEventTarget {
     #[doc = "Set the field `ecs_target`.\n"]
     pub fn set_ecs_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetEcsTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -245,7 +284,7 @@ impl CloudwatchEventTarget {
     #[doc = "Set the field `http_target`.\n"]
     pub fn set_http_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetHttpTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_HttpTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -261,7 +300,7 @@ impl CloudwatchEventTarget {
     #[doc = "Set the field `input_transformer`.\n"]
     pub fn set_input_transformer(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetInputTransformerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_InputTransformer>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -277,7 +316,7 @@ impl CloudwatchEventTarget {
     #[doc = "Set the field `kinesis_target`.\n"]
     pub fn set_kinesis_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetKinesisTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_KinesisTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -293,7 +332,7 @@ impl CloudwatchEventTarget {
     #[doc = "Set the field `redshift_target`.\n"]
     pub fn set_redshift_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetRedshiftTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_RedshiftTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -309,7 +348,7 @@ impl CloudwatchEventTarget {
     #[doc = "Set the field `retry_policy`.\n"]
     pub fn set_retry_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetRetryPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_RetryPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -325,7 +364,7 @@ impl CloudwatchEventTarget {
     #[doc = "Set the field `run_command_targets`.\n"]
     pub fn set_run_command_targets(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetRunCommandTargetsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_RunCommandTargets>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -338,10 +377,26 @@ impl CloudwatchEventTarget {
         self
     }
 
+    #[doc = "Set the field `sagemaker_pipeline_target`.\n"]
+    pub fn set_sagemaker_pipeline_target(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_SagemakerPipelineTarget>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().sagemaker_pipeline_target = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.sagemaker_pipeline_target = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `sqs_target`.\n"]
     pub fn set_sqs_target(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetSqsTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_SqsTarget>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -364,6 +419,11 @@ impl CloudwatchEventTarget {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_bus_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `force_destroy` after provisioning.\n"]
+    pub fn force_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_destroy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -377,6 +437,12 @@ impl CloudwatchEventTarget {
     #[doc = "Get a reference to the value of field `input_path` after provisioning.\n"]
     pub fn input_path(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.input_path", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -394,53 +460,63 @@ impl CloudwatchEventTarget {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `appsync_target` after provisioning.\n"]
+    pub fn appsync_target(&self) -> terrars::ListRef<CloudwatchEventTarget_AppsyncTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.appsync_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `batch_target` after provisioning.\n"]
-    pub fn batch_target(&self) -> terrars::ListRef<CloudwatchEventTargetBatchTargetElRef> {
+    pub fn batch_target(&self) -> terrars::ListRef<CloudwatchEventTarget_BatchTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.batch_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dead_letter_config` after provisioning.\n"]
-    pub fn dead_letter_config(&self) -> terrars::ListRef<CloudwatchEventTargetDeadLetterConfigElRef> {
+    pub fn dead_letter_config(&self) -> terrars::ListRef<CloudwatchEventTarget_DeadLetterConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dead_letter_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ecs_target` after provisioning.\n"]
-    pub fn ecs_target(&self) -> terrars::ListRef<CloudwatchEventTargetEcsTargetElRef> {
+    pub fn ecs_target(&self) -> terrars::ListRef<CloudwatchEventTarget_EcsTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ecs_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `http_target` after provisioning.\n"]
-    pub fn http_target(&self) -> terrars::ListRef<CloudwatchEventTargetHttpTargetElRef> {
+    pub fn http_target(&self) -> terrars::ListRef<CloudwatchEventTarget_HttpTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `input_transformer` after provisioning.\n"]
-    pub fn input_transformer(&self) -> terrars::ListRef<CloudwatchEventTargetInputTransformerElRef> {
+    pub fn input_transformer(&self) -> terrars::ListRef<CloudwatchEventTarget_InputTransformerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_transformer", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `kinesis_target` after provisioning.\n"]
-    pub fn kinesis_target(&self) -> terrars::ListRef<CloudwatchEventTargetKinesisTargetElRef> {
+    pub fn kinesis_target(&self) -> terrars::ListRef<CloudwatchEventTarget_KinesisTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `redshift_target` after provisioning.\n"]
-    pub fn redshift_target(&self) -> terrars::ListRef<CloudwatchEventTargetRedshiftTargetElRef> {
+    pub fn redshift_target(&self) -> terrars::ListRef<CloudwatchEventTarget_RedshiftTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redshift_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<CloudwatchEventTargetRetryPolicyElRef> {
+    pub fn retry_policy(&self) -> terrars::ListRef<CloudwatchEventTarget_RetryPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `run_command_targets` after provisioning.\n"]
-    pub fn run_command_targets(&self) -> terrars::ListRef<CloudwatchEventTargetRunCommandTargetsElRef> {
+    pub fn run_command_targets(&self) -> terrars::ListRef<CloudwatchEventTarget_RunCommandTargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.run_command_targets", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `sagemaker_pipeline_target` after provisioning.\n"]
+    pub fn sagemaker_pipeline_target(&self) -> terrars::ListRef<CloudwatchEventTarget_SagemakerPipelineTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sagemaker_pipeline_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sqs_target` after provisioning.\n"]
-    pub fn sqs_target(&self) -> terrars::ListRef<CloudwatchEventTargetSqsTargetElRef> {
+    pub fn sqs_target(&self) -> terrars::ListRef<CloudwatchEventTarget_SqsTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sqs_target", self.extract_ref()))
     }
 }
@@ -489,7 +565,7 @@ impl BuildCloudwatchEventTarget {
         let out = CloudwatchEventTarget(std::rc::Rc::new(CloudwatchEventTarget_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudwatchEventTargetData {
+            data: std::cell::RefCell::new(CloudwatchEventTargetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -497,12 +573,15 @@ impl BuildCloudwatchEventTarget {
                 provisioner: core::default::Default::default(),
                 arn: self.arn,
                 event_bus_name: core::default::Default::default(),
+                force_destroy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 input: core::default::Default::default(),
                 input_path: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role_arn: core::default::Default::default(),
                 rule: self.rule,
                 target_id: core::default::Default::default(),
+                appsync_target: core::default::Default::default(),
                 batch_target: core::default::Default::default(),
                 dead_letter_config: core::default::Default::default(),
                 ecs_target: core::default::Default::default(),
@@ -512,6 +591,7 @@ impl BuildCloudwatchEventTarget {
                 redshift_target: core::default::Default::default(),
                 retry_policy: core::default::Default::default(),
                 run_command_targets: core::default::Default::default(),
+                sagemaker_pipeline_target: core::default::Default::default(),
                 sqs_target: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -554,6 +634,11 @@ impl CloudwatchEventTargetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.event_bus_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `force_destroy` after provisioning.\n"]
+    pub fn force_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.force_destroy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -567,6 +652,12 @@ impl CloudwatchEventTargetRef {
     #[doc = "Get a reference to the value of field `input_path` after provisioning.\n"]
     pub fn input_path(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.input_path", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -584,59 +675,148 @@ impl CloudwatchEventTargetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `appsync_target` after provisioning.\n"]
+    pub fn appsync_target(&self) -> terrars::ListRef<CloudwatchEventTarget_AppsyncTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.appsync_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `batch_target` after provisioning.\n"]
-    pub fn batch_target(&self) -> terrars::ListRef<CloudwatchEventTargetBatchTargetElRef> {
+    pub fn batch_target(&self) -> terrars::ListRef<CloudwatchEventTarget_BatchTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.batch_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `dead_letter_config` after provisioning.\n"]
-    pub fn dead_letter_config(&self) -> terrars::ListRef<CloudwatchEventTargetDeadLetterConfigElRef> {
+    pub fn dead_letter_config(&self) -> terrars::ListRef<CloudwatchEventTarget_DeadLetterConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dead_letter_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ecs_target` after provisioning.\n"]
-    pub fn ecs_target(&self) -> terrars::ListRef<CloudwatchEventTargetEcsTargetElRef> {
+    pub fn ecs_target(&self) -> terrars::ListRef<CloudwatchEventTarget_EcsTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ecs_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `http_target` after provisioning.\n"]
-    pub fn http_target(&self) -> terrars::ListRef<CloudwatchEventTargetHttpTargetElRef> {
+    pub fn http_target(&self) -> terrars::ListRef<CloudwatchEventTarget_HttpTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.http_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `input_transformer` after provisioning.\n"]
-    pub fn input_transformer(&self) -> terrars::ListRef<CloudwatchEventTargetInputTransformerElRef> {
+    pub fn input_transformer(&self) -> terrars::ListRef<CloudwatchEventTarget_InputTransformerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_transformer", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `kinesis_target` after provisioning.\n"]
-    pub fn kinesis_target(&self) -> terrars::ListRef<CloudwatchEventTargetKinesisTargetElRef> {
+    pub fn kinesis_target(&self) -> terrars::ListRef<CloudwatchEventTarget_KinesisTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `redshift_target` after provisioning.\n"]
-    pub fn redshift_target(&self) -> terrars::ListRef<CloudwatchEventTargetRedshiftTargetElRef> {
+    pub fn redshift_target(&self) -> terrars::ListRef<CloudwatchEventTarget_RedshiftTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redshift_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<CloudwatchEventTargetRetryPolicyElRef> {
+    pub fn retry_policy(&self) -> terrars::ListRef<CloudwatchEventTarget_RetryPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `run_command_targets` after provisioning.\n"]
-    pub fn run_command_targets(&self) -> terrars::ListRef<CloudwatchEventTargetRunCommandTargetsElRef> {
+    pub fn run_command_targets(&self) -> terrars::ListRef<CloudwatchEventTarget_RunCommandTargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.run_command_targets", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `sagemaker_pipeline_target` after provisioning.\n"]
+    pub fn sagemaker_pipeline_target(&self) -> terrars::ListRef<CloudwatchEventTarget_SagemakerPipelineTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sagemaker_pipeline_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sqs_target` after provisioning.\n"]
-    pub fn sqs_target(&self) -> terrars::ListRef<CloudwatchEventTargetSqsTargetElRef> {
+    pub fn sqs_target(&self) -> terrars::ListRef<CloudwatchEventTarget_SqsTargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sqs_target", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudwatchEventTargetDynamic {
+    appsync_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_AppsyncTarget>>,
+    batch_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_BatchTarget>>,
+    dead_letter_config: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_DeadLetterConfig>>,
+    ecs_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_EcsTarget>>,
+    http_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_HttpTarget>>,
+    input_transformer: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_InputTransformer>>,
+    kinesis_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_KinesisTarget>>,
+    redshift_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_RedshiftTarget>>,
+    retry_policy: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_RetryPolicy>>,
+    run_command_targets: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_RunCommandTargets>>,
+    sagemaker_pipeline_target: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudwatchEventTarget_SagemakerPipelineTarget>>,
+    sqs_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTarget_SqsTarget>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetBatchTargetEl {
+pub struct CloudwatchEventTarget_AppsyncTarget {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    graphql_operation: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl CloudwatchEventTarget_AppsyncTarget {
+    #[doc = "Set the field `graphql_operation`.\n"]
+    pub fn set_graphql_operation(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.graphql_operation = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchEventTarget_AppsyncTarget {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_AppsyncTarget>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchEventTarget_AppsyncTarget {}
+
+impl BuildCloudwatchEventTarget_AppsyncTarget {
+    pub fn build(self) -> CloudwatchEventTarget_AppsyncTarget {
+        CloudwatchEventTarget_AppsyncTarget { graphql_operation: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_AppsyncTargetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchEventTarget_AppsyncTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_AppsyncTargetRef {
+        CloudwatchEventTarget_AppsyncTargetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchEventTarget_AppsyncTargetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `graphql_operation` after provisioning.\n"]
+    pub fn graphql_operation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.graphql_operation", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchEventTarget_BatchTarget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     array_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -645,7 +825,7 @@ pub struct CloudwatchEventTargetBatchTargetEl {
     job_name: terrars::PrimField<std::string::String>,
 }
 
-impl CloudwatchEventTargetBatchTargetEl {
+impl CloudwatchEventTarget_BatchTarget {
     #[doc = "Set the field `array_size`.\n"]
     pub fn set_array_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.array_size = std::option::Option::Some(v.into());
@@ -659,8 +839,8 @@ impl CloudwatchEventTargetBatchTargetEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetBatchTargetEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetBatchTargetEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_BatchTarget {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_BatchTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -671,16 +851,16 @@ impl terrars::ToListMappable for CloudwatchEventTargetBatchTargetEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetBatchTargetEl {
+pub struct BuildCloudwatchEventTarget_BatchTarget {
     #[doc = ""]
     pub job_definition: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub job_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchEventTargetBatchTargetEl {
-    pub fn build(self) -> CloudwatchEventTargetBatchTargetEl {
-        CloudwatchEventTargetBatchTargetEl {
+impl BuildCloudwatchEventTarget_BatchTarget {
+    pub fn build(self) -> CloudwatchEventTarget_BatchTarget {
+        CloudwatchEventTarget_BatchTarget {
             array_size: core::default::Default::default(),
             job_attempts: core::default::Default::default(),
             job_definition: self.job_definition,
@@ -689,21 +869,23 @@ impl BuildCloudwatchEventTargetBatchTargetEl {
     }
 }
 
-pub struct CloudwatchEventTargetBatchTargetElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_BatchTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetBatchTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetBatchTargetElRef {
-        CloudwatchEventTargetBatchTargetElRef {
+impl terrars::Ref for CloudwatchEventTarget_BatchTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_BatchTargetRef {
+        CloudwatchEventTarget_BatchTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetBatchTargetElRef {
+impl CloudwatchEventTarget_BatchTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -730,12 +912,12 @@ impl CloudwatchEventTargetBatchTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetDeadLetterConfigEl {
+pub struct CloudwatchEventTarget_DeadLetterConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudwatchEventTargetDeadLetterConfigEl {
+impl CloudwatchEventTarget_DeadLetterConfig {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -743,8 +925,8 @@ impl CloudwatchEventTargetDeadLetterConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetDeadLetterConfigEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetDeadLetterConfigEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_DeadLetterConfig {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_DeadLetterConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -755,29 +937,31 @@ impl terrars::ToListMappable for CloudwatchEventTargetDeadLetterConfigEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetDeadLetterConfigEl {}
+pub struct BuildCloudwatchEventTarget_DeadLetterConfig {}
 
-impl BuildCloudwatchEventTargetDeadLetterConfigEl {
-    pub fn build(self) -> CloudwatchEventTargetDeadLetterConfigEl {
-        CloudwatchEventTargetDeadLetterConfigEl { arn: core::default::Default::default() }
+impl BuildCloudwatchEventTarget_DeadLetterConfig {
+    pub fn build(self) -> CloudwatchEventTarget_DeadLetterConfig {
+        CloudwatchEventTarget_DeadLetterConfig { arn: core::default::Default::default() }
     }
 }
 
-pub struct CloudwatchEventTargetDeadLetterConfigElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_DeadLetterConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetDeadLetterConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetDeadLetterConfigElRef {
-        CloudwatchEventTargetDeadLetterConfigElRef {
+impl terrars::Ref for CloudwatchEventTarget_DeadLetterConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_DeadLetterConfigRef {
+        CloudwatchEventTarget_DeadLetterConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetDeadLetterConfigElRef {
+impl CloudwatchEventTarget_DeadLetterConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -789,7 +973,7 @@ impl CloudwatchEventTargetDeadLetterConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
+pub struct CloudwatchEventTarget_EcsTarget_CapacityProviderStrategy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     base: std::option::Option<terrars::PrimField<f64>>,
     capacity_provider: terrars::PrimField<std::string::String>,
@@ -797,7 +981,7 @@ pub struct CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
     weight: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
+impl CloudwatchEventTarget_EcsTarget_CapacityProviderStrategy {
     #[doc = "Set the field `base`.\n"]
     pub fn set_base(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.base = std::option::Option::Some(v.into());
@@ -811,8 +995,8 @@ impl CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_EcsTarget_CapacityProviderStrategy {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget_CapacityProviderStrategy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -823,14 +1007,14 @@ impl terrars::ToListMappable for CloudwatchEventTargetEcsTargetElCapacityProvide
     }
 }
 
-pub struct BuildCloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
+pub struct BuildCloudwatchEventTarget_EcsTarget_CapacityProviderStrategy {
     #[doc = ""]
     pub capacity_provider: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
-    pub fn build(self) -> CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
-        CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
+impl BuildCloudwatchEventTarget_EcsTarget_CapacityProviderStrategy {
+    pub fn build(self) -> CloudwatchEventTarget_EcsTarget_CapacityProviderStrategy {
+        CloudwatchEventTarget_EcsTarget_CapacityProviderStrategy {
             base: core::default::Default::default(),
             capacity_provider: self.capacity_provider,
             weight: core::default::Default::default(),
@@ -838,24 +1022,26 @@ impl BuildCloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl {
     }
 }
 
-pub struct CloudwatchEventTargetEcsTargetElCapacityProviderStrategyElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_EcsTarget_CapacityProviderStrategyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetEcsTargetElCapacityProviderStrategyElRef {
+impl terrars::Ref for CloudwatchEventTarget_EcsTarget_CapacityProviderStrategyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudwatchEventTargetEcsTargetElCapacityProviderStrategyElRef {
-        CloudwatchEventTargetEcsTargetElCapacityProviderStrategyElRef {
+    ) -> CloudwatchEventTarget_EcsTarget_CapacityProviderStrategyRef {
+        CloudwatchEventTarget_EcsTarget_CapacityProviderStrategyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetEcsTargetElCapacityProviderStrategyElRef {
+impl CloudwatchEventTarget_EcsTarget_CapacityProviderStrategyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -877,7 +1063,7 @@ impl CloudwatchEventTargetEcsTargetElCapacityProviderStrategyElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
+pub struct CloudwatchEventTarget_EcsTarget_NetworkConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     assign_public_ip: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -885,7 +1071,7 @@ pub struct CloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
     subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
+impl CloudwatchEventTarget_EcsTarget_NetworkConfiguration {
     #[doc = "Set the field `assign_public_ip`.\n"]
     pub fn set_assign_public_ip(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.assign_public_ip = std::option::Option::Some(v.into());
@@ -902,8 +1088,8 @@ impl CloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetEcsTargetElNetworkConfigurationEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_EcsTarget_NetworkConfiguration {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget_NetworkConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -914,14 +1100,14 @@ impl terrars::ToListMappable for CloudwatchEventTargetEcsTargetElNetworkConfigur
     }
 }
 
-pub struct BuildCloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
+pub struct BuildCloudwatchEventTarget_EcsTarget_NetworkConfiguration {
     #[doc = ""]
     pub subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildCloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
-    pub fn build(self) -> CloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
-        CloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
+impl BuildCloudwatchEventTarget_EcsTarget_NetworkConfiguration {
+    pub fn build(self) -> CloudwatchEventTarget_EcsTarget_NetworkConfiguration {
+        CloudwatchEventTarget_EcsTarget_NetworkConfiguration {
             assign_public_ip: core::default::Default::default(),
             security_groups: core::default::Default::default(),
             subnets: self.subnets,
@@ -929,24 +1115,26 @@ impl BuildCloudwatchEventTargetEcsTargetElNetworkConfigurationEl {
     }
 }
 
-pub struct CloudwatchEventTargetEcsTargetElNetworkConfigurationElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_EcsTarget_NetworkConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetEcsTargetElNetworkConfigurationElRef {
+impl terrars::Ref for CloudwatchEventTarget_EcsTarget_NetworkConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudwatchEventTargetEcsTargetElNetworkConfigurationElRef {
-        CloudwatchEventTargetEcsTargetElNetworkConfigurationElRef {
+    ) -> CloudwatchEventTarget_EcsTarget_NetworkConfigurationRef {
+        CloudwatchEventTarget_EcsTarget_NetworkConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetEcsTargetElNetworkConfigurationElRef {
+impl CloudwatchEventTarget_EcsTarget_NetworkConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -968,23 +1156,23 @@ impl CloudwatchEventTargetEcsTargetElNetworkConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetEcsTargetElPlacementConstraintEl {
+pub struct CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    expression: std::option::Option<terrars::PrimField<std::string::String>>,
+    field: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl CloudwatchEventTargetEcsTargetElPlacementConstraintEl {
-    #[doc = "Set the field `expression`.\n"]
-    pub fn set_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.expression = std::option::Option::Some(v.into());
+impl CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy {
+    #[doc = "Set the field `field`.\n"]
+    pub fn set_field(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.field = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetEcsTargetElPlacementConstraintEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetEcsTargetElPlacementConstraintEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -995,38 +1183,117 @@ impl terrars::ToListMappable for CloudwatchEventTargetEcsTargetElPlacementConstr
     }
 }
 
-pub struct BuildCloudwatchEventTargetEcsTargetElPlacementConstraintEl {
+pub struct BuildCloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchEventTargetEcsTargetElPlacementConstraintEl {
-    pub fn build(self) -> CloudwatchEventTargetEcsTargetElPlacementConstraintEl {
-        CloudwatchEventTargetEcsTargetElPlacementConstraintEl {
-            expression: core::default::Default::default(),
+impl BuildCloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy {
+    pub fn build(self) -> CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy {
+        CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy {
+            field: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct CloudwatchEventTargetEcsTargetElPlacementConstraintElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetEcsTargetElPlacementConstraintElRef {
+impl terrars::Ref for CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudwatchEventTargetEcsTargetElPlacementConstraintElRef {
-        CloudwatchEventTargetEcsTargetElPlacementConstraintElRef {
+    ) -> CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategyRef {
+        CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetEcsTargetElPlacementConstraintElRef {
+impl CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `field` after provisioning.\n"]
+    pub fn field(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.field", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchEventTarget_EcsTarget_PlacementConstraint {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    expression: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
+}
+
+impl CloudwatchEventTarget_EcsTarget_PlacementConstraint {
+    #[doc = "Set the field `expression`.\n"]
+    pub fn set_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.expression = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchEventTarget_EcsTarget_PlacementConstraint {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget_PlacementConstraint>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchEventTarget_EcsTarget_PlacementConstraint {
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCloudwatchEventTarget_EcsTarget_PlacementConstraint {
+    pub fn build(self) -> CloudwatchEventTarget_EcsTarget_PlacementConstraint {
+        CloudwatchEventTarget_EcsTarget_PlacementConstraint {
+            expression: core::default::Default::default(),
+            type_: self.type_,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_EcsTarget_PlacementConstraintRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchEventTarget_EcsTarget_PlacementConstraintRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudwatchEventTarget_EcsTarget_PlacementConstraintRef {
+        CloudwatchEventTarget_EcsTarget_PlacementConstraintRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchEventTarget_EcsTarget_PlacementConstraintRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1043,20 +1310,23 @@ impl CloudwatchEventTargetEcsTargetElPlacementConstraintElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudwatchEventTargetEcsTargetElDynamic {
+struct CloudwatchEventTarget_EcsTargetDynamic {
     capacity_provider_strategy: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl>>,
+    ::Option<terrars::DynamicBlock<CloudwatchEventTarget_EcsTarget_CapacityProviderStrategy>>,
     network_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudwatchEventTargetEcsTargetElNetworkConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<CloudwatchEventTarget_EcsTarget_NetworkConfiguration>>,
+    ordered_placement_strategy: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy>>,
     placement_constraint: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudwatchEventTargetEcsTargetElPlacementConstraintEl>>,
+    ::Option<terrars::DynamicBlock<CloudwatchEventTarget_EcsTarget_PlacementConstraint>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetEcsTargetEl {
+pub struct CloudwatchEventTarget_EcsTarget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_ecs_managed_tags: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1077,15 +1347,19 @@ pub struct CloudwatchEventTargetEcsTargetEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity_provider_strategy: std
     ::option
-    ::Option<std::vec::Vec<CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl>>,
+    ::Option<std::vec::Vec<CloudwatchEventTarget_EcsTarget_CapacityProviderStrategy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    network_configuration: std::option::Option<std::vec::Vec<CloudwatchEventTargetEcsTargetElNetworkConfigurationEl>>,
+    network_configuration: std::option::Option<std::vec::Vec<CloudwatchEventTarget_EcsTarget_NetworkConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    placement_constraint: std::option::Option<std::vec::Vec<CloudwatchEventTargetEcsTargetElPlacementConstraintEl>>,
-    dynamic: CloudwatchEventTargetEcsTargetElDynamic,
+    ordered_placement_strategy: std
+    ::option
+    ::Option<std::vec::Vec<CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    placement_constraint: std::option::Option<std::vec::Vec<CloudwatchEventTarget_EcsTarget_PlacementConstraint>>,
+    dynamic: CloudwatchEventTarget_EcsTargetDynamic,
 }
 
-impl CloudwatchEventTargetEcsTargetEl {
+impl CloudwatchEventTarget_EcsTarget {
     #[doc = "Set the field `enable_ecs_managed_tags`.\n"]
     pub fn set_enable_ecs_managed_tags(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_ecs_managed_tags = std::option::Option::Some(v.into());
@@ -1145,7 +1419,7 @@ impl CloudwatchEventTargetEcsTargetEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudwatchEventTargetEcsTargetElCapacityProviderStrategyEl>>,
+                    ::Into<terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget_CapacityProviderStrategy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1161,7 +1435,7 @@ impl CloudwatchEventTargetEcsTargetEl {
     #[doc = "Set the field `network_configuration`.\n"]
     pub fn set_network_configuration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetEcsTargetElNetworkConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget_NetworkConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1174,10 +1448,31 @@ impl CloudwatchEventTargetEcsTargetEl {
         self
     }
 
+    #[doc = "Set the field `ordered_placement_strategy`.\n"]
+    pub fn set_ordered_placement_strategy(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.ordered_placement_strategy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ordered_placement_strategy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `placement_constraint`.\n"]
     pub fn set_placement_constraint(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTargetEcsTargetElPlacementConstraintEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget_PlacementConstraint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1191,8 +1486,8 @@ impl CloudwatchEventTargetEcsTargetEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetEcsTargetEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetEcsTargetEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_EcsTarget {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_EcsTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1203,14 +1498,14 @@ impl terrars::ToListMappable for CloudwatchEventTargetEcsTargetEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetEcsTargetEl {
+pub struct BuildCloudwatchEventTarget_EcsTarget {
     #[doc = ""]
     pub task_definition_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchEventTargetEcsTargetEl {
-    pub fn build(self) -> CloudwatchEventTargetEcsTargetEl {
-        CloudwatchEventTargetEcsTargetEl {
+impl BuildCloudwatchEventTarget_EcsTarget {
+    pub fn build(self) -> CloudwatchEventTarget_EcsTarget {
+        CloudwatchEventTarget_EcsTarget {
             enable_ecs_managed_tags: core::default::Default::default(),
             enable_execute_command: core::default::Default::default(),
             group: core::default::Default::default(),
@@ -1222,27 +1517,30 @@ impl BuildCloudwatchEventTargetEcsTargetEl {
             task_definition_arn: self.task_definition_arn,
             capacity_provider_strategy: core::default::Default::default(),
             network_configuration: core::default::Default::default(),
+            ordered_placement_strategy: core::default::Default::default(),
             placement_constraint: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudwatchEventTargetEcsTargetElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_EcsTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetEcsTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetEcsTargetElRef {
-        CloudwatchEventTargetEcsTargetElRef {
+impl terrars::Ref for CloudwatchEventTarget_EcsTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_EcsTargetRef {
+        CloudwatchEventTarget_EcsTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetEcsTargetElRef {
+impl CloudwatchEventTarget_EcsTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1293,13 +1591,20 @@ impl CloudwatchEventTargetEcsTargetElRef {
     }
 
     #[doc = "Get a reference to the value of field `network_configuration` after provisioning.\n"]
-    pub fn network_configuration(&self) -> terrars::ListRef<CloudwatchEventTargetEcsTargetElNetworkConfigurationElRef> {
+    pub fn network_configuration(&self) -> terrars::ListRef<CloudwatchEventTarget_EcsTarget_NetworkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ordered_placement_strategy` after provisioning.\n"]
+    pub fn ordered_placement_strategy(
+        &self,
+    ) -> terrars::ListRef<CloudwatchEventTarget_EcsTarget_OrderedPlacementStrategyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ordered_placement_strategy", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetHttpTargetEl {
+pub struct CloudwatchEventTarget_HttpTarget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     header_parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1308,7 +1613,7 @@ pub struct CloudwatchEventTargetHttpTargetEl {
     query_string_parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudwatchEventTargetHttpTargetEl {
+impl CloudwatchEventTarget_HttpTarget {
     #[doc = "Set the field `header_parameters`.\n"]
     pub fn set_header_parameters(
         mut self,
@@ -1337,8 +1642,8 @@ impl CloudwatchEventTargetHttpTargetEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetHttpTargetEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetHttpTargetEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_HttpTarget {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_HttpTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1349,11 +1654,11 @@ impl terrars::ToListMappable for CloudwatchEventTargetHttpTargetEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetHttpTargetEl {}
+pub struct BuildCloudwatchEventTarget_HttpTarget {}
 
-impl BuildCloudwatchEventTargetHttpTargetEl {
-    pub fn build(self) -> CloudwatchEventTargetHttpTargetEl {
-        CloudwatchEventTargetHttpTargetEl {
+impl BuildCloudwatchEventTarget_HttpTarget {
+    pub fn build(self) -> CloudwatchEventTarget_HttpTarget {
+        CloudwatchEventTarget_HttpTarget {
             header_parameters: core::default::Default::default(),
             path_parameter_values: core::default::Default::default(),
             query_string_parameters: core::default::Default::default(),
@@ -1361,21 +1666,23 @@ impl BuildCloudwatchEventTargetHttpTargetEl {
     }
 }
 
-pub struct CloudwatchEventTargetHttpTargetElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_HttpTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetHttpTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetHttpTargetElRef {
-        CloudwatchEventTargetHttpTargetElRef {
+impl terrars::Ref for CloudwatchEventTarget_HttpTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_HttpTargetRef {
+        CloudwatchEventTarget_HttpTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetHttpTargetElRef {
+impl CloudwatchEventTarget_HttpTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1397,13 +1704,13 @@ impl CloudwatchEventTargetHttpTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetInputTransformerEl {
+pub struct CloudwatchEventTarget_InputTransformer {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     input_paths: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     input_template: terrars::PrimField<std::string::String>,
 }
 
-impl CloudwatchEventTargetInputTransformerEl {
+impl CloudwatchEventTarget_InputTransformer {
     #[doc = "Set the field `input_paths`.\n"]
     pub fn set_input_paths(
         mut self,
@@ -1414,8 +1721,8 @@ impl CloudwatchEventTargetInputTransformerEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetInputTransformerEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetInputTransformerEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_InputTransformer {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_InputTransformer>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1426,35 +1733,37 @@ impl terrars::ToListMappable for CloudwatchEventTargetInputTransformerEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetInputTransformerEl {
+pub struct BuildCloudwatchEventTarget_InputTransformer {
     #[doc = ""]
     pub input_template: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchEventTargetInputTransformerEl {
-    pub fn build(self) -> CloudwatchEventTargetInputTransformerEl {
-        CloudwatchEventTargetInputTransformerEl {
+impl BuildCloudwatchEventTarget_InputTransformer {
+    pub fn build(self) -> CloudwatchEventTarget_InputTransformer {
+        CloudwatchEventTarget_InputTransformer {
             input_paths: core::default::Default::default(),
             input_template: self.input_template,
         }
     }
 }
 
-pub struct CloudwatchEventTargetInputTransformerElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_InputTransformerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetInputTransformerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetInputTransformerElRef {
-        CloudwatchEventTargetInputTransformerElRef {
+impl terrars::Ref for CloudwatchEventTarget_InputTransformerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_InputTransformerRef {
+        CloudwatchEventTarget_InputTransformerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetInputTransformerElRef {
+impl CloudwatchEventTarget_InputTransformerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1471,12 +1780,12 @@ impl CloudwatchEventTargetInputTransformerElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetKinesisTargetEl {
+pub struct CloudwatchEventTarget_KinesisTarget {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     partition_key_path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudwatchEventTargetKinesisTargetEl {
+impl CloudwatchEventTarget_KinesisTarget {
     #[doc = "Set the field `partition_key_path`.\n"]
     pub fn set_partition_key_path(
         mut self,
@@ -1487,8 +1796,8 @@ impl CloudwatchEventTargetKinesisTargetEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetKinesisTargetEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetKinesisTargetEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_KinesisTarget {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_KinesisTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1499,29 +1808,31 @@ impl terrars::ToListMappable for CloudwatchEventTargetKinesisTargetEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetKinesisTargetEl {}
+pub struct BuildCloudwatchEventTarget_KinesisTarget {}
 
-impl BuildCloudwatchEventTargetKinesisTargetEl {
-    pub fn build(self) -> CloudwatchEventTargetKinesisTargetEl {
-        CloudwatchEventTargetKinesisTargetEl { partition_key_path: core::default::Default::default() }
+impl BuildCloudwatchEventTarget_KinesisTarget {
+    pub fn build(self) -> CloudwatchEventTarget_KinesisTarget {
+        CloudwatchEventTarget_KinesisTarget { partition_key_path: core::default::Default::default() }
     }
 }
 
-pub struct CloudwatchEventTargetKinesisTargetElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_KinesisTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetKinesisTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetKinesisTargetElRef {
-        CloudwatchEventTargetKinesisTargetElRef {
+impl terrars::Ref for CloudwatchEventTarget_KinesisTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_KinesisTargetRef {
+        CloudwatchEventTarget_KinesisTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetKinesisTargetElRef {
+impl CloudwatchEventTarget_KinesisTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1533,7 +1844,7 @@ impl CloudwatchEventTargetKinesisTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetRedshiftTargetEl {
+pub struct CloudwatchEventTarget_RedshiftTarget {
     database: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     db_user: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -1547,7 +1858,7 @@ pub struct CloudwatchEventTargetRedshiftTargetEl {
     with_event: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl CloudwatchEventTargetRedshiftTargetEl {
+impl CloudwatchEventTarget_RedshiftTarget {
     #[doc = "Set the field `db_user`.\n"]
     pub fn set_db_user(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.db_user = std::option::Option::Some(v.into());
@@ -1582,8 +1893,8 @@ impl CloudwatchEventTargetRedshiftTargetEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetRedshiftTargetEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetRedshiftTargetEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_RedshiftTarget {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_RedshiftTarget>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1594,14 +1905,14 @@ impl terrars::ToListMappable for CloudwatchEventTargetRedshiftTargetEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetRedshiftTargetEl {
+pub struct BuildCloudwatchEventTarget_RedshiftTarget {
     #[doc = ""]
     pub database: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchEventTargetRedshiftTargetEl {
-    pub fn build(self) -> CloudwatchEventTargetRedshiftTargetEl {
-        CloudwatchEventTargetRedshiftTargetEl {
+impl BuildCloudwatchEventTarget_RedshiftTarget {
+    pub fn build(self) -> CloudwatchEventTarget_RedshiftTarget {
+        CloudwatchEventTarget_RedshiftTarget {
             database: self.database,
             db_user: core::default::Default::default(),
             secrets_manager_arn: core::default::Default::default(),
@@ -1612,21 +1923,23 @@ impl BuildCloudwatchEventTargetRedshiftTargetEl {
     }
 }
 
-pub struct CloudwatchEventTargetRedshiftTargetElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_RedshiftTargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetRedshiftTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetRedshiftTargetElRef {
-        CloudwatchEventTargetRedshiftTargetElRef {
+impl terrars::Ref for CloudwatchEventTarget_RedshiftTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_RedshiftTargetRef {
+        CloudwatchEventTarget_RedshiftTargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetRedshiftTargetElRef {
+impl CloudwatchEventTarget_RedshiftTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1663,14 +1976,14 @@ impl CloudwatchEventTargetRedshiftTargetElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetRetryPolicyEl {
+pub struct CloudwatchEventTarget_RetryPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_event_age_in_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_retry_attempts: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl CloudwatchEventTargetRetryPolicyEl {
+impl CloudwatchEventTarget_RetryPolicy {
     #[doc = "Set the field `maximum_event_age_in_seconds`.\n"]
     pub fn set_maximum_event_age_in_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.maximum_event_age_in_seconds = std::option::Option::Some(v.into());
@@ -1684,8 +1997,8 @@ impl CloudwatchEventTargetRetryPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchEventTargetRetryPolicyEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetRetryPolicyEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_RetryPolicy {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_RetryPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1696,32 +2009,34 @@ impl terrars::ToListMappable for CloudwatchEventTargetRetryPolicyEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetRetryPolicyEl {}
+pub struct BuildCloudwatchEventTarget_RetryPolicy {}
 
-impl BuildCloudwatchEventTargetRetryPolicyEl {
-    pub fn build(self) -> CloudwatchEventTargetRetryPolicyEl {
-        CloudwatchEventTargetRetryPolicyEl {
+impl BuildCloudwatchEventTarget_RetryPolicy {
+    pub fn build(self) -> CloudwatchEventTarget_RetryPolicy {
+        CloudwatchEventTarget_RetryPolicy {
             maximum_event_age_in_seconds: core::default::Default::default(),
             maximum_retry_attempts: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudwatchEventTargetRetryPolicyElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_RetryPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetRetryPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetRetryPolicyElRef {
-        CloudwatchEventTargetRetryPolicyElRef {
+impl terrars::Ref for CloudwatchEventTarget_RetryPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_RetryPolicyRef {
+        CloudwatchEventTarget_RetryPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetRetryPolicyElRef {
+impl CloudwatchEventTarget_RetryPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1738,15 +2053,15 @@ impl CloudwatchEventTargetRetryPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetRunCommandTargetsEl {
+pub struct CloudwatchEventTarget_RunCommandTargets {
     key: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudwatchEventTargetRunCommandTargetsEl { }
+impl CloudwatchEventTarget_RunCommandTargets { }
 
-impl terrars::ToListMappable for CloudwatchEventTargetRunCommandTargetsEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetRunCommandTargetsEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_RunCommandTargets {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_RunCommandTargets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1757,37 +2072,39 @@ impl terrars::ToListMappable for CloudwatchEventTargetRunCommandTargetsEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetRunCommandTargetsEl {
+pub struct BuildCloudwatchEventTarget_RunCommandTargets {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildCloudwatchEventTargetRunCommandTargetsEl {
-    pub fn build(self) -> CloudwatchEventTargetRunCommandTargetsEl {
-        CloudwatchEventTargetRunCommandTargetsEl {
+impl BuildCloudwatchEventTarget_RunCommandTargets {
+    pub fn build(self) -> CloudwatchEventTarget_RunCommandTargets {
+        CloudwatchEventTarget_RunCommandTargets {
             key: self.key,
             values: self.values,
         }
     }
 }
 
-pub struct CloudwatchEventTargetRunCommandTargetsElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_RunCommandTargetsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetRunCommandTargetsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetRunCommandTargetsElRef {
-        CloudwatchEventTargetRunCommandTargetsElRef {
+impl terrars::Ref for CloudwatchEventTarget_RunCommandTargetsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_RunCommandTargetsRef {
+        CloudwatchEventTarget_RunCommandTargetsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetRunCommandTargetsElRef {
+impl CloudwatchEventTarget_RunCommandTargetsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1804,21 +2121,15 @@ impl CloudwatchEventTargetRunCommandTargetsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudwatchEventTargetSqsTargetEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList {
+    name: terrars::PrimField<std::string::String>,
+    value: terrars::PrimField<std::string::String>,
 }
 
-impl CloudwatchEventTargetSqsTargetEl {
-    #[doc = "Set the field `message_group_id`.\n"]
-    pub fn set_message_group_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.message_group_id = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList { }
 
-impl terrars::ToListMappable for CloudwatchEventTargetSqsTargetEl {
-    type O = terrars::BlockAssignable<CloudwatchEventTargetSqsTargetEl>;
+impl terrars::ToListMappable for CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1829,29 +2140,197 @@ impl terrars::ToListMappable for CloudwatchEventTargetSqsTargetEl {
     }
 }
 
-pub struct BuildCloudwatchEventTargetSqsTargetEl {}
+pub struct BuildCloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub value: terrars::PrimField<std::string::String>,
+}
 
-impl BuildCloudwatchEventTargetSqsTargetEl {
-    pub fn build(self) -> CloudwatchEventTargetSqsTargetEl {
-        CloudwatchEventTargetSqsTargetEl { message_group_id: core::default::Default::default() }
+impl BuildCloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList {
+    pub fn build(self) -> CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList {
+        CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList {
+            name: self.name,
+            value: self.value,
+        }
     }
 }
 
-pub struct CloudwatchEventTargetSqsTargetElRef {
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterListRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchEventTargetSqsTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTargetSqsTargetElRef {
-        CloudwatchEventTargetSqsTargetElRef {
+impl terrars::Ref for CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterListRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterListRef {
+        CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterListRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchEventTargetSqsTargetElRef {
+impl CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterListRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
+    pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CloudwatchEventTarget_SagemakerPipelineTargetDynamic {
+    pipeline_parameter_list: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList>>,
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchEventTarget_SagemakerPipelineTarget {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pipeline_parameter_list: std
+    ::option
+    ::Option<std::vec::Vec<CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList>>,
+    dynamic: CloudwatchEventTarget_SagemakerPipelineTargetDynamic,
+}
+
+impl CloudwatchEventTarget_SagemakerPipelineTarget {
+    #[doc = "Set the field `pipeline_parameter_list`.\n"]
+    pub fn set_pipeline_parameter_list(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<CloudwatchEventTarget_SagemakerPipelineTarget_PipelineParameterList>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.pipeline_parameter_list = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.pipeline_parameter_list = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchEventTarget_SagemakerPipelineTarget {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_SagemakerPipelineTarget>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchEventTarget_SagemakerPipelineTarget {}
+
+impl BuildCloudwatchEventTarget_SagemakerPipelineTarget {
+    pub fn build(self) -> CloudwatchEventTarget_SagemakerPipelineTarget {
+        CloudwatchEventTarget_SagemakerPipelineTarget {
+            pipeline_parameter_list: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_SagemakerPipelineTargetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchEventTarget_SagemakerPipelineTargetRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CloudwatchEventTarget_SagemakerPipelineTargetRef {
+        CloudwatchEventTarget_SagemakerPipelineTargetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchEventTarget_SagemakerPipelineTargetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudwatchEventTarget_SqsTarget {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl CloudwatchEventTarget_SqsTarget {
+    #[doc = "Set the field `message_group_id`.\n"]
+    pub fn set_message_group_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message_group_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudwatchEventTarget_SqsTarget {
+    type O = terrars::BlockAssignable<CloudwatchEventTarget_SqsTarget>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudwatchEventTarget_SqsTarget {}
+
+impl BuildCloudwatchEventTarget_SqsTarget {
+    pub fn build(self) -> CloudwatchEventTarget_SqsTarget {
+        CloudwatchEventTarget_SqsTarget { message_group_id: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudwatchEventTarget_SqsTargetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudwatchEventTarget_SqsTargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudwatchEventTarget_SqsTargetRef {
+        CloudwatchEventTarget_SqsTargetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudwatchEventTarget_SqsTargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1860,18 +2339,4 @@ impl CloudwatchEventTargetSqsTargetElRef {
     pub fn message_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.message_group_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudwatchEventTargetDynamic {
-    batch_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetBatchTargetEl>>,
-    dead_letter_config: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetDeadLetterConfigEl>>,
-    ecs_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetEcsTargetEl>>,
-    http_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetHttpTargetEl>>,
-    input_transformer: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetInputTransformerEl>>,
-    kinesis_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetKinesisTargetEl>>,
-    redshift_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetRedshiftTargetEl>>,
-    retry_policy: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetRetryPolicyEl>>,
-    run_command_targets: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetRunCommandTargetsEl>>,
-    sqs_target: std::option::Option<terrars::DynamicBlock<CloudwatchEventTargetSqsTargetEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FsxFileCacheData {
+struct FsxFileCacheData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,6 +29,8 @@ struct FsxFileCacheData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     storage_capacity: terrars::PrimField<f64>,
     subnet_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -35,18 +39,18 @@ struct FsxFileCacheData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_repository_association: std::option::Option<std::vec::Vec<FsxFileCacheDataRepositoryAssociationEl>>,
+    data_repository_association: std::option::Option<std::vec::Vec<FsxFileCache_DataRepositoryAssociation>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lustre_configuration: std::option::Option<std::vec::Vec<FsxFileCacheLustreConfigurationEl>>,
+    lustre_configuration: std::option::Option<std::vec::Vec<FsxFileCache_LustreConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FsxFileCacheTimeoutsEl>,
+    timeouts: std::option::Option<FsxFileCache_Timeouts>,
     dynamic: FsxFileCacheDynamic,
 }
 
 struct FsxFileCache_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FsxFileCacheData>,
+    data: std::cell::RefCell<FsxFileCacheData_>,
 }
 
 #[derive(Clone)]
@@ -167,6 +171,13 @@ impl FsxFileCache {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         self,
@@ -197,7 +208,7 @@ impl FsxFileCache {
     #[doc = "Set the field `data_repository_association`.\n"]
     pub fn set_data_repository_association(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxFileCacheDataRepositoryAssociationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxFileCache_DataRepositoryAssociation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -213,7 +224,7 @@ impl FsxFileCache {
     #[doc = "Set the field `lustre_configuration`.\n"]
     pub fn set_lustre_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxFileCacheLustreConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxFileCache_LustreConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -227,7 +238,7 @@ impl FsxFileCache {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FsxFileCacheTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FsxFileCache_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -293,6 +304,12 @@ impl FsxFileCache {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
@@ -324,8 +341,8 @@ impl FsxFileCache {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxFileCacheTimeoutsElRef {
-        FsxFileCacheTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxFileCache_TimeoutsRef {
+        FsxFileCache_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -377,7 +394,7 @@ impl BuildFsxFileCache {
         let out = FsxFileCache(std::rc::Rc::new(FsxFileCache_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FsxFileCacheData {
+            data: std::cell::RefCell::new(FsxFileCacheData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -388,6 +405,7 @@ impl BuildFsxFileCache {
                 file_cache_type_version: self.file_cache_type_version,
                 id: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_group_ids: core::default::Default::default(),
                 storage_capacity: self.storage_capacity,
                 subnet_ids: self.subnet_ids,
@@ -488,6 +506,12 @@ impl FsxFileCacheRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
     pub fn security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_ids", self.extract_ref()))
@@ -519,19 +543,25 @@ impl FsxFileCacheRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxFileCacheTimeoutsElRef {
-        FsxFileCacheTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxFileCache_TimeoutsRef {
+        FsxFileCache_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FsxFileCacheDynamic {
+    data_repository_association: std::option::Option<terrars::DynamicBlock<FsxFileCache_DataRepositoryAssociation>>,
+    lustre_configuration: std::option::Option<terrars::DynamicBlock<FsxFileCache_LustreConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct FsxFileCacheDataRepositoryAssociationElNfsEl {
+pub struct FsxFileCache_DataRepositoryAssociation_Nfs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_ips: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     version: terrars::PrimField<std::string::String>,
 }
 
-impl FsxFileCacheDataRepositoryAssociationElNfsEl {
+impl FsxFileCache_DataRepositoryAssociation_Nfs {
     #[doc = "Set the field `dns_ips`.\n"]
     pub fn set_dns_ips(
         mut self,
@@ -542,8 +572,8 @@ impl FsxFileCacheDataRepositoryAssociationElNfsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxFileCacheDataRepositoryAssociationElNfsEl {
-    type O = terrars::BlockAssignable<FsxFileCacheDataRepositoryAssociationElNfsEl>;
+impl terrars::ToListMappable for FsxFileCache_DataRepositoryAssociation_Nfs {
+    type O = terrars::BlockAssignable<FsxFileCache_DataRepositoryAssociation_Nfs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -554,38 +584,37 @@ impl terrars::ToListMappable for FsxFileCacheDataRepositoryAssociationElNfsEl {
     }
 }
 
-pub struct BuildFsxFileCacheDataRepositoryAssociationElNfsEl {
+pub struct BuildFsxFileCache_DataRepositoryAssociation_Nfs {
     #[doc = ""]
     pub version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFsxFileCacheDataRepositoryAssociationElNfsEl {
-    pub fn build(self) -> FsxFileCacheDataRepositoryAssociationElNfsEl {
-        FsxFileCacheDataRepositoryAssociationElNfsEl {
+impl BuildFsxFileCache_DataRepositoryAssociation_Nfs {
+    pub fn build(self) -> FsxFileCache_DataRepositoryAssociation_Nfs {
+        FsxFileCache_DataRepositoryAssociation_Nfs {
             dns_ips: core::default::Default::default(),
             version: self.version,
         }
     }
 }
 
-pub struct FsxFileCacheDataRepositoryAssociationElNfsElRef {
+#[allow(dead_code)]
+pub struct FsxFileCache_DataRepositoryAssociation_NfsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxFileCacheDataRepositoryAssociationElNfsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> FsxFileCacheDataRepositoryAssociationElNfsElRef {
-        FsxFileCacheDataRepositoryAssociationElNfsElRef {
+impl terrars::Ref for FsxFileCache_DataRepositoryAssociation_NfsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxFileCache_DataRepositoryAssociation_NfsRef {
+        FsxFileCache_DataRepositoryAssociation_NfsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxFileCacheDataRepositoryAssociationElNfsElRef {
+impl FsxFileCache_DataRepositoryAssociation_NfsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -602,12 +631,12 @@ impl FsxFileCacheDataRepositoryAssociationElNfsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct FsxFileCacheDataRepositoryAssociationElDynamic {
-    nfs: std::option::Option<terrars::DynamicBlock<FsxFileCacheDataRepositoryAssociationElNfsEl>>,
+struct FsxFileCache_DataRepositoryAssociationDynamic {
+    nfs: std::option::Option<terrars::DynamicBlock<FsxFileCache_DataRepositoryAssociation_Nfs>>,
 }
 
 #[derive(Serialize)]
-pub struct FsxFileCacheDataRepositoryAssociationEl {
+pub struct FsxFileCache_DataRepositoryAssociation {
     data_repository_path: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_repository_subdirectories: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -615,11 +644,11 @@ pub struct FsxFileCacheDataRepositoryAssociationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nfs: std::option::Option<std::vec::Vec<FsxFileCacheDataRepositoryAssociationElNfsEl>>,
-    dynamic: FsxFileCacheDataRepositoryAssociationElDynamic,
+    nfs: std::option::Option<std::vec::Vec<FsxFileCache_DataRepositoryAssociation_Nfs>>,
+    dynamic: FsxFileCache_DataRepositoryAssociationDynamic,
 }
 
-impl FsxFileCacheDataRepositoryAssociationEl {
+impl FsxFileCache_DataRepositoryAssociation {
     #[doc = "Set the field `data_repository_subdirectories`.\n"]
     pub fn set_data_repository_subdirectories(
         mut self,
@@ -641,7 +670,7 @@ impl FsxFileCacheDataRepositoryAssociationEl {
     #[doc = "Set the field `nfs`.\n"]
     pub fn set_nfs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxFileCacheDataRepositoryAssociationElNfsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxFileCache_DataRepositoryAssociation_Nfs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -655,8 +684,8 @@ impl FsxFileCacheDataRepositoryAssociationEl {
     }
 }
 
-impl terrars::ToListMappable for FsxFileCacheDataRepositoryAssociationEl {
-    type O = terrars::BlockAssignable<FsxFileCacheDataRepositoryAssociationEl>;
+impl terrars::ToListMappable for FsxFileCache_DataRepositoryAssociation {
+    type O = terrars::BlockAssignable<FsxFileCache_DataRepositoryAssociation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -667,16 +696,16 @@ impl terrars::ToListMappable for FsxFileCacheDataRepositoryAssociationEl {
     }
 }
 
-pub struct BuildFsxFileCacheDataRepositoryAssociationEl {
+pub struct BuildFsxFileCache_DataRepositoryAssociation {
     #[doc = ""]
     pub data_repository_path: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub file_cache_path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFsxFileCacheDataRepositoryAssociationEl {
-    pub fn build(self) -> FsxFileCacheDataRepositoryAssociationEl {
-        FsxFileCacheDataRepositoryAssociationEl {
+impl BuildFsxFileCache_DataRepositoryAssociation {
+    pub fn build(self) -> FsxFileCache_DataRepositoryAssociation {
+        FsxFileCache_DataRepositoryAssociation {
             data_repository_path: self.data_repository_path,
             data_repository_subdirectories: core::default::Default::default(),
             file_cache_path: self.file_cache_path,
@@ -687,21 +716,23 @@ impl BuildFsxFileCacheDataRepositoryAssociationEl {
     }
 }
 
-pub struct FsxFileCacheDataRepositoryAssociationElRef {
+#[allow(dead_code)]
+pub struct FsxFileCache_DataRepositoryAssociationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxFileCacheDataRepositoryAssociationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxFileCacheDataRepositoryAssociationElRef {
-        FsxFileCacheDataRepositoryAssociationElRef {
+impl terrars::Ref for FsxFileCache_DataRepositoryAssociationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxFileCache_DataRepositoryAssociationRef {
+        FsxFileCache_DataRepositoryAssociationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxFileCacheDataRepositoryAssociationElRef {
+impl FsxFileCache_DataRepositoryAssociationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -758,14 +789,14 @@ impl FsxFileCacheDataRepositoryAssociationElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxFileCacheLustreConfigurationElLogConfigurationEl {
+pub struct FsxFileCache_LustreConfiguration_LogConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxFileCacheLustreConfigurationElLogConfigurationEl {
+impl FsxFileCache_LustreConfiguration_LogConfiguration {
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.destination = std::option::Option::Some(v.into());
@@ -779,8 +810,8 @@ impl FsxFileCacheLustreConfigurationElLogConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for FsxFileCacheLustreConfigurationElLogConfigurationEl {
-    type O = terrars::BlockAssignable<FsxFileCacheLustreConfigurationElLogConfigurationEl>;
+impl terrars::ToListMappable for FsxFileCache_LustreConfiguration_LogConfiguration {
+    type O = terrars::BlockAssignable<FsxFileCache_LustreConfiguration_LogConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -791,35 +822,37 @@ impl terrars::ToListMappable for FsxFileCacheLustreConfigurationElLogConfigurati
     }
 }
 
-pub struct BuildFsxFileCacheLustreConfigurationElLogConfigurationEl {}
+pub struct BuildFsxFileCache_LustreConfiguration_LogConfiguration {}
 
-impl BuildFsxFileCacheLustreConfigurationElLogConfigurationEl {
-    pub fn build(self) -> FsxFileCacheLustreConfigurationElLogConfigurationEl {
-        FsxFileCacheLustreConfigurationElLogConfigurationEl {
+impl BuildFsxFileCache_LustreConfiguration_LogConfiguration {
+    pub fn build(self) -> FsxFileCache_LustreConfiguration_LogConfiguration {
+        FsxFileCache_LustreConfiguration_LogConfiguration {
             destination: core::default::Default::default(),
             level: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxFileCacheLustreConfigurationElLogConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxFileCache_LustreConfiguration_LogConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxFileCacheLustreConfigurationElLogConfigurationElRef {
+impl terrars::Ref for FsxFileCache_LustreConfiguration_LogConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxFileCacheLustreConfigurationElLogConfigurationElRef {
-        FsxFileCacheLustreConfigurationElLogConfigurationElRef {
+    ) -> FsxFileCache_LustreConfiguration_LogConfigurationRef {
+        FsxFileCache_LustreConfiguration_LogConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxFileCacheLustreConfigurationElLogConfigurationElRef {
+impl FsxFileCache_LustreConfiguration_LogConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -836,14 +869,14 @@ impl FsxFileCacheLustreConfigurationElLogConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxFileCacheLustreConfigurationElMetadataConfigurationEl {
+pub struct FsxFileCache_LustreConfiguration_MetadataConfiguration {
     storage_capacity: terrars::PrimField<f64>,
 }
 
-impl FsxFileCacheLustreConfigurationElMetadataConfigurationEl { }
+impl FsxFileCache_LustreConfiguration_MetadataConfiguration { }
 
-impl terrars::ToListMappable for FsxFileCacheLustreConfigurationElMetadataConfigurationEl {
-    type O = terrars::BlockAssignable<FsxFileCacheLustreConfigurationElMetadataConfigurationEl>;
+impl terrars::ToListMappable for FsxFileCache_LustreConfiguration_MetadataConfiguration {
+    type O = terrars::BlockAssignable<FsxFileCache_LustreConfiguration_MetadataConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -854,35 +887,37 @@ impl terrars::ToListMappable for FsxFileCacheLustreConfigurationElMetadataConfig
     }
 }
 
-pub struct BuildFsxFileCacheLustreConfigurationElMetadataConfigurationEl {
+pub struct BuildFsxFileCache_LustreConfiguration_MetadataConfiguration {
     #[doc = ""]
     pub storage_capacity: terrars::PrimField<f64>,
 }
 
-impl BuildFsxFileCacheLustreConfigurationElMetadataConfigurationEl {
-    pub fn build(self) -> FsxFileCacheLustreConfigurationElMetadataConfigurationEl {
-        FsxFileCacheLustreConfigurationElMetadataConfigurationEl { storage_capacity: self.storage_capacity }
+impl BuildFsxFileCache_LustreConfiguration_MetadataConfiguration {
+    pub fn build(self) -> FsxFileCache_LustreConfiguration_MetadataConfiguration {
+        FsxFileCache_LustreConfiguration_MetadataConfiguration { storage_capacity: self.storage_capacity }
     }
 }
 
-pub struct FsxFileCacheLustreConfigurationElMetadataConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxFileCache_LustreConfiguration_MetadataConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxFileCacheLustreConfigurationElMetadataConfigurationElRef {
+impl terrars::Ref for FsxFileCache_LustreConfiguration_MetadataConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxFileCacheLustreConfigurationElMetadataConfigurationElRef {
-        FsxFileCacheLustreConfigurationElMetadataConfigurationElRef {
+    ) -> FsxFileCache_LustreConfiguration_MetadataConfigurationRef {
+        FsxFileCache_LustreConfiguration_MetadataConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxFileCacheLustreConfigurationElMetadataConfigurationElRef {
+impl FsxFileCache_LustreConfiguration_MetadataConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -894,24 +929,24 @@ impl FsxFileCacheLustreConfigurationElMetadataConfigurationElRef {
 }
 
 #[derive(Serialize, Default)]
-struct FsxFileCacheLustreConfigurationElDynamic {
+struct FsxFileCache_LustreConfigurationDynamic {
     metadata_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<FsxFileCacheLustreConfigurationElMetadataConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<FsxFileCache_LustreConfiguration_MetadataConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct FsxFileCacheLustreConfigurationEl {
+pub struct FsxFileCache_LustreConfiguration {
     deployment_type: terrars::PrimField<std::string::String>,
     per_unit_storage_throughput: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weekly_maintenance_start_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata_configuration: std::option::Option<std::vec::Vec<FsxFileCacheLustreConfigurationElMetadataConfigurationEl>>,
-    dynamic: FsxFileCacheLustreConfigurationElDynamic,
+    metadata_configuration: std::option::Option<std::vec::Vec<FsxFileCache_LustreConfiguration_MetadataConfiguration>>,
+    dynamic: FsxFileCache_LustreConfigurationDynamic,
 }
 
-impl FsxFileCacheLustreConfigurationEl {
+impl FsxFileCache_LustreConfiguration {
     #[doc = "Set the field `weekly_maintenance_start_time`.\n"]
     pub fn set_weekly_maintenance_start_time(
         mut self,
@@ -924,12 +959,7 @@ impl FsxFileCacheLustreConfigurationEl {
     #[doc = "Set the field `metadata_configuration`.\n"]
     pub fn set_metadata_configuration(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<FsxFileCacheLustreConfigurationElMetadataConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxFileCache_LustreConfiguration_MetadataConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -943,8 +973,8 @@ impl FsxFileCacheLustreConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for FsxFileCacheLustreConfigurationEl {
-    type O = terrars::BlockAssignable<FsxFileCacheLustreConfigurationEl>;
+impl terrars::ToListMappable for FsxFileCache_LustreConfiguration {
+    type O = terrars::BlockAssignable<FsxFileCache_LustreConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -955,16 +985,16 @@ impl terrars::ToListMappable for FsxFileCacheLustreConfigurationEl {
     }
 }
 
-pub struct BuildFsxFileCacheLustreConfigurationEl {
+pub struct BuildFsxFileCache_LustreConfiguration {
     #[doc = ""]
     pub deployment_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub per_unit_storage_throughput: terrars::PrimField<f64>,
 }
 
-impl BuildFsxFileCacheLustreConfigurationEl {
-    pub fn build(self) -> FsxFileCacheLustreConfigurationEl {
-        FsxFileCacheLustreConfigurationEl {
+impl BuildFsxFileCache_LustreConfiguration {
+    pub fn build(self) -> FsxFileCache_LustreConfiguration {
+        FsxFileCache_LustreConfiguration {
             deployment_type: self.deployment_type,
             per_unit_storage_throughput: self.per_unit_storage_throughput,
             weekly_maintenance_start_time: core::default::Default::default(),
@@ -974,21 +1004,23 @@ impl BuildFsxFileCacheLustreConfigurationEl {
     }
 }
 
-pub struct FsxFileCacheLustreConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxFileCache_LustreConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxFileCacheLustreConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxFileCacheLustreConfigurationElRef {
-        FsxFileCacheLustreConfigurationElRef {
+impl terrars::Ref for FsxFileCache_LustreConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxFileCache_LustreConfigurationRef {
+        FsxFileCache_LustreConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxFileCacheLustreConfigurationElRef {
+impl FsxFileCache_LustreConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -999,7 +1031,7 @@ impl FsxFileCacheLustreConfigurationElRef {
     }
 
     #[doc = "Get a reference to the value of field `log_configuration` after provisioning.\n"]
-    pub fn log_configuration(&self) -> terrars::SetRef<FsxFileCacheLustreConfigurationElLogConfigurationElRef> {
+    pub fn log_configuration(&self) -> terrars::SetRef<FsxFileCache_LustreConfiguration_LogConfigurationRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.log_configuration", self.base))
     }
 
@@ -1020,7 +1052,7 @@ impl FsxFileCacheLustreConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxFileCacheTimeoutsEl {
+pub struct FsxFileCache_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1029,7 +1061,7 @@ pub struct FsxFileCacheTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxFileCacheTimeoutsEl {
+impl FsxFileCache_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1049,8 +1081,8 @@ impl FsxFileCacheTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxFileCacheTimeoutsEl {
-    type O = terrars::BlockAssignable<FsxFileCacheTimeoutsEl>;
+impl terrars::ToListMappable for FsxFileCache_Timeouts {
+    type O = terrars::BlockAssignable<FsxFileCache_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1061,11 +1093,11 @@ impl terrars::ToListMappable for FsxFileCacheTimeoutsEl {
     }
 }
 
-pub struct BuildFsxFileCacheTimeoutsEl {}
+pub struct BuildFsxFileCache_Timeouts {}
 
-impl BuildFsxFileCacheTimeoutsEl {
-    pub fn build(self) -> FsxFileCacheTimeoutsEl {
-        FsxFileCacheTimeoutsEl {
+impl BuildFsxFileCache_Timeouts {
+    pub fn build(self) -> FsxFileCache_Timeouts {
+        FsxFileCache_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1073,21 +1105,23 @@ impl BuildFsxFileCacheTimeoutsEl {
     }
 }
 
-pub struct FsxFileCacheTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FsxFileCache_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxFileCacheTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxFileCacheTimeoutsElRef {
-        FsxFileCacheTimeoutsElRef {
+impl terrars::Ref for FsxFileCache_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxFileCache_TimeoutsRef {
+        FsxFileCache_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxFileCacheTimeoutsElRef {
+impl FsxFileCache_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1106,10 +1140,4 @@ impl FsxFileCacheTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FsxFileCacheDynamic {
-    data_repository_association: std::option::Option<terrars::DynamicBlock<FsxFileCacheDataRepositoryAssociationEl>>,
-    lustre_configuration: std::option::Option<terrars::DynamicBlock<FsxFileCacheLustreConfigurationEl>>,
 }

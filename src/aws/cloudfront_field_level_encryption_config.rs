@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudfrontFieldLevelEncryptionConfigData {
+struct CloudfrontFieldLevelEncryptionConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,18 +27,18 @@ struct CloudfrontFieldLevelEncryptionConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content_type_profile_config: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl>>,
+    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_arg_profile_config: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl>>,
+    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig>>,
     dynamic: CloudfrontFieldLevelEncryptionConfigDynamic,
 }
 
 struct CloudfrontFieldLevelEncryptionConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudfrontFieldLevelEncryptionConfigData>,
+    data: std::cell::RefCell<CloudfrontFieldLevelEncryptionConfigData_>,
 }
 
 #[derive(Clone)]
@@ -156,7 +158,7 @@ impl CloudfrontFieldLevelEncryptionConfig {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl>>,
+                    ::Into<terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -177,7 +179,7 @@ impl CloudfrontFieldLevelEncryptionConfig {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl>>,
+                    ::Into<terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,6 +190,11 @@ impl CloudfrontFieldLevelEncryptionConfig {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `caller_reference` after provisioning.\n"]
@@ -213,14 +220,14 @@ impl CloudfrontFieldLevelEncryptionConfig {
     #[doc = "Get a reference to the value of field `content_type_profile_config` after provisioning.\n"]
     pub fn content_type_profile_config(
         &self,
-    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElRef> {
+    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.content_type_profile_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `query_arg_profile_config` after provisioning.\n"]
     pub fn query_arg_profile_config(
         &self,
-    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElRef> {
+    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_arg_profile_config", self.extract_ref()))
     }
 }
@@ -265,7 +272,7 @@ impl BuildCloudfrontFieldLevelEncryptionConfig {
         let out = CloudfrontFieldLevelEncryptionConfig(std::rc::Rc::new(CloudfrontFieldLevelEncryptionConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudfrontFieldLevelEncryptionConfigData {
+            data: std::cell::RefCell::new(CloudfrontFieldLevelEncryptionConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -306,6 +313,11 @@ impl CloudfrontFieldLevelEncryptionConfigRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `caller_reference` after provisioning.\n"]
     pub fn caller_reference(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.caller_reference", self.extract_ref()))
@@ -329,27 +341,37 @@ impl CloudfrontFieldLevelEncryptionConfigRef {
     #[doc = "Get a reference to the value of field `content_type_profile_config` after provisioning.\n"]
     pub fn content_type_profile_config(
         &self,
-    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElRef> {
+    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.content_type_profile_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `query_arg_profile_config` after provisioning.\n"]
     pub fn query_arg_profile_config(
         &self,
-    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElRef> {
+    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_arg_profile_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudfrontFieldLevelEncryptionConfigDynamic {
+    content_type_profile_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig>>,
+    query_arg_profile_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl {
+pub struct CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items {
     content_type: terrars::PrimField<std::string::String>,
     format: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     profile_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl {
+impl CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items {
     #[doc = "Set the field `profile_id`.\n"]
     pub fn set_profile_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.profile_id = std::option::Option::Some(v.into());
@@ -358,10 +380,10 @@ impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypePr
 }
 
 impl terrars
-::ToListMappable for CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl {
+::ToListMappable for CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items {
     type O =
         terrars
-        ::BlockAssignable<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl>;
+        ::BlockAssignable<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -372,16 +394,16 @@ impl terrars
     }
 }
 
-pub struct BuildCloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl {
+pub struct BuildCloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items {
     #[doc = ""]
     pub content_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub format: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl {
-    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl {
-        CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl {
+impl BuildCloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items {
+    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items {
+        CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items {
             content_type: self.content_type,
             format: self.format,
             profile_id: core::default::Default::default(),
@@ -389,24 +411,26 @@ impl BuildCloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentT
     }
 }
 
-pub struct CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsElRef {
+#[allow(dead_code)]
+pub struct CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_ItemsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsElRef {
+impl terrars::Ref for CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_ItemsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsElRef {
-        CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsElRef {
+    ) -> CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_ItemsRef {
+        CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_ItemsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsElRef {
+impl CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_ItemsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -428,27 +452,24 @@ impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypePr
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElDynamic {
+struct CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfilesDynamic {
     items: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl>,
+        terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl {
+pub struct CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     items: std
     ::option
-    ::Option<
-        std::vec::Vec<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl>,
-    >,
-    dynamic: CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElDynamic,
+    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items>>,
+    dynamic: CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfilesDynamic,
 }
 
-impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl {
+impl CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
@@ -460,7 +481,7 @@ impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypePr
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElItemsEl,
+                            CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles_Items,
                         >,
                     >,
     ) -> Self {
@@ -476,10 +497,9 @@ impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypePr
     }
 }
 
-impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl {
+impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles {
     type O =
-        terrars
-        ::BlockAssignable<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl>;
+        terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,60 +510,62 @@ impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigContentType
     }
 }
 
-pub struct BuildCloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl {}
+pub struct BuildCloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles {}
 
-impl BuildCloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl {
-    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl {
-        CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl {
+impl BuildCloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles {
+    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles {
+        CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles {
             items: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElRef {
+#[allow(dead_code)]
+pub struct CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfilesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElRef {
+impl terrars::Ref for CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfilesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElRef {
-        CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElRef {
+    ) -> CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfilesRef {
+        CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfilesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElRef {
+impl CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfilesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElDynamic {
+struct CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfigDynamic {
     content_type_profiles: std
     ::option
     ::Option<
-        terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl>,
+        terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
+pub struct CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig {
     forward_when_content_type_is_unknown: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content_type_profiles: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl>>,
-    dynamic: CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElDynamic,
+    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles>>,
+    dynamic: CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfigDynamic,
 }
 
-impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
+impl CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig {
     #[doc = "Set the field `content_type_profiles`.\n"]
     pub fn set_content_type_profiles(
         mut self,
@@ -555,7 +577,7 @@ impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesEl,
+                            CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfiles,
                         >,
                     >,
     ) -> Self {
@@ -571,8 +593,8 @@ impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
-    type O = terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl>;
+impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig {
+    type O = terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -583,14 +605,14 @@ impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigContentType
     }
 }
 
-pub struct BuildCloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
+pub struct BuildCloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig {
     #[doc = ""]
     pub forward_when_content_type_is_unknown: terrars::PrimField<bool>,
 }
 
-impl BuildCloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
-    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
-        CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
+impl BuildCloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig {
+    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig {
+        CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig {
             forward_when_content_type_is_unknown: self.forward_when_content_type_is_unknown,
             content_type_profiles: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -598,24 +620,26 @@ impl BuildCloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl {
     }
 }
 
-pub struct CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElRef {
+impl terrars::Ref for CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElRef {
-        CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElRef {
+    ) -> CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfigRef {
+        CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElRef {
+impl CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -628,23 +652,22 @@ impl CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElRef {
     #[doc = "Get a reference to the value of field `content_type_profiles` after provisioning.\n"]
     pub fn content_type_profiles(
         &self,
-    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigElContentTypeProfilesElRef> {
+    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfig_ContentTypeProfileConfig_ContentTypeProfilesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.content_type_profiles", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl {
+pub struct CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items {
     profile_id: terrars::PrimField<std::string::String>,
     query_arg: terrars::PrimField<std::string::String>,
 }
 
-impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl { }
+impl CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items { }
 
-impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl {
+impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items {
     type O =
-        terrars
-        ::BlockAssignable<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl>;
+        terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -655,40 +678,42 @@ impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigQueryArgPro
     }
 }
 
-pub struct BuildCloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl {
+pub struct BuildCloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items {
     #[doc = ""]
     pub profile_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub query_arg: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl {
-    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl {
-        CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl {
+impl BuildCloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items {
+    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items {
+        CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items {
             profile_id: self.profile_id,
             query_arg: self.query_arg,
         }
     }
 }
 
-pub struct CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsElRef {
+#[allow(dead_code)]
+pub struct CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_ItemsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsElRef {
+impl terrars::Ref for CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_ItemsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsElRef {
-        CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsElRef {
+    ) -> CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_ItemsRef {
+        CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_ItemsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsElRef {
+impl CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_ItemsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -705,24 +730,24 @@ impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfiles
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElDynamic {
+struct CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfilesDynamic {
     items: std
     ::option
     ::Option<
-        terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl>,
+        terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl {
+pub struct CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     items: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl>>,
-    dynamic: CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElDynamic,
+    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items>>,
+    dynamic: CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfilesDynamic,
 }
 
-impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl {
+impl CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
@@ -734,7 +759,7 @@ impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfiles
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElItemsEl,
+                            CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles_Items,
                         >,
                     >,
     ) -> Self {
@@ -750,8 +775,8 @@ impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfiles
     }
 }
 
-impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl {
-    type O = terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl>;
+impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles {
+    type O = terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -762,58 +787,60 @@ impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigQueryArgPro
     }
 }
 
-pub struct BuildCloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl {}
+pub struct BuildCloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles {}
 
-impl BuildCloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl {
-    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl {
-        CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl {
+impl BuildCloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles {
+    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles {
+        CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles {
             items: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElRef {
+#[allow(dead_code)]
+pub struct CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfilesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElRef {
+impl terrars::Ref for CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfilesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElRef {
-        CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElRef {
+    ) -> CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfilesRef {
+        CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfilesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElRef {
+impl CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfilesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElDynamic {
+struct CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfigDynamic {
     query_arg_profiles: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
+pub struct CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig {
     forward_when_query_arg_profile_is_unknown: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_arg_profiles: std
     ::option
-    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl>>,
-    dynamic: CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElDynamic,
+    ::Option<std::vec::Vec<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles>>,
+    dynamic: CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfigDynamic,
 }
 
-impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
+impl CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig {
     #[doc = "Set the field `query_arg_profiles`.\n"]
     pub fn set_query_arg_profiles(
         mut self,
@@ -824,9 +851,7 @@ impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesEl,
-                        >,
+                        ::BlockAssignable<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfiles>,
                     >,
     ) -> Self {
         match v.into() {
@@ -841,8 +866,8 @@ impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
-    type O = terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl>;
+impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig {
+    type O = terrars::BlockAssignable<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -853,14 +878,14 @@ impl terrars::ToListMappable for CloudfrontFieldLevelEncryptionConfigQueryArgPro
     }
 }
 
-pub struct BuildCloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
+pub struct BuildCloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig {
     #[doc = ""]
     pub forward_when_query_arg_profile_is_unknown: terrars::PrimField<bool>,
 }
 
-impl BuildCloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
-    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
-        CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
+impl BuildCloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig {
+    pub fn build(self) -> CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig {
+        CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig {
             forward_when_query_arg_profile_is_unknown: self.forward_when_query_arg_profile_is_unknown,
             query_arg_profiles: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -868,24 +893,26 @@ impl BuildCloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl {
     }
 }
 
-pub struct CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElRef {
+impl terrars::Ref for CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElRef {
-        CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElRef {
+    ) -> CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfigRef {
+        CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElRef {
+impl CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -901,17 +928,7 @@ impl CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElRef {
     #[doc = "Get a reference to the value of field `query_arg_profiles` after provisioning.\n"]
     pub fn query_arg_profiles(
         &self,
-    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigElQueryArgProfilesElRef> {
+    ) -> terrars::ListRef<CloudfrontFieldLevelEncryptionConfig_QueryArgProfileConfig_QueryArgProfilesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_arg_profiles", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudfrontFieldLevelEncryptionConfigDynamic {
-    content_type_profile_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfigContentTypeProfileConfigEl>>,
-    query_arg_profile_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudfrontFieldLevelEncryptionConfigQueryArgProfileConfigEl>>,
 }

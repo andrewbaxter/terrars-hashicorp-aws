@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct TimestreamwriteTableData {
+struct TimestreamwriteTableData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct TimestreamwriteTableData {
     database_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     table_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -29,16 +33,18 @@ struct TimestreamwriteTableData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     magnetic_store_write_properties: std
     ::option
-    ::Option<std::vec::Vec<TimestreamwriteTableMagneticStoreWritePropertiesEl>>,
+    ::Option<std::vec::Vec<TimestreamwriteTable_MagneticStoreWriteProperties>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retention_properties: std::option::Option<std::vec::Vec<TimestreamwriteTableRetentionPropertiesEl>>,
+    retention_properties: std::option::Option<std::vec::Vec<TimestreamwriteTable_RetentionProperties>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schema: std::option::Option<std::vec::Vec<TimestreamwriteTable_Schema>>,
     dynamic: TimestreamwriteTableDynamic,
 }
 
 struct TimestreamwriteTable_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<TimestreamwriteTableData>,
+    data: std::cell::RefCell<TimestreamwriteTableData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +150,13 @@ impl TimestreamwriteTable {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -165,7 +178,7 @@ impl TimestreamwriteTable {
     #[doc = "Set the field `magnetic_store_write_properties`.\n"]
     pub fn set_magnetic_store_write_properties(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<TimestreamwriteTableMagneticStoreWritePropertiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TimestreamwriteTable_MagneticStoreWriteProperties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,7 +194,7 @@ impl TimestreamwriteTable {
     #[doc = "Set the field `retention_properties`.\n"]
     pub fn set_retention_properties(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<TimestreamwriteTableRetentionPropertiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TimestreamwriteTable_RetentionProperties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -189,6 +202,19 @@ impl TimestreamwriteTable {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.retention_properties = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `schema`.\n"]
+    pub fn set_schema(self, v: impl std::convert::Into<terrars::BlockAssignable<TimestreamwriteTable_Schema>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().schema = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.schema = std::option::Option::Some(d);
             },
         }
         self
@@ -209,6 +235,12 @@ impl TimestreamwriteTable {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
     pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
@@ -227,7 +259,7 @@ impl TimestreamwriteTable {
     #[doc = "Get a reference to the value of field `magnetic_store_write_properties` after provisioning.\n"]
     pub fn magnetic_store_write_properties(
         &self,
-    ) -> terrars::ListRef<TimestreamwriteTableMagneticStoreWritePropertiesElRef> {
+    ) -> terrars::ListRef<TimestreamwriteTable_MagneticStoreWritePropertiesRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.magnetic_store_write_properties", self.extract_ref()),
@@ -235,8 +267,13 @@ impl TimestreamwriteTable {
     }
 
     #[doc = "Get a reference to the value of field `retention_properties` after provisioning.\n"]
-    pub fn retention_properties(&self) -> terrars::ListRef<TimestreamwriteTableRetentionPropertiesElRef> {
+    pub fn retention_properties(&self) -> terrars::ListRef<TimestreamwriteTable_RetentionPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retention_properties", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
+    pub fn schema(&self) -> terrars::ListRef<TimestreamwriteTable_SchemaRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.schema", self.extract_ref()))
     }
 }
 
@@ -284,7 +321,7 @@ impl BuildTimestreamwriteTable {
         let out = TimestreamwriteTable(std::rc::Rc::new(TimestreamwriteTable_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(TimestreamwriteTableData {
+            data: std::cell::RefCell::new(TimestreamwriteTableData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -292,11 +329,13 @@ impl BuildTimestreamwriteTable {
                 provisioner: core::default::Default::default(),
                 database_name: self.database_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 table_name: self.table_name,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 magnetic_store_write_properties: core::default::Default::default(),
                 retention_properties: core::default::Default::default(),
+                schema: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -343,6 +382,12 @@ impl TimestreamwriteTableRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
     pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
@@ -361,7 +406,7 @@ impl TimestreamwriteTableRef {
     #[doc = "Get a reference to the value of field `magnetic_store_write_properties` after provisioning.\n"]
     pub fn magnetic_store_write_properties(
         &self,
-    ) -> terrars::ListRef<TimestreamwriteTableMagneticStoreWritePropertiesElRef> {
+    ) -> terrars::ListRef<TimestreamwriteTable_MagneticStoreWritePropertiesRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.magnetic_store_write_properties", self.extract_ref()),
@@ -369,13 +414,27 @@ impl TimestreamwriteTableRef {
     }
 
     #[doc = "Get a reference to the value of field `retention_properties` after provisioning.\n"]
-    pub fn retention_properties(&self) -> terrars::ListRef<TimestreamwriteTableRetentionPropertiesElRef> {
+    pub fn retention_properties(&self) -> terrars::ListRef<TimestreamwriteTable_RetentionPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retention_properties", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `schema` after provisioning.\n"]
+    pub fn schema(&self) -> terrars::ListRef<TimestreamwriteTable_SchemaRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.schema", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct TimestreamwriteTableDynamic {
+    magnetic_store_write_properties: std
+    ::option
+    ::Option<terrars::DynamicBlock<TimestreamwriteTable_MagneticStoreWriteProperties>>,
+    retention_properties: std::option::Option<terrars::DynamicBlock<TimestreamwriteTable_RetentionProperties>>,
+    schema: std::option::Option<terrars::DynamicBlock<TimestreamwriteTable_Schema>>,
+}
+
 #[derive(Serialize)]
-pub struct TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl {
+pub struct TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -386,7 +445,7 @@ pub struct TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreReject
     object_key_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl {
+impl TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration {
     #[doc = "Set the field `bucket_name`.\n"]
     pub fn set_bucket_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_name = std::option::Option::Some(v.into());
@@ -413,11 +472,11 @@ impl TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedData
 }
 
 impl terrars
-::ToListMappable for TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl {
+::ToListMappable for TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration {
     type O =
         terrars
         ::BlockAssignable<
-            TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl,
+            TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -429,13 +488,13 @@ impl terrars
     }
 }
 
-pub struct BuildTimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl {}
+pub struct BuildTimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration {}
 
-impl BuildTimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl {
+impl BuildTimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration {
     pub fn build(
         self,
-    ) -> TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl {
-        TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl {
+    ) -> TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration {
+        TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration {
             bucket_name: core::default::Default::default(),
             encryption_option: core::default::Default::default(),
             kms_key_id: core::default::Default::default(),
@@ -444,25 +503,27 @@ impl BuildTimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejecte
     }
 }
 
-pub struct TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationElRef {
+#[allow(dead_code)]
+pub struct TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationElRef {
+::Ref for TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3ConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationElRef {
-        TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationElRef {
+    ) -> TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3ConfigurationRef {
+        TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationElRef {
+impl TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -489,31 +550,31 @@ impl TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedData
 }
 
 #[derive(Serialize, Default)]
-struct TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElDynamic {
+struct TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocationDynamic {
     s3_configuration: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl,
+            TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl {
+pub struct TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_configuration: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl>,
+        ::Vec<TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration>,
     >,
-    dynamic: TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElDynamic,
+    dynamic: TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocationDynamic,
 }
 
-impl TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl {
+impl TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation {
     #[doc = "Set the field `s3_configuration`.\n"]
     pub fn set_s3_configuration(
         mut self,
@@ -525,7 +586,7 @@ impl TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedData
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationEl,
+                            TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3Configuration,
                         >,
                     >,
     ) -> Self {
@@ -541,10 +602,10 @@ impl TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedData
     }
 }
 
-impl terrars::ToListMappable for TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl {
+impl terrars::ToListMappable for TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation {
     type O =
         terrars
-        ::BlockAssignable<TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl>;
+        ::BlockAssignable<TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -555,35 +616,37 @@ impl terrars::ToListMappable for TimestreamwriteTableMagneticStoreWritePropertie
     }
 }
 
-pub struct BuildTimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl {}
+pub struct BuildTimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation {}
 
-impl BuildTimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl {
-    pub fn build(self) -> TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl {
-        TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl {
+impl BuildTimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation {
+    pub fn build(self) -> TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation {
+        TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation {
             s3_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElRef {
+#[allow(dead_code)]
+pub struct TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElRef {
+impl terrars::Ref for TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElRef {
-        TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElRef {
+    ) -> TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocationRef {
+        TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElRef {
+impl TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -592,34 +655,32 @@ impl TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedData
     pub fn s3_configuration(
         &self,
     ) -> terrars
-    ::ListRef<
-        TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElS3ConfigurationElRef,
-    > {
+    ::ListRef<TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation_S3ConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct TimestreamwriteTableMagneticStoreWritePropertiesElDynamic {
+struct TimestreamwriteTable_MagneticStoreWritePropertiesDynamic {
     magnetic_store_rejected_data_location: std
     ::option
     ::Option<
-        terrars::DynamicBlock<TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl>,
+        terrars::DynamicBlock<TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct TimestreamwriteTableMagneticStoreWritePropertiesEl {
+pub struct TimestreamwriteTable_MagneticStoreWriteProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_magnetic_store_writes: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     magnetic_store_rejected_data_location: std
     ::option
-    ::Option<std::vec::Vec<TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl>>,
-    dynamic: TimestreamwriteTableMagneticStoreWritePropertiesElDynamic,
+    ::Option<std::vec::Vec<TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation>>,
+    dynamic: TimestreamwriteTable_MagneticStoreWritePropertiesDynamic,
 }
 
-impl TimestreamwriteTableMagneticStoreWritePropertiesEl {
+impl TimestreamwriteTable_MagneticStoreWriteProperties {
     #[doc = "Set the field `enable_magnetic_store_writes`.\n"]
     pub fn set_enable_magnetic_store_writes(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_magnetic_store_writes = std::option::Option::Some(v.into());
@@ -637,7 +698,7 @@ impl TimestreamwriteTableMagneticStoreWritePropertiesEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationEl,
+                            TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocation,
                         >,
                     >,
     ) -> Self {
@@ -653,8 +714,8 @@ impl TimestreamwriteTableMagneticStoreWritePropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for TimestreamwriteTableMagneticStoreWritePropertiesEl {
-    type O = terrars::BlockAssignable<TimestreamwriteTableMagneticStoreWritePropertiesEl>;
+impl terrars::ToListMappable for TimestreamwriteTable_MagneticStoreWriteProperties {
+    type O = terrars::BlockAssignable<TimestreamwriteTable_MagneticStoreWriteProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -665,11 +726,11 @@ impl terrars::ToListMappable for TimestreamwriteTableMagneticStoreWritePropertie
     }
 }
 
-pub struct BuildTimestreamwriteTableMagneticStoreWritePropertiesEl {}
+pub struct BuildTimestreamwriteTable_MagneticStoreWriteProperties {}
 
-impl BuildTimestreamwriteTableMagneticStoreWritePropertiesEl {
-    pub fn build(self) -> TimestreamwriteTableMagneticStoreWritePropertiesEl {
-        TimestreamwriteTableMagneticStoreWritePropertiesEl {
+impl BuildTimestreamwriteTable_MagneticStoreWriteProperties {
+    pub fn build(self) -> TimestreamwriteTable_MagneticStoreWriteProperties {
+        TimestreamwriteTable_MagneticStoreWriteProperties {
             enable_magnetic_store_writes: core::default::Default::default(),
             magnetic_store_rejected_data_location: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -677,24 +738,26 @@ impl BuildTimestreamwriteTableMagneticStoreWritePropertiesEl {
     }
 }
 
-pub struct TimestreamwriteTableMagneticStoreWritePropertiesElRef {
+#[allow(dead_code)]
+pub struct TimestreamwriteTable_MagneticStoreWritePropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TimestreamwriteTableMagneticStoreWritePropertiesElRef {
+impl terrars::Ref for TimestreamwriteTable_MagneticStoreWritePropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> TimestreamwriteTableMagneticStoreWritePropertiesElRef {
-        TimestreamwriteTableMagneticStoreWritePropertiesElRef {
+    ) -> TimestreamwriteTable_MagneticStoreWritePropertiesRef {
+        TimestreamwriteTable_MagneticStoreWritePropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TimestreamwriteTableMagneticStoreWritePropertiesElRef {
+impl TimestreamwriteTable_MagneticStoreWritePropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -707,21 +770,21 @@ impl TimestreamwriteTableMagneticStoreWritePropertiesElRef {
     #[doc = "Get a reference to the value of field `magnetic_store_rejected_data_location` after provisioning.\n"]
     pub fn magnetic_store_rejected_data_location(
         &self,
-    ) -> terrars::ListRef<TimestreamwriteTableMagneticStoreWritePropertiesElMagneticStoreRejectedDataLocationElRef> {
+    ) -> terrars::ListRef<TimestreamwriteTable_MagneticStoreWriteProperties_MagneticStoreRejectedDataLocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.magnetic_store_rejected_data_location", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct TimestreamwriteTableRetentionPropertiesEl {
+pub struct TimestreamwriteTable_RetentionProperties {
     magnetic_store_retention_period_in_days: terrars::PrimField<f64>,
     memory_store_retention_period_in_hours: terrars::PrimField<f64>,
 }
 
-impl TimestreamwriteTableRetentionPropertiesEl { }
+impl TimestreamwriteTable_RetentionProperties { }
 
-impl terrars::ToListMappable for TimestreamwriteTableRetentionPropertiesEl {
-    type O = terrars::BlockAssignable<TimestreamwriteTableRetentionPropertiesEl>;
+impl terrars::ToListMappable for TimestreamwriteTable_RetentionProperties {
+    type O = terrars::BlockAssignable<TimestreamwriteTable_RetentionProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -732,37 +795,39 @@ impl terrars::ToListMappable for TimestreamwriteTableRetentionPropertiesEl {
     }
 }
 
-pub struct BuildTimestreamwriteTableRetentionPropertiesEl {
+pub struct BuildTimestreamwriteTable_RetentionProperties {
     #[doc = ""]
     pub magnetic_store_retention_period_in_days: terrars::PrimField<f64>,
     #[doc = ""]
     pub memory_store_retention_period_in_hours: terrars::PrimField<f64>,
 }
 
-impl BuildTimestreamwriteTableRetentionPropertiesEl {
-    pub fn build(self) -> TimestreamwriteTableRetentionPropertiesEl {
-        TimestreamwriteTableRetentionPropertiesEl {
+impl BuildTimestreamwriteTable_RetentionProperties {
+    pub fn build(self) -> TimestreamwriteTable_RetentionProperties {
+        TimestreamwriteTable_RetentionProperties {
             magnetic_store_retention_period_in_days: self.magnetic_store_retention_period_in_days,
             memory_store_retention_period_in_hours: self.memory_store_retention_period_in_hours,
         }
     }
 }
 
-pub struct TimestreamwriteTableRetentionPropertiesElRef {
+#[allow(dead_code)]
+pub struct TimestreamwriteTable_RetentionPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TimestreamwriteTableRetentionPropertiesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TimestreamwriteTableRetentionPropertiesElRef {
-        TimestreamwriteTableRetentionPropertiesElRef {
+impl terrars::Ref for TimestreamwriteTable_RetentionPropertiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TimestreamwriteTable_RetentionPropertiesRef {
+        TimestreamwriteTable_RetentionPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TimestreamwriteTableRetentionPropertiesElRef {
+impl TimestreamwriteTable_RetentionPropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -784,10 +849,178 @@ impl TimestreamwriteTableRetentionPropertiesElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct TimestreamwriteTable_Schema_CompositePartitionKey {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enforcement_in_record: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
+}
+
+impl TimestreamwriteTable_Schema_CompositePartitionKey {
+    #[doc = "Set the field `enforcement_in_record`.\n"]
+    pub fn set_enforcement_in_record(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.enforcement_in_record = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for TimestreamwriteTable_Schema_CompositePartitionKey {
+    type O = terrars::BlockAssignable<TimestreamwriteTable_Schema_CompositePartitionKey>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildTimestreamwriteTable_Schema_CompositePartitionKey {
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
+}
+
+impl BuildTimestreamwriteTable_Schema_CompositePartitionKey {
+    pub fn build(self) -> TimestreamwriteTable_Schema_CompositePartitionKey {
+        TimestreamwriteTable_Schema_CompositePartitionKey {
+            enforcement_in_record: core::default::Default::default(),
+            name: core::default::Default::default(),
+            type_: self.type_,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct TimestreamwriteTable_Schema_CompositePartitionKeyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for TimestreamwriteTable_Schema_CompositePartitionKeyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> TimestreamwriteTable_Schema_CompositePartitionKeyRef {
+        TimestreamwriteTable_Schema_CompositePartitionKeyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl TimestreamwriteTable_Schema_CompositePartitionKeyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enforcement_in_record` after provisioning.\n"]
+    pub fn enforcement_in_record(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enforcement_in_record", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct TimestreamwriteTableDynamic {
-    magnetic_store_write_properties: std
+struct TimestreamwriteTable_SchemaDynamic {
+    composite_partition_key: std
     ::option
-    ::Option<terrars::DynamicBlock<TimestreamwriteTableMagneticStoreWritePropertiesEl>>,
-    retention_properties: std::option::Option<terrars::DynamicBlock<TimestreamwriteTableRetentionPropertiesEl>>,
+    ::Option<terrars::DynamicBlock<TimestreamwriteTable_Schema_CompositePartitionKey>>,
+}
+
+#[derive(Serialize)]
+pub struct TimestreamwriteTable_Schema {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    composite_partition_key: std::option::Option<std::vec::Vec<TimestreamwriteTable_Schema_CompositePartitionKey>>,
+    dynamic: TimestreamwriteTable_SchemaDynamic,
+}
+
+impl TimestreamwriteTable_Schema {
+    #[doc = "Set the field `composite_partition_key`.\n"]
+    pub fn set_composite_partition_key(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<TimestreamwriteTable_Schema_CompositePartitionKey>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.composite_partition_key = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.composite_partition_key = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for TimestreamwriteTable_Schema {
+    type O = terrars::BlockAssignable<TimestreamwriteTable_Schema>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildTimestreamwriteTable_Schema {}
+
+impl BuildTimestreamwriteTable_Schema {
+    pub fn build(self) -> TimestreamwriteTable_Schema {
+        TimestreamwriteTable_Schema {
+            composite_partition_key: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct TimestreamwriteTable_SchemaRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for TimestreamwriteTable_SchemaRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TimestreamwriteTable_SchemaRef {
+        TimestreamwriteTable_SchemaRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl TimestreamwriteTable_SchemaRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `composite_partition_key` after provisioning.\n"]
+    pub fn composite_partition_key(&self) -> terrars::ListRef<TimestreamwriteTable_Schema_CompositePartitionKeyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.composite_partition_key", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LightsailInstancePublicPortsData {
+struct LightsailInstancePublicPortsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct LightsailInstancePublicPortsData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     instance_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_info: std::option::Option<std::vec::Vec<LightsailInstancePublicPortsPortInfoEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port_info: std::option::Option<std::vec::Vec<LightsailInstancePublicPorts_PortInfo>>,
     dynamic: LightsailInstancePublicPortsDynamic,
 }
 
 struct LightsailInstancePublicPorts_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LightsailInstancePublicPortsData>,
+    data: std::cell::RefCell<LightsailInstancePublicPortsData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl LightsailInstancePublicPorts {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `port_info`.\n"]
     pub fn set_port_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LightsailInstancePublicPortsPortInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LightsailInstancePublicPorts_PortInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -159,6 +170,12 @@ impl LightsailInstancePublicPorts {
     #[doc = "Get a reference to the value of field `instance_name` after provisioning.\n"]
     pub fn instance_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -204,7 +221,7 @@ impl BuildLightsailInstancePublicPorts {
         let out = LightsailInstancePublicPorts(std::rc::Rc::new(LightsailInstancePublicPorts_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LightsailInstancePublicPortsData {
+            data: std::cell::RefCell::new(LightsailInstancePublicPortsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -212,6 +229,7 @@ impl BuildLightsailInstancePublicPorts {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_name: self.instance_name,
+                region: core::default::Default::default(),
                 port_info: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -253,10 +271,21 @@ impl LightsailInstancePublicPortsRef {
     pub fn instance_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct LightsailInstancePublicPortsDynamic {
+    port_info: std::option::Option<terrars::DynamicBlock<LightsailInstancePublicPorts_PortInfo>>,
 }
 
 #[derive(Serialize)]
-pub struct LightsailInstancePublicPortsPortInfoEl {
+pub struct LightsailInstancePublicPorts_PortInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr_list_aliases: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -268,7 +297,7 @@ pub struct LightsailInstancePublicPortsPortInfoEl {
     to_port: terrars::PrimField<f64>,
 }
 
-impl LightsailInstancePublicPortsPortInfoEl {
+impl LightsailInstancePublicPorts_PortInfo {
     #[doc = "Set the field `cidr_list_aliases`.\n"]
     pub fn set_cidr_list_aliases(
         mut self,
@@ -297,8 +326,8 @@ impl LightsailInstancePublicPortsPortInfoEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailInstancePublicPortsPortInfoEl {
-    type O = terrars::BlockAssignable<LightsailInstancePublicPortsPortInfoEl>;
+impl terrars::ToListMappable for LightsailInstancePublicPorts_PortInfo {
+    type O = terrars::BlockAssignable<LightsailInstancePublicPorts_PortInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -309,7 +338,7 @@ impl terrars::ToListMappable for LightsailInstancePublicPortsPortInfoEl {
     }
 }
 
-pub struct BuildLightsailInstancePublicPortsPortInfoEl {
+pub struct BuildLightsailInstancePublicPorts_PortInfo {
     #[doc = ""]
     pub from_port: terrars::PrimField<f64>,
     #[doc = ""]
@@ -318,9 +347,9 @@ pub struct BuildLightsailInstancePublicPortsPortInfoEl {
     pub to_port: terrars::PrimField<f64>,
 }
 
-impl BuildLightsailInstancePublicPortsPortInfoEl {
-    pub fn build(self) -> LightsailInstancePublicPortsPortInfoEl {
-        LightsailInstancePublicPortsPortInfoEl {
+impl BuildLightsailInstancePublicPorts_PortInfo {
+    pub fn build(self) -> LightsailInstancePublicPorts_PortInfo {
+        LightsailInstancePublicPorts_PortInfo {
             cidr_list_aliases: core::default::Default::default(),
             cidrs: core::default::Default::default(),
             from_port: self.from_port,
@@ -331,21 +360,23 @@ impl BuildLightsailInstancePublicPortsPortInfoEl {
     }
 }
 
-pub struct LightsailInstancePublicPortsPortInfoElRef {
+#[allow(dead_code)]
+pub struct LightsailInstancePublicPorts_PortInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailInstancePublicPortsPortInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LightsailInstancePublicPortsPortInfoElRef {
-        LightsailInstancePublicPortsPortInfoElRef {
+impl terrars::Ref for LightsailInstancePublicPorts_PortInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LightsailInstancePublicPorts_PortInfoRef {
+        LightsailInstancePublicPorts_PortInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailInstancePublicPortsPortInfoElRef {
+impl LightsailInstancePublicPorts_PortInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -379,9 +410,4 @@ impl LightsailInstancePublicPortsPortInfoElRef {
     pub fn to_port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.to_port", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LightsailInstancePublicPortsDynamic {
-    port_info: std::option::Option<terrars::DynamicBlock<LightsailInstancePublicPortsPortInfoEl>>,
 }

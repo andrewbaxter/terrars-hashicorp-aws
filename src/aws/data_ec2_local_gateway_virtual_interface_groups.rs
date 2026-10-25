@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2LocalGatewayVirtualInterfaceGroupsData {
+struct DataEc2LocalGatewayVirtualInterfaceGroupsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,18 +21,20 @@ struct DataEc2LocalGatewayVirtualInterfaceGroupsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2LocalGatewayVirtualInterfaceGroupsFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEc2LocalGatewayVirtualInterfaceGroups_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl>,
+    timeouts: std::option::Option<DataEc2LocalGatewayVirtualInterfaceGroups_Timeouts>,
     dynamic: DataEc2LocalGatewayVirtualInterfaceGroupsDynamic,
 }
 
 struct DataEc2LocalGatewayVirtualInterfaceGroups_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2LocalGatewayVirtualInterfaceGroupsData>,
+    data: std::cell::RefCell<DataEc2LocalGatewayVirtualInterfaceGroupsData_>,
 }
 
 #[derive(Clone)]
@@ -81,6 +85,13 @@ impl DataEc2LocalGatewayVirtualInterfaceGroups {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -93,7 +104,7 @@ impl DataEc2LocalGatewayVirtualInterfaceGroups {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2LocalGatewayVirtualInterfaceGroupsFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2LocalGatewayVirtualInterfaceGroups_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -107,7 +118,7 @@ impl DataEc2LocalGatewayVirtualInterfaceGroups {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2LocalGatewayVirtualInterfaceGroups_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -130,14 +141,20 @@ impl DataEc2LocalGatewayVirtualInterfaceGroups {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef {
-        DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2LocalGatewayVirtualInterfaceGroups_TimeoutsRef {
+        DataEc2LocalGatewayVirtualInterfaceGroups_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -185,12 +202,13 @@ impl BuildDataEc2LocalGatewayVirtualInterfaceGroups {
             DataEc2LocalGatewayVirtualInterfaceGroups(std::rc::Rc::new(DataEc2LocalGatewayVirtualInterfaceGroups_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(DataEc2LocalGatewayVirtualInterfaceGroupsData {
+                data: std::cell::RefCell::new(DataEc2LocalGatewayVirtualInterfaceGroupsData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
                     for_each: std::option::Option::None,
                     id: core::default::Default::default(),
+                    region: core::default::Default::default(),
                     tags: core::default::Default::default(),
                     filter: core::default::Default::default(),
                     timeouts: core::default::Default::default(),
@@ -243,30 +261,41 @@ impl DataEc2LocalGatewayVirtualInterfaceGroupsRef {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef {
-        DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2LocalGatewayVirtualInterfaceGroups_TimeoutsRef {
+        DataEc2LocalGatewayVirtualInterfaceGroups_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
-#[derive(Serialize)]
-pub struct DataEc2LocalGatewayVirtualInterfaceGroupsFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct DataEc2LocalGatewayVirtualInterfaceGroupsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2LocalGatewayVirtualInterfaceGroups_Filter>>,
 }
 
-impl DataEc2LocalGatewayVirtualInterfaceGroupsFilterEl { }
+#[derive(Serialize)]
+pub struct DataEc2LocalGatewayVirtualInterfaceGroups_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for DataEc2LocalGatewayVirtualInterfaceGroupsFilterEl {
-    type O = terrars::BlockAssignable<DataEc2LocalGatewayVirtualInterfaceGroupsFilterEl>;
+impl DataEc2LocalGatewayVirtualInterfaceGroups_Filter { }
+
+impl terrars::ToListMappable for DataEc2LocalGatewayVirtualInterfaceGroups_Filter {
+    type O = terrars::BlockAssignable<DataEc2LocalGatewayVirtualInterfaceGroups_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -277,40 +306,42 @@ impl terrars::ToListMappable for DataEc2LocalGatewayVirtualInterfaceGroupsFilter
     }
 }
 
-pub struct BuildDataEc2LocalGatewayVirtualInterfaceGroupsFilterEl {
+pub struct BuildDataEc2LocalGatewayVirtualInterfaceGroups_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEc2LocalGatewayVirtualInterfaceGroupsFilterEl {
-    pub fn build(self) -> DataEc2LocalGatewayVirtualInterfaceGroupsFilterEl {
-        DataEc2LocalGatewayVirtualInterfaceGroupsFilterEl {
+impl BuildDataEc2LocalGatewayVirtualInterfaceGroups_Filter {
+    pub fn build(self) -> DataEc2LocalGatewayVirtualInterfaceGroups_Filter {
+        DataEc2LocalGatewayVirtualInterfaceGroups_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEc2LocalGatewayVirtualInterfaceGroupsFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2LocalGatewayVirtualInterfaceGroups_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2LocalGatewayVirtualInterfaceGroupsFilterElRef {
+impl terrars::Ref for DataEc2LocalGatewayVirtualInterfaceGroups_FilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2LocalGatewayVirtualInterfaceGroupsFilterElRef {
-        DataEc2LocalGatewayVirtualInterfaceGroupsFilterElRef {
+    ) -> DataEc2LocalGatewayVirtualInterfaceGroups_FilterRef {
+        DataEc2LocalGatewayVirtualInterfaceGroups_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2LocalGatewayVirtualInterfaceGroupsFilterElRef {
+impl DataEc2LocalGatewayVirtualInterfaceGroups_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -321,18 +352,18 @@ impl DataEc2LocalGatewayVirtualInterfaceGroupsFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl {
+pub struct DataEc2LocalGatewayVirtualInterfaceGroups_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl {
+impl DataEc2LocalGatewayVirtualInterfaceGroups_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -340,8 +371,8 @@ impl DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl>;
+impl terrars::ToListMappable for DataEc2LocalGatewayVirtualInterfaceGroups_Timeouts {
+    type O = terrars::BlockAssignable<DataEc2LocalGatewayVirtualInterfaceGroups_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -352,32 +383,34 @@ impl terrars::ToListMappable for DataEc2LocalGatewayVirtualInterfaceGroupsTimeou
     }
 }
 
-pub struct BuildDataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl {}
+pub struct BuildDataEc2LocalGatewayVirtualInterfaceGroups_Timeouts {}
 
-impl BuildDataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl {
-    pub fn build(self) -> DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl {
-        DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEc2LocalGatewayVirtualInterfaceGroups_Timeouts {
+    pub fn build(self) -> DataEc2LocalGatewayVirtualInterfaceGroups_Timeouts {
+        DataEc2LocalGatewayVirtualInterfaceGroups_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEc2LocalGatewayVirtualInterfaceGroups_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef {
+impl terrars::Ref for DataEc2LocalGatewayVirtualInterfaceGroups_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef {
-        DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef {
+    ) -> DataEc2LocalGatewayVirtualInterfaceGroups_TimeoutsRef {
+        DataEc2LocalGatewayVirtualInterfaceGroups_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef {
+impl DataEc2LocalGatewayVirtualInterfaceGroups_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -386,9 +419,4 @@ impl DataEc2LocalGatewayVirtualInterfaceGroupsTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2LocalGatewayVirtualInterfaceGroupsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2LocalGatewayVirtualInterfaceGroupsFilterEl>>,
 }

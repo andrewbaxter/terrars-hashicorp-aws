@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Apigatewayv2RouteResponseData {
+struct Apigatewayv2RouteResponseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct Apigatewayv2RouteResponseData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     model_selection_expression: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_models: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     route_id: terrars::PrimField<std::string::String>,
     route_response_key: terrars::PrimField<std::string::String>,
@@ -32,7 +36,7 @@ struct Apigatewayv2RouteResponseData {
 struct Apigatewayv2RouteResponse_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Apigatewayv2RouteResponseData>,
+    data: std::cell::RefCell<Apigatewayv2RouteResponseData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl Apigatewayv2RouteResponse {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `response_models`.\n"]
     pub fn set_response_models(
         self,
@@ -169,6 +180,12 @@ impl Apigatewayv2RouteResponse {
     #[doc = "Get a reference to the value of field `model_selection_expression` after provisioning.\n"]
     pub fn model_selection_expression(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.model_selection_expression", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `response_models` after provisioning.\n"]
@@ -233,7 +250,7 @@ impl BuildApigatewayv2RouteResponse {
         let out = Apigatewayv2RouteResponse(std::rc::Rc::new(Apigatewayv2RouteResponse_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Apigatewayv2RouteResponseData {
+            data: std::cell::RefCell::new(Apigatewayv2RouteResponseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -242,6 +259,7 @@ impl BuildApigatewayv2RouteResponse {
                 api_id: self.api_id,
                 id: core::default::Default::default(),
                 model_selection_expression: core::default::Default::default(),
+                region: core::default::Default::default(),
                 response_models: core::default::Default::default(),
                 route_id: self.route_id,
                 route_response_key: self.route_response_key,
@@ -288,6 +306,12 @@ impl Apigatewayv2RouteResponseRef {
     #[doc = "Get a reference to the value of field `model_selection_expression` after provisioning.\n"]
     pub fn model_selection_expression(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.model_selection_expression", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `response_models` after provisioning.\n"]

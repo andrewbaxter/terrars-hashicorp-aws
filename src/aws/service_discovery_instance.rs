@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ServiceDiscoveryInstanceData {
+struct ServiceDiscoveryInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,13 +24,15 @@ struct ServiceDiscoveryInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     instance_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     service_id: terrars::PrimField<std::string::String>,
 }
 
 struct ServiceDiscoveryInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ServiceDiscoveryInstanceData>,
+    data: std::cell::RefCell<ServiceDiscoveryInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -134,6 +138,13 @@ impl ServiceDiscoveryInstance {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `attributes` after provisioning.\n"]
     pub fn attributes(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.attributes", self.extract_ref()))
@@ -147,6 +158,12 @@ impl ServiceDiscoveryInstance {
     #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
     pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_id` after provisioning.\n"]
@@ -201,7 +218,7 @@ impl BuildServiceDiscoveryInstance {
         let out = ServiceDiscoveryInstance(std::rc::Rc::new(ServiceDiscoveryInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ServiceDiscoveryInstanceData {
+            data: std::cell::RefCell::new(ServiceDiscoveryInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -210,6 +227,7 @@ impl BuildServiceDiscoveryInstance {
                 attributes: self.attributes,
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
+                region: core::default::Default::default(),
                 service_id: self.service_id,
             }),
         }));
@@ -254,6 +272,12 @@ impl ServiceDiscoveryInstanceRef {
     #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
     pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_id` after provisioning.\n"]

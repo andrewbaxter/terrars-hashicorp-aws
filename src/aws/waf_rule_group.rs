@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafRuleGroupData {
+struct WafRuleGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,14 +29,14 @@ struct WafRuleGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    activated_rule: std::option::Option<std::vec::Vec<WafRuleGroupActivatedRuleEl>>,
+    activated_rule: std::option::Option<std::vec::Vec<WafRuleGroup_ActivatedRule>>,
     dynamic: WafRuleGroupDynamic,
 }
 
 struct WafRuleGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafRuleGroupData>,
+    data: std::cell::RefCell<WafRuleGroupData_>,
 }
 
 #[derive(Clone)]
@@ -161,7 +163,7 @@ impl WafRuleGroup {
     #[doc = "Set the field `activated_rule`.\n"]
     pub fn set_activated_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafRuleGroupActivatedRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafRuleGroup_ActivatedRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -249,7 +251,7 @@ impl BuildWafRuleGroup {
         let out = WafRuleGroup(std::rc::Rc::new(WafRuleGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafRuleGroupData {
+            data: std::cell::RefCell::new(WafRuleGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -323,16 +325,21 @@ impl WafRuleGroupRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafRuleGroupDynamic {
+    activated_rule: std::option::Option<terrars::DynamicBlock<WafRuleGroup_ActivatedRule>>,
+}
+
 #[derive(Serialize)]
-pub struct WafRuleGroupActivatedRuleElActionEl {
+pub struct WafRuleGroup_ActivatedRule_Action {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafRuleGroupActivatedRuleElActionEl { }
+impl WafRuleGroup_ActivatedRule_Action { }
 
-impl terrars::ToListMappable for WafRuleGroupActivatedRuleElActionEl {
-    type O = terrars::BlockAssignable<WafRuleGroupActivatedRuleElActionEl>;
+impl terrars::ToListMappable for WafRuleGroup_ActivatedRule_Action {
+    type O = terrars::BlockAssignable<WafRuleGroup_ActivatedRule_Action>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -343,32 +350,34 @@ impl terrars::ToListMappable for WafRuleGroupActivatedRuleElActionEl {
     }
 }
 
-pub struct BuildWafRuleGroupActivatedRuleElActionEl {
+pub struct BuildWafRuleGroup_ActivatedRule_Action {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafRuleGroupActivatedRuleElActionEl {
-    pub fn build(self) -> WafRuleGroupActivatedRuleElActionEl {
-        WafRuleGroupActivatedRuleElActionEl { type_: self.type_ }
+impl BuildWafRuleGroup_ActivatedRule_Action {
+    pub fn build(self) -> WafRuleGroup_ActivatedRule_Action {
+        WafRuleGroup_ActivatedRule_Action { type_: self.type_ }
     }
 }
 
-pub struct WafRuleGroupActivatedRuleElActionElRef {
+#[allow(dead_code)]
+pub struct WafRuleGroup_ActivatedRule_ActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafRuleGroupActivatedRuleElActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafRuleGroupActivatedRuleElActionElRef {
-        WafRuleGroupActivatedRuleElActionElRef {
+impl terrars::Ref for WafRuleGroup_ActivatedRule_ActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafRuleGroup_ActivatedRule_ActionRef {
+        WafRuleGroup_ActivatedRule_ActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafRuleGroupActivatedRuleElActionElRef {
+impl WafRuleGroup_ActivatedRule_ActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -380,22 +389,22 @@ impl WafRuleGroupActivatedRuleElActionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafRuleGroupActivatedRuleElDynamic {
-    action: std::option::Option<terrars::DynamicBlock<WafRuleGroupActivatedRuleElActionEl>>,
+struct WafRuleGroup_ActivatedRuleDynamic {
+    action: std::option::Option<terrars::DynamicBlock<WafRuleGroup_ActivatedRule_Action>>,
 }
 
 #[derive(Serialize)]
-pub struct WafRuleGroupActivatedRuleEl {
+pub struct WafRuleGroup_ActivatedRule {
     priority: terrars::PrimField<f64>,
     rule_id: terrars::PrimField<std::string::String>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<std::vec::Vec<WafRuleGroupActivatedRuleElActionEl>>,
-    dynamic: WafRuleGroupActivatedRuleElDynamic,
+    action: std::option::Option<std::vec::Vec<WafRuleGroup_ActivatedRule_Action>>,
+    dynamic: WafRuleGroup_ActivatedRuleDynamic,
 }
 
-impl WafRuleGroupActivatedRuleEl {
+impl WafRuleGroup_ActivatedRule {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -405,7 +414,7 @@ impl WafRuleGroupActivatedRuleEl {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafRuleGroupActivatedRuleElActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafRuleGroup_ActivatedRule_Action>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -419,8 +428,8 @@ impl WafRuleGroupActivatedRuleEl {
     }
 }
 
-impl terrars::ToListMappable for WafRuleGroupActivatedRuleEl {
-    type O = terrars::BlockAssignable<WafRuleGroupActivatedRuleEl>;
+impl terrars::ToListMappable for WafRuleGroup_ActivatedRule {
+    type O = terrars::BlockAssignable<WafRuleGroup_ActivatedRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -431,16 +440,16 @@ impl terrars::ToListMappable for WafRuleGroupActivatedRuleEl {
     }
 }
 
-pub struct BuildWafRuleGroupActivatedRuleEl {
+pub struct BuildWafRuleGroup_ActivatedRule {
     #[doc = ""]
     pub priority: terrars::PrimField<f64>,
     #[doc = ""]
     pub rule_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafRuleGroupActivatedRuleEl {
-    pub fn build(self) -> WafRuleGroupActivatedRuleEl {
-        WafRuleGroupActivatedRuleEl {
+impl BuildWafRuleGroup_ActivatedRule {
+    pub fn build(self) -> WafRuleGroup_ActivatedRule {
+        WafRuleGroup_ActivatedRule {
             priority: self.priority,
             rule_id: self.rule_id,
             type_: core::default::Default::default(),
@@ -450,21 +459,23 @@ impl BuildWafRuleGroupActivatedRuleEl {
     }
 }
 
-pub struct WafRuleGroupActivatedRuleElRef {
+#[allow(dead_code)]
+pub struct WafRuleGroup_ActivatedRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafRuleGroupActivatedRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafRuleGroupActivatedRuleElRef {
-        WafRuleGroupActivatedRuleElRef {
+impl terrars::Ref for WafRuleGroup_ActivatedRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafRuleGroup_ActivatedRuleRef {
+        WafRuleGroup_ActivatedRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafRuleGroupActivatedRuleElRef {
+impl WafRuleGroup_ActivatedRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -485,12 +496,7 @@ impl WafRuleGroupActivatedRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::ListRef<WafRuleGroupActivatedRuleElActionElRef> {
+    pub fn action(&self) -> terrars::ListRef<WafRuleGroup_ActivatedRule_ActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafRuleGroupDynamic {
-    activated_rule: std::option::Option<terrars::DynamicBlock<WafRuleGroupActivatedRuleEl>>,
 }

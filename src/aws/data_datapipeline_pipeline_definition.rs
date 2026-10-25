@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataDatapipelinePipelineDefinitionData {
+struct DataDatapipelinePipelineDefinitionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,14 +22,16 @@ struct DataDatapipelinePipelineDefinitionData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     pipeline_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter_value: std::option::Option<std::vec::Vec<DataDatapipelinePipelineDefinitionParameterValueEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parameter_value: std::option::Option<std::vec::Vec<DataDatapipelinePipelineDefinition_ParameterValue>>,
     dynamic: DataDatapipelinePipelineDefinitionDynamic,
 }
 
 struct DataDatapipelinePipelineDefinition_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDatapipelinePipelineDefinitionData>,
+    data: std::cell::RefCell<DataDatapipelinePipelineDefinitionData_>,
 }
 
 #[derive(Clone)]
@@ -78,10 +82,17 @@ impl DataDatapipelinePipelineDefinition {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `parameter_value`.\n"]
     pub fn set_parameter_value(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataDatapipelinePipelineDefinitionParameterValueEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataDatapipelinePipelineDefinition_ParameterValue>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -100,7 +111,7 @@ impl DataDatapipelinePipelineDefinition {
     }
 
     #[doc = "Get a reference to the value of field `parameter_object` after provisioning.\n"]
-    pub fn parameter_object(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinitionParameterObjectElRef> {
+    pub fn parameter_object(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinition_ParameterObjectRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.parameter_object", self.extract_ref()))
     }
 
@@ -110,8 +121,14 @@ impl DataDatapipelinePipelineDefinition {
     }
 
     #[doc = "Get a reference to the value of field `pipeline_object` after provisioning.\n"]
-    pub fn pipeline_object(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinitionPipelineObjectElRef> {
+    pub fn pipeline_object(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinition_PipelineObjectRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.pipeline_object", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -157,13 +174,14 @@ impl BuildDataDatapipelinePipelineDefinition {
         let out = DataDatapipelinePipelineDefinition(std::rc::Rc::new(DataDatapipelinePipelineDefinition_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDatapipelinePipelineDefinitionData {
+            data: std::cell::RefCell::new(DataDatapipelinePipelineDefinitionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 pipeline_id: self.pipeline_id,
+                region: core::default::Default::default(),
                 parameter_value: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -202,7 +220,7 @@ impl DataDatapipelinePipelineDefinitionRef {
     }
 
     #[doc = "Get a reference to the value of field `parameter_object` after provisioning.\n"]
-    pub fn parameter_object(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinitionParameterObjectElRef> {
+    pub fn parameter_object(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinition_ParameterObjectRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.parameter_object", self.extract_ref()))
     }
 
@@ -212,20 +230,31 @@ impl DataDatapipelinePipelineDefinitionRef {
     }
 
     #[doc = "Get a reference to the value of field `pipeline_object` after provisioning.\n"]
-    pub fn pipeline_object(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinitionPipelineObjectElRef> {
+    pub fn pipeline_object(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinition_PipelineObjectRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.pipeline_object", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataDatapipelinePipelineDefinitionDynamic {
+    parameter_value: std::option::Option<terrars::DynamicBlock<DataDatapipelinePipelineDefinition_ParameterValue>>,
+}
+
 #[derive(Serialize)]
-pub struct DataDatapipelinePipelineDefinitionParameterObjectElAttributeEl {
+pub struct DataDatapipelinePipelineDefinition_ParameterObject_Attribute {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     string_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDatapipelinePipelineDefinitionParameterObjectElAttributeEl {
+impl DataDatapipelinePipelineDefinition_ParameterObject_Attribute {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -239,8 +268,8 @@ impl DataDatapipelinePipelineDefinitionParameterObjectElAttributeEl {
     }
 }
 
-impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionParameterObjectElAttributeEl {
-    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinitionParameterObjectElAttributeEl>;
+impl terrars::ToListMappable for DataDatapipelinePipelineDefinition_ParameterObject_Attribute {
+    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinition_ParameterObject_Attribute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -251,35 +280,37 @@ impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionParameterObje
     }
 }
 
-pub struct BuildDataDatapipelinePipelineDefinitionParameterObjectElAttributeEl {}
+pub struct BuildDataDatapipelinePipelineDefinition_ParameterObject_Attribute {}
 
-impl BuildDataDatapipelinePipelineDefinitionParameterObjectElAttributeEl {
-    pub fn build(self) -> DataDatapipelinePipelineDefinitionParameterObjectElAttributeEl {
-        DataDatapipelinePipelineDefinitionParameterObjectElAttributeEl {
+impl BuildDataDatapipelinePipelineDefinition_ParameterObject_Attribute {
+    pub fn build(self) -> DataDatapipelinePipelineDefinition_ParameterObject_Attribute {
+        DataDatapipelinePipelineDefinition_ParameterObject_Attribute {
             key: core::default::Default::default(),
             string_value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataDatapipelinePipelineDefinitionParameterObjectElAttributeElRef {
+#[allow(dead_code)]
+pub struct DataDatapipelinePipelineDefinition_ParameterObject_AttributeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDatapipelinePipelineDefinitionParameterObjectElAttributeElRef {
+impl terrars::Ref for DataDatapipelinePipelineDefinition_ParameterObject_AttributeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataDatapipelinePipelineDefinitionParameterObjectElAttributeElRef {
-        DataDatapipelinePipelineDefinitionParameterObjectElAttributeElRef {
+    ) -> DataDatapipelinePipelineDefinition_ParameterObject_AttributeRef {
+        DataDatapipelinePipelineDefinition_ParameterObject_AttributeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDatapipelinePipelineDefinitionParameterObjectElAttributeElRef {
+impl DataDatapipelinePipelineDefinition_ParameterObject_AttributeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -296,23 +327,18 @@ impl DataDatapipelinePipelineDefinitionParameterObjectElAttributeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDatapipelinePipelineDefinitionParameterObjectEl {
+pub struct DataDatapipelinePipelineDefinition_ParameterObject {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attribute: std::option::Option<terrars::SetField<DataDatapipelinePipelineDefinitionParameterObjectElAttributeEl>>,
+    attribute: std::option::Option<terrars::SetField<DataDatapipelinePipelineDefinition_ParameterObject_Attribute>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDatapipelinePipelineDefinitionParameterObjectEl {
+impl DataDatapipelinePipelineDefinition_ParameterObject {
     #[doc = "Set the field `attribute`.\n"]
     pub fn set_attribute(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::SetField<DataDatapipelinePipelineDefinitionParameterObjectElAttributeEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataDatapipelinePipelineDefinition_ParameterObject_Attribute>>,
     ) -> Self {
         self.attribute = std::option::Option::Some(v.into());
         self
@@ -325,8 +351,8 @@ impl DataDatapipelinePipelineDefinitionParameterObjectEl {
     }
 }
 
-impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionParameterObjectEl {
-    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinitionParameterObjectEl>;
+impl terrars::ToListMappable for DataDatapipelinePipelineDefinition_ParameterObject {
+    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinition_ParameterObject>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -337,41 +363,43 @@ impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionParameterObje
     }
 }
 
-pub struct BuildDataDatapipelinePipelineDefinitionParameterObjectEl {}
+pub struct BuildDataDatapipelinePipelineDefinition_ParameterObject {}
 
-impl BuildDataDatapipelinePipelineDefinitionParameterObjectEl {
-    pub fn build(self) -> DataDatapipelinePipelineDefinitionParameterObjectEl {
-        DataDatapipelinePipelineDefinitionParameterObjectEl {
+impl BuildDataDatapipelinePipelineDefinition_ParameterObject {
+    pub fn build(self) -> DataDatapipelinePipelineDefinition_ParameterObject {
+        DataDatapipelinePipelineDefinition_ParameterObject {
             attribute: core::default::Default::default(),
             id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataDatapipelinePipelineDefinitionParameterObjectElRef {
+#[allow(dead_code)]
+pub struct DataDatapipelinePipelineDefinition_ParameterObjectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDatapipelinePipelineDefinitionParameterObjectElRef {
+impl terrars::Ref for DataDatapipelinePipelineDefinition_ParameterObjectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataDatapipelinePipelineDefinitionParameterObjectElRef {
-        DataDatapipelinePipelineDefinitionParameterObjectElRef {
+    ) -> DataDatapipelinePipelineDefinition_ParameterObjectRef {
+        DataDatapipelinePipelineDefinition_ParameterObjectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDatapipelinePipelineDefinitionParameterObjectElRef {
+impl DataDatapipelinePipelineDefinition_ParameterObjectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `attribute` after provisioning.\n"]
-    pub fn attribute(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinitionParameterObjectElAttributeElRef> {
+    pub fn attribute(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinition_ParameterObject_AttributeRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.attribute", self.base))
     }
 
@@ -382,7 +410,7 @@ impl DataDatapipelinePipelineDefinitionParameterObjectElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {
+pub struct DataDatapipelinePipelineDefinition_PipelineObject_Field {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -391,7 +419,7 @@ pub struct DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {
     string_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {
+impl DataDatapipelinePipelineDefinition_PipelineObject_Field {
     #[doc = "Set the field `key`.\n"]
     pub fn set_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key = std::option::Option::Some(v.into());
@@ -411,8 +439,8 @@ impl DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {
     }
 }
 
-impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {
-    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl>;
+impl terrars::ToListMappable for DataDatapipelinePipelineDefinition_PipelineObject_Field {
+    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinition_PipelineObject_Field>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -423,11 +451,11 @@ impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionPipelineObjec
     }
 }
 
-pub struct BuildDataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {}
+pub struct BuildDataDatapipelinePipelineDefinition_PipelineObject_Field {}
 
-impl BuildDataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {
-    pub fn build(self) -> DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {
-        DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {
+impl BuildDataDatapipelinePipelineDefinition_PipelineObject_Field {
+    pub fn build(self) -> DataDatapipelinePipelineDefinition_PipelineObject_Field {
+        DataDatapipelinePipelineDefinition_PipelineObject_Field {
             key: core::default::Default::default(),
             ref_value: core::default::Default::default(),
             string_value: core::default::Default::default(),
@@ -435,24 +463,26 @@ impl BuildDataDatapipelinePipelineDefinitionPipelineObjectElFieldEl {
     }
 }
 
-pub struct DataDatapipelinePipelineDefinitionPipelineObjectElFieldElRef {
+#[allow(dead_code)]
+pub struct DataDatapipelinePipelineDefinition_PipelineObject_FieldRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDatapipelinePipelineDefinitionPipelineObjectElFieldElRef {
+impl terrars::Ref for DataDatapipelinePipelineDefinition_PipelineObject_FieldRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataDatapipelinePipelineDefinitionPipelineObjectElFieldElRef {
-        DataDatapipelinePipelineDefinitionPipelineObjectElFieldElRef {
+    ) -> DataDatapipelinePipelineDefinition_PipelineObject_FieldRef {
+        DataDatapipelinePipelineDefinition_PipelineObject_FieldRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDatapipelinePipelineDefinitionPipelineObjectElFieldElRef {
+impl DataDatapipelinePipelineDefinition_PipelineObject_FieldRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -474,20 +504,20 @@ impl DataDatapipelinePipelineDefinitionPipelineObjectElFieldElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDatapipelinePipelineDefinitionPipelineObjectEl {
+pub struct DataDatapipelinePipelineDefinition_PipelineObject {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field: std::option::Option<terrars::SetField<DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl>>,
+    field: std::option::Option<terrars::SetField<DataDatapipelinePipelineDefinition_PipelineObject_Field>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDatapipelinePipelineDefinitionPipelineObjectEl {
+impl DataDatapipelinePipelineDefinition_PipelineObject {
     #[doc = "Set the field `field`.\n"]
     pub fn set_field(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataDatapipelinePipelineDefinitionPipelineObjectElFieldEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataDatapipelinePipelineDefinition_PipelineObject_Field>>,
     ) -> Self {
         self.field = std::option::Option::Some(v.into());
         self
@@ -506,8 +536,8 @@ impl DataDatapipelinePipelineDefinitionPipelineObjectEl {
     }
 }
 
-impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionPipelineObjectEl {
-    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinitionPipelineObjectEl>;
+impl terrars::ToListMappable for DataDatapipelinePipelineDefinition_PipelineObject {
+    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinition_PipelineObject>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -518,11 +548,11 @@ impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionPipelineObjec
     }
 }
 
-pub struct BuildDataDatapipelinePipelineDefinitionPipelineObjectEl {}
+pub struct BuildDataDatapipelinePipelineDefinition_PipelineObject {}
 
-impl BuildDataDatapipelinePipelineDefinitionPipelineObjectEl {
-    pub fn build(self) -> DataDatapipelinePipelineDefinitionPipelineObjectEl {
-        DataDatapipelinePipelineDefinitionPipelineObjectEl {
+impl BuildDataDatapipelinePipelineDefinition_PipelineObject {
+    pub fn build(self) -> DataDatapipelinePipelineDefinition_PipelineObject {
+        DataDatapipelinePipelineDefinition_PipelineObject {
             field: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -530,30 +560,32 @@ impl BuildDataDatapipelinePipelineDefinitionPipelineObjectEl {
     }
 }
 
-pub struct DataDatapipelinePipelineDefinitionPipelineObjectElRef {
+#[allow(dead_code)]
+pub struct DataDatapipelinePipelineDefinition_PipelineObjectRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDatapipelinePipelineDefinitionPipelineObjectElRef {
+impl terrars::Ref for DataDatapipelinePipelineDefinition_PipelineObjectRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataDatapipelinePipelineDefinitionPipelineObjectElRef {
-        DataDatapipelinePipelineDefinitionPipelineObjectElRef {
+    ) -> DataDatapipelinePipelineDefinition_PipelineObjectRef {
+        DataDatapipelinePipelineDefinition_PipelineObjectRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDatapipelinePipelineDefinitionPipelineObjectElRef {
+impl DataDatapipelinePipelineDefinition_PipelineObjectRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `field` after provisioning.\n"]
-    pub fn field(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinitionPipelineObjectElFieldElRef> {
+    pub fn field(&self) -> terrars::SetRef<DataDatapipelinePipelineDefinition_PipelineObject_FieldRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.field", self.base))
     }
 
@@ -569,12 +601,12 @@ impl DataDatapipelinePipelineDefinitionPipelineObjectElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDatapipelinePipelineDefinitionParameterValueEl {}
+pub struct DataDatapipelinePipelineDefinition_ParameterValue {}
 
-impl DataDatapipelinePipelineDefinitionParameterValueEl { }
+impl DataDatapipelinePipelineDefinition_ParameterValue { }
 
-impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionParameterValueEl {
-    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinitionParameterValueEl>;
+impl terrars::ToListMappable for DataDatapipelinePipelineDefinition_ParameterValue {
+    type O = terrars::BlockAssignable<DataDatapipelinePipelineDefinition_ParameterValue>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -585,32 +617,34 @@ impl terrars::ToListMappable for DataDatapipelinePipelineDefinitionParameterValu
     }
 }
 
-pub struct BuildDataDatapipelinePipelineDefinitionParameterValueEl {}
+pub struct BuildDataDatapipelinePipelineDefinition_ParameterValue {}
 
-impl BuildDataDatapipelinePipelineDefinitionParameterValueEl {
-    pub fn build(self) -> DataDatapipelinePipelineDefinitionParameterValueEl {
-        DataDatapipelinePipelineDefinitionParameterValueEl {}
+impl BuildDataDatapipelinePipelineDefinition_ParameterValue {
+    pub fn build(self) -> DataDatapipelinePipelineDefinition_ParameterValue {
+        DataDatapipelinePipelineDefinition_ParameterValue {}
     }
 }
 
-pub struct DataDatapipelinePipelineDefinitionParameterValueElRef {
+#[allow(dead_code)]
+pub struct DataDatapipelinePipelineDefinition_ParameterValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDatapipelinePipelineDefinitionParameterValueElRef {
+impl terrars::Ref for DataDatapipelinePipelineDefinition_ParameterValueRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataDatapipelinePipelineDefinitionParameterValueElRef {
-        DataDatapipelinePipelineDefinitionParameterValueElRef {
+    ) -> DataDatapipelinePipelineDefinition_ParameterValueRef {
+        DataDatapipelinePipelineDefinition_ParameterValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDatapipelinePipelineDefinitionParameterValueElRef {
+impl DataDatapipelinePipelineDefinition_ParameterValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -624,9 +658,4 @@ impl DataDatapipelinePipelineDefinitionParameterValueElRef {
     pub fn string_value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.string_value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataDatapipelinePipelineDefinitionDynamic {
-    parameter_value: std::option::Option<terrars::DynamicBlock<DataDatapipelinePipelineDefinitionParameterValueEl>>,
 }

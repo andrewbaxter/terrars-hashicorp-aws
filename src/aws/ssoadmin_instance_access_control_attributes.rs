@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsoadminInstanceAccessControlAttributesData {
+struct SsoadminInstanceAccessControlAttributesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct SsoadminInstanceAccessControlAttributesData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     instance_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attribute: std::option::Option<std::vec::Vec<SsoadminInstanceAccessControlAttributesAttributeEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    attribute: std::option::Option<std::vec::Vec<SsoadminInstanceAccessControlAttributes_Attribute>>,
     dynamic: SsoadminInstanceAccessControlAttributesDynamic,
 }
 
 struct SsoadminInstanceAccessControlAttributes_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsoadminInstanceAccessControlAttributesData>,
+    data: std::cell::RefCell<SsoadminInstanceAccessControlAttributesData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl SsoadminInstanceAccessControlAttributes {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `attribute`.\n"]
     pub fn set_attribute(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SsoadminInstanceAccessControlAttributesAttributeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsoadminInstanceAccessControlAttributes_Attribute>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -159,6 +170,12 @@ impl SsoadminInstanceAccessControlAttributes {
     #[doc = "Get a reference to the value of field `instance_arn` after provisioning.\n"]
     pub fn instance_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_arn", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -214,7 +231,7 @@ impl BuildSsoadminInstanceAccessControlAttributes {
         let out = SsoadminInstanceAccessControlAttributes(std::rc::Rc::new(SsoadminInstanceAccessControlAttributes_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsoadminInstanceAccessControlAttributesData {
+            data: std::cell::RefCell::new(SsoadminInstanceAccessControlAttributesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -222,6 +239,7 @@ impl BuildSsoadminInstanceAccessControlAttributes {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_arn: self.instance_arn,
+                region: core::default::Default::default(),
                 attribute: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -264,6 +282,12 @@ impl SsoadminInstanceAccessControlAttributesRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -275,15 +299,20 @@ impl SsoadminInstanceAccessControlAttributesRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct SsoadminInstanceAccessControlAttributesDynamic {
+    attribute: std::option::Option<terrars::DynamicBlock<SsoadminInstanceAccessControlAttributes_Attribute>>,
+}
+
 #[derive(Serialize)]
-pub struct SsoadminInstanceAccessControlAttributesAttributeElValueEl {
+pub struct SsoadminInstanceAccessControlAttributes_Attribute_Value {
     source: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl SsoadminInstanceAccessControlAttributesAttributeElValueEl { }
+impl SsoadminInstanceAccessControlAttributes_Attribute_Value { }
 
-impl terrars::ToListMappable for SsoadminInstanceAccessControlAttributesAttributeElValueEl {
-    type O = terrars::BlockAssignable<SsoadminInstanceAccessControlAttributesAttributeElValueEl>;
+impl terrars::ToListMappable for SsoadminInstanceAccessControlAttributes_Attribute_Value {
+    type O = terrars::BlockAssignable<SsoadminInstanceAccessControlAttributes_Attribute_Value>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -294,35 +323,37 @@ impl terrars::ToListMappable for SsoadminInstanceAccessControlAttributesAttribut
     }
 }
 
-pub struct BuildSsoadminInstanceAccessControlAttributesAttributeElValueEl {
+pub struct BuildSsoadminInstanceAccessControlAttributes_Attribute_Value {
     #[doc = ""]
     pub source: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSsoadminInstanceAccessControlAttributesAttributeElValueEl {
-    pub fn build(self) -> SsoadminInstanceAccessControlAttributesAttributeElValueEl {
-        SsoadminInstanceAccessControlAttributesAttributeElValueEl { source: self.source }
+impl BuildSsoadminInstanceAccessControlAttributes_Attribute_Value {
+    pub fn build(self) -> SsoadminInstanceAccessControlAttributes_Attribute_Value {
+        SsoadminInstanceAccessControlAttributes_Attribute_Value { source: self.source }
     }
 }
 
-pub struct SsoadminInstanceAccessControlAttributesAttributeElValueElRef {
+#[allow(dead_code)]
+pub struct SsoadminInstanceAccessControlAttributes_Attribute_ValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsoadminInstanceAccessControlAttributesAttributeElValueElRef {
+impl terrars::Ref for SsoadminInstanceAccessControlAttributes_Attribute_ValueRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsoadminInstanceAccessControlAttributesAttributeElValueElRef {
-        SsoadminInstanceAccessControlAttributesAttributeElValueElRef {
+    ) -> SsoadminInstanceAccessControlAttributes_Attribute_ValueRef {
+        SsoadminInstanceAccessControlAttributes_Attribute_ValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsoadminInstanceAccessControlAttributesAttributeElValueElRef {
+impl SsoadminInstanceAccessControlAttributes_Attribute_ValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -334,19 +365,19 @@ impl SsoadminInstanceAccessControlAttributesAttributeElValueElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SsoadminInstanceAccessControlAttributesAttributeElDynamic {
-    value: std::option::Option<terrars::DynamicBlock<SsoadminInstanceAccessControlAttributesAttributeElValueEl>>,
+struct SsoadminInstanceAccessControlAttributes_AttributeDynamic {
+    value: std::option::Option<terrars::DynamicBlock<SsoadminInstanceAccessControlAttributes_Attribute_Value>>,
 }
 
 #[derive(Serialize)]
-pub struct SsoadminInstanceAccessControlAttributesAttributeEl {
+pub struct SsoadminInstanceAccessControlAttributes_Attribute {
     key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<std::vec::Vec<SsoadminInstanceAccessControlAttributesAttributeElValueEl>>,
-    dynamic: SsoadminInstanceAccessControlAttributesAttributeElDynamic,
+    value: std::option::Option<std::vec::Vec<SsoadminInstanceAccessControlAttributes_Attribute_Value>>,
+    dynamic: SsoadminInstanceAccessControlAttributes_AttributeDynamic,
 }
 
-impl SsoadminInstanceAccessControlAttributesAttributeEl {
+impl SsoadminInstanceAccessControlAttributes_Attribute {
     #[doc = "Set the field `value`.\n"]
     pub fn set_value(
         mut self,
@@ -355,7 +386,7 @@ impl SsoadminInstanceAccessControlAttributesAttributeEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SsoadminInstanceAccessControlAttributesAttributeElValueEl>>,
+                    ::Into<terrars::BlockAssignable<SsoadminInstanceAccessControlAttributes_Attribute_Value>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -369,8 +400,8 @@ impl SsoadminInstanceAccessControlAttributesAttributeEl {
     }
 }
 
-impl terrars::ToListMappable for SsoadminInstanceAccessControlAttributesAttributeEl {
-    type O = terrars::BlockAssignable<SsoadminInstanceAccessControlAttributesAttributeEl>;
+impl terrars::ToListMappable for SsoadminInstanceAccessControlAttributes_Attribute {
+    type O = terrars::BlockAssignable<SsoadminInstanceAccessControlAttributes_Attribute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,14 +412,14 @@ impl terrars::ToListMappable for SsoadminInstanceAccessControlAttributesAttribut
     }
 }
 
-pub struct BuildSsoadminInstanceAccessControlAttributesAttributeEl {
+pub struct BuildSsoadminInstanceAccessControlAttributes_Attribute {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSsoadminInstanceAccessControlAttributesAttributeEl {
-    pub fn build(self) -> SsoadminInstanceAccessControlAttributesAttributeEl {
-        SsoadminInstanceAccessControlAttributesAttributeEl {
+impl BuildSsoadminInstanceAccessControlAttributes_Attribute {
+    pub fn build(self) -> SsoadminInstanceAccessControlAttributes_Attribute {
+        SsoadminInstanceAccessControlAttributes_Attribute {
             key: self.key,
             value: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -396,24 +427,26 @@ impl BuildSsoadminInstanceAccessControlAttributesAttributeEl {
     }
 }
 
-pub struct SsoadminInstanceAccessControlAttributesAttributeElRef {
+#[allow(dead_code)]
+pub struct SsoadminInstanceAccessControlAttributes_AttributeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsoadminInstanceAccessControlAttributesAttributeElRef {
+impl terrars::Ref for SsoadminInstanceAccessControlAttributes_AttributeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsoadminInstanceAccessControlAttributesAttributeElRef {
-        SsoadminInstanceAccessControlAttributesAttributeElRef {
+    ) -> SsoadminInstanceAccessControlAttributes_AttributeRef {
+        SsoadminInstanceAccessControlAttributes_AttributeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsoadminInstanceAccessControlAttributesAttributeElRef {
+impl SsoadminInstanceAccessControlAttributes_AttributeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,9 +455,4 @@ impl SsoadminInstanceAccessControlAttributesAttributeElRef {
     pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SsoadminInstanceAccessControlAttributesDynamic {
-    attribute: std::option::Option<terrars::DynamicBlock<SsoadminInstanceAccessControlAttributesAttributeEl>>,
 }

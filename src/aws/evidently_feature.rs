@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EvidentlyFeatureData {
+struct EvidentlyFeatureData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,20 +33,22 @@ struct EvidentlyFeatureData {
     name: terrars::PrimField<std::string::String>,
     project: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EvidentlyFeatureTimeoutsEl>,
+    timeouts: std::option::Option<EvidentlyFeature_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    variations: std::option::Option<std::vec::Vec<EvidentlyFeatureVariationsEl>>,
+    variations: std::option::Option<std::vec::Vec<EvidentlyFeature_Variations>>,
     dynamic: EvidentlyFeatureDynamic,
 }
 
 struct EvidentlyFeature_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EvidentlyFeatureData>,
+    data: std::cell::RefCell<EvidentlyFeatureData_>,
 }
 
 #[derive(Clone)]
@@ -177,6 +181,13 @@ impl EvidentlyFeature {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -196,7 +207,7 @@ impl EvidentlyFeature {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EvidentlyFeatureTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EvidentlyFeature_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -204,7 +215,7 @@ impl EvidentlyFeature {
     #[doc = "Set the field `variations`.\n"]
     pub fn set_variations(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyFeatureVariationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyFeature_Variations>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -243,7 +254,7 @@ impl EvidentlyFeature {
     }
 
     #[doc = "Get a reference to the value of field `evaluation_rules` after provisioning.\n"]
-    pub fn evaluation_rules(&self) -> terrars::SetRef<EvidentlyFeatureEvaluationRulesElRef> {
+    pub fn evaluation_rules(&self) -> terrars::SetRef<EvidentlyFeature_EvaluationRulesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.evaluation_rules", self.extract_ref()))
     }
 
@@ -272,6 +283,12 @@ impl EvidentlyFeature {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -293,8 +310,8 @@ impl EvidentlyFeature {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EvidentlyFeatureTimeoutsElRef {
-        EvidentlyFeatureTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EvidentlyFeature_TimeoutsRef {
+        EvidentlyFeature_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -342,7 +359,7 @@ impl BuildEvidentlyFeature {
         let out = EvidentlyFeature(std::rc::Rc::new(EvidentlyFeature_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EvidentlyFeatureData {
+            data: std::cell::RefCell::new(EvidentlyFeatureData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -355,6 +372,7 @@ impl BuildEvidentlyFeature {
                 id: core::default::Default::default(),
                 name: self.name,
                 project: self.project,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -416,7 +434,7 @@ impl EvidentlyFeatureRef {
     }
 
     #[doc = "Get a reference to the value of field `evaluation_rules` after provisioning.\n"]
-    pub fn evaluation_rules(&self) -> terrars::SetRef<EvidentlyFeatureEvaluationRulesElRef> {
+    pub fn evaluation_rules(&self) -> terrars::SetRef<EvidentlyFeature_EvaluationRulesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.evaluation_rules", self.extract_ref()))
     }
 
@@ -445,6 +463,12 @@ impl EvidentlyFeatureRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -466,20 +490,25 @@ impl EvidentlyFeatureRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EvidentlyFeatureTimeoutsElRef {
-        EvidentlyFeatureTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EvidentlyFeature_TimeoutsRef {
+        EvidentlyFeature_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EvidentlyFeatureDynamic {
+    variations: std::option::Option<terrars::DynamicBlock<EvidentlyFeature_Variations>>,
+}
+
 #[derive(Serialize)]
-pub struct EvidentlyFeatureEvaluationRulesEl {
+pub struct EvidentlyFeature_EvaluationRules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EvidentlyFeatureEvaluationRulesEl {
+impl EvidentlyFeature_EvaluationRules {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -493,8 +522,8 @@ impl EvidentlyFeatureEvaluationRulesEl {
     }
 }
 
-impl terrars::ToListMappable for EvidentlyFeatureEvaluationRulesEl {
-    type O = terrars::BlockAssignable<EvidentlyFeatureEvaluationRulesEl>;
+impl terrars::ToListMappable for EvidentlyFeature_EvaluationRules {
+    type O = terrars::BlockAssignable<EvidentlyFeature_EvaluationRules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -505,32 +534,34 @@ impl terrars::ToListMappable for EvidentlyFeatureEvaluationRulesEl {
     }
 }
 
-pub struct BuildEvidentlyFeatureEvaluationRulesEl {}
+pub struct BuildEvidentlyFeature_EvaluationRules {}
 
-impl BuildEvidentlyFeatureEvaluationRulesEl {
-    pub fn build(self) -> EvidentlyFeatureEvaluationRulesEl {
-        EvidentlyFeatureEvaluationRulesEl {
+impl BuildEvidentlyFeature_EvaluationRules {
+    pub fn build(self) -> EvidentlyFeature_EvaluationRules {
+        EvidentlyFeature_EvaluationRules {
             name: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct EvidentlyFeatureEvaluationRulesElRef {
+#[allow(dead_code)]
+pub struct EvidentlyFeature_EvaluationRulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EvidentlyFeatureEvaluationRulesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyFeatureEvaluationRulesElRef {
-        EvidentlyFeatureEvaluationRulesElRef {
+impl terrars::Ref for EvidentlyFeature_EvaluationRulesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyFeature_EvaluationRulesRef {
+        EvidentlyFeature_EvaluationRulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EvidentlyFeatureEvaluationRulesElRef {
+impl EvidentlyFeature_EvaluationRulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -547,7 +578,7 @@ impl EvidentlyFeatureEvaluationRulesElRef {
 }
 
 #[derive(Serialize)]
-pub struct EvidentlyFeatureTimeoutsEl {
+pub struct EvidentlyFeature_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -556,7 +587,7 @@ pub struct EvidentlyFeatureTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EvidentlyFeatureTimeoutsEl {
+impl EvidentlyFeature_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -576,8 +607,8 @@ impl EvidentlyFeatureTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EvidentlyFeatureTimeoutsEl {
-    type O = terrars::BlockAssignable<EvidentlyFeatureTimeoutsEl>;
+impl terrars::ToListMappable for EvidentlyFeature_Timeouts {
+    type O = terrars::BlockAssignable<EvidentlyFeature_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -588,11 +619,11 @@ impl terrars::ToListMappable for EvidentlyFeatureTimeoutsEl {
     }
 }
 
-pub struct BuildEvidentlyFeatureTimeoutsEl {}
+pub struct BuildEvidentlyFeature_Timeouts {}
 
-impl BuildEvidentlyFeatureTimeoutsEl {
-    pub fn build(self) -> EvidentlyFeatureTimeoutsEl {
-        EvidentlyFeatureTimeoutsEl {
+impl BuildEvidentlyFeature_Timeouts {
+    pub fn build(self) -> EvidentlyFeature_Timeouts {
+        EvidentlyFeature_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -600,21 +631,23 @@ impl BuildEvidentlyFeatureTimeoutsEl {
     }
 }
 
-pub struct EvidentlyFeatureTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EvidentlyFeature_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EvidentlyFeatureTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyFeatureTimeoutsElRef {
-        EvidentlyFeatureTimeoutsElRef {
+impl terrars::Ref for EvidentlyFeature_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyFeature_TimeoutsRef {
+        EvidentlyFeature_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EvidentlyFeatureTimeoutsElRef {
+impl EvidentlyFeature_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -636,7 +669,7 @@ impl EvidentlyFeatureTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct EvidentlyFeatureVariationsElValueEl {
+pub struct EvidentlyFeature_Variations_Value {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bool_value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -647,7 +680,7 @@ pub struct EvidentlyFeatureVariationsElValueEl {
     string_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EvidentlyFeatureVariationsElValueEl {
+impl EvidentlyFeature_Variations_Value {
     #[doc = "Set the field `bool_value`.\n"]
     pub fn set_bool_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bool_value = std::option::Option::Some(v.into());
@@ -673,8 +706,8 @@ impl EvidentlyFeatureVariationsElValueEl {
     }
 }
 
-impl terrars::ToListMappable for EvidentlyFeatureVariationsElValueEl {
-    type O = terrars::BlockAssignable<EvidentlyFeatureVariationsElValueEl>;
+impl terrars::ToListMappable for EvidentlyFeature_Variations_Value {
+    type O = terrars::BlockAssignable<EvidentlyFeature_Variations_Value>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -685,11 +718,11 @@ impl terrars::ToListMappable for EvidentlyFeatureVariationsElValueEl {
     }
 }
 
-pub struct BuildEvidentlyFeatureVariationsElValueEl {}
+pub struct BuildEvidentlyFeature_Variations_Value {}
 
-impl BuildEvidentlyFeatureVariationsElValueEl {
-    pub fn build(self) -> EvidentlyFeatureVariationsElValueEl {
-        EvidentlyFeatureVariationsElValueEl {
+impl BuildEvidentlyFeature_Variations_Value {
+    pub fn build(self) -> EvidentlyFeature_Variations_Value {
+        EvidentlyFeature_Variations_Value {
             bool_value: core::default::Default::default(),
             double_value: core::default::Default::default(),
             long_value: core::default::Default::default(),
@@ -698,21 +731,23 @@ impl BuildEvidentlyFeatureVariationsElValueEl {
     }
 }
 
-pub struct EvidentlyFeatureVariationsElValueElRef {
+#[allow(dead_code)]
+pub struct EvidentlyFeature_Variations_ValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EvidentlyFeatureVariationsElValueElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyFeatureVariationsElValueElRef {
-        EvidentlyFeatureVariationsElValueElRef {
+impl terrars::Ref for EvidentlyFeature_Variations_ValueRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyFeature_Variations_ValueRef {
+        EvidentlyFeature_Variations_ValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EvidentlyFeatureVariationsElValueElRef {
+impl EvidentlyFeature_Variations_ValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -739,23 +774,23 @@ impl EvidentlyFeatureVariationsElValueElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EvidentlyFeatureVariationsElDynamic {
-    value: std::option::Option<terrars::DynamicBlock<EvidentlyFeatureVariationsElValueEl>>,
+struct EvidentlyFeature_VariationsDynamic {
+    value: std::option::Option<terrars::DynamicBlock<EvidentlyFeature_Variations_Value>>,
 }
 
 #[derive(Serialize)]
-pub struct EvidentlyFeatureVariationsEl {
+pub struct EvidentlyFeature_Variations {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<std::vec::Vec<EvidentlyFeatureVariationsElValueEl>>,
-    dynamic: EvidentlyFeatureVariationsElDynamic,
+    value: std::option::Option<std::vec::Vec<EvidentlyFeature_Variations_Value>>,
+    dynamic: EvidentlyFeature_VariationsDynamic,
 }
 
-impl EvidentlyFeatureVariationsEl {
+impl EvidentlyFeature_Variations {
     #[doc = "Set the field `value`.\n"]
     pub fn set_value(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyFeatureVariationsElValueEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyFeature_Variations_Value>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -769,8 +804,8 @@ impl EvidentlyFeatureVariationsEl {
     }
 }
 
-impl terrars::ToListMappable for EvidentlyFeatureVariationsEl {
-    type O = terrars::BlockAssignable<EvidentlyFeatureVariationsEl>;
+impl terrars::ToListMappable for EvidentlyFeature_Variations {
+    type O = terrars::BlockAssignable<EvidentlyFeature_Variations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -781,14 +816,14 @@ impl terrars::ToListMappable for EvidentlyFeatureVariationsEl {
     }
 }
 
-pub struct BuildEvidentlyFeatureVariationsEl {
+pub struct BuildEvidentlyFeature_Variations {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEvidentlyFeatureVariationsEl {
-    pub fn build(self) -> EvidentlyFeatureVariationsEl {
-        EvidentlyFeatureVariationsEl {
+impl BuildEvidentlyFeature_Variations {
+    pub fn build(self) -> EvidentlyFeature_Variations {
+        EvidentlyFeature_Variations {
             name: self.name,
             value: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -796,21 +831,23 @@ impl BuildEvidentlyFeatureVariationsEl {
     }
 }
 
-pub struct EvidentlyFeatureVariationsElRef {
+#[allow(dead_code)]
+pub struct EvidentlyFeature_VariationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EvidentlyFeatureVariationsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyFeatureVariationsElRef {
-        EvidentlyFeatureVariationsElRef {
+impl terrars::Ref for EvidentlyFeature_VariationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyFeature_VariationsRef {
+        EvidentlyFeature_VariationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EvidentlyFeatureVariationsElRef {
+impl EvidentlyFeature_VariationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -821,12 +858,7 @@ impl EvidentlyFeatureVariationsElRef {
     }
 
     #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
-    pub fn value(&self) -> terrars::ListRef<EvidentlyFeatureVariationsElValueElRef> {
+    pub fn value(&self) -> terrars::ListRef<EvidentlyFeature_Variations_ValueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EvidentlyFeatureDynamic {
-    variations: std::option::Option<terrars::DynamicBlock<EvidentlyFeatureVariationsEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlobalacceleratorListenerData {
+struct GlobalacceleratorListenerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,16 +27,16 @@ struct GlobalacceleratorListenerData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     protocol: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    port_range: std::option::Option<std::vec::Vec<GlobalacceleratorListenerPortRangeEl>>,
+    port_range: std::option::Option<std::vec::Vec<GlobalacceleratorListener_PortRange>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GlobalacceleratorListenerTimeoutsEl>,
+    timeouts: std::option::Option<GlobalacceleratorListener_Timeouts>,
     dynamic: GlobalacceleratorListenerDynamic,
 }
 
 struct GlobalacceleratorListener_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlobalacceleratorListenerData>,
+    data: std::cell::RefCell<GlobalacceleratorListenerData_>,
 }
 
 #[derive(Clone)]
@@ -149,7 +151,7 @@ impl GlobalacceleratorListener {
     #[doc = "Set the field `port_range`.\n"]
     pub fn set_port_range(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlobalacceleratorListenerPortRangeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlobalacceleratorListener_PortRange>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -163,7 +165,7 @@ impl GlobalacceleratorListener {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GlobalacceleratorListenerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GlobalacceleratorListener_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -171,6 +173,11 @@ impl GlobalacceleratorListener {
     #[doc = "Get a reference to the value of field `accelerator_arn` after provisioning.\n"]
     pub fn accelerator_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `client_affinity` after provisioning.\n"]
@@ -189,11 +196,8 @@ impl GlobalacceleratorListener {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GlobalacceleratorListenerTimeoutsElRef {
-        GlobalacceleratorListenerTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> GlobalacceleratorListener_TimeoutsRef {
+        GlobalacceleratorListener_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -241,7 +245,7 @@ impl BuildGlobalacceleratorListener {
         let out = GlobalacceleratorListener(std::rc::Rc::new(GlobalacceleratorListener_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlobalacceleratorListenerData {
+            data: std::cell::RefCell::new(GlobalacceleratorListenerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -289,6 +293,11 @@ impl GlobalacceleratorListenerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.accelerator_arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `client_affinity` after provisioning.\n"]
     pub fn client_affinity(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.client_affinity", self.extract_ref()))
@@ -305,23 +314,25 @@ impl GlobalacceleratorListenerRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GlobalacceleratorListenerTimeoutsElRef {
-        GlobalacceleratorListenerTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> GlobalacceleratorListener_TimeoutsRef {
+        GlobalacceleratorListener_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlobalacceleratorListenerDynamic {
+    port_range: std::option::Option<terrars::DynamicBlock<GlobalacceleratorListener_PortRange>>,
+}
+
 #[derive(Serialize)]
-pub struct GlobalacceleratorListenerPortRangeEl {
+pub struct GlobalacceleratorListener_PortRange {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     from_port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     to_port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl GlobalacceleratorListenerPortRangeEl {
+impl GlobalacceleratorListener_PortRange {
     #[doc = "Set the field `from_port`.\n"]
     pub fn set_from_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.from_port = std::option::Option::Some(v.into());
@@ -335,8 +346,8 @@ impl GlobalacceleratorListenerPortRangeEl {
     }
 }
 
-impl terrars::ToListMappable for GlobalacceleratorListenerPortRangeEl {
-    type O = terrars::BlockAssignable<GlobalacceleratorListenerPortRangeEl>;
+impl terrars::ToListMappable for GlobalacceleratorListener_PortRange {
+    type O = terrars::BlockAssignable<GlobalacceleratorListener_PortRange>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -347,32 +358,34 @@ impl terrars::ToListMappable for GlobalacceleratorListenerPortRangeEl {
     }
 }
 
-pub struct BuildGlobalacceleratorListenerPortRangeEl {}
+pub struct BuildGlobalacceleratorListener_PortRange {}
 
-impl BuildGlobalacceleratorListenerPortRangeEl {
-    pub fn build(self) -> GlobalacceleratorListenerPortRangeEl {
-        GlobalacceleratorListenerPortRangeEl {
+impl BuildGlobalacceleratorListener_PortRange {
+    pub fn build(self) -> GlobalacceleratorListener_PortRange {
+        GlobalacceleratorListener_PortRange {
             from_port: core::default::Default::default(),
             to_port: core::default::Default::default(),
         }
     }
 }
 
-pub struct GlobalacceleratorListenerPortRangeElRef {
+#[allow(dead_code)]
+pub struct GlobalacceleratorListener_PortRangeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlobalacceleratorListenerPortRangeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorListenerPortRangeElRef {
-        GlobalacceleratorListenerPortRangeElRef {
+impl terrars::Ref for GlobalacceleratorListener_PortRangeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorListener_PortRangeRef {
+        GlobalacceleratorListener_PortRangeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlobalacceleratorListenerPortRangeElRef {
+impl GlobalacceleratorListener_PortRangeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -389,7 +402,7 @@ impl GlobalacceleratorListenerPortRangeElRef {
 }
 
 #[derive(Serialize)]
-pub struct GlobalacceleratorListenerTimeoutsEl {
+pub struct GlobalacceleratorListener_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -398,7 +411,7 @@ pub struct GlobalacceleratorListenerTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GlobalacceleratorListenerTimeoutsEl {
+impl GlobalacceleratorListener_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -418,8 +431,8 @@ impl GlobalacceleratorListenerTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GlobalacceleratorListenerTimeoutsEl {
-    type O = terrars::BlockAssignable<GlobalacceleratorListenerTimeoutsEl>;
+impl terrars::ToListMappable for GlobalacceleratorListener_Timeouts {
+    type O = terrars::BlockAssignable<GlobalacceleratorListener_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -430,11 +443,11 @@ impl terrars::ToListMappable for GlobalacceleratorListenerTimeoutsEl {
     }
 }
 
-pub struct BuildGlobalacceleratorListenerTimeoutsEl {}
+pub struct BuildGlobalacceleratorListener_Timeouts {}
 
-impl BuildGlobalacceleratorListenerTimeoutsEl {
-    pub fn build(self) -> GlobalacceleratorListenerTimeoutsEl {
-        GlobalacceleratorListenerTimeoutsEl {
+impl BuildGlobalacceleratorListener_Timeouts {
+    pub fn build(self) -> GlobalacceleratorListener_Timeouts {
+        GlobalacceleratorListener_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -442,21 +455,23 @@ impl BuildGlobalacceleratorListenerTimeoutsEl {
     }
 }
 
-pub struct GlobalacceleratorListenerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GlobalacceleratorListener_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlobalacceleratorListenerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorListenerTimeoutsElRef {
-        GlobalacceleratorListenerTimeoutsElRef {
+impl terrars::Ref for GlobalacceleratorListener_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlobalacceleratorListener_TimeoutsRef {
+        GlobalacceleratorListener_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlobalacceleratorListenerTimeoutsElRef {
+impl GlobalacceleratorListener_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -475,9 +490,4 @@ impl GlobalacceleratorListenerTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GlobalacceleratorListenerDynamic {
-    port_range: std::option::Option<terrars::DynamicBlock<GlobalacceleratorListenerPortRangeEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DmsReplicationTaskData {
+struct DmsReplicationTaskData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,10 +27,14 @@ struct DmsReplicationTaskData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     migration_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     replication_instance_arn: terrars::PrimField<std::string::String>,
     replication_task_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replication_task_settings: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     source_endpoint_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_replication_task: std::option::Option<terrars::PrimField<bool>>,
@@ -43,7 +49,7 @@ struct DmsReplicationTaskData {
 struct DmsReplicationTask_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DmsReplicationTaskData>,
+    data: std::cell::RefCell<DmsReplicationTaskData_>,
 }
 
 #[derive(Clone)]
@@ -161,12 +167,25 @@ impl DmsReplicationTask {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `replication_task_settings`.\n"]
     pub fn set_replication_task_settings(
         self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().replication_task_settings = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resource_identifier`.\n"]
+    pub fn set_resource_identifier(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().resource_identifier = std::option::Option::Some(v.into());
         self
     }
 
@@ -214,6 +233,12 @@ impl DmsReplicationTask {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.migration_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `replication_instance_arn` after provisioning.\n"]
     pub fn replication_instance_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_instance_arn", self.extract_ref()))
@@ -232,6 +257,11 @@ impl DmsReplicationTask {
     #[doc = "Get a reference to the value of field `replication_task_settings` after provisioning.\n"]
     pub fn replication_task_settings(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_task_settings", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_identifier` after provisioning.\n"]
+    pub fn resource_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_identifier", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_endpoint_arn` after provisioning.\n"]
@@ -322,7 +352,7 @@ impl BuildDmsReplicationTask {
         let out = DmsReplicationTask(std::rc::Rc::new(DmsReplicationTask_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DmsReplicationTaskData {
+            data: std::cell::RefCell::new(DmsReplicationTaskData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -332,9 +362,11 @@ impl BuildDmsReplicationTask {
                 cdc_start_time: core::default::Default::default(),
                 id: core::default::Default::default(),
                 migration_type: self.migration_type,
+                region: core::default::Default::default(),
                 replication_instance_arn: self.replication_instance_arn,
                 replication_task_id: self.replication_task_id,
                 replication_task_settings: core::default::Default::default(),
+                resource_identifier: core::default::Default::default(),
                 source_endpoint_arn: self.source_endpoint_arn,
                 start_replication_task: core::default::Default::default(),
                 table_mappings: self.table_mappings,
@@ -391,6 +423,12 @@ impl DmsReplicationTaskRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.migration_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `replication_instance_arn` after provisioning.\n"]
     pub fn replication_instance_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_instance_arn", self.extract_ref()))
@@ -409,6 +447,11 @@ impl DmsReplicationTaskRef {
     #[doc = "Get a reference to the value of field `replication_task_settings` after provisioning.\n"]
     pub fn replication_task_settings(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replication_task_settings", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_identifier` after provisioning.\n"]
+    pub fn resource_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_identifier", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_endpoint_arn` after provisioning.\n"]

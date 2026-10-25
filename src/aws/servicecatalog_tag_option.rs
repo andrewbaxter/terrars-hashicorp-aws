@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ServicecatalogTagOptionData {
+struct ServicecatalogTagOptionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,15 +25,17 @@ struct ServicecatalogTagOptionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     value: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ServicecatalogTagOptionTimeoutsEl>,
+    timeouts: std::option::Option<ServicecatalogTagOption_Timeouts>,
 }
 
 struct ServicecatalogTagOption_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ServicecatalogTagOptionData>,
+    data: std::cell::RefCell<ServicecatalogTagOptionData_>,
 }
 
 #[derive(Clone)]
@@ -143,8 +147,15 @@ impl ServicecatalogTagOption {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogTagOptionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogTagOption_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -169,14 +180,20 @@ impl ServicecatalogTagOption {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogTagOptionTimeoutsElRef {
-        ServicecatalogTagOptionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ServicecatalogTagOption_TimeoutsRef {
+        ServicecatalogTagOption_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -224,7 +241,7 @@ impl BuildServicecatalogTagOption {
         let out = ServicecatalogTagOption(std::rc::Rc::new(ServicecatalogTagOption_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ServicecatalogTagOptionData {
+            data: std::cell::RefCell::new(ServicecatalogTagOptionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -233,6 +250,7 @@ impl BuildServicecatalogTagOption {
                 active: core::default::Default::default(),
                 id: core::default::Default::default(),
                 key: self.key,
+                region: core::default::Default::default(),
                 value: self.value,
                 timeouts: core::default::Default::default(),
             }),
@@ -285,19 +303,25 @@ impl ServicecatalogTagOptionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogTagOptionTimeoutsElRef {
-        ServicecatalogTagOptionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ServicecatalogTagOption_TimeoutsRef {
+        ServicecatalogTagOption_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ServicecatalogTagOptionTimeoutsEl {
+pub struct ServicecatalogTagOption_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -308,7 +332,7 @@ pub struct ServicecatalogTagOptionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ServicecatalogTagOptionTimeoutsEl {
+impl ServicecatalogTagOption_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -334,8 +358,8 @@ impl ServicecatalogTagOptionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ServicecatalogTagOptionTimeoutsEl {
-    type O = terrars::BlockAssignable<ServicecatalogTagOptionTimeoutsEl>;
+impl terrars::ToListMappable for ServicecatalogTagOption_Timeouts {
+    type O = terrars::BlockAssignable<ServicecatalogTagOption_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -346,11 +370,11 @@ impl terrars::ToListMappable for ServicecatalogTagOptionTimeoutsEl {
     }
 }
 
-pub struct BuildServicecatalogTagOptionTimeoutsEl {}
+pub struct BuildServicecatalogTagOption_Timeouts {}
 
-impl BuildServicecatalogTagOptionTimeoutsEl {
-    pub fn build(self) -> ServicecatalogTagOptionTimeoutsEl {
-        ServicecatalogTagOptionTimeoutsEl {
+impl BuildServicecatalogTagOption_Timeouts {
+    pub fn build(self) -> ServicecatalogTagOption_Timeouts {
+        ServicecatalogTagOption_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             read: core::default::Default::default(),
@@ -359,21 +383,23 @@ impl BuildServicecatalogTagOptionTimeoutsEl {
     }
 }
 
-pub struct ServicecatalogTagOptionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ServicecatalogTagOption_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ServicecatalogTagOptionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ServicecatalogTagOptionTimeoutsElRef {
-        ServicecatalogTagOptionTimeoutsElRef {
+impl terrars::Ref for ServicecatalogTagOption_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ServicecatalogTagOption_TimeoutsRef {
+        ServicecatalogTagOption_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ServicecatalogTagOptionTimeoutsElRef {
+impl ServicecatalogTagOption_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

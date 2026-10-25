@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataRdsClusterData {
+struct DataRdsClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataRdsClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataRdsCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRdsClusterData>,
+    data: std::cell::RefCell<DataRdsClusterData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataRdsCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -121,6 +132,16 @@ impl DataRdsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_resource_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_scalability_type` after provisioning.\n"]
+    pub fn cluster_scalability_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_scalability_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `database_insights_mode` after provisioning.\n"]
+    pub fn database_insights_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_insights_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
     pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
@@ -137,6 +158,16 @@ impl DataRdsCluster {
     #[doc = "Get a reference to the value of field `db_subnet_group_name` after provisioning.\n"]
     pub fn db_subnet_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_subnet_group_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `db_system_id` after provisioning.\n"]
+    pub fn db_system_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_system_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `deletion_protection` after provisioning.\n"]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enabled_cloudwatch_logs_exports` after provisioning.\n"]
@@ -200,9 +231,24 @@ impl DataRdsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `master_user_secret` after provisioning.\n"]
+    pub fn master_user_secret(&self) -> terrars::ListRef<DataRdsCluster_MasterUserSecretRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_user_secret", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `master_username` after provisioning.\n"]
     pub fn master_username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_username", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `monitoring_interval` after provisioning.\n"]
+    pub fn monitoring_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_interval", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `monitoring_role_arn` after provisioning.\n"]
+    pub fn monitoring_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_role_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
@@ -230,6 +276,12 @@ impl DataRdsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reader_endpoint", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `replication_source_identifier` after provisioning.\n"]
     pub fn replication_source_identifier(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
@@ -246,6 +298,11 @@ impl DataRdsCluster {
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `upgrade_rollout_order` after provisioning.\n"]
+    pub fn upgrade_rollout_order(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upgrade_rollout_order", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
@@ -296,13 +353,14 @@ impl BuildDataRdsCluster {
         let out = DataRdsCluster(std::rc::Rc::new(DataRdsCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRdsClusterData {
+            data: std::cell::RefCell::new(DataRdsClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 cluster_identifier: self.cluster_identifier,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -369,6 +427,16 @@ impl DataRdsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_resource_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_scalability_type` after provisioning.\n"]
+    pub fn cluster_scalability_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_scalability_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `database_insights_mode` after provisioning.\n"]
+    pub fn database_insights_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_insights_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
     pub fn database_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_name", self.extract_ref()))
@@ -385,6 +453,16 @@ impl DataRdsClusterRef {
     #[doc = "Get a reference to the value of field `db_subnet_group_name` after provisioning.\n"]
     pub fn db_subnet_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_subnet_group_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `db_system_id` after provisioning.\n"]
+    pub fn db_system_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_system_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `deletion_protection` after provisioning.\n"]
+    pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enabled_cloudwatch_logs_exports` after provisioning.\n"]
@@ -448,9 +526,24 @@ impl DataRdsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `master_user_secret` after provisioning.\n"]
+    pub fn master_user_secret(&self) -> terrars::ListRef<DataRdsCluster_MasterUserSecretRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_user_secret", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `master_username` after provisioning.\n"]
     pub fn master_username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_username", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `monitoring_interval` after provisioning.\n"]
+    pub fn monitoring_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_interval", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `monitoring_role_arn` after provisioning.\n"]
+    pub fn monitoring_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_role_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
@@ -478,6 +571,12 @@ impl DataRdsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reader_endpoint", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `replication_source_identifier` after provisioning.\n"]
     pub fn replication_source_identifier(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
@@ -496,8 +595,104 @@ impl DataRdsClusterRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `upgrade_rollout_order` after provisioning.\n"]
+    pub fn upgrade_rollout_order(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upgrade_rollout_order", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
     pub fn vpc_security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataRdsCluster_MasterUserSecret {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_status: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataRdsCluster_MasterUserSecret {
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_arn`.\n"]
+    pub fn set_secret_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_status`.\n"]
+    pub fn set_secret_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_status = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataRdsCluster_MasterUserSecret {
+    type O = terrars::BlockAssignable<DataRdsCluster_MasterUserSecret>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataRdsCluster_MasterUserSecret {}
+
+impl BuildDataRdsCluster_MasterUserSecret {
+    pub fn build(self) -> DataRdsCluster_MasterUserSecret {
+        DataRdsCluster_MasterUserSecret {
+            kms_key_id: core::default::Default::default(),
+            secret_arn: core::default::Default::default(),
+            secret_status: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataRdsCluster_MasterUserSecretRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataRdsCluster_MasterUserSecretRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRdsCluster_MasterUserSecretRef {
+        DataRdsCluster_MasterUserSecretRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataRdsCluster_MasterUserSecretRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
+    pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_status` after provisioning.\n"]
+    pub fn secret_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_status", self.base))
     }
 }

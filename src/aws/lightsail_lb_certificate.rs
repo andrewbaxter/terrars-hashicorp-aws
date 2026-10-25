@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LightsailLbCertificateData {
+struct LightsailLbCertificateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,13 +27,15 @@ struct LightsailLbCertificateData {
     lb_name: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subject_alternative_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
 struct LightsailLbCertificate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LightsailLbCertificateData>,
+    data: std::cell::RefCell<LightsailLbCertificateData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl LightsailLbCertificate {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `subject_alternative_names`.\n"]
     pub fn set_subject_alternative_names(
         self,
@@ -168,7 +179,7 @@ impl LightsailLbCertificate {
     }
 
     #[doc = "Get a reference to the value of field `domain_validation_records` after provisioning.\n"]
-    pub fn domain_validation_records(&self) -> terrars::SetRef<LightsailLbCertificateDomainValidationRecordsElRef> {
+    pub fn domain_validation_records(&self) -> terrars::SetRef<LightsailLbCertificate_DomainValidationRecordsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.domain_validation_records", self.extract_ref()))
     }
 
@@ -185,6 +196,12 @@ impl LightsailLbCertificate {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subject_alternative_names` after provisioning.\n"]
@@ -242,7 +259,7 @@ impl BuildLightsailLbCertificate {
         let out = LightsailLbCertificate(std::rc::Rc::new(LightsailLbCertificate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LightsailLbCertificateData {
+            data: std::cell::RefCell::new(LightsailLbCertificateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -252,6 +269,7 @@ impl BuildLightsailLbCertificate {
                 id: core::default::Default::default(),
                 lb_name: self.lb_name,
                 name: self.name,
+                region: core::default::Default::default(),
                 subject_alternative_names: core::default::Default::default(),
             }),
         }));
@@ -299,7 +317,7 @@ impl LightsailLbCertificateRef {
     }
 
     #[doc = "Get a reference to the value of field `domain_validation_records` after provisioning.\n"]
-    pub fn domain_validation_records(&self) -> terrars::SetRef<LightsailLbCertificateDomainValidationRecordsElRef> {
+    pub fn domain_validation_records(&self) -> terrars::SetRef<LightsailLbCertificate_DomainValidationRecordsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.domain_validation_records", self.extract_ref()))
     }
 
@@ -318,6 +336,12 @@ impl LightsailLbCertificateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subject_alternative_names` after provisioning.\n"]
     pub fn subject_alternative_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subject_alternative_names", self.extract_ref()))
@@ -330,7 +354,7 @@ impl LightsailLbCertificateRef {
 }
 
 #[derive(Serialize)]
-pub struct LightsailLbCertificateDomainValidationRecordsEl {
+pub struct LightsailLbCertificate_DomainValidationRecords {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -341,7 +365,7 @@ pub struct LightsailLbCertificateDomainValidationRecordsEl {
     resource_record_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LightsailLbCertificateDomainValidationRecordsEl {
+impl LightsailLbCertificate_DomainValidationRecords {
     #[doc = "Set the field `domain_name`.\n"]
     pub fn set_domain_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.domain_name = std::option::Option::Some(v.into());
@@ -376,8 +400,8 @@ impl LightsailLbCertificateDomainValidationRecordsEl {
     }
 }
 
-impl terrars::ToListMappable for LightsailLbCertificateDomainValidationRecordsEl {
-    type O = terrars::BlockAssignable<LightsailLbCertificateDomainValidationRecordsEl>;
+impl terrars::ToListMappable for LightsailLbCertificate_DomainValidationRecords {
+    type O = terrars::BlockAssignable<LightsailLbCertificate_DomainValidationRecords>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -388,11 +412,11 @@ impl terrars::ToListMappable for LightsailLbCertificateDomainValidationRecordsEl
     }
 }
 
-pub struct BuildLightsailLbCertificateDomainValidationRecordsEl {}
+pub struct BuildLightsailLbCertificate_DomainValidationRecords {}
 
-impl BuildLightsailLbCertificateDomainValidationRecordsEl {
-    pub fn build(self) -> LightsailLbCertificateDomainValidationRecordsEl {
-        LightsailLbCertificateDomainValidationRecordsEl {
+impl BuildLightsailLbCertificate_DomainValidationRecords {
+    pub fn build(self) -> LightsailLbCertificate_DomainValidationRecords {
+        LightsailLbCertificate_DomainValidationRecords {
             domain_name: core::default::Default::default(),
             resource_record_name: core::default::Default::default(),
             resource_record_type: core::default::Default::default(),
@@ -401,24 +425,26 @@ impl BuildLightsailLbCertificateDomainValidationRecordsEl {
     }
 }
 
-pub struct LightsailLbCertificateDomainValidationRecordsElRef {
+#[allow(dead_code)]
+pub struct LightsailLbCertificate_DomainValidationRecordsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LightsailLbCertificateDomainValidationRecordsElRef {
+impl terrars::Ref for LightsailLbCertificate_DomainValidationRecordsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LightsailLbCertificateDomainValidationRecordsElRef {
-        LightsailLbCertificateDomainValidationRecordsElRef {
+    ) -> LightsailLbCertificate_DomainValidationRecordsRef {
+        LightsailLbCertificate_DomainValidationRecordsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LightsailLbCertificateDomainValidationRecordsElRef {
+impl LightsailLbCertificate_DomainValidationRecordsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

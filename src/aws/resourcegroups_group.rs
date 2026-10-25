@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ResourcegroupsGroupData {
+struct ResourcegroupsGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,22 +26,24 @@ struct ResourcegroupsGroupData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    configuration: std::option::Option<std::vec::Vec<ResourcegroupsGroupConfigurationEl>>,
+    configuration: std::option::Option<std::vec::Vec<ResourcegroupsGroup_Configuration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_query: std::option::Option<std::vec::Vec<ResourcegroupsGroupResourceQueryEl>>,
+    resource_query: std::option::Option<std::vec::Vec<ResourcegroupsGroup_ResourceQuery>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ResourcegroupsGroupTimeoutsEl>,
+    timeouts: std::option::Option<ResourcegroupsGroup_Timeouts>,
     dynamic: ResourcegroupsGroupDynamic,
 }
 
 struct ResourcegroupsGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ResourcegroupsGroupData>,
+    data: std::cell::RefCell<ResourcegroupsGroupData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl ResourcegroupsGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -172,7 +183,7 @@ impl ResourcegroupsGroup {
     #[doc = "Set the field `configuration`.\n"]
     pub fn set_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ResourcegroupsGroupConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ResourcegroupsGroup_Configuration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,7 +199,7 @@ impl ResourcegroupsGroup {
     #[doc = "Set the field `resource_query`.\n"]
     pub fn set_resource_query(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ResourcegroupsGroupResourceQueryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ResourcegroupsGroup_ResourceQuery>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -202,7 +213,7 @@ impl ResourcegroupsGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ResourcegroupsGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ResourcegroupsGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -227,6 +238,12 @@ impl ResourcegroupsGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -238,13 +255,13 @@ impl ResourcegroupsGroup {
     }
 
     #[doc = "Get a reference to the value of field `resource_query` after provisioning.\n"]
-    pub fn resource_query(&self) -> terrars::ListRef<ResourcegroupsGroupResourceQueryElRef> {
+    pub fn resource_query(&self) -> terrars::ListRef<ResourcegroupsGroup_ResourceQueryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_query", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ResourcegroupsGroupTimeoutsElRef {
-        ResourcegroupsGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ResourcegroupsGroup_TimeoutsRef {
+        ResourcegroupsGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -290,7 +307,7 @@ impl BuildResourcegroupsGroup {
         let out = ResourcegroupsGroup(std::rc::Rc::new(ResourcegroupsGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ResourcegroupsGroupData {
+            data: std::cell::RefCell::new(ResourcegroupsGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -299,6 +316,7 @@ impl BuildResourcegroupsGroup {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 configuration: core::default::Default::default(),
@@ -355,6 +373,12 @@ impl ResourcegroupsGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -366,26 +390,32 @@ impl ResourcegroupsGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `resource_query` after provisioning.\n"]
-    pub fn resource_query(&self) -> terrars::ListRef<ResourcegroupsGroupResourceQueryElRef> {
+    pub fn resource_query(&self) -> terrars::ListRef<ResourcegroupsGroup_ResourceQueryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_query", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ResourcegroupsGroupTimeoutsElRef {
-        ResourcegroupsGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ResourcegroupsGroup_TimeoutsRef {
+        ResourcegroupsGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ResourcegroupsGroupDynamic {
+    configuration: std::option::Option<terrars::DynamicBlock<ResourcegroupsGroup_Configuration>>,
+    resource_query: std::option::Option<terrars::DynamicBlock<ResourcegroupsGroup_ResourceQuery>>,
+}
+
 #[derive(Serialize)]
-pub struct ResourcegroupsGroupConfigurationElParametersEl {
+pub struct ResourcegroupsGroup_Configuration_Parameters {
     name: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl ResourcegroupsGroupConfigurationElParametersEl { }
+impl ResourcegroupsGroup_Configuration_Parameters { }
 
-impl terrars::ToListMappable for ResourcegroupsGroupConfigurationElParametersEl {
-    type O = terrars::BlockAssignable<ResourcegroupsGroupConfigurationElParametersEl>;
+impl terrars::ToListMappable for ResourcegroupsGroup_Configuration_Parameters {
+    type O = terrars::BlockAssignable<ResourcegroupsGroup_Configuration_Parameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -396,40 +426,42 @@ impl terrars::ToListMappable for ResourcegroupsGroupConfigurationElParametersEl 
     }
 }
 
-pub struct BuildResourcegroupsGroupConfigurationElParametersEl {
+pub struct BuildResourcegroupsGroup_Configuration_Parameters {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildResourcegroupsGroupConfigurationElParametersEl {
-    pub fn build(self) -> ResourcegroupsGroupConfigurationElParametersEl {
-        ResourcegroupsGroupConfigurationElParametersEl {
+impl BuildResourcegroupsGroup_Configuration_Parameters {
+    pub fn build(self) -> ResourcegroupsGroup_Configuration_Parameters {
+        ResourcegroupsGroup_Configuration_Parameters {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct ResourcegroupsGroupConfigurationElParametersElRef {
+#[allow(dead_code)]
+pub struct ResourcegroupsGroup_Configuration_ParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ResourcegroupsGroupConfigurationElParametersElRef {
+impl terrars::Ref for ResourcegroupsGroup_Configuration_ParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ResourcegroupsGroupConfigurationElParametersElRef {
-        ResourcegroupsGroupConfigurationElParametersElRef {
+    ) -> ResourcegroupsGroup_Configuration_ParametersRef {
+        ResourcegroupsGroup_Configuration_ParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ResourcegroupsGroupConfigurationElParametersElRef {
+impl ResourcegroupsGroup_Configuration_ParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -446,24 +478,24 @@ impl ResourcegroupsGroupConfigurationElParametersElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ResourcegroupsGroupConfigurationElDynamic {
-    parameters: std::option::Option<terrars::DynamicBlock<ResourcegroupsGroupConfigurationElParametersEl>>,
+struct ResourcegroupsGroup_ConfigurationDynamic {
+    parameters: std::option::Option<terrars::DynamicBlock<ResourcegroupsGroup_Configuration_Parameters>>,
 }
 
 #[derive(Serialize)]
-pub struct ResourcegroupsGroupConfigurationEl {
+pub struct ResourcegroupsGroup_Configuration {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std::option::Option<std::vec::Vec<ResourcegroupsGroupConfigurationElParametersEl>>,
-    dynamic: ResourcegroupsGroupConfigurationElDynamic,
+    parameters: std::option::Option<std::vec::Vec<ResourcegroupsGroup_Configuration_Parameters>>,
+    dynamic: ResourcegroupsGroup_ConfigurationDynamic,
 }
 
-impl ResourcegroupsGroupConfigurationEl {
+impl ResourcegroupsGroup_Configuration {
     #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ResourcegroupsGroupConfigurationElParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ResourcegroupsGroup_Configuration_Parameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -477,8 +509,8 @@ impl ResourcegroupsGroupConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for ResourcegroupsGroupConfigurationEl {
-    type O = terrars::BlockAssignable<ResourcegroupsGroupConfigurationEl>;
+impl terrars::ToListMappable for ResourcegroupsGroup_Configuration {
+    type O = terrars::BlockAssignable<ResourcegroupsGroup_Configuration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -489,14 +521,14 @@ impl terrars::ToListMappable for ResourcegroupsGroupConfigurationEl {
     }
 }
 
-pub struct BuildResourcegroupsGroupConfigurationEl {
+pub struct BuildResourcegroupsGroup_Configuration {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildResourcegroupsGroupConfigurationEl {
-    pub fn build(self) -> ResourcegroupsGroupConfigurationEl {
-        ResourcegroupsGroupConfigurationEl {
+impl BuildResourcegroupsGroup_Configuration {
+    pub fn build(self) -> ResourcegroupsGroup_Configuration {
+        ResourcegroupsGroup_Configuration {
             type_: self.type_,
             parameters: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -504,21 +536,23 @@ impl BuildResourcegroupsGroupConfigurationEl {
     }
 }
 
-pub struct ResourcegroupsGroupConfigurationElRef {
+#[allow(dead_code)]
+pub struct ResourcegroupsGroup_ConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ResourcegroupsGroupConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ResourcegroupsGroupConfigurationElRef {
-        ResourcegroupsGroupConfigurationElRef {
+impl terrars::Ref for ResourcegroupsGroup_ConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ResourcegroupsGroup_ConfigurationRef {
+        ResourcegroupsGroup_ConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ResourcegroupsGroupConfigurationElRef {
+impl ResourcegroupsGroup_ConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -530,13 +564,13 @@ impl ResourcegroupsGroupConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct ResourcegroupsGroupResourceQueryEl {
+pub struct ResourcegroupsGroup_ResourceQuery {
     query: terrars::PrimField<std::string::String>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ResourcegroupsGroupResourceQueryEl {
+impl ResourcegroupsGroup_ResourceQuery {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -544,8 +578,8 @@ impl ResourcegroupsGroupResourceQueryEl {
     }
 }
 
-impl terrars::ToListMappable for ResourcegroupsGroupResourceQueryEl {
-    type O = terrars::BlockAssignable<ResourcegroupsGroupResourceQueryEl>;
+impl terrars::ToListMappable for ResourcegroupsGroup_ResourceQuery {
+    type O = terrars::BlockAssignable<ResourcegroupsGroup_ResourceQuery>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -556,35 +590,37 @@ impl terrars::ToListMappable for ResourcegroupsGroupResourceQueryEl {
     }
 }
 
-pub struct BuildResourcegroupsGroupResourceQueryEl {
+pub struct BuildResourcegroupsGroup_ResourceQuery {
     #[doc = ""]
     pub query: terrars::PrimField<std::string::String>,
 }
 
-impl BuildResourcegroupsGroupResourceQueryEl {
-    pub fn build(self) -> ResourcegroupsGroupResourceQueryEl {
-        ResourcegroupsGroupResourceQueryEl {
+impl BuildResourcegroupsGroup_ResourceQuery {
+    pub fn build(self) -> ResourcegroupsGroup_ResourceQuery {
+        ResourcegroupsGroup_ResourceQuery {
             query: self.query,
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct ResourcegroupsGroupResourceQueryElRef {
+#[allow(dead_code)]
+pub struct ResourcegroupsGroup_ResourceQueryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ResourcegroupsGroupResourceQueryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ResourcegroupsGroupResourceQueryElRef {
-        ResourcegroupsGroupResourceQueryElRef {
+impl terrars::Ref for ResourcegroupsGroup_ResourceQueryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ResourcegroupsGroup_ResourceQueryRef {
+        ResourcegroupsGroup_ResourceQueryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ResourcegroupsGroupResourceQueryElRef {
+impl ResourcegroupsGroup_ResourceQueryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -601,14 +637,14 @@ impl ResourcegroupsGroupResourceQueryElRef {
 }
 
 #[derive(Serialize)]
-pub struct ResourcegroupsGroupTimeoutsEl {
+pub struct ResourcegroupsGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ResourcegroupsGroupTimeoutsEl {
+impl ResourcegroupsGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -622,8 +658,8 @@ impl ResourcegroupsGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ResourcegroupsGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<ResourcegroupsGroupTimeoutsEl>;
+impl terrars::ToListMappable for ResourcegroupsGroup_Timeouts {
+    type O = terrars::BlockAssignable<ResourcegroupsGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -634,32 +670,34 @@ impl terrars::ToListMappable for ResourcegroupsGroupTimeoutsEl {
     }
 }
 
-pub struct BuildResourcegroupsGroupTimeoutsEl {}
+pub struct BuildResourcegroupsGroup_Timeouts {}
 
-impl BuildResourcegroupsGroupTimeoutsEl {
-    pub fn build(self) -> ResourcegroupsGroupTimeoutsEl {
-        ResourcegroupsGroupTimeoutsEl {
+impl BuildResourcegroupsGroup_Timeouts {
+    pub fn build(self) -> ResourcegroupsGroup_Timeouts {
+        ResourcegroupsGroup_Timeouts {
             create: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct ResourcegroupsGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ResourcegroupsGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ResourcegroupsGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ResourcegroupsGroupTimeoutsElRef {
-        ResourcegroupsGroupTimeoutsElRef {
+impl terrars::Ref for ResourcegroupsGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ResourcegroupsGroup_TimeoutsRef {
+        ResourcegroupsGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ResourcegroupsGroupTimeoutsElRef {
+impl ResourcegroupsGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -673,10 +711,4 @@ impl ResourcegroupsGroupTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ResourcegroupsGroupDynamic {
-    configuration: std::option::Option<terrars::DynamicBlock<ResourcegroupsGroupConfigurationEl>>,
-    resource_query: std::option::Option<terrars::DynamicBlock<ResourcegroupsGroupResourceQueryEl>>,
 }

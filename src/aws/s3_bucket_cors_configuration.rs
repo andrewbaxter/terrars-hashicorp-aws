@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketCorsConfigurationData {
+struct S3BucketCorsConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,16 @@ struct S3BucketCorsConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors_rule: std::option::Option<std::vec::Vec<S3BucketCorsConfigurationCorsRuleEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cors_rule: std::option::Option<std::vec::Vec<S3BucketCorsConfiguration_CorsRule>>,
     dynamic: S3BucketCorsConfigurationDynamic,
 }
 
 struct S3BucketCorsConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketCorsConfigurationData>,
+    data: std::cell::RefCell<S3BucketCorsConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -143,10 +147,17 @@ impl S3BucketCorsConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `cors_rule`.\n"]
     pub fn set_cors_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketCorsConfigurationCorsRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketCorsConfiguration_CorsRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -172,6 +183,12 @@ impl S3BucketCorsConfiguration {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -217,7 +234,7 @@ impl BuildS3BucketCorsConfiguration {
         let out = S3BucketCorsConfiguration(std::rc::Rc::new(S3BucketCorsConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketCorsConfigurationData {
+            data: std::cell::RefCell::new(S3BucketCorsConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -226,6 +243,7 @@ impl BuildS3BucketCorsConfiguration {
                 bucket: self.bucket,
                 expected_bucket_owner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 cors_rule: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -272,10 +290,21 @@ impl S3BucketCorsConfigurationRef {
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct S3BucketCorsConfigurationDynamic {
+    cors_rule: std::option::Option<terrars::DynamicBlock<S3BucketCorsConfiguration_CorsRule>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketCorsConfigurationCorsRuleEl {
+pub struct S3BucketCorsConfiguration_CorsRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_headers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
@@ -288,7 +317,7 @@ pub struct S3BucketCorsConfigurationCorsRuleEl {
     max_age_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl S3BucketCorsConfigurationCorsRuleEl {
+impl S3BucketCorsConfiguration_CorsRule {
     #[doc = "Set the field `allowed_headers`.\n"]
     pub fn set_allowed_headers(
         mut self,
@@ -320,8 +349,8 @@ impl S3BucketCorsConfigurationCorsRuleEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketCorsConfigurationCorsRuleEl {
-    type O = terrars::BlockAssignable<S3BucketCorsConfigurationCorsRuleEl>;
+impl terrars::ToListMappable for S3BucketCorsConfiguration_CorsRule {
+    type O = terrars::BlockAssignable<S3BucketCorsConfiguration_CorsRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -332,16 +361,16 @@ impl terrars::ToListMappable for S3BucketCorsConfigurationCorsRuleEl {
     }
 }
 
-pub struct BuildS3BucketCorsConfigurationCorsRuleEl {
+pub struct BuildS3BucketCorsConfiguration_CorsRule {
     #[doc = ""]
     pub allowed_methods: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub allowed_origins: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildS3BucketCorsConfigurationCorsRuleEl {
-    pub fn build(self) -> S3BucketCorsConfigurationCorsRuleEl {
-        S3BucketCorsConfigurationCorsRuleEl {
+impl BuildS3BucketCorsConfiguration_CorsRule {
+    pub fn build(self) -> S3BucketCorsConfiguration_CorsRule {
+        S3BucketCorsConfiguration_CorsRule {
             allowed_headers: core::default::Default::default(),
             allowed_methods: self.allowed_methods,
             allowed_origins: self.allowed_origins,
@@ -352,21 +381,23 @@ impl BuildS3BucketCorsConfigurationCorsRuleEl {
     }
 }
 
-pub struct S3BucketCorsConfigurationCorsRuleElRef {
+#[allow(dead_code)]
+pub struct S3BucketCorsConfiguration_CorsRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketCorsConfigurationCorsRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketCorsConfigurationCorsRuleElRef {
-        S3BucketCorsConfigurationCorsRuleElRef {
+impl terrars::Ref for S3BucketCorsConfiguration_CorsRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketCorsConfiguration_CorsRuleRef {
+        S3BucketCorsConfiguration_CorsRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketCorsConfigurationCorsRuleElRef {
+impl S3BucketCorsConfiguration_CorsRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +431,4 @@ impl S3BucketCorsConfigurationCorsRuleElRef {
     pub fn max_age_seconds(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_age_seconds", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketCorsConfigurationDynamic {
-    cors_rule: std::option::Option<terrars::DynamicBlock<S3BucketCorsConfigurationCorsRuleEl>>,
 }

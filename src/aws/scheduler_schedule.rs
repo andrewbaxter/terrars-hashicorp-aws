@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SchedulerScheduleData {
+struct SchedulerScheduleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct SchedulerScheduleData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    action_after_completion: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,6 +36,8 @@ struct SchedulerScheduleData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     schedule_expression: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schedule_expression_timezone: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -40,16 +46,16 @@ struct SchedulerScheduleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    flexible_time_window: std::option::Option<std::vec::Vec<SchedulerScheduleFlexibleTimeWindowEl>>,
+    flexible_time_window: std::option::Option<std::vec::Vec<SchedulerSchedule_FlexibleTimeWindow>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target: std::option::Option<std::vec::Vec<SchedulerScheduleTargetEl>>,
+    target: std::option::Option<std::vec::Vec<SchedulerSchedule_Target>>,
     dynamic: SchedulerScheduleDynamic,
 }
 
 struct SchedulerSchedule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SchedulerScheduleData>,
+    data: std::cell::RefCell<SchedulerScheduleData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +155,15 @@ impl SchedulerSchedule {
         self
     }
 
+    #[doc = "Set the field `action_after_completion`.\n"]
+    pub fn set_action_after_completion(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().action_after_completion = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -191,6 +206,13 @@ impl SchedulerSchedule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `schedule_expression_timezone`.\n"]
     pub fn set_schedule_expression_timezone(
         self,
@@ -215,7 +237,7 @@ impl SchedulerSchedule {
     #[doc = "Set the field `flexible_time_window`.\n"]
     pub fn set_flexible_time_window(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerScheduleFlexibleTimeWindowEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerSchedule_FlexibleTimeWindow>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -229,7 +251,7 @@ impl SchedulerSchedule {
     }
 
     #[doc = "Set the field `target`.\n"]
-    pub fn set_target(self, v: impl std::convert::Into<terrars::BlockAssignable<SchedulerScheduleTargetEl>>) -> Self {
+    pub fn set_target(self, v: impl std::convert::Into<terrars::BlockAssignable<SchedulerSchedule_Target>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().target = std::option::Option::Some(v);
@@ -239,6 +261,11 @@ impl SchedulerSchedule {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `action_after_completion` after provisioning.\n"]
+    pub fn action_after_completion(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action_after_completion", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -281,6 +308,12 @@ impl SchedulerSchedule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schedule_expression` after provisioning.\n"]
     pub fn schedule_expression(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule_expression", self.extract_ref()))
@@ -302,12 +335,12 @@ impl SchedulerSchedule {
     }
 
     #[doc = "Get a reference to the value of field `flexible_time_window` after provisioning.\n"]
-    pub fn flexible_time_window(&self) -> terrars::ListRef<SchedulerScheduleFlexibleTimeWindowElRef> {
+    pub fn flexible_time_window(&self) -> terrars::ListRef<SchedulerSchedule_FlexibleTimeWindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.flexible_time_window", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> terrars::ListRef<SchedulerScheduleTargetElRef> {
+    pub fn target(&self) -> terrars::ListRef<SchedulerSchedule_TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
 }
@@ -354,12 +387,13 @@ impl BuildSchedulerSchedule {
         let out = SchedulerSchedule(std::rc::Rc::new(SchedulerSchedule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SchedulerScheduleData {
+            data: std::cell::RefCell::new(SchedulerScheduleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                action_after_completion: core::default::Default::default(),
                 description: core::default::Default::default(),
                 end_date: core::default::Default::default(),
                 group_name: core::default::Default::default(),
@@ -367,6 +401,7 @@ impl BuildSchedulerSchedule {
                 kms_key_arn: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 schedule_expression: self.schedule_expression,
                 schedule_expression_timezone: core::default::Default::default(),
                 start_date: core::default::Default::default(),
@@ -402,6 +437,11 @@ impl SchedulerScheduleRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `action_after_completion` after provisioning.\n"]
+    pub fn action_after_completion(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action_after_completion", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -444,6 +484,12 @@ impl SchedulerScheduleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `schedule_expression` after provisioning.\n"]
     pub fn schedule_expression(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule_expression", self.extract_ref()))
@@ -465,24 +511,30 @@ impl SchedulerScheduleRef {
     }
 
     #[doc = "Get a reference to the value of field `flexible_time_window` after provisioning.\n"]
-    pub fn flexible_time_window(&self) -> terrars::ListRef<SchedulerScheduleFlexibleTimeWindowElRef> {
+    pub fn flexible_time_window(&self) -> terrars::ListRef<SchedulerSchedule_FlexibleTimeWindowRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.flexible_time_window", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> terrars::ListRef<SchedulerScheduleTargetElRef> {
+    pub fn target(&self) -> terrars::ListRef<SchedulerSchedule_TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SchedulerScheduleDynamic {
+    flexible_time_window: std::option::Option<terrars::DynamicBlock<SchedulerSchedule_FlexibleTimeWindow>>,
+    target: std::option::Option<terrars::DynamicBlock<SchedulerSchedule_Target>>,
+}
+
 #[derive(Serialize)]
-pub struct SchedulerScheduleFlexibleTimeWindowEl {
+pub struct SchedulerSchedule_FlexibleTimeWindow {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_window_in_minutes: std::option::Option<terrars::PrimField<f64>>,
     mode: terrars::PrimField<std::string::String>,
 }
 
-impl SchedulerScheduleFlexibleTimeWindowEl {
+impl SchedulerSchedule_FlexibleTimeWindow {
     #[doc = "Set the field `maximum_window_in_minutes`.\n"]
     pub fn set_maximum_window_in_minutes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.maximum_window_in_minutes = std::option::Option::Some(v.into());
@@ -490,8 +542,8 @@ impl SchedulerScheduleFlexibleTimeWindowEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleFlexibleTimeWindowEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleFlexibleTimeWindowEl>;
+impl terrars::ToListMappable for SchedulerSchedule_FlexibleTimeWindow {
+    type O = terrars::BlockAssignable<SchedulerSchedule_FlexibleTimeWindow>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -502,35 +554,37 @@ impl terrars::ToListMappable for SchedulerScheduleFlexibleTimeWindowEl {
     }
 }
 
-pub struct BuildSchedulerScheduleFlexibleTimeWindowEl {
+pub struct BuildSchedulerSchedule_FlexibleTimeWindow {
     #[doc = ""]
     pub mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSchedulerScheduleFlexibleTimeWindowEl {
-    pub fn build(self) -> SchedulerScheduleFlexibleTimeWindowEl {
-        SchedulerScheduleFlexibleTimeWindowEl {
+impl BuildSchedulerSchedule_FlexibleTimeWindow {
+    pub fn build(self) -> SchedulerSchedule_FlexibleTimeWindow {
+        SchedulerSchedule_FlexibleTimeWindow {
             maximum_window_in_minutes: core::default::Default::default(),
             mode: self.mode,
         }
     }
 }
 
-pub struct SchedulerScheduleFlexibleTimeWindowElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_FlexibleTimeWindowRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleFlexibleTimeWindowElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerScheduleFlexibleTimeWindowElRef {
-        SchedulerScheduleFlexibleTimeWindowElRef {
+impl terrars::Ref for SchedulerSchedule_FlexibleTimeWindowRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerSchedule_FlexibleTimeWindowRef {
+        SchedulerSchedule_FlexibleTimeWindowRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleFlexibleTimeWindowElRef {
+impl SchedulerSchedule_FlexibleTimeWindowRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -547,21 +601,14 @@ impl SchedulerScheduleFlexibleTimeWindowElRef {
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElDeadLetterConfigEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct SchedulerSchedule_Target_DeadLetterConfig {
+    arn: terrars::PrimField<std::string::String>,
 }
 
-impl SchedulerScheduleTargetElDeadLetterConfigEl {
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.arn = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl SchedulerSchedule_Target_DeadLetterConfig { }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElDeadLetterConfigEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElDeadLetterConfigEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_DeadLetterConfig {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_DeadLetterConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -572,32 +619,34 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElDeadLetterConfigEl {
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElDeadLetterConfigEl {}
+pub struct BuildSchedulerSchedule_Target_DeadLetterConfig {
+    #[doc = ""]
+    pub arn: terrars::PrimField<std::string::String>,
+}
 
-impl BuildSchedulerScheduleTargetElDeadLetterConfigEl {
-    pub fn build(self) -> SchedulerScheduleTargetElDeadLetterConfigEl {
-        SchedulerScheduleTargetElDeadLetterConfigEl { arn: core::default::Default::default() }
+impl BuildSchedulerSchedule_Target_DeadLetterConfig {
+    pub fn build(self) -> SchedulerSchedule_Target_DeadLetterConfig {
+        SchedulerSchedule_Target_DeadLetterConfig { arn: self.arn }
     }
 }
 
-pub struct SchedulerScheduleTargetElDeadLetterConfigElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_DeadLetterConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElDeadLetterConfigElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> SchedulerScheduleTargetElDeadLetterConfigElRef {
-        SchedulerScheduleTargetElDeadLetterConfigElRef {
+impl terrars::Ref for SchedulerSchedule_Target_DeadLetterConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerSchedule_Target_DeadLetterConfigRef {
+        SchedulerSchedule_Target_DeadLetterConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElDeadLetterConfigElRef {
+impl SchedulerSchedule_Target_DeadLetterConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -609,7 +658,7 @@ impl SchedulerScheduleTargetElDeadLetterConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
+pub struct SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     base: std::option::Option<terrars::PrimField<f64>>,
     capacity_provider: terrars::PrimField<std::string::String>,
@@ -617,7 +666,7 @@ pub struct SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
     weight: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
+impl SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy {
     #[doc = "Set the field `base`.\n"]
     pub fn set_base(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.base = std::option::Option::Some(v.into());
@@ -631,8 +680,8 @@ impl SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -643,14 +692,14 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersElCapacit
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
+pub struct BuildSchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy {
     #[doc = ""]
     pub capacity_provider: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
-    pub fn build(self) -> SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
-        SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
+impl BuildSchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy {
+    pub fn build(self) -> SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy {
+        SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy {
             base: core::default::Default::default(),
             capacity_provider: self.capacity_provider,
             weight: core::default::Default::default(),
@@ -658,24 +707,26 @@ impl BuildSchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl {
     }
 }
 
-pub struct SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyElRef {
+impl terrars::Ref for SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyElRef {
-        SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyElRef {
+    ) -> SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategyRef {
+        SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyElRef {
+impl SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -697,7 +748,7 @@ impl SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyElRef {
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
+pub struct SchedulerSchedule_Target_EcsParameters_NetworkConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     assign_public_ip: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -705,7 +756,7 @@ pub struct SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
     subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
+impl SchedulerSchedule_Target_EcsParameters_NetworkConfiguration {
     #[doc = "Set the field `assign_public_ip`.\n"]
     pub fn set_assign_public_ip(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.assign_public_ip = std::option::Option::Some(v.into());
@@ -722,8 +773,8 @@ impl SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_EcsParameters_NetworkConfiguration {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters_NetworkConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -734,14 +785,14 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersElNetwork
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
+pub struct BuildSchedulerSchedule_Target_EcsParameters_NetworkConfiguration {
     #[doc = ""]
     pub subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
-    pub fn build(self) -> SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
-        SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
+impl BuildSchedulerSchedule_Target_EcsParameters_NetworkConfiguration {
+    pub fn build(self) -> SchedulerSchedule_Target_EcsParameters_NetworkConfiguration {
+        SchedulerSchedule_Target_EcsParameters_NetworkConfiguration {
             assign_public_ip: core::default::Default::default(),
             security_groups: core::default::Default::default(),
             subnets: self.subnets,
@@ -749,24 +800,26 @@ impl BuildSchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl {
     }
 }
 
-pub struct SchedulerScheduleTargetElEcsParametersElNetworkConfigurationElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_EcsParameters_NetworkConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElEcsParametersElNetworkConfigurationElRef {
+impl terrars::Ref for SchedulerSchedule_Target_EcsParameters_NetworkConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SchedulerScheduleTargetElEcsParametersElNetworkConfigurationElRef {
-        SchedulerScheduleTargetElEcsParametersElNetworkConfigurationElRef {
+    ) -> SchedulerSchedule_Target_EcsParameters_NetworkConfigurationRef {
+        SchedulerSchedule_Target_EcsParameters_NetworkConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElEcsParametersElNetworkConfigurationElRef {
+impl SchedulerSchedule_Target_EcsParameters_NetworkConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -788,14 +841,14 @@ impl SchedulerScheduleTargetElEcsParametersElNetworkConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl {
+pub struct SchedulerSchedule_Target_EcsParameters_PlacementConstraints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     expression: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl {
+impl SchedulerSchedule_Target_EcsParameters_PlacementConstraints {
     #[doc = "Set the field `expression`.\n"]
     pub fn set_expression(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.expression = std::option::Option::Some(v.into());
@@ -803,8 +856,8 @@ impl SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_EcsParameters_PlacementConstraints {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters_PlacementConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -815,38 +868,40 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersElPlaceme
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl {
+pub struct BuildSchedulerSchedule_Target_EcsParameters_PlacementConstraints {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl {
-    pub fn build(self) -> SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl {
-        SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl {
+impl BuildSchedulerSchedule_Target_EcsParameters_PlacementConstraints {
+    pub fn build(self) -> SchedulerSchedule_Target_EcsParameters_PlacementConstraints {
+        SchedulerSchedule_Target_EcsParameters_PlacementConstraints {
             expression: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct SchedulerScheduleTargetElEcsParametersElPlacementConstraintsElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_EcsParameters_PlacementConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElEcsParametersElPlacementConstraintsElRef {
+impl terrars::Ref for SchedulerSchedule_Target_EcsParameters_PlacementConstraintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SchedulerScheduleTargetElEcsParametersElPlacementConstraintsElRef {
-        SchedulerScheduleTargetElEcsParametersElPlacementConstraintsElRef {
+    ) -> SchedulerSchedule_Target_EcsParameters_PlacementConstraintsRef {
+        SchedulerSchedule_Target_EcsParameters_PlacementConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElEcsParametersElPlacementConstraintsElRef {
+impl SchedulerSchedule_Target_EcsParameters_PlacementConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -863,14 +918,14 @@ impl SchedulerScheduleTargetElEcsParametersElPlacementConstraintsElRef {
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl {
+pub struct SchedulerSchedule_Target_EcsParameters_PlacementStrategy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     field: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl {
+impl SchedulerSchedule_Target_EcsParameters_PlacementStrategy {
     #[doc = "Set the field `field`.\n"]
     pub fn set_field(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.field = std::option::Option::Some(v.into());
@@ -878,8 +933,8 @@ impl SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_EcsParameters_PlacementStrategy {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters_PlacementStrategy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -890,38 +945,40 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersElPlaceme
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElEcsParametersElPlacementStrategyEl {
+pub struct BuildSchedulerSchedule_Target_EcsParameters_PlacementStrategy {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSchedulerScheduleTargetElEcsParametersElPlacementStrategyEl {
-    pub fn build(self) -> SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl {
-        SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl {
+impl BuildSchedulerSchedule_Target_EcsParameters_PlacementStrategy {
+    pub fn build(self) -> SchedulerSchedule_Target_EcsParameters_PlacementStrategy {
+        SchedulerSchedule_Target_EcsParameters_PlacementStrategy {
             field: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct SchedulerScheduleTargetElEcsParametersElPlacementStrategyElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_EcsParameters_PlacementStrategyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElEcsParametersElPlacementStrategyElRef {
+impl terrars::Ref for SchedulerSchedule_Target_EcsParameters_PlacementStrategyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SchedulerScheduleTargetElEcsParametersElPlacementStrategyElRef {
-        SchedulerScheduleTargetElEcsParametersElPlacementStrategyElRef {
+    ) -> SchedulerSchedule_Target_EcsParameters_PlacementStrategyRef {
+        SchedulerSchedule_Target_EcsParameters_PlacementStrategyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElEcsParametersElPlacementStrategyElRef {
+impl SchedulerSchedule_Target_EcsParameters_PlacementStrategyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -938,23 +995,23 @@ impl SchedulerScheduleTargetElEcsParametersElPlacementStrategyElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SchedulerScheduleTargetElEcsParametersElDynamic {
+struct SchedulerSchedule_Target_EcsParametersDynamic {
     capacity_provider_strategy: std
     ::option
-    ::Option<terrars::DynamicBlock<SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl>>,
+    ::Option<terrars::DynamicBlock<SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy>>,
     network_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<SchedulerSchedule_Target_EcsParameters_NetworkConfiguration>>,
     placement_constraints: std
     ::option
-    ::Option<terrars::DynamicBlock<SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl>>,
+    ::Option<terrars::DynamicBlock<SchedulerSchedule_Target_EcsParameters_PlacementConstraints>>,
     placement_strategy: std
     ::option
-    ::Option<terrars::DynamicBlock<SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl>>,
+    ::Option<terrars::DynamicBlock<SchedulerSchedule_Target_EcsParameters_PlacementStrategy>>,
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElEcsParametersEl {
+pub struct SchedulerSchedule_Target_EcsParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_ecs_managed_tags: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -977,21 +1034,21 @@ pub struct SchedulerScheduleTargetElEcsParametersEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity_provider_strategy: std
     ::option
-    ::Option<std::vec::Vec<SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl>>,
+    ::Option<std::vec::Vec<SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_configuration: std
     ::option
-    ::Option<std::vec::Vec<SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl>>,
+    ::Option<std::vec::Vec<SchedulerSchedule_Target_EcsParameters_NetworkConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     placement_constraints: std
     ::option
-    ::Option<std::vec::Vec<SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl>>,
+    ::Option<std::vec::Vec<SchedulerSchedule_Target_EcsParameters_PlacementConstraints>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    placement_strategy: std::option::Option<std::vec::Vec<SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl>>,
-    dynamic: SchedulerScheduleTargetElEcsParametersElDynamic,
+    placement_strategy: std::option::Option<std::vec::Vec<SchedulerSchedule_Target_EcsParameters_PlacementStrategy>>,
+    dynamic: SchedulerSchedule_Target_EcsParametersDynamic,
 }
 
-impl SchedulerScheduleTargetElEcsParametersEl {
+impl SchedulerSchedule_Target_EcsParameters {
     #[doc = "Set the field `enable_ecs_managed_tags`.\n"]
     pub fn set_enable_ecs_managed_tags(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_ecs_managed_tags = std::option::Option::Some(v.into());
@@ -1057,9 +1114,7 @@ impl SchedulerScheduleTargetElEcsParametersEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersElCapacityProviderStrategyEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters_CapacityProviderStrategy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1080,7 +1135,7 @@ impl SchedulerScheduleTargetElEcsParametersEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersElNetworkConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters_NetworkConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1101,7 +1156,7 @@ impl SchedulerScheduleTargetElEcsParametersEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersElPlacementConstraintsEl>>,
+                    ::Into<terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters_PlacementConstraints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1122,7 +1177,7 @@ impl SchedulerScheduleTargetElEcsParametersEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersElPlacementStrategyEl>>,
+                    ::Into<terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters_PlacementStrategy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1136,8 +1191,8 @@ impl SchedulerScheduleTargetElEcsParametersEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_EcsParameters {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1148,14 +1203,14 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElEcsParametersEl {
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElEcsParametersEl {
+pub struct BuildSchedulerSchedule_Target_EcsParameters {
     #[doc = ""]
     pub task_definition_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSchedulerScheduleTargetElEcsParametersEl {
-    pub fn build(self) -> SchedulerScheduleTargetElEcsParametersEl {
-        SchedulerScheduleTargetElEcsParametersEl {
+impl BuildSchedulerSchedule_Target_EcsParameters {
+    pub fn build(self) -> SchedulerSchedule_Target_EcsParameters {
+        SchedulerSchedule_Target_EcsParameters {
             enable_ecs_managed_tags: core::default::Default::default(),
             enable_execute_command: core::default::Default::default(),
             group: core::default::Default::default(),
@@ -1175,21 +1230,23 @@ impl BuildSchedulerScheduleTargetElEcsParametersEl {
     }
 }
 
-pub struct SchedulerScheduleTargetElEcsParametersElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_EcsParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElEcsParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerScheduleTargetElEcsParametersElRef {
-        SchedulerScheduleTargetElEcsParametersElRef {
+impl terrars::Ref for SchedulerSchedule_Target_EcsParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerSchedule_Target_EcsParametersRef {
+        SchedulerSchedule_Target_EcsParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElEcsParametersElRef {
+impl SchedulerSchedule_Target_EcsParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1247,21 +1304,21 @@ impl SchedulerScheduleTargetElEcsParametersElRef {
     #[doc = "Get a reference to the value of field `network_configuration` after provisioning.\n"]
     pub fn network_configuration(
         &self,
-    ) -> terrars::ListRef<SchedulerScheduleTargetElEcsParametersElNetworkConfigurationElRef> {
+    ) -> terrars::ListRef<SchedulerSchedule_Target_EcsParameters_NetworkConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElEventbridgeParametersEl {
+pub struct SchedulerSchedule_Target_EventbridgeParameters {
     detail_type: terrars::PrimField<std::string::String>,
     source: terrars::PrimField<std::string::String>,
 }
 
-impl SchedulerScheduleTargetElEventbridgeParametersEl { }
+impl SchedulerSchedule_Target_EventbridgeParameters { }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElEventbridgeParametersEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElEventbridgeParametersEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_EventbridgeParameters {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_EventbridgeParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1272,40 +1329,42 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElEventbridgeParametersE
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElEventbridgeParametersEl {
+pub struct BuildSchedulerSchedule_Target_EventbridgeParameters {
     #[doc = ""]
     pub detail_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub source: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSchedulerScheduleTargetElEventbridgeParametersEl {
-    pub fn build(self) -> SchedulerScheduleTargetElEventbridgeParametersEl {
-        SchedulerScheduleTargetElEventbridgeParametersEl {
+impl BuildSchedulerSchedule_Target_EventbridgeParameters {
+    pub fn build(self) -> SchedulerSchedule_Target_EventbridgeParameters {
+        SchedulerSchedule_Target_EventbridgeParameters {
             detail_type: self.detail_type,
             source: self.source,
         }
     }
 }
 
-pub struct SchedulerScheduleTargetElEventbridgeParametersElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_EventbridgeParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElEventbridgeParametersElRef {
+impl terrars::Ref for SchedulerSchedule_Target_EventbridgeParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SchedulerScheduleTargetElEventbridgeParametersElRef {
-        SchedulerScheduleTargetElEventbridgeParametersElRef {
+    ) -> SchedulerSchedule_Target_EventbridgeParametersRef {
+        SchedulerSchedule_Target_EventbridgeParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElEventbridgeParametersElRef {
+impl SchedulerSchedule_Target_EventbridgeParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1322,14 +1381,14 @@ impl SchedulerScheduleTargetElEventbridgeParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElKinesisParametersEl {
+pub struct SchedulerSchedule_Target_KinesisParameters {
     partition_key: terrars::PrimField<std::string::String>,
 }
 
-impl SchedulerScheduleTargetElKinesisParametersEl { }
+impl SchedulerSchedule_Target_KinesisParameters { }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElKinesisParametersEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElKinesisParametersEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_KinesisParameters {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_KinesisParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1340,35 +1399,34 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElKinesisParametersEl {
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElKinesisParametersEl {
+pub struct BuildSchedulerSchedule_Target_KinesisParameters {
     #[doc = ""]
     pub partition_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSchedulerScheduleTargetElKinesisParametersEl {
-    pub fn build(self) -> SchedulerScheduleTargetElKinesisParametersEl {
-        SchedulerScheduleTargetElKinesisParametersEl { partition_key: self.partition_key }
+impl BuildSchedulerSchedule_Target_KinesisParameters {
+    pub fn build(self) -> SchedulerSchedule_Target_KinesisParameters {
+        SchedulerSchedule_Target_KinesisParameters { partition_key: self.partition_key }
     }
 }
 
-pub struct SchedulerScheduleTargetElKinesisParametersElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_KinesisParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElKinesisParametersElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> SchedulerScheduleTargetElKinesisParametersElRef {
-        SchedulerScheduleTargetElKinesisParametersElRef {
+impl terrars::Ref for SchedulerSchedule_Target_KinesisParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerSchedule_Target_KinesisParametersRef {
+        SchedulerSchedule_Target_KinesisParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElKinesisParametersElRef {
+impl SchedulerSchedule_Target_KinesisParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1380,14 +1438,14 @@ impl SchedulerScheduleTargetElKinesisParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElRetryPolicyEl {
+pub struct SchedulerSchedule_Target_RetryPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_event_age_in_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_retry_attempts: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SchedulerScheduleTargetElRetryPolicyEl {
+impl SchedulerSchedule_Target_RetryPolicy {
     #[doc = "Set the field `maximum_event_age_in_seconds`.\n"]
     pub fn set_maximum_event_age_in_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.maximum_event_age_in_seconds = std::option::Option::Some(v.into());
@@ -1401,8 +1459,8 @@ impl SchedulerScheduleTargetElRetryPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElRetryPolicyEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElRetryPolicyEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_RetryPolicy {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_RetryPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1413,32 +1471,34 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElRetryPolicyEl {
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElRetryPolicyEl {}
+pub struct BuildSchedulerSchedule_Target_RetryPolicy {}
 
-impl BuildSchedulerScheduleTargetElRetryPolicyEl {
-    pub fn build(self) -> SchedulerScheduleTargetElRetryPolicyEl {
-        SchedulerScheduleTargetElRetryPolicyEl {
+impl BuildSchedulerSchedule_Target_RetryPolicy {
+    pub fn build(self) -> SchedulerSchedule_Target_RetryPolicy {
+        SchedulerSchedule_Target_RetryPolicy {
             maximum_event_age_in_seconds: core::default::Default::default(),
             maximum_retry_attempts: core::default::Default::default(),
         }
     }
 }
 
-pub struct SchedulerScheduleTargetElRetryPolicyElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_RetryPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElRetryPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerScheduleTargetElRetryPolicyElRef {
-        SchedulerScheduleTargetElRetryPolicyElRef {
+impl terrars::Ref for SchedulerSchedule_Target_RetryPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerSchedule_Target_RetryPolicyRef {
+        SchedulerSchedule_Target_RetryPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElRetryPolicyElRef {
+impl SchedulerSchedule_Target_RetryPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1455,15 +1515,15 @@ impl SchedulerScheduleTargetElRetryPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl {
+pub struct SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl { }
+impl SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter { }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1474,40 +1534,42 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElSagemakerPipelineParam
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl {
+pub struct BuildSchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl {
-    pub fn build(self) -> SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl {
-        SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl {
+impl BuildSchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter {
+    pub fn build(self) -> SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter {
+        SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterElRef {
+impl terrars::Ref for SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterElRef {
-        SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterElRef {
+    ) -> SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameterRef {
+        SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterElRef {
+impl SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1524,22 +1586,22 @@ impl SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterElRe
 }
 
 #[derive(Serialize, Default)]
-struct SchedulerScheduleTargetElSagemakerPipelineParametersElDynamic {
+struct SchedulerSchedule_Target_SagemakerPipelineParametersDynamic {
     pipeline_parameter: std
     ::option
-    ::Option<terrars::DynamicBlock<SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl>>,
+    ::Option<terrars::DynamicBlock<SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter>>,
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElSagemakerPipelineParametersEl {
+pub struct SchedulerSchedule_Target_SagemakerPipelineParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pipeline_parameter: std
     ::option
-    ::Option<std::vec::Vec<SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl>>,
-    dynamic: SchedulerScheduleTargetElSagemakerPipelineParametersElDynamic,
+    ::Option<std::vec::Vec<SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter>>,
+    dynamic: SchedulerSchedule_Target_SagemakerPipelineParametersDynamic,
 }
 
-impl SchedulerScheduleTargetElSagemakerPipelineParametersEl {
+impl SchedulerSchedule_Target_SagemakerPipelineParameters {
     #[doc = "Set the field `pipeline_parameter`.\n"]
     pub fn set_pipeline_parameter(
         mut self,
@@ -1550,7 +1612,7 @@ impl SchedulerScheduleTargetElSagemakerPipelineParametersEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<SchedulerScheduleTargetElSagemakerPipelineParametersElPipelineParameterEl>,
+                        ::BlockAssignable<SchedulerSchedule_Target_SagemakerPipelineParameters_PipelineParameter>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1565,8 +1627,8 @@ impl SchedulerScheduleTargetElSagemakerPipelineParametersEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElSagemakerPipelineParametersEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElSagemakerPipelineParametersEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_SagemakerPipelineParameters {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_SagemakerPipelineParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1577,47 +1639,49 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElSagemakerPipelineParam
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElSagemakerPipelineParametersEl {}
+pub struct BuildSchedulerSchedule_Target_SagemakerPipelineParameters {}
 
-impl BuildSchedulerScheduleTargetElSagemakerPipelineParametersEl {
-    pub fn build(self) -> SchedulerScheduleTargetElSagemakerPipelineParametersEl {
-        SchedulerScheduleTargetElSagemakerPipelineParametersEl {
+impl BuildSchedulerSchedule_Target_SagemakerPipelineParameters {
+    pub fn build(self) -> SchedulerSchedule_Target_SagemakerPipelineParameters {
+        SchedulerSchedule_Target_SagemakerPipelineParameters {
             pipeline_parameter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SchedulerScheduleTargetElSagemakerPipelineParametersElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_SagemakerPipelineParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElSagemakerPipelineParametersElRef {
+impl terrars::Ref for SchedulerSchedule_Target_SagemakerPipelineParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SchedulerScheduleTargetElSagemakerPipelineParametersElRef {
-        SchedulerScheduleTargetElSagemakerPipelineParametersElRef {
+    ) -> SchedulerSchedule_Target_SagemakerPipelineParametersRef {
+        SchedulerSchedule_Target_SagemakerPipelineParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElSagemakerPipelineParametersElRef {
+impl SchedulerSchedule_Target_SagemakerPipelineParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetElSqsParametersEl {
+pub struct SchedulerSchedule_Target_SqsParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     message_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SchedulerScheduleTargetElSqsParametersEl {
+impl SchedulerSchedule_Target_SqsParameters {
     #[doc = "Set the field `message_group_id`.\n"]
     pub fn set_message_group_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.message_group_id = std::option::Option::Some(v.into());
@@ -1625,8 +1689,8 @@ impl SchedulerScheduleTargetElSqsParametersEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetElSqsParametersEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetElSqsParametersEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target_SqsParameters {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target_SqsParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1637,29 +1701,31 @@ impl terrars::ToListMappable for SchedulerScheduleTargetElSqsParametersEl {
     }
 }
 
-pub struct BuildSchedulerScheduleTargetElSqsParametersEl {}
+pub struct BuildSchedulerSchedule_Target_SqsParameters {}
 
-impl BuildSchedulerScheduleTargetElSqsParametersEl {
-    pub fn build(self) -> SchedulerScheduleTargetElSqsParametersEl {
-        SchedulerScheduleTargetElSqsParametersEl { message_group_id: core::default::Default::default() }
+impl BuildSchedulerSchedule_Target_SqsParameters {
+    pub fn build(self) -> SchedulerSchedule_Target_SqsParameters {
+        SchedulerSchedule_Target_SqsParameters { message_group_id: core::default::Default::default() }
     }
 }
 
-pub struct SchedulerScheduleTargetElSqsParametersElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_Target_SqsParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElSqsParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerScheduleTargetElSqsParametersElRef {
-        SchedulerScheduleTargetElSqsParametersElRef {
+impl terrars::Ref for SchedulerSchedule_Target_SqsParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerSchedule_Target_SqsParametersRef {
+        SchedulerSchedule_Target_SqsParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElSqsParametersElRef {
+impl SchedulerSchedule_Target_SqsParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1671,46 +1737,46 @@ impl SchedulerScheduleTargetElSqsParametersElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SchedulerScheduleTargetElDynamic {
-    dead_letter_config: std::option::Option<terrars::DynamicBlock<SchedulerScheduleTargetElDeadLetterConfigEl>>,
-    ecs_parameters: std::option::Option<terrars::DynamicBlock<SchedulerScheduleTargetElEcsParametersEl>>,
+struct SchedulerSchedule_TargetDynamic {
+    dead_letter_config: std::option::Option<terrars::DynamicBlock<SchedulerSchedule_Target_DeadLetterConfig>>,
+    ecs_parameters: std::option::Option<terrars::DynamicBlock<SchedulerSchedule_Target_EcsParameters>>,
     eventbridge_parameters: std
     ::option
-    ::Option<terrars::DynamicBlock<SchedulerScheduleTargetElEventbridgeParametersEl>>,
-    kinesis_parameters: std::option::Option<terrars::DynamicBlock<SchedulerScheduleTargetElKinesisParametersEl>>,
-    retry_policy: std::option::Option<terrars::DynamicBlock<SchedulerScheduleTargetElRetryPolicyEl>>,
+    ::Option<terrars::DynamicBlock<SchedulerSchedule_Target_EventbridgeParameters>>,
+    kinesis_parameters: std::option::Option<terrars::DynamicBlock<SchedulerSchedule_Target_KinesisParameters>>,
+    retry_policy: std::option::Option<terrars::DynamicBlock<SchedulerSchedule_Target_RetryPolicy>>,
     sagemaker_pipeline_parameters: std
     ::option
-    ::Option<terrars::DynamicBlock<SchedulerScheduleTargetElSagemakerPipelineParametersEl>>,
-    sqs_parameters: std::option::Option<terrars::DynamicBlock<SchedulerScheduleTargetElSqsParametersEl>>,
+    ::Option<terrars::DynamicBlock<SchedulerSchedule_Target_SagemakerPipelineParameters>>,
+    sqs_parameters: std::option::Option<terrars::DynamicBlock<SchedulerSchedule_Target_SqsParameters>>,
 }
 
 #[derive(Serialize)]
-pub struct SchedulerScheduleTargetEl {
+pub struct SchedulerSchedule_Target {
     arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     input: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    dead_letter_config: std::option::Option<std::vec::Vec<SchedulerScheduleTargetElDeadLetterConfigEl>>,
+    dead_letter_config: std::option::Option<std::vec::Vec<SchedulerSchedule_Target_DeadLetterConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ecs_parameters: std::option::Option<std::vec::Vec<SchedulerScheduleTargetElEcsParametersEl>>,
+    ecs_parameters: std::option::Option<std::vec::Vec<SchedulerSchedule_Target_EcsParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    eventbridge_parameters: std::option::Option<std::vec::Vec<SchedulerScheduleTargetElEventbridgeParametersEl>>,
+    eventbridge_parameters: std::option::Option<std::vec::Vec<SchedulerSchedule_Target_EventbridgeParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kinesis_parameters: std::option::Option<std::vec::Vec<SchedulerScheduleTargetElKinesisParametersEl>>,
+    kinesis_parameters: std::option::Option<std::vec::Vec<SchedulerSchedule_Target_KinesisParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    retry_policy: std::option::Option<std::vec::Vec<SchedulerScheduleTargetElRetryPolicyEl>>,
+    retry_policy: std::option::Option<std::vec::Vec<SchedulerSchedule_Target_RetryPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sagemaker_pipeline_parameters: std
     ::option
-    ::Option<std::vec::Vec<SchedulerScheduleTargetElSagemakerPipelineParametersEl>>,
+    ::Option<std::vec::Vec<SchedulerSchedule_Target_SagemakerPipelineParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sqs_parameters: std::option::Option<std::vec::Vec<SchedulerScheduleTargetElSqsParametersEl>>,
-    dynamic: SchedulerScheduleTargetElDynamic,
+    sqs_parameters: std::option::Option<std::vec::Vec<SchedulerSchedule_Target_SqsParameters>>,
+    dynamic: SchedulerSchedule_TargetDynamic,
 }
 
-impl SchedulerScheduleTargetEl {
+impl SchedulerSchedule_Target {
     #[doc = "Set the field `input`.\n"]
     pub fn set_input(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.input = std::option::Option::Some(v.into());
@@ -1720,7 +1786,7 @@ impl SchedulerScheduleTargetEl {
     #[doc = "Set the field `dead_letter_config`.\n"]
     pub fn set_dead_letter_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerScheduleTargetElDeadLetterConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerSchedule_Target_DeadLetterConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1736,7 +1802,7 @@ impl SchedulerScheduleTargetEl {
     #[doc = "Set the field `ecs_parameters`.\n"]
     pub fn set_ecs_parameters(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerScheduleTargetElEcsParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerSchedule_Target_EcsParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1752,7 +1818,7 @@ impl SchedulerScheduleTargetEl {
     #[doc = "Set the field `eventbridge_parameters`.\n"]
     pub fn set_eventbridge_parameters(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerScheduleTargetElEventbridgeParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerSchedule_Target_EventbridgeParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1768,7 +1834,7 @@ impl SchedulerScheduleTargetEl {
     #[doc = "Set the field `kinesis_parameters`.\n"]
     pub fn set_kinesis_parameters(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerScheduleTargetElKinesisParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerSchedule_Target_KinesisParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1784,7 +1850,7 @@ impl SchedulerScheduleTargetEl {
     #[doc = "Set the field `retry_policy`.\n"]
     pub fn set_retry_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerScheduleTargetElRetryPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerSchedule_Target_RetryPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1800,7 +1866,7 @@ impl SchedulerScheduleTargetEl {
     #[doc = "Set the field `sagemaker_pipeline_parameters`.\n"]
     pub fn set_sagemaker_pipeline_parameters(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerScheduleTargetElSagemakerPipelineParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerSchedule_Target_SagemakerPipelineParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1816,7 +1882,7 @@ impl SchedulerScheduleTargetEl {
     #[doc = "Set the field `sqs_parameters`.\n"]
     pub fn set_sqs_parameters(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerScheduleTargetElSqsParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SchedulerSchedule_Target_SqsParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1830,8 +1896,8 @@ impl SchedulerScheduleTargetEl {
     }
 }
 
-impl terrars::ToListMappable for SchedulerScheduleTargetEl {
-    type O = terrars::BlockAssignable<SchedulerScheduleTargetEl>;
+impl terrars::ToListMappable for SchedulerSchedule_Target {
+    type O = terrars::BlockAssignable<SchedulerSchedule_Target>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1842,16 +1908,16 @@ impl terrars::ToListMappable for SchedulerScheduleTargetEl {
     }
 }
 
-pub struct BuildSchedulerScheduleTargetEl {
+pub struct BuildSchedulerSchedule_Target {
     #[doc = ""]
     pub arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSchedulerScheduleTargetEl {
-    pub fn build(self) -> SchedulerScheduleTargetEl {
-        SchedulerScheduleTargetEl {
+impl BuildSchedulerSchedule_Target {
+    pub fn build(self) -> SchedulerSchedule_Target {
+        SchedulerSchedule_Target {
             arn: self.arn,
             input: core::default::Default::default(),
             role_arn: self.role_arn,
@@ -1867,21 +1933,23 @@ impl BuildSchedulerScheduleTargetEl {
     }
 }
 
-pub struct SchedulerScheduleTargetElRef {
+#[allow(dead_code)]
+pub struct SchedulerSchedule_TargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SchedulerScheduleTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerScheduleTargetElRef {
-        SchedulerScheduleTargetElRef {
+impl terrars::Ref for SchedulerSchedule_TargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SchedulerSchedule_TargetRef {
+        SchedulerSchedule_TargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SchedulerScheduleTargetElRef {
+impl SchedulerSchedule_TargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1902,45 +1970,39 @@ impl SchedulerScheduleTargetElRef {
     }
 
     #[doc = "Get a reference to the value of field `dead_letter_config` after provisioning.\n"]
-    pub fn dead_letter_config(&self) -> terrars::ListRef<SchedulerScheduleTargetElDeadLetterConfigElRef> {
+    pub fn dead_letter_config(&self) -> terrars::ListRef<SchedulerSchedule_Target_DeadLetterConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dead_letter_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ecs_parameters` after provisioning.\n"]
-    pub fn ecs_parameters(&self) -> terrars::ListRef<SchedulerScheduleTargetElEcsParametersElRef> {
+    pub fn ecs_parameters(&self) -> terrars::ListRef<SchedulerSchedule_Target_EcsParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ecs_parameters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `eventbridge_parameters` after provisioning.\n"]
-    pub fn eventbridge_parameters(&self) -> terrars::ListRef<SchedulerScheduleTargetElEventbridgeParametersElRef> {
+    pub fn eventbridge_parameters(&self) -> terrars::ListRef<SchedulerSchedule_Target_EventbridgeParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.eventbridge_parameters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `kinesis_parameters` after provisioning.\n"]
-    pub fn kinesis_parameters(&self) -> terrars::ListRef<SchedulerScheduleTargetElKinesisParametersElRef> {
+    pub fn kinesis_parameters(&self) -> terrars::ListRef<SchedulerSchedule_Target_KinesisParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kinesis_parameters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `retry_policy` after provisioning.\n"]
-    pub fn retry_policy(&self) -> terrars::ListRef<SchedulerScheduleTargetElRetryPolicyElRef> {
+    pub fn retry_policy(&self) -> terrars::ListRef<SchedulerSchedule_Target_RetryPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.retry_policy", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sagemaker_pipeline_parameters` after provisioning.\n"]
     pub fn sagemaker_pipeline_parameters(
         &self,
-    ) -> terrars::ListRef<SchedulerScheduleTargetElSagemakerPipelineParametersElRef> {
+    ) -> terrars::ListRef<SchedulerSchedule_Target_SagemakerPipelineParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sagemaker_pipeline_parameters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `sqs_parameters` after provisioning.\n"]
-    pub fn sqs_parameters(&self) -> terrars::ListRef<SchedulerScheduleTargetElSqsParametersElRef> {
+    pub fn sqs_parameters(&self) -> terrars::ListRef<SchedulerSchedule_Target_SqsParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sqs_parameters", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SchedulerScheduleDynamic {
-    flexible_time_window: std::option::Option<terrars::DynamicBlock<SchedulerScheduleFlexibleTimeWindowEl>>,
-    target: std::option::Option<terrars::DynamicBlock<SchedulerScheduleTargetEl>>,
 }

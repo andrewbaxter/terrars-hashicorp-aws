@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppstreamDirectoryConfigData {
+struct AppstreamDirectoryConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,14 +25,20 @@ struct AppstreamDirectoryConfigData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     organizational_unit_distinguished_names: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    service_account_credentials: std::option::Option<std::vec::Vec<AppstreamDirectoryConfigServiceAccountCredentialsEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    certificate_based_auth_properties: std
+    ::option
+    ::Option<std::vec::Vec<AppstreamDirectoryConfig_CertificateBasedAuthProperties>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_account_credentials: std::option::Option<std::vec::Vec<AppstreamDirectoryConfig_ServiceAccountCredentials>>,
     dynamic: AppstreamDirectoryConfigDynamic,
 }
 
 struct AppstreamDirectoryConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppstreamDirectoryConfigData>,
+    data: std::cell::RefCell<AppstreamDirectoryConfigData_>,
 }
 
 #[derive(Clone)]
@@ -136,10 +144,38 @@ impl AppstreamDirectoryConfig {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `certificate_based_auth_properties`.\n"]
+    pub fn set_certificate_based_auth_properties(
+        self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<AppstreamDirectoryConfig_CertificateBasedAuthProperties>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().certificate_based_auth_properties = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.certificate_based_auth_properties = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `service_account_credentials`.\n"]
     pub fn set_service_account_credentials(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamDirectoryConfigServiceAccountCredentialsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamDirectoryConfig_ServiceAccountCredentials>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -175,10 +211,24 @@ impl AppstreamDirectoryConfig {
         )
     }
 
-    #[doc = "Get a reference to the value of field `service_account_credentials` after provisioning.\n"]
-    pub fn service_account_credentials(
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_based_auth_properties` after provisioning.\n"]
+    pub fn certificate_based_auth_properties(
         &self,
-    ) -> terrars::ListRef<AppstreamDirectoryConfigServiceAccountCredentialsElRef> {
+    ) -> terrars::ListRef<AppstreamDirectoryConfig_CertificateBasedAuthPropertiesRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.certificate_based_auth_properties", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `service_account_credentials` after provisioning.\n"]
+    pub fn service_account_credentials(&self) -> terrars::ListRef<AppstreamDirectoryConfig_ServiceAccountCredentialsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_account_credentials", self.extract_ref()))
     }
 }
@@ -227,7 +277,7 @@ impl BuildAppstreamDirectoryConfig {
         let out = AppstreamDirectoryConfig(std::rc::Rc::new(AppstreamDirectoryConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppstreamDirectoryConfigData {
+            data: std::cell::RefCell::new(AppstreamDirectoryConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -236,6 +286,8 @@ impl BuildAppstreamDirectoryConfig {
                 directory_name: self.directory_name,
                 id: core::default::Default::default(),
                 organizational_unit_distinguished_names: self.organizational_unit_distinguished_names,
+                region: core::default::Default::default(),
+                certificate_based_auth_properties: core::default::Default::default(),
                 service_account_credentials: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -291,24 +343,65 @@ impl AppstreamDirectoryConfigRef {
         )
     }
 
-    #[doc = "Get a reference to the value of field `service_account_credentials` after provisioning.\n"]
-    pub fn service_account_credentials(
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_based_auth_properties` after provisioning.\n"]
+    pub fn certificate_based_auth_properties(
         &self,
-    ) -> terrars::ListRef<AppstreamDirectoryConfigServiceAccountCredentialsElRef> {
+    ) -> terrars::ListRef<AppstreamDirectoryConfig_CertificateBasedAuthPropertiesRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.certificate_based_auth_properties", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `service_account_credentials` after provisioning.\n"]
+    pub fn service_account_credentials(&self) -> terrars::ListRef<AppstreamDirectoryConfig_ServiceAccountCredentialsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.service_account_credentials", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct AppstreamDirectoryConfigServiceAccountCredentialsEl {
-    account_name: terrars::PrimField<std::string::String>,
-    account_password: terrars::PrimField<std::string::String>,
+#[derive(Serialize, Default)]
+struct AppstreamDirectoryConfigDynamic {
+    certificate_based_auth_properties: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppstreamDirectoryConfig_CertificateBasedAuthProperties>>,
+    service_account_credentials: std
+    ::option
+    ::Option<terrars::DynamicBlock<AppstreamDirectoryConfig_ServiceAccountCredentials>>,
 }
 
-impl AppstreamDirectoryConfigServiceAccountCredentialsEl { }
+#[derive(Serialize)]
+pub struct AppstreamDirectoryConfig_CertificateBasedAuthProperties {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    certificate_authority_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for AppstreamDirectoryConfigServiceAccountCredentialsEl {
-    type O = terrars::BlockAssignable<AppstreamDirectoryConfigServiceAccountCredentialsEl>;
+impl AppstreamDirectoryConfig_CertificateBasedAuthProperties {
+    #[doc = "Set the field `certificate_authority_arn`.\n"]
+    pub fn set_certificate_authority_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.certificate_authority_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppstreamDirectoryConfig_CertificateBasedAuthProperties {
+    type O = terrars::BlockAssignable<AppstreamDirectoryConfig_CertificateBasedAuthProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -319,40 +412,108 @@ impl terrars::ToListMappable for AppstreamDirectoryConfigServiceAccountCredentia
     }
 }
 
-pub struct BuildAppstreamDirectoryConfigServiceAccountCredentialsEl {
-    #[doc = ""]
-    pub account_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub account_password: terrars::PrimField<std::string::String>,
-}
+pub struct BuildAppstreamDirectoryConfig_CertificateBasedAuthProperties {}
 
-impl BuildAppstreamDirectoryConfigServiceAccountCredentialsEl {
-    pub fn build(self) -> AppstreamDirectoryConfigServiceAccountCredentialsEl {
-        AppstreamDirectoryConfigServiceAccountCredentialsEl {
-            account_name: self.account_name,
-            account_password: self.account_password,
+impl BuildAppstreamDirectoryConfig_CertificateBasedAuthProperties {
+    pub fn build(self) -> AppstreamDirectoryConfig_CertificateBasedAuthProperties {
+        AppstreamDirectoryConfig_CertificateBasedAuthProperties {
+            certificate_authority_arn: core::default::Default::default(),
+            status: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppstreamDirectoryConfigServiceAccountCredentialsElRef {
+#[allow(dead_code)]
+pub struct AppstreamDirectoryConfig_CertificateBasedAuthPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamDirectoryConfigServiceAccountCredentialsElRef {
+impl terrars::Ref for AppstreamDirectoryConfig_CertificateBasedAuthPropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AppstreamDirectoryConfigServiceAccountCredentialsElRef {
-        AppstreamDirectoryConfigServiceAccountCredentialsElRef {
+    ) -> AppstreamDirectoryConfig_CertificateBasedAuthPropertiesRef {
+        AppstreamDirectoryConfig_CertificateBasedAuthPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamDirectoryConfigServiceAccountCredentialsElRef {
+impl AppstreamDirectoryConfig_CertificateBasedAuthPropertiesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_authority_arn` after provisioning.\n"]
+    pub fn certificate_authority_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_authority_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AppstreamDirectoryConfig_ServiceAccountCredentials {
+    account_name: terrars::PrimField<std::string::String>,
+    account_password: terrars::PrimField<std::string::String>,
+}
+
+impl AppstreamDirectoryConfig_ServiceAccountCredentials { }
+
+impl terrars::ToListMappable for AppstreamDirectoryConfig_ServiceAccountCredentials {
+    type O = terrars::BlockAssignable<AppstreamDirectoryConfig_ServiceAccountCredentials>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppstreamDirectoryConfig_ServiceAccountCredentials {
+    #[doc = ""]
+    pub account_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub account_password: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAppstreamDirectoryConfig_ServiceAccountCredentials {
+    pub fn build(self) -> AppstreamDirectoryConfig_ServiceAccountCredentials {
+        AppstreamDirectoryConfig_ServiceAccountCredentials {
+            account_name: self.account_name,
+            account_password: self.account_password,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppstreamDirectoryConfig_ServiceAccountCredentialsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppstreamDirectoryConfig_ServiceAccountCredentialsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AppstreamDirectoryConfig_ServiceAccountCredentialsRef {
+        AppstreamDirectoryConfig_ServiceAccountCredentialsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppstreamDirectoryConfig_ServiceAccountCredentialsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -366,11 +527,4 @@ impl AppstreamDirectoryConfigServiceAccountCredentialsElRef {
     pub fn account_password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_password", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppstreamDirectoryConfigDynamic {
-    service_account_credentials: std
-    ::option
-    ::Option<terrars::DynamicBlock<AppstreamDirectoryConfigServiceAccountCredentialsEl>>,
 }

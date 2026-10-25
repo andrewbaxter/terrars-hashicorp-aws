@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbProxyDefaultTargetGroupData {
+struct DbProxyDefaultTargetGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,16 +24,18 @@ struct DbProxyDefaultTargetGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    connection_pool_config: std::option::Option<std::vec::Vec<DbProxyDefaultTargetGroupConnectionPoolConfigEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DbProxyDefaultTargetGroupTimeoutsEl>,
+    connection_pool_config: std::option::Option<std::vec::Vec<DbProxyDefaultTargetGroup_ConnectionPoolConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DbProxyDefaultTargetGroup_Timeouts>,
     dynamic: DbProxyDefaultTargetGroupDynamic,
 }
 
 struct DbProxyDefaultTargetGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbProxyDefaultTargetGroupData>,
+    data: std::cell::RefCell<DbProxyDefaultTargetGroupData_>,
 }
 
 #[derive(Clone)]
@@ -137,10 +141,17 @@ impl DbProxyDefaultTargetGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `connection_pool_config`.\n"]
     pub fn set_connection_pool_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DbProxyDefaultTargetGroupConnectionPoolConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DbProxyDefaultTargetGroup_ConnectionPoolConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -154,7 +165,7 @@ impl DbProxyDefaultTargetGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DbProxyDefaultTargetGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DbProxyDefaultTargetGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -179,17 +190,20 @@ impl DbProxyDefaultTargetGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `connection_pool_config` after provisioning.\n"]
-    pub fn connection_pool_config(&self) -> terrars::ListRef<DbProxyDefaultTargetGroupConnectionPoolConfigElRef> {
+    pub fn connection_pool_config(&self) -> terrars::ListRef<DbProxyDefaultTargetGroup_ConnectionPoolConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connection_pool_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbProxyDefaultTargetGroupTimeoutsElRef {
-        DbProxyDefaultTargetGroupTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> DbProxyDefaultTargetGroup_TimeoutsRef {
+        DbProxyDefaultTargetGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -235,7 +249,7 @@ impl BuildDbProxyDefaultTargetGroup {
         let out = DbProxyDefaultTargetGroup(std::rc::Rc::new(DbProxyDefaultTargetGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbProxyDefaultTargetGroupData {
+            data: std::cell::RefCell::new(DbProxyDefaultTargetGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -243,6 +257,7 @@ impl BuildDbProxyDefaultTargetGroup {
                 provisioner: core::default::Default::default(),
                 db_proxy_name: self.db_proxy_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 connection_pool_config: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -296,22 +311,32 @@ impl DbProxyDefaultTargetGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `connection_pool_config` after provisioning.\n"]
-    pub fn connection_pool_config(&self) -> terrars::ListRef<DbProxyDefaultTargetGroupConnectionPoolConfigElRef> {
+    pub fn connection_pool_config(&self) -> terrars::ListRef<DbProxyDefaultTargetGroup_ConnectionPoolConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connection_pool_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbProxyDefaultTargetGroupTimeoutsElRef {
-        DbProxyDefaultTargetGroupTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> DbProxyDefaultTargetGroup_TimeoutsRef {
+        DbProxyDefaultTargetGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DbProxyDefaultTargetGroupDynamic {
+    connection_pool_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<DbProxyDefaultTargetGroup_ConnectionPoolConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct DbProxyDefaultTargetGroupConnectionPoolConfigEl {
+pub struct DbProxyDefaultTargetGroup_ConnectionPoolConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connection_borrow_timeout: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -324,7 +349,7 @@ pub struct DbProxyDefaultTargetGroupConnectionPoolConfigEl {
     session_pinning_filters: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DbProxyDefaultTargetGroupConnectionPoolConfigEl {
+impl DbProxyDefaultTargetGroup_ConnectionPoolConfig {
     #[doc = "Set the field `connection_borrow_timeout`.\n"]
     pub fn set_connection_borrow_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.connection_borrow_timeout = std::option::Option::Some(v.into());
@@ -359,8 +384,8 @@ impl DbProxyDefaultTargetGroupConnectionPoolConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DbProxyDefaultTargetGroupConnectionPoolConfigEl {
-    type O = terrars::BlockAssignable<DbProxyDefaultTargetGroupConnectionPoolConfigEl>;
+impl terrars::ToListMappable for DbProxyDefaultTargetGroup_ConnectionPoolConfig {
+    type O = terrars::BlockAssignable<DbProxyDefaultTargetGroup_ConnectionPoolConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -371,11 +396,11 @@ impl terrars::ToListMappable for DbProxyDefaultTargetGroupConnectionPoolConfigEl
     }
 }
 
-pub struct BuildDbProxyDefaultTargetGroupConnectionPoolConfigEl {}
+pub struct BuildDbProxyDefaultTargetGroup_ConnectionPoolConfig {}
 
-impl BuildDbProxyDefaultTargetGroupConnectionPoolConfigEl {
-    pub fn build(self) -> DbProxyDefaultTargetGroupConnectionPoolConfigEl {
-        DbProxyDefaultTargetGroupConnectionPoolConfigEl {
+impl BuildDbProxyDefaultTargetGroup_ConnectionPoolConfig {
+    pub fn build(self) -> DbProxyDefaultTargetGroup_ConnectionPoolConfig {
+        DbProxyDefaultTargetGroup_ConnectionPoolConfig {
             connection_borrow_timeout: core::default::Default::default(),
             init_query: core::default::Default::default(),
             max_connections_percent: core::default::Default::default(),
@@ -385,24 +410,26 @@ impl BuildDbProxyDefaultTargetGroupConnectionPoolConfigEl {
     }
 }
 
-pub struct DbProxyDefaultTargetGroupConnectionPoolConfigElRef {
+#[allow(dead_code)]
+pub struct DbProxyDefaultTargetGroup_ConnectionPoolConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbProxyDefaultTargetGroupConnectionPoolConfigElRef {
+impl terrars::Ref for DbProxyDefaultTargetGroup_ConnectionPoolConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DbProxyDefaultTargetGroupConnectionPoolConfigElRef {
-        DbProxyDefaultTargetGroupConnectionPoolConfigElRef {
+    ) -> DbProxyDefaultTargetGroup_ConnectionPoolConfigRef {
+        DbProxyDefaultTargetGroup_ConnectionPoolConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbProxyDefaultTargetGroupConnectionPoolConfigElRef {
+impl DbProxyDefaultTargetGroup_ConnectionPoolConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -434,14 +461,14 @@ impl DbProxyDefaultTargetGroupConnectionPoolConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DbProxyDefaultTargetGroupTimeoutsEl {
+pub struct DbProxyDefaultTargetGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DbProxyDefaultTargetGroupTimeoutsEl {
+impl DbProxyDefaultTargetGroup_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -455,8 +482,8 @@ impl DbProxyDefaultTargetGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DbProxyDefaultTargetGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<DbProxyDefaultTargetGroupTimeoutsEl>;
+impl terrars::ToListMappable for DbProxyDefaultTargetGroup_Timeouts {
+    type O = terrars::BlockAssignable<DbProxyDefaultTargetGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -467,32 +494,34 @@ impl terrars::ToListMappable for DbProxyDefaultTargetGroupTimeoutsEl {
     }
 }
 
-pub struct BuildDbProxyDefaultTargetGroupTimeoutsEl {}
+pub struct BuildDbProxyDefaultTargetGroup_Timeouts {}
 
-impl BuildDbProxyDefaultTargetGroupTimeoutsEl {
-    pub fn build(self) -> DbProxyDefaultTargetGroupTimeoutsEl {
-        DbProxyDefaultTargetGroupTimeoutsEl {
+impl BuildDbProxyDefaultTargetGroup_Timeouts {
+    pub fn build(self) -> DbProxyDefaultTargetGroup_Timeouts {
+        DbProxyDefaultTargetGroup_Timeouts {
             create: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct DbProxyDefaultTargetGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DbProxyDefaultTargetGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbProxyDefaultTargetGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbProxyDefaultTargetGroupTimeoutsElRef {
-        DbProxyDefaultTargetGroupTimeoutsElRef {
+impl terrars::Ref for DbProxyDefaultTargetGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbProxyDefaultTargetGroup_TimeoutsRef {
+        DbProxyDefaultTargetGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbProxyDefaultTargetGroupTimeoutsElRef {
+impl DbProxyDefaultTargetGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -506,11 +535,4 @@ impl DbProxyDefaultTargetGroupTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DbProxyDefaultTargetGroupDynamic {
-    connection_pool_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<DbProxyDefaultTargetGroupConnectionPoolConfigEl>>,
 }

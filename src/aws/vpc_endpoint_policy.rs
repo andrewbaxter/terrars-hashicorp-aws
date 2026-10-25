@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct VpcEndpointPolicyData {
+struct VpcEndpointPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,15 +24,17 @@ struct VpcEndpointPolicyData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     vpc_endpoint_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VpcEndpointPolicyTimeoutsEl>,
+    timeouts: std::option::Option<VpcEndpointPolicy_Timeouts>,
 }
 
 struct VpcEndpointPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpcEndpointPolicyData>,
+    data: std::cell::RefCell<VpcEndpointPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -142,8 +146,15 @@ impl VpcEndpointPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VpcEndpointPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VpcEndpointPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -158,14 +169,20 @@ impl VpcEndpointPolicy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
     pub fn vpc_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcEndpointPolicyTimeoutsElRef {
-        VpcEndpointPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VpcEndpointPolicy_TimeoutsRef {
+        VpcEndpointPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -211,7 +228,7 @@ impl BuildVpcEndpointPolicy {
         let out = VpcEndpointPolicy(std::rc::Rc::new(VpcEndpointPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpcEndpointPolicyData {
+            data: std::cell::RefCell::new(VpcEndpointPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -219,6 +236,7 @@ impl BuildVpcEndpointPolicy {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 policy: core::default::Default::default(),
+                region: core::default::Default::default(),
                 vpc_endpoint_id: self.vpc_endpoint_id,
                 timeouts: core::default::Default::default(),
             }),
@@ -261,26 +279,32 @@ impl VpcEndpointPolicyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_endpoint_id` after provisioning.\n"]
     pub fn vpc_endpoint_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_endpoint_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcEndpointPolicyTimeoutsElRef {
-        VpcEndpointPolicyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VpcEndpointPolicy_TimeoutsRef {
+        VpcEndpointPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct VpcEndpointPolicyTimeoutsEl {
+pub struct VpcEndpointPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpcEndpointPolicyTimeoutsEl {
+impl VpcEndpointPolicy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -294,8 +318,8 @@ impl VpcEndpointPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VpcEndpointPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<VpcEndpointPolicyTimeoutsEl>;
+impl terrars::ToListMappable for VpcEndpointPolicy_Timeouts {
+    type O = terrars::BlockAssignable<VpcEndpointPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -306,32 +330,34 @@ impl terrars::ToListMappable for VpcEndpointPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildVpcEndpointPolicyTimeoutsEl {}
+pub struct BuildVpcEndpointPolicy_Timeouts {}
 
-impl BuildVpcEndpointPolicyTimeoutsEl {
-    pub fn build(self) -> VpcEndpointPolicyTimeoutsEl {
-        VpcEndpointPolicyTimeoutsEl {
+impl BuildVpcEndpointPolicy_Timeouts {
+    pub fn build(self) -> VpcEndpointPolicy_Timeouts {
+        VpcEndpointPolicy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct VpcEndpointPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VpcEndpointPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpcEndpointPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcEndpointPolicyTimeoutsElRef {
-        VpcEndpointPolicyTimeoutsElRef {
+impl terrars::Ref for VpcEndpointPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcEndpointPolicy_TimeoutsRef {
+        VpcEndpointPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpcEndpointPolicyTimeoutsElRef {
+impl VpcEndpointPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DaxClusterData {
+struct DaxClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,6 +37,8 @@ struct DaxClusterData {
     notification_topic_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameter_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     replication_factor: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -45,16 +49,16 @@ struct DaxClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    server_side_encryption: std::option::Option<std::vec::Vec<DaxClusterServerSideEncryptionEl>>,
+    server_side_encryption: std::option::Option<std::vec::Vec<DaxCluster_ServerSideEncryption>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DaxClusterTimeoutsEl>,
+    timeouts: std::option::Option<DaxCluster_Timeouts>,
     dynamic: DaxClusterDynamic,
 }
 
 struct DaxCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DaxClusterData>,
+    data: std::cell::RefCell<DaxClusterData_>,
 }
 
 #[derive(Clone)]
@@ -205,6 +209,13 @@ impl DaxCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         self,
@@ -241,7 +252,7 @@ impl DaxCluster {
     #[doc = "Set the field `server_side_encryption`.\n"]
     pub fn set_server_side_encryption(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DaxClusterServerSideEncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DaxCluster_ServerSideEncryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -255,7 +266,7 @@ impl DaxCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DaxClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DaxCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -319,7 +330,7 @@ impl DaxCluster {
     }
 
     #[doc = "Get a reference to the value of field `nodes` after provisioning.\n"]
-    pub fn nodes(&self) -> terrars::ListRef<DaxClusterNodesElRef> {
+    pub fn nodes(&self) -> terrars::ListRef<DaxCluster_NodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nodes", self.extract_ref()))
     }
 
@@ -336,6 +347,12 @@ impl DaxCluster {
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
     pub fn port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_factor` after provisioning.\n"]
@@ -364,13 +381,13 @@ impl DaxCluster {
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]
-    pub fn server_side_encryption(&self) -> terrars::ListRef<DaxClusterServerSideEncryptionElRef> {
+    pub fn server_side_encryption(&self) -> terrars::ListRef<DaxCluster_ServerSideEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_side_encryption", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DaxClusterTimeoutsElRef {
-        DaxClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DaxCluster_TimeoutsRef {
+        DaxCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -422,7 +439,7 @@ impl BuildDaxCluster {
         let out = DaxCluster(std::rc::Rc::new(DaxCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DaxClusterData {
+            data: std::cell::RefCell::new(DaxClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -438,6 +455,7 @@ impl BuildDaxCluster {
                 node_type: self.node_type,
                 notification_topic_arn: core::default::Default::default(),
                 parameter_group_name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 replication_factor: self.replication_factor,
                 security_group_ids: core::default::Default::default(),
                 subnet_group_name: core::default::Default::default(),
@@ -535,7 +553,7 @@ impl DaxClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `nodes` after provisioning.\n"]
-    pub fn nodes(&self) -> terrars::ListRef<DaxClusterNodesElRef> {
+    pub fn nodes(&self) -> terrars::ListRef<DaxCluster_NodesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nodes", self.extract_ref()))
     }
 
@@ -552,6 +570,12 @@ impl DaxClusterRef {
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
     pub fn port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_factor` after provisioning.\n"]
@@ -580,18 +604,23 @@ impl DaxClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]
-    pub fn server_side_encryption(&self) -> terrars::ListRef<DaxClusterServerSideEncryptionElRef> {
+    pub fn server_side_encryption(&self) -> terrars::ListRef<DaxCluster_ServerSideEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.server_side_encryption", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DaxClusterTimeoutsElRef {
-        DaxClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DaxCluster_TimeoutsRef {
+        DaxCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DaxClusterDynamic {
+    server_side_encryption: std::option::Option<terrars::DynamicBlock<DaxCluster_ServerSideEncryption>>,
+}
+
 #[derive(Serialize)]
-pub struct DaxClusterNodesEl {
+pub struct DaxCluster_Nodes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -602,7 +631,7 @@ pub struct DaxClusterNodesEl {
     port: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DaxClusterNodesEl {
+impl DaxCluster_Nodes {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -628,8 +657,8 @@ impl DaxClusterNodesEl {
     }
 }
 
-impl terrars::ToListMappable for DaxClusterNodesEl {
-    type O = terrars::BlockAssignable<DaxClusterNodesEl>;
+impl terrars::ToListMappable for DaxCluster_Nodes {
+    type O = terrars::BlockAssignable<DaxCluster_Nodes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -640,11 +669,11 @@ impl terrars::ToListMappable for DaxClusterNodesEl {
     }
 }
 
-pub struct BuildDaxClusterNodesEl {}
+pub struct BuildDaxCluster_Nodes {}
 
-impl BuildDaxClusterNodesEl {
-    pub fn build(self) -> DaxClusterNodesEl {
-        DaxClusterNodesEl {
+impl BuildDaxCluster_Nodes {
+    pub fn build(self) -> DaxCluster_Nodes {
+        DaxCluster_Nodes {
             address: core::default::Default::default(),
             availability_zone: core::default::Default::default(),
             id: core::default::Default::default(),
@@ -653,21 +682,23 @@ impl BuildDaxClusterNodesEl {
     }
 }
 
-pub struct DaxClusterNodesElRef {
+#[allow(dead_code)]
+pub struct DaxCluster_NodesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DaxClusterNodesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DaxClusterNodesElRef {
-        DaxClusterNodesElRef {
+impl terrars::Ref for DaxCluster_NodesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DaxCluster_NodesRef {
+        DaxCluster_NodesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DaxClusterNodesElRef {
+impl DaxCluster_NodesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -694,12 +725,12 @@ impl DaxClusterNodesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DaxClusterServerSideEncryptionEl {
+pub struct DaxCluster_ServerSideEncryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DaxClusterServerSideEncryptionEl {
+impl DaxCluster_ServerSideEncryption {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -707,8 +738,8 @@ impl DaxClusterServerSideEncryptionEl {
     }
 }
 
-impl terrars::ToListMappable for DaxClusterServerSideEncryptionEl {
-    type O = terrars::BlockAssignable<DaxClusterServerSideEncryptionEl>;
+impl terrars::ToListMappable for DaxCluster_ServerSideEncryption {
+    type O = terrars::BlockAssignable<DaxCluster_ServerSideEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -719,29 +750,31 @@ impl terrars::ToListMappable for DaxClusterServerSideEncryptionEl {
     }
 }
 
-pub struct BuildDaxClusterServerSideEncryptionEl {}
+pub struct BuildDaxCluster_ServerSideEncryption {}
 
-impl BuildDaxClusterServerSideEncryptionEl {
-    pub fn build(self) -> DaxClusterServerSideEncryptionEl {
-        DaxClusterServerSideEncryptionEl { enabled: core::default::Default::default() }
+impl BuildDaxCluster_ServerSideEncryption {
+    pub fn build(self) -> DaxCluster_ServerSideEncryption {
+        DaxCluster_ServerSideEncryption { enabled: core::default::Default::default() }
     }
 }
 
-pub struct DaxClusterServerSideEncryptionElRef {
+#[allow(dead_code)]
+pub struct DaxCluster_ServerSideEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DaxClusterServerSideEncryptionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DaxClusterServerSideEncryptionElRef {
-        DaxClusterServerSideEncryptionElRef {
+impl terrars::Ref for DaxCluster_ServerSideEncryptionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DaxCluster_ServerSideEncryptionRef {
+        DaxCluster_ServerSideEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DaxClusterServerSideEncryptionElRef {
+impl DaxCluster_ServerSideEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -753,7 +786,7 @@ impl DaxClusterServerSideEncryptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DaxClusterTimeoutsEl {
+pub struct DaxCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -762,7 +795,7 @@ pub struct DaxClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DaxClusterTimeoutsEl {
+impl DaxCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -782,8 +815,8 @@ impl DaxClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DaxClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<DaxClusterTimeoutsEl>;
+impl terrars::ToListMappable for DaxCluster_Timeouts {
+    type O = terrars::BlockAssignable<DaxCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -794,11 +827,11 @@ impl terrars::ToListMappable for DaxClusterTimeoutsEl {
     }
 }
 
-pub struct BuildDaxClusterTimeoutsEl {}
+pub struct BuildDaxCluster_Timeouts {}
 
-impl BuildDaxClusterTimeoutsEl {
-    pub fn build(self) -> DaxClusterTimeoutsEl {
-        DaxClusterTimeoutsEl {
+impl BuildDaxCluster_Timeouts {
+    pub fn build(self) -> DaxCluster_Timeouts {
+        DaxCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -806,21 +839,23 @@ impl BuildDaxClusterTimeoutsEl {
     }
 }
 
-pub struct DaxClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DaxCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DaxClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DaxClusterTimeoutsElRef {
-        DaxClusterTimeoutsElRef {
+impl terrars::Ref for DaxCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DaxCluster_TimeoutsRef {
+        DaxCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DaxClusterTimeoutsElRef {
+impl DaxCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -839,9 +874,4 @@ impl DaxClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DaxClusterDynamic {
-    server_side_encryption: std::option::Option<terrars::DynamicBlock<DaxClusterServerSideEncryptionEl>>,
 }

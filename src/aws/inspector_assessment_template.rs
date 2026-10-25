@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct InspectorAssessmentTemplateData {
+struct InspectorAssessmentTemplateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct InspectorAssessmentTemplateData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     rules_package_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -29,14 +33,14 @@ struct InspectorAssessmentTemplateData {
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     target_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    event_subscription: std::option::Option<std::vec::Vec<InspectorAssessmentTemplateEventSubscriptionEl>>,
+    event_subscription: std::option::Option<std::vec::Vec<InspectorAssessmentTemplate_EventSubscription>>,
     dynamic: InspectorAssessmentTemplateDynamic,
 }
 
 struct InspectorAssessmentTemplate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<InspectorAssessmentTemplateData>,
+    data: std::cell::RefCell<InspectorAssessmentTemplateData_>,
 }
 
 #[derive(Clone)]
@@ -142,6 +146,13 @@ impl InspectorAssessmentTemplate {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -163,7 +174,7 @@ impl InspectorAssessmentTemplate {
     #[doc = "Set the field `event_subscription`.\n"]
     pub fn set_event_subscription(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<InspectorAssessmentTemplateEventSubscriptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<InspectorAssessmentTemplate_EventSubscription>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -194,6 +205,12 @@ impl InspectorAssessmentTemplate {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rules_package_arns` after provisioning.\n"]
@@ -265,7 +282,7 @@ impl BuildInspectorAssessmentTemplate {
         let out = InspectorAssessmentTemplate(std::rc::Rc::new(InspectorAssessmentTemplate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(InspectorAssessmentTemplateData {
+            data: std::cell::RefCell::new(InspectorAssessmentTemplateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -274,6 +291,7 @@ impl BuildInspectorAssessmentTemplate {
                 duration: self.duration,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 rules_package_arns: self.rules_package_arns,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -330,6 +348,12 @@ impl InspectorAssessmentTemplateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rules_package_arns` after provisioning.\n"]
     pub fn rules_package_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.rules_package_arns", self.extract_ref()))
@@ -351,16 +375,21 @@ impl InspectorAssessmentTemplateRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct InspectorAssessmentTemplateDynamic {
+    event_subscription: std::option::Option<terrars::DynamicBlock<InspectorAssessmentTemplate_EventSubscription>>,
+}
+
 #[derive(Serialize)]
-pub struct InspectorAssessmentTemplateEventSubscriptionEl {
+pub struct InspectorAssessmentTemplate_EventSubscription {
     event: terrars::PrimField<std::string::String>,
     topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl InspectorAssessmentTemplateEventSubscriptionEl { }
+impl InspectorAssessmentTemplate_EventSubscription { }
 
-impl terrars::ToListMappable for InspectorAssessmentTemplateEventSubscriptionEl {
-    type O = terrars::BlockAssignable<InspectorAssessmentTemplateEventSubscriptionEl>;
+impl terrars::ToListMappable for InspectorAssessmentTemplate_EventSubscription {
+    type O = terrars::BlockAssignable<InspectorAssessmentTemplate_EventSubscription>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -371,40 +400,42 @@ impl terrars::ToListMappable for InspectorAssessmentTemplateEventSubscriptionEl 
     }
 }
 
-pub struct BuildInspectorAssessmentTemplateEventSubscriptionEl {
+pub struct BuildInspectorAssessmentTemplate_EventSubscription {
     #[doc = ""]
     pub event: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildInspectorAssessmentTemplateEventSubscriptionEl {
-    pub fn build(self) -> InspectorAssessmentTemplateEventSubscriptionEl {
-        InspectorAssessmentTemplateEventSubscriptionEl {
+impl BuildInspectorAssessmentTemplate_EventSubscription {
+    pub fn build(self) -> InspectorAssessmentTemplate_EventSubscription {
+        InspectorAssessmentTemplate_EventSubscription {
             event: self.event,
             topic_arn: self.topic_arn,
         }
     }
 }
 
-pub struct InspectorAssessmentTemplateEventSubscriptionElRef {
+#[allow(dead_code)]
+pub struct InspectorAssessmentTemplate_EventSubscriptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for InspectorAssessmentTemplateEventSubscriptionElRef {
+impl terrars::Ref for InspectorAssessmentTemplate_EventSubscriptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> InspectorAssessmentTemplateEventSubscriptionElRef {
-        InspectorAssessmentTemplateEventSubscriptionElRef {
+    ) -> InspectorAssessmentTemplate_EventSubscriptionRef {
+        InspectorAssessmentTemplate_EventSubscriptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl InspectorAssessmentTemplateEventSubscriptionElRef {
+impl InspectorAssessmentTemplate_EventSubscriptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -418,9 +449,4 @@ impl InspectorAssessmentTemplateEventSubscriptionElRef {
     pub fn topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct InspectorAssessmentTemplateDynamic {
-    event_subscription: std::option::Option<terrars::DynamicBlock<InspectorAssessmentTemplateEventSubscriptionEl>>,
 }

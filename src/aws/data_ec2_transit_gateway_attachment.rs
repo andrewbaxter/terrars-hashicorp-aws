@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2TransitGatewayAttachmentData {
+struct DataEc2TransitGatewayAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,18 +21,20 @@ struct DataEc2TransitGatewayAttachmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transit_gateway_attachment_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2TransitGatewayAttachmentFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEc2TransitGatewayAttachment_Filter>>,
     dynamic: DataEc2TransitGatewayAttachmentDynamic,
 }
 
 struct DataEc2TransitGatewayAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2TransitGatewayAttachmentData>,
+    data: std::cell::RefCell<DataEc2TransitGatewayAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -81,6 +85,13 @@ impl DataEc2TransitGatewayAttachment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -102,7 +113,7 @@ impl DataEc2TransitGatewayAttachment {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2TransitGatewayAttachmentFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2TransitGatewayAttachment_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -120,9 +131,28 @@ impl DataEc2TransitGatewayAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `association_state` after provisioning.\n"]
+    pub fn association_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.association_state", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `association_transit_gateway_route_table_id` after provisioning.\n"]
+    pub fn association_transit_gateway_route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.association_transit_gateway_route_table_id", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
@@ -209,12 +239,13 @@ impl BuildDataEc2TransitGatewayAttachment {
         let out = DataEc2TransitGatewayAttachment(std::rc::Rc::new(DataEc2TransitGatewayAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2TransitGatewayAttachmentData {
+            data: std::cell::RefCell::new(DataEc2TransitGatewayAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 transit_gateway_attachment_id: core::default::Default::default(),
                 filter: core::default::Default::default(),
@@ -254,9 +285,28 @@ impl DataEc2TransitGatewayAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `association_state` after provisioning.\n"]
+    pub fn association_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.association_state", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `association_transit_gateway_route_table_id` after provisioning.\n"]
+    pub fn association_transit_gateway_route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.association_transit_gateway_route_table_id", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
@@ -303,16 +353,21 @@ impl DataEc2TransitGatewayAttachmentRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataEc2TransitGatewayAttachmentDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2TransitGatewayAttachment_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayAttachmentFilterEl {
+pub struct DataEc2TransitGatewayAttachment_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayAttachmentFilterEl { }
+impl DataEc2TransitGatewayAttachment_Filter { }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayAttachmentFilterEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayAttachmentFilterEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayAttachment_Filter {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayAttachment_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -323,37 +378,39 @@ impl terrars::ToListMappable for DataEc2TransitGatewayAttachmentFilterEl {
     }
 }
 
-pub struct BuildDataEc2TransitGatewayAttachmentFilterEl {
+pub struct BuildDataEc2TransitGatewayAttachment_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEc2TransitGatewayAttachmentFilterEl {
-    pub fn build(self) -> DataEc2TransitGatewayAttachmentFilterEl {
-        DataEc2TransitGatewayAttachmentFilterEl {
+impl BuildDataEc2TransitGatewayAttachment_Filter {
+    pub fn build(self) -> DataEc2TransitGatewayAttachment_Filter {
+        DataEc2TransitGatewayAttachment_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEc2TransitGatewayAttachmentFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayAttachment_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayAttachmentFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2TransitGatewayAttachmentFilterElRef {
-        DataEc2TransitGatewayAttachmentFilterElRef {
+impl terrars::Ref for DataEc2TransitGatewayAttachment_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2TransitGatewayAttachment_FilterRef {
+        DataEc2TransitGatewayAttachment_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayAttachmentFilterElRef {
+impl DataEc2TransitGatewayAttachment_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -367,9 +424,4 @@ impl DataEc2TransitGatewayAttachmentFilterElRef {
     pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2TransitGatewayAttachmentDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2TransitGatewayAttachmentFilterEl>>,
 }

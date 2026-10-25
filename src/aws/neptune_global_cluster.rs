@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NeptuneGlobalClusterData {
+struct NeptuneGlobalClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,17 +30,19 @@ struct NeptuneGlobalClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_db_cluster_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_encrypted: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NeptuneGlobalClusterTimeoutsEl>,
+    timeouts: std::option::Option<NeptuneGlobalCluster_Timeouts>,
 }
 
 struct NeptuneGlobalCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NeptuneGlobalClusterData>,
+    data: std::cell::RefCell<NeptuneGlobalClusterData_>,
 }
 
 #[derive(Clone)]
@@ -162,6 +166,13 @@ impl NeptuneGlobalCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `source_db_cluster_identifier`.\n"]
     pub fn set_source_db_cluster_identifier(
         self,
@@ -178,7 +189,7 @@ impl NeptuneGlobalCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NeptuneGlobalClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NeptuneGlobalCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -209,7 +220,7 @@ impl NeptuneGlobalCluster {
     }
 
     #[doc = "Get a reference to the value of field `global_cluster_members` after provisioning.\n"]
-    pub fn global_cluster_members(&self) -> terrars::SetRef<NeptuneGlobalClusterGlobalClusterMembersElRef> {
+    pub fn global_cluster_members(&self) -> terrars::SetRef<NeptuneGlobalCluster_GlobalClusterMembersRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.global_cluster_members", self.extract_ref()))
     }
 
@@ -221,6 +232,12 @@ impl NeptuneGlobalCluster {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_db_cluster_identifier` after provisioning.\n"]
@@ -239,8 +256,8 @@ impl NeptuneGlobalCluster {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NeptuneGlobalClusterTimeoutsElRef {
-        NeptuneGlobalClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NeptuneGlobalCluster_TimeoutsRef {
+        NeptuneGlobalCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -286,7 +303,7 @@ impl BuildNeptuneGlobalCluster {
         let out = NeptuneGlobalCluster(std::rc::Rc::new(NeptuneGlobalCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NeptuneGlobalClusterData {
+            data: std::cell::RefCell::new(NeptuneGlobalClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -297,6 +314,7 @@ impl BuildNeptuneGlobalCluster {
                 engine_version: core::default::Default::default(),
                 global_cluster_identifier: self.global_cluster_identifier,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 source_db_cluster_identifier: core::default::Default::default(),
                 storage_encrypted: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -356,7 +374,7 @@ impl NeptuneGlobalClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `global_cluster_members` after provisioning.\n"]
-    pub fn global_cluster_members(&self) -> terrars::SetRef<NeptuneGlobalClusterGlobalClusterMembersElRef> {
+    pub fn global_cluster_members(&self) -> terrars::SetRef<NeptuneGlobalCluster_GlobalClusterMembersRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.global_cluster_members", self.extract_ref()))
     }
 
@@ -368,6 +386,12 @@ impl NeptuneGlobalClusterRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_db_cluster_identifier` after provisioning.\n"]
@@ -386,20 +410,20 @@ impl NeptuneGlobalClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NeptuneGlobalClusterTimeoutsElRef {
-        NeptuneGlobalClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NeptuneGlobalCluster_TimeoutsRef {
+        NeptuneGlobalCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct NeptuneGlobalClusterGlobalClusterMembersEl {
+pub struct NeptuneGlobalCluster_GlobalClusterMembers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     db_cluster_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     is_writer: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl NeptuneGlobalClusterGlobalClusterMembersEl {
+impl NeptuneGlobalCluster_GlobalClusterMembers {
     #[doc = "Set the field `db_cluster_arn`.\n"]
     pub fn set_db_cluster_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.db_cluster_arn = std::option::Option::Some(v.into());
@@ -413,8 +437,8 @@ impl NeptuneGlobalClusterGlobalClusterMembersEl {
     }
 }
 
-impl terrars::ToListMappable for NeptuneGlobalClusterGlobalClusterMembersEl {
-    type O = terrars::BlockAssignable<NeptuneGlobalClusterGlobalClusterMembersEl>;
+impl terrars::ToListMappable for NeptuneGlobalCluster_GlobalClusterMembers {
+    type O = terrars::BlockAssignable<NeptuneGlobalCluster_GlobalClusterMembers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -425,32 +449,34 @@ impl terrars::ToListMappable for NeptuneGlobalClusterGlobalClusterMembersEl {
     }
 }
 
-pub struct BuildNeptuneGlobalClusterGlobalClusterMembersEl {}
+pub struct BuildNeptuneGlobalCluster_GlobalClusterMembers {}
 
-impl BuildNeptuneGlobalClusterGlobalClusterMembersEl {
-    pub fn build(self) -> NeptuneGlobalClusterGlobalClusterMembersEl {
-        NeptuneGlobalClusterGlobalClusterMembersEl {
+impl BuildNeptuneGlobalCluster_GlobalClusterMembers {
+    pub fn build(self) -> NeptuneGlobalCluster_GlobalClusterMembers {
+        NeptuneGlobalCluster_GlobalClusterMembers {
             db_cluster_arn: core::default::Default::default(),
             is_writer: core::default::Default::default(),
         }
     }
 }
 
-pub struct NeptuneGlobalClusterGlobalClusterMembersElRef {
+#[allow(dead_code)]
+pub struct NeptuneGlobalCluster_GlobalClusterMembersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NeptuneGlobalClusterGlobalClusterMembersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneGlobalClusterGlobalClusterMembersElRef {
-        NeptuneGlobalClusterGlobalClusterMembersElRef {
+impl terrars::Ref for NeptuneGlobalCluster_GlobalClusterMembersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneGlobalCluster_GlobalClusterMembersRef {
+        NeptuneGlobalCluster_GlobalClusterMembersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NeptuneGlobalClusterGlobalClusterMembersElRef {
+impl NeptuneGlobalCluster_GlobalClusterMembersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -467,7 +493,7 @@ impl NeptuneGlobalClusterGlobalClusterMembersElRef {
 }
 
 #[derive(Serialize)]
-pub struct NeptuneGlobalClusterTimeoutsEl {
+pub struct NeptuneGlobalCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -476,7 +502,7 @@ pub struct NeptuneGlobalClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NeptuneGlobalClusterTimeoutsEl {
+impl NeptuneGlobalCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -496,8 +522,8 @@ impl NeptuneGlobalClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NeptuneGlobalClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<NeptuneGlobalClusterTimeoutsEl>;
+impl terrars::ToListMappable for NeptuneGlobalCluster_Timeouts {
+    type O = terrars::BlockAssignable<NeptuneGlobalCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -508,11 +534,11 @@ impl terrars::ToListMappable for NeptuneGlobalClusterTimeoutsEl {
     }
 }
 
-pub struct BuildNeptuneGlobalClusterTimeoutsEl {}
+pub struct BuildNeptuneGlobalCluster_Timeouts {}
 
-impl BuildNeptuneGlobalClusterTimeoutsEl {
-    pub fn build(self) -> NeptuneGlobalClusterTimeoutsEl {
-        NeptuneGlobalClusterTimeoutsEl {
+impl BuildNeptuneGlobalCluster_Timeouts {
+    pub fn build(self) -> NeptuneGlobalCluster_Timeouts {
+        NeptuneGlobalCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -520,21 +546,23 @@ impl BuildNeptuneGlobalClusterTimeoutsEl {
     }
 }
 
-pub struct NeptuneGlobalClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NeptuneGlobalCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NeptuneGlobalClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneGlobalClusterTimeoutsElRef {
-        NeptuneGlobalClusterTimeoutsElRef {
+impl terrars::Ref for NeptuneGlobalCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneGlobalCluster_TimeoutsRef {
+        NeptuneGlobalCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NeptuneGlobalClusterTimeoutsElRef {
+impl NeptuneGlobalCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

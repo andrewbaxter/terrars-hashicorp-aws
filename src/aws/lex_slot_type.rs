@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LexSlotTypeData {
+struct LexSlotTypeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,18 +28,20 @@ struct LexSlotTypeData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value_selection_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enumeration_value: std::option::Option<std::vec::Vec<LexSlotTypeEnumerationValueEl>>,
+    enumeration_value: std::option::Option<std::vec::Vec<LexSlotType_EnumerationValue>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LexSlotTypeTimeoutsEl>,
+    timeouts: std::option::Option<LexSlotType_Timeouts>,
     dynamic: LexSlotTypeDynamic,
 }
 
 struct LexSlotType_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LexSlotTypeData>,
+    data: std::cell::RefCell<LexSlotTypeData_>,
 }
 
 #[derive(Clone)]
@@ -155,6 +159,13 @@ impl LexSlotType {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `value_selection_strategy`.\n"]
     pub fn set_value_selection_strategy(
         self,
@@ -167,7 +178,7 @@ impl LexSlotType {
     #[doc = "Set the field `enumeration_value`.\n"]
     pub fn set_enumeration_value(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexSlotTypeEnumerationValueEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexSlotType_EnumerationValue>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,7 +192,7 @@ impl LexSlotType {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LexSlotTypeTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LexSlotType_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -221,6 +232,12 @@ impl LexSlotType {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `value_selection_strategy` after provisioning.\n"]
     pub fn value_selection_strategy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value_selection_strategy", self.extract_ref()))
@@ -232,8 +249,8 @@ impl LexSlotType {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LexSlotTypeTimeoutsElRef {
-        LexSlotTypeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LexSlotType_TimeoutsRef {
+        LexSlotType_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -279,7 +296,7 @@ impl BuildLexSlotType {
         let out = LexSlotType(std::rc::Rc::new(LexSlotType_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LexSlotTypeData {
+            data: std::cell::RefCell::new(LexSlotTypeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -289,6 +306,7 @@ impl BuildLexSlotType {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 value_selection_strategy: core::default::Default::default(),
                 enumeration_value: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -358,6 +376,12 @@ impl LexSlotTypeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `value_selection_strategy` after provisioning.\n"]
     pub fn value_selection_strategy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value_selection_strategy", self.extract_ref()))
@@ -369,19 +393,24 @@ impl LexSlotTypeRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LexSlotTypeTimeoutsElRef {
-        LexSlotTypeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LexSlotType_TimeoutsRef {
+        LexSlotType_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LexSlotTypeDynamic {
+    enumeration_value: std::option::Option<terrars::DynamicBlock<LexSlotType_EnumerationValue>>,
+}
+
 #[derive(Serialize)]
-pub struct LexSlotTypeEnumerationValueEl {
+pub struct LexSlotType_EnumerationValue {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     synonyms: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl LexSlotTypeEnumerationValueEl {
+impl LexSlotType_EnumerationValue {
     #[doc = "Set the field `synonyms`.\n"]
     pub fn set_synonyms(
         mut self,
@@ -392,8 +421,8 @@ impl LexSlotTypeEnumerationValueEl {
     }
 }
 
-impl terrars::ToListMappable for LexSlotTypeEnumerationValueEl {
-    type O = terrars::BlockAssignable<LexSlotTypeEnumerationValueEl>;
+impl terrars::ToListMappable for LexSlotType_EnumerationValue {
+    type O = terrars::BlockAssignable<LexSlotType_EnumerationValue>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -404,35 +433,37 @@ impl terrars::ToListMappable for LexSlotTypeEnumerationValueEl {
     }
 }
 
-pub struct BuildLexSlotTypeEnumerationValueEl {
+pub struct BuildLexSlotType_EnumerationValue {
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexSlotTypeEnumerationValueEl {
-    pub fn build(self) -> LexSlotTypeEnumerationValueEl {
-        LexSlotTypeEnumerationValueEl {
+impl BuildLexSlotType_EnumerationValue {
+    pub fn build(self) -> LexSlotType_EnumerationValue {
+        LexSlotType_EnumerationValue {
             synonyms: core::default::Default::default(),
             value: self.value,
         }
     }
 }
 
-pub struct LexSlotTypeEnumerationValueElRef {
+#[allow(dead_code)]
+pub struct LexSlotType_EnumerationValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexSlotTypeEnumerationValueElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexSlotTypeEnumerationValueElRef {
-        LexSlotTypeEnumerationValueElRef {
+impl terrars::Ref for LexSlotType_EnumerationValueRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexSlotType_EnumerationValueRef {
+        LexSlotType_EnumerationValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexSlotTypeEnumerationValueElRef {
+impl LexSlotType_EnumerationValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -449,7 +480,7 @@ impl LexSlotTypeEnumerationValueElRef {
 }
 
 #[derive(Serialize)]
-pub struct LexSlotTypeTimeoutsEl {
+pub struct LexSlotType_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -458,7 +489,7 @@ pub struct LexSlotTypeTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LexSlotTypeTimeoutsEl {
+impl LexSlotType_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -478,8 +509,8 @@ impl LexSlotTypeTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LexSlotTypeTimeoutsEl {
-    type O = terrars::BlockAssignable<LexSlotTypeTimeoutsEl>;
+impl terrars::ToListMappable for LexSlotType_Timeouts {
+    type O = terrars::BlockAssignable<LexSlotType_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,11 +521,11 @@ impl terrars::ToListMappable for LexSlotTypeTimeoutsEl {
     }
 }
 
-pub struct BuildLexSlotTypeTimeoutsEl {}
+pub struct BuildLexSlotType_Timeouts {}
 
-impl BuildLexSlotTypeTimeoutsEl {
-    pub fn build(self) -> LexSlotTypeTimeoutsEl {
-        LexSlotTypeTimeoutsEl {
+impl BuildLexSlotType_Timeouts {
+    pub fn build(self) -> LexSlotType_Timeouts {
+        LexSlotType_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -502,21 +533,23 @@ impl BuildLexSlotTypeTimeoutsEl {
     }
 }
 
-pub struct LexSlotTypeTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LexSlotType_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexSlotTypeTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexSlotTypeTimeoutsElRef {
-        LexSlotTypeTimeoutsElRef {
+impl terrars::Ref for LexSlotType_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexSlotType_TimeoutsRef {
+        LexSlotType_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexSlotTypeTimeoutsElRef {
+impl LexSlotType_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -535,9 +568,4 @@ impl LexSlotTypeTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LexSlotTypeDynamic {
-    enumeration_value: std::option::Option<terrars::DynamicBlock<LexSlotTypeEnumerationValueEl>>,
 }

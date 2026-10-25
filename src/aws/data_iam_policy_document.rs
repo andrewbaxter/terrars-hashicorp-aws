@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataIamPolicyDocumentData {
+struct DataIamPolicyDocumentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -31,14 +33,14 @@ struct DataIamPolicyDocumentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    statement: std::option::Option<std::vec::Vec<DataIamPolicyDocumentStatementEl>>,
+    statement: std::option::Option<std::vec::Vec<DataIamPolicyDocument_Statement>>,
     dynamic: DataIamPolicyDocumentDynamic,
 }
 
 struct DataIamPolicyDocument_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataIamPolicyDocumentData>,
+    data: std::cell::RefCell<DataIamPolicyDocumentData_>,
 }
 
 #[derive(Clone)]
@@ -134,7 +136,7 @@ impl DataIamPolicyDocument {
     #[doc = "Set the field `statement`.\n"]
     pub fn set_statement(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataIamPolicyDocumentStatementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataIamPolicyDocument_Statement>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -155,6 +157,11 @@ impl DataIamPolicyDocument {
     #[doc = "Get a reference to the value of field `json` after provisioning.\n"]
     pub fn json(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.json", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `minified_json` after provisioning.\n"]
+    pub fn minified_json(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minified_json", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `override_json` after provisioning.\n"]
@@ -188,7 +195,7 @@ impl DataIamPolicyDocument {
     }
 
     #[doc = "Get a reference to the value of field `statement` after provisioning.\n"]
-    pub fn statement(&self) -> terrars::ListRef<DataIamPolicyDocumentStatementElRef> {
+    pub fn statement(&self) -> terrars::ListRef<DataIamPolicyDocument_StatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.statement", self.extract_ref()))
     }
 }
@@ -233,7 +240,7 @@ impl BuildDataIamPolicyDocument {
         let out = DataIamPolicyDocument(std::rc::Rc::new(DataIamPolicyDocument_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataIamPolicyDocumentData {
+            data: std::cell::RefCell::new(DataIamPolicyDocumentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -287,6 +294,11 @@ impl DataIamPolicyDocumentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.json", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `minified_json` after provisioning.\n"]
+    pub fn minified_json(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.minified_json", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `override_json` after provisioning.\n"]
     pub fn override_json(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.override_json", self.extract_ref()))
@@ -318,22 +330,27 @@ impl DataIamPolicyDocumentRef {
     }
 
     #[doc = "Get a reference to the value of field `statement` after provisioning.\n"]
-    pub fn statement(&self) -> terrars::ListRef<DataIamPolicyDocumentStatementElRef> {
+    pub fn statement(&self) -> terrars::ListRef<DataIamPolicyDocument_StatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.statement", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataIamPolicyDocumentDynamic {
+    statement: std::option::Option<terrars::DynamicBlock<DataIamPolicyDocument_Statement>>,
+}
+
 #[derive(Serialize)]
-pub struct DataIamPolicyDocumentStatementElConditionEl {
+pub struct DataIamPolicyDocument_Statement_Condition {
     test: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
     variable: terrars::PrimField<std::string::String>,
 }
 
-impl DataIamPolicyDocumentStatementElConditionEl { }
+impl DataIamPolicyDocument_Statement_Condition { }
 
-impl terrars::ToListMappable for DataIamPolicyDocumentStatementElConditionEl {
-    type O = terrars::BlockAssignable<DataIamPolicyDocumentStatementElConditionEl>;
+impl terrars::ToListMappable for DataIamPolicyDocument_Statement_Condition {
+    type O = terrars::BlockAssignable<DataIamPolicyDocument_Statement_Condition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -344,7 +361,7 @@ impl terrars::ToListMappable for DataIamPolicyDocumentStatementElConditionEl {
     }
 }
 
-pub struct BuildDataIamPolicyDocumentStatementElConditionEl {
+pub struct BuildDataIamPolicyDocument_Statement_Condition {
     #[doc = ""]
     pub test: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -353,9 +370,9 @@ pub struct BuildDataIamPolicyDocumentStatementElConditionEl {
     pub variable: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataIamPolicyDocumentStatementElConditionEl {
-    pub fn build(self) -> DataIamPolicyDocumentStatementElConditionEl {
-        DataIamPolicyDocumentStatementElConditionEl {
+impl BuildDataIamPolicyDocument_Statement_Condition {
+    pub fn build(self) -> DataIamPolicyDocument_Statement_Condition {
+        DataIamPolicyDocument_Statement_Condition {
             test: self.test,
             values: self.values,
             variable: self.variable,
@@ -363,24 +380,23 @@ impl BuildDataIamPolicyDocumentStatementElConditionEl {
     }
 }
 
-pub struct DataIamPolicyDocumentStatementElConditionElRef {
+#[allow(dead_code)]
+pub struct DataIamPolicyDocument_Statement_ConditionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIamPolicyDocumentStatementElConditionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataIamPolicyDocumentStatementElConditionElRef {
-        DataIamPolicyDocumentStatementElConditionElRef {
+impl terrars::Ref for DataIamPolicyDocument_Statement_ConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIamPolicyDocument_Statement_ConditionRef {
+        DataIamPolicyDocument_Statement_ConditionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIamPolicyDocumentStatementElConditionElRef {
+impl DataIamPolicyDocument_Statement_ConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -402,16 +418,16 @@ impl DataIamPolicyDocumentStatementElConditionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataIamPolicyDocumentStatementElNotPrincipalsEl {
+pub struct DataIamPolicyDocument_Statement_NotPrincipals {
     identifiers: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl DataIamPolicyDocumentStatementElNotPrincipalsEl { }
+impl DataIamPolicyDocument_Statement_NotPrincipals { }
 
-impl terrars::ToListMappable for DataIamPolicyDocumentStatementElNotPrincipalsEl {
-    type O = terrars::BlockAssignable<DataIamPolicyDocumentStatementElNotPrincipalsEl>;
+impl terrars::ToListMappable for DataIamPolicyDocument_Statement_NotPrincipals {
+    type O = terrars::BlockAssignable<DataIamPolicyDocument_Statement_NotPrincipals>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -422,40 +438,42 @@ impl terrars::ToListMappable for DataIamPolicyDocumentStatementElNotPrincipalsEl
     }
 }
 
-pub struct BuildDataIamPolicyDocumentStatementElNotPrincipalsEl {
+pub struct BuildDataIamPolicyDocument_Statement_NotPrincipals {
     #[doc = ""]
     pub identifiers: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataIamPolicyDocumentStatementElNotPrincipalsEl {
-    pub fn build(self) -> DataIamPolicyDocumentStatementElNotPrincipalsEl {
-        DataIamPolicyDocumentStatementElNotPrincipalsEl {
+impl BuildDataIamPolicyDocument_Statement_NotPrincipals {
+    pub fn build(self) -> DataIamPolicyDocument_Statement_NotPrincipals {
+        DataIamPolicyDocument_Statement_NotPrincipals {
             identifiers: self.identifiers,
             type_: self.type_,
         }
     }
 }
 
-pub struct DataIamPolicyDocumentStatementElNotPrincipalsElRef {
+#[allow(dead_code)]
+pub struct DataIamPolicyDocument_Statement_NotPrincipalsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIamPolicyDocumentStatementElNotPrincipalsElRef {
+impl terrars::Ref for DataIamPolicyDocument_Statement_NotPrincipalsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataIamPolicyDocumentStatementElNotPrincipalsElRef {
-        DataIamPolicyDocumentStatementElNotPrincipalsElRef {
+    ) -> DataIamPolicyDocument_Statement_NotPrincipalsRef {
+        DataIamPolicyDocument_Statement_NotPrincipalsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIamPolicyDocumentStatementElNotPrincipalsElRef {
+impl DataIamPolicyDocument_Statement_NotPrincipalsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -472,16 +490,16 @@ impl DataIamPolicyDocumentStatementElNotPrincipalsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataIamPolicyDocumentStatementElPrincipalsEl {
+pub struct DataIamPolicyDocument_Statement_Principals {
     identifiers: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl DataIamPolicyDocumentStatementElPrincipalsEl { }
+impl DataIamPolicyDocument_Statement_Principals { }
 
-impl terrars::ToListMappable for DataIamPolicyDocumentStatementElPrincipalsEl {
-    type O = terrars::BlockAssignable<DataIamPolicyDocumentStatementElPrincipalsEl>;
+impl terrars::ToListMappable for DataIamPolicyDocument_Statement_Principals {
+    type O = terrars::BlockAssignable<DataIamPolicyDocument_Statement_Principals>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -492,40 +510,39 @@ impl terrars::ToListMappable for DataIamPolicyDocumentStatementElPrincipalsEl {
     }
 }
 
-pub struct BuildDataIamPolicyDocumentStatementElPrincipalsEl {
+pub struct BuildDataIamPolicyDocument_Statement_Principals {
     #[doc = ""]
     pub identifiers: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataIamPolicyDocumentStatementElPrincipalsEl {
-    pub fn build(self) -> DataIamPolicyDocumentStatementElPrincipalsEl {
-        DataIamPolicyDocumentStatementElPrincipalsEl {
+impl BuildDataIamPolicyDocument_Statement_Principals {
+    pub fn build(self) -> DataIamPolicyDocument_Statement_Principals {
+        DataIamPolicyDocument_Statement_Principals {
             identifiers: self.identifiers,
             type_: self.type_,
         }
     }
 }
 
-pub struct DataIamPolicyDocumentStatementElPrincipalsElRef {
+#[allow(dead_code)]
+pub struct DataIamPolicyDocument_Statement_PrincipalsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIamPolicyDocumentStatementElPrincipalsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataIamPolicyDocumentStatementElPrincipalsElRef {
-        DataIamPolicyDocumentStatementElPrincipalsElRef {
+impl terrars::Ref for DataIamPolicyDocument_Statement_PrincipalsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIamPolicyDocument_Statement_PrincipalsRef {
+        DataIamPolicyDocument_Statement_PrincipalsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIamPolicyDocumentStatementElPrincipalsElRef {
+impl DataIamPolicyDocument_Statement_PrincipalsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -542,14 +559,14 @@ impl DataIamPolicyDocumentStatementElPrincipalsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataIamPolicyDocumentStatementElDynamic {
-    condition: std::option::Option<terrars::DynamicBlock<DataIamPolicyDocumentStatementElConditionEl>>,
-    not_principals: std::option::Option<terrars::DynamicBlock<DataIamPolicyDocumentStatementElNotPrincipalsEl>>,
-    principals: std::option::Option<terrars::DynamicBlock<DataIamPolicyDocumentStatementElPrincipalsEl>>,
+struct DataIamPolicyDocument_StatementDynamic {
+    condition: std::option::Option<terrars::DynamicBlock<DataIamPolicyDocument_Statement_Condition>>,
+    not_principals: std::option::Option<terrars::DynamicBlock<DataIamPolicyDocument_Statement_NotPrincipals>>,
+    principals: std::option::Option<terrars::DynamicBlock<DataIamPolicyDocument_Statement_Principals>>,
 }
 
 #[derive(Serialize)]
-pub struct DataIamPolicyDocumentStatementEl {
+pub struct DataIamPolicyDocument_Statement {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     actions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -563,15 +580,15 @@ pub struct DataIamPolicyDocumentStatementEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sid: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    condition: std::option::Option<std::vec::Vec<DataIamPolicyDocumentStatementElConditionEl>>,
+    condition: std::option::Option<std::vec::Vec<DataIamPolicyDocument_Statement_Condition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    not_principals: std::option::Option<std::vec::Vec<DataIamPolicyDocumentStatementElNotPrincipalsEl>>,
+    not_principals: std::option::Option<std::vec::Vec<DataIamPolicyDocument_Statement_NotPrincipals>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    principals: std::option::Option<std::vec::Vec<DataIamPolicyDocumentStatementElPrincipalsEl>>,
-    dynamic: DataIamPolicyDocumentStatementElDynamic,
+    principals: std::option::Option<std::vec::Vec<DataIamPolicyDocument_Statement_Principals>>,
+    dynamic: DataIamPolicyDocument_StatementDynamic,
 }
 
-impl DataIamPolicyDocumentStatementEl {
+impl DataIamPolicyDocument_Statement {
     #[doc = "Set the field `actions`.\n"]
     pub fn set_actions(
         mut self,
@@ -623,7 +640,7 @@ impl DataIamPolicyDocumentStatementEl {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataIamPolicyDocumentStatementElConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataIamPolicyDocument_Statement_Condition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -639,7 +656,7 @@ impl DataIamPolicyDocumentStatementEl {
     #[doc = "Set the field `not_principals`.\n"]
     pub fn set_not_principals(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataIamPolicyDocumentStatementElNotPrincipalsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataIamPolicyDocument_Statement_NotPrincipals>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -655,7 +672,7 @@ impl DataIamPolicyDocumentStatementEl {
     #[doc = "Set the field `principals`.\n"]
     pub fn set_principals(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataIamPolicyDocumentStatementElPrincipalsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataIamPolicyDocument_Statement_Principals>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -669,8 +686,8 @@ impl DataIamPolicyDocumentStatementEl {
     }
 }
 
-impl terrars::ToListMappable for DataIamPolicyDocumentStatementEl {
-    type O = terrars::BlockAssignable<DataIamPolicyDocumentStatementEl>;
+impl terrars::ToListMappable for DataIamPolicyDocument_Statement {
+    type O = terrars::BlockAssignable<DataIamPolicyDocument_Statement>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -681,11 +698,11 @@ impl terrars::ToListMappable for DataIamPolicyDocumentStatementEl {
     }
 }
 
-pub struct BuildDataIamPolicyDocumentStatementEl {}
+pub struct BuildDataIamPolicyDocument_Statement {}
 
-impl BuildDataIamPolicyDocumentStatementEl {
-    pub fn build(self) -> DataIamPolicyDocumentStatementEl {
-        DataIamPolicyDocumentStatementEl {
+impl BuildDataIamPolicyDocument_Statement {
+    pub fn build(self) -> DataIamPolicyDocument_Statement {
+        DataIamPolicyDocument_Statement {
             actions: core::default::Default::default(),
             effect: core::default::Default::default(),
             not_actions: core::default::Default::default(),
@@ -700,21 +717,23 @@ impl BuildDataIamPolicyDocumentStatementEl {
     }
 }
 
-pub struct DataIamPolicyDocumentStatementElRef {
+#[allow(dead_code)]
+pub struct DataIamPolicyDocument_StatementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataIamPolicyDocumentStatementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIamPolicyDocumentStatementElRef {
-        DataIamPolicyDocumentStatementElRef {
+impl terrars::Ref for DataIamPolicyDocument_StatementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataIamPolicyDocument_StatementRef {
+        DataIamPolicyDocument_StatementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataIamPolicyDocumentStatementElRef {
+impl DataIamPolicyDocument_StatementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -748,9 +767,4 @@ impl DataIamPolicyDocumentStatementElRef {
     pub fn sid(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sid", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataIamPolicyDocumentDynamic {
-    statement: std::option::Option<terrars::DynamicBlock<DataIamPolicyDocumentStatementEl>>,
 }

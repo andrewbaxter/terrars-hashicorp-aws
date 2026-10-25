@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerHumanTaskUiData {
+struct SagemakerHumanTaskUiData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,20 @@ struct SagemakerHumanTaskUiData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ui_template: std::option::Option<std::vec::Vec<SagemakerHumanTaskUiUiTemplateEl>>,
+    ui_template: std::option::Option<std::vec::Vec<SagemakerHumanTaskUi_UiTemplate>>,
     dynamic: SagemakerHumanTaskUiDynamic,
 }
 
 struct SagemakerHumanTaskUi_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerHumanTaskUiData>,
+    data: std::cell::RefCell<SagemakerHumanTaskUiData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl SagemakerHumanTaskUi {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -160,7 +171,7 @@ impl SagemakerHumanTaskUi {
     #[doc = "Set the field `ui_template`.\n"]
     pub fn set_ui_template(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerHumanTaskUiUiTemplateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerHumanTaskUi_UiTemplate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,6 +199,12 @@ impl SagemakerHumanTaskUi {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -199,7 +216,7 @@ impl SagemakerHumanTaskUi {
     }
 
     #[doc = "Get a reference to the value of field `ui_template` after provisioning.\n"]
-    pub fn ui_template(&self) -> terrars::ListRef<SagemakerHumanTaskUiUiTemplateElRef> {
+    pub fn ui_template(&self) -> terrars::ListRef<SagemakerHumanTaskUi_UiTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ui_template", self.extract_ref()))
     }
 }
@@ -246,7 +263,7 @@ impl BuildSagemakerHumanTaskUi {
         let out = SagemakerHumanTaskUi(std::rc::Rc::new(SagemakerHumanTaskUi_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerHumanTaskUiData {
+            data: std::cell::RefCell::new(SagemakerHumanTaskUiData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -254,6 +271,7 @@ impl BuildSagemakerHumanTaskUi {
                 provisioner: core::default::Default::default(),
                 human_task_ui_name: self.human_task_ui_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 ui_template: core::default::Default::default(),
@@ -303,6 +321,12 @@ impl SagemakerHumanTaskUiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -314,18 +338,23 @@ impl SagemakerHumanTaskUiRef {
     }
 
     #[doc = "Get a reference to the value of field `ui_template` after provisioning.\n"]
-    pub fn ui_template(&self) -> terrars::ListRef<SagemakerHumanTaskUiUiTemplateElRef> {
+    pub fn ui_template(&self) -> terrars::ListRef<SagemakerHumanTaskUi_UiTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ui_template", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerHumanTaskUiDynamic {
+    ui_template: std::option::Option<terrars::DynamicBlock<SagemakerHumanTaskUi_UiTemplate>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerHumanTaskUiUiTemplateEl {
+pub struct SagemakerHumanTaskUi_UiTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SagemakerHumanTaskUiUiTemplateEl {
+impl SagemakerHumanTaskUi_UiTemplate {
     #[doc = "Set the field `content`.\n"]
     pub fn set_content(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.content = std::option::Option::Some(v.into());
@@ -333,8 +362,8 @@ impl SagemakerHumanTaskUiUiTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerHumanTaskUiUiTemplateEl {
-    type O = terrars::BlockAssignable<SagemakerHumanTaskUiUiTemplateEl>;
+impl terrars::ToListMappable for SagemakerHumanTaskUi_UiTemplate {
+    type O = terrars::BlockAssignable<SagemakerHumanTaskUi_UiTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -345,29 +374,31 @@ impl terrars::ToListMappable for SagemakerHumanTaskUiUiTemplateEl {
     }
 }
 
-pub struct BuildSagemakerHumanTaskUiUiTemplateEl {}
+pub struct BuildSagemakerHumanTaskUi_UiTemplate {}
 
-impl BuildSagemakerHumanTaskUiUiTemplateEl {
-    pub fn build(self) -> SagemakerHumanTaskUiUiTemplateEl {
-        SagemakerHumanTaskUiUiTemplateEl { content: core::default::Default::default() }
+impl BuildSagemakerHumanTaskUi_UiTemplate {
+    pub fn build(self) -> SagemakerHumanTaskUi_UiTemplate {
+        SagemakerHumanTaskUi_UiTemplate { content: core::default::Default::default() }
     }
 }
 
-pub struct SagemakerHumanTaskUiUiTemplateElRef {
+#[allow(dead_code)]
+pub struct SagemakerHumanTaskUi_UiTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerHumanTaskUiUiTemplateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerHumanTaskUiUiTemplateElRef {
-        SagemakerHumanTaskUiUiTemplateElRef {
+impl terrars::Ref for SagemakerHumanTaskUi_UiTemplateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerHumanTaskUi_UiTemplateRef {
+        SagemakerHumanTaskUi_UiTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerHumanTaskUiUiTemplateElRef {
+impl SagemakerHumanTaskUi_UiTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -386,9 +417,4 @@ impl SagemakerHumanTaskUiUiTemplateElRef {
     pub fn url(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.url", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SagemakerHumanTaskUiDynamic {
-    ui_template: std::option::Option<terrars::DynamicBlock<SagemakerHumanTaskUiUiTemplateEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbProxyTargetData {
+struct DbProxyTargetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,13 +27,15 @@ struct DbProxyTargetData {
     db_proxy_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     target_group_name: terrars::PrimField<std::string::String>,
 }
 
 struct DbProxyTarget_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbProxyTargetData>,
+    data: std::cell::RefCell<DbProxyTargetData_>,
 }
 
 #[derive(Clone)]
@@ -152,6 +156,13 @@ impl DbProxyTarget {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `db_cluster_identifier` after provisioning.\n"]
     pub fn db_cluster_identifier(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_cluster_identifier", self.extract_ref()))
@@ -185,6 +196,12 @@ impl DbProxyTarget {
     #[doc = "Get a reference to the value of field `rds_resource_id` after provisioning.\n"]
     pub fn rds_resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rds_resource_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_arn` after provisioning.\n"]
@@ -252,7 +269,7 @@ impl BuildDbProxyTarget {
         let out = DbProxyTarget(std::rc::Rc::new(DbProxyTarget_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbProxyTargetData {
+            data: std::cell::RefCell::new(DbProxyTargetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -262,6 +279,7 @@ impl BuildDbProxyTarget {
                 db_instance_identifier: core::default::Default::default(),
                 db_proxy_name: self.db_proxy_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 target_group_name: self.target_group_name,
             }),
         }));
@@ -326,6 +344,12 @@ impl DbProxyTargetRef {
     #[doc = "Get a reference to the value of field `rds_resource_id` after provisioning.\n"]
     pub fn rds_resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rds_resource_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_arn` after provisioning.\n"]

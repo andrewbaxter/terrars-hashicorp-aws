@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct PrometheusWorkspaceData {
+struct PrometheusWorkspaceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,18 +25,22 @@ struct PrometheusWorkspaceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_configuration: std::option::Option<std::vec::Vec<PrometheusWorkspaceLoggingConfigurationEl>>,
+    logging_configuration: std::option::Option<std::vec::Vec<PrometheusWorkspace_LoggingConfiguration>>,
     dynamic: PrometheusWorkspaceDynamic,
 }
 
 struct PrometheusWorkspace_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PrometheusWorkspaceData>,
+    data: std::cell::RefCell<PrometheusWorkspaceData_>,
 }
 
 #[derive(Clone)]
@@ -146,6 +152,19 @@ impl PrometheusWorkspace {
         self
     }
 
+    #[doc = "Set the field `kms_key_arn`.\n"]
+    pub fn set_kms_key_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -167,7 +186,7 @@ impl PrometheusWorkspace {
     #[doc = "Set the field `logging_configuration`.\n"]
     pub fn set_logging_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<PrometheusWorkspaceLoggingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<PrometheusWorkspace_LoggingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -195,9 +214,20 @@ impl PrometheusWorkspace {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `prometheus_endpoint` after provisioning.\n"]
     pub fn prometheus_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.prometheus_endpoint", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -211,7 +241,7 @@ impl PrometheusWorkspace {
     }
 
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(&self) -> terrars::ListRef<PrometheusWorkspaceLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<PrometheusWorkspace_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 }
@@ -256,7 +286,7 @@ impl BuildPrometheusWorkspace {
         let out = PrometheusWorkspace(std::rc::Rc::new(PrometheusWorkspace_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PrometheusWorkspaceData {
+            data: std::cell::RefCell::new(PrometheusWorkspaceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -264,6 +294,8 @@ impl BuildPrometheusWorkspace {
                 provisioner: core::default::Default::default(),
                 alias: core::default::Default::default(),
                 id: core::default::Default::default(),
+                kms_key_arn: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 logging_configuration: core::default::Default::default(),
@@ -313,9 +345,20 @@ impl PrometheusWorkspaceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `prometheus_endpoint` after provisioning.\n"]
     pub fn prometheus_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.prometheus_endpoint", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -329,20 +372,25 @@ impl PrometheusWorkspaceRef {
     }
 
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(&self) -> terrars::ListRef<PrometheusWorkspaceLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<PrometheusWorkspace_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct PrometheusWorkspaceDynamic {
+    logging_configuration: std::option::Option<terrars::DynamicBlock<PrometheusWorkspace_LoggingConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct PrometheusWorkspaceLoggingConfigurationEl {
+pub struct PrometheusWorkspace_LoggingConfiguration {
     log_group_arn: terrars::PrimField<std::string::String>,
 }
 
-impl PrometheusWorkspaceLoggingConfigurationEl { }
+impl PrometheusWorkspace_LoggingConfiguration { }
 
-impl terrars::ToListMappable for PrometheusWorkspaceLoggingConfigurationEl {
-    type O = terrars::BlockAssignable<PrometheusWorkspaceLoggingConfigurationEl>;
+impl terrars::ToListMappable for PrometheusWorkspace_LoggingConfiguration {
+    type O = terrars::BlockAssignable<PrometheusWorkspace_LoggingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -353,32 +401,34 @@ impl terrars::ToListMappable for PrometheusWorkspaceLoggingConfigurationEl {
     }
 }
 
-pub struct BuildPrometheusWorkspaceLoggingConfigurationEl {
+pub struct BuildPrometheusWorkspace_LoggingConfiguration {
     #[doc = ""]
     pub log_group_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildPrometheusWorkspaceLoggingConfigurationEl {
-    pub fn build(self) -> PrometheusWorkspaceLoggingConfigurationEl {
-        PrometheusWorkspaceLoggingConfigurationEl { log_group_arn: self.log_group_arn }
+impl BuildPrometheusWorkspace_LoggingConfiguration {
+    pub fn build(self) -> PrometheusWorkspace_LoggingConfiguration {
+        PrometheusWorkspace_LoggingConfiguration { log_group_arn: self.log_group_arn }
     }
 }
 
-pub struct PrometheusWorkspaceLoggingConfigurationElRef {
+#[allow(dead_code)]
+pub struct PrometheusWorkspace_LoggingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for PrometheusWorkspaceLoggingConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> PrometheusWorkspaceLoggingConfigurationElRef {
-        PrometheusWorkspaceLoggingConfigurationElRef {
+impl terrars::Ref for PrometheusWorkspace_LoggingConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> PrometheusWorkspace_LoggingConfigurationRef {
+        PrometheusWorkspace_LoggingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl PrometheusWorkspaceLoggingConfigurationElRef {
+impl PrometheusWorkspace_LoggingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -387,9 +437,4 @@ impl PrometheusWorkspaceLoggingConfigurationElRef {
     pub fn log_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct PrometheusWorkspaceDynamic {
-    logging_configuration: std::option::Option<terrars::DynamicBlock<PrometheusWorkspaceLoggingConfigurationEl>>,
 }

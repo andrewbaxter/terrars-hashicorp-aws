@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Sesv2DedicatedIpPoolData {
+struct Sesv2DedicatedIpPoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,19 +24,19 @@ struct Sesv2DedicatedIpPoolData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     pool_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scaling_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Sesv2DedicatedIpPoolTimeoutsEl>,
 }
 
 struct Sesv2DedicatedIpPool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Sesv2DedicatedIpPoolData>,
+    data: std::cell::RefCell<Sesv2DedicatedIpPoolData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +142,13 @@ impl Sesv2DedicatedIpPool {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `scaling_mode`.\n"]
     pub fn set_scaling_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().scaling_mode = std::option::Option::Some(v.into());
@@ -164,12 +173,6 @@ impl Sesv2DedicatedIpPool {
         self
     }
 
-    #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Sesv2DedicatedIpPoolTimeoutsEl>) -> Self {
-        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -185,6 +188,12 @@ impl Sesv2DedicatedIpPool {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `scaling_mode` after provisioning.\n"]
     pub fn scaling_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_mode", self.extract_ref()))
@@ -198,11 +207,6 @@ impl Sesv2DedicatedIpPool {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Sesv2DedicatedIpPoolTimeoutsElRef {
-        Sesv2DedicatedIpPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -248,7 +252,7 @@ impl BuildSesv2DedicatedIpPool {
         let out = Sesv2DedicatedIpPool(std::rc::Rc::new(Sesv2DedicatedIpPool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Sesv2DedicatedIpPoolData {
+            data: std::cell::RefCell::new(Sesv2DedicatedIpPoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -256,10 +260,10 @@ impl BuildSesv2DedicatedIpPool {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 pool_name: self.pool_name,
+                region: core::default::Default::default(),
                 scaling_mode: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
-                timeouts: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -305,6 +309,12 @@ impl Sesv2DedicatedIpPoolRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `scaling_mode` after provisioning.\n"]
     pub fn scaling_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_mode", self.extract_ref()))
@@ -318,99 +328,5 @@ impl Sesv2DedicatedIpPoolRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Sesv2DedicatedIpPoolTimeoutsElRef {
-        Sesv2DedicatedIpPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
-    }
-}
-
-#[derive(Serialize)]
-pub struct Sesv2DedicatedIpPoolTimeoutsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    create: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delete: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    update: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl Sesv2DedicatedIpPoolTimeoutsEl {
-    #[doc = "Set the field `create`.\n"]
-    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.create = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.delete = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `update`.\n"]
-    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.update = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for Sesv2DedicatedIpPoolTimeoutsEl {
-    type O = terrars::BlockAssignable<Sesv2DedicatedIpPoolTimeoutsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildSesv2DedicatedIpPoolTimeoutsEl {}
-
-impl BuildSesv2DedicatedIpPoolTimeoutsEl {
-    pub fn build(self) -> Sesv2DedicatedIpPoolTimeoutsEl {
-        Sesv2DedicatedIpPoolTimeoutsEl {
-            create: core::default::Default::default(),
-            delete: core::default::Default::default(),
-            update: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Sesv2DedicatedIpPoolTimeoutsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Sesv2DedicatedIpPoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Sesv2DedicatedIpPoolTimeoutsElRef {
-        Sesv2DedicatedIpPoolTimeoutsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Sesv2DedicatedIpPoolTimeoutsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
-    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
-    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
-    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataMemorydbUserData {
+struct DataMemorydbUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,6 +21,8 @@ struct DataMemorydbUserData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     user_name: terrars::PrimField<std::string::String>,
 }
@@ -26,7 +30,7 @@ struct DataMemorydbUserData {
 struct DataMemorydbUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataMemorydbUserData>,
+    data: std::cell::RefCell<DataMemorydbUserData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataMemorydbUser {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -97,7 +108,7 @@ impl DataMemorydbUser {
     }
 
     #[doc = "Get a reference to the value of field `authentication_mode` after provisioning.\n"]
-    pub fn authentication_mode(&self) -> terrars::ListRef<DataMemorydbUserAuthenticationModeElRef> {
+    pub fn authentication_mode(&self) -> terrars::ListRef<DataMemorydbUser_AuthenticationModeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_mode", self.extract_ref()))
     }
 
@@ -109,6 +120,12 @@ impl DataMemorydbUser {
     #[doc = "Get a reference to the value of field `minimum_engine_version` after provisioning.\n"]
     pub fn minimum_engine_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_engine_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -164,12 +181,13 @@ impl BuildDataMemorydbUser {
         let out = DataMemorydbUser(std::rc::Rc::new(DataMemorydbUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataMemorydbUserData {
+            data: std::cell::RefCell::new(DataMemorydbUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 user_name: self.user_name,
             }),
@@ -213,7 +231,7 @@ impl DataMemorydbUserRef {
     }
 
     #[doc = "Get a reference to the value of field `authentication_mode` after provisioning.\n"]
-    pub fn authentication_mode(&self) -> terrars::ListRef<DataMemorydbUserAuthenticationModeElRef> {
+    pub fn authentication_mode(&self) -> terrars::ListRef<DataMemorydbUser_AuthenticationModeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_mode", self.extract_ref()))
     }
 
@@ -225,6 +243,12 @@ impl DataMemorydbUserRef {
     #[doc = "Get a reference to the value of field `minimum_engine_version` after provisioning.\n"]
     pub fn minimum_engine_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_engine_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -239,14 +263,14 @@ impl DataMemorydbUserRef {
 }
 
 #[derive(Serialize)]
-pub struct DataMemorydbUserAuthenticationModeEl {
+pub struct DataMemorydbUser_AuthenticationMode {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataMemorydbUserAuthenticationModeEl {
+impl DataMemorydbUser_AuthenticationMode {
     #[doc = "Set the field `password_count`.\n"]
     pub fn set_password_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.password_count = std::option::Option::Some(v.into());
@@ -260,8 +284,8 @@ impl DataMemorydbUserAuthenticationModeEl {
     }
 }
 
-impl terrars::ToListMappable for DataMemorydbUserAuthenticationModeEl {
-    type O = terrars::BlockAssignable<DataMemorydbUserAuthenticationModeEl>;
+impl terrars::ToListMappable for DataMemorydbUser_AuthenticationMode {
+    type O = terrars::BlockAssignable<DataMemorydbUser_AuthenticationMode>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -272,32 +296,34 @@ impl terrars::ToListMappable for DataMemorydbUserAuthenticationModeEl {
     }
 }
 
-pub struct BuildDataMemorydbUserAuthenticationModeEl {}
+pub struct BuildDataMemorydbUser_AuthenticationMode {}
 
-impl BuildDataMemorydbUserAuthenticationModeEl {
-    pub fn build(self) -> DataMemorydbUserAuthenticationModeEl {
-        DataMemorydbUserAuthenticationModeEl {
+impl BuildDataMemorydbUser_AuthenticationMode {
+    pub fn build(self) -> DataMemorydbUser_AuthenticationMode {
+        DataMemorydbUser_AuthenticationMode {
             password_count: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataMemorydbUserAuthenticationModeElRef {
+#[allow(dead_code)]
+pub struct DataMemorydbUser_AuthenticationModeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataMemorydbUserAuthenticationModeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbUserAuthenticationModeElRef {
-        DataMemorydbUserAuthenticationModeElRef {
+impl terrars::Ref for DataMemorydbUser_AuthenticationModeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataMemorydbUser_AuthenticationModeRef {
+        DataMemorydbUser_AuthenticationModeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataMemorydbUserAuthenticationModeElRef {
+impl DataMemorydbUser_AuthenticationModeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

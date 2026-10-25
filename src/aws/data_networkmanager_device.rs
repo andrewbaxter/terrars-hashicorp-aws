@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataNetworkmanagerDeviceData {
+struct DataNetworkmanagerDeviceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,7 +29,7 @@ struct DataNetworkmanagerDeviceData {
 struct DataNetworkmanagerDevice_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataNetworkmanagerDeviceData>,
+    data: std::cell::RefCell<DataNetworkmanagerDeviceData_>,
 }
 
 #[derive(Clone)]
@@ -93,7 +95,7 @@ impl DataNetworkmanagerDevice {
     }
 
     #[doc = "Get a reference to the value of field `aws_location` after provisioning.\n"]
-    pub fn aws_location(&self) -> terrars::ListRef<DataNetworkmanagerDeviceAwsLocationElRef> {
+    pub fn aws_location(&self) -> terrars::ListRef<DataNetworkmanagerDevice_AwsLocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_location", self.extract_ref()))
     }
 
@@ -118,7 +120,7 @@ impl DataNetworkmanagerDevice {
     }
 
     #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> terrars::ListRef<DataNetworkmanagerDeviceLocationElRef> {
+    pub fn location(&self) -> terrars::ListRef<DataNetworkmanagerDevice_LocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
@@ -197,7 +199,7 @@ impl BuildDataNetworkmanagerDevice {
         let out = DataNetworkmanagerDevice(std::rc::Rc::new(DataNetworkmanagerDevice_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataNetworkmanagerDeviceData {
+            data: std::cell::RefCell::new(DataNetworkmanagerDeviceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -242,7 +244,7 @@ impl DataNetworkmanagerDeviceRef {
     }
 
     #[doc = "Get a reference to the value of field `aws_location` after provisioning.\n"]
-    pub fn aws_location(&self) -> terrars::ListRef<DataNetworkmanagerDeviceAwsLocationElRef> {
+    pub fn aws_location(&self) -> terrars::ListRef<DataNetworkmanagerDevice_AwsLocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.aws_location", self.extract_ref()))
     }
 
@@ -267,7 +269,7 @@ impl DataNetworkmanagerDeviceRef {
     }
 
     #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> terrars::ListRef<DataNetworkmanagerDeviceLocationElRef> {
+    pub fn location(&self) -> terrars::ListRef<DataNetworkmanagerDevice_LocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
@@ -303,14 +305,14 @@ impl DataNetworkmanagerDeviceRef {
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkmanagerDeviceAwsLocationEl {
+pub struct DataNetworkmanagerDevice_AwsLocation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataNetworkmanagerDeviceAwsLocationEl {
+impl DataNetworkmanagerDevice_AwsLocation {
     #[doc = "Set the field `subnet_arn`.\n"]
     pub fn set_subnet_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.subnet_arn = std::option::Option::Some(v.into());
@@ -324,8 +326,8 @@ impl DataNetworkmanagerDeviceAwsLocationEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkmanagerDeviceAwsLocationEl {
-    type O = terrars::BlockAssignable<DataNetworkmanagerDeviceAwsLocationEl>;
+impl terrars::ToListMappable for DataNetworkmanagerDevice_AwsLocation {
+    type O = terrars::BlockAssignable<DataNetworkmanagerDevice_AwsLocation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -336,32 +338,34 @@ impl terrars::ToListMappable for DataNetworkmanagerDeviceAwsLocationEl {
     }
 }
 
-pub struct BuildDataNetworkmanagerDeviceAwsLocationEl {}
+pub struct BuildDataNetworkmanagerDevice_AwsLocation {}
 
-impl BuildDataNetworkmanagerDeviceAwsLocationEl {
-    pub fn build(self) -> DataNetworkmanagerDeviceAwsLocationEl {
-        DataNetworkmanagerDeviceAwsLocationEl {
+impl BuildDataNetworkmanagerDevice_AwsLocation {
+    pub fn build(self) -> DataNetworkmanagerDevice_AwsLocation {
+        DataNetworkmanagerDevice_AwsLocation {
             subnet_arn: core::default::Default::default(),
             zone: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataNetworkmanagerDeviceAwsLocationElRef {
+#[allow(dead_code)]
+pub struct DataNetworkmanagerDevice_AwsLocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkmanagerDeviceAwsLocationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkmanagerDeviceAwsLocationElRef {
-        DataNetworkmanagerDeviceAwsLocationElRef {
+impl terrars::Ref for DataNetworkmanagerDevice_AwsLocationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkmanagerDevice_AwsLocationRef {
+        DataNetworkmanagerDevice_AwsLocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkmanagerDeviceAwsLocationElRef {
+impl DataNetworkmanagerDevice_AwsLocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -378,7 +382,7 @@ impl DataNetworkmanagerDeviceAwsLocationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkmanagerDeviceLocationEl {
+pub struct DataNetworkmanagerDevice_Location {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -387,7 +391,7 @@ pub struct DataNetworkmanagerDeviceLocationEl {
     longitude: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataNetworkmanagerDeviceLocationEl {
+impl DataNetworkmanagerDevice_Location {
     #[doc = "Set the field `address`.\n"]
     pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address = std::option::Option::Some(v.into());
@@ -407,8 +411,8 @@ impl DataNetworkmanagerDeviceLocationEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkmanagerDeviceLocationEl {
-    type O = terrars::BlockAssignable<DataNetworkmanagerDeviceLocationEl>;
+impl terrars::ToListMappable for DataNetworkmanagerDevice_Location {
+    type O = terrars::BlockAssignable<DataNetworkmanagerDevice_Location>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -419,11 +423,11 @@ impl terrars::ToListMappable for DataNetworkmanagerDeviceLocationEl {
     }
 }
 
-pub struct BuildDataNetworkmanagerDeviceLocationEl {}
+pub struct BuildDataNetworkmanagerDevice_Location {}
 
-impl BuildDataNetworkmanagerDeviceLocationEl {
-    pub fn build(self) -> DataNetworkmanagerDeviceLocationEl {
-        DataNetworkmanagerDeviceLocationEl {
+impl BuildDataNetworkmanagerDevice_Location {
+    pub fn build(self) -> DataNetworkmanagerDevice_Location {
+        DataNetworkmanagerDevice_Location {
             address: core::default::Default::default(),
             latitude: core::default::Default::default(),
             longitude: core::default::Default::default(),
@@ -431,21 +435,23 @@ impl BuildDataNetworkmanagerDeviceLocationEl {
     }
 }
 
-pub struct DataNetworkmanagerDeviceLocationElRef {
+#[allow(dead_code)]
+pub struct DataNetworkmanagerDevice_LocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkmanagerDeviceLocationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkmanagerDeviceLocationElRef {
-        DataNetworkmanagerDeviceLocationElRef {
+impl terrars::Ref for DataNetworkmanagerDevice_LocationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkmanagerDevice_LocationRef {
+        DataNetworkmanagerDevice_LocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkmanagerDeviceLocationElRef {
+impl DataNetworkmanagerDevice_LocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

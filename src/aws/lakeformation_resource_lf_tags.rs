@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LakeformationResourceLfTagsData {
+struct LakeformationResourceLfTagsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,22 +25,24 @@ struct LakeformationResourceLfTagsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    database: std::option::Option<std::vec::Vec<LakeformationResourceLfTagsDatabaseEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lf_tag: std::option::Option<std::vec::Vec<LakeformationResourceLfTagsLfTagEl>>,
+    database: std::option::Option<std::vec::Vec<LakeformationResourceLfTags_Database>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    table: std::option::Option<std::vec::Vec<LakeformationResourceLfTagsTableEl>>,
+    lf_tag: std::option::Option<std::vec::Vec<LakeformationResourceLfTags_LfTag>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    table_with_columns: std::option::Option<std::vec::Vec<LakeformationResourceLfTagsTableWithColumnsEl>>,
+    table: std::option::Option<std::vec::Vec<LakeformationResourceLfTags_Table>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LakeformationResourceLfTagsTimeoutsEl>,
+    table_with_columns: std::option::Option<std::vec::Vec<LakeformationResourceLfTags_TableWithColumns>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<LakeformationResourceLfTags_Timeouts>,
     dynamic: LakeformationResourceLfTagsDynamic,
 }
 
 struct LakeformationResourceLfTags_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LakeformationResourceLfTagsData>,
+    data: std::cell::RefCell<LakeformationResourceLfTagsData_>,
 }
 
 #[derive(Clone)]
@@ -150,10 +154,17 @@ impl LakeformationResourceLfTags {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `database`.\n"]
     pub fn set_database(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LakeformationResourceLfTagsDatabaseEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LakeformationResourceLfTags_Database>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -169,7 +180,7 @@ impl LakeformationResourceLfTags {
     #[doc = "Set the field `lf_tag`.\n"]
     pub fn set_lf_tag(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LakeformationResourceLfTagsLfTagEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LakeformationResourceLfTags_LfTag>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,7 +196,7 @@ impl LakeformationResourceLfTags {
     #[doc = "Set the field `table`.\n"]
     pub fn set_table(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LakeformationResourceLfTagsTableEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LakeformationResourceLfTags_Table>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -201,7 +212,7 @@ impl LakeformationResourceLfTags {
     #[doc = "Set the field `table_with_columns`.\n"]
     pub fn set_table_with_columns(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LakeformationResourceLfTagsTableWithColumnsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LakeformationResourceLfTags_TableWithColumns>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,7 +226,7 @@ impl LakeformationResourceLfTags {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LakeformationResourceLfTagsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LakeformationResourceLfTags_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -230,24 +241,30 @@ impl LakeformationResourceLfTags {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `database` after provisioning.\n"]
-    pub fn database(&self) -> terrars::ListRef<LakeformationResourceLfTagsDatabaseElRef> {
+    pub fn database(&self) -> terrars::ListRef<LakeformationResourceLfTags_DatabaseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table` after provisioning.\n"]
-    pub fn table(&self) -> terrars::ListRef<LakeformationResourceLfTagsTableElRef> {
+    pub fn table(&self) -> terrars::ListRef<LakeformationResourceLfTags_TableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table_with_columns` after provisioning.\n"]
-    pub fn table_with_columns(&self) -> terrars::ListRef<LakeformationResourceLfTagsTableWithColumnsElRef> {
+    pub fn table_with_columns(&self) -> terrars::ListRef<LakeformationResourceLfTags_TableWithColumnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table_with_columns", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LakeformationResourceLfTagsTimeoutsElRef {
-        LakeformationResourceLfTagsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> LakeformationResourceLfTags_TimeoutsRef {
+        LakeformationResourceLfTags_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -294,7 +311,7 @@ impl BuildLakeformationResourceLfTags {
         let out = LakeformationResourceLfTags(std::rc::Rc::new(LakeformationResourceLfTags_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LakeformationResourceLfTagsData {
+            data: std::cell::RefCell::new(LakeformationResourceLfTagsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -302,6 +319,7 @@ impl BuildLakeformationResourceLfTags {
                 provisioner: core::default::Default::default(),
                 catalog_id: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 database: core::default::Default::default(),
                 lf_tag: core::default::Default::default(),
                 table: core::default::Default::default(),
@@ -348,38 +366,52 @@ impl LakeformationResourceLfTagsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `database` after provisioning.\n"]
-    pub fn database(&self) -> terrars::ListRef<LakeformationResourceLfTagsDatabaseElRef> {
+    pub fn database(&self) -> terrars::ListRef<LakeformationResourceLfTags_DatabaseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.database", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table` after provisioning.\n"]
-    pub fn table(&self) -> terrars::ListRef<LakeformationResourceLfTagsTableElRef> {
+    pub fn table(&self) -> terrars::ListRef<LakeformationResourceLfTags_TableRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table_with_columns` after provisioning.\n"]
-    pub fn table_with_columns(&self) -> terrars::ListRef<LakeformationResourceLfTagsTableWithColumnsElRef> {
+    pub fn table_with_columns(&self) -> terrars::ListRef<LakeformationResourceLfTags_TableWithColumnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.table_with_columns", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LakeformationResourceLfTagsTimeoutsElRef {
-        LakeformationResourceLfTagsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> LakeformationResourceLfTags_TimeoutsRef {
+        LakeformationResourceLfTags_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct LakeformationResourceLfTagsDynamic {
+    database: std::option::Option<terrars::DynamicBlock<LakeformationResourceLfTags_Database>>,
+    lf_tag: std::option::Option<terrars::DynamicBlock<LakeformationResourceLfTags_LfTag>>,
+    table: std::option::Option<terrars::DynamicBlock<LakeformationResourceLfTags_Table>>,
+    table_with_columns: std::option::Option<terrars::DynamicBlock<LakeformationResourceLfTags_TableWithColumns>>,
+}
+
 #[derive(Serialize)]
-pub struct LakeformationResourceLfTagsDatabaseEl {
+pub struct LakeformationResourceLfTags_Database {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
 }
 
-impl LakeformationResourceLfTagsDatabaseEl {
+impl LakeformationResourceLfTags_Database {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -387,8 +419,8 @@ impl LakeformationResourceLfTagsDatabaseEl {
     }
 }
 
-impl terrars::ToListMappable for LakeformationResourceLfTagsDatabaseEl {
-    type O = terrars::BlockAssignable<LakeformationResourceLfTagsDatabaseEl>;
+impl terrars::ToListMappable for LakeformationResourceLfTags_Database {
+    type O = terrars::BlockAssignable<LakeformationResourceLfTags_Database>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -399,35 +431,37 @@ impl terrars::ToListMappable for LakeformationResourceLfTagsDatabaseEl {
     }
 }
 
-pub struct BuildLakeformationResourceLfTagsDatabaseEl {
+pub struct BuildLakeformationResourceLfTags_Database {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLakeformationResourceLfTagsDatabaseEl {
-    pub fn build(self) -> LakeformationResourceLfTagsDatabaseEl {
-        LakeformationResourceLfTagsDatabaseEl {
+impl BuildLakeformationResourceLfTags_Database {
+    pub fn build(self) -> LakeformationResourceLfTags_Database {
+        LakeformationResourceLfTags_Database {
             catalog_id: core::default::Default::default(),
             name: self.name,
         }
     }
 }
 
-pub struct LakeformationResourceLfTagsDatabaseElRef {
+#[allow(dead_code)]
+pub struct LakeformationResourceLfTags_DatabaseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LakeformationResourceLfTagsDatabaseElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LakeformationResourceLfTagsDatabaseElRef {
-        LakeformationResourceLfTagsDatabaseElRef {
+impl terrars::Ref for LakeformationResourceLfTags_DatabaseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LakeformationResourceLfTags_DatabaseRef {
+        LakeformationResourceLfTags_DatabaseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LakeformationResourceLfTagsDatabaseElRef {
+impl LakeformationResourceLfTags_DatabaseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -444,14 +478,14 @@ impl LakeformationResourceLfTagsDatabaseElRef {
 }
 
 #[derive(Serialize)]
-pub struct LakeformationResourceLfTagsLfTagEl {
+pub struct LakeformationResourceLfTags_LfTag {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl LakeformationResourceLfTagsLfTagEl {
+impl LakeformationResourceLfTags_LfTag {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -459,8 +493,8 @@ impl LakeformationResourceLfTagsLfTagEl {
     }
 }
 
-impl terrars::ToListMappable for LakeformationResourceLfTagsLfTagEl {
-    type O = terrars::BlockAssignable<LakeformationResourceLfTagsLfTagEl>;
+impl terrars::ToListMappable for LakeformationResourceLfTags_LfTag {
+    type O = terrars::BlockAssignable<LakeformationResourceLfTags_LfTag>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -471,16 +505,16 @@ impl terrars::ToListMappable for LakeformationResourceLfTagsLfTagEl {
     }
 }
 
-pub struct BuildLakeformationResourceLfTagsLfTagEl {
+pub struct BuildLakeformationResourceLfTags_LfTag {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLakeformationResourceLfTagsLfTagEl {
-    pub fn build(self) -> LakeformationResourceLfTagsLfTagEl {
-        LakeformationResourceLfTagsLfTagEl {
+impl BuildLakeformationResourceLfTags_LfTag {
+    pub fn build(self) -> LakeformationResourceLfTags_LfTag {
+        LakeformationResourceLfTags_LfTag {
             catalog_id: core::default::Default::default(),
             key: self.key,
             value: self.value,
@@ -488,21 +522,23 @@ impl BuildLakeformationResourceLfTagsLfTagEl {
     }
 }
 
-pub struct LakeformationResourceLfTagsLfTagElRef {
+#[allow(dead_code)]
+pub struct LakeformationResourceLfTags_LfTagRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LakeformationResourceLfTagsLfTagElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LakeformationResourceLfTagsLfTagElRef {
-        LakeformationResourceLfTagsLfTagElRef {
+impl terrars::Ref for LakeformationResourceLfTags_LfTagRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LakeformationResourceLfTags_LfTagRef {
+        LakeformationResourceLfTags_LfTagRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LakeformationResourceLfTagsLfTagElRef {
+impl LakeformationResourceLfTags_LfTagRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -524,7 +560,7 @@ impl LakeformationResourceLfTagsLfTagElRef {
 }
 
 #[derive(Serialize)]
-pub struct LakeformationResourceLfTagsTableEl {
+pub struct LakeformationResourceLfTags_Table {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     database_name: terrars::PrimField<std::string::String>,
@@ -534,7 +570,7 @@ pub struct LakeformationResourceLfTagsTableEl {
     wildcard: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl LakeformationResourceLfTagsTableEl {
+impl LakeformationResourceLfTags_Table {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -554,8 +590,8 @@ impl LakeformationResourceLfTagsTableEl {
     }
 }
 
-impl terrars::ToListMappable for LakeformationResourceLfTagsTableEl {
-    type O = terrars::BlockAssignable<LakeformationResourceLfTagsTableEl>;
+impl terrars::ToListMappable for LakeformationResourceLfTags_Table {
+    type O = terrars::BlockAssignable<LakeformationResourceLfTags_Table>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -566,14 +602,14 @@ impl terrars::ToListMappable for LakeformationResourceLfTagsTableEl {
     }
 }
 
-pub struct BuildLakeformationResourceLfTagsTableEl {
+pub struct BuildLakeformationResourceLfTags_Table {
     #[doc = ""]
     pub database_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLakeformationResourceLfTagsTableEl {
-    pub fn build(self) -> LakeformationResourceLfTagsTableEl {
-        LakeformationResourceLfTagsTableEl {
+impl BuildLakeformationResourceLfTags_Table {
+    pub fn build(self) -> LakeformationResourceLfTags_Table {
+        LakeformationResourceLfTags_Table {
             catalog_id: core::default::Default::default(),
             database_name: self.database_name,
             name: core::default::Default::default(),
@@ -582,21 +618,23 @@ impl BuildLakeformationResourceLfTagsTableEl {
     }
 }
 
-pub struct LakeformationResourceLfTagsTableElRef {
+#[allow(dead_code)]
+pub struct LakeformationResourceLfTags_TableRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LakeformationResourceLfTagsTableElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LakeformationResourceLfTagsTableElRef {
-        LakeformationResourceLfTagsTableElRef {
+impl terrars::Ref for LakeformationResourceLfTags_TableRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LakeformationResourceLfTags_TableRef {
+        LakeformationResourceLfTags_TableRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LakeformationResourceLfTagsTableElRef {
+impl LakeformationResourceLfTags_TableRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -623,7 +661,7 @@ impl LakeformationResourceLfTagsTableElRef {
 }
 
 #[derive(Serialize)]
-pub struct LakeformationResourceLfTagsTableWithColumnsEl {
+pub struct LakeformationResourceLfTags_TableWithColumns {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     catalog_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -636,7 +674,7 @@ pub struct LakeformationResourceLfTagsTableWithColumnsEl {
     wildcard: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl LakeformationResourceLfTagsTableWithColumnsEl {
+impl LakeformationResourceLfTags_TableWithColumns {
     #[doc = "Set the field `catalog_id`.\n"]
     pub fn set_catalog_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.catalog_id = std::option::Option::Some(v.into());
@@ -668,8 +706,8 @@ impl LakeformationResourceLfTagsTableWithColumnsEl {
     }
 }
 
-impl terrars::ToListMappable for LakeformationResourceLfTagsTableWithColumnsEl {
-    type O = terrars::BlockAssignable<LakeformationResourceLfTagsTableWithColumnsEl>;
+impl terrars::ToListMappable for LakeformationResourceLfTags_TableWithColumns {
+    type O = terrars::BlockAssignable<LakeformationResourceLfTags_TableWithColumns>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -680,16 +718,16 @@ impl terrars::ToListMappable for LakeformationResourceLfTagsTableWithColumnsEl {
     }
 }
 
-pub struct BuildLakeformationResourceLfTagsTableWithColumnsEl {
+pub struct BuildLakeformationResourceLfTags_TableWithColumns {
     #[doc = ""]
     pub database_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLakeformationResourceLfTagsTableWithColumnsEl {
-    pub fn build(self) -> LakeformationResourceLfTagsTableWithColumnsEl {
-        LakeformationResourceLfTagsTableWithColumnsEl {
+impl BuildLakeformationResourceLfTags_TableWithColumns {
+    pub fn build(self) -> LakeformationResourceLfTags_TableWithColumns {
+        LakeformationResourceLfTags_TableWithColumns {
             catalog_id: core::default::Default::default(),
             column_names: core::default::Default::default(),
             database_name: self.database_name,
@@ -700,24 +738,26 @@ impl BuildLakeformationResourceLfTagsTableWithColumnsEl {
     }
 }
 
-pub struct LakeformationResourceLfTagsTableWithColumnsElRef {
+#[allow(dead_code)]
+pub struct LakeformationResourceLfTags_TableWithColumnsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LakeformationResourceLfTagsTableWithColumnsElRef {
+impl terrars::Ref for LakeformationResourceLfTags_TableWithColumnsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LakeformationResourceLfTagsTableWithColumnsElRef {
-        LakeformationResourceLfTagsTableWithColumnsElRef {
+    ) -> LakeformationResourceLfTags_TableWithColumnsRef {
+        LakeformationResourceLfTags_TableWithColumnsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LakeformationResourceLfTagsTableWithColumnsElRef {
+impl LakeformationResourceLfTags_TableWithColumnsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -754,14 +794,14 @@ impl LakeformationResourceLfTagsTableWithColumnsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LakeformationResourceLfTagsTimeoutsEl {
+pub struct LakeformationResourceLfTags_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LakeformationResourceLfTagsTimeoutsEl {
+impl LakeformationResourceLfTags_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -775,8 +815,8 @@ impl LakeformationResourceLfTagsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LakeformationResourceLfTagsTimeoutsEl {
-    type O = terrars::BlockAssignable<LakeformationResourceLfTagsTimeoutsEl>;
+impl terrars::ToListMappable for LakeformationResourceLfTags_Timeouts {
+    type O = terrars::BlockAssignable<LakeformationResourceLfTags_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -787,32 +827,34 @@ impl terrars::ToListMappable for LakeformationResourceLfTagsTimeoutsEl {
     }
 }
 
-pub struct BuildLakeformationResourceLfTagsTimeoutsEl {}
+pub struct BuildLakeformationResourceLfTags_Timeouts {}
 
-impl BuildLakeformationResourceLfTagsTimeoutsEl {
-    pub fn build(self) -> LakeformationResourceLfTagsTimeoutsEl {
-        LakeformationResourceLfTagsTimeoutsEl {
+impl BuildLakeformationResourceLfTags_Timeouts {
+    pub fn build(self) -> LakeformationResourceLfTags_Timeouts {
+        LakeformationResourceLfTags_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct LakeformationResourceLfTagsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LakeformationResourceLfTags_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LakeformationResourceLfTagsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LakeformationResourceLfTagsTimeoutsElRef {
-        LakeformationResourceLfTagsTimeoutsElRef {
+impl terrars::Ref for LakeformationResourceLfTags_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LakeformationResourceLfTags_TimeoutsRef {
+        LakeformationResourceLfTags_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LakeformationResourceLfTagsTimeoutsElRef {
+impl LakeformationResourceLfTags_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -826,12 +868,4 @@ impl LakeformationResourceLfTagsTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LakeformationResourceLfTagsDynamic {
-    database: std::option::Option<terrars::DynamicBlock<LakeformationResourceLfTagsDatabaseEl>>,
-    lf_tag: std::option::Option<terrars::DynamicBlock<LakeformationResourceLfTagsLfTagEl>>,
-    table: std::option::Option<terrars::DynamicBlock<LakeformationResourceLfTagsTableEl>>,
-    table_with_columns: std::option::Option<terrars::DynamicBlock<LakeformationResourceLfTagsTableWithColumnsEl>>,
 }

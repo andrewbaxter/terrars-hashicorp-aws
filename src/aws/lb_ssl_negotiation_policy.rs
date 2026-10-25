@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LbSslNegotiationPolicyData {
+struct LbSslNegotiationPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,18 @@ struct LbSslNegotiationPolicyData {
     load_balancer: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attribute: std::option::Option<std::vec::Vec<LbSslNegotiationPolicyAttributeEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    triggers: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    attribute: std::option::Option<std::vec::Vec<LbSslNegotiationPolicy_Attribute>>,
     dynamic: LbSslNegotiationPolicyDynamic,
 }
 
 struct LbSslNegotiationPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LbSslNegotiationPolicyData>,
+    data: std::cell::RefCell<LbSslNegotiationPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -137,10 +143,26 @@ impl LbSslNegotiationPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `triggers`.\n"]
+    pub fn set_triggers(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().triggers = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `attribute`.\n"]
     pub fn set_attribute(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LbSslNegotiationPolicyAttributeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LbSslNegotiationPolicy_Attribute>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -171,6 +193,17 @@ impl LbSslNegotiationPolicy {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `triggers` after provisioning.\n"]
+    pub fn triggers(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.triggers", self.extract_ref()))
     }
 }
 
@@ -220,7 +253,7 @@ impl BuildLbSslNegotiationPolicy {
         let out = LbSslNegotiationPolicy(std::rc::Rc::new(LbSslNegotiationPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LbSslNegotiationPolicyData {
+            data: std::cell::RefCell::new(LbSslNegotiationPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -230,6 +263,8 @@ impl BuildLbSslNegotiationPolicy {
                 lb_port: self.lb_port,
                 load_balancer: self.load_balancer,
                 name: self.name,
+                region: core::default::Default::default(),
+                triggers: core::default::Default::default(),
                 attribute: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -281,18 +316,34 @@ impl LbSslNegotiationPolicyRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `triggers` after provisioning.\n"]
+    pub fn triggers(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.triggers", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct LbSslNegotiationPolicyDynamic {
+    attribute: std::option::Option<terrars::DynamicBlock<LbSslNegotiationPolicy_Attribute>>,
 }
 
 #[derive(Serialize)]
-pub struct LbSslNegotiationPolicyAttributeEl {
+pub struct LbSslNegotiationPolicy_Attribute {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl LbSslNegotiationPolicyAttributeEl { }
+impl LbSslNegotiationPolicy_Attribute { }
 
-impl terrars::ToListMappable for LbSslNegotiationPolicyAttributeEl {
-    type O = terrars::BlockAssignable<LbSslNegotiationPolicyAttributeEl>;
+impl terrars::ToListMappable for LbSslNegotiationPolicy_Attribute {
+    type O = terrars::BlockAssignable<LbSslNegotiationPolicy_Attribute>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -303,37 +354,39 @@ impl terrars::ToListMappable for LbSslNegotiationPolicyAttributeEl {
     }
 }
 
-pub struct BuildLbSslNegotiationPolicyAttributeEl {
+pub struct BuildLbSslNegotiationPolicy_Attribute {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLbSslNegotiationPolicyAttributeEl {
-    pub fn build(self) -> LbSslNegotiationPolicyAttributeEl {
-        LbSslNegotiationPolicyAttributeEl {
+impl BuildLbSslNegotiationPolicy_Attribute {
+    pub fn build(self) -> LbSslNegotiationPolicy_Attribute {
+        LbSslNegotiationPolicy_Attribute {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct LbSslNegotiationPolicyAttributeElRef {
+#[allow(dead_code)]
+pub struct LbSslNegotiationPolicy_AttributeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LbSslNegotiationPolicyAttributeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LbSslNegotiationPolicyAttributeElRef {
-        LbSslNegotiationPolicyAttributeElRef {
+impl terrars::Ref for LbSslNegotiationPolicy_AttributeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LbSslNegotiationPolicy_AttributeRef {
+        LbSslNegotiationPolicy_AttributeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LbSslNegotiationPolicyAttributeElRef {
+impl LbSslNegotiationPolicy_AttributeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -347,9 +400,4 @@ impl LbSslNegotiationPolicyAttributeElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LbSslNegotiationPolicyDynamic {
-    attribute: std::option::Option<terrars::DynamicBlock<LbSslNegotiationPolicyAttributeEl>>,
 }

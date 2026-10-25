@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataSesv2DedicatedIpPoolData {
+struct DataSesv2DedicatedIpPoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataSesv2DedicatedIpPoolData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     pool_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataSesv2DedicatedIpPool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSesv2DedicatedIpPoolData>,
+    data: std::cell::RefCell<DataSesv2DedicatedIpPoolData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataSesv2DedicatedIpPool {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -92,7 +103,7 @@ impl DataSesv2DedicatedIpPool {
     }
 
     #[doc = "Get a reference to the value of field `dedicated_ips` after provisioning.\n"]
-    pub fn dedicated_ips(&self) -> terrars::ListRef<DataSesv2DedicatedIpPoolDedicatedIpsElRef> {
+    pub fn dedicated_ips(&self) -> terrars::ListRef<DataSesv2DedicatedIpPool_DedicatedIpsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dedicated_ips", self.extract_ref()))
     }
 
@@ -104,6 +115,12 @@ impl DataSesv2DedicatedIpPool {
     #[doc = "Get a reference to the value of field `pool_name` after provisioning.\n"]
     pub fn pool_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scaling_mode` after provisioning.\n"]
@@ -159,13 +176,14 @@ impl BuildDataSesv2DedicatedIpPool {
         let out = DataSesv2DedicatedIpPool(std::rc::Rc::new(DataSesv2DedicatedIpPool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSesv2DedicatedIpPoolData {
+            data: std::cell::RefCell::new(DataSesv2DedicatedIpPoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 pool_name: self.pool_name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -203,7 +221,7 @@ impl DataSesv2DedicatedIpPoolRef {
     }
 
     #[doc = "Get a reference to the value of field `dedicated_ips` after provisioning.\n"]
-    pub fn dedicated_ips(&self) -> terrars::ListRef<DataSesv2DedicatedIpPoolDedicatedIpsElRef> {
+    pub fn dedicated_ips(&self) -> terrars::ListRef<DataSesv2DedicatedIpPool_DedicatedIpsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dedicated_ips", self.extract_ref()))
     }
 
@@ -215,6 +233,12 @@ impl DataSesv2DedicatedIpPoolRef {
     #[doc = "Get a reference to the value of field `pool_name` after provisioning.\n"]
     pub fn pool_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scaling_mode` after provisioning.\n"]
@@ -229,7 +253,7 @@ impl DataSesv2DedicatedIpPoolRef {
 }
 
 #[derive(Serialize)]
-pub struct DataSesv2DedicatedIpPoolDedicatedIpsEl {
+pub struct DataSesv2DedicatedIpPool_DedicatedIps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -238,7 +262,7 @@ pub struct DataSesv2DedicatedIpPoolDedicatedIpsEl {
     warmup_status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSesv2DedicatedIpPoolDedicatedIpsEl {
+impl DataSesv2DedicatedIpPool_DedicatedIps {
     #[doc = "Set the field `ip`.\n"]
     pub fn set_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ip = std::option::Option::Some(v.into());
@@ -258,8 +282,8 @@ impl DataSesv2DedicatedIpPoolDedicatedIpsEl {
     }
 }
 
-impl terrars::ToListMappable for DataSesv2DedicatedIpPoolDedicatedIpsEl {
-    type O = terrars::BlockAssignable<DataSesv2DedicatedIpPoolDedicatedIpsEl>;
+impl terrars::ToListMappable for DataSesv2DedicatedIpPool_DedicatedIps {
+    type O = terrars::BlockAssignable<DataSesv2DedicatedIpPool_DedicatedIps>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -270,11 +294,11 @@ impl terrars::ToListMappable for DataSesv2DedicatedIpPoolDedicatedIpsEl {
     }
 }
 
-pub struct BuildDataSesv2DedicatedIpPoolDedicatedIpsEl {}
+pub struct BuildDataSesv2DedicatedIpPool_DedicatedIps {}
 
-impl BuildDataSesv2DedicatedIpPoolDedicatedIpsEl {
-    pub fn build(self) -> DataSesv2DedicatedIpPoolDedicatedIpsEl {
-        DataSesv2DedicatedIpPoolDedicatedIpsEl {
+impl BuildDataSesv2DedicatedIpPool_DedicatedIps {
+    pub fn build(self) -> DataSesv2DedicatedIpPool_DedicatedIps {
+        DataSesv2DedicatedIpPool_DedicatedIps {
             ip: core::default::Default::default(),
             warmup_percentage: core::default::Default::default(),
             warmup_status: core::default::Default::default(),
@@ -282,21 +306,23 @@ impl BuildDataSesv2DedicatedIpPoolDedicatedIpsEl {
     }
 }
 
-pub struct DataSesv2DedicatedIpPoolDedicatedIpsElRef {
+#[allow(dead_code)]
+pub struct DataSesv2DedicatedIpPool_DedicatedIpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSesv2DedicatedIpPoolDedicatedIpsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSesv2DedicatedIpPoolDedicatedIpsElRef {
-        DataSesv2DedicatedIpPoolDedicatedIpsElRef {
+impl terrars::Ref for DataSesv2DedicatedIpPool_DedicatedIpsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSesv2DedicatedIpPool_DedicatedIpsRef {
+        DataSesv2DedicatedIpPool_DedicatedIpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSesv2DedicatedIpPoolDedicatedIpsElRef {
+impl DataSesv2DedicatedIpPool_DedicatedIpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

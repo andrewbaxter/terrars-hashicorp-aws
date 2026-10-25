@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct OpensearchDomainSamlOptionsData {
+struct OpensearchDomainSamlOptionsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,16 +24,18 @@ struct OpensearchDomainSamlOptionsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    saml_options: std::option::Option<std::vec::Vec<OpensearchDomainSamlOptionsSamlOptionsEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<OpensearchDomainSamlOptionsTimeoutsEl>,
+    saml_options: std::option::Option<std::vec::Vec<OpensearchDomainSamlOptions_SamlOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<OpensearchDomainSamlOptions_Timeouts>,
     dynamic: OpensearchDomainSamlOptionsDynamic,
 }
 
 struct OpensearchDomainSamlOptions_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<OpensearchDomainSamlOptionsData>,
+    data: std::cell::RefCell<OpensearchDomainSamlOptionsData_>,
 }
 
 #[derive(Clone)]
@@ -137,10 +141,17 @@ impl OpensearchDomainSamlOptions {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `saml_options`.\n"]
     pub fn set_saml_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainSamlOptionsSamlOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainSamlOptions_SamlOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -154,7 +165,7 @@ impl OpensearchDomainSamlOptions {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<OpensearchDomainSamlOptionsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<OpensearchDomainSamlOptions_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -169,14 +180,20 @@ impl OpensearchDomainSamlOptions {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `saml_options` after provisioning.\n"]
-    pub fn saml_options(&self) -> terrars::ListRef<OpensearchDomainSamlOptionsSamlOptionsElRef> {
+    pub fn saml_options(&self) -> terrars::ListRef<OpensearchDomainSamlOptions_SamlOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.saml_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OpensearchDomainSamlOptionsTimeoutsElRef {
-        OpensearchDomainSamlOptionsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> OpensearchDomainSamlOptions_TimeoutsRef {
+        OpensearchDomainSamlOptions_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -225,7 +242,7 @@ impl BuildOpensearchDomainSamlOptions {
         let out = OpensearchDomainSamlOptions(std::rc::Rc::new(OpensearchDomainSamlOptions_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(OpensearchDomainSamlOptionsData {
+            data: std::cell::RefCell::new(OpensearchDomainSamlOptionsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -233,6 +250,7 @@ impl BuildOpensearchDomainSamlOptions {
                 provisioner: core::default::Default::default(),
                 domain_name: self.domain_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 saml_options: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -276,30 +294,41 @@ impl OpensearchDomainSamlOptionsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `saml_options` after provisioning.\n"]
-    pub fn saml_options(&self) -> terrars::ListRef<OpensearchDomainSamlOptionsSamlOptionsElRef> {
+    pub fn saml_options(&self) -> terrars::ListRef<OpensearchDomainSamlOptions_SamlOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.saml_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> OpensearchDomainSamlOptionsTimeoutsElRef {
-        OpensearchDomainSamlOptionsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> OpensearchDomainSamlOptions_TimeoutsRef {
+        OpensearchDomainSamlOptions_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct OpensearchDomainSamlOptionsDynamic {
+    saml_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainSamlOptions_SamlOptions>>,
+}
+
 #[derive(Serialize)]
-pub struct OpensearchDomainSamlOptionsSamlOptionsElIdpEl {
+pub struct OpensearchDomainSamlOptions_SamlOptions_Idp {
     entity_id: terrars::PrimField<std::string::String>,
     metadata_content: terrars::PrimField<std::string::String>,
 }
 
-impl OpensearchDomainSamlOptionsSamlOptionsElIdpEl { }
+impl OpensearchDomainSamlOptions_SamlOptions_Idp { }
 
-impl terrars::ToListMappable for OpensearchDomainSamlOptionsSamlOptionsElIdpEl {
-    type O = terrars::BlockAssignable<OpensearchDomainSamlOptionsSamlOptionsElIdpEl>;
+impl terrars::ToListMappable for OpensearchDomainSamlOptions_SamlOptions_Idp {
+    type O = terrars::BlockAssignable<OpensearchDomainSamlOptions_SamlOptions_Idp>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -310,40 +339,42 @@ impl terrars::ToListMappable for OpensearchDomainSamlOptionsSamlOptionsElIdpEl {
     }
 }
 
-pub struct BuildOpensearchDomainSamlOptionsSamlOptionsElIdpEl {
+pub struct BuildOpensearchDomainSamlOptions_SamlOptions_Idp {
     #[doc = ""]
     pub entity_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub metadata_content: terrars::PrimField<std::string::String>,
 }
 
-impl BuildOpensearchDomainSamlOptionsSamlOptionsElIdpEl {
-    pub fn build(self) -> OpensearchDomainSamlOptionsSamlOptionsElIdpEl {
-        OpensearchDomainSamlOptionsSamlOptionsElIdpEl {
+impl BuildOpensearchDomainSamlOptions_SamlOptions_Idp {
+    pub fn build(self) -> OpensearchDomainSamlOptions_SamlOptions_Idp {
+        OpensearchDomainSamlOptions_SamlOptions_Idp {
             entity_id: self.entity_id,
             metadata_content: self.metadata_content,
         }
     }
 }
 
-pub struct OpensearchDomainSamlOptionsSamlOptionsElIdpElRef {
+#[allow(dead_code)]
+pub struct OpensearchDomainSamlOptions_SamlOptions_IdpRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OpensearchDomainSamlOptionsSamlOptionsElIdpElRef {
+impl terrars::Ref for OpensearchDomainSamlOptions_SamlOptions_IdpRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> OpensearchDomainSamlOptionsSamlOptionsElIdpElRef {
-        OpensearchDomainSamlOptionsSamlOptionsElIdpElRef {
+    ) -> OpensearchDomainSamlOptions_SamlOptions_IdpRef {
+        OpensearchDomainSamlOptions_SamlOptions_IdpRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OpensearchDomainSamlOptionsSamlOptionsElIdpElRef {
+impl OpensearchDomainSamlOptions_SamlOptions_IdpRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -360,12 +391,12 @@ impl OpensearchDomainSamlOptionsSamlOptionsElIdpElRef {
 }
 
 #[derive(Serialize, Default)]
-struct OpensearchDomainSamlOptionsSamlOptionsElDynamic {
-    idp: std::option::Option<terrars::DynamicBlock<OpensearchDomainSamlOptionsSamlOptionsElIdpEl>>,
+struct OpensearchDomainSamlOptions_SamlOptionsDynamic {
+    idp: std::option::Option<terrars::DynamicBlock<OpensearchDomainSamlOptions_SamlOptions_Idp>>,
 }
 
 #[derive(Serialize)]
-pub struct OpensearchDomainSamlOptionsSamlOptionsEl {
+pub struct OpensearchDomainSamlOptions_SamlOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -379,11 +410,11 @@ pub struct OpensearchDomainSamlOptionsSamlOptionsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subject_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    idp: std::option::Option<std::vec::Vec<OpensearchDomainSamlOptionsSamlOptionsElIdpEl>>,
-    dynamic: OpensearchDomainSamlOptionsSamlOptionsElDynamic,
+    idp: std::option::Option<std::vec::Vec<OpensearchDomainSamlOptions_SamlOptions_Idp>>,
+    dynamic: OpensearchDomainSamlOptions_SamlOptionsDynamic,
 }
 
-impl OpensearchDomainSamlOptionsSamlOptionsEl {
+impl OpensearchDomainSamlOptions_SamlOptions {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -426,7 +457,7 @@ impl OpensearchDomainSamlOptionsSamlOptionsEl {
     #[doc = "Set the field `idp`.\n"]
     pub fn set_idp(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainSamlOptionsSamlOptionsElIdpEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<OpensearchDomainSamlOptions_SamlOptions_Idp>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -440,8 +471,8 @@ impl OpensearchDomainSamlOptionsSamlOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for OpensearchDomainSamlOptionsSamlOptionsEl {
-    type O = terrars::BlockAssignable<OpensearchDomainSamlOptionsSamlOptionsEl>;
+impl terrars::ToListMappable for OpensearchDomainSamlOptions_SamlOptions {
+    type O = terrars::BlockAssignable<OpensearchDomainSamlOptions_SamlOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -452,11 +483,11 @@ impl terrars::ToListMappable for OpensearchDomainSamlOptionsSamlOptionsEl {
     }
 }
 
-pub struct BuildOpensearchDomainSamlOptionsSamlOptionsEl {}
+pub struct BuildOpensearchDomainSamlOptions_SamlOptions {}
 
-impl BuildOpensearchDomainSamlOptionsSamlOptionsEl {
-    pub fn build(self) -> OpensearchDomainSamlOptionsSamlOptionsEl {
-        OpensearchDomainSamlOptionsSamlOptionsEl {
+impl BuildOpensearchDomainSamlOptions_SamlOptions {
+    pub fn build(self) -> OpensearchDomainSamlOptions_SamlOptions {
+        OpensearchDomainSamlOptions_SamlOptions {
             enabled: core::default::Default::default(),
             master_backend_role: core::default::Default::default(),
             master_user_name: core::default::Default::default(),
@@ -469,21 +500,23 @@ impl BuildOpensearchDomainSamlOptionsSamlOptionsEl {
     }
 }
 
-pub struct OpensearchDomainSamlOptionsSamlOptionsElRef {
+#[allow(dead_code)]
+pub struct OpensearchDomainSamlOptions_SamlOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OpensearchDomainSamlOptionsSamlOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainSamlOptionsSamlOptionsElRef {
-        OpensearchDomainSamlOptionsSamlOptionsElRef {
+impl terrars::Ref for OpensearchDomainSamlOptions_SamlOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainSamlOptions_SamlOptionsRef {
+        OpensearchDomainSamlOptions_SamlOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OpensearchDomainSamlOptionsSamlOptionsElRef {
+impl OpensearchDomainSamlOptions_SamlOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -519,20 +552,20 @@ impl OpensearchDomainSamlOptionsSamlOptionsElRef {
     }
 
     #[doc = "Get a reference to the value of field `idp` after provisioning.\n"]
-    pub fn idp(&self) -> terrars::ListRef<OpensearchDomainSamlOptionsSamlOptionsElIdpElRef> {
+    pub fn idp(&self) -> terrars::ListRef<OpensearchDomainSamlOptions_SamlOptions_IdpRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.idp", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct OpensearchDomainSamlOptionsTimeoutsEl {
+pub struct OpensearchDomainSamlOptions_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl OpensearchDomainSamlOptionsTimeoutsEl {
+impl OpensearchDomainSamlOptions_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -546,8 +579,8 @@ impl OpensearchDomainSamlOptionsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for OpensearchDomainSamlOptionsTimeoutsEl {
-    type O = terrars::BlockAssignable<OpensearchDomainSamlOptionsTimeoutsEl>;
+impl terrars::ToListMappable for OpensearchDomainSamlOptions_Timeouts {
+    type O = terrars::BlockAssignable<OpensearchDomainSamlOptions_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -558,32 +591,34 @@ impl terrars::ToListMappable for OpensearchDomainSamlOptionsTimeoutsEl {
     }
 }
 
-pub struct BuildOpensearchDomainSamlOptionsTimeoutsEl {}
+pub struct BuildOpensearchDomainSamlOptions_Timeouts {}
 
-impl BuildOpensearchDomainSamlOptionsTimeoutsEl {
-    pub fn build(self) -> OpensearchDomainSamlOptionsTimeoutsEl {
-        OpensearchDomainSamlOptionsTimeoutsEl {
+impl BuildOpensearchDomainSamlOptions_Timeouts {
+    pub fn build(self) -> OpensearchDomainSamlOptions_Timeouts {
+        OpensearchDomainSamlOptions_Timeouts {
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct OpensearchDomainSamlOptionsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct OpensearchDomainSamlOptions_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for OpensearchDomainSamlOptionsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainSamlOptionsTimeoutsElRef {
-        OpensearchDomainSamlOptionsTimeoutsElRef {
+impl terrars::Ref for OpensearchDomainSamlOptions_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> OpensearchDomainSamlOptions_TimeoutsRef {
+        OpensearchDomainSamlOptions_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl OpensearchDomainSamlOptionsTimeoutsElRef {
+impl OpensearchDomainSamlOptions_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -597,9 +632,4 @@ impl OpensearchDomainSamlOptionsTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct OpensearchDomainSamlOptionsDynamic {
-    saml_options: std::option::Option<terrars::DynamicBlock<OpensearchDomainSamlOptionsSamlOptionsEl>>,
 }

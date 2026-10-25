@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppconfigEnvironmentData {
+struct AppconfigEnvironmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,22 +23,20 @@ struct AppconfigEnvironmentData {
     application_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    monitor: std::option::Option<std::vec::Vec<AppconfigEnvironmentMonitorEl>>,
+    monitor: std::option::Option<std::vec::Vec<AppconfigEnvironment_Monitor>>,
     dynamic: AppconfigEnvironmentDynamic,
 }
 
 struct AppconfigEnvironment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppconfigEnvironmentData>,
+    data: std::cell::RefCell<AppconfigEnvironmentData_>,
 }
 
 #[derive(Clone)]
@@ -142,9 +142,10 @@ impl AppconfigEnvironment {
         self
     }
 
-    #[doc = "Set the field `id`.\n"]
-    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -157,19 +158,10 @@ impl AppconfigEnvironment {
         self
     }
 
-    #[doc = "Set the field `tags_all`.\n"]
-    pub fn set_tags_all(
-        self,
-        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `monitor`.\n"]
     pub fn set_monitor(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppconfigEnvironmentMonitorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppconfigEnvironment_Monitor>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -210,6 +202,12 @@ impl AppconfigEnvironment {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -272,7 +270,7 @@ impl BuildAppconfigEnvironment {
         let out = AppconfigEnvironment(std::rc::Rc::new(AppconfigEnvironment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppconfigEnvironmentData {
+            data: std::cell::RefCell::new(AppconfigEnvironmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -280,10 +278,9 @@ impl BuildAppconfigEnvironment {
                 provisioner: core::default::Default::default(),
                 application_id: self.application_id,
                 description: core::default::Default::default(),
-                id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
-                tags_all: core::default::Default::default(),
                 monitor: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -346,6 +343,12 @@ impl AppconfigEnvironmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -362,14 +365,19 @@ impl AppconfigEnvironmentRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppconfigEnvironmentDynamic {
+    monitor: std::option::Option<terrars::DynamicBlock<AppconfigEnvironment_Monitor>>,
+}
+
 #[derive(Serialize)]
-pub struct AppconfigEnvironmentMonitorEl {
+pub struct AppconfigEnvironment_Monitor {
     alarm_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     alarm_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppconfigEnvironmentMonitorEl {
+impl AppconfigEnvironment_Monitor {
     #[doc = "Set the field `alarm_role_arn`.\n"]
     pub fn set_alarm_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.alarm_role_arn = std::option::Option::Some(v.into());
@@ -377,8 +385,8 @@ impl AppconfigEnvironmentMonitorEl {
     }
 }
 
-impl terrars::ToListMappable for AppconfigEnvironmentMonitorEl {
-    type O = terrars::BlockAssignable<AppconfigEnvironmentMonitorEl>;
+impl terrars::ToListMappable for AppconfigEnvironment_Monitor {
+    type O = terrars::BlockAssignable<AppconfigEnvironment_Monitor>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -389,35 +397,37 @@ impl terrars::ToListMappable for AppconfigEnvironmentMonitorEl {
     }
 }
 
-pub struct BuildAppconfigEnvironmentMonitorEl {
+pub struct BuildAppconfigEnvironment_Monitor {
     #[doc = ""]
     pub alarm_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppconfigEnvironmentMonitorEl {
-    pub fn build(self) -> AppconfigEnvironmentMonitorEl {
-        AppconfigEnvironmentMonitorEl {
+impl BuildAppconfigEnvironment_Monitor {
+    pub fn build(self) -> AppconfigEnvironment_Monitor {
+        AppconfigEnvironment_Monitor {
             alarm_arn: self.alarm_arn,
             alarm_role_arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppconfigEnvironmentMonitorElRef {
+#[allow(dead_code)]
+pub struct AppconfigEnvironment_MonitorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppconfigEnvironmentMonitorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppconfigEnvironmentMonitorElRef {
-        AppconfigEnvironmentMonitorElRef {
+impl terrars::Ref for AppconfigEnvironment_MonitorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppconfigEnvironment_MonitorRef {
+        AppconfigEnvironment_MonitorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppconfigEnvironmentMonitorElRef {
+impl AppconfigEnvironment_MonitorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -431,9 +441,4 @@ impl AppconfigEnvironmentMonitorElRef {
     pub fn alarm_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.alarm_role_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppconfigEnvironmentDynamic {
-    monitor: std::option::Option<terrars::DynamicBlock<AppconfigEnvironmentMonitorEl>>,
 }

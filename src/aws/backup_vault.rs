@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct BackupVaultData {
+struct BackupVaultData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,17 +28,19 @@ struct BackupVaultData {
     kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<BackupVaultTimeoutsEl>,
+    timeouts: std::option::Option<BackupVault_Timeouts>,
 }
 
 struct BackupVault_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BackupVaultData>,
+    data: std::cell::RefCell<BackupVaultData_>,
 }
 
 #[derive(Clone)]
@@ -154,6 +158,13 @@ impl BackupVault {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -173,7 +184,7 @@ impl BackupVault {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<BackupVaultTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<BackupVault_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -208,6 +219,12 @@ impl BackupVault {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.recovery_points", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -219,8 +236,8 @@ impl BackupVault {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BackupVaultTimeoutsElRef {
-        BackupVaultTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BackupVault_TimeoutsRef {
+        BackupVault_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -266,7 +283,7 @@ impl BuildBackupVault {
         let out = BackupVault(std::rc::Rc::new(BackupVault_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BackupVaultData {
+            data: std::cell::RefCell::new(BackupVaultData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -276,6 +293,7 @@ impl BuildBackupVault {
                 id: core::default::Default::default(),
                 kms_key_arn: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -339,6 +357,12 @@ impl BackupVaultRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.recovery_points", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -350,18 +374,18 @@ impl BackupVaultRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> BackupVaultTimeoutsElRef {
-        BackupVaultTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> BackupVault_TimeoutsRef {
+        BackupVault_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct BackupVaultTimeoutsEl {
+pub struct BackupVault_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl BackupVaultTimeoutsEl {
+impl BackupVault_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -369,8 +393,8 @@ impl BackupVaultTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for BackupVaultTimeoutsEl {
-    type O = terrars::BlockAssignable<BackupVaultTimeoutsEl>;
+impl terrars::ToListMappable for BackupVault_Timeouts {
+    type O = terrars::BlockAssignable<BackupVault_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,29 +405,31 @@ impl terrars::ToListMappable for BackupVaultTimeoutsEl {
     }
 }
 
-pub struct BuildBackupVaultTimeoutsEl {}
+pub struct BuildBackupVault_Timeouts {}
 
-impl BuildBackupVaultTimeoutsEl {
-    pub fn build(self) -> BackupVaultTimeoutsEl {
-        BackupVaultTimeoutsEl { delete: core::default::Default::default() }
+impl BuildBackupVault_Timeouts {
+    pub fn build(self) -> BackupVault_Timeouts {
+        BackupVault_Timeouts { delete: core::default::Default::default() }
     }
 }
 
-pub struct BackupVaultTimeoutsElRef {
+#[allow(dead_code)]
+pub struct BackupVault_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupVaultTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupVaultTimeoutsElRef {
-        BackupVaultTimeoutsElRef {
+impl terrars::Ref for BackupVault_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupVault_TimeoutsRef {
+        BackupVault_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupVaultTimeoutsElRef {
+impl BackupVault_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

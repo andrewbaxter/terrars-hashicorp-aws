@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2HostData {
+struct DataEc2HostData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,18 +23,20 @@ struct DataEc2HostData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2HostFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEc2Host_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEc2HostTimeoutsEl>,
+    timeouts: std::option::Option<DataEc2Host_Timeouts>,
     dynamic: DataEc2HostDynamic,
 }
 
 struct DataEc2Host_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2HostData>,
+    data: std::cell::RefCell<DataEc2HostData_>,
 }
 
 #[derive(Clone)]
@@ -89,6 +93,13 @@ impl DataEc2Host {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -99,7 +110,7 @@ impl DataEc2Host {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEc2HostFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEc2Host_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -112,14 +123,32 @@ impl DataEc2Host {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2HostTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2Host_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Get a reference to the value of field `allocation_time` after provisioning.\n"]
+    pub fn allocation_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allocation_time", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `allows_multiple_instance_types` after provisioning.\n"]
+    pub fn allows_multiple_instance_types(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.allows_multiple_instance_types", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `asset_id` after provisioning.\n"]
+    pub fn asset_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.asset_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `auto_placement` after provisioning.\n"]
@@ -132,6 +161,16 @@ impl DataEc2Host {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `availability_zone_id` after provisioning.\n"]
+    pub fn availability_zone_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `available_capacity` after provisioning.\n"]
+    pub fn available_capacity(&self) -> terrars::ListRef<DataEc2Host_AvailableCapacityRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.available_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cores` after provisioning.\n"]
     pub fn cores(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cores", self.extract_ref()))
@@ -142,9 +181,19 @@ impl DataEc2Host {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `host_maintenance` after provisioning.\n"]
+    pub fn host_maintenance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_maintenance", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `host_recovery` after provisioning.\n"]
     pub fn host_recovery(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_recovery", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `host_reservation_id` after provisioning.\n"]
+    pub fn host_reservation_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_reservation_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -162,6 +211,19 @@ impl DataEc2Host {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `instances` after provisioning.\n"]
+    pub fn instances(&self) -> terrars::ListRef<DataEc2Host_InstancesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instances", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `member_of_service_linked_resource_group` after provisioning.\n"]
+    pub fn member_of_service_linked_resource_group(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.member_of_service_linked_resource_group", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `outpost_arn` after provisioning.\n"]
     pub fn outpost_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outpost_arn", self.extract_ref()))
@@ -172,9 +234,25 @@ impl DataEc2Host {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `release_time` after provisioning.\n"]
+    pub fn release_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.release_time", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sockets` after provisioning.\n"]
     pub fn sockets(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sockets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -188,8 +266,8 @@ impl DataEc2Host {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2HostTimeoutsElRef {
-        DataEc2HostTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEc2Host_TimeoutsRef {
+        DataEc2Host_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -233,13 +311,14 @@ impl BuildDataEc2Host {
         let out = DataEc2Host(std::rc::Rc::new(DataEc2Host_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2HostData {
+            data: std::cell::RefCell::new(DataEc2HostData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 host_id: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -274,9 +353,27 @@ impl DataEc2HostRef {
         self.base.clone()
     }
 
+    #[doc = "Get a reference to the value of field `allocation_time` after provisioning.\n"]
+    pub fn allocation_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allocation_time", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `allows_multiple_instance_types` after provisioning.\n"]
+    pub fn allows_multiple_instance_types(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.allows_multiple_instance_types", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `asset_id` after provisioning.\n"]
+    pub fn asset_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.asset_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `auto_placement` after provisioning.\n"]
@@ -289,6 +386,16 @@ impl DataEc2HostRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `availability_zone_id` after provisioning.\n"]
+    pub fn availability_zone_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `available_capacity` after provisioning.\n"]
+    pub fn available_capacity(&self) -> terrars::ListRef<DataEc2Host_AvailableCapacityRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.available_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cores` after provisioning.\n"]
     pub fn cores(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cores", self.extract_ref()))
@@ -299,9 +406,19 @@ impl DataEc2HostRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `host_maintenance` after provisioning.\n"]
+    pub fn host_maintenance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_maintenance", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `host_recovery` after provisioning.\n"]
     pub fn host_recovery(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_recovery", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `host_reservation_id` after provisioning.\n"]
+    pub fn host_reservation_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_reservation_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -319,6 +436,19 @@ impl DataEc2HostRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `instances` after provisioning.\n"]
+    pub fn instances(&self) -> terrars::ListRef<DataEc2Host_InstancesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instances", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `member_of_service_linked_resource_group` after provisioning.\n"]
+    pub fn member_of_service_linked_resource_group(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.member_of_service_linked_resource_group", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `outpost_arn` after provisioning.\n"]
     pub fn outpost_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outpost_arn", self.extract_ref()))
@@ -329,9 +459,25 @@ impl DataEc2HostRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `release_time` after provisioning.\n"]
+    pub fn release_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.release_time", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sockets` after provisioning.\n"]
     pub fn sockets(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sockets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -345,21 +491,48 @@ impl DataEc2HostRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2HostTimeoutsElRef {
-        DataEc2HostTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEc2Host_TimeoutsRef {
+        DataEc2Host_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataEc2HostFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct DataEc2HostDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2Host_Filter>>,
 }
 
-impl DataEc2HostFilterEl { }
+#[derive(Serialize)]
+pub struct DataEc2Host_AvailableCapacity_AvailableInstanceCapacity {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    available_capacity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    total_capacity: std::option::Option<terrars::PrimField<f64>>,
+}
 
-impl terrars::ToListMappable for DataEc2HostFilterEl {
-    type O = terrars::BlockAssignable<DataEc2HostFilterEl>;
+impl DataEc2Host_AvailableCapacity_AvailableInstanceCapacity {
+    #[doc = "Set the field `available_capacity`.\n"]
+    pub fn set_available_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.available_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `total_capacity`.\n"]
+    pub fn set_total_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.total_capacity = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataEc2Host_AvailableCapacity_AvailableInstanceCapacity {
+    type O = terrars::BlockAssignable<DataEc2Host_AvailableCapacity_AvailableInstanceCapacity>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -370,37 +543,286 @@ impl terrars::ToListMappable for DataEc2HostFilterEl {
     }
 }
 
-pub struct BuildDataEc2HostFilterEl {
-    #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
+pub struct BuildDataEc2Host_AvailableCapacity_AvailableInstanceCapacity {}
 
-impl BuildDataEc2HostFilterEl {
-    pub fn build(self) -> DataEc2HostFilterEl {
-        DataEc2HostFilterEl {
-            name: self.name,
-            values: self.values,
+impl BuildDataEc2Host_AvailableCapacity_AvailableInstanceCapacity {
+    pub fn build(self) -> DataEc2Host_AvailableCapacity_AvailableInstanceCapacity {
+        DataEc2Host_AvailableCapacity_AvailableInstanceCapacity {
+            available_capacity: core::default::Default::default(),
+            instance_type: core::default::Default::default(),
+            total_capacity: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2HostFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2Host_AvailableCapacity_AvailableInstanceCapacityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2HostFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2HostFilterElRef {
-        DataEc2HostFilterElRef {
+impl terrars::Ref for DataEc2Host_AvailableCapacity_AvailableInstanceCapacityRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataEc2Host_AvailableCapacity_AvailableInstanceCapacityRef {
+        DataEc2Host_AvailableCapacity_AvailableInstanceCapacityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2HostFilterElRef {
+impl DataEc2Host_AvailableCapacity_AvailableInstanceCapacityRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `available_capacity` after provisioning.\n"]
+    pub fn available_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.available_capacity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `total_capacity` after provisioning.\n"]
+    pub fn total_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_capacity", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataEc2Host_AvailableCapacity {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    available_instance_capacity: std
+    ::option
+    ::Option<terrars::ListField<DataEc2Host_AvailableCapacity_AvailableInstanceCapacity>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    available_vcpus: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataEc2Host_AvailableCapacity {
+    #[doc = "Set the field `available_instance_capacity`.\n"]
+    pub fn set_available_instance_capacity(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<DataEc2Host_AvailableCapacity_AvailableInstanceCapacity>>,
+    ) -> Self {
+        self.available_instance_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `available_vcpus`.\n"]
+    pub fn set_available_vcpus(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.available_vcpus = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataEc2Host_AvailableCapacity {
+    type O = terrars::BlockAssignable<DataEc2Host_AvailableCapacity>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataEc2Host_AvailableCapacity {}
+
+impl BuildDataEc2Host_AvailableCapacity {
+    pub fn build(self) -> DataEc2Host_AvailableCapacity {
+        DataEc2Host_AvailableCapacity {
+            available_instance_capacity: core::default::Default::default(),
+            available_vcpus: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataEc2Host_AvailableCapacityRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataEc2Host_AvailableCapacityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2Host_AvailableCapacityRef {
+        DataEc2Host_AvailableCapacityRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataEc2Host_AvailableCapacityRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `available_instance_capacity` after provisioning.\n"]
+    pub fn available_instance_capacity(
+        &self,
+    ) -> terrars::ListRef<DataEc2Host_AvailableCapacity_AvailableInstanceCapacityRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.available_instance_capacity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `available_vcpus` after provisioning.\n"]
+    pub fn available_vcpus(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.available_vcpus", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataEc2Host_Instances {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    owner_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataEc2Host_Instances {
+    #[doc = "Set the field `instance_id`.\n"]
+    pub fn set_instance_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `owner_id`.\n"]
+    pub fn set_owner_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.owner_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataEc2Host_Instances {
+    type O = terrars::BlockAssignable<DataEc2Host_Instances>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataEc2Host_Instances {}
+
+impl BuildDataEc2Host_Instances {
+    pub fn build(self) -> DataEc2Host_Instances {
+        DataEc2Host_Instances {
+            instance_id: core::default::Default::default(),
+            instance_type: core::default::Default::default(),
+            owner_id: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataEc2Host_InstancesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataEc2Host_InstancesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2Host_InstancesRef {
+        DataEc2Host_InstancesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataEc2Host_InstancesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
+    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
+    pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataEc2Host_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl DataEc2Host_Filter { }
+
+impl terrars::ToListMappable for DataEc2Host_Filter {
+    type O = terrars::BlockAssignable<DataEc2Host_Filter>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataEc2Host_Filter {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildDataEc2Host_Filter {
+    pub fn build(self) -> DataEc2Host_Filter {
+        DataEc2Host_Filter {
+            name: self.name,
+            values: self.values,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataEc2Host_FilterRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataEc2Host_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2Host_FilterRef {
+        DataEc2Host_FilterRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataEc2Host_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -411,18 +833,18 @@ impl DataEc2HostFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2HostTimeoutsEl {
+pub struct DataEc2Host_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2HostTimeoutsEl {
+impl DataEc2Host_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -430,8 +852,8 @@ impl DataEc2HostTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2HostTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEc2HostTimeoutsEl>;
+impl terrars::ToListMappable for DataEc2Host_Timeouts {
+    type O = terrars::BlockAssignable<DataEc2Host_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -442,29 +864,31 @@ impl terrars::ToListMappable for DataEc2HostTimeoutsEl {
     }
 }
 
-pub struct BuildDataEc2HostTimeoutsEl {}
+pub struct BuildDataEc2Host_Timeouts {}
 
-impl BuildDataEc2HostTimeoutsEl {
-    pub fn build(self) -> DataEc2HostTimeoutsEl {
-        DataEc2HostTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEc2Host_Timeouts {
+    pub fn build(self) -> DataEc2Host_Timeouts {
+        DataEc2Host_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEc2HostTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEc2Host_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2HostTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2HostTimeoutsElRef {
-        DataEc2HostTimeoutsElRef {
+impl terrars::Ref for DataEc2Host_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2Host_TimeoutsRef {
+        DataEc2Host_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2HostTimeoutsElRef {
+impl DataEc2Host_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -473,9 +897,4 @@ impl DataEc2HostTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2HostDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2HostFilterEl>>,
 }

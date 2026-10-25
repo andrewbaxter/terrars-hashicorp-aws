@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct BackupPlanData {
+struct BackupPlanData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,20 +24,24 @@ struct BackupPlanData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    advanced_backup_setting: std::option::Option<std::vec::Vec<BackupPlanAdvancedBackupSettingEl>>,
+    advanced_backup_setting: std::option::Option<std::vec::Vec<BackupPlan_AdvancedBackupSetting>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<BackupPlanRuleEl>>,
+    rule: std::option::Option<std::vec::Vec<BackupPlan_Rule>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scan_setting: std::option::Option<std::vec::Vec<BackupPlan_ScanSetting>>,
     dynamic: BackupPlanDynamic,
 }
 
 struct BackupPlan_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BackupPlanData>,
+    data: std::cell::RefCell<BackupPlanData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +147,13 @@ impl BackupPlan {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -162,7 +175,7 @@ impl BackupPlan {
     #[doc = "Set the field `advanced_backup_setting`.\n"]
     pub fn set_advanced_backup_setting(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupPlanAdvancedBackupSettingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupPlan_AdvancedBackupSetting>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -176,13 +189,26 @@ impl BackupPlan {
     }
 
     #[doc = "Set the field `rule`.\n"]
-    pub fn set_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<BackupPlanRuleEl>>) -> Self {
+    pub fn set_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<BackupPlan_Rule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().rule = std::option::Option::Some(v);
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.rule = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `scan_setting`.\n"]
+    pub fn set_scan_setting(self, v: impl std::convert::Into<terrars::BlockAssignable<BackupPlan_ScanSetting>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().scan_setting = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.scan_setting = std::option::Option::Some(d);
             },
         }
         self
@@ -201,6 +227,12 @@ impl BackupPlan {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -261,7 +293,7 @@ impl BuildBackupPlan {
         let out = BackupPlan(std::rc::Rc::new(BackupPlan_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BackupPlanData {
+            data: std::cell::RefCell::new(BackupPlanData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -269,10 +301,12 @@ impl BuildBackupPlan {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 advanced_backup_setting: core::default::Default::default(),
                 rule: core::default::Default::default(),
+                scan_setting: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -319,6 +353,12 @@ impl BackupPlanRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -335,16 +375,23 @@ impl BackupPlanRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct BackupPlanDynamic {
+    advanced_backup_setting: std::option::Option<terrars::DynamicBlock<BackupPlan_AdvancedBackupSetting>>,
+    rule: std::option::Option<terrars::DynamicBlock<BackupPlan_Rule>>,
+    scan_setting: std::option::Option<terrars::DynamicBlock<BackupPlan_ScanSetting>>,
+}
+
 #[derive(Serialize)]
-pub struct BackupPlanAdvancedBackupSettingEl {
+pub struct BackupPlan_AdvancedBackupSetting {
     backup_options: terrars::RecField<terrars::PrimField<std::string::String>>,
     resource_type: terrars::PrimField<std::string::String>,
 }
 
-impl BackupPlanAdvancedBackupSettingEl { }
+impl BackupPlan_AdvancedBackupSetting { }
 
-impl terrars::ToListMappable for BackupPlanAdvancedBackupSettingEl {
-    type O = terrars::BlockAssignable<BackupPlanAdvancedBackupSettingEl>;
+impl terrars::ToListMappable for BackupPlan_AdvancedBackupSetting {
+    type O = terrars::BlockAssignable<BackupPlan_AdvancedBackupSetting>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -355,37 +402,39 @@ impl terrars::ToListMappable for BackupPlanAdvancedBackupSettingEl {
     }
 }
 
-pub struct BuildBackupPlanAdvancedBackupSettingEl {
+pub struct BuildBackupPlan_AdvancedBackupSetting {
     #[doc = ""]
     pub backup_options: terrars::RecField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub resource_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBackupPlanAdvancedBackupSettingEl {
-    pub fn build(self) -> BackupPlanAdvancedBackupSettingEl {
-        BackupPlanAdvancedBackupSettingEl {
+impl BuildBackupPlan_AdvancedBackupSetting {
+    pub fn build(self) -> BackupPlan_AdvancedBackupSetting {
+        BackupPlan_AdvancedBackupSetting {
             backup_options: self.backup_options,
             resource_type: self.resource_type,
         }
     }
 }
 
-pub struct BackupPlanAdvancedBackupSettingElRef {
+#[allow(dead_code)]
+pub struct BackupPlan_AdvancedBackupSettingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupPlanAdvancedBackupSettingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlanAdvancedBackupSettingElRef {
-        BackupPlanAdvancedBackupSettingElRef {
+impl terrars::Ref for BackupPlan_AdvancedBackupSettingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlan_AdvancedBackupSettingRef {
+        BackupPlan_AdvancedBackupSettingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupPlanAdvancedBackupSettingElRef {
+impl BackupPlan_AdvancedBackupSettingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -402,14 +451,16 @@ impl BackupPlanAdvancedBackupSettingElRef {
 }
 
 #[derive(Serialize)]
-pub struct BackupPlanRuleElCopyActionElLifecycleEl {
+pub struct BackupPlan_Rule_Lifecycle {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cold_storage_after: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_after: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    opt_in_to_archive_for_supported_resources: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl BackupPlanRuleElCopyActionElLifecycleEl {
+impl BackupPlan_Rule_Lifecycle {
     #[doc = "Set the field `cold_storage_after`.\n"]
     pub fn set_cold_storage_after(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.cold_storage_after = std::option::Option::Some(v.into());
@@ -421,10 +472,19 @@ impl BackupPlanRuleElCopyActionElLifecycleEl {
         self.delete_after = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `opt_in_to_archive_for_supported_resources`.\n"]
+    pub fn set_opt_in_to_archive_for_supported_resources(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.opt_in_to_archive_for_supported_resources = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for BackupPlanRuleElCopyActionElLifecycleEl {
-    type O = terrars::BlockAssignable<BackupPlanRuleElCopyActionElLifecycleEl>;
+impl terrars::ToListMappable for BackupPlan_Rule_Lifecycle {
+    type O = terrars::BlockAssignable<BackupPlan_Rule_Lifecycle>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -435,32 +495,35 @@ impl terrars::ToListMappable for BackupPlanRuleElCopyActionElLifecycleEl {
     }
 }
 
-pub struct BuildBackupPlanRuleElCopyActionElLifecycleEl {}
+pub struct BuildBackupPlan_Rule_Lifecycle {}
 
-impl BuildBackupPlanRuleElCopyActionElLifecycleEl {
-    pub fn build(self) -> BackupPlanRuleElCopyActionElLifecycleEl {
-        BackupPlanRuleElCopyActionElLifecycleEl {
+impl BuildBackupPlan_Rule_Lifecycle {
+    pub fn build(self) -> BackupPlan_Rule_Lifecycle {
+        BackupPlan_Rule_Lifecycle {
             cold_storage_after: core::default::Default::default(),
             delete_after: core::default::Default::default(),
+            opt_in_to_archive_for_supported_resources: core::default::Default::default(),
         }
     }
 }
 
-pub struct BackupPlanRuleElCopyActionElLifecycleElRef {
+#[allow(dead_code)]
+pub struct BackupPlan_Rule_LifecycleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupPlanRuleElCopyActionElLifecycleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlanRuleElCopyActionElLifecycleElRef {
-        BackupPlanRuleElCopyActionElLifecycleElRef {
+impl terrars::Ref for BackupPlan_Rule_LifecycleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlan_Rule_LifecycleRef {
+        BackupPlan_Rule_LifecycleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupPlanRuleElCopyActionElLifecycleElRef {
+impl BackupPlan_Rule_LifecycleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -474,26 +537,34 @@ impl BackupPlanRuleElCopyActionElLifecycleElRef {
     pub fn delete_after(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_after", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `opt_in_to_archive_for_supported_resources` after provisioning.\n"]
+    pub fn opt_in_to_archive_for_supported_resources(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.opt_in_to_archive_for_supported_resources", self.base),
+        )
+    }
 }
 
 #[derive(Serialize, Default)]
-struct BackupPlanRuleElCopyActionElDynamic {
-    lifecycle: std::option::Option<terrars::DynamicBlock<BackupPlanRuleElCopyActionElLifecycleEl>>,
+struct BackupPlan_Rule_CopyActionDynamic {
+    lifecycle: std::option::Option<terrars::DynamicBlock<BackupPlan_Rule_Lifecycle>>,
 }
 
 #[derive(Serialize)]
-pub struct BackupPlanRuleElCopyActionEl {
+pub struct BackupPlan_Rule_CopyAction {
     destination_vault_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lifecycle: std::option::Option<std::vec::Vec<BackupPlanRuleElCopyActionElLifecycleEl>>,
-    dynamic: BackupPlanRuleElCopyActionElDynamic,
+    lifecycle: std::option::Option<std::vec::Vec<BackupPlan_Rule_Lifecycle>>,
+    dynamic: BackupPlan_Rule_CopyActionDynamic,
 }
 
-impl BackupPlanRuleElCopyActionEl {
+impl BackupPlan_Rule_CopyAction {
     #[doc = "Set the field `lifecycle`.\n"]
     pub fn set_lifecycle(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupPlanRuleElCopyActionElLifecycleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupPlan_Rule_Lifecycle>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -507,8 +578,8 @@ impl BackupPlanRuleElCopyActionEl {
     }
 }
 
-impl terrars::ToListMappable for BackupPlanRuleElCopyActionEl {
-    type O = terrars::BlockAssignable<BackupPlanRuleElCopyActionEl>;
+impl terrars::ToListMappable for BackupPlan_Rule_CopyAction {
+    type O = terrars::BlockAssignable<BackupPlan_Rule_CopyAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -519,14 +590,14 @@ impl terrars::ToListMappable for BackupPlanRuleElCopyActionEl {
     }
 }
 
-pub struct BuildBackupPlanRuleElCopyActionEl {
+pub struct BuildBackupPlan_Rule_CopyAction {
     #[doc = ""]
     pub destination_vault_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBackupPlanRuleElCopyActionEl {
-    pub fn build(self) -> BackupPlanRuleElCopyActionEl {
-        BackupPlanRuleElCopyActionEl {
+impl BuildBackupPlan_Rule_CopyAction {
+    pub fn build(self) -> BackupPlan_Rule_CopyAction {
+        BackupPlan_Rule_CopyAction {
             destination_vault_arn: self.destination_vault_arn,
             lifecycle: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -534,21 +605,23 @@ impl BuildBackupPlanRuleElCopyActionEl {
     }
 }
 
-pub struct BackupPlanRuleElCopyActionElRef {
+#[allow(dead_code)]
+pub struct BackupPlan_Rule_CopyActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupPlanRuleElCopyActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlanRuleElCopyActionElRef {
-        BackupPlanRuleElCopyActionElRef {
+impl terrars::Ref for BackupPlan_Rule_CopyActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlan_Rule_CopyActionRef {
+        BackupPlan_Rule_CopyActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupPlanRuleElCopyActionElRef {
+impl BackupPlan_Rule_CopyActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -559,35 +632,21 @@ impl BackupPlanRuleElCopyActionElRef {
     }
 
     #[doc = "Get a reference to the value of field `lifecycle` after provisioning.\n"]
-    pub fn lifecycle(&self) -> terrars::ListRef<BackupPlanRuleElCopyActionElLifecycleElRef> {
+    pub fn lifecycle(&self) -> terrars::ListRef<BackupPlan_Rule_LifecycleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lifecycle", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BackupPlanRuleElLifecycleEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cold_storage_after: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delete_after: std::option::Option<terrars::PrimField<f64>>,
+pub struct BackupPlan_Rule_ScanAction {
+    malware_scanner: terrars::PrimField<std::string::String>,
+    scan_mode: terrars::PrimField<std::string::String>,
 }
 
-impl BackupPlanRuleElLifecycleEl {
-    #[doc = "Set the field `cold_storage_after`.\n"]
-    pub fn set_cold_storage_after(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.cold_storage_after = std::option::Option::Some(v.into());
-        self
-    }
+impl BackupPlan_Rule_ScanAction { }
 
-    #[doc = "Set the field `delete_after`.\n"]
-    pub fn set_delete_after(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.delete_after = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for BackupPlanRuleElLifecycleEl {
-    type O = terrars::BlockAssignable<BackupPlanRuleElLifecycleEl>;
+impl terrars::ToListMappable for BackupPlan_Rule_ScanAction {
+    type O = terrars::BlockAssignable<BackupPlan_Rule_ScanAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -598,55 +657,63 @@ impl terrars::ToListMappable for BackupPlanRuleElLifecycleEl {
     }
 }
 
-pub struct BuildBackupPlanRuleElLifecycleEl {}
+pub struct BuildBackupPlan_Rule_ScanAction {
+    #[doc = ""]
+    pub malware_scanner: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub scan_mode: terrars::PrimField<std::string::String>,
+}
 
-impl BuildBackupPlanRuleElLifecycleEl {
-    pub fn build(self) -> BackupPlanRuleElLifecycleEl {
-        BackupPlanRuleElLifecycleEl {
-            cold_storage_after: core::default::Default::default(),
-            delete_after: core::default::Default::default(),
+impl BuildBackupPlan_Rule_ScanAction {
+    pub fn build(self) -> BackupPlan_Rule_ScanAction {
+        BackupPlan_Rule_ScanAction {
+            malware_scanner: self.malware_scanner,
+            scan_mode: self.scan_mode,
         }
     }
 }
 
-pub struct BackupPlanRuleElLifecycleElRef {
+#[allow(dead_code)]
+pub struct BackupPlan_Rule_ScanActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupPlanRuleElLifecycleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlanRuleElLifecycleElRef {
-        BackupPlanRuleElLifecycleElRef {
+impl terrars::Ref for BackupPlan_Rule_ScanActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlan_Rule_ScanActionRef {
+        BackupPlan_Rule_ScanActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupPlanRuleElLifecycleElRef {
+impl BackupPlan_Rule_ScanActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
-    #[doc = "Get a reference to the value of field `cold_storage_after` after provisioning.\n"]
-    pub fn cold_storage_after(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cold_storage_after", self.base))
+    #[doc = "Get a reference to the value of field `malware_scanner` after provisioning.\n"]
+    pub fn malware_scanner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.malware_scanner", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `delete_after` after provisioning.\n"]
-    pub fn delete_after(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_after", self.base))
+    #[doc = "Get a reference to the value of field `scan_mode` after provisioning.\n"]
+    pub fn scan_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scan_mode", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct BackupPlanRuleElDynamic {
-    copy_action: std::option::Option<terrars::DynamicBlock<BackupPlanRuleElCopyActionEl>>,
-    lifecycle: std::option::Option<terrars::DynamicBlock<BackupPlanRuleElLifecycleEl>>,
+struct BackupPlan_RuleDynamic {
+    copy_action: std::option::Option<terrars::DynamicBlock<BackupPlan_Rule_CopyAction>>,
+    lifecycle: std::option::Option<terrars::DynamicBlock<BackupPlan_Rule_Lifecycle>>,
+    scan_action: std::option::Option<terrars::DynamicBlock<BackupPlan_Rule_ScanAction>>,
 }
 
 #[derive(Serialize)]
-pub struct BackupPlanRuleEl {
+pub struct BackupPlan_Rule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     completion_window: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -657,16 +724,22 @@ pub struct BackupPlanRuleEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     schedule: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    schedule_expression_timezone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_window: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_logically_air_gapped_backup_vault_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     target_vault_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    copy_action: std::option::Option<std::vec::Vec<BackupPlanRuleElCopyActionEl>>,
+    copy_action: std::option::Option<std::vec::Vec<BackupPlan_Rule_CopyAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lifecycle: std::option::Option<std::vec::Vec<BackupPlanRuleElLifecycleEl>>,
-    dynamic: BackupPlanRuleElDynamic,
+    lifecycle: std::option::Option<std::vec::Vec<BackupPlan_Rule_Lifecycle>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scan_action: std::option::Option<std::vec::Vec<BackupPlan_Rule_ScanAction>>,
+    dynamic: BackupPlan_RuleDynamic,
 }
 
-impl BackupPlanRuleEl {
+impl BackupPlan_Rule {
     #[doc = "Set the field `completion_window`.\n"]
     pub fn set_completion_window(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.completion_window = std::option::Option::Some(v.into());
@@ -694,16 +767,34 @@ impl BackupPlanRuleEl {
         self
     }
 
+    #[doc = "Set the field `schedule_expression_timezone`.\n"]
+    pub fn set_schedule_expression_timezone(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.schedule_expression_timezone = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `start_window`.\n"]
     pub fn set_start_window(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.start_window = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `target_logically_air_gapped_backup_vault_arn`.\n"]
+    pub fn set_target_logically_air_gapped_backup_vault_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.target_logically_air_gapped_backup_vault_arn = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `copy_action`.\n"]
     pub fn set_copy_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupPlanRuleElCopyActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupPlan_Rule_CopyAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -719,7 +810,7 @@ impl BackupPlanRuleEl {
     #[doc = "Set the field `lifecycle`.\n"]
     pub fn set_lifecycle(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BackupPlanRuleElLifecycleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupPlan_Rule_Lifecycle>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -731,10 +822,26 @@ impl BackupPlanRuleEl {
         }
         self
     }
+
+    #[doc = "Set the field `scan_action`.\n"]
+    pub fn set_scan_action(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<BackupPlan_Rule_ScanAction>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.scan_action = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.scan_action = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for BackupPlanRuleEl {
-    type O = terrars::BlockAssignable<BackupPlanRuleEl>;
+impl terrars::ToListMappable for BackupPlan_Rule {
+    type O = terrars::BlockAssignable<BackupPlan_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -745,45 +852,50 @@ impl terrars::ToListMappable for BackupPlanRuleEl {
     }
 }
 
-pub struct BuildBackupPlanRuleEl {
+pub struct BuildBackupPlan_Rule {
     #[doc = ""]
     pub rule_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub target_vault_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBackupPlanRuleEl {
-    pub fn build(self) -> BackupPlanRuleEl {
-        BackupPlanRuleEl {
+impl BuildBackupPlan_Rule {
+    pub fn build(self) -> BackupPlan_Rule {
+        BackupPlan_Rule {
             completion_window: core::default::Default::default(),
             enable_continuous_backup: core::default::Default::default(),
             recovery_point_tags: core::default::Default::default(),
             rule_name: self.rule_name,
             schedule: core::default::Default::default(),
+            schedule_expression_timezone: core::default::Default::default(),
             start_window: core::default::Default::default(),
+            target_logically_air_gapped_backup_vault_arn: core::default::Default::default(),
             target_vault_name: self.target_vault_name,
             copy_action: core::default::Default::default(),
             lifecycle: core::default::Default::default(),
+            scan_action: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct BackupPlanRuleElRef {
+#[allow(dead_code)]
+pub struct BackupPlan_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BackupPlanRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlanRuleElRef {
-        BackupPlanRuleElRef {
+impl terrars::Ref for BackupPlan_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlan_RuleRef {
+        BackupPlan_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BackupPlanRuleElRef {
+impl BackupPlan_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -813,9 +925,23 @@ impl BackupPlanRuleElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `schedule_expression_timezone` after provisioning.\n"]
+    pub fn schedule_expression_timezone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.schedule_expression_timezone", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `start_window` after provisioning.\n"]
     pub fn start_window(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_window", self.base))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `target_logically_air_gapped_backup_vault_arn` after provisioning.\n"]
+    pub fn target_logically_air_gapped_backup_vault_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.target_logically_air_gapped_backup_vault_arn", self.base),
+        )
     }
 
     #[doc = "Get a reference to the value of field `target_vault_name` after provisioning.\n"]
@@ -824,13 +950,84 @@ impl BackupPlanRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `lifecycle` after provisioning.\n"]
-    pub fn lifecycle(&self) -> terrars::ListRef<BackupPlanRuleElLifecycleElRef> {
+    pub fn lifecycle(&self) -> terrars::ListRef<BackupPlan_Rule_LifecycleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lifecycle", self.base))
     }
 }
 
-#[derive(Serialize, Default)]
-struct BackupPlanDynamic {
-    advanced_backup_setting: std::option::Option<terrars::DynamicBlock<BackupPlanAdvancedBackupSettingEl>>,
-    rule: std::option::Option<terrars::DynamicBlock<BackupPlanRuleEl>>,
+#[derive(Serialize)]
+pub struct BackupPlan_ScanSetting {
+    malware_scanner: terrars::PrimField<std::string::String>,
+    resource_types: terrars::SetField<terrars::PrimField<std::string::String>>,
+    scanner_role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BackupPlan_ScanSetting { }
+
+impl terrars::ToListMappable for BackupPlan_ScanSetting {
+    type O = terrars::BlockAssignable<BackupPlan_ScanSetting>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBackupPlan_ScanSetting {
+    #[doc = ""]
+    pub malware_scanner: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub resource_types: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub scanner_role_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildBackupPlan_ScanSetting {
+    pub fn build(self) -> BackupPlan_ScanSetting {
+        BackupPlan_ScanSetting {
+            malware_scanner: self.malware_scanner,
+            resource_types: self.resource_types,
+            scanner_role_arn: self.scanner_role_arn,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BackupPlan_ScanSettingRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BackupPlan_ScanSettingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BackupPlan_ScanSettingRef {
+        BackupPlan_ScanSettingRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BackupPlan_ScanSettingRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `malware_scanner` after provisioning.\n"]
+    pub fn malware_scanner(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.malware_scanner", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_types` after provisioning.\n"]
+    pub fn resource_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.resource_types", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scanner_role_arn` after provisioning.\n"]
+    pub fn scanner_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scanner_role_arn", self.base))
+    }
 }

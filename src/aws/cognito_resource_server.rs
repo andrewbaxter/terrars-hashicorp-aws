@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CognitoResourceServerData {
+struct CognitoResourceServerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,16 +24,18 @@ struct CognitoResourceServerData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     identifier: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     user_pool_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scope: std::option::Option<std::vec::Vec<CognitoResourceServerScopeEl>>,
+    scope: std::option::Option<std::vec::Vec<CognitoResourceServer_Scope>>,
     dynamic: CognitoResourceServerDynamic,
 }
 
 struct CognitoResourceServer_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CognitoResourceServerData>,
+    data: std::cell::RefCell<CognitoResourceServerData_>,
 }
 
 #[derive(Clone)]
@@ -137,8 +141,15 @@ impl CognitoResourceServer {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `scope`.\n"]
-    pub fn set_scope(self, v: impl std::convert::Into<terrars::BlockAssignable<CognitoResourceServerScopeEl>>) -> Self {
+    pub fn set_scope(self, v: impl std::convert::Into<terrars::BlockAssignable<CognitoResourceServer_Scope>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().scope = std::option::Option::Some(v);
@@ -163,6 +174,12 @@ impl CognitoResourceServer {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scope_identifiers` after provisioning.\n"]
@@ -222,7 +239,7 @@ impl BuildCognitoResourceServer {
         let out = CognitoResourceServer(std::rc::Rc::new(CognitoResourceServer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CognitoResourceServerData {
+            data: std::cell::RefCell::new(CognitoResourceServerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -231,6 +248,7 @@ impl BuildCognitoResourceServer {
                 id: core::default::Default::default(),
                 identifier: self.identifier,
                 name: self.name,
+                region: core::default::Default::default(),
                 user_pool_id: self.user_pool_id,
                 scope: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -279,6 +297,12 @@ impl CognitoResourceServerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `scope_identifiers` after provisioning.\n"]
     pub fn scope_identifiers(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scope_identifiers", self.extract_ref()))
@@ -290,16 +314,21 @@ impl CognitoResourceServerRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct CognitoResourceServerDynamic {
+    scope: std::option::Option<terrars::DynamicBlock<CognitoResourceServer_Scope>>,
+}
+
 #[derive(Serialize)]
-pub struct CognitoResourceServerScopeEl {
+pub struct CognitoResourceServer_Scope {
     scope_description: terrars::PrimField<std::string::String>,
     scope_name: terrars::PrimField<std::string::String>,
 }
 
-impl CognitoResourceServerScopeEl { }
+impl CognitoResourceServer_Scope { }
 
-impl terrars::ToListMappable for CognitoResourceServerScopeEl {
-    type O = terrars::BlockAssignable<CognitoResourceServerScopeEl>;
+impl terrars::ToListMappable for CognitoResourceServer_Scope {
+    type O = terrars::BlockAssignable<CognitoResourceServer_Scope>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -310,37 +339,39 @@ impl terrars::ToListMappable for CognitoResourceServerScopeEl {
     }
 }
 
-pub struct BuildCognitoResourceServerScopeEl {
+pub struct BuildCognitoResourceServer_Scope {
     #[doc = ""]
     pub scope_description: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub scope_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCognitoResourceServerScopeEl {
-    pub fn build(self) -> CognitoResourceServerScopeEl {
-        CognitoResourceServerScopeEl {
+impl BuildCognitoResourceServer_Scope {
+    pub fn build(self) -> CognitoResourceServer_Scope {
+        CognitoResourceServer_Scope {
             scope_description: self.scope_description,
             scope_name: self.scope_name,
         }
     }
 }
 
-pub struct CognitoResourceServerScopeElRef {
+#[allow(dead_code)]
+pub struct CognitoResourceServer_ScopeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoResourceServerScopeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoResourceServerScopeElRef {
-        CognitoResourceServerScopeElRef {
+impl terrars::Ref for CognitoResourceServer_ScopeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoResourceServer_ScopeRef {
+        CognitoResourceServer_ScopeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoResourceServerScopeElRef {
+impl CognitoResourceServer_ScopeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -354,9 +385,4 @@ impl CognitoResourceServerScopeElRef {
     pub fn scope_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.scope_name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CognitoResourceServerDynamic {
-    scope: std::option::Option<terrars::DynamicBlock<CognitoResourceServerScopeEl>>,
 }

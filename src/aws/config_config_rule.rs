@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConfigConfigRuleData {
+struct ConfigConfigRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,20 +30,24 @@ struct ConfigConfigRuleData {
     maximum_execution_frequency: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scope: std::option::Option<std::vec::Vec<ConfigConfigRuleScopeEl>>,
+    evaluation_mode: std::option::Option<std::vec::Vec<ConfigConfigRule_EvaluationMode>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source: std::option::Option<std::vec::Vec<ConfigConfigRuleSourceEl>>,
+    scope: std::option::Option<std::vec::Vec<ConfigConfigRule_Scope>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source: std::option::Option<std::vec::Vec<ConfigConfigRule_Source>>,
     dynamic: ConfigConfigRuleDynamic,
 }
 
 struct ConfigConfigRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConfigConfigRuleData>,
+    data: std::cell::RefCell<ConfigConfigRuleData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +174,13 @@ impl ConfigConfigRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -186,8 +199,24 @@ impl ConfigConfigRule {
         self
     }
 
+    #[doc = "Set the field `evaluation_mode`.\n"]
+    pub fn set_evaluation_mode(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRule_EvaluationMode>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().evaluation_mode = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.evaluation_mode = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `scope`.\n"]
-    pub fn set_scope(self, v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRuleScopeEl>>) -> Self {
+    pub fn set_scope(self, v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRule_Scope>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().scope = std::option::Option::Some(v);
@@ -200,7 +229,7 @@ impl ConfigConfigRule {
     }
 
     #[doc = "Set the field `source`.\n"]
-    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRuleSourceEl>>) -> Self {
+    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRule_Source>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().source = std::option::Option::Some(v);
@@ -242,6 +271,12 @@ impl ConfigConfigRule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rule_id` after provisioning.\n"]
     pub fn rule_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_id", self.extract_ref()))
@@ -258,12 +293,12 @@ impl ConfigConfigRule {
     }
 
     #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
-    pub fn scope(&self) -> terrars::ListRef<ConfigConfigRuleScopeElRef> {
+    pub fn scope(&self) -> terrars::ListRef<ConfigConfigRule_ScopeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<ConfigConfigRuleSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<ConfigConfigRule_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
@@ -310,7 +345,7 @@ impl BuildConfigConfigRule {
         let out = ConfigConfigRule(std::rc::Rc::new(ConfigConfigRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConfigConfigRuleData {
+            data: std::cell::RefCell::new(ConfigConfigRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -321,8 +356,10 @@ impl BuildConfigConfigRule {
                 input_parameters: core::default::Default::default(),
                 maximum_execution_frequency: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                evaluation_mode: core::default::Default::default(),
                 scope: core::default::Default::default(),
                 source: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -386,6 +423,12 @@ impl ConfigConfigRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rule_id` after provisioning.\n"]
     pub fn rule_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_id", self.extract_ref()))
@@ -402,18 +445,86 @@ impl ConfigConfigRuleRef {
     }
 
     #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
-    pub fn scope(&self) -> terrars::ListRef<ConfigConfigRuleScopeElRef> {
+    pub fn scope(&self) -> terrars::ListRef<ConfigConfigRule_ScopeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<ConfigConfigRuleSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<ConfigConfigRule_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ConfigConfigRuleDynamic {
+    evaluation_mode: std::option::Option<terrars::DynamicBlock<ConfigConfigRule_EvaluationMode>>,
+    scope: std::option::Option<terrars::DynamicBlock<ConfigConfigRule_Scope>>,
+    source: std::option::Option<terrars::DynamicBlock<ConfigConfigRule_Source>>,
+}
+
 #[derive(Serialize)]
-pub struct ConfigConfigRuleScopeEl {
+pub struct ConfigConfigRule_EvaluationMode {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ConfigConfigRule_EvaluationMode {
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ConfigConfigRule_EvaluationMode {
+    type O = terrars::BlockAssignable<ConfigConfigRule_EvaluationMode>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildConfigConfigRule_EvaluationMode {}
+
+impl BuildConfigConfigRule_EvaluationMode {
+    pub fn build(self) -> ConfigConfigRule_EvaluationMode {
+        ConfigConfigRule_EvaluationMode { mode: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ConfigConfigRule_EvaluationModeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ConfigConfigRule_EvaluationModeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRule_EvaluationModeRef {
+        ConfigConfigRule_EvaluationModeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ConfigConfigRule_EvaluationModeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ConfigConfigRule_Scope {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compliance_resource_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -424,7 +535,7 @@ pub struct ConfigConfigRuleScopeEl {
     tag_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConfigConfigRuleScopeEl {
+impl ConfigConfigRule_Scope {
     #[doc = "Set the field `compliance_resource_id`.\n"]
     pub fn set_compliance_resource_id(
         mut self,
@@ -456,8 +567,8 @@ impl ConfigConfigRuleScopeEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigConfigRuleScopeEl {
-    type O = terrars::BlockAssignable<ConfigConfigRuleScopeEl>;
+impl terrars::ToListMappable for ConfigConfigRule_Scope {
+    type O = terrars::BlockAssignable<ConfigConfigRule_Scope>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -468,11 +579,11 @@ impl terrars::ToListMappable for ConfigConfigRuleScopeEl {
     }
 }
 
-pub struct BuildConfigConfigRuleScopeEl {}
+pub struct BuildConfigConfigRule_Scope {}
 
-impl BuildConfigConfigRuleScopeEl {
-    pub fn build(self) -> ConfigConfigRuleScopeEl {
-        ConfigConfigRuleScopeEl {
+impl BuildConfigConfigRule_Scope {
+    pub fn build(self) -> ConfigConfigRule_Scope {
+        ConfigConfigRule_Scope {
             compliance_resource_id: core::default::Default::default(),
             compliance_resource_types: core::default::Default::default(),
             tag_key: core::default::Default::default(),
@@ -481,21 +592,23 @@ impl BuildConfigConfigRuleScopeEl {
     }
 }
 
-pub struct ConfigConfigRuleScopeElRef {
+#[allow(dead_code)]
+pub struct ConfigConfigRule_ScopeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigConfigRuleScopeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRuleScopeElRef {
-        ConfigConfigRuleScopeElRef {
+impl terrars::Ref for ConfigConfigRule_ScopeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRule_ScopeRef {
+        ConfigConfigRule_ScopeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigConfigRuleScopeElRef {
+impl ConfigConfigRule_ScopeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -522,14 +635,14 @@ impl ConfigConfigRuleScopeElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConfigConfigRuleSourceElCustomPolicyDetailsEl {
+pub struct ConfigConfigRule_Source_CustomPolicyDetails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_debug_log_delivery: std::option::Option<terrars::PrimField<bool>>,
     policy_runtime: terrars::PrimField<std::string::String>,
     policy_text: terrars::PrimField<std::string::String>,
 }
 
-impl ConfigConfigRuleSourceElCustomPolicyDetailsEl {
+impl ConfigConfigRule_Source_CustomPolicyDetails {
     #[doc = "Set the field `enable_debug_log_delivery`.\n"]
     pub fn set_enable_debug_log_delivery(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enable_debug_log_delivery = std::option::Option::Some(v.into());
@@ -537,8 +650,8 @@ impl ConfigConfigRuleSourceElCustomPolicyDetailsEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigConfigRuleSourceElCustomPolicyDetailsEl {
-    type O = terrars::BlockAssignable<ConfigConfigRuleSourceElCustomPolicyDetailsEl>;
+impl terrars::ToListMappable for ConfigConfigRule_Source_CustomPolicyDetails {
+    type O = terrars::BlockAssignable<ConfigConfigRule_Source_CustomPolicyDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -549,16 +662,16 @@ impl terrars::ToListMappable for ConfigConfigRuleSourceElCustomPolicyDetailsEl {
     }
 }
 
-pub struct BuildConfigConfigRuleSourceElCustomPolicyDetailsEl {
+pub struct BuildConfigConfigRule_Source_CustomPolicyDetails {
     #[doc = ""]
     pub policy_runtime: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub policy_text: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConfigConfigRuleSourceElCustomPolicyDetailsEl {
-    pub fn build(self) -> ConfigConfigRuleSourceElCustomPolicyDetailsEl {
-        ConfigConfigRuleSourceElCustomPolicyDetailsEl {
+impl BuildConfigConfigRule_Source_CustomPolicyDetails {
+    pub fn build(self) -> ConfigConfigRule_Source_CustomPolicyDetails {
+        ConfigConfigRule_Source_CustomPolicyDetails {
             enable_debug_log_delivery: core::default::Default::default(),
             policy_runtime: self.policy_runtime,
             policy_text: self.policy_text,
@@ -566,24 +679,26 @@ impl BuildConfigConfigRuleSourceElCustomPolicyDetailsEl {
     }
 }
 
-pub struct ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
+#[allow(dead_code)]
+pub struct ConfigConfigRule_Source_CustomPolicyDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
+impl terrars::Ref for ConfigConfigRule_Source_CustomPolicyDetailsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
-        ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
+    ) -> ConfigConfigRule_Source_CustomPolicyDetailsRef {
+        ConfigConfigRule_Source_CustomPolicyDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
+impl ConfigConfigRule_Source_CustomPolicyDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -605,7 +720,7 @@ impl ConfigConfigRuleSourceElCustomPolicyDetailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConfigConfigRuleSourceElSourceDetailEl {
+pub struct ConfigConfigRule_Source_SourceDetail {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event_source: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -614,7 +729,7 @@ pub struct ConfigConfigRuleSourceElSourceDetailEl {
     message_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConfigConfigRuleSourceElSourceDetailEl {
+impl ConfigConfigRule_Source_SourceDetail {
     #[doc = "Set the field `event_source`.\n"]
     pub fn set_event_source(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.event_source = std::option::Option::Some(v.into());
@@ -637,8 +752,8 @@ impl ConfigConfigRuleSourceElSourceDetailEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigConfigRuleSourceElSourceDetailEl {
-    type O = terrars::BlockAssignable<ConfigConfigRuleSourceElSourceDetailEl>;
+impl terrars::ToListMappable for ConfigConfigRule_Source_SourceDetail {
+    type O = terrars::BlockAssignable<ConfigConfigRule_Source_SourceDetail>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -649,11 +764,11 @@ impl terrars::ToListMappable for ConfigConfigRuleSourceElSourceDetailEl {
     }
 }
 
-pub struct BuildConfigConfigRuleSourceElSourceDetailEl {}
+pub struct BuildConfigConfigRule_Source_SourceDetail {}
 
-impl BuildConfigConfigRuleSourceElSourceDetailEl {
-    pub fn build(self) -> ConfigConfigRuleSourceElSourceDetailEl {
-        ConfigConfigRuleSourceElSourceDetailEl {
+impl BuildConfigConfigRule_Source_SourceDetail {
+    pub fn build(self) -> ConfigConfigRule_Source_SourceDetail {
+        ConfigConfigRule_Source_SourceDetail {
             event_source: core::default::Default::default(),
             maximum_execution_frequency: core::default::Default::default(),
             message_type: core::default::Default::default(),
@@ -661,21 +776,23 @@ impl BuildConfigConfigRuleSourceElSourceDetailEl {
     }
 }
 
-pub struct ConfigConfigRuleSourceElSourceDetailElRef {
+#[allow(dead_code)]
+pub struct ConfigConfigRule_Source_SourceDetailRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigConfigRuleSourceElSourceDetailElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRuleSourceElSourceDetailElRef {
-        ConfigConfigRuleSourceElSourceDetailElRef {
+impl terrars::Ref for ConfigConfigRule_Source_SourceDetailRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRule_Source_SourceDetailRef {
+        ConfigConfigRule_Source_SourceDetailRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigConfigRuleSourceElSourceDetailElRef {
+impl ConfigConfigRule_Source_SourceDetailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -697,24 +814,24 @@ impl ConfigConfigRuleSourceElSourceDetailElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ConfigConfigRuleSourceElDynamic {
-    custom_policy_details: std::option::Option<terrars::DynamicBlock<ConfigConfigRuleSourceElCustomPolicyDetailsEl>>,
-    source_detail: std::option::Option<terrars::DynamicBlock<ConfigConfigRuleSourceElSourceDetailEl>>,
+struct ConfigConfigRule_SourceDynamic {
+    custom_policy_details: std::option::Option<terrars::DynamicBlock<ConfigConfigRule_Source_CustomPolicyDetails>>,
+    source_detail: std::option::Option<terrars::DynamicBlock<ConfigConfigRule_Source_SourceDetail>>,
 }
 
 #[derive(Serialize)]
-pub struct ConfigConfigRuleSourceEl {
+pub struct ConfigConfigRule_Source {
     owner: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_policy_details: std::option::Option<std::vec::Vec<ConfigConfigRuleSourceElCustomPolicyDetailsEl>>,
+    custom_policy_details: std::option::Option<std::vec::Vec<ConfigConfigRule_Source_CustomPolicyDetails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source_detail: std::option::Option<std::vec::Vec<ConfigConfigRuleSourceElSourceDetailEl>>,
-    dynamic: ConfigConfigRuleSourceElDynamic,
+    source_detail: std::option::Option<std::vec::Vec<ConfigConfigRule_Source_SourceDetail>>,
+    dynamic: ConfigConfigRule_SourceDynamic,
 }
 
-impl ConfigConfigRuleSourceEl {
+impl ConfigConfigRule_Source {
     #[doc = "Set the field `source_identifier`.\n"]
     pub fn set_source_identifier(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.source_identifier = std::option::Option::Some(v.into());
@@ -724,7 +841,7 @@ impl ConfigConfigRuleSourceEl {
     #[doc = "Set the field `custom_policy_details`.\n"]
     pub fn set_custom_policy_details(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRuleSourceElCustomPolicyDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRule_Source_CustomPolicyDetails>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -740,7 +857,7 @@ impl ConfigConfigRuleSourceEl {
     #[doc = "Set the field `source_detail`.\n"]
     pub fn set_source_detail(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRuleSourceElSourceDetailEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigConfigRule_Source_SourceDetail>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -754,8 +871,8 @@ impl ConfigConfigRuleSourceEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigConfigRuleSourceEl {
-    type O = terrars::BlockAssignable<ConfigConfigRuleSourceEl>;
+impl terrars::ToListMappable for ConfigConfigRule_Source {
+    type O = terrars::BlockAssignable<ConfigConfigRule_Source>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -766,14 +883,14 @@ impl terrars::ToListMappable for ConfigConfigRuleSourceEl {
     }
 }
 
-pub struct BuildConfigConfigRuleSourceEl {
+pub struct BuildConfigConfigRule_Source {
     #[doc = ""]
     pub owner: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConfigConfigRuleSourceEl {
-    pub fn build(self) -> ConfigConfigRuleSourceEl {
-        ConfigConfigRuleSourceEl {
+impl BuildConfigConfigRule_Source {
+    pub fn build(self) -> ConfigConfigRule_Source {
+        ConfigConfigRule_Source {
             owner: self.owner,
             source_identifier: core::default::Default::default(),
             custom_policy_details: core::default::Default::default(),
@@ -783,21 +900,23 @@ impl BuildConfigConfigRuleSourceEl {
     }
 }
 
-pub struct ConfigConfigRuleSourceElRef {
+#[allow(dead_code)]
+pub struct ConfigConfigRule_SourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigConfigRuleSourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRuleSourceElRef {
-        ConfigConfigRuleSourceElRef {
+impl terrars::Ref for ConfigConfigRule_SourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigConfigRule_SourceRef {
+        ConfigConfigRule_SourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigConfigRuleSourceElRef {
+impl ConfigConfigRule_SourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -813,13 +932,7 @@ impl ConfigConfigRuleSourceElRef {
     }
 
     #[doc = "Get a reference to the value of field `custom_policy_details` after provisioning.\n"]
-    pub fn custom_policy_details(&self) -> terrars::ListRef<ConfigConfigRuleSourceElCustomPolicyDetailsElRef> {
+    pub fn custom_policy_details(&self) -> terrars::ListRef<ConfigConfigRule_Source_CustomPolicyDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_policy_details", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ConfigConfigRuleDynamic {
-    scope: std::option::Option<terrars::DynamicBlock<ConfigConfigRuleScopeEl>>,
-    source: std::option::Option<terrars::DynamicBlock<ConfigConfigRuleSourceEl>>,
 }

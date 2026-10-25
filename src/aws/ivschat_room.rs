@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IvschatRoomData {
+struct IvschatRoomData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,20 +31,22 @@ struct IvschatRoomData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message_review_handler: std::option::Option<std::vec::Vec<IvschatRoomMessageReviewHandlerEl>>,
+    message_review_handler: std::option::Option<std::vec::Vec<IvschatRoom_MessageReviewHandler>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IvschatRoomTimeoutsEl>,
+    timeouts: std::option::Option<IvschatRoom_Timeouts>,
     dynamic: IvschatRoomDynamic,
 }
 
 struct IvschatRoom_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IvschatRoomData>,
+    data: std::cell::RefCell<IvschatRoomData_>,
 }
 
 #[derive(Clone)]
@@ -175,6 +179,13 @@ impl IvschatRoom {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -196,7 +207,7 @@ impl IvschatRoom {
     #[doc = "Set the field `message_review_handler`.\n"]
     pub fn set_message_review_handler(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IvschatRoomMessageReviewHandlerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IvschatRoom_MessageReviewHandler>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -210,7 +221,7 @@ impl IvschatRoom {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IvschatRoomTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IvschatRoom_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -251,6 +262,12 @@ impl IvschatRoom {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -262,13 +279,13 @@ impl IvschatRoom {
     }
 
     #[doc = "Get a reference to the value of field `message_review_handler` after provisioning.\n"]
-    pub fn message_review_handler(&self) -> terrars::ListRef<IvschatRoomMessageReviewHandlerElRef> {
+    pub fn message_review_handler(&self) -> terrars::ListRef<IvschatRoom_MessageReviewHandlerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.message_review_handler", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IvschatRoomTimeoutsElRef {
-        IvschatRoomTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IvschatRoom_TimeoutsRef {
+        IvschatRoom_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -312,7 +329,7 @@ impl BuildIvschatRoom {
         let out = IvschatRoom(std::rc::Rc::new(IvschatRoom_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IvschatRoomData {
+            data: std::cell::RefCell::new(IvschatRoomData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -323,6 +340,7 @@ impl BuildIvschatRoom {
                 maximum_message_length: core::default::Default::default(),
                 maximum_message_rate_per_second: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 message_review_handler: core::default::Default::default(),
@@ -394,6 +412,12 @@ impl IvschatRoomRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -405,25 +429,30 @@ impl IvschatRoomRef {
     }
 
     #[doc = "Get a reference to the value of field `message_review_handler` after provisioning.\n"]
-    pub fn message_review_handler(&self) -> terrars::ListRef<IvschatRoomMessageReviewHandlerElRef> {
+    pub fn message_review_handler(&self) -> terrars::ListRef<IvschatRoom_MessageReviewHandlerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.message_review_handler", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IvschatRoomTimeoutsElRef {
-        IvschatRoomTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IvschatRoom_TimeoutsRef {
+        IvschatRoom_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IvschatRoomDynamic {
+    message_review_handler: std::option::Option<terrars::DynamicBlock<IvschatRoom_MessageReviewHandler>>,
+}
+
 #[derive(Serialize)]
-pub struct IvschatRoomMessageReviewHandlerEl {
+pub struct IvschatRoom_MessageReviewHandler {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fallback_result: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IvschatRoomMessageReviewHandlerEl {
+impl IvschatRoom_MessageReviewHandler {
     #[doc = "Set the field `fallback_result`.\n"]
     pub fn set_fallback_result(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.fallback_result = std::option::Option::Some(v.into());
@@ -437,8 +466,8 @@ impl IvschatRoomMessageReviewHandlerEl {
     }
 }
 
-impl terrars::ToListMappable for IvschatRoomMessageReviewHandlerEl {
-    type O = terrars::BlockAssignable<IvschatRoomMessageReviewHandlerEl>;
+impl terrars::ToListMappable for IvschatRoom_MessageReviewHandler {
+    type O = terrars::BlockAssignable<IvschatRoom_MessageReviewHandler>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -449,32 +478,34 @@ impl terrars::ToListMappable for IvschatRoomMessageReviewHandlerEl {
     }
 }
 
-pub struct BuildIvschatRoomMessageReviewHandlerEl {}
+pub struct BuildIvschatRoom_MessageReviewHandler {}
 
-impl BuildIvschatRoomMessageReviewHandlerEl {
-    pub fn build(self) -> IvschatRoomMessageReviewHandlerEl {
-        IvschatRoomMessageReviewHandlerEl {
+impl BuildIvschatRoom_MessageReviewHandler {
+    pub fn build(self) -> IvschatRoom_MessageReviewHandler {
+        IvschatRoom_MessageReviewHandler {
             fallback_result: core::default::Default::default(),
             uri: core::default::Default::default(),
         }
     }
 }
 
-pub struct IvschatRoomMessageReviewHandlerElRef {
+#[allow(dead_code)]
+pub struct IvschatRoom_MessageReviewHandlerRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IvschatRoomMessageReviewHandlerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IvschatRoomMessageReviewHandlerElRef {
-        IvschatRoomMessageReviewHandlerElRef {
+impl terrars::Ref for IvschatRoom_MessageReviewHandlerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IvschatRoom_MessageReviewHandlerRef {
+        IvschatRoom_MessageReviewHandlerRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IvschatRoomMessageReviewHandlerElRef {
+impl IvschatRoom_MessageReviewHandlerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -491,7 +522,7 @@ impl IvschatRoomMessageReviewHandlerElRef {
 }
 
 #[derive(Serialize)]
-pub struct IvschatRoomTimeoutsEl {
+pub struct IvschatRoom_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -500,7 +531,7 @@ pub struct IvschatRoomTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IvschatRoomTimeoutsEl {
+impl IvschatRoom_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -520,8 +551,8 @@ impl IvschatRoomTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IvschatRoomTimeoutsEl {
-    type O = terrars::BlockAssignable<IvschatRoomTimeoutsEl>;
+impl terrars::ToListMappable for IvschatRoom_Timeouts {
+    type O = terrars::BlockAssignable<IvschatRoom_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -532,11 +563,11 @@ impl terrars::ToListMappable for IvschatRoomTimeoutsEl {
     }
 }
 
-pub struct BuildIvschatRoomTimeoutsEl {}
+pub struct BuildIvschatRoom_Timeouts {}
 
-impl BuildIvschatRoomTimeoutsEl {
-    pub fn build(self) -> IvschatRoomTimeoutsEl {
-        IvschatRoomTimeoutsEl {
+impl BuildIvschatRoom_Timeouts {
+    pub fn build(self) -> IvschatRoom_Timeouts {
+        IvschatRoom_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -544,21 +575,23 @@ impl BuildIvschatRoomTimeoutsEl {
     }
 }
 
-pub struct IvschatRoomTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IvschatRoom_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IvschatRoomTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IvschatRoomTimeoutsElRef {
-        IvschatRoomTimeoutsElRef {
+impl terrars::Ref for IvschatRoom_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IvschatRoom_TimeoutsRef {
+        IvschatRoom_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IvschatRoomTimeoutsElRef {
+impl IvschatRoom_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -577,9 +610,4 @@ impl IvschatRoomTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IvschatRoomDynamic {
-    message_review_handler: std::option::Option<terrars::DynamicBlock<IvschatRoomMessageReviewHandlerEl>>,
 }

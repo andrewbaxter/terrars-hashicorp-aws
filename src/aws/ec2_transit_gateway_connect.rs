@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2TransitGatewayConnectData {
+struct Ec2TransitGatewayConnectData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,6 +25,8 @@ struct Ec2TransitGatewayConnectData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocol: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -33,13 +37,13 @@ struct Ec2TransitGatewayConnectData {
     transit_gateway_id: terrars::PrimField<std::string::String>,
     transport_attachment_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Ec2TransitGatewayConnectTimeoutsEl>,
+    timeouts: std::option::Option<Ec2TransitGatewayConnect_Timeouts>,
 }
 
 struct Ec2TransitGatewayConnect_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2TransitGatewayConnectData>,
+    data: std::cell::RefCell<Ec2TransitGatewayConnectData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl Ec2TransitGatewayConnect {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -190,7 +201,7 @@ impl Ec2TransitGatewayConnect {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Ec2TransitGatewayConnectTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Ec2TransitGatewayConnect_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -203,6 +214,12 @@ impl Ec2TransitGatewayConnect {
     #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
     pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -244,8 +261,8 @@ impl Ec2TransitGatewayConnect {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Ec2TransitGatewayConnectTimeoutsElRef {
-        Ec2TransitGatewayConnectTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Ec2TransitGatewayConnect_TimeoutsRef {
+        Ec2TransitGatewayConnect_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -293,7 +310,7 @@ impl BuildEc2TransitGatewayConnect {
         let out = Ec2TransitGatewayConnect(std::rc::Rc::new(Ec2TransitGatewayConnect_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2TransitGatewayConnectData {
+            data: std::cell::RefCell::new(Ec2TransitGatewayConnectData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -301,6 +318,7 @@ impl BuildEc2TransitGatewayConnect {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 protocol: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 transit_gateway_default_route_table_association: core::default::Default::default(),
@@ -348,6 +366,12 @@ impl Ec2TransitGatewayConnectRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -387,13 +411,13 @@ impl Ec2TransitGatewayConnectRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Ec2TransitGatewayConnectTimeoutsElRef {
-        Ec2TransitGatewayConnectTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Ec2TransitGatewayConnect_TimeoutsRef {
+        Ec2TransitGatewayConnect_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct Ec2TransitGatewayConnectTimeoutsEl {
+pub struct Ec2TransitGatewayConnect_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -402,7 +426,7 @@ pub struct Ec2TransitGatewayConnectTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Ec2TransitGatewayConnectTimeoutsEl {
+impl Ec2TransitGatewayConnect_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -422,8 +446,8 @@ impl Ec2TransitGatewayConnectTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2TransitGatewayConnectTimeoutsEl {
-    type O = terrars::BlockAssignable<Ec2TransitGatewayConnectTimeoutsEl>;
+impl terrars::ToListMappable for Ec2TransitGatewayConnect_Timeouts {
+    type O = terrars::BlockAssignable<Ec2TransitGatewayConnect_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -434,11 +458,11 @@ impl terrars::ToListMappable for Ec2TransitGatewayConnectTimeoutsEl {
     }
 }
 
-pub struct BuildEc2TransitGatewayConnectTimeoutsEl {}
+pub struct BuildEc2TransitGatewayConnect_Timeouts {}
 
-impl BuildEc2TransitGatewayConnectTimeoutsEl {
-    pub fn build(self) -> Ec2TransitGatewayConnectTimeoutsEl {
-        Ec2TransitGatewayConnectTimeoutsEl {
+impl BuildEc2TransitGatewayConnect_Timeouts {
+    pub fn build(self) -> Ec2TransitGatewayConnect_Timeouts {
+        Ec2TransitGatewayConnect_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -446,21 +470,23 @@ impl BuildEc2TransitGatewayConnectTimeoutsEl {
     }
 }
 
-pub struct Ec2TransitGatewayConnectTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Ec2TransitGatewayConnect_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2TransitGatewayConnectTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2TransitGatewayConnectTimeoutsElRef {
-        Ec2TransitGatewayConnectTimeoutsElRef {
+impl terrars::Ref for Ec2TransitGatewayConnect_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2TransitGatewayConnect_TimeoutsRef {
+        Ec2TransitGatewayConnect_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2TransitGatewayConnectTimeoutsElRef {
+impl Ec2TransitGatewayConnect_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

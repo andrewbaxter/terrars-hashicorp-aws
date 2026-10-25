@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WorkspacesIpGroupData {
+struct WorkspacesIpGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct WorkspacesIpGroupData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rules: std::option::Option<std::vec::Vec<WorkspacesIpGroupRulesEl>>,
+    rules: std::option::Option<std::vec::Vec<WorkspacesIpGroup_Rules>>,
     dynamic: WorkspacesIpGroupDynamic,
 }
 
 struct WorkspacesIpGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WorkspacesIpGroupData>,
+    data: std::cell::RefCell<WorkspacesIpGroupData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl WorkspacesIpGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -166,7 +177,7 @@ impl WorkspacesIpGroup {
     }
 
     #[doc = "Set the field `rules`.\n"]
-    pub fn set_rules(self, v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesIpGroupRulesEl>>) -> Self {
+    pub fn set_rules(self, v: impl std::convert::Into<terrars::BlockAssignable<WorkspacesIpGroup_Rules>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().rules = std::option::Option::Some(v);
@@ -191,6 +202,12 @@ impl WorkspacesIpGroup {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -246,7 +263,7 @@ impl BuildWorkspacesIpGroup {
         let out = WorkspacesIpGroup(std::rc::Rc::new(WorkspacesIpGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WorkspacesIpGroupData {
+            data: std::cell::RefCell::new(WorkspacesIpGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -255,6 +272,7 @@ impl BuildWorkspacesIpGroup {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 rules: core::default::Default::default(),
@@ -304,6 +322,12 @@ impl WorkspacesIpGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -315,14 +339,19 @@ impl WorkspacesIpGroupRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WorkspacesIpGroupDynamic {
+    rules: std::option::Option<terrars::DynamicBlock<WorkspacesIpGroup_Rules>>,
+}
+
 #[derive(Serialize)]
-pub struct WorkspacesIpGroupRulesEl {
+pub struct WorkspacesIpGroup_Rules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     source: terrars::PrimField<std::string::String>,
 }
 
-impl WorkspacesIpGroupRulesEl {
+impl WorkspacesIpGroup_Rules {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -330,8 +359,8 @@ impl WorkspacesIpGroupRulesEl {
     }
 }
 
-impl terrars::ToListMappable for WorkspacesIpGroupRulesEl {
-    type O = terrars::BlockAssignable<WorkspacesIpGroupRulesEl>;
+impl terrars::ToListMappable for WorkspacesIpGroup_Rules {
+    type O = terrars::BlockAssignable<WorkspacesIpGroup_Rules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -342,35 +371,37 @@ impl terrars::ToListMappable for WorkspacesIpGroupRulesEl {
     }
 }
 
-pub struct BuildWorkspacesIpGroupRulesEl {
+pub struct BuildWorkspacesIpGroup_Rules {
     #[doc = ""]
     pub source: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWorkspacesIpGroupRulesEl {
-    pub fn build(self) -> WorkspacesIpGroupRulesEl {
-        WorkspacesIpGroupRulesEl {
+impl BuildWorkspacesIpGroup_Rules {
+    pub fn build(self) -> WorkspacesIpGroup_Rules {
+        WorkspacesIpGroup_Rules {
             description: core::default::Default::default(),
             source: self.source,
         }
     }
 }
 
-pub struct WorkspacesIpGroupRulesElRef {
+#[allow(dead_code)]
+pub struct WorkspacesIpGroup_RulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WorkspacesIpGroupRulesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkspacesIpGroupRulesElRef {
-        WorkspacesIpGroupRulesElRef {
+impl terrars::Ref for WorkspacesIpGroup_RulesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WorkspacesIpGroup_RulesRef {
+        WorkspacesIpGroup_RulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WorkspacesIpGroupRulesElRef {
+impl WorkspacesIpGroup_RulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -384,9 +415,4 @@ impl WorkspacesIpGroupRulesElRef {
     pub fn source(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WorkspacesIpGroupDynamic {
-    rules: std::option::Option<terrars::DynamicBlock<WorkspacesIpGroupRulesEl>>,
 }

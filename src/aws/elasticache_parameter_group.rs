@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ElasticacheParameterGroupData {
+struct ElasticacheParameterGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,18 +27,20 @@ struct ElasticacheParameterGroupData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<std::vec::Vec<ElasticacheParameterGroupParameterEl>>,
+    parameter: std::option::Option<std::vec::Vec<ElasticacheParameterGroup_Parameter>>,
     dynamic: ElasticacheParameterGroupDynamic,
 }
 
 struct ElasticacheParameterGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ElasticacheParameterGroupData>,
+    data: std::cell::RefCell<ElasticacheParameterGroupData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl ElasticacheParameterGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -169,7 +180,7 @@ impl ElasticacheParameterGroup {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElasticacheParameterGroupParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElasticacheParameterGroup_Parameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,6 +216,12 @@ impl ElasticacheParameterGroup {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -262,7 +279,7 @@ impl BuildElasticacheParameterGroup {
         let out = ElasticacheParameterGroup(std::rc::Rc::new(ElasticacheParameterGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ElasticacheParameterGroupData {
+            data: std::cell::RefCell::new(ElasticacheParameterGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -272,6 +289,7 @@ impl BuildElasticacheParameterGroup {
                 family: self.family,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 parameter: core::default::Default::default(),
@@ -331,6 +349,12 @@ impl ElasticacheParameterGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -342,16 +366,21 @@ impl ElasticacheParameterGroupRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct ElasticacheParameterGroupDynamic {
+    parameter: std::option::Option<terrars::DynamicBlock<ElasticacheParameterGroup_Parameter>>,
+}
+
 #[derive(Serialize)]
-pub struct ElasticacheParameterGroupParameterEl {
+pub struct ElasticacheParameterGroup_Parameter {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl ElasticacheParameterGroupParameterEl { }
+impl ElasticacheParameterGroup_Parameter { }
 
-impl terrars::ToListMappable for ElasticacheParameterGroupParameterEl {
-    type O = terrars::BlockAssignable<ElasticacheParameterGroupParameterEl>;
+impl terrars::ToListMappable for ElasticacheParameterGroup_Parameter {
+    type O = terrars::BlockAssignable<ElasticacheParameterGroup_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -362,37 +391,39 @@ impl terrars::ToListMappable for ElasticacheParameterGroupParameterEl {
     }
 }
 
-pub struct BuildElasticacheParameterGroupParameterEl {
+pub struct BuildElasticacheParameterGroup_Parameter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildElasticacheParameterGroupParameterEl {
-    pub fn build(self) -> ElasticacheParameterGroupParameterEl {
-        ElasticacheParameterGroupParameterEl {
+impl BuildElasticacheParameterGroup_Parameter {
+    pub fn build(self) -> ElasticacheParameterGroup_Parameter {
+        ElasticacheParameterGroup_Parameter {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct ElasticacheParameterGroupParameterElRef {
+#[allow(dead_code)]
+pub struct ElasticacheParameterGroup_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElasticacheParameterGroupParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticacheParameterGroupParameterElRef {
-        ElasticacheParameterGroupParameterElRef {
+impl terrars::Ref for ElasticacheParameterGroup_ParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticacheParameterGroup_ParameterRef {
+        ElasticacheParameterGroup_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElasticacheParameterGroupParameterElRef {
+impl ElasticacheParameterGroup_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -406,9 +437,4 @@ impl ElasticacheParameterGroupParameterElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ElasticacheParameterGroupDynamic {
-    parameter: std::option::Option<terrars::DynamicBlock<ElasticacheParameterGroupParameterEl>>,
 }

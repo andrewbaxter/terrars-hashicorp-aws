@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LexBotAliasData {
+struct LexBotAliasData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,16 +28,18 @@ struct LexBotAliasData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    conversation_logs: std::option::Option<std::vec::Vec<LexBotAliasConversationLogsEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LexBotAliasTimeoutsEl>,
+    conversation_logs: std::option::Option<std::vec::Vec<LexBotAlias_ConversationLogs>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<LexBotAlias_Timeouts>,
     dynamic: LexBotAliasDynamic,
 }
 
 struct LexBotAlias_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LexBotAliasData>,
+    data: std::cell::RefCell<LexBotAliasData_>,
 }
 
 #[derive(Clone)]
@@ -147,10 +151,17 @@ impl LexBotAlias {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `conversation_logs`.\n"]
     pub fn set_conversation_logs(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexBotAliasConversationLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexBotAlias_ConversationLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -164,7 +175,7 @@ impl LexBotAlias {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LexBotAliasTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LexBotAlias_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -214,14 +225,20 @@ impl LexBotAlias {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `conversation_logs` after provisioning.\n"]
-    pub fn conversation_logs(&self) -> terrars::ListRef<LexBotAliasConversationLogsElRef> {
+    pub fn conversation_logs(&self) -> terrars::ListRef<LexBotAlias_ConversationLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conversation_logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LexBotAliasTimeoutsElRef {
-        LexBotAliasTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LexBotAlias_TimeoutsRef {
+        LexBotAlias_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -271,7 +288,7 @@ impl BuildLexBotAlias {
         let out = LexBotAlias(std::rc::Rc::new(LexBotAlias_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LexBotAliasData {
+            data: std::cell::RefCell::new(LexBotAliasData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -282,6 +299,7 @@ impl BuildLexBotAlias {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 conversation_logs: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -360,19 +378,30 @@ impl LexBotAliasRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `conversation_logs` after provisioning.\n"]
-    pub fn conversation_logs(&self) -> terrars::ListRef<LexBotAliasConversationLogsElRef> {
+    pub fn conversation_logs(&self) -> terrars::ListRef<LexBotAlias_ConversationLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.conversation_logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LexBotAliasTimeoutsElRef {
-        LexBotAliasTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LexBotAlias_TimeoutsRef {
+        LexBotAlias_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LexBotAliasDynamic {
+    conversation_logs: std::option::Option<terrars::DynamicBlock<LexBotAlias_ConversationLogs>>,
+}
+
 #[derive(Serialize)]
-pub struct LexBotAliasConversationLogsElLogSettingsEl {
+pub struct LexBotAlias_ConversationLogs_LogSettings {
     destination: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -380,7 +409,7 @@ pub struct LexBotAliasConversationLogsElLogSettingsEl {
     resource_arn: terrars::PrimField<std::string::String>,
 }
 
-impl LexBotAliasConversationLogsElLogSettingsEl {
+impl LexBotAlias_ConversationLogs_LogSettings {
     #[doc = "Set the field `kms_key_arn`.\n"]
     pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_arn = std::option::Option::Some(v.into());
@@ -388,8 +417,8 @@ impl LexBotAliasConversationLogsElLogSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for LexBotAliasConversationLogsElLogSettingsEl {
-    type O = terrars::BlockAssignable<LexBotAliasConversationLogsElLogSettingsEl>;
+impl terrars::ToListMappable for LexBotAlias_ConversationLogs_LogSettings {
+    type O = terrars::BlockAssignable<LexBotAlias_ConversationLogs_LogSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -400,7 +429,7 @@ impl terrars::ToListMappable for LexBotAliasConversationLogsElLogSettingsEl {
     }
 }
 
-pub struct BuildLexBotAliasConversationLogsElLogSettingsEl {
+pub struct BuildLexBotAlias_ConversationLogs_LogSettings {
     #[doc = ""]
     pub destination: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -409,9 +438,9 @@ pub struct BuildLexBotAliasConversationLogsElLogSettingsEl {
     pub resource_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexBotAliasConversationLogsElLogSettingsEl {
-    pub fn build(self) -> LexBotAliasConversationLogsElLogSettingsEl {
-        LexBotAliasConversationLogsElLogSettingsEl {
+impl BuildLexBotAlias_ConversationLogs_LogSettings {
+    pub fn build(self) -> LexBotAlias_ConversationLogs_LogSettings {
+        LexBotAlias_ConversationLogs_LogSettings {
             destination: self.destination,
             kms_key_arn: core::default::Default::default(),
             log_type: self.log_type,
@@ -420,21 +449,23 @@ impl BuildLexBotAliasConversationLogsElLogSettingsEl {
     }
 }
 
-pub struct LexBotAliasConversationLogsElLogSettingsElRef {
+#[allow(dead_code)]
+pub struct LexBotAlias_ConversationLogs_LogSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexBotAliasConversationLogsElLogSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotAliasConversationLogsElLogSettingsElRef {
-        LexBotAliasConversationLogsElLogSettingsElRef {
+impl terrars::Ref for LexBotAlias_ConversationLogs_LogSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotAlias_ConversationLogs_LogSettingsRef {
+        LexBotAlias_ConversationLogs_LogSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexBotAliasConversationLogsElLogSettingsElRef {
+impl LexBotAlias_ConversationLogs_LogSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -466,23 +497,23 @@ impl LexBotAliasConversationLogsElLogSettingsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LexBotAliasConversationLogsElDynamic {
-    log_settings: std::option::Option<terrars::DynamicBlock<LexBotAliasConversationLogsElLogSettingsEl>>,
+struct LexBotAlias_ConversationLogsDynamic {
+    log_settings: std::option::Option<terrars::DynamicBlock<LexBotAlias_ConversationLogs_LogSettings>>,
 }
 
 #[derive(Serialize)]
-pub struct LexBotAliasConversationLogsEl {
+pub struct LexBotAlias_ConversationLogs {
     iam_role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_settings: std::option::Option<std::vec::Vec<LexBotAliasConversationLogsElLogSettingsEl>>,
-    dynamic: LexBotAliasConversationLogsElDynamic,
+    log_settings: std::option::Option<std::vec::Vec<LexBotAlias_ConversationLogs_LogSettings>>,
+    dynamic: LexBotAlias_ConversationLogsDynamic,
 }
 
-impl LexBotAliasConversationLogsEl {
+impl LexBotAlias_ConversationLogs {
     #[doc = "Set the field `log_settings`.\n"]
     pub fn set_log_settings(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexBotAliasConversationLogsElLogSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexBotAlias_ConversationLogs_LogSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -496,8 +527,8 @@ impl LexBotAliasConversationLogsEl {
     }
 }
 
-impl terrars::ToListMappable for LexBotAliasConversationLogsEl {
-    type O = terrars::BlockAssignable<LexBotAliasConversationLogsEl>;
+impl terrars::ToListMappable for LexBotAlias_ConversationLogs {
+    type O = terrars::BlockAssignable<LexBotAlias_ConversationLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -508,14 +539,14 @@ impl terrars::ToListMappable for LexBotAliasConversationLogsEl {
     }
 }
 
-pub struct BuildLexBotAliasConversationLogsEl {
+pub struct BuildLexBotAlias_ConversationLogs {
     #[doc = ""]
     pub iam_role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexBotAliasConversationLogsEl {
-    pub fn build(self) -> LexBotAliasConversationLogsEl {
-        LexBotAliasConversationLogsEl {
+impl BuildLexBotAlias_ConversationLogs {
+    pub fn build(self) -> LexBotAlias_ConversationLogs {
+        LexBotAlias_ConversationLogs {
             iam_role_arn: self.iam_role_arn,
             log_settings: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -523,21 +554,23 @@ impl BuildLexBotAliasConversationLogsEl {
     }
 }
 
-pub struct LexBotAliasConversationLogsElRef {
+#[allow(dead_code)]
+pub struct LexBotAlias_ConversationLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexBotAliasConversationLogsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotAliasConversationLogsElRef {
-        LexBotAliasConversationLogsElRef {
+impl terrars::Ref for LexBotAlias_ConversationLogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotAlias_ConversationLogsRef {
+        LexBotAlias_ConversationLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexBotAliasConversationLogsElRef {
+impl LexBotAlias_ConversationLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -549,7 +582,7 @@ impl LexBotAliasConversationLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LexBotAliasTimeoutsEl {
+pub struct LexBotAlias_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -558,7 +591,7 @@ pub struct LexBotAliasTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LexBotAliasTimeoutsEl {
+impl LexBotAlias_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -578,8 +611,8 @@ impl LexBotAliasTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LexBotAliasTimeoutsEl {
-    type O = terrars::BlockAssignable<LexBotAliasTimeoutsEl>;
+impl terrars::ToListMappable for LexBotAlias_Timeouts {
+    type O = terrars::BlockAssignable<LexBotAlias_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -590,11 +623,11 @@ impl terrars::ToListMappable for LexBotAliasTimeoutsEl {
     }
 }
 
-pub struct BuildLexBotAliasTimeoutsEl {}
+pub struct BuildLexBotAlias_Timeouts {}
 
-impl BuildLexBotAliasTimeoutsEl {
-    pub fn build(self) -> LexBotAliasTimeoutsEl {
-        LexBotAliasTimeoutsEl {
+impl BuildLexBotAlias_Timeouts {
+    pub fn build(self) -> LexBotAlias_Timeouts {
+        LexBotAlias_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -602,21 +635,23 @@ impl BuildLexBotAliasTimeoutsEl {
     }
 }
 
-pub struct LexBotAliasTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LexBotAlias_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexBotAliasTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotAliasTimeoutsElRef {
-        LexBotAliasTimeoutsElRef {
+impl terrars::Ref for LexBotAlias_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotAlias_TimeoutsRef {
+        LexBotAlias_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexBotAliasTimeoutsElRef {
+impl LexBotAlias_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -635,9 +670,4 @@ impl LexBotAliasTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LexBotAliasDynamic {
-    conversation_logs: std::option::Option<terrars::DynamicBlock<LexBotAliasConversationLogsEl>>,
 }

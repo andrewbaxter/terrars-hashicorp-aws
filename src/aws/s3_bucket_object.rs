@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketObjectData {
+struct S3BucketObjectData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -55,6 +57,8 @@ struct S3BucketObjectData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_lock_retain_until_date: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     server_side_encryption: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -73,7 +77,7 @@ struct S3BucketObjectData {
 struct S3BucketObject_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketObjectData>,
+    data: std::cell::RefCell<S3BucketObjectData_>,
 }
 
 #[derive(Clone)]
@@ -284,6 +288,13 @@ impl S3BucketObject {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `server_side_encryption`.\n"]
     pub fn set_server_side_encryption(
         self,
@@ -338,6 +349,11 @@ impl S3BucketObject {
     #[doc = "Get a reference to the value of field `acl` after provisioning.\n"]
     pub fn acl(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.acl", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
@@ -434,6 +450,12 @@ impl S3BucketObject {
             self.shared().clone(),
             format!("{}.object_lock_retain_until_date", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]
@@ -521,7 +543,7 @@ impl BuildS3BucketObject {
         let out = S3BucketObject(std::rc::Rc::new(S3BucketObject_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketObjectData {
+            data: std::cell::RefCell::new(S3BucketObjectData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -546,6 +568,7 @@ impl BuildS3BucketObject {
                 object_lock_legal_hold_status: core::default::Default::default(),
                 object_lock_mode: core::default::Default::default(),
                 object_lock_retain_until_date: core::default::Default::default(),
+                region: core::default::Default::default(),
                 server_side_encryption: core::default::Default::default(),
                 source: core::default::Default::default(),
                 source_hash: core::default::Default::default(),
@@ -586,6 +609,11 @@ impl S3BucketObjectRef {
     #[doc = "Get a reference to the value of field `acl` after provisioning.\n"]
     pub fn acl(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.acl", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
@@ -682,6 +710,12 @@ impl S3BucketObjectRef {
             self.shared().clone(),
             format!("{}.object_lock_retain_until_date", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct VpcIpamPoolCidrData {
+struct VpcIpamPoolCidrData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,16 +26,20 @@ struct VpcIpamPoolCidrData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     ipam_pool_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cidr_authorization_context: std::option::Option<std::vec::Vec<VpcIpamPoolCidrCidrAuthorizationContextEl>>,
+    netmask_length: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VpcIpamPoolCidrTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cidr_authorization_context: std::option::Option<std::vec::Vec<VpcIpamPoolCidr_CidrAuthorizationContext>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<VpcIpamPoolCidr_Timeouts>,
     dynamic: VpcIpamPoolCidrDynamic,
 }
 
 struct VpcIpamPoolCidr_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpcIpamPoolCidrData>,
+    data: std::cell::RefCell<VpcIpamPoolCidrData_>,
 }
 
 #[derive(Clone)]
@@ -145,10 +151,23 @@ impl VpcIpamPoolCidr {
         self
     }
 
+    #[doc = "Set the field `netmask_length`.\n"]
+    pub fn set_netmask_length(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().netmask_length = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `cidr_authorization_context`.\n"]
     pub fn set_cidr_authorization_context(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VpcIpamPoolCidrCidrAuthorizationContextEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VpcIpamPoolCidr_CidrAuthorizationContext>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -162,7 +181,7 @@ impl VpcIpamPoolCidr {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VpcIpamPoolCidrTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VpcIpamPoolCidr_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -177,19 +196,35 @@ impl VpcIpamPoolCidr {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipam_pool_cidr_id` after provisioning.\n"]
+    pub fn ipam_pool_cidr_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipam_pool_cidr_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ipam_pool_id` after provisioning.\n"]
     pub fn ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipam_pool_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `netmask_length` after provisioning.\n"]
+    pub fn netmask_length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.netmask_length", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cidr_authorization_context` after provisioning.\n"]
-    pub fn cidr_authorization_context(&self) -> terrars::ListRef<VpcIpamPoolCidrCidrAuthorizationContextElRef> {
+    pub fn cidr_authorization_context(&self) -> terrars::ListRef<VpcIpamPoolCidr_CidrAuthorizationContextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cidr_authorization_context", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcIpamPoolCidrTimeoutsElRef {
-        VpcIpamPoolCidrTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VpcIpamPoolCidr_TimeoutsRef {
+        VpcIpamPoolCidr_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -235,7 +270,7 @@ impl BuildVpcIpamPoolCidr {
         let out = VpcIpamPoolCidr(std::rc::Rc::new(VpcIpamPoolCidr_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpcIpamPoolCidrData {
+            data: std::cell::RefCell::new(VpcIpamPoolCidrData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -244,6 +279,8 @@ impl BuildVpcIpamPoolCidr {
                 cidr: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ipam_pool_id: self.ipam_pool_id,
+                netmask_length: core::default::Default::default(),
+                region: core::default::Default::default(),
                 cidr_authorization_context: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -287,31 +324,52 @@ impl VpcIpamPoolCidrRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipam_pool_cidr_id` after provisioning.\n"]
+    pub fn ipam_pool_cidr_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipam_pool_cidr_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ipam_pool_id` after provisioning.\n"]
     pub fn ipam_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipam_pool_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `netmask_length` after provisioning.\n"]
+    pub fn netmask_length(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.netmask_length", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cidr_authorization_context` after provisioning.\n"]
-    pub fn cidr_authorization_context(&self) -> terrars::ListRef<VpcIpamPoolCidrCidrAuthorizationContextElRef> {
+    pub fn cidr_authorization_context(&self) -> terrars::ListRef<VpcIpamPoolCidr_CidrAuthorizationContextRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cidr_authorization_context", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcIpamPoolCidrTimeoutsElRef {
-        VpcIpamPoolCidrTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VpcIpamPoolCidr_TimeoutsRef {
+        VpcIpamPoolCidr_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct VpcIpamPoolCidrDynamic {
+    cidr_authorization_context: std::option::Option<terrars::DynamicBlock<VpcIpamPoolCidr_CidrAuthorizationContext>>,
+}
+
 #[derive(Serialize)]
-pub struct VpcIpamPoolCidrCidrAuthorizationContextEl {
+pub struct VpcIpamPoolCidr_CidrAuthorizationContext {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     message: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     signature: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpcIpamPoolCidrCidrAuthorizationContextEl {
+impl VpcIpamPoolCidr_CidrAuthorizationContext {
     #[doc = "Set the field `message`.\n"]
     pub fn set_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.message = std::option::Option::Some(v.into());
@@ -325,8 +383,8 @@ impl VpcIpamPoolCidrCidrAuthorizationContextEl {
     }
 }
 
-impl terrars::ToListMappable for VpcIpamPoolCidrCidrAuthorizationContextEl {
-    type O = terrars::BlockAssignable<VpcIpamPoolCidrCidrAuthorizationContextEl>;
+impl terrars::ToListMappable for VpcIpamPoolCidr_CidrAuthorizationContext {
+    type O = terrars::BlockAssignable<VpcIpamPoolCidr_CidrAuthorizationContext>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -337,32 +395,34 @@ impl terrars::ToListMappable for VpcIpamPoolCidrCidrAuthorizationContextEl {
     }
 }
 
-pub struct BuildVpcIpamPoolCidrCidrAuthorizationContextEl {}
+pub struct BuildVpcIpamPoolCidr_CidrAuthorizationContext {}
 
-impl BuildVpcIpamPoolCidrCidrAuthorizationContextEl {
-    pub fn build(self) -> VpcIpamPoolCidrCidrAuthorizationContextEl {
-        VpcIpamPoolCidrCidrAuthorizationContextEl {
+impl BuildVpcIpamPoolCidr_CidrAuthorizationContext {
+    pub fn build(self) -> VpcIpamPoolCidr_CidrAuthorizationContext {
+        VpcIpamPoolCidr_CidrAuthorizationContext {
             message: core::default::Default::default(),
             signature: core::default::Default::default(),
         }
     }
 }
 
-pub struct VpcIpamPoolCidrCidrAuthorizationContextElRef {
+#[allow(dead_code)]
+pub struct VpcIpamPoolCidr_CidrAuthorizationContextRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpcIpamPoolCidrCidrAuthorizationContextElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpamPoolCidrCidrAuthorizationContextElRef {
-        VpcIpamPoolCidrCidrAuthorizationContextElRef {
+impl terrars::Ref for VpcIpamPoolCidr_CidrAuthorizationContextRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpamPoolCidr_CidrAuthorizationContextRef {
+        VpcIpamPoolCidr_CidrAuthorizationContextRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpcIpamPoolCidrCidrAuthorizationContextElRef {
+impl VpcIpamPoolCidr_CidrAuthorizationContextRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -379,14 +439,14 @@ impl VpcIpamPoolCidrCidrAuthorizationContextElRef {
 }
 
 #[derive(Serialize)]
-pub struct VpcIpamPoolCidrTimeoutsEl {
+pub struct VpcIpamPoolCidr_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpcIpamPoolCidrTimeoutsEl {
+impl VpcIpamPoolCidr_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -400,8 +460,8 @@ impl VpcIpamPoolCidrTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VpcIpamPoolCidrTimeoutsEl {
-    type O = terrars::BlockAssignable<VpcIpamPoolCidrTimeoutsEl>;
+impl terrars::ToListMappable for VpcIpamPoolCidr_Timeouts {
+    type O = terrars::BlockAssignable<VpcIpamPoolCidr_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -412,32 +472,34 @@ impl terrars::ToListMappable for VpcIpamPoolCidrTimeoutsEl {
     }
 }
 
-pub struct BuildVpcIpamPoolCidrTimeoutsEl {}
+pub struct BuildVpcIpamPoolCidr_Timeouts {}
 
-impl BuildVpcIpamPoolCidrTimeoutsEl {
-    pub fn build(self) -> VpcIpamPoolCidrTimeoutsEl {
-        VpcIpamPoolCidrTimeoutsEl {
+impl BuildVpcIpamPoolCidr_Timeouts {
+    pub fn build(self) -> VpcIpamPoolCidr_Timeouts {
+        VpcIpamPoolCidr_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct VpcIpamPoolCidrTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VpcIpamPoolCidr_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpcIpamPoolCidrTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpamPoolCidrTimeoutsElRef {
-        VpcIpamPoolCidrTimeoutsElRef {
+impl terrars::Ref for VpcIpamPoolCidr_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpamPoolCidr_TimeoutsRef {
+        VpcIpamPoolCidr_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpcIpamPoolCidrTimeoutsElRef {
+impl VpcIpamPoolCidr_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -451,11 +513,4 @@ impl VpcIpamPoolCidrTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VpcIpamPoolCidrDynamic {
-    cidr_authorization_context: std
-    ::option
-    ::Option<terrars::DynamicBlock<VpcIpamPoolCidrCidrAuthorizationContextEl>>,
 }

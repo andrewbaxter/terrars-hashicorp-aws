@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SesReceiptRuleData {
+struct SesReceiptRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,32 +29,34 @@ struct SesReceiptRuleData {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     recipients: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     rule_set_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     scan_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tls_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    add_header_action: std::option::Option<std::vec::Vec<SesReceiptRuleAddHeaderActionEl>>,
+    add_header_action: std::option::Option<std::vec::Vec<SesReceiptRule_AddHeaderAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    bounce_action: std::option::Option<std::vec::Vec<SesReceiptRuleBounceActionEl>>,
+    bounce_action: std::option::Option<std::vec::Vec<SesReceiptRule_BounceAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lambda_action: std::option::Option<std::vec::Vec<SesReceiptRuleLambdaActionEl>>,
+    lambda_action: std::option::Option<std::vec::Vec<SesReceiptRule_LambdaAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_action: std::option::Option<std::vec::Vec<SesReceiptRuleS3ActionEl>>,
+    s3_action: std::option::Option<std::vec::Vec<SesReceiptRule_S3Action>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sns_action: std::option::Option<std::vec::Vec<SesReceiptRuleSnsActionEl>>,
+    sns_action: std::option::Option<std::vec::Vec<SesReceiptRule_SnsAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stop_action: std::option::Option<std::vec::Vec<SesReceiptRuleStopActionEl>>,
+    stop_action: std::option::Option<std::vec::Vec<SesReceiptRule_StopAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    workmail_action: std::option::Option<std::vec::Vec<SesReceiptRuleWorkmailActionEl>>,
+    workmail_action: std::option::Option<std::vec::Vec<SesReceiptRule_WorkmailAction>>,
     dynamic: SesReceiptRuleDynamic,
 }
 
 struct SesReceiptRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SesReceiptRuleData>,
+    data: std::cell::RefCell<SesReceiptRuleData_>,
 }
 
 #[derive(Clone)]
@@ -179,6 +183,13 @@ impl SesReceiptRule {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `scan_enabled`.\n"]
     pub fn set_scan_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().scan_enabled = std::option::Option::Some(v.into());
@@ -194,7 +205,7 @@ impl SesReceiptRule {
     #[doc = "Set the field `add_header_action`.\n"]
     pub fn set_add_header_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRuleAddHeaderActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRule_AddHeaderAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -210,7 +221,7 @@ impl SesReceiptRule {
     #[doc = "Set the field `bounce_action`.\n"]
     pub fn set_bounce_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRuleBounceActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRule_BounceAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -226,7 +237,7 @@ impl SesReceiptRule {
     #[doc = "Set the field `lambda_action`.\n"]
     pub fn set_lambda_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRuleLambdaActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRule_LambdaAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -240,7 +251,7 @@ impl SesReceiptRule {
     }
 
     #[doc = "Set the field `s3_action`.\n"]
-    pub fn set_s3_action(self, v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRuleS3ActionEl>>) -> Self {
+    pub fn set_s3_action(self, v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRule_S3Action>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().s3_action = std::option::Option::Some(v);
@@ -253,10 +264,7 @@ impl SesReceiptRule {
     }
 
     #[doc = "Set the field `sns_action`.\n"]
-    pub fn set_sns_action(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRuleSnsActionEl>>,
-    ) -> Self {
+    pub fn set_sns_action(self, v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRule_SnsAction>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sns_action = std::option::Option::Some(v);
@@ -271,7 +279,7 @@ impl SesReceiptRule {
     #[doc = "Set the field `stop_action`.\n"]
     pub fn set_stop_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRuleStopActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRule_StopAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -287,7 +295,7 @@ impl SesReceiptRule {
     #[doc = "Set the field `workmail_action`.\n"]
     pub fn set_workmail_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRuleWorkmailActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesReceiptRule_WorkmailAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -328,6 +336,12 @@ impl SesReceiptRule {
     #[doc = "Get a reference to the value of field `recipients` after provisioning.\n"]
     pub fn recipients(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.recipients", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rule_set_name` after provisioning.\n"]
@@ -390,7 +404,7 @@ impl BuildSesReceiptRule {
         let out = SesReceiptRule(std::rc::Rc::new(SesReceiptRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SesReceiptRuleData {
+            data: std::cell::RefCell::new(SesReceiptRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -401,6 +415,7 @@ impl BuildSesReceiptRule {
                 id: core::default::Default::default(),
                 name: self.name,
                 recipients: core::default::Default::default(),
+                region: core::default::Default::default(),
                 rule_set_name: self.rule_set_name,
                 scan_enabled: core::default::Default::default(),
                 tls_policy: core::default::Default::default(),
@@ -472,6 +487,12 @@ impl SesReceiptRuleRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.recipients", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rule_set_name` after provisioning.\n"]
     pub fn rule_set_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_set_name", self.extract_ref()))
@@ -488,17 +509,28 @@ impl SesReceiptRuleRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct SesReceiptRuleDynamic {
+    add_header_action: std::option::Option<terrars::DynamicBlock<SesReceiptRule_AddHeaderAction>>,
+    bounce_action: std::option::Option<terrars::DynamicBlock<SesReceiptRule_BounceAction>>,
+    lambda_action: std::option::Option<terrars::DynamicBlock<SesReceiptRule_LambdaAction>>,
+    s3_action: std::option::Option<terrars::DynamicBlock<SesReceiptRule_S3Action>>,
+    sns_action: std::option::Option<terrars::DynamicBlock<SesReceiptRule_SnsAction>>,
+    stop_action: std::option::Option<terrars::DynamicBlock<SesReceiptRule_StopAction>>,
+    workmail_action: std::option::Option<terrars::DynamicBlock<SesReceiptRule_WorkmailAction>>,
+}
+
 #[derive(Serialize)]
-pub struct SesReceiptRuleAddHeaderActionEl {
+pub struct SesReceiptRule_AddHeaderAction {
     header_name: terrars::PrimField<std::string::String>,
     header_value: terrars::PrimField<std::string::String>,
     position: terrars::PrimField<f64>,
 }
 
-impl SesReceiptRuleAddHeaderActionEl { }
+impl SesReceiptRule_AddHeaderAction { }
 
-impl terrars::ToListMappable for SesReceiptRuleAddHeaderActionEl {
-    type O = terrars::BlockAssignable<SesReceiptRuleAddHeaderActionEl>;
+impl terrars::ToListMappable for SesReceiptRule_AddHeaderAction {
+    type O = terrars::BlockAssignable<SesReceiptRule_AddHeaderAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -509,7 +541,7 @@ impl terrars::ToListMappable for SesReceiptRuleAddHeaderActionEl {
     }
 }
 
-pub struct BuildSesReceiptRuleAddHeaderActionEl {
+pub struct BuildSesReceiptRule_AddHeaderAction {
     #[doc = ""]
     pub header_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -518,9 +550,9 @@ pub struct BuildSesReceiptRuleAddHeaderActionEl {
     pub position: terrars::PrimField<f64>,
 }
 
-impl BuildSesReceiptRuleAddHeaderActionEl {
-    pub fn build(self) -> SesReceiptRuleAddHeaderActionEl {
-        SesReceiptRuleAddHeaderActionEl {
+impl BuildSesReceiptRule_AddHeaderAction {
+    pub fn build(self) -> SesReceiptRule_AddHeaderAction {
+        SesReceiptRule_AddHeaderAction {
             header_name: self.header_name,
             header_value: self.header_value,
             position: self.position,
@@ -528,21 +560,23 @@ impl BuildSesReceiptRuleAddHeaderActionEl {
     }
 }
 
-pub struct SesReceiptRuleAddHeaderActionElRef {
+#[allow(dead_code)]
+pub struct SesReceiptRule_AddHeaderActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesReceiptRuleAddHeaderActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRuleAddHeaderActionElRef {
-        SesReceiptRuleAddHeaderActionElRef {
+impl terrars::Ref for SesReceiptRule_AddHeaderActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRule_AddHeaderActionRef {
+        SesReceiptRule_AddHeaderActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesReceiptRuleAddHeaderActionElRef {
+impl SesReceiptRule_AddHeaderActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -564,7 +598,7 @@ impl SesReceiptRuleAddHeaderActionElRef {
 }
 
 #[derive(Serialize)]
-pub struct SesReceiptRuleBounceActionEl {
+pub struct SesReceiptRule_BounceAction {
     message: terrars::PrimField<std::string::String>,
     position: terrars::PrimField<f64>,
     sender: terrars::PrimField<std::string::String>,
@@ -575,7 +609,7 @@ pub struct SesReceiptRuleBounceActionEl {
     topic_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SesReceiptRuleBounceActionEl {
+impl SesReceiptRule_BounceAction {
     #[doc = "Set the field `status_code`.\n"]
     pub fn set_status_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.status_code = std::option::Option::Some(v.into());
@@ -589,8 +623,8 @@ impl SesReceiptRuleBounceActionEl {
     }
 }
 
-impl terrars::ToListMappable for SesReceiptRuleBounceActionEl {
-    type O = terrars::BlockAssignable<SesReceiptRuleBounceActionEl>;
+impl terrars::ToListMappable for SesReceiptRule_BounceAction {
+    type O = terrars::BlockAssignable<SesReceiptRule_BounceAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -601,7 +635,7 @@ impl terrars::ToListMappable for SesReceiptRuleBounceActionEl {
     }
 }
 
-pub struct BuildSesReceiptRuleBounceActionEl {
+pub struct BuildSesReceiptRule_BounceAction {
     #[doc = ""]
     pub message: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -612,9 +646,9 @@ pub struct BuildSesReceiptRuleBounceActionEl {
     pub smtp_reply_code: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesReceiptRuleBounceActionEl {
-    pub fn build(self) -> SesReceiptRuleBounceActionEl {
-        SesReceiptRuleBounceActionEl {
+impl BuildSesReceiptRule_BounceAction {
+    pub fn build(self) -> SesReceiptRule_BounceAction {
+        SesReceiptRule_BounceAction {
             message: self.message,
             position: self.position,
             sender: self.sender,
@@ -625,21 +659,23 @@ impl BuildSesReceiptRuleBounceActionEl {
     }
 }
 
-pub struct SesReceiptRuleBounceActionElRef {
+#[allow(dead_code)]
+pub struct SesReceiptRule_BounceActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesReceiptRuleBounceActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRuleBounceActionElRef {
-        SesReceiptRuleBounceActionElRef {
+impl terrars::Ref for SesReceiptRule_BounceActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRule_BounceActionRef {
+        SesReceiptRule_BounceActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesReceiptRuleBounceActionElRef {
+impl SesReceiptRule_BounceActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -676,7 +712,7 @@ impl SesReceiptRuleBounceActionElRef {
 }
 
 #[derive(Serialize)]
-pub struct SesReceiptRuleLambdaActionEl {
+pub struct SesReceiptRule_LambdaAction {
     function_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     invocation_type: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -685,7 +721,7 @@ pub struct SesReceiptRuleLambdaActionEl {
     topic_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SesReceiptRuleLambdaActionEl {
+impl SesReceiptRule_LambdaAction {
     #[doc = "Set the field `invocation_type`.\n"]
     pub fn set_invocation_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.invocation_type = std::option::Option::Some(v.into());
@@ -699,8 +735,8 @@ impl SesReceiptRuleLambdaActionEl {
     }
 }
 
-impl terrars::ToListMappable for SesReceiptRuleLambdaActionEl {
-    type O = terrars::BlockAssignable<SesReceiptRuleLambdaActionEl>;
+impl terrars::ToListMappable for SesReceiptRule_LambdaAction {
+    type O = terrars::BlockAssignable<SesReceiptRule_LambdaAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -711,16 +747,16 @@ impl terrars::ToListMappable for SesReceiptRuleLambdaActionEl {
     }
 }
 
-pub struct BuildSesReceiptRuleLambdaActionEl {
+pub struct BuildSesReceiptRule_LambdaAction {
     #[doc = ""]
     pub function_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub position: terrars::PrimField<f64>,
 }
 
-impl BuildSesReceiptRuleLambdaActionEl {
-    pub fn build(self) -> SesReceiptRuleLambdaActionEl {
-        SesReceiptRuleLambdaActionEl {
+impl BuildSesReceiptRule_LambdaAction {
+    pub fn build(self) -> SesReceiptRule_LambdaAction {
+        SesReceiptRule_LambdaAction {
             function_arn: self.function_arn,
             invocation_type: core::default::Default::default(),
             position: self.position,
@@ -729,21 +765,23 @@ impl BuildSesReceiptRuleLambdaActionEl {
     }
 }
 
-pub struct SesReceiptRuleLambdaActionElRef {
+#[allow(dead_code)]
+pub struct SesReceiptRule_LambdaActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesReceiptRuleLambdaActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRuleLambdaActionElRef {
-        SesReceiptRuleLambdaActionElRef {
+impl terrars::Ref for SesReceiptRule_LambdaActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRule_LambdaActionRef {
+        SesReceiptRule_LambdaActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesReceiptRuleLambdaActionElRef {
+impl SesReceiptRule_LambdaActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -770,8 +808,10 @@ impl SesReceiptRuleLambdaActionElRef {
 }
 
 #[derive(Serialize)]
-pub struct SesReceiptRuleS3ActionEl {
+pub struct SesReceiptRule_S3Action {
     bucket_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iam_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -781,7 +821,13 @@ pub struct SesReceiptRuleS3ActionEl {
     topic_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SesReceiptRuleS3ActionEl {
+impl SesReceiptRule_S3Action {
+    #[doc = "Set the field `iam_role_arn`.\n"]
+    pub fn set_iam_role_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.iam_role_arn = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `kms_key_arn`.\n"]
     pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_arn = std::option::Option::Some(v.into());
@@ -801,8 +847,8 @@ impl SesReceiptRuleS3ActionEl {
     }
 }
 
-impl terrars::ToListMappable for SesReceiptRuleS3ActionEl {
-    type O = terrars::BlockAssignable<SesReceiptRuleS3ActionEl>;
+impl terrars::ToListMappable for SesReceiptRule_S3Action {
+    type O = terrars::BlockAssignable<SesReceiptRule_S3Action>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -813,17 +859,18 @@ impl terrars::ToListMappable for SesReceiptRuleS3ActionEl {
     }
 }
 
-pub struct BuildSesReceiptRuleS3ActionEl {
+pub struct BuildSesReceiptRule_S3Action {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub position: terrars::PrimField<f64>,
 }
 
-impl BuildSesReceiptRuleS3ActionEl {
-    pub fn build(self) -> SesReceiptRuleS3ActionEl {
-        SesReceiptRuleS3ActionEl {
+impl BuildSesReceiptRule_S3Action {
+    pub fn build(self) -> SesReceiptRule_S3Action {
+        SesReceiptRule_S3Action {
             bucket_name: self.bucket_name,
+            iam_role_arn: core::default::Default::default(),
             kms_key_arn: core::default::Default::default(),
             object_key_prefix: core::default::Default::default(),
             position: self.position,
@@ -832,21 +879,23 @@ impl BuildSesReceiptRuleS3ActionEl {
     }
 }
 
-pub struct SesReceiptRuleS3ActionElRef {
+#[allow(dead_code)]
+pub struct SesReceiptRule_S3ActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesReceiptRuleS3ActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRuleS3ActionElRef {
-        SesReceiptRuleS3ActionElRef {
+impl terrars::Ref for SesReceiptRule_S3ActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRule_S3ActionRef {
+        SesReceiptRule_S3ActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesReceiptRuleS3ActionElRef {
+impl SesReceiptRule_S3ActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -854,6 +903,11 @@ impl SesReceiptRuleS3ActionElRef {
     #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
     pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `iam_role_arn` after provisioning.\n"]
+    pub fn iam_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.iam_role_arn", self.base))
     }
 
     #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
@@ -878,14 +932,14 @@ impl SesReceiptRuleS3ActionElRef {
 }
 
 #[derive(Serialize)]
-pub struct SesReceiptRuleSnsActionEl {
+pub struct SesReceiptRule_SnsAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encoding: std::option::Option<terrars::PrimField<std::string::String>>,
     position: terrars::PrimField<f64>,
     topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl SesReceiptRuleSnsActionEl {
+impl SesReceiptRule_SnsAction {
     #[doc = "Set the field `encoding`.\n"]
     pub fn set_encoding(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.encoding = std::option::Option::Some(v.into());
@@ -893,8 +947,8 @@ impl SesReceiptRuleSnsActionEl {
     }
 }
 
-impl terrars::ToListMappable for SesReceiptRuleSnsActionEl {
-    type O = terrars::BlockAssignable<SesReceiptRuleSnsActionEl>;
+impl terrars::ToListMappable for SesReceiptRule_SnsAction {
+    type O = terrars::BlockAssignable<SesReceiptRule_SnsAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -905,16 +959,16 @@ impl terrars::ToListMappable for SesReceiptRuleSnsActionEl {
     }
 }
 
-pub struct BuildSesReceiptRuleSnsActionEl {
+pub struct BuildSesReceiptRule_SnsAction {
     #[doc = ""]
     pub position: terrars::PrimField<f64>,
     #[doc = ""]
     pub topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesReceiptRuleSnsActionEl {
-    pub fn build(self) -> SesReceiptRuleSnsActionEl {
-        SesReceiptRuleSnsActionEl {
+impl BuildSesReceiptRule_SnsAction {
+    pub fn build(self) -> SesReceiptRule_SnsAction {
+        SesReceiptRule_SnsAction {
             encoding: core::default::Default::default(),
             position: self.position,
             topic_arn: self.topic_arn,
@@ -922,21 +976,23 @@ impl BuildSesReceiptRuleSnsActionEl {
     }
 }
 
-pub struct SesReceiptRuleSnsActionElRef {
+#[allow(dead_code)]
+pub struct SesReceiptRule_SnsActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesReceiptRuleSnsActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRuleSnsActionElRef {
-        SesReceiptRuleSnsActionElRef {
+impl terrars::Ref for SesReceiptRule_SnsActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRule_SnsActionRef {
+        SesReceiptRule_SnsActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesReceiptRuleSnsActionElRef {
+impl SesReceiptRule_SnsActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -958,14 +1014,14 @@ impl SesReceiptRuleSnsActionElRef {
 }
 
 #[derive(Serialize)]
-pub struct SesReceiptRuleStopActionEl {
+pub struct SesReceiptRule_StopAction {
     position: terrars::PrimField<f64>,
     scope: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     topic_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SesReceiptRuleStopActionEl {
+impl SesReceiptRule_StopAction {
     #[doc = "Set the field `topic_arn`.\n"]
     pub fn set_topic_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.topic_arn = std::option::Option::Some(v.into());
@@ -973,8 +1029,8 @@ impl SesReceiptRuleStopActionEl {
     }
 }
 
-impl terrars::ToListMappable for SesReceiptRuleStopActionEl {
-    type O = terrars::BlockAssignable<SesReceiptRuleStopActionEl>;
+impl terrars::ToListMappable for SesReceiptRule_StopAction {
+    type O = terrars::BlockAssignable<SesReceiptRule_StopAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -985,16 +1041,16 @@ impl terrars::ToListMappable for SesReceiptRuleStopActionEl {
     }
 }
 
-pub struct BuildSesReceiptRuleStopActionEl {
+pub struct BuildSesReceiptRule_StopAction {
     #[doc = ""]
     pub position: terrars::PrimField<f64>,
     #[doc = ""]
     pub scope: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSesReceiptRuleStopActionEl {
-    pub fn build(self) -> SesReceiptRuleStopActionEl {
-        SesReceiptRuleStopActionEl {
+impl BuildSesReceiptRule_StopAction {
+    pub fn build(self) -> SesReceiptRule_StopAction {
+        SesReceiptRule_StopAction {
             position: self.position,
             scope: self.scope,
             topic_arn: core::default::Default::default(),
@@ -1002,21 +1058,23 @@ impl BuildSesReceiptRuleStopActionEl {
     }
 }
 
-pub struct SesReceiptRuleStopActionElRef {
+#[allow(dead_code)]
+pub struct SesReceiptRule_StopActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesReceiptRuleStopActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRuleStopActionElRef {
-        SesReceiptRuleStopActionElRef {
+impl terrars::Ref for SesReceiptRule_StopActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRule_StopActionRef {
+        SesReceiptRule_StopActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesReceiptRuleStopActionElRef {
+impl SesReceiptRule_StopActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1038,14 +1096,14 @@ impl SesReceiptRuleStopActionElRef {
 }
 
 #[derive(Serialize)]
-pub struct SesReceiptRuleWorkmailActionEl {
+pub struct SesReceiptRule_WorkmailAction {
     organization_arn: terrars::PrimField<std::string::String>,
     position: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     topic_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SesReceiptRuleWorkmailActionEl {
+impl SesReceiptRule_WorkmailAction {
     #[doc = "Set the field `topic_arn`.\n"]
     pub fn set_topic_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.topic_arn = std::option::Option::Some(v.into());
@@ -1053,8 +1111,8 @@ impl SesReceiptRuleWorkmailActionEl {
     }
 }
 
-impl terrars::ToListMappable for SesReceiptRuleWorkmailActionEl {
-    type O = terrars::BlockAssignable<SesReceiptRuleWorkmailActionEl>;
+impl terrars::ToListMappable for SesReceiptRule_WorkmailAction {
+    type O = terrars::BlockAssignable<SesReceiptRule_WorkmailAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1065,16 +1123,16 @@ impl terrars::ToListMappable for SesReceiptRuleWorkmailActionEl {
     }
 }
 
-pub struct BuildSesReceiptRuleWorkmailActionEl {
+pub struct BuildSesReceiptRule_WorkmailAction {
     #[doc = ""]
     pub organization_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub position: terrars::PrimField<f64>,
 }
 
-impl BuildSesReceiptRuleWorkmailActionEl {
-    pub fn build(self) -> SesReceiptRuleWorkmailActionEl {
-        SesReceiptRuleWorkmailActionEl {
+impl BuildSesReceiptRule_WorkmailAction {
+    pub fn build(self) -> SesReceiptRule_WorkmailAction {
+        SesReceiptRule_WorkmailAction {
             organization_arn: self.organization_arn,
             position: self.position,
             topic_arn: core::default::Default::default(),
@@ -1082,21 +1140,23 @@ impl BuildSesReceiptRuleWorkmailActionEl {
     }
 }
 
-pub struct SesReceiptRuleWorkmailActionElRef {
+#[allow(dead_code)]
+pub struct SesReceiptRule_WorkmailActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesReceiptRuleWorkmailActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRuleWorkmailActionElRef {
-        SesReceiptRuleWorkmailActionElRef {
+impl terrars::Ref for SesReceiptRule_WorkmailActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesReceiptRule_WorkmailActionRef {
+        SesReceiptRule_WorkmailActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesReceiptRuleWorkmailActionElRef {
+impl SesReceiptRule_WorkmailActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1115,15 +1175,4 @@ impl SesReceiptRuleWorkmailActionElRef {
     pub fn topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SesReceiptRuleDynamic {
-    add_header_action: std::option::Option<terrars::DynamicBlock<SesReceiptRuleAddHeaderActionEl>>,
-    bounce_action: std::option::Option<terrars::DynamicBlock<SesReceiptRuleBounceActionEl>>,
-    lambda_action: std::option::Option<terrars::DynamicBlock<SesReceiptRuleLambdaActionEl>>,
-    s3_action: std::option::Option<terrars::DynamicBlock<SesReceiptRuleS3ActionEl>>,
-    sns_action: std::option::Option<terrars::DynamicBlock<SesReceiptRuleSnsActionEl>>,
-    stop_action: std::option::Option<terrars::DynamicBlock<SesReceiptRuleStopActionEl>>,
-    workmail_action: std::option::Option<terrars::DynamicBlock<SesReceiptRuleWorkmailActionEl>>,
 }

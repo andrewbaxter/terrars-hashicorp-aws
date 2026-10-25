@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerAttachmentAccepterData {
+struct NetworkmanagerAttachmentAccepterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,13 +25,13 @@ struct NetworkmanagerAttachmentAccepterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerAttachmentAccepterTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerAttachmentAccepter_Timeouts>,
 }
 
 struct NetworkmanagerAttachmentAccepter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerAttachmentAccepterData>,
+    data: std::cell::RefCell<NetworkmanagerAttachmentAccepterData_>,
 }
 
 #[derive(Clone)]
@@ -136,7 +138,7 @@ impl NetworkmanagerAttachmentAccepter {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerAttachmentAccepterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerAttachmentAccepter_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -174,6 +176,11 @@ impl NetworkmanagerAttachmentAccepter {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.edge_location", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `edge_locations` after provisioning.\n"]
+    pub fn edge_locations(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.edge_locations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -200,8 +207,8 @@ impl NetworkmanagerAttachmentAccepter {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerAttachmentAccepterTimeoutsElRef {
-        NetworkmanagerAttachmentAccepterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerAttachmentAccepter_TimeoutsRef {
+        NetworkmanagerAttachmentAccepter_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -252,7 +259,7 @@ impl BuildNetworkmanagerAttachmentAccepter {
         let out = NetworkmanagerAttachmentAccepter(std::rc::Rc::new(NetworkmanagerAttachmentAccepter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkmanagerAttachmentAccepterData {
+            data: std::cell::RefCell::new(NetworkmanagerAttachmentAccepterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -325,6 +332,11 @@ impl NetworkmanagerAttachmentAccepterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.edge_location", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `edge_locations` after provisioning.\n"]
+    pub fn edge_locations(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.edge_locations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -351,8 +363,8 @@ impl NetworkmanagerAttachmentAccepterRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerAttachmentAccepterTimeoutsElRef {
-        NetworkmanagerAttachmentAccepterTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerAttachmentAccepter_TimeoutsRef {
+        NetworkmanagerAttachmentAccepter_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -360,12 +372,12 @@ impl NetworkmanagerAttachmentAccepterRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerAttachmentAccepterTimeoutsEl {
+pub struct NetworkmanagerAttachmentAccepter_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerAttachmentAccepterTimeoutsEl {
+impl NetworkmanagerAttachmentAccepter_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -373,8 +385,8 @@ impl NetworkmanagerAttachmentAccepterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerAttachmentAccepterTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerAttachmentAccepterTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerAttachmentAccepter_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerAttachmentAccepter_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -385,29 +397,31 @@ impl terrars::ToListMappable for NetworkmanagerAttachmentAccepterTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkmanagerAttachmentAccepterTimeoutsEl {}
+pub struct BuildNetworkmanagerAttachmentAccepter_Timeouts {}
 
-impl BuildNetworkmanagerAttachmentAccepterTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerAttachmentAccepterTimeoutsEl {
-        NetworkmanagerAttachmentAccepterTimeoutsEl { create: core::default::Default::default() }
+impl BuildNetworkmanagerAttachmentAccepter_Timeouts {
+    pub fn build(self) -> NetworkmanagerAttachmentAccepter_Timeouts {
+        NetworkmanagerAttachmentAccepter_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct NetworkmanagerAttachmentAccepterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerAttachmentAccepter_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerAttachmentAccepterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerAttachmentAccepterTimeoutsElRef {
-        NetworkmanagerAttachmentAccepterTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerAttachmentAccepter_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerAttachmentAccepter_TimeoutsRef {
+        NetworkmanagerAttachmentAccepter_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerAttachmentAccepterTimeoutsElRef {
+impl NetworkmanagerAttachmentAccepter_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

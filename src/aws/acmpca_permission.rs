@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AcmpcaPermissionData {
+struct AcmpcaPermissionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,13 +26,15 @@ struct AcmpcaPermissionData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     principal: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_account: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct AcmpcaPermission_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AcmpcaPermissionData>,
+    data: std::cell::RefCell<AcmpcaPermissionData_>,
 }
 
 #[derive(Clone)]
@@ -136,6 +140,13 @@ impl AcmpcaPermission {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `source_account`.\n"]
     pub fn set_source_account(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().source_account = std::option::Option::Some(v.into());
@@ -165,6 +176,12 @@ impl AcmpcaPermission {
     #[doc = "Get a reference to the value of field `principal` after provisioning.\n"]
     pub fn principal(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_account` after provisioning.\n"]
@@ -219,7 +236,7 @@ impl BuildAcmpcaPermission {
         let out = AcmpcaPermission(std::rc::Rc::new(AcmpcaPermission_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AcmpcaPermissionData {
+            data: std::cell::RefCell::new(AcmpcaPermissionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -229,6 +246,7 @@ impl BuildAcmpcaPermission {
                 certificate_authority_arn: self.certificate_authority_arn,
                 id: core::default::Default::default(),
                 principal: self.principal,
+                region: core::default::Default::default(),
                 source_account: core::default::Default::default(),
             }),
         }));
@@ -283,6 +301,12 @@ impl AcmpcaPermissionRef {
     #[doc = "Get a reference to the value of field `principal` after provisioning.\n"]
     pub fn principal(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source_account` after provisioning.\n"]

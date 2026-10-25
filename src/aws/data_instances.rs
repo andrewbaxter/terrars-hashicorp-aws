@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataInstancesData {
+struct DataInstancesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,16 +25,18 @@ struct DataInstancesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataInstancesFilterEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataInstancesTimeoutsEl>,
+    filter: std::option::Option<std::vec::Vec<DataInstances_Filter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataInstances_Timeouts>,
     dynamic: DataInstancesDynamic,
 }
 
 struct DataInstances_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataInstancesData>,
+    data: std::cell::RefCell<DataInstancesData_>,
 }
 
 #[derive(Clone)]
@@ -101,8 +105,15 @@ impl DataInstances {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataInstancesFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataInstances_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -115,7 +126,7 @@ impl DataInstances {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataInstancesTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataInstances_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -140,6 +151,11 @@ impl DataInstances {
         terrars::RecRef::new(self.shared().clone(), format!("{}.instance_tags", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipv6_addresses` after provisioning.\n"]
+    pub fn ipv6_addresses(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ipv6_addresses", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `private_ips` after provisioning.\n"]
     pub fn private_ips(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.private_ips", self.extract_ref()))
@@ -150,9 +166,15 @@ impl DataInstances {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_ips", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataInstancesTimeoutsElRef {
-        DataInstancesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataInstances_TimeoutsRef {
+        DataInstances_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -196,7 +218,7 @@ impl BuildDataInstances {
         let out = DataInstances(std::rc::Rc::new(DataInstances_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataInstancesData {
+            data: std::cell::RefCell::new(DataInstancesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -204,6 +226,7 @@ impl BuildDataInstances {
                 id: core::default::Default::default(),
                 instance_state_names: core::default::Default::default(),
                 instance_tags: core::default::Default::default(),
+                region: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -257,6 +280,11 @@ impl DataInstancesRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.instance_tags", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ipv6_addresses` after provisioning.\n"]
+    pub fn ipv6_addresses(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ipv6_addresses", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `private_ips` after provisioning.\n"]
     pub fn private_ips(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.private_ips", self.extract_ref()))
@@ -267,22 +295,33 @@ impl DataInstancesRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_ips", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataInstancesTimeoutsElRef {
-        DataInstancesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataInstances_TimeoutsRef {
+        DataInstances_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataInstancesFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct DataInstancesDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataInstances_Filter>>,
 }
 
-impl DataInstancesFilterEl { }
+#[derive(Serialize)]
+pub struct DataInstances_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for DataInstancesFilterEl {
-    type O = terrars::BlockAssignable<DataInstancesFilterEl>;
+impl DataInstances_Filter { }
+
+impl terrars::ToListMappable for DataInstances_Filter {
+    type O = terrars::BlockAssignable<DataInstances_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -293,37 +332,39 @@ impl terrars::ToListMappable for DataInstancesFilterEl {
     }
 }
 
-pub struct BuildDataInstancesFilterEl {
+pub struct BuildDataInstances_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataInstancesFilterEl {
-    pub fn build(self) -> DataInstancesFilterEl {
-        DataInstancesFilterEl {
+impl BuildDataInstances_Filter {
+    pub fn build(self) -> DataInstances_Filter {
+        DataInstances_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataInstancesFilterElRef {
+#[allow(dead_code)]
+pub struct DataInstances_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataInstancesFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInstancesFilterElRef {
-        DataInstancesFilterElRef {
+impl terrars::Ref for DataInstances_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInstances_FilterRef {
+        DataInstances_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataInstancesFilterElRef {
+impl DataInstances_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -334,18 +375,18 @@ impl DataInstancesFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataInstancesTimeoutsEl {
+pub struct DataInstances_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataInstancesTimeoutsEl {
+impl DataInstances_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -353,8 +394,8 @@ impl DataInstancesTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataInstancesTimeoutsEl {
-    type O = terrars::BlockAssignable<DataInstancesTimeoutsEl>;
+impl terrars::ToListMappable for DataInstances_Timeouts {
+    type O = terrars::BlockAssignable<DataInstances_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -365,29 +406,31 @@ impl terrars::ToListMappable for DataInstancesTimeoutsEl {
     }
 }
 
-pub struct BuildDataInstancesTimeoutsEl {}
+pub struct BuildDataInstances_Timeouts {}
 
-impl BuildDataInstancesTimeoutsEl {
-    pub fn build(self) -> DataInstancesTimeoutsEl {
-        DataInstancesTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataInstances_Timeouts {
+    pub fn build(self) -> DataInstances_Timeouts {
+        DataInstances_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataInstancesTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataInstances_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataInstancesTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInstancesTimeoutsElRef {
-        DataInstancesTimeoutsElRef {
+impl terrars::Ref for DataInstances_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataInstances_TimeoutsRef {
+        DataInstances_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataInstancesTimeoutsElRef {
+impl DataInstances_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -396,9 +439,4 @@ impl DataInstancesTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataInstancesDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataInstancesFilterEl>>,
 }

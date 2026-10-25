@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataVpnGatewayData {
+struct DataVpnGatewayData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,20 +27,22 @@ struct DataVpnGatewayData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataVpnGatewayFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataVpnGateway_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataVpnGatewayTimeoutsEl>,
+    timeouts: std::option::Option<DataVpnGateway_Timeouts>,
     dynamic: DataVpnGatewayDynamic,
 }
 
 struct DataVpnGateway_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVpnGatewayData>,
+    data: std::cell::RefCell<DataVpnGatewayData_>,
 }
 
 #[derive(Clone)]
@@ -107,6 +111,13 @@ impl DataVpnGateway {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `state`.\n"]
     pub fn set_state(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().state = std::option::Option::Some(v.into());
@@ -123,7 +134,7 @@ impl DataVpnGateway {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataVpnGatewayFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataVpnGateway_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -136,7 +147,7 @@ impl DataVpnGateway {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpnGatewayTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpnGateway_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -166,6 +177,12 @@ impl DataVpnGateway {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -177,8 +194,8 @@ impl DataVpnGateway {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpnGatewayTimeoutsElRef {
-        DataVpnGatewayTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpnGateway_TimeoutsRef {
+        DataVpnGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -222,7 +239,7 @@ impl BuildDataVpnGateway {
         let out = DataVpnGateway(std::rc::Rc::new(DataVpnGateway_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVpnGatewayData {
+            data: std::cell::RefCell::new(DataVpnGatewayData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -231,6 +248,7 @@ impl BuildDataVpnGateway {
                 attached_vpc_id: core::default::Default::default(),
                 availability_zone: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 state: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
@@ -291,6 +309,12 @@ impl DataVpnGatewayRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -302,21 +326,26 @@ impl DataVpnGatewayRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpnGatewayTimeoutsElRef {
-        DataVpnGatewayTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpnGateway_TimeoutsRef {
+        DataVpnGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataVpnGatewayDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataVpnGateway_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataVpnGatewayFilterEl {
+pub struct DataVpnGateway_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpnGatewayFilterEl { }
+impl DataVpnGateway_Filter { }
 
-impl terrars::ToListMappable for DataVpnGatewayFilterEl {
-    type O = terrars::BlockAssignable<DataVpnGatewayFilterEl>;
+impl terrars::ToListMappable for DataVpnGateway_Filter {
+    type O = terrars::BlockAssignable<DataVpnGateway_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -327,37 +356,39 @@ impl terrars::ToListMappable for DataVpnGatewayFilterEl {
     }
 }
 
-pub struct BuildDataVpnGatewayFilterEl {
+pub struct BuildDataVpnGateway_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataVpnGatewayFilterEl {
-    pub fn build(self) -> DataVpnGatewayFilterEl {
-        DataVpnGatewayFilterEl {
+impl BuildDataVpnGateway_Filter {
+    pub fn build(self) -> DataVpnGateway_Filter {
+        DataVpnGateway_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataVpnGatewayFilterElRef {
+#[allow(dead_code)]
+pub struct DataVpnGateway_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpnGatewayFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpnGatewayFilterElRef {
-        DataVpnGatewayFilterElRef {
+impl terrars::Ref for DataVpnGateway_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpnGateway_FilterRef {
+        DataVpnGateway_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpnGatewayFilterElRef {
+impl DataVpnGateway_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -374,12 +405,12 @@ impl DataVpnGatewayFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpnGatewayTimeoutsEl {
+pub struct DataVpnGateway_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpnGatewayTimeoutsEl {
+impl DataVpnGateway_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -387,8 +418,8 @@ impl DataVpnGatewayTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpnGatewayTimeoutsEl {
-    type O = terrars::BlockAssignable<DataVpnGatewayTimeoutsEl>;
+impl terrars::ToListMappable for DataVpnGateway_Timeouts {
+    type O = terrars::BlockAssignable<DataVpnGateway_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -399,29 +430,31 @@ impl terrars::ToListMappable for DataVpnGatewayTimeoutsEl {
     }
 }
 
-pub struct BuildDataVpnGatewayTimeoutsEl {}
+pub struct BuildDataVpnGateway_Timeouts {}
 
-impl BuildDataVpnGatewayTimeoutsEl {
-    pub fn build(self) -> DataVpnGatewayTimeoutsEl {
-        DataVpnGatewayTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataVpnGateway_Timeouts {
+    pub fn build(self) -> DataVpnGateway_Timeouts {
+        DataVpnGateway_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataVpnGatewayTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataVpnGateway_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpnGatewayTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpnGatewayTimeoutsElRef {
-        DataVpnGatewayTimeoutsElRef {
+impl terrars::Ref for DataVpnGateway_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpnGateway_TimeoutsRef {
+        DataVpnGateway_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpnGatewayTimeoutsElRef {
+impl DataVpnGateway_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -430,9 +463,4 @@ impl DataVpnGatewayTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataVpnGatewayDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataVpnGatewayFilterEl>>,
 }

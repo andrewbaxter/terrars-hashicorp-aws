@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FisExperimentTemplateData {
+struct FisExperimentTemplateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,26 +23,36 @@ struct FisExperimentTemplateData {
     description: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<std::vec::Vec<FisExperimentTemplateActionEl>>,
+    action: std::option::Option<std::vec::Vec<FisExperimentTemplate_Action>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stop_condition: std::option::Option<std::vec::Vec<FisExperimentTemplateStopConditionEl>>,
+    experiment_options: std::option::Option<std::vec::Vec<FisExperimentTemplate_ExperimentOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target: std::option::Option<std::vec::Vec<FisExperimentTemplateTargetEl>>,
+    experiment_report_configuration: std
+    ::option
+    ::Option<std::vec::Vec<FisExperimentTemplate_ExperimentReportConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FisExperimentTemplateTimeoutsEl>,
+    log_configuration: std::option::Option<std::vec::Vec<FisExperimentTemplate_LogConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stop_condition: std::option::Option<std::vec::Vec<FisExperimentTemplate_StopCondition>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target: std::option::Option<std::vec::Vec<FisExperimentTemplate_Target>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<FisExperimentTemplate_Timeouts>,
     dynamic: FisExperimentTemplateDynamic,
 }
 
 struct FisExperimentTemplate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FisExperimentTemplateData>,
+    data: std::cell::RefCell<FisExperimentTemplateData_>,
 }
 
 #[derive(Clone)]
@@ -146,6 +158,13 @@ impl FisExperimentTemplate {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -165,10 +184,7 @@ impl FisExperimentTemplate {
     }
 
     #[doc = "Set the field `action`.\n"]
-    pub fn set_action(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplateActionEl>>,
-    ) -> Self {
+    pub fn set_action(self, v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_Action>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().action = std::option::Option::Some(v);
@@ -180,10 +196,58 @@ impl FisExperimentTemplate {
         self
     }
 
+    #[doc = "Set the field `experiment_options`.\n"]
+    pub fn set_experiment_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_ExperimentOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().experiment_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.experiment_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `experiment_report_configuration`.\n"]
+    pub fn set_experiment_report_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_ExperimentReportConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().experiment_report_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.experiment_report_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `log_configuration`.\n"]
+    pub fn set_log_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_LogConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().log_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.log_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `stop_condition`.\n"]
     pub fn set_stop_condition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplateStopConditionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_StopCondition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -197,10 +261,7 @@ impl FisExperimentTemplate {
     }
 
     #[doc = "Set the field `target`.\n"]
-    pub fn set_target(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplateTargetEl>>,
-    ) -> Self {
+    pub fn set_target(self, v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_Target>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().target = std::option::Option::Some(v);
@@ -213,7 +274,7 @@ impl FisExperimentTemplate {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FisExperimentTemplateTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FisExperimentTemplate_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -226,6 +287,12 @@ impl FisExperimentTemplate {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -243,9 +310,29 @@ impl FisExperimentTemplate {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `experiment_options` after provisioning.\n"]
+    pub fn experiment_options(&self) -> terrars::ListRef<FisExperimentTemplate_ExperimentOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.experiment_options", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `experiment_report_configuration` after provisioning.\n"]
+    pub fn experiment_report_configuration(
+        &self,
+    ) -> terrars::ListRef<FisExperimentTemplate_ExperimentReportConfigurationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.experiment_report_configuration", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `log_configuration` after provisioning.\n"]
+    pub fn log_configuration(&self) -> terrars::ListRef<FisExperimentTemplate_LogConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.log_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FisExperimentTemplateTimeoutsElRef {
-        FisExperimentTemplateTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FisExperimentTemplate_TimeoutsRef {
+        FisExperimentTemplate_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -293,7 +380,7 @@ impl BuildFisExperimentTemplate {
         let out = FisExperimentTemplate(std::rc::Rc::new(FisExperimentTemplate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FisExperimentTemplateData {
+            data: std::cell::RefCell::new(FisExperimentTemplateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -301,10 +388,14 @@ impl BuildFisExperimentTemplate {
                 provisioner: core::default::Default::default(),
                 description: self.description,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 action: core::default::Default::default(),
+                experiment_options: core::default::Default::default(),
+                experiment_report_configuration: core::default::Default::default(),
+                log_configuration: core::default::Default::default(),
                 stop_condition: core::default::Default::default(),
                 target: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -349,6 +440,12 @@ impl FisExperimentTemplateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -364,22 +461,54 @@ impl FisExperimentTemplateRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `experiment_options` after provisioning.\n"]
+    pub fn experiment_options(&self) -> terrars::ListRef<FisExperimentTemplate_ExperimentOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.experiment_options", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `experiment_report_configuration` after provisioning.\n"]
+    pub fn experiment_report_configuration(
+        &self,
+    ) -> terrars::ListRef<FisExperimentTemplate_ExperimentReportConfigurationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.experiment_report_configuration", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `log_configuration` after provisioning.\n"]
+    pub fn log_configuration(&self) -> terrars::ListRef<FisExperimentTemplate_LogConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.log_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FisExperimentTemplateTimeoutsElRef {
-        FisExperimentTemplateTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FisExperimentTemplate_TimeoutsRef {
+        FisExperimentTemplate_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FisExperimentTemplateDynamic {
+    action: std::option::Option<terrars::DynamicBlock<FisExperimentTemplate_Action>>,
+    experiment_options: std::option::Option<terrars::DynamicBlock<FisExperimentTemplate_ExperimentOptions>>,
+    experiment_report_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<FisExperimentTemplate_ExperimentReportConfiguration>>,
+    log_configuration: std::option::Option<terrars::DynamicBlock<FisExperimentTemplate_LogConfiguration>>,
+    stop_condition: std::option::Option<terrars::DynamicBlock<FisExperimentTemplate_StopCondition>>,
+    target: std::option::Option<terrars::DynamicBlock<FisExperimentTemplate_Target>>,
+}
+
 #[derive(Serialize)]
-pub struct FisExperimentTemplateActionElParameterEl {
+pub struct FisExperimentTemplate_Action_Parameter {
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl FisExperimentTemplateActionElParameterEl { }
+impl FisExperimentTemplate_Action_Parameter { }
 
-impl terrars::ToListMappable for FisExperimentTemplateActionElParameterEl {
-    type O = terrars::BlockAssignable<FisExperimentTemplateActionElParameterEl>;
+impl terrars::ToListMappable for FisExperimentTemplate_Action_Parameter {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_Action_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -390,37 +519,39 @@ impl terrars::ToListMappable for FisExperimentTemplateActionElParameterEl {
     }
 }
 
-pub struct BuildFisExperimentTemplateActionElParameterEl {
+pub struct BuildFisExperimentTemplate_Action_Parameter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFisExperimentTemplateActionElParameterEl {
-    pub fn build(self) -> FisExperimentTemplateActionElParameterEl {
-        FisExperimentTemplateActionElParameterEl {
+impl BuildFisExperimentTemplate_Action_Parameter {
+    pub fn build(self) -> FisExperimentTemplate_Action_Parameter {
+        FisExperimentTemplate_Action_Parameter {
             key: self.key,
             value: self.value,
         }
     }
 }
 
-pub struct FisExperimentTemplateActionElParameterElRef {
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_Action_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FisExperimentTemplateActionElParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplateActionElParameterElRef {
-        FisExperimentTemplateActionElParameterElRef {
+impl terrars::Ref for FisExperimentTemplate_Action_ParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_Action_ParameterRef {
+        FisExperimentTemplate_Action_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FisExperimentTemplateActionElParameterElRef {
+impl FisExperimentTemplate_Action_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -437,15 +568,15 @@ impl FisExperimentTemplateActionElParameterElRef {
 }
 
 #[derive(Serialize)]
-pub struct FisExperimentTemplateActionElTargetEl {
+pub struct FisExperimentTemplate_Action_Target {
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl FisExperimentTemplateActionElTargetEl { }
+impl FisExperimentTemplate_Action_Target { }
 
-impl terrars::ToListMappable for FisExperimentTemplateActionElTargetEl {
-    type O = terrars::BlockAssignable<FisExperimentTemplateActionElTargetEl>;
+impl terrars::ToListMappable for FisExperimentTemplate_Action_Target {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_Action_Target>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -456,37 +587,39 @@ impl terrars::ToListMappable for FisExperimentTemplateActionElTargetEl {
     }
 }
 
-pub struct BuildFisExperimentTemplateActionElTargetEl {
+pub struct BuildFisExperimentTemplate_Action_Target {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFisExperimentTemplateActionElTargetEl {
-    pub fn build(self) -> FisExperimentTemplateActionElTargetEl {
-        FisExperimentTemplateActionElTargetEl {
+impl BuildFisExperimentTemplate_Action_Target {
+    pub fn build(self) -> FisExperimentTemplate_Action_Target {
+        FisExperimentTemplate_Action_Target {
             key: self.key,
             value: self.value,
         }
     }
 }
 
-pub struct FisExperimentTemplateActionElTargetElRef {
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_Action_TargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FisExperimentTemplateActionElTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplateActionElTargetElRef {
-        FisExperimentTemplateActionElTargetElRef {
+impl terrars::Ref for FisExperimentTemplate_Action_TargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_Action_TargetRef {
+        FisExperimentTemplate_Action_TargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FisExperimentTemplateActionElTargetElRef {
+impl FisExperimentTemplate_Action_TargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -503,13 +636,13 @@ impl FisExperimentTemplateActionElTargetElRef {
 }
 
 #[derive(Serialize, Default)]
-struct FisExperimentTemplateActionElDynamic {
-    parameter: std::option::Option<terrars::DynamicBlock<FisExperimentTemplateActionElParameterEl>>,
-    target: std::option::Option<terrars::DynamicBlock<FisExperimentTemplateActionElTargetEl>>,
+struct FisExperimentTemplate_ActionDynamic {
+    parameter: std::option::Option<terrars::DynamicBlock<FisExperimentTemplate_Action_Parameter>>,
+    target: std::option::Option<terrars::DynamicBlock<FisExperimentTemplate_Action_Target>>,
 }
 
 #[derive(Serialize)]
-pub struct FisExperimentTemplateActionEl {
+pub struct FisExperimentTemplate_Action {
     action_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -517,13 +650,13 @@ pub struct FisExperimentTemplateActionEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_after: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<std::vec::Vec<FisExperimentTemplateActionElParameterEl>>,
+    parameter: std::option::Option<std::vec::Vec<FisExperimentTemplate_Action_Parameter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target: std::option::Option<std::vec::Vec<FisExperimentTemplateActionElTargetEl>>,
-    dynamic: FisExperimentTemplateActionElDynamic,
+    target: std::option::Option<std::vec::Vec<FisExperimentTemplate_Action_Target>>,
+    dynamic: FisExperimentTemplate_ActionDynamic,
 }
 
-impl FisExperimentTemplateActionEl {
+impl FisExperimentTemplate_Action {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -542,7 +675,7 @@ impl FisExperimentTemplateActionEl {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplateActionElParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_Action_Parameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -558,7 +691,7 @@ impl FisExperimentTemplateActionEl {
     #[doc = "Set the field `target`.\n"]
     pub fn set_target(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplateActionElTargetEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_Action_Target>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -572,8 +705,8 @@ impl FisExperimentTemplateActionEl {
     }
 }
 
-impl terrars::ToListMappable for FisExperimentTemplateActionEl {
-    type O = terrars::BlockAssignable<FisExperimentTemplateActionEl>;
+impl terrars::ToListMappable for FisExperimentTemplate_Action {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_Action>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -584,16 +717,16 @@ impl terrars::ToListMappable for FisExperimentTemplateActionEl {
     }
 }
 
-pub struct BuildFisExperimentTemplateActionEl {
+pub struct BuildFisExperimentTemplate_Action {
     #[doc = ""]
     pub action_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFisExperimentTemplateActionEl {
-    pub fn build(self) -> FisExperimentTemplateActionEl {
-        FisExperimentTemplateActionEl {
+impl BuildFisExperimentTemplate_Action {
+    pub fn build(self) -> FisExperimentTemplate_Action {
+        FisExperimentTemplate_Action {
             action_id: self.action_id,
             description: core::default::Default::default(),
             name: self.name,
@@ -605,21 +738,23 @@ impl BuildFisExperimentTemplateActionEl {
     }
 }
 
-pub struct FisExperimentTemplateActionElRef {
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_ActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FisExperimentTemplateActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplateActionElRef {
-        FisExperimentTemplateActionElRef {
+impl terrars::Ref for FisExperimentTemplate_ActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_ActionRef {
+        FisExperimentTemplate_ActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FisExperimentTemplateActionElRef {
+impl FisExperimentTemplate_ActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -645,28 +780,38 @@ impl FisExperimentTemplateActionElRef {
     }
 
     #[doc = "Get a reference to the value of field `target` after provisioning.\n"]
-    pub fn target(&self) -> terrars::ListRef<FisExperimentTemplateActionElTargetElRef> {
+    pub fn target(&self) -> terrars::ListRef<FisExperimentTemplate_Action_TargetRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct FisExperimentTemplateStopConditionEl {
-    source: terrars::PrimField<std::string::String>,
+pub struct FisExperimentTemplate_ExperimentOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    value: std::option::Option<terrars::PrimField<std::string::String>>,
+    account_targeting: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    empty_target_resolution_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FisExperimentTemplateStopConditionEl {
-    #[doc = "Set the field `value`.\n"]
-    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.value = std::option::Option::Some(v.into());
+impl FisExperimentTemplate_ExperimentOptions {
+    #[doc = "Set the field `account_targeting`.\n"]
+    pub fn set_account_targeting(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.account_targeting = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `empty_target_resolution_mode`.\n"]
+    pub fn set_empty_target_resolution_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.empty_target_resolution_mode = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for FisExperimentTemplateStopConditionEl {
-    type O = terrars::BlockAssignable<FisExperimentTemplateStopConditionEl>;
+impl terrars::ToListMappable for FisExperimentTemplate_ExperimentOptions {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_ExperimentOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -677,35 +822,783 @@ impl terrars::ToListMappable for FisExperimentTemplateStopConditionEl {
     }
 }
 
-pub struct BuildFisExperimentTemplateStopConditionEl {
-    #[doc = ""]
-    pub source: terrars::PrimField<std::string::String>,
-}
+pub struct BuildFisExperimentTemplate_ExperimentOptions {}
 
-impl BuildFisExperimentTemplateStopConditionEl {
-    pub fn build(self) -> FisExperimentTemplateStopConditionEl {
-        FisExperimentTemplateStopConditionEl {
-            source: self.source,
-            value: core::default::Default::default(),
+impl BuildFisExperimentTemplate_ExperimentOptions {
+    pub fn build(self) -> FisExperimentTemplate_ExperimentOptions {
+        FisExperimentTemplate_ExperimentOptions {
+            account_targeting: core::default::Default::default(),
+            empty_target_resolution_mode: core::default::Default::default(),
         }
     }
 }
 
-pub struct FisExperimentTemplateStopConditionElRef {
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_ExperimentOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FisExperimentTemplateStopConditionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplateStopConditionElRef {
-        FisExperimentTemplateStopConditionElRef {
+impl terrars::Ref for FisExperimentTemplate_ExperimentOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_ExperimentOptionsRef {
+        FisExperimentTemplate_ExperimentOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FisExperimentTemplateStopConditionElRef {
+impl FisExperimentTemplate_ExperimentOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `account_targeting` after provisioning.\n"]
+    pub fn account_targeting(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_targeting", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `empty_target_resolution_mode` after provisioning.\n"]
+    pub fn empty_target_resolution_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.empty_target_resolution_mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dashboard_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard {
+    #[doc = "Set the field `dashboard_arn`.\n"]
+    pub fn set_dashboard_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.dashboard_arn = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard {
+    type O =
+        terrars
+        ::BlockAssignable<FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard {}
+
+impl BuildFisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard {
+    pub fn build(self) -> FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard {
+        FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard {
+            dashboard_arn: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboardRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboardRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboardRef {
+        FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboardRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboardRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `dashboard_arn` after provisioning.\n"]
+    pub fn dashboard_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dashboard_arn", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct FisExperimentTemplate_ExperimentReportConfiguration_DataSourcesDynamic {
+    cloudwatch_dashboard: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct FisExperimentTemplate_ExperimentReportConfiguration_DataSources {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_dashboard: std
+    ::option
+    ::Option<std::vec::Vec<FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard>>,
+    dynamic: FisExperimentTemplate_ExperimentReportConfiguration_DataSourcesDynamic,
+}
+
+impl FisExperimentTemplate_ExperimentReportConfiguration_DataSources {
+    #[doc = "Set the field `cloudwatch_dashboard`.\n"]
+    pub fn set_cloudwatch_dashboard(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboard,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_dashboard = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_dashboard = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for FisExperimentTemplate_ExperimentReportConfiguration_DataSources {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_ExperimentReportConfiguration_DataSources>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFisExperimentTemplate_ExperimentReportConfiguration_DataSources {}
+
+impl BuildFisExperimentTemplate_ExperimentReportConfiguration_DataSources {
+    pub fn build(self) -> FisExperimentTemplate_ExperimentReportConfiguration_DataSources {
+        FisExperimentTemplate_ExperimentReportConfiguration_DataSources {
+            cloudwatch_dashboard: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_ExperimentReportConfiguration_DataSourcesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FisExperimentTemplate_ExperimentReportConfiguration_DataSourcesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> FisExperimentTemplate_ExperimentReportConfiguration_DataSourcesRef {
+        FisExperimentTemplate_ExperimentReportConfiguration_DataSourcesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FisExperimentTemplate_ExperimentReportConfiguration_DataSourcesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `cloudwatch_dashboard` after provisioning.\n"]
+    pub fn cloudwatch_dashboard(
+        &self,
+    ) -> terrars::ListRef<FisExperimentTemplate_ExperimentReportConfiguration_DataSources_CloudwatchDashboardRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_dashboard", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct FisExperimentTemplate_LogConfiguration_S3Configuration {
+    bucket_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl FisExperimentTemplate_LogConfiguration_S3Configuration {
+    #[doc = "Set the field `prefix`.\n"]
+    pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.prefix = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for FisExperimentTemplate_LogConfiguration_S3Configuration {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_LogConfiguration_S3Configuration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFisExperimentTemplate_LogConfiguration_S3Configuration {
+    #[doc = ""]
+    pub bucket_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildFisExperimentTemplate_LogConfiguration_S3Configuration {
+    pub fn build(self) -> FisExperimentTemplate_LogConfiguration_S3Configuration {
+        FisExperimentTemplate_LogConfiguration_S3Configuration {
+            bucket_name: self.bucket_name,
+            prefix: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_LogConfiguration_S3ConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FisExperimentTemplate_LogConfiguration_S3ConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> FisExperimentTemplate_LogConfiguration_S3ConfigurationRef {
+        FisExperimentTemplate_LogConfiguration_S3ConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FisExperimentTemplate_LogConfiguration_S3ConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bucket_name` after provisioning.\n"]
+    pub fn bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix` after provisioning.\n"]
+    pub fn prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct FisExperimentTemplate_ExperimentReportConfiguration_OutputsDynamic {
+    s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<FisExperimentTemplate_LogConfiguration_S3Configuration>>,
+}
+
+#[derive(Serialize)]
+pub struct FisExperimentTemplate_ExperimentReportConfiguration_Outputs {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_configuration: std::option::Option<std::vec::Vec<FisExperimentTemplate_LogConfiguration_S3Configuration>>,
+    dynamic: FisExperimentTemplate_ExperimentReportConfiguration_OutputsDynamic,
+}
+
+impl FisExperimentTemplate_ExperimentReportConfiguration_Outputs {
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_LogConfiguration_S3Configuration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for FisExperimentTemplate_ExperimentReportConfiguration_Outputs {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_ExperimentReportConfiguration_Outputs>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFisExperimentTemplate_ExperimentReportConfiguration_Outputs {}
+
+impl BuildFisExperimentTemplate_ExperimentReportConfiguration_Outputs {
+    pub fn build(self) -> FisExperimentTemplate_ExperimentReportConfiguration_Outputs {
+        FisExperimentTemplate_ExperimentReportConfiguration_Outputs {
+            s3_configuration: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_ExperimentReportConfiguration_OutputsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FisExperimentTemplate_ExperimentReportConfiguration_OutputsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> FisExperimentTemplate_ExperimentReportConfiguration_OutputsRef {
+        FisExperimentTemplate_ExperimentReportConfiguration_OutputsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FisExperimentTemplate_ExperimentReportConfiguration_OutputsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(&self) -> terrars::ListRef<FisExperimentTemplate_LogConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct FisExperimentTemplate_ExperimentReportConfigurationDynamic {
+    data_sources: std
+    ::option
+    ::Option<terrars::DynamicBlock<FisExperimentTemplate_ExperimentReportConfiguration_DataSources>>,
+    outputs: std
+    ::option
+    ::Option<terrars::DynamicBlock<FisExperimentTemplate_ExperimentReportConfiguration_Outputs>>,
+}
+
+#[derive(Serialize)]
+pub struct FisExperimentTemplate_ExperimentReportConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    post_experiment_duration: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pre_experiment_duration: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_sources: std::option::Option<std::vec::Vec<FisExperimentTemplate_ExperimentReportConfiguration_DataSources>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    outputs: std::option::Option<std::vec::Vec<FisExperimentTemplate_ExperimentReportConfiguration_Outputs>>,
+    dynamic: FisExperimentTemplate_ExperimentReportConfigurationDynamic,
+}
+
+impl FisExperimentTemplate_ExperimentReportConfiguration {
+    #[doc = "Set the field `post_experiment_duration`.\n"]
+    pub fn set_post_experiment_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.post_experiment_duration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `pre_experiment_duration`.\n"]
+    pub fn set_pre_experiment_duration(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.pre_experiment_duration = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `data_sources`.\n"]
+    pub fn set_data_sources(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<FisExperimentTemplate_ExperimentReportConfiguration_DataSources>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.data_sources = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.data_sources = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `outputs`.\n"]
+    pub fn set_outputs(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<FisExperimentTemplate_ExperimentReportConfiguration_Outputs>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.outputs = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.outputs = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for FisExperimentTemplate_ExperimentReportConfiguration {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_ExperimentReportConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFisExperimentTemplate_ExperimentReportConfiguration {}
+
+impl BuildFisExperimentTemplate_ExperimentReportConfiguration {
+    pub fn build(self) -> FisExperimentTemplate_ExperimentReportConfiguration {
+        FisExperimentTemplate_ExperimentReportConfiguration {
+            post_experiment_duration: core::default::Default::default(),
+            pre_experiment_duration: core::default::Default::default(),
+            data_sources: core::default::Default::default(),
+            outputs: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_ExperimentReportConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FisExperimentTemplate_ExperimentReportConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> FisExperimentTemplate_ExperimentReportConfigurationRef {
+        FisExperimentTemplate_ExperimentReportConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FisExperimentTemplate_ExperimentReportConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `post_experiment_duration` after provisioning.\n"]
+    pub fn post_experiment_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.post_experiment_duration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `pre_experiment_duration` after provisioning.\n"]
+    pub fn pre_experiment_duration(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pre_experiment_duration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `data_sources` after provisioning.\n"]
+    pub fn data_sources(&self) -> terrars::ListRef<FisExperimentTemplate_ExperimentReportConfiguration_DataSourcesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.data_sources", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `outputs` after provisioning.\n"]
+    pub fn outputs(&self) -> terrars::ListRef<FisExperimentTemplate_ExperimentReportConfiguration_OutputsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.outputs", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration {
+    log_group_arn: terrars::PrimField<std::string::String>,
+}
+
+impl FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration { }
+
+impl terrars::ToListMappable for FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration {
+    #[doc = ""]
+    pub log_group_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildFisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration {
+    pub fn build(self) -> FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration {
+        FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration { log_group_arn: self.log_group_arn }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfigurationRef {
+        FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `log_group_arn` after provisioning.\n"]
+    pub fn log_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_arn", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct FisExperimentTemplate_LogConfigurationDynamic {
+    cloudwatch_logs_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration>>,
+    s3_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<FisExperimentTemplate_LogConfiguration_S3Configuration>>,
+}
+
+#[derive(Serialize)]
+pub struct FisExperimentTemplate_LogConfiguration {
+    log_schema_version: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cloudwatch_logs_configuration: std
+    ::option
+    ::Option<std::vec::Vec<FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_configuration: std::option::Option<std::vec::Vec<FisExperimentTemplate_LogConfiguration_S3Configuration>>,
+    dynamic: FisExperimentTemplate_LogConfigurationDynamic,
+}
+
+impl FisExperimentTemplate_LogConfiguration {
+    #[doc = "Set the field `cloudwatch_logs_configuration`.\n"]
+    pub fn set_cloudwatch_logs_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfiguration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.cloudwatch_logs_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.cloudwatch_logs_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `s3_configuration`.\n"]
+    pub fn set_s3_configuration(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_LogConfiguration_S3Configuration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for FisExperimentTemplate_LogConfiguration {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_LogConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFisExperimentTemplate_LogConfiguration {
+    #[doc = ""]
+    pub log_schema_version: terrars::PrimField<f64>,
+}
+
+impl BuildFisExperimentTemplate_LogConfiguration {
+    pub fn build(self) -> FisExperimentTemplate_LogConfiguration {
+        FisExperimentTemplate_LogConfiguration {
+            log_schema_version: self.log_schema_version,
+            cloudwatch_logs_configuration: core::default::Default::default(),
+            s3_configuration: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_LogConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FisExperimentTemplate_LogConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_LogConfigurationRef {
+        FisExperimentTemplate_LogConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FisExperimentTemplate_LogConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `log_schema_version` after provisioning.\n"]
+    pub fn log_schema_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_schema_version", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cloudwatch_logs_configuration` after provisioning.\n"]
+    pub fn cloudwatch_logs_configuration(
+        &self,
+    ) -> terrars::ListRef<FisExperimentTemplate_LogConfiguration_CloudwatchLogsConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs_configuration", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_configuration` after provisioning.\n"]
+    pub fn s3_configuration(&self) -> terrars::ListRef<FisExperimentTemplate_LogConfiguration_S3ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_configuration", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct FisExperimentTemplate_StopCondition {
+    source: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    value: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl FisExperimentTemplate_StopCondition {
+    #[doc = "Set the field `value`.\n"]
+    pub fn set_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.value = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for FisExperimentTemplate_StopCondition {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_StopCondition>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFisExperimentTemplate_StopCondition {
+    #[doc = ""]
+    pub source: terrars::PrimField<std::string::String>,
+}
+
+impl BuildFisExperimentTemplate_StopCondition {
+    pub fn build(self) -> FisExperimentTemplate_StopCondition {
+        FisExperimentTemplate_StopCondition {
+            source: self.source,
+            value: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_StopConditionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FisExperimentTemplate_StopConditionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_StopConditionRef {
+        FisExperimentTemplate_StopConditionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FisExperimentTemplate_StopConditionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -722,15 +1615,15 @@ impl FisExperimentTemplateStopConditionElRef {
 }
 
 #[derive(Serialize)]
-pub struct FisExperimentTemplateTargetElFilterEl {
+pub struct FisExperimentTemplate_Target_Filter {
     path: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl FisExperimentTemplateTargetElFilterEl { }
+impl FisExperimentTemplate_Target_Filter { }
 
-impl terrars::ToListMappable for FisExperimentTemplateTargetElFilterEl {
-    type O = terrars::BlockAssignable<FisExperimentTemplateTargetElFilterEl>;
+impl terrars::ToListMappable for FisExperimentTemplate_Target_Filter {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_Target_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -741,37 +1634,39 @@ impl terrars::ToListMappable for FisExperimentTemplateTargetElFilterEl {
     }
 }
 
-pub struct BuildFisExperimentTemplateTargetElFilterEl {
+pub struct BuildFisExperimentTemplate_Target_Filter {
     #[doc = ""]
     pub path: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildFisExperimentTemplateTargetElFilterEl {
-    pub fn build(self) -> FisExperimentTemplateTargetElFilterEl {
-        FisExperimentTemplateTargetElFilterEl {
+impl BuildFisExperimentTemplate_Target_Filter {
+    pub fn build(self) -> FisExperimentTemplate_Target_Filter {
+        FisExperimentTemplate_Target_Filter {
             path: self.path,
             values: self.values,
         }
     }
 }
 
-pub struct FisExperimentTemplateTargetElFilterElRef {
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_Target_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FisExperimentTemplateTargetElFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplateTargetElFilterElRef {
-        FisExperimentTemplateTargetElFilterElRef {
+impl terrars::Ref for FisExperimentTemplate_Target_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_Target_FilterRef {
+        FisExperimentTemplate_Target_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FisExperimentTemplateTargetElFilterElRef {
+impl FisExperimentTemplate_Target_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -788,15 +1683,15 @@ impl FisExperimentTemplateTargetElFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct FisExperimentTemplateTargetElResourceTagEl {
+pub struct FisExperimentTemplate_Target_ResourceTag {
     key: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl FisExperimentTemplateTargetElResourceTagEl { }
+impl FisExperimentTemplate_Target_ResourceTag { }
 
-impl terrars::ToListMappable for FisExperimentTemplateTargetElResourceTagEl {
-    type O = terrars::BlockAssignable<FisExperimentTemplateTargetElResourceTagEl>;
+impl terrars::ToListMappable for FisExperimentTemplate_Target_ResourceTag {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_Target_ResourceTag>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -807,37 +1702,39 @@ impl terrars::ToListMappable for FisExperimentTemplateTargetElResourceTagEl {
     }
 }
 
-pub struct BuildFisExperimentTemplateTargetElResourceTagEl {
+pub struct BuildFisExperimentTemplate_Target_ResourceTag {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFisExperimentTemplateTargetElResourceTagEl {
-    pub fn build(self) -> FisExperimentTemplateTargetElResourceTagEl {
-        FisExperimentTemplateTargetElResourceTagEl {
+impl BuildFisExperimentTemplate_Target_ResourceTag {
+    pub fn build(self) -> FisExperimentTemplate_Target_ResourceTag {
+        FisExperimentTemplate_Target_ResourceTag {
             key: self.key,
             value: self.value,
         }
     }
 }
 
-pub struct FisExperimentTemplateTargetElResourceTagElRef {
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_Target_ResourceTagRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FisExperimentTemplateTargetElResourceTagElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplateTargetElResourceTagElRef {
-        FisExperimentTemplateTargetElResourceTagElRef {
+impl terrars::Ref for FisExperimentTemplate_Target_ResourceTagRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_Target_ResourceTagRef {
+        FisExperimentTemplate_Target_ResourceTagRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FisExperimentTemplateTargetElResourceTagElRef {
+impl FisExperimentTemplate_Target_ResourceTagRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -854,26 +1751,37 @@ impl FisExperimentTemplateTargetElResourceTagElRef {
 }
 
 #[derive(Serialize, Default)]
-struct FisExperimentTemplateTargetElDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<FisExperimentTemplateTargetElFilterEl>>,
-    resource_tag: std::option::Option<terrars::DynamicBlock<FisExperimentTemplateTargetElResourceTagEl>>,
+struct FisExperimentTemplate_TargetDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<FisExperimentTemplate_Target_Filter>>,
+    resource_tag: std::option::Option<terrars::DynamicBlock<FisExperimentTemplate_Target_ResourceTag>>,
 }
 
 #[derive(Serialize)]
-pub struct FisExperimentTemplateTargetEl {
+pub struct FisExperimentTemplate_Target {
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     resource_type: terrars::PrimField<std::string::String>,
     selection_mode: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<FisExperimentTemplateTargetElFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<FisExperimentTemplate_Target_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_tag: std::option::Option<std::vec::Vec<FisExperimentTemplateTargetElResourceTagEl>>,
-    dynamic: FisExperimentTemplateTargetElDynamic,
+    resource_tag: std::option::Option<std::vec::Vec<FisExperimentTemplate_Target_ResourceTag>>,
+    dynamic: FisExperimentTemplate_TargetDynamic,
 }
 
-impl FisExperimentTemplateTargetEl {
+impl FisExperimentTemplate_Target {
+    #[doc = "Set the field `parameters`.\n"]
+    pub fn set_parameters(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.parameters = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resource_arns`.\n"]
     pub fn set_resource_arns(
         mut self,
@@ -886,7 +1794,7 @@ impl FisExperimentTemplateTargetEl {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplateTargetElFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_Target_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -902,7 +1810,7 @@ impl FisExperimentTemplateTargetEl {
     #[doc = "Set the field `resource_tag`.\n"]
     pub fn set_resource_tag(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplateTargetElResourceTagEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FisExperimentTemplate_Target_ResourceTag>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -916,8 +1824,8 @@ impl FisExperimentTemplateTargetEl {
     }
 }
 
-impl terrars::ToListMappable for FisExperimentTemplateTargetEl {
-    type O = terrars::BlockAssignable<FisExperimentTemplateTargetEl>;
+impl terrars::ToListMappable for FisExperimentTemplate_Target {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_Target>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -928,7 +1836,7 @@ impl terrars::ToListMappable for FisExperimentTemplateTargetEl {
     }
 }
 
-pub struct BuildFisExperimentTemplateTargetEl {
+pub struct BuildFisExperimentTemplate_Target {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -937,10 +1845,11 @@ pub struct BuildFisExperimentTemplateTargetEl {
     pub selection_mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFisExperimentTemplateTargetEl {
-    pub fn build(self) -> FisExperimentTemplateTargetEl {
-        FisExperimentTemplateTargetEl {
+impl BuildFisExperimentTemplate_Target {
+    pub fn build(self) -> FisExperimentTemplate_Target {
+        FisExperimentTemplate_Target {
             name: self.name,
+            parameters: core::default::Default::default(),
             resource_arns: core::default::Default::default(),
             resource_type: self.resource_type,
             selection_mode: self.selection_mode,
@@ -951,21 +1860,23 @@ impl BuildFisExperimentTemplateTargetEl {
     }
 }
 
-pub struct FisExperimentTemplateTargetElRef {
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_TargetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FisExperimentTemplateTargetElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplateTargetElRef {
-        FisExperimentTemplateTargetElRef {
+impl terrars::Ref for FisExperimentTemplate_TargetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_TargetRef {
+        FisExperimentTemplate_TargetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FisExperimentTemplateTargetElRef {
+impl FisExperimentTemplate_TargetRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -973,6 +1884,11 @@ impl FisExperimentTemplateTargetElRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
+    pub fn parameters(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.parameters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `resource_arns` after provisioning.\n"]
@@ -991,13 +1907,13 @@ impl FisExperimentTemplateTargetElRef {
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<FisExperimentTemplateTargetElFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<FisExperimentTemplate_Target_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct FisExperimentTemplateTimeoutsEl {
+pub struct FisExperimentTemplate_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1006,7 +1922,7 @@ pub struct FisExperimentTemplateTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FisExperimentTemplateTimeoutsEl {
+impl FisExperimentTemplate_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1026,8 +1942,8 @@ impl FisExperimentTemplateTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FisExperimentTemplateTimeoutsEl {
-    type O = terrars::BlockAssignable<FisExperimentTemplateTimeoutsEl>;
+impl terrars::ToListMappable for FisExperimentTemplate_Timeouts {
+    type O = terrars::BlockAssignable<FisExperimentTemplate_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1038,11 +1954,11 @@ impl terrars::ToListMappable for FisExperimentTemplateTimeoutsEl {
     }
 }
 
-pub struct BuildFisExperimentTemplateTimeoutsEl {}
+pub struct BuildFisExperimentTemplate_Timeouts {}
 
-impl BuildFisExperimentTemplateTimeoutsEl {
-    pub fn build(self) -> FisExperimentTemplateTimeoutsEl {
-        FisExperimentTemplateTimeoutsEl {
+impl BuildFisExperimentTemplate_Timeouts {
+    pub fn build(self) -> FisExperimentTemplate_Timeouts {
+        FisExperimentTemplate_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1050,21 +1966,23 @@ impl BuildFisExperimentTemplateTimeoutsEl {
     }
 }
 
-pub struct FisExperimentTemplateTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FisExperimentTemplate_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FisExperimentTemplateTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplateTimeoutsElRef {
-        FisExperimentTemplateTimeoutsElRef {
+impl terrars::Ref for FisExperimentTemplate_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FisExperimentTemplate_TimeoutsRef {
+        FisExperimentTemplate_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FisExperimentTemplateTimeoutsElRef {
+impl FisExperimentTemplate_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1083,11 +2001,4 @@ impl FisExperimentTemplateTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FisExperimentTemplateDynamic {
-    action: std::option::Option<terrars::DynamicBlock<FisExperimentTemplateActionEl>>,
-    stop_condition: std::option::Option<terrars::DynamicBlock<FisExperimentTemplateStopConditionEl>>,
-    target: std::option::Option<terrars::DynamicBlock<FisExperimentTemplateTargetEl>>,
 }

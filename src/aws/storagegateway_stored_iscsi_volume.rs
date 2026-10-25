@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct StoragegatewayStoredIscsiVolumeData {
+struct StoragegatewayStoredIscsiVolumeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,6 +31,8 @@ struct StoragegatewayStoredIscsiVolumeData {
     network_interface_id: terrars::PrimField<std::string::String>,
     preserve_existing_data: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snapshot_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -40,7 +44,7 @@ struct StoragegatewayStoredIscsiVolumeData {
 struct StoragegatewayStoredIscsiVolume_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<StoragegatewayStoredIscsiVolumeData>,
+    data: std::cell::RefCell<StoragegatewayStoredIscsiVolumeData_>,
 }
 
 #[derive(Clone)]
@@ -158,6 +162,13 @@ impl StoragegatewayStoredIscsiVolume {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `snapshot_id`.\n"]
     pub fn set_snapshot_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().snapshot_id = std::option::Option::Some(v.into());
@@ -235,6 +246,12 @@ impl StoragegatewayStoredIscsiVolume {
     #[doc = "Get a reference to the value of field `preserve_existing_data` after provisioning.\n"]
     pub fn preserve_existing_data(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve_existing_data", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_id` after provisioning.\n"]
@@ -338,7 +355,7 @@ impl BuildStoragegatewayStoredIscsiVolume {
         let out = StoragegatewayStoredIscsiVolume(std::rc::Rc::new(StoragegatewayStoredIscsiVolume_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(StoragegatewayStoredIscsiVolumeData {
+            data: std::cell::RefCell::new(StoragegatewayStoredIscsiVolumeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -351,6 +368,7 @@ impl BuildStoragegatewayStoredIscsiVolume {
                 kms_key: core::default::Default::default(),
                 network_interface_id: self.network_interface_id,
                 preserve_existing_data: self.preserve_existing_data,
+                region: core::default::Default::default(),
                 snapshot_id: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -438,6 +456,12 @@ impl StoragegatewayStoredIscsiVolumeRef {
     #[doc = "Get a reference to the value of field `preserve_existing_data` after provisioning.\n"]
     pub fn preserve_existing_data(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve_existing_data", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `snapshot_id` after provisioning.\n"]

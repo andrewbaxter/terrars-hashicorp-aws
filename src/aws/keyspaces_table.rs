@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KeyspacesTableData {
+struct KeyspacesTableData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,32 +25,36 @@ struct KeyspacesTableData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     keyspace_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     table_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    capacity_specification: std::option::Option<std::vec::Vec<KeyspacesTableCapacitySpecificationEl>>,
+    capacity_specification: std::option::Option<std::vec::Vec<KeyspacesTable_CapacitySpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    comment: std::option::Option<std::vec::Vec<KeyspacesTableCommentEl>>,
+    client_side_timestamps: std::option::Option<std::vec::Vec<KeyspacesTable_ClientSideTimestamps>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_specification: std::option::Option<std::vec::Vec<KeyspacesTableEncryptionSpecificationEl>>,
+    comment: std::option::Option<std::vec::Vec<KeyspacesTable_Comment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    point_in_time_recovery: std::option::Option<std::vec::Vec<KeyspacesTablePointInTimeRecoveryEl>>,
+    encryption_specification: std::option::Option<std::vec::Vec<KeyspacesTable_EncryptionSpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schema_definition: std::option::Option<std::vec::Vec<KeyspacesTableSchemaDefinitionEl>>,
+    point_in_time_recovery: std::option::Option<std::vec::Vec<KeyspacesTable_PointInTimeRecovery>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KeyspacesTableTimeoutsEl>,
+    schema_definition: std::option::Option<std::vec::Vec<KeyspacesTable_SchemaDefinition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ttl: std::option::Option<std::vec::Vec<KeyspacesTableTtlEl>>,
+    timeouts: std::option::Option<KeyspacesTable_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ttl: std::option::Option<std::vec::Vec<KeyspacesTable_Ttl>>,
     dynamic: KeyspacesTableDynamic,
 }
 
 struct KeyspacesTable_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KeyspacesTableData>,
+    data: std::cell::RefCell<KeyspacesTableData_>,
 }
 
 #[derive(Clone)]
@@ -160,6 +166,13 @@ impl KeyspacesTable {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -181,7 +194,7 @@ impl KeyspacesTable {
     #[doc = "Set the field `capacity_specification`.\n"]
     pub fn set_capacity_specification(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTableCapacitySpecificationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_CapacitySpecification>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -194,8 +207,24 @@ impl KeyspacesTable {
         self
     }
 
+    #[doc = "Set the field `client_side_timestamps`.\n"]
+    pub fn set_client_side_timestamps(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_ClientSideTimestamps>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().client_side_timestamps = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.client_side_timestamps = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `comment`.\n"]
-    pub fn set_comment(self, v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTableCommentEl>>) -> Self {
+    pub fn set_comment(self, v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_Comment>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().comment = std::option::Option::Some(v);
@@ -210,7 +239,7 @@ impl KeyspacesTable {
     #[doc = "Set the field `encryption_specification`.\n"]
     pub fn set_encryption_specification(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTableEncryptionSpecificationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_EncryptionSpecification>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -226,7 +255,7 @@ impl KeyspacesTable {
     #[doc = "Set the field `point_in_time_recovery`.\n"]
     pub fn set_point_in_time_recovery(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTablePointInTimeRecoveryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_PointInTimeRecovery>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -242,7 +271,7 @@ impl KeyspacesTable {
     #[doc = "Set the field `schema_definition`.\n"]
     pub fn set_schema_definition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTableSchemaDefinitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_SchemaDefinition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -256,13 +285,13 @@ impl KeyspacesTable {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KeyspacesTableTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KeyspacesTable_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `ttl`.\n"]
-    pub fn set_ttl(self, v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTableTtlEl>>) -> Self {
+    pub fn set_ttl(self, v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_Ttl>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().ttl = std::option::Option::Some(v);
@@ -294,6 +323,12 @@ impl KeyspacesTable {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.keyspace_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
     pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
@@ -310,37 +345,42 @@ impl KeyspacesTable {
     }
 
     #[doc = "Get a reference to the value of field `capacity_specification` after provisioning.\n"]
-    pub fn capacity_specification(&self) -> terrars::ListRef<KeyspacesTableCapacitySpecificationElRef> {
+    pub fn capacity_specification(&self) -> terrars::ListRef<KeyspacesTable_CapacitySpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_specification", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `client_side_timestamps` after provisioning.\n"]
+    pub fn client_side_timestamps(&self) -> terrars::ListRef<KeyspacesTable_ClientSideTimestampsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_side_timestamps", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
-    pub fn comment(&self) -> terrars::ListRef<KeyspacesTableCommentElRef> {
+    pub fn comment(&self) -> terrars::ListRef<KeyspacesTable_CommentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `encryption_specification` after provisioning.\n"]
-    pub fn encryption_specification(&self) -> terrars::ListRef<KeyspacesTableEncryptionSpecificationElRef> {
+    pub fn encryption_specification(&self) -> terrars::ListRef<KeyspacesTable_EncryptionSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_specification", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `point_in_time_recovery` after provisioning.\n"]
-    pub fn point_in_time_recovery(&self) -> terrars::ListRef<KeyspacesTablePointInTimeRecoveryElRef> {
+    pub fn point_in_time_recovery(&self) -> terrars::ListRef<KeyspacesTable_PointInTimeRecoveryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.point_in_time_recovery", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema_definition` after provisioning.\n"]
-    pub fn schema_definition(&self) -> terrars::ListRef<KeyspacesTableSchemaDefinitionElRef> {
+    pub fn schema_definition(&self) -> terrars::ListRef<KeyspacesTable_SchemaDefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_definition", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KeyspacesTableTimeoutsElRef {
-        KeyspacesTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KeyspacesTable_TimeoutsRef {
+        KeyspacesTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ttl` after provisioning.\n"]
-    pub fn ttl(&self) -> terrars::ListRef<KeyspacesTableTtlElRef> {
+    pub fn ttl(&self) -> terrars::ListRef<KeyspacesTable_TtlRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
     }
 }
@@ -389,7 +429,7 @@ impl BuildKeyspacesTable {
         let out = KeyspacesTable(std::rc::Rc::new(KeyspacesTable_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KeyspacesTableData {
+            data: std::cell::RefCell::new(KeyspacesTableData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -398,10 +438,12 @@ impl BuildKeyspacesTable {
                 default_time_to_live: core::default::Default::default(),
                 id: core::default::Default::default(),
                 keyspace_name: self.keyspace_name,
+                region: core::default::Default::default(),
                 table_name: self.table_name,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 capacity_specification: core::default::Default::default(),
+                client_side_timestamps: core::default::Default::default(),
                 comment: core::default::Default::default(),
                 encryption_specification: core::default::Default::default(),
                 point_in_time_recovery: core::default::Default::default(),
@@ -459,6 +501,12 @@ impl KeyspacesTableRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.keyspace_name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
     pub fn table_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.table_name", self.extract_ref()))
@@ -475,43 +523,59 @@ impl KeyspacesTableRef {
     }
 
     #[doc = "Get a reference to the value of field `capacity_specification` after provisioning.\n"]
-    pub fn capacity_specification(&self) -> terrars::ListRef<KeyspacesTableCapacitySpecificationElRef> {
+    pub fn capacity_specification(&self) -> terrars::ListRef<KeyspacesTable_CapacitySpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_specification", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `client_side_timestamps` after provisioning.\n"]
+    pub fn client_side_timestamps(&self) -> terrars::ListRef<KeyspacesTable_ClientSideTimestampsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_side_timestamps", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
-    pub fn comment(&self) -> terrars::ListRef<KeyspacesTableCommentElRef> {
+    pub fn comment(&self) -> terrars::ListRef<KeyspacesTable_CommentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `encryption_specification` after provisioning.\n"]
-    pub fn encryption_specification(&self) -> terrars::ListRef<KeyspacesTableEncryptionSpecificationElRef> {
+    pub fn encryption_specification(&self) -> terrars::ListRef<KeyspacesTable_EncryptionSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_specification", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `point_in_time_recovery` after provisioning.\n"]
-    pub fn point_in_time_recovery(&self) -> terrars::ListRef<KeyspacesTablePointInTimeRecoveryElRef> {
+    pub fn point_in_time_recovery(&self) -> terrars::ListRef<KeyspacesTable_PointInTimeRecoveryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.point_in_time_recovery", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schema_definition` after provisioning.\n"]
-    pub fn schema_definition(&self) -> terrars::ListRef<KeyspacesTableSchemaDefinitionElRef> {
+    pub fn schema_definition(&self) -> terrars::ListRef<KeyspacesTable_SchemaDefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schema_definition", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KeyspacesTableTimeoutsElRef {
-        KeyspacesTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KeyspacesTable_TimeoutsRef {
+        KeyspacesTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `ttl` after provisioning.\n"]
-    pub fn ttl(&self) -> terrars::ListRef<KeyspacesTableTtlElRef> {
+    pub fn ttl(&self) -> terrars::ListRef<KeyspacesTable_TtlRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ttl", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct KeyspacesTableDynamic {
+    capacity_specification: std::option::Option<terrars::DynamicBlock<KeyspacesTable_CapacitySpecification>>,
+    client_side_timestamps: std::option::Option<terrars::DynamicBlock<KeyspacesTable_ClientSideTimestamps>>,
+    comment: std::option::Option<terrars::DynamicBlock<KeyspacesTable_Comment>>,
+    encryption_specification: std::option::Option<terrars::DynamicBlock<KeyspacesTable_EncryptionSpecification>>,
+    point_in_time_recovery: std::option::Option<terrars::DynamicBlock<KeyspacesTable_PointInTimeRecovery>>,
+    schema_definition: std::option::Option<terrars::DynamicBlock<KeyspacesTable_SchemaDefinition>>,
+    ttl: std::option::Option<terrars::DynamicBlock<KeyspacesTable_Ttl>>,
+}
+
 #[derive(Serialize)]
-pub struct KeyspacesTableCapacitySpecificationEl {
+pub struct KeyspacesTable_CapacitySpecification {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read_capacity_units: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -520,7 +584,7 @@ pub struct KeyspacesTableCapacitySpecificationEl {
     write_capacity_units: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl KeyspacesTableCapacitySpecificationEl {
+impl KeyspacesTable_CapacitySpecification {
     #[doc = "Set the field `read_capacity_units`.\n"]
     pub fn set_read_capacity_units(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.read_capacity_units = std::option::Option::Some(v.into());
@@ -540,8 +604,8 @@ impl KeyspacesTableCapacitySpecificationEl {
     }
 }
 
-impl terrars::ToListMappable for KeyspacesTableCapacitySpecificationEl {
-    type O = terrars::BlockAssignable<KeyspacesTableCapacitySpecificationEl>;
+impl terrars::ToListMappable for KeyspacesTable_CapacitySpecification {
+    type O = terrars::BlockAssignable<KeyspacesTable_CapacitySpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -552,11 +616,11 @@ impl terrars::ToListMappable for KeyspacesTableCapacitySpecificationEl {
     }
 }
 
-pub struct BuildKeyspacesTableCapacitySpecificationEl {}
+pub struct BuildKeyspacesTable_CapacitySpecification {}
 
-impl BuildKeyspacesTableCapacitySpecificationEl {
-    pub fn build(self) -> KeyspacesTableCapacitySpecificationEl {
-        KeyspacesTableCapacitySpecificationEl {
+impl BuildKeyspacesTable_CapacitySpecification {
+    pub fn build(self) -> KeyspacesTable_CapacitySpecification {
+        KeyspacesTable_CapacitySpecification {
             read_capacity_units: core::default::Default::default(),
             throughput_mode: core::default::Default::default(),
             write_capacity_units: core::default::Default::default(),
@@ -564,21 +628,23 @@ impl BuildKeyspacesTableCapacitySpecificationEl {
     }
 }
 
-pub struct KeyspacesTableCapacitySpecificationElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_CapacitySpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableCapacitySpecificationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTableCapacitySpecificationElRef {
-        KeyspacesTableCapacitySpecificationElRef {
+impl terrars::Ref for KeyspacesTable_CapacitySpecificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTable_CapacitySpecificationRef {
+        KeyspacesTable_CapacitySpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableCapacitySpecificationElRef {
+impl KeyspacesTable_CapacitySpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -600,21 +666,14 @@ impl KeyspacesTableCapacitySpecificationElRef {
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTableCommentEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct KeyspacesTable_ClientSideTimestamps {
+    status: terrars::PrimField<std::string::String>,
 }
 
-impl KeyspacesTableCommentEl {
-    #[doc = "Set the field `message`.\n"]
-    pub fn set_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.message = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl KeyspacesTable_ClientSideTimestamps { }
 
-impl terrars::ToListMappable for KeyspacesTableCommentEl {
-    type O = terrars::BlockAssignable<KeyspacesTableCommentEl>;
+impl terrars::ToListMappable for KeyspacesTable_ClientSideTimestamps {
+    type O = terrars::BlockAssignable<KeyspacesTable_ClientSideTimestamps>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -625,29 +684,95 @@ impl terrars::ToListMappable for KeyspacesTableCommentEl {
     }
 }
 
-pub struct BuildKeyspacesTableCommentEl {}
+pub struct BuildKeyspacesTable_ClientSideTimestamps {
+    #[doc = ""]
+    pub status: terrars::PrimField<std::string::String>,
+}
 
-impl BuildKeyspacesTableCommentEl {
-    pub fn build(self) -> KeyspacesTableCommentEl {
-        KeyspacesTableCommentEl { message: core::default::Default::default() }
+impl BuildKeyspacesTable_ClientSideTimestamps {
+    pub fn build(self) -> KeyspacesTable_ClientSideTimestamps {
+        KeyspacesTable_ClientSideTimestamps { status: self.status }
     }
 }
 
-pub struct KeyspacesTableCommentElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_ClientSideTimestampsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableCommentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTableCommentElRef {
-        KeyspacesTableCommentElRef {
+impl terrars::Ref for KeyspacesTable_ClientSideTimestampsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTable_ClientSideTimestampsRef {
+        KeyspacesTable_ClientSideTimestampsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableCommentElRef {
+impl KeyspacesTable_ClientSideTimestampsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct KeyspacesTable_Comment {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl KeyspacesTable_Comment {
+    #[doc = "Set the field `message`.\n"]
+    pub fn set_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for KeyspacesTable_Comment {
+    type O = terrars::BlockAssignable<KeyspacesTable_Comment>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildKeyspacesTable_Comment {}
+
+impl BuildKeyspacesTable_Comment {
+    pub fn build(self) -> KeyspacesTable_Comment {
+        KeyspacesTable_Comment { message: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct KeyspacesTable_CommentRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for KeyspacesTable_CommentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTable_CommentRef {
+        KeyspacesTable_CommentRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl KeyspacesTable_CommentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -659,14 +784,14 @@ impl KeyspacesTableCommentElRef {
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTableEncryptionSpecificationEl {
+pub struct KeyspacesTable_EncryptionSpecification {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KeyspacesTableEncryptionSpecificationEl {
+impl KeyspacesTable_EncryptionSpecification {
     #[doc = "Set the field `kms_key_identifier`.\n"]
     pub fn set_kms_key_identifier(
         mut self,
@@ -683,8 +808,8 @@ impl KeyspacesTableEncryptionSpecificationEl {
     }
 }
 
-impl terrars::ToListMappable for KeyspacesTableEncryptionSpecificationEl {
-    type O = terrars::BlockAssignable<KeyspacesTableEncryptionSpecificationEl>;
+impl terrars::ToListMappable for KeyspacesTable_EncryptionSpecification {
+    type O = terrars::BlockAssignable<KeyspacesTable_EncryptionSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -695,32 +820,34 @@ impl terrars::ToListMappable for KeyspacesTableEncryptionSpecificationEl {
     }
 }
 
-pub struct BuildKeyspacesTableEncryptionSpecificationEl {}
+pub struct BuildKeyspacesTable_EncryptionSpecification {}
 
-impl BuildKeyspacesTableEncryptionSpecificationEl {
-    pub fn build(self) -> KeyspacesTableEncryptionSpecificationEl {
-        KeyspacesTableEncryptionSpecificationEl {
+impl BuildKeyspacesTable_EncryptionSpecification {
+    pub fn build(self) -> KeyspacesTable_EncryptionSpecification {
+        KeyspacesTable_EncryptionSpecification {
             kms_key_identifier: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct KeyspacesTableEncryptionSpecificationElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_EncryptionSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableEncryptionSpecificationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTableEncryptionSpecificationElRef {
-        KeyspacesTableEncryptionSpecificationElRef {
+impl terrars::Ref for KeyspacesTable_EncryptionSpecificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTable_EncryptionSpecificationRef {
+        KeyspacesTable_EncryptionSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableEncryptionSpecificationElRef {
+impl KeyspacesTable_EncryptionSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -737,12 +864,12 @@ impl KeyspacesTableEncryptionSpecificationElRef {
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTablePointInTimeRecoveryEl {
+pub struct KeyspacesTable_PointInTimeRecovery {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KeyspacesTablePointInTimeRecoveryEl {
+impl KeyspacesTable_PointInTimeRecovery {
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.status = std::option::Option::Some(v.into());
@@ -750,8 +877,8 @@ impl KeyspacesTablePointInTimeRecoveryEl {
     }
 }
 
-impl terrars::ToListMappable for KeyspacesTablePointInTimeRecoveryEl {
-    type O = terrars::BlockAssignable<KeyspacesTablePointInTimeRecoveryEl>;
+impl terrars::ToListMappable for KeyspacesTable_PointInTimeRecovery {
+    type O = terrars::BlockAssignable<KeyspacesTable_PointInTimeRecovery>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -762,29 +889,31 @@ impl terrars::ToListMappable for KeyspacesTablePointInTimeRecoveryEl {
     }
 }
 
-pub struct BuildKeyspacesTablePointInTimeRecoveryEl {}
+pub struct BuildKeyspacesTable_PointInTimeRecovery {}
 
-impl BuildKeyspacesTablePointInTimeRecoveryEl {
-    pub fn build(self) -> KeyspacesTablePointInTimeRecoveryEl {
-        KeyspacesTablePointInTimeRecoveryEl { status: core::default::Default::default() }
+impl BuildKeyspacesTable_PointInTimeRecovery {
+    pub fn build(self) -> KeyspacesTable_PointInTimeRecovery {
+        KeyspacesTable_PointInTimeRecovery { status: core::default::Default::default() }
     }
 }
 
-pub struct KeyspacesTablePointInTimeRecoveryElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_PointInTimeRecoveryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTablePointInTimeRecoveryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTablePointInTimeRecoveryElRef {
-        KeyspacesTablePointInTimeRecoveryElRef {
+impl terrars::Ref for KeyspacesTable_PointInTimeRecoveryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTable_PointInTimeRecoveryRef {
+        KeyspacesTable_PointInTimeRecoveryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTablePointInTimeRecoveryElRef {
+impl KeyspacesTable_PointInTimeRecoveryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -796,15 +925,15 @@ impl KeyspacesTablePointInTimeRecoveryElRef {
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTableSchemaDefinitionElClusteringKeyEl {
+pub struct KeyspacesTable_SchemaDefinition_ClusteringKey {
     name: terrars::PrimField<std::string::String>,
     order_by: terrars::PrimField<std::string::String>,
 }
 
-impl KeyspacesTableSchemaDefinitionElClusteringKeyEl { }
+impl KeyspacesTable_SchemaDefinition_ClusteringKey { }
 
-impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionElClusteringKeyEl {
-    type O = terrars::BlockAssignable<KeyspacesTableSchemaDefinitionElClusteringKeyEl>;
+impl terrars::ToListMappable for KeyspacesTable_SchemaDefinition_ClusteringKey {
+    type O = terrars::BlockAssignable<KeyspacesTable_SchemaDefinition_ClusteringKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -815,40 +944,42 @@ impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionElClusteringKeyEl
     }
 }
 
-pub struct BuildKeyspacesTableSchemaDefinitionElClusteringKeyEl {
+pub struct BuildKeyspacesTable_SchemaDefinition_ClusteringKey {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub order_by: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKeyspacesTableSchemaDefinitionElClusteringKeyEl {
-    pub fn build(self) -> KeyspacesTableSchemaDefinitionElClusteringKeyEl {
-        KeyspacesTableSchemaDefinitionElClusteringKeyEl {
+impl BuildKeyspacesTable_SchemaDefinition_ClusteringKey {
+    pub fn build(self) -> KeyspacesTable_SchemaDefinition_ClusteringKey {
+        KeyspacesTable_SchemaDefinition_ClusteringKey {
             name: self.name,
             order_by: self.order_by,
         }
     }
 }
 
-pub struct KeyspacesTableSchemaDefinitionElClusteringKeyElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_SchemaDefinition_ClusteringKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableSchemaDefinitionElClusteringKeyElRef {
+impl terrars::Ref for KeyspacesTable_SchemaDefinition_ClusteringKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KeyspacesTableSchemaDefinitionElClusteringKeyElRef {
-        KeyspacesTableSchemaDefinitionElClusteringKeyElRef {
+    ) -> KeyspacesTable_SchemaDefinition_ClusteringKeyRef {
+        KeyspacesTable_SchemaDefinition_ClusteringKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableSchemaDefinitionElClusteringKeyElRef {
+impl KeyspacesTable_SchemaDefinition_ClusteringKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -865,16 +996,16 @@ impl KeyspacesTableSchemaDefinitionElClusteringKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTableSchemaDefinitionElColumnEl {
+pub struct KeyspacesTable_SchemaDefinition_Column {
     name: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl KeyspacesTableSchemaDefinitionElColumnEl { }
+impl KeyspacesTable_SchemaDefinition_Column { }
 
-impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionElColumnEl {
-    type O = terrars::BlockAssignable<KeyspacesTableSchemaDefinitionElColumnEl>;
+impl terrars::ToListMappable for KeyspacesTable_SchemaDefinition_Column {
+    type O = terrars::BlockAssignable<KeyspacesTable_SchemaDefinition_Column>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -885,37 +1016,39 @@ impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionElColumnEl {
     }
 }
 
-pub struct BuildKeyspacesTableSchemaDefinitionElColumnEl {
+pub struct BuildKeyspacesTable_SchemaDefinition_Column {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKeyspacesTableSchemaDefinitionElColumnEl {
-    pub fn build(self) -> KeyspacesTableSchemaDefinitionElColumnEl {
-        KeyspacesTableSchemaDefinitionElColumnEl {
+impl BuildKeyspacesTable_SchemaDefinition_Column {
+    pub fn build(self) -> KeyspacesTable_SchemaDefinition_Column {
+        KeyspacesTable_SchemaDefinition_Column {
             name: self.name,
             type_: self.type_,
         }
     }
 }
 
-pub struct KeyspacesTableSchemaDefinitionElColumnElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_SchemaDefinition_ColumnRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableSchemaDefinitionElColumnElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTableSchemaDefinitionElColumnElRef {
-        KeyspacesTableSchemaDefinitionElColumnElRef {
+impl terrars::Ref for KeyspacesTable_SchemaDefinition_ColumnRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTable_SchemaDefinition_ColumnRef {
+        KeyspacesTable_SchemaDefinition_ColumnRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableSchemaDefinitionElColumnElRef {
+impl KeyspacesTable_SchemaDefinition_ColumnRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -932,14 +1065,14 @@ impl KeyspacesTableSchemaDefinitionElColumnElRef {
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTableSchemaDefinitionElPartitionKeyEl {
+pub struct KeyspacesTable_SchemaDefinition_PartitionKey {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl KeyspacesTableSchemaDefinitionElPartitionKeyEl { }
+impl KeyspacesTable_SchemaDefinition_PartitionKey { }
 
-impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionElPartitionKeyEl {
-    type O = terrars::BlockAssignable<KeyspacesTableSchemaDefinitionElPartitionKeyEl>;
+impl terrars::ToListMappable for KeyspacesTable_SchemaDefinition_PartitionKey {
+    type O = terrars::BlockAssignable<KeyspacesTable_SchemaDefinition_PartitionKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -950,35 +1083,37 @@ impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionElPartitionKeyEl 
     }
 }
 
-pub struct BuildKeyspacesTableSchemaDefinitionElPartitionKeyEl {
+pub struct BuildKeyspacesTable_SchemaDefinition_PartitionKey {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKeyspacesTableSchemaDefinitionElPartitionKeyEl {
-    pub fn build(self) -> KeyspacesTableSchemaDefinitionElPartitionKeyEl {
-        KeyspacesTableSchemaDefinitionElPartitionKeyEl { name: self.name }
+impl BuildKeyspacesTable_SchemaDefinition_PartitionKey {
+    pub fn build(self) -> KeyspacesTable_SchemaDefinition_PartitionKey {
+        KeyspacesTable_SchemaDefinition_PartitionKey { name: self.name }
     }
 }
 
-pub struct KeyspacesTableSchemaDefinitionElPartitionKeyElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_SchemaDefinition_PartitionKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableSchemaDefinitionElPartitionKeyElRef {
+impl terrars::Ref for KeyspacesTable_SchemaDefinition_PartitionKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KeyspacesTableSchemaDefinitionElPartitionKeyElRef {
-        KeyspacesTableSchemaDefinitionElPartitionKeyElRef {
+    ) -> KeyspacesTable_SchemaDefinition_PartitionKeyRef {
+        KeyspacesTable_SchemaDefinition_PartitionKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableSchemaDefinitionElPartitionKeyElRef {
+impl KeyspacesTable_SchemaDefinition_PartitionKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -990,14 +1125,14 @@ impl KeyspacesTableSchemaDefinitionElPartitionKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTableSchemaDefinitionElStaticColumnEl {
+pub struct KeyspacesTable_SchemaDefinition_StaticColumn {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl KeyspacesTableSchemaDefinitionElStaticColumnEl { }
+impl KeyspacesTable_SchemaDefinition_StaticColumn { }
 
-impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionElStaticColumnEl {
-    type O = terrars::BlockAssignable<KeyspacesTableSchemaDefinitionElStaticColumnEl>;
+impl terrars::ToListMappable for KeyspacesTable_SchemaDefinition_StaticColumn {
+    type O = terrars::BlockAssignable<KeyspacesTable_SchemaDefinition_StaticColumn>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1008,35 +1143,37 @@ impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionElStaticColumnEl 
     }
 }
 
-pub struct BuildKeyspacesTableSchemaDefinitionElStaticColumnEl {
+pub struct BuildKeyspacesTable_SchemaDefinition_StaticColumn {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKeyspacesTableSchemaDefinitionElStaticColumnEl {
-    pub fn build(self) -> KeyspacesTableSchemaDefinitionElStaticColumnEl {
-        KeyspacesTableSchemaDefinitionElStaticColumnEl { name: self.name }
+impl BuildKeyspacesTable_SchemaDefinition_StaticColumn {
+    pub fn build(self) -> KeyspacesTable_SchemaDefinition_StaticColumn {
+        KeyspacesTable_SchemaDefinition_StaticColumn { name: self.name }
     }
 }
 
-pub struct KeyspacesTableSchemaDefinitionElStaticColumnElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_SchemaDefinition_StaticColumnRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableSchemaDefinitionElStaticColumnElRef {
+impl terrars::Ref for KeyspacesTable_SchemaDefinition_StaticColumnRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KeyspacesTableSchemaDefinitionElStaticColumnElRef {
-        KeyspacesTableSchemaDefinitionElStaticColumnElRef {
+    ) -> KeyspacesTable_SchemaDefinition_StaticColumnRef {
+        KeyspacesTable_SchemaDefinition_StaticColumnRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableSchemaDefinitionElStaticColumnElRef {
+impl KeyspacesTable_SchemaDefinition_StaticColumnRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1048,31 +1185,31 @@ impl KeyspacesTableSchemaDefinitionElStaticColumnElRef {
 }
 
 #[derive(Serialize, Default)]
-struct KeyspacesTableSchemaDefinitionElDynamic {
-    clustering_key: std::option::Option<terrars::DynamicBlock<KeyspacesTableSchemaDefinitionElClusteringKeyEl>>,
-    column: std::option::Option<terrars::DynamicBlock<KeyspacesTableSchemaDefinitionElColumnEl>>,
-    partition_key: std::option::Option<terrars::DynamicBlock<KeyspacesTableSchemaDefinitionElPartitionKeyEl>>,
-    static_column: std::option::Option<terrars::DynamicBlock<KeyspacesTableSchemaDefinitionElStaticColumnEl>>,
+struct KeyspacesTable_SchemaDefinitionDynamic {
+    clustering_key: std::option::Option<terrars::DynamicBlock<KeyspacesTable_SchemaDefinition_ClusteringKey>>,
+    column: std::option::Option<terrars::DynamicBlock<KeyspacesTable_SchemaDefinition_Column>>,
+    partition_key: std::option::Option<terrars::DynamicBlock<KeyspacesTable_SchemaDefinition_PartitionKey>>,
+    static_column: std::option::Option<terrars::DynamicBlock<KeyspacesTable_SchemaDefinition_StaticColumn>>,
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTableSchemaDefinitionEl {
+pub struct KeyspacesTable_SchemaDefinition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    clustering_key: std::option::Option<std::vec::Vec<KeyspacesTableSchemaDefinitionElClusteringKeyEl>>,
+    clustering_key: std::option::Option<std::vec::Vec<KeyspacesTable_SchemaDefinition_ClusteringKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    column: std::option::Option<std::vec::Vec<KeyspacesTableSchemaDefinitionElColumnEl>>,
+    column: std::option::Option<std::vec::Vec<KeyspacesTable_SchemaDefinition_Column>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    partition_key: std::option::Option<std::vec::Vec<KeyspacesTableSchemaDefinitionElPartitionKeyEl>>,
+    partition_key: std::option::Option<std::vec::Vec<KeyspacesTable_SchemaDefinition_PartitionKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    static_column: std::option::Option<std::vec::Vec<KeyspacesTableSchemaDefinitionElStaticColumnEl>>,
-    dynamic: KeyspacesTableSchemaDefinitionElDynamic,
+    static_column: std::option::Option<std::vec::Vec<KeyspacesTable_SchemaDefinition_StaticColumn>>,
+    dynamic: KeyspacesTable_SchemaDefinitionDynamic,
 }
 
-impl KeyspacesTableSchemaDefinitionEl {
+impl KeyspacesTable_SchemaDefinition {
     #[doc = "Set the field `clustering_key`.\n"]
     pub fn set_clustering_key(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTableSchemaDefinitionElClusteringKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_SchemaDefinition_ClusteringKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1088,7 +1225,7 @@ impl KeyspacesTableSchemaDefinitionEl {
     #[doc = "Set the field `column`.\n"]
     pub fn set_column(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTableSchemaDefinitionElColumnEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_SchemaDefinition_Column>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1104,7 +1241,7 @@ impl KeyspacesTableSchemaDefinitionEl {
     #[doc = "Set the field `partition_key`.\n"]
     pub fn set_partition_key(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTableSchemaDefinitionElPartitionKeyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_SchemaDefinition_PartitionKey>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1120,7 +1257,7 @@ impl KeyspacesTableSchemaDefinitionEl {
     #[doc = "Set the field `static_column`.\n"]
     pub fn set_static_column(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTableSchemaDefinitionElStaticColumnEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KeyspacesTable_SchemaDefinition_StaticColumn>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1134,8 +1271,8 @@ impl KeyspacesTableSchemaDefinitionEl {
     }
 }
 
-impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionEl {
-    type O = terrars::BlockAssignable<KeyspacesTableSchemaDefinitionEl>;
+impl terrars::ToListMappable for KeyspacesTable_SchemaDefinition {
+    type O = terrars::BlockAssignable<KeyspacesTable_SchemaDefinition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1146,11 +1283,11 @@ impl terrars::ToListMappable for KeyspacesTableSchemaDefinitionEl {
     }
 }
 
-pub struct BuildKeyspacesTableSchemaDefinitionEl {}
+pub struct BuildKeyspacesTable_SchemaDefinition {}
 
-impl BuildKeyspacesTableSchemaDefinitionEl {
-    pub fn build(self) -> KeyspacesTableSchemaDefinitionEl {
-        KeyspacesTableSchemaDefinitionEl {
+impl BuildKeyspacesTable_SchemaDefinition {
+    pub fn build(self) -> KeyspacesTable_SchemaDefinition {
+        KeyspacesTable_SchemaDefinition {
             clustering_key: core::default::Default::default(),
             column: core::default::Default::default(),
             partition_key: core::default::Default::default(),
@@ -1160,38 +1297,40 @@ impl BuildKeyspacesTableSchemaDefinitionEl {
     }
 }
 
-pub struct KeyspacesTableSchemaDefinitionElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_SchemaDefinitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableSchemaDefinitionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTableSchemaDefinitionElRef {
-        KeyspacesTableSchemaDefinitionElRef {
+impl terrars::Ref for KeyspacesTable_SchemaDefinitionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTable_SchemaDefinitionRef {
+        KeyspacesTable_SchemaDefinitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableSchemaDefinitionElRef {
+impl KeyspacesTable_SchemaDefinitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `clustering_key` after provisioning.\n"]
-    pub fn clustering_key(&self) -> terrars::ListRef<KeyspacesTableSchemaDefinitionElClusteringKeyElRef> {
+    pub fn clustering_key(&self) -> terrars::ListRef<KeyspacesTable_SchemaDefinition_ClusteringKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.clustering_key", self.base))
     }
 
     #[doc = "Get a reference to the value of field `partition_key` after provisioning.\n"]
-    pub fn partition_key(&self) -> terrars::ListRef<KeyspacesTableSchemaDefinitionElPartitionKeyElRef> {
+    pub fn partition_key(&self) -> terrars::ListRef<KeyspacesTable_SchemaDefinition_PartitionKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.partition_key", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTableTimeoutsEl {
+pub struct KeyspacesTable_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1200,7 +1339,7 @@ pub struct KeyspacesTableTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KeyspacesTableTimeoutsEl {
+impl KeyspacesTable_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1220,8 +1359,8 @@ impl KeyspacesTableTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KeyspacesTableTimeoutsEl {
-    type O = terrars::BlockAssignable<KeyspacesTableTimeoutsEl>;
+impl terrars::ToListMappable for KeyspacesTable_Timeouts {
+    type O = terrars::BlockAssignable<KeyspacesTable_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1232,11 +1371,11 @@ impl terrars::ToListMappable for KeyspacesTableTimeoutsEl {
     }
 }
 
-pub struct BuildKeyspacesTableTimeoutsEl {}
+pub struct BuildKeyspacesTable_Timeouts {}
 
-impl BuildKeyspacesTableTimeoutsEl {
-    pub fn build(self) -> KeyspacesTableTimeoutsEl {
-        KeyspacesTableTimeoutsEl {
+impl BuildKeyspacesTable_Timeouts {
+    pub fn build(self) -> KeyspacesTable_Timeouts {
+        KeyspacesTable_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1244,21 +1383,23 @@ impl BuildKeyspacesTableTimeoutsEl {
     }
 }
 
-pub struct KeyspacesTableTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTableTimeoutsElRef {
-        KeyspacesTableTimeoutsElRef {
+impl terrars::Ref for KeyspacesTable_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTable_TimeoutsRef {
+        KeyspacesTable_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableTimeoutsElRef {
+impl KeyspacesTable_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1280,14 +1421,14 @@ impl KeyspacesTableTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct KeyspacesTableTtlEl {
+pub struct KeyspacesTable_Ttl {
     status: terrars::PrimField<std::string::String>,
 }
 
-impl KeyspacesTableTtlEl { }
+impl KeyspacesTable_Ttl { }
 
-impl terrars::ToListMappable for KeyspacesTableTtlEl {
-    type O = terrars::BlockAssignable<KeyspacesTableTtlEl>;
+impl terrars::ToListMappable for KeyspacesTable_Ttl {
+    type O = terrars::BlockAssignable<KeyspacesTable_Ttl>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1298,32 +1439,34 @@ impl terrars::ToListMappable for KeyspacesTableTtlEl {
     }
 }
 
-pub struct BuildKeyspacesTableTtlEl {
+pub struct BuildKeyspacesTable_Ttl {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKeyspacesTableTtlEl {
-    pub fn build(self) -> KeyspacesTableTtlEl {
-        KeyspacesTableTtlEl { status: self.status }
+impl BuildKeyspacesTable_Ttl {
+    pub fn build(self) -> KeyspacesTable_Ttl {
+        KeyspacesTable_Ttl { status: self.status }
     }
 }
 
-pub struct KeyspacesTableTtlElRef {
+#[allow(dead_code)]
+pub struct KeyspacesTable_TtlRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KeyspacesTableTtlElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTableTtlElRef {
-        KeyspacesTableTtlElRef {
+impl terrars::Ref for KeyspacesTable_TtlRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KeyspacesTable_TtlRef {
+        KeyspacesTable_TtlRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KeyspacesTableTtlElRef {
+impl KeyspacesTable_TtlRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1332,14 +1475,4 @@ impl KeyspacesTableTtlElRef {
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KeyspacesTableDynamic {
-    capacity_specification: std::option::Option<terrars::DynamicBlock<KeyspacesTableCapacitySpecificationEl>>,
-    comment: std::option::Option<terrars::DynamicBlock<KeyspacesTableCommentEl>>,
-    encryption_specification: std::option::Option<terrars::DynamicBlock<KeyspacesTableEncryptionSpecificationEl>>,
-    point_in_time_recovery: std::option::Option<terrars::DynamicBlock<KeyspacesTablePointInTimeRecoveryEl>>,
-    schema_definition: std::option::Option<terrars::DynamicBlock<KeyspacesTableSchemaDefinitionEl>>,
-    ttl: std::option::Option<terrars::DynamicBlock<KeyspacesTableTtlEl>>,
 }

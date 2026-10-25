@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LambdaFunctionEventInvokeConfigData {
+struct LambdaFunctionEventInvokeConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,16 @@ struct LambdaFunctionEventInvokeConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     qualifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_config: std::option::Option<std::vec::Vec<LambdaFunctionEventInvokeConfigDestinationConfigEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_config: std::option::Option<std::vec::Vec<LambdaFunctionEventInvokeConfig_DestinationConfig>>,
     dynamic: LambdaFunctionEventInvokeConfigDynamic,
 }
 
 struct LambdaFunctionEventInvokeConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LambdaFunctionEventInvokeConfigData>,
+    data: std::cell::RefCell<LambdaFunctionEventInvokeConfigData_>,
 }
 
 #[derive(Clone)]
@@ -159,10 +163,17 @@ impl LambdaFunctionEventInvokeConfig {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `destination_config`.\n"]
     pub fn set_destination_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LambdaFunctionEventInvokeConfigDestinationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LambdaFunctionEventInvokeConfig_DestinationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,8 +211,14 @@ impl LambdaFunctionEventInvokeConfig {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `destination_config` after provisioning.\n"]
-    pub fn destination_config(&self) -> terrars::ListRef<LambdaFunctionEventInvokeConfigDestinationConfigElRef> {
+    pub fn destination_config(&self) -> terrars::ListRef<LambdaFunctionEventInvokeConfig_DestinationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_config", self.extract_ref()))
     }
 }
@@ -248,7 +265,7 @@ impl BuildLambdaFunctionEventInvokeConfig {
         let out = LambdaFunctionEventInvokeConfig(std::rc::Rc::new(LambdaFunctionEventInvokeConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LambdaFunctionEventInvokeConfigData {
+            data: std::cell::RefCell::new(LambdaFunctionEventInvokeConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -259,6 +276,7 @@ impl BuildLambdaFunctionEventInvokeConfig {
                 maximum_event_age_in_seconds: core::default::Default::default(),
                 maximum_retry_attempts: core::default::Default::default(),
                 qualifier: core::default::Default::default(),
+                region: core::default::Default::default(),
                 destination_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -316,21 +334,34 @@ impl LambdaFunctionEventInvokeConfigRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `destination_config` after provisioning.\n"]
-    pub fn destination_config(&self) -> terrars::ListRef<LambdaFunctionEventInvokeConfigDestinationConfigElRef> {
+    pub fn destination_config(&self) -> terrars::ListRef<LambdaFunctionEventInvokeConfig_DestinationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LambdaFunctionEventInvokeConfigDynamic {
+    destination_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<LambdaFunctionEventInvokeConfig_DestinationConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl {
+pub struct LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure {
     destination: terrars::PrimField<std::string::String>,
 }
 
-impl LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl { }
+impl LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure { }
 
-impl terrars::ToListMappable for LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl {
-    type O = terrars::BlockAssignable<LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl>;
+impl terrars::ToListMappable for LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure {
+    type O = terrars::BlockAssignable<LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -341,35 +372,37 @@ impl terrars::ToListMappable for LambdaFunctionEventInvokeConfigDestinationConfi
     }
 }
 
-pub struct BuildLambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl {
+pub struct BuildLambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure {
     #[doc = ""]
     pub destination: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl {
-    pub fn build(self) -> LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl {
-        LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl { destination: self.destination }
+impl BuildLambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure {
+    pub fn build(self) -> LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure {
+        LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure { destination: self.destination }
     }
 }
 
-pub struct LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureElRef {
+#[allow(dead_code)]
+pub struct LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailureRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureElRef {
+impl terrars::Ref for LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailureRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureElRef {
-        LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureElRef {
+    ) -> LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailureRef {
+        LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailureRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureElRef {
+impl LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailureRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,14 +414,14 @@ impl LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureElRef {
 }
 
 #[derive(Serialize)]
-pub struct LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl {
+pub struct LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess {
     destination: terrars::PrimField<std::string::String>,
 }
 
-impl LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl { }
+impl LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess { }
 
-impl terrars::ToListMappable for LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl {
-    type O = terrars::BlockAssignable<LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl>;
+impl terrars::ToListMappable for LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess {
+    type O = terrars::BlockAssignable<LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -399,35 +432,37 @@ impl terrars::ToListMappable for LambdaFunctionEventInvokeConfigDestinationConfi
     }
 }
 
-pub struct BuildLambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl {
+pub struct BuildLambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess {
     #[doc = ""]
     pub destination: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl {
-    pub fn build(self) -> LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl {
-        LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl { destination: self.destination }
+impl BuildLambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess {
+    pub fn build(self) -> LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess {
+        LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess { destination: self.destination }
     }
 }
 
-pub struct LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessElRef {
+#[allow(dead_code)]
+pub struct LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessElRef {
+impl terrars::Ref for LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccessRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessElRef {
-        LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessElRef {
+    ) -> LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccessRef {
+        LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessElRef {
+impl LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -439,25 +474,25 @@ impl LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LambdaFunctionEventInvokeConfigDestinationConfigElDynamic {
+struct LambdaFunctionEventInvokeConfig_DestinationConfigDynamic {
     on_failure: std
     ::option
-    ::Option<terrars::DynamicBlock<LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl>>,
+    ::Option<terrars::DynamicBlock<LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure>>,
     on_success: std
     ::option
-    ::Option<terrars::DynamicBlock<LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl>>,
+    ::Option<terrars::DynamicBlock<LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess>>,
 }
 
 #[derive(Serialize)]
-pub struct LambdaFunctionEventInvokeConfigDestinationConfigEl {
+pub struct LambdaFunctionEventInvokeConfig_DestinationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    on_failure: std::option::Option<std::vec::Vec<LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl>>,
+    on_failure: std::option::Option<std::vec::Vec<LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    on_success: std::option::Option<std::vec::Vec<LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl>>,
-    dynamic: LambdaFunctionEventInvokeConfigDestinationConfigElDynamic,
+    on_success: std::option::Option<std::vec::Vec<LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess>>,
+    dynamic: LambdaFunctionEventInvokeConfig_DestinationConfigDynamic,
 }
 
-impl LambdaFunctionEventInvokeConfigDestinationConfigEl {
+impl LambdaFunctionEventInvokeConfig_DestinationConfig {
     #[doc = "Set the field `on_failure`.\n"]
     pub fn set_on_failure(
         mut self,
@@ -466,7 +501,7 @@ impl LambdaFunctionEventInvokeConfigDestinationConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureEl>>,
+                    ::Into<terrars::BlockAssignable<LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailure>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -487,7 +522,7 @@ impl LambdaFunctionEventInvokeConfigDestinationConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessEl>>,
+                    ::Into<terrars::BlockAssignable<LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccess>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -501,8 +536,8 @@ impl LambdaFunctionEventInvokeConfigDestinationConfigEl {
     }
 }
 
-impl terrars::ToListMappable for LambdaFunctionEventInvokeConfigDestinationConfigEl {
-    type O = terrars::BlockAssignable<LambdaFunctionEventInvokeConfigDestinationConfigEl>;
+impl terrars::ToListMappable for LambdaFunctionEventInvokeConfig_DestinationConfig {
+    type O = terrars::BlockAssignable<LambdaFunctionEventInvokeConfig_DestinationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -513,11 +548,11 @@ impl terrars::ToListMappable for LambdaFunctionEventInvokeConfigDestinationConfi
     }
 }
 
-pub struct BuildLambdaFunctionEventInvokeConfigDestinationConfigEl {}
+pub struct BuildLambdaFunctionEventInvokeConfig_DestinationConfig {}
 
-impl BuildLambdaFunctionEventInvokeConfigDestinationConfigEl {
-    pub fn build(self) -> LambdaFunctionEventInvokeConfigDestinationConfigEl {
-        LambdaFunctionEventInvokeConfigDestinationConfigEl {
+impl BuildLambdaFunctionEventInvokeConfig_DestinationConfig {
+    pub fn build(self) -> LambdaFunctionEventInvokeConfig_DestinationConfig {
+        LambdaFunctionEventInvokeConfig_DestinationConfig {
             on_failure: core::default::Default::default(),
             on_success: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -525,42 +560,37 @@ impl BuildLambdaFunctionEventInvokeConfigDestinationConfigEl {
     }
 }
 
-pub struct LambdaFunctionEventInvokeConfigDestinationConfigElRef {
+#[allow(dead_code)]
+pub struct LambdaFunctionEventInvokeConfig_DestinationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LambdaFunctionEventInvokeConfigDestinationConfigElRef {
+impl terrars::Ref for LambdaFunctionEventInvokeConfig_DestinationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LambdaFunctionEventInvokeConfigDestinationConfigElRef {
-        LambdaFunctionEventInvokeConfigDestinationConfigElRef {
+    ) -> LambdaFunctionEventInvokeConfig_DestinationConfigRef {
+        LambdaFunctionEventInvokeConfig_DestinationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LambdaFunctionEventInvokeConfigDestinationConfigElRef {
+impl LambdaFunctionEventInvokeConfig_DestinationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `on_failure` after provisioning.\n"]
-    pub fn on_failure(&self) -> terrars::ListRef<LambdaFunctionEventInvokeConfigDestinationConfigElOnFailureElRef> {
+    pub fn on_failure(&self) -> terrars::ListRef<LambdaFunctionEventInvokeConfig_DestinationConfig_OnFailureRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.on_failure", self.base))
     }
 
     #[doc = "Get a reference to the value of field `on_success` after provisioning.\n"]
-    pub fn on_success(&self) -> terrars::ListRef<LambdaFunctionEventInvokeConfigDestinationConfigElOnSuccessElRef> {
+    pub fn on_success(&self) -> terrars::ListRef<LambdaFunctionEventInvokeConfig_DestinationConfig_OnSuccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.on_success", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LambdaFunctionEventInvokeConfigDynamic {
-    destination_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<LambdaFunctionEventInvokeConfigDestinationConfigEl>>,
 }

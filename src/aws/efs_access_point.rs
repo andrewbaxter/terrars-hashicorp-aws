@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EfsAccessPointData {
+struct EfsAccessPointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,20 +24,22 @@ struct EfsAccessPointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    posix_user: std::option::Option<std::vec::Vec<EfsAccessPointPosixUserEl>>,
+    posix_user: std::option::Option<std::vec::Vec<EfsAccessPoint_PosixUser>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    root_directory: std::option::Option<std::vec::Vec<EfsAccessPointRootDirectoryEl>>,
+    root_directory: std::option::Option<std::vec::Vec<EfsAccessPoint_RootDirectory>>,
     dynamic: EfsAccessPointDynamic,
 }
 
 struct EfsAccessPoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EfsAccessPointData>,
+    data: std::cell::RefCell<EfsAccessPointData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl EfsAccessPoint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -160,10 +171,7 @@ impl EfsAccessPoint {
     }
 
     #[doc = "Set the field `posix_user`.\n"]
-    pub fn set_posix_user(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EfsAccessPointPosixUserEl>>,
-    ) -> Self {
+    pub fn set_posix_user(self, v: impl std::convert::Into<terrars::BlockAssignable<EfsAccessPoint_PosixUser>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().posix_user = std::option::Option::Some(v);
@@ -178,7 +186,7 @@ impl EfsAccessPoint {
     #[doc = "Set the field `root_directory`.\n"]
     pub fn set_root_directory(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EfsAccessPointRootDirectoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EfsAccessPoint_RootDirectory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,6 +224,12 @@ impl EfsAccessPoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -227,12 +241,12 @@ impl EfsAccessPoint {
     }
 
     #[doc = "Get a reference to the value of field `posix_user` after provisioning.\n"]
-    pub fn posix_user(&self) -> terrars::ListRef<EfsAccessPointPosixUserElRef> {
+    pub fn posix_user(&self) -> terrars::ListRef<EfsAccessPoint_PosixUserRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.posix_user", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_directory` after provisioning.\n"]
-    pub fn root_directory(&self) -> terrars::ListRef<EfsAccessPointRootDirectoryElRef> {
+    pub fn root_directory(&self) -> terrars::ListRef<EfsAccessPoint_RootDirectoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_directory", self.extract_ref()))
     }
 }
@@ -279,7 +293,7 @@ impl BuildEfsAccessPoint {
         let out = EfsAccessPoint(std::rc::Rc::new(EfsAccessPoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EfsAccessPointData {
+            data: std::cell::RefCell::new(EfsAccessPointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -287,6 +301,7 @@ impl BuildEfsAccessPoint {
                 provisioner: core::default::Default::default(),
                 file_system_id: self.file_system_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 posix_user: core::default::Default::default(),
@@ -347,6 +362,12 @@ impl EfsAccessPointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -358,25 +379,31 @@ impl EfsAccessPointRef {
     }
 
     #[doc = "Get a reference to the value of field `posix_user` after provisioning.\n"]
-    pub fn posix_user(&self) -> terrars::ListRef<EfsAccessPointPosixUserElRef> {
+    pub fn posix_user(&self) -> terrars::ListRef<EfsAccessPoint_PosixUserRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.posix_user", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_directory` after provisioning.\n"]
-    pub fn root_directory(&self) -> terrars::ListRef<EfsAccessPointRootDirectoryElRef> {
+    pub fn root_directory(&self) -> terrars::ListRef<EfsAccessPoint_RootDirectoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_directory", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EfsAccessPointDynamic {
+    posix_user: std::option::Option<terrars::DynamicBlock<EfsAccessPoint_PosixUser>>,
+    root_directory: std::option::Option<terrars::DynamicBlock<EfsAccessPoint_RootDirectory>>,
+}
+
 #[derive(Serialize)]
-pub struct EfsAccessPointPosixUserEl {
+pub struct EfsAccessPoint_PosixUser {
     gid: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secondary_gids: std::option::Option<terrars::SetField<terrars::PrimField<f64>>>,
     uid: terrars::PrimField<f64>,
 }
 
-impl EfsAccessPointPosixUserEl {
+impl EfsAccessPoint_PosixUser {
     #[doc = "Set the field `secondary_gids`.\n"]
     pub fn set_secondary_gids(
         mut self,
@@ -387,8 +414,8 @@ impl EfsAccessPointPosixUserEl {
     }
 }
 
-impl terrars::ToListMappable for EfsAccessPointPosixUserEl {
-    type O = terrars::BlockAssignable<EfsAccessPointPosixUserEl>;
+impl terrars::ToListMappable for EfsAccessPoint_PosixUser {
+    type O = terrars::BlockAssignable<EfsAccessPoint_PosixUser>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -399,16 +426,16 @@ impl terrars::ToListMappable for EfsAccessPointPosixUserEl {
     }
 }
 
-pub struct BuildEfsAccessPointPosixUserEl {
+pub struct BuildEfsAccessPoint_PosixUser {
     #[doc = ""]
     pub gid: terrars::PrimField<f64>,
     #[doc = ""]
     pub uid: terrars::PrimField<f64>,
 }
 
-impl BuildEfsAccessPointPosixUserEl {
-    pub fn build(self) -> EfsAccessPointPosixUserEl {
-        EfsAccessPointPosixUserEl {
+impl BuildEfsAccessPoint_PosixUser {
+    pub fn build(self) -> EfsAccessPoint_PosixUser {
+        EfsAccessPoint_PosixUser {
             gid: self.gid,
             secondary_gids: core::default::Default::default(),
             uid: self.uid,
@@ -416,21 +443,23 @@ impl BuildEfsAccessPointPosixUserEl {
     }
 }
 
-pub struct EfsAccessPointPosixUserElRef {
+#[allow(dead_code)]
+pub struct EfsAccessPoint_PosixUserRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EfsAccessPointPosixUserElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsAccessPointPosixUserElRef {
-        EfsAccessPointPosixUserElRef {
+impl terrars::Ref for EfsAccessPoint_PosixUserRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsAccessPoint_PosixUserRef {
+        EfsAccessPoint_PosixUserRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EfsAccessPointPosixUserElRef {
+impl EfsAccessPoint_PosixUserRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -452,16 +481,16 @@ impl EfsAccessPointPosixUserElRef {
 }
 
 #[derive(Serialize)]
-pub struct EfsAccessPointRootDirectoryElCreationInfoEl {
+pub struct EfsAccessPoint_RootDirectory_CreationInfo {
     owner_gid: terrars::PrimField<f64>,
     owner_uid: terrars::PrimField<f64>,
     permissions: terrars::PrimField<std::string::String>,
 }
 
-impl EfsAccessPointRootDirectoryElCreationInfoEl { }
+impl EfsAccessPoint_RootDirectory_CreationInfo { }
 
-impl terrars::ToListMappable for EfsAccessPointRootDirectoryElCreationInfoEl {
-    type O = terrars::BlockAssignable<EfsAccessPointRootDirectoryElCreationInfoEl>;
+impl terrars::ToListMappable for EfsAccessPoint_RootDirectory_CreationInfo {
+    type O = terrars::BlockAssignable<EfsAccessPoint_RootDirectory_CreationInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -472,7 +501,7 @@ impl terrars::ToListMappable for EfsAccessPointRootDirectoryElCreationInfoEl {
     }
 }
 
-pub struct BuildEfsAccessPointRootDirectoryElCreationInfoEl {
+pub struct BuildEfsAccessPoint_RootDirectory_CreationInfo {
     #[doc = ""]
     pub owner_gid: terrars::PrimField<f64>,
     #[doc = ""]
@@ -481,9 +510,9 @@ pub struct BuildEfsAccessPointRootDirectoryElCreationInfoEl {
     pub permissions: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEfsAccessPointRootDirectoryElCreationInfoEl {
-    pub fn build(self) -> EfsAccessPointRootDirectoryElCreationInfoEl {
-        EfsAccessPointRootDirectoryElCreationInfoEl {
+impl BuildEfsAccessPoint_RootDirectory_CreationInfo {
+    pub fn build(self) -> EfsAccessPoint_RootDirectory_CreationInfo {
+        EfsAccessPoint_RootDirectory_CreationInfo {
             owner_gid: self.owner_gid,
             owner_uid: self.owner_uid,
             permissions: self.permissions,
@@ -491,24 +520,23 @@ impl BuildEfsAccessPointRootDirectoryElCreationInfoEl {
     }
 }
 
-pub struct EfsAccessPointRootDirectoryElCreationInfoElRef {
+#[allow(dead_code)]
+pub struct EfsAccessPoint_RootDirectory_CreationInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EfsAccessPointRootDirectoryElCreationInfoElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> EfsAccessPointRootDirectoryElCreationInfoElRef {
-        EfsAccessPointRootDirectoryElCreationInfoElRef {
+impl terrars::Ref for EfsAccessPoint_RootDirectory_CreationInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsAccessPoint_RootDirectory_CreationInfoRef {
+        EfsAccessPoint_RootDirectory_CreationInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EfsAccessPointRootDirectoryElCreationInfoElRef {
+impl EfsAccessPoint_RootDirectory_CreationInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -530,20 +558,20 @@ impl EfsAccessPointRootDirectoryElCreationInfoElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EfsAccessPointRootDirectoryElDynamic {
-    creation_info: std::option::Option<terrars::DynamicBlock<EfsAccessPointRootDirectoryElCreationInfoEl>>,
+struct EfsAccessPoint_RootDirectoryDynamic {
+    creation_info: std::option::Option<terrars::DynamicBlock<EfsAccessPoint_RootDirectory_CreationInfo>>,
 }
 
 #[derive(Serialize)]
-pub struct EfsAccessPointRootDirectoryEl {
+pub struct EfsAccessPoint_RootDirectory {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    creation_info: std::option::Option<std::vec::Vec<EfsAccessPointRootDirectoryElCreationInfoEl>>,
-    dynamic: EfsAccessPointRootDirectoryElDynamic,
+    creation_info: std::option::Option<std::vec::Vec<EfsAccessPoint_RootDirectory_CreationInfo>>,
+    dynamic: EfsAccessPoint_RootDirectoryDynamic,
 }
 
-impl EfsAccessPointRootDirectoryEl {
+impl EfsAccessPoint_RootDirectory {
     #[doc = "Set the field `path`.\n"]
     pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.path = std::option::Option::Some(v.into());
@@ -553,7 +581,7 @@ impl EfsAccessPointRootDirectoryEl {
     #[doc = "Set the field `creation_info`.\n"]
     pub fn set_creation_info(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EfsAccessPointRootDirectoryElCreationInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EfsAccessPoint_RootDirectory_CreationInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -567,8 +595,8 @@ impl EfsAccessPointRootDirectoryEl {
     }
 }
 
-impl terrars::ToListMappable for EfsAccessPointRootDirectoryEl {
-    type O = terrars::BlockAssignable<EfsAccessPointRootDirectoryEl>;
+impl terrars::ToListMappable for EfsAccessPoint_RootDirectory {
+    type O = terrars::BlockAssignable<EfsAccessPoint_RootDirectory>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -579,11 +607,11 @@ impl terrars::ToListMappable for EfsAccessPointRootDirectoryEl {
     }
 }
 
-pub struct BuildEfsAccessPointRootDirectoryEl {}
+pub struct BuildEfsAccessPoint_RootDirectory {}
 
-impl BuildEfsAccessPointRootDirectoryEl {
-    pub fn build(self) -> EfsAccessPointRootDirectoryEl {
-        EfsAccessPointRootDirectoryEl {
+impl BuildEfsAccessPoint_RootDirectory {
+    pub fn build(self) -> EfsAccessPoint_RootDirectory {
+        EfsAccessPoint_RootDirectory {
             path: core::default::Default::default(),
             creation_info: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -591,21 +619,23 @@ impl BuildEfsAccessPointRootDirectoryEl {
     }
 }
 
-pub struct EfsAccessPointRootDirectoryElRef {
+#[allow(dead_code)]
+pub struct EfsAccessPoint_RootDirectoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EfsAccessPointRootDirectoryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsAccessPointRootDirectoryElRef {
-        EfsAccessPointRootDirectoryElRef {
+impl terrars::Ref for EfsAccessPoint_RootDirectoryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EfsAccessPoint_RootDirectoryRef {
+        EfsAccessPoint_RootDirectoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EfsAccessPointRootDirectoryElRef {
+impl EfsAccessPoint_RootDirectoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -616,13 +646,7 @@ impl EfsAccessPointRootDirectoryElRef {
     }
 
     #[doc = "Get a reference to the value of field `creation_info` after provisioning.\n"]
-    pub fn creation_info(&self) -> terrars::ListRef<EfsAccessPointRootDirectoryElCreationInfoElRef> {
+    pub fn creation_info(&self) -> terrars::ListRef<EfsAccessPoint_RootDirectory_CreationInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.creation_info", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EfsAccessPointDynamic {
-    posix_user: std::option::Option<terrars::DynamicBlock<EfsAccessPointPosixUserEl>>,
-    root_directory: std::option::Option<terrars::DynamicBlock<EfsAccessPointRootDirectoryEl>>,
 }

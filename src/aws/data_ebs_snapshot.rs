@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEbsSnapshotData {
+struct DataEbsSnapshotData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,22 +25,24 @@ struct DataEbsSnapshotData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     owners: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     restorable_by_user_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snapshot_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEbsSnapshotFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEbsSnapshot_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEbsSnapshotTimeoutsEl>,
+    timeouts: std::option::Option<DataEbsSnapshot_Timeouts>,
     dynamic: DataEbsSnapshotDynamic,
 }
 
 struct DataEbsSnapshot_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEbsSnapshotData>,
+    data: std::cell::RefCell<DataEbsSnapshotData_>,
 }
 
 #[derive(Clone)]
@@ -104,6 +108,13 @@ impl DataEbsSnapshot {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `restorable_by_user_ids`.\n"]
     pub fn set_restorable_by_user_ids(
         self,
@@ -132,7 +143,7 @@ impl DataEbsSnapshot {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEbsSnapshotFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEbsSnapshot_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -145,7 +156,7 @@ impl DataEbsSnapshot {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEbsSnapshotTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEbsSnapshot_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -205,6 +216,12 @@ impl DataEbsSnapshot {
         terrars::ListRef::new(self.shared().clone(), format!("{}.owners", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `restorable_by_user_ids` after provisioning.\n"]
     pub fn restorable_by_user_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restorable_by_user_ids", self.extract_ref()))
@@ -218,6 +235,11 @@ impl DataEbsSnapshot {
     #[doc = "Get a reference to the value of field `snapshot_ids` after provisioning.\n"]
     pub fn snapshot_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_ids", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -246,8 +268,8 @@ impl DataEbsSnapshot {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEbsSnapshotTimeoutsElRef {
-        DataEbsSnapshotTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEbsSnapshot_TimeoutsRef {
+        DataEbsSnapshot_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -291,7 +313,7 @@ impl BuildDataEbsSnapshot {
         let out = DataEbsSnapshot(std::rc::Rc::new(DataEbsSnapshot_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEbsSnapshotData {
+            data: std::cell::RefCell::new(DataEbsSnapshotData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -299,6 +321,7 @@ impl BuildDataEbsSnapshot {
                 id: core::default::Default::default(),
                 most_recent: core::default::Default::default(),
                 owners: core::default::Default::default(),
+                region: core::default::Default::default(),
                 restorable_by_user_ids: core::default::Default::default(),
                 snapshot_ids: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -390,6 +413,12 @@ impl DataEbsSnapshotRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.owners", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `restorable_by_user_ids` after provisioning.\n"]
     pub fn restorable_by_user_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restorable_by_user_ids", self.extract_ref()))
@@ -403,6 +432,11 @@ impl DataEbsSnapshotRef {
     #[doc = "Get a reference to the value of field `snapshot_ids` after provisioning.\n"]
     pub fn snapshot_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_ids", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
+    pub fn start_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.start_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
@@ -431,21 +465,26 @@ impl DataEbsSnapshotRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEbsSnapshotTimeoutsElRef {
-        DataEbsSnapshotTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEbsSnapshot_TimeoutsRef {
+        DataEbsSnapshot_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataEbsSnapshotFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct DataEbsSnapshotDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEbsSnapshot_Filter>>,
 }
 
-impl DataEbsSnapshotFilterEl { }
+#[derive(Serialize)]
+pub struct DataEbsSnapshot_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for DataEbsSnapshotFilterEl {
-    type O = terrars::BlockAssignable<DataEbsSnapshotFilterEl>;
+impl DataEbsSnapshot_Filter { }
+
+impl terrars::ToListMappable for DataEbsSnapshot_Filter {
+    type O = terrars::BlockAssignable<DataEbsSnapshot_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -456,37 +495,39 @@ impl terrars::ToListMappable for DataEbsSnapshotFilterEl {
     }
 }
 
-pub struct BuildDataEbsSnapshotFilterEl {
+pub struct BuildDataEbsSnapshot_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEbsSnapshotFilterEl {
-    pub fn build(self) -> DataEbsSnapshotFilterEl {
-        DataEbsSnapshotFilterEl {
+impl BuildDataEbsSnapshot_Filter {
+    pub fn build(self) -> DataEbsSnapshot_Filter {
+        DataEbsSnapshot_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEbsSnapshotFilterElRef {
+#[allow(dead_code)]
+pub struct DataEbsSnapshot_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEbsSnapshotFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsSnapshotFilterElRef {
-        DataEbsSnapshotFilterElRef {
+impl terrars::Ref for DataEbsSnapshot_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsSnapshot_FilterRef {
+        DataEbsSnapshot_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEbsSnapshotFilterElRef {
+impl DataEbsSnapshot_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -497,18 +538,18 @@ impl DataEbsSnapshotFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEbsSnapshotTimeoutsEl {
+pub struct DataEbsSnapshot_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEbsSnapshotTimeoutsEl {
+impl DataEbsSnapshot_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -516,8 +557,8 @@ impl DataEbsSnapshotTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEbsSnapshotTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEbsSnapshotTimeoutsEl>;
+impl terrars::ToListMappable for DataEbsSnapshot_Timeouts {
+    type O = terrars::BlockAssignable<DataEbsSnapshot_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -528,29 +569,31 @@ impl terrars::ToListMappable for DataEbsSnapshotTimeoutsEl {
     }
 }
 
-pub struct BuildDataEbsSnapshotTimeoutsEl {}
+pub struct BuildDataEbsSnapshot_Timeouts {}
 
-impl BuildDataEbsSnapshotTimeoutsEl {
-    pub fn build(self) -> DataEbsSnapshotTimeoutsEl {
-        DataEbsSnapshotTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEbsSnapshot_Timeouts {
+    pub fn build(self) -> DataEbsSnapshot_Timeouts {
+        DataEbsSnapshot_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEbsSnapshotTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEbsSnapshot_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEbsSnapshotTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsSnapshotTimeoutsElRef {
-        DataEbsSnapshotTimeoutsElRef {
+impl terrars::Ref for DataEbsSnapshot_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsSnapshot_TimeoutsRef {
+        DataEbsSnapshot_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEbsSnapshotTimeoutsElRef {
+impl DataEbsSnapshot_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -559,9 +602,4 @@ impl DataEbsSnapshotTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEbsSnapshotDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEbsSnapshotFilterEl>>,
 }

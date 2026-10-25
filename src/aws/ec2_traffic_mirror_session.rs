@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2TrafficMirrorSessionData {
+struct Ec2TrafficMirrorSessionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct Ec2TrafficMirrorSessionData {
     network_interface_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     packet_length: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     session_number: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -39,7 +43,7 @@ struct Ec2TrafficMirrorSessionData {
 struct Ec2TrafficMirrorSession_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2TrafficMirrorSessionData>,
+    data: std::cell::RefCell<Ec2TrafficMirrorSessionData_>,
 }
 
 #[derive(Clone)]
@@ -157,6 +161,13 @@ impl Ec2TrafficMirrorSession {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -209,6 +220,12 @@ impl Ec2TrafficMirrorSession {
     #[doc = "Get a reference to the value of field `packet_length` after provisioning.\n"]
     pub fn packet_length(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.packet_length", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `session_number` after provisioning.\n"]
@@ -290,7 +307,7 @@ impl BuildEc2TrafficMirrorSession {
         let out = Ec2TrafficMirrorSession(std::rc::Rc::new(Ec2TrafficMirrorSession_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2TrafficMirrorSessionData {
+            data: std::cell::RefCell::new(Ec2TrafficMirrorSessionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -300,6 +317,7 @@ impl BuildEc2TrafficMirrorSession {
                 id: core::default::Default::default(),
                 network_interface_id: self.network_interface_id,
                 packet_length: core::default::Default::default(),
+                region: core::default::Default::default(),
                 session_number: self.session_number,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -364,6 +382,12 @@ impl Ec2TrafficMirrorSessionRef {
     #[doc = "Get a reference to the value of field `packet_length` after provisioning.\n"]
     pub fn packet_length(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.packet_length", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `session_number` after provisioning.\n"]

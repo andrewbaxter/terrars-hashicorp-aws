@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Sesv2EmailIdentityMailFromAttributesData {
+struct Sesv2EmailIdentityMailFromAttributesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,12 +27,14 @@ struct Sesv2EmailIdentityMailFromAttributesData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mail_from_domain: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct Sesv2EmailIdentityMailFromAttributes_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Sesv2EmailIdentityMailFromAttributesData>,
+    data: std::cell::RefCell<Sesv2EmailIdentityMailFromAttributesData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl Sesv2EmailIdentityMailFromAttributes {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `behavior_on_mx_failure` after provisioning.\n"]
     pub fn behavior_on_mx_failure(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.behavior_on_mx_failure", self.extract_ref()))
@@ -169,6 +180,12 @@ impl Sesv2EmailIdentityMailFromAttributes {
     #[doc = "Get a reference to the value of field `mail_from_domain` after provisioning.\n"]
     pub fn mail_from_domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mail_from_domain", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -214,7 +231,7 @@ impl BuildSesv2EmailIdentityMailFromAttributes {
         let out = Sesv2EmailIdentityMailFromAttributes(std::rc::Rc::new(Sesv2EmailIdentityMailFromAttributes_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Sesv2EmailIdentityMailFromAttributesData {
+            data: std::cell::RefCell::new(Sesv2EmailIdentityMailFromAttributesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -224,6 +241,7 @@ impl BuildSesv2EmailIdentityMailFromAttributes {
                 email_identity: self.email_identity,
                 id: core::default::Default::default(),
                 mail_from_domain: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -272,5 +290,11 @@ impl Sesv2EmailIdentityMailFromAttributesRef {
     #[doc = "Get a reference to the value of field `mail_from_domain` after provisioning.\n"]
     pub fn mail_from_domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.mail_from_domain", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }

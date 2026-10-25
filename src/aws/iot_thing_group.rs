@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IotThingGroupData {
+struct IotThingGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct IotThingGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parent_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    properties: std::option::Option<std::vec::Vec<IotThingGroupPropertiesEl>>,
+    properties: std::option::Option<std::vec::Vec<IotThingGroup_Properties>>,
     dynamic: IotThingGroupDynamic,
 }
 
 struct IotThingGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IotThingGroupData>,
+    data: std::cell::RefCell<IotThingGroupData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl IotThingGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -166,10 +177,7 @@ impl IotThingGroup {
     }
 
     #[doc = "Set the field `properties`.\n"]
-    pub fn set_properties(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IotThingGroupPropertiesEl>>,
-    ) -> Self {
+    pub fn set_properties(self, v: impl std::convert::Into<terrars::BlockAssignable<IotThingGroup_Properties>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().properties = std::option::Option::Some(v);
@@ -192,7 +200,7 @@ impl IotThingGroup {
     }
 
     #[doc = "Get a reference to the value of field `metadata` after provisioning.\n"]
-    pub fn metadata(&self) -> terrars::ListRef<IotThingGroupMetadataElRef> {
+    pub fn metadata(&self) -> terrars::ListRef<IotThingGroup_MetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
@@ -204,6 +212,12 @@ impl IotThingGroup {
     #[doc = "Get a reference to the value of field `parent_group_name` after provisioning.\n"]
     pub fn parent_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent_group_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -222,7 +236,7 @@ impl IotThingGroup {
     }
 
     #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
-    pub fn properties(&self) -> terrars::ListRef<IotThingGroupPropertiesElRef> {
+    pub fn properties(&self) -> terrars::ListRef<IotThingGroup_PropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
     }
 }
@@ -269,7 +283,7 @@ impl BuildIotThingGroup {
         let out = IotThingGroup(std::rc::Rc::new(IotThingGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IotThingGroupData {
+            data: std::cell::RefCell::new(IotThingGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -278,6 +292,7 @@ impl BuildIotThingGroup {
                 id: core::default::Default::default(),
                 name: self.name,
                 parent_group_name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 properties: core::default::Default::default(),
@@ -323,7 +338,7 @@ impl IotThingGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `metadata` after provisioning.\n"]
-    pub fn metadata(&self) -> terrars::ListRef<IotThingGroupMetadataElRef> {
+    pub fn metadata(&self) -> terrars::ListRef<IotThingGroup_MetadataRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata", self.extract_ref()))
     }
 
@@ -335,6 +350,12 @@ impl IotThingGroupRef {
     #[doc = "Get a reference to the value of field `parent_group_name` after provisioning.\n"]
     pub fn parent_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.parent_group_name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -353,20 +374,25 @@ impl IotThingGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `properties` after provisioning.\n"]
-    pub fn properties(&self) -> terrars::ListRef<IotThingGroupPropertiesElRef> {
+    pub fn properties(&self) -> terrars::ListRef<IotThingGroup_PropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IotThingGroupDynamic {
+    properties: std::option::Option<terrars::DynamicBlock<IotThingGroup_Properties>>,
+}
+
 #[derive(Serialize)]
-pub struct IotThingGroupMetadataElRootToParentGroupsEl {
+pub struct IotThingGroup_Metadata_RootToParentGroups {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IotThingGroupMetadataElRootToParentGroupsEl {
+impl IotThingGroup_Metadata_RootToParentGroups {
     #[doc = "Set the field `group_arn`.\n"]
     pub fn set_group_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.group_arn = std::option::Option::Some(v.into());
@@ -380,8 +406,8 @@ impl IotThingGroupMetadataElRootToParentGroupsEl {
     }
 }
 
-impl terrars::ToListMappable for IotThingGroupMetadataElRootToParentGroupsEl {
-    type O = terrars::BlockAssignable<IotThingGroupMetadataElRootToParentGroupsEl>;
+impl terrars::ToListMappable for IotThingGroup_Metadata_RootToParentGroups {
+    type O = terrars::BlockAssignable<IotThingGroup_Metadata_RootToParentGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -392,35 +418,34 @@ impl terrars::ToListMappable for IotThingGroupMetadataElRootToParentGroupsEl {
     }
 }
 
-pub struct BuildIotThingGroupMetadataElRootToParentGroupsEl {}
+pub struct BuildIotThingGroup_Metadata_RootToParentGroups {}
 
-impl BuildIotThingGroupMetadataElRootToParentGroupsEl {
-    pub fn build(self) -> IotThingGroupMetadataElRootToParentGroupsEl {
-        IotThingGroupMetadataElRootToParentGroupsEl {
+impl BuildIotThingGroup_Metadata_RootToParentGroups {
+    pub fn build(self) -> IotThingGroup_Metadata_RootToParentGroups {
+        IotThingGroup_Metadata_RootToParentGroups {
             group_arn: core::default::Default::default(),
             group_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct IotThingGroupMetadataElRootToParentGroupsElRef {
+#[allow(dead_code)]
+pub struct IotThingGroup_Metadata_RootToParentGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotThingGroupMetadataElRootToParentGroupsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IotThingGroupMetadataElRootToParentGroupsElRef {
-        IotThingGroupMetadataElRootToParentGroupsElRef {
+impl terrars::Ref for IotThingGroup_Metadata_RootToParentGroupsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotThingGroup_Metadata_RootToParentGroupsRef {
+        IotThingGroup_Metadata_RootToParentGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotThingGroupMetadataElRootToParentGroupsElRef {
+impl IotThingGroup_Metadata_RootToParentGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -437,16 +462,16 @@ impl IotThingGroupMetadataElRootToParentGroupsElRef {
 }
 
 #[derive(Serialize)]
-pub struct IotThingGroupMetadataEl {
+pub struct IotThingGroup_Metadata {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     creation_date: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parent_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    root_to_parent_groups: std::option::Option<terrars::ListField<IotThingGroupMetadataElRootToParentGroupsEl>>,
+    root_to_parent_groups: std::option::Option<terrars::ListField<IotThingGroup_Metadata_RootToParentGroups>>,
 }
 
-impl IotThingGroupMetadataEl {
+impl IotThingGroup_Metadata {
     #[doc = "Set the field `creation_date`.\n"]
     pub fn set_creation_date(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.creation_date = std::option::Option::Some(v.into());
@@ -462,15 +487,15 @@ impl IotThingGroupMetadataEl {
     #[doc = "Set the field `root_to_parent_groups`.\n"]
     pub fn set_root_to_parent_groups(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<IotThingGroupMetadataElRootToParentGroupsEl>>,
+        v: impl std::convert::Into<terrars::ListField<IotThingGroup_Metadata_RootToParentGroups>>,
     ) -> Self {
         self.root_to_parent_groups = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for IotThingGroupMetadataEl {
-    type O = terrars::BlockAssignable<IotThingGroupMetadataEl>;
+impl terrars::ToListMappable for IotThingGroup_Metadata {
+    type O = terrars::BlockAssignable<IotThingGroup_Metadata>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -481,11 +506,11 @@ impl terrars::ToListMappable for IotThingGroupMetadataEl {
     }
 }
 
-pub struct BuildIotThingGroupMetadataEl {}
+pub struct BuildIotThingGroup_Metadata {}
 
-impl BuildIotThingGroupMetadataEl {
-    pub fn build(self) -> IotThingGroupMetadataEl {
-        IotThingGroupMetadataEl {
+impl BuildIotThingGroup_Metadata {
+    pub fn build(self) -> IotThingGroup_Metadata {
+        IotThingGroup_Metadata {
             creation_date: core::default::Default::default(),
             parent_group_name: core::default::Default::default(),
             root_to_parent_groups: core::default::Default::default(),
@@ -493,21 +518,23 @@ impl BuildIotThingGroupMetadataEl {
     }
 }
 
-pub struct IotThingGroupMetadataElRef {
+#[allow(dead_code)]
+pub struct IotThingGroup_MetadataRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotThingGroupMetadataElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IotThingGroupMetadataElRef {
-        IotThingGroupMetadataElRef {
+impl terrars::Ref for IotThingGroup_MetadataRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotThingGroup_MetadataRef {
+        IotThingGroup_MetadataRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotThingGroupMetadataElRef {
+impl IotThingGroup_MetadataRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -523,18 +550,18 @@ impl IotThingGroupMetadataElRef {
     }
 
     #[doc = "Get a reference to the value of field `root_to_parent_groups` after provisioning.\n"]
-    pub fn root_to_parent_groups(&self) -> terrars::ListRef<IotThingGroupMetadataElRootToParentGroupsElRef> {
+    pub fn root_to_parent_groups(&self) -> terrars::ListRef<IotThingGroup_Metadata_RootToParentGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_to_parent_groups", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct IotThingGroupPropertiesElAttributePayloadEl {
+pub struct IotThingGroup_Properties_AttributePayload {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     attributes: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl IotThingGroupPropertiesElAttributePayloadEl {
+impl IotThingGroup_Properties_AttributePayload {
     #[doc = "Set the field `attributes`.\n"]
     pub fn set_attributes(
         mut self,
@@ -545,8 +572,8 @@ impl IotThingGroupPropertiesElAttributePayloadEl {
     }
 }
 
-impl terrars::ToListMappable for IotThingGroupPropertiesElAttributePayloadEl {
-    type O = terrars::BlockAssignable<IotThingGroupPropertiesElAttributePayloadEl>;
+impl terrars::ToListMappable for IotThingGroup_Properties_AttributePayload {
+    type O = terrars::BlockAssignable<IotThingGroup_Properties_AttributePayload>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -557,32 +584,31 @@ impl terrars::ToListMappable for IotThingGroupPropertiesElAttributePayloadEl {
     }
 }
 
-pub struct BuildIotThingGroupPropertiesElAttributePayloadEl {}
+pub struct BuildIotThingGroup_Properties_AttributePayload {}
 
-impl BuildIotThingGroupPropertiesElAttributePayloadEl {
-    pub fn build(self) -> IotThingGroupPropertiesElAttributePayloadEl {
-        IotThingGroupPropertiesElAttributePayloadEl { attributes: core::default::Default::default() }
+impl BuildIotThingGroup_Properties_AttributePayload {
+    pub fn build(self) -> IotThingGroup_Properties_AttributePayload {
+        IotThingGroup_Properties_AttributePayload { attributes: core::default::Default::default() }
     }
 }
 
-pub struct IotThingGroupPropertiesElAttributePayloadElRef {
+#[allow(dead_code)]
+pub struct IotThingGroup_Properties_AttributePayloadRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotThingGroupPropertiesElAttributePayloadElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> IotThingGroupPropertiesElAttributePayloadElRef {
-        IotThingGroupPropertiesElAttributePayloadElRef {
+impl terrars::Ref for IotThingGroup_Properties_AttributePayloadRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotThingGroup_Properties_AttributePayloadRef {
+        IotThingGroup_Properties_AttributePayloadRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotThingGroupPropertiesElAttributePayloadElRef {
+impl IotThingGroup_Properties_AttributePayloadRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -594,20 +620,20 @@ impl IotThingGroupPropertiesElAttributePayloadElRef {
 }
 
 #[derive(Serialize, Default)]
-struct IotThingGroupPropertiesElDynamic {
-    attribute_payload: std::option::Option<terrars::DynamicBlock<IotThingGroupPropertiesElAttributePayloadEl>>,
+struct IotThingGroup_PropertiesDynamic {
+    attribute_payload: std::option::Option<terrars::DynamicBlock<IotThingGroup_Properties_AttributePayload>>,
 }
 
 #[derive(Serialize)]
-pub struct IotThingGroupPropertiesEl {
+pub struct IotThingGroup_Properties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attribute_payload: std::option::Option<std::vec::Vec<IotThingGroupPropertiesElAttributePayloadEl>>,
-    dynamic: IotThingGroupPropertiesElDynamic,
+    attribute_payload: std::option::Option<std::vec::Vec<IotThingGroup_Properties_AttributePayload>>,
+    dynamic: IotThingGroup_PropertiesDynamic,
 }
 
-impl IotThingGroupPropertiesEl {
+impl IotThingGroup_Properties {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -617,7 +643,7 @@ impl IotThingGroupPropertiesEl {
     #[doc = "Set the field `attribute_payload`.\n"]
     pub fn set_attribute_payload(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IotThingGroupPropertiesElAttributePayloadEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotThingGroup_Properties_AttributePayload>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -631,8 +657,8 @@ impl IotThingGroupPropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for IotThingGroupPropertiesEl {
-    type O = terrars::BlockAssignable<IotThingGroupPropertiesEl>;
+impl terrars::ToListMappable for IotThingGroup_Properties {
+    type O = terrars::BlockAssignable<IotThingGroup_Properties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -643,11 +669,11 @@ impl terrars::ToListMappable for IotThingGroupPropertiesEl {
     }
 }
 
-pub struct BuildIotThingGroupPropertiesEl {}
+pub struct BuildIotThingGroup_Properties {}
 
-impl BuildIotThingGroupPropertiesEl {
-    pub fn build(self) -> IotThingGroupPropertiesEl {
-        IotThingGroupPropertiesEl {
+impl BuildIotThingGroup_Properties {
+    pub fn build(self) -> IotThingGroup_Properties {
+        IotThingGroup_Properties {
             description: core::default::Default::default(),
             attribute_payload: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -655,21 +681,23 @@ impl BuildIotThingGroupPropertiesEl {
     }
 }
 
-pub struct IotThingGroupPropertiesElRef {
+#[allow(dead_code)]
+pub struct IotThingGroup_PropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotThingGroupPropertiesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IotThingGroupPropertiesElRef {
-        IotThingGroupPropertiesElRef {
+impl terrars::Ref for IotThingGroup_PropertiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IotThingGroup_PropertiesRef {
+        IotThingGroup_PropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotThingGroupPropertiesElRef {
+impl IotThingGroup_PropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -680,12 +708,7 @@ impl IotThingGroupPropertiesElRef {
     }
 
     #[doc = "Get a reference to the value of field `attribute_payload` after provisioning.\n"]
-    pub fn attribute_payload(&self) -> terrars::ListRef<IotThingGroupPropertiesElAttributePayloadElRef> {
+    pub fn attribute_payload(&self) -> terrars::ListRef<IotThingGroup_Properties_AttributePayloadRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attribute_payload", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IotThingGroupDynamic {
-    properties: std::option::Option<terrars::DynamicBlock<IotThingGroupPropertiesEl>>,
 }

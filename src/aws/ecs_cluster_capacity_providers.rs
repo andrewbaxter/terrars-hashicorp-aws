@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EcsClusterCapacityProvidersData {
+struct EcsClusterCapacityProvidersData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,16 +26,18 @@ struct EcsClusterCapacityProvidersData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_capacity_provider_strategy: std
     ::option
-    ::Option<std::vec::Vec<EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl>>,
+    ::Option<std::vec::Vec<EcsClusterCapacityProviders_DefaultCapacityProviderStrategy>>,
     dynamic: EcsClusterCapacityProvidersDynamic,
 }
 
 struct EcsClusterCapacityProviders_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EcsClusterCapacityProvidersData>,
+    data: std::cell::RefCell<EcsClusterCapacityProvidersData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl EcsClusterCapacityProviders {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `default_capacity_provider_strategy`.\n"]
     pub fn set_default_capacity_provider_strategy(
         self,
@@ -156,7 +167,7 @@ impl EcsClusterCapacityProviders {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl>>,
+                    ::Into<terrars::BlockAssignable<EcsClusterCapacityProviders_DefaultCapacityProviderStrategy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -182,6 +193,12 @@ impl EcsClusterCapacityProviders {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -227,7 +244,7 @@ impl BuildEcsClusterCapacityProviders {
         let out = EcsClusterCapacityProviders(std::rc::Rc::new(EcsClusterCapacityProviders_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EcsClusterCapacityProvidersData {
+            data: std::cell::RefCell::new(EcsClusterCapacityProvidersData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -236,6 +253,7 @@ impl BuildEcsClusterCapacityProviders {
                 capacity_providers: core::default::Default::default(),
                 cluster_name: self.cluster_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 default_capacity_provider_strategy: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -282,10 +300,23 @@ impl EcsClusterCapacityProvidersRef {
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct EcsClusterCapacityProvidersDynamic {
+    default_capacity_provider_strategy: std
+    ::option
+    ::Option<terrars::DynamicBlock<EcsClusterCapacityProviders_DefaultCapacityProviderStrategy>>,
 }
 
 #[derive(Serialize)]
-pub struct EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
+pub struct EcsClusterCapacityProviders_DefaultCapacityProviderStrategy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     base: std::option::Option<terrars::PrimField<f64>>,
     capacity_provider: terrars::PrimField<std::string::String>,
@@ -293,7 +324,7 @@ pub struct EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
     weight: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
+impl EcsClusterCapacityProviders_DefaultCapacityProviderStrategy {
     #[doc = "Set the field `base`.\n"]
     pub fn set_base(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.base = std::option::Option::Some(v.into());
@@ -307,8 +338,8 @@ impl EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
     }
 }
 
-impl terrars::ToListMappable for EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
-    type O = terrars::BlockAssignable<EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl>;
+impl terrars::ToListMappable for EcsClusterCapacityProviders_DefaultCapacityProviderStrategy {
+    type O = terrars::BlockAssignable<EcsClusterCapacityProviders_DefaultCapacityProviderStrategy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -319,14 +350,14 @@ impl terrars::ToListMappable for EcsClusterCapacityProvidersDefaultCapacityProvi
     }
 }
 
-pub struct BuildEcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
+pub struct BuildEcsClusterCapacityProviders_DefaultCapacityProviderStrategy {
     #[doc = ""]
     pub capacity_provider: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
-    pub fn build(self) -> EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
-        EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
+impl BuildEcsClusterCapacityProviders_DefaultCapacityProviderStrategy {
+    pub fn build(self) -> EcsClusterCapacityProviders_DefaultCapacityProviderStrategy {
+        EcsClusterCapacityProviders_DefaultCapacityProviderStrategy {
             base: core::default::Default::default(),
             capacity_provider: self.capacity_provider,
             weight: core::default::Default::default(),
@@ -334,24 +365,26 @@ impl BuildEcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl {
     }
 }
 
-pub struct EcsClusterCapacityProvidersDefaultCapacityProviderStrategyElRef {
+#[allow(dead_code)]
+pub struct EcsClusterCapacityProviders_DefaultCapacityProviderStrategyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcsClusterCapacityProvidersDefaultCapacityProviderStrategyElRef {
+impl terrars::Ref for EcsClusterCapacityProviders_DefaultCapacityProviderStrategyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcsClusterCapacityProvidersDefaultCapacityProviderStrategyElRef {
-        EcsClusterCapacityProvidersDefaultCapacityProviderStrategyElRef {
+    ) -> EcsClusterCapacityProviders_DefaultCapacityProviderStrategyRef {
+        EcsClusterCapacityProviders_DefaultCapacityProviderStrategyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcsClusterCapacityProvidersDefaultCapacityProviderStrategyElRef {
+impl EcsClusterCapacityProviders_DefaultCapacityProviderStrategyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -370,11 +403,4 @@ impl EcsClusterCapacityProvidersDefaultCapacityProviderStrategyElRef {
     pub fn weight(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EcsClusterCapacityProvidersDynamic {
-    default_capacity_provider_strategy: std
-    ::option
-    ::Option<terrars::DynamicBlock<EcsClusterCapacityProvidersDefaultCapacityProviderStrategyEl>>,
 }

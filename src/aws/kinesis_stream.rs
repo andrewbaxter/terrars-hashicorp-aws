@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KinesisStreamData {
+struct KinesisStreamData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,7 +30,11 @@ struct KinesisStreamData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_record_size_in_kib: std::option::Option<terrars::PrimField<f64>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retention_period: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -40,16 +46,18 @@ struct KinesisStreamData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    stream_mode_details: std::option::Option<std::vec::Vec<KinesisStreamStreamModeDetailsEl>>,
+    warm_throughput_mib_ps: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KinesisStreamTimeoutsEl>,
+    stream_mode_details: std::option::Option<std::vec::Vec<KinesisStream_StreamModeDetails>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<KinesisStream_Timeouts>,
     dynamic: KinesisStreamDynamic,
 }
 
 struct KinesisStream_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KinesisStreamData>,
+    data: std::cell::RefCell<KinesisStreamData_>,
 }
 
 #[derive(Clone)]
@@ -179,6 +187,19 @@ impl KinesisStream {
         self
     }
 
+    #[doc = "Set the field `max_record_size_in_kib`.\n"]
+    pub fn set_max_record_size_in_kib(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().max_record_size_in_kib = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `retention_period`.\n"]
     pub fn set_retention_period(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().retention_period = std::option::Option::Some(v.into());
@@ -218,10 +239,16 @@ impl KinesisStream {
         self
     }
 
+    #[doc = "Set the field `warm_throughput_mib_ps`.\n"]
+    pub fn set_warm_throughput_mib_ps(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().warm_throughput_mib_ps = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `stream_mode_details`.\n"]
     pub fn set_stream_mode_details(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KinesisStreamStreamModeDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KinesisStream_StreamModeDetails>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -235,7 +262,7 @@ impl KinesisStream {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KinesisStreamTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KinesisStream_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -265,9 +292,20 @@ impl KinesisStream {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `max_record_size_in_kib` after provisioning.\n"]
+    pub fn max_record_size_in_kib(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_record_size_in_kib", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retention_period` after provisioning.\n"]
@@ -295,14 +333,19 @@ impl KinesisStream {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `warm_throughput_mib_ps` after provisioning.\n"]
+    pub fn warm_throughput_mib_ps(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warm_throughput_mib_ps", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stream_mode_details` after provisioning.\n"]
-    pub fn stream_mode_details(&self) -> terrars::ListRef<KinesisStreamStreamModeDetailsElRef> {
+    pub fn stream_mode_details(&self) -> terrars::ListRef<KinesisStream_StreamModeDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stream_mode_details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KinesisStreamTimeoutsElRef {
-        KinesisStreamTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KinesisStream_TimeoutsRef {
+        KinesisStream_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -348,7 +391,7 @@ impl BuildKinesisStream {
         let out = KinesisStream(std::rc::Rc::new(KinesisStream_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KinesisStreamData {
+            data: std::cell::RefCell::new(KinesisStreamData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -359,12 +402,15 @@ impl BuildKinesisStream {
                 enforce_consumer_deletion: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
+                max_record_size_in_kib: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 retention_period: core::default::Default::default(),
                 shard_count: core::default::Default::default(),
                 shard_level_metrics: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                warm_throughput_mib_ps: core::default::Default::default(),
                 stream_mode_details: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -423,9 +469,20 @@ impl KinesisStreamRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `max_record_size_in_kib` after provisioning.\n"]
+    pub fn max_record_size_in_kib(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_record_size_in_kib", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retention_period` after provisioning.\n"]
@@ -453,26 +510,36 @@ impl KinesisStreamRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `warm_throughput_mib_ps` after provisioning.\n"]
+    pub fn warm_throughput_mib_ps(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warm_throughput_mib_ps", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stream_mode_details` after provisioning.\n"]
-    pub fn stream_mode_details(&self) -> terrars::ListRef<KinesisStreamStreamModeDetailsElRef> {
+    pub fn stream_mode_details(&self) -> terrars::ListRef<KinesisStream_StreamModeDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stream_mode_details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KinesisStreamTimeoutsElRef {
-        KinesisStreamTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KinesisStream_TimeoutsRef {
+        KinesisStream_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct KinesisStreamDynamic {
+    stream_mode_details: std::option::Option<terrars::DynamicBlock<KinesisStream_StreamModeDetails>>,
+}
+
 #[derive(Serialize)]
-pub struct KinesisStreamStreamModeDetailsEl {
+pub struct KinesisStream_StreamModeDetails {
     stream_mode: terrars::PrimField<std::string::String>,
 }
 
-impl KinesisStreamStreamModeDetailsEl { }
+impl KinesisStream_StreamModeDetails { }
 
-impl terrars::ToListMappable for KinesisStreamStreamModeDetailsEl {
-    type O = terrars::BlockAssignable<KinesisStreamStreamModeDetailsEl>;
+impl terrars::ToListMappable for KinesisStream_StreamModeDetails {
+    type O = terrars::BlockAssignable<KinesisStream_StreamModeDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -483,32 +550,34 @@ impl terrars::ToListMappable for KinesisStreamStreamModeDetailsEl {
     }
 }
 
-pub struct BuildKinesisStreamStreamModeDetailsEl {
+pub struct BuildKinesisStream_StreamModeDetails {
     #[doc = ""]
     pub stream_mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKinesisStreamStreamModeDetailsEl {
-    pub fn build(self) -> KinesisStreamStreamModeDetailsEl {
-        KinesisStreamStreamModeDetailsEl { stream_mode: self.stream_mode }
+impl BuildKinesisStream_StreamModeDetails {
+    pub fn build(self) -> KinesisStream_StreamModeDetails {
+        KinesisStream_StreamModeDetails { stream_mode: self.stream_mode }
     }
 }
 
-pub struct KinesisStreamStreamModeDetailsElRef {
+#[allow(dead_code)]
+pub struct KinesisStream_StreamModeDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisStreamStreamModeDetailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KinesisStreamStreamModeDetailsElRef {
-        KinesisStreamStreamModeDetailsElRef {
+impl terrars::Ref for KinesisStream_StreamModeDetailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KinesisStream_StreamModeDetailsRef {
+        KinesisStream_StreamModeDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisStreamStreamModeDetailsElRef {
+impl KinesisStream_StreamModeDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -520,7 +589,7 @@ impl KinesisStreamStreamModeDetailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct KinesisStreamTimeoutsEl {
+pub struct KinesisStream_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -529,7 +598,7 @@ pub struct KinesisStreamTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KinesisStreamTimeoutsEl {
+impl KinesisStream_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -549,8 +618,8 @@ impl KinesisStreamTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KinesisStreamTimeoutsEl {
-    type O = terrars::BlockAssignable<KinesisStreamTimeoutsEl>;
+impl terrars::ToListMappable for KinesisStream_Timeouts {
+    type O = terrars::BlockAssignable<KinesisStream_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -561,11 +630,11 @@ impl terrars::ToListMappable for KinesisStreamTimeoutsEl {
     }
 }
 
-pub struct BuildKinesisStreamTimeoutsEl {}
+pub struct BuildKinesisStream_Timeouts {}
 
-impl BuildKinesisStreamTimeoutsEl {
-    pub fn build(self) -> KinesisStreamTimeoutsEl {
-        KinesisStreamTimeoutsEl {
+impl BuildKinesisStream_Timeouts {
+    pub fn build(self) -> KinesisStream_Timeouts {
+        KinesisStream_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -573,21 +642,23 @@ impl BuildKinesisStreamTimeoutsEl {
     }
 }
 
-pub struct KinesisStreamTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KinesisStream_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KinesisStreamTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KinesisStreamTimeoutsElRef {
-        KinesisStreamTimeoutsElRef {
+impl terrars::Ref for KinesisStream_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KinesisStream_TimeoutsRef {
+        KinesisStream_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KinesisStreamTimeoutsElRef {
+impl KinesisStream_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -606,9 +677,4 @@ impl KinesisStreamTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KinesisStreamDynamic {
-    stream_mode_details: std::option::Option<terrars::DynamicBlock<KinesisStreamStreamModeDetailsEl>>,
 }

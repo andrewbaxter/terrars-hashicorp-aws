@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ChimeVoiceConnectorOriginationData {
+struct ChimeVoiceConnectorOriginationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,16 +24,18 @@ struct ChimeVoiceConnectorOriginationData {
     disabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     voice_connector_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route: std::option::Option<std::vec::Vec<ChimeVoiceConnectorOriginationRouteEl>>,
+    route: std::option::Option<std::vec::Vec<ChimeVoiceConnectorOrigination_Route>>,
     dynamic: ChimeVoiceConnectorOriginationDynamic,
 }
 
 struct ChimeVoiceConnectorOrigination_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ChimeVoiceConnectorOriginationData>,
+    data: std::cell::RefCell<ChimeVoiceConnectorOriginationData_>,
 }
 
 #[derive(Clone)]
@@ -143,10 +147,17 @@ impl ChimeVoiceConnectorOrigination {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `route`.\n"]
     pub fn set_route(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ChimeVoiceConnectorOriginationRouteEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ChimeVoiceConnectorOrigination_Route>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -167,6 +178,12 @@ impl ChimeVoiceConnectorOrigination {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `voice_connector_id` after provisioning.\n"]
@@ -217,7 +234,7 @@ impl BuildChimeVoiceConnectorOrigination {
         let out = ChimeVoiceConnectorOrigination(std::rc::Rc::new(ChimeVoiceConnectorOrigination_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ChimeVoiceConnectorOriginationData {
+            data: std::cell::RefCell::new(ChimeVoiceConnectorOriginationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -225,6 +242,7 @@ impl BuildChimeVoiceConnectorOrigination {
                 provisioner: core::default::Default::default(),
                 disabled: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 voice_connector_id: self.voice_connector_id,
                 route: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -268,14 +286,25 @@ impl ChimeVoiceConnectorOriginationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `voice_connector_id` after provisioning.\n"]
     pub fn voice_connector_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.voice_connector_id", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ChimeVoiceConnectorOriginationDynamic {
+    route: std::option::Option<terrars::DynamicBlock<ChimeVoiceConnectorOrigination_Route>>,
+}
+
 #[derive(Serialize)]
-pub struct ChimeVoiceConnectorOriginationRouteEl {
+pub struct ChimeVoiceConnectorOrigination_Route {
     host: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
@@ -284,7 +313,7 @@ pub struct ChimeVoiceConnectorOriginationRouteEl {
     weight: terrars::PrimField<f64>,
 }
 
-impl ChimeVoiceConnectorOriginationRouteEl {
+impl ChimeVoiceConnectorOrigination_Route {
     #[doc = "Set the field `port`.\n"]
     pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.port = std::option::Option::Some(v.into());
@@ -292,8 +321,8 @@ impl ChimeVoiceConnectorOriginationRouteEl {
     }
 }
 
-impl terrars::ToListMappable for ChimeVoiceConnectorOriginationRouteEl {
-    type O = terrars::BlockAssignable<ChimeVoiceConnectorOriginationRouteEl>;
+impl terrars::ToListMappable for ChimeVoiceConnectorOrigination_Route {
+    type O = terrars::BlockAssignable<ChimeVoiceConnectorOrigination_Route>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -304,7 +333,7 @@ impl terrars::ToListMappable for ChimeVoiceConnectorOriginationRouteEl {
     }
 }
 
-pub struct BuildChimeVoiceConnectorOriginationRouteEl {
+pub struct BuildChimeVoiceConnectorOrigination_Route {
     #[doc = ""]
     pub host: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -315,9 +344,9 @@ pub struct BuildChimeVoiceConnectorOriginationRouteEl {
     pub weight: terrars::PrimField<f64>,
 }
 
-impl BuildChimeVoiceConnectorOriginationRouteEl {
-    pub fn build(self) -> ChimeVoiceConnectorOriginationRouteEl {
-        ChimeVoiceConnectorOriginationRouteEl {
+impl BuildChimeVoiceConnectorOrigination_Route {
+    pub fn build(self) -> ChimeVoiceConnectorOrigination_Route {
+        ChimeVoiceConnectorOrigination_Route {
             host: self.host,
             port: core::default::Default::default(),
             priority: self.priority,
@@ -327,21 +356,23 @@ impl BuildChimeVoiceConnectorOriginationRouteEl {
     }
 }
 
-pub struct ChimeVoiceConnectorOriginationRouteElRef {
+#[allow(dead_code)]
+pub struct ChimeVoiceConnectorOrigination_RouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ChimeVoiceConnectorOriginationRouteElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ChimeVoiceConnectorOriginationRouteElRef {
-        ChimeVoiceConnectorOriginationRouteElRef {
+impl terrars::Ref for ChimeVoiceConnectorOrigination_RouteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ChimeVoiceConnectorOrigination_RouteRef {
+        ChimeVoiceConnectorOrigination_RouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ChimeVoiceConnectorOriginationRouteElRef {
+impl ChimeVoiceConnectorOrigination_RouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -370,9 +401,4 @@ impl ChimeVoiceConnectorOriginationRouteElRef {
     pub fn weight(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.weight", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ChimeVoiceConnectorOriginationDynamic {
-    route: std::option::Option<terrars::DynamicBlock<ChimeVoiceConnectorOriginationRouteEl>>,
 }

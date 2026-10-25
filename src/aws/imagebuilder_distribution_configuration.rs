@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ImagebuilderDistributionConfigurationData {
+struct ImagebuilderDistributionConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct ImagebuilderDistributionConfigurationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    distribution: std::option::Option<std::vec::Vec<ImagebuilderDistributionConfigurationDistributionEl>>,
+    distribution: std::option::Option<std::vec::Vec<ImagebuilderDistributionConfiguration_Distribution>>,
     dynamic: ImagebuilderDistributionConfigurationDynamic,
 }
 
 struct ImagebuilderDistributionConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ImagebuilderDistributionConfigurationData>,
+    data: std::cell::RefCell<ImagebuilderDistributionConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl ImagebuilderDistributionConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl ImagebuilderDistributionConfiguration {
     #[doc = "Set the field `distribution`.\n"]
     pub fn set_distribution(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderDistributionConfigurationDistributionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,6 +220,12 @@ impl ImagebuilderDistributionConfiguration {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -264,7 +281,7 @@ impl BuildImagebuilderDistributionConfiguration {
         let out = ImagebuilderDistributionConfiguration(std::rc::Rc::new(ImagebuilderDistributionConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ImagebuilderDistributionConfigurationData {
+            data: std::cell::RefCell::new(ImagebuilderDistributionConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -273,6 +290,7 @@ impl BuildImagebuilderDistributionConfiguration {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 distribution: core::default::Default::default(),
@@ -337,6 +355,12 @@ impl ImagebuilderDistributionConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -348,8 +372,13 @@ impl ImagebuilderDistributionConfigurationRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct ImagebuilderDistributionConfigurationDynamic {
+    distribution: std::option::Option<terrars::DynamicBlock<ImagebuilderDistributionConfiguration_Distribution>>,
+}
+
 #[derive(Serialize)]
-pub struct ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {
+pub struct ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     organization_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -360,7 +389,7 @@ pub struct ImagebuilderDistributionConfigurationDistributionElAmiDistributionCon
     user_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {
+impl ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission {
     #[doc = "Set the field `organization_arns`.\n"]
     pub fn set_organization_arns(
         mut self,
@@ -399,11 +428,11 @@ impl ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigura
 }
 
 impl terrars
-::ToListMappable for ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {
+::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission {
     type O =
         terrars
         ::BlockAssignable<
-            ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl,
+            ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -415,13 +444,13 @@ impl terrars
     }
 }
 
-pub struct BuildImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {}
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission {}
 
-impl BuildImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {
+impl BuildImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission {
     pub fn build(
         self,
-    ) -> ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {
-        ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission {
+        ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission {
             organization_arns: core::default::Default::default(),
             organizational_unit_arns: core::default::Default::default(),
             user_groups: core::default::Default::default(),
@@ -430,25 +459,27 @@ impl BuildImagebuilderDistributionConfigurationDistributionElAmiDistributionConf
     }
 }
 
-pub struct ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermissionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionElRef {
+::Ref for ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermissionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionElRef {
-        ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionElRef {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermissionRef {
+        ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermissionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionElRef {
+impl ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermissionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -475,19 +506,19 @@ impl ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigura
 }
 
 #[derive(Serialize, Default)]
-struct ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElDynamic {
+struct ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfigurationDynamic {
     launch_permission: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl,
+            ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl {
+pub struct ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ami_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -504,12 +535,12 @@ pub struct ImagebuilderDistributionConfigurationDistributionElAmiDistributionCon
     ::Option<
         std
         ::vec
-        ::Vec<ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl>,
+        ::Vec<ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission>,
     >,
-    dynamic: ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElDynamic,
+    dynamic: ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfigurationDynamic,
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl {
+impl ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration {
     #[doc = "Set the field `ami_tags`.\n"]
     pub fn set_ami_tags(
         mut self,
@@ -557,7 +588,7 @@ impl ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigura
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionEl,
+                            ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermission,
                         >,
                     >,
     ) -> Self {
@@ -573,9 +604,9 @@ impl ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigura
     }
 }
 
-impl terrars::ToListMappable for ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl {
+impl terrars::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration {
     type O =
-        terrars::BlockAssignable<ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl>;
+        terrars::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -586,11 +617,11 @@ impl terrars::ToListMappable for ImagebuilderDistributionConfigurationDistributi
     }
 }
 
-pub struct BuildImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl {}
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration {}
 
-impl BuildImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl {
-    pub fn build(self) -> ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl {
-        ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl {
+impl BuildImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration {
+    pub fn build(self) -> ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration {
+        ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration {
             ami_tags: core::default::Default::default(),
             description: core::default::Default::default(),
             kms_key_id: core::default::Default::default(),
@@ -602,24 +633,26 @@ impl BuildImagebuilderDistributionConfigurationDistributionElAmiDistributionConf
     }
 }
 
-pub struct ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElRef {
+impl terrars::Ref for ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElRef {
-        ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElRef {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfigurationRef {
+        ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElRef {
+impl ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -653,25 +686,25 @@ impl ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigura
     pub fn launch_permission(
         &self,
     ) -> terrars
-    ::ListRef<ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElLaunchPermissionElRef> {
+    ::ListRef<ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration_LaunchPermissionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_permission", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl {
+pub struct ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository {
     repository_name: terrars::PrimField<std::string::String>,
     service: terrars::PrimField<std::string::String>,
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl { }
+impl ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository { }
 
 impl terrars
-::ToListMappable for ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl {
+::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository {
     type O =
         terrars
         ::BlockAssignable<
-            ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl,
+            ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -683,43 +716,45 @@ impl terrars
     }
 }
 
-pub struct BuildImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl {
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository {
     #[doc = ""]
     pub repository_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub service: terrars::PrimField<std::string::String>,
 }
 
-impl BuildImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl {
+impl BuildImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository {
     pub fn build(
         self,
-    ) -> ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl {
-        ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository {
+        ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository {
             repository_name: self.repository_name,
             service: self.service,
         }
     }
 }
 
-pub struct ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepositoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryElRef {
+::Ref for ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepositoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryElRef {
-        ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryElRef {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepositoryRef {
+        ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepositoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryElRef {
+impl ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepositoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -736,19 +771,19 @@ impl ImagebuilderDistributionConfigurationDistributionElContainerDistributionCon
 }
 
 #[derive(Serialize, Default)]
-struct ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElDynamic {
+struct ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfigurationDynamic {
     target_repository: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl,
+            ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl {
+pub struct ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     container_tags: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -759,14 +794,12 @@ pub struct ImagebuilderDistributionConfigurationDistributionElContainerDistribut
     ::Option<
         std
         ::vec
-        ::Vec<
-            ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl,
-        >,
+        ::Vec<ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository>,
     >,
-    dynamic: ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElDynamic,
+    dynamic: ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfigurationDynamic,
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl {
+impl ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration {
     #[doc = "Set the field `container_tags`.\n"]
     pub fn set_container_tags(
         mut self,
@@ -793,7 +826,7 @@ impl ImagebuilderDistributionConfigurationDistributionElContainerDistributionCon
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryEl,
+                            ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepository,
                         >,
                     >,
     ) -> Self {
@@ -810,10 +843,10 @@ impl ImagebuilderDistributionConfigurationDistributionElContainerDistributionCon
 }
 
 impl terrars
-::ToListMappable for ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl {
+::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration {
     type O =
         terrars
-        ::BlockAssignable<ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl>;
+        ::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -824,11 +857,11 @@ impl terrars
     }
 }
 
-pub struct BuildImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl {}
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration {}
 
-impl BuildImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl {
-    pub fn build(self) -> ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl {
-        ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl {
+impl BuildImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration {
+    pub fn build(self) -> ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration {
+        ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration {
             container_tags: core::default::Default::default(),
             description: core::default::Default::default(),
             target_repository: core::default::Default::default(),
@@ -837,24 +870,26 @@ impl BuildImagebuilderDistributionConfigurationDistributionElContainerDistributi
     }
 }
 
-pub struct ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElRef {
+impl terrars::Ref for ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElRef {
-        ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElRef {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfigurationRef {
+        ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElRef {
+impl ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -874,14 +909,14 @@ impl ImagebuilderDistributionConfigurationDistributionElContainerDistributionCon
         &self,
     ) -> terrars
     ::ListRef<
-        ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElTargetRepositoryElRef,
+        ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration_TargetRepositoryRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_repository", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl {
+pub struct ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_template_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -890,7 +925,7 @@ pub struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigur
     launch_template_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl {
+impl ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate {
     #[doc = "Set the field `launch_template_id`.\n"]
     pub fn set_launch_template_id(
         mut self,
@@ -920,12 +955,10 @@ impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationE
 }
 
 impl terrars
-::ToListMappable for ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl {
+::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate {
     type O =
         terrars
-        ::BlockAssignable<
-            ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl,
-        >;
+        ::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -936,13 +969,11 @@ impl terrars
     }
 }
 
-pub struct BuildImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl {}
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate {}
 
-impl BuildImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl {
-    pub fn build(
-        self,
-    ) -> ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl {
-        ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl {
+impl BuildImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate {
+    pub fn build(self) -> ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate {
+        ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate {
             launch_template_id: core::default::Default::default(),
             launch_template_name: core::default::Default::default(),
             launch_template_version: core::default::Default::default(),
@@ -950,24 +981,26 @@ impl BuildImagebuilderDistributionConfigurationDistributionElFastLaunchConfigura
     }
 }
 
-pub struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateElRef {
+impl terrars::Ref for ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateElRef {
-        ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateElRef {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplateRef {
+        ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateElRef {
+impl ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -989,12 +1022,12 @@ impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationE
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {
+pub struct ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_resource_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {
+impl ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration {
     #[doc = "Set the field `target_resource_count`.\n"]
     pub fn set_target_resource_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.target_resource_count = std::option::Option::Some(v.into());
@@ -1003,11 +1036,11 @@ impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationE
 }
 
 impl terrars
-::ToListMappable for ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {
+::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration {
     type O =
         terrars
         ::BlockAssignable<
-            ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl,
+            ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1019,37 +1052,39 @@ impl terrars
     }
 }
 
-pub struct BuildImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {}
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration {}
 
-impl BuildImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {
+impl BuildImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration {
     pub fn build(
         self,
-    ) -> ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {
-        ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration {
+        ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration {
             target_resource_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationElRef {
+::Ref for ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationElRef {
-        ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationElRef {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfigurationRef {
+        ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationElRef {
+impl ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1061,25 +1096,25 @@ impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationE
 }
 
 #[derive(Serialize, Default)]
-struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElDynamic {
+struct ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfigurationDynamic {
     launch_template: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl>,
+        ::DynamicBlock<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate>,
     >,
     snapshot_configuration: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl,
+            ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl {
+pub struct ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration {
     account_id: terrars::PrimField<std::string::String>,
     enabled: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1088,7 +1123,7 @@ pub struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigur
     launch_template: std
     ::option
     ::Option<
-        std::vec::Vec<ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl>,
+        std::vec::Vec<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     snapshot_configuration: std
@@ -1096,12 +1131,12 @@ pub struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigur
     ::Option<
         std
         ::vec
-        ::Vec<ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl>,
+        ::Vec<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration>,
     >,
-    dynamic: ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElDynamic,
+    dynamic: ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfigurationDynamic,
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl {
+impl ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration {
     #[doc = "Set the field `max_parallel_launches`.\n"]
     pub fn set_max_parallel_launches(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_parallel_launches = std::option::Option::Some(v.into());
@@ -1119,7 +1154,7 @@ impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateEl,
+                            ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplate,
                         >,
                     >,
     ) -> Self {
@@ -1145,7 +1180,7 @@ impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationE
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationEl,
+                            ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -1161,8 +1196,8 @@ impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationE
     }
 }
 
-impl terrars::ToListMappable for ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl {
-    type O = terrars::BlockAssignable<ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl>;
+impl terrars::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration {
+    type O = terrars::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1173,16 +1208,16 @@ impl terrars::ToListMappable for ImagebuilderDistributionConfigurationDistributi
     }
 }
 
-pub struct BuildImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl {
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration {
     #[doc = ""]
     pub account_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl {
-    pub fn build(self) -> ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl {
-        ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl {
+impl BuildImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration {
+    pub fn build(self) -> ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration {
+        ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration {
             account_id: self.account_id,
             enabled: self.enabled,
             max_parallel_launches: core::default::Default::default(),
@@ -1193,24 +1228,26 @@ impl BuildImagebuilderDistributionConfigurationDistributionElFastLaunchConfigura
     }
 }
 
-pub struct ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElRef {
+impl terrars::Ref for ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElRef {
-        ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElRef {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfigurationRef {
+        ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElRef {
+impl ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1234,7 +1271,7 @@ impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationE
     pub fn launch_template(
         &self,
     ) -> terrars
-    ::ListRef<ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElLaunchTemplateElRef> {
+    ::ListRef<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_LaunchTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template", self.base))
     }
 
@@ -1242,13 +1279,13 @@ impl ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationE
     pub fn snapshot_configuration(
         &self,
     ) -> terrars
-    ::ListRef<ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationElSnapshotConfigurationElRef> {
+    ::ListRef<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration_SnapshotConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl {
+pub struct ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1256,7 +1293,7 @@ pub struct ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConf
     launch_template_id: terrars::PrimField<std::string::String>,
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl {
+impl ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration {
     #[doc = "Set the field `account_id`.\n"]
     pub fn set_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.account_id = std::option::Option::Some(v.into());
@@ -1270,9 +1307,9 @@ impl ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurat
     }
 }
 
-impl terrars::ToListMappable for ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl {
+impl terrars::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration {
     type O =
-        terrars::BlockAssignable<ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl>;
+        terrars::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1283,14 +1320,14 @@ impl terrars::ToListMappable for ImagebuilderDistributionConfigurationDistributi
     }
 }
 
-pub struct BuildImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl {
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration {
     #[doc = ""]
     pub launch_template_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl {
-    pub fn build(self) -> ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl {
-        ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl {
+impl BuildImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration {
+    pub fn build(self) -> ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration {
+        ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration {
             account_id: core::default::Default::default(),
             default: core::default::Default::default(),
             launch_template_id: self.launch_template_id,
@@ -1298,24 +1335,26 @@ impl BuildImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfi
     }
 }
 
-pub struct ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationElRef {
+impl terrars::Ref for ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationElRef {
-        ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationElRef {
+    ) -> ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfigurationRef {
+        ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationElRef {
+impl ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1336,53 +1375,247 @@ impl ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurat
     }
 }
 
-#[derive(Serialize, Default)]
-struct ImagebuilderDistributionConfigurationDistributionElDynamic {
-    ami_distribution_configuration: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl>,
-    >,
-    container_distribution_configuration: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl>,
-    >,
-    fast_launch_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl>>,
-    launch_template_configuration: std
-    ::option
-    ::Option<
-        terrars::DynamicBlock<ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl>,
-    >,
+#[derive(Serialize)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration {
+    disk_image_format: terrars::PrimField<std::string::String>,
+    role_name: terrars::PrimField<std::string::String>,
+    s3_bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration {
+    #[doc = "Set the field `s3_prefix`.\n"]
+    pub fn set_s3_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.s3_prefix = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration {
+    type O = terrars::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration {
+    #[doc = ""]
+    pub disk_image_format: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub role_name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub s3_bucket: terrars::PrimField<std::string::String>,
+}
+
+impl BuildImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration {
+    pub fn build(self) -> ImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration {
+        ImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration {
+            disk_image_format: self.disk_image_format,
+            role_name: self.role_name,
+            s3_bucket: self.s3_bucket,
+            s3_prefix: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_S3ExportConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ImagebuilderDistributionConfiguration_Distribution_S3ExportConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ImagebuilderDistributionConfiguration_Distribution_S3ExportConfigurationRef {
+        ImagebuilderDistributionConfiguration_Distribution_S3ExportConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ImagebuilderDistributionConfiguration_Distribution_S3ExportConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `disk_image_format` after provisioning.\n"]
+    pub fn disk_image_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disk_image_format", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `role_name` after provisioning.\n"]
+    pub fn role_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_bucket` after provisioning.\n"]
+    pub fn s3_bucket(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_prefix` after provisioning.\n"]
+    pub fn s3_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_prefix", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderDistributionConfigurationDistributionEl {
+pub struct ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ami_account_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    data_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    parameter_name: terrars::PrimField<std::string::String>,
+}
+
+impl ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration {
+    #[doc = "Set the field `ami_account_id`.\n"]
+    pub fn set_ami_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ami_account_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `data_type`.\n"]
+    pub fn set_data_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.data_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration {
+    type O = terrars::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration {
+    #[doc = ""]
+    pub parameter_name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration {
+    pub fn build(self) -> ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration {
+        ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration {
+            ami_account_id: core::default::Default::default(),
+            data_type: core::default::Default::default(),
+            parameter_name: self.parameter_name,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfigurationRef {
+        ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ami_account_id` after provisioning.\n"]
+    pub fn ami_account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ami_account_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `data_type` after provisioning.\n"]
+    pub fn data_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.data_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `parameter_name` after provisioning.\n"]
+    pub fn parameter_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_name", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ImagebuilderDistributionConfiguration_DistributionDynamic {
+    ami_distribution_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration>>,
+    container_distribution_configuration: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration>,
+    >,
+    fast_launch_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration>>,
+    launch_template_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration>>,
+    s3_export_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration>>,
+    ssm_parameter_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration>>,
+}
+
+#[derive(Serialize)]
+pub struct ImagebuilderDistributionConfiguration_Distribution {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     license_configuration_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     region: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ami_distribution_configuration: std
     ::option
-    ::Option<std::vec::Vec<ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl>>,
+    ::Option<std::vec::Vec<ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     container_distribution_configuration: std
     ::option
-    ::Option<std::vec::Vec<ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl>>,
+    ::Option<std::vec::Vec<ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fast_launch_configuration: std
     ::option
-    ::Option<std::vec::Vec<ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl>>,
+    ::Option<std::vec::Vec<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_template_configuration: std
     ::option
-    ::Option<std::vec::Vec<ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl>>,
-    dynamic: ImagebuilderDistributionConfigurationDistributionElDynamic,
+    ::Option<std::vec::Vec<ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_export_configuration: std
+    ::option
+    ::Option<std::vec::Vec<ImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ssm_parameter_configuration: std
+    ::option
+    ::Option<std::vec::Vec<ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration>>,
+    dynamic: ImagebuilderDistributionConfiguration_DistributionDynamic,
 }
 
-impl ImagebuilderDistributionConfigurationDistributionEl {
+impl ImagebuilderDistributionConfiguration_Distribution {
     #[doc = "Set the field `license_configuration_arns`.\n"]
     pub fn set_license_configuration_arns(
         mut self,
@@ -1403,7 +1636,7 @@ impl ImagebuilderDistributionConfigurationDistributionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationEl,
+                            ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -1429,7 +1662,7 @@ impl ImagebuilderDistributionConfigurationDistributionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationEl,
+                            ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -1454,9 +1687,7 @@ impl ImagebuilderDistributionConfigurationDistributionEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            ImagebuilderDistributionConfigurationDistributionElFastLaunchConfigurationEl,
-                        >,
+                        ::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution_FastLaunchConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1481,7 +1712,7 @@ impl ImagebuilderDistributionConfigurationDistributionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            ImagebuilderDistributionConfigurationDistributionElLaunchTemplateConfigurationEl,
+                            ImagebuilderDistributionConfiguration_Distribution_LaunchTemplateConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -1495,10 +1726,60 @@ impl ImagebuilderDistributionConfigurationDistributionEl {
         }
         self
     }
+
+    #[doc = "Set the field `s3_export_configuration`.\n"]
+    pub fn set_s3_export_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution_S3ExportConfiguration>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.s3_export_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.s3_export_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `ssm_parameter_configuration`.\n"]
+    pub fn set_ssm_parameter_configuration(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            ImagebuilderDistributionConfiguration_Distribution_SsmParameterConfiguration,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.ssm_parameter_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ssm_parameter_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for ImagebuilderDistributionConfigurationDistributionEl {
-    type O = terrars::BlockAssignable<ImagebuilderDistributionConfigurationDistributionEl>;
+impl terrars::ToListMappable for ImagebuilderDistributionConfiguration_Distribution {
+    type O = terrars::BlockAssignable<ImagebuilderDistributionConfiguration_Distribution>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1509,43 +1790,47 @@ impl terrars::ToListMappable for ImagebuilderDistributionConfigurationDistributi
     }
 }
 
-pub struct BuildImagebuilderDistributionConfigurationDistributionEl {
+pub struct BuildImagebuilderDistributionConfiguration_Distribution {
     #[doc = ""]
     pub region: terrars::PrimField<std::string::String>,
 }
 
-impl BuildImagebuilderDistributionConfigurationDistributionEl {
-    pub fn build(self) -> ImagebuilderDistributionConfigurationDistributionEl {
-        ImagebuilderDistributionConfigurationDistributionEl {
+impl BuildImagebuilderDistributionConfiguration_Distribution {
+    pub fn build(self) -> ImagebuilderDistributionConfiguration_Distribution {
+        ImagebuilderDistributionConfiguration_Distribution {
             license_configuration_arns: core::default::Default::default(),
             region: self.region,
             ami_distribution_configuration: core::default::Default::default(),
             container_distribution_configuration: core::default::Default::default(),
             fast_launch_configuration: core::default::Default::default(),
             launch_template_configuration: core::default::Default::default(),
+            s3_export_configuration: core::default::Default::default(),
+            ssm_parameter_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ImagebuilderDistributionConfigurationDistributionElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderDistributionConfiguration_DistributionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderDistributionConfigurationDistributionElRef {
+impl terrars::Ref for ImagebuilderDistributionConfiguration_DistributionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderDistributionConfigurationDistributionElRef {
-        ImagebuilderDistributionConfigurationDistributionElRef {
+    ) -> ImagebuilderDistributionConfiguration_DistributionRef {
+        ImagebuilderDistributionConfiguration_DistributionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderDistributionConfigurationDistributionElRef {
+impl ImagebuilderDistributionConfiguration_DistributionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1563,19 +1848,21 @@ impl ImagebuilderDistributionConfigurationDistributionElRef {
     #[doc = "Get a reference to the value of field `ami_distribution_configuration` after provisioning.\n"]
     pub fn ami_distribution_configuration(
         &self,
-    ) -> terrars::ListRef<ImagebuilderDistributionConfigurationDistributionElAmiDistributionConfigurationElRef> {
+    ) -> terrars::ListRef<ImagebuilderDistributionConfiguration_Distribution_AmiDistributionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ami_distribution_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `container_distribution_configuration` after provisioning.\n"]
     pub fn container_distribution_configuration(
         &self,
-    ) -> terrars::ListRef<ImagebuilderDistributionConfigurationDistributionElContainerDistributionConfigurationElRef> {
+    ) -> terrars::ListRef<ImagebuilderDistributionConfiguration_Distribution_ContainerDistributionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.container_distribution_configuration", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct ImagebuilderDistributionConfigurationDynamic {
-    distribution: std::option::Option<terrars::DynamicBlock<ImagebuilderDistributionConfigurationDistributionEl>>,
+    #[doc = "Get a reference to the value of field `s3_export_configuration` after provisioning.\n"]
+    pub fn s3_export_configuration(
+        &self,
+    ) -> terrars::ListRef<ImagebuilderDistributionConfiguration_Distribution_S3ExportConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_export_configuration", self.base))
+    }
 }

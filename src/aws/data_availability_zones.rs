@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataAvailabilityZonesData {
+struct DataAvailabilityZonesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -25,18 +27,20 @@ struct DataAvailabilityZonesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataAvailabilityZonesFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataAvailabilityZones_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataAvailabilityZonesTimeoutsEl>,
+    timeouts: std::option::Option<DataAvailabilityZones_Timeouts>,
     dynamic: DataAvailabilityZonesDynamic,
 }
 
 struct DataAvailabilityZones_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAvailabilityZonesData>,
+    data: std::cell::RefCell<DataAvailabilityZonesData_>,
 }
 
 #[derive(Clone)]
@@ -111,6 +115,13 @@ impl DataAvailabilityZones {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `state`.\n"]
     pub fn set_state(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().state = std::option::Option::Some(v.into());
@@ -118,10 +129,7 @@ impl DataAvailabilityZones {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataAvailabilityZonesFilterEl>>,
-    ) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataAvailabilityZones_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -134,7 +142,7 @@ impl DataAvailabilityZones {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataAvailabilityZonesTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataAvailabilityZones_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -169,6 +177,12 @@ impl DataAvailabilityZones {
         terrars::ListRef::new(self.shared().clone(), format!("{}.names", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -180,8 +194,8 @@ impl DataAvailabilityZones {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAvailabilityZonesTimeoutsElRef {
-        DataAvailabilityZonesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAvailabilityZones_TimeoutsRef {
+        DataAvailabilityZones_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -225,7 +239,7 @@ impl BuildDataAvailabilityZones {
         let out = DataAvailabilityZones(std::rc::Rc::new(DataAvailabilityZones_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAvailabilityZonesData {
+            data: std::cell::RefCell::new(DataAvailabilityZonesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -234,6 +248,7 @@ impl BuildDataAvailabilityZones {
                 exclude_names: core::default::Default::default(),
                 exclude_zone_ids: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 state: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -298,6 +313,12 @@ impl DataAvailabilityZonesRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.names", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -309,21 +330,26 @@ impl DataAvailabilityZonesRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAvailabilityZonesTimeoutsElRef {
-        DataAvailabilityZonesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAvailabilityZones_TimeoutsRef {
+        DataAvailabilityZones_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataAvailabilityZonesDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataAvailabilityZones_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataAvailabilityZonesFilterEl {
+pub struct DataAvailabilityZones_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAvailabilityZonesFilterEl { }
+impl DataAvailabilityZones_Filter { }
 
-impl terrars::ToListMappable for DataAvailabilityZonesFilterEl {
-    type O = terrars::BlockAssignable<DataAvailabilityZonesFilterEl>;
+impl terrars::ToListMappable for DataAvailabilityZones_Filter {
+    type O = terrars::BlockAssignable<DataAvailabilityZones_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -334,37 +360,39 @@ impl terrars::ToListMappable for DataAvailabilityZonesFilterEl {
     }
 }
 
-pub struct BuildDataAvailabilityZonesFilterEl {
+pub struct BuildDataAvailabilityZones_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataAvailabilityZonesFilterEl {
-    pub fn build(self) -> DataAvailabilityZonesFilterEl {
-        DataAvailabilityZonesFilterEl {
+impl BuildDataAvailabilityZones_Filter {
+    pub fn build(self) -> DataAvailabilityZones_Filter {
+        DataAvailabilityZones_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataAvailabilityZonesFilterElRef {
+#[allow(dead_code)]
+pub struct DataAvailabilityZones_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAvailabilityZonesFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAvailabilityZonesFilterElRef {
-        DataAvailabilityZonesFilterElRef {
+impl terrars::Ref for DataAvailabilityZones_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAvailabilityZones_FilterRef {
+        DataAvailabilityZones_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAvailabilityZonesFilterElRef {
+impl DataAvailabilityZones_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -381,12 +409,12 @@ impl DataAvailabilityZonesFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAvailabilityZonesTimeoutsEl {
+pub struct DataAvailabilityZones_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAvailabilityZonesTimeoutsEl {
+impl DataAvailabilityZones_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -394,8 +422,8 @@ impl DataAvailabilityZonesTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAvailabilityZonesTimeoutsEl {
-    type O = terrars::BlockAssignable<DataAvailabilityZonesTimeoutsEl>;
+impl terrars::ToListMappable for DataAvailabilityZones_Timeouts {
+    type O = terrars::BlockAssignable<DataAvailabilityZones_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -406,29 +434,31 @@ impl terrars::ToListMappable for DataAvailabilityZonesTimeoutsEl {
     }
 }
 
-pub struct BuildDataAvailabilityZonesTimeoutsEl {}
+pub struct BuildDataAvailabilityZones_Timeouts {}
 
-impl BuildDataAvailabilityZonesTimeoutsEl {
-    pub fn build(self) -> DataAvailabilityZonesTimeoutsEl {
-        DataAvailabilityZonesTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataAvailabilityZones_Timeouts {
+    pub fn build(self) -> DataAvailabilityZones_Timeouts {
+        DataAvailabilityZones_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataAvailabilityZonesTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataAvailabilityZones_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAvailabilityZonesTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAvailabilityZonesTimeoutsElRef {
-        DataAvailabilityZonesTimeoutsElRef {
+impl terrars::Ref for DataAvailabilityZones_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAvailabilityZones_TimeoutsRef {
+        DataAvailabilityZones_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAvailabilityZonesTimeoutsElRef {
+impl DataAvailabilityZones_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -437,9 +467,4 @@ impl DataAvailabilityZonesTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataAvailabilityZonesDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataAvailabilityZonesFilterEl>>,
 }

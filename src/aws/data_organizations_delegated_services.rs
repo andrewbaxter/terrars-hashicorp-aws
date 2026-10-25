@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataOrganizationsDelegatedServicesData {
+struct DataOrganizationsDelegatedServicesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataOrganizationsDelegatedServicesData {
 struct DataOrganizationsDelegatedServices_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataOrganizationsDelegatedServicesData>,
+    data: std::cell::RefCell<DataOrganizationsDelegatedServicesData_>,
 }
 
 #[derive(Clone)]
@@ -81,7 +83,7 @@ impl DataOrganizationsDelegatedServices {
     }
 
     #[doc = "Get a reference to the value of field `delegated_services` after provisioning.\n"]
-    pub fn delegated_services(&self) -> terrars::SetRef<DataOrganizationsDelegatedServicesDelegatedServicesElRef> {
+    pub fn delegated_services(&self) -> terrars::SetRef<DataOrganizationsDelegatedServices_DelegatedServicesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.delegated_services", self.extract_ref()))
     }
 
@@ -133,7 +135,7 @@ impl BuildDataOrganizationsDelegatedServices {
         let out = DataOrganizationsDelegatedServices(std::rc::Rc::new(DataOrganizationsDelegatedServices_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataOrganizationsDelegatedServicesData {
+            data: std::cell::RefCell::new(DataOrganizationsDelegatedServicesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -176,7 +178,7 @@ impl DataOrganizationsDelegatedServicesRef {
     }
 
     #[doc = "Get a reference to the value of field `delegated_services` after provisioning.\n"]
-    pub fn delegated_services(&self) -> terrars::SetRef<DataOrganizationsDelegatedServicesDelegatedServicesElRef> {
+    pub fn delegated_services(&self) -> terrars::SetRef<DataOrganizationsDelegatedServices_DelegatedServicesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.delegated_services", self.extract_ref()))
     }
 
@@ -187,14 +189,14 @@ impl DataOrganizationsDelegatedServicesRef {
 }
 
 #[derive(Serialize)]
-pub struct DataOrganizationsDelegatedServicesDelegatedServicesEl {
+pub struct DataOrganizationsDelegatedServices_DelegatedServices {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delegation_enabled_date: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_principal: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataOrganizationsDelegatedServicesDelegatedServicesEl {
+impl DataOrganizationsDelegatedServices_DelegatedServices {
     #[doc = "Set the field `delegation_enabled_date`.\n"]
     pub fn set_delegation_enabled_date(
         mut self,
@@ -211,8 +213,8 @@ impl DataOrganizationsDelegatedServicesDelegatedServicesEl {
     }
 }
 
-impl terrars::ToListMappable for DataOrganizationsDelegatedServicesDelegatedServicesEl {
-    type O = terrars::BlockAssignable<DataOrganizationsDelegatedServicesDelegatedServicesEl>;
+impl terrars::ToListMappable for DataOrganizationsDelegatedServices_DelegatedServices {
+    type O = terrars::BlockAssignable<DataOrganizationsDelegatedServices_DelegatedServices>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -223,35 +225,37 @@ impl terrars::ToListMappable for DataOrganizationsDelegatedServicesDelegatedServ
     }
 }
 
-pub struct BuildDataOrganizationsDelegatedServicesDelegatedServicesEl {}
+pub struct BuildDataOrganizationsDelegatedServices_DelegatedServices {}
 
-impl BuildDataOrganizationsDelegatedServicesDelegatedServicesEl {
-    pub fn build(self) -> DataOrganizationsDelegatedServicesDelegatedServicesEl {
-        DataOrganizationsDelegatedServicesDelegatedServicesEl {
+impl BuildDataOrganizationsDelegatedServices_DelegatedServices {
+    pub fn build(self) -> DataOrganizationsDelegatedServices_DelegatedServices {
+        DataOrganizationsDelegatedServices_DelegatedServices {
             delegation_enabled_date: core::default::Default::default(),
             service_principal: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataOrganizationsDelegatedServicesDelegatedServicesElRef {
+#[allow(dead_code)]
+pub struct DataOrganizationsDelegatedServices_DelegatedServicesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataOrganizationsDelegatedServicesDelegatedServicesElRef {
+impl terrars::Ref for DataOrganizationsDelegatedServices_DelegatedServicesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataOrganizationsDelegatedServicesDelegatedServicesElRef {
-        DataOrganizationsDelegatedServicesDelegatedServicesElRef {
+    ) -> DataOrganizationsDelegatedServices_DelegatedServicesRef {
+        DataOrganizationsDelegatedServices_DelegatedServicesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataOrganizationsDelegatedServicesDelegatedServicesElRef {
+impl DataOrganizationsDelegatedServices_DelegatedServicesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

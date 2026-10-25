@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafregionalIpsetData {
+struct WafregionalIpsetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct WafregionalIpsetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ip_set_descriptor: std::option::Option<std::vec::Vec<WafregionalIpsetIpSetDescriptorEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_set_descriptor: std::option::Option<std::vec::Vec<WafregionalIpset_IpSetDescriptor>>,
     dynamic: WafregionalIpsetDynamic,
 }
 
 struct WafregionalIpset_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafregionalIpsetData>,
+    data: std::cell::RefCell<WafregionalIpsetData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl WafregionalIpset {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `ip_set_descriptor`.\n"]
     pub fn set_ip_set_descriptor(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalIpsetIpSetDescriptorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalIpset_IpSetDescriptor>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -164,6 +175,12 @@ impl WafregionalIpset {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -209,7 +226,7 @@ impl BuildWafregionalIpset {
         let out = WafregionalIpset(std::rc::Rc::new(WafregionalIpset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafregionalIpsetData {
+            data: std::cell::RefCell::new(WafregionalIpsetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -217,6 +234,7 @@ impl BuildWafregionalIpset {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 ip_set_descriptor: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -263,19 +281,30 @@ impl WafregionalIpsetRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct WafregionalIpsetDynamic {
+    ip_set_descriptor: std::option::Option<terrars::DynamicBlock<WafregionalIpset_IpSetDescriptor>>,
 }
 
 #[derive(Serialize)]
-pub struct WafregionalIpsetIpSetDescriptorEl {
+pub struct WafregionalIpset_IpSetDescriptor {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl WafregionalIpsetIpSetDescriptorEl { }
+impl WafregionalIpset_IpSetDescriptor { }
 
-impl terrars::ToListMappable for WafregionalIpsetIpSetDescriptorEl {
-    type O = terrars::BlockAssignable<WafregionalIpsetIpSetDescriptorEl>;
+impl terrars::ToListMappable for WafregionalIpset_IpSetDescriptor {
+    type O = terrars::BlockAssignable<WafregionalIpset_IpSetDescriptor>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -286,37 +315,39 @@ impl terrars::ToListMappable for WafregionalIpsetIpSetDescriptorEl {
     }
 }
 
-pub struct BuildWafregionalIpsetIpSetDescriptorEl {
+pub struct BuildWafregionalIpset_IpSetDescriptor {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafregionalIpsetIpSetDescriptorEl {
-    pub fn build(self) -> WafregionalIpsetIpSetDescriptorEl {
-        WafregionalIpsetIpSetDescriptorEl {
+impl BuildWafregionalIpset_IpSetDescriptor {
+    pub fn build(self) -> WafregionalIpset_IpSetDescriptor {
+        WafregionalIpset_IpSetDescriptor {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct WafregionalIpsetIpSetDescriptorElRef {
+#[allow(dead_code)]
+pub struct WafregionalIpset_IpSetDescriptorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafregionalIpsetIpSetDescriptorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalIpsetIpSetDescriptorElRef {
-        WafregionalIpsetIpSetDescriptorElRef {
+impl terrars::Ref for WafregionalIpset_IpSetDescriptorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalIpset_IpSetDescriptorRef {
+        WafregionalIpset_IpSetDescriptorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafregionalIpsetIpSetDescriptorElRef {
+impl WafregionalIpset_IpSetDescriptorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -330,9 +361,4 @@ impl WafregionalIpsetIpSetDescriptorElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafregionalIpsetDynamic {
-    ip_set_descriptor: std::option::Option<terrars::DynamicBlock<WafregionalIpsetIpSetDescriptorEl>>,
 }

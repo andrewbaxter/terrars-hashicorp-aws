@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConnectQuickConnectData {
+struct ConnectQuickConnectData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,18 +27,20 @@ struct ConnectQuickConnectData {
     instance_id: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    quick_connect_config: std::option::Option<std::vec::Vec<ConnectQuickConnectQuickConnectConfigEl>>,
+    quick_connect_config: std::option::Option<std::vec::Vec<ConnectQuickConnect_QuickConnectConfig>>,
     dynamic: ConnectQuickConnectDynamic,
 }
 
 struct ConnectQuickConnect_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConnectQuickConnectData>,
+    data: std::cell::RefCell<ConnectQuickConnectData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl ConnectQuickConnect {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -169,7 +180,7 @@ impl ConnectQuickConnect {
     #[doc = "Set the field `quick_connect_config`.\n"]
     pub fn set_quick_connect_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQuickConnectQuickConnectConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQuickConnect_QuickConnectConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -212,6 +223,12 @@ impl ConnectQuickConnect {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.quick_connect_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -223,7 +240,7 @@ impl ConnectQuickConnect {
     }
 
     #[doc = "Get a reference to the value of field `quick_connect_config` after provisioning.\n"]
-    pub fn quick_connect_config(&self) -> terrars::ListRef<ConnectQuickConnectQuickConnectConfigElRef> {
+    pub fn quick_connect_config(&self) -> terrars::ListRef<ConnectQuickConnect_QuickConnectConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.quick_connect_config", self.extract_ref()))
     }
 }
@@ -272,7 +289,7 @@ impl BuildConnectQuickConnect {
         let out = ConnectQuickConnect(std::rc::Rc::new(ConnectQuickConnect_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConnectQuickConnectData {
+            data: std::cell::RefCell::new(ConnectQuickConnectData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -282,6 +299,7 @@ impl BuildConnectQuickConnect {
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 quick_connect_config: core::default::Default::default(),
@@ -346,6 +364,12 @@ impl ConnectQuickConnectRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.quick_connect_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -357,20 +381,25 @@ impl ConnectQuickConnectRef {
     }
 
     #[doc = "Get a reference to the value of field `quick_connect_config` after provisioning.\n"]
-    pub fn quick_connect_config(&self) -> terrars::ListRef<ConnectQuickConnectQuickConnectConfigElRef> {
+    pub fn quick_connect_config(&self) -> terrars::ListRef<ConnectQuickConnect_QuickConnectConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.quick_connect_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ConnectQuickConnectDynamic {
+    quick_connect_config: std::option::Option<terrars::DynamicBlock<ConnectQuickConnect_QuickConnectConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct ConnectQuickConnectQuickConnectConfigElPhoneConfigEl {
+pub struct ConnectQuickConnect_QuickConnectConfig_PhoneConfig {
     phone_number: terrars::PrimField<std::string::String>,
 }
 
-impl ConnectQuickConnectQuickConnectConfigElPhoneConfigEl { }
+impl ConnectQuickConnect_QuickConnectConfig_PhoneConfig { }
 
-impl terrars::ToListMappable for ConnectQuickConnectQuickConnectConfigElPhoneConfigEl {
-    type O = terrars::BlockAssignable<ConnectQuickConnectQuickConnectConfigElPhoneConfigEl>;
+impl terrars::ToListMappable for ConnectQuickConnect_QuickConnectConfig_PhoneConfig {
+    type O = terrars::BlockAssignable<ConnectQuickConnect_QuickConnectConfig_PhoneConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,35 +410,37 @@ impl terrars::ToListMappable for ConnectQuickConnectQuickConnectConfigElPhoneCon
     }
 }
 
-pub struct BuildConnectQuickConnectQuickConnectConfigElPhoneConfigEl {
+pub struct BuildConnectQuickConnect_QuickConnectConfig_PhoneConfig {
     #[doc = ""]
     pub phone_number: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectQuickConnectQuickConnectConfigElPhoneConfigEl {
-    pub fn build(self) -> ConnectQuickConnectQuickConnectConfigElPhoneConfigEl {
-        ConnectQuickConnectQuickConnectConfigElPhoneConfigEl { phone_number: self.phone_number }
+impl BuildConnectQuickConnect_QuickConnectConfig_PhoneConfig {
+    pub fn build(self) -> ConnectQuickConnect_QuickConnectConfig_PhoneConfig {
+        ConnectQuickConnect_QuickConnectConfig_PhoneConfig { phone_number: self.phone_number }
     }
 }
 
-pub struct ConnectQuickConnectQuickConnectConfigElPhoneConfigElRef {
+#[allow(dead_code)]
+pub struct ConnectQuickConnect_QuickConnectConfig_PhoneConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectQuickConnectQuickConnectConfigElPhoneConfigElRef {
+impl terrars::Ref for ConnectQuickConnect_QuickConnectConfig_PhoneConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectQuickConnectQuickConnectConfigElPhoneConfigElRef {
-        ConnectQuickConnectQuickConnectConfigElPhoneConfigElRef {
+    ) -> ConnectQuickConnect_QuickConnectConfig_PhoneConfigRef {
+        ConnectQuickConnect_QuickConnectConfig_PhoneConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectQuickConnectQuickConnectConfigElPhoneConfigElRef {
+impl ConnectQuickConnect_QuickConnectConfig_PhoneConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -421,15 +452,15 @@ impl ConnectQuickConnectQuickConnectConfigElPhoneConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectQuickConnectQuickConnectConfigElQueueConfigEl {
+pub struct ConnectQuickConnect_QuickConnectConfig_QueueConfig {
     contact_flow_id: terrars::PrimField<std::string::String>,
     queue_id: terrars::PrimField<std::string::String>,
 }
 
-impl ConnectQuickConnectQuickConnectConfigElQueueConfigEl { }
+impl ConnectQuickConnect_QuickConnectConfig_QueueConfig { }
 
-impl terrars::ToListMappable for ConnectQuickConnectQuickConnectConfigElQueueConfigEl {
-    type O = terrars::BlockAssignable<ConnectQuickConnectQuickConnectConfigElQueueConfigEl>;
+impl terrars::ToListMappable for ConnectQuickConnect_QuickConnectConfig_QueueConfig {
+    type O = terrars::BlockAssignable<ConnectQuickConnect_QuickConnectConfig_QueueConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -440,40 +471,42 @@ impl terrars::ToListMappable for ConnectQuickConnectQuickConnectConfigElQueueCon
     }
 }
 
-pub struct BuildConnectQuickConnectQuickConnectConfigElQueueConfigEl {
+pub struct BuildConnectQuickConnect_QuickConnectConfig_QueueConfig {
     #[doc = ""]
     pub contact_flow_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub queue_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectQuickConnectQuickConnectConfigElQueueConfigEl {
-    pub fn build(self) -> ConnectQuickConnectQuickConnectConfigElQueueConfigEl {
-        ConnectQuickConnectQuickConnectConfigElQueueConfigEl {
+impl BuildConnectQuickConnect_QuickConnectConfig_QueueConfig {
+    pub fn build(self) -> ConnectQuickConnect_QuickConnectConfig_QueueConfig {
+        ConnectQuickConnect_QuickConnectConfig_QueueConfig {
             contact_flow_id: self.contact_flow_id,
             queue_id: self.queue_id,
         }
     }
 }
 
-pub struct ConnectQuickConnectQuickConnectConfigElQueueConfigElRef {
+#[allow(dead_code)]
+pub struct ConnectQuickConnect_QuickConnectConfig_QueueConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectQuickConnectQuickConnectConfigElQueueConfigElRef {
+impl terrars::Ref for ConnectQuickConnect_QuickConnectConfig_QueueConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectQuickConnectQuickConnectConfigElQueueConfigElRef {
-        ConnectQuickConnectQuickConnectConfigElQueueConfigElRef {
+    ) -> ConnectQuickConnect_QuickConnectConfig_QueueConfigRef {
+        ConnectQuickConnect_QuickConnectConfig_QueueConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectQuickConnectQuickConnectConfigElQueueConfigElRef {
+impl ConnectQuickConnect_QuickConnectConfig_QueueConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -490,15 +523,15 @@ impl ConnectQuickConnectQuickConnectConfigElQueueConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectQuickConnectQuickConnectConfigElUserConfigEl {
+pub struct ConnectQuickConnect_QuickConnectConfig_UserConfig {
     contact_flow_id: terrars::PrimField<std::string::String>,
     user_id: terrars::PrimField<std::string::String>,
 }
 
-impl ConnectQuickConnectQuickConnectConfigElUserConfigEl { }
+impl ConnectQuickConnect_QuickConnectConfig_UserConfig { }
 
-impl terrars::ToListMappable for ConnectQuickConnectQuickConnectConfigElUserConfigEl {
-    type O = terrars::BlockAssignable<ConnectQuickConnectQuickConnectConfigElUserConfigEl>;
+impl terrars::ToListMappable for ConnectQuickConnect_QuickConnectConfig_UserConfig {
+    type O = terrars::BlockAssignable<ConnectQuickConnect_QuickConnectConfig_UserConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -509,40 +542,42 @@ impl terrars::ToListMappable for ConnectQuickConnectQuickConnectConfigElUserConf
     }
 }
 
-pub struct BuildConnectQuickConnectQuickConnectConfigElUserConfigEl {
+pub struct BuildConnectQuickConnect_QuickConnectConfig_UserConfig {
     #[doc = ""]
     pub contact_flow_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub user_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectQuickConnectQuickConnectConfigElUserConfigEl {
-    pub fn build(self) -> ConnectQuickConnectQuickConnectConfigElUserConfigEl {
-        ConnectQuickConnectQuickConnectConfigElUserConfigEl {
+impl BuildConnectQuickConnect_QuickConnectConfig_UserConfig {
+    pub fn build(self) -> ConnectQuickConnect_QuickConnectConfig_UserConfig {
+        ConnectQuickConnect_QuickConnectConfig_UserConfig {
             contact_flow_id: self.contact_flow_id,
             user_id: self.user_id,
         }
     }
 }
 
-pub struct ConnectQuickConnectQuickConnectConfigElUserConfigElRef {
+#[allow(dead_code)]
+pub struct ConnectQuickConnect_QuickConnectConfig_UserConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectQuickConnectQuickConnectConfigElUserConfigElRef {
+impl terrars::Ref for ConnectQuickConnect_QuickConnectConfig_UserConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectQuickConnectQuickConnectConfigElUserConfigElRef {
-        ConnectQuickConnectQuickConnectConfigElUserConfigElRef {
+    ) -> ConnectQuickConnect_QuickConnectConfig_UserConfigRef {
+        ConnectQuickConnect_QuickConnectConfig_UserConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectQuickConnectQuickConnectConfigElUserConfigElRef {
+impl ConnectQuickConnect_QuickConnectConfig_UserConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -559,29 +594,29 @@ impl ConnectQuickConnectQuickConnectConfigElUserConfigElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ConnectQuickConnectQuickConnectConfigElDynamic {
-    phone_config: std::option::Option<terrars::DynamicBlock<ConnectQuickConnectQuickConnectConfigElPhoneConfigEl>>,
-    queue_config: std::option::Option<terrars::DynamicBlock<ConnectQuickConnectQuickConnectConfigElQueueConfigEl>>,
-    user_config: std::option::Option<terrars::DynamicBlock<ConnectQuickConnectQuickConnectConfigElUserConfigEl>>,
+struct ConnectQuickConnect_QuickConnectConfigDynamic {
+    phone_config: std::option::Option<terrars::DynamicBlock<ConnectQuickConnect_QuickConnectConfig_PhoneConfig>>,
+    queue_config: std::option::Option<terrars::DynamicBlock<ConnectQuickConnect_QuickConnectConfig_QueueConfig>>,
+    user_config: std::option::Option<terrars::DynamicBlock<ConnectQuickConnect_QuickConnectConfig_UserConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct ConnectQuickConnectQuickConnectConfigEl {
+pub struct ConnectQuickConnect_QuickConnectConfig {
     quick_connect_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    phone_config: std::option::Option<std::vec::Vec<ConnectQuickConnectQuickConnectConfigElPhoneConfigEl>>,
+    phone_config: std::option::Option<std::vec::Vec<ConnectQuickConnect_QuickConnectConfig_PhoneConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    queue_config: std::option::Option<std::vec::Vec<ConnectQuickConnectQuickConnectConfigElQueueConfigEl>>,
+    queue_config: std::option::Option<std::vec::Vec<ConnectQuickConnect_QuickConnectConfig_QueueConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_config: std::option::Option<std::vec::Vec<ConnectQuickConnectQuickConnectConfigElUserConfigEl>>,
-    dynamic: ConnectQuickConnectQuickConnectConfigElDynamic,
+    user_config: std::option::Option<std::vec::Vec<ConnectQuickConnect_QuickConnectConfig_UserConfig>>,
+    dynamic: ConnectQuickConnect_QuickConnectConfigDynamic,
 }
 
-impl ConnectQuickConnectQuickConnectConfigEl {
+impl ConnectQuickConnect_QuickConnectConfig {
     #[doc = "Set the field `phone_config`.\n"]
     pub fn set_phone_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQuickConnectQuickConnectConfigElPhoneConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQuickConnect_QuickConnectConfig_PhoneConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -597,7 +632,7 @@ impl ConnectQuickConnectQuickConnectConfigEl {
     #[doc = "Set the field `queue_config`.\n"]
     pub fn set_queue_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQuickConnectQuickConnectConfigElQueueConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQuickConnect_QuickConnectConfig_QueueConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -613,7 +648,7 @@ impl ConnectQuickConnectQuickConnectConfigEl {
     #[doc = "Set the field `user_config`.\n"]
     pub fn set_user_config(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQuickConnectQuickConnectConfigElUserConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectQuickConnect_QuickConnectConfig_UserConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -627,8 +662,8 @@ impl ConnectQuickConnectQuickConnectConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectQuickConnectQuickConnectConfigEl {
-    type O = terrars::BlockAssignable<ConnectQuickConnectQuickConnectConfigEl>;
+impl terrars::ToListMappable for ConnectQuickConnect_QuickConnectConfig {
+    type O = terrars::BlockAssignable<ConnectQuickConnect_QuickConnectConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -639,14 +674,14 @@ impl terrars::ToListMappable for ConnectQuickConnectQuickConnectConfigEl {
     }
 }
 
-pub struct BuildConnectQuickConnectQuickConnectConfigEl {
+pub struct BuildConnectQuickConnect_QuickConnectConfig {
     #[doc = ""]
     pub quick_connect_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectQuickConnectQuickConnectConfigEl {
-    pub fn build(self) -> ConnectQuickConnectQuickConnectConfigEl {
-        ConnectQuickConnectQuickConnectConfigEl {
+impl BuildConnectQuickConnect_QuickConnectConfig {
+    pub fn build(self) -> ConnectQuickConnect_QuickConnectConfig {
+        ConnectQuickConnect_QuickConnectConfig {
             quick_connect_type: self.quick_connect_type,
             phone_config: core::default::Default::default(),
             queue_config: core::default::Default::default(),
@@ -656,21 +691,23 @@ impl BuildConnectQuickConnectQuickConnectConfigEl {
     }
 }
 
-pub struct ConnectQuickConnectQuickConnectConfigElRef {
+#[allow(dead_code)]
+pub struct ConnectQuickConnect_QuickConnectConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectQuickConnectQuickConnectConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectQuickConnectQuickConnectConfigElRef {
-        ConnectQuickConnectQuickConnectConfigElRef {
+impl terrars::Ref for ConnectQuickConnect_QuickConnectConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectQuickConnect_QuickConnectConfigRef {
+        ConnectQuickConnect_QuickConnectConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectQuickConnectQuickConnectConfigElRef {
+impl ConnectQuickConnect_QuickConnectConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -681,22 +718,17 @@ impl ConnectQuickConnectQuickConnectConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `phone_config` after provisioning.\n"]
-    pub fn phone_config(&self) -> terrars::ListRef<ConnectQuickConnectQuickConnectConfigElPhoneConfigElRef> {
+    pub fn phone_config(&self) -> terrars::ListRef<ConnectQuickConnect_QuickConnectConfig_PhoneConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phone_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `queue_config` after provisioning.\n"]
-    pub fn queue_config(&self) -> terrars::ListRef<ConnectQuickConnectQuickConnectConfigElQueueConfigElRef> {
+    pub fn queue_config(&self) -> terrars::ListRef<ConnectQuickConnect_QuickConnectConfig_QueueConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.queue_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `user_config` after provisioning.\n"]
-    pub fn user_config(&self) -> terrars::ListRef<ConnectQuickConnectQuickConnectConfigElUserConfigElRef> {
+    pub fn user_config(&self) -> terrars::ListRef<ConnectQuickConnect_QuickConnectConfig_UserConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_config", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ConnectQuickConnectDynamic {
-    quick_connect_config: std::option::Option<terrars::DynamicBlock<ConnectQuickConnectQuickConnectConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct VpcData {
+struct VpcData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,10 +24,6 @@ struct VpcData {
     assign_generated_ipv6_cidr_block: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enable_classiclink: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enable_classiclink_dns_support: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_dns_hostnames: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -49,6 +47,8 @@ struct VpcData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv6_netmask_length: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -57,7 +57,7 @@ struct VpcData {
 struct Vpc_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpcData>,
+    data: std::cell::RefCell<VpcData_>,
 }
 
 #[derive(Clone)]
@@ -169,18 +169,6 @@ impl Vpc {
         self
     }
 
-    #[doc = "Set the field `enable_classiclink`.\n"]
-    pub fn set_enable_classiclink(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_classiclink = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `enable_classiclink_dns_support`.\n"]
-    pub fn set_enable_classiclink_dns_support(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.0.data.borrow_mut().enable_classiclink_dns_support = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `enable_dns_hostnames`.\n"]
     pub fn set_enable_dns_hostnames(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().enable_dns_hostnames = std::option::Option::Some(v.into());
@@ -250,6 +238,13 @@ impl Vpc {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -304,19 +299,6 @@ impl Vpc {
     #[doc = "Get a reference to the value of field `dhcp_options_id` after provisioning.\n"]
     pub fn dhcp_options_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dhcp_options_id", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `enable_classiclink` after provisioning.\n"]
-    pub fn enable_classiclink(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_classiclink", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `enable_classiclink_dns_support` after provisioning.\n"]
-    pub fn enable_classiclink_dns_support(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(
-            self.shared().clone(),
-            format!("{}.enable_classiclink_dns_support", self.extract_ref()),
-        )
     }
 
     #[doc = "Get a reference to the value of field `enable_dns_hostnames` after provisioning.\n"]
@@ -395,6 +377,12 @@ impl Vpc {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -446,7 +434,7 @@ impl BuildVpc {
         let out = Vpc(std::rc::Rc::new(Vpc_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpcData {
+            data: std::cell::RefCell::new(VpcData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -454,8 +442,6 @@ impl BuildVpc {
                 provisioner: core::default::Default::default(),
                 assign_generated_ipv6_cidr_block: core::default::Default::default(),
                 cidr_block: core::default::Default::default(),
-                enable_classiclink: core::default::Default::default(),
-                enable_classiclink_dns_support: core::default::Default::default(),
                 enable_dns_hostnames: core::default::Default::default(),
                 enable_dns_support: core::default::Default::default(),
                 enable_network_address_usage_metrics: core::default::Default::default(),
@@ -467,6 +453,7 @@ impl BuildVpc {
                 ipv6_cidr_block_network_border_group: core::default::Default::default(),
                 ipv6_ipam_pool_id: core::default::Default::default(),
                 ipv6_netmask_length: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
             }),
@@ -537,19 +524,6 @@ impl VpcRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dhcp_options_id", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `enable_classiclink` after provisioning.\n"]
-    pub fn enable_classiclink(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_classiclink", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `enable_classiclink_dns_support` after provisioning.\n"]
-    pub fn enable_classiclink_dns_support(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(
-            self.shared().clone(),
-            format!("{}.enable_classiclink_dns_support", self.extract_ref()),
-        )
-    }
-
     #[doc = "Get a reference to the value of field `enable_dns_hostnames` after provisioning.\n"]
     pub fn enable_dns_hostnames(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_dns_hostnames", self.extract_ref()))
@@ -624,6 +598,12 @@ impl VpcRef {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]

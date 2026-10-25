@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEksNodeGroupData {
+struct DataEksNodeGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,13 +23,15 @@ struct DataEksNodeGroupData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     node_group_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataEksNodeGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEksNodeGroupData>,
+    data: std::cell::RefCell<DataEksNodeGroupData_>,
 }
 
 #[derive(Clone)]
@@ -75,6 +79,13 @@ impl DataEksNodeGroup {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -127,6 +138,11 @@ impl DataEksNodeGroup {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `launch_template` after provisioning.\n"]
+    pub fn launch_template(&self) -> terrars::ListRef<DataEksNodeGroup_LaunchTemplateRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `node_group_name` after provisioning.\n"]
     pub fn node_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_group_name", self.extract_ref()))
@@ -137,23 +153,29 @@ impl DataEksNodeGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_role_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `release_version` after provisioning.\n"]
     pub fn release_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.release_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `remote_access` after provisioning.\n"]
-    pub fn remote_access(&self) -> terrars::ListRef<DataEksNodeGroupRemoteAccessElRef> {
+    pub fn remote_access(&self) -> terrars::ListRef<DataEksNodeGroup_RemoteAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.remote_access", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<DataEksNodeGroupResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<DataEksNodeGroup_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scaling_config` after provisioning.\n"]
-    pub fn scaling_config(&self) -> terrars::ListRef<DataEksNodeGroupScalingConfigElRef> {
+    pub fn scaling_config(&self) -> terrars::ListRef<DataEksNodeGroup_ScalingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scaling_config", self.extract_ref()))
     }
 
@@ -173,13 +195,23 @@ impl DataEksNodeGroup {
     }
 
     #[doc = "Get a reference to the value of field `taints` after provisioning.\n"]
-    pub fn taints(&self) -> terrars::ListRef<DataEksNodeGroupTaintsElRef> {
+    pub fn taints(&self) -> terrars::ListRef<DataEksNodeGroup_TaintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.taints", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `update_config` after provisioning.\n"]
+    pub fn update_config(&self) -> terrars::ListRef<DataEksNodeGroup_UpdateConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.update_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
     pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `warm_pool_config` after provisioning.\n"]
+    pub fn warm_pool_config(&self) -> terrars::ListRef<DataEksNodeGroup_WarmPoolConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.warm_pool_config", self.extract_ref()))
     }
 }
 
@@ -227,7 +259,7 @@ impl BuildDataEksNodeGroup {
         let out = DataEksNodeGroup(std::rc::Rc::new(DataEksNodeGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEksNodeGroupData {
+            data: std::cell::RefCell::new(DataEksNodeGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -235,6 +267,7 @@ impl BuildDataEksNodeGroup {
                 cluster_name: self.cluster_name,
                 id: core::default::Default::default(),
                 node_group_name: self.node_group_name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -306,6 +339,11 @@ impl DataEksNodeGroupRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.labels", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `launch_template` after provisioning.\n"]
+    pub fn launch_template(&self) -> terrars::ListRef<DataEksNodeGroup_LaunchTemplateRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `node_group_name` after provisioning.\n"]
     pub fn node_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_group_name", self.extract_ref()))
@@ -316,23 +354,29 @@ impl DataEksNodeGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.node_role_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `release_version` after provisioning.\n"]
     pub fn release_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.release_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `remote_access` after provisioning.\n"]
-    pub fn remote_access(&self) -> terrars::ListRef<DataEksNodeGroupRemoteAccessElRef> {
+    pub fn remote_access(&self) -> terrars::ListRef<DataEksNodeGroup_RemoteAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.remote_access", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
-    pub fn resources(&self) -> terrars::ListRef<DataEksNodeGroupResourcesElRef> {
+    pub fn resources(&self) -> terrars::ListRef<DataEksNodeGroup_ResourcesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scaling_config` after provisioning.\n"]
-    pub fn scaling_config(&self) -> terrars::ListRef<DataEksNodeGroupScalingConfigElRef> {
+    pub fn scaling_config(&self) -> terrars::ListRef<DataEksNodeGroup_ScalingConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scaling_config", self.extract_ref()))
     }
 
@@ -352,25 +396,126 @@ impl DataEksNodeGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `taints` after provisioning.\n"]
-    pub fn taints(&self) -> terrars::ListRef<DataEksNodeGroupTaintsElRef> {
+    pub fn taints(&self) -> terrars::ListRef<DataEksNodeGroup_TaintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.taints", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `update_config` after provisioning.\n"]
+    pub fn update_config(&self) -> terrars::ListRef<DataEksNodeGroup_UpdateConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.update_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
     pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `warm_pool_config` after provisioning.\n"]
+    pub fn warm_pool_config(&self) -> terrars::ListRef<DataEksNodeGroup_WarmPoolConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.warm_pool_config", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataEksNodeGroupRemoteAccessEl {
+pub struct DataEksNodeGroup_LaunchTemplate {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    version: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataEksNodeGroup_LaunchTemplate {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `version`.\n"]
+    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.version = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataEksNodeGroup_LaunchTemplate {
+    type O = terrars::BlockAssignable<DataEksNodeGroup_LaunchTemplate>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataEksNodeGroup_LaunchTemplate {}
+
+impl BuildDataEksNodeGroup_LaunchTemplate {
+    pub fn build(self) -> DataEksNodeGroup_LaunchTemplate {
+        DataEksNodeGroup_LaunchTemplate {
+            id: core::default::Default::default(),
+            name: core::default::Default::default(),
+            version: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataEksNodeGroup_LaunchTemplateRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataEksNodeGroup_LaunchTemplateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroup_LaunchTemplateRef {
+        DataEksNodeGroup_LaunchTemplateRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataEksNodeGroup_LaunchTemplateRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
+    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataEksNodeGroup_RemoteAccess {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ec2_ssh_key: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataEksNodeGroupRemoteAccessEl {
+impl DataEksNodeGroup_RemoteAccess {
     #[doc = "Set the field `ec2_ssh_key`.\n"]
     pub fn set_ec2_ssh_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ec2_ssh_key = std::option::Option::Some(v.into());
@@ -387,8 +532,8 @@ impl DataEksNodeGroupRemoteAccessEl {
     }
 }
 
-impl terrars::ToListMappable for DataEksNodeGroupRemoteAccessEl {
-    type O = terrars::BlockAssignable<DataEksNodeGroupRemoteAccessEl>;
+impl terrars::ToListMappable for DataEksNodeGroup_RemoteAccess {
+    type O = terrars::BlockAssignable<DataEksNodeGroup_RemoteAccess>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -399,32 +544,34 @@ impl terrars::ToListMappable for DataEksNodeGroupRemoteAccessEl {
     }
 }
 
-pub struct BuildDataEksNodeGroupRemoteAccessEl {}
+pub struct BuildDataEksNodeGroup_RemoteAccess {}
 
-impl BuildDataEksNodeGroupRemoteAccessEl {
-    pub fn build(self) -> DataEksNodeGroupRemoteAccessEl {
-        DataEksNodeGroupRemoteAccessEl {
+impl BuildDataEksNodeGroup_RemoteAccess {
+    pub fn build(self) -> DataEksNodeGroup_RemoteAccess {
+        DataEksNodeGroup_RemoteAccess {
             ec2_ssh_key: core::default::Default::default(),
             source_security_group_ids: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEksNodeGroupRemoteAccessElRef {
+#[allow(dead_code)]
+pub struct DataEksNodeGroup_RemoteAccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEksNodeGroupRemoteAccessElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroupRemoteAccessElRef {
-        DataEksNodeGroupRemoteAccessElRef {
+impl terrars::Ref for DataEksNodeGroup_RemoteAccessRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroup_RemoteAccessRef {
+        DataEksNodeGroup_RemoteAccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEksNodeGroupRemoteAccessElRef {
+impl DataEksNodeGroup_RemoteAccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -441,12 +588,12 @@ impl DataEksNodeGroupRemoteAccessElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEksNodeGroupResourcesElAutoscalingGroupsEl {
+pub struct DataEksNodeGroup_Resources_AutoscalingGroups {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEksNodeGroupResourcesElAutoscalingGroupsEl {
+impl DataEksNodeGroup_Resources_AutoscalingGroups {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -454,8 +601,8 @@ impl DataEksNodeGroupResourcesElAutoscalingGroupsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEksNodeGroupResourcesElAutoscalingGroupsEl {
-    type O = terrars::BlockAssignable<DataEksNodeGroupResourcesElAutoscalingGroupsEl>;
+impl terrars::ToListMappable for DataEksNodeGroup_Resources_AutoscalingGroups {
+    type O = terrars::BlockAssignable<DataEksNodeGroup_Resources_AutoscalingGroups>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -466,32 +613,34 @@ impl terrars::ToListMappable for DataEksNodeGroupResourcesElAutoscalingGroupsEl 
     }
 }
 
-pub struct BuildDataEksNodeGroupResourcesElAutoscalingGroupsEl {}
+pub struct BuildDataEksNodeGroup_Resources_AutoscalingGroups {}
 
-impl BuildDataEksNodeGroupResourcesElAutoscalingGroupsEl {
-    pub fn build(self) -> DataEksNodeGroupResourcesElAutoscalingGroupsEl {
-        DataEksNodeGroupResourcesElAutoscalingGroupsEl { name: core::default::Default::default() }
+impl BuildDataEksNodeGroup_Resources_AutoscalingGroups {
+    pub fn build(self) -> DataEksNodeGroup_Resources_AutoscalingGroups {
+        DataEksNodeGroup_Resources_AutoscalingGroups { name: core::default::Default::default() }
     }
 }
 
-pub struct DataEksNodeGroupResourcesElAutoscalingGroupsElRef {
+#[allow(dead_code)]
+pub struct DataEksNodeGroup_Resources_AutoscalingGroupsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEksNodeGroupResourcesElAutoscalingGroupsElRef {
+impl terrars::Ref for DataEksNodeGroup_Resources_AutoscalingGroupsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEksNodeGroupResourcesElAutoscalingGroupsElRef {
-        DataEksNodeGroupResourcesElAutoscalingGroupsElRef {
+    ) -> DataEksNodeGroup_Resources_AutoscalingGroupsRef {
+        DataEksNodeGroup_Resources_AutoscalingGroupsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEksNodeGroupResourcesElAutoscalingGroupsElRef {
+impl DataEksNodeGroup_Resources_AutoscalingGroupsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -503,18 +652,18 @@ impl DataEksNodeGroupResourcesElAutoscalingGroupsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEksNodeGroupResourcesEl {
+pub struct DataEksNodeGroup_Resources {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    autoscaling_groups: std::option::Option<terrars::ListField<DataEksNodeGroupResourcesElAutoscalingGroupsEl>>,
+    autoscaling_groups: std::option::Option<terrars::ListField<DataEksNodeGroup_Resources_AutoscalingGroups>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     remote_access_security_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEksNodeGroupResourcesEl {
+impl DataEksNodeGroup_Resources {
     #[doc = "Set the field `autoscaling_groups`.\n"]
     pub fn set_autoscaling_groups(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataEksNodeGroupResourcesElAutoscalingGroupsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataEksNodeGroup_Resources_AutoscalingGroups>>,
     ) -> Self {
         self.autoscaling_groups = std::option::Option::Some(v.into());
         self
@@ -530,8 +679,8 @@ impl DataEksNodeGroupResourcesEl {
     }
 }
 
-impl terrars::ToListMappable for DataEksNodeGroupResourcesEl {
-    type O = terrars::BlockAssignable<DataEksNodeGroupResourcesEl>;
+impl terrars::ToListMappable for DataEksNodeGroup_Resources {
+    type O = terrars::BlockAssignable<DataEksNodeGroup_Resources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -542,38 +691,40 @@ impl terrars::ToListMappable for DataEksNodeGroupResourcesEl {
     }
 }
 
-pub struct BuildDataEksNodeGroupResourcesEl {}
+pub struct BuildDataEksNodeGroup_Resources {}
 
-impl BuildDataEksNodeGroupResourcesEl {
-    pub fn build(self) -> DataEksNodeGroupResourcesEl {
-        DataEksNodeGroupResourcesEl {
+impl BuildDataEksNodeGroup_Resources {
+    pub fn build(self) -> DataEksNodeGroup_Resources {
+        DataEksNodeGroup_Resources {
             autoscaling_groups: core::default::Default::default(),
             remote_access_security_group_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEksNodeGroupResourcesElRef {
+#[allow(dead_code)]
+pub struct DataEksNodeGroup_ResourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEksNodeGroupResourcesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroupResourcesElRef {
-        DataEksNodeGroupResourcesElRef {
+impl terrars::Ref for DataEksNodeGroup_ResourcesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroup_ResourcesRef {
+        DataEksNodeGroup_ResourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEksNodeGroupResourcesElRef {
+impl DataEksNodeGroup_ResourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `autoscaling_groups` after provisioning.\n"]
-    pub fn autoscaling_groups(&self) -> terrars::ListRef<DataEksNodeGroupResourcesElAutoscalingGroupsElRef> {
+    pub fn autoscaling_groups(&self) -> terrars::ListRef<DataEksNodeGroup_Resources_AutoscalingGroupsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.autoscaling_groups", self.base))
     }
 
@@ -584,7 +735,7 @@ impl DataEksNodeGroupResourcesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEksNodeGroupScalingConfigEl {
+pub struct DataEksNodeGroup_ScalingConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     desired_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -593,7 +744,7 @@ pub struct DataEksNodeGroupScalingConfigEl {
     min_size: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataEksNodeGroupScalingConfigEl {
+impl DataEksNodeGroup_ScalingConfig {
     #[doc = "Set the field `desired_size`.\n"]
     pub fn set_desired_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.desired_size = std::option::Option::Some(v.into());
@@ -613,8 +764,8 @@ impl DataEksNodeGroupScalingConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataEksNodeGroupScalingConfigEl {
-    type O = terrars::BlockAssignable<DataEksNodeGroupScalingConfigEl>;
+impl terrars::ToListMappable for DataEksNodeGroup_ScalingConfig {
+    type O = terrars::BlockAssignable<DataEksNodeGroup_ScalingConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -625,11 +776,11 @@ impl terrars::ToListMappable for DataEksNodeGroupScalingConfigEl {
     }
 }
 
-pub struct BuildDataEksNodeGroupScalingConfigEl {}
+pub struct BuildDataEksNodeGroup_ScalingConfig {}
 
-impl BuildDataEksNodeGroupScalingConfigEl {
-    pub fn build(self) -> DataEksNodeGroupScalingConfigEl {
-        DataEksNodeGroupScalingConfigEl {
+impl BuildDataEksNodeGroup_ScalingConfig {
+    pub fn build(self) -> DataEksNodeGroup_ScalingConfig {
+        DataEksNodeGroup_ScalingConfig {
             desired_size: core::default::Default::default(),
             max_size: core::default::Default::default(),
             min_size: core::default::Default::default(),
@@ -637,21 +788,23 @@ impl BuildDataEksNodeGroupScalingConfigEl {
     }
 }
 
-pub struct DataEksNodeGroupScalingConfigElRef {
+#[allow(dead_code)]
+pub struct DataEksNodeGroup_ScalingConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEksNodeGroupScalingConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroupScalingConfigElRef {
-        DataEksNodeGroupScalingConfigElRef {
+impl terrars::Ref for DataEksNodeGroup_ScalingConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroup_ScalingConfigRef {
+        DataEksNodeGroup_ScalingConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEksNodeGroupScalingConfigElRef {
+impl DataEksNodeGroup_ScalingConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -673,7 +826,7 @@ impl DataEksNodeGroupScalingConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEksNodeGroupTaintsEl {
+pub struct DataEksNodeGroup_Taints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     effect: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -682,7 +835,7 @@ pub struct DataEksNodeGroupTaintsEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEksNodeGroupTaintsEl {
+impl DataEksNodeGroup_Taints {
     #[doc = "Set the field `effect`.\n"]
     pub fn set_effect(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.effect = std::option::Option::Some(v.into());
@@ -702,8 +855,8 @@ impl DataEksNodeGroupTaintsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEksNodeGroupTaintsEl {
-    type O = terrars::BlockAssignable<DataEksNodeGroupTaintsEl>;
+impl terrars::ToListMappable for DataEksNodeGroup_Taints {
+    type O = terrars::BlockAssignable<DataEksNodeGroup_Taints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -714,11 +867,11 @@ impl terrars::ToListMappable for DataEksNodeGroupTaintsEl {
     }
 }
 
-pub struct BuildDataEksNodeGroupTaintsEl {}
+pub struct BuildDataEksNodeGroup_Taints {}
 
-impl BuildDataEksNodeGroupTaintsEl {
-    pub fn build(self) -> DataEksNodeGroupTaintsEl {
-        DataEksNodeGroupTaintsEl {
+impl BuildDataEksNodeGroup_Taints {
+    pub fn build(self) -> DataEksNodeGroup_Taints {
+        DataEksNodeGroup_Taints {
             effect: core::default::Default::default(),
             key: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -726,21 +879,23 @@ impl BuildDataEksNodeGroupTaintsEl {
     }
 }
 
-pub struct DataEksNodeGroupTaintsElRef {
+#[allow(dead_code)]
+pub struct DataEksNodeGroup_TaintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEksNodeGroupTaintsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroupTaintsElRef {
-        DataEksNodeGroupTaintsElRef {
+impl terrars::Ref for DataEksNodeGroup_TaintsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroup_TaintsRef {
+        DataEksNodeGroup_TaintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEksNodeGroupTaintsElRef {
+impl DataEksNodeGroup_TaintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -758,5 +913,201 @@ impl DataEksNodeGroupTaintsElRef {
     #[doc = "Get a reference to the value of field `value` after provisioning.\n"]
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataEksNodeGroup_UpdateConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_unavailable: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_unavailable_percentage: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataEksNodeGroup_UpdateConfig {
+    #[doc = "Set the field `max_unavailable`.\n"]
+    pub fn set_max_unavailable(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_unavailable = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `max_unavailable_percentage`.\n"]
+    pub fn set_max_unavailable_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_unavailable_percentage = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update_strategy`.\n"]
+    pub fn set_update_strategy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update_strategy = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataEksNodeGroup_UpdateConfig {
+    type O = terrars::BlockAssignable<DataEksNodeGroup_UpdateConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataEksNodeGroup_UpdateConfig {}
+
+impl BuildDataEksNodeGroup_UpdateConfig {
+    pub fn build(self) -> DataEksNodeGroup_UpdateConfig {
+        DataEksNodeGroup_UpdateConfig {
+            max_unavailable: core::default::Default::default(),
+            max_unavailable_percentage: core::default::Default::default(),
+            update_strategy: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataEksNodeGroup_UpdateConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataEksNodeGroup_UpdateConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroup_UpdateConfigRef {
+        DataEksNodeGroup_UpdateConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataEksNodeGroup_UpdateConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_unavailable` after provisioning.\n"]
+    pub fn max_unavailable(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_unavailable", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_unavailable_percentage` after provisioning.\n"]
+    pub fn max_unavailable_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_unavailable_percentage", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update_strategy` after provisioning.\n"]
+    pub fn update_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update_strategy", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataEksNodeGroup_WarmPoolConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_group_prepared_capacity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pool_state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reuse_on_scale_in: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataEksNodeGroup_WarmPoolConfig {
+    #[doc = "Set the field `max_group_prepared_capacity`.\n"]
+    pub fn set_max_group_prepared_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_group_prepared_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min_size`.\n"]
+    pub fn set_min_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_size = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `pool_state`.\n"]
+    pub fn set_pool_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.pool_state = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `reuse_on_scale_in`.\n"]
+    pub fn set_reuse_on_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.reuse_on_scale_in = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataEksNodeGroup_WarmPoolConfig {
+    type O = terrars::BlockAssignable<DataEksNodeGroup_WarmPoolConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataEksNodeGroup_WarmPoolConfig {}
+
+impl BuildDataEksNodeGroup_WarmPoolConfig {
+    pub fn build(self) -> DataEksNodeGroup_WarmPoolConfig {
+        DataEksNodeGroup_WarmPoolConfig {
+            max_group_prepared_capacity: core::default::Default::default(),
+            min_size: core::default::Default::default(),
+            pool_state: core::default::Default::default(),
+            reuse_on_scale_in: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataEksNodeGroup_WarmPoolConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataEksNodeGroup_WarmPoolConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEksNodeGroup_WarmPoolConfigRef {
+        DataEksNodeGroup_WarmPoolConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataEksNodeGroup_WarmPoolConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_group_prepared_capacity` after provisioning.\n"]
+    pub fn max_group_prepared_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_group_prepared_capacity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min_size` after provisioning.\n"]
+    pub fn min_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_size", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `pool_state` after provisioning.\n"]
+    pub fn pool_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool_state", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `reuse_on_scale_in` after provisioning.\n"]
+    pub fn reuse_on_scale_in(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.reuse_on_scale_in", self.base))
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NeptuneClusterData {
+struct NeptuneClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -55,13 +57,19 @@ struct NeptuneClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     neptune_cluster_parameter_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    neptune_instance_parameter_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     neptune_subnet_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_backup_window: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_maintenance_window: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replication_source_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -71,6 +79,8 @@ struct NeptuneClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_encrypted: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -79,16 +89,16 @@ struct NeptuneClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     serverless_v2_scaling_configuration: std
     ::option
-    ::Option<std::vec::Vec<NeptuneClusterServerlessV2ScalingConfigurationEl>>,
+    ::Option<std::vec::Vec<NeptuneCluster_ServerlessV2ScalingConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NeptuneClusterTimeoutsEl>,
+    timeouts: std::option::Option<NeptuneCluster_Timeouts>,
     dynamic: NeptuneClusterDynamic,
 }
 
 struct NeptuneCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NeptuneClusterData>,
+    data: std::cell::RefCell<NeptuneClusterData_>,
 }
 
 #[derive(Clone)]
@@ -317,12 +327,27 @@ impl NeptuneCluster {
         self
     }
 
+    #[doc = "Set the field `neptune_instance_parameter_group_name`.\n"]
+    pub fn set_neptune_instance_parameter_group_name(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().neptune_instance_parameter_group_name = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `neptune_subnet_group_name`.\n"]
     pub fn set_neptune_subnet_group_name(
         self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().neptune_subnet_group_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `network_type`.\n"]
+    pub fn set_network_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().network_type = std::option::Option::Some(v.into());
         self
     }
 
@@ -350,6 +375,13 @@ impl NeptuneCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `replication_source_identifier`.\n"]
     pub fn set_replication_source_identifier(
         self,
@@ -374,6 +406,12 @@ impl NeptuneCluster {
     #[doc = "Set the field `storage_encrypted`.\n"]
     pub fn set_storage_encrypted(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().storage_encrypted = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `storage_type`.\n"]
+    pub fn set_storage_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().storage_type = std::option::Option::Some(v.into());
         self
     }
 
@@ -407,7 +445,7 @@ impl NeptuneCluster {
     #[doc = "Set the field `serverless_v2_scaling_configuration`.\n"]
     pub fn set_serverless_v2_scaling_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NeptuneClusterServerlessV2ScalingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NeptuneCluster_ServerlessV2ScalingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -421,7 +459,7 @@ impl NeptuneCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NeptuneClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NeptuneCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -547,9 +585,22 @@ impl NeptuneCluster {
         )
     }
 
+    #[doc = "Get a reference to the value of field `neptune_instance_parameter_group_name` after provisioning.\n"]
+    pub fn neptune_instance_parameter_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.neptune_instance_parameter_group_name", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `neptune_subnet_group_name` after provisioning.\n"]
     pub fn neptune_subnet_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.neptune_subnet_group_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
@@ -570,6 +621,12 @@ impl NeptuneCluster {
     #[doc = "Get a reference to the value of field `reader_endpoint` after provisioning.\n"]
     pub fn reader_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reader_endpoint", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_source_identifier` after provisioning.\n"]
@@ -595,6 +652,11 @@ impl NeptuneCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_encrypted", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
+    pub fn storage_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -613,7 +675,7 @@ impl NeptuneCluster {
     #[doc = "Get a reference to the value of field `serverless_v2_scaling_configuration` after provisioning.\n"]
     pub fn serverless_v2_scaling_configuration(
         &self,
-    ) -> terrars::ListRef<NeptuneClusterServerlessV2ScalingConfigurationElRef> {
+    ) -> terrars::ListRef<NeptuneCluster_ServerlessV2ScalingConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.serverless_v2_scaling_configuration", self.extract_ref()),
@@ -621,8 +683,8 @@ impl NeptuneCluster {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NeptuneClusterTimeoutsElRef {
-        NeptuneClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NeptuneCluster_TimeoutsRef {
+        NeptuneCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -666,7 +728,7 @@ impl BuildNeptuneCluster {
         let out = NeptuneCluster(std::rc::Rc::new(NeptuneCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NeptuneClusterData {
+            data: std::cell::RefCell::new(NeptuneClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -690,14 +752,18 @@ impl BuildNeptuneCluster {
                 id: core::default::Default::default(),
                 kms_key_arn: core::default::Default::default(),
                 neptune_cluster_parameter_group_name: core::default::Default::default(),
+                neptune_instance_parameter_group_name: core::default::Default::default(),
                 neptune_subnet_group_name: core::default::Default::default(),
+                network_type: core::default::Default::default(),
                 port: core::default::Default::default(),
                 preferred_backup_window: core::default::Default::default(),
                 preferred_maintenance_window: core::default::Default::default(),
+                region: core::default::Default::default(),
                 replication_source_identifier: core::default::Default::default(),
                 skip_final_snapshot: core::default::Default::default(),
                 snapshot_identifier: core::default::Default::default(),
                 storage_encrypted: core::default::Default::default(),
+                storage_type: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 vpc_security_group_ids: core::default::Default::default(),
@@ -855,9 +921,22 @@ impl NeptuneClusterRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `neptune_instance_parameter_group_name` after provisioning.\n"]
+    pub fn neptune_instance_parameter_group_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.neptune_instance_parameter_group_name", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `neptune_subnet_group_name` after provisioning.\n"]
     pub fn neptune_subnet_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.neptune_subnet_group_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
@@ -878,6 +957,12 @@ impl NeptuneClusterRef {
     #[doc = "Get a reference to the value of field `reader_endpoint` after provisioning.\n"]
     pub fn reader_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reader_endpoint", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_source_identifier` after provisioning.\n"]
@@ -903,6 +988,11 @@ impl NeptuneClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_encrypted", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
+    pub fn storage_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -921,7 +1011,7 @@ impl NeptuneClusterRef {
     #[doc = "Get a reference to the value of field `serverless_v2_scaling_configuration` after provisioning.\n"]
     pub fn serverless_v2_scaling_configuration(
         &self,
-    ) -> terrars::ListRef<NeptuneClusterServerlessV2ScalingConfigurationElRef> {
+    ) -> terrars::ListRef<NeptuneCluster_ServerlessV2ScalingConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.serverless_v2_scaling_configuration", self.extract_ref()),
@@ -929,20 +1019,27 @@ impl NeptuneClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NeptuneClusterTimeoutsElRef {
-        NeptuneClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> NeptuneCluster_TimeoutsRef {
+        NeptuneCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct NeptuneClusterDynamic {
+    serverless_v2_scaling_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<NeptuneCluster_ServerlessV2ScalingConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct NeptuneClusterServerlessV2ScalingConfigurationEl {
+pub struct NeptuneCluster_ServerlessV2ScalingConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_capacity: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_capacity: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl NeptuneClusterServerlessV2ScalingConfigurationEl {
+impl NeptuneCluster_ServerlessV2ScalingConfiguration {
     #[doc = "Set the field `max_capacity`.\n"]
     pub fn set_max_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_capacity = std::option::Option::Some(v.into());
@@ -956,8 +1053,8 @@ impl NeptuneClusterServerlessV2ScalingConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for NeptuneClusterServerlessV2ScalingConfigurationEl {
-    type O = terrars::BlockAssignable<NeptuneClusterServerlessV2ScalingConfigurationEl>;
+impl terrars::ToListMappable for NeptuneCluster_ServerlessV2ScalingConfiguration {
+    type O = terrars::BlockAssignable<NeptuneCluster_ServerlessV2ScalingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -968,35 +1065,37 @@ impl terrars::ToListMappable for NeptuneClusterServerlessV2ScalingConfigurationE
     }
 }
 
-pub struct BuildNeptuneClusterServerlessV2ScalingConfigurationEl {}
+pub struct BuildNeptuneCluster_ServerlessV2ScalingConfiguration {}
 
-impl BuildNeptuneClusterServerlessV2ScalingConfigurationEl {
-    pub fn build(self) -> NeptuneClusterServerlessV2ScalingConfigurationEl {
-        NeptuneClusterServerlessV2ScalingConfigurationEl {
+impl BuildNeptuneCluster_ServerlessV2ScalingConfiguration {
+    pub fn build(self) -> NeptuneCluster_ServerlessV2ScalingConfiguration {
+        NeptuneCluster_ServerlessV2ScalingConfiguration {
             max_capacity: core::default::Default::default(),
             min_capacity: core::default::Default::default(),
         }
     }
 }
 
-pub struct NeptuneClusterServerlessV2ScalingConfigurationElRef {
+#[allow(dead_code)]
+pub struct NeptuneCluster_ServerlessV2ScalingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NeptuneClusterServerlessV2ScalingConfigurationElRef {
+impl terrars::Ref for NeptuneCluster_ServerlessV2ScalingConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NeptuneClusterServerlessV2ScalingConfigurationElRef {
-        NeptuneClusterServerlessV2ScalingConfigurationElRef {
+    ) -> NeptuneCluster_ServerlessV2ScalingConfigurationRef {
+        NeptuneCluster_ServerlessV2ScalingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NeptuneClusterServerlessV2ScalingConfigurationElRef {
+impl NeptuneCluster_ServerlessV2ScalingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1013,7 +1112,7 @@ impl NeptuneClusterServerlessV2ScalingConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct NeptuneClusterTimeoutsEl {
+pub struct NeptuneCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1022,7 +1121,7 @@ pub struct NeptuneClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NeptuneClusterTimeoutsEl {
+impl NeptuneCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1042,8 +1141,8 @@ impl NeptuneClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NeptuneClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<NeptuneClusterTimeoutsEl>;
+impl terrars::ToListMappable for NeptuneCluster_Timeouts {
+    type O = terrars::BlockAssignable<NeptuneCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1054,11 +1153,11 @@ impl terrars::ToListMappable for NeptuneClusterTimeoutsEl {
     }
 }
 
-pub struct BuildNeptuneClusterTimeoutsEl {}
+pub struct BuildNeptuneCluster_Timeouts {}
 
-impl BuildNeptuneClusterTimeoutsEl {
-    pub fn build(self) -> NeptuneClusterTimeoutsEl {
-        NeptuneClusterTimeoutsEl {
+impl BuildNeptuneCluster_Timeouts {
+    pub fn build(self) -> NeptuneCluster_Timeouts {
+        NeptuneCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1066,21 +1165,23 @@ impl BuildNeptuneClusterTimeoutsEl {
     }
 }
 
-pub struct NeptuneClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NeptuneCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NeptuneClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneClusterTimeoutsElRef {
-        NeptuneClusterTimeoutsElRef {
+impl terrars::Ref for NeptuneCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneCluster_TimeoutsRef {
+        NeptuneCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NeptuneClusterTimeoutsElRef {
+impl NeptuneCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1099,11 +1200,4 @@ impl NeptuneClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NeptuneClusterDynamic {
-    serverless_v2_scaling_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<NeptuneClusterServerlessV2ScalingConfigurationEl>>,
 }

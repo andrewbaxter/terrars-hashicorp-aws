@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SesConfigurationSetData {
+struct SesConfigurationSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,20 +24,22 @@ struct SesConfigurationSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     reputation_metrics_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sending_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delivery_options: std::option::Option<std::vec::Vec<SesConfigurationSetDeliveryOptionsEl>>,
+    delivery_options: std::option::Option<std::vec::Vec<SesConfigurationSet_DeliveryOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tracking_options: std::option::Option<std::vec::Vec<SesConfigurationSetTrackingOptionsEl>>,
+    tracking_options: std::option::Option<std::vec::Vec<SesConfigurationSet_TrackingOptions>>,
     dynamic: SesConfigurationSetDynamic,
 }
 
 struct SesConfigurationSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SesConfigurationSetData>,
+    data: std::cell::RefCell<SesConfigurationSetData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl SesConfigurationSet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `reputation_metrics_enabled`.\n"]
     pub fn set_reputation_metrics_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().reputation_metrics_enabled = std::option::Option::Some(v.into());
@@ -156,7 +167,7 @@ impl SesConfigurationSet {
     #[doc = "Set the field `delivery_options`.\n"]
     pub fn set_delivery_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesConfigurationSetDeliveryOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesConfigurationSet_DeliveryOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -172,7 +183,7 @@ impl SesConfigurationSet {
     #[doc = "Set the field `tracking_options`.\n"]
     pub fn set_tracking_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SesConfigurationSetTrackingOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SesConfigurationSet_TrackingOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,6 +216,12 @@ impl SesConfigurationSet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `reputation_metrics_enabled` after provisioning.\n"]
     pub fn reputation_metrics_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reputation_metrics_enabled", self.extract_ref()))
@@ -216,12 +233,12 @@ impl SesConfigurationSet {
     }
 
     #[doc = "Get a reference to the value of field `delivery_options` after provisioning.\n"]
-    pub fn delivery_options(&self) -> terrars::ListRef<SesConfigurationSetDeliveryOptionsElRef> {
+    pub fn delivery_options(&self) -> terrars::ListRef<SesConfigurationSet_DeliveryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delivery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tracking_options` after provisioning.\n"]
-    pub fn tracking_options(&self) -> terrars::ListRef<SesConfigurationSetTrackingOptionsElRef> {
+    pub fn tracking_options(&self) -> terrars::ListRef<SesConfigurationSet_TrackingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tracking_options", self.extract_ref()))
     }
 }
@@ -268,7 +285,7 @@ impl BuildSesConfigurationSet {
         let out = SesConfigurationSet(std::rc::Rc::new(SesConfigurationSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SesConfigurationSetData {
+            data: std::cell::RefCell::new(SesConfigurationSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -276,6 +293,7 @@ impl BuildSesConfigurationSet {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 reputation_metrics_enabled: core::default::Default::default(),
                 sending_enabled: core::default::Default::default(),
                 delivery_options: core::default::Default::default(),
@@ -331,6 +349,12 @@ impl SesConfigurationSetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `reputation_metrics_enabled` after provisioning.\n"]
     pub fn reputation_metrics_enabled(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reputation_metrics_enabled", self.extract_ref()))
@@ -342,23 +366,29 @@ impl SesConfigurationSetRef {
     }
 
     #[doc = "Get a reference to the value of field `delivery_options` after provisioning.\n"]
-    pub fn delivery_options(&self) -> terrars::ListRef<SesConfigurationSetDeliveryOptionsElRef> {
+    pub fn delivery_options(&self) -> terrars::ListRef<SesConfigurationSet_DeliveryOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.delivery_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tracking_options` after provisioning.\n"]
-    pub fn tracking_options(&self) -> terrars::ListRef<SesConfigurationSetTrackingOptionsElRef> {
+    pub fn tracking_options(&self) -> terrars::ListRef<SesConfigurationSet_TrackingOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tracking_options", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SesConfigurationSetDynamic {
+    delivery_options: std::option::Option<terrars::DynamicBlock<SesConfigurationSet_DeliveryOptions>>,
+    tracking_options: std::option::Option<terrars::DynamicBlock<SesConfigurationSet_TrackingOptions>>,
+}
+
 #[derive(Serialize)]
-pub struct SesConfigurationSetDeliveryOptionsEl {
+pub struct SesConfigurationSet_DeliveryOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tls_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SesConfigurationSetDeliveryOptionsEl {
+impl SesConfigurationSet_DeliveryOptions {
     #[doc = "Set the field `tls_policy`.\n"]
     pub fn set_tls_policy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.tls_policy = std::option::Option::Some(v.into());
@@ -366,8 +396,8 @@ impl SesConfigurationSetDeliveryOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for SesConfigurationSetDeliveryOptionsEl {
-    type O = terrars::BlockAssignable<SesConfigurationSetDeliveryOptionsEl>;
+impl terrars::ToListMappable for SesConfigurationSet_DeliveryOptions {
+    type O = terrars::BlockAssignable<SesConfigurationSet_DeliveryOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -378,29 +408,31 @@ impl terrars::ToListMappable for SesConfigurationSetDeliveryOptionsEl {
     }
 }
 
-pub struct BuildSesConfigurationSetDeliveryOptionsEl {}
+pub struct BuildSesConfigurationSet_DeliveryOptions {}
 
-impl BuildSesConfigurationSetDeliveryOptionsEl {
-    pub fn build(self) -> SesConfigurationSetDeliveryOptionsEl {
-        SesConfigurationSetDeliveryOptionsEl { tls_policy: core::default::Default::default() }
+impl BuildSesConfigurationSet_DeliveryOptions {
+    pub fn build(self) -> SesConfigurationSet_DeliveryOptions {
+        SesConfigurationSet_DeliveryOptions { tls_policy: core::default::Default::default() }
     }
 }
 
-pub struct SesConfigurationSetDeliveryOptionsElRef {
+#[allow(dead_code)]
+pub struct SesConfigurationSet_DeliveryOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesConfigurationSetDeliveryOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesConfigurationSetDeliveryOptionsElRef {
-        SesConfigurationSetDeliveryOptionsElRef {
+impl terrars::Ref for SesConfigurationSet_DeliveryOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesConfigurationSet_DeliveryOptionsRef {
+        SesConfigurationSet_DeliveryOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesConfigurationSetDeliveryOptionsElRef {
+impl SesConfigurationSet_DeliveryOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -412,12 +444,12 @@ impl SesConfigurationSetDeliveryOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct SesConfigurationSetTrackingOptionsEl {
+pub struct SesConfigurationSet_TrackingOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     custom_redirect_domain: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SesConfigurationSetTrackingOptionsEl {
+impl SesConfigurationSet_TrackingOptions {
     #[doc = "Set the field `custom_redirect_domain`.\n"]
     pub fn set_custom_redirect_domain(
         mut self,
@@ -428,8 +460,8 @@ impl SesConfigurationSetTrackingOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for SesConfigurationSetTrackingOptionsEl {
-    type O = terrars::BlockAssignable<SesConfigurationSetTrackingOptionsEl>;
+impl terrars::ToListMappable for SesConfigurationSet_TrackingOptions {
+    type O = terrars::BlockAssignable<SesConfigurationSet_TrackingOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -440,29 +472,31 @@ impl terrars::ToListMappable for SesConfigurationSetTrackingOptionsEl {
     }
 }
 
-pub struct BuildSesConfigurationSetTrackingOptionsEl {}
+pub struct BuildSesConfigurationSet_TrackingOptions {}
 
-impl BuildSesConfigurationSetTrackingOptionsEl {
-    pub fn build(self) -> SesConfigurationSetTrackingOptionsEl {
-        SesConfigurationSetTrackingOptionsEl { custom_redirect_domain: core::default::Default::default() }
+impl BuildSesConfigurationSet_TrackingOptions {
+    pub fn build(self) -> SesConfigurationSet_TrackingOptions {
+        SesConfigurationSet_TrackingOptions { custom_redirect_domain: core::default::Default::default() }
     }
 }
 
-pub struct SesConfigurationSetTrackingOptionsElRef {
+#[allow(dead_code)]
+pub struct SesConfigurationSet_TrackingOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesConfigurationSetTrackingOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesConfigurationSetTrackingOptionsElRef {
-        SesConfigurationSetTrackingOptionsElRef {
+impl terrars::Ref for SesConfigurationSet_TrackingOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesConfigurationSet_TrackingOptionsRef {
+        SesConfigurationSet_TrackingOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesConfigurationSetTrackingOptionsElRef {
+impl SesConfigurationSet_TrackingOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -471,10 +505,4 @@ impl SesConfigurationSetTrackingOptionsElRef {
     pub fn custom_redirect_domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_redirect_domain", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SesConfigurationSetDynamic {
-    delivery_options: std::option::Option<terrars::DynamicBlock<SesConfigurationSetDeliveryOptionsEl>>,
-    tracking_options: std::option::Option<terrars::DynamicBlock<SesConfigurationSetTrackingOptionsEl>>,
 }

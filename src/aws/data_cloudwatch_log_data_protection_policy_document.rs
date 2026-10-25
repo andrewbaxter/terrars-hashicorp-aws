@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataCloudwatchLogDataProtectionPolicyDocumentData {
+struct DataCloudwatchLogDataProtectionPolicyDocumentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,14 +26,16 @@ struct DataCloudwatchLogDataProtectionPolicyDocumentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    statement: std::option::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocumentStatementEl>>,
+    configuration: std::option::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Configuration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    statement: std::option::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Statement>>,
     dynamic: DataCloudwatchLogDataProtectionPolicyDocumentDynamic,
 }
 
 struct DataCloudwatchLogDataProtectionPolicyDocument_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudwatchLogDataProtectionPolicyDocumentData>,
+    data: std::cell::RefCell<DataCloudwatchLogDataProtectionPolicyDocumentData_>,
 }
 
 #[derive(Clone)]
@@ -96,6 +100,27 @@ impl DataCloudwatchLogDataProtectionPolicyDocument {
         self
     }
 
+    #[doc = "Set the field `configuration`.\n"]
+    pub fn set_configuration(
+        self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Configuration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `statement`.\n"]
     pub fn set_statement(
         self,
@@ -104,7 +129,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocument {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocumentStatementEl>>,
+                    ::Into<terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Statement>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -142,8 +167,13 @@ impl DataCloudwatchLogDataProtectionPolicyDocument {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `statement` after provisioning.\n"]
-    pub fn statement(&self) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocumentStatementElRef> {
+    pub fn statement(&self) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_StatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.statement", self.extract_ref()))
     }
 }
@@ -192,7 +222,7 @@ impl BuildDataCloudwatchLogDataProtectionPolicyDocument {
                 std::rc::Rc::new(DataCloudwatchLogDataProtectionPolicyDocument_ {
                     shared: stack.shared.clone(),
                     tf_id: self.tf_id,
-                    data: std::cell::RefCell::new(DataCloudwatchLogDataProtectionPolicyDocumentData {
+                    data: std::cell::RefCell::new(DataCloudwatchLogDataProtectionPolicyDocumentData_ {
                         depends_on: core::default::Default::default(),
                         provider: std::option::Option::None,
                         lifecycle: core::default::Default::default(),
@@ -201,6 +231,7 @@ impl BuildDataCloudwatchLogDataProtectionPolicyDocument {
                         id: core::default::Default::default(),
                         name: self.name,
                         version: core::default::Default::default(),
+                        configuration: core::default::Default::default(),
                         statement: core::default::Default::default(),
                         dynamic: core::default::Default::default(),
                     }),
@@ -259,27 +290,211 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `statement` after provisioning.\n"]
-    pub fn statement(&self) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocumentStatementElRef> {
+    pub fn statement(&self) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_StatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.statement", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataCloudwatchLogDataProtectionPolicyDocumentDynamic {
+    configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocument_Configuration>>,
+    statement: std::option::Option<terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocument_Statement>>,
+}
+
 #[derive(Serialize)]
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl {
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier {
+    name: terrars::PrimField<std::string::String>,
+    regex: terrars::PrimField<std::string::String>,
+}
+
+impl DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier { }
+
+impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier {
+    type O =
+        terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub regex: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier {
+    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier {
+        DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier {
+            name: self.name,
+            regex: self.regex,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifierRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifierRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifierRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifierRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifierRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `regex` after provisioning.\n"]
+    pub fn regex(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.regex", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataCloudwatchLogDataProtectionPolicyDocument_ConfigurationDynamic {
+    custom_data_identifier: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Configuration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_data_identifier: std
+    ::option
+    ::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier>>,
+    dynamic: DataCloudwatchLogDataProtectionPolicyDocument_ConfigurationDynamic,
+}
+
+impl DataCloudwatchLogDataProtectionPolicyDocument_Configuration {
+    #[doc = "Set the field `custom_data_identifier`.\n"]
+    pub fn set_custom_data_identifier(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifier,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.custom_data_identifier = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.custom_data_identifier = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Configuration {
+    type O = terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Configuration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Configuration {}
+
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Configuration {
+    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocument_Configuration {
+        DataCloudwatchLogDataProtectionPolicyDocument_Configuration {
+            custom_data_identifier: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_ConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocument_ConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_ConfigurationRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_ConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataCloudwatchLogDataProtectionPolicyDocument_ConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `custom_data_identifier` after provisioning.\n"]
+    pub fn custom_data_identifier(
+        &self,
+    ) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_Configuration_CustomDataIdentifierRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.custom_data_identifier", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs {
     log_group: terrars::PrimField<std::string::String>,
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl {
-
-}
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs { }
 
 impl terrars
-::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl {
+::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs {
     type O =
         terrars
         ::BlockAssignable<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl,
+            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -291,40 +506,42 @@ impl terrars
     }
 }
 
-pub struct BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl {
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs {
     #[doc = ""]
     pub log_group: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl {
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs {
     pub fn build(
         self,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs {
             log_group: self.log_group,
         }
     }
 }
 
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsElRef {
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsElRef {
+::Ref for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsElRef {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsElRef {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogsRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsElRef {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -336,18 +553,18 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
 }
 
 #[derive(Serialize)]
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl {
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose {
     delivery_stream: terrars::PrimField<std::string::String>,
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl { }
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose { }
 
 impl terrars
-::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl {
+::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose {
     type O =
         terrars
         ::BlockAssignable<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl,
+            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -359,40 +576,42 @@ impl terrars
     }
 }
 
-pub struct BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl {
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose {
     #[doc = ""]
     pub delivery_stream: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl {
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose {
     pub fn build(
         self,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose {
             delivery_stream: self.delivery_stream,
         }
     }
 }
 
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseElRef {
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_FirehoseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseElRef {
+::Ref for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_FirehoseRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseElRef {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseElRef {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_FirehoseRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_FirehoseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseElRef {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_FirehoseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -404,18 +623,18 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
 }
 
 #[derive(Serialize)]
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El {
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3 {
     bucket: terrars::PrimField<std::string::String>,
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El { }
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3 { }
 
 impl terrars
-::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El {
+::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3 {
     type O =
         terrars
         ::BlockAssignable<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El,
+            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -427,40 +646,42 @@ impl terrars
     }
 }
 
-pub struct BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El {
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3 {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El {
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3 {
     pub fn build(
         self,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3 {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3 {
             bucket: self.bucket,
         }
     }
 }
 
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3ElRef {
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3ElRef {
+::Ref for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3Ref {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3ElRef {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3ElRef {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3Ref {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3ElRef {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -472,13 +693,13 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
 }
 
 #[derive(Serialize, Default)]
-struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElDynamic {
+struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestinationDynamic {
     cloudwatch_logs: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl,
+            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs,
         >,
     >,
     firehose: std
@@ -486,21 +707,19 @@ struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditE
     ::Option<
         terrars
         ::DynamicBlock<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl,
+            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose,
         >,
     >,
     s3: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El,
-        >,
+        ::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl {
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_logs: std
     ::option
@@ -508,7 +727,7 @@ pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAu
         std
         ::vec
         ::Vec<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl,
+            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -517,22 +736,18 @@ pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAu
     ::Option<
         std
         ::vec
-        ::Vec<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl,
-        >,
+        ::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El>,
+        std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3>,
     >,
-    dynamic: DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElDynamic,
+    dynamic: DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestinationDynamic,
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination {
     #[doc = "Set the field `cloudwatch_logs`.\n"]
     pub fn set_cloudwatch_logs(
         mut self,
@@ -544,7 +759,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsEl,
+                            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogs,
                         >,
                     >,
     ) -> Self {
@@ -570,7 +785,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseEl,
+                            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_Firehose,
                         >,
                     >,
     ) -> Self {
@@ -596,7 +811,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3El,
+                            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3,
                         >,
                     >,
     ) -> Self {
@@ -613,11 +828,11 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
 }
 
 impl terrars
-::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl {
+::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination {
     type O =
         terrars
         ::BlockAssignable<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl,
+            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -629,13 +844,13 @@ impl terrars
     }
 }
 
-pub struct BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl {}
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination {}
 
-impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl {
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination {
     pub fn build(
         self,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination {
             cloudwatch_logs: core::default::Default::default(),
             firehose: core::default::Default::default(),
             s3: core::default::Default::default(),
@@ -644,25 +859,26 @@ impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAud
     }
 }
 
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElRef {
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElRef {
+impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElRef {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElRef {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestinationRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElRef {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -672,7 +888,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
         &self,
     ) -> terrars
     ::ListRef<
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElCloudwatchLogsElRef,
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_CloudwatchLogsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
     }
@@ -682,7 +898,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
         &self,
     ) -> terrars
     ::ListRef<
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElFirehoseElRef,
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_FirehoseRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.firehose", self.base))
     }
@@ -691,35 +907,33 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElF
     pub fn s3(
         &self,
     ) -> terrars
-    ::ListRef<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElS3ElRef> {
+    ::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElDynamic {
+struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_AuditDynamic {
     findings_destination: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl,
-        >,
+        ::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl {
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     findings_destination: std
     ::option
     ::Option<
-        std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl>,
+        std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination>,
     >,
-    dynamic: DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElDynamic,
+    dynamic: DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_AuditDynamic,
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit {
     #[doc = "Set the field `findings_destination`.\n"]
     pub fn set_findings_destination(
         mut self,
@@ -731,7 +945,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl 
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationEl,
+                            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestination,
                         >,
                     >,
     ) -> Self {
@@ -747,8 +961,8 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl 
     }
 }
 
-impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl {
-    type O = terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl>;
+impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit {
+    type O = terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -759,35 +973,37 @@ impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentSt
     }
 }
 
-pub struct BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl {}
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit {}
 
-impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl {
-    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl {
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit {
+    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit {
             findings_destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElRef {
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_AuditRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElRef {
+impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_AuditRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElRef {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElRef {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_AuditRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_AuditRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElRef {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_AuditRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -796,23 +1012,21 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElR
     pub fn findings_destination(
         &self,
     ) -> terrars
-    ::ListRef<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElFindingsDestinationElRef> {
+    ::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit_FindingsDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.findings_destination", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl {}
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig {}
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl { }
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig { }
 
 impl terrars
-::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl {
+::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig {
     type O =
         terrars
-        ::BlockAssignable<
-            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl,
-        >;
+        ::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -823,61 +1037,58 @@ impl terrars
     }
 }
 
-pub struct BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl {}
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig {}
 
-impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl {
-    pub fn build(
-        self,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl {}
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig {
+    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig {}
     }
 }
 
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigElRef {
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigElRef {
+impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigElRef {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigElRef {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfigRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigElRef {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElDynamic {
+struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_DeidentifyDynamic {
     mask_config: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl>,
+        terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl {
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mask_config: std
     ::option
-    ::Option<
-        std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl>,
-    >,
-    dynamic: DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElDynamic,
+    ::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig>>,
+    dynamic: DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_DeidentifyDynamic,
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify {
     #[doc = "Set the field `mask_config`.\n"]
     pub fn set_mask_config(
         mut self,
@@ -889,7 +1100,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidenti
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigEl,
+                            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfig,
                         >,
                     >,
     ) -> Self {
@@ -905,9 +1116,8 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidenti
     }
 }
 
-impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl {
-    type O =
-        terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl>;
+impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify {
+    type O = terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -918,35 +1128,37 @@ impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentSt
     }
 }
 
-pub struct BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl {}
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify {}
 
-impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl {
-    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl {
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify {
+    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify {
             mask_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElRef {
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_DeidentifyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElRef {
+impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_DeidentifyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElRef {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElRef {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_DeidentifyRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_DeidentifyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElRef {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_DeidentifyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -954,34 +1166,33 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidenti
     #[doc = "Get a reference to the value of field `mask_config` after provisioning.\n"]
     pub fn mask_config(
         &self,
-    ) -> terrars
-    ::ListRef<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElMaskConfigElRef> {
+    ) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify_MaskConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mask_config", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDynamic {
+struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_OperationDynamic {
     audit: std
     ::option
-    ::Option<terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl>>,
+    ::Option<terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit>>,
     deidentify: std
     ::option
-    ::Option<terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl>>,
+    ::Option<terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify>>,
 }
 
 #[derive(Serialize)]
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    audit: std::option::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl>>,
+    audit: std::option::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deidentify: std
     ::option
-    ::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl>>,
-    dynamic: DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDynamic,
+    ::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify>>,
+    dynamic: DataCloudwatchLogDataProtectionPolicyDocument_Statement_OperationDynamic,
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation {
     #[doc = "Set the field `audit`.\n"]
     pub fn set_audit(
         mut self,
@@ -992,7 +1203,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditEl>,
+                        ::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Audit>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1017,7 +1228,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyEl,
+                            DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_Deidentify,
                         >,
                     >,
     ) -> Self {
@@ -1033,8 +1244,8 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
-    type O = terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl>;
+impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation {
+    type O = terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1045,11 +1256,11 @@ impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentSt
     }
 }
 
-pub struct BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {}
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation {}
 
-impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
-    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation {
+    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation {
             audit: core::default::Default::default(),
             deidentify: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1057,61 +1268,61 @@ impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl {
     }
 }
 
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElRef {
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement_OperationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElRef {
+impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocument_Statement_OperationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElRef {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElRef {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement_OperationRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement_OperationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElRef {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement_OperationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `audit` after provisioning.\n"]
-    pub fn audit(
-        &self,
-    ) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElAuditElRef> {
+    pub fn audit(&self) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_AuditRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audit", self.base))
     }
 
     #[doc = "Get a reference to the value of field `deidentify` after provisioning.\n"]
     pub fn deidentify(
         &self,
-    ) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElDeidentifyElRef> {
+    ) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation_DeidentifyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.deidentify", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElDynamic {
+struct DataCloudwatchLogDataProtectionPolicyDocument_StatementDynamic {
     operation: std
     ::option
-    ::Option<terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl>>,
+    ::Option<terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation>>,
 }
 
 #[derive(Serialize)]
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_Statement {
     data_identifiers: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sid: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    operation: std::option::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl>>,
-    dynamic: DataCloudwatchLogDataProtectionPolicyDocumentStatementElDynamic,
+    operation: std::option::Option<std::vec::Vec<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation>>,
+    dynamic: DataCloudwatchLogDataProtectionPolicyDocument_StatementDynamic,
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
+impl DataCloudwatchLogDataProtectionPolicyDocument_Statement {
     #[doc = "Set the field `sid`.\n"]
     pub fn set_sid(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.sid = std::option::Option::Some(v.into());
@@ -1127,7 +1338,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationEl>,
+                        terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Statement_Operation>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1142,8 +1353,8 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
-    type O = terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocumentStatementEl>;
+impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocument_Statement {
+    type O = terrars::BlockAssignable<DataCloudwatchLogDataProtectionPolicyDocument_Statement>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1154,14 +1365,14 @@ impl terrars::ToListMappable for DataCloudwatchLogDataProtectionPolicyDocumentSt
     }
 }
 
-pub struct BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
+pub struct BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement {
     #[doc = ""]
     pub data_identifiers: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
-    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
+impl BuildDataCloudwatchLogDataProtectionPolicyDocument_Statement {
+    pub fn build(self) -> DataCloudwatchLogDataProtectionPolicyDocument_Statement {
+        DataCloudwatchLogDataProtectionPolicyDocument_Statement {
             data_identifiers: self.data_identifiers,
             sid: core::default::Default::default(),
             operation: core::default::Default::default(),
@@ -1170,24 +1381,26 @@ impl BuildDataCloudwatchLogDataProtectionPolicyDocumentStatementEl {
     }
 }
 
-pub struct DataCloudwatchLogDataProtectionPolicyDocumentStatementElRef {
+#[allow(dead_code)]
+pub struct DataCloudwatchLogDataProtectionPolicyDocument_StatementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocumentStatementElRef {
+impl terrars::Ref for DataCloudwatchLogDataProtectionPolicyDocument_StatementRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCloudwatchLogDataProtectionPolicyDocumentStatementElRef {
-        DataCloudwatchLogDataProtectionPolicyDocumentStatementElRef {
+    ) -> DataCloudwatchLogDataProtectionPolicyDocument_StatementRef {
+        DataCloudwatchLogDataProtectionPolicyDocument_StatementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElRef {
+impl DataCloudwatchLogDataProtectionPolicyDocument_StatementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1203,12 +1416,7 @@ impl DataCloudwatchLogDataProtectionPolicyDocumentStatementElRef {
     }
 
     #[doc = "Get a reference to the value of field `operation` after provisioning.\n"]
-    pub fn operation(&self) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocumentStatementElOperationElRef> {
+    pub fn operation(&self) -> terrars::ListRef<DataCloudwatchLogDataProtectionPolicyDocument_Statement_OperationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.operation", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataCloudwatchLogDataProtectionPolicyDocumentDynamic {
-    statement: std::option::Option<terrars::DynamicBlock<DataCloudwatchLogDataProtectionPolicyDocumentStatementEl>>,
 }

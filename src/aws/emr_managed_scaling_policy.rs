@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EmrManagedScalingPolicyData {
+struct EmrManagedScalingPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,20 @@ struct EmrManagedScalingPolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    compute_limits: std::option::Option<std::vec::Vec<EmrManagedScalingPolicyComputeLimitsEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scaling_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    utilization_performance_index: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compute_limits: std::option::Option<std::vec::Vec<EmrManagedScalingPolicy_ComputeLimits>>,
     dynamic: EmrManagedScalingPolicyDynamic,
 }
 
 struct EmrManagedScalingPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EmrManagedScalingPolicyData>,
+    data: std::cell::RefCell<EmrManagedScalingPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +143,29 @@ impl EmrManagedScalingPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scaling_strategy`.\n"]
+    pub fn set_scaling_strategy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().scaling_strategy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `utilization_performance_index`.\n"]
+    pub fn set_utilization_performance_index(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().utilization_performance_index = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `compute_limits`.\n"]
     pub fn set_compute_limits(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EmrManagedScalingPolicyComputeLimitsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EmrManagedScalingPolicy_ComputeLimits>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -159,6 +186,25 @@ impl EmrManagedScalingPolicy {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `scaling_strategy` after provisioning.\n"]
+    pub fn scaling_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_strategy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `utilization_performance_index` after provisioning.\n"]
+    pub fn utilization_performance_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.utilization_performance_index", self.extract_ref()),
+        )
     }
 }
 
@@ -204,7 +250,7 @@ impl BuildEmrManagedScalingPolicy {
         let out = EmrManagedScalingPolicy(std::rc::Rc::new(EmrManagedScalingPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EmrManagedScalingPolicyData {
+            data: std::cell::RefCell::new(EmrManagedScalingPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -212,6 +258,9 @@ impl BuildEmrManagedScalingPolicy {
                 provisioner: core::default::Default::default(),
                 cluster_id: self.cluster_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
+                scaling_strategy: core::default::Default::default(),
+                utilization_performance_index: core::default::Default::default(),
                 compute_limits: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -253,10 +302,34 @@ impl EmrManagedScalingPolicyRef {
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `scaling_strategy` after provisioning.\n"]
+    pub fn scaling_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scaling_strategy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `utilization_performance_index` after provisioning.\n"]
+    pub fn utilization_performance_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.utilization_performance_index", self.extract_ref()),
+        )
+    }
+}
+
+#[derive(Serialize, Default)]
+struct EmrManagedScalingPolicyDynamic {
+    compute_limits: std::option::Option<terrars::DynamicBlock<EmrManagedScalingPolicy_ComputeLimits>>,
 }
 
 #[derive(Serialize)]
-pub struct EmrManagedScalingPolicyComputeLimitsEl {
+pub struct EmrManagedScalingPolicy_ComputeLimits {
     maximum_capacity_units: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_core_capacity_units: std::option::Option<terrars::PrimField<f64>>,
@@ -266,7 +339,7 @@ pub struct EmrManagedScalingPolicyComputeLimitsEl {
     unit_type: terrars::PrimField<std::string::String>,
 }
 
-impl EmrManagedScalingPolicyComputeLimitsEl {
+impl EmrManagedScalingPolicy_ComputeLimits {
     #[doc = "Set the field `maximum_core_capacity_units`.\n"]
     pub fn set_maximum_core_capacity_units(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.maximum_core_capacity_units = std::option::Option::Some(v.into());
@@ -280,8 +353,8 @@ impl EmrManagedScalingPolicyComputeLimitsEl {
     }
 }
 
-impl terrars::ToListMappable for EmrManagedScalingPolicyComputeLimitsEl {
-    type O = terrars::BlockAssignable<EmrManagedScalingPolicyComputeLimitsEl>;
+impl terrars::ToListMappable for EmrManagedScalingPolicy_ComputeLimits {
+    type O = terrars::BlockAssignable<EmrManagedScalingPolicy_ComputeLimits>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -292,7 +365,7 @@ impl terrars::ToListMappable for EmrManagedScalingPolicyComputeLimitsEl {
     }
 }
 
-pub struct BuildEmrManagedScalingPolicyComputeLimitsEl {
+pub struct BuildEmrManagedScalingPolicy_ComputeLimits {
     #[doc = ""]
     pub maximum_capacity_units: terrars::PrimField<f64>,
     #[doc = ""]
@@ -301,9 +374,9 @@ pub struct BuildEmrManagedScalingPolicyComputeLimitsEl {
     pub unit_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEmrManagedScalingPolicyComputeLimitsEl {
-    pub fn build(self) -> EmrManagedScalingPolicyComputeLimitsEl {
-        EmrManagedScalingPolicyComputeLimitsEl {
+impl BuildEmrManagedScalingPolicy_ComputeLimits {
+    pub fn build(self) -> EmrManagedScalingPolicy_ComputeLimits {
+        EmrManagedScalingPolicy_ComputeLimits {
             maximum_capacity_units: self.maximum_capacity_units,
             maximum_core_capacity_units: core::default::Default::default(),
             maximum_ondemand_capacity_units: core::default::Default::default(),
@@ -313,21 +386,23 @@ impl BuildEmrManagedScalingPolicyComputeLimitsEl {
     }
 }
 
-pub struct EmrManagedScalingPolicyComputeLimitsElRef {
+#[allow(dead_code)]
+pub struct EmrManagedScalingPolicy_ComputeLimitsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EmrManagedScalingPolicyComputeLimitsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EmrManagedScalingPolicyComputeLimitsElRef {
-        EmrManagedScalingPolicyComputeLimitsElRef {
+impl terrars::Ref for EmrManagedScalingPolicy_ComputeLimitsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EmrManagedScalingPolicy_ComputeLimitsRef {
+        EmrManagedScalingPolicy_ComputeLimitsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EmrManagedScalingPolicyComputeLimitsElRef {
+impl EmrManagedScalingPolicy_ComputeLimitsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -356,9 +431,4 @@ impl EmrManagedScalingPolicyComputeLimitsElRef {
     pub fn unit_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.unit_type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EmrManagedScalingPolicyDynamic {
-    compute_limits: std::option::Option<terrars::DynamicBlock<EmrManagedScalingPolicyComputeLimitsEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataBackupReportPlanData {
+struct DataBackupReportPlanData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataBackupReportPlanData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataBackupReportPlan_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataBackupReportPlanData>,
+    data: std::cell::RefCell<DataBackupReportPlanData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataBackupReportPlan {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -116,13 +127,19 @@ impl DataBackupReportPlan {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `report_delivery_channel` after provisioning.\n"]
-    pub fn report_delivery_channel(&self) -> terrars::ListRef<DataBackupReportPlanReportDeliveryChannelElRef> {
+    pub fn report_delivery_channel(&self) -> terrars::ListRef<DataBackupReportPlan_ReportDeliveryChannelRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.report_delivery_channel", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `report_setting` after provisioning.\n"]
-    pub fn report_setting(&self) -> terrars::ListRef<DataBackupReportPlanReportSettingElRef> {
+    pub fn report_setting(&self) -> terrars::ListRef<DataBackupReportPlan_ReportSettingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.report_setting", self.extract_ref()))
     }
 
@@ -174,13 +191,14 @@ impl BuildDataBackupReportPlan {
         let out = DataBackupReportPlan(std::rc::Rc::new(DataBackupReportPlan_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataBackupReportPlanData {
+            data: std::cell::RefCell::new(DataBackupReportPlanData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -242,13 +260,19 @@ impl DataBackupReportPlanRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `report_delivery_channel` after provisioning.\n"]
-    pub fn report_delivery_channel(&self) -> terrars::ListRef<DataBackupReportPlanReportDeliveryChannelElRef> {
+    pub fn report_delivery_channel(&self) -> terrars::ListRef<DataBackupReportPlan_ReportDeliveryChannelRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.report_delivery_channel", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `report_setting` after provisioning.\n"]
-    pub fn report_setting(&self) -> terrars::ListRef<DataBackupReportPlanReportSettingElRef> {
+    pub fn report_setting(&self) -> terrars::ListRef<DataBackupReportPlan_ReportSettingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.report_setting", self.extract_ref()))
     }
 
@@ -259,7 +283,7 @@ impl DataBackupReportPlanRef {
 }
 
 #[derive(Serialize)]
-pub struct DataBackupReportPlanReportDeliveryChannelEl {
+pub struct DataBackupReportPlan_ReportDeliveryChannel {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     formats: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -268,7 +292,7 @@ pub struct DataBackupReportPlanReportDeliveryChannelEl {
     s3_key_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataBackupReportPlanReportDeliveryChannelEl {
+impl DataBackupReportPlan_ReportDeliveryChannel {
     #[doc = "Set the field `formats`.\n"]
     pub fn set_formats(
         mut self,
@@ -291,8 +315,8 @@ impl DataBackupReportPlanReportDeliveryChannelEl {
     }
 }
 
-impl terrars::ToListMappable for DataBackupReportPlanReportDeliveryChannelEl {
-    type O = terrars::BlockAssignable<DataBackupReportPlanReportDeliveryChannelEl>;
+impl terrars::ToListMappable for DataBackupReportPlan_ReportDeliveryChannel {
+    type O = terrars::BlockAssignable<DataBackupReportPlan_ReportDeliveryChannel>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -303,11 +327,11 @@ impl terrars::ToListMappable for DataBackupReportPlanReportDeliveryChannelEl {
     }
 }
 
-pub struct BuildDataBackupReportPlanReportDeliveryChannelEl {}
+pub struct BuildDataBackupReportPlan_ReportDeliveryChannel {}
 
-impl BuildDataBackupReportPlanReportDeliveryChannelEl {
-    pub fn build(self) -> DataBackupReportPlanReportDeliveryChannelEl {
-        DataBackupReportPlanReportDeliveryChannelEl {
+impl BuildDataBackupReportPlan_ReportDeliveryChannel {
+    pub fn build(self) -> DataBackupReportPlan_ReportDeliveryChannel {
+        DataBackupReportPlan_ReportDeliveryChannel {
             formats: core::default::Default::default(),
             s3_bucket_name: core::default::Default::default(),
             s3_key_prefix: core::default::Default::default(),
@@ -315,24 +339,23 @@ impl BuildDataBackupReportPlanReportDeliveryChannelEl {
     }
 }
 
-pub struct DataBackupReportPlanReportDeliveryChannelElRef {
+#[allow(dead_code)]
+pub struct DataBackupReportPlan_ReportDeliveryChannelRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataBackupReportPlanReportDeliveryChannelElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataBackupReportPlanReportDeliveryChannelElRef {
-        DataBackupReportPlanReportDeliveryChannelElRef {
+impl terrars::Ref for DataBackupReportPlan_ReportDeliveryChannelRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataBackupReportPlan_ReportDeliveryChannelRef {
+        DataBackupReportPlan_ReportDeliveryChannelRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataBackupReportPlanReportDeliveryChannelElRef {
+impl DataBackupReportPlan_ReportDeliveryChannelRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -354,16 +377,31 @@ impl DataBackupReportPlanReportDeliveryChannelElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataBackupReportPlanReportSettingEl {
+pub struct DataBackupReportPlan_ReportSetting {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    accounts: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     framework_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     number_of_frameworks: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    organization_units: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     report_template: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataBackupReportPlanReportSettingEl {
+impl DataBackupReportPlan_ReportSetting {
+    #[doc = "Set the field `accounts`.\n"]
+    pub fn set_accounts(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.accounts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `framework_arns`.\n"]
     pub fn set_framework_arns(
         mut self,
@@ -379,6 +417,24 @@ impl DataBackupReportPlanReportSettingEl {
         self
     }
 
+    #[doc = "Set the field `organization_units`.\n"]
+    pub fn set_organization_units(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.organization_units = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `regions`.\n"]
+    pub fn set_regions(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.regions = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `report_template`.\n"]
     pub fn set_report_template(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.report_template = std::option::Option::Some(v.into());
@@ -386,8 +442,8 @@ impl DataBackupReportPlanReportSettingEl {
     }
 }
 
-impl terrars::ToListMappable for DataBackupReportPlanReportSettingEl {
-    type O = terrars::BlockAssignable<DataBackupReportPlanReportSettingEl>;
+impl terrars::ToListMappable for DataBackupReportPlan_ReportSetting {
+    type O = terrars::BlockAssignable<DataBackupReportPlan_ReportSetting>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -398,35 +454,45 @@ impl terrars::ToListMappable for DataBackupReportPlanReportSettingEl {
     }
 }
 
-pub struct BuildDataBackupReportPlanReportSettingEl {}
+pub struct BuildDataBackupReportPlan_ReportSetting {}
 
-impl BuildDataBackupReportPlanReportSettingEl {
-    pub fn build(self) -> DataBackupReportPlanReportSettingEl {
-        DataBackupReportPlanReportSettingEl {
+impl BuildDataBackupReportPlan_ReportSetting {
+    pub fn build(self) -> DataBackupReportPlan_ReportSetting {
+        DataBackupReportPlan_ReportSetting {
+            accounts: core::default::Default::default(),
             framework_arns: core::default::Default::default(),
             number_of_frameworks: core::default::Default::default(),
+            organization_units: core::default::Default::default(),
+            regions: core::default::Default::default(),
             report_template: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataBackupReportPlanReportSettingElRef {
+#[allow(dead_code)]
+pub struct DataBackupReportPlan_ReportSettingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataBackupReportPlanReportSettingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataBackupReportPlanReportSettingElRef {
-        DataBackupReportPlanReportSettingElRef {
+impl terrars::Ref for DataBackupReportPlan_ReportSettingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataBackupReportPlan_ReportSettingRef {
+        DataBackupReportPlan_ReportSettingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataBackupReportPlanReportSettingElRef {
+impl DataBackupReportPlan_ReportSettingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `accounts` after provisioning.\n"]
+    pub fn accounts(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.accounts", self.base))
     }
 
     #[doc = "Get a reference to the value of field `framework_arns` after provisioning.\n"]
@@ -437,6 +503,16 @@ impl DataBackupReportPlanReportSettingElRef {
     #[doc = "Get a reference to the value of field `number_of_frameworks` after provisioning.\n"]
     pub fn number_of_frameworks(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_frameworks", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `organization_units` after provisioning.\n"]
+    pub fn organization_units(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.organization_units", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `regions` after provisioning.\n"]
+    pub fn regions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.regions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `report_template` after provisioning.\n"]

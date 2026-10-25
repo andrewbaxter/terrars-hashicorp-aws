@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RdsReservedInstanceData {
+struct RdsReservedInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,19 +26,21 @@ struct RdsReservedInstanceData {
     instance_count: std::option::Option<terrars::PrimField<f64>>,
     offering_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     reservation_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RdsReservedInstanceTimeoutsEl>,
+    timeouts: std::option::Option<RdsReservedInstance_Timeouts>,
 }
 
 struct RdsReservedInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RdsReservedInstanceData>,
+    data: std::cell::RefCell<RdsReservedInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +152,13 @@ impl RdsReservedInstance {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `reservation_id`.\n"]
     pub fn set_reservation_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().reservation_id = std::option::Option::Some(v.into());
@@ -173,7 +184,7 @@ impl RdsReservedInstance {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RdsReservedInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RdsReservedInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -239,8 +250,14 @@ impl RdsReservedInstance {
     }
 
     #[doc = "Get a reference to the value of field `recurring_charges` after provisioning.\n"]
-    pub fn recurring_charges(&self) -> terrars::ListRef<RdsReservedInstanceRecurringChargesElRef> {
+    pub fn recurring_charges(&self) -> terrars::ListRef<RdsReservedInstance_RecurringChargesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.recurring_charges", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `reservation_id` after provisioning.\n"]
@@ -274,8 +291,8 @@ impl RdsReservedInstance {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RdsReservedInstanceTimeoutsElRef {
-        RdsReservedInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RdsReservedInstance_TimeoutsRef {
+        RdsReservedInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -321,7 +338,7 @@ impl BuildRdsReservedInstance {
         let out = RdsReservedInstance(std::rc::Rc::new(RdsReservedInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RdsReservedInstanceData {
+            data: std::cell::RefCell::new(RdsReservedInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -330,6 +347,7 @@ impl BuildRdsReservedInstance {
                 id: core::default::Default::default(),
                 instance_count: core::default::Default::default(),
                 offering_id: self.offering_id,
+                region: core::default::Default::default(),
                 reservation_id: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -425,8 +443,14 @@ impl RdsReservedInstanceRef {
     }
 
     #[doc = "Get a reference to the value of field `recurring_charges` after provisioning.\n"]
-    pub fn recurring_charges(&self) -> terrars::ListRef<RdsReservedInstanceRecurringChargesElRef> {
+    pub fn recurring_charges(&self) -> terrars::ListRef<RdsReservedInstance_RecurringChargesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.recurring_charges", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `reservation_id` after provisioning.\n"]
@@ -460,20 +484,20 @@ impl RdsReservedInstanceRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RdsReservedInstanceTimeoutsElRef {
-        RdsReservedInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RdsReservedInstance_TimeoutsRef {
+        RdsReservedInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct RdsReservedInstanceRecurringChargesEl {
+pub struct RdsReservedInstance_RecurringCharges {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     recurring_charge_amount: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     recurring_charge_frequency: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RdsReservedInstanceRecurringChargesEl {
+impl RdsReservedInstance_RecurringCharges {
     #[doc = "Set the field `recurring_charge_amount`.\n"]
     pub fn set_recurring_charge_amount(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.recurring_charge_amount = std::option::Option::Some(v.into());
@@ -490,8 +514,8 @@ impl RdsReservedInstanceRecurringChargesEl {
     }
 }
 
-impl terrars::ToListMappable for RdsReservedInstanceRecurringChargesEl {
-    type O = terrars::BlockAssignable<RdsReservedInstanceRecurringChargesEl>;
+impl terrars::ToListMappable for RdsReservedInstance_RecurringCharges {
+    type O = terrars::BlockAssignable<RdsReservedInstance_RecurringCharges>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -502,32 +526,34 @@ impl terrars::ToListMappable for RdsReservedInstanceRecurringChargesEl {
     }
 }
 
-pub struct BuildRdsReservedInstanceRecurringChargesEl {}
+pub struct BuildRdsReservedInstance_RecurringCharges {}
 
-impl BuildRdsReservedInstanceRecurringChargesEl {
-    pub fn build(self) -> RdsReservedInstanceRecurringChargesEl {
-        RdsReservedInstanceRecurringChargesEl {
+impl BuildRdsReservedInstance_RecurringCharges {
+    pub fn build(self) -> RdsReservedInstance_RecurringCharges {
+        RdsReservedInstance_RecurringCharges {
             recurring_charge_amount: core::default::Default::default(),
             recurring_charge_frequency: core::default::Default::default(),
         }
     }
 }
 
-pub struct RdsReservedInstanceRecurringChargesElRef {
+#[allow(dead_code)]
+pub struct RdsReservedInstance_RecurringChargesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsReservedInstanceRecurringChargesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsReservedInstanceRecurringChargesElRef {
-        RdsReservedInstanceRecurringChargesElRef {
+impl terrars::Ref for RdsReservedInstance_RecurringChargesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsReservedInstance_RecurringChargesRef {
+        RdsReservedInstance_RecurringChargesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsReservedInstanceRecurringChargesElRef {
+impl RdsReservedInstance_RecurringChargesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -544,7 +570,7 @@ impl RdsReservedInstanceRecurringChargesElRef {
 }
 
 #[derive(Serialize)]
-pub struct RdsReservedInstanceTimeoutsEl {
+pub struct RdsReservedInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -553,7 +579,7 @@ pub struct RdsReservedInstanceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RdsReservedInstanceTimeoutsEl {
+impl RdsReservedInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -573,8 +599,8 @@ impl RdsReservedInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RdsReservedInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<RdsReservedInstanceTimeoutsEl>;
+impl terrars::ToListMappable for RdsReservedInstance_Timeouts {
+    type O = terrars::BlockAssignable<RdsReservedInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -585,11 +611,11 @@ impl terrars::ToListMappable for RdsReservedInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildRdsReservedInstanceTimeoutsEl {}
+pub struct BuildRdsReservedInstance_Timeouts {}
 
-impl BuildRdsReservedInstanceTimeoutsEl {
-    pub fn build(self) -> RdsReservedInstanceTimeoutsEl {
-        RdsReservedInstanceTimeoutsEl {
+impl BuildRdsReservedInstance_Timeouts {
+    pub fn build(self) -> RdsReservedInstance_Timeouts {
+        RdsReservedInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -597,21 +623,23 @@ impl BuildRdsReservedInstanceTimeoutsEl {
     }
 }
 
-pub struct RdsReservedInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RdsReservedInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsReservedInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsReservedInstanceTimeoutsElRef {
-        RdsReservedInstanceTimeoutsElRef {
+impl terrars::Ref for RdsReservedInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsReservedInstance_TimeoutsRef {
+        RdsReservedInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsReservedInstanceTimeoutsElRef {
+impl RdsReservedInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

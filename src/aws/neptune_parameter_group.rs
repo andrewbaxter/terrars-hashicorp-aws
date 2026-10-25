@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NeptuneParameterGroupData {
+struct NeptuneParameterGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,20 +25,25 @@ struct NeptuneParameterGroupData {
     family: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
-    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<std::vec::Vec<NeptuneParameterGroupParameterEl>>,
+    parameter: std::option::Option<std::vec::Vec<NeptuneParameterGroup_Parameter>>,
     dynamic: NeptuneParameterGroupDynamic,
 }
 
 struct NeptuneParameterGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NeptuneParameterGroupData>,
+    data: std::cell::RefCell<NeptuneParameterGroupData_>,
 }
 
 #[derive(Clone)]
@@ -148,6 +155,25 @@ impl NeptuneParameterGroup {
         self
     }
 
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name_prefix`.\n"]
+    pub fn set_name_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().name_prefix = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -169,7 +195,7 @@ impl NeptuneParameterGroup {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NeptuneParameterGroupParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NeptuneParameterGroup_Parameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,6 +231,17 @@ impl NeptuneParameterGroup {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name_prefix` after provisioning.\n"]
+    pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -253,8 +290,6 @@ pub struct BuildNeptuneParameterGroup {
     pub tf_id: std::string::String,
     #[doc = ""]
     pub family: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildNeptuneParameterGroup {
@@ -262,7 +297,7 @@ impl BuildNeptuneParameterGroup {
         let out = NeptuneParameterGroup(std::rc::Rc::new(NeptuneParameterGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NeptuneParameterGroupData {
+            data: std::cell::RefCell::new(NeptuneParameterGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -271,7 +306,9 @@ impl BuildNeptuneParameterGroup {
                 description: core::default::Default::default(),
                 family: self.family,
                 id: core::default::Default::default(),
-                name: self.name,
+                name: core::default::Default::default(),
+                name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 parameter: core::default::Default::default(),
@@ -331,6 +368,17 @@ impl NeptuneParameterGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `name_prefix` after provisioning.\n"]
+    pub fn name_prefix(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -342,15 +390,20 @@ impl NeptuneParameterGroupRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct NeptuneParameterGroupDynamic {
+    parameter: std::option::Option<terrars::DynamicBlock<NeptuneParameterGroup_Parameter>>,
+}
+
 #[derive(Serialize)]
-pub struct NeptuneParameterGroupParameterEl {
+pub struct NeptuneParameterGroup_Parameter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     apply_method: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl NeptuneParameterGroupParameterEl {
+impl NeptuneParameterGroup_Parameter {
     #[doc = "Set the field `apply_method`.\n"]
     pub fn set_apply_method(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.apply_method = std::option::Option::Some(v.into());
@@ -358,8 +411,8 @@ impl NeptuneParameterGroupParameterEl {
     }
 }
 
-impl terrars::ToListMappable for NeptuneParameterGroupParameterEl {
-    type O = terrars::BlockAssignable<NeptuneParameterGroupParameterEl>;
+impl terrars::ToListMappable for NeptuneParameterGroup_Parameter {
+    type O = terrars::BlockAssignable<NeptuneParameterGroup_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -370,16 +423,16 @@ impl terrars::ToListMappable for NeptuneParameterGroupParameterEl {
     }
 }
 
-pub struct BuildNeptuneParameterGroupParameterEl {
+pub struct BuildNeptuneParameterGroup_Parameter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNeptuneParameterGroupParameterEl {
-    pub fn build(self) -> NeptuneParameterGroupParameterEl {
-        NeptuneParameterGroupParameterEl {
+impl BuildNeptuneParameterGroup_Parameter {
+    pub fn build(self) -> NeptuneParameterGroup_Parameter {
+        NeptuneParameterGroup_Parameter {
             apply_method: core::default::Default::default(),
             name: self.name,
             value: self.value,
@@ -387,21 +440,23 @@ impl BuildNeptuneParameterGroupParameterEl {
     }
 }
 
-pub struct NeptuneParameterGroupParameterElRef {
+#[allow(dead_code)]
+pub struct NeptuneParameterGroup_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NeptuneParameterGroupParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneParameterGroupParameterElRef {
-        NeptuneParameterGroupParameterElRef {
+impl terrars::Ref for NeptuneParameterGroup_ParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NeptuneParameterGroup_ParameterRef {
+        NeptuneParameterGroup_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NeptuneParameterGroupParameterElRef {
+impl NeptuneParameterGroup_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -420,9 +475,4 @@ impl NeptuneParameterGroupParameterElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NeptuneParameterGroupDynamic {
-    parameter: std::option::Option<terrars::DynamicBlock<NeptuneParameterGroupParameterEl>>,
 }

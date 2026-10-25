@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2TransitGatewayVpcAttachmentAccepterData {
+struct Ec2TransitGatewayVpcAttachmentAccepterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct Ec2TransitGatewayVpcAttachmentAccepterData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,7 +38,7 @@ struct Ec2TransitGatewayVpcAttachmentAccepterData {
 struct Ec2TransitGatewayVpcAttachmentAccepter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2TransitGatewayVpcAttachmentAccepterData>,
+    data: std::cell::RefCell<Ec2TransitGatewayVpcAttachmentAccepterData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl Ec2TransitGatewayVpcAttachmentAccepter {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -196,6 +207,20 @@ impl Ec2TransitGatewayVpcAttachmentAccepter {
     #[doc = "Get a reference to the value of field `ipv6_support` after provisioning.\n"]
     pub fn ipv6_support(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_support", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `security_group_referencing_support` after provisioning.\n"]
+    pub fn security_group_referencing_support(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.security_group_referencing_support", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
@@ -297,13 +322,14 @@ impl BuildEc2TransitGatewayVpcAttachmentAccepter {
         let out = Ec2TransitGatewayVpcAttachmentAccepter(std::rc::Rc::new(Ec2TransitGatewayVpcAttachmentAccepter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2TransitGatewayVpcAttachmentAccepterData {
+            data: std::cell::RefCell::new(Ec2TransitGatewayVpcAttachmentAccepterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 transit_gateway_attachment_id: self.transit_gateway_attachment_id,
@@ -357,6 +383,20 @@ impl Ec2TransitGatewayVpcAttachmentAccepterRef {
     #[doc = "Get a reference to the value of field `ipv6_support` after provisioning.\n"]
     pub fn ipv6_support(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_support", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `security_group_referencing_support` after provisioning.\n"]
+    pub fn security_group_referencing_support(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.security_group_referencing_support", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]

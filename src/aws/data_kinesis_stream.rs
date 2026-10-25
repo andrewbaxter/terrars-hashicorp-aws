@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataKinesisStreamData {
+struct DataKinesisStreamData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataKinesisStreamData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataKinesisStream_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataKinesisStreamData>,
+    data: std::cell::RefCell<DataKinesisStreamData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataKinesisStream {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -101,9 +112,24 @@ impl DataKinesisStream {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_type` after provisioning.\n"]
+    pub fn encryption_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `max_record_size_in_kib` after provisioning.\n"]
+    pub fn max_record_size_in_kib(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_record_size_in_kib", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -114,6 +140,12 @@ impl DataKinesisStream {
     #[doc = "Get a reference to the value of field `open_shards` after provisioning.\n"]
     pub fn open_shards(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.open_shards", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retention_period` after provisioning.\n"]
@@ -132,13 +164,18 @@ impl DataKinesisStream {
     }
 
     #[doc = "Get a reference to the value of field `stream_mode_details` after provisioning.\n"]
-    pub fn stream_mode_details(&self) -> terrars::ListRef<DataKinesisStreamStreamModeDetailsElRef> {
+    pub fn stream_mode_details(&self) -> terrars::ListRef<DataKinesisStream_StreamModeDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stream_mode_details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `warm_throughput` after provisioning.\n"]
+    pub fn warm_throughput(&self) -> terrars::ListRef<DataKinesisStream_WarmThroughputRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.warm_throughput", self.extract_ref()))
     }
 }
 
@@ -184,13 +221,14 @@ impl BuildDataKinesisStream {
         let out = DataKinesisStream(std::rc::Rc::new(DataKinesisStream_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataKinesisStreamData {
+            data: std::cell::RefCell::new(DataKinesisStreamData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -237,9 +275,24 @@ impl DataKinesisStreamRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_timestamp", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `encryption_type` after provisioning.\n"]
+    pub fn encryption_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.encryption_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `max_record_size_in_kib` after provisioning.\n"]
+    pub fn max_record_size_in_kib(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_record_size_in_kib", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
@@ -250,6 +303,12 @@ impl DataKinesisStreamRef {
     #[doc = "Get a reference to the value of field `open_shards` after provisioning.\n"]
     pub fn open_shards(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.open_shards", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `retention_period` after provisioning.\n"]
@@ -268,7 +327,7 @@ impl DataKinesisStreamRef {
     }
 
     #[doc = "Get a reference to the value of field `stream_mode_details` after provisioning.\n"]
-    pub fn stream_mode_details(&self) -> terrars::ListRef<DataKinesisStreamStreamModeDetailsElRef> {
+    pub fn stream_mode_details(&self) -> terrars::ListRef<DataKinesisStream_StreamModeDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stream_mode_details", self.extract_ref()))
     }
 
@@ -276,15 +335,20 @@ impl DataKinesisStreamRef {
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `warm_throughput` after provisioning.\n"]
+    pub fn warm_throughput(&self) -> terrars::ListRef<DataKinesisStream_WarmThroughputRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.warm_throughput", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataKinesisStreamStreamModeDetailsEl {
+pub struct DataKinesisStream_StreamModeDetails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stream_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataKinesisStreamStreamModeDetailsEl {
+impl DataKinesisStream_StreamModeDetails {
     #[doc = "Set the field `stream_mode`.\n"]
     pub fn set_stream_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.stream_mode = std::option::Option::Some(v.into());
@@ -292,8 +356,8 @@ impl DataKinesisStreamStreamModeDetailsEl {
     }
 }
 
-impl terrars::ToListMappable for DataKinesisStreamStreamModeDetailsEl {
-    type O = terrars::BlockAssignable<DataKinesisStreamStreamModeDetailsEl>;
+impl terrars::ToListMappable for DataKinesisStream_StreamModeDetails {
+    type O = terrars::BlockAssignable<DataKinesisStream_StreamModeDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -304,29 +368,31 @@ impl terrars::ToListMappable for DataKinesisStreamStreamModeDetailsEl {
     }
 }
 
-pub struct BuildDataKinesisStreamStreamModeDetailsEl {}
+pub struct BuildDataKinesisStream_StreamModeDetails {}
 
-impl BuildDataKinesisStreamStreamModeDetailsEl {
-    pub fn build(self) -> DataKinesisStreamStreamModeDetailsEl {
-        DataKinesisStreamStreamModeDetailsEl { stream_mode: core::default::Default::default() }
+impl BuildDataKinesisStream_StreamModeDetails {
+    pub fn build(self) -> DataKinesisStream_StreamModeDetails {
+        DataKinesisStream_StreamModeDetails { stream_mode: core::default::Default::default() }
     }
 }
 
-pub struct DataKinesisStreamStreamModeDetailsElRef {
+#[allow(dead_code)]
+pub struct DataKinesisStream_StreamModeDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKinesisStreamStreamModeDetailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKinesisStreamStreamModeDetailsElRef {
-        DataKinesisStreamStreamModeDetailsElRef {
+impl terrars::Ref for DataKinesisStream_StreamModeDetailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKinesisStream_StreamModeDetailsRef {
+        DataKinesisStream_StreamModeDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKinesisStreamStreamModeDetailsElRef {
+impl DataKinesisStream_StreamModeDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -334,5 +400,82 @@ impl DataKinesisStreamStreamModeDetailsElRef {
     #[doc = "Get a reference to the value of field `stream_mode` after provisioning.\n"]
     pub fn stream_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataKinesisStream_WarmThroughput {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    current_mib_ps: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_mib_ps: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataKinesisStream_WarmThroughput {
+    #[doc = "Set the field `current_mib_ps`.\n"]
+    pub fn set_current_mib_ps(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.current_mib_ps = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `target_mib_ps`.\n"]
+    pub fn set_target_mib_ps(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.target_mib_ps = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataKinesisStream_WarmThroughput {
+    type O = terrars::BlockAssignable<DataKinesisStream_WarmThroughput>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataKinesisStream_WarmThroughput {}
+
+impl BuildDataKinesisStream_WarmThroughput {
+    pub fn build(self) -> DataKinesisStream_WarmThroughput {
+        DataKinesisStream_WarmThroughput {
+            current_mib_ps: core::default::Default::default(),
+            target_mib_ps: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataKinesisStream_WarmThroughputRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataKinesisStream_WarmThroughputRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKinesisStream_WarmThroughputRef {
+        DataKinesisStream_WarmThroughputRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataKinesisStream_WarmThroughputRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `current_mib_ps` after provisioning.\n"]
+    pub fn current_mib_ps(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.current_mib_ps", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `target_mib_ps` after provisioning.\n"]
+    pub fn target_mib_ps(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_mib_ps", self.base))
     }
 }

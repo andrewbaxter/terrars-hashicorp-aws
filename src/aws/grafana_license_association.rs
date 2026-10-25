@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GrafanaLicenseAssociationData {
+struct GrafanaLicenseAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,17 +21,21 @@ struct GrafanaLicenseAssociationData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grafana_token: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     license_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     workspace_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GrafanaLicenseAssociationTimeoutsEl>,
+    timeouts: std::option::Option<GrafanaLicenseAssociation_Timeouts>,
 }
 
 struct GrafanaLicenseAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GrafanaLicenseAssociationData>,
+    data: std::cell::RefCell<GrafanaLicenseAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -129,14 +135,27 @@ impl GrafanaLicenseAssociation {
         self
     }
 
+    #[doc = "Set the field `grafana_token`.\n"]
+    pub fn set_grafana_token(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().grafana_token = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GrafanaLicenseAssociationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GrafanaLicenseAssociation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -144,6 +163,11 @@ impl GrafanaLicenseAssociation {
     #[doc = "Get a reference to the value of field `free_trial_expiration` after provisioning.\n"]
     pub fn free_trial_expiration(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.free_trial_expiration", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `grafana_token` after provisioning.\n"]
+    pub fn grafana_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.grafana_token", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -161,17 +185,20 @@ impl GrafanaLicenseAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `workspace_id` after provisioning.\n"]
     pub fn workspace_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.workspace_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GrafanaLicenseAssociationTimeoutsElRef {
-        GrafanaLicenseAssociationTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> GrafanaLicenseAssociation_TimeoutsRef {
+        GrafanaLicenseAssociation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -219,14 +246,16 @@ impl BuildGrafanaLicenseAssociation {
         let out = GrafanaLicenseAssociation(std::rc::Rc::new(GrafanaLicenseAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GrafanaLicenseAssociationData {
+            data: std::cell::RefCell::new(GrafanaLicenseAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                grafana_token: core::default::Default::default(),
                 id: core::default::Default::default(),
                 license_type: self.license_type,
+                region: core::default::Default::default(),
                 workspace_id: self.workspace_id,
                 timeouts: core::default::Default::default(),
             }),
@@ -264,6 +293,11 @@ impl GrafanaLicenseAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.free_trial_expiration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `grafana_token` after provisioning.\n"]
+    pub fn grafana_token(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.grafana_token", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -279,29 +313,32 @@ impl GrafanaLicenseAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `workspace_id` after provisioning.\n"]
     pub fn workspace_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.workspace_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GrafanaLicenseAssociationTimeoutsElRef {
-        GrafanaLicenseAssociationTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> GrafanaLicenseAssociation_TimeoutsRef {
+        GrafanaLicenseAssociation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct GrafanaLicenseAssociationTimeoutsEl {
+pub struct GrafanaLicenseAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GrafanaLicenseAssociationTimeoutsEl {
+impl GrafanaLicenseAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -315,8 +352,8 @@ impl GrafanaLicenseAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GrafanaLicenseAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<GrafanaLicenseAssociationTimeoutsEl>;
+impl terrars::ToListMappable for GrafanaLicenseAssociation_Timeouts {
+    type O = terrars::BlockAssignable<GrafanaLicenseAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -327,32 +364,34 @@ impl terrars::ToListMappable for GrafanaLicenseAssociationTimeoutsEl {
     }
 }
 
-pub struct BuildGrafanaLicenseAssociationTimeoutsEl {}
+pub struct BuildGrafanaLicenseAssociation_Timeouts {}
 
-impl BuildGrafanaLicenseAssociationTimeoutsEl {
-    pub fn build(self) -> GrafanaLicenseAssociationTimeoutsEl {
-        GrafanaLicenseAssociationTimeoutsEl {
+impl BuildGrafanaLicenseAssociation_Timeouts {
+    pub fn build(self) -> GrafanaLicenseAssociation_Timeouts {
+        GrafanaLicenseAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct GrafanaLicenseAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GrafanaLicenseAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GrafanaLicenseAssociationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GrafanaLicenseAssociationTimeoutsElRef {
-        GrafanaLicenseAssociationTimeoutsElRef {
+impl terrars::Ref for GrafanaLicenseAssociation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GrafanaLicenseAssociation_TimeoutsRef {
+        GrafanaLicenseAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GrafanaLicenseAssociationTimeoutsElRef {
+impl GrafanaLicenseAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

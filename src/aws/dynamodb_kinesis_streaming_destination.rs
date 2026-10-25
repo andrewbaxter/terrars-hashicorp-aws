@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DynamodbKinesisStreamingDestinationData {
+struct DynamodbKinesisStreamingDestinationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,7 +21,11 @@ struct DynamodbKinesisStreamingDestinationData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    approximate_creation_date_time_precision: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     stream_arn: terrars::PrimField<std::string::String>,
     table_name: terrars::PrimField<std::string::String>,
 }
@@ -27,7 +33,7 @@ struct DynamodbKinesisStreamingDestinationData {
 struct DynamodbKinesisStreamingDestination_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DynamodbKinesisStreamingDestinationData>,
+    data: std::cell::RefCell<DynamodbKinesisStreamingDestinationData_>,
 }
 
 #[derive(Clone)]
@@ -127,15 +133,45 @@ impl DynamodbKinesisStreamingDestination {
         self
     }
 
+    #[doc = "Set the field `approximate_creation_date_time_precision`.\n"]
+    pub fn set_approximate_creation_date_time_precision(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().approximate_creation_date_time_precision = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `approximate_creation_date_time_precision` after provisioning.\n"]
+    pub fn approximate_creation_date_time_precision(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.approximate_creation_date_time_precision", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `stream_arn` after provisioning.\n"]
@@ -193,13 +229,15 @@ impl BuildDynamodbKinesisStreamingDestination {
         let out = DynamodbKinesisStreamingDestination(std::rc::Rc::new(DynamodbKinesisStreamingDestination_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DynamodbKinesisStreamingDestinationData {
+            data: std::cell::RefCell::new(DynamodbKinesisStreamingDestinationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                approximate_creation_date_time_precision: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 stream_arn: self.stream_arn,
                 table_name: self.table_name,
             }),
@@ -232,9 +270,23 @@ impl DynamodbKinesisStreamingDestinationRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `approximate_creation_date_time_precision` after provisioning.\n"]
+    pub fn approximate_creation_date_time_precision(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.approximate_creation_date_time_precision", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `stream_arn` after provisioning.\n"]

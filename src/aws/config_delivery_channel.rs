@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConfigDeliveryChannelData {
+struct ConfigDeliveryChannelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct ConfigDeliveryChannelData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     s3_bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_key_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -30,14 +34,14 @@ struct ConfigDeliveryChannelData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sns_topic_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    snapshot_delivery_properties: std::option::Option<std::vec::Vec<ConfigDeliveryChannelSnapshotDeliveryPropertiesEl>>,
+    snapshot_delivery_properties: std::option::Option<std::vec::Vec<ConfigDeliveryChannel_SnapshotDeliveryProperties>>,
     dynamic: ConfigDeliveryChannelDynamic,
 }
 
 struct ConfigDeliveryChannel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConfigDeliveryChannelData>,
+    data: std::cell::RefCell<ConfigDeliveryChannelData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl ConfigDeliveryChannel {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `s3_key_prefix`.\n"]
     pub fn set_s3_key_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().s3_key_prefix = std::option::Option::Some(v.into());
@@ -170,7 +181,7 @@ impl ConfigDeliveryChannel {
     #[doc = "Set the field `snapshot_delivery_properties`.\n"]
     pub fn set_snapshot_delivery_properties(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConfigDeliveryChannelSnapshotDeliveryPropertiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigDeliveryChannel_SnapshotDeliveryProperties>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -191,6 +202,12 @@ impl ConfigDeliveryChannel {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_bucket_name` after provisioning.\n"]
@@ -214,7 +231,7 @@ impl ConfigDeliveryChannel {
     }
 
     #[doc = "Get a reference to the value of field `snapshot_delivery_properties` after provisioning.\n"]
-    pub fn snapshot_delivery_properties(&self) -> terrars::ListRef<ConfigDeliveryChannelSnapshotDeliveryPropertiesElRef> {
+    pub fn snapshot_delivery_properties(&self) -> terrars::ListRef<ConfigDeliveryChannel_SnapshotDeliveryPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_delivery_properties", self.extract_ref()))
     }
 }
@@ -261,7 +278,7 @@ impl BuildConfigDeliveryChannel {
         let out = ConfigDeliveryChannel(std::rc::Rc::new(ConfigDeliveryChannel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConfigDeliveryChannelData {
+            data: std::cell::RefCell::new(ConfigDeliveryChannelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -269,6 +286,7 @@ impl BuildConfigDeliveryChannel {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 s3_bucket_name: self.s3_bucket_name,
                 s3_key_prefix: core::default::Default::default(),
                 s3_kms_key_arn: core::default::Default::default(),
@@ -315,6 +333,12 @@ impl ConfigDeliveryChannelRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `s3_bucket_name` after provisioning.\n"]
     pub fn s3_bucket_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket_name", self.extract_ref()))
@@ -336,18 +360,25 @@ impl ConfigDeliveryChannelRef {
     }
 
     #[doc = "Get a reference to the value of field `snapshot_delivery_properties` after provisioning.\n"]
-    pub fn snapshot_delivery_properties(&self) -> terrars::ListRef<ConfigDeliveryChannelSnapshotDeliveryPropertiesElRef> {
+    pub fn snapshot_delivery_properties(&self) -> terrars::ListRef<ConfigDeliveryChannel_SnapshotDeliveryPropertiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_delivery_properties", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ConfigDeliveryChannelDynamic {
+    snapshot_delivery_properties: std
+    ::option
+    ::Option<terrars::DynamicBlock<ConfigDeliveryChannel_SnapshotDeliveryProperties>>,
+}
+
 #[derive(Serialize)]
-pub struct ConfigDeliveryChannelSnapshotDeliveryPropertiesEl {
+pub struct ConfigDeliveryChannel_SnapshotDeliveryProperties {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delivery_frequency: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConfigDeliveryChannelSnapshotDeliveryPropertiesEl {
+impl ConfigDeliveryChannel_SnapshotDeliveryProperties {
     #[doc = "Set the field `delivery_frequency`.\n"]
     pub fn set_delivery_frequency(
         mut self,
@@ -358,8 +389,8 @@ impl ConfigDeliveryChannelSnapshotDeliveryPropertiesEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigDeliveryChannelSnapshotDeliveryPropertiesEl {
-    type O = terrars::BlockAssignable<ConfigDeliveryChannelSnapshotDeliveryPropertiesEl>;
+impl terrars::ToListMappable for ConfigDeliveryChannel_SnapshotDeliveryProperties {
+    type O = terrars::BlockAssignable<ConfigDeliveryChannel_SnapshotDeliveryProperties>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -370,32 +401,34 @@ impl terrars::ToListMappable for ConfigDeliveryChannelSnapshotDeliveryProperties
     }
 }
 
-pub struct BuildConfigDeliveryChannelSnapshotDeliveryPropertiesEl {}
+pub struct BuildConfigDeliveryChannel_SnapshotDeliveryProperties {}
 
-impl BuildConfigDeliveryChannelSnapshotDeliveryPropertiesEl {
-    pub fn build(self) -> ConfigDeliveryChannelSnapshotDeliveryPropertiesEl {
-        ConfigDeliveryChannelSnapshotDeliveryPropertiesEl { delivery_frequency: core::default::Default::default() }
+impl BuildConfigDeliveryChannel_SnapshotDeliveryProperties {
+    pub fn build(self) -> ConfigDeliveryChannel_SnapshotDeliveryProperties {
+        ConfigDeliveryChannel_SnapshotDeliveryProperties { delivery_frequency: core::default::Default::default() }
     }
 }
 
-pub struct ConfigDeliveryChannelSnapshotDeliveryPropertiesElRef {
+#[allow(dead_code)]
+pub struct ConfigDeliveryChannel_SnapshotDeliveryPropertiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigDeliveryChannelSnapshotDeliveryPropertiesElRef {
+impl terrars::Ref for ConfigDeliveryChannel_SnapshotDeliveryPropertiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConfigDeliveryChannelSnapshotDeliveryPropertiesElRef {
-        ConfigDeliveryChannelSnapshotDeliveryPropertiesElRef {
+    ) -> ConfigDeliveryChannel_SnapshotDeliveryPropertiesRef {
+        ConfigDeliveryChannel_SnapshotDeliveryPropertiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigDeliveryChannelSnapshotDeliveryPropertiesElRef {
+impl ConfigDeliveryChannel_SnapshotDeliveryPropertiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -404,11 +437,4 @@ impl ConfigDeliveryChannelSnapshotDeliveryPropertiesElRef {
     pub fn delivery_frequency(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delivery_frequency", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ConfigDeliveryChannelDynamic {
-    snapshot_delivery_properties: std
-    ::option
-    ::Option<terrars::DynamicBlock<ConfigDeliveryChannelSnapshotDeliveryPropertiesEl>>,
 }

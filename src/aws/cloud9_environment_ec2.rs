@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Cloud9EnvironmentEc2Data {
+struct Cloud9EnvironmentEc2Data_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,12 +28,13 @@ struct Cloud9EnvironmentEc2Data {
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    image_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    image_id: terrars::PrimField<std::string::String>,
     instance_type: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     owner_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -43,7 +46,7 @@ struct Cloud9EnvironmentEc2Data {
 struct Cloud9EnvironmentEc2_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Cloud9EnvironmentEc2Data>,
+    data: std::cell::RefCell<Cloud9EnvironmentEc2Data_>,
 }
 
 #[derive(Clone)]
@@ -167,15 +170,16 @@ impl Cloud9EnvironmentEc2 {
         self
     }
 
-    #[doc = "Set the field `image_id`.\n"]
-    pub fn set_image_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().image_id = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `owner_arn`.\n"]
     pub fn set_owner_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().owner_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -248,6 +252,12 @@ impl Cloud9EnvironmentEc2 {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
     pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.extract_ref()))
@@ -303,6 +313,8 @@ impl terrars::Resource_ for Cloud9EnvironmentEc2_ {
 pub struct BuildCloud9EnvironmentEc2 {
     pub tf_id: std::string::String,
     #[doc = ""]
+    pub image_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
     pub instance_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
@@ -313,7 +325,7 @@ impl BuildCloud9EnvironmentEc2 {
         let out = Cloud9EnvironmentEc2(std::rc::Rc::new(Cloud9EnvironmentEc2_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Cloud9EnvironmentEc2Data {
+            data: std::cell::RefCell::new(Cloud9EnvironmentEc2Data_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -323,10 +335,11 @@ impl BuildCloud9EnvironmentEc2 {
                 connection_type: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
-                image_id: core::default::Default::default(),
+                image_id: self.image_id,
                 instance_type: self.instance_type,
                 name: self.name,
                 owner_arn: core::default::Default::default(),
+                region: core::default::Default::default(),
                 subnet_id: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -403,6 +416,12 @@ impl Cloud9EnvironmentEc2Ref {
     #[doc = "Get a reference to the value of field `owner_arn` after provisioning.\n"]
     pub fn owner_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_arn", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]

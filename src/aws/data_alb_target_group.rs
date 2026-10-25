@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataAlbTargetGroupData {
+struct DataAlbTargetGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,17 +23,21 @@ struct DataAlbTargetGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    load_balancing_anomaly_mitigation: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataAlbTargetGroupTimeoutsEl>,
+    timeouts: std::option::Option<DataAlbTargetGroup_Timeouts>,
 }
 
 struct DataAlbTargetGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAlbTargetGroupData>,
+    data: std::cell::RefCell<DataAlbTargetGroupData_>,
 }
 
 #[derive(Clone)]
@@ -88,9 +94,25 @@ impl DataAlbTargetGroup {
         self
     }
 
+    #[doc = "Set the field `load_balancing_anomaly_mitigation`.\n"]
+    pub fn set_load_balancing_anomaly_mitigation(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().load_balancing_anomaly_mitigation = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -104,7 +126,7 @@ impl DataAlbTargetGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataAlbTargetGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataAlbTargetGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -125,12 +147,12 @@ impl DataAlbTargetGroup {
     }
 
     #[doc = "Get a reference to the value of field `deregistration_delay` after provisioning.\n"]
-    pub fn deregistration_delay(&self) -> terrars::PrimExpr<f64> {
+    pub fn deregistration_delay(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deregistration_delay", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `health_check` after provisioning.\n"]
-    pub fn health_check(&self) -> terrars::ListRef<DataAlbTargetGroupHealthCheckElRef> {
+    pub fn health_check(&self) -> terrars::ListRef<DataAlbTargetGroup_HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check", self.extract_ref()))
     }
 
@@ -147,11 +169,32 @@ impl DataAlbTargetGroup {
         )
     }
 
+    #[doc = "Get a reference to the value of field `load_balancer_arns` after provisioning.\n"]
+    pub fn load_balancer_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.load_balancer_arns", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `load_balancing_algorithm_type` after provisioning.\n"]
     pub fn load_balancing_algorithm_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.load_balancing_algorithm_type", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `load_balancing_anomaly_mitigation` after provisioning.\n"]
+    pub fn load_balancing_anomaly_mitigation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.load_balancing_anomaly_mitigation", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `load_balancing_cross_zone_enabled` after provisioning.\n"]
+    pub fn load_balancing_cross_zone_enabled(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.load_balancing_cross_zone_enabled", self.extract_ref()),
         )
     }
 
@@ -185,19 +228,30 @@ impl DataAlbTargetGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.proxy_protocol_v2", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `slow_start` after provisioning.\n"]
     pub fn slow_start(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.slow_start", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `stickiness` after provisioning.\n"]
-    pub fn stickiness(&self) -> terrars::ListRef<DataAlbTargetGroupStickinessElRef> {
+    pub fn stickiness(&self) -> terrars::ListRef<DataAlbTargetGroup_StickinessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stickiness", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_control_port` after provisioning.\n"]
+    pub fn target_control_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_control_port", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_type` after provisioning.\n"]
@@ -211,8 +265,8 @@ impl DataAlbTargetGroup {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAlbTargetGroupTimeoutsElRef {
-        DataAlbTargetGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAlbTargetGroup_TimeoutsRef {
+        DataAlbTargetGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -256,14 +310,16 @@ impl BuildDataAlbTargetGroup {
         let out = DataAlbTargetGroup(std::rc::Rc::new(DataAlbTargetGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAlbTargetGroupData {
+            data: std::cell::RefCell::new(DataAlbTargetGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 arn: core::default::Default::default(),
                 id: core::default::Default::default(),
+                load_balancing_anomaly_mitigation: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
@@ -312,12 +368,12 @@ impl DataAlbTargetGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `deregistration_delay` after provisioning.\n"]
-    pub fn deregistration_delay(&self) -> terrars::PrimExpr<f64> {
+    pub fn deregistration_delay(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deregistration_delay", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `health_check` after provisioning.\n"]
-    pub fn health_check(&self) -> terrars::ListRef<DataAlbTargetGroupHealthCheckElRef> {
+    pub fn health_check(&self) -> terrars::ListRef<DataAlbTargetGroup_HealthCheckRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.health_check", self.extract_ref()))
     }
 
@@ -334,11 +390,32 @@ impl DataAlbTargetGroupRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `load_balancer_arns` after provisioning.\n"]
+    pub fn load_balancer_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.load_balancer_arns", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `load_balancing_algorithm_type` after provisioning.\n"]
     pub fn load_balancing_algorithm_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
             self.shared().clone(),
             format!("{}.load_balancing_algorithm_type", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `load_balancing_anomaly_mitigation` after provisioning.\n"]
+    pub fn load_balancing_anomaly_mitigation(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.load_balancing_anomaly_mitigation", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `load_balancing_cross_zone_enabled` after provisioning.\n"]
+    pub fn load_balancing_cross_zone_enabled(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.load_balancing_cross_zone_enabled", self.extract_ref()),
         )
     }
 
@@ -372,19 +449,30 @@ impl DataAlbTargetGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.proxy_protocol_v2", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `slow_start` after provisioning.\n"]
     pub fn slow_start(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.slow_start", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `stickiness` after provisioning.\n"]
-    pub fn stickiness(&self) -> terrars::ListRef<DataAlbTargetGroupStickinessElRef> {
+    pub fn stickiness(&self) -> terrars::ListRef<DataAlbTargetGroup_StickinessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stickiness", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `target_control_port` after provisioning.\n"]
+    pub fn target_control_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_control_port", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_type` after provisioning.\n"]
@@ -398,13 +486,13 @@ impl DataAlbTargetGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAlbTargetGroupTimeoutsElRef {
-        DataAlbTargetGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAlbTargetGroup_TimeoutsRef {
+        DataAlbTargetGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAlbTargetGroupHealthCheckEl {
+pub struct DataAlbTargetGroup_HealthCheck {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -425,7 +513,7 @@ pub struct DataAlbTargetGroupHealthCheckEl {
     unhealthy_threshold: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataAlbTargetGroupHealthCheckEl {
+impl DataAlbTargetGroup_HealthCheck {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -481,8 +569,8 @@ impl DataAlbTargetGroupHealthCheckEl {
     }
 }
 
-impl terrars::ToListMappable for DataAlbTargetGroupHealthCheckEl {
-    type O = terrars::BlockAssignable<DataAlbTargetGroupHealthCheckEl>;
+impl terrars::ToListMappable for DataAlbTargetGroup_HealthCheck {
+    type O = terrars::BlockAssignable<DataAlbTargetGroup_HealthCheck>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -493,11 +581,11 @@ impl terrars::ToListMappable for DataAlbTargetGroupHealthCheckEl {
     }
 }
 
-pub struct BuildDataAlbTargetGroupHealthCheckEl {}
+pub struct BuildDataAlbTargetGroup_HealthCheck {}
 
-impl BuildDataAlbTargetGroupHealthCheckEl {
-    pub fn build(self) -> DataAlbTargetGroupHealthCheckEl {
-        DataAlbTargetGroupHealthCheckEl {
+impl BuildDataAlbTargetGroup_HealthCheck {
+    pub fn build(self) -> DataAlbTargetGroup_HealthCheck {
+        DataAlbTargetGroup_HealthCheck {
             enabled: core::default::Default::default(),
             healthy_threshold: core::default::Default::default(),
             interval: core::default::Default::default(),
@@ -511,21 +599,23 @@ impl BuildDataAlbTargetGroupHealthCheckEl {
     }
 }
 
-pub struct DataAlbTargetGroupHealthCheckElRef {
+#[allow(dead_code)]
+pub struct DataAlbTargetGroup_HealthCheckRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlbTargetGroupHealthCheckElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlbTargetGroupHealthCheckElRef {
-        DataAlbTargetGroupHealthCheckElRef {
+impl terrars::Ref for DataAlbTargetGroup_HealthCheckRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlbTargetGroup_HealthCheckRef {
+        DataAlbTargetGroup_HealthCheckRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlbTargetGroupHealthCheckElRef {
+impl DataAlbTargetGroup_HealthCheckRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -577,7 +667,7 @@ impl DataAlbTargetGroupHealthCheckElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAlbTargetGroupStickinessEl {
+pub struct DataAlbTargetGroup_Stickiness {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cookie_duration: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -588,7 +678,7 @@ pub struct DataAlbTargetGroupStickinessEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAlbTargetGroupStickinessEl {
+impl DataAlbTargetGroup_Stickiness {
     #[doc = "Set the field `cookie_duration`.\n"]
     pub fn set_cookie_duration(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.cookie_duration = std::option::Option::Some(v.into());
@@ -614,8 +704,8 @@ impl DataAlbTargetGroupStickinessEl {
     }
 }
 
-impl terrars::ToListMappable for DataAlbTargetGroupStickinessEl {
-    type O = terrars::BlockAssignable<DataAlbTargetGroupStickinessEl>;
+impl terrars::ToListMappable for DataAlbTargetGroup_Stickiness {
+    type O = terrars::BlockAssignable<DataAlbTargetGroup_Stickiness>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -626,11 +716,11 @@ impl terrars::ToListMappable for DataAlbTargetGroupStickinessEl {
     }
 }
 
-pub struct BuildDataAlbTargetGroupStickinessEl {}
+pub struct BuildDataAlbTargetGroup_Stickiness {}
 
-impl BuildDataAlbTargetGroupStickinessEl {
-    pub fn build(self) -> DataAlbTargetGroupStickinessEl {
-        DataAlbTargetGroupStickinessEl {
+impl BuildDataAlbTargetGroup_Stickiness {
+    pub fn build(self) -> DataAlbTargetGroup_Stickiness {
+        DataAlbTargetGroup_Stickiness {
             cookie_duration: core::default::Default::default(),
             cookie_name: core::default::Default::default(),
             enabled: core::default::Default::default(),
@@ -639,21 +729,23 @@ impl BuildDataAlbTargetGroupStickinessEl {
     }
 }
 
-pub struct DataAlbTargetGroupStickinessElRef {
+#[allow(dead_code)]
+pub struct DataAlbTargetGroup_StickinessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlbTargetGroupStickinessElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlbTargetGroupStickinessElRef {
-        DataAlbTargetGroupStickinessElRef {
+impl terrars::Ref for DataAlbTargetGroup_StickinessRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlbTargetGroup_StickinessRef {
+        DataAlbTargetGroup_StickinessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlbTargetGroupStickinessElRef {
+impl DataAlbTargetGroup_StickinessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -680,12 +772,12 @@ impl DataAlbTargetGroupStickinessElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAlbTargetGroupTimeoutsEl {
+pub struct DataAlbTargetGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAlbTargetGroupTimeoutsEl {
+impl DataAlbTargetGroup_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -693,8 +785,8 @@ impl DataAlbTargetGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAlbTargetGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<DataAlbTargetGroupTimeoutsEl>;
+impl terrars::ToListMappable for DataAlbTargetGroup_Timeouts {
+    type O = terrars::BlockAssignable<DataAlbTargetGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -705,29 +797,31 @@ impl terrars::ToListMappable for DataAlbTargetGroupTimeoutsEl {
     }
 }
 
-pub struct BuildDataAlbTargetGroupTimeoutsEl {}
+pub struct BuildDataAlbTargetGroup_Timeouts {}
 
-impl BuildDataAlbTargetGroupTimeoutsEl {
-    pub fn build(self) -> DataAlbTargetGroupTimeoutsEl {
-        DataAlbTargetGroupTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataAlbTargetGroup_Timeouts {
+    pub fn build(self) -> DataAlbTargetGroup_Timeouts {
+        DataAlbTargetGroup_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataAlbTargetGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataAlbTargetGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAlbTargetGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlbTargetGroupTimeoutsElRef {
-        DataAlbTargetGroupTimeoutsElRef {
+impl terrars::Ref for DataAlbTargetGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAlbTargetGroup_TimeoutsRef {
+        DataAlbTargetGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAlbTargetGroupTimeoutsElRef {
+impl DataAlbTargetGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

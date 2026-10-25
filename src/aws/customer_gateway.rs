@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CustomerGatewayData {
+struct CustomerGatewayData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,7 +20,10 @@ struct CustomerGatewayData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
-    bgp_asn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_asn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_asn_extended: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,6 +32,8 @@ struct CustomerGatewayData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_address: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -38,7 +45,7 @@ struct CustomerGatewayData {
 struct CustomerGateway_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CustomerGatewayData>,
+    data: std::cell::RefCell<CustomerGatewayData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +145,18 @@ impl CustomerGateway {
         self
     }
 
+    #[doc = "Set the field `bgp_asn`.\n"]
+    pub fn set_bgp_asn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().bgp_asn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bgp_asn_extended`.\n"]
+    pub fn set_bgp_asn_extended(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().bgp_asn_extended = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `certificate_arn`.\n"]
     pub fn set_certificate_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().certificate_arn = std::option::Option::Some(v.into());
@@ -159,6 +178,13 @@ impl CustomerGateway {
     #[doc = "Set the field `ip_address`.\n"]
     pub fn set_ip_address(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().ip_address = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -190,6 +216,11 @@ impl CustomerGateway {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_asn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bgp_asn_extended` after provisioning.\n"]
+    pub fn bgp_asn_extended(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_asn_extended", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `certificate_arn` after provisioning.\n"]
     pub fn certificate_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_arn", self.extract_ref()))
@@ -208,6 +239,12 @@ impl CustomerGateway {
     #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
     pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -260,8 +297,6 @@ impl terrars::Resource_ for CustomerGateway_ {
 pub struct BuildCustomerGateway {
     pub tf_id: std::string::String,
     #[doc = ""]
-    pub bgp_asn: terrars::PrimField<std::string::String>,
-    #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
@@ -270,17 +305,19 @@ impl BuildCustomerGateway {
         let out = CustomerGateway(std::rc::Rc::new(CustomerGateway_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CustomerGatewayData {
+            data: std::cell::RefCell::new(CustomerGatewayData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                bgp_asn: self.bgp_asn,
+                bgp_asn: core::default::Default::default(),
+                bgp_asn_extended: core::default::Default::default(),
                 certificate_arn: core::default::Default::default(),
                 device_name: core::default::Default::default(),
                 id: core::default::Default::default(),
                 ip_address: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 type_: self.type_,
@@ -324,6 +361,11 @@ impl CustomerGatewayRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_asn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bgp_asn_extended` after provisioning.\n"]
+    pub fn bgp_asn_extended(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_asn_extended", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `certificate_arn` after provisioning.\n"]
     pub fn certificate_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_arn", self.extract_ref()))
@@ -342,6 +384,12 @@ impl CustomerGatewayRef {
     #[doc = "Get a reference to the value of field `ip_address` after provisioning.\n"]
     pub fn ip_address(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AthenaDatabaseData {
+struct AthenaDatabaseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,16 +34,20 @@ struct AthenaDatabaseData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     properties: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    acl_configuration: std::option::Option<std::vec::Vec<AthenaDatabaseAclConfigurationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_configuration: std::option::Option<std::vec::Vec<AthenaDatabaseEncryptionConfigurationEl>>,
+    workgroup: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    acl_configuration: std::option::Option<std::vec::Vec<AthenaDatabase_AclConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_configuration: std::option::Option<std::vec::Vec<AthenaDatabase_EncryptionConfiguration>>,
     dynamic: AthenaDatabaseDynamic,
 }
 
 struct AthenaDatabase_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AthenaDatabaseData>,
+    data: std::cell::RefCell<AthenaDatabaseData_>,
 }
 
 #[derive(Clone)]
@@ -180,10 +186,23 @@ impl AthenaDatabase {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `workgroup`.\n"]
+    pub fn set_workgroup(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().workgroup = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `acl_configuration`.\n"]
     pub fn set_acl_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AthenaDatabaseAclConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AthenaDatabase_AclConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -199,7 +218,7 @@ impl AthenaDatabase {
     #[doc = "Set the field `encryption_configuration`.\n"]
     pub fn set_encryption_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AthenaDatabaseEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AthenaDatabase_EncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -247,13 +266,24 @@ impl AthenaDatabase {
         terrars::RecRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `workgroup` after provisioning.\n"]
+    pub fn workgroup(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workgroup", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `acl_configuration` after provisioning.\n"]
-    pub fn acl_configuration(&self) -> terrars::ListRef<AthenaDatabaseAclConfigurationElRef> {
+    pub fn acl_configuration(&self) -> terrars::ListRef<AthenaDatabase_AclConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.acl_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::ListRef<AthenaDatabaseEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<AthenaDatabase_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 }
@@ -300,7 +330,7 @@ impl BuildAthenaDatabase {
         let out = AthenaDatabase(std::rc::Rc::new(AthenaDatabase_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AthenaDatabaseData {
+            data: std::cell::RefCell::new(AthenaDatabaseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -313,6 +343,8 @@ impl BuildAthenaDatabase {
                 id: core::default::Default::default(),
                 name: self.name,
                 properties: core::default::Default::default(),
+                region: core::default::Default::default(),
+                workgroup: core::default::Default::default(),
                 acl_configuration: core::default::Default::default(),
                 encryption_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -381,26 +413,43 @@ impl AthenaDatabaseRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.properties", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `workgroup` after provisioning.\n"]
+    pub fn workgroup(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workgroup", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `acl_configuration` after provisioning.\n"]
-    pub fn acl_configuration(&self) -> terrars::ListRef<AthenaDatabaseAclConfigurationElRef> {
+    pub fn acl_configuration(&self) -> terrars::ListRef<AthenaDatabase_AclConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.acl_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::ListRef<AthenaDatabaseEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<AthenaDatabase_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AthenaDatabaseDynamic {
+    acl_configuration: std::option::Option<terrars::DynamicBlock<AthenaDatabase_AclConfiguration>>,
+    encryption_configuration: std::option::Option<terrars::DynamicBlock<AthenaDatabase_EncryptionConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct AthenaDatabaseAclConfigurationEl {
+pub struct AthenaDatabase_AclConfiguration {
     s3_acl_option: terrars::PrimField<std::string::String>,
 }
 
-impl AthenaDatabaseAclConfigurationEl { }
+impl AthenaDatabase_AclConfiguration { }
 
-impl terrars::ToListMappable for AthenaDatabaseAclConfigurationEl {
-    type O = terrars::BlockAssignable<AthenaDatabaseAclConfigurationEl>;
+impl terrars::ToListMappable for AthenaDatabase_AclConfiguration {
+    type O = terrars::BlockAssignable<AthenaDatabase_AclConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -411,32 +460,34 @@ impl terrars::ToListMappable for AthenaDatabaseAclConfigurationEl {
     }
 }
 
-pub struct BuildAthenaDatabaseAclConfigurationEl {
+pub struct BuildAthenaDatabase_AclConfiguration {
     #[doc = ""]
     pub s3_acl_option: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAthenaDatabaseAclConfigurationEl {
-    pub fn build(self) -> AthenaDatabaseAclConfigurationEl {
-        AthenaDatabaseAclConfigurationEl { s3_acl_option: self.s3_acl_option }
+impl BuildAthenaDatabase_AclConfiguration {
+    pub fn build(self) -> AthenaDatabase_AclConfiguration {
+        AthenaDatabase_AclConfiguration { s3_acl_option: self.s3_acl_option }
     }
 }
 
-pub struct AthenaDatabaseAclConfigurationElRef {
+#[allow(dead_code)]
+pub struct AthenaDatabase_AclConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AthenaDatabaseAclConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AthenaDatabaseAclConfigurationElRef {
-        AthenaDatabaseAclConfigurationElRef {
+impl terrars::Ref for AthenaDatabase_AclConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AthenaDatabase_AclConfigurationRef {
+        AthenaDatabase_AclConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AthenaDatabaseAclConfigurationElRef {
+impl AthenaDatabase_AclConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -448,13 +499,13 @@ impl AthenaDatabaseAclConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct AthenaDatabaseEncryptionConfigurationEl {
+pub struct AthenaDatabase_EncryptionConfiguration {
     encryption_option: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AthenaDatabaseEncryptionConfigurationEl {
+impl AthenaDatabase_EncryptionConfiguration {
     #[doc = "Set the field `kms_key`.\n"]
     pub fn set_kms_key(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key = std::option::Option::Some(v.into());
@@ -462,8 +513,8 @@ impl AthenaDatabaseEncryptionConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for AthenaDatabaseEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<AthenaDatabaseEncryptionConfigurationEl>;
+impl terrars::ToListMappable for AthenaDatabase_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<AthenaDatabase_EncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -474,35 +525,37 @@ impl terrars::ToListMappable for AthenaDatabaseEncryptionConfigurationEl {
     }
 }
 
-pub struct BuildAthenaDatabaseEncryptionConfigurationEl {
+pub struct BuildAthenaDatabase_EncryptionConfiguration {
     #[doc = ""]
     pub encryption_option: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAthenaDatabaseEncryptionConfigurationEl {
-    pub fn build(self) -> AthenaDatabaseEncryptionConfigurationEl {
-        AthenaDatabaseEncryptionConfigurationEl {
+impl BuildAthenaDatabase_EncryptionConfiguration {
+    pub fn build(self) -> AthenaDatabase_EncryptionConfiguration {
+        AthenaDatabase_EncryptionConfiguration {
             encryption_option: self.encryption_option,
             kms_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct AthenaDatabaseEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct AthenaDatabase_EncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AthenaDatabaseEncryptionConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AthenaDatabaseEncryptionConfigurationElRef {
-        AthenaDatabaseEncryptionConfigurationElRef {
+impl terrars::Ref for AthenaDatabase_EncryptionConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AthenaDatabase_EncryptionConfigurationRef {
+        AthenaDatabase_EncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AthenaDatabaseEncryptionConfigurationElRef {
+impl AthenaDatabase_EncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -516,10 +569,4 @@ impl AthenaDatabaseEncryptionConfigurationElRef {
     pub fn kms_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AthenaDatabaseDynamic {
-    acl_configuration: std::option::Option<terrars::DynamicBlock<AthenaDatabaseAclConfigurationEl>>,
-    encryption_configuration: std::option::Option<terrars::DynamicBlock<AthenaDatabaseEncryptionConfigurationEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataAmiData {
+struct DataAmiData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -16,6 +18,8 @@ struct DataAmiData {
     lifecycle: terrars::DatasourceLifecycle,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allow_unsafe_filter: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     executable_users: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,18 +33,22 @@ struct DataAmiData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     owners: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataAmiFilterEl>>,
+    uefi_data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataAmiTimeoutsEl>,
+    filter: std::option::Option<std::vec::Vec<DataAmi_Filter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataAmi_Timeouts>,
     dynamic: DataAmiDynamic,
 }
 
 struct DataAmi_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAmiData>,
+    data: std::cell::RefCell<DataAmiData_>,
 }
 
 #[derive(Clone)]
@@ -82,6 +90,12 @@ impl DataAmi {
             condition: condition.into(),
             error_message: error_message.into(),
         });
+        self
+    }
+
+    #[doc = "Set the field `allow_unsafe_filter`.\n"]
+    pub fn set_allow_unsafe_filter(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().allow_unsafe_filter = std::option::Option::Some(v.into());
         self
     }
 
@@ -127,6 +141,13 @@ impl DataAmi {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -136,8 +157,14 @@ impl DataAmi {
         self
     }
 
+    #[doc = "Set the field `uefi_data`.\n"]
+    pub fn set_uefi_data(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().uefi_data = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataAmiFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataAmi_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -150,9 +177,14 @@ impl DataAmi {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataAmiTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataAmi_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Get a reference to the value of field `allow_unsafe_filter` after provisioning.\n"]
+    pub fn allow_unsafe_filter(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_unsafe_filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `architecture` after provisioning.\n"]
@@ -166,7 +198,7 @@ impl DataAmi {
     }
 
     #[doc = "Get a reference to the value of field `block_device_mappings` after provisioning.\n"]
-    pub fn block_device_mappings(&self) -> terrars::SetRef<DataAmiBlockDeviceMappingsElRef> {
+    pub fn block_device_mappings(&self) -> terrars::SetRef<DataAmi_BlockDeviceMappingsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.block_device_mappings", self.extract_ref()))
     }
 
@@ -245,6 +277,11 @@ impl DataAmi {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kernel_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `last_launched_time` after provisioning.\n"]
+    pub fn last_launched_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_launched_time", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `most_recent` after provisioning.\n"]
     pub fn most_recent(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.most_recent", self.extract_ref()))
@@ -281,7 +318,7 @@ impl DataAmi {
     }
 
     #[doc = "Get a reference to the value of field `product_codes` after provisioning.\n"]
-    pub fn product_codes(&self) -> terrars::SetRef<DataAmiProductCodesElRef> {
+    pub fn product_codes(&self) -> terrars::SetRef<DataAmi_ProductCodesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.product_codes", self.extract_ref()))
     }
 
@@ -293,6 +330,12 @@ impl DataAmi {
     #[doc = "Get a reference to the value of field `ramdisk_id` after provisioning.\n"]
     pub fn ramdisk_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ramdisk_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_device_name` after provisioning.\n"]
@@ -335,6 +378,11 @@ impl DataAmi {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tpm_support", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `uefi_data` after provisioning.\n"]
+    pub fn uefi_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uefi_data", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `usage_operation` after provisioning.\n"]
     pub fn usage_operation(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.usage_operation", self.extract_ref()))
@@ -346,8 +394,8 @@ impl DataAmi {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAmiTimeoutsElRef {
-        DataAmiTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAmi_TimeoutsRef {
+        DataAmi_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -391,18 +439,21 @@ impl BuildDataAmi {
         let out = DataAmi(std::rc::Rc::new(DataAmi_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAmiData {
+            data: std::cell::RefCell::new(DataAmiData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
+                allow_unsafe_filter: core::default::Default::default(),
                 executable_users: core::default::Default::default(),
                 id: core::default::Default::default(),
                 include_deprecated: core::default::Default::default(),
                 most_recent: core::default::Default::default(),
                 name_regex: core::default::Default::default(),
                 owners: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
+                uefi_data: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -436,6 +487,11 @@ impl DataAmiRef {
         self.base.clone()
     }
 
+    #[doc = "Get a reference to the value of field `allow_unsafe_filter` after provisioning.\n"]
+    pub fn allow_unsafe_filter(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allow_unsafe_filter", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `architecture` after provisioning.\n"]
     pub fn architecture(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.architecture", self.extract_ref()))
@@ -447,7 +503,7 @@ impl DataAmiRef {
     }
 
     #[doc = "Get a reference to the value of field `block_device_mappings` after provisioning.\n"]
-    pub fn block_device_mappings(&self) -> terrars::SetRef<DataAmiBlockDeviceMappingsElRef> {
+    pub fn block_device_mappings(&self) -> terrars::SetRef<DataAmi_BlockDeviceMappingsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.block_device_mappings", self.extract_ref()))
     }
 
@@ -526,6 +582,11 @@ impl DataAmiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kernel_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `last_launched_time` after provisioning.\n"]
+    pub fn last_launched_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_launched_time", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `most_recent` after provisioning.\n"]
     pub fn most_recent(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.most_recent", self.extract_ref()))
@@ -562,7 +623,7 @@ impl DataAmiRef {
     }
 
     #[doc = "Get a reference to the value of field `product_codes` after provisioning.\n"]
-    pub fn product_codes(&self) -> terrars::SetRef<DataAmiProductCodesElRef> {
+    pub fn product_codes(&self) -> terrars::SetRef<DataAmi_ProductCodesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.product_codes", self.extract_ref()))
     }
 
@@ -574,6 +635,12 @@ impl DataAmiRef {
     #[doc = "Get a reference to the value of field `ramdisk_id` after provisioning.\n"]
     pub fn ramdisk_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ramdisk_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_device_name` after provisioning.\n"]
@@ -616,6 +683,11 @@ impl DataAmiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tpm_support", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `uefi_data` after provisioning.\n"]
+    pub fn uefi_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uefi_data", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `usage_operation` after provisioning.\n"]
     pub fn usage_operation(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.usage_operation", self.extract_ref()))
@@ -627,13 +699,18 @@ impl DataAmiRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAmiTimeoutsElRef {
-        DataAmiTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAmi_TimeoutsRef {
+        DataAmi_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataAmiDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataAmi_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataAmiBlockDeviceMappingsEl {
+pub struct DataAmi_BlockDeviceMappings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -644,7 +721,7 @@ pub struct DataAmiBlockDeviceMappingsEl {
     virtual_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAmiBlockDeviceMappingsEl {
+impl DataAmi_BlockDeviceMappings {
     #[doc = "Set the field `device_name`.\n"]
     pub fn set_device_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.device_name = std::option::Option::Some(v.into());
@@ -673,8 +750,8 @@ impl DataAmiBlockDeviceMappingsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAmiBlockDeviceMappingsEl {
-    type O = terrars::BlockAssignable<DataAmiBlockDeviceMappingsEl>;
+impl terrars::ToListMappable for DataAmi_BlockDeviceMappings {
+    type O = terrars::BlockAssignable<DataAmi_BlockDeviceMappings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -685,11 +762,11 @@ impl terrars::ToListMappable for DataAmiBlockDeviceMappingsEl {
     }
 }
 
-pub struct BuildDataAmiBlockDeviceMappingsEl {}
+pub struct BuildDataAmi_BlockDeviceMappings {}
 
-impl BuildDataAmiBlockDeviceMappingsEl {
-    pub fn build(self) -> DataAmiBlockDeviceMappingsEl {
-        DataAmiBlockDeviceMappingsEl {
+impl BuildDataAmi_BlockDeviceMappings {
+    pub fn build(self) -> DataAmi_BlockDeviceMappings {
+        DataAmi_BlockDeviceMappings {
             device_name: core::default::Default::default(),
             ebs: core::default::Default::default(),
             no_device: core::default::Default::default(),
@@ -698,21 +775,23 @@ impl BuildDataAmiBlockDeviceMappingsEl {
     }
 }
 
-pub struct DataAmiBlockDeviceMappingsElRef {
+#[allow(dead_code)]
+pub struct DataAmi_BlockDeviceMappingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAmiBlockDeviceMappingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmiBlockDeviceMappingsElRef {
-        DataAmiBlockDeviceMappingsElRef {
+impl terrars::Ref for DataAmi_BlockDeviceMappingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmi_BlockDeviceMappingsRef {
+        DataAmi_BlockDeviceMappingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAmiBlockDeviceMappingsElRef {
+impl DataAmi_BlockDeviceMappingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -739,14 +818,14 @@ impl DataAmiBlockDeviceMappingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAmiProductCodesEl {
+pub struct DataAmi_ProductCodes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     product_code_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     product_code_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAmiProductCodesEl {
+impl DataAmi_ProductCodes {
     #[doc = "Set the field `product_code_id`.\n"]
     pub fn set_product_code_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.product_code_id = std::option::Option::Some(v.into());
@@ -760,8 +839,8 @@ impl DataAmiProductCodesEl {
     }
 }
 
-impl terrars::ToListMappable for DataAmiProductCodesEl {
-    type O = terrars::BlockAssignable<DataAmiProductCodesEl>;
+impl terrars::ToListMappable for DataAmi_ProductCodes {
+    type O = terrars::BlockAssignable<DataAmi_ProductCodes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -772,32 +851,34 @@ impl terrars::ToListMappable for DataAmiProductCodesEl {
     }
 }
 
-pub struct BuildDataAmiProductCodesEl {}
+pub struct BuildDataAmi_ProductCodes {}
 
-impl BuildDataAmiProductCodesEl {
-    pub fn build(self) -> DataAmiProductCodesEl {
-        DataAmiProductCodesEl {
+impl BuildDataAmi_ProductCodes {
+    pub fn build(self) -> DataAmi_ProductCodes {
+        DataAmi_ProductCodes {
             product_code_id: core::default::Default::default(),
             product_code_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataAmiProductCodesElRef {
+#[allow(dead_code)]
+pub struct DataAmi_ProductCodesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAmiProductCodesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmiProductCodesElRef {
-        DataAmiProductCodesElRef {
+impl terrars::Ref for DataAmi_ProductCodesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmi_ProductCodesRef {
+        DataAmi_ProductCodesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAmiProductCodesElRef {
+impl DataAmi_ProductCodesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -814,15 +895,15 @@ impl DataAmiProductCodesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataAmiFilterEl {
+pub struct DataAmi_Filter {
     name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAmiFilterEl { }
+impl DataAmi_Filter { }
 
-impl terrars::ToListMappable for DataAmiFilterEl {
-    type O = terrars::BlockAssignable<DataAmiFilterEl>;
+impl terrars::ToListMappable for DataAmi_Filter {
+    type O = terrars::BlockAssignable<DataAmi_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -833,37 +914,39 @@ impl terrars::ToListMappable for DataAmiFilterEl {
     }
 }
 
-pub struct BuildDataAmiFilterEl {
+pub struct BuildDataAmi_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataAmiFilterEl {
-    pub fn build(self) -> DataAmiFilterEl {
-        DataAmiFilterEl {
+impl BuildDataAmi_Filter {
+    pub fn build(self) -> DataAmi_Filter {
+        DataAmi_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataAmiFilterElRef {
+#[allow(dead_code)]
+pub struct DataAmi_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAmiFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmiFilterElRef {
-        DataAmiFilterElRef {
+impl terrars::Ref for DataAmi_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmi_FilterRef {
+        DataAmi_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAmiFilterElRef {
+impl DataAmi_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -874,18 +957,18 @@ impl DataAmiFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAmiTimeoutsEl {
+pub struct DataAmi_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAmiTimeoutsEl {
+impl DataAmi_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -893,8 +976,8 @@ impl DataAmiTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAmiTimeoutsEl {
-    type O = terrars::BlockAssignable<DataAmiTimeoutsEl>;
+impl terrars::ToListMappable for DataAmi_Timeouts {
+    type O = terrars::BlockAssignable<DataAmi_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -905,29 +988,31 @@ impl terrars::ToListMappable for DataAmiTimeoutsEl {
     }
 }
 
-pub struct BuildDataAmiTimeoutsEl {}
+pub struct BuildDataAmi_Timeouts {}
 
-impl BuildDataAmiTimeoutsEl {
-    pub fn build(self) -> DataAmiTimeoutsEl {
-        DataAmiTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataAmi_Timeouts {
+    pub fn build(self) -> DataAmi_Timeouts {
+        DataAmi_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataAmiTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataAmi_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAmiTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmiTimeoutsElRef {
-        DataAmiTimeoutsElRef {
+impl terrars::Ref for DataAmi_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmi_TimeoutsRef {
+        DataAmi_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAmiTimeoutsElRef {
+impl DataAmi_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -936,9 +1021,4 @@ impl DataAmiTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataAmiDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataAmiFilterEl>>,
 }

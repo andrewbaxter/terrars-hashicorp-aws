@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RdsClusterData {
+struct RdsClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,11 +27,15 @@ struct RdsClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     apply_immediately: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_minor_version_upgrade: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zones: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backtrack_window: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backup_retention_period: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ca_certificate_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,7 +43,11 @@ struct RdsClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cluster_members: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cluster_scalability_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     copy_tags_to_snapshot: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    database_insights_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     database_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -49,15 +59,26 @@ struct RdsClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     db_subnet_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    db_system_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete_automated_backups: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deletion_protection: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_iam_role_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_global_write_forwarding: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_http_endpoint: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled_cloudwatch_logs_exports: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    enable_local_write_forwarding: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    engine: std::option::Option<terrars::PrimField<std::string::String>>,
+    enabled_cloudwatch_logs_exports: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    engine: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    engine_lifecycle_support: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -77,17 +98,39 @@ struct RdsClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    manage_master_user_password: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     master_password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_password_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_password_wo_version: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_user_secret_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     master_username: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    monitoring_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    monitoring_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    performance_insights_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    performance_insights_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    performance_insights_retention_period: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_backup_window: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_maintenance_window: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    publicly_accessible: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replication_source_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -107,22 +150,24 @@ struct RdsClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    restore_to_point_in_time: std::option::Option<std::vec::Vec<RdsClusterRestoreToPointInTimeEl>>,
+    warning_event_categories: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_import: std::option::Option<std::vec::Vec<RdsClusterS3ImportEl>>,
+    restore_to_point_in_time: std::option::Option<std::vec::Vec<RdsCluster_RestoreToPointInTime>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scaling_configuration: std::option::Option<std::vec::Vec<RdsClusterScalingConfigurationEl>>,
+    s3_import: std::option::Option<std::vec::Vec<RdsCluster_S3Import>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    serverlessv2_scaling_configuration: std::option::Option<std::vec::Vec<RdsClusterServerlessv2ScalingConfigurationEl>>,
+    scaling_configuration: std::option::Option<std::vec::Vec<RdsCluster_ScalingConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RdsClusterTimeoutsEl>,
+    serverlessv2_scaling_configuration: std::option::Option<std::vec::Vec<RdsCluster_Serverlessv2ScalingConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<RdsCluster_Timeouts>,
     dynamic: RdsClusterDynamic,
 }
 
 struct RdsCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RdsClusterData>,
+    data: std::cell::RefCell<RdsClusterData_>,
 }
 
 #[derive(Clone)]
@@ -240,6 +285,12 @@ impl RdsCluster {
         self
     }
 
+    #[doc = "Set the field `auto_minor_version_upgrade`.\n"]
+    pub fn set_auto_minor_version_upgrade(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().auto_minor_version_upgrade = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `availability_zones`.\n"]
     pub fn set_availability_zones(
         self,
@@ -258,6 +309,15 @@ impl RdsCluster {
     #[doc = "Set the field `backup_retention_period`.\n"]
     pub fn set_backup_retention_period(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().backup_retention_period = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ca_certificate_identifier`.\n"]
+    pub fn set_ca_certificate_identifier(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().ca_certificate_identifier = std::option::Option::Some(v.into());
         self
     }
 
@@ -285,9 +345,27 @@ impl RdsCluster {
         self
     }
 
+    #[doc = "Set the field `cluster_scalability_type`.\n"]
+    pub fn set_cluster_scalability_type(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().cluster_scalability_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `copy_tags_to_snapshot`.\n"]
     pub fn set_copy_tags_to_snapshot(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().copy_tags_to_snapshot = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `database_insights_mode`.\n"]
+    pub fn set_database_insights_mode(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().database_insights_mode = std::option::Option::Some(v.into());
         self
     }
 
@@ -330,9 +408,33 @@ impl RdsCluster {
         self
     }
 
+    #[doc = "Set the field `db_system_id`.\n"]
+    pub fn set_db_system_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().db_system_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete_automated_backups`.\n"]
+    pub fn set_delete_automated_backups(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().delete_automated_backups = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `deletion_protection`.\n"]
     pub fn set_deletion_protection(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().deletion_protection = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `domain`.\n"]
+    pub fn set_domain(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().domain = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `domain_iam_role_name`.\n"]
+    pub fn set_domain_iam_role_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().domain_iam_role_name = std::option::Option::Some(v.into());
         self
     }
 
@@ -348,6 +450,12 @@ impl RdsCluster {
         self
     }
 
+    #[doc = "Set the field `enable_local_write_forwarding`.\n"]
+    pub fn set_enable_local_write_forwarding(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_local_write_forwarding = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enabled_cloudwatch_logs_exports`.\n"]
     pub fn set_enabled_cloudwatch_logs_exports(
         self,
@@ -357,9 +465,12 @@ impl RdsCluster {
         self
     }
 
-    #[doc = "Set the field `engine`.\n"]
-    pub fn set_engine(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().engine = std::option::Option::Some(v.into());
+    #[doc = "Set the field `engine_lifecycle_support`.\n"]
+    pub fn set_engine_lifecycle_support(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().engine_lifecycle_support = std::option::Option::Some(v.into());
         self
     }
 
@@ -426,9 +537,36 @@ impl RdsCluster {
         self
     }
 
+    #[doc = "Set the field `manage_master_user_password`.\n"]
+    pub fn set_manage_master_user_password(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().manage_master_user_password = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `master_password`.\n"]
     pub fn set_master_password(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().master_password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `master_password_wo`.\n"]
+    pub fn set_master_password_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().master_password_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `master_password_wo_version`.\n"]
+    pub fn set_master_password_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().master_password_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `master_user_secret_kms_key_id`.\n"]
+    pub fn set_master_user_secret_kms_key_id(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().master_user_secret_kms_key_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -438,9 +576,42 @@ impl RdsCluster {
         self
     }
 
+    #[doc = "Set the field `monitoring_interval`.\n"]
+    pub fn set_monitoring_interval(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().monitoring_interval = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `monitoring_role_arn`.\n"]
+    pub fn set_monitoring_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().monitoring_role_arn = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `network_type`.\n"]
     pub fn set_network_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().network_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `performance_insights_enabled`.\n"]
+    pub fn set_performance_insights_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().performance_insights_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `performance_insights_kms_key_id`.\n"]
+    pub fn set_performance_insights_kms_key_id(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().performance_insights_kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `performance_insights_retention_period`.\n"]
+    pub fn set_performance_insights_retention_period(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().performance_insights_retention_period = std::option::Option::Some(v.into());
         self
     }
 
@@ -465,6 +636,19 @@ impl RdsCluster {
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().preferred_maintenance_window = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `publicly_accessible`.\n"]
+    pub fn set_publicly_accessible(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().publicly_accessible = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -534,10 +718,19 @@ impl RdsCluster {
         self
     }
 
+    #[doc = "Set the field `warning_event_categories`.\n"]
+    pub fn set_warning_event_categories(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().warning_event_categories = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `restore_to_point_in_time`.\n"]
     pub fn set_restore_to_point_in_time(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RdsClusterRestoreToPointInTimeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RdsCluster_RestoreToPointInTime>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -551,7 +744,7 @@ impl RdsCluster {
     }
 
     #[doc = "Set the field `s3_import`.\n"]
-    pub fn set_s3_import(self, v: impl std::convert::Into<terrars::BlockAssignable<RdsClusterS3ImportEl>>) -> Self {
+    pub fn set_s3_import(self, v: impl std::convert::Into<terrars::BlockAssignable<RdsCluster_S3Import>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().s3_import = std::option::Option::Some(v);
@@ -566,7 +759,7 @@ impl RdsCluster {
     #[doc = "Set the field `scaling_configuration`.\n"]
     pub fn set_scaling_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RdsClusterScalingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RdsCluster_ScalingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -582,7 +775,7 @@ impl RdsCluster {
     #[doc = "Set the field `serverlessv2_scaling_configuration`.\n"]
     pub fn set_serverlessv2_scaling_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RdsClusterServerlessv2ScalingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RdsCluster_Serverlessv2ScalingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -596,7 +789,7 @@ impl RdsCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RdsClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RdsCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -621,6 +814,11 @@ impl RdsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `auto_minor_version_upgrade` after provisioning.\n"]
+    pub fn auto_minor_version_upgrade(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_minor_version_upgrade", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `availability_zones` after provisioning.\n"]
     pub fn availability_zones(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.availability_zones", self.extract_ref()))
@@ -634,6 +832,16 @@ impl RdsCluster {
     #[doc = "Get a reference to the value of field `backup_retention_period` after provisioning.\n"]
     pub fn backup_retention_period(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_retention_period", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ca_certificate_identifier` after provisioning.\n"]
+    pub fn ca_certificate_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_certificate_identifier", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ca_certificate_valid_till` after provisioning.\n"]
+    pub fn ca_certificate_valid_till(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_certificate_valid_till", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster_identifier` after provisioning.\n"]
@@ -656,9 +864,19 @@ impl RdsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_resource_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_scalability_type` after provisioning.\n"]
+    pub fn cluster_scalability_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_scalability_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `copy_tags_to_snapshot` after provisioning.\n"]
     pub fn copy_tags_to_snapshot(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.copy_tags_to_snapshot", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `database_insights_mode` after provisioning.\n"]
+    pub fn database_insights_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_insights_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
@@ -692,9 +910,29 @@ impl RdsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_subnet_group_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `db_system_id` after provisioning.\n"]
+    pub fn db_system_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_system_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `delete_automated_backups` after provisioning.\n"]
+    pub fn delete_automated_backups(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_automated_backups", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `deletion_protection` after provisioning.\n"]
     pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain` after provisioning.\n"]
+    pub fn domain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_iam_role_name` after provisioning.\n"]
+    pub fn domain_iam_role_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_iam_role_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enable_global_write_forwarding` after provisioning.\n"]
@@ -708,6 +946,14 @@ impl RdsCluster {
     #[doc = "Get a reference to the value of field `enable_http_endpoint` after provisioning.\n"]
     pub fn enable_http_endpoint(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_http_endpoint", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_local_write_forwarding` after provisioning.\n"]
+    pub fn enable_local_write_forwarding(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_local_write_forwarding", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `enabled_cloudwatch_logs_exports` after provisioning.\n"]
@@ -726,6 +972,11 @@ impl RdsCluster {
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
     pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine_lifecycle_support` after provisioning.\n"]
+    pub fn engine_lifecycle_support(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_lifecycle_support", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_mode` after provisioning.\n"]
@@ -786,9 +1037,37 @@ impl RdsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `manage_master_user_password` after provisioning.\n"]
+    pub fn manage_master_user_password(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_master_user_password", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `master_password` after provisioning.\n"]
     pub fn master_password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_wo` after provisioning.\n"]
+    pub fn master_password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_wo_version` after provisioning.\n"]
+    pub fn master_password_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_wo_version", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_user_secret` after provisioning.\n"]
+    pub fn master_user_secret(&self) -> terrars::ListRef<RdsCluster_MasterUserSecretRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_user_secret", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_user_secret_kms_key_id` after provisioning.\n"]
+    pub fn master_user_secret_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.master_user_secret_kms_key_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `master_username` after provisioning.\n"]
@@ -796,9 +1075,40 @@ impl RdsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_username", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `monitoring_interval` after provisioning.\n"]
+    pub fn monitoring_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_interval", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `monitoring_role_arn` after provisioning.\n"]
+    pub fn monitoring_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_role_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
     pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `performance_insights_enabled` after provisioning.\n"]
+    pub fn performance_insights_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.performance_insights_enabled", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `performance_insights_kms_key_id` after provisioning.\n"]
+    pub fn performance_insights_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.performance_insights_kms_key_id", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `performance_insights_retention_period` after provisioning.\n"]
+    pub fn performance_insights_retention_period(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.performance_insights_retention_period", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
@@ -816,9 +1126,20 @@ impl RdsCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_maintenance_window", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `publicly_accessible` after provisioning.\n"]
+    pub fn publicly_accessible(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `reader_endpoint` after provisioning.\n"]
     pub fn reader_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reader_endpoint", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_source_identifier` after provisioning.\n"]
@@ -864,30 +1185,38 @@ impl RdsCluster {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `upgrade_rollout_order` after provisioning.\n"]
+    pub fn upgrade_rollout_order(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upgrade_rollout_order", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
     pub fn vpc_security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `warning_event_categories` after provisioning.\n"]
+    pub fn warning_event_categories(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.warning_event_categories", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `restore_to_point_in_time` after provisioning.\n"]
-    pub fn restore_to_point_in_time(&self) -> terrars::ListRef<RdsClusterRestoreToPointInTimeElRef> {
+    pub fn restore_to_point_in_time(&self) -> terrars::ListRef<RdsCluster_RestoreToPointInTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_to_point_in_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_import` after provisioning.\n"]
-    pub fn s3_import(&self) -> terrars::ListRef<RdsClusterS3ImportElRef> {
+    pub fn s3_import(&self) -> terrars::ListRef<RdsCluster_S3ImportRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_import", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scaling_configuration` after provisioning.\n"]
-    pub fn scaling_configuration(&self) -> terrars::ListRef<RdsClusterScalingConfigurationElRef> {
+    pub fn scaling_configuration(&self) -> terrars::ListRef<RdsCluster_ScalingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scaling_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `serverlessv2_scaling_configuration` after provisioning.\n"]
-    pub fn serverlessv2_scaling_configuration(
-        &self,
-    ) -> terrars::ListRef<RdsClusterServerlessv2ScalingConfigurationElRef> {
+    pub fn serverlessv2_scaling_configuration(&self) -> terrars::ListRef<RdsCluster_Serverlessv2ScalingConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.serverlessv2_scaling_configuration", self.extract_ref()),
@@ -895,8 +1224,8 @@ impl RdsCluster {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RdsClusterTimeoutsElRef {
-        RdsClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RdsCluster_TimeoutsRef {
+        RdsCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -933,6 +1262,8 @@ impl terrars::Resource_ for RdsCluster_ {
 
 pub struct BuildRdsCluster {
     pub tf_id: std::string::String,
+    #[doc = ""]
+    pub engine: terrars::PrimField<std::string::String>,
 }
 
 impl BuildRdsCluster {
@@ -940,7 +1271,7 @@ impl BuildRdsCluster {
         let out = RdsCluster(std::rc::Rc::new(RdsCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RdsClusterData {
+            data: std::cell::RefCell::new(RdsClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -949,23 +1280,33 @@ impl BuildRdsCluster {
                 allocated_storage: core::default::Default::default(),
                 allow_major_version_upgrade: core::default::Default::default(),
                 apply_immediately: core::default::Default::default(),
+                auto_minor_version_upgrade: core::default::Default::default(),
                 availability_zones: core::default::Default::default(),
                 backtrack_window: core::default::Default::default(),
                 backup_retention_period: core::default::Default::default(),
+                ca_certificate_identifier: core::default::Default::default(),
                 cluster_identifier: core::default::Default::default(),
                 cluster_identifier_prefix: core::default::Default::default(),
                 cluster_members: core::default::Default::default(),
+                cluster_scalability_type: core::default::Default::default(),
                 copy_tags_to_snapshot: core::default::Default::default(),
+                database_insights_mode: core::default::Default::default(),
                 database_name: core::default::Default::default(),
                 db_cluster_instance_class: core::default::Default::default(),
                 db_cluster_parameter_group_name: core::default::Default::default(),
                 db_instance_parameter_group_name: core::default::Default::default(),
                 db_subnet_group_name: core::default::Default::default(),
+                db_system_id: core::default::Default::default(),
+                delete_automated_backups: core::default::Default::default(),
                 deletion_protection: core::default::Default::default(),
+                domain: core::default::Default::default(),
+                domain_iam_role_name: core::default::Default::default(),
                 enable_global_write_forwarding: core::default::Default::default(),
                 enable_http_endpoint: core::default::Default::default(),
+                enable_local_write_forwarding: core::default::Default::default(),
                 enabled_cloudwatch_logs_exports: core::default::Default::default(),
-                engine: core::default::Default::default(),
+                engine: self.engine,
+                engine_lifecycle_support: core::default::Default::default(),
                 engine_mode: core::default::Default::default(),
                 engine_version: core::default::Default::default(),
                 final_snapshot_identifier: core::default::Default::default(),
@@ -975,12 +1316,23 @@ impl BuildRdsCluster {
                 id: core::default::Default::default(),
                 iops: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
+                manage_master_user_password: core::default::Default::default(),
                 master_password: core::default::Default::default(),
+                master_password_wo: core::default::Default::default(),
+                master_password_wo_version: core::default::Default::default(),
+                master_user_secret_kms_key_id: core::default::Default::default(),
                 master_username: core::default::Default::default(),
+                monitoring_interval: core::default::Default::default(),
+                monitoring_role_arn: core::default::Default::default(),
                 network_type: core::default::Default::default(),
+                performance_insights_enabled: core::default::Default::default(),
+                performance_insights_kms_key_id: core::default::Default::default(),
+                performance_insights_retention_period: core::default::Default::default(),
                 port: core::default::Default::default(),
                 preferred_backup_window: core::default::Default::default(),
                 preferred_maintenance_window: core::default::Default::default(),
+                publicly_accessible: core::default::Default::default(),
+                region: core::default::Default::default(),
                 replication_source_identifier: core::default::Default::default(),
                 skip_final_snapshot: core::default::Default::default(),
                 snapshot_identifier: core::default::Default::default(),
@@ -990,6 +1342,7 @@ impl BuildRdsCluster {
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 vpc_security_group_ids: core::default::Default::default(),
+                warning_event_categories: core::default::Default::default(),
                 restore_to_point_in_time: core::default::Default::default(),
                 s3_import: core::default::Default::default(),
                 scaling_configuration: core::default::Default::default(),
@@ -1046,6 +1399,11 @@ impl RdsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `auto_minor_version_upgrade` after provisioning.\n"]
+    pub fn auto_minor_version_upgrade(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_minor_version_upgrade", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `availability_zones` after provisioning.\n"]
     pub fn availability_zones(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.availability_zones", self.extract_ref()))
@@ -1059,6 +1417,16 @@ impl RdsClusterRef {
     #[doc = "Get a reference to the value of field `backup_retention_period` after provisioning.\n"]
     pub fn backup_retention_period(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_retention_period", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ca_certificate_identifier` after provisioning.\n"]
+    pub fn ca_certificate_identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_certificate_identifier", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ca_certificate_valid_till` after provisioning.\n"]
+    pub fn ca_certificate_valid_till(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ca_certificate_valid_till", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster_identifier` after provisioning.\n"]
@@ -1081,9 +1449,19 @@ impl RdsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_resource_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_scalability_type` after provisioning.\n"]
+    pub fn cluster_scalability_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_scalability_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `copy_tags_to_snapshot` after provisioning.\n"]
     pub fn copy_tags_to_snapshot(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.copy_tags_to_snapshot", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `database_insights_mode` after provisioning.\n"]
+    pub fn database_insights_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_insights_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `database_name` after provisioning.\n"]
@@ -1117,9 +1495,29 @@ impl RdsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_subnet_group_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `db_system_id` after provisioning.\n"]
+    pub fn db_system_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_system_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `delete_automated_backups` after provisioning.\n"]
+    pub fn delete_automated_backups(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_automated_backups", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `deletion_protection` after provisioning.\n"]
     pub fn deletion_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.deletion_protection", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain` after provisioning.\n"]
+    pub fn domain(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_iam_role_name` after provisioning.\n"]
+    pub fn domain_iam_role_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_iam_role_name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enable_global_write_forwarding` after provisioning.\n"]
@@ -1133,6 +1531,14 @@ impl RdsClusterRef {
     #[doc = "Get a reference to the value of field `enable_http_endpoint` after provisioning.\n"]
     pub fn enable_http_endpoint(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_http_endpoint", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_local_write_forwarding` after provisioning.\n"]
+    pub fn enable_local_write_forwarding(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.enable_local_write_forwarding", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `enabled_cloudwatch_logs_exports` after provisioning.\n"]
@@ -1151,6 +1557,11 @@ impl RdsClusterRef {
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
     pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine_lifecycle_support` after provisioning.\n"]
+    pub fn engine_lifecycle_support(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_lifecycle_support", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_mode` after provisioning.\n"]
@@ -1211,9 +1622,37 @@ impl RdsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `manage_master_user_password` after provisioning.\n"]
+    pub fn manage_master_user_password(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_master_user_password", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `master_password` after provisioning.\n"]
     pub fn master_password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_wo` after provisioning.\n"]
+    pub fn master_password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_password_wo_version` after provisioning.\n"]
+    pub fn master_password_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_password_wo_version", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_user_secret` after provisioning.\n"]
+    pub fn master_user_secret(&self) -> terrars::ListRef<RdsCluster_MasterUserSecretRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_user_secret", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_user_secret_kms_key_id` after provisioning.\n"]
+    pub fn master_user_secret_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.master_user_secret_kms_key_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `master_username` after provisioning.\n"]
@@ -1221,9 +1660,40 @@ impl RdsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_username", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `monitoring_interval` after provisioning.\n"]
+    pub fn monitoring_interval(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_interval", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `monitoring_role_arn` after provisioning.\n"]
+    pub fn monitoring_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.monitoring_role_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
     pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `performance_insights_enabled` after provisioning.\n"]
+    pub fn performance_insights_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.performance_insights_enabled", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `performance_insights_kms_key_id` after provisioning.\n"]
+    pub fn performance_insights_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.performance_insights_kms_key_id", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `performance_insights_retention_period` after provisioning.\n"]
+    pub fn performance_insights_retention_period(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.performance_insights_retention_period", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
@@ -1241,9 +1711,20 @@ impl RdsClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_maintenance_window", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `publicly_accessible` after provisioning.\n"]
+    pub fn publicly_accessible(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `reader_endpoint` after provisioning.\n"]
     pub fn reader_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.reader_endpoint", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_source_identifier` after provisioning.\n"]
@@ -1289,30 +1770,38 @@ impl RdsClusterRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `upgrade_rollout_order` after provisioning.\n"]
+    pub fn upgrade_rollout_order(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upgrade_rollout_order", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `vpc_security_group_ids` after provisioning.\n"]
     pub fn vpc_security_group_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `warning_event_categories` after provisioning.\n"]
+    pub fn warning_event_categories(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.warning_event_categories", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `restore_to_point_in_time` after provisioning.\n"]
-    pub fn restore_to_point_in_time(&self) -> terrars::ListRef<RdsClusterRestoreToPointInTimeElRef> {
+    pub fn restore_to_point_in_time(&self) -> terrars::ListRef<RdsCluster_RestoreToPointInTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_to_point_in_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_import` after provisioning.\n"]
-    pub fn s3_import(&self) -> terrars::ListRef<RdsClusterS3ImportElRef> {
+    pub fn s3_import(&self) -> terrars::ListRef<RdsCluster_S3ImportRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_import", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scaling_configuration` after provisioning.\n"]
-    pub fn scaling_configuration(&self) -> terrars::ListRef<RdsClusterScalingConfigurationElRef> {
+    pub fn scaling_configuration(&self) -> terrars::ListRef<RdsCluster_ScalingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scaling_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `serverlessv2_scaling_configuration` after provisioning.\n"]
-    pub fn serverlessv2_scaling_configuration(
-        &self,
-    ) -> terrars::ListRef<RdsClusterServerlessv2ScalingConfigurationElRef> {
+    pub fn serverlessv2_scaling_configuration(&self) -> terrars::ListRef<RdsCluster_Serverlessv2ScalingConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.serverlessv2_scaling_configuration", self.extract_ref()),
@@ -1320,23 +1809,127 @@ impl RdsClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RdsClusterTimeoutsElRef {
-        RdsClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RdsCluster_TimeoutsRef {
+        RdsCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct RdsClusterDynamic {
+    restore_to_point_in_time: std::option::Option<terrars::DynamicBlock<RdsCluster_RestoreToPointInTime>>,
+    s3_import: std::option::Option<terrars::DynamicBlock<RdsCluster_S3Import>>,
+    scaling_configuration: std::option::Option<terrars::DynamicBlock<RdsCluster_ScalingConfiguration>>,
+    serverlessv2_scaling_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<RdsCluster_Serverlessv2ScalingConfiguration>>,
+}
+
+#[derive(Serialize)]
+pub struct RdsCluster_MasterUserSecret {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_status: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl RdsCluster_MasterUserSecret {
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_arn`.\n"]
+    pub fn set_secret_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_status`.\n"]
+    pub fn set_secret_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_status = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for RdsCluster_MasterUserSecret {
+    type O = terrars::BlockAssignable<RdsCluster_MasterUserSecret>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRdsCluster_MasterUserSecret {}
+
+impl BuildRdsCluster_MasterUserSecret {
+    pub fn build(self) -> RdsCluster_MasterUserSecret {
+        RdsCluster_MasterUserSecret {
+            kms_key_id: core::default::Default::default(),
+            secret_arn: core::default::Default::default(),
+            secret_status: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct RdsCluster_MasterUserSecretRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for RdsCluster_MasterUserSecretRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsCluster_MasterUserSecretRef {
+        RdsCluster_MasterUserSecretRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl RdsCluster_MasterUserSecretRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
+    pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_status` after provisioning.\n"]
+    pub fn secret_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_status", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct RdsClusterRestoreToPointInTimeEl {
+pub struct RdsCluster_RestoreToPointInTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     restore_to_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     restore_type: std::option::Option<terrars::PrimField<std::string::String>>,
-    source_cluster_identifier: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_cluster_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    source_cluster_resource_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_latest_restorable_time: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl RdsClusterRestoreToPointInTimeEl {
+impl RdsCluster_RestoreToPointInTime {
     #[doc = "Set the field `restore_to_time`.\n"]
     pub fn set_restore_to_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.restore_to_time = std::option::Option::Some(v.into());
@@ -1349,6 +1942,24 @@ impl RdsClusterRestoreToPointInTimeEl {
         self
     }
 
+    #[doc = "Set the field `source_cluster_identifier`.\n"]
+    pub fn set_source_cluster_identifier(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_cluster_identifier = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `source_cluster_resource_id`.\n"]
+    pub fn set_source_cluster_resource_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.source_cluster_resource_id = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `use_latest_restorable_time`.\n"]
     pub fn set_use_latest_restorable_time(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.use_latest_restorable_time = std::option::Option::Some(v.into());
@@ -1356,8 +1967,8 @@ impl RdsClusterRestoreToPointInTimeEl {
     }
 }
 
-impl terrars::ToListMappable for RdsClusterRestoreToPointInTimeEl {
-    type O = terrars::BlockAssignable<RdsClusterRestoreToPointInTimeEl>;
+impl terrars::ToListMappable for RdsCluster_RestoreToPointInTime {
+    type O = terrars::BlockAssignable<RdsCluster_RestoreToPointInTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1368,37 +1979,37 @@ impl terrars::ToListMappable for RdsClusterRestoreToPointInTimeEl {
     }
 }
 
-pub struct BuildRdsClusterRestoreToPointInTimeEl {
-    #[doc = ""]
-    pub source_cluster_identifier: terrars::PrimField<std::string::String>,
-}
+pub struct BuildRdsCluster_RestoreToPointInTime {}
 
-impl BuildRdsClusterRestoreToPointInTimeEl {
-    pub fn build(self) -> RdsClusterRestoreToPointInTimeEl {
-        RdsClusterRestoreToPointInTimeEl {
+impl BuildRdsCluster_RestoreToPointInTime {
+    pub fn build(self) -> RdsCluster_RestoreToPointInTime {
+        RdsCluster_RestoreToPointInTime {
             restore_to_time: core::default::Default::default(),
             restore_type: core::default::Default::default(),
-            source_cluster_identifier: self.source_cluster_identifier,
+            source_cluster_identifier: core::default::Default::default(),
+            source_cluster_resource_id: core::default::Default::default(),
             use_latest_restorable_time: core::default::Default::default(),
         }
     }
 }
 
-pub struct RdsClusterRestoreToPointInTimeElRef {
+#[allow(dead_code)]
+pub struct RdsCluster_RestoreToPointInTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsClusterRestoreToPointInTimeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsClusterRestoreToPointInTimeElRef {
-        RdsClusterRestoreToPointInTimeElRef {
+impl terrars::Ref for RdsCluster_RestoreToPointInTimeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsCluster_RestoreToPointInTimeRef {
+        RdsCluster_RestoreToPointInTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsClusterRestoreToPointInTimeElRef {
+impl RdsCluster_RestoreToPointInTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1418,6 +2029,11 @@ impl RdsClusterRestoreToPointInTimeElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_cluster_identifier", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `source_cluster_resource_id` after provisioning.\n"]
+    pub fn source_cluster_resource_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_cluster_resource_id", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `use_latest_restorable_time` after provisioning.\n"]
     pub fn use_latest_restorable_time(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_latest_restorable_time", self.base))
@@ -1425,7 +2041,7 @@ impl RdsClusterRestoreToPointInTimeElRef {
 }
 
 #[derive(Serialize)]
-pub struct RdsClusterS3ImportEl {
+pub struct RdsCluster_S3Import {
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -1434,7 +2050,7 @@ pub struct RdsClusterS3ImportEl {
     source_engine_version: terrars::PrimField<std::string::String>,
 }
 
-impl RdsClusterS3ImportEl {
+impl RdsCluster_S3Import {
     #[doc = "Set the field `bucket_prefix`.\n"]
     pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_prefix = std::option::Option::Some(v.into());
@@ -1442,8 +2058,8 @@ impl RdsClusterS3ImportEl {
     }
 }
 
-impl terrars::ToListMappable for RdsClusterS3ImportEl {
-    type O = terrars::BlockAssignable<RdsClusterS3ImportEl>;
+impl terrars::ToListMappable for RdsCluster_S3Import {
+    type O = terrars::BlockAssignable<RdsCluster_S3Import>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1454,7 +2070,7 @@ impl terrars::ToListMappable for RdsClusterS3ImportEl {
     }
 }
 
-pub struct BuildRdsClusterS3ImportEl {
+pub struct BuildRdsCluster_S3Import {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -1465,9 +2081,9 @@ pub struct BuildRdsClusterS3ImportEl {
     pub source_engine_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRdsClusterS3ImportEl {
-    pub fn build(self) -> RdsClusterS3ImportEl {
-        RdsClusterS3ImportEl {
+impl BuildRdsCluster_S3Import {
+    pub fn build(self) -> RdsCluster_S3Import {
+        RdsCluster_S3Import {
             bucket_name: self.bucket_name,
             bucket_prefix: core::default::Default::default(),
             ingestion_role: self.ingestion_role,
@@ -1477,21 +2093,23 @@ impl BuildRdsClusterS3ImportEl {
     }
 }
 
-pub struct RdsClusterS3ImportElRef {
+#[allow(dead_code)]
+pub struct RdsCluster_S3ImportRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsClusterS3ImportElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsClusterS3ImportElRef {
-        RdsClusterS3ImportElRef {
+impl terrars::Ref for RdsCluster_S3ImportRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsCluster_S3ImportRef {
+        RdsCluster_S3ImportRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsClusterS3ImportElRef {
+impl RdsCluster_S3ImportRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1523,7 +2141,7 @@ impl RdsClusterS3ImportElRef {
 }
 
 #[derive(Serialize)]
-pub struct RdsClusterScalingConfigurationEl {
+pub struct RdsCluster_ScalingConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_pause: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1531,12 +2149,14 @@ pub struct RdsClusterScalingConfigurationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_capacity: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    seconds_before_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     seconds_until_auto_pause: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timeout_action: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RdsClusterScalingConfigurationEl {
+impl RdsCluster_ScalingConfiguration {
     #[doc = "Set the field `auto_pause`.\n"]
     pub fn set_auto_pause(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.auto_pause = std::option::Option::Some(v.into());
@@ -1555,6 +2175,12 @@ impl RdsClusterScalingConfigurationEl {
         self
     }
 
+    #[doc = "Set the field `seconds_before_timeout`.\n"]
+    pub fn set_seconds_before_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.seconds_before_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `seconds_until_auto_pause`.\n"]
     pub fn set_seconds_until_auto_pause(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.seconds_until_auto_pause = std::option::Option::Some(v.into());
@@ -1568,8 +2194,8 @@ impl RdsClusterScalingConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for RdsClusterScalingConfigurationEl {
-    type O = terrars::BlockAssignable<RdsClusterScalingConfigurationEl>;
+impl terrars::ToListMappable for RdsCluster_ScalingConfiguration {
+    type O = terrars::BlockAssignable<RdsCluster_ScalingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1580,35 +2206,38 @@ impl terrars::ToListMappable for RdsClusterScalingConfigurationEl {
     }
 }
 
-pub struct BuildRdsClusterScalingConfigurationEl {}
+pub struct BuildRdsCluster_ScalingConfiguration {}
 
-impl BuildRdsClusterScalingConfigurationEl {
-    pub fn build(self) -> RdsClusterScalingConfigurationEl {
-        RdsClusterScalingConfigurationEl {
+impl BuildRdsCluster_ScalingConfiguration {
+    pub fn build(self) -> RdsCluster_ScalingConfiguration {
+        RdsCluster_ScalingConfiguration {
             auto_pause: core::default::Default::default(),
             max_capacity: core::default::Default::default(),
             min_capacity: core::default::Default::default(),
+            seconds_before_timeout: core::default::Default::default(),
             seconds_until_auto_pause: core::default::Default::default(),
             timeout_action: core::default::Default::default(),
         }
     }
 }
 
-pub struct RdsClusterScalingConfigurationElRef {
+#[allow(dead_code)]
+pub struct RdsCluster_ScalingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsClusterScalingConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsClusterScalingConfigurationElRef {
-        RdsClusterScalingConfigurationElRef {
+impl terrars::Ref for RdsCluster_ScalingConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsCluster_ScalingConfigurationRef {
+        RdsCluster_ScalingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsClusterScalingConfigurationElRef {
+impl RdsCluster_ScalingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1628,6 +2257,11 @@ impl RdsClusterScalingConfigurationElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_capacity", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `seconds_before_timeout` after provisioning.\n"]
+    pub fn seconds_before_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds_before_timeout", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `seconds_until_auto_pause` after provisioning.\n"]
     pub fn seconds_until_auto_pause(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds_until_auto_pause", self.base))
@@ -1640,15 +2274,23 @@ impl RdsClusterScalingConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct RdsClusterServerlessv2ScalingConfigurationEl {
+pub struct RdsCluster_Serverlessv2ScalingConfiguration {
     max_capacity: terrars::PrimField<f64>,
     min_capacity: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    seconds_until_auto_pause: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl RdsClusterServerlessv2ScalingConfigurationEl { }
+impl RdsCluster_Serverlessv2ScalingConfiguration {
+    #[doc = "Set the field `seconds_until_auto_pause`.\n"]
+    pub fn set_seconds_until_auto_pause(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.seconds_until_auto_pause = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for RdsClusterServerlessv2ScalingConfigurationEl {
-    type O = terrars::BlockAssignable<RdsClusterServerlessv2ScalingConfigurationEl>;
+impl terrars::ToListMappable for RdsCluster_Serverlessv2ScalingConfiguration {
+    type O = terrars::BlockAssignable<RdsCluster_Serverlessv2ScalingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1659,40 +2301,43 @@ impl terrars::ToListMappable for RdsClusterServerlessv2ScalingConfigurationEl {
     }
 }
 
-pub struct BuildRdsClusterServerlessv2ScalingConfigurationEl {
+pub struct BuildRdsCluster_Serverlessv2ScalingConfiguration {
     #[doc = ""]
     pub max_capacity: terrars::PrimField<f64>,
     #[doc = ""]
     pub min_capacity: terrars::PrimField<f64>,
 }
 
-impl BuildRdsClusterServerlessv2ScalingConfigurationEl {
-    pub fn build(self) -> RdsClusterServerlessv2ScalingConfigurationEl {
-        RdsClusterServerlessv2ScalingConfigurationEl {
+impl BuildRdsCluster_Serverlessv2ScalingConfiguration {
+    pub fn build(self) -> RdsCluster_Serverlessv2ScalingConfiguration {
+        RdsCluster_Serverlessv2ScalingConfiguration {
             max_capacity: self.max_capacity,
             min_capacity: self.min_capacity,
+            seconds_until_auto_pause: core::default::Default::default(),
         }
     }
 }
 
-pub struct RdsClusterServerlessv2ScalingConfigurationElRef {
+#[allow(dead_code)]
+pub struct RdsCluster_Serverlessv2ScalingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsClusterServerlessv2ScalingConfigurationElRef {
+impl terrars::Ref for RdsCluster_Serverlessv2ScalingConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> RdsClusterServerlessv2ScalingConfigurationElRef {
-        RdsClusterServerlessv2ScalingConfigurationElRef {
+    ) -> RdsCluster_Serverlessv2ScalingConfigurationRef {
+        RdsCluster_Serverlessv2ScalingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsClusterServerlessv2ScalingConfigurationElRef {
+impl RdsCluster_Serverlessv2ScalingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1706,10 +2351,15 @@ impl RdsClusterServerlessv2ScalingConfigurationElRef {
     pub fn min_capacity(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_capacity", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `seconds_until_auto_pause` after provisioning.\n"]
+    pub fn seconds_until_auto_pause(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.seconds_until_auto_pause", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct RdsClusterTimeoutsEl {
+pub struct RdsCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1718,7 +2368,7 @@ pub struct RdsClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RdsClusterTimeoutsEl {
+impl RdsCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1738,8 +2388,8 @@ impl RdsClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RdsClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<RdsClusterTimeoutsEl>;
+impl terrars::ToListMappable for RdsCluster_Timeouts {
+    type O = terrars::BlockAssignable<RdsCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1750,11 +2400,11 @@ impl terrars::ToListMappable for RdsClusterTimeoutsEl {
     }
 }
 
-pub struct BuildRdsClusterTimeoutsEl {}
+pub struct BuildRdsCluster_Timeouts {}
 
-impl BuildRdsClusterTimeoutsEl {
-    pub fn build(self) -> RdsClusterTimeoutsEl {
-        RdsClusterTimeoutsEl {
+impl BuildRdsCluster_Timeouts {
+    pub fn build(self) -> RdsCluster_Timeouts {
+        RdsCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1762,21 +2412,23 @@ impl BuildRdsClusterTimeoutsEl {
     }
 }
 
-pub struct RdsClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RdsCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RdsClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsClusterTimeoutsElRef {
-        RdsClusterTimeoutsElRef {
+impl terrars::Ref for RdsCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RdsCluster_TimeoutsRef {
+        RdsCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RdsClusterTimeoutsElRef {
+impl RdsCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1795,14 +2447,4 @@ impl RdsClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct RdsClusterDynamic {
-    restore_to_point_in_time: std::option::Option<terrars::DynamicBlock<RdsClusterRestoreToPointInTimeEl>>,
-    s3_import: std::option::Option<terrars::DynamicBlock<RdsClusterS3ImportEl>>,
-    scaling_configuration: std::option::Option<terrars::DynamicBlock<RdsClusterScalingConfigurationEl>>,
-    serverlessv2_scaling_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<RdsClusterServerlessv2ScalingConfigurationEl>>,
 }

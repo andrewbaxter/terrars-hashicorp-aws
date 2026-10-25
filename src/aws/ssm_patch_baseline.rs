@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsmPatchBaselineData {
+struct SsmPatchBaselineData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,12 +27,16 @@ struct SsmPatchBaselineData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     approved_patches_enable_non_security: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    available_security_updates_compliance_status: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     operating_system: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rejected_patches: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -40,18 +46,18 @@ struct SsmPatchBaselineData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    approval_rule: std::option::Option<std::vec::Vec<SsmPatchBaselineApprovalRuleEl>>,
+    approval_rule: std::option::Option<std::vec::Vec<SsmPatchBaseline_ApprovalRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    global_filter: std::option::Option<std::vec::Vec<SsmPatchBaselineGlobalFilterEl>>,
+    global_filter: std::option::Option<std::vec::Vec<SsmPatchBaseline_GlobalFilter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    source: std::option::Option<std::vec::Vec<SsmPatchBaselineSourceEl>>,
+    source: std::option::Option<std::vec::Vec<SsmPatchBaseline_Source>>,
     dynamic: SsmPatchBaselineDynamic,
 }
 
 struct SsmPatchBaseline_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsmPatchBaselineData>,
+    data: std::cell::RefCell<SsmPatchBaselineData_>,
 }
 
 #[derive(Clone)]
@@ -175,6 +181,15 @@ impl SsmPatchBaseline {
         self
     }
 
+    #[doc = "Set the field `available_security_updates_compliance_status`.\n"]
+    pub fn set_available_security_updates_compliance_status(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().available_security_updates_compliance_status = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -190,6 +205,13 @@ impl SsmPatchBaseline {
     #[doc = "Set the field `operating_system`.\n"]
     pub fn set_operating_system(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().operating_system = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -232,7 +254,7 @@ impl SsmPatchBaseline {
     #[doc = "Set the field `approval_rule`.\n"]
     pub fn set_approval_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaselineApprovalRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaseline_ApprovalRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -248,7 +270,7 @@ impl SsmPatchBaseline {
     #[doc = "Set the field `global_filter`.\n"]
     pub fn set_global_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaselineGlobalFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaseline_GlobalFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -262,7 +284,7 @@ impl SsmPatchBaseline {
     }
 
     #[doc = "Set the field `source`.\n"]
-    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaselineSourceEl>>) -> Self {
+    pub fn set_source(self, v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaseline_Source>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().source = std::option::Option::Some(v);
@@ -300,6 +322,15 @@ impl SsmPatchBaseline {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `available_security_updates_compliance_status` after provisioning.\n"]
+    pub fn available_security_updates_compliance_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.available_security_updates_compliance_status", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -310,6 +341,11 @@ impl SsmPatchBaseline {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `json` after provisioning.\n"]
+    pub fn json(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.json", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -318,6 +354,12 @@ impl SsmPatchBaseline {
     #[doc = "Get a reference to the value of field `operating_system` after provisioning.\n"]
     pub fn operating_system(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rejected_patches` after provisioning.\n"]
@@ -341,17 +383,17 @@ impl SsmPatchBaseline {
     }
 
     #[doc = "Get a reference to the value of field `approval_rule` after provisioning.\n"]
-    pub fn approval_rule(&self) -> terrars::ListRef<SsmPatchBaselineApprovalRuleElRef> {
+    pub fn approval_rule(&self) -> terrars::ListRef<SsmPatchBaseline_ApprovalRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.approval_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `global_filter` after provisioning.\n"]
-    pub fn global_filter(&self) -> terrars::ListRef<SsmPatchBaselineGlobalFilterElRef> {
+    pub fn global_filter(&self) -> terrars::ListRef<SsmPatchBaseline_GlobalFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.global_filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<SsmPatchBaselineSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<SsmPatchBaseline_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
@@ -398,7 +440,7 @@ impl BuildSsmPatchBaseline {
         let out = SsmPatchBaseline(std::rc::Rc::new(SsmPatchBaseline_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsmPatchBaselineData {
+            data: std::cell::RefCell::new(SsmPatchBaselineData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -407,10 +449,12 @@ impl BuildSsmPatchBaseline {
                 approved_patches: core::default::Default::default(),
                 approved_patches_compliance_level: core::default::Default::default(),
                 approved_patches_enable_non_security: core::default::Default::default(),
+                available_security_updates_compliance_status: core::default::Default::default(),
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
                 operating_system: core::default::Default::default(),
+                region: core::default::Default::default(),
                 rejected_patches: core::default::Default::default(),
                 rejected_patches_action: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -475,6 +519,15 @@ impl SsmPatchBaselineRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `available_security_updates_compliance_status` after provisioning.\n"]
+    pub fn available_security_updates_compliance_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.available_security_updates_compliance_status", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
@@ -485,6 +538,11 @@ impl SsmPatchBaselineRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `json` after provisioning.\n"]
+    pub fn json(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.json", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -493,6 +551,12 @@ impl SsmPatchBaselineRef {
     #[doc = "Get a reference to the value of field `operating_system` after provisioning.\n"]
     pub fn operating_system(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.operating_system", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `rejected_patches` after provisioning.\n"]
@@ -516,31 +580,38 @@ impl SsmPatchBaselineRef {
     }
 
     #[doc = "Get a reference to the value of field `approval_rule` after provisioning.\n"]
-    pub fn approval_rule(&self) -> terrars::ListRef<SsmPatchBaselineApprovalRuleElRef> {
+    pub fn approval_rule(&self) -> terrars::ListRef<SsmPatchBaseline_ApprovalRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.approval_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `global_filter` after provisioning.\n"]
-    pub fn global_filter(&self) -> terrars::ListRef<SsmPatchBaselineGlobalFilterElRef> {
+    pub fn global_filter(&self) -> terrars::ListRef<SsmPatchBaseline_GlobalFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.global_filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `source` after provisioning.\n"]
-    pub fn source(&self) -> terrars::ListRef<SsmPatchBaselineSourceElRef> {
+    pub fn source(&self) -> terrars::ListRef<SsmPatchBaseline_SourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SsmPatchBaselineDynamic {
+    approval_rule: std::option::Option<terrars::DynamicBlock<SsmPatchBaseline_ApprovalRule>>,
+    global_filter: std::option::Option<terrars::DynamicBlock<SsmPatchBaseline_GlobalFilter>>,
+    source: std::option::Option<terrars::DynamicBlock<SsmPatchBaseline_Source>>,
+}
+
 #[derive(Serialize)]
-pub struct SsmPatchBaselineApprovalRuleElPatchFilterEl {
+pub struct SsmPatchBaseline_ApprovalRule_PatchFilter {
     key: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmPatchBaselineApprovalRuleElPatchFilterEl { }
+impl SsmPatchBaseline_ApprovalRule_PatchFilter { }
 
-impl terrars::ToListMappable for SsmPatchBaselineApprovalRuleElPatchFilterEl {
-    type O = terrars::BlockAssignable<SsmPatchBaselineApprovalRuleElPatchFilterEl>;
+impl terrars::ToListMappable for SsmPatchBaseline_ApprovalRule_PatchFilter {
+    type O = terrars::BlockAssignable<SsmPatchBaseline_ApprovalRule_PatchFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -551,40 +622,39 @@ impl terrars::ToListMappable for SsmPatchBaselineApprovalRuleElPatchFilterEl {
     }
 }
 
-pub struct BuildSsmPatchBaselineApprovalRuleElPatchFilterEl {
+pub struct BuildSsmPatchBaseline_ApprovalRule_PatchFilter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSsmPatchBaselineApprovalRuleElPatchFilterEl {
-    pub fn build(self) -> SsmPatchBaselineApprovalRuleElPatchFilterEl {
-        SsmPatchBaselineApprovalRuleElPatchFilterEl {
+impl BuildSsmPatchBaseline_ApprovalRule_PatchFilter {
+    pub fn build(self) -> SsmPatchBaseline_ApprovalRule_PatchFilter {
+        SsmPatchBaseline_ApprovalRule_PatchFilter {
             key: self.key,
             values: self.values,
         }
     }
 }
 
-pub struct SsmPatchBaselineApprovalRuleElPatchFilterElRef {
+#[allow(dead_code)]
+pub struct SsmPatchBaseline_ApprovalRule_PatchFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmPatchBaselineApprovalRuleElPatchFilterElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> SsmPatchBaselineApprovalRuleElPatchFilterElRef {
-        SsmPatchBaselineApprovalRuleElPatchFilterElRef {
+impl terrars::Ref for SsmPatchBaseline_ApprovalRule_PatchFilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaseline_ApprovalRule_PatchFilterRef {
+        SsmPatchBaseline_ApprovalRule_PatchFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmPatchBaselineApprovalRuleElPatchFilterElRef {
+impl SsmPatchBaseline_ApprovalRule_PatchFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -601,12 +671,12 @@ impl SsmPatchBaselineApprovalRuleElPatchFilterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SsmPatchBaselineApprovalRuleElDynamic {
-    patch_filter: std::option::Option<terrars::DynamicBlock<SsmPatchBaselineApprovalRuleElPatchFilterEl>>,
+struct SsmPatchBaseline_ApprovalRuleDynamic {
+    patch_filter: std::option::Option<terrars::DynamicBlock<SsmPatchBaseline_ApprovalRule_PatchFilter>>,
 }
 
 #[derive(Serialize)]
-pub struct SsmPatchBaselineApprovalRuleEl {
+pub struct SsmPatchBaseline_ApprovalRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     approve_after_days: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -616,11 +686,11 @@ pub struct SsmPatchBaselineApprovalRuleEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enable_non_security: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    patch_filter: std::option::Option<std::vec::Vec<SsmPatchBaselineApprovalRuleElPatchFilterEl>>,
-    dynamic: SsmPatchBaselineApprovalRuleElDynamic,
+    patch_filter: std::option::Option<std::vec::Vec<SsmPatchBaseline_ApprovalRule_PatchFilter>>,
+    dynamic: SsmPatchBaseline_ApprovalRuleDynamic,
 }
 
-impl SsmPatchBaselineApprovalRuleEl {
+impl SsmPatchBaseline_ApprovalRule {
     #[doc = "Set the field `approve_after_days`.\n"]
     pub fn set_approve_after_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.approve_after_days = std::option::Option::Some(v.into());
@@ -651,7 +721,7 @@ impl SsmPatchBaselineApprovalRuleEl {
     #[doc = "Set the field `patch_filter`.\n"]
     pub fn set_patch_filter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaselineApprovalRuleElPatchFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmPatchBaseline_ApprovalRule_PatchFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -665,8 +735,8 @@ impl SsmPatchBaselineApprovalRuleEl {
     }
 }
 
-impl terrars::ToListMappable for SsmPatchBaselineApprovalRuleEl {
-    type O = terrars::BlockAssignable<SsmPatchBaselineApprovalRuleEl>;
+impl terrars::ToListMappable for SsmPatchBaseline_ApprovalRule {
+    type O = terrars::BlockAssignable<SsmPatchBaseline_ApprovalRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -677,11 +747,11 @@ impl terrars::ToListMappable for SsmPatchBaselineApprovalRuleEl {
     }
 }
 
-pub struct BuildSsmPatchBaselineApprovalRuleEl {}
+pub struct BuildSsmPatchBaseline_ApprovalRule {}
 
-impl BuildSsmPatchBaselineApprovalRuleEl {
-    pub fn build(self) -> SsmPatchBaselineApprovalRuleEl {
-        SsmPatchBaselineApprovalRuleEl {
+impl BuildSsmPatchBaseline_ApprovalRule {
+    pub fn build(self) -> SsmPatchBaseline_ApprovalRule {
+        SsmPatchBaseline_ApprovalRule {
             approve_after_days: core::default::Default::default(),
             approve_until_date: core::default::Default::default(),
             compliance_level: core::default::Default::default(),
@@ -692,21 +762,23 @@ impl BuildSsmPatchBaselineApprovalRuleEl {
     }
 }
 
-pub struct SsmPatchBaselineApprovalRuleElRef {
+#[allow(dead_code)]
+pub struct SsmPatchBaseline_ApprovalRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmPatchBaselineApprovalRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaselineApprovalRuleElRef {
-        SsmPatchBaselineApprovalRuleElRef {
+impl terrars::Ref for SsmPatchBaseline_ApprovalRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaseline_ApprovalRuleRef {
+        SsmPatchBaseline_ApprovalRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmPatchBaselineApprovalRuleElRef {
+impl SsmPatchBaseline_ApprovalRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -732,21 +804,21 @@ impl SsmPatchBaselineApprovalRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `patch_filter` after provisioning.\n"]
-    pub fn patch_filter(&self) -> terrars::ListRef<SsmPatchBaselineApprovalRuleElPatchFilterElRef> {
+    pub fn patch_filter(&self) -> terrars::ListRef<SsmPatchBaseline_ApprovalRule_PatchFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.patch_filter", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SsmPatchBaselineGlobalFilterEl {
+pub struct SsmPatchBaseline_GlobalFilter {
     key: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmPatchBaselineGlobalFilterEl { }
+impl SsmPatchBaseline_GlobalFilter { }
 
-impl terrars::ToListMappable for SsmPatchBaselineGlobalFilterEl {
-    type O = terrars::BlockAssignable<SsmPatchBaselineGlobalFilterEl>;
+impl terrars::ToListMappable for SsmPatchBaseline_GlobalFilter {
+    type O = terrars::BlockAssignable<SsmPatchBaseline_GlobalFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -757,37 +829,39 @@ impl terrars::ToListMappable for SsmPatchBaselineGlobalFilterEl {
     }
 }
 
-pub struct BuildSsmPatchBaselineGlobalFilterEl {
+pub struct BuildSsmPatchBaseline_GlobalFilter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSsmPatchBaselineGlobalFilterEl {
-    pub fn build(self) -> SsmPatchBaselineGlobalFilterEl {
-        SsmPatchBaselineGlobalFilterEl {
+impl BuildSsmPatchBaseline_GlobalFilter {
+    pub fn build(self) -> SsmPatchBaseline_GlobalFilter {
+        SsmPatchBaseline_GlobalFilter {
             key: self.key,
             values: self.values,
         }
     }
 }
 
-pub struct SsmPatchBaselineGlobalFilterElRef {
+#[allow(dead_code)]
+pub struct SsmPatchBaseline_GlobalFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmPatchBaselineGlobalFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaselineGlobalFilterElRef {
-        SsmPatchBaselineGlobalFilterElRef {
+impl terrars::Ref for SsmPatchBaseline_GlobalFilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaseline_GlobalFilterRef {
+        SsmPatchBaseline_GlobalFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmPatchBaselineGlobalFilterElRef {
+impl SsmPatchBaseline_GlobalFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -804,16 +878,16 @@ impl SsmPatchBaselineGlobalFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct SsmPatchBaselineSourceEl {
+pub struct SsmPatchBaseline_Source {
     configuration: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     products: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmPatchBaselineSourceEl { }
+impl SsmPatchBaseline_Source { }
 
-impl terrars::ToListMappable for SsmPatchBaselineSourceEl {
-    type O = terrars::BlockAssignable<SsmPatchBaselineSourceEl>;
+impl terrars::ToListMappable for SsmPatchBaseline_Source {
+    type O = terrars::BlockAssignable<SsmPatchBaseline_Source>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -824,7 +898,7 @@ impl terrars::ToListMappable for SsmPatchBaselineSourceEl {
     }
 }
 
-pub struct BuildSsmPatchBaselineSourceEl {
+pub struct BuildSsmPatchBaseline_Source {
     #[doc = ""]
     pub configuration: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -833,9 +907,9 @@ pub struct BuildSsmPatchBaselineSourceEl {
     pub products: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSsmPatchBaselineSourceEl {
-    pub fn build(self) -> SsmPatchBaselineSourceEl {
-        SsmPatchBaselineSourceEl {
+impl BuildSsmPatchBaseline_Source {
+    pub fn build(self) -> SsmPatchBaseline_Source {
+        SsmPatchBaseline_Source {
             configuration: self.configuration,
             name: self.name,
             products: self.products,
@@ -843,21 +917,23 @@ impl BuildSsmPatchBaselineSourceEl {
     }
 }
 
-pub struct SsmPatchBaselineSourceElRef {
+#[allow(dead_code)]
+pub struct SsmPatchBaseline_SourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmPatchBaselineSourceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaselineSourceElRef {
-        SsmPatchBaselineSourceElRef {
+impl terrars::Ref for SsmPatchBaseline_SourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmPatchBaseline_SourceRef {
+        SsmPatchBaseline_SourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmPatchBaselineSourceElRef {
+impl SsmPatchBaseline_SourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -876,11 +952,4 @@ impl SsmPatchBaselineSourceElRef {
     pub fn products(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.products", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SsmPatchBaselineDynamic {
-    approval_rule: std::option::Option<terrars::DynamicBlock<SsmPatchBaselineApprovalRuleEl>>,
-    global_filter: std::option::Option<terrars::DynamicBlock<SsmPatchBaselineGlobalFilterEl>>,
-    source: std::option::Option<terrars::DynamicBlock<SsmPatchBaselineSourceEl>>,
 }

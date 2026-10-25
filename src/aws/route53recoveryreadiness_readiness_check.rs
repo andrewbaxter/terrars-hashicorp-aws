@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53recoveryreadinessReadinessCheckData {
+struct Route53recoveryreadinessReadinessCheckData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,13 +29,13 @@ struct Route53recoveryreadinessReadinessCheckData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Route53recoveryreadinessReadinessCheckTimeoutsEl>,
+    timeouts: std::option::Option<Route53recoveryreadinessReadinessCheck_Timeouts>,
 }
 
 struct Route53recoveryreadinessReadinessCheck_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53recoveryreadinessReadinessCheckData>,
+    data: std::cell::RefCell<Route53recoveryreadinessReadinessCheckData_>,
 }
 
 #[derive(Clone)]
@@ -158,7 +160,7 @@ impl Route53recoveryreadinessReadinessCheck {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Route53recoveryreadinessReadinessCheckTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Route53recoveryreadinessReadinessCheck_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -194,8 +196,8 @@ impl Route53recoveryreadinessReadinessCheck {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53recoveryreadinessReadinessCheckTimeoutsElRef {
-        Route53recoveryreadinessReadinessCheckTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53recoveryreadinessReadinessCheck_TimeoutsRef {
+        Route53recoveryreadinessReadinessCheck_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -246,7 +248,7 @@ impl BuildRoute53recoveryreadinessReadinessCheck {
         let out = Route53recoveryreadinessReadinessCheck(std::rc::Rc::new(Route53recoveryreadinessReadinessCheck_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53recoveryreadinessReadinessCheckData {
+            data: std::cell::RefCell::new(Route53recoveryreadinessReadinessCheckData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -319,8 +321,8 @@ impl Route53recoveryreadinessReadinessCheckRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53recoveryreadinessReadinessCheckTimeoutsElRef {
-        Route53recoveryreadinessReadinessCheckTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53recoveryreadinessReadinessCheck_TimeoutsRef {
+        Route53recoveryreadinessReadinessCheck_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -328,12 +330,12 @@ impl Route53recoveryreadinessReadinessCheckRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53recoveryreadinessReadinessCheckTimeoutsEl {
+pub struct Route53recoveryreadinessReadinessCheck_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53recoveryreadinessReadinessCheckTimeoutsEl {
+impl Route53recoveryreadinessReadinessCheck_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -341,8 +343,8 @@ impl Route53recoveryreadinessReadinessCheckTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Route53recoveryreadinessReadinessCheckTimeoutsEl {
-    type O = terrars::BlockAssignable<Route53recoveryreadinessReadinessCheckTimeoutsEl>;
+impl terrars::ToListMappable for Route53recoveryreadinessReadinessCheck_Timeouts {
+    type O = terrars::BlockAssignable<Route53recoveryreadinessReadinessCheck_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -353,32 +355,34 @@ impl terrars::ToListMappable for Route53recoveryreadinessReadinessCheckTimeoutsE
     }
 }
 
-pub struct BuildRoute53recoveryreadinessReadinessCheckTimeoutsEl {}
+pub struct BuildRoute53recoveryreadinessReadinessCheck_Timeouts {}
 
-impl BuildRoute53recoveryreadinessReadinessCheckTimeoutsEl {
-    pub fn build(self) -> Route53recoveryreadinessReadinessCheckTimeoutsEl {
-        Route53recoveryreadinessReadinessCheckTimeoutsEl { delete: core::default::Default::default() }
+impl BuildRoute53recoveryreadinessReadinessCheck_Timeouts {
+    pub fn build(self) -> Route53recoveryreadinessReadinessCheck_Timeouts {
+        Route53recoveryreadinessReadinessCheck_Timeouts { delete: core::default::Default::default() }
     }
 }
 
-pub struct Route53recoveryreadinessReadinessCheckTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Route53recoveryreadinessReadinessCheck_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53recoveryreadinessReadinessCheckTimeoutsElRef {
+impl terrars::Ref for Route53recoveryreadinessReadinessCheck_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53recoveryreadinessReadinessCheckTimeoutsElRef {
-        Route53recoveryreadinessReadinessCheckTimeoutsElRef {
+    ) -> Route53recoveryreadinessReadinessCheck_TimeoutsRef {
+        Route53recoveryreadinessReadinessCheck_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53recoveryreadinessReadinessCheckTimeoutsElRef {
+impl Route53recoveryreadinessReadinessCheck_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IotProvisioningTemplateData {
+struct IotProvisioningTemplateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,19 +29,23 @@ struct IotProvisioningTemplateData {
     name: terrars::PrimField<std::string::String>,
     provisioning_role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     template_body: terrars::PrimField<std::string::String>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    pre_provisioning_hook: std::option::Option<std::vec::Vec<IotProvisioningTemplatePreProvisioningHookEl>>,
+    pre_provisioning_hook: std::option::Option<std::vec::Vec<IotProvisioningTemplate_PreProvisioningHook>>,
     dynamic: IotProvisioningTemplateDynamic,
 }
 
 struct IotProvisioningTemplate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IotProvisioningTemplateData>,
+    data: std::cell::RefCell<IotProvisioningTemplateData_>,
 }
 
 #[derive(Clone)]
@@ -157,6 +163,13 @@ impl IotProvisioningTemplate {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -175,10 +188,16 @@ impl IotProvisioningTemplate {
         self
     }
 
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().type_ = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `pre_provisioning_hook`.\n"]
     pub fn set_pre_provisioning_hook(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<IotProvisioningTemplatePreProvisioningHookEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<IotProvisioningTemplate_PreProvisioningHook>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -226,6 +245,12 @@ impl IotProvisioningTemplate {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioning_role_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -241,8 +266,13 @@ impl IotProvisioningTemplate {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.template_body", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `pre_provisioning_hook` after provisioning.\n"]
-    pub fn pre_provisioning_hook(&self) -> terrars::ListRef<IotProvisioningTemplatePreProvisioningHookElRef> {
+    pub fn pre_provisioning_hook(&self) -> terrars::ListRef<IotProvisioningTemplate_PreProvisioningHookRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pre_provisioning_hook", self.extract_ref()))
     }
 }
@@ -293,7 +323,7 @@ impl BuildIotProvisioningTemplate {
         let out = IotProvisioningTemplate(std::rc::Rc::new(IotProvisioningTemplate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IotProvisioningTemplateData {
+            data: std::cell::RefCell::new(IotProvisioningTemplateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -304,9 +334,11 @@ impl BuildIotProvisioningTemplate {
                 id: core::default::Default::default(),
                 name: self.name,
                 provisioning_role_arn: self.provisioning_role_arn,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 template_body: self.template_body,
+                type_: core::default::Default::default(),
                 pre_provisioning_hook: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -374,6 +406,12 @@ impl IotProvisioningTemplateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provisioning_role_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -389,20 +427,30 @@ impl IotProvisioningTemplateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.template_body", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `pre_provisioning_hook` after provisioning.\n"]
-    pub fn pre_provisioning_hook(&self) -> terrars::ListRef<IotProvisioningTemplatePreProvisioningHookElRef> {
+    pub fn pre_provisioning_hook(&self) -> terrars::ListRef<IotProvisioningTemplate_PreProvisioningHookRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.pre_provisioning_hook", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct IotProvisioningTemplateDynamic {
+    pre_provisioning_hook: std::option::Option<terrars::DynamicBlock<IotProvisioningTemplate_PreProvisioningHook>>,
+}
+
 #[derive(Serialize)]
-pub struct IotProvisioningTemplatePreProvisioningHookEl {
+pub struct IotProvisioningTemplate_PreProvisioningHook {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     payload_version: std::option::Option<terrars::PrimField<std::string::String>>,
     target_arn: terrars::PrimField<std::string::String>,
 }
 
-impl IotProvisioningTemplatePreProvisioningHookEl {
+impl IotProvisioningTemplate_PreProvisioningHook {
     #[doc = "Set the field `payload_version`.\n"]
     pub fn set_payload_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.payload_version = std::option::Option::Some(v.into());
@@ -410,8 +458,8 @@ impl IotProvisioningTemplatePreProvisioningHookEl {
     }
 }
 
-impl terrars::ToListMappable for IotProvisioningTemplatePreProvisioningHookEl {
-    type O = terrars::BlockAssignable<IotProvisioningTemplatePreProvisioningHookEl>;
+impl terrars::ToListMappable for IotProvisioningTemplate_PreProvisioningHook {
+    type O = terrars::BlockAssignable<IotProvisioningTemplate_PreProvisioningHook>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -422,38 +470,40 @@ impl terrars::ToListMappable for IotProvisioningTemplatePreProvisioningHookEl {
     }
 }
 
-pub struct BuildIotProvisioningTemplatePreProvisioningHookEl {
+pub struct BuildIotProvisioningTemplate_PreProvisioningHook {
     #[doc = ""]
     pub target_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildIotProvisioningTemplatePreProvisioningHookEl {
-    pub fn build(self) -> IotProvisioningTemplatePreProvisioningHookEl {
-        IotProvisioningTemplatePreProvisioningHookEl {
+impl BuildIotProvisioningTemplate_PreProvisioningHook {
+    pub fn build(self) -> IotProvisioningTemplate_PreProvisioningHook {
+        IotProvisioningTemplate_PreProvisioningHook {
             payload_version: core::default::Default::default(),
             target_arn: self.target_arn,
         }
     }
 }
 
-pub struct IotProvisioningTemplatePreProvisioningHookElRef {
+#[allow(dead_code)]
+pub struct IotProvisioningTemplate_PreProvisioningHookRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IotProvisioningTemplatePreProvisioningHookElRef {
+impl terrars::Ref for IotProvisioningTemplate_PreProvisioningHookRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> IotProvisioningTemplatePreProvisioningHookElRef {
-        IotProvisioningTemplatePreProvisioningHookElRef {
+    ) -> IotProvisioningTemplate_PreProvisioningHookRef {
+        IotProvisioningTemplate_PreProvisioningHookRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IotProvisioningTemplatePreProvisioningHookElRef {
+impl IotProvisioningTemplate_PreProvisioningHookRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -467,9 +517,4 @@ impl IotProvisioningTemplatePreProvisioningHookElRef {
     pub fn target_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.target_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IotProvisioningTemplateDynamic {
-    pre_provisioning_hook: std::option::Option<terrars::DynamicBlock<IotProvisioningTemplatePreProvisioningHookEl>>,
 }

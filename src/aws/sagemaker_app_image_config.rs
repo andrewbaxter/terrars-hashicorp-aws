@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerAppImageConfigData {
+struct SagemakerAppImageConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,24 @@ struct SagemakerAppImageConfigData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kernel_gateway_image_config: std::option::Option<std::vec::Vec<SagemakerAppImageConfigKernelGatewayImageConfigEl>>,
+    code_editor_app_image_config: std::option::Option<std::vec::Vec<SagemakerAppImageConfig_CodeEditorAppImageConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    jupyter_lab_image_config: std::option::Option<std::vec::Vec<SagemakerAppImageConfig_JupyterLabImageConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kernel_gateway_image_config: std::option::Option<std::vec::Vec<SagemakerAppImageConfig_KernelGatewayImageConfig>>,
     dynamic: SagemakerAppImageConfigDynamic,
 }
 
 struct SagemakerAppImageConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerAppImageConfigData>,
+    data: std::cell::RefCell<SagemakerAppImageConfigData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +147,13 @@ impl SagemakerAppImageConfig {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -157,10 +172,42 @@ impl SagemakerAppImageConfig {
         self
     }
 
+    #[doc = "Set the field `code_editor_app_image_config`.\n"]
+    pub fn set_code_editor_app_image_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerAppImageConfig_CodeEditorAppImageConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().code_editor_app_image_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.code_editor_app_image_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `jupyter_lab_image_config`.\n"]
+    pub fn set_jupyter_lab_image_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerAppImageConfig_JupyterLabImageConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().jupyter_lab_image_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.jupyter_lab_image_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `kernel_gateway_image_config`.\n"]
     pub fn set_kernel_gateway_image_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerAppImageConfigKernelGatewayImageConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerAppImageConfig_KernelGatewayImageConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,6 +235,12 @@ impl SagemakerAppImageConfig {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -198,8 +251,18 @@ impl SagemakerAppImageConfig {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `code_editor_app_image_config` after provisioning.\n"]
+    pub fn code_editor_app_image_config(&self) -> terrars::ListRef<SagemakerAppImageConfig_CodeEditorAppImageConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.code_editor_app_image_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `jupyter_lab_image_config` after provisioning.\n"]
+    pub fn jupyter_lab_image_config(&self) -> terrars::ListRef<SagemakerAppImageConfig_JupyterLabImageConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.jupyter_lab_image_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `kernel_gateway_image_config` after provisioning.\n"]
-    pub fn kernel_gateway_image_config(&self) -> terrars::ListRef<SagemakerAppImageConfigKernelGatewayImageConfigElRef> {
+    pub fn kernel_gateway_image_config(&self) -> terrars::ListRef<SagemakerAppImageConfig_KernelGatewayImageConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kernel_gateway_image_config", self.extract_ref()))
     }
 }
@@ -246,7 +309,7 @@ impl BuildSagemakerAppImageConfig {
         let out = SagemakerAppImageConfig(std::rc::Rc::new(SagemakerAppImageConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerAppImageConfigData {
+            data: std::cell::RefCell::new(SagemakerAppImageConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -254,8 +317,11 @@ impl BuildSagemakerAppImageConfig {
                 provisioner: core::default::Default::default(),
                 app_image_config_name: self.app_image_config_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                code_editor_app_image_config: core::default::Default::default(),
+                jupyter_lab_image_config: core::default::Default::default(),
                 kernel_gateway_image_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -303,6 +369,12 @@ impl SagemakerAppImageConfigRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -313,14 +385,140 @@ impl SagemakerAppImageConfigRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `code_editor_app_image_config` after provisioning.\n"]
+    pub fn code_editor_app_image_config(&self) -> terrars::ListRef<SagemakerAppImageConfig_CodeEditorAppImageConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.code_editor_app_image_config", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `jupyter_lab_image_config` after provisioning.\n"]
+    pub fn jupyter_lab_image_config(&self) -> terrars::ListRef<SagemakerAppImageConfig_JupyterLabImageConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.jupyter_lab_image_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `kernel_gateway_image_config` after provisioning.\n"]
-    pub fn kernel_gateway_image_config(&self) -> terrars::ListRef<SagemakerAppImageConfigKernelGatewayImageConfigElRef> {
+    pub fn kernel_gateway_image_config(&self) -> terrars::ListRef<SagemakerAppImageConfig_KernelGatewayImageConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kernel_gateway_image_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerAppImageConfigDynamic {
+    code_editor_app_image_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerAppImageConfig_CodeEditorAppImageConfig>>,
+    jupyter_lab_image_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerAppImageConfig_JupyterLabImageConfig>>,
+    kernel_gateway_image_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerAppImageConfig_KernelGatewayImageConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {
+pub struct SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_arguments: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_entrypoint: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_environment_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig {
+    #[doc = "Set the field `container_arguments`.\n"]
+    pub fn set_container_arguments(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.container_arguments = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `container_entrypoint`.\n"]
+    pub fn set_container_entrypoint(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.container_entrypoint = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `container_environment_variables`.\n"]
+    pub fn set_container_environment_variables(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.container_environment_variables = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig {
+    type O = terrars::BlockAssignable<SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig {}
+
+impl BuildSagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig {
+    pub fn build(self) -> SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig {
+        SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig {
+            container_arguments: core::default::Default::default(),
+            container_entrypoint: core::default::Default::default(),
+            container_environment_variables: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfigRef {
+        SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `container_arguments` after provisioning.\n"]
+    pub fn container_arguments(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.container_arguments", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `container_entrypoint` after provisioning.\n"]
+    pub fn container_entrypoint(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.container_entrypoint", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `container_environment_variables` after provisioning.\n"]
+    pub fn container_environment_variables(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.container_environment_variables", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_gid: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -329,7 +527,7 @@ pub struct SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {
     mount_path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {
+impl SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig {
     #[doc = "Set the field `default_gid`.\n"]
     pub fn set_default_gid(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.default_gid = std::option::Option::Some(v.into());
@@ -349,8 +547,8 @@ impl SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {
-    type O = terrars::BlockAssignable<SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl>;
+impl terrars::ToListMappable for SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig {
+    type O = terrars::BlockAssignable<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -361,11 +559,11 @@ impl terrars::ToListMappable for SagemakerAppImageConfigKernelGatewayImageConfig
     }
 }
 
-pub struct BuildSagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {}
+pub struct BuildSagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig {}
 
-impl BuildSagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {
-    pub fn build(self) -> SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {
-        SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {
+impl BuildSagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig {
+    pub fn build(self) -> SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig {
+        SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig {
             default_gid: core::default::Default::default(),
             default_uid: core::default::Default::default(),
             mount_path: core::default::Default::default(),
@@ -373,24 +571,26 @@ impl BuildSagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl {
     }
 }
 
-pub struct SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigElRef {
+impl terrars::Ref for SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigElRef {
-        SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigElRef {
+    ) -> SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfigRef {
+        SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigElRef {
+impl SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -411,23 +611,73 @@ impl SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    display_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    name: terrars::PrimField<std::string::String>,
+#[derive(Serialize, Default)]
+struct SagemakerAppImageConfig_CodeEditorAppImageConfigDynamic {
+    container_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig>>,
+    file_system_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>>,
 }
 
-impl SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl {
-    #[doc = "Set the field `display_name`.\n"]
-    pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.display_name = std::option::Option::Some(v.into());
+#[derive(Serialize)]
+pub struct SagemakerAppImageConfig_CodeEditorAppImageConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_config: std::option::Option<std::vec::Vec<SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_system_config: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>>,
+    dynamic: SagemakerAppImageConfig_CodeEditorAppImageConfigDynamic,
+}
+
+impl SagemakerAppImageConfig_CodeEditorAppImageConfig {
+    #[doc = "Set the field `container_config`.\n"]
+    pub fn set_container_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.container_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.container_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `file_system_config`.\n"]
+    pub fn set_file_system_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.file_system_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.file_system_config = std::option::Option::Some(d);
+            },
+        }
         self
     }
 }
 
-impl terrars::ToListMappable for SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl {
-    type O = terrars::BlockAssignable<SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl>;
+impl terrars::ToListMappable for SagemakerAppImageConfig_CodeEditorAppImageConfig {
+    type O = terrars::BlockAssignable<SagemakerAppImageConfig_CodeEditorAppImageConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -438,38 +688,242 @@ impl terrars::ToListMappable for SagemakerAppImageConfigKernelGatewayImageConfig
     }
 }
 
-pub struct BuildSagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl {
-    #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
-}
+pub struct BuildSagemakerAppImageConfig_CodeEditorAppImageConfig {}
 
-impl BuildSagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl {
-    pub fn build(self) -> SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl {
-        SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl {
-            display_name: core::default::Default::default(),
-            name: self.name,
+impl BuildSagemakerAppImageConfig_CodeEditorAppImageConfig {
+    pub fn build(self) -> SagemakerAppImageConfig_CodeEditorAppImageConfig {
+        SagemakerAppImageConfig_CodeEditorAppImageConfig {
+            container_config: core::default::Default::default(),
+            file_system_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecElRef {
+#[allow(dead_code)]
+pub struct SagemakerAppImageConfig_CodeEditorAppImageConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecElRef {
+impl terrars::Ref for SagemakerAppImageConfig_CodeEditorAppImageConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecElRef {
-        SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecElRef {
+    ) -> SagemakerAppImageConfig_CodeEditorAppImageConfigRef {
+        SagemakerAppImageConfig_CodeEditorAppImageConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecElRef {
+impl SagemakerAppImageConfig_CodeEditorAppImageConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `container_config` after provisioning.\n"]
+    pub fn container_config(&self) -> terrars::ListRef<SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.container_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `file_system_config` after provisioning.\n"]
+    pub fn file_system_config(
+        &self,
+    ) -> terrars::ListRef<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.file_system_config", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct SagemakerAppImageConfig_JupyterLabImageConfigDynamic {
+    container_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig>>,
+    file_system_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct SagemakerAppImageConfig_JupyterLabImageConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    container_config: std::option::Option<std::vec::Vec<SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    file_system_config: std
+    ::option
+    ::Option<std::vec::Vec<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>>,
+    dynamic: SagemakerAppImageConfig_JupyterLabImageConfigDynamic,
+}
+
+impl SagemakerAppImageConfig_JupyterLabImageConfig {
+    #[doc = "Set the field `container_config`.\n"]
+    pub fn set_container_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.container_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.container_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `file_system_config`.\n"]
+    pub fn set_file_system_config(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.file_system_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.file_system_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for SagemakerAppImageConfig_JupyterLabImageConfig {
+    type O = terrars::BlockAssignable<SagemakerAppImageConfig_JupyterLabImageConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSagemakerAppImageConfig_JupyterLabImageConfig {}
+
+impl BuildSagemakerAppImageConfig_JupyterLabImageConfig {
+    pub fn build(self) -> SagemakerAppImageConfig_JupyterLabImageConfig {
+        SagemakerAppImageConfig_JupyterLabImageConfig {
+            container_config: core::default::Default::default(),
+            file_system_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SagemakerAppImageConfig_JupyterLabImageConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SagemakerAppImageConfig_JupyterLabImageConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerAppImageConfig_JupyterLabImageConfigRef {
+        SagemakerAppImageConfig_JupyterLabImageConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SagemakerAppImageConfig_JupyterLabImageConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `container_config` after provisioning.\n"]
+    pub fn container_config(&self) -> terrars::ListRef<SagemakerAppImageConfig_JupyterLabImageConfig_ContainerConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.container_config", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `file_system_config` after provisioning.\n"]
+    pub fn file_system_config(
+        &self,
+    ) -> terrars::ListRef<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.file_system_config", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    display_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+}
+
+impl SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec {
+    #[doc = "Set the field `display_name`.\n"]
+    pub fn set_display_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.display_name = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec {
+    type O = terrars::BlockAssignable<SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildSagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec {
+    pub fn build(self) -> SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec {
+        SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec {
+            display_name: core::default::Default::default(),
+            name: self.name,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpecRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpecRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpecRef {
+        SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpecRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -486,27 +940,27 @@ impl SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SagemakerAppImageConfigKernelGatewayImageConfigElDynamic {
+struct SagemakerAppImageConfig_KernelGatewayImageConfigDynamic {
     file_system_config: std
     ::option
-    ::Option<terrars::DynamicBlock<SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl>>,
+    ::Option<terrars::DynamicBlock<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>>,
     kernel_spec: std
     ::option
-    ::Option<terrars::DynamicBlock<SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl>>,
+    ::Option<terrars::DynamicBlock<SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec>>,
 }
 
 #[derive(Serialize)]
-pub struct SagemakerAppImageConfigKernelGatewayImageConfigEl {
+pub struct SagemakerAppImageConfig_KernelGatewayImageConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_system_config: std
     ::option
-    ::Option<std::vec::Vec<SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl>>,
+    ::Option<std::vec::Vec<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    kernel_spec: std::option::Option<std::vec::Vec<SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl>>,
-    dynamic: SagemakerAppImageConfigKernelGatewayImageConfigElDynamic,
+    kernel_spec: std::option::Option<std::vec::Vec<SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec>>,
+    dynamic: SagemakerAppImageConfig_KernelGatewayImageConfigDynamic,
 }
 
-impl SagemakerAppImageConfigKernelGatewayImageConfigEl {
+impl SagemakerAppImageConfig_KernelGatewayImageConfig {
     #[doc = "Set the field `file_system_config`.\n"]
     pub fn set_file_system_config(
         mut self,
@@ -515,9 +969,7 @@ impl SagemakerAppImageConfigKernelGatewayImageConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -538,7 +990,7 @@ impl SagemakerAppImageConfigKernelGatewayImageConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecEl>>,
+                    ::Into<terrars::BlockAssignable<SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -552,8 +1004,8 @@ impl SagemakerAppImageConfigKernelGatewayImageConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerAppImageConfigKernelGatewayImageConfigEl {
-    type O = terrars::BlockAssignable<SagemakerAppImageConfigKernelGatewayImageConfigEl>;
+impl terrars::ToListMappable for SagemakerAppImageConfig_KernelGatewayImageConfig {
+    type O = terrars::BlockAssignable<SagemakerAppImageConfig_KernelGatewayImageConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -564,11 +1016,11 @@ impl terrars::ToListMappable for SagemakerAppImageConfigKernelGatewayImageConfig
     }
 }
 
-pub struct BuildSagemakerAppImageConfigKernelGatewayImageConfigEl {}
+pub struct BuildSagemakerAppImageConfig_KernelGatewayImageConfig {}
 
-impl BuildSagemakerAppImageConfigKernelGatewayImageConfigEl {
-    pub fn build(self) -> SagemakerAppImageConfigKernelGatewayImageConfigEl {
-        SagemakerAppImageConfigKernelGatewayImageConfigEl {
+impl BuildSagemakerAppImageConfig_KernelGatewayImageConfig {
+    pub fn build(self) -> SagemakerAppImageConfig_KernelGatewayImageConfig {
+        SagemakerAppImageConfig_KernelGatewayImageConfig {
             file_system_config: core::default::Default::default(),
             kernel_spec: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -576,24 +1028,26 @@ impl BuildSagemakerAppImageConfigKernelGatewayImageConfigEl {
     }
 }
 
-pub struct SagemakerAppImageConfigKernelGatewayImageConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerAppImageConfig_KernelGatewayImageConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerAppImageConfigKernelGatewayImageConfigElRef {
+impl terrars::Ref for SagemakerAppImageConfig_KernelGatewayImageConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerAppImageConfigKernelGatewayImageConfigElRef {
-        SagemakerAppImageConfigKernelGatewayImageConfigElRef {
+    ) -> SagemakerAppImageConfig_KernelGatewayImageConfigRef {
+        SagemakerAppImageConfig_KernelGatewayImageConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerAppImageConfigKernelGatewayImageConfigElRef {
+impl SagemakerAppImageConfig_KernelGatewayImageConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -601,19 +1055,12 @@ impl SagemakerAppImageConfigKernelGatewayImageConfigElRef {
     #[doc = "Get a reference to the value of field `file_system_config` after provisioning.\n"]
     pub fn file_system_config(
         &self,
-    ) -> terrars::ListRef<SagemakerAppImageConfigKernelGatewayImageConfigElFileSystemConfigElRef> {
+    ) -> terrars::ListRef<SagemakerAppImageConfig_JupyterLabImageConfig_FileSystemConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.file_system_config", self.base))
     }
 
     #[doc = "Get a reference to the value of field `kernel_spec` after provisioning.\n"]
-    pub fn kernel_spec(&self) -> terrars::ListRef<SagemakerAppImageConfigKernelGatewayImageConfigElKernelSpecElRef> {
+    pub fn kernel_spec(&self) -> terrars::ListRef<SagemakerAppImageConfig_KernelGatewayImageConfig_KernelSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.kernel_spec", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SagemakerAppImageConfigDynamic {
-    kernel_gateway_image_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<SagemakerAppImageConfigKernelGatewayImageConfigEl>>,
 }

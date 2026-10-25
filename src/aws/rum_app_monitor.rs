@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RumAppMonitorData {
+struct RumAppMonitorData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,25 +22,30 @@ struct RumAppMonitorData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cw_log_enabled: std::option::Option<terrars::PrimField<bool>>,
-    domain: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_list: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    app_monitor_configuration: std::option::Option<std::vec::Vec<RumAppMonitorAppMonitorConfigurationEl>>,
+    app_monitor_configuration: std::option::Option<std::vec::Vec<RumAppMonitor_AppMonitorConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_events: std::option::Option<std::vec::Vec<RumAppMonitorCustomEventsEl>>,
+    custom_events: std::option::Option<std::vec::Vec<RumAppMonitor_CustomEvents>>,
     dynamic: RumAppMonitorDynamic,
 }
 
 struct RumAppMonitor_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RumAppMonitorData>,
+    data: std::cell::RefCell<RumAppMonitorData_>,
 }
 
 #[derive(Clone)]
@@ -144,9 +151,31 @@ impl RumAppMonitor {
         self
     }
 
+    #[doc = "Set the field `domain`.\n"]
+    pub fn set_domain(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().domain = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `domain_list`.\n"]
+    pub fn set_domain_list(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().domain_list = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -171,7 +200,7 @@ impl RumAppMonitor {
     #[doc = "Set the field `app_monitor_configuration`.\n"]
     pub fn set_app_monitor_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RumAppMonitorAppMonitorConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RumAppMonitor_AppMonitorConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -187,7 +216,7 @@ impl RumAppMonitor {
     #[doc = "Set the field `custom_events`.\n"]
     pub fn set_custom_events(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RumAppMonitorCustomEventsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RumAppMonitor_CustomEvents>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -225,6 +254,11 @@ impl RumAppMonitor {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `domain_list` after provisioning.\n"]
+    pub fn domain_list(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.domain_list", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -233,6 +267,12 @@ impl RumAppMonitor {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -246,12 +286,12 @@ impl RumAppMonitor {
     }
 
     #[doc = "Get a reference to the value of field `app_monitor_configuration` after provisioning.\n"]
-    pub fn app_monitor_configuration(&self) -> terrars::ListRef<RumAppMonitorAppMonitorConfigurationElRef> {
+    pub fn app_monitor_configuration(&self) -> terrars::ListRef<RumAppMonitor_AppMonitorConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.app_monitor_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `custom_events` after provisioning.\n"]
-    pub fn custom_events(&self) -> terrars::ListRef<RumAppMonitorCustomEventsElRef> {
+    pub fn custom_events(&self) -> terrars::ListRef<RumAppMonitor_CustomEventsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_events", self.extract_ref()))
     }
 }
@@ -290,8 +330,6 @@ impl terrars::Resource_ for RumAppMonitor_ {
 pub struct BuildRumAppMonitor {
     pub tf_id: std::string::String,
     #[doc = ""]
-    pub domain: terrars::PrimField<std::string::String>,
-    #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
@@ -300,16 +338,18 @@ impl BuildRumAppMonitor {
         let out = RumAppMonitor(std::rc::Rc::new(RumAppMonitor_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RumAppMonitorData {
+            data: std::cell::RefCell::new(RumAppMonitorData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 cw_log_enabled: core::default::Default::default(),
-                domain: self.domain,
+                domain: core::default::Default::default(),
+                domain_list: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 app_monitor_configuration: core::default::Default::default(),
@@ -370,6 +410,11 @@ impl RumAppMonitorRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `domain_list` after provisioning.\n"]
+    pub fn domain_list(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.domain_list", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -378,6 +423,12 @@ impl RumAppMonitorRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -391,18 +442,24 @@ impl RumAppMonitorRef {
     }
 
     #[doc = "Get a reference to the value of field `app_monitor_configuration` after provisioning.\n"]
-    pub fn app_monitor_configuration(&self) -> terrars::ListRef<RumAppMonitorAppMonitorConfigurationElRef> {
+    pub fn app_monitor_configuration(&self) -> terrars::ListRef<RumAppMonitor_AppMonitorConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.app_monitor_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `custom_events` after provisioning.\n"]
-    pub fn custom_events(&self) -> terrars::ListRef<RumAppMonitorCustomEventsElRef> {
+    pub fn custom_events(&self) -> terrars::ListRef<RumAppMonitor_CustomEventsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_events", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct RumAppMonitorDynamic {
+    app_monitor_configuration: std::option::Option<terrars::DynamicBlock<RumAppMonitor_AppMonitorConfiguration>>,
+    custom_events: std::option::Option<terrars::DynamicBlock<RumAppMonitor_CustomEvents>>,
+}
+
 #[derive(Serialize)]
-pub struct RumAppMonitorAppMonitorConfigurationEl {
+pub struct RumAppMonitor_AppMonitorConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_cookies: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -423,7 +480,7 @@ pub struct RumAppMonitorAppMonitorConfigurationEl {
     telemetries: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl RumAppMonitorAppMonitorConfigurationEl {
+impl RumAppMonitor_AppMonitorConfiguration {
     #[doc = "Set the field `allow_cookies`.\n"]
     pub fn set_allow_cookies(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_cookies = std::option::Option::Some(v.into());
@@ -491,8 +548,8 @@ impl RumAppMonitorAppMonitorConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for RumAppMonitorAppMonitorConfigurationEl {
-    type O = terrars::BlockAssignable<RumAppMonitorAppMonitorConfigurationEl>;
+impl terrars::ToListMappable for RumAppMonitor_AppMonitorConfiguration {
+    type O = terrars::BlockAssignable<RumAppMonitor_AppMonitorConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -503,11 +560,11 @@ impl terrars::ToListMappable for RumAppMonitorAppMonitorConfigurationEl {
     }
 }
 
-pub struct BuildRumAppMonitorAppMonitorConfigurationEl {}
+pub struct BuildRumAppMonitor_AppMonitorConfiguration {}
 
-impl BuildRumAppMonitorAppMonitorConfigurationEl {
-    pub fn build(self) -> RumAppMonitorAppMonitorConfigurationEl {
-        RumAppMonitorAppMonitorConfigurationEl {
+impl BuildRumAppMonitor_AppMonitorConfiguration {
+    pub fn build(self) -> RumAppMonitor_AppMonitorConfiguration {
+        RumAppMonitor_AppMonitorConfiguration {
             allow_cookies: core::default::Default::default(),
             enable_xray: core::default::Default::default(),
             excluded_pages: core::default::Default::default(),
@@ -521,21 +578,23 @@ impl BuildRumAppMonitorAppMonitorConfigurationEl {
     }
 }
 
-pub struct RumAppMonitorAppMonitorConfigurationElRef {
+#[allow(dead_code)]
+pub struct RumAppMonitor_AppMonitorConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RumAppMonitorAppMonitorConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RumAppMonitorAppMonitorConfigurationElRef {
-        RumAppMonitorAppMonitorConfigurationElRef {
+impl terrars::Ref for RumAppMonitor_AppMonitorConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RumAppMonitor_AppMonitorConfigurationRef {
+        RumAppMonitor_AppMonitorConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RumAppMonitorAppMonitorConfigurationElRef {
+impl RumAppMonitor_AppMonitorConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -587,12 +646,12 @@ impl RumAppMonitorAppMonitorConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct RumAppMonitorCustomEventsEl {
+pub struct RumAppMonitor_CustomEvents {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RumAppMonitorCustomEventsEl {
+impl RumAppMonitor_CustomEvents {
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.status = std::option::Option::Some(v.into());
@@ -600,8 +659,8 @@ impl RumAppMonitorCustomEventsEl {
     }
 }
 
-impl terrars::ToListMappable for RumAppMonitorCustomEventsEl {
-    type O = terrars::BlockAssignable<RumAppMonitorCustomEventsEl>;
+impl terrars::ToListMappable for RumAppMonitor_CustomEvents {
+    type O = terrars::BlockAssignable<RumAppMonitor_CustomEvents>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -612,29 +671,31 @@ impl terrars::ToListMappable for RumAppMonitorCustomEventsEl {
     }
 }
 
-pub struct BuildRumAppMonitorCustomEventsEl {}
+pub struct BuildRumAppMonitor_CustomEvents {}
 
-impl BuildRumAppMonitorCustomEventsEl {
-    pub fn build(self) -> RumAppMonitorCustomEventsEl {
-        RumAppMonitorCustomEventsEl { status: core::default::Default::default() }
+impl BuildRumAppMonitor_CustomEvents {
+    pub fn build(self) -> RumAppMonitor_CustomEvents {
+        RumAppMonitor_CustomEvents { status: core::default::Default::default() }
     }
 }
 
-pub struct RumAppMonitorCustomEventsElRef {
+#[allow(dead_code)]
+pub struct RumAppMonitor_CustomEventsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RumAppMonitorCustomEventsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RumAppMonitorCustomEventsElRef {
-        RumAppMonitorCustomEventsElRef {
+impl terrars::Ref for RumAppMonitor_CustomEventsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RumAppMonitor_CustomEventsRef {
+        RumAppMonitor_CustomEventsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RumAppMonitorCustomEventsElRef {
+impl RumAppMonitor_CustomEventsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -643,10 +704,4 @@ impl RumAppMonitorCustomEventsElRef {
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct RumAppMonitorDynamic {
-    app_monitor_configuration: std::option::Option<terrars::DynamicBlock<RumAppMonitorAppMonitorConfigurationEl>>,
-    custom_events: std::option::Option<terrars::DynamicBlock<RumAppMonitorCustomEventsEl>>,
 }

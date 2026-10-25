@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudfrontFunctionData {
+struct CloudfrontFunctionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,16 +25,22 @@ struct CloudfrontFunctionData {
     comment: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    key_value_store_associations: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publish: std::option::Option<terrars::PrimField<bool>>,
     runtime: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct CloudfrontFunction_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudfrontFunctionData>,
+    data: std::cell::RefCell<CloudfrontFunctionData_>,
 }
 
 #[derive(Clone)]
@@ -144,9 +152,36 @@ impl CloudfrontFunction {
         self
     }
 
+    #[doc = "Set the field `key_value_store_associations`.\n"]
+    pub fn set_key_value_store_associations(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().key_value_store_associations = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `publish`.\n"]
     pub fn set_publish(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().publish = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
         self
     }
 
@@ -175,6 +210,11 @@ impl CloudfrontFunction {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `key_value_store_associations` after provisioning.\n"]
+    pub fn key_value_store_associations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.key_value_store_associations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `live_stage_etag` after provisioning.\n"]
     pub fn live_stage_etag(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.live_stage_etag", self.extract_ref()))
@@ -198,6 +238,16 @@ impl CloudfrontFunction {
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 }
 
@@ -247,7 +297,7 @@ impl BuildCloudfrontFunction {
         let out = CloudfrontFunction(std::rc::Rc::new(CloudfrontFunction_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudfrontFunctionData {
+            data: std::cell::RefCell::new(CloudfrontFunctionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -256,9 +306,12 @@ impl BuildCloudfrontFunction {
                 code: self.code,
                 comment: core::default::Default::default(),
                 id: core::default::Default::default(),
+                key_value_store_associations: core::default::Default::default(),
                 name: self.name,
                 publish: core::default::Default::default(),
                 runtime: self.runtime,
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -314,6 +367,11 @@ impl CloudfrontFunctionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `key_value_store_associations` after provisioning.\n"]
+    pub fn key_value_store_associations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.key_value_store_associations", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `live_stage_etag` after provisioning.\n"]
     pub fn live_stage_etag(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.live_stage_etag", self.extract_ref()))
@@ -337,5 +395,15 @@ impl CloudfrontFunctionRef {
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 }

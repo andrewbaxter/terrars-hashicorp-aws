@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataDirectoryServiceDirectoryData {
+struct DataDirectoryServiceDirectoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataDirectoryServiceDirectoryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataDirectoryServiceDirectory_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDirectoryServiceDirectoryData>,
+    data: std::cell::RefCell<DataDirectoryServiceDirectoryData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataDirectoryServiceDirectory {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -97,7 +108,7 @@ impl DataDirectoryServiceDirectory {
     }
 
     #[doc = "Get a reference to the value of field `connect_settings` after provisioning.\n"]
-    pub fn connect_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectoryConnectSettingsElRef> {
+    pub fn connect_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectory_ConnectSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connect_settings", self.extract_ref()))
     }
 
@@ -137,8 +148,14 @@ impl DataDirectoryServiceDirectory {
     }
 
     #[doc = "Get a reference to the value of field `radius_settings` after provisioning.\n"]
-    pub fn radius_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectoryRadiusSettingsElRef> {
+    pub fn radius_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectory_RadiusSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.radius_settings", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -167,7 +184,7 @@ impl DataDirectoryServiceDirectory {
     }
 
     #[doc = "Get a reference to the value of field `vpc_settings` after provisioning.\n"]
-    pub fn vpc_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectoryVpcSettingsElRef> {
+    pub fn vpc_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectory_VpcSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_settings", self.extract_ref()))
     }
 }
@@ -214,13 +231,14 @@ impl BuildDataDirectoryServiceDirectory {
         let out = DataDirectoryServiceDirectory(std::rc::Rc::new(DataDirectoryServiceDirectory_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDirectoryServiceDirectoryData {
+            data: std::cell::RefCell::new(DataDirectoryServiceDirectoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 directory_id: self.directory_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -263,7 +281,7 @@ impl DataDirectoryServiceDirectoryRef {
     }
 
     #[doc = "Get a reference to the value of field `connect_settings` after provisioning.\n"]
-    pub fn connect_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectoryConnectSettingsElRef> {
+    pub fn connect_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectory_ConnectSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connect_settings", self.extract_ref()))
     }
 
@@ -303,8 +321,14 @@ impl DataDirectoryServiceDirectoryRef {
     }
 
     #[doc = "Get a reference to the value of field `radius_settings` after provisioning.\n"]
-    pub fn radius_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectoryRadiusSettingsElRef> {
+    pub fn radius_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectory_RadiusSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.radius_settings", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -333,13 +357,13 @@ impl DataDirectoryServiceDirectoryRef {
     }
 
     #[doc = "Get a reference to the value of field `vpc_settings` after provisioning.\n"]
-    pub fn vpc_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectoryVpcSettingsElRef> {
+    pub fn vpc_settings(&self) -> terrars::ListRef<DataDirectoryServiceDirectory_VpcSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_settings", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataDirectoryServiceDirectoryConnectSettingsEl {
+pub struct DataDirectoryServiceDirectory_ConnectSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zones: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -354,7 +378,7 @@ pub struct DataDirectoryServiceDirectoryConnectSettingsEl {
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDirectoryServiceDirectoryConnectSettingsEl {
+impl DataDirectoryServiceDirectory_ConnectSettings {
     #[doc = "Set the field `availability_zones`.\n"]
     pub fn set_availability_zones(
         mut self,
@@ -404,8 +428,8 @@ impl DataDirectoryServiceDirectoryConnectSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for DataDirectoryServiceDirectoryConnectSettingsEl {
-    type O = terrars::BlockAssignable<DataDirectoryServiceDirectoryConnectSettingsEl>;
+impl terrars::ToListMappable for DataDirectoryServiceDirectory_ConnectSettings {
+    type O = terrars::BlockAssignable<DataDirectoryServiceDirectory_ConnectSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -416,11 +440,11 @@ impl terrars::ToListMappable for DataDirectoryServiceDirectoryConnectSettingsEl 
     }
 }
 
-pub struct BuildDataDirectoryServiceDirectoryConnectSettingsEl {}
+pub struct BuildDataDirectoryServiceDirectory_ConnectSettings {}
 
-impl BuildDataDirectoryServiceDirectoryConnectSettingsEl {
-    pub fn build(self) -> DataDirectoryServiceDirectoryConnectSettingsEl {
-        DataDirectoryServiceDirectoryConnectSettingsEl {
+impl BuildDataDirectoryServiceDirectory_ConnectSettings {
+    pub fn build(self) -> DataDirectoryServiceDirectory_ConnectSettings {
+        DataDirectoryServiceDirectory_ConnectSettings {
             availability_zones: core::default::Default::default(),
             connect_ips: core::default::Default::default(),
             customer_dns_ips: core::default::Default::default(),
@@ -431,24 +455,26 @@ impl BuildDataDirectoryServiceDirectoryConnectSettingsEl {
     }
 }
 
-pub struct DataDirectoryServiceDirectoryConnectSettingsElRef {
+#[allow(dead_code)]
+pub struct DataDirectoryServiceDirectory_ConnectSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDirectoryServiceDirectoryConnectSettingsElRef {
+impl terrars::Ref for DataDirectoryServiceDirectory_ConnectSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataDirectoryServiceDirectoryConnectSettingsElRef {
-        DataDirectoryServiceDirectoryConnectSettingsElRef {
+    ) -> DataDirectoryServiceDirectory_ConnectSettingsRef {
+        DataDirectoryServiceDirectory_ConnectSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDirectoryServiceDirectoryConnectSettingsElRef {
+impl DataDirectoryServiceDirectory_ConnectSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -485,7 +511,7 @@ impl DataDirectoryServiceDirectoryConnectSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDirectoryServiceDirectoryRadiusSettingsEl {
+pub struct DataDirectoryServiceDirectory_RadiusSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     authentication_protocol: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -502,7 +528,7 @@ pub struct DataDirectoryServiceDirectoryRadiusSettingsEl {
     use_same_username: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataDirectoryServiceDirectoryRadiusSettingsEl {
+impl DataDirectoryServiceDirectory_RadiusSettings {
     #[doc = "Set the field `authentication_protocol`.\n"]
     pub fn set_authentication_protocol(
         mut self,
@@ -552,8 +578,8 @@ impl DataDirectoryServiceDirectoryRadiusSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for DataDirectoryServiceDirectoryRadiusSettingsEl {
-    type O = terrars::BlockAssignable<DataDirectoryServiceDirectoryRadiusSettingsEl>;
+impl terrars::ToListMappable for DataDirectoryServiceDirectory_RadiusSettings {
+    type O = terrars::BlockAssignable<DataDirectoryServiceDirectory_RadiusSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -564,11 +590,11 @@ impl terrars::ToListMappable for DataDirectoryServiceDirectoryRadiusSettingsEl {
     }
 }
 
-pub struct BuildDataDirectoryServiceDirectoryRadiusSettingsEl {}
+pub struct BuildDataDirectoryServiceDirectory_RadiusSettings {}
 
-impl BuildDataDirectoryServiceDirectoryRadiusSettingsEl {
-    pub fn build(self) -> DataDirectoryServiceDirectoryRadiusSettingsEl {
-        DataDirectoryServiceDirectoryRadiusSettingsEl {
+impl BuildDataDirectoryServiceDirectory_RadiusSettings {
+    pub fn build(self) -> DataDirectoryServiceDirectory_RadiusSettings {
+        DataDirectoryServiceDirectory_RadiusSettings {
             authentication_protocol: core::default::Default::default(),
             display_label: core::default::Default::default(),
             radius_port: core::default::Default::default(),
@@ -580,24 +606,26 @@ impl BuildDataDirectoryServiceDirectoryRadiusSettingsEl {
     }
 }
 
-pub struct DataDirectoryServiceDirectoryRadiusSettingsElRef {
+#[allow(dead_code)]
+pub struct DataDirectoryServiceDirectory_RadiusSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDirectoryServiceDirectoryRadiusSettingsElRef {
+impl terrars::Ref for DataDirectoryServiceDirectory_RadiusSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataDirectoryServiceDirectoryRadiusSettingsElRef {
-        DataDirectoryServiceDirectoryRadiusSettingsElRef {
+    ) -> DataDirectoryServiceDirectory_RadiusSettingsRef {
+        DataDirectoryServiceDirectory_RadiusSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDirectoryServiceDirectoryRadiusSettingsElRef {
+impl DataDirectoryServiceDirectory_RadiusSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -639,7 +667,7 @@ impl DataDirectoryServiceDirectoryRadiusSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataDirectoryServiceDirectoryVpcSettingsEl {
+pub struct DataDirectoryServiceDirectory_VpcSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zones: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -648,7 +676,7 @@ pub struct DataDirectoryServiceDirectoryVpcSettingsEl {
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataDirectoryServiceDirectoryVpcSettingsEl {
+impl DataDirectoryServiceDirectory_VpcSettings {
     #[doc = "Set the field `availability_zones`.\n"]
     pub fn set_availability_zones(
         mut self,
@@ -674,8 +702,8 @@ impl DataDirectoryServiceDirectoryVpcSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for DataDirectoryServiceDirectoryVpcSettingsEl {
-    type O = terrars::BlockAssignable<DataDirectoryServiceDirectoryVpcSettingsEl>;
+impl terrars::ToListMappable for DataDirectoryServiceDirectory_VpcSettings {
+    type O = terrars::BlockAssignable<DataDirectoryServiceDirectory_VpcSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -686,11 +714,11 @@ impl terrars::ToListMappable for DataDirectoryServiceDirectoryVpcSettingsEl {
     }
 }
 
-pub struct BuildDataDirectoryServiceDirectoryVpcSettingsEl {}
+pub struct BuildDataDirectoryServiceDirectory_VpcSettings {}
 
-impl BuildDataDirectoryServiceDirectoryVpcSettingsEl {
-    pub fn build(self) -> DataDirectoryServiceDirectoryVpcSettingsEl {
-        DataDirectoryServiceDirectoryVpcSettingsEl {
+impl BuildDataDirectoryServiceDirectory_VpcSettings {
+    pub fn build(self) -> DataDirectoryServiceDirectory_VpcSettings {
+        DataDirectoryServiceDirectory_VpcSettings {
             availability_zones: core::default::Default::default(),
             subnet_ids: core::default::Default::default(),
             vpc_id: core::default::Default::default(),
@@ -698,21 +726,23 @@ impl BuildDataDirectoryServiceDirectoryVpcSettingsEl {
     }
 }
 
-pub struct DataDirectoryServiceDirectoryVpcSettingsElRef {
+#[allow(dead_code)]
+pub struct DataDirectoryServiceDirectory_VpcSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataDirectoryServiceDirectoryVpcSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDirectoryServiceDirectoryVpcSettingsElRef {
-        DataDirectoryServiceDirectoryVpcSettingsElRef {
+impl terrars::Ref for DataDirectoryServiceDirectory_VpcSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDirectoryServiceDirectory_VpcSettingsRef {
+        DataDirectoryServiceDirectory_VpcSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataDirectoryServiceDirectoryVpcSettingsElRef {
+impl DataDirectoryServiceDirectory_VpcSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

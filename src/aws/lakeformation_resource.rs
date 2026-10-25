@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LakeformationResourceData {
+struct LakeformationResourceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,15 +22,25 @@ struct LakeformationResourceData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hybrid_access_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    use_service_linked_role: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    with_federation: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    with_privileged_access: std::option::Option<terrars::PrimField<bool>>,
 }
 
 struct LakeformationResource_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LakeformationResourceData>,
+    data: std::cell::RefCell<LakeformationResourceData_>,
 }
 
 #[derive(Clone)]
@@ -128,9 +140,22 @@ impl LakeformationResource {
         self
     }
 
+    #[doc = "Set the field `hybrid_access_enabled`.\n"]
+    pub fn set_hybrid_access_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().hybrid_access_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -140,9 +165,32 @@ impl LakeformationResource {
         self
     }
 
+    #[doc = "Set the field `use_service_linked_role`.\n"]
+    pub fn set_use_service_linked_role(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().use_service_linked_role = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `with_federation`.\n"]
+    pub fn set_with_federation(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().with_federation = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `with_privileged_access`.\n"]
+    pub fn set_with_privileged_access(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().with_privileged_access = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `hybrid_access_enabled` after provisioning.\n"]
+    pub fn hybrid_access_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hybrid_access_enabled", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -155,9 +203,30 @@ impl LakeformationResource {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `use_service_linked_role` after provisioning.\n"]
+    pub fn use_service_linked_role(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_service_linked_role", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `with_federation` after provisioning.\n"]
+    pub fn with_federation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.with_federation", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `with_privileged_access` after provisioning.\n"]
+    pub fn with_privileged_access(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.with_privileged_access", self.extract_ref()))
     }
 }
 
@@ -203,15 +272,20 @@ impl BuildLakeformationResource {
         let out = LakeformationResource(std::rc::Rc::new(LakeformationResource_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LakeformationResourceData {
+            data: std::cell::RefCell::new(LakeformationResourceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 arn: self.arn,
+                hybrid_access_enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role_arn: core::default::Default::default(),
+                use_service_linked_role: core::default::Default::default(),
+                with_federation: core::default::Default::default(),
+                with_privileged_access: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -247,6 +321,11 @@ impl LakeformationResourceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `hybrid_access_enabled` after provisioning.\n"]
+    pub fn hybrid_access_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hybrid_access_enabled", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -257,8 +336,29 @@ impl LakeformationResourceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `use_service_linked_role` after provisioning.\n"]
+    pub fn use_service_linked_role(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_service_linked_role", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `with_federation` after provisioning.\n"]
+    pub fn with_federation(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.with_federation", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `with_privileged_access` after provisioning.\n"]
+    pub fn with_privileged_access(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.with_privileged_access", self.extract_ref()))
     }
 }

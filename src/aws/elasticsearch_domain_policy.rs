@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ElasticsearchDomainPolicyData {
+struct ElasticsearchDomainPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,13 +25,15 @@ struct ElasticsearchDomainPolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ElasticsearchDomainPolicyTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ElasticsearchDomainPolicy_Timeouts>,
 }
 
 struct ElasticsearchDomainPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ElasticsearchDomainPolicyData>,
+    data: std::cell::RefCell<ElasticsearchDomainPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -135,8 +139,15 @@ impl ElasticsearchDomainPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ElasticsearchDomainPolicyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ElasticsearchDomainPolicy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -156,12 +167,15 @@ impl ElasticsearchDomainPolicy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ElasticsearchDomainPolicyTimeoutsElRef {
-        ElasticsearchDomainPolicyTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> ElasticsearchDomainPolicy_TimeoutsRef {
+        ElasticsearchDomainPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -209,7 +223,7 @@ impl BuildElasticsearchDomainPolicy {
         let out = ElasticsearchDomainPolicy(std::rc::Rc::new(ElasticsearchDomainPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ElasticsearchDomainPolicyData {
+            data: std::cell::RefCell::new(ElasticsearchDomainPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -218,6 +232,7 @@ impl BuildElasticsearchDomainPolicy {
                 access_policies: self.access_policies,
                 domain_name: self.domain_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -264,24 +279,27 @@ impl ElasticsearchDomainPolicyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ElasticsearchDomainPolicyTimeoutsElRef {
-        ElasticsearchDomainPolicyTimeoutsElRef::new(
-            self.shared().clone(),
-            format!("{}.timeouts", self.extract_ref()),
-        )
+    pub fn timeouts(&self) -> ElasticsearchDomainPolicy_TimeoutsRef {
+        ElasticsearchDomainPolicy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ElasticsearchDomainPolicyTimeoutsEl {
+pub struct ElasticsearchDomainPolicy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElasticsearchDomainPolicyTimeoutsEl {
+impl ElasticsearchDomainPolicy_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -295,8 +313,8 @@ impl ElasticsearchDomainPolicyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ElasticsearchDomainPolicyTimeoutsEl {
-    type O = terrars::BlockAssignable<ElasticsearchDomainPolicyTimeoutsEl>;
+impl terrars::ToListMappable for ElasticsearchDomainPolicy_Timeouts {
+    type O = terrars::BlockAssignable<ElasticsearchDomainPolicy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -307,32 +325,34 @@ impl terrars::ToListMappable for ElasticsearchDomainPolicyTimeoutsEl {
     }
 }
 
-pub struct BuildElasticsearchDomainPolicyTimeoutsEl {}
+pub struct BuildElasticsearchDomainPolicy_Timeouts {}
 
-impl BuildElasticsearchDomainPolicyTimeoutsEl {
-    pub fn build(self) -> ElasticsearchDomainPolicyTimeoutsEl {
-        ElasticsearchDomainPolicyTimeoutsEl {
+impl BuildElasticsearchDomainPolicy_Timeouts {
+    pub fn build(self) -> ElasticsearchDomainPolicy_Timeouts {
+        ElasticsearchDomainPolicy_Timeouts {
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct ElasticsearchDomainPolicyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ElasticsearchDomainPolicy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElasticsearchDomainPolicyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticsearchDomainPolicyTimeoutsElRef {
-        ElasticsearchDomainPolicyTimeoutsElRef {
+impl terrars::Ref for ElasticsearchDomainPolicy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticsearchDomainPolicy_TimeoutsRef {
+        ElasticsearchDomainPolicy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElasticsearchDomainPolicyTimeoutsElRef {
+impl ElasticsearchDomainPolicy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

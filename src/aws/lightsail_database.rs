@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LightsailDatabaseData {
+struct LightsailDatabaseData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,6 +41,8 @@ struct LightsailDatabaseData {
     preferred_maintenance_window: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publicly_accessible: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     relational_database_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skip_final_snapshot: std::option::Option<terrars::PrimField<bool>>,
@@ -51,7 +55,7 @@ struct LightsailDatabaseData {
 struct LightsailDatabase_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LightsailDatabaseData>,
+    data: std::cell::RefCell<LightsailDatabaseData_>,
 }
 
 #[derive(Clone)]
@@ -205,6 +209,13 @@ impl LightsailDatabase {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `skip_final_snapshot`.\n"]
     pub fn set_skip_final_snapshot(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().skip_final_snapshot = std::option::Option::Some(v.into());
@@ -344,6 +355,12 @@ impl LightsailDatabase {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ram_size", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `relational_database_name` after provisioning.\n"]
     pub fn relational_database_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.relational_database_name", self.extract_ref()))
@@ -427,7 +444,7 @@ impl BuildLightsailDatabase {
         let out = LightsailDatabase(std::rc::Rc::new(LightsailDatabase_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LightsailDatabaseData {
+            data: std::cell::RefCell::new(LightsailDatabaseData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -446,6 +463,7 @@ impl BuildLightsailDatabase {
                 preferred_backup_window: core::default::Default::default(),
                 preferred_maintenance_window: core::default::Default::default(),
                 publicly_accessible: core::default::Default::default(),
+                region: core::default::Default::default(),
                 relational_database_name: self.relational_database_name,
                 skip_final_snapshot: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -593,6 +611,12 @@ impl LightsailDatabaseRef {
     #[doc = "Get a reference to the value of field `ram_size` after provisioning.\n"]
     pub fn ram_size(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ram_size", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `relational_database_name` after provisioning.\n"]

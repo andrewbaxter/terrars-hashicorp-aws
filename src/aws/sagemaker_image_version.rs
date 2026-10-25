@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerImageVersionData {
+struct SagemakerImageVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,16 +20,34 @@ struct SagemakerImageVersionData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    aliases: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     base_image: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    horovod: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     image_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    job_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ml_framework: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    processor: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    programming_lang: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    release_notes: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vendor_guidance: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct SagemakerImageVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerImageVersionData>,
+    data: std::cell::RefCell<SagemakerImageVersionData_>,
 }
 
 #[derive(Clone)]
@@ -127,10 +147,73 @@ impl SagemakerImageVersion {
         self
     }
 
+    #[doc = "Set the field `aliases`.\n"]
+    pub fn set_aliases(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().aliases = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `horovod`.\n"]
+    pub fn set_horovod(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().horovod = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Set the field `job_type`.\n"]
+    pub fn set_job_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().job_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ml_framework`.\n"]
+    pub fn set_ml_framework(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ml_framework = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `processor`.\n"]
+    pub fn set_processor(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().processor = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `programming_lang`.\n"]
+    pub fn set_programming_lang(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().programming_lang = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `release_notes`.\n"]
+    pub fn set_release_notes(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().release_notes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `vendor_guidance`.\n"]
+    pub fn set_vendor_guidance(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().vendor_guidance = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `aliases` after provisioning.\n"]
+    pub fn aliases(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.aliases", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -148,6 +231,11 @@ impl SagemakerImageVersion {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.container_image", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `horovod` after provisioning.\n"]
+    pub fn horovod(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.horovod", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -161,6 +249,42 @@ impl SagemakerImageVersion {
     #[doc = "Get a reference to the value of field `image_name` after provisioning.\n"]
     pub fn image_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `job_type` after provisioning.\n"]
+    pub fn job_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ml_framework` after provisioning.\n"]
+    pub fn ml_framework(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ml_framework", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `processor` after provisioning.\n"]
+    pub fn processor(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.processor", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `programming_lang` after provisioning.\n"]
+    pub fn programming_lang(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.programming_lang", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `release_notes` after provisioning.\n"]
+    pub fn release_notes(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.release_notes", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vendor_guidance` after provisioning.\n"]
+    pub fn vendor_guidance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vendor_guidance", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
@@ -213,15 +337,24 @@ impl BuildSagemakerImageVersion {
         let out = SagemakerImageVersion(std::rc::Rc::new(SagemakerImageVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerImageVersionData {
+            data: std::cell::RefCell::new(SagemakerImageVersionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                aliases: core::default::Default::default(),
                 base_image: self.base_image,
+                horovod: core::default::Default::default(),
                 id: core::default::Default::default(),
                 image_name: self.image_name,
+                job_type: core::default::Default::default(),
+                ml_framework: core::default::Default::default(),
+                processor: core::default::Default::default(),
+                programming_lang: core::default::Default::default(),
+                region: core::default::Default::default(),
+                release_notes: core::default::Default::default(),
+                vendor_guidance: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -252,6 +385,11 @@ impl SagemakerImageVersionRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `aliases` after provisioning.\n"]
+    pub fn aliases(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.aliases", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -267,6 +405,11 @@ impl SagemakerImageVersionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.container_image", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `horovod` after provisioning.\n"]
+    pub fn horovod(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.horovod", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -280,6 +423,42 @@ impl SagemakerImageVersionRef {
     #[doc = "Get a reference to the value of field `image_name` after provisioning.\n"]
     pub fn image_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.image_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `job_type` after provisioning.\n"]
+    pub fn job_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ml_framework` after provisioning.\n"]
+    pub fn ml_framework(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ml_framework", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `processor` after provisioning.\n"]
+    pub fn processor(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.processor", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `programming_lang` after provisioning.\n"]
+    pub fn programming_lang(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.programming_lang", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `release_notes` after provisioning.\n"]
+    pub fn release_notes(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.release_notes", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vendor_guidance` after provisioning.\n"]
+    pub fn vendor_guidance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vendor_guidance", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]

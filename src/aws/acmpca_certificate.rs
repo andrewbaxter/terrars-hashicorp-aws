@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AcmpcaCertificateData {
+struct AcmpcaCertificateData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,22 +20,26 @@ struct AcmpcaCertificateData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    api_passthrough: std::option::Option<terrars::PrimField<std::string::String>>,
     certificate_authority_arn: terrars::PrimField<std::string::String>,
     certificate_signing_request: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     signing_algorithm: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     template_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    validity: std::option::Option<std::vec::Vec<AcmpcaCertificateValidityEl>>,
+    validity: std::option::Option<std::vec::Vec<AcmpcaCertificate_Validity>>,
     dynamic: AcmpcaCertificateDynamic,
 }
 
 struct AcmpcaCertificate_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AcmpcaCertificateData>,
+    data: std::cell::RefCell<AcmpcaCertificateData_>,
 }
 
 #[derive(Clone)]
@@ -133,9 +139,22 @@ impl AcmpcaCertificate {
         self
     }
 
+    #[doc = "Set the field `api_passthrough`.\n"]
+    pub fn set_api_passthrough(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().api_passthrough = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -146,10 +165,7 @@ impl AcmpcaCertificate {
     }
 
     #[doc = "Set the field `validity`.\n"]
-    pub fn set_validity(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AcmpcaCertificateValidityEl>>,
-    ) -> Self {
+    pub fn set_validity(self, v: impl std::convert::Into<terrars::BlockAssignable<AcmpcaCertificate_Validity>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().validity = std::option::Option::Some(v);
@@ -159,6 +175,11 @@ impl AcmpcaCertificate {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `api_passthrough` after provisioning.\n"]
+    pub fn api_passthrough(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_passthrough", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -191,6 +212,12 @@ impl AcmpcaCertificate {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `signing_algorithm` after provisioning.\n"]
     pub fn signing_algorithm(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.signing_algorithm", self.extract_ref()))
@@ -202,7 +229,7 @@ impl AcmpcaCertificate {
     }
 
     #[doc = "Get a reference to the value of field `validity` after provisioning.\n"]
-    pub fn validity(&self) -> terrars::ListRef<AcmpcaCertificateValidityElRef> {
+    pub fn validity(&self) -> terrars::ListRef<AcmpcaCertificate_ValidityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validity", self.extract_ref()))
     }
 }
@@ -253,15 +280,17 @@ impl BuildAcmpcaCertificate {
         let out = AcmpcaCertificate(std::rc::Rc::new(AcmpcaCertificate_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AcmpcaCertificateData {
+            data: std::cell::RefCell::new(AcmpcaCertificateData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                api_passthrough: core::default::Default::default(),
                 certificate_authority_arn: self.certificate_authority_arn,
                 certificate_signing_request: self.certificate_signing_request,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 signing_algorithm: self.signing_algorithm,
                 template_arn: core::default::Default::default(),
                 validity: core::default::Default::default(),
@@ -296,6 +325,11 @@ impl AcmpcaCertificateRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `api_passthrough` after provisioning.\n"]
+    pub fn api_passthrough(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.api_passthrough", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -326,6 +360,12 @@ impl AcmpcaCertificateRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `signing_algorithm` after provisioning.\n"]
     pub fn signing_algorithm(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.signing_algorithm", self.extract_ref()))
@@ -337,22 +377,27 @@ impl AcmpcaCertificateRef {
     }
 
     #[doc = "Get a reference to the value of field `validity` after provisioning.\n"]
-    pub fn validity(&self) -> terrars::ListRef<AcmpcaCertificateValidityElRef> {
+    pub fn validity(&self) -> terrars::ListRef<AcmpcaCertificate_ValidityRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.validity", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AcmpcaCertificateDynamic {
+    validity: std::option::Option<terrars::DynamicBlock<AcmpcaCertificate_Validity>>,
+}
+
 #[derive(Serialize)]
-pub struct AcmpcaCertificateValidityEl {
+pub struct AcmpcaCertificate_Validity {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl AcmpcaCertificateValidityEl { }
+impl AcmpcaCertificate_Validity { }
 
-impl terrars::ToListMappable for AcmpcaCertificateValidityEl {
-    type O = terrars::BlockAssignable<AcmpcaCertificateValidityEl>;
+impl terrars::ToListMappable for AcmpcaCertificate_Validity {
+    type O = terrars::BlockAssignable<AcmpcaCertificate_Validity>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -363,37 +408,39 @@ impl terrars::ToListMappable for AcmpcaCertificateValidityEl {
     }
 }
 
-pub struct BuildAcmpcaCertificateValidityEl {
+pub struct BuildAcmpcaCertificate_Validity {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAcmpcaCertificateValidityEl {
-    pub fn build(self) -> AcmpcaCertificateValidityEl {
-        AcmpcaCertificateValidityEl {
+impl BuildAcmpcaCertificate_Validity {
+    pub fn build(self) -> AcmpcaCertificate_Validity {
+        AcmpcaCertificate_Validity {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct AcmpcaCertificateValidityElRef {
+#[allow(dead_code)]
+pub struct AcmpcaCertificate_ValidityRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AcmpcaCertificateValidityElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmpcaCertificateValidityElRef {
-        AcmpcaCertificateValidityElRef {
+impl terrars::Ref for AcmpcaCertificate_ValidityRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmpcaCertificate_ValidityRef {
+        AcmpcaCertificate_ValidityRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AcmpcaCertificateValidityElRef {
+impl AcmpcaCertificate_ValidityRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -407,9 +454,4 @@ impl AcmpcaCertificateValidityElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AcmpcaCertificateDynamic {
-    validity: std::option::Option<terrars::DynamicBlock<AcmpcaCertificateValidityEl>>,
 }

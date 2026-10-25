@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsoadminCustomerManagedPolicyAttachmentData {
+struct SsoadminCustomerManagedPolicyAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,16 +25,20 @@ struct SsoadminCustomerManagedPolicyAttachmentData {
     instance_arn: terrars::PrimField<std::string::String>,
     permission_set_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customer_managed_policy_reference: std
     ::option
-    ::Option<std::vec::Vec<SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl>>,
+    ::Option<std::vec::Vec<SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<SsoadminCustomerManagedPolicyAttachment_Timeouts>,
     dynamic: SsoadminCustomerManagedPolicyAttachmentDynamic,
 }
 
 struct SsoadminCustomerManagedPolicyAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsoadminCustomerManagedPolicyAttachmentData>,
+    data: std::cell::RefCell<SsoadminCustomerManagedPolicyAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +144,13 @@ impl SsoadminCustomerManagedPolicyAttachment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `customer_managed_policy_reference`.\n"]
     pub fn set_customer_managed_policy_reference(
         self,
@@ -148,7 +161,7 @@ impl SsoadminCustomerManagedPolicyAttachment {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl>,
+                        ::BlockAssignable<SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference>,
                     >,
     ) -> Self {
         match v.into() {
@@ -159,6 +172,12 @@ impl SsoadminCustomerManagedPolicyAttachment {
                 self.0.data.borrow_mut().dynamic.customer_managed_policy_reference = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<SsoadminCustomerManagedPolicyAttachment_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -177,13 +196,27 @@ impl SsoadminCustomerManagedPolicyAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission_set_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `customer_managed_policy_reference` after provisioning.\n"]
     pub fn customer_managed_policy_reference(
         &self,
-    ) -> terrars::ListRef<SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceElRef> {
+    ) -> terrars::ListRef<SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReferenceRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.customer_managed_policy_reference", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> SsoadminCustomerManagedPolicyAttachment_TimeoutsRef {
+        SsoadminCustomerManagedPolicyAttachment_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
@@ -232,7 +265,7 @@ impl BuildSsoadminCustomerManagedPolicyAttachment {
         let out = SsoadminCustomerManagedPolicyAttachment(std::rc::Rc::new(SsoadminCustomerManagedPolicyAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsoadminCustomerManagedPolicyAttachmentData {
+            data: std::cell::RefCell::new(SsoadminCustomerManagedPolicyAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -241,7 +274,9 @@ impl BuildSsoadminCustomerManagedPolicyAttachment {
                 id: core::default::Default::default(),
                 instance_arn: self.instance_arn,
                 permission_set_arn: self.permission_set_arn,
+                region: core::default::Default::default(),
                 customer_managed_policy_reference: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -288,25 +323,46 @@ impl SsoadminCustomerManagedPolicyAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission_set_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `customer_managed_policy_reference` after provisioning.\n"]
     pub fn customer_managed_policy_reference(
         &self,
-    ) -> terrars::ListRef<SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceElRef> {
+    ) -> terrars::ListRef<SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReferenceRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.customer_managed_policy_reference", self.extract_ref()),
         )
     }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> SsoadminCustomerManagedPolicyAttachment_TimeoutsRef {
+        SsoadminCustomerManagedPolicyAttachment_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
+    }
+}
+
+#[derive(Serialize, Default)]
+struct SsoadminCustomerManagedPolicyAttachmentDynamic {
+    customer_managed_policy_reference: std
+    ::option
+    ::Option<terrars::DynamicBlock<SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference>>,
 }
 
 #[derive(Serialize)]
-pub struct SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl {
+pub struct SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl {
+impl SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference {
     #[doc = "Set the field `path`.\n"]
     pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.path = std::option::Option::Some(v.into());
@@ -314,8 +370,8 @@ impl SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl {
     }
 }
 
-impl terrars::ToListMappable for SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl {
-    type O = terrars::BlockAssignable<SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl>;
+impl terrars::ToListMappable for SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference {
+    type O = terrars::BlockAssignable<SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -326,38 +382,40 @@ impl terrars::ToListMappable for SsoadminCustomerManagedPolicyAttachmentCustomer
     }
 }
 
-pub struct BuildSsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl {
+pub struct BuildSsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl {
-    pub fn build(self) -> SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl {
-        SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl {
+impl BuildSsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference {
+    pub fn build(self) -> SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference {
+        SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReference {
             name: self.name,
             path: core::default::Default::default(),
         }
     }
 }
 
-pub struct SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceElRef {
+#[allow(dead_code)]
+pub struct SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReferenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceElRef {
+impl terrars::Ref for SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReferenceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceElRef {
-        SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceElRef {
+    ) -> SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReferenceRef {
+        SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReferenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceElRef {
+impl SsoadminCustomerManagedPolicyAttachment_CustomerManagedPolicyReferenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -373,9 +431,82 @@ impl SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceElRef 
     }
 }
 
-#[derive(Serialize, Default)]
-struct SsoadminCustomerManagedPolicyAttachmentDynamic {
-    customer_managed_policy_reference: std
-    ::option
-    ::Option<terrars::DynamicBlock<SsoadminCustomerManagedPolicyAttachmentCustomerManagedPolicyReferenceEl>>,
+#[derive(Serialize)]
+pub struct SsoadminCustomerManagedPolicyAttachment_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl SsoadminCustomerManagedPolicyAttachment_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SsoadminCustomerManagedPolicyAttachment_Timeouts {
+    type O = terrars::BlockAssignable<SsoadminCustomerManagedPolicyAttachment_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSsoadminCustomerManagedPolicyAttachment_Timeouts {}
+
+impl BuildSsoadminCustomerManagedPolicyAttachment_Timeouts {
+    pub fn build(self) -> SsoadminCustomerManagedPolicyAttachment_Timeouts {
+        SsoadminCustomerManagedPolicyAttachment_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SsoadminCustomerManagedPolicyAttachment_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SsoadminCustomerManagedPolicyAttachment_TimeoutsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SsoadminCustomerManagedPolicyAttachment_TimeoutsRef {
+        SsoadminCustomerManagedPolicyAttachment_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SsoadminCustomerManagedPolicyAttachment_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
 }

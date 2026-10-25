@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MemorydbUserData {
+struct MemorydbUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,19 +24,21 @@ struct MemorydbUserData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     user_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    authentication_mode: std::option::Option<std::vec::Vec<MemorydbUserAuthenticationModeEl>>,
+    authentication_mode: std::option::Option<std::vec::Vec<MemorydbUser_AuthenticationMode>>,
     dynamic: MemorydbUserDynamic,
 }
 
 struct MemorydbUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MemorydbUserData>,
+    data: std::cell::RefCell<MemorydbUserData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl MemorydbUser {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -161,7 +172,7 @@ impl MemorydbUser {
     #[doc = "Set the field `authentication_mode`.\n"]
     pub fn set_authentication_mode(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MemorydbUserAuthenticationModeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MemorydbUser_AuthenticationMode>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -194,6 +205,12 @@ impl MemorydbUser {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_engine_version", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -210,7 +227,7 @@ impl MemorydbUser {
     }
 
     #[doc = "Get a reference to the value of field `authentication_mode` after provisioning.\n"]
-    pub fn authentication_mode(&self) -> terrars::ListRef<MemorydbUserAuthenticationModeElRef> {
+    pub fn authentication_mode(&self) -> terrars::ListRef<MemorydbUser_AuthenticationModeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_mode", self.extract_ref()))
     }
 }
@@ -259,7 +276,7 @@ impl BuildMemorydbUser {
         let out = MemorydbUser(std::rc::Rc::new(MemorydbUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MemorydbUserData {
+            data: std::cell::RefCell::new(MemorydbUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -267,6 +284,7 @@ impl BuildMemorydbUser {
                 provisioner: core::default::Default::default(),
                 access_string: self.access_string,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 user_name: self.user_name,
@@ -322,6 +340,12 @@ impl MemorydbUserRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_engine_version", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -338,22 +362,37 @@ impl MemorydbUserRef {
     }
 
     #[doc = "Get a reference to the value of field `authentication_mode` after provisioning.\n"]
-    pub fn authentication_mode(&self) -> terrars::ListRef<MemorydbUserAuthenticationModeElRef> {
+    pub fn authentication_mode(&self) -> terrars::ListRef<MemorydbUser_AuthenticationModeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_mode", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MemorydbUserDynamic {
+    authentication_mode: std::option::Option<terrars::DynamicBlock<MemorydbUser_AuthenticationMode>>,
+}
+
 #[derive(Serialize)]
-pub struct MemorydbUserAuthenticationModeEl {
-    passwords: terrars::SetField<terrars::PrimField<std::string::String>>,
+pub struct MemorydbUser_AuthenticationMode {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    passwords: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl MemorydbUserAuthenticationModeEl { }
+impl MemorydbUser_AuthenticationMode {
+    #[doc = "Set the field `passwords`.\n"]
+    pub fn set_passwords(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.passwords = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for MemorydbUserAuthenticationModeEl {
-    type O = terrars::BlockAssignable<MemorydbUserAuthenticationModeEl>;
+impl terrars::ToListMappable for MemorydbUser_AuthenticationMode {
+    type O = terrars::BlockAssignable<MemorydbUser_AuthenticationMode>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -364,37 +403,37 @@ impl terrars::ToListMappable for MemorydbUserAuthenticationModeEl {
     }
 }
 
-pub struct BuildMemorydbUserAuthenticationModeEl {
-    #[doc = ""]
-    pub passwords: terrars::SetField<terrars::PrimField<std::string::String>>,
+pub struct BuildMemorydbUser_AuthenticationMode {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMemorydbUserAuthenticationModeEl {
-    pub fn build(self) -> MemorydbUserAuthenticationModeEl {
-        MemorydbUserAuthenticationModeEl {
-            passwords: self.passwords,
+impl BuildMemorydbUser_AuthenticationMode {
+    pub fn build(self) -> MemorydbUser_AuthenticationMode {
+        MemorydbUser_AuthenticationMode {
+            passwords: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct MemorydbUserAuthenticationModeElRef {
+#[allow(dead_code)]
+pub struct MemorydbUser_AuthenticationModeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MemorydbUserAuthenticationModeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MemorydbUserAuthenticationModeElRef {
-        MemorydbUserAuthenticationModeElRef {
+impl terrars::Ref for MemorydbUser_AuthenticationModeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MemorydbUser_AuthenticationModeRef {
+        MemorydbUser_AuthenticationModeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MemorydbUserAuthenticationModeElRef {
+impl MemorydbUser_AuthenticationModeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -413,9 +452,4 @@ impl MemorydbUserAuthenticationModeElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MemorydbUserDynamic {
-    authentication_mode: std::option::Option<terrars::DynamicBlock<MemorydbUserAuthenticationModeEl>>,
 }

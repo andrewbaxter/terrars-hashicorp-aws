@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MediaPackageChannelData {
+struct MediaPackageChannelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct MediaPackageChannelData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -32,7 +36,7 @@ struct MediaPackageChannelData {
 struct MediaPackageChannel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MediaPackageChannelData>,
+    data: std::cell::RefCell<MediaPackageChannelData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +148,13 @@ impl MediaPackageChannel {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -178,13 +189,19 @@ impl MediaPackageChannel {
     }
 
     #[doc = "Get a reference to the value of field `hls_ingest` after provisioning.\n"]
-    pub fn hls_ingest(&self) -> terrars::ListRef<MediaPackageChannelHlsIngestElRef> {
+    pub fn hls_ingest(&self) -> terrars::ListRef<MediaPackageChannel_HlsIngestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hls_ingest", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -240,7 +257,7 @@ impl BuildMediaPackageChannel {
         let out = MediaPackageChannel(std::rc::Rc::new(MediaPackageChannel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MediaPackageChannelData {
+            data: std::cell::RefCell::new(MediaPackageChannelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -249,6 +266,7 @@ impl BuildMediaPackageChannel {
                 channel_id: self.channel_id,
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
             }),
@@ -297,13 +315,19 @@ impl MediaPackageChannelRef {
     }
 
     #[doc = "Get a reference to the value of field `hls_ingest` after provisioning.\n"]
-    pub fn hls_ingest(&self) -> terrars::ListRef<MediaPackageChannelHlsIngestElRef> {
+    pub fn hls_ingest(&self) -> terrars::ListRef<MediaPackageChannel_HlsIngestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hls_ingest", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -318,7 +342,7 @@ impl MediaPackageChannelRef {
 }
 
 #[derive(Serialize)]
-pub struct MediaPackageChannelHlsIngestElIngestEndpointsEl {
+pub struct MediaPackageChannel_HlsIngest_IngestEndpoints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -327,7 +351,7 @@ pub struct MediaPackageChannelHlsIngestElIngestEndpointsEl {
     username: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MediaPackageChannelHlsIngestElIngestEndpointsEl {
+impl MediaPackageChannel_HlsIngest_IngestEndpoints {
     #[doc = "Set the field `password`.\n"]
     pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.password = std::option::Option::Some(v.into());
@@ -347,8 +371,8 @@ impl MediaPackageChannelHlsIngestElIngestEndpointsEl {
     }
 }
 
-impl terrars::ToListMappable for MediaPackageChannelHlsIngestElIngestEndpointsEl {
-    type O = terrars::BlockAssignable<MediaPackageChannelHlsIngestElIngestEndpointsEl>;
+impl terrars::ToListMappable for MediaPackageChannel_HlsIngest_IngestEndpoints {
+    type O = terrars::BlockAssignable<MediaPackageChannel_HlsIngest_IngestEndpoints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -359,11 +383,11 @@ impl terrars::ToListMappable for MediaPackageChannelHlsIngestElIngestEndpointsEl
     }
 }
 
-pub struct BuildMediaPackageChannelHlsIngestElIngestEndpointsEl {}
+pub struct BuildMediaPackageChannel_HlsIngest_IngestEndpoints {}
 
-impl BuildMediaPackageChannelHlsIngestElIngestEndpointsEl {
-    pub fn build(self) -> MediaPackageChannelHlsIngestElIngestEndpointsEl {
-        MediaPackageChannelHlsIngestElIngestEndpointsEl {
+impl BuildMediaPackageChannel_HlsIngest_IngestEndpoints {
+    pub fn build(self) -> MediaPackageChannel_HlsIngest_IngestEndpoints {
+        MediaPackageChannel_HlsIngest_IngestEndpoints {
             password: core::default::Default::default(),
             url: core::default::Default::default(),
             username: core::default::Default::default(),
@@ -371,24 +395,26 @@ impl BuildMediaPackageChannelHlsIngestElIngestEndpointsEl {
     }
 }
 
-pub struct MediaPackageChannelHlsIngestElIngestEndpointsElRef {
+#[allow(dead_code)]
+pub struct MediaPackageChannel_HlsIngest_IngestEndpointsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MediaPackageChannelHlsIngestElIngestEndpointsElRef {
+impl terrars::Ref for MediaPackageChannel_HlsIngest_IngestEndpointsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MediaPackageChannelHlsIngestElIngestEndpointsElRef {
-        MediaPackageChannelHlsIngestElIngestEndpointsElRef {
+    ) -> MediaPackageChannel_HlsIngest_IngestEndpointsRef {
+        MediaPackageChannel_HlsIngest_IngestEndpointsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MediaPackageChannelHlsIngestElIngestEndpointsElRef {
+impl MediaPackageChannel_HlsIngest_IngestEndpointsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -410,24 +436,24 @@ impl MediaPackageChannelHlsIngestElIngestEndpointsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MediaPackageChannelHlsIngestEl {
+pub struct MediaPackageChannel_HlsIngest {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingest_endpoints: std::option::Option<terrars::ListField<MediaPackageChannelHlsIngestElIngestEndpointsEl>>,
+    ingest_endpoints: std::option::Option<terrars::ListField<MediaPackageChannel_HlsIngest_IngestEndpoints>>,
 }
 
-impl MediaPackageChannelHlsIngestEl {
+impl MediaPackageChannel_HlsIngest {
     #[doc = "Set the field `ingest_endpoints`.\n"]
     pub fn set_ingest_endpoints(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<MediaPackageChannelHlsIngestElIngestEndpointsEl>>,
+        v: impl std::convert::Into<terrars::ListField<MediaPackageChannel_HlsIngest_IngestEndpoints>>,
     ) -> Self {
         self.ingest_endpoints = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for MediaPackageChannelHlsIngestEl {
-    type O = terrars::BlockAssignable<MediaPackageChannelHlsIngestEl>;
+impl terrars::ToListMappable for MediaPackageChannel_HlsIngest {
+    type O = terrars::BlockAssignable<MediaPackageChannel_HlsIngest>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -438,35 +464,37 @@ impl terrars::ToListMappable for MediaPackageChannelHlsIngestEl {
     }
 }
 
-pub struct BuildMediaPackageChannelHlsIngestEl {}
+pub struct BuildMediaPackageChannel_HlsIngest {}
 
-impl BuildMediaPackageChannelHlsIngestEl {
-    pub fn build(self) -> MediaPackageChannelHlsIngestEl {
-        MediaPackageChannelHlsIngestEl { ingest_endpoints: core::default::Default::default() }
+impl BuildMediaPackageChannel_HlsIngest {
+    pub fn build(self) -> MediaPackageChannel_HlsIngest {
+        MediaPackageChannel_HlsIngest { ingest_endpoints: core::default::Default::default() }
     }
 }
 
-pub struct MediaPackageChannelHlsIngestElRef {
+#[allow(dead_code)]
+pub struct MediaPackageChannel_HlsIngestRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MediaPackageChannelHlsIngestElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MediaPackageChannelHlsIngestElRef {
-        MediaPackageChannelHlsIngestElRef {
+impl terrars::Ref for MediaPackageChannel_HlsIngestRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MediaPackageChannel_HlsIngestRef {
+        MediaPackageChannel_HlsIngestRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MediaPackageChannelHlsIngestElRef {
+impl MediaPackageChannel_HlsIngestRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `ingest_endpoints` after provisioning.\n"]
-    pub fn ingest_endpoints(&self) -> terrars::ListRef<MediaPackageChannelHlsIngestElIngestEndpointsElRef> {
+    pub fn ingest_endpoints(&self) -> terrars::ListRef<MediaPackageChannel_HlsIngest_IngestEndpointsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ingest_endpoints", self.base))
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GrafanaWorkspaceData {
+struct GrafanaWorkspaceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,7 +29,11 @@ struct GrafanaWorkspaceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    grafana_version: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -38,6 +44,8 @@ struct GrafanaWorkspaceData {
     organizational_units: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     permission_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stack_set_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -46,16 +54,18 @@ struct GrafanaWorkspaceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<GrafanaWorkspaceTimeoutsEl>,
+    network_access_control: std::option::Option<std::vec::Vec<GrafanaWorkspace_NetworkAccessControl>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_configuration: std::option::Option<std::vec::Vec<GrafanaWorkspaceVpcConfigurationEl>>,
+    timeouts: std::option::Option<GrafanaWorkspace_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_configuration: std::option::Option<std::vec::Vec<GrafanaWorkspace_VpcConfiguration>>,
     dynamic: GrafanaWorkspaceDynamic,
 }
 
 struct GrafanaWorkspace_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GrafanaWorkspaceData>,
+    data: std::cell::RefCell<GrafanaWorkspaceData_>,
 }
 
 #[derive(Clone)]
@@ -176,9 +186,21 @@ impl GrafanaWorkspace {
         self
     }
 
+    #[doc = "Set the field `grafana_version`.\n"]
+    pub fn set_grafana_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().grafana_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -215,6 +237,13 @@ impl GrafanaWorkspace {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `role_arn`.\n"]
     pub fn set_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().role_arn = std::option::Option::Some(v.into());
@@ -245,8 +274,24 @@ impl GrafanaWorkspace {
         self
     }
 
+    #[doc = "Set the field `network_access_control`.\n"]
+    pub fn set_network_access_control(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<GrafanaWorkspace_NetworkAccessControl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().network_access_control = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.network_access_control = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<GrafanaWorkspaceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<GrafanaWorkspace_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -254,7 +299,7 @@ impl GrafanaWorkspace {
     #[doc = "Set the field `vpc_configuration`.\n"]
     pub fn set_vpc_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GrafanaWorkspaceVpcConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GrafanaWorkspace_VpcConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -312,6 +357,11 @@ impl GrafanaWorkspace {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -335,6 +385,12 @@ impl GrafanaWorkspace {
     #[doc = "Get a reference to the value of field `permission_type` after provisioning.\n"]
     pub fn permission_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -362,13 +418,18 @@ impl GrafanaWorkspace {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_access_control` after provisioning.\n"]
+    pub fn network_access_control(&self) -> terrars::ListRef<GrafanaWorkspace_NetworkAccessControlRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_access_control", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GrafanaWorkspaceTimeoutsElRef {
-        GrafanaWorkspaceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GrafanaWorkspace_TimeoutsRef {
+        GrafanaWorkspace_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
-    pub fn vpc_configuration(&self) -> terrars::ListRef<GrafanaWorkspaceVpcConfigurationElRef> {
+    pub fn vpc_configuration(&self) -> terrars::ListRef<GrafanaWorkspace_VpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.extract_ref()))
     }
 }
@@ -419,7 +480,7 @@ impl BuildGrafanaWorkspace {
         let out = GrafanaWorkspace(std::rc::Rc::new(GrafanaWorkspace_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GrafanaWorkspaceData {
+            data: std::cell::RefCell::new(GrafanaWorkspaceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -430,16 +491,20 @@ impl BuildGrafanaWorkspace {
                 configuration: core::default::Default::default(),
                 data_sources: core::default::Default::default(),
                 description: core::default::Default::default(),
+                grafana_version: core::default::Default::default(),
                 id: core::default::Default::default(),
+                kms_key_id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 notification_destinations: core::default::Default::default(),
                 organization_role_name: core::default::Default::default(),
                 organizational_units: core::default::Default::default(),
                 permission_type: self.permission_type,
+                region: core::default::Default::default(),
                 role_arn: core::default::Default::default(),
                 stack_set_name: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                network_access_control: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 vpc_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -518,6 +583,11 @@ impl GrafanaWorkspaceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -541,6 +611,12 @@ impl GrafanaWorkspaceRef {
     #[doc = "Get a reference to the value of field `permission_type` after provisioning.\n"]
     pub fn permission_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -568,26 +644,105 @@ impl GrafanaWorkspaceRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_access_control` after provisioning.\n"]
+    pub fn network_access_control(&self) -> terrars::ListRef<GrafanaWorkspace_NetworkAccessControlRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_access_control", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> GrafanaWorkspaceTimeoutsElRef {
-        GrafanaWorkspaceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> GrafanaWorkspace_TimeoutsRef {
+        GrafanaWorkspace_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
-    pub fn vpc_configuration(&self) -> terrars::ListRef<GrafanaWorkspaceVpcConfigurationElRef> {
+    pub fn vpc_configuration(&self) -> terrars::ListRef<GrafanaWorkspace_VpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GrafanaWorkspaceDynamic {
+    network_access_control: std::option::Option<terrars::DynamicBlock<GrafanaWorkspace_NetworkAccessControl>>,
+    vpc_configuration: std::option::Option<terrars::DynamicBlock<GrafanaWorkspace_VpcConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct GrafanaWorkspaceTimeoutsEl {
+pub struct GrafanaWorkspace_NetworkAccessControl {
+    prefix_list_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    vpce_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl GrafanaWorkspace_NetworkAccessControl { }
+
+impl terrars::ToListMappable for GrafanaWorkspace_NetworkAccessControl {
+    type O = terrars::BlockAssignable<GrafanaWorkspace_NetworkAccessControl>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildGrafanaWorkspace_NetworkAccessControl {
+    #[doc = ""]
+    pub prefix_list_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[doc = ""]
+    pub vpce_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildGrafanaWorkspace_NetworkAccessControl {
+    pub fn build(self) -> GrafanaWorkspace_NetworkAccessControl {
+        GrafanaWorkspace_NetworkAccessControl {
+            prefix_list_ids: self.prefix_list_ids,
+            vpce_ids: self.vpce_ids,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct GrafanaWorkspace_NetworkAccessControlRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for GrafanaWorkspace_NetworkAccessControlRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GrafanaWorkspace_NetworkAccessControlRef {
+        GrafanaWorkspace_NetworkAccessControlRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl GrafanaWorkspace_NetworkAccessControlRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_list_ids` after provisioning.\n"]
+    pub fn prefix_list_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.prefix_list_ids", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `vpce_ids` after provisioning.\n"]
+    pub fn vpce_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.vpce_ids", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct GrafanaWorkspace_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl GrafanaWorkspaceTimeoutsEl {
+impl GrafanaWorkspace_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -601,8 +756,8 @@ impl GrafanaWorkspaceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for GrafanaWorkspaceTimeoutsEl {
-    type O = terrars::BlockAssignable<GrafanaWorkspaceTimeoutsEl>;
+impl terrars::ToListMappable for GrafanaWorkspace_Timeouts {
+    type O = terrars::BlockAssignable<GrafanaWorkspace_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -613,32 +768,34 @@ impl terrars::ToListMappable for GrafanaWorkspaceTimeoutsEl {
     }
 }
 
-pub struct BuildGrafanaWorkspaceTimeoutsEl {}
+pub struct BuildGrafanaWorkspace_Timeouts {}
 
-impl BuildGrafanaWorkspaceTimeoutsEl {
-    pub fn build(self) -> GrafanaWorkspaceTimeoutsEl {
-        GrafanaWorkspaceTimeoutsEl {
+impl BuildGrafanaWorkspace_Timeouts {
+    pub fn build(self) -> GrafanaWorkspace_Timeouts {
+        GrafanaWorkspace_Timeouts {
             create: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct GrafanaWorkspaceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct GrafanaWorkspace_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GrafanaWorkspaceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GrafanaWorkspaceTimeoutsElRef {
-        GrafanaWorkspaceTimeoutsElRef {
+impl terrars::Ref for GrafanaWorkspace_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GrafanaWorkspace_TimeoutsRef {
+        GrafanaWorkspace_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GrafanaWorkspaceTimeoutsElRef {
+impl GrafanaWorkspace_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -655,15 +812,15 @@ impl GrafanaWorkspaceTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct GrafanaWorkspaceVpcConfigurationEl {
+pub struct GrafanaWorkspace_VpcConfiguration {
     security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl GrafanaWorkspaceVpcConfigurationEl { }
+impl GrafanaWorkspace_VpcConfiguration { }
 
-impl terrars::ToListMappable for GrafanaWorkspaceVpcConfigurationEl {
-    type O = terrars::BlockAssignable<GrafanaWorkspaceVpcConfigurationEl>;
+impl terrars::ToListMappable for GrafanaWorkspace_VpcConfiguration {
+    type O = terrars::BlockAssignable<GrafanaWorkspace_VpcConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -674,37 +831,39 @@ impl terrars::ToListMappable for GrafanaWorkspaceVpcConfigurationEl {
     }
 }
 
-pub struct BuildGrafanaWorkspaceVpcConfigurationEl {
+pub struct BuildGrafanaWorkspace_VpcConfiguration {
     #[doc = ""]
     pub security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildGrafanaWorkspaceVpcConfigurationEl {
-    pub fn build(self) -> GrafanaWorkspaceVpcConfigurationEl {
-        GrafanaWorkspaceVpcConfigurationEl {
+impl BuildGrafanaWorkspace_VpcConfiguration {
+    pub fn build(self) -> GrafanaWorkspace_VpcConfiguration {
+        GrafanaWorkspace_VpcConfiguration {
             security_group_ids: self.security_group_ids,
             subnet_ids: self.subnet_ids,
         }
     }
 }
 
-pub struct GrafanaWorkspaceVpcConfigurationElRef {
+#[allow(dead_code)]
+pub struct GrafanaWorkspace_VpcConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GrafanaWorkspaceVpcConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GrafanaWorkspaceVpcConfigurationElRef {
-        GrafanaWorkspaceVpcConfigurationElRef {
+impl terrars::Ref for GrafanaWorkspace_VpcConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GrafanaWorkspace_VpcConfigurationRef {
+        GrafanaWorkspace_VpcConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GrafanaWorkspaceVpcConfigurationElRef {
+impl GrafanaWorkspace_VpcConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -718,9 +877,4 @@ impl GrafanaWorkspaceVpcConfigurationElRef {
     pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GrafanaWorkspaceDynamic {
-    vpc_configuration: std::option::Option<terrars::DynamicBlock<GrafanaWorkspaceVpcConfigurationEl>>,
 }

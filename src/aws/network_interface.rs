@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkInterfaceData {
+struct NetworkInterfaceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,6 +22,8 @@ struct NetworkInterfaceData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_primary_ipv6: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -51,6 +55,8 @@ struct NetworkInterfaceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_ips_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_dest_check: std::option::Option<terrars::PrimField<bool>>,
@@ -60,14 +66,20 @@ struct NetworkInterfaceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attachment: std::option::Option<std::vec::Vec<NetworkInterfaceAttachmentEl>>,
+    attachment: std::option::Option<std::vec::Vec<NetworkInterface_Attachment>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connection_tracking_specification: std
+    ::option
+    ::Option<std::vec::Vec<NetworkInterface_ConnectionTrackingSpecification>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ena_srd_specification: std::option::Option<std::vec::Vec<NetworkInterface_EnaSrdSpecification>>,
     dynamic: NetworkInterfaceDynamic,
 }
 
 struct NetworkInterface_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkInterfaceData>,
+    data: std::cell::RefCell<NetworkInterfaceData_>,
 }
 
 #[derive(Clone)]
@@ -170,6 +182,12 @@ impl NetworkInterface {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `enable_primary_ipv6`.\n"]
+    pub fn set_enable_primary_ipv6(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_primary_ipv6 = std::option::Option::Some(v.into());
         self
     }
 
@@ -281,6 +299,13 @@ impl NetworkInterface {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_groups`.\n"]
     pub fn set_security_groups(
         self,
@@ -317,7 +342,7 @@ impl NetworkInterface {
     #[doc = "Set the field `attachment`.\n"]
     pub fn set_attachment(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkInterfaceAttachmentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkInterface_Attachment>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -325,6 +350,38 @@ impl NetworkInterface {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.attachment = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `connection_tracking_specification`.\n"]
+    pub fn set_connection_tracking_specification(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkInterface_ConnectionTrackingSpecification>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().connection_tracking_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.connection_tracking_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `ena_srd_specification`.\n"]
+    pub fn set_ena_srd_specification(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkInterface_EnaSrdSpecification>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().ena_srd_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.ena_srd_specification = std::option::Option::Some(d);
             },
         }
         self
@@ -338,6 +395,11 @@ impl NetworkInterface {
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_primary_ipv6` after provisioning.\n"]
+    pub fn enable_primary_ipv6(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_primary_ipv6", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -435,6 +497,12 @@ impl NetworkInterface {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_ips_count", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
@@ -458,6 +526,21 @@ impl NetworkInterface {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `connection_tracking_specification` after provisioning.\n"]
+    pub fn connection_tracking_specification(
+        &self,
+    ) -> terrars::ListRef<NetworkInterface_ConnectionTrackingSpecificationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.connection_tracking_specification", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `ena_srd_specification` after provisioning.\n"]
+    pub fn ena_srd_specification(&self) -> terrars::ListRef<NetworkInterface_EnaSrdSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ena_srd_specification", self.extract_ref()))
     }
 }
 
@@ -503,13 +586,14 @@ impl BuildNetworkInterface {
         let out = NetworkInterface(std::rc::Rc::new(NetworkInterface_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkInterfaceData {
+            data: std::cell::RefCell::new(NetworkInterfaceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 description: core::default::Default::default(),
+                enable_primary_ipv6: core::default::Default::default(),
                 id: core::default::Default::default(),
                 interface_type: core::default::Default::default(),
                 ipv4_prefix_count: core::default::Default::default(),
@@ -525,12 +609,15 @@ impl BuildNetworkInterface {
                 private_ip_list_enabled: core::default::Default::default(),
                 private_ips: core::default::Default::default(),
                 private_ips_count: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_groups: core::default::Default::default(),
                 source_dest_check: core::default::Default::default(),
                 subnet_id: self.subnet_id,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 attachment: core::default::Default::default(),
+                connection_tracking_specification: core::default::Default::default(),
+                ena_srd_specification: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -570,6 +657,11 @@ impl NetworkInterfaceRef {
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `enable_primary_ipv6` after provisioning.\n"]
+    pub fn enable_primary_ipv6(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_primary_ipv6", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -667,6 +759,12 @@ impl NetworkInterfaceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_ips_count", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
@@ -691,18 +789,50 @@ impl NetworkInterfaceRef {
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `connection_tracking_specification` after provisioning.\n"]
+    pub fn connection_tracking_specification(
+        &self,
+    ) -> terrars::ListRef<NetworkInterface_ConnectionTrackingSpecificationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.connection_tracking_specification", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `ena_srd_specification` after provisioning.\n"]
+    pub fn ena_srd_specification(&self) -> terrars::ListRef<NetworkInterface_EnaSrdSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ena_srd_specification", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct NetworkInterfaceDynamic {
+    attachment: std::option::Option<terrars::DynamicBlock<NetworkInterface_Attachment>>,
+    connection_tracking_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkInterface_ConnectionTrackingSpecification>>,
+    ena_srd_specification: std::option::Option<terrars::DynamicBlock<NetworkInterface_EnaSrdSpecification>>,
 }
 
 #[derive(Serialize)]
-pub struct NetworkInterfaceAttachmentEl {
+pub struct NetworkInterface_Attachment {
     device_index: terrars::PrimField<f64>,
     instance: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_card_index: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl NetworkInterfaceAttachmentEl { }
+impl NetworkInterface_Attachment {
+    #[doc = "Set the field `network_card_index`.\n"]
+    pub fn set_network_card_index(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.network_card_index = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for NetworkInterfaceAttachmentEl {
-    type O = terrars::BlockAssignable<NetworkInterfaceAttachmentEl>;
+impl terrars::ToListMappable for NetworkInterface_Attachment {
+    type O = terrars::BlockAssignable<NetworkInterface_Attachment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -713,37 +843,40 @@ impl terrars::ToListMappable for NetworkInterfaceAttachmentEl {
     }
 }
 
-pub struct BuildNetworkInterfaceAttachmentEl {
+pub struct BuildNetworkInterface_Attachment {
     #[doc = ""]
     pub device_index: terrars::PrimField<f64>,
     #[doc = ""]
     pub instance: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkInterfaceAttachmentEl {
-    pub fn build(self) -> NetworkInterfaceAttachmentEl {
-        NetworkInterfaceAttachmentEl {
+impl BuildNetworkInterface_Attachment {
+    pub fn build(self) -> NetworkInterface_Attachment {
+        NetworkInterface_Attachment {
             device_index: self.device_index,
             instance: self.instance,
+            network_card_index: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkInterfaceAttachmentElRef {
+#[allow(dead_code)]
+pub struct NetworkInterface_AttachmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkInterfaceAttachmentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkInterfaceAttachmentElRef {
-        NetworkInterfaceAttachmentElRef {
+impl terrars::Ref for NetworkInterface_AttachmentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkInterface_AttachmentRef {
+        NetworkInterface_AttachmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkInterfaceAttachmentElRef {
+impl NetworkInterface_AttachmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -762,9 +895,274 @@ impl NetworkInterfaceAttachmentElRef {
     pub fn instance(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `network_card_index` after provisioning.\n"]
+    pub fn network_card_index(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_card_index", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct NetworkInterface_ConnectionTrackingSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tcp_established_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    udp_stream_timeout: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    udp_timeout: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl NetworkInterface_ConnectionTrackingSpecification {
+    #[doc = "Set the field `tcp_established_timeout`.\n"]
+    pub fn set_tcp_established_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.tcp_established_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `udp_stream_timeout`.\n"]
+    pub fn set_udp_stream_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.udp_stream_timeout = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `udp_timeout`.\n"]
+    pub fn set_udp_timeout(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.udp_timeout = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkInterface_ConnectionTrackingSpecification {
+    type O = terrars::BlockAssignable<NetworkInterface_ConnectionTrackingSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkInterface_ConnectionTrackingSpecification {}
+
+impl BuildNetworkInterface_ConnectionTrackingSpecification {
+    pub fn build(self) -> NetworkInterface_ConnectionTrackingSpecification {
+        NetworkInterface_ConnectionTrackingSpecification {
+            tcp_established_timeout: core::default::Default::default(),
+            udp_stream_timeout: core::default::Default::default(),
+            udp_timeout: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkInterface_ConnectionTrackingSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkInterface_ConnectionTrackingSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> NetworkInterface_ConnectionTrackingSpecificationRef {
+        NetworkInterface_ConnectionTrackingSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkInterface_ConnectionTrackingSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `tcp_established_timeout` after provisioning.\n"]
+    pub fn tcp_established_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tcp_established_timeout", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `udp_stream_timeout` after provisioning.\n"]
+    pub fn udp_stream_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.udp_stream_timeout", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `udp_timeout` after provisioning.\n"]
+    pub fn udp_timeout(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.udp_timeout", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ena_srd_udp_enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification {
+    #[doc = "Set the field `ena_srd_udp_enabled`.\n"]
+    pub fn set_ena_srd_udp_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.ena_srd_udp_enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification {
+    type O = terrars::BlockAssignable<NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification {}
+
+impl BuildNetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification {
+    pub fn build(self) -> NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification {
+        NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification {
+            ena_srd_udp_enabled: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+        NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ena_srd_udp_enabled` after provisioning.\n"]
+    pub fn ena_srd_udp_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ena_srd_udp_enabled", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct NetworkInterfaceDynamic {
-    attachment: std::option::Option<terrars::DynamicBlock<NetworkInterfaceAttachmentEl>>,
+struct NetworkInterface_EnaSrdSpecificationDynamic {
+    ena_srd_udp_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification>>,
+}
+
+#[derive(Serialize)]
+pub struct NetworkInterface_EnaSrdSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ena_srd_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ena_srd_udp_specification: std
+    ::option
+    ::Option<std::vec::Vec<NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification>>,
+    dynamic: NetworkInterface_EnaSrdSpecificationDynamic,
+}
+
+impl NetworkInterface_EnaSrdSpecification {
+    #[doc = "Set the field `ena_srd_enabled`.\n"]
+    pub fn set_ena_srd_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.ena_srd_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ena_srd_udp_specification`.\n"]
+    pub fn set_ena_srd_udp_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecification>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.ena_srd_udp_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ena_srd_udp_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkInterface_EnaSrdSpecification {
+    type O = terrars::BlockAssignable<NetworkInterface_EnaSrdSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkInterface_EnaSrdSpecification {}
+
+impl BuildNetworkInterface_EnaSrdSpecification {
+    pub fn build(self) -> NetworkInterface_EnaSrdSpecification {
+        NetworkInterface_EnaSrdSpecification {
+            ena_srd_enabled: core::default::Default::default(),
+            ena_srd_udp_specification: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkInterface_EnaSrdSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkInterface_EnaSrdSpecificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkInterface_EnaSrdSpecificationRef {
+        NetworkInterface_EnaSrdSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkInterface_EnaSrdSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ena_srd_enabled` after provisioning.\n"]
+    pub fn ena_srd_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ena_srd_enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ena_srd_udp_specification` after provisioning.\n"]
+    pub fn ena_srd_udp_specification(
+        &self,
+    ) -> terrars::ListRef<NetworkInterface_EnaSrdSpecification_EnaSrdUdpSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ena_srd_udp_specification", self.base))
+    }
 }

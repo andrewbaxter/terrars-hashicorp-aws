@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConfigRemediationConfigurationData {
+struct ConfigRemediationConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,6 +28,8 @@ struct ConfigRemediationConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maximum_automatic_attempts: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retry_attempt_seconds: std::option::Option<terrars::PrimField<f64>>,
@@ -34,16 +38,16 @@ struct ConfigRemediationConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    execution_controls: std::option::Option<std::vec::Vec<ConfigRemediationConfigurationExecutionControlsEl>>,
+    execution_controls: std::option::Option<std::vec::Vec<ConfigRemediationConfiguration_ExecutionControls>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameter: std::option::Option<std::vec::Vec<ConfigRemediationConfigurationParameterEl>>,
+    parameter: std::option::Option<std::vec::Vec<ConfigRemediationConfiguration_Parameter>>,
     dynamic: ConfigRemediationConfigurationDynamic,
 }
 
 struct ConfigRemediationConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConfigRemediationConfigurationData>,
+    data: std::cell::RefCell<ConfigRemediationConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -161,6 +165,13 @@ impl ConfigRemediationConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resource_type`.\n"]
     pub fn set_resource_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().resource_type = std::option::Option::Some(v.into());
@@ -182,7 +193,7 @@ impl ConfigRemediationConfiguration {
     #[doc = "Set the field `execution_controls`.\n"]
     pub fn set_execution_controls(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConfigRemediationConfigurationExecutionControlsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigRemediationConfiguration_ExecutionControls>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -198,7 +209,7 @@ impl ConfigRemediationConfiguration {
     #[doc = "Set the field `parameter`.\n"]
     pub fn set_parameter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConfigRemediationConfigurationParameterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConfigRemediationConfiguration_Parameter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -236,6 +247,12 @@ impl ConfigRemediationConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_automatic_attempts", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
     pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
@@ -262,8 +279,13 @@ impl ConfigRemediationConfiguration {
     }
 
     #[doc = "Get a reference to the value of field `execution_controls` after provisioning.\n"]
-    pub fn execution_controls(&self) -> terrars::ListRef<ConfigRemediationConfigurationExecutionControlsElRef> {
+    pub fn execution_controls(&self) -> terrars::ListRef<ConfigRemediationConfiguration_ExecutionControlsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.execution_controls", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `parameter` after provisioning.\n"]
+    pub fn parameter(&self) -> terrars::ListRef<ConfigRemediationConfiguration_ParameterRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.parameter", self.extract_ref()))
     }
 }
 
@@ -313,7 +335,7 @@ impl BuildConfigRemediationConfiguration {
         let out = ConfigRemediationConfiguration(std::rc::Rc::new(ConfigRemediationConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConfigRemediationConfigurationData {
+            data: std::cell::RefCell::new(ConfigRemediationConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -323,6 +345,7 @@ impl BuildConfigRemediationConfiguration {
                 config_rule_name: self.config_rule_name,
                 id: core::default::Default::default(),
                 maximum_automatic_attempts: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resource_type: core::default::Default::default(),
                 retry_attempt_seconds: core::default::Default::default(),
                 target_id: self.target_id,
@@ -386,6 +409,12 @@ impl ConfigRemediationConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_automatic_attempts", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
     pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
@@ -412,20 +441,31 @@ impl ConfigRemediationConfigurationRef {
     }
 
     #[doc = "Get a reference to the value of field `execution_controls` after provisioning.\n"]
-    pub fn execution_controls(&self) -> terrars::ListRef<ConfigRemediationConfigurationExecutionControlsElRef> {
+    pub fn execution_controls(&self) -> terrars::ListRef<ConfigRemediationConfiguration_ExecutionControlsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.execution_controls", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `parameter` after provisioning.\n"]
+    pub fn parameter(&self) -> terrars::ListRef<ConfigRemediationConfiguration_ParameterRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.parameter", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ConfigRemediationConfigurationDynamic {
+    execution_controls: std::option::Option<terrars::DynamicBlock<ConfigRemediationConfiguration_ExecutionControls>>,
+    parameter: std::option::Option<terrars::DynamicBlock<ConfigRemediationConfiguration_Parameter>>,
+}
+
 #[derive(Serialize)]
-pub struct ConfigRemediationConfigurationExecutionControlsElSsmControlsEl {
+pub struct ConfigRemediationConfiguration_ExecutionControls_SsmControls {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     concurrent_execution_rate_percentage: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_percentage: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ConfigRemediationConfigurationExecutionControlsElSsmControlsEl {
+impl ConfigRemediationConfiguration_ExecutionControls_SsmControls {
     #[doc = "Set the field `concurrent_execution_rate_percentage`.\n"]
     pub fn set_concurrent_execution_rate_percentage(
         mut self,
@@ -442,8 +482,8 @@ impl ConfigRemediationConfigurationExecutionControlsElSsmControlsEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigRemediationConfigurationExecutionControlsElSsmControlsEl {
-    type O = terrars::BlockAssignable<ConfigRemediationConfigurationExecutionControlsElSsmControlsEl>;
+impl terrars::ToListMappable for ConfigRemediationConfiguration_ExecutionControls_SsmControls {
+    type O = terrars::BlockAssignable<ConfigRemediationConfiguration_ExecutionControls_SsmControls>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -454,35 +494,37 @@ impl terrars::ToListMappable for ConfigRemediationConfigurationExecutionControls
     }
 }
 
-pub struct BuildConfigRemediationConfigurationExecutionControlsElSsmControlsEl {}
+pub struct BuildConfigRemediationConfiguration_ExecutionControls_SsmControls {}
 
-impl BuildConfigRemediationConfigurationExecutionControlsElSsmControlsEl {
-    pub fn build(self) -> ConfigRemediationConfigurationExecutionControlsElSsmControlsEl {
-        ConfigRemediationConfigurationExecutionControlsElSsmControlsEl {
+impl BuildConfigRemediationConfiguration_ExecutionControls_SsmControls {
+    pub fn build(self) -> ConfigRemediationConfiguration_ExecutionControls_SsmControls {
+        ConfigRemediationConfiguration_ExecutionControls_SsmControls {
             concurrent_execution_rate_percentage: core::default::Default::default(),
             error_percentage: core::default::Default::default(),
         }
     }
 }
 
-pub struct ConfigRemediationConfigurationExecutionControlsElSsmControlsElRef {
+#[allow(dead_code)]
+pub struct ConfigRemediationConfiguration_ExecutionControls_SsmControlsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigRemediationConfigurationExecutionControlsElSsmControlsElRef {
+impl terrars::Ref for ConfigRemediationConfiguration_ExecutionControls_SsmControlsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConfigRemediationConfigurationExecutionControlsElSsmControlsElRef {
-        ConfigRemediationConfigurationExecutionControlsElSsmControlsElRef {
+    ) -> ConfigRemediationConfiguration_ExecutionControls_SsmControlsRef {
+        ConfigRemediationConfiguration_ExecutionControls_SsmControlsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigRemediationConfigurationExecutionControlsElSsmControlsElRef {
+impl ConfigRemediationConfiguration_ExecutionControls_SsmControlsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -499,20 +541,20 @@ impl ConfigRemediationConfigurationExecutionControlsElSsmControlsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ConfigRemediationConfigurationExecutionControlsElDynamic {
+struct ConfigRemediationConfiguration_ExecutionControlsDynamic {
     ssm_controls: std
     ::option
-    ::Option<terrars::DynamicBlock<ConfigRemediationConfigurationExecutionControlsElSsmControlsEl>>,
+    ::Option<terrars::DynamicBlock<ConfigRemediationConfiguration_ExecutionControls_SsmControls>>,
 }
 
 #[derive(Serialize)]
-pub struct ConfigRemediationConfigurationExecutionControlsEl {
+pub struct ConfigRemediationConfiguration_ExecutionControls {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssm_controls: std::option::Option<std::vec::Vec<ConfigRemediationConfigurationExecutionControlsElSsmControlsEl>>,
-    dynamic: ConfigRemediationConfigurationExecutionControlsElDynamic,
+    ssm_controls: std::option::Option<std::vec::Vec<ConfigRemediationConfiguration_ExecutionControls_SsmControls>>,
+    dynamic: ConfigRemediationConfiguration_ExecutionControlsDynamic,
 }
 
-impl ConfigRemediationConfigurationExecutionControlsEl {
+impl ConfigRemediationConfiguration_ExecutionControls {
     #[doc = "Set the field `ssm_controls`.\n"]
     pub fn set_ssm_controls(
         mut self,
@@ -521,7 +563,7 @@ impl ConfigRemediationConfigurationExecutionControlsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ConfigRemediationConfigurationExecutionControlsElSsmControlsEl>>,
+                    ::Into<terrars::BlockAssignable<ConfigRemediationConfiguration_ExecutionControls_SsmControls>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -535,8 +577,8 @@ impl ConfigRemediationConfigurationExecutionControlsEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigRemediationConfigurationExecutionControlsEl {
-    type O = terrars::BlockAssignable<ConfigRemediationConfigurationExecutionControlsEl>;
+impl terrars::ToListMappable for ConfigRemediationConfiguration_ExecutionControls {
+    type O = terrars::BlockAssignable<ConfigRemediationConfiguration_ExecutionControls>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -547,47 +589,49 @@ impl terrars::ToListMappable for ConfigRemediationConfigurationExecutionControls
     }
 }
 
-pub struct BuildConfigRemediationConfigurationExecutionControlsEl {}
+pub struct BuildConfigRemediationConfiguration_ExecutionControls {}
 
-impl BuildConfigRemediationConfigurationExecutionControlsEl {
-    pub fn build(self) -> ConfigRemediationConfigurationExecutionControlsEl {
-        ConfigRemediationConfigurationExecutionControlsEl {
+impl BuildConfigRemediationConfiguration_ExecutionControls {
+    pub fn build(self) -> ConfigRemediationConfiguration_ExecutionControls {
+        ConfigRemediationConfiguration_ExecutionControls {
             ssm_controls: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ConfigRemediationConfigurationExecutionControlsElRef {
+#[allow(dead_code)]
+pub struct ConfigRemediationConfiguration_ExecutionControlsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigRemediationConfigurationExecutionControlsElRef {
+impl terrars::Ref for ConfigRemediationConfiguration_ExecutionControlsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConfigRemediationConfigurationExecutionControlsElRef {
-        ConfigRemediationConfigurationExecutionControlsElRef {
+    ) -> ConfigRemediationConfiguration_ExecutionControlsRef {
+        ConfigRemediationConfiguration_ExecutionControlsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigRemediationConfigurationExecutionControlsElRef {
+impl ConfigRemediationConfiguration_ExecutionControlsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `ssm_controls` after provisioning.\n"]
-    pub fn ssm_controls(&self) -> terrars::ListRef<ConfigRemediationConfigurationExecutionControlsElSsmControlsElRef> {
+    pub fn ssm_controls(&self) -> terrars::ListRef<ConfigRemediationConfiguration_ExecutionControls_SsmControlsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssm_controls", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct ConfigRemediationConfigurationParameterEl {
+pub struct ConfigRemediationConfiguration_Parameter {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_value: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -597,7 +641,7 @@ pub struct ConfigRemediationConfigurationParameterEl {
     static_values: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl ConfigRemediationConfigurationParameterEl {
+impl ConfigRemediationConfiguration_Parameter {
     #[doc = "Set the field `resource_value`.\n"]
     pub fn set_resource_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.resource_value = std::option::Option::Some(v.into());
@@ -620,8 +664,8 @@ impl ConfigRemediationConfigurationParameterEl {
     }
 }
 
-impl terrars::ToListMappable for ConfigRemediationConfigurationParameterEl {
-    type O = terrars::BlockAssignable<ConfigRemediationConfigurationParameterEl>;
+impl terrars::ToListMappable for ConfigRemediationConfiguration_Parameter {
+    type O = terrars::BlockAssignable<ConfigRemediationConfiguration_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -632,14 +676,14 @@ impl terrars::ToListMappable for ConfigRemediationConfigurationParameterEl {
     }
 }
 
-pub struct BuildConfigRemediationConfigurationParameterEl {
+pub struct BuildConfigRemediationConfiguration_Parameter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConfigRemediationConfigurationParameterEl {
-    pub fn build(self) -> ConfigRemediationConfigurationParameterEl {
-        ConfigRemediationConfigurationParameterEl {
+impl BuildConfigRemediationConfiguration_Parameter {
+    pub fn build(self) -> ConfigRemediationConfiguration_Parameter {
+        ConfigRemediationConfiguration_Parameter {
             name: self.name,
             resource_value: core::default::Default::default(),
             static_value: core::default::Default::default(),
@@ -648,21 +692,23 @@ impl BuildConfigRemediationConfigurationParameterEl {
     }
 }
 
-pub struct ConfigRemediationConfigurationParameterElRef {
+#[allow(dead_code)]
+pub struct ConfigRemediationConfiguration_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConfigRemediationConfigurationParameterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigRemediationConfigurationParameterElRef {
-        ConfigRemediationConfigurationParameterElRef {
+impl terrars::Ref for ConfigRemediationConfiguration_ParameterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConfigRemediationConfiguration_ParameterRef {
+        ConfigRemediationConfiguration_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConfigRemediationConfigurationParameterElRef {
+impl ConfigRemediationConfiguration_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -686,10 +732,4 @@ impl ConfigRemediationConfigurationParameterElRef {
     pub fn static_values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.static_values", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ConfigRemediationConfigurationDynamic {
-    execution_controls: std::option::Option<terrars::DynamicBlock<ConfigRemediationConfigurationExecutionControlsEl>>,
-    parameter: std::option::Option<terrars::DynamicBlock<ConfigRemediationConfigurationParameterEl>>,
 }

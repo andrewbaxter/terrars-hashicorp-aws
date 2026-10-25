@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SfnActivityData {
+struct SfnActivityData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,15 +24,20 @@ struct SfnActivityData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    encryption_configuration: std::option::Option<std::vec::Vec<SfnActivity_EncryptionConfiguration>>,
+    dynamic: SfnActivityDynamic,
 }
 
 struct SfnActivity_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SfnActivityData>,
+    data: std::cell::RefCell<SfnActivityData_>,
 }
 
 #[derive(Clone)]
@@ -136,6 +143,13 @@ impl SfnActivity {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -154,6 +168,27 @@ impl SfnActivity {
         self
     }
 
+    #[doc = "Set the field `encryption_configuration`.\n"]
+    pub fn set_encryption_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SfnActivity_EncryptionConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().encryption_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.encryption_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `creation_date` after provisioning.\n"]
     pub fn creation_date(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_date", self.extract_ref()))
@@ -169,6 +204,12 @@ impl SfnActivity {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -177,6 +218,11 @@ impl SfnActivity {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
+    pub fn encryption_configuration(&self) -> terrars::ListRef<SfnActivity_EncryptionConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 }
 
@@ -222,7 +268,7 @@ impl BuildSfnActivity {
         let out = SfnActivity(std::rc::Rc::new(SfnActivity_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SfnActivityData {
+            data: std::cell::RefCell::new(SfnActivityData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -230,8 +276,11 @@ impl BuildSfnActivity {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                encryption_configuration: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -262,6 +311,11 @@ impl SfnActivityRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `creation_date` after provisioning.\n"]
     pub fn creation_date(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_date", self.extract_ref()))
@@ -277,6 +331,12 @@ impl SfnActivityRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -285,5 +345,106 @@ impl SfnActivityRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
+    pub fn encryption_configuration(&self) -> terrars::ListRef<SfnActivity_EncryptionConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct SfnActivityDynamic {
+    encryption_configuration: std::option::Option<terrars::DynamicBlock<SfnActivity_EncryptionConfiguration>>,
+}
+
+#[derive(Serialize)]
+pub struct SfnActivity_EncryptionConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_data_key_reuse_period_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl SfnActivity_EncryptionConfiguration {
+    #[doc = "Set the field `kms_data_key_reuse_period_seconds`.\n"]
+    pub fn set_kms_data_key_reuse_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.kms_data_key_reuse_period_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SfnActivity_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<SfnActivity_EncryptionConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSfnActivity_EncryptionConfiguration {}
+
+impl BuildSfnActivity_EncryptionConfiguration {
+    pub fn build(self) -> SfnActivity_EncryptionConfiguration {
+        SfnActivity_EncryptionConfiguration {
+            kms_data_key_reuse_period_seconds: core::default::Default::default(),
+            kms_key_id: core::default::Default::default(),
+            type_: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SfnActivity_EncryptionConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SfnActivity_EncryptionConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SfnActivity_EncryptionConfigurationRef {
+        SfnActivity_EncryptionConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SfnActivity_EncryptionConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `kms_data_key_reuse_period_seconds` after provisioning.\n"]
+    pub fn kms_data_key_reuse_period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_data_key_reuse_period_seconds", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }

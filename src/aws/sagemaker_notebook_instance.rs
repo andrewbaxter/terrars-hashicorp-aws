@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerNotebookInstanceData {
+struct SagemakerNotebookInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,8 +20,6 @@ struct SagemakerNotebookInstanceData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    accelerator_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     additional_code_repositories: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,6 +36,8 @@ struct SagemakerNotebookInstanceData {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     platform_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     root_access: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -52,14 +54,14 @@ struct SagemakerNotebookInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_metadata_service_configuration: std
     ::option
-    ::Option<std::vec::Vec<SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl>>,
+    ::Option<std::vec::Vec<SagemakerNotebookInstance_InstanceMetadataServiceConfiguration>>,
     dynamic: SagemakerNotebookInstanceDynamic,
 }
 
 struct SagemakerNotebookInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerNotebookInstanceData>,
+    data: std::cell::RefCell<SagemakerNotebookInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -159,15 +161,6 @@ impl SagemakerNotebookInstance {
         self
     }
 
-    #[doc = "Set the field `accelerator_types`.\n"]
-    pub fn set_accelerator_types(
-        self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.0.data.borrow_mut().accelerator_types = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `additional_code_repositories`.\n"]
     pub fn set_additional_code_repositories(
         self,
@@ -216,6 +209,13 @@ impl SagemakerNotebookInstance {
     #[doc = "Set the field `platform_identifier`.\n"]
     pub fn set_platform_identifier(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().platform_identifier = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -272,7 +272,7 @@ impl SagemakerNotebookInstance {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<SagemakerNotebookInstance_InstanceMetadataServiceConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -284,11 +284,6 @@ impl SagemakerNotebookInstance {
             },
         }
         self
-    }
-
-    #[doc = "Get a reference to the value of field `accelerator_types` after provisioning.\n"]
-    pub fn accelerator_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.accelerator_types", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `additional_code_repositories` after provisioning.\n"]
@@ -346,6 +341,12 @@ impl SagemakerNotebookInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_identifier", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -389,7 +390,7 @@ impl SagemakerNotebookInstance {
     #[doc = "Get a reference to the value of field `instance_metadata_service_configuration` after provisioning.\n"]
     pub fn instance_metadata_service_configuration(
         &self,
-    ) -> terrars::ListRef<SagemakerNotebookInstanceInstanceMetadataServiceConfigurationElRef> {
+    ) -> terrars::ListRef<SagemakerNotebookInstance_InstanceMetadataServiceConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.instance_metadata_service_configuration", self.extract_ref()),
@@ -443,13 +444,12 @@ impl BuildSagemakerNotebookInstance {
         let out = SagemakerNotebookInstance(std::rc::Rc::new(SagemakerNotebookInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerNotebookInstanceData {
+            data: std::cell::RefCell::new(SagemakerNotebookInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
-                accelerator_types: core::default::Default::default(),
                 additional_code_repositories: core::default::Default::default(),
                 default_code_repository: core::default::Default::default(),
                 direct_internet_access: core::default::Default::default(),
@@ -459,6 +459,7 @@ impl BuildSagemakerNotebookInstance {
                 lifecycle_config_name: core::default::Default::default(),
                 name: self.name,
                 platform_identifier: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 root_access: core::default::Default::default(),
                 security_groups: core::default::Default::default(),
@@ -496,11 +497,6 @@ impl SagemakerNotebookInstanceRef {
 
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `accelerator_types` after provisioning.\n"]
-    pub fn accelerator_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.accelerator_types", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `additional_code_repositories` after provisioning.\n"]
@@ -558,6 +554,12 @@ impl SagemakerNotebookInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_identifier", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -601,7 +603,7 @@ impl SagemakerNotebookInstanceRef {
     #[doc = "Get a reference to the value of field `instance_metadata_service_configuration` after provisioning.\n"]
     pub fn instance_metadata_service_configuration(
         &self,
-    ) -> terrars::ListRef<SagemakerNotebookInstanceInstanceMetadataServiceConfigurationElRef> {
+    ) -> terrars::ListRef<SagemakerNotebookInstance_InstanceMetadataServiceConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.instance_metadata_service_configuration", self.extract_ref()),
@@ -609,13 +611,20 @@ impl SagemakerNotebookInstanceRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerNotebookInstanceDynamic {
+    instance_metadata_service_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerNotebookInstance_InstanceMetadataServiceConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl {
+pub struct SagemakerNotebookInstance_InstanceMetadataServiceConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     minimum_instance_metadata_service_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl {
+impl SagemakerNotebookInstance_InstanceMetadataServiceConfiguration {
     #[doc = "Set the field `minimum_instance_metadata_service_version`.\n"]
     pub fn set_minimum_instance_metadata_service_version(
         mut self,
@@ -626,8 +635,8 @@ impl SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl {
-    type O = terrars::BlockAssignable<SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl>;
+impl terrars::ToListMappable for SagemakerNotebookInstance_InstanceMetadataServiceConfiguration {
+    type O = terrars::BlockAssignable<SagemakerNotebookInstance_InstanceMetadataServiceConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -638,34 +647,36 @@ impl terrars::ToListMappable for SagemakerNotebookInstanceInstanceMetadataServic
     }
 }
 
-pub struct BuildSagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl {}
+pub struct BuildSagemakerNotebookInstance_InstanceMetadataServiceConfiguration {}
 
-impl BuildSagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl {
-    pub fn build(self) -> SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl {
-        SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl {
+impl BuildSagemakerNotebookInstance_InstanceMetadataServiceConfiguration {
+    pub fn build(self) -> SagemakerNotebookInstance_InstanceMetadataServiceConfiguration {
+        SagemakerNotebookInstance_InstanceMetadataServiceConfiguration {
             minimum_instance_metadata_service_version: core::default::Default::default(),
         }
     }
 }
 
-pub struct SagemakerNotebookInstanceInstanceMetadataServiceConfigurationElRef {
+#[allow(dead_code)]
+pub struct SagemakerNotebookInstance_InstanceMetadataServiceConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerNotebookInstanceInstanceMetadataServiceConfigurationElRef {
+impl terrars::Ref for SagemakerNotebookInstance_InstanceMetadataServiceConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerNotebookInstanceInstanceMetadataServiceConfigurationElRef {
-        SagemakerNotebookInstanceInstanceMetadataServiceConfigurationElRef {
+    ) -> SagemakerNotebookInstance_InstanceMetadataServiceConfigurationRef {
+        SagemakerNotebookInstance_InstanceMetadataServiceConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerNotebookInstanceInstanceMetadataServiceConfigurationElRef {
+impl SagemakerNotebookInstance_InstanceMetadataServiceConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -677,11 +688,4 @@ impl SagemakerNotebookInstanceInstanceMetadataServiceConfigurationElRef {
             format!("{}.minimum_instance_metadata_service_version", self.base),
         )
     }
-}
-
-#[derive(Serialize, Default)]
-struct SagemakerNotebookInstanceDynamic {
-    instance_metadata_service_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<SagemakerNotebookInstanceInstanceMetadataServiceConfigurationEl>>,
 }

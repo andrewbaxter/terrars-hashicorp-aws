@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RouteTableData {
+struct RouteTableData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,20 +25,22 @@ struct RouteTableData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     propagating_vgws: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    route: std::option::Option<terrars::SetField<RouteTableRouteEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    route: std::option::Option<terrars::SetField<RouteTable_Route>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     vpc_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RouteTableTimeoutsEl>,
+    timeouts: std::option::Option<RouteTable_Timeouts>,
 }
 
 struct RouteTable_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RouteTableData>,
+    data: std::cell::RefCell<RouteTableData_>,
 }
 
 #[derive(Clone)]
@@ -151,8 +155,15 @@ impl RouteTable {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `route`.\n"]
-    pub fn set_route(self, v: impl std::convert::Into<terrars::SetField<RouteTableRouteEl>>) -> Self {
+    pub fn set_route(self, v: impl std::convert::Into<terrars::SetField<RouteTable_Route>>) -> Self {
         self.0.data.borrow_mut().route = std::option::Option::Some(v.into());
         self
     }
@@ -176,7 +187,7 @@ impl RouteTable {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RouteTableTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RouteTable_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -201,8 +212,14 @@ impl RouteTable {
         terrars::SetRef::new(self.shared().clone(), format!("{}.propagating_vgws", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `route` after provisioning.\n"]
-    pub fn route(&self) -> terrars::SetRef<RouteTableRouteElRef> {
+    pub fn route(&self) -> terrars::SetRef<RouteTable_RouteRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.route", self.extract_ref()))
     }
 
@@ -222,8 +239,8 @@ impl RouteTable {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RouteTableTimeoutsElRef {
-        RouteTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RouteTable_TimeoutsRef {
+        RouteTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -269,7 +286,7 @@ impl BuildRouteTable {
         let out = RouteTable(std::rc::Rc::new(RouteTable_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RouteTableData {
+            data: std::cell::RefCell::new(RouteTableData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -277,6 +294,7 @@ impl BuildRouteTable {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 propagating_vgws: core::default::Default::default(),
+                region: core::default::Default::default(),
                 route: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -332,8 +350,14 @@ impl RouteTableRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.propagating_vgws", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `route` after provisioning.\n"]
-    pub fn route(&self) -> terrars::SetRef<RouteTableRouteElRef> {
+    pub fn route(&self) -> terrars::SetRef<RouteTable_RouteRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.route", self.extract_ref()))
     }
 
@@ -353,13 +377,13 @@ impl RouteTableRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RouteTableTimeoutsElRef {
-        RouteTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RouteTable_TimeoutsRef {
+        RouteTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct RouteTableRouteEl {
+pub struct RouteTable_Route {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     carrier_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -373,8 +397,6 @@ pub struct RouteTableRouteEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     local_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -383,6 +405,8 @@ pub struct RouteTableRouteEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    odb_network_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transit_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -390,7 +414,7 @@ pub struct RouteTableRouteEl {
     vpc_peering_connection_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RouteTableRouteEl {
+impl RouteTable_Route {
     #[doc = "Set the field `carrier_gateway_id`.\n"]
     pub fn set_carrier_gateway_id(
         mut self,
@@ -436,12 +460,6 @@ impl RouteTableRouteEl {
         self
     }
 
-    #[doc = "Set the field `instance_id`.\n"]
-    pub fn set_instance_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.instance_id = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `ipv6_cidr_block`.\n"]
     pub fn set_ipv6_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.ipv6_cidr_block = std::option::Option::Some(v.into());
@@ -466,6 +484,12 @@ impl RouteTableRouteEl {
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.network_interface_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `odb_network_arn`.\n"]
+    pub fn set_odb_network_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.odb_network_arn = std::option::Option::Some(v.into());
         self
     }
 
@@ -494,8 +518,8 @@ impl RouteTableRouteEl {
     }
 }
 
-impl terrars::ToListMappable for RouteTableRouteEl {
-    type O = terrars::BlockAssignable<RouteTableRouteEl>;
+impl terrars::ToListMappable for RouteTable_Route {
+    type O = terrars::BlockAssignable<RouteTable_Route>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -506,22 +530,22 @@ impl terrars::ToListMappable for RouteTableRouteEl {
     }
 }
 
-pub struct BuildRouteTableRouteEl {}
+pub struct BuildRouteTable_Route {}
 
-impl BuildRouteTableRouteEl {
-    pub fn build(self) -> RouteTableRouteEl {
-        RouteTableRouteEl {
+impl BuildRouteTable_Route {
+    pub fn build(self) -> RouteTable_Route {
+        RouteTable_Route {
             carrier_gateway_id: core::default::Default::default(),
             cidr_block: core::default::Default::default(),
             core_network_arn: core::default::Default::default(),
             destination_prefix_list_id: core::default::Default::default(),
             egress_only_gateway_id: core::default::Default::default(),
             gateway_id: core::default::Default::default(),
-            instance_id: core::default::Default::default(),
             ipv6_cidr_block: core::default::Default::default(),
             local_gateway_id: core::default::Default::default(),
             nat_gateway_id: core::default::Default::default(),
             network_interface_id: core::default::Default::default(),
+            odb_network_arn: core::default::Default::default(),
             transit_gateway_id: core::default::Default::default(),
             vpc_endpoint_id: core::default::Default::default(),
             vpc_peering_connection_id: core::default::Default::default(),
@@ -529,21 +553,23 @@ impl BuildRouteTableRouteEl {
     }
 }
 
-pub struct RouteTableRouteElRef {
+#[allow(dead_code)]
+pub struct RouteTable_RouteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RouteTableRouteElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RouteTableRouteElRef {
-        RouteTableRouteElRef {
+impl terrars::Ref for RouteTable_RouteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RouteTable_RouteRef {
+        RouteTable_RouteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RouteTableRouteElRef {
+impl RouteTable_RouteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -578,11 +604,6 @@ impl RouteTableRouteElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.gateway_id", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `instance_id` after provisioning.\n"]
-    pub fn instance_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.base))
-    }
-
     #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
     pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
@@ -603,6 +624,11 @@ impl RouteTableRouteElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `odb_network_arn` after provisioning.\n"]
+    pub fn odb_network_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.odb_network_arn", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
     pub fn transit_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.base))
@@ -620,7 +646,7 @@ impl RouteTableRouteElRef {
 }
 
 #[derive(Serialize)]
-pub struct RouteTableTimeoutsEl {
+pub struct RouteTable_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -629,7 +655,7 @@ pub struct RouteTableTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RouteTableTimeoutsEl {
+impl RouteTable_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -649,8 +675,8 @@ impl RouteTableTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RouteTableTimeoutsEl {
-    type O = terrars::BlockAssignable<RouteTableTimeoutsEl>;
+impl terrars::ToListMappable for RouteTable_Timeouts {
+    type O = terrars::BlockAssignable<RouteTable_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -661,11 +687,11 @@ impl terrars::ToListMappable for RouteTableTimeoutsEl {
     }
 }
 
-pub struct BuildRouteTableTimeoutsEl {}
+pub struct BuildRouteTable_Timeouts {}
 
-impl BuildRouteTableTimeoutsEl {
-    pub fn build(self) -> RouteTableTimeoutsEl {
-        RouteTableTimeoutsEl {
+impl BuildRouteTable_Timeouts {
+    pub fn build(self) -> RouteTable_Timeouts {
+        RouteTable_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -673,21 +699,23 @@ impl BuildRouteTableTimeoutsEl {
     }
 }
 
-pub struct RouteTableTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RouteTable_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RouteTableTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RouteTableTimeoutsElRef {
-        RouteTableTimeoutsElRef {
+impl terrars::Ref for RouteTable_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RouteTable_TimeoutsRef {
+        RouteTable_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RouteTableTimeoutsElRef {
+impl RouteTable_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

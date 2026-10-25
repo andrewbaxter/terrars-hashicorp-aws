@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsmMaintenanceWindowTaskData {
+struct SsmMaintenanceWindowTaskData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,21 +35,23 @@ struct SsmMaintenanceWindowTaskData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     priority: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     task_arn: terrars::PrimField<std::string::String>,
     task_type: terrars::PrimField<std::string::String>,
     window_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    targets: std::option::Option<std::vec::Vec<SsmMaintenanceWindowTaskTargetsEl>>,
+    targets: std::option::Option<std::vec::Vec<SsmMaintenanceWindowTask_Targets>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    task_invocation_parameters: std::option::Option<std::vec::Vec<SsmMaintenanceWindowTaskTaskInvocationParametersEl>>,
+    task_invocation_parameters: std::option::Option<std::vec::Vec<SsmMaintenanceWindowTask_TaskInvocationParameters>>,
     dynamic: SsmMaintenanceWindowTaskDynamic,
 }
 
 struct SsmMaintenanceWindowTask_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsmMaintenanceWindowTaskData>,
+    data: std::cell::RefCell<SsmMaintenanceWindowTaskData_>,
 }
 
 #[derive(Clone)]
@@ -189,6 +193,13 @@ impl SsmMaintenanceWindowTask {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `service_role_arn`.\n"]
     pub fn set_service_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().service_role_arn = std::option::Option::Some(v.into());
@@ -198,7 +209,7 @@ impl SsmMaintenanceWindowTask {
     #[doc = "Set the field `targets`.\n"]
     pub fn set_targets(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SsmMaintenanceWindowTaskTargetsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmMaintenanceWindowTask_Targets>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,7 +225,7 @@ impl SsmMaintenanceWindowTask {
     #[doc = "Set the field `task_invocation_parameters`.\n"]
     pub fn set_task_invocation_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -267,6 +278,12 @@ impl SsmMaintenanceWindowTask {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_role_arn` after provisioning.\n"]
     pub fn service_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role_arn", self.extract_ref()))
@@ -293,12 +310,12 @@ impl SsmMaintenanceWindowTask {
     }
 
     #[doc = "Get a reference to the value of field `targets` after provisioning.\n"]
-    pub fn targets(&self) -> terrars::ListRef<SsmMaintenanceWindowTaskTargetsElRef> {
+    pub fn targets(&self) -> terrars::ListRef<SsmMaintenanceWindowTask_TargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.targets", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `task_invocation_parameters` after provisioning.\n"]
-    pub fn task_invocation_parameters(&self) -> terrars::ListRef<SsmMaintenanceWindowTaskTaskInvocationParametersElRef> {
+    pub fn task_invocation_parameters(&self) -> terrars::ListRef<SsmMaintenanceWindowTask_TaskInvocationParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.task_invocation_parameters", self.extract_ref()))
     }
 }
@@ -349,7 +366,7 @@ impl BuildSsmMaintenanceWindowTask {
         let out = SsmMaintenanceWindowTask(std::rc::Rc::new(SsmMaintenanceWindowTask_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsmMaintenanceWindowTaskData {
+            data: std::cell::RefCell::new(SsmMaintenanceWindowTaskData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -362,6 +379,7 @@ impl BuildSsmMaintenanceWindowTask {
                 max_errors: core::default::Default::default(),
                 name: core::default::Default::default(),
                 priority: core::default::Default::default(),
+                region: core::default::Default::default(),
                 service_role_arn: core::default::Default::default(),
                 task_arn: self.task_arn,
                 task_type: self.task_type,
@@ -439,6 +457,12 @@ impl SsmMaintenanceWindowTaskRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_role_arn` after provisioning.\n"]
     pub fn service_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role_arn", self.extract_ref()))
@@ -465,26 +489,34 @@ impl SsmMaintenanceWindowTaskRef {
     }
 
     #[doc = "Get a reference to the value of field `targets` after provisioning.\n"]
-    pub fn targets(&self) -> terrars::ListRef<SsmMaintenanceWindowTaskTargetsElRef> {
+    pub fn targets(&self) -> terrars::ListRef<SsmMaintenanceWindowTask_TargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.targets", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `task_invocation_parameters` after provisioning.\n"]
-    pub fn task_invocation_parameters(&self) -> terrars::ListRef<SsmMaintenanceWindowTaskTaskInvocationParametersElRef> {
+    pub fn task_invocation_parameters(&self) -> terrars::ListRef<SsmMaintenanceWindowTask_TaskInvocationParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.task_invocation_parameters", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SsmMaintenanceWindowTaskDynamic {
+    targets: std::option::Option<terrars::DynamicBlock<SsmMaintenanceWindowTask_Targets>>,
+    task_invocation_parameters: std
+    ::option
+    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTask_TaskInvocationParameters>>,
+}
+
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTargetsEl {
+pub struct SsmMaintenanceWindowTask_Targets {
     key: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmMaintenanceWindowTaskTargetsEl { }
+impl SsmMaintenanceWindowTask_Targets { }
 
-impl terrars::ToListMappable for SsmMaintenanceWindowTaskTargetsEl {
-    type O = terrars::BlockAssignable<SsmMaintenanceWindowTaskTargetsEl>;
+impl terrars::ToListMappable for SsmMaintenanceWindowTask_Targets {
+    type O = terrars::BlockAssignable<SsmMaintenanceWindowTask_Targets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -495,37 +527,39 @@ impl terrars::ToListMappable for SsmMaintenanceWindowTaskTargetsEl {
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTaskTargetsEl {
+pub struct BuildSsmMaintenanceWindowTask_Targets {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSsmMaintenanceWindowTaskTargetsEl {
-    pub fn build(self) -> SsmMaintenanceWindowTaskTargetsEl {
-        SsmMaintenanceWindowTaskTargetsEl {
+impl BuildSsmMaintenanceWindowTask_Targets {
+    pub fn build(self) -> SsmMaintenanceWindowTask_Targets {
+        SsmMaintenanceWindowTask_Targets {
             key: self.key,
             values: self.values,
         }
     }
 }
 
-pub struct SsmMaintenanceWindowTaskTargetsElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTask_TargetsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTaskTargetsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmMaintenanceWindowTaskTargetsElRef {
-        SsmMaintenanceWindowTaskTargetsElRef {
+impl terrars::Ref for SsmMaintenanceWindowTask_TargetsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmMaintenanceWindowTask_TargetsRef {
+        SsmMaintenanceWindowTask_TargetsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTaskTargetsElRef {
+impl SsmMaintenanceWindowTask_TargetsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -542,17 +576,16 @@ impl SsmMaintenanceWindowTaskTargetsElRef {
 }
 
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl {
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl { }
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter { }
 
-impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl {
+impl terrars::ToListMappable for SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter {
     type O =
-        terrars
-        ::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl>;
+        terrars::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -563,40 +596,42 @@ impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParameter
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl {
+pub struct BuildSsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl {
-    pub fn build(self) -> SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl {
+impl BuildSsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter {
+    pub fn build(self) -> SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_ParameterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterElRef {
+impl terrars::Ref for SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_ParameterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterElRef {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterElRef {
+    ) -> SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_ParameterRef {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_ParameterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterElRef {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_ParameterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -613,26 +648,26 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElPar
 }
 
 #[derive(Serialize, Default)]
-struct SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElDynamic {
+struct SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParametersDynamic {
     parameter: std
     ::option
     ::Option<
-        terrars::DynamicBlock<SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl>,
+        terrars::DynamicBlock<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl {
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     document_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameter: std
     ::option
-    ::Option<std::vec::Vec<SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl>>,
-    dynamic: SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElDynamic,
+    ::Option<std::vec::Vec<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter>>,
+    dynamic: SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParametersDynamic,
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters {
     #[doc = "Set the field `document_version`.\n"]
     pub fn set_document_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.document_version = std::option::Option::Some(v.into());
@@ -650,7 +685,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElParameterEl,
+                            SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter,
                         >,
                     >,
     ) -> Self {
@@ -666,8 +701,8 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl {
     }
 }
 
-impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl {
-    type O = terrars::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl>;
+impl terrars::ToListMappable for SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters {
+    type O = terrars::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -678,11 +713,11 @@ impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParameter
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl {}
+pub struct BuildSsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters {}
 
-impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl {
-    pub fn build(self) -> SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl {
+impl BuildSsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters {
+    pub fn build(self) -> SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters {
             document_version: core::default::Default::default(),
             parameter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -690,24 +725,26 @@ impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParameters
     }
 }
 
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElRef {
+impl terrars::Ref for SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElRef {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElRef {
+    ) -> SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParametersRef {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElRef {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -719,7 +756,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElRef
 }
 
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl {
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_context: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -728,7 +765,7 @@ pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl 
     qualifier: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters {
     #[doc = "Set the field `client_context`.\n"]
     pub fn set_client_context(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.client_context = std::option::Option::Some(v.into());
@@ -748,8 +785,8 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl {
     }
 }
 
-impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl {
-    type O = terrars::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl>;
+impl terrars::ToListMappable for SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters {
+    type O = terrars::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -760,11 +797,11 @@ impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParameter
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl {}
+pub struct BuildSsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters {}
 
-impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl {
-    pub fn build(self) -> SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl {
+impl BuildSsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters {
+    pub fn build(self) -> SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters {
             client_context: core::default::Default::default(),
             payload: core::default::Default::default(),
             qualifier: core::default::Default::default(),
@@ -772,24 +809,26 @@ impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl {
     }
 }
 
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersElRef {
+impl terrars::Ref for SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersElRef {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersElRef {
+    ) -> SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParametersRef {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersElRef {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -811,14 +850,14 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl {
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_output_enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig {
     #[doc = "Set the field `cloudwatch_log_group_name`.\n"]
     pub fn set_cloudwatch_log_group_name(
         mut self,
@@ -836,10 +875,10 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElClo
 }
 
 impl terrars
-::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl {
+::ToListMappable for SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig {
     type O =
         terrars
-        ::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl>;
+        ::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -850,35 +889,37 @@ impl terrars
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl {}
+pub struct BuildSsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig {}
 
-impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl {
-    pub fn build(self) -> SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl {
+impl BuildSsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig {
+    pub fn build(self) -> SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig {
             cloudwatch_log_group_name: core::default::Default::default(),
             cloudwatch_output_enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigElRef {
+impl terrars::Ref for SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigElRef {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigElRef {
+    ) -> SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfigRef {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigElRef {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -895,7 +936,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElClo
 }
 
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl {
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notification_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -904,7 +945,7 @@ pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParameter
     notification_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig {
     #[doc = "Set the field `notification_arn`.\n"]
     pub fn set_notification_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.notification_arn = std::option::Option::Some(v.into());
@@ -928,12 +969,10 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNot
 }
 
 impl terrars
-::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl {
+::ToListMappable for SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig {
     type O =
         terrars
-        ::BlockAssignable<
-            SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl,
-        >;
+        ::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -944,13 +983,11 @@ impl terrars
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl {}
+pub struct BuildSsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig {}
 
-impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl {
-    pub fn build(
-        self,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl {
+impl BuildSsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig {
+    pub fn build(self) -> SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig {
             notification_arn: core::default::Default::default(),
             notification_events: core::default::Default::default(),
             notification_type: core::default::Default::default(),
@@ -958,24 +995,26 @@ impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParameters
     }
 }
 
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigElRef {
+impl terrars::Ref for SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigElRef {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigElRef {
+    ) -> SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfigRef {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigElRef {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -996,100 +1035,28 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNot
     }
 }
 
-#[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl { }
-
-impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl {
-    type O =
-        terrars
-        ::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl {
-    #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
-
-impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl {
-    pub fn build(self) -> SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl {
-            name: self.name,
-            values: self.values,
-        }
-    }
-}
-
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterElRef {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElDynamic {
+struct SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParametersDynamic {
     cloudwatch_config: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl>,
+        terrars::DynamicBlock<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig>,
     >,
     notification_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl>,
+        ::DynamicBlock<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig>,
     >,
     parameter: std
     ::option
     ::Option<
-        terrars::DynamicBlock<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl>,
+        terrars::DynamicBlock<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     comment: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1109,23 +1076,21 @@ pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParameter
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_config: std
     ::option
-    ::Option<
-        std::vec::Vec<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl>,
-    >,
+    ::Option<std::vec::Vec<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notification_config: std
     ::option
     ::Option<
-        std::vec::Vec<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl>,
+        std::vec::Vec<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameter: std
     ::option
-    ::Option<std::vec::Vec<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl>>,
-    dynamic: SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElDynamic,
+    ::Option<std::vec::Vec<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter>>,
+    dynamic: SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParametersDynamic,
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters {
     #[doc = "Set the field `comment`.\n"]
     pub fn set_comment(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.comment = std::option::Option::Some(v.into());
@@ -1191,7 +1156,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigEl,
+                            SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfig,
                         >,
                     >,
     ) -> Self {
@@ -1217,7 +1182,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigEl,
+                            SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfig,
                         >,
                     >,
     ) -> Self {
@@ -1243,7 +1208,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElParameterEl,
+                            SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters_Parameter,
                         >,
                     >,
     ) -> Self {
@@ -1259,8 +1224,8 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
     }
 }
 
-impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
-    type O = terrars::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl>;
+impl terrars::ToListMappable for SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters {
+    type O = terrars::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1271,11 +1236,11 @@ impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParameter
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {}
+pub struct BuildSsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters {}
 
-impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
-    pub fn build(self) -> SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl {
+impl BuildSsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters {
+    pub fn build(self) -> SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters {
             comment: core::default::Default::default(),
             document_hash: core::default::Default::default(),
             document_hash_type: core::default::Default::default(),
@@ -1292,24 +1257,26 @@ impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParameters
     }
 }
 
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElRef {
+impl terrars::Ref for SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElRef {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElRef {
+    ) -> SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParametersRef {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElRef {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1357,8 +1324,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElRef
     #[doc = "Get a reference to the value of field `cloudwatch_config` after provisioning.\n"]
     pub fn cloudwatch_config(
         &self,
-    ) -> terrars
-    ::ListRef<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElCloudwatchConfigElRef> {
+    ) -> terrars::ListRef<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_CloudwatchConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_config", self.base))
     }
 
@@ -1366,20 +1332,20 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElRef
     pub fn notification_config(
         &self,
     ) -> terrars
-    ::ListRef<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElNotificationConfigElRef> {
+    ::ListRef<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters_NotificationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl {
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     input: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters {
     #[doc = "Set the field `input`.\n"]
     pub fn set_input(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.input = std::option::Option::Some(v.into());
@@ -1393,8 +1359,8 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl
     }
 }
 
-impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl {
-    type O = terrars::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl>;
+impl terrars::ToListMappable for SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters {
+    type O = terrars::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1405,35 +1371,37 @@ impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParameter
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl {}
+pub struct BuildSsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters {}
 
-impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl {
-    pub fn build(self) -> SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl {
+impl BuildSsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters {
+    pub fn build(self) -> SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters {
             input: core::default::Default::default(),
             name: core::default::Default::default(),
         }
     }
 }
 
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersElRef {
+impl terrars::Ref for SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersElRef {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersElRef {
+    ) -> SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParametersRef {
+        SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersElRef {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1450,43 +1418,43 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl
 }
 
 #[derive(Serialize, Default)]
-struct SsmMaintenanceWindowTaskTaskInvocationParametersElDynamic {
+struct SsmMaintenanceWindowTask_TaskInvocationParametersDynamic {
     automation_parameters: std
     ::option
-    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl>>,
+    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters>>,
     lambda_parameters: std
     ::option
-    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl>>,
+    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters>>,
     run_command_parameters: std
     ::option
-    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl>>,
+    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters>>,
     step_functions_parameters: std
     ::option
-    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl>>,
+    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters>>,
 }
 
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersEl {
+pub struct SsmMaintenanceWindowTask_TaskInvocationParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     automation_parameters: std
     ::option
-    ::Option<std::vec::Vec<SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl>>,
+    ::Option<std::vec::Vec<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lambda_parameters: std
     ::option
-    ::Option<std::vec::Vec<SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl>>,
+    ::Option<std::vec::Vec<SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     run_command_parameters: std
     ::option
-    ::Option<std::vec::Vec<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl>>,
+    ::Option<std::vec::Vec<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     step_functions_parameters: std
     ::option
-    ::Option<std::vec::Vec<SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl>>,
-    dynamic: SsmMaintenanceWindowTaskTaskInvocationParametersElDynamic,
+    ::Option<std::vec::Vec<SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters>>,
+    dynamic: SsmMaintenanceWindowTask_TaskInvocationParametersDynamic,
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersEl {
+impl SsmMaintenanceWindowTask_TaskInvocationParameters {
     #[doc = "Set the field `automation_parameters`.\n"]
     pub fn set_automation_parameters(
         mut self,
@@ -1497,7 +1465,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersEl>,
+                        ::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParameters>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1520,7 +1488,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersEl>,
+                        terrars::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParameters>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1544,7 +1512,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersEl>,
+                        ::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParameters>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1568,7 +1536,7 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersEl>,
+                        ::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParameters>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1583,8 +1551,8 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersEl {
     }
 }
 
-impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParametersEl {
-    type O = terrars::BlockAssignable<SsmMaintenanceWindowTaskTaskInvocationParametersEl>;
+impl terrars::ToListMappable for SsmMaintenanceWindowTask_TaskInvocationParameters {
+    type O = terrars::BlockAssignable<SsmMaintenanceWindowTask_TaskInvocationParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1595,11 +1563,11 @@ impl terrars::ToListMappable for SsmMaintenanceWindowTaskTaskInvocationParameter
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTaskTaskInvocationParametersEl {}
+pub struct BuildSsmMaintenanceWindowTask_TaskInvocationParameters {}
 
-impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersEl {
-    pub fn build(self) -> SsmMaintenanceWindowTaskTaskInvocationParametersEl {
-        SsmMaintenanceWindowTaskTaskInvocationParametersEl {
+impl BuildSsmMaintenanceWindowTask_TaskInvocationParameters {
+    pub fn build(self) -> SsmMaintenanceWindowTask_TaskInvocationParameters {
+        SsmMaintenanceWindowTask_TaskInvocationParameters {
             automation_parameters: core::default::Default::default(),
             lambda_parameters: core::default::Default::default(),
             run_command_parameters: core::default::Default::default(),
@@ -1609,24 +1577,26 @@ impl BuildSsmMaintenanceWindowTaskTaskInvocationParametersEl {
     }
 }
 
-pub struct SsmMaintenanceWindowTaskTaskInvocationParametersElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTask_TaskInvocationParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTaskTaskInvocationParametersElRef {
+impl terrars::Ref for SsmMaintenanceWindowTask_TaskInvocationParametersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsmMaintenanceWindowTaskTaskInvocationParametersElRef {
-        SsmMaintenanceWindowTaskTaskInvocationParametersElRef {
+    ) -> SsmMaintenanceWindowTask_TaskInvocationParametersRef {
+        SsmMaintenanceWindowTask_TaskInvocationParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTaskTaskInvocationParametersElRef {
+impl SsmMaintenanceWindowTask_TaskInvocationParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1634,36 +1604,28 @@ impl SsmMaintenanceWindowTaskTaskInvocationParametersElRef {
     #[doc = "Get a reference to the value of field `automation_parameters` after provisioning.\n"]
     pub fn automation_parameters(
         &self,
-    ) -> terrars::ListRef<SsmMaintenanceWindowTaskTaskInvocationParametersElAutomationParametersElRef> {
+    ) -> terrars::ListRef<SsmMaintenanceWindowTask_TaskInvocationParameters_AutomationParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.automation_parameters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `lambda_parameters` after provisioning.\n"]
     pub fn lambda_parameters(
         &self,
-    ) -> terrars::ListRef<SsmMaintenanceWindowTaskTaskInvocationParametersElLambdaParametersElRef> {
+    ) -> terrars::ListRef<SsmMaintenanceWindowTask_TaskInvocationParameters_LambdaParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_parameters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `run_command_parameters` after provisioning.\n"]
     pub fn run_command_parameters(
         &self,
-    ) -> terrars::ListRef<SsmMaintenanceWindowTaskTaskInvocationParametersElRunCommandParametersElRef> {
+    ) -> terrars::ListRef<SsmMaintenanceWindowTask_TaskInvocationParameters_RunCommandParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.run_command_parameters", self.base))
     }
 
     #[doc = "Get a reference to the value of field `step_functions_parameters` after provisioning.\n"]
     pub fn step_functions_parameters(
         &self,
-    ) -> terrars::ListRef<SsmMaintenanceWindowTaskTaskInvocationParametersElStepFunctionsParametersElRef> {
+    ) -> terrars::ListRef<SsmMaintenanceWindowTask_TaskInvocationParameters_StepFunctionsParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.step_functions_parameters", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SsmMaintenanceWindowTaskDynamic {
-    targets: std::option::Option<terrars::DynamicBlock<SsmMaintenanceWindowTaskTargetsEl>>,
-    task_invocation_parameters: std
-    ::option
-    ::Option<terrars::DynamicBlock<SsmMaintenanceWindowTaskTaskInvocationParametersEl>>,
 }

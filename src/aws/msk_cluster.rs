@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MskClusterData {
+struct MskClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,32 +28,36 @@ struct MskClusterData {
     kafka_version: terrars::PrimField<std::string::String>,
     number_of_broker_nodes: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    broker_node_group_info: std::option::Option<std::vec::Vec<MskClusterBrokerNodeGroupInfoEl>>,
+    broker_node_group_info: std::option::Option<std::vec::Vec<MskCluster_BrokerNodeGroupInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    client_authentication: std::option::Option<std::vec::Vec<MskClusterClientAuthenticationEl>>,
+    client_authentication: std::option::Option<std::vec::Vec<MskCluster_ClientAuthentication>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    configuration_info: std::option::Option<std::vec::Vec<MskClusterConfigurationInfoEl>>,
+    configuration_info: std::option::Option<std::vec::Vec<MskCluster_ConfigurationInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_info: std::option::Option<std::vec::Vec<MskClusterEncryptionInfoEl>>,
+    encryption_info: std::option::Option<std::vec::Vec<MskCluster_EncryptionInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_info: std::option::Option<std::vec::Vec<MskClusterLoggingInfoEl>>,
+    logging_info: std::option::Option<std::vec::Vec<MskCluster_LoggingInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    open_monitoring: std::option::Option<std::vec::Vec<MskClusterOpenMonitoringEl>>,
+    open_monitoring: std::option::Option<std::vec::Vec<MskCluster_OpenMonitoring>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MskClusterTimeoutsEl>,
+    rebalancing: std::option::Option<std::vec::Vec<MskCluster_Rebalancing>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<MskCluster_Timeouts>,
     dynamic: MskClusterDynamic,
 }
 
 struct MskCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MskClusterData>,
+    data: std::cell::RefCell<MskClusterData_>,
 }
 
 #[derive(Clone)]
@@ -163,6 +169,13 @@ impl MskCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `storage_mode`.\n"]
     pub fn set_storage_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().storage_mode = std::option::Option::Some(v.into());
@@ -190,7 +203,7 @@ impl MskCluster {
     #[doc = "Set the field `broker_node_group_info`.\n"]
     pub fn set_broker_node_group_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -206,7 +219,7 @@ impl MskCluster {
     #[doc = "Set the field `client_authentication`.\n"]
     pub fn set_client_authentication(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterClientAuthenticationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_ClientAuthentication>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -222,7 +235,7 @@ impl MskCluster {
     #[doc = "Set the field `configuration_info`.\n"]
     pub fn set_configuration_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterConfigurationInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_ConfigurationInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -238,7 +251,7 @@ impl MskCluster {
     #[doc = "Set the field `encryption_info`.\n"]
     pub fn set_encryption_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterEncryptionInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_EncryptionInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -252,10 +265,7 @@ impl MskCluster {
     }
 
     #[doc = "Set the field `logging_info`.\n"]
-    pub fn set_logging_info(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterLoggingInfoEl>>,
-    ) -> Self {
+    pub fn set_logging_info(self, v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_LoggingInfo>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().logging_info = std::option::Option::Some(v);
@@ -270,7 +280,7 @@ impl MskCluster {
     #[doc = "Set the field `open_monitoring`.\n"]
     pub fn set_open_monitoring(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterOpenMonitoringEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_OpenMonitoring>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -283,8 +293,21 @@ impl MskCluster {
         self
     }
 
+    #[doc = "Set the field `rebalancing`.\n"]
+    pub fn set_rebalancing(self, v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_Rebalancing>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().rebalancing = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.rebalancing = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MskClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MskCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -297,6 +320,11 @@ impl MskCluster {
     #[doc = "Get a reference to the value of field `bootstrap_brokers` after provisioning.\n"]
     pub fn bootstrap_brokers(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_ipv6` after provisioning.\n"]
+    pub fn bootstrap_brokers_ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_ipv6", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `bootstrap_brokers_public_sasl_iam` after provisioning.\n"]
@@ -325,9 +353,25 @@ impl MskCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_sasl_iam", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_sasl_iam_ipv6` after provisioning.\n"]
+    pub fn bootstrap_brokers_sasl_iam_ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_sasl_iam_ipv6", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `bootstrap_brokers_sasl_scram` after provisioning.\n"]
     pub fn bootstrap_brokers_sasl_scram(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_sasl_scram", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_sasl_scram_ipv6` after provisioning.\n"]
+    pub fn bootstrap_brokers_sasl_scram_ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_sasl_scram_ipv6", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `bootstrap_brokers_tls` after provisioning.\n"]
@@ -335,14 +379,54 @@ impl MskCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_tls", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_tls_ipv6` after provisioning.\n"]
+    pub fn bootstrap_brokers_tls_ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_tls_ipv6", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_vpc_connectivity_sasl_iam` after provisioning.\n"]
+    pub fn bootstrap_brokers_vpc_connectivity_sasl_iam(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_vpc_connectivity_sasl_iam", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `bootstrap_brokers_vpc_connectivity_sasl_scram` after provisioning.\n"]
+    pub fn bootstrap_brokers_vpc_connectivity_sasl_scram(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_vpc_connectivity_sasl_scram", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_vpc_connectivity_tls` after provisioning.\n"]
+    pub fn bootstrap_brokers_vpc_connectivity_tls(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_vpc_connectivity_tls", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
     pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_uuid` after provisioning.\n"]
+    pub fn cluster_uuid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_uuid", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `current_version` after provisioning.\n"]
     pub fn current_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.current_version", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `customer_action_status` after provisioning.\n"]
+    pub fn customer_action_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_action_status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enhanced_monitoring` after provisioning.\n"]
@@ -363,6 +447,12 @@ impl MskCluster {
     #[doc = "Get a reference to the value of field `number_of_broker_nodes` after provisioning.\n"]
     pub fn number_of_broker_nodes(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_broker_nodes", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_mode` after provisioning.\n"]
@@ -391,38 +481,43 @@ impl MskCluster {
     }
 
     #[doc = "Get a reference to the value of field `broker_node_group_info` after provisioning.\n"]
-    pub fn broker_node_group_info(&self) -> terrars::ListRef<MskClusterBrokerNodeGroupInfoElRef> {
+    pub fn broker_node_group_info(&self) -> terrars::ListRef<MskCluster_BrokerNodeGroupInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.broker_node_group_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `client_authentication` after provisioning.\n"]
-    pub fn client_authentication(&self) -> terrars::ListRef<MskClusterClientAuthenticationElRef> {
+    pub fn client_authentication(&self) -> terrars::ListRef<MskCluster_ClientAuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_authentication", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `configuration_info` after provisioning.\n"]
-    pub fn configuration_info(&self) -> terrars::ListRef<MskClusterConfigurationInfoElRef> {
+    pub fn configuration_info(&self) -> terrars::ListRef<MskCluster_ConfigurationInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `encryption_info` after provisioning.\n"]
-    pub fn encryption_info(&self) -> terrars::ListRef<MskClusterEncryptionInfoElRef> {
+    pub fn encryption_info(&self) -> terrars::ListRef<MskCluster_EncryptionInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_info` after provisioning.\n"]
-    pub fn logging_info(&self) -> terrars::ListRef<MskClusterLoggingInfoElRef> {
+    pub fn logging_info(&self) -> terrars::ListRef<MskCluster_LoggingInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `open_monitoring` after provisioning.\n"]
-    pub fn open_monitoring(&self) -> terrars::ListRef<MskClusterOpenMonitoringElRef> {
+    pub fn open_monitoring(&self) -> terrars::ListRef<MskCluster_OpenMonitoringRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.open_monitoring", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `rebalancing` after provisioning.\n"]
+    pub fn rebalancing(&self) -> terrars::ListRef<MskCluster_RebalancingRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rebalancing", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MskClusterTimeoutsElRef {
-        MskClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MskCluster_TimeoutsRef {
+        MskCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -472,7 +567,7 @@ impl BuildMskCluster {
         let out = MskCluster(std::rc::Rc::new(MskCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MskClusterData {
+            data: std::cell::RefCell::new(MskClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -483,6 +578,7 @@ impl BuildMskCluster {
                 id: core::default::Default::default(),
                 kafka_version: self.kafka_version,
                 number_of_broker_nodes: self.number_of_broker_nodes,
+                region: core::default::Default::default(),
                 storage_mode: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -492,6 +588,7 @@ impl BuildMskCluster {
                 encryption_info: core::default::Default::default(),
                 logging_info: core::default::Default::default(),
                 open_monitoring: core::default::Default::default(),
+                rebalancing: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -534,6 +631,11 @@ impl MskClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_ipv6` after provisioning.\n"]
+    pub fn bootstrap_brokers_ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_ipv6", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `bootstrap_brokers_public_sasl_iam` after provisioning.\n"]
     pub fn bootstrap_brokers_public_sasl_iam(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
@@ -560,9 +662,25 @@ impl MskClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_sasl_iam", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_sasl_iam_ipv6` after provisioning.\n"]
+    pub fn bootstrap_brokers_sasl_iam_ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_sasl_iam_ipv6", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `bootstrap_brokers_sasl_scram` after provisioning.\n"]
     pub fn bootstrap_brokers_sasl_scram(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_sasl_scram", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_sasl_scram_ipv6` after provisioning.\n"]
+    pub fn bootstrap_brokers_sasl_scram_ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_sasl_scram_ipv6", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `bootstrap_brokers_tls` after provisioning.\n"]
@@ -570,14 +688,54 @@ impl MskClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_tls", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_tls_ipv6` after provisioning.\n"]
+    pub fn bootstrap_brokers_tls_ipv6(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_tls_ipv6", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_vpc_connectivity_sasl_iam` after provisioning.\n"]
+    pub fn bootstrap_brokers_vpc_connectivity_sasl_iam(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_vpc_connectivity_sasl_iam", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `bootstrap_brokers_vpc_connectivity_sasl_scram` after provisioning.\n"]
+    pub fn bootstrap_brokers_vpc_connectivity_sasl_scram(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_vpc_connectivity_sasl_scram", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_vpc_connectivity_tls` after provisioning.\n"]
+    pub fn bootstrap_brokers_vpc_connectivity_tls(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.bootstrap_brokers_vpc_connectivity_tls", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
     pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_uuid` after provisioning.\n"]
+    pub fn cluster_uuid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_uuid", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `current_version` after provisioning.\n"]
     pub fn current_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.current_version", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `customer_action_status` after provisioning.\n"]
+    pub fn customer_action_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_action_status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enhanced_monitoring` after provisioning.\n"]
@@ -598,6 +756,12 @@ impl MskClusterRef {
     #[doc = "Get a reference to the value of field `number_of_broker_nodes` after provisioning.\n"]
     pub fn number_of_broker_nodes(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.number_of_broker_nodes", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_mode` after provisioning.\n"]
@@ -626,48 +790,64 @@ impl MskClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `broker_node_group_info` after provisioning.\n"]
-    pub fn broker_node_group_info(&self) -> terrars::ListRef<MskClusterBrokerNodeGroupInfoElRef> {
+    pub fn broker_node_group_info(&self) -> terrars::ListRef<MskCluster_BrokerNodeGroupInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.broker_node_group_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `client_authentication` after provisioning.\n"]
-    pub fn client_authentication(&self) -> terrars::ListRef<MskClusterClientAuthenticationElRef> {
+    pub fn client_authentication(&self) -> terrars::ListRef<MskCluster_ClientAuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_authentication", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `configuration_info` after provisioning.\n"]
-    pub fn configuration_info(&self) -> terrars::ListRef<MskClusterConfigurationInfoElRef> {
+    pub fn configuration_info(&self) -> terrars::ListRef<MskCluster_ConfigurationInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.configuration_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `encryption_info` after provisioning.\n"]
-    pub fn encryption_info(&self) -> terrars::ListRef<MskClusterEncryptionInfoElRef> {
+    pub fn encryption_info(&self) -> terrars::ListRef<MskCluster_EncryptionInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_info` after provisioning.\n"]
-    pub fn logging_info(&self) -> terrars::ListRef<MskClusterLoggingInfoElRef> {
+    pub fn logging_info(&self) -> terrars::ListRef<MskCluster_LoggingInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `open_monitoring` after provisioning.\n"]
-    pub fn open_monitoring(&self) -> terrars::ListRef<MskClusterOpenMonitoringElRef> {
+    pub fn open_monitoring(&self) -> terrars::ListRef<MskCluster_OpenMonitoringRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.open_monitoring", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `rebalancing` after provisioning.\n"]
+    pub fn rebalancing(&self) -> terrars::ListRef<MskCluster_RebalancingRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rebalancing", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MskClusterTimeoutsElRef {
-        MskClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MskCluster_TimeoutsRef {
+        MskCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MskClusterDynamic {
+    broker_node_group_info: std::option::Option<terrars::DynamicBlock<MskCluster_BrokerNodeGroupInfo>>,
+    client_authentication: std::option::Option<terrars::DynamicBlock<MskCluster_ClientAuthentication>>,
+    configuration_info: std::option::Option<terrars::DynamicBlock<MskCluster_ConfigurationInfo>>,
+    encryption_info: std::option::Option<terrars::DynamicBlock<MskCluster_EncryptionInfo>>,
+    logging_info: std::option::Option<terrars::DynamicBlock<MskCluster_LoggingInfo>>,
+    open_monitoring: std::option::Option<terrars::DynamicBlock<MskCluster_OpenMonitoring>>,
+    rebalancing: std::option::Option<terrars::DynamicBlock<MskCluster_Rebalancing>>,
+}
+
 #[derive(Serialize)]
-pub struct MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl {
+pub struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl {
+impl MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -675,8 +855,8 @@ impl MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl {
-    type O = terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl>;
+impl terrars::ToListMappable for MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess {
+    type O = terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -687,32 +867,34 @@ impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElConnectivityInfo
     }
 }
 
-pub struct BuildMskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl {}
+pub struct BuildMskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess {}
 
-impl BuildMskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl {
-    pub fn build(self) -> MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl {
-        MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl { type_: core::default::Default::default() }
+impl BuildMskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess {
+    pub fn build(self) -> MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess {
+        MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess { type_: core::default::Default::default() }
     }
 }
 
-pub struct MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessElRef {
+#[allow(dead_code)]
+pub struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccessRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessElRef {
+impl terrars::Ref for MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccessRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessElRef {
-        MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessElRef {
+    ) -> MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccessRef {
+        MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccessRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessElRef {
+impl MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccessRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -723,21 +905,311 @@ impl MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct MskCluster_ClientAuthentication_Sasl {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iam: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scram: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl MskCluster_ClientAuthentication_Sasl {
+    #[doc = "Set the field `iam`.\n"]
+    pub fn set_iam(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.iam = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scram`.\n"]
+    pub fn set_scram(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.scram = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for MskCluster_ClientAuthentication_Sasl {
+    type O = terrars::BlockAssignable<MskCluster_ClientAuthentication_Sasl>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildMskCluster_ClientAuthentication_Sasl {}
+
+impl BuildMskCluster_ClientAuthentication_Sasl {
+    pub fn build(self) -> MskCluster_ClientAuthentication_Sasl {
+        MskCluster_ClientAuthentication_Sasl {
+            iam: core::default::Default::default(),
+            scram: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct MskCluster_ClientAuthentication_SaslRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for MskCluster_ClientAuthentication_SaslRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_ClientAuthentication_SaslRef {
+        MskCluster_ClientAuthentication_SaslRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl MskCluster_ClientAuthentication_SaslRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `iam` after provisioning.\n"]
+    pub fn iam(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.iam", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scram` after provisioning.\n"]
+    pub fn scram(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scram", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct MskClusterBrokerNodeGroupInfoElConnectivityInfoElDynamic {
-    public_access: std
-    ::option
-    ::Option<terrars::DynamicBlock<MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl>>,
+struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthenticationDynamic {
+    sasl: std::option::Option<terrars::DynamicBlock<MskCluster_ClientAuthentication_Sasl>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterBrokerNodeGroupInfoElConnectivityInfoEl {
+pub struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    public_access: std::option::Option<std::vec::Vec<MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl>>,
-    dynamic: MskClusterBrokerNodeGroupInfoElConnectivityInfoElDynamic,
+    tls: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sasl: std::option::Option<std::vec::Vec<MskCluster_ClientAuthentication_Sasl>>,
+    dynamic: MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthenticationDynamic,
 }
 
-impl MskClusterBrokerNodeGroupInfoElConnectivityInfoEl {
+impl MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication {
+    #[doc = "Set the field `tls`.\n"]
+    pub fn set_tls(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.tls = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `sasl`.\n"]
+    pub fn set_sasl(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_ClientAuthentication_Sasl>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.sasl = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.sasl = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication {
+    type O =
+        terrars
+        ::BlockAssignable<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildMskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication {}
+
+impl BuildMskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication {
+    pub fn build(self) -> MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication {
+        MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication {
+            tls: core::default::Default::default(),
+            sasl: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthenticationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthenticationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthenticationRef {
+        MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthenticationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthenticationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `tls` after provisioning.\n"]
+    pub fn tls(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tls", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `sasl` after provisioning.\n"]
+    pub fn sasl(&self) -> terrars::ListRef<MskCluster_ClientAuthentication_SaslRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sasl", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivityDynamic {
+    client_authentication: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    client_authentication: std
+    ::option
+    ::Option<std::vec::Vec<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication>>,
+    dynamic: MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivityDynamic,
+}
+
+impl MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity {
+    #[doc = "Set the field `client_authentication`.\n"]
+    pub fn set_client_authentication(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthentication,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.client_authentication = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.client_authentication = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity {
+    type O = terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildMskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity {}
+
+impl BuildMskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity {
+    pub fn build(self) -> MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity {
+        MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity {
+            client_authentication: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivityRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivityRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivityRef {
+        MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivityRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivityRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `client_authentication` after provisioning.\n"]
+    pub fn client_authentication(
+        &self,
+    ) -> terrars::ListRef<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity_ClientAuthenticationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.client_authentication", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfoDynamic {
+    public_access: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess>>,
+    vpc_connectivity: std
+    ::option
+    ::Option<terrars::DynamicBlock<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity>>,
+}
+
+#[derive(Serialize)]
+pub struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfo {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    public_access: std::option::Option<std::vec::Vec<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_connectivity: std::option::Option<std::vec::Vec<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity>>,
+    dynamic: MskCluster_BrokerNodeGroupInfo_ConnectivityInfoDynamic,
+}
+
+impl MskCluster_BrokerNodeGroupInfo_ConnectivityInfo {
+    #[doc = "Set the field `network_type`.\n"]
+    pub fn set_network_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.network_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `public_access`.\n"]
     pub fn set_public_access(
         mut self,
@@ -746,7 +1218,7 @@ impl MskClusterBrokerNodeGroupInfoElConnectivityInfoEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessEl>>,
+                    ::Into<terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccess>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -758,10 +1230,31 @@ impl MskClusterBrokerNodeGroupInfoElConnectivityInfoEl {
         }
         self
     }
+
+    #[doc = "Set the field `vpc_connectivity`.\n"]
+    pub fn set_vpc_connectivity(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivity>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.vpc_connectivity = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.vpc_connectivity = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElConnectivityInfoEl {
-    type O = terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoElConnectivityInfoEl>;
+impl terrars::ToListMappable for MskCluster_BrokerNodeGroupInfo_ConnectivityInfo {
+    type O = terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -772,54 +1265,70 @@ impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElConnectivityInfo
     }
 }
 
-pub struct BuildMskClusterBrokerNodeGroupInfoElConnectivityInfoEl {}
+pub struct BuildMskCluster_BrokerNodeGroupInfo_ConnectivityInfo {}
 
-impl BuildMskClusterBrokerNodeGroupInfoElConnectivityInfoEl {
-    pub fn build(self) -> MskClusterBrokerNodeGroupInfoElConnectivityInfoEl {
-        MskClusterBrokerNodeGroupInfoElConnectivityInfoEl {
+impl BuildMskCluster_BrokerNodeGroupInfo_ConnectivityInfo {
+    pub fn build(self) -> MskCluster_BrokerNodeGroupInfo_ConnectivityInfo {
+        MskCluster_BrokerNodeGroupInfo_ConnectivityInfo {
+            network_type: core::default::Default::default(),
             public_access: core::default::Default::default(),
+            vpc_connectivity: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskClusterBrokerNodeGroupInfoElConnectivityInfoElRef {
+#[allow(dead_code)]
+pub struct MskCluster_BrokerNodeGroupInfo_ConnectivityInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterBrokerNodeGroupInfoElConnectivityInfoElRef {
+impl terrars::Ref for MskCluster_BrokerNodeGroupInfo_ConnectivityInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskClusterBrokerNodeGroupInfoElConnectivityInfoElRef {
-        MskClusterBrokerNodeGroupInfoElConnectivityInfoElRef {
+    ) -> MskCluster_BrokerNodeGroupInfo_ConnectivityInfoRef {
+        MskCluster_BrokerNodeGroupInfo_ConnectivityInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterBrokerNodeGroupInfoElConnectivityInfoElRef {
+impl MskCluster_BrokerNodeGroupInfo_ConnectivityInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `public_access` after provisioning.\n"]
-    pub fn public_access(&self) -> terrars::ListRef<MskClusterBrokerNodeGroupInfoElConnectivityInfoElPublicAccessElRef> {
+    pub fn public_access(&self) -> terrars::ListRef<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_PublicAccessRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_access", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_connectivity` after provisioning.\n"]
+    pub fn vpc_connectivity(
+        &self,
+    ) -> terrars::ListRef<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo_VpcConnectivityRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_connectivity", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl {
+pub struct MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     volume_throughput: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl {
+impl MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -833,10 +1342,9 @@ impl MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThro
     }
 }
 
-impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl {
+impl terrars::ToListMappable for MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput {
     type O =
-        terrars
-        ::BlockAssignable<MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl>;
+        terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -847,35 +1355,37 @@ impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElStorageInfoElEbs
     }
 }
 
-pub struct BuildMskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl {}
+pub struct BuildMskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput {}
 
-impl BuildMskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl {
-    pub fn build(self) -> MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl {
-        MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl {
+impl BuildMskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput {
+    pub fn build(self) -> MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput {
+        MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput {
             enabled: core::default::Default::default(),
             volume_throughput: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputElRef {
+#[allow(dead_code)]
+pub struct MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughputRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputElRef {
+impl terrars::Ref for MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughputRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputElRef {
-        MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputElRef {
+    ) -> MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughputRef {
+        MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughputRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputElRef {
+impl MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughputRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -892,26 +1402,24 @@ impl MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThro
 }
 
 #[derive(Serialize, Default)]
-struct MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElDynamic {
+struct MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfoDynamic {
     provisioned_throughput: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl>,
-    >,
+    ::Option<terrars::DynamicBlock<MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {
+pub struct MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     volume_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     provisioned_throughput: std
     ::option
-    ::Option<std::vec::Vec<MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl>>,
-    dynamic: MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElDynamic,
+    ::Option<std::vec::Vec<MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput>>,
+    dynamic: MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfoDynamic,
 }
 
-impl MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {
+impl MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo {
     #[doc = "Set the field `volume_size`.\n"]
     pub fn set_volume_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.volume_size = std::option::Option::Some(v.into());
@@ -929,7 +1437,7 @@ impl MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputEl,
+                            MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughput,
                         >,
                     >,
     ) -> Self {
@@ -945,8 +1453,8 @@ impl MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {
-    type O = terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl>;
+impl terrars::ToListMappable for MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo {
+    type O = terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -957,11 +1465,11 @@ impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElStorageInfoElEbs
     }
 }
 
-pub struct BuildMskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {}
+pub struct BuildMskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo {}
 
-impl BuildMskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {
-    pub fn build(self) -> MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {
-        MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {
+impl BuildMskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo {
+    pub fn build(self) -> MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo {
+        MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo {
             volume_size: core::default::Default::default(),
             provisioned_throughput: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -969,24 +1477,26 @@ impl BuildMskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl {
     }
 }
 
-pub struct MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElRef {
+#[allow(dead_code)]
+pub struct MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElRef {
+impl terrars::Ref for MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElRef {
-        MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElRef {
+    ) -> MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfoRef {
+        MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElRef {
+impl MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -999,26 +1509,26 @@ impl MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElRef {
     #[doc = "Get a reference to the value of field `provisioned_throughput` after provisioning.\n"]
     pub fn provisioned_throughput(
         &self,
-    ) -> terrars::ListRef<MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElProvisionedThroughputElRef> {
+    ) -> terrars::ListRef<MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo_ProvisionedThroughputRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.provisioned_throughput", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct MskClusterBrokerNodeGroupInfoElStorageInfoElDynamic {
+struct MskCluster_BrokerNodeGroupInfo_StorageInfoDynamic {
     ebs_storage_info: std
     ::option
-    ::Option<terrars::DynamicBlock<MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl>>,
+    ::Option<terrars::DynamicBlock<MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterBrokerNodeGroupInfoElStorageInfoEl {
+pub struct MskCluster_BrokerNodeGroupInfo_StorageInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ebs_storage_info: std::option::Option<std::vec::Vec<MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl>>,
-    dynamic: MskClusterBrokerNodeGroupInfoElStorageInfoElDynamic,
+    ebs_storage_info: std::option::Option<std::vec::Vec<MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo>>,
+    dynamic: MskCluster_BrokerNodeGroupInfo_StorageInfoDynamic,
 }
 
-impl MskClusterBrokerNodeGroupInfoElStorageInfoEl {
+impl MskCluster_BrokerNodeGroupInfo_StorageInfo {
     #[doc = "Set the field `ebs_storage_info`.\n"]
     pub fn set_ebs_storage_info(
         mut self,
@@ -1027,7 +1537,7 @@ impl MskClusterBrokerNodeGroupInfoElStorageInfoEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoEl>>,
+                    ::Into<terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1041,8 +1551,8 @@ impl MskClusterBrokerNodeGroupInfoElStorageInfoEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElStorageInfoEl {
-    type O = terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoElStorageInfoEl>;
+impl terrars::ToListMappable for MskCluster_BrokerNodeGroupInfo_StorageInfo {
+    type O = terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_StorageInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1053,84 +1563,75 @@ impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoElStorageInfoEl {
     }
 }
 
-pub struct BuildMskClusterBrokerNodeGroupInfoElStorageInfoEl {}
+pub struct BuildMskCluster_BrokerNodeGroupInfo_StorageInfo {}
 
-impl BuildMskClusterBrokerNodeGroupInfoElStorageInfoEl {
-    pub fn build(self) -> MskClusterBrokerNodeGroupInfoElStorageInfoEl {
-        MskClusterBrokerNodeGroupInfoElStorageInfoEl {
+impl BuildMskCluster_BrokerNodeGroupInfo_StorageInfo {
+    pub fn build(self) -> MskCluster_BrokerNodeGroupInfo_StorageInfo {
+        MskCluster_BrokerNodeGroupInfo_StorageInfo {
             ebs_storage_info: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskClusterBrokerNodeGroupInfoElStorageInfoElRef {
+#[allow(dead_code)]
+pub struct MskCluster_BrokerNodeGroupInfo_StorageInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterBrokerNodeGroupInfoElStorageInfoElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> MskClusterBrokerNodeGroupInfoElStorageInfoElRef {
-        MskClusterBrokerNodeGroupInfoElStorageInfoElRef {
+impl terrars::Ref for MskCluster_BrokerNodeGroupInfo_StorageInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_BrokerNodeGroupInfo_StorageInfoRef {
+        MskCluster_BrokerNodeGroupInfo_StorageInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterBrokerNodeGroupInfoElStorageInfoElRef {
+impl MskCluster_BrokerNodeGroupInfo_StorageInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `ebs_storage_info` after provisioning.\n"]
-    pub fn ebs_storage_info(&self) -> terrars::ListRef<MskClusterBrokerNodeGroupInfoElStorageInfoElEbsStorageInfoElRef> {
+    pub fn ebs_storage_info(&self) -> terrars::ListRef<MskCluster_BrokerNodeGroupInfo_StorageInfo_EbsStorageInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ebs_storage_info", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct MskClusterBrokerNodeGroupInfoElDynamic {
-    connectivity_info: std::option::Option<terrars::DynamicBlock<MskClusterBrokerNodeGroupInfoElConnectivityInfoEl>>,
-    storage_info: std::option::Option<terrars::DynamicBlock<MskClusterBrokerNodeGroupInfoElStorageInfoEl>>,
+struct MskCluster_BrokerNodeGroupInfoDynamic {
+    connectivity_info: std::option::Option<terrars::DynamicBlock<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo>>,
+    storage_info: std::option::Option<terrars::DynamicBlock<MskCluster_BrokerNodeGroupInfo_StorageInfo>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterBrokerNodeGroupInfoEl {
+pub struct MskCluster_BrokerNodeGroupInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     az_distribution: std::option::Option<terrars::PrimField<std::string::String>>,
     client_subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ebs_volume_size: std::option::Option<terrars::PrimField<f64>>,
     instance_type: terrars::PrimField<std::string::String>,
     security_groups: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    connectivity_info: std::option::Option<std::vec::Vec<MskClusterBrokerNodeGroupInfoElConnectivityInfoEl>>,
+    connectivity_info: std::option::Option<std::vec::Vec<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage_info: std::option::Option<std::vec::Vec<MskClusterBrokerNodeGroupInfoElStorageInfoEl>>,
-    dynamic: MskClusterBrokerNodeGroupInfoElDynamic,
+    storage_info: std::option::Option<std::vec::Vec<MskCluster_BrokerNodeGroupInfo_StorageInfo>>,
+    dynamic: MskCluster_BrokerNodeGroupInfoDynamic,
 }
 
-impl MskClusterBrokerNodeGroupInfoEl {
+impl MskCluster_BrokerNodeGroupInfo {
     #[doc = "Set the field `az_distribution`.\n"]
     pub fn set_az_distribution(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.az_distribution = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `ebs_volume_size`.\n"]
-    pub fn set_ebs_volume_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.ebs_volume_size = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `connectivity_info`.\n"]
     pub fn set_connectivity_info(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoElConnectivityInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_ConnectivityInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1146,7 +1647,7 @@ impl MskClusterBrokerNodeGroupInfoEl {
     #[doc = "Set the field `storage_info`.\n"]
     pub fn set_storage_info(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoElStorageInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo_StorageInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1160,8 +1661,8 @@ impl MskClusterBrokerNodeGroupInfoEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoEl {
-    type O = terrars::BlockAssignable<MskClusterBrokerNodeGroupInfoEl>;
+impl terrars::ToListMappable for MskCluster_BrokerNodeGroupInfo {
+    type O = terrars::BlockAssignable<MskCluster_BrokerNodeGroupInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1172,7 +1673,7 @@ impl terrars::ToListMappable for MskClusterBrokerNodeGroupInfoEl {
     }
 }
 
-pub struct BuildMskClusterBrokerNodeGroupInfoEl {
+pub struct BuildMskCluster_BrokerNodeGroupInfo {
     #[doc = ""]
     pub client_subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
@@ -1181,12 +1682,11 @@ pub struct BuildMskClusterBrokerNodeGroupInfoEl {
     pub security_groups: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildMskClusterBrokerNodeGroupInfoEl {
-    pub fn build(self) -> MskClusterBrokerNodeGroupInfoEl {
-        MskClusterBrokerNodeGroupInfoEl {
+impl BuildMskCluster_BrokerNodeGroupInfo {
+    pub fn build(self) -> MskCluster_BrokerNodeGroupInfo {
+        MskCluster_BrokerNodeGroupInfo {
             az_distribution: core::default::Default::default(),
             client_subnets: self.client_subnets,
-            ebs_volume_size: core::default::Default::default(),
             instance_type: self.instance_type,
             security_groups: self.security_groups,
             connectivity_info: core::default::Default::default(),
@@ -1196,21 +1696,23 @@ impl BuildMskClusterBrokerNodeGroupInfoEl {
     }
 }
 
-pub struct MskClusterBrokerNodeGroupInfoElRef {
+#[allow(dead_code)]
+pub struct MskCluster_BrokerNodeGroupInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterBrokerNodeGroupInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterBrokerNodeGroupInfoElRef {
-        MskClusterBrokerNodeGroupInfoElRef {
+impl terrars::Ref for MskCluster_BrokerNodeGroupInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_BrokerNodeGroupInfoRef {
+        MskCluster_BrokerNodeGroupInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterBrokerNodeGroupInfoElRef {
+impl MskCluster_BrokerNodeGroupInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1225,11 +1727,6 @@ impl MskClusterBrokerNodeGroupInfoElRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.client_subnets", self.base))
     }
 
-    #[doc = "Get a reference to the value of field `ebs_volume_size` after provisioning.\n"]
-    pub fn ebs_volume_size(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ebs_volume_size", self.base))
-    }
-
     #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
     pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
@@ -1241,98 +1738,23 @@ impl MskClusterBrokerNodeGroupInfoElRef {
     }
 
     #[doc = "Get a reference to the value of field `connectivity_info` after provisioning.\n"]
-    pub fn connectivity_info(&self) -> terrars::ListRef<MskClusterBrokerNodeGroupInfoElConnectivityInfoElRef> {
+    pub fn connectivity_info(&self) -> terrars::ListRef<MskCluster_BrokerNodeGroupInfo_ConnectivityInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connectivity_info", self.base))
     }
 
     #[doc = "Get a reference to the value of field `storage_info` after provisioning.\n"]
-    pub fn storage_info(&self) -> terrars::ListRef<MskClusterBrokerNodeGroupInfoElStorageInfoElRef> {
+    pub fn storage_info(&self) -> terrars::ListRef<MskCluster_BrokerNodeGroupInfo_StorageInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_info", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MskClusterClientAuthenticationElSaslEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    iam: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scram: std::option::Option<terrars::PrimField<bool>>,
-}
-
-impl MskClusterClientAuthenticationElSaslEl {
-    #[doc = "Set the field `iam`.\n"]
-    pub fn set_iam(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.iam = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `scram`.\n"]
-    pub fn set_scram(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.scram = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for MskClusterClientAuthenticationElSaslEl {
-    type O = terrars::BlockAssignable<MskClusterClientAuthenticationElSaslEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildMskClusterClientAuthenticationElSaslEl {}
-
-impl BuildMskClusterClientAuthenticationElSaslEl {
-    pub fn build(self) -> MskClusterClientAuthenticationElSaslEl {
-        MskClusterClientAuthenticationElSaslEl {
-            iam: core::default::Default::default(),
-            scram: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct MskClusterClientAuthenticationElSaslElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for MskClusterClientAuthenticationElSaslElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterClientAuthenticationElSaslElRef {
-        MskClusterClientAuthenticationElSaslElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl MskClusterClientAuthenticationElSaslElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `iam` after provisioning.\n"]
-    pub fn iam(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.iam", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `scram` after provisioning.\n"]
-    pub fn scram(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scram", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct MskClusterClientAuthenticationElTlsEl {
+pub struct MskCluster_ClientAuthentication_Tls {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     certificate_authority_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl MskClusterClientAuthenticationElTlsEl {
+impl MskCluster_ClientAuthentication_Tls {
     #[doc = "Set the field `certificate_authority_arns`.\n"]
     pub fn set_certificate_authority_arns(
         mut self,
@@ -1343,8 +1765,8 @@ impl MskClusterClientAuthenticationElTlsEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterClientAuthenticationElTlsEl {
-    type O = terrars::BlockAssignable<MskClusterClientAuthenticationElTlsEl>;
+impl terrars::ToListMappable for MskCluster_ClientAuthentication_Tls {
+    type O = terrars::BlockAssignable<MskCluster_ClientAuthentication_Tls>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1355,29 +1777,31 @@ impl terrars::ToListMappable for MskClusterClientAuthenticationElTlsEl {
     }
 }
 
-pub struct BuildMskClusterClientAuthenticationElTlsEl {}
+pub struct BuildMskCluster_ClientAuthentication_Tls {}
 
-impl BuildMskClusterClientAuthenticationElTlsEl {
-    pub fn build(self) -> MskClusterClientAuthenticationElTlsEl {
-        MskClusterClientAuthenticationElTlsEl { certificate_authority_arns: core::default::Default::default() }
+impl BuildMskCluster_ClientAuthentication_Tls {
+    pub fn build(self) -> MskCluster_ClientAuthentication_Tls {
+        MskCluster_ClientAuthentication_Tls { certificate_authority_arns: core::default::Default::default() }
     }
 }
 
-pub struct MskClusterClientAuthenticationElTlsElRef {
+#[allow(dead_code)]
+pub struct MskCluster_ClientAuthentication_TlsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterClientAuthenticationElTlsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterClientAuthenticationElTlsElRef {
-        MskClusterClientAuthenticationElTlsElRef {
+impl terrars::Ref for MskCluster_ClientAuthentication_TlsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_ClientAuthentication_TlsRef {
+        MskCluster_ClientAuthentication_TlsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterClientAuthenticationElTlsElRef {
+impl MskCluster_ClientAuthentication_TlsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1389,23 +1813,23 @@ impl MskClusterClientAuthenticationElTlsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MskClusterClientAuthenticationElDynamic {
-    sasl: std::option::Option<terrars::DynamicBlock<MskClusterClientAuthenticationElSaslEl>>,
-    tls: std::option::Option<terrars::DynamicBlock<MskClusterClientAuthenticationElTlsEl>>,
+struct MskCluster_ClientAuthenticationDynamic {
+    sasl: std::option::Option<terrars::DynamicBlock<MskCluster_ClientAuthentication_Sasl>>,
+    tls: std::option::Option<terrars::DynamicBlock<MskCluster_ClientAuthentication_Tls>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterClientAuthenticationEl {
+pub struct MskCluster_ClientAuthentication {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     unauthenticated: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sasl: std::option::Option<std::vec::Vec<MskClusterClientAuthenticationElSaslEl>>,
+    sasl: std::option::Option<std::vec::Vec<MskCluster_ClientAuthentication_Sasl>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tls: std::option::Option<std::vec::Vec<MskClusterClientAuthenticationElTlsEl>>,
-    dynamic: MskClusterClientAuthenticationElDynamic,
+    tls: std::option::Option<std::vec::Vec<MskCluster_ClientAuthentication_Tls>>,
+    dynamic: MskCluster_ClientAuthenticationDynamic,
 }
 
-impl MskClusterClientAuthenticationEl {
+impl MskCluster_ClientAuthentication {
     #[doc = "Set the field `unauthenticated`.\n"]
     pub fn set_unauthenticated(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.unauthenticated = std::option::Option::Some(v.into());
@@ -1415,7 +1839,7 @@ impl MskClusterClientAuthenticationEl {
     #[doc = "Set the field `sasl`.\n"]
     pub fn set_sasl(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterClientAuthenticationElSaslEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_ClientAuthentication_Sasl>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1431,7 +1855,7 @@ impl MskClusterClientAuthenticationEl {
     #[doc = "Set the field `tls`.\n"]
     pub fn set_tls(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterClientAuthenticationElTlsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_ClientAuthentication_Tls>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1445,8 +1869,8 @@ impl MskClusterClientAuthenticationEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterClientAuthenticationEl {
-    type O = terrars::BlockAssignable<MskClusterClientAuthenticationEl>;
+impl terrars::ToListMappable for MskCluster_ClientAuthentication {
+    type O = terrars::BlockAssignable<MskCluster_ClientAuthentication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1457,11 +1881,11 @@ impl terrars::ToListMappable for MskClusterClientAuthenticationEl {
     }
 }
 
-pub struct BuildMskClusterClientAuthenticationEl {}
+pub struct BuildMskCluster_ClientAuthentication {}
 
-impl BuildMskClusterClientAuthenticationEl {
-    pub fn build(self) -> MskClusterClientAuthenticationEl {
-        MskClusterClientAuthenticationEl {
+impl BuildMskCluster_ClientAuthentication {
+    pub fn build(self) -> MskCluster_ClientAuthentication {
+        MskCluster_ClientAuthentication {
             unauthenticated: core::default::Default::default(),
             sasl: core::default::Default::default(),
             tls: core::default::Default::default(),
@@ -1470,21 +1894,23 @@ impl BuildMskClusterClientAuthenticationEl {
     }
 }
 
-pub struct MskClusterClientAuthenticationElRef {
+#[allow(dead_code)]
+pub struct MskCluster_ClientAuthenticationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterClientAuthenticationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterClientAuthenticationElRef {
-        MskClusterClientAuthenticationElRef {
+impl terrars::Ref for MskCluster_ClientAuthenticationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_ClientAuthenticationRef {
+        MskCluster_ClientAuthenticationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterClientAuthenticationElRef {
+impl MskCluster_ClientAuthenticationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1495,26 +1921,26 @@ impl MskClusterClientAuthenticationElRef {
     }
 
     #[doc = "Get a reference to the value of field `sasl` after provisioning.\n"]
-    pub fn sasl(&self) -> terrars::ListRef<MskClusterClientAuthenticationElSaslElRef> {
+    pub fn sasl(&self) -> terrars::ListRef<MskCluster_ClientAuthentication_SaslRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sasl", self.base))
     }
 
     #[doc = "Get a reference to the value of field `tls` after provisioning.\n"]
-    pub fn tls(&self) -> terrars::ListRef<MskClusterClientAuthenticationElTlsElRef> {
+    pub fn tls(&self) -> terrars::ListRef<MskCluster_ClientAuthentication_TlsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tls", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MskClusterConfigurationInfoEl {
+pub struct MskCluster_ConfigurationInfo {
     arn: terrars::PrimField<std::string::String>,
     revision: terrars::PrimField<f64>,
 }
 
-impl MskClusterConfigurationInfoEl { }
+impl MskCluster_ConfigurationInfo { }
 
-impl terrars::ToListMappable for MskClusterConfigurationInfoEl {
-    type O = terrars::BlockAssignable<MskClusterConfigurationInfoEl>;
+impl terrars::ToListMappable for MskCluster_ConfigurationInfo {
+    type O = terrars::BlockAssignable<MskCluster_ConfigurationInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1525,37 +1951,39 @@ impl terrars::ToListMappable for MskClusterConfigurationInfoEl {
     }
 }
 
-pub struct BuildMskClusterConfigurationInfoEl {
+pub struct BuildMskCluster_ConfigurationInfo {
     #[doc = ""]
     pub arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub revision: terrars::PrimField<f64>,
 }
 
-impl BuildMskClusterConfigurationInfoEl {
-    pub fn build(self) -> MskClusterConfigurationInfoEl {
-        MskClusterConfigurationInfoEl {
+impl BuildMskCluster_ConfigurationInfo {
+    pub fn build(self) -> MskCluster_ConfigurationInfo {
+        MskCluster_ConfigurationInfo {
             arn: self.arn,
             revision: self.revision,
         }
     }
 }
 
-pub struct MskClusterConfigurationInfoElRef {
+#[allow(dead_code)]
+pub struct MskCluster_ConfigurationInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterConfigurationInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterConfigurationInfoElRef {
-        MskClusterConfigurationInfoElRef {
+impl terrars::Ref for MskCluster_ConfigurationInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_ConfigurationInfoRef {
+        MskCluster_ConfigurationInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterConfigurationInfoElRef {
+impl MskCluster_ConfigurationInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1572,14 +2000,14 @@ impl MskClusterConfigurationInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct MskClusterEncryptionInfoElEncryptionInTransitEl {
+pub struct MskCluster_EncryptionInfo_EncryptionInTransit {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     client_broker: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     in_cluster: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl MskClusterEncryptionInfoElEncryptionInTransitEl {
+impl MskCluster_EncryptionInfo_EncryptionInTransit {
     #[doc = "Set the field `client_broker`.\n"]
     pub fn set_client_broker(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.client_broker = std::option::Option::Some(v.into());
@@ -1593,8 +2021,8 @@ impl MskClusterEncryptionInfoElEncryptionInTransitEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterEncryptionInfoElEncryptionInTransitEl {
-    type O = terrars::BlockAssignable<MskClusterEncryptionInfoElEncryptionInTransitEl>;
+impl terrars::ToListMappable for MskCluster_EncryptionInfo_EncryptionInTransit {
+    type O = terrars::BlockAssignable<MskCluster_EncryptionInfo_EncryptionInTransit>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1605,35 +2033,37 @@ impl terrars::ToListMappable for MskClusterEncryptionInfoElEncryptionInTransitEl
     }
 }
 
-pub struct BuildMskClusterEncryptionInfoElEncryptionInTransitEl {}
+pub struct BuildMskCluster_EncryptionInfo_EncryptionInTransit {}
 
-impl BuildMskClusterEncryptionInfoElEncryptionInTransitEl {
-    pub fn build(self) -> MskClusterEncryptionInfoElEncryptionInTransitEl {
-        MskClusterEncryptionInfoElEncryptionInTransitEl {
+impl BuildMskCluster_EncryptionInfo_EncryptionInTransit {
+    pub fn build(self) -> MskCluster_EncryptionInfo_EncryptionInTransit {
+        MskCluster_EncryptionInfo_EncryptionInTransit {
             client_broker: core::default::Default::default(),
             in_cluster: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskClusterEncryptionInfoElEncryptionInTransitElRef {
+#[allow(dead_code)]
+pub struct MskCluster_EncryptionInfo_EncryptionInTransitRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterEncryptionInfoElEncryptionInTransitElRef {
+impl terrars::Ref for MskCluster_EncryptionInfo_EncryptionInTransitRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskClusterEncryptionInfoElEncryptionInTransitElRef {
-        MskClusterEncryptionInfoElEncryptionInTransitElRef {
+    ) -> MskCluster_EncryptionInfo_EncryptionInTransitRef {
+        MskCluster_EncryptionInfo_EncryptionInTransitRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterEncryptionInfoElEncryptionInTransitElRef {
+impl MskCluster_EncryptionInfo_EncryptionInTransitRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1650,22 +2080,20 @@ impl MskClusterEncryptionInfoElEncryptionInTransitElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MskClusterEncryptionInfoElDynamic {
-    encryption_in_transit: std
-    ::option
-    ::Option<terrars::DynamicBlock<MskClusterEncryptionInfoElEncryptionInTransitEl>>,
+struct MskCluster_EncryptionInfoDynamic {
+    encryption_in_transit: std::option::Option<terrars::DynamicBlock<MskCluster_EncryptionInfo_EncryptionInTransit>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterEncryptionInfoEl {
+pub struct MskCluster_EncryptionInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_at_rest_kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_in_transit: std::option::Option<std::vec::Vec<MskClusterEncryptionInfoElEncryptionInTransitEl>>,
-    dynamic: MskClusterEncryptionInfoElDynamic,
+    encryption_in_transit: std::option::Option<std::vec::Vec<MskCluster_EncryptionInfo_EncryptionInTransit>>,
+    dynamic: MskCluster_EncryptionInfoDynamic,
 }
 
-impl MskClusterEncryptionInfoEl {
+impl MskCluster_EncryptionInfo {
     #[doc = "Set the field `encryption_at_rest_kms_key_arn`.\n"]
     pub fn set_encryption_at_rest_kms_key_arn(
         mut self,
@@ -1678,7 +2106,7 @@ impl MskClusterEncryptionInfoEl {
     #[doc = "Set the field `encryption_in_transit`.\n"]
     pub fn set_encryption_in_transit(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterEncryptionInfoElEncryptionInTransitEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_EncryptionInfo_EncryptionInTransit>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1692,8 +2120,8 @@ impl MskClusterEncryptionInfoEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterEncryptionInfoEl {
-    type O = terrars::BlockAssignable<MskClusterEncryptionInfoEl>;
+impl terrars::ToListMappable for MskCluster_EncryptionInfo {
+    type O = terrars::BlockAssignable<MskCluster_EncryptionInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1704,11 +2132,11 @@ impl terrars::ToListMappable for MskClusterEncryptionInfoEl {
     }
 }
 
-pub struct BuildMskClusterEncryptionInfoEl {}
+pub struct BuildMskCluster_EncryptionInfo {}
 
-impl BuildMskClusterEncryptionInfoEl {
-    pub fn build(self) -> MskClusterEncryptionInfoEl {
-        MskClusterEncryptionInfoEl {
+impl BuildMskCluster_EncryptionInfo {
+    pub fn build(self) -> MskCluster_EncryptionInfo {
+        MskCluster_EncryptionInfo {
             encryption_at_rest_kms_key_arn: core::default::Default::default(),
             encryption_in_transit: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1716,21 +2144,23 @@ impl BuildMskClusterEncryptionInfoEl {
     }
 }
 
-pub struct MskClusterEncryptionInfoElRef {
+#[allow(dead_code)]
+pub struct MskCluster_EncryptionInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterEncryptionInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterEncryptionInfoElRef {
-        MskClusterEncryptionInfoElRef {
+impl terrars::Ref for MskCluster_EncryptionInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_EncryptionInfoRef {
+        MskCluster_EncryptionInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterEncryptionInfoElRef {
+impl MskCluster_EncryptionInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1741,19 +2171,19 @@ impl MskClusterEncryptionInfoElRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_in_transit` after provisioning.\n"]
-    pub fn encryption_in_transit(&self) -> terrars::ListRef<MskClusterEncryptionInfoElEncryptionInTransitElRef> {
+    pub fn encryption_in_transit(&self) -> terrars::ListRef<MskCluster_EncryptionInfo_EncryptionInTransitRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_in_transit", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl {
+pub struct MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs {
     enabled: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_group: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl {
+impl MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs {
     #[doc = "Set the field `log_group`.\n"]
     pub fn set_log_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.log_group = std::option::Option::Some(v.into());
@@ -1761,8 +2191,8 @@ impl MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl {
-    type O = terrars::BlockAssignable<MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl>;
+impl terrars::ToListMappable for MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs {
+    type O = terrars::BlockAssignable<MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1773,38 +2203,40 @@ impl terrars::ToListMappable for MskClusterLoggingInfoElBrokerLogsElCloudwatchLo
     }
 }
 
-pub struct BuildMskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl {
+pub struct BuildMskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildMskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl {
-    pub fn build(self) -> MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl {
-        MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl {
+impl BuildMskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs {
+    pub fn build(self) -> MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs {
+        MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs {
             enabled: self.enabled,
             log_group: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsElRef {
+#[allow(dead_code)]
+pub struct MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsElRef {
+impl terrars::Ref for MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsElRef {
-        MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsElRef {
+    ) -> MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogsRef {
+        MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsElRef {
+impl MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1821,13 +2253,13 @@ impl MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MskClusterLoggingInfoElBrokerLogsElFirehoseEl {
+pub struct MskCluster_LoggingInfo_BrokerLogs_Firehose {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delivery_stream: std::option::Option<terrars::PrimField<std::string::String>>,
     enabled: terrars::PrimField<bool>,
 }
 
-impl MskClusterLoggingInfoElBrokerLogsElFirehoseEl {
+impl MskCluster_LoggingInfo_BrokerLogs_Firehose {
     #[doc = "Set the field `delivery_stream`.\n"]
     pub fn set_delivery_stream(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delivery_stream = std::option::Option::Some(v.into());
@@ -1835,8 +2267,8 @@ impl MskClusterLoggingInfoElBrokerLogsElFirehoseEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterLoggingInfoElBrokerLogsElFirehoseEl {
-    type O = terrars::BlockAssignable<MskClusterLoggingInfoElBrokerLogsElFirehoseEl>;
+impl terrars::ToListMappable for MskCluster_LoggingInfo_BrokerLogs_Firehose {
+    type O = terrars::BlockAssignable<MskCluster_LoggingInfo_BrokerLogs_Firehose>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1847,38 +2279,37 @@ impl terrars::ToListMappable for MskClusterLoggingInfoElBrokerLogsElFirehoseEl {
     }
 }
 
-pub struct BuildMskClusterLoggingInfoElBrokerLogsElFirehoseEl {
+pub struct BuildMskCluster_LoggingInfo_BrokerLogs_Firehose {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildMskClusterLoggingInfoElBrokerLogsElFirehoseEl {
-    pub fn build(self) -> MskClusterLoggingInfoElBrokerLogsElFirehoseEl {
-        MskClusterLoggingInfoElBrokerLogsElFirehoseEl {
+impl BuildMskCluster_LoggingInfo_BrokerLogs_Firehose {
+    pub fn build(self) -> MskCluster_LoggingInfo_BrokerLogs_Firehose {
+        MskCluster_LoggingInfo_BrokerLogs_Firehose {
             delivery_stream: core::default::Default::default(),
             enabled: self.enabled,
         }
     }
 }
 
-pub struct MskClusterLoggingInfoElBrokerLogsElFirehoseElRef {
+#[allow(dead_code)]
+pub struct MskCluster_LoggingInfo_BrokerLogs_FirehoseRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterLoggingInfoElBrokerLogsElFirehoseElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> MskClusterLoggingInfoElBrokerLogsElFirehoseElRef {
-        MskClusterLoggingInfoElBrokerLogsElFirehoseElRef {
+impl terrars::Ref for MskCluster_LoggingInfo_BrokerLogs_FirehoseRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_LoggingInfo_BrokerLogs_FirehoseRef {
+        MskCluster_LoggingInfo_BrokerLogs_FirehoseRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterLoggingInfoElBrokerLogsElFirehoseElRef {
+impl MskCluster_LoggingInfo_BrokerLogs_FirehoseRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1895,7 +2326,7 @@ impl MskClusterLoggingInfoElBrokerLogsElFirehoseElRef {
 }
 
 #[derive(Serialize)]
-pub struct MskClusterLoggingInfoElBrokerLogsElS3El {
+pub struct MskCluster_LoggingInfo_BrokerLogs_S3 {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     enabled: terrars::PrimField<bool>,
@@ -1903,7 +2334,7 @@ pub struct MskClusterLoggingInfoElBrokerLogsElS3El {
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MskClusterLoggingInfoElBrokerLogsElS3El {
+impl MskCluster_LoggingInfo_BrokerLogs_S3 {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -1917,8 +2348,8 @@ impl MskClusterLoggingInfoElBrokerLogsElS3El {
     }
 }
 
-impl terrars::ToListMappable for MskClusterLoggingInfoElBrokerLogsElS3El {
-    type O = terrars::BlockAssignable<MskClusterLoggingInfoElBrokerLogsElS3El>;
+impl terrars::ToListMappable for MskCluster_LoggingInfo_BrokerLogs_S3 {
+    type O = terrars::BlockAssignable<MskCluster_LoggingInfo_BrokerLogs_S3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1929,14 +2360,14 @@ impl terrars::ToListMappable for MskClusterLoggingInfoElBrokerLogsElS3El {
     }
 }
 
-pub struct BuildMskClusterLoggingInfoElBrokerLogsElS3El {
+pub struct BuildMskCluster_LoggingInfo_BrokerLogs_S3 {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildMskClusterLoggingInfoElBrokerLogsElS3El {
-    pub fn build(self) -> MskClusterLoggingInfoElBrokerLogsElS3El {
-        MskClusterLoggingInfoElBrokerLogsElS3El {
+impl BuildMskCluster_LoggingInfo_BrokerLogs_S3 {
+    pub fn build(self) -> MskCluster_LoggingInfo_BrokerLogs_S3 {
+        MskCluster_LoggingInfo_BrokerLogs_S3 {
             bucket: core::default::Default::default(),
             enabled: self.enabled,
             prefix: core::default::Default::default(),
@@ -1944,21 +2375,23 @@ impl BuildMskClusterLoggingInfoElBrokerLogsElS3El {
     }
 }
 
-pub struct MskClusterLoggingInfoElBrokerLogsElS3ElRef {
+#[allow(dead_code)]
+pub struct MskCluster_LoggingInfo_BrokerLogs_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterLoggingInfoElBrokerLogsElS3ElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterLoggingInfoElBrokerLogsElS3ElRef {
-        MskClusterLoggingInfoElBrokerLogsElS3ElRef {
+impl terrars::Ref for MskCluster_LoggingInfo_BrokerLogs_S3Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_LoggingInfo_BrokerLogs_S3Ref {
+        MskCluster_LoggingInfo_BrokerLogs_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterLoggingInfoElBrokerLogsElS3ElRef {
+impl MskCluster_LoggingInfo_BrokerLogs_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1980,28 +2413,28 @@ impl MskClusterLoggingInfoElBrokerLogsElS3ElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MskClusterLoggingInfoElBrokerLogsElDynamic {
-    cloudwatch_logs: std::option::Option<terrars::DynamicBlock<MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl>>,
-    firehose: std::option::Option<terrars::DynamicBlock<MskClusterLoggingInfoElBrokerLogsElFirehoseEl>>,
-    s3: std::option::Option<terrars::DynamicBlock<MskClusterLoggingInfoElBrokerLogsElS3El>>,
+struct MskCluster_LoggingInfo_BrokerLogsDynamic {
+    cloudwatch_logs: std::option::Option<terrars::DynamicBlock<MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs>>,
+    firehose: std::option::Option<terrars::DynamicBlock<MskCluster_LoggingInfo_BrokerLogs_Firehose>>,
+    s3: std::option::Option<terrars::DynamicBlock<MskCluster_LoggingInfo_BrokerLogs_S3>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterLoggingInfoElBrokerLogsEl {
+pub struct MskCluster_LoggingInfo_BrokerLogs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloudwatch_logs: std::option::Option<std::vec::Vec<MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl>>,
+    cloudwatch_logs: std::option::Option<std::vec::Vec<MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    firehose: std::option::Option<std::vec::Vec<MskClusterLoggingInfoElBrokerLogsElFirehoseEl>>,
+    firehose: std::option::Option<std::vec::Vec<MskCluster_LoggingInfo_BrokerLogs_Firehose>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3: std::option::Option<std::vec::Vec<MskClusterLoggingInfoElBrokerLogsElS3El>>,
-    dynamic: MskClusterLoggingInfoElBrokerLogsElDynamic,
+    s3: std::option::Option<std::vec::Vec<MskCluster_LoggingInfo_BrokerLogs_S3>>,
+    dynamic: MskCluster_LoggingInfo_BrokerLogsDynamic,
 }
 
-impl MskClusterLoggingInfoElBrokerLogsEl {
+impl MskCluster_LoggingInfo_BrokerLogs {
     #[doc = "Set the field `cloudwatch_logs`.\n"]
     pub fn set_cloudwatch_logs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2017,7 +2450,7 @@ impl MskClusterLoggingInfoElBrokerLogsEl {
     #[doc = "Set the field `firehose`.\n"]
     pub fn set_firehose(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterLoggingInfoElBrokerLogsElFirehoseEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_LoggingInfo_BrokerLogs_Firehose>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2033,7 +2466,7 @@ impl MskClusterLoggingInfoElBrokerLogsEl {
     #[doc = "Set the field `s3`.\n"]
     pub fn set_s3(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterLoggingInfoElBrokerLogsElS3El>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_LoggingInfo_BrokerLogs_S3>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2047,8 +2480,8 @@ impl MskClusterLoggingInfoElBrokerLogsEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterLoggingInfoElBrokerLogsEl {
-    type O = terrars::BlockAssignable<MskClusterLoggingInfoElBrokerLogsEl>;
+impl terrars::ToListMappable for MskCluster_LoggingInfo_BrokerLogs {
+    type O = terrars::BlockAssignable<MskCluster_LoggingInfo_BrokerLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2059,11 +2492,11 @@ impl terrars::ToListMappable for MskClusterLoggingInfoElBrokerLogsEl {
     }
 }
 
-pub struct BuildMskClusterLoggingInfoElBrokerLogsEl {}
+pub struct BuildMskCluster_LoggingInfo_BrokerLogs {}
 
-impl BuildMskClusterLoggingInfoElBrokerLogsEl {
-    pub fn build(self) -> MskClusterLoggingInfoElBrokerLogsEl {
-        MskClusterLoggingInfoElBrokerLogsEl {
+impl BuildMskCluster_LoggingInfo_BrokerLogs {
+    pub fn build(self) -> MskCluster_LoggingInfo_BrokerLogs {
+        MskCluster_LoggingInfo_BrokerLogs {
             cloudwatch_logs: core::default::Default::default(),
             firehose: core::default::Default::default(),
             s3: core::default::Default::default(),
@@ -2072,58 +2505,60 @@ impl BuildMskClusterLoggingInfoElBrokerLogsEl {
     }
 }
 
-pub struct MskClusterLoggingInfoElBrokerLogsElRef {
+#[allow(dead_code)]
+pub struct MskCluster_LoggingInfo_BrokerLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterLoggingInfoElBrokerLogsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterLoggingInfoElBrokerLogsElRef {
-        MskClusterLoggingInfoElBrokerLogsElRef {
+impl terrars::Ref for MskCluster_LoggingInfo_BrokerLogsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_LoggingInfo_BrokerLogsRef {
+        MskCluster_LoggingInfo_BrokerLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterLoggingInfoElBrokerLogsElRef {
+impl MskCluster_LoggingInfo_BrokerLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cloudwatch_logs` after provisioning.\n"]
-    pub fn cloudwatch_logs(&self) -> terrars::ListRef<MskClusterLoggingInfoElBrokerLogsElCloudwatchLogsElRef> {
+    pub fn cloudwatch_logs(&self) -> terrars::ListRef<MskCluster_LoggingInfo_BrokerLogs_CloudwatchLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `firehose` after provisioning.\n"]
-    pub fn firehose(&self) -> terrars::ListRef<MskClusterLoggingInfoElBrokerLogsElFirehoseElRef> {
+    pub fn firehose(&self) -> terrars::ListRef<MskCluster_LoggingInfo_BrokerLogs_FirehoseRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.firehose", self.base))
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<MskClusterLoggingInfoElBrokerLogsElS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<MskCluster_LoggingInfo_BrokerLogs_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct MskClusterLoggingInfoElDynamic {
-    broker_logs: std::option::Option<terrars::DynamicBlock<MskClusterLoggingInfoElBrokerLogsEl>>,
+struct MskCluster_LoggingInfoDynamic {
+    broker_logs: std::option::Option<terrars::DynamicBlock<MskCluster_LoggingInfo_BrokerLogs>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterLoggingInfoEl {
+pub struct MskCluster_LoggingInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    broker_logs: std::option::Option<std::vec::Vec<MskClusterLoggingInfoElBrokerLogsEl>>,
-    dynamic: MskClusterLoggingInfoElDynamic,
+    broker_logs: std::option::Option<std::vec::Vec<MskCluster_LoggingInfo_BrokerLogs>>,
+    dynamic: MskCluster_LoggingInfoDynamic,
 }
 
-impl MskClusterLoggingInfoEl {
+impl MskCluster_LoggingInfo {
     #[doc = "Set the field `broker_logs`.\n"]
     pub fn set_broker_logs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterLoggingInfoElBrokerLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_LoggingInfo_BrokerLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2137,8 +2572,8 @@ impl MskClusterLoggingInfoEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterLoggingInfoEl {
-    type O = terrars::BlockAssignable<MskClusterLoggingInfoEl>;
+impl terrars::ToListMappable for MskCluster_LoggingInfo {
+    type O = terrars::BlockAssignable<MskCluster_LoggingInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2149,51 +2584,53 @@ impl terrars::ToListMappable for MskClusterLoggingInfoEl {
     }
 }
 
-pub struct BuildMskClusterLoggingInfoEl {}
+pub struct BuildMskCluster_LoggingInfo {}
 
-impl BuildMskClusterLoggingInfoEl {
-    pub fn build(self) -> MskClusterLoggingInfoEl {
-        MskClusterLoggingInfoEl {
+impl BuildMskCluster_LoggingInfo {
+    pub fn build(self) -> MskCluster_LoggingInfo {
+        MskCluster_LoggingInfo {
             broker_logs: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskClusterLoggingInfoElRef {
+#[allow(dead_code)]
+pub struct MskCluster_LoggingInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterLoggingInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterLoggingInfoElRef {
-        MskClusterLoggingInfoElRef {
+impl terrars::Ref for MskCluster_LoggingInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_LoggingInfoRef {
+        MskCluster_LoggingInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterLoggingInfoElRef {
+impl MskCluster_LoggingInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `broker_logs` after provisioning.\n"]
-    pub fn broker_logs(&self) -> terrars::ListRef<MskClusterLoggingInfoElBrokerLogsElRef> {
+    pub fn broker_logs(&self) -> terrars::ListRef<MskCluster_LoggingInfo_BrokerLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.broker_logs", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MskClusterOpenMonitoringElPrometheusElJmxExporterEl {
+pub struct MskCluster_OpenMonitoring_Prometheus_JmxExporter {
     enabled_in_broker: terrars::PrimField<bool>,
 }
 
-impl MskClusterOpenMonitoringElPrometheusElJmxExporterEl { }
+impl MskCluster_OpenMonitoring_Prometheus_JmxExporter { }
 
-impl terrars::ToListMappable for MskClusterOpenMonitoringElPrometheusElJmxExporterEl {
-    type O = terrars::BlockAssignable<MskClusterOpenMonitoringElPrometheusElJmxExporterEl>;
+impl terrars::ToListMappable for MskCluster_OpenMonitoring_Prometheus_JmxExporter {
+    type O = terrars::BlockAssignable<MskCluster_OpenMonitoring_Prometheus_JmxExporter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2204,35 +2641,37 @@ impl terrars::ToListMappable for MskClusterOpenMonitoringElPrometheusElJmxExport
     }
 }
 
-pub struct BuildMskClusterOpenMonitoringElPrometheusElJmxExporterEl {
+pub struct BuildMskCluster_OpenMonitoring_Prometheus_JmxExporter {
     #[doc = ""]
     pub enabled_in_broker: terrars::PrimField<bool>,
 }
 
-impl BuildMskClusterOpenMonitoringElPrometheusElJmxExporterEl {
-    pub fn build(self) -> MskClusterOpenMonitoringElPrometheusElJmxExporterEl {
-        MskClusterOpenMonitoringElPrometheusElJmxExporterEl { enabled_in_broker: self.enabled_in_broker }
+impl BuildMskCluster_OpenMonitoring_Prometheus_JmxExporter {
+    pub fn build(self) -> MskCluster_OpenMonitoring_Prometheus_JmxExporter {
+        MskCluster_OpenMonitoring_Prometheus_JmxExporter { enabled_in_broker: self.enabled_in_broker }
     }
 }
 
-pub struct MskClusterOpenMonitoringElPrometheusElJmxExporterElRef {
+#[allow(dead_code)]
+pub struct MskCluster_OpenMonitoring_Prometheus_JmxExporterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterOpenMonitoringElPrometheusElJmxExporterElRef {
+impl terrars::Ref for MskCluster_OpenMonitoring_Prometheus_JmxExporterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskClusterOpenMonitoringElPrometheusElJmxExporterElRef {
-        MskClusterOpenMonitoringElPrometheusElJmxExporterElRef {
+    ) -> MskCluster_OpenMonitoring_Prometheus_JmxExporterRef {
+        MskCluster_OpenMonitoring_Prometheus_JmxExporterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterOpenMonitoringElPrometheusElJmxExporterElRef {
+impl MskCluster_OpenMonitoring_Prometheus_JmxExporterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2244,14 +2683,14 @@ impl MskClusterOpenMonitoringElPrometheusElJmxExporterElRef {
 }
 
 #[derive(Serialize)]
-pub struct MskClusterOpenMonitoringElPrometheusElNodeExporterEl {
+pub struct MskCluster_OpenMonitoring_Prometheus_NodeExporter {
     enabled_in_broker: terrars::PrimField<bool>,
 }
 
-impl MskClusterOpenMonitoringElPrometheusElNodeExporterEl { }
+impl MskCluster_OpenMonitoring_Prometheus_NodeExporter { }
 
-impl terrars::ToListMappable for MskClusterOpenMonitoringElPrometheusElNodeExporterEl {
-    type O = terrars::BlockAssignable<MskClusterOpenMonitoringElPrometheusElNodeExporterEl>;
+impl terrars::ToListMappable for MskCluster_OpenMonitoring_Prometheus_NodeExporter {
+    type O = terrars::BlockAssignable<MskCluster_OpenMonitoring_Prometheus_NodeExporter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2262,35 +2701,37 @@ impl terrars::ToListMappable for MskClusterOpenMonitoringElPrometheusElNodeExpor
     }
 }
 
-pub struct BuildMskClusterOpenMonitoringElPrometheusElNodeExporterEl {
+pub struct BuildMskCluster_OpenMonitoring_Prometheus_NodeExporter {
     #[doc = ""]
     pub enabled_in_broker: terrars::PrimField<bool>,
 }
 
-impl BuildMskClusterOpenMonitoringElPrometheusElNodeExporterEl {
-    pub fn build(self) -> MskClusterOpenMonitoringElPrometheusElNodeExporterEl {
-        MskClusterOpenMonitoringElPrometheusElNodeExporterEl { enabled_in_broker: self.enabled_in_broker }
+impl BuildMskCluster_OpenMonitoring_Prometheus_NodeExporter {
+    pub fn build(self) -> MskCluster_OpenMonitoring_Prometheus_NodeExporter {
+        MskCluster_OpenMonitoring_Prometheus_NodeExporter { enabled_in_broker: self.enabled_in_broker }
     }
 }
 
-pub struct MskClusterOpenMonitoringElPrometheusElNodeExporterElRef {
+#[allow(dead_code)]
+pub struct MskCluster_OpenMonitoring_Prometheus_NodeExporterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterOpenMonitoringElPrometheusElNodeExporterElRef {
+impl terrars::Ref for MskCluster_OpenMonitoring_Prometheus_NodeExporterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskClusterOpenMonitoringElPrometheusElNodeExporterElRef {
-        MskClusterOpenMonitoringElPrometheusElNodeExporterElRef {
+    ) -> MskCluster_OpenMonitoring_Prometheus_NodeExporterRef {
+        MskCluster_OpenMonitoring_Prometheus_NodeExporterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterOpenMonitoringElPrometheusElNodeExporterElRef {
+impl MskCluster_OpenMonitoring_Prometheus_NodeExporterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2302,25 +2743,25 @@ impl MskClusterOpenMonitoringElPrometheusElNodeExporterElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MskClusterOpenMonitoringElPrometheusElDynamic {
-    jmx_exporter: std::option::Option<terrars::DynamicBlock<MskClusterOpenMonitoringElPrometheusElJmxExporterEl>>,
-    node_exporter: std::option::Option<terrars::DynamicBlock<MskClusterOpenMonitoringElPrometheusElNodeExporterEl>>,
+struct MskCluster_OpenMonitoring_PrometheusDynamic {
+    jmx_exporter: std::option::Option<terrars::DynamicBlock<MskCluster_OpenMonitoring_Prometheus_JmxExporter>>,
+    node_exporter: std::option::Option<terrars::DynamicBlock<MskCluster_OpenMonitoring_Prometheus_NodeExporter>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterOpenMonitoringElPrometheusEl {
+pub struct MskCluster_OpenMonitoring_Prometheus {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    jmx_exporter: std::option::Option<std::vec::Vec<MskClusterOpenMonitoringElPrometheusElJmxExporterEl>>,
+    jmx_exporter: std::option::Option<std::vec::Vec<MskCluster_OpenMonitoring_Prometheus_JmxExporter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    node_exporter: std::option::Option<std::vec::Vec<MskClusterOpenMonitoringElPrometheusElNodeExporterEl>>,
-    dynamic: MskClusterOpenMonitoringElPrometheusElDynamic,
+    node_exporter: std::option::Option<std::vec::Vec<MskCluster_OpenMonitoring_Prometheus_NodeExporter>>,
+    dynamic: MskCluster_OpenMonitoring_PrometheusDynamic,
 }
 
-impl MskClusterOpenMonitoringElPrometheusEl {
+impl MskCluster_OpenMonitoring_Prometheus {
     #[doc = "Set the field `jmx_exporter`.\n"]
     pub fn set_jmx_exporter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterOpenMonitoringElPrometheusElJmxExporterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_OpenMonitoring_Prometheus_JmxExporter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2336,7 +2777,7 @@ impl MskClusterOpenMonitoringElPrometheusEl {
     #[doc = "Set the field `node_exporter`.\n"]
     pub fn set_node_exporter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterOpenMonitoringElPrometheusElNodeExporterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_OpenMonitoring_Prometheus_NodeExporter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2350,8 +2791,8 @@ impl MskClusterOpenMonitoringElPrometheusEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterOpenMonitoringElPrometheusEl {
-    type O = terrars::BlockAssignable<MskClusterOpenMonitoringElPrometheusEl>;
+impl terrars::ToListMappable for MskCluster_OpenMonitoring_Prometheus {
+    type O = terrars::BlockAssignable<MskCluster_OpenMonitoring_Prometheus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2362,11 +2803,11 @@ impl terrars::ToListMappable for MskClusterOpenMonitoringElPrometheusEl {
     }
 }
 
-pub struct BuildMskClusterOpenMonitoringElPrometheusEl {}
+pub struct BuildMskCluster_OpenMonitoring_Prometheus {}
 
-impl BuildMskClusterOpenMonitoringElPrometheusEl {
-    pub fn build(self) -> MskClusterOpenMonitoringElPrometheusEl {
-        MskClusterOpenMonitoringElPrometheusEl {
+impl BuildMskCluster_OpenMonitoring_Prometheus {
+    pub fn build(self) -> MskCluster_OpenMonitoring_Prometheus {
+        MskCluster_OpenMonitoring_Prometheus {
             jmx_exporter: core::default::Default::default(),
             node_exporter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2374,53 +2815,55 @@ impl BuildMskClusterOpenMonitoringElPrometheusEl {
     }
 }
 
-pub struct MskClusterOpenMonitoringElPrometheusElRef {
+#[allow(dead_code)]
+pub struct MskCluster_OpenMonitoring_PrometheusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterOpenMonitoringElPrometheusElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterOpenMonitoringElPrometheusElRef {
-        MskClusterOpenMonitoringElPrometheusElRef {
+impl terrars::Ref for MskCluster_OpenMonitoring_PrometheusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_OpenMonitoring_PrometheusRef {
+        MskCluster_OpenMonitoring_PrometheusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterOpenMonitoringElPrometheusElRef {
+impl MskCluster_OpenMonitoring_PrometheusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `jmx_exporter` after provisioning.\n"]
-    pub fn jmx_exporter(&self) -> terrars::ListRef<MskClusterOpenMonitoringElPrometheusElJmxExporterElRef> {
+    pub fn jmx_exporter(&self) -> terrars::ListRef<MskCluster_OpenMonitoring_Prometheus_JmxExporterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.jmx_exporter", self.base))
     }
 
     #[doc = "Get a reference to the value of field `node_exporter` after provisioning.\n"]
-    pub fn node_exporter(&self) -> terrars::ListRef<MskClusterOpenMonitoringElPrometheusElNodeExporterElRef> {
+    pub fn node_exporter(&self) -> terrars::ListRef<MskCluster_OpenMonitoring_Prometheus_NodeExporterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_exporter", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct MskClusterOpenMonitoringElDynamic {
-    prometheus: std::option::Option<terrars::DynamicBlock<MskClusterOpenMonitoringElPrometheusEl>>,
+struct MskCluster_OpenMonitoringDynamic {
+    prometheus: std::option::Option<terrars::DynamicBlock<MskCluster_OpenMonitoring_Prometheus>>,
 }
 
 #[derive(Serialize)]
-pub struct MskClusterOpenMonitoringEl {
+pub struct MskCluster_OpenMonitoring {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    prometheus: std::option::Option<std::vec::Vec<MskClusterOpenMonitoringElPrometheusEl>>,
-    dynamic: MskClusterOpenMonitoringElDynamic,
+    prometheus: std::option::Option<std::vec::Vec<MskCluster_OpenMonitoring_Prometheus>>,
+    dynamic: MskCluster_OpenMonitoringDynamic,
 }
 
-impl MskClusterOpenMonitoringEl {
+impl MskCluster_OpenMonitoring {
     #[doc = "Set the field `prometheus`.\n"]
     pub fn set_prometheus(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskClusterOpenMonitoringElPrometheusEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskCluster_OpenMonitoring_Prometheus>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2434,8 +2877,8 @@ impl MskClusterOpenMonitoringEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterOpenMonitoringEl {
-    type O = terrars::BlockAssignable<MskClusterOpenMonitoringEl>;
+impl terrars::ToListMappable for MskCluster_OpenMonitoring {
+    type O = terrars::BlockAssignable<MskCluster_OpenMonitoring>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2446,44 +2889,103 @@ impl terrars::ToListMappable for MskClusterOpenMonitoringEl {
     }
 }
 
-pub struct BuildMskClusterOpenMonitoringEl {}
+pub struct BuildMskCluster_OpenMonitoring {}
 
-impl BuildMskClusterOpenMonitoringEl {
-    pub fn build(self) -> MskClusterOpenMonitoringEl {
-        MskClusterOpenMonitoringEl {
+impl BuildMskCluster_OpenMonitoring {
+    pub fn build(self) -> MskCluster_OpenMonitoring {
+        MskCluster_OpenMonitoring {
             prometheus: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskClusterOpenMonitoringElRef {
+#[allow(dead_code)]
+pub struct MskCluster_OpenMonitoringRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterOpenMonitoringElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterOpenMonitoringElRef {
-        MskClusterOpenMonitoringElRef {
+impl terrars::Ref for MskCluster_OpenMonitoringRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_OpenMonitoringRef {
+        MskCluster_OpenMonitoringRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterOpenMonitoringElRef {
+impl MskCluster_OpenMonitoringRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `prometheus` after provisioning.\n"]
-    pub fn prometheus(&self) -> terrars::ListRef<MskClusterOpenMonitoringElPrometheusElRef> {
+    pub fn prometheus(&self) -> terrars::ListRef<MskCluster_OpenMonitoring_PrometheusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.prometheus", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MskClusterTimeoutsEl {
+pub struct MskCluster_Rebalancing {
+    status: terrars::PrimField<std::string::String>,
+}
+
+impl MskCluster_Rebalancing { }
+
+impl terrars::ToListMappable for MskCluster_Rebalancing {
+    type O = terrars::BlockAssignable<MskCluster_Rebalancing>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildMskCluster_Rebalancing {
+    #[doc = ""]
+    pub status: terrars::PrimField<std::string::String>,
+}
+
+impl BuildMskCluster_Rebalancing {
+    pub fn build(self) -> MskCluster_Rebalancing {
+        MskCluster_Rebalancing { status: self.status }
+    }
+}
+
+#[allow(dead_code)]
+pub struct MskCluster_RebalancingRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for MskCluster_RebalancingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_RebalancingRef {
+        MskCluster_RebalancingRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl MskCluster_RebalancingRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct MskCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2492,7 +2994,7 @@ pub struct MskClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MskClusterTimeoutsEl {
+impl MskCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2512,8 +3014,8 @@ impl MskClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MskClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<MskClusterTimeoutsEl>;
+impl terrars::ToListMappable for MskCluster_Timeouts {
+    type O = terrars::BlockAssignable<MskCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2524,11 +3026,11 @@ impl terrars::ToListMappable for MskClusterTimeoutsEl {
     }
 }
 
-pub struct BuildMskClusterTimeoutsEl {}
+pub struct BuildMskCluster_Timeouts {}
 
-impl BuildMskClusterTimeoutsEl {
-    pub fn build(self) -> MskClusterTimeoutsEl {
-        MskClusterTimeoutsEl {
+impl BuildMskCluster_Timeouts {
+    pub fn build(self) -> MskCluster_Timeouts {
+        MskCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2536,21 +3038,23 @@ impl BuildMskClusterTimeoutsEl {
     }
 }
 
-pub struct MskClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MskCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskClusterTimeoutsElRef {
-        MskClusterTimeoutsElRef {
+impl terrars::Ref for MskCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskCluster_TimeoutsRef {
+        MskCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskClusterTimeoutsElRef {
+impl MskCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2569,14 +3073,4 @@ impl MskClusterTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MskClusterDynamic {
-    broker_node_group_info: std::option::Option<terrars::DynamicBlock<MskClusterBrokerNodeGroupInfoEl>>,
-    client_authentication: std::option::Option<terrars::DynamicBlock<MskClusterClientAuthenticationEl>>,
-    configuration_info: std::option::Option<terrars::DynamicBlock<MskClusterConfigurationInfoEl>>,
-    encryption_info: std::option::Option<terrars::DynamicBlock<MskClusterEncryptionInfoEl>>,
-    logging_info: std::option::Option<terrars::DynamicBlock<MskClusterLoggingInfoEl>>,
-    open_monitoring: std::option::Option<terrars::DynamicBlock<MskClusterOpenMonitoringEl>>,
 }

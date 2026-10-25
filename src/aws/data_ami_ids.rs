@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataAmiIdsData {
+struct DataAmiIdsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,21 +23,25 @@ struct DataAmiIdsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    include_deprecated: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_regex: std::option::Option<terrars::PrimField<std::string::String>>,
     owners: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sort_ascending: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataAmiIdsFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataAmiIds_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataAmiIdsTimeoutsEl>,
+    timeouts: std::option::Option<DataAmiIds_Timeouts>,
     dynamic: DataAmiIdsDynamic,
 }
 
 struct DataAmiIds_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataAmiIdsData>,
+    data: std::cell::RefCell<DataAmiIdsData_>,
 }
 
 #[derive(Clone)]
@@ -95,9 +101,22 @@ impl DataAmiIds {
         self
     }
 
+    #[doc = "Set the field `include_deprecated`.\n"]
+    pub fn set_include_deprecated(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().include_deprecated = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `name_regex`.\n"]
     pub fn set_name_regex(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().name_regex = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -108,7 +127,7 @@ impl DataAmiIds {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataAmiIdsFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataAmiIds_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -121,7 +140,7 @@ impl DataAmiIds {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataAmiIdsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataAmiIds_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -141,6 +160,11 @@ impl DataAmiIds {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `include_deprecated` after provisioning.\n"]
+    pub fn include_deprecated(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_deprecated", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name_regex` after provisioning.\n"]
     pub fn name_regex(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_regex", self.extract_ref()))
@@ -151,14 +175,20 @@ impl DataAmiIds {
         terrars::ListRef::new(self.shared().clone(), format!("{}.owners", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sort_ascending` after provisioning.\n"]
     pub fn sort_ascending(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sort_ascending", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAmiIdsTimeoutsElRef {
-        DataAmiIdsTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAmiIds_TimeoutsRef {
+        DataAmiIds_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -204,15 +234,17 @@ impl BuildDataAmiIds {
         let out = DataAmiIds(std::rc::Rc::new(DataAmiIds_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataAmiIdsData {
+            data: std::cell::RefCell::new(DataAmiIdsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 executable_users: core::default::Default::default(),
                 id: core::default::Default::default(),
+                include_deprecated: core::default::Default::default(),
                 name_regex: core::default::Default::default(),
                 owners: self.owners,
+                region: core::default::Default::default(),
                 sort_ascending: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -262,6 +294,11 @@ impl DataAmiIdsRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `include_deprecated` after provisioning.\n"]
+    pub fn include_deprecated(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_deprecated", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name_regex` after provisioning.\n"]
     pub fn name_regex(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_regex", self.extract_ref()))
@@ -272,27 +309,38 @@ impl DataAmiIdsRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.owners", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sort_ascending` after provisioning.\n"]
     pub fn sort_ascending(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sort_ascending", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataAmiIdsTimeoutsElRef {
-        DataAmiIdsTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataAmiIds_TimeoutsRef {
+        DataAmiIds_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataAmiIdsFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct DataAmiIdsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataAmiIds_Filter>>,
 }
 
-impl DataAmiIdsFilterEl { }
+#[derive(Serialize)]
+pub struct DataAmiIds_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for DataAmiIdsFilterEl {
-    type O = terrars::BlockAssignable<DataAmiIdsFilterEl>;
+impl DataAmiIds_Filter { }
+
+impl terrars::ToListMappable for DataAmiIds_Filter {
+    type O = terrars::BlockAssignable<DataAmiIds_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -303,37 +351,39 @@ impl terrars::ToListMappable for DataAmiIdsFilterEl {
     }
 }
 
-pub struct BuildDataAmiIdsFilterEl {
+pub struct BuildDataAmiIds_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataAmiIdsFilterEl {
-    pub fn build(self) -> DataAmiIdsFilterEl {
-        DataAmiIdsFilterEl {
+impl BuildDataAmiIds_Filter {
+    pub fn build(self) -> DataAmiIds_Filter {
+        DataAmiIds_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataAmiIdsFilterElRef {
+#[allow(dead_code)]
+pub struct DataAmiIds_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAmiIdsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmiIdsFilterElRef {
-        DataAmiIdsFilterElRef {
+impl terrars::Ref for DataAmiIds_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmiIds_FilterRef {
+        DataAmiIds_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAmiIdsFilterElRef {
+impl DataAmiIds_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -344,18 +394,18 @@ impl DataAmiIdsFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataAmiIdsTimeoutsEl {
+pub struct DataAmiIds_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataAmiIdsTimeoutsEl {
+impl DataAmiIds_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -363,8 +413,8 @@ impl DataAmiIdsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataAmiIdsTimeoutsEl {
-    type O = terrars::BlockAssignable<DataAmiIdsTimeoutsEl>;
+impl terrars::ToListMappable for DataAmiIds_Timeouts {
+    type O = terrars::BlockAssignable<DataAmiIds_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -375,29 +425,31 @@ impl terrars::ToListMappable for DataAmiIdsTimeoutsEl {
     }
 }
 
-pub struct BuildDataAmiIdsTimeoutsEl {}
+pub struct BuildDataAmiIds_Timeouts {}
 
-impl BuildDataAmiIdsTimeoutsEl {
-    pub fn build(self) -> DataAmiIdsTimeoutsEl {
-        DataAmiIdsTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataAmiIds_Timeouts {
+    pub fn build(self) -> DataAmiIds_Timeouts {
+        DataAmiIds_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataAmiIdsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataAmiIds_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataAmiIdsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmiIdsTimeoutsElRef {
-        DataAmiIdsTimeoutsElRef {
+impl terrars::Ref for DataAmiIds_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataAmiIds_TimeoutsRef {
+        DataAmiIds_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataAmiIdsTimeoutsElRef {
+impl DataAmiIds_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -406,9 +458,4 @@ impl DataAmiIdsTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataAmiIdsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataAmiIdsFilterEl>>,
 }

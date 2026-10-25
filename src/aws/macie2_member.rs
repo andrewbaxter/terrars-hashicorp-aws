@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Macie2MemberData {
+struct Macie2MemberData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,19 +31,21 @@ struct Macie2MemberData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     invite: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Macie2MemberTimeoutsEl>,
+    timeouts: std::option::Option<Macie2Member_Timeouts>,
 }
 
 struct Macie2Member_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Macie2MemberData>,
+    data: std::cell::RefCell<Macie2MemberData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +172,13 @@ impl Macie2Member {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `status`.\n"]
     pub fn set_status(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().status = std::option::Option::Some(v.into());
@@ -193,7 +204,7 @@ impl Macie2Member {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Macie2MemberTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Macie2Member_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -251,6 +262,12 @@ impl Macie2Member {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_account_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `relationship_status` after provisioning.\n"]
     pub fn relationship_status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.relationship_status", self.extract_ref()))
@@ -277,8 +294,8 @@ impl Macie2Member {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Macie2MemberTimeoutsElRef {
-        Macie2MemberTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Macie2Member_TimeoutsRef {
+        Macie2Member_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -326,7 +343,7 @@ impl BuildMacie2Member {
         let out = Macie2Member(std::rc::Rc::new(Macie2Member_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Macie2MemberData {
+            data: std::cell::RefCell::new(Macie2MemberData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -338,6 +355,7 @@ impl BuildMacie2Member {
                 invitation_disable_email_notification: core::default::Default::default(),
                 invitation_message: core::default::Default::default(),
                 invite: core::default::Default::default(),
+                region: core::default::Default::default(),
                 status: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -425,6 +443,12 @@ impl Macie2MemberRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.master_account_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `relationship_status` after provisioning.\n"]
     pub fn relationship_status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.relationship_status", self.extract_ref()))
@@ -451,20 +475,20 @@ impl Macie2MemberRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Macie2MemberTimeoutsElRef {
-        Macie2MemberTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Macie2Member_TimeoutsRef {
+        Macie2Member_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct Macie2MemberTimeoutsEl {
+pub struct Macie2Member_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Macie2MemberTimeoutsEl {
+impl Macie2Member_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -478,8 +502,8 @@ impl Macie2MemberTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2MemberTimeoutsEl {
-    type O = terrars::BlockAssignable<Macie2MemberTimeoutsEl>;
+impl terrars::ToListMappable for Macie2Member_Timeouts {
+    type O = terrars::BlockAssignable<Macie2Member_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,32 +514,34 @@ impl terrars::ToListMappable for Macie2MemberTimeoutsEl {
     }
 }
 
-pub struct BuildMacie2MemberTimeoutsEl {}
+pub struct BuildMacie2Member_Timeouts {}
 
-impl BuildMacie2MemberTimeoutsEl {
-    pub fn build(self) -> Macie2MemberTimeoutsEl {
-        Macie2MemberTimeoutsEl {
+impl BuildMacie2Member_Timeouts {
+    pub fn build(self) -> Macie2Member_Timeouts {
+        Macie2Member_Timeouts {
             create: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct Macie2MemberTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Macie2Member_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2MemberTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2MemberTimeoutsElRef {
-        Macie2MemberTimeoutsElRef {
+impl terrars::Ref for Macie2Member_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2Member_TimeoutsRef {
+        Macie2Member_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2MemberTimeoutsElRef {
+impl Macie2Member_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

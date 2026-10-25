@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ComprehendDocumentClassifierData {
+struct ComprehendDocumentClassifierData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,6 +30,8 @@ struct ComprehendDocumentClassifierData {
     model_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -38,20 +42,20 @@ struct ComprehendDocumentClassifierData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     volume_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input_data_config: std::option::Option<std::vec::Vec<ComprehendDocumentClassifierInputDataConfigEl>>,
+    input_data_config: std::option::Option<std::vec::Vec<ComprehendDocumentClassifier_InputDataConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    output_data_config: std::option::Option<std::vec::Vec<ComprehendDocumentClassifierOutputDataConfigEl>>,
+    output_data_config: std::option::Option<std::vec::Vec<ComprehendDocumentClassifier_OutputDataConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ComprehendDocumentClassifierTimeoutsEl>,
+    timeouts: std::option::Option<ComprehendDocumentClassifier_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_config: std::option::Option<std::vec::Vec<ComprehendDocumentClassifierVpcConfigEl>>,
+    vpc_config: std::option::Option<std::vec::Vec<ComprehendDocumentClassifier_VpcConfig>>,
     dynamic: ComprehendDocumentClassifierDynamic,
 }
 
 struct ComprehendDocumentClassifier_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ComprehendDocumentClassifierData>,
+    data: std::cell::RefCell<ComprehendDocumentClassifierData_>,
 }
 
 #[derive(Clone)]
@@ -169,6 +173,13 @@ impl ComprehendDocumentClassifier {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -208,7 +219,7 @@ impl ComprehendDocumentClassifier {
     #[doc = "Set the field `input_data_config`.\n"]
     pub fn set_input_data_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendDocumentClassifierInputDataConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendDocumentClassifier_InputDataConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -224,7 +235,7 @@ impl ComprehendDocumentClassifier {
     #[doc = "Set the field `output_data_config`.\n"]
     pub fn set_output_data_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendDocumentClassifierOutputDataConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendDocumentClassifier_OutputDataConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -238,7 +249,7 @@ impl ComprehendDocumentClassifier {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ComprehendDocumentClassifierTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ComprehendDocumentClassifier_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -246,7 +257,7 @@ impl ComprehendDocumentClassifier {
     #[doc = "Set the field `vpc_config`.\n"]
     pub fn set_vpc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendDocumentClassifierVpcConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ComprehendDocumentClassifier_VpcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -294,6 +305,12 @@ impl ComprehendDocumentClassifier {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -320,25 +337,25 @@ impl ComprehendDocumentClassifier {
     }
 
     #[doc = "Get a reference to the value of field `input_data_config` after provisioning.\n"]
-    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierInputDataConfigElRef> {
+    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifier_InputDataConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `output_data_config` after provisioning.\n"]
-    pub fn output_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierOutputDataConfigElRef> {
+    pub fn output_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifier_OutputDataConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_data_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComprehendDocumentClassifierTimeoutsElRef {
-        ComprehendDocumentClassifierTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComprehendDocumentClassifier_TimeoutsRef {
+        ComprehendDocumentClassifier_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendDocumentClassifier_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
@@ -389,7 +406,7 @@ impl BuildComprehendDocumentClassifier {
         let out = ComprehendDocumentClassifier(std::rc::Rc::new(ComprehendDocumentClassifier_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ComprehendDocumentClassifierData {
+            data: std::cell::RefCell::new(ComprehendDocumentClassifierData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -401,6 +418,7 @@ impl BuildComprehendDocumentClassifier {
                 mode: core::default::Default::default(),
                 model_kms_key_id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 version_name: core::default::Default::default(),
@@ -476,6 +494,12 @@ impl ComprehendDocumentClassifierRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -502,31 +526,38 @@ impl ComprehendDocumentClassifierRef {
     }
 
     #[doc = "Get a reference to the value of field `input_data_config` after provisioning.\n"]
-    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierInputDataConfigElRef> {
+    pub fn input_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifier_InputDataConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.input_data_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `output_data_config` after provisioning.\n"]
-    pub fn output_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierOutputDataConfigElRef> {
+    pub fn output_data_config(&self) -> terrars::ListRef<ComprehendDocumentClassifier_OutputDataConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_data_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ComprehendDocumentClassifierTimeoutsElRef {
-        ComprehendDocumentClassifierTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ComprehendDocumentClassifier_TimeoutsRef {
+        ComprehendDocumentClassifier_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendDocumentClassifierVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<ComprehendDocumentClassifier_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ComprehendDocumentClassifierDynamic {
+    input_data_config: std::option::Option<terrars::DynamicBlock<ComprehendDocumentClassifier_InputDataConfig>>,
+    output_data_config: std::option::Option<terrars::DynamicBlock<ComprehendDocumentClassifier_OutputDataConfig>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<ComprehendDocumentClassifier_VpcConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
+pub struct ComprehendDocumentClassifier_InputDataConfig_AugmentedManifests {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     annotation_data_s3_uri: std::option::Option<terrars::PrimField<std::string::String>>,
     attribute_names: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -539,7 +570,7 @@ pub struct ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
     split: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
+impl ComprehendDocumentClassifier_InputDataConfig_AugmentedManifests {
     #[doc = "Set the field `annotation_data_s3_uri`.\n"]
     pub fn set_annotation_data_s3_uri(
         mut self,
@@ -571,8 +602,8 @@ impl ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
     }
 }
 
-impl terrars::ToListMappable for ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
-    type O = terrars::BlockAssignable<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifier_InputDataConfig_AugmentedManifests {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifier_InputDataConfig_AugmentedManifests>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -583,16 +614,16 @@ impl terrars::ToListMappable for ComprehendDocumentClassifierInputDataConfigElAu
     }
 }
 
-pub struct BuildComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
+pub struct BuildComprehendDocumentClassifier_InputDataConfig_AugmentedManifests {
     #[doc = ""]
     pub attribute_names: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
-    pub fn build(self) -> ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
-        ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
+impl BuildComprehendDocumentClassifier_InputDataConfig_AugmentedManifests {
+    pub fn build(self) -> ComprehendDocumentClassifier_InputDataConfig_AugmentedManifests {
+        ComprehendDocumentClassifier_InputDataConfig_AugmentedManifests {
             annotation_data_s3_uri: core::default::Default::default(),
             attribute_names: self.attribute_names,
             document_type: core::default::Default::default(),
@@ -603,24 +634,26 @@ impl BuildComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl {
     }
 }
 
-pub struct ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
+#[allow(dead_code)]
+pub struct ComprehendDocumentClassifier_InputDataConfig_AugmentedManifestsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
+impl terrars::Ref for ComprehendDocumentClassifier_InputDataConfig_AugmentedManifestsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
-        ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
+    ) -> ComprehendDocumentClassifier_InputDataConfig_AugmentedManifestsRef {
+        ComprehendDocumentClassifier_InputDataConfig_AugmentedManifestsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
+impl ComprehendDocumentClassifier_InputDataConfig_AugmentedManifestsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -657,14 +690,14 @@ impl ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ComprehendDocumentClassifierInputDataConfigElDynamic {
+struct ComprehendDocumentClassifier_InputDataConfigDynamic {
     augmented_manifests: std
     ::option
-    ::Option<terrars::DynamicBlock<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>>,
+    ::Option<terrars::DynamicBlock<ComprehendDocumentClassifier_InputDataConfig_AugmentedManifests>>,
 }
 
 #[derive(Serialize)]
-pub struct ComprehendDocumentClassifierInputDataConfigEl {
+pub struct ComprehendDocumentClassifier_InputDataConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -676,11 +709,11 @@ pub struct ComprehendDocumentClassifierInputDataConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     augmented_manifests: std
     ::option
-    ::Option<std::vec::Vec<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>>,
-    dynamic: ComprehendDocumentClassifierInputDataConfigElDynamic,
+    ::Option<std::vec::Vec<ComprehendDocumentClassifier_InputDataConfig_AugmentedManifests>>,
+    dynamic: ComprehendDocumentClassifier_InputDataConfigDynamic,
 }
 
-impl ComprehendDocumentClassifierInputDataConfigEl {
+impl ComprehendDocumentClassifier_InputDataConfig {
     #[doc = "Set the field `data_format`.\n"]
     pub fn set_data_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data_format = std::option::Option::Some(v.into());
@@ -713,9 +746,7 @@ impl ComprehendDocumentClassifierInputDataConfigEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<ComprehendDocumentClassifierInputDataConfigElAugmentedManifestsEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<ComprehendDocumentClassifier_InputDataConfig_AugmentedManifests>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -729,8 +760,8 @@ impl ComprehendDocumentClassifierInputDataConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ComprehendDocumentClassifierInputDataConfigEl {
-    type O = terrars::BlockAssignable<ComprehendDocumentClassifierInputDataConfigEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifier_InputDataConfig {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifier_InputDataConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -741,11 +772,11 @@ impl terrars::ToListMappable for ComprehendDocumentClassifierInputDataConfigEl {
     }
 }
 
-pub struct BuildComprehendDocumentClassifierInputDataConfigEl {}
+pub struct BuildComprehendDocumentClassifier_InputDataConfig {}
 
-impl BuildComprehendDocumentClassifierInputDataConfigEl {
-    pub fn build(self) -> ComprehendDocumentClassifierInputDataConfigEl {
-        ComprehendDocumentClassifierInputDataConfigEl {
+impl BuildComprehendDocumentClassifier_InputDataConfig {
+    pub fn build(self) -> ComprehendDocumentClassifier_InputDataConfig {
+        ComprehendDocumentClassifier_InputDataConfig {
             data_format: core::default::Default::default(),
             label_delimiter: core::default::Default::default(),
             s3_uri: core::default::Default::default(),
@@ -756,24 +787,26 @@ impl BuildComprehendDocumentClassifierInputDataConfigEl {
     }
 }
 
-pub struct ComprehendDocumentClassifierInputDataConfigElRef {
+#[allow(dead_code)]
+pub struct ComprehendDocumentClassifier_InputDataConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendDocumentClassifierInputDataConfigElRef {
+impl terrars::Ref for ComprehendDocumentClassifier_InputDataConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComprehendDocumentClassifierInputDataConfigElRef {
-        ComprehendDocumentClassifierInputDataConfigElRef {
+    ) -> ComprehendDocumentClassifier_InputDataConfigRef {
+        ComprehendDocumentClassifier_InputDataConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendDocumentClassifierInputDataConfigElRef {
+impl ComprehendDocumentClassifier_InputDataConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -800,13 +833,13 @@ impl ComprehendDocumentClassifierInputDataConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComprehendDocumentClassifierOutputDataConfigEl {
+pub struct ComprehendDocumentClassifier_OutputDataConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     s3_uri: terrars::PrimField<std::string::String>,
 }
 
-impl ComprehendDocumentClassifierOutputDataConfigEl {
+impl ComprehendDocumentClassifier_OutputDataConfig {
     #[doc = "Set the field `kms_key_id`.\n"]
     pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_id = std::option::Option::Some(v.into());
@@ -814,8 +847,8 @@ impl ComprehendDocumentClassifierOutputDataConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ComprehendDocumentClassifierOutputDataConfigEl {
-    type O = terrars::BlockAssignable<ComprehendDocumentClassifierOutputDataConfigEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifier_OutputDataConfig {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifier_OutputDataConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -826,38 +859,40 @@ impl terrars::ToListMappable for ComprehendDocumentClassifierOutputDataConfigEl 
     }
 }
 
-pub struct BuildComprehendDocumentClassifierOutputDataConfigEl {
+pub struct BuildComprehendDocumentClassifier_OutputDataConfig {
     #[doc = ""]
     pub s3_uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildComprehendDocumentClassifierOutputDataConfigEl {
-    pub fn build(self) -> ComprehendDocumentClassifierOutputDataConfigEl {
-        ComprehendDocumentClassifierOutputDataConfigEl {
+impl BuildComprehendDocumentClassifier_OutputDataConfig {
+    pub fn build(self) -> ComprehendDocumentClassifier_OutputDataConfig {
+        ComprehendDocumentClassifier_OutputDataConfig {
             kms_key_id: core::default::Default::default(),
             s3_uri: self.s3_uri,
         }
     }
 }
 
-pub struct ComprehendDocumentClassifierOutputDataConfigElRef {
+#[allow(dead_code)]
+pub struct ComprehendDocumentClassifier_OutputDataConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendDocumentClassifierOutputDataConfigElRef {
+impl terrars::Ref for ComprehendDocumentClassifier_OutputDataConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ComprehendDocumentClassifierOutputDataConfigElRef {
-        ComprehendDocumentClassifierOutputDataConfigElRef {
+    ) -> ComprehendDocumentClassifier_OutputDataConfigRef {
+        ComprehendDocumentClassifier_OutputDataConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendDocumentClassifierOutputDataConfigElRef {
+impl ComprehendDocumentClassifier_OutputDataConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -879,7 +914,7 @@ impl ComprehendDocumentClassifierOutputDataConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComprehendDocumentClassifierTimeoutsEl {
+pub struct ComprehendDocumentClassifier_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -888,7 +923,7 @@ pub struct ComprehendDocumentClassifierTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ComprehendDocumentClassifierTimeoutsEl {
+impl ComprehendDocumentClassifier_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -908,8 +943,8 @@ impl ComprehendDocumentClassifierTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ComprehendDocumentClassifierTimeoutsEl {
-    type O = terrars::BlockAssignable<ComprehendDocumentClassifierTimeoutsEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifier_Timeouts {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifier_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -920,11 +955,11 @@ impl terrars::ToListMappable for ComprehendDocumentClassifierTimeoutsEl {
     }
 }
 
-pub struct BuildComprehendDocumentClassifierTimeoutsEl {}
+pub struct BuildComprehendDocumentClassifier_Timeouts {}
 
-impl BuildComprehendDocumentClassifierTimeoutsEl {
-    pub fn build(self) -> ComprehendDocumentClassifierTimeoutsEl {
-        ComprehendDocumentClassifierTimeoutsEl {
+impl BuildComprehendDocumentClassifier_Timeouts {
+    pub fn build(self) -> ComprehendDocumentClassifier_Timeouts {
+        ComprehendDocumentClassifier_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -932,21 +967,23 @@ impl BuildComprehendDocumentClassifierTimeoutsEl {
     }
 }
 
-pub struct ComprehendDocumentClassifierTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ComprehendDocumentClassifier_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendDocumentClassifierTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendDocumentClassifierTimeoutsElRef {
-        ComprehendDocumentClassifierTimeoutsElRef {
+impl terrars::Ref for ComprehendDocumentClassifier_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendDocumentClassifier_TimeoutsRef {
+        ComprehendDocumentClassifier_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendDocumentClassifierTimeoutsElRef {
+impl ComprehendDocumentClassifier_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -968,15 +1005,15 @@ impl ComprehendDocumentClassifierTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ComprehendDocumentClassifierVpcConfigEl {
+pub struct ComprehendDocumentClassifier_VpcConfig {
     security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl ComprehendDocumentClassifierVpcConfigEl { }
+impl ComprehendDocumentClassifier_VpcConfig { }
 
-impl terrars::ToListMappable for ComprehendDocumentClassifierVpcConfigEl {
-    type O = terrars::BlockAssignable<ComprehendDocumentClassifierVpcConfigEl>;
+impl terrars::ToListMappable for ComprehendDocumentClassifier_VpcConfig {
+    type O = terrars::BlockAssignable<ComprehendDocumentClassifier_VpcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -987,37 +1024,39 @@ impl terrars::ToListMappable for ComprehendDocumentClassifierVpcConfigEl {
     }
 }
 
-pub struct BuildComprehendDocumentClassifierVpcConfigEl {
+pub struct BuildComprehendDocumentClassifier_VpcConfig {
     #[doc = ""]
     pub security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub subnets: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildComprehendDocumentClassifierVpcConfigEl {
-    pub fn build(self) -> ComprehendDocumentClassifierVpcConfigEl {
-        ComprehendDocumentClassifierVpcConfigEl {
+impl BuildComprehendDocumentClassifier_VpcConfig {
+    pub fn build(self) -> ComprehendDocumentClassifier_VpcConfig {
+        ComprehendDocumentClassifier_VpcConfig {
             security_group_ids: self.security_group_ids,
             subnets: self.subnets,
         }
     }
 }
 
-pub struct ComprehendDocumentClassifierVpcConfigElRef {
+#[allow(dead_code)]
+pub struct ComprehendDocumentClassifier_VpcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ComprehendDocumentClassifierVpcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendDocumentClassifierVpcConfigElRef {
-        ComprehendDocumentClassifierVpcConfigElRef {
+impl terrars::Ref for ComprehendDocumentClassifier_VpcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ComprehendDocumentClassifier_VpcConfigRef {
+        ComprehendDocumentClassifier_VpcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ComprehendDocumentClassifierVpcConfigElRef {
+impl ComprehendDocumentClassifier_VpcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1031,11 +1070,4 @@ impl ComprehendDocumentClassifierVpcConfigElRef {
     pub fn subnets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnets", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ComprehendDocumentClassifierDynamic {
-    input_data_config: std::option::Option<terrars::DynamicBlock<ComprehendDocumentClassifierInputDataConfigEl>>,
-    output_data_config: std::option::Option<terrars::DynamicBlock<ComprehendDocumentClassifierOutputDataConfigEl>>,
-    vpc_config: std::option::Option<terrars::DynamicBlock<ComprehendDocumentClassifierVpcConfigEl>>,
 }

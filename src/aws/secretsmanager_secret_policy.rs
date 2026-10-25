@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SecretsmanagerSecretPolicyData {
+struct SecretsmanagerSecretPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,13 +25,15 @@ struct SecretsmanagerSecretPolicyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     policy: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     secret_arn: terrars::PrimField<std::string::String>,
 }
 
 struct SecretsmanagerSecretPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SecretsmanagerSecretPolicyData>,
+    data: std::cell::RefCell<SecretsmanagerSecretPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +145,13 @@ impl SecretsmanagerSecretPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `block_public_policy` after provisioning.\n"]
     pub fn block_public_policy(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.block_public_policy", self.extract_ref()))
@@ -154,6 +165,12 @@ impl SecretsmanagerSecretPolicy {
     #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
     pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
@@ -206,7 +223,7 @@ impl BuildSecretsmanagerSecretPolicy {
         let out = SecretsmanagerSecretPolicy(std::rc::Rc::new(SecretsmanagerSecretPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SecretsmanagerSecretPolicyData {
+            data: std::cell::RefCell::new(SecretsmanagerSecretPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -215,6 +232,7 @@ impl BuildSecretsmanagerSecretPolicy {
                 block_public_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 policy: self.policy,
+                region: core::default::Default::default(),
                 secret_arn: self.secret_arn,
             }),
         }));
@@ -259,6 +277,12 @@ impl SecretsmanagerSecretPolicyRef {
     #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
     pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]

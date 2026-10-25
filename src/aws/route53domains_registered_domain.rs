@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53domainsRegisteredDomainData {
+struct Route53domainsRegisteredDomainData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct Route53domainsRegisteredDomainData {
     admin_privacy: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     auto_renew: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    billing_privacy: std::option::Option<terrars::PrimField<bool>>,
     domain_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -36,22 +40,24 @@ struct Route53domainsRegisteredDomainData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     transfer_lock: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    admin_contact: std::option::Option<std::vec::Vec<Route53domainsRegisteredDomainAdminContactEl>>,
+    admin_contact: std::option::Option<std::vec::Vec<Route53domainsRegisteredDomain_AdminContact>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name_server: std::option::Option<std::vec::Vec<Route53domainsRegisteredDomainNameServerEl>>,
+    billing_contact: std::option::Option<std::vec::Vec<Route53domainsRegisteredDomain_BillingContact>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    registrant_contact: std::option::Option<std::vec::Vec<Route53domainsRegisteredDomainRegistrantContactEl>>,
+    name_server: std::option::Option<std::vec::Vec<Route53domainsRegisteredDomain_NameServer>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tech_contact: std::option::Option<std::vec::Vec<Route53domainsRegisteredDomainTechContactEl>>,
+    registrant_contact: std::option::Option<std::vec::Vec<Route53domainsRegisteredDomain_RegistrantContact>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Route53domainsRegisteredDomainTimeoutsEl>,
+    tech_contact: std::option::Option<std::vec::Vec<Route53domainsRegisteredDomain_TechContact>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Route53domainsRegisteredDomain_Timeouts>,
     dynamic: Route53domainsRegisteredDomainDynamic,
 }
 
 struct Route53domainsRegisteredDomain_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53domainsRegisteredDomainData>,
+    data: std::cell::RefCell<Route53domainsRegisteredDomainData_>,
 }
 
 #[derive(Clone)]
@@ -163,6 +169,12 @@ impl Route53domainsRegisteredDomain {
         self
     }
 
+    #[doc = "Set the field `billing_privacy`.\n"]
+    pub fn set_billing_privacy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().billing_privacy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -208,7 +220,7 @@ impl Route53domainsRegisteredDomain {
     #[doc = "Set the field `admin_contact`.\n"]
     pub fn set_admin_contact(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53domainsRegisteredDomainAdminContactEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53domainsRegisteredDomain_AdminContact>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -221,10 +233,26 @@ impl Route53domainsRegisteredDomain {
         self
     }
 
+    #[doc = "Set the field `billing_contact`.\n"]
+    pub fn set_billing_contact(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53domainsRegisteredDomain_BillingContact>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().billing_contact = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.billing_contact = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `name_server`.\n"]
     pub fn set_name_server(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53domainsRegisteredDomainNameServerEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53domainsRegisteredDomain_NameServer>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -240,7 +268,7 @@ impl Route53domainsRegisteredDomain {
     #[doc = "Set the field `registrant_contact`.\n"]
     pub fn set_registrant_contact(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53domainsRegisteredDomainRegistrantContactEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53domainsRegisteredDomain_RegistrantContact>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -256,7 +284,7 @@ impl Route53domainsRegisteredDomain {
     #[doc = "Set the field `tech_contact`.\n"]
     pub fn set_tech_contact(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53domainsRegisteredDomainTechContactEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53domainsRegisteredDomain_TechContact>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -270,7 +298,7 @@ impl Route53domainsRegisteredDomain {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Route53domainsRegisteredDomainTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Route53domainsRegisteredDomain_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -293,6 +321,11 @@ impl Route53domainsRegisteredDomain {
     #[doc = "Get a reference to the value of field `auto_renew` after provisioning.\n"]
     pub fn auto_renew(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_renew", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `billing_privacy` after provisioning.\n"]
+    pub fn billing_privacy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_privacy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `creation_date` after provisioning.\n"]
@@ -371,28 +404,33 @@ impl Route53domainsRegisteredDomain {
     }
 
     #[doc = "Get a reference to the value of field `admin_contact` after provisioning.\n"]
-    pub fn admin_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomainAdminContactElRef> {
+    pub fn admin_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_AdminContactRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_contact", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `billing_contact` after provisioning.\n"]
+    pub fn billing_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_BillingContactRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.billing_contact", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name_server` after provisioning.\n"]
-    pub fn name_server(&self) -> terrars::ListRef<Route53domainsRegisteredDomainNameServerElRef> {
+    pub fn name_server(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_NameServerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name_server", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `registrant_contact` after provisioning.\n"]
-    pub fn registrant_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomainRegistrantContactElRef> {
+    pub fn registrant_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_RegistrantContactRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.registrant_contact", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tech_contact` after provisioning.\n"]
-    pub fn tech_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomainTechContactElRef> {
+    pub fn tech_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_TechContactRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tech_contact", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53domainsRegisteredDomainTimeoutsElRef {
-        Route53domainsRegisteredDomainTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53domainsRegisteredDomain_TimeoutsRef {
+        Route53domainsRegisteredDomain_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -441,7 +479,7 @@ impl BuildRoute53domainsRegisteredDomain {
         let out = Route53domainsRegisteredDomain(std::rc::Rc::new(Route53domainsRegisteredDomain_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53domainsRegisteredDomainData {
+            data: std::cell::RefCell::new(Route53domainsRegisteredDomainData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -449,6 +487,7 @@ impl BuildRoute53domainsRegisteredDomain {
                 provisioner: core::default::Default::default(),
                 admin_privacy: core::default::Default::default(),
                 auto_renew: core::default::Default::default(),
+                billing_privacy: core::default::Default::default(),
                 domain_name: self.domain_name,
                 id: core::default::Default::default(),
                 registrant_privacy: core::default::Default::default(),
@@ -457,6 +496,7 @@ impl BuildRoute53domainsRegisteredDomain {
                 tech_privacy: core::default::Default::default(),
                 transfer_lock: core::default::Default::default(),
                 admin_contact: core::default::Default::default(),
+                billing_contact: core::default::Default::default(),
                 name_server: core::default::Default::default(),
                 registrant_contact: core::default::Default::default(),
                 tech_contact: core::default::Default::default(),
@@ -512,6 +552,11 @@ impl Route53domainsRegisteredDomainRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_renew", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `billing_privacy` after provisioning.\n"]
+    pub fn billing_privacy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.billing_privacy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `creation_date` after provisioning.\n"]
     pub fn creation_date(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_date", self.extract_ref()))
@@ -588,36 +633,50 @@ impl Route53domainsRegisteredDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `admin_contact` after provisioning.\n"]
-    pub fn admin_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomainAdminContactElRef> {
+    pub fn admin_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_AdminContactRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_contact", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `billing_contact` after provisioning.\n"]
+    pub fn billing_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_BillingContactRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.billing_contact", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name_server` after provisioning.\n"]
-    pub fn name_server(&self) -> terrars::ListRef<Route53domainsRegisteredDomainNameServerElRef> {
+    pub fn name_server(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_NameServerRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.name_server", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `registrant_contact` after provisioning.\n"]
-    pub fn registrant_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomainRegistrantContactElRef> {
+    pub fn registrant_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_RegistrantContactRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.registrant_contact", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tech_contact` after provisioning.\n"]
-    pub fn tech_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomainTechContactElRef> {
+    pub fn tech_contact(&self) -> terrars::ListRef<Route53domainsRegisteredDomain_TechContactRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tech_contact", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53domainsRegisteredDomainTimeoutsElRef {
-        Route53domainsRegisteredDomainTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53domainsRegisteredDomain_TimeoutsRef {
+        Route53domainsRegisteredDomain_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct Route53domainsRegisteredDomainDynamic {
+    admin_contact: std::option::Option<terrars::DynamicBlock<Route53domainsRegisteredDomain_AdminContact>>,
+    billing_contact: std::option::Option<terrars::DynamicBlock<Route53domainsRegisteredDomain_BillingContact>>,
+    name_server: std::option::Option<terrars::DynamicBlock<Route53domainsRegisteredDomain_NameServer>>,
+    registrant_contact: std::option::Option<terrars::DynamicBlock<Route53domainsRegisteredDomain_RegistrantContact>>,
+    tech_contact: std::option::Option<terrars::DynamicBlock<Route53domainsRegisteredDomain_TechContact>>,
+}
+
 #[derive(Serialize)]
-pub struct Route53domainsRegisteredDomainAdminContactEl {
+pub struct Route53domainsRegisteredDomain_AdminContact {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address_line_1: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -648,7 +707,7 @@ pub struct Route53domainsRegisteredDomainAdminContactEl {
     zip_code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53domainsRegisteredDomainAdminContactEl {
+impl Route53domainsRegisteredDomain_AdminContact {
     #[doc = "Set the field `address_line_1`.\n"]
     pub fn set_address_line_1(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address_line_1 = std::option::Option::Some(v.into());
@@ -737,8 +796,8 @@ impl Route53domainsRegisteredDomainAdminContactEl {
     }
 }
 
-impl terrars::ToListMappable for Route53domainsRegisteredDomainAdminContactEl {
-    type O = terrars::BlockAssignable<Route53domainsRegisteredDomainAdminContactEl>;
+impl terrars::ToListMappable for Route53domainsRegisteredDomain_AdminContact {
+    type O = terrars::BlockAssignable<Route53domainsRegisteredDomain_AdminContact>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -749,11 +808,11 @@ impl terrars::ToListMappable for Route53domainsRegisteredDomainAdminContactEl {
     }
 }
 
-pub struct BuildRoute53domainsRegisteredDomainAdminContactEl {}
+pub struct BuildRoute53domainsRegisteredDomain_AdminContact {}
 
-impl BuildRoute53domainsRegisteredDomainAdminContactEl {
-    pub fn build(self) -> Route53domainsRegisteredDomainAdminContactEl {
-        Route53domainsRegisteredDomainAdminContactEl {
+impl BuildRoute53domainsRegisteredDomain_AdminContact {
+    pub fn build(self) -> Route53domainsRegisteredDomain_AdminContact {
+        Route53domainsRegisteredDomain_AdminContact {
             address_line_1: core::default::Default::default(),
             address_line_2: core::default::Default::default(),
             city: core::default::Default::default(),
@@ -772,24 +831,26 @@ impl BuildRoute53domainsRegisteredDomainAdminContactEl {
     }
 }
 
-pub struct Route53domainsRegisteredDomainAdminContactElRef {
+#[allow(dead_code)]
+pub struct Route53domainsRegisteredDomain_AdminContactRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53domainsRegisteredDomainAdminContactElRef {
+impl terrars::Ref for Route53domainsRegisteredDomain_AdminContactRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53domainsRegisteredDomainAdminContactElRef {
-        Route53domainsRegisteredDomainAdminContactElRef {
+    ) -> Route53domainsRegisteredDomain_AdminContactRef {
+        Route53domainsRegisteredDomain_AdminContactRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53domainsRegisteredDomainAdminContactElRef {
+impl Route53domainsRegisteredDomain_AdminContactRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -866,25 +927,128 @@ impl Route53domainsRegisteredDomainAdminContactElRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53domainsRegisteredDomainNameServerEl {
+pub struct Route53domainsRegisteredDomain_BillingContact {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    glue_ips: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    name: terrars::PrimField<std::string::String>,
+    address_line_1: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    address_line_2: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    city: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    contact_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    country_code: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    email: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    extra_params: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fax: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    first_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    last_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    organization_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    phone_number: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    zip_code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53domainsRegisteredDomainNameServerEl {
-    #[doc = "Set the field `glue_ips`.\n"]
-    pub fn set_glue_ips(
+impl Route53domainsRegisteredDomain_BillingContact {
+    #[doc = "Set the field `address_line_1`.\n"]
+    pub fn set_address_line_1(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.address_line_1 = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `address_line_2`.\n"]
+    pub fn set_address_line_2(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.address_line_2 = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `city`.\n"]
+    pub fn set_city(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.city = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `contact_type`.\n"]
+    pub fn set_contact_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.contact_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `country_code`.\n"]
+    pub fn set_country_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.country_code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `email`.\n"]
+    pub fn set_email(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.email = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `extra_params`.\n"]
+    pub fn set_extra_params(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
-        self.glue_ips = std::option::Option::Some(v.into());
+        self.extra_params = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `fax`.\n"]
+    pub fn set_fax(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.fax = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `first_name`.\n"]
+    pub fn set_first_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.first_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `last_name`.\n"]
+    pub fn set_last_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.last_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `organization_name`.\n"]
+    pub fn set_organization_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.organization_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `phone_number`.\n"]
+    pub fn set_phone_number(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.phone_number = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `state`.\n"]
+    pub fn set_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.state = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `zip_code`.\n"]
+    pub fn set_zip_code(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.zip_code = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for Route53domainsRegisteredDomainNameServerEl {
-    type O = terrars::BlockAssignable<Route53domainsRegisteredDomainNameServerEl>;
+impl terrars::ToListMappable for Route53domainsRegisteredDomain_BillingContact {
+    type O = terrars::BlockAssignable<Route53domainsRegisteredDomain_BillingContact>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -895,35 +1059,185 @@ impl terrars::ToListMappable for Route53domainsRegisteredDomainNameServerEl {
     }
 }
 
-pub struct BuildRoute53domainsRegisteredDomainNameServerEl {
-    #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
-}
+pub struct BuildRoute53domainsRegisteredDomain_BillingContact {}
 
-impl BuildRoute53domainsRegisteredDomainNameServerEl {
-    pub fn build(self) -> Route53domainsRegisteredDomainNameServerEl {
-        Route53domainsRegisteredDomainNameServerEl {
-            glue_ips: core::default::Default::default(),
-            name: self.name,
+impl BuildRoute53domainsRegisteredDomain_BillingContact {
+    pub fn build(self) -> Route53domainsRegisteredDomain_BillingContact {
+        Route53domainsRegisteredDomain_BillingContact {
+            address_line_1: core::default::Default::default(),
+            address_line_2: core::default::Default::default(),
+            city: core::default::Default::default(),
+            contact_type: core::default::Default::default(),
+            country_code: core::default::Default::default(),
+            email: core::default::Default::default(),
+            extra_params: core::default::Default::default(),
+            fax: core::default::Default::default(),
+            first_name: core::default::Default::default(),
+            last_name: core::default::Default::default(),
+            organization_name: core::default::Default::default(),
+            phone_number: core::default::Default::default(),
+            state: core::default::Default::default(),
+            zip_code: core::default::Default::default(),
         }
     }
 }
 
-pub struct Route53domainsRegisteredDomainNameServerElRef {
+#[allow(dead_code)]
+pub struct Route53domainsRegisteredDomain_BillingContactRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53domainsRegisteredDomainNameServerElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53domainsRegisteredDomainNameServerElRef {
-        Route53domainsRegisteredDomainNameServerElRef {
+impl terrars::Ref for Route53domainsRegisteredDomain_BillingContactRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Route53domainsRegisteredDomain_BillingContactRef {
+        Route53domainsRegisteredDomain_BillingContactRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53domainsRegisteredDomainNameServerElRef {
+impl Route53domainsRegisteredDomain_BillingContactRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `address_line_1` after provisioning.\n"]
+    pub fn address_line_1(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address_line_1", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `address_line_2` after provisioning.\n"]
+    pub fn address_line_2(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address_line_2", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `city` after provisioning.\n"]
+    pub fn city(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.city", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `contact_type` after provisioning.\n"]
+    pub fn contact_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.contact_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `country_code` after provisioning.\n"]
+    pub fn country_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.country_code", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `email` after provisioning.\n"]
+    pub fn email(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.email", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `extra_params` after provisioning.\n"]
+    pub fn extra_params(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.extra_params", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `fax` after provisioning.\n"]
+    pub fn fax(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fax", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `first_name` after provisioning.\n"]
+    pub fn first_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.first_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `last_name` after provisioning.\n"]
+    pub fn last_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `organization_name` after provisioning.\n"]
+    pub fn organization_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.organization_name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `phone_number` after provisioning.\n"]
+    pub fn phone_number(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.phone_number", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `zip_code` after provisioning.\n"]
+    pub fn zip_code(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.zip_code", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Route53domainsRegisteredDomain_NameServer {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    glue_ips: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    name: terrars::PrimField<std::string::String>,
+}
+
+impl Route53domainsRegisteredDomain_NameServer {
+    #[doc = "Set the field `glue_ips`.\n"]
+    pub fn set_glue_ips(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.glue_ips = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Route53domainsRegisteredDomain_NameServer {
+    type O = terrars::BlockAssignable<Route53domainsRegisteredDomain_NameServer>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildRoute53domainsRegisteredDomain_NameServer {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+}
+
+impl BuildRoute53domainsRegisteredDomain_NameServer {
+    pub fn build(self) -> Route53domainsRegisteredDomain_NameServer {
+        Route53domainsRegisteredDomain_NameServer {
+            glue_ips: core::default::Default::default(),
+            name: self.name,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Route53domainsRegisteredDomain_NameServerRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Route53domainsRegisteredDomain_NameServerRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53domainsRegisteredDomain_NameServerRef {
+        Route53domainsRegisteredDomain_NameServerRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Route53domainsRegisteredDomain_NameServerRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -940,7 +1254,7 @@ impl Route53domainsRegisteredDomainNameServerElRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53domainsRegisteredDomainRegistrantContactEl {
+pub struct Route53domainsRegisteredDomain_RegistrantContact {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address_line_1: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -971,7 +1285,7 @@ pub struct Route53domainsRegisteredDomainRegistrantContactEl {
     zip_code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53domainsRegisteredDomainRegistrantContactEl {
+impl Route53domainsRegisteredDomain_RegistrantContact {
     #[doc = "Set the field `address_line_1`.\n"]
     pub fn set_address_line_1(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address_line_1 = std::option::Option::Some(v.into());
@@ -1060,8 +1374,8 @@ impl Route53domainsRegisteredDomainRegistrantContactEl {
     }
 }
 
-impl terrars::ToListMappable for Route53domainsRegisteredDomainRegistrantContactEl {
-    type O = terrars::BlockAssignable<Route53domainsRegisteredDomainRegistrantContactEl>;
+impl terrars::ToListMappable for Route53domainsRegisteredDomain_RegistrantContact {
+    type O = terrars::BlockAssignable<Route53domainsRegisteredDomain_RegistrantContact>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1072,11 +1386,11 @@ impl terrars::ToListMappable for Route53domainsRegisteredDomainRegistrantContact
     }
 }
 
-pub struct BuildRoute53domainsRegisteredDomainRegistrantContactEl {}
+pub struct BuildRoute53domainsRegisteredDomain_RegistrantContact {}
 
-impl BuildRoute53domainsRegisteredDomainRegistrantContactEl {
-    pub fn build(self) -> Route53domainsRegisteredDomainRegistrantContactEl {
-        Route53domainsRegisteredDomainRegistrantContactEl {
+impl BuildRoute53domainsRegisteredDomain_RegistrantContact {
+    pub fn build(self) -> Route53domainsRegisteredDomain_RegistrantContact {
+        Route53domainsRegisteredDomain_RegistrantContact {
             address_line_1: core::default::Default::default(),
             address_line_2: core::default::Default::default(),
             city: core::default::Default::default(),
@@ -1095,24 +1409,26 @@ impl BuildRoute53domainsRegisteredDomainRegistrantContactEl {
     }
 }
 
-pub struct Route53domainsRegisteredDomainRegistrantContactElRef {
+#[allow(dead_code)]
+pub struct Route53domainsRegisteredDomain_RegistrantContactRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53domainsRegisteredDomainRegistrantContactElRef {
+impl terrars::Ref for Route53domainsRegisteredDomain_RegistrantContactRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53domainsRegisteredDomainRegistrantContactElRef {
-        Route53domainsRegisteredDomainRegistrantContactElRef {
+    ) -> Route53domainsRegisteredDomain_RegistrantContactRef {
+        Route53domainsRegisteredDomain_RegistrantContactRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53domainsRegisteredDomainRegistrantContactElRef {
+impl Route53domainsRegisteredDomain_RegistrantContactRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1189,7 +1505,7 @@ impl Route53domainsRegisteredDomainRegistrantContactElRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53domainsRegisteredDomainTechContactEl {
+pub struct Route53domainsRegisteredDomain_TechContact {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address_line_1: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1220,7 +1536,7 @@ pub struct Route53domainsRegisteredDomainTechContactEl {
     zip_code: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53domainsRegisteredDomainTechContactEl {
+impl Route53domainsRegisteredDomain_TechContact {
     #[doc = "Set the field `address_line_1`.\n"]
     pub fn set_address_line_1(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.address_line_1 = std::option::Option::Some(v.into());
@@ -1309,8 +1625,8 @@ impl Route53domainsRegisteredDomainTechContactEl {
     }
 }
 
-impl terrars::ToListMappable for Route53domainsRegisteredDomainTechContactEl {
-    type O = terrars::BlockAssignable<Route53domainsRegisteredDomainTechContactEl>;
+impl terrars::ToListMappable for Route53domainsRegisteredDomain_TechContact {
+    type O = terrars::BlockAssignable<Route53domainsRegisteredDomain_TechContact>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1321,11 +1637,11 @@ impl terrars::ToListMappable for Route53domainsRegisteredDomainTechContactEl {
     }
 }
 
-pub struct BuildRoute53domainsRegisteredDomainTechContactEl {}
+pub struct BuildRoute53domainsRegisteredDomain_TechContact {}
 
-impl BuildRoute53domainsRegisteredDomainTechContactEl {
-    pub fn build(self) -> Route53domainsRegisteredDomainTechContactEl {
-        Route53domainsRegisteredDomainTechContactEl {
+impl BuildRoute53domainsRegisteredDomain_TechContact {
+    pub fn build(self) -> Route53domainsRegisteredDomain_TechContact {
+        Route53domainsRegisteredDomain_TechContact {
             address_line_1: core::default::Default::default(),
             address_line_2: core::default::Default::default(),
             city: core::default::Default::default(),
@@ -1344,24 +1660,23 @@ impl BuildRoute53domainsRegisteredDomainTechContactEl {
     }
 }
 
-pub struct Route53domainsRegisteredDomainTechContactElRef {
+#[allow(dead_code)]
+pub struct Route53domainsRegisteredDomain_TechContactRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53domainsRegisteredDomainTechContactElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Route53domainsRegisteredDomainTechContactElRef {
-        Route53domainsRegisteredDomainTechContactElRef {
+impl terrars::Ref for Route53domainsRegisteredDomain_TechContactRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53domainsRegisteredDomain_TechContactRef {
+        Route53domainsRegisteredDomain_TechContactRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53domainsRegisteredDomainTechContactElRef {
+impl Route53domainsRegisteredDomain_TechContactRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1438,14 +1753,14 @@ impl Route53domainsRegisteredDomainTechContactElRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53domainsRegisteredDomainTimeoutsEl {
+pub struct Route53domainsRegisteredDomain_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53domainsRegisteredDomainTimeoutsEl {
+impl Route53domainsRegisteredDomain_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1459,8 +1774,8 @@ impl Route53domainsRegisteredDomainTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Route53domainsRegisteredDomainTimeoutsEl {
-    type O = terrars::BlockAssignable<Route53domainsRegisteredDomainTimeoutsEl>;
+impl terrars::ToListMappable for Route53domainsRegisteredDomain_Timeouts {
+    type O = terrars::BlockAssignable<Route53domainsRegisteredDomain_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1471,32 +1786,34 @@ impl terrars::ToListMappable for Route53domainsRegisteredDomainTimeoutsEl {
     }
 }
 
-pub struct BuildRoute53domainsRegisteredDomainTimeoutsEl {}
+pub struct BuildRoute53domainsRegisteredDomain_Timeouts {}
 
-impl BuildRoute53domainsRegisteredDomainTimeoutsEl {
-    pub fn build(self) -> Route53domainsRegisteredDomainTimeoutsEl {
-        Route53domainsRegisteredDomainTimeoutsEl {
+impl BuildRoute53domainsRegisteredDomain_Timeouts {
+    pub fn build(self) -> Route53domainsRegisteredDomain_Timeouts {
+        Route53domainsRegisteredDomain_Timeouts {
             create: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct Route53domainsRegisteredDomainTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Route53domainsRegisteredDomain_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53domainsRegisteredDomainTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53domainsRegisteredDomainTimeoutsElRef {
-        Route53domainsRegisteredDomainTimeoutsElRef {
+impl terrars::Ref for Route53domainsRegisteredDomain_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53domainsRegisteredDomain_TimeoutsRef {
+        Route53domainsRegisteredDomain_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53domainsRegisteredDomainTimeoutsElRef {
+impl Route53domainsRegisteredDomain_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1510,14 +1827,4 @@ impl Route53domainsRegisteredDomainTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Route53domainsRegisteredDomainDynamic {
-    admin_contact: std::option::Option<terrars::DynamicBlock<Route53domainsRegisteredDomainAdminContactEl>>,
-    name_server: std::option::Option<terrars::DynamicBlock<Route53domainsRegisteredDomainNameServerEl>>,
-    registrant_contact: std
-    ::option
-    ::Option<terrars::DynamicBlock<Route53domainsRegisteredDomainRegistrantContactEl>>,
-    tech_contact: std::option::Option<terrars::DynamicBlock<Route53domainsRegisteredDomainTechContactEl>>,
 }

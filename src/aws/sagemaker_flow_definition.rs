@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerFlowDefinitionData {
+struct SagemakerFlowDefinitionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,26 +23,28 @@ struct SagemakerFlowDefinitionData {
     flow_definition_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    human_loop_activation_config: std::option::Option<std::vec::Vec<SagemakerFlowDefinitionHumanLoopActivationConfigEl>>,
+    human_loop_activation_config: std::option::Option<std::vec::Vec<SagemakerFlowDefinition_HumanLoopActivationConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    human_loop_config: std::option::Option<std::vec::Vec<SagemakerFlowDefinitionHumanLoopConfigEl>>,
+    human_loop_config: std::option::Option<std::vec::Vec<SagemakerFlowDefinition_HumanLoopConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    human_loop_request_source: std::option::Option<std::vec::Vec<SagemakerFlowDefinitionHumanLoopRequestSourceEl>>,
+    human_loop_request_source: std::option::Option<std::vec::Vec<SagemakerFlowDefinition_HumanLoopRequestSource>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    output_config: std::option::Option<std::vec::Vec<SagemakerFlowDefinitionOutputConfigEl>>,
+    output_config: std::option::Option<std::vec::Vec<SagemakerFlowDefinition_OutputConfig>>,
     dynamic: SagemakerFlowDefinitionDynamic,
 }
 
 struct SagemakerFlowDefinition_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerFlowDefinitionData>,
+    data: std::cell::RefCell<SagemakerFlowDefinitionData_>,
 }
 
 #[derive(Clone)]
@@ -146,6 +150,13 @@ impl SagemakerFlowDefinition {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -167,7 +178,7 @@ impl SagemakerFlowDefinition {
     #[doc = "Set the field `human_loop_activation_config`.\n"]
     pub fn set_human_loop_activation_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFlowDefinitionHumanLoopActivationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFlowDefinition_HumanLoopActivationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -183,7 +194,7 @@ impl SagemakerFlowDefinition {
     #[doc = "Set the field `human_loop_config`.\n"]
     pub fn set_human_loop_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFlowDefinitionHumanLoopConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFlowDefinition_HumanLoopConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -199,7 +210,7 @@ impl SagemakerFlowDefinition {
     #[doc = "Set the field `human_loop_request_source`.\n"]
     pub fn set_human_loop_request_source(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFlowDefinitionHumanLoopRequestSourceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFlowDefinition_HumanLoopRequestSource>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -215,7 +226,7 @@ impl SagemakerFlowDefinition {
     #[doc = "Set the field `output_config`.\n"]
     pub fn set_output_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFlowDefinitionOutputConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerFlowDefinition_OutputConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -243,6 +254,12 @@ impl SagemakerFlowDefinition {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -259,24 +276,22 @@ impl SagemakerFlowDefinition {
     }
 
     #[doc = "Get a reference to the value of field `human_loop_activation_config` after provisioning.\n"]
-    pub fn human_loop_activation_config(
-        &self,
-    ) -> terrars::ListRef<SagemakerFlowDefinitionHumanLoopActivationConfigElRef> {
+    pub fn human_loop_activation_config(&self) -> terrars::ListRef<SagemakerFlowDefinition_HumanLoopActivationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.human_loop_activation_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `human_loop_config` after provisioning.\n"]
-    pub fn human_loop_config(&self) -> terrars::ListRef<SagemakerFlowDefinitionHumanLoopConfigElRef> {
+    pub fn human_loop_config(&self) -> terrars::ListRef<SagemakerFlowDefinition_HumanLoopConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.human_loop_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `human_loop_request_source` after provisioning.\n"]
-    pub fn human_loop_request_source(&self) -> terrars::ListRef<SagemakerFlowDefinitionHumanLoopRequestSourceElRef> {
+    pub fn human_loop_request_source(&self) -> terrars::ListRef<SagemakerFlowDefinition_HumanLoopRequestSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.human_loop_request_source", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `output_config` after provisioning.\n"]
-    pub fn output_config(&self) -> terrars::ListRef<SagemakerFlowDefinitionOutputConfigElRef> {
+    pub fn output_config(&self) -> terrars::ListRef<SagemakerFlowDefinition_OutputConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_config", self.extract_ref()))
     }
 }
@@ -325,7 +340,7 @@ impl BuildSagemakerFlowDefinition {
         let out = SagemakerFlowDefinition(std::rc::Rc::new(SagemakerFlowDefinition_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerFlowDefinitionData {
+            data: std::cell::RefCell::new(SagemakerFlowDefinitionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -333,6 +348,7 @@ impl BuildSagemakerFlowDefinition {
                 provisioner: core::default::Default::default(),
                 flow_definition_name: self.flow_definition_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -386,6 +402,12 @@ impl SagemakerFlowDefinitionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -402,40 +424,50 @@ impl SagemakerFlowDefinitionRef {
     }
 
     #[doc = "Get a reference to the value of field `human_loop_activation_config` after provisioning.\n"]
-    pub fn human_loop_activation_config(
-        &self,
-    ) -> terrars::ListRef<SagemakerFlowDefinitionHumanLoopActivationConfigElRef> {
+    pub fn human_loop_activation_config(&self) -> terrars::ListRef<SagemakerFlowDefinition_HumanLoopActivationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.human_loop_activation_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `human_loop_config` after provisioning.\n"]
-    pub fn human_loop_config(&self) -> terrars::ListRef<SagemakerFlowDefinitionHumanLoopConfigElRef> {
+    pub fn human_loop_config(&self) -> terrars::ListRef<SagemakerFlowDefinition_HumanLoopConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.human_loop_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `human_loop_request_source` after provisioning.\n"]
-    pub fn human_loop_request_source(&self) -> terrars::ListRef<SagemakerFlowDefinitionHumanLoopRequestSourceElRef> {
+    pub fn human_loop_request_source(&self) -> terrars::ListRef<SagemakerFlowDefinition_HumanLoopRequestSourceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.human_loop_request_source", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `output_config` after provisioning.\n"]
-    pub fn output_config(&self) -> terrars::ListRef<SagemakerFlowDefinitionOutputConfigElRef> {
+    pub fn output_config(&self) -> terrars::ListRef<SagemakerFlowDefinition_OutputConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.output_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerFlowDefinitionDynamic {
+    human_loop_activation_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerFlowDefinition_HumanLoopActivationConfig>>,
+    human_loop_config: std::option::Option<terrars::DynamicBlock<SagemakerFlowDefinition_HumanLoopConfig>>,
+    human_loop_request_source: std
+    ::option
+    ::Option<terrars::DynamicBlock<SagemakerFlowDefinition_HumanLoopRequestSource>>,
+    output_config: std::option::Option<terrars::DynamicBlock<SagemakerFlowDefinition_OutputConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl {
+pub struct SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig {
     human_loop_activation_conditions: terrars::PrimField<std::string::String>,
 }
 
-impl SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl { }
+impl SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig { }
 
 impl terrars
-::ToListMappable for SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl {
+::ToListMappable for SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig {
     type O =
         terrars
-        ::BlockAssignable<SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl>;
+        ::BlockAssignable<SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -446,37 +478,39 @@ impl terrars
     }
 }
 
-pub struct BuildSagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl {
+pub struct BuildSagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig {
     #[doc = ""]
     pub human_loop_activation_conditions: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl {
-    pub fn build(self) -> SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl {
-        SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl {
+impl BuildSagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig {
+    pub fn build(self) -> SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig {
+        SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig {
             human_loop_activation_conditions: self.human_loop_activation_conditions,
         }
     }
 }
 
-pub struct SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigElRef {
+impl terrars::Ref for SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigElRef {
-        SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigElRef {
+    ) -> SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfigRef {
+        SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigElRef {
+impl SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -488,24 +522,24 @@ impl SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationCondit
 }
 
 #[derive(Serialize, Default)]
-struct SagemakerFlowDefinitionHumanLoopActivationConfigElDynamic {
+struct SagemakerFlowDefinition_HumanLoopActivationConfigDynamic {
     human_loop_activation_conditions_config: std
     ::option
     ::Option<
-        terrars::DynamicBlock<SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl>,
+        terrars::DynamicBlock<SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct SagemakerFlowDefinitionHumanLoopActivationConfigEl {
+pub struct SagemakerFlowDefinition_HumanLoopActivationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     human_loop_activation_conditions_config: std
     ::option
-    ::Option<std::vec::Vec<SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl>>,
-    dynamic: SagemakerFlowDefinitionHumanLoopActivationConfigElDynamic,
+    ::Option<std::vec::Vec<SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig>>,
+    dynamic: SagemakerFlowDefinition_HumanLoopActivationConfigDynamic,
 }
 
-impl SagemakerFlowDefinitionHumanLoopActivationConfigEl {
+impl SagemakerFlowDefinition_HumanLoopActivationConfig {
     #[doc = "Set the field `human_loop_activation_conditions_config`.\n"]
     pub fn set_human_loop_activation_conditions_config(
         mut self,
@@ -517,7 +551,7 @@ impl SagemakerFlowDefinitionHumanLoopActivationConfigEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigEl,
+                            SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfig,
                         >,
                     >,
     ) -> Self {
@@ -533,8 +567,8 @@ impl SagemakerFlowDefinitionHumanLoopActivationConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopActivationConfigEl {
-    type O = terrars::BlockAssignable<SagemakerFlowDefinitionHumanLoopActivationConfigEl>;
+impl terrars::ToListMappable for SagemakerFlowDefinition_HumanLoopActivationConfig {
+    type O = terrars::BlockAssignable<SagemakerFlowDefinition_HumanLoopActivationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -545,35 +579,37 @@ impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopActivationConfi
     }
 }
 
-pub struct BuildSagemakerFlowDefinitionHumanLoopActivationConfigEl {}
+pub struct BuildSagemakerFlowDefinition_HumanLoopActivationConfig {}
 
-impl BuildSagemakerFlowDefinitionHumanLoopActivationConfigEl {
-    pub fn build(self) -> SagemakerFlowDefinitionHumanLoopActivationConfigEl {
-        SagemakerFlowDefinitionHumanLoopActivationConfigEl {
+impl BuildSagemakerFlowDefinition_HumanLoopActivationConfig {
+    pub fn build(self) -> SagemakerFlowDefinition_HumanLoopActivationConfig {
+        SagemakerFlowDefinition_HumanLoopActivationConfig {
             human_loop_activation_conditions_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SagemakerFlowDefinitionHumanLoopActivationConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerFlowDefinition_HumanLoopActivationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerFlowDefinitionHumanLoopActivationConfigElRef {
+impl terrars::Ref for SagemakerFlowDefinition_HumanLoopActivationConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerFlowDefinitionHumanLoopActivationConfigElRef {
-        SagemakerFlowDefinitionHumanLoopActivationConfigElRef {
+    ) -> SagemakerFlowDefinition_HumanLoopActivationConfigRef {
+        SagemakerFlowDefinition_HumanLoopActivationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerFlowDefinitionHumanLoopActivationConfigElRef {
+impl SagemakerFlowDefinition_HumanLoopActivationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -581,7 +617,7 @@ impl SagemakerFlowDefinitionHumanLoopActivationConfigElRef {
     #[doc = "Get a reference to the value of field `human_loop_activation_conditions_config` after provisioning.\n"]
     pub fn human_loop_activation_conditions_config(
         &self,
-    ) -> terrars::ListRef<SagemakerFlowDefinitionHumanLoopActivationConfigElHumanLoopActivationConditionsConfigElRef> {
+    ) -> terrars::ListRef<SagemakerFlowDefinition_HumanLoopActivationConfig_HumanLoopActivationConditionsConfigRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.human_loop_activation_conditions_config", self.base),
@@ -590,7 +626,7 @@ impl SagemakerFlowDefinitionHumanLoopActivationConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl {
+pub struct SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cents: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -599,7 +635,7 @@ pub struct SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmo
     tenth_fractions_of_a_cent: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl {
+impl SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd {
     #[doc = "Set the field `cents`.\n"]
     pub fn set_cents(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.cents = std::option::Option::Some(v.into());
@@ -619,9 +655,8 @@ impl SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInU
     }
 }
 
-impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl {
-    type O =
-        terrars::BlockAssignable<SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl>;
+impl terrars::ToListMappable for SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd {
+    type O = terrars::BlockAssignable<SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -632,11 +667,11 @@ impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopConfigElPublicW
     }
 }
 
-pub struct BuildSagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl {}
+pub struct BuildSagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd {}
 
-impl BuildSagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl {
-    pub fn build(self) -> SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl {
-        SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl {
+impl BuildSagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd {
+    pub fn build(self) -> SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd {
+        SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd {
             cents: core::default::Default::default(),
             dollars: core::default::Default::default(),
             tenth_fractions_of_a_cent: core::default::Default::default(),
@@ -644,24 +679,26 @@ impl BuildSagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmou
     }
 }
 
-pub struct SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdElRef {
+#[allow(dead_code)]
+pub struct SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdElRef {
+impl terrars::Ref for SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsdRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdElRef {
-        SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdElRef {
+    ) -> SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsdRef {
+        SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdElRef {
+impl SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -683,22 +720,22 @@ impl SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInU
 }
 
 #[derive(Serialize, Default)]
-struct SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElDynamic {
+struct SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPriceDynamic {
     amount_in_usd: std
     ::option
-    ::Option<terrars::DynamicBlock<SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl>>,
+    ::Option<terrars::DynamicBlock<SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd>>,
 }
 
 #[derive(Serialize)]
-pub struct SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl {
+pub struct SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     amount_in_usd: std
     ::option
-    ::Option<std::vec::Vec<SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl>>,
-    dynamic: SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElDynamic,
+    ::Option<std::vec::Vec<SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd>>,
+    dynamic: SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPriceDynamic,
 }
 
-impl SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl {
+impl SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice {
     #[doc = "Set the field `amount_in_usd`.\n"]
     pub fn set_amount_in_usd(
         mut self,
@@ -710,7 +747,7 @@ impl SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdEl,
+                            SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsd,
                         >,
                     >,
     ) -> Self {
@@ -726,8 +763,8 @@ impl SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl {
-    type O = terrars::BlockAssignable<SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl>;
+impl terrars::ToListMappable for SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice {
+    type O = terrars::BlockAssignable<SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -738,35 +775,37 @@ impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopConfigElPublicW
     }
 }
 
-pub struct BuildSagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl {}
+pub struct BuildSagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice {}
 
-impl BuildSagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl {
-    pub fn build(self) -> SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl {
-        SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl {
+impl BuildSagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice {
+    pub fn build(self) -> SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice {
+        SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice {
             amount_in_usd: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElRef {
+#[allow(dead_code)]
+pub struct SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPriceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElRef {
+impl terrars::Ref for SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPriceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElRef {
-        SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElRef {
+    ) -> SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPriceRef {
+        SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPriceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElRef {
+impl SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPriceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -774,20 +813,20 @@ impl SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElRef {
     #[doc = "Get a reference to the value of field `amount_in_usd` after provisioning.\n"]
     pub fn amount_in_usd(
         &self,
-    ) -> terrars::ListRef<SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElAmountInUsdElRef> {
+    ) -> terrars::ListRef<SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice_AmountInUsdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.amount_in_usd", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct SagemakerFlowDefinitionHumanLoopConfigElDynamic {
+struct SagemakerFlowDefinition_HumanLoopConfigDynamic {
     public_workforce_task_price: std
     ::option
-    ::Option<terrars::DynamicBlock<SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl>>,
+    ::Option<terrars::DynamicBlock<SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice>>,
 }
 
 #[derive(Serialize)]
-pub struct SagemakerFlowDefinitionHumanLoopConfigEl {
+pub struct SagemakerFlowDefinition_HumanLoopConfig {
     human_task_ui_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     task_availability_lifetime_in_seconds: std::option::Option<terrars::PrimField<f64>>,
@@ -802,11 +841,11 @@ pub struct SagemakerFlowDefinitionHumanLoopConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     public_workforce_task_price: std
     ::option
-    ::Option<std::vec::Vec<SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl>>,
-    dynamic: SagemakerFlowDefinitionHumanLoopConfigElDynamic,
+    ::Option<std::vec::Vec<SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice>>,
+    dynamic: SagemakerFlowDefinition_HumanLoopConfigDynamic,
 }
 
-impl SagemakerFlowDefinitionHumanLoopConfigEl {
+impl SagemakerFlowDefinition_HumanLoopConfig {
     #[doc = "Set the field `task_availability_lifetime_in_seconds`.\n"]
     pub fn set_task_availability_lifetime_in_seconds(
         mut self,
@@ -840,7 +879,7 @@ impl SagemakerFlowDefinitionHumanLoopConfigEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceEl>,
+                        terrars::BlockAssignable<SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPrice>,
                     >,
     ) -> Self {
         match v.into() {
@@ -855,8 +894,8 @@ impl SagemakerFlowDefinitionHumanLoopConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopConfigEl {
-    type O = terrars::BlockAssignable<SagemakerFlowDefinitionHumanLoopConfigEl>;
+impl terrars::ToListMappable for SagemakerFlowDefinition_HumanLoopConfig {
+    type O = terrars::BlockAssignable<SagemakerFlowDefinition_HumanLoopConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -867,7 +906,7 @@ impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopConfigEl {
     }
 }
 
-pub struct BuildSagemakerFlowDefinitionHumanLoopConfigEl {
+pub struct BuildSagemakerFlowDefinition_HumanLoopConfig {
     #[doc = ""]
     pub human_task_ui_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -880,9 +919,9 @@ pub struct BuildSagemakerFlowDefinitionHumanLoopConfigEl {
     pub workteam_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerFlowDefinitionHumanLoopConfigEl {
-    pub fn build(self) -> SagemakerFlowDefinitionHumanLoopConfigEl {
-        SagemakerFlowDefinitionHumanLoopConfigEl {
+impl BuildSagemakerFlowDefinition_HumanLoopConfig {
+    pub fn build(self) -> SagemakerFlowDefinition_HumanLoopConfig {
+        SagemakerFlowDefinition_HumanLoopConfig {
             human_task_ui_arn: self.human_task_ui_arn,
             task_availability_lifetime_in_seconds: core::default::Default::default(),
             task_count: self.task_count,
@@ -897,21 +936,23 @@ impl BuildSagemakerFlowDefinitionHumanLoopConfigEl {
     }
 }
 
-pub struct SagemakerFlowDefinitionHumanLoopConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerFlowDefinition_HumanLoopConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerFlowDefinitionHumanLoopConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerFlowDefinitionHumanLoopConfigElRef {
-        SagemakerFlowDefinitionHumanLoopConfigElRef {
+impl terrars::Ref for SagemakerFlowDefinition_HumanLoopConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerFlowDefinition_HumanLoopConfigRef {
+        SagemakerFlowDefinition_HumanLoopConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerFlowDefinitionHumanLoopConfigElRef {
+impl SagemakerFlowDefinition_HumanLoopConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -959,20 +1000,20 @@ impl SagemakerFlowDefinitionHumanLoopConfigElRef {
     #[doc = "Get a reference to the value of field `public_workforce_task_price` after provisioning.\n"]
     pub fn public_workforce_task_price(
         &self,
-    ) -> terrars::ListRef<SagemakerFlowDefinitionHumanLoopConfigElPublicWorkforceTaskPriceElRef> {
+    ) -> terrars::ListRef<SagemakerFlowDefinition_HumanLoopConfig_PublicWorkforceTaskPriceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_workforce_task_price", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SagemakerFlowDefinitionHumanLoopRequestSourceEl {
+pub struct SagemakerFlowDefinition_HumanLoopRequestSource {
     aws_managed_human_loop_request_source: terrars::PrimField<std::string::String>,
 }
 
-impl SagemakerFlowDefinitionHumanLoopRequestSourceEl { }
+impl SagemakerFlowDefinition_HumanLoopRequestSource { }
 
-impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopRequestSourceEl {
-    type O = terrars::BlockAssignable<SagemakerFlowDefinitionHumanLoopRequestSourceEl>;
+impl terrars::ToListMappable for SagemakerFlowDefinition_HumanLoopRequestSource {
+    type O = terrars::BlockAssignable<SagemakerFlowDefinition_HumanLoopRequestSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -983,37 +1024,39 @@ impl terrars::ToListMappable for SagemakerFlowDefinitionHumanLoopRequestSourceEl
     }
 }
 
-pub struct BuildSagemakerFlowDefinitionHumanLoopRequestSourceEl {
+pub struct BuildSagemakerFlowDefinition_HumanLoopRequestSource {
     #[doc = ""]
     pub aws_managed_human_loop_request_source: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerFlowDefinitionHumanLoopRequestSourceEl {
-    pub fn build(self) -> SagemakerFlowDefinitionHumanLoopRequestSourceEl {
-        SagemakerFlowDefinitionHumanLoopRequestSourceEl {
+impl BuildSagemakerFlowDefinition_HumanLoopRequestSource {
+    pub fn build(self) -> SagemakerFlowDefinition_HumanLoopRequestSource {
+        SagemakerFlowDefinition_HumanLoopRequestSource {
             aws_managed_human_loop_request_source: self.aws_managed_human_loop_request_source,
         }
     }
 }
 
-pub struct SagemakerFlowDefinitionHumanLoopRequestSourceElRef {
+#[allow(dead_code)]
+pub struct SagemakerFlowDefinition_HumanLoopRequestSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerFlowDefinitionHumanLoopRequestSourceElRef {
+impl terrars::Ref for SagemakerFlowDefinition_HumanLoopRequestSourceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SagemakerFlowDefinitionHumanLoopRequestSourceElRef {
-        SagemakerFlowDefinitionHumanLoopRequestSourceElRef {
+    ) -> SagemakerFlowDefinition_HumanLoopRequestSourceRef {
+        SagemakerFlowDefinition_HumanLoopRequestSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerFlowDefinitionHumanLoopRequestSourceElRef {
+impl SagemakerFlowDefinition_HumanLoopRequestSourceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1025,13 +1068,13 @@ impl SagemakerFlowDefinitionHumanLoopRequestSourceElRef {
 }
 
 #[derive(Serialize)]
-pub struct SagemakerFlowDefinitionOutputConfigEl {
+pub struct SagemakerFlowDefinition_OutputConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     s3_output_path: terrars::PrimField<std::string::String>,
 }
 
-impl SagemakerFlowDefinitionOutputConfigEl {
+impl SagemakerFlowDefinition_OutputConfig {
     #[doc = "Set the field `kms_key_id`.\n"]
     pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_id = std::option::Option::Some(v.into());
@@ -1039,8 +1082,8 @@ impl SagemakerFlowDefinitionOutputConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerFlowDefinitionOutputConfigEl {
-    type O = terrars::BlockAssignable<SagemakerFlowDefinitionOutputConfigEl>;
+impl terrars::ToListMappable for SagemakerFlowDefinition_OutputConfig {
+    type O = terrars::BlockAssignable<SagemakerFlowDefinition_OutputConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1051,35 +1094,37 @@ impl terrars::ToListMappable for SagemakerFlowDefinitionOutputConfigEl {
     }
 }
 
-pub struct BuildSagemakerFlowDefinitionOutputConfigEl {
+pub struct BuildSagemakerFlowDefinition_OutputConfig {
     #[doc = ""]
     pub s3_output_path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerFlowDefinitionOutputConfigEl {
-    pub fn build(self) -> SagemakerFlowDefinitionOutputConfigEl {
-        SagemakerFlowDefinitionOutputConfigEl {
+impl BuildSagemakerFlowDefinition_OutputConfig {
+    pub fn build(self) -> SagemakerFlowDefinition_OutputConfig {
+        SagemakerFlowDefinition_OutputConfig {
             kms_key_id: core::default::Default::default(),
             s3_output_path: self.s3_output_path,
         }
     }
 }
 
-pub struct SagemakerFlowDefinitionOutputConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerFlowDefinition_OutputConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerFlowDefinitionOutputConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerFlowDefinitionOutputConfigElRef {
-        SagemakerFlowDefinitionOutputConfigElRef {
+impl terrars::Ref for SagemakerFlowDefinition_OutputConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerFlowDefinition_OutputConfigRef {
+        SagemakerFlowDefinition_OutputConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerFlowDefinitionOutputConfigElRef {
+impl SagemakerFlowDefinition_OutputConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1093,16 +1138,4 @@ impl SagemakerFlowDefinitionOutputConfigElRef {
     pub fn s3_output_path(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_output_path", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SagemakerFlowDefinitionDynamic {
-    human_loop_activation_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<SagemakerFlowDefinitionHumanLoopActivationConfigEl>>,
-    human_loop_config: std::option::Option<terrars::DynamicBlock<SagemakerFlowDefinitionHumanLoopConfigEl>>,
-    human_loop_request_source: std
-    ::option
-    ::Option<terrars::DynamicBlock<SagemakerFlowDefinitionHumanLoopRequestSourceEl>>,
-    output_config: std::option::Option<terrars::DynamicBlock<SagemakerFlowDefinitionOutputConfigEl>>,
 }

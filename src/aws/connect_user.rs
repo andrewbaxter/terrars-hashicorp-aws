@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConnectUserData {
+struct ConnectUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,6 +30,8 @@ struct ConnectUserData {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     routing_profile_id: terrars::PrimField<std::string::String>,
     security_profile_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,16 +39,16 @@ struct ConnectUserData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    identity_info: std::option::Option<std::vec::Vec<ConnectUserIdentityInfoEl>>,
+    identity_info: std::option::Option<std::vec::Vec<ConnectUser_IdentityInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    phone_config: std::option::Option<std::vec::Vec<ConnectUserPhoneConfigEl>>,
+    phone_config: std::option::Option<std::vec::Vec<ConnectUser_PhoneConfig>>,
     dynamic: ConnectUserDynamic,
 }
 
 struct ConnectUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConnectUserData>,
+    data: std::cell::RefCell<ConnectUserData_>,
 }
 
 #[derive(Clone)]
@@ -168,6 +172,13 @@ impl ConnectUser {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -189,7 +200,7 @@ impl ConnectUser {
     #[doc = "Set the field `identity_info`.\n"]
     pub fn set_identity_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConnectUserIdentityInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectUser_IdentityInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +216,7 @@ impl ConnectUser {
     #[doc = "Set the field `phone_config`.\n"]
     pub fn set_phone_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConnectUserPhoneConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectUser_PhoneConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -253,6 +264,12 @@ impl ConnectUser {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `routing_profile_id` after provisioning.\n"]
     pub fn routing_profile_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_profile_id", self.extract_ref()))
@@ -279,12 +296,12 @@ impl ConnectUser {
     }
 
     #[doc = "Get a reference to the value of field `identity_info` after provisioning.\n"]
-    pub fn identity_info(&self) -> terrars::ListRef<ConnectUserIdentityInfoElRef> {
+    pub fn identity_info(&self) -> terrars::ListRef<ConnectUser_IdentityInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.identity_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `phone_config` after provisioning.\n"]
-    pub fn phone_config(&self) -> terrars::ListRef<ConnectUserPhoneConfigElRef> {
+    pub fn phone_config(&self) -> terrars::ListRef<ConnectUser_PhoneConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phone_config", self.extract_ref()))
     }
 }
@@ -337,7 +354,7 @@ impl BuildConnectUser {
         let out = ConnectUser(std::rc::Rc::new(ConnectUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConnectUserData {
+            data: std::cell::RefCell::new(ConnectUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -349,6 +366,7 @@ impl BuildConnectUser {
                 instance_id: self.instance_id,
                 name: self.name,
                 password: core::default::Default::default(),
+                region: core::default::Default::default(),
                 routing_profile_id: self.routing_profile_id,
                 security_profile_ids: self.security_profile_ids,
                 tags: core::default::Default::default(),
@@ -421,6 +439,12 @@ impl ConnectUserRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `routing_profile_id` after provisioning.\n"]
     pub fn routing_profile_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_profile_id", self.extract_ref()))
@@ -447,27 +471,35 @@ impl ConnectUserRef {
     }
 
     #[doc = "Get a reference to the value of field `identity_info` after provisioning.\n"]
-    pub fn identity_info(&self) -> terrars::ListRef<ConnectUserIdentityInfoElRef> {
+    pub fn identity_info(&self) -> terrars::ListRef<ConnectUser_IdentityInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.identity_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `phone_config` after provisioning.\n"]
-    pub fn phone_config(&self) -> terrars::ListRef<ConnectUserPhoneConfigElRef> {
+    pub fn phone_config(&self) -> terrars::ListRef<ConnectUser_PhoneConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.phone_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ConnectUserDynamic {
+    identity_info: std::option::Option<terrars::DynamicBlock<ConnectUser_IdentityInfo>>,
+    phone_config: std::option::Option<terrars::DynamicBlock<ConnectUser_PhoneConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct ConnectUserIdentityInfoEl {
+pub struct ConnectUser_IdentityInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     email: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     first_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     last_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_email: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConnectUserIdentityInfoEl {
+impl ConnectUser_IdentityInfo {
     #[doc = "Set the field `email`.\n"]
     pub fn set_email(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.email = std::option::Option::Some(v.into());
@@ -485,10 +517,16 @@ impl ConnectUserIdentityInfoEl {
         self.last_name = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `secondary_email`.\n"]
+    pub fn set_secondary_email(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secondary_email = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for ConnectUserIdentityInfoEl {
-    type O = terrars::BlockAssignable<ConnectUserIdentityInfoEl>;
+impl terrars::ToListMappable for ConnectUser_IdentityInfo {
+    type O = terrars::BlockAssignable<ConnectUser_IdentityInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -499,33 +537,36 @@ impl terrars::ToListMappable for ConnectUserIdentityInfoEl {
     }
 }
 
-pub struct BuildConnectUserIdentityInfoEl {}
+pub struct BuildConnectUser_IdentityInfo {}
 
-impl BuildConnectUserIdentityInfoEl {
-    pub fn build(self) -> ConnectUserIdentityInfoEl {
-        ConnectUserIdentityInfoEl {
+impl BuildConnectUser_IdentityInfo {
+    pub fn build(self) -> ConnectUser_IdentityInfo {
+        ConnectUser_IdentityInfo {
             email: core::default::Default::default(),
             first_name: core::default::Default::default(),
             last_name: core::default::Default::default(),
+            secondary_email: core::default::Default::default(),
         }
     }
 }
 
-pub struct ConnectUserIdentityInfoElRef {
+#[allow(dead_code)]
+pub struct ConnectUser_IdentityInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserIdentityInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectUserIdentityInfoElRef {
-        ConnectUserIdentityInfoElRef {
+impl terrars::Ref for ConnectUser_IdentityInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectUser_IdentityInfoRef {
+        ConnectUser_IdentityInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserIdentityInfoElRef {
+impl ConnectUser_IdentityInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -544,10 +585,15 @@ impl ConnectUserIdentityInfoElRef {
     pub fn last_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_name", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `secondary_email` after provisioning.\n"]
+    pub fn secondary_email(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secondary_email", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserPhoneConfigEl {
+pub struct ConnectUser_PhoneConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     after_contact_work_time_limit: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -557,7 +603,7 @@ pub struct ConnectUserPhoneConfigEl {
     phone_type: terrars::PrimField<std::string::String>,
 }
 
-impl ConnectUserPhoneConfigEl {
+impl ConnectUser_PhoneConfig {
     #[doc = "Set the field `after_contact_work_time_limit`.\n"]
     pub fn set_after_contact_work_time_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.after_contact_work_time_limit = std::option::Option::Some(v.into());
@@ -577,8 +623,8 @@ impl ConnectUserPhoneConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectUserPhoneConfigEl {
-    type O = terrars::BlockAssignable<ConnectUserPhoneConfigEl>;
+impl terrars::ToListMappable for ConnectUser_PhoneConfig {
+    type O = terrars::BlockAssignable<ConnectUser_PhoneConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -589,14 +635,14 @@ impl terrars::ToListMappable for ConnectUserPhoneConfigEl {
     }
 }
 
-pub struct BuildConnectUserPhoneConfigEl {
+pub struct BuildConnectUser_PhoneConfig {
     #[doc = ""]
     pub phone_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectUserPhoneConfigEl {
-    pub fn build(self) -> ConnectUserPhoneConfigEl {
-        ConnectUserPhoneConfigEl {
+impl BuildConnectUser_PhoneConfig {
+    pub fn build(self) -> ConnectUser_PhoneConfig {
+        ConnectUser_PhoneConfig {
             after_contact_work_time_limit: core::default::Default::default(),
             auto_accept: core::default::Default::default(),
             desk_phone_number: core::default::Default::default(),
@@ -605,21 +651,23 @@ impl BuildConnectUserPhoneConfigEl {
     }
 }
 
-pub struct ConnectUserPhoneConfigElRef {
+#[allow(dead_code)]
+pub struct ConnectUser_PhoneConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserPhoneConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectUserPhoneConfigElRef {
-        ConnectUserPhoneConfigElRef {
+impl terrars::Ref for ConnectUser_PhoneConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectUser_PhoneConfigRef {
+        ConnectUser_PhoneConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserPhoneConfigElRef {
+impl ConnectUser_PhoneConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -643,10 +691,4 @@ impl ConnectUserPhoneConfigElRef {
     pub fn phone_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.phone_type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ConnectUserDynamic {
-    identity_info: std::option::Option<terrars::DynamicBlock<ConnectUserIdentityInfoEl>>,
-    phone_config: std::option::Option<terrars::DynamicBlock<ConnectUserPhoneConfigEl>>,
 }

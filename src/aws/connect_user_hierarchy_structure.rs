@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConnectUserHierarchyStructureData {
+struct ConnectUserHierarchyStructureData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct ConnectUserHierarchyStructureData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     instance_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    hierarchy_structure: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructureHierarchyStructureEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hierarchy_structure: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructure_HierarchyStructure>>,
     dynamic: ConnectUserHierarchyStructureDynamic,
 }
 
 struct ConnectUserHierarchyStructure_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConnectUserHierarchyStructureData>,
+    data: std::cell::RefCell<ConnectUserHierarchyStructureData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl ConnectUserHierarchyStructure {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `hierarchy_structure`.\n"]
     pub fn set_hierarchy_structure(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -161,8 +172,14 @@ impl ConnectUserHierarchyStructure {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `hierarchy_structure` after provisioning.\n"]
-    pub fn hierarchy_structure(&self) -> terrars::ListRef<ConnectUserHierarchyStructureHierarchyStructureElRef> {
+    pub fn hierarchy_structure(&self) -> terrars::ListRef<ConnectUserHierarchyStructure_HierarchyStructureRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hierarchy_structure", self.extract_ref()))
     }
 }
@@ -209,7 +226,7 @@ impl BuildConnectUserHierarchyStructure {
         let out = ConnectUserHierarchyStructure(std::rc::Rc::new(ConnectUserHierarchyStructure_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConnectUserHierarchyStructureData {
+            data: std::cell::RefCell::new(ConnectUserHierarchyStructureData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -217,6 +234,7 @@ impl BuildConnectUserHierarchyStructure {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
+                region: core::default::Default::default(),
                 hierarchy_structure: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -259,21 +277,34 @@ impl ConnectUserHierarchyStructureRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `hierarchy_structure` after provisioning.\n"]
-    pub fn hierarchy_structure(&self) -> terrars::ListRef<ConnectUserHierarchyStructureHierarchyStructureElRef> {
+    pub fn hierarchy_structure(&self) -> terrars::ListRef<ConnectUserHierarchyStructure_HierarchyStructureRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.hierarchy_structure", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ConnectUserHierarchyStructureDynamic {
+    hierarchy_structure: std
+    ::option
+    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructure_HierarchyStructure>>,
+}
+
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl { }
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelFive { }
 
-impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelFive>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -284,35 +315,37 @@ impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructure
     }
 }
 
-pub struct BuildConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
+pub struct BuildConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
-    pub fn build(self) -> ConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl { name: self.name }
+impl BuildConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
+    pub fn build(self) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelFive {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelFive { name: self.name }
     }
 }
 
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+impl terrars::Ref for ConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+    ) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -334,14 +367,14 @@ impl ConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelFourEl { }
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelFour { }
 
-impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelFour>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -352,35 +385,37 @@ impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructure
     }
 }
 
-pub struct BuildConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
+pub struct BuildConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
-    pub fn build(self) -> ConnectUserHierarchyStructureHierarchyStructureElLevelFourEl {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelFourEl { name: self.name }
+impl BuildConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
+    pub fn build(self) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelFour {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelFour { name: self.name }
     }
 }
 
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+impl terrars::Ref for ConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+    ) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -402,14 +437,14 @@ impl ConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelOneEl { }
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelOne { }
 
-impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelOne>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -420,35 +455,37 @@ impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructure
     }
 }
 
-pub struct BuildConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
+pub struct BuildConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
-    pub fn build(self) -> ConnectUserHierarchyStructureHierarchyStructureElLevelOneEl {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelOneEl { name: self.name }
+impl BuildConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
+    pub fn build(self) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelOne {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelOne { name: self.name }
     }
 }
 
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+impl terrars::Ref for ConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+    ) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -470,14 +507,14 @@ impl ConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl { }
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelThree { }
 
-impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelThree>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -488,35 +525,37 @@ impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructure
     }
 }
 
-pub struct BuildConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
+pub struct BuildConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
-    pub fn build(self) -> ConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl { name: self.name }
+impl BuildConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
+    pub fn build(self) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelThree {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelThree { name: self.name }
     }
 }
 
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
+impl terrars::Ref for ConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
+    ) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -538,14 +577,14 @@ impl ConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef {
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl { }
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelTwo { }
 
-impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelTwo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -556,35 +595,37 @@ impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructure
     }
 }
 
-pub struct BuildConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
+pub struct BuildConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
-    pub fn build(self) -> ConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl { name: self.name }
+impl BuildConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
+    pub fn build(self) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelTwo {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelTwo { name: self.name }
     }
 }
 
-pub struct ConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+impl terrars::Ref for ConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
-        ConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+    ) -> ConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
+        ConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
+impl ConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -606,40 +647,38 @@ impl ConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ConnectUserHierarchyStructureHierarchyStructureElDynamic {
+struct ConnectUserHierarchyStructure_HierarchyStructureDynamic {
     level_five: std
     ::option
-    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>>,
+    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructure_HierarchyStructure_LevelFive>>,
     level_four: std
     ::option
-    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>>,
-    level_one: std
-    ::option
-    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>>,
+    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructure_HierarchyStructure_LevelFour>>,
+    level_one: std::option::Option<terrars::DynamicBlock<ConnectUserHierarchyStructure_HierarchyStructure_LevelOne>>,
     level_three: std
     ::option
-    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>>,
+    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructure_HierarchyStructure_LevelThree>>,
     level_two: std
     ::option
-    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>>,
+    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructure_HierarchyStructure_LevelTwo>>,
 }
 
 #[derive(Serialize)]
-pub struct ConnectUserHierarchyStructureHierarchyStructureEl {
+pub struct ConnectUserHierarchyStructure_HierarchyStructure {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_five: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>>,
+    level_five: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructure_HierarchyStructure_LevelFive>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_four: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>>,
+    level_four: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructure_HierarchyStructure_LevelFour>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_one: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>>,
+    level_one: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructure_HierarchyStructure_LevelOne>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_three: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>>,
+    level_three: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructure_HierarchyStructure_LevelThree>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    level_two: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>>,
-    dynamic: ConnectUserHierarchyStructureHierarchyStructureElDynamic,
+    level_two: std::option::Option<std::vec::Vec<ConnectUserHierarchyStructure_HierarchyStructure_LevelTwo>>,
+    dynamic: ConnectUserHierarchyStructure_HierarchyStructureDynamic,
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureEl {
+impl ConnectUserHierarchyStructure_HierarchyStructure {
     #[doc = "Set the field `level_five`.\n"]
     pub fn set_level_five(
         mut self,
@@ -648,7 +687,7 @@ impl ConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelFiveEl>>,
+                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelFive>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -669,7 +708,7 @@ impl ConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelFourEl>>,
+                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelFour>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -690,7 +729,7 @@ impl ConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelOneEl>>,
+                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelOne>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -711,7 +750,7 @@ impl ConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelThreeEl>>,
+                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelThree>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -732,7 +771,7 @@ impl ConnectUserHierarchyStructureHierarchyStructureEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureElLevelTwoEl>>,
+                    ::Into<terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure_LevelTwo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -746,8 +785,8 @@ impl ConnectUserHierarchyStructureHierarchyStructureEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructureEl {
-    type O = terrars::BlockAssignable<ConnectUserHierarchyStructureHierarchyStructureEl>;
+impl terrars::ToListMappable for ConnectUserHierarchyStructure_HierarchyStructure {
+    type O = terrars::BlockAssignable<ConnectUserHierarchyStructure_HierarchyStructure>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -758,11 +797,11 @@ impl terrars::ToListMappable for ConnectUserHierarchyStructureHierarchyStructure
     }
 }
 
-pub struct BuildConnectUserHierarchyStructureHierarchyStructureEl {}
+pub struct BuildConnectUserHierarchyStructure_HierarchyStructure {}
 
-impl BuildConnectUserHierarchyStructureHierarchyStructureEl {
-    pub fn build(self) -> ConnectUserHierarchyStructureHierarchyStructureEl {
-        ConnectUserHierarchyStructureHierarchyStructureEl {
+impl BuildConnectUserHierarchyStructure_HierarchyStructure {
+    pub fn build(self) -> ConnectUserHierarchyStructure_HierarchyStructure {
+        ConnectUserHierarchyStructure_HierarchyStructure {
             level_five: core::default::Default::default(),
             level_four: core::default::Default::default(),
             level_one: core::default::Default::default(),
@@ -773,57 +812,52 @@ impl BuildConnectUserHierarchyStructureHierarchyStructureEl {
     }
 }
 
-pub struct ConnectUserHierarchyStructureHierarchyStructureElRef {
+#[allow(dead_code)]
+pub struct ConnectUserHierarchyStructure_HierarchyStructureRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectUserHierarchyStructureHierarchyStructureElRef {
+impl terrars::Ref for ConnectUserHierarchyStructure_HierarchyStructureRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ConnectUserHierarchyStructureHierarchyStructureElRef {
-        ConnectUserHierarchyStructureHierarchyStructureElRef {
+    ) -> ConnectUserHierarchyStructure_HierarchyStructureRef {
+        ConnectUserHierarchyStructure_HierarchyStructureRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectUserHierarchyStructureHierarchyStructureElRef {
+impl ConnectUserHierarchyStructure_HierarchyStructureRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `level_five` after provisioning.\n"]
-    pub fn level_five(&self) -> terrars::ListRef<ConnectUserHierarchyStructureHierarchyStructureElLevelFiveElRef> {
+    pub fn level_five(&self) -> terrars::ListRef<ConnectUserHierarchyStructure_HierarchyStructure_LevelFiveRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_five", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_four` after provisioning.\n"]
-    pub fn level_four(&self) -> terrars::ListRef<ConnectUserHierarchyStructureHierarchyStructureElLevelFourElRef> {
+    pub fn level_four(&self) -> terrars::ListRef<ConnectUserHierarchyStructure_HierarchyStructure_LevelFourRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_four", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_one` after provisioning.\n"]
-    pub fn level_one(&self) -> terrars::ListRef<ConnectUserHierarchyStructureHierarchyStructureElLevelOneElRef> {
+    pub fn level_one(&self) -> terrars::ListRef<ConnectUserHierarchyStructure_HierarchyStructure_LevelOneRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_one", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_three` after provisioning.\n"]
-    pub fn level_three(&self) -> terrars::ListRef<ConnectUserHierarchyStructureHierarchyStructureElLevelThreeElRef> {
+    pub fn level_three(&self) -> terrars::ListRef<ConnectUserHierarchyStructure_HierarchyStructure_LevelThreeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_three", self.base))
     }
 
     #[doc = "Get a reference to the value of field `level_two` after provisioning.\n"]
-    pub fn level_two(&self) -> terrars::ListRef<ConnectUserHierarchyStructureHierarchyStructureElLevelTwoElRef> {
+    pub fn level_two(&self) -> terrars::ListRef<ConnectUserHierarchyStructure_HierarchyStructure_LevelTwoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.level_two", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ConnectUserHierarchyStructureDynamic {
-    hierarchy_structure: std
-    ::option
-    ::Option<terrars::DynamicBlock<ConnectUserHierarchyStructureHierarchyStructureEl>>,
 }

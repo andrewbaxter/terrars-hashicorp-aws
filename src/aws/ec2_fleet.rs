@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2FleetData {
+struct Ec2FleetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,7 +25,15 @@ struct Ec2FleetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     excess_capacity_termination_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fleet_state: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fulfilled_capacity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fulfilled_on_demand_capacity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replace_unhealthy_instances: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,22 +47,28 @@ struct Ec2FleetData {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    launch_template_config: std::option::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigEl>>,
+    valid_from: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    on_demand_options: std::option::Option<std::vec::Vec<Ec2FleetOnDemandOptionsEl>>,
+    valid_until: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spot_options: std::option::Option<std::vec::Vec<Ec2FleetSpotOptionsEl>>,
+    fleet_instance_set: std::option::Option<std::vec::Vec<Ec2Fleet_FleetInstanceSet>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    target_capacity_specification: std::option::Option<std::vec::Vec<Ec2FleetTargetCapacitySpecificationEl>>,
+    launch_template_config: std::option::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Ec2FleetTimeoutsEl>,
+    on_demand_options: std::option::Option<std::vec::Vec<Ec2Fleet_OnDemandOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    spot_options: std::option::Option<std::vec::Vec<Ec2Fleet_SpotOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    target_capacity_specification: std::option::Option<std::vec::Vec<Ec2Fleet_TargetCapacitySpecification>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Ec2Fleet_Timeouts>,
     dynamic: Ec2FleetDynamic,
 }
 
 struct Ec2Fleet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2FleetData>,
+    data: std::cell::RefCell<Ec2FleetData_>,
 }
 
 #[derive(Clone)]
@@ -167,9 +183,34 @@ impl Ec2Fleet {
         self
     }
 
+    #[doc = "Set the field `fleet_state`.\n"]
+    pub fn set_fleet_state(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().fleet_state = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `fulfilled_capacity`.\n"]
+    pub fn set_fulfilled_capacity(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().fulfilled_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `fulfilled_on_demand_capacity`.\n"]
+    pub fn set_fulfilled_on_demand_capacity(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().fulfilled_on_demand_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -215,10 +256,38 @@ impl Ec2Fleet {
         self
     }
 
+    #[doc = "Set the field `valid_from`.\n"]
+    pub fn set_valid_from(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().valid_from = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `valid_until`.\n"]
+    pub fn set_valid_until(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().valid_until = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `fleet_instance_set`.\n"]
+    pub fn set_fleet_instance_set(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2Fleet_FleetInstanceSet>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().fleet_instance_set = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.fleet_instance_set = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `launch_template_config`.\n"]
     pub fn set_launch_template_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -234,7 +303,7 @@ impl Ec2Fleet {
     #[doc = "Set the field `on_demand_options`.\n"]
     pub fn set_on_demand_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Ec2FleetOnDemandOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2Fleet_OnDemandOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -248,7 +317,7 @@ impl Ec2Fleet {
     }
 
     #[doc = "Set the field `spot_options`.\n"]
-    pub fn set_spot_options(self, v: impl std::convert::Into<terrars::BlockAssignable<Ec2FleetSpotOptionsEl>>) -> Self {
+    pub fn set_spot_options(self, v: impl std::convert::Into<terrars::BlockAssignable<Ec2Fleet_SpotOptions>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().spot_options = std::option::Option::Some(v);
@@ -263,7 +332,7 @@ impl Ec2Fleet {
     #[doc = "Set the field `target_capacity_specification`.\n"]
     pub fn set_target_capacity_specification(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Ec2FleetTargetCapacitySpecificationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2Fleet_TargetCapacitySpecification>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -277,7 +346,7 @@ impl Ec2Fleet {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Ec2FleetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Ec2Fleet_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -300,9 +369,30 @@ impl Ec2Fleet {
         )
     }
 
+    #[doc = "Get a reference to the value of field `fleet_state` after provisioning.\n"]
+    pub fn fleet_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fleet_state", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fulfilled_capacity` after provisioning.\n"]
+    pub fn fulfilled_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fulfilled_capacity", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fulfilled_on_demand_capacity` after provisioning.\n"]
+    pub fn fulfilled_on_demand_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fulfilled_on_demand_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replace_unhealthy_instances` after provisioning.\n"]
@@ -338,29 +428,44 @@ impl Ec2Fleet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `valid_from` after provisioning.\n"]
+    pub fn valid_from(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_from", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `valid_until` after provisioning.\n"]
+    pub fn valid_until(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_until", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fleet_instance_set` after provisioning.\n"]
+    pub fn fleet_instance_set(&self) -> terrars::ListRef<Ec2Fleet_FleetInstanceSetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.fleet_instance_set", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `launch_template_config` after provisioning.\n"]
-    pub fn launch_template_config(&self) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElRef> {
+    pub fn launch_template_config(&self) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `on_demand_options` after provisioning.\n"]
-    pub fn on_demand_options(&self) -> terrars::ListRef<Ec2FleetOnDemandOptionsElRef> {
+    pub fn on_demand_options(&self) -> terrars::ListRef<Ec2Fleet_OnDemandOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.on_demand_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `spot_options` after provisioning.\n"]
-    pub fn spot_options(&self) -> terrars::ListRef<Ec2FleetSpotOptionsElRef> {
+    pub fn spot_options(&self) -> terrars::ListRef<Ec2Fleet_SpotOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spot_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_capacity_specification` after provisioning.\n"]
-    pub fn target_capacity_specification(&self) -> terrars::ListRef<Ec2FleetTargetCapacitySpecificationElRef> {
+    pub fn target_capacity_specification(&self) -> terrars::ListRef<Ec2Fleet_TargetCapacitySpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_capacity_specification", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Ec2FleetTimeoutsElRef {
-        Ec2FleetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Ec2Fleet_TimeoutsRef {
+        Ec2Fleet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -404,7 +509,7 @@ impl BuildEc2Fleet {
         let out = Ec2Fleet(std::rc::Rc::new(Ec2Fleet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2FleetData {
+            data: std::cell::RefCell::new(Ec2FleetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -412,13 +517,20 @@ impl BuildEc2Fleet {
                 provisioner: core::default::Default::default(),
                 context: core::default::Default::default(),
                 excess_capacity_termination_policy: core::default::Default::default(),
+                fleet_state: core::default::Default::default(),
+                fulfilled_capacity: core::default::Default::default(),
+                fulfilled_on_demand_capacity: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 replace_unhealthy_instances: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 terminate_instances: core::default::Default::default(),
                 terminate_instances_with_expiration: core::default::Default::default(),
                 type_: core::default::Default::default(),
+                valid_from: core::default::Default::default(),
+                valid_until: core::default::Default::default(),
+                fleet_instance_set: core::default::Default::default(),
                 launch_template_config: core::default::Default::default(),
                 on_demand_options: core::default::Default::default(),
                 spot_options: core::default::Default::default(),
@@ -473,9 +585,30 @@ impl Ec2FleetRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `fleet_state` after provisioning.\n"]
+    pub fn fleet_state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fleet_state", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fulfilled_capacity` after provisioning.\n"]
+    pub fn fulfilled_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fulfilled_capacity", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fulfilled_on_demand_capacity` after provisioning.\n"]
+    pub fn fulfilled_on_demand_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fulfilled_on_demand_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replace_unhealthy_instances` after provisioning.\n"]
@@ -511,34 +644,166 @@ impl Ec2FleetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `valid_from` after provisioning.\n"]
+    pub fn valid_from(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_from", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `valid_until` after provisioning.\n"]
+    pub fn valid_until(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_until", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fleet_instance_set` after provisioning.\n"]
+    pub fn fleet_instance_set(&self) -> terrars::ListRef<Ec2Fleet_FleetInstanceSetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.fleet_instance_set", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `launch_template_config` after provisioning.\n"]
-    pub fn launch_template_config(&self) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElRef> {
+    pub fn launch_template_config(&self) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `on_demand_options` after provisioning.\n"]
-    pub fn on_demand_options(&self) -> terrars::ListRef<Ec2FleetOnDemandOptionsElRef> {
+    pub fn on_demand_options(&self) -> terrars::ListRef<Ec2Fleet_OnDemandOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.on_demand_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `spot_options` after provisioning.\n"]
-    pub fn spot_options(&self) -> terrars::ListRef<Ec2FleetSpotOptionsElRef> {
+    pub fn spot_options(&self) -> terrars::ListRef<Ec2Fleet_SpotOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spot_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_capacity_specification` after provisioning.\n"]
-    pub fn target_capacity_specification(&self) -> terrars::ListRef<Ec2FleetTargetCapacitySpecificationElRef> {
+    pub fn target_capacity_specification(&self) -> terrars::ListRef<Ec2Fleet_TargetCapacitySpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_capacity_specification", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Ec2FleetTimeoutsElRef {
-        Ec2FleetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Ec2Fleet_TimeoutsRef {
+        Ec2Fleet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct Ec2FleetDynamic {
+    fleet_instance_set: std::option::Option<terrars::DynamicBlock<Ec2Fleet_FleetInstanceSet>>,
+    launch_template_config: std::option::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig>>,
+    on_demand_options: std::option::Option<terrars::DynamicBlock<Ec2Fleet_OnDemandOptions>>,
+    spot_options: std::option::Option<terrars::DynamicBlock<Ec2Fleet_SpotOptions>>,
+    target_capacity_specification: std::option::Option<terrars::DynamicBlock<Ec2Fleet_TargetCapacitySpecification>>,
+}
+
+#[derive(Serialize)]
+pub struct Ec2Fleet_FleetInstanceSet {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lifecycle: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    platform: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Ec2Fleet_FleetInstanceSet {
+    #[doc = "Set the field `instance_ids`.\n"]
+    pub fn set_instance_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.instance_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `instance_type`.\n"]
+    pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.instance_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `lifecycle`.\n"]
+    pub fn set_lifecycle(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.lifecycle = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `platform`.\n"]
+    pub fn set_platform(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.platform = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Ec2Fleet_FleetInstanceSet {
+    type O = terrars::BlockAssignable<Ec2Fleet_FleetInstanceSet>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEc2Fleet_FleetInstanceSet {}
+
+impl BuildEc2Fleet_FleetInstanceSet {
+    pub fn build(self) -> Ec2Fleet_FleetInstanceSet {
+        Ec2Fleet_FleetInstanceSet {
+            instance_ids: core::default::Default::default(),
+            instance_type: core::default::Default::default(),
+            lifecycle: core::default::Default::default(),
+            platform: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Ec2Fleet_FleetInstanceSetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Ec2Fleet_FleetInstanceSetRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2Fleet_FleetInstanceSetRef {
+        Ec2Fleet_FleetInstanceSetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Ec2Fleet_FleetInstanceSetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `instance_ids` after provisioning.\n"]
+    pub fn instance_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_ids", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_type` after provisioning.\n"]
+    pub fn instance_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `lifecycle` after provisioning.\n"]
+    pub fn lifecycle(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lifecycle", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `platform` after provisioning.\n"]
+    pub fn platform(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_template_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -546,7 +811,7 @@ pub struct Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
     version: terrars::PrimField<std::string::String>,
 }
 
-impl Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
+impl Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification {
     #[doc = "Set the field `launch_template_id`.\n"]
     pub fn set_launch_template_id(
         mut self,
@@ -566,8 +831,8 @@ impl Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
-    type O = terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl>;
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification {
+    type O = terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -578,14 +843,14 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElLaunchTemplateSpe
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
+pub struct BuildEc2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification {
     #[doc = ""]
     pub version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEc2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
-        Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification {
+        Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification {
             launch_template_id: core::default::Default::default(),
             launch_template_name: core::default::Default::default(),
             version: self.version,
@@ -593,24 +858,26 @@ impl BuildEc2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl {
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
-        Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
+    ) -> Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
+        Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
+impl Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -632,14 +899,14 @@ impl Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationElRef {
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -653,9 +920,8 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCo
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl {
-    type O =
-        terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl>;
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount {
+    type O = terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -666,35 +932,37 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanc
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl {}
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount {}
 
-impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountElRef {
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCountRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountElRef {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -711,95 +979,14 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCo
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-    #[doc = "Set the field `max`.\n"]
-    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.max = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `min`.\n"]
-    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.min = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-    type O =
-        terrars
-        ::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {}
-
-impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-            max: core::default::Default::default(),
-            min: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `max` after provisioning.\n"]
-    pub fn max(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `min` after provisioning.\n"]
-    pub fn min(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    max: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    min: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -814,10 +1001,10 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBa
 }
 
 impl terrars
-::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
     type O =
         terrars
-        ::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl>;
+        ::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -828,35 +1015,37 @@ impl terrars
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {}
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib {}
 
-impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -873,14 +1062,14 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBa
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -894,9 +1083,10 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerV
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
     type O =
-        terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl>;
+        terrars
+        ::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -907,35 +1097,37 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanc
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {}
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps {}
 
-impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -952,22 +1144,29 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerV
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
-    min: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `min`.\n"]
+    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl {
-    type O = terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl>;
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu {
+    type O = terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -978,38 +1177,113 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanc
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl {
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu {}
+
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu {
+            max: core::default::Default::default(),
+            min: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpuRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpuRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpuRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpuRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpuRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max` after provisioning.\n"]
+    pub fn max(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min` after provisioning.\n"]
+    pub fn min(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max: std::option::Option<terrars::PrimField<f64>>,
+    min: terrars::PrimField<f64>,
+}
+
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib {
+    #[doc = "Set the field `max`.\n"]
+    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib {
+    type O = terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib {
     #[doc = ""]
     pub min: terrars::PrimField<f64>,
 }
 
-impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib {
             max: core::default::Default::default(),
             min: self.min,
         }
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMibRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMibRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibElRef {
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMibRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMibRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibElRef {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMibRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1026,14 +1300,14 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibElRe
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1047,10 +1321,9 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterf
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps {
     type O =
-        terrars
-        ::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl>;
+        terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1061,35 +1334,37 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanc
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {}
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps {}
 
-impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1106,14 +1381,14 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterf
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1127,10 +1402,9 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalSto
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount {
     type O =
-        terrars
-        ::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl>;
+        terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1141,35 +1415,37 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanc
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {}
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount {}
 
-impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCountRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1186,13 +1462,94 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalSto
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb {
+    #[doc = "Set the field `max`.\n"]
+    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min`.\n"]
+    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb {
+    type O =
+        terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb {}
+
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb {
+            max: core::default::Default::default(),
+            min: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGbRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGbRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGbRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGbRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGbRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max` after provisioning.\n"]
+    pub fn max(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min` after provisioning.\n"]
+    pub fn min(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     min: terrars::PrimField<f64>,
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1200,8 +1557,8 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl {
-    type O = terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl>;
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount {
+    type O = terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1212,38 +1569,40 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanc
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl {
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount {
     #[doc = ""]
     pub min: terrars::PrimField<f64>,
 }
 
-impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount {
             max: core::default::Default::default(),
             min: self.min,
         }
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountElRef {
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCountRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountElRef {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1260,51 +1619,52 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountElRe
 }
 
 #[derive(Serialize, Default)]
-struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElDynamic {
+struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirementsDynamic {
     accelerator_count: std
     ::option
-    ::Option<terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl>>,
+    ::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount>>,
     accelerator_total_memory_mib: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl>,
+        terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib>,
     >,
     baseline_ebs_bandwidth_mbps: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl>,
+        terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps>,
     >,
     memory_gib_per_vcpu: std
     ::option
-    ::Option<terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl>>,
+    ::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu>>,
     memory_mib: std
     ::option
-    ::Option<terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl>>,
+    ::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib>>,
+    network_bandwidth_gbps: std
+    ::option
+    ::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps>>,
     network_interface_count: std
     ::option
     ::Option<
-        terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl>,
+        terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount>,
     >,
     total_local_storage_gb: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl>,
-    >,
+    ::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb>>,
     vcpu_count: std
     ::option
-    ::Option<terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl>>,
+    ::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount>>,
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_manufacturers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_instance_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bare_metal: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1320,6 +1680,8 @@ pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     local_storage_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_spot_price_as_percentage_of_optimal_on_demand_price: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     on_demand_max_price_percentage_over_lowest_price: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     require_hibernate_support: std::option::Option<terrars::PrimField<bool>>,
@@ -1328,41 +1690,39 @@ pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_count: std
     ::option
-    ::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl>>,
+    ::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_total_memory_mib: std
     ::option
-    ::Option<
-        std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl>,
-    >,
+    ::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     baseline_ebs_bandwidth_mbps: std
     ::option
-    ::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl>>,
+    ::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     memory_gib_per_vcpu: std
     ::option
-    ::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl>>,
+    ::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    memory_mib: std
+    memory_mib: std::option::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_bandwidth_gbps: std
     ::option
-    ::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl>>,
+    ::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface_count: std
     ::option
-    ::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl>>,
+    ::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     total_local_storage_gb: std
     ::option
-    ::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl>>,
+    ::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vcpu_count: std
-    ::option
-    ::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl>>,
-    dynamic: Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElDynamic,
+    vcpu_count: std::option::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount>>,
+    dynamic: Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirementsDynamic,
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements {
     #[doc = "Set the field `accelerator_manufacturers`.\n"]
     pub fn set_accelerator_manufacturers(
         mut self,
@@ -1387,6 +1747,15 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.accelerator_types = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `allowed_instance_types`.\n"]
+    pub fn set_allowed_instance_types(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_instance_types = std::option::Option::Some(v.into());
         self
     }
 
@@ -1447,6 +1816,15 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
         self
     }
 
+    #[doc = "Set the field `max_spot_price_as_percentage_of_optimal_on_demand_price`.\n"]
+    pub fn set_max_spot_price_as_percentage_of_optimal_on_demand_price(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.max_spot_price_as_percentage_of_optimal_on_demand_price = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `on_demand_max_price_percentage_over_lowest_price`.\n"]
     pub fn set_on_demand_max_price_percentage_over_lowest_price(
         mut self,
@@ -1482,7 +1860,7 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountEl,
+                            Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCount,
                         >,
                     >,
     ) -> Self {
@@ -1508,7 +1886,7 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl,
+                            Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMib,
                         >,
                     >,
     ) -> Self {
@@ -1534,7 +1912,7 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl,
+                            Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbps,
                         >,
                     >,
     ) -> Self {
@@ -1560,7 +1938,7 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl,
+                            Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpu,
                         >,
                     >,
     ) -> Self {
@@ -1585,7 +1963,7 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibEl>,
+                        ::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMib>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1594,6 +1972,32 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.memory_mib = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `network_bandwidth_gbps`.\n"]
+    pub fn set_network_bandwidth_gbps(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbps,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_bandwidth_gbps = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_bandwidth_gbps = std::option::Option::Some(d);
             },
         }
         self
@@ -1610,7 +2014,7 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountEl,
+                            Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCount,
                         >,
                     >,
     ) -> Self {
@@ -1636,7 +2040,7 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbEl,
+                            Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGb,
                         >,
                     >,
     ) -> Self {
@@ -1661,7 +2065,7 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountEl>,
+                        ::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCount>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1676,8 +2080,8 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
-    type O = terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl>;
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements {
+    type O = terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1688,14 +2092,15 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideElInstanc
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {}
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements {}
 
-impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_Override_InstanceRequirements {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements {
             accelerator_manufacturers: core::default::Default::default(),
             accelerator_names: core::default::Default::default(),
             accelerator_types: core::default::Default::default(),
+            allowed_instance_types: core::default::Default::default(),
             bare_metal: core::default::Default::default(),
             burstable_performance: core::default::Default::default(),
             cpu_manufacturers: core::default::Default::default(),
@@ -1703,6 +2108,7 @@ impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
             instance_generations: core::default::Default::default(),
             local_storage: core::default::Default::default(),
             local_storage_types: core::default::Default::default(),
+            max_spot_price_as_percentage_of_optimal_on_demand_price: core::default::Default::default(),
             on_demand_max_price_percentage_over_lowest_price: core::default::Default::default(),
             require_hibernate_support: core::default::Default::default(),
             spot_max_price_percentage_over_lowest_price: core::default::Default::default(),
@@ -1711,6 +2117,7 @@ impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
             baseline_ebs_bandwidth_mbps: core::default::Default::default(),
             memory_gib_per_vcpu: core::default::Default::default(),
             memory_mib: core::default::Default::default(),
+            network_bandwidth_gbps: core::default::Default::default(),
             network_interface_count: core::default::Default::default(),
             total_local_storage_gb: core::default::Default::default(),
             vcpu_count: core::default::Default::default(),
@@ -1719,24 +2126,26 @@ impl BuildEc2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl {
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirementsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirementsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElRef {
+    ) -> Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirementsRef {
+        Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirementsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElRef {
+impl Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirementsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1754,6 +2163,11 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElRef {
     #[doc = "Get a reference to the value of field `accelerator_types` after provisioning.\n"]
     pub fn accelerator_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.accelerator_types", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `allowed_instance_types` after provisioning.\n"]
+    pub fn allowed_instance_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_instance_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `bare_metal` after provisioning.\n"]
@@ -1792,6 +2206,15 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElRef {
     }
 
     #[doc =
+        "Get a reference to the value of field `max_spot_price_as_percentage_of_optimal_on_demand_price` after provisioning.\n"]
+    pub fn max_spot_price_as_percentage_of_optimal_on_demand_price(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.max_spot_price_as_percentage_of_optimal_on_demand_price", self.base),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `on_demand_max_price_percentage_over_lowest_price` after provisioning.\n"]
     pub fn on_demand_max_price_percentage_over_lowest_price(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(
@@ -1816,71 +2239,76 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElRef {
     #[doc = "Get a reference to the value of field `accelerator_count` after provisioning.\n"]
     pub fn accelerator_count(
         &self,
-    ) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorCountElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerator_count", self.base))
     }
 
     #[doc = "Get a reference to the value of field `accelerator_total_memory_mib` after provisioning.\n"]
     pub fn accelerator_total_memory_mib(
         &self,
-    ) -> terrars
-    ::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerator_total_memory_mib", self.base))
     }
 
     #[doc = "Get a reference to the value of field `baseline_ebs_bandwidth_mbps` after provisioning.\n"]
     pub fn baseline_ebs_bandwidth_mbps(
         &self,
-    ) -> terrars
-    ::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.baseline_ebs_bandwidth_mbps", self.base))
     }
 
     #[doc = "Get a reference to the value of field `memory_gib_per_vcpu` after provisioning.\n"]
     pub fn memory_gib_per_vcpu(
         &self,
-    ) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryGibPerVcpuRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memory_gib_per_vcpu", self.base))
     }
 
     #[doc = "Get a reference to the value of field `memory_mib` after provisioning.\n"]
     pub fn memory_mib(
         &self,
-    ) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElMemoryMibElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_MemoryMibRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memory_mib", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `network_bandwidth_gbps` after provisioning.\n"]
+    pub fn network_bandwidth_gbps(
+        &self,
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkBandwidthGbpsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_bandwidth_gbps", self.base))
     }
 
     #[doc = "Get a reference to the value of field `network_interface_count` after provisioning.\n"]
     pub fn network_interface_count(
         &self,
-    ) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_NetworkInterfaceCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface_count", self.base))
     }
 
     #[doc = "Get a reference to the value of field `total_local_storage_gb` after provisioning.\n"]
     pub fn total_local_storage_gb(
         &self,
-    ) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_TotalLocalStorageGbRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.total_local_storage_gb", self.base))
     }
 
     #[doc = "Get a reference to the value of field `vcpu_count` after provisioning.\n"]
     pub fn vcpu_count(
         &self,
-    ) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElVcpuCountElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements_VcpuCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vcpu_count", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Ec2FleetLaunchTemplateConfigElOverrideElDynamic {
+struct Ec2Fleet_LaunchTemplateConfig_OverrideDynamic {
     instance_requirements: std
     ::option
-    ::Option<terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl>>,
+    ::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements>>,
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigElOverrideEl {
+pub struct Ec2Fleet_LaunchTemplateConfig_Override {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1896,11 +2324,11 @@ pub struct Ec2FleetLaunchTemplateConfigElOverrideEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_requirements: std
     ::option
-    ::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl>>,
-    dynamic: Ec2FleetLaunchTemplateConfigElOverrideElDynamic,
+    ::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements>>,
+    dynamic: Ec2Fleet_LaunchTemplateConfig_OverrideDynamic,
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideEl {
+impl Ec2Fleet_LaunchTemplateConfig_Override {
     #[doc = "Set the field `availability_zone`.\n"]
     pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.availability_zone = std::option::Option::Some(v.into());
@@ -1945,7 +2373,7 @@ impl Ec2FleetLaunchTemplateConfigElOverrideEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsEl>>,
+                    ::Into<terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirements>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1959,8 +2387,8 @@ impl Ec2FleetLaunchTemplateConfigElOverrideEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideEl {
-    type O = terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideEl>;
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig_Override {
+    type O = terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1971,11 +2399,11 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigElOverrideEl {
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigElOverrideEl {}
+pub struct BuildEc2Fleet_LaunchTemplateConfig_Override {}
 
-impl BuildEc2FleetLaunchTemplateConfigElOverrideEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigElOverrideEl {
-        Ec2FleetLaunchTemplateConfigElOverrideEl {
+impl BuildEc2Fleet_LaunchTemplateConfig_Override {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig_Override {
+        Ec2Fleet_LaunchTemplateConfig_Override {
             availability_zone: core::default::Default::default(),
             instance_type: core::default::Default::default(),
             max_price: core::default::Default::default(),
@@ -1988,21 +2416,23 @@ impl BuildEc2FleetLaunchTemplateConfigElOverrideEl {
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElOverrideElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfig_OverrideRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElOverrideElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2FleetLaunchTemplateConfigElOverrideElRef {
-        Ec2FleetLaunchTemplateConfigElOverrideElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfig_OverrideRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2Fleet_LaunchTemplateConfig_OverrideRef {
+        Ec2Fleet_LaunchTemplateConfig_OverrideRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElOverrideElRef {
+impl Ec2Fleet_LaunchTemplateConfig_OverrideRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2040,31 +2470,31 @@ impl Ec2FleetLaunchTemplateConfigElOverrideElRef {
     #[doc = "Get a reference to the value of field `instance_requirements` after provisioning.\n"]
     pub fn instance_requirements(
         &self,
-    ) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElInstanceRequirementsElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_Override_InstanceRequirementsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_requirements", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Ec2FleetLaunchTemplateConfigElDynamic {
+struct Ec2Fleet_LaunchTemplateConfigDynamic {
     launch_template_specification: std
     ::option
-    ::Option<terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl>>,
-    override_: std::option::Option<terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigElOverrideEl>>,
+    ::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification>>,
+    override_: std::option::Option<terrars::DynamicBlock<Ec2Fleet_LaunchTemplateConfig_Override>>,
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetLaunchTemplateConfigEl {
+pub struct Ec2Fleet_LaunchTemplateConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_template_specification: std
     ::option
-    ::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl>>,
+    ::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification>>,
     #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
-    override_: std::option::Option<std::vec::Vec<Ec2FleetLaunchTemplateConfigElOverrideEl>>,
-    dynamic: Ec2FleetLaunchTemplateConfigElDynamic,
+    override_: std::option::Option<std::vec::Vec<Ec2Fleet_LaunchTemplateConfig_Override>>,
+    dynamic: Ec2Fleet_LaunchTemplateConfigDynamic,
 }
 
-impl Ec2FleetLaunchTemplateConfigEl {
+impl Ec2Fleet_LaunchTemplateConfig {
     #[doc = "Set the field `launch_template_specification`.\n"]
     pub fn set_launch_template_specification(
         mut self,
@@ -2073,7 +2503,7 @@ impl Ec2FleetLaunchTemplateConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationEl>>,
+                    ::Into<terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecification>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2089,7 +2519,7 @@ impl Ec2FleetLaunchTemplateConfigEl {
     #[doc = "Set the field `override_`.\n"]
     pub fn set_override(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigElOverrideEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig_Override>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2103,8 +2533,8 @@ impl Ec2FleetLaunchTemplateConfigEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigEl {
-    type O = terrars::BlockAssignable<Ec2FleetLaunchTemplateConfigEl>;
+impl terrars::ToListMappable for Ec2Fleet_LaunchTemplateConfig {
+    type O = terrars::BlockAssignable<Ec2Fleet_LaunchTemplateConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2115,11 +2545,11 @@ impl terrars::ToListMappable for Ec2FleetLaunchTemplateConfigEl {
     }
 }
 
-pub struct BuildEc2FleetLaunchTemplateConfigEl {}
+pub struct BuildEc2Fleet_LaunchTemplateConfig {}
 
-impl BuildEc2FleetLaunchTemplateConfigEl {
-    pub fn build(self) -> Ec2FleetLaunchTemplateConfigEl {
-        Ec2FleetLaunchTemplateConfigEl {
+impl BuildEc2Fleet_LaunchTemplateConfig {
+    pub fn build(self) -> Ec2Fleet_LaunchTemplateConfig {
+        Ec2Fleet_LaunchTemplateConfig {
             launch_template_specification: core::default::Default::default(),
             override_: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2127,21 +2557,23 @@ impl BuildEc2FleetLaunchTemplateConfigEl {
     }
 }
 
-pub struct Ec2FleetLaunchTemplateConfigElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_LaunchTemplateConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetLaunchTemplateConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2FleetLaunchTemplateConfigElRef {
-        Ec2FleetLaunchTemplateConfigElRef {
+impl terrars::Ref for Ec2Fleet_LaunchTemplateConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2Fleet_LaunchTemplateConfigRef {
+        Ec2Fleet_LaunchTemplateConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetLaunchTemplateConfigElRef {
+impl Ec2Fleet_LaunchTemplateConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2149,23 +2581,105 @@ impl Ec2FleetLaunchTemplateConfigElRef {
     #[doc = "Get a reference to the value of field `launch_template_specification` after provisioning.\n"]
     pub fn launch_template_specification(
         &self,
-    ) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElLaunchTemplateSpecificationElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_LaunchTemplateSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template_specification", self.base))
     }
 
     #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
-    pub fn override_(&self) -> terrars::ListRef<Ec2FleetLaunchTemplateConfigElOverrideElRef> {
+    pub fn override_(&self) -> terrars::ListRef<Ec2Fleet_LaunchTemplateConfig_OverrideRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.override", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetOnDemandOptionsEl {
+pub struct Ec2Fleet_OnDemandOptions_CapacityReservationOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    allocation_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    usage_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Ec2FleetOnDemandOptionsEl {
+impl Ec2Fleet_OnDemandOptions_CapacityReservationOptions {
+    #[doc = "Set the field `usage_strategy`.\n"]
+    pub fn set_usage_strategy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.usage_strategy = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Ec2Fleet_OnDemandOptions_CapacityReservationOptions {
+    type O = terrars::BlockAssignable<Ec2Fleet_OnDemandOptions_CapacityReservationOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEc2Fleet_OnDemandOptions_CapacityReservationOptions {}
+
+impl BuildEc2Fleet_OnDemandOptions_CapacityReservationOptions {
+    pub fn build(self) -> Ec2Fleet_OnDemandOptions_CapacityReservationOptions {
+        Ec2Fleet_OnDemandOptions_CapacityReservationOptions { usage_strategy: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Ec2Fleet_OnDemandOptions_CapacityReservationOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Ec2Fleet_OnDemandOptions_CapacityReservationOptionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> Ec2Fleet_OnDemandOptions_CapacityReservationOptionsRef {
+        Ec2Fleet_OnDemandOptions_CapacityReservationOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Ec2Fleet_OnDemandOptions_CapacityReservationOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `usage_strategy` after provisioning.\n"]
+    pub fn usage_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.usage_strategy", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct Ec2Fleet_OnDemandOptionsDynamic {
+    capacity_reservation_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<Ec2Fleet_OnDemandOptions_CapacityReservationOptions>>,
+}
+
+#[derive(Serialize)]
+pub struct Ec2Fleet_OnDemandOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allocation_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_total_price: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_target_capacity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    single_availability_zone: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    single_instance_type: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capacity_reservation_options: std::option::Option<std::vec::Vec<Ec2Fleet_OnDemandOptions_CapacityReservationOptions>>,
+    dynamic: Ec2Fleet_OnDemandOptionsDynamic,
+}
+
+impl Ec2Fleet_OnDemandOptions {
     #[doc = "Set the field `allocation_strategy`.\n"]
     pub fn set_allocation_strategy(
         mut self,
@@ -2174,10 +2688,50 @@ impl Ec2FleetOnDemandOptionsEl {
         self.allocation_strategy = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `max_total_price`.\n"]
+    pub fn set_max_total_price(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.max_total_price = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min_target_capacity`.\n"]
+    pub fn set_min_target_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_target_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `single_availability_zone`.\n"]
+    pub fn set_single_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.single_availability_zone = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `single_instance_type`.\n"]
+    pub fn set_single_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.single_instance_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `capacity_reservation_options`.\n"]
+    pub fn set_capacity_reservation_options(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2Fleet_OnDemandOptions_CapacityReservationOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.capacity_reservation_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.capacity_reservation_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for Ec2FleetOnDemandOptionsEl {
-    type O = terrars::BlockAssignable<Ec2FleetOnDemandOptionsEl>;
+impl terrars::ToListMappable for Ec2Fleet_OnDemandOptions {
+    type O = terrars::BlockAssignable<Ec2Fleet_OnDemandOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2188,29 +2742,39 @@ impl terrars::ToListMappable for Ec2FleetOnDemandOptionsEl {
     }
 }
 
-pub struct BuildEc2FleetOnDemandOptionsEl {}
+pub struct BuildEc2Fleet_OnDemandOptions {}
 
-impl BuildEc2FleetOnDemandOptionsEl {
-    pub fn build(self) -> Ec2FleetOnDemandOptionsEl {
-        Ec2FleetOnDemandOptionsEl { allocation_strategy: core::default::Default::default() }
+impl BuildEc2Fleet_OnDemandOptions {
+    pub fn build(self) -> Ec2Fleet_OnDemandOptions {
+        Ec2Fleet_OnDemandOptions {
+            allocation_strategy: core::default::Default::default(),
+            max_total_price: core::default::Default::default(),
+            min_target_capacity: core::default::Default::default(),
+            single_availability_zone: core::default::Default::default(),
+            single_instance_type: core::default::Default::default(),
+            capacity_reservation_options: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
     }
 }
 
-pub struct Ec2FleetOnDemandOptionsElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_OnDemandOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetOnDemandOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2FleetOnDemandOptionsElRef {
-        Ec2FleetOnDemandOptionsElRef {
+impl terrars::Ref for Ec2Fleet_OnDemandOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2Fleet_OnDemandOptionsRef {
+        Ec2Fleet_OnDemandOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetOnDemandOptionsElRef {
+impl Ec2Fleet_OnDemandOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2219,15 +2783,44 @@ impl Ec2FleetOnDemandOptionsElRef {
     pub fn allocation_strategy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.allocation_strategy", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `max_total_price` after provisioning.\n"]
+    pub fn max_total_price(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_total_price", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min_target_capacity` after provisioning.\n"]
+    pub fn min_target_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_target_capacity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `single_availability_zone` after provisioning.\n"]
+    pub fn single_availability_zone(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.single_availability_zone", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `single_instance_type` after provisioning.\n"]
+    pub fn single_instance_type(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.single_instance_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `capacity_reservation_options` after provisioning.\n"]
+    pub fn capacity_reservation_options(
+        &self,
+    ) -> terrars::ListRef<Ec2Fleet_OnDemandOptions_CapacityReservationOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_reservation_options", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl {
+pub struct Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replacement_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    termination_delay: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl {
+impl Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance {
     #[doc = "Set the field `replacement_strategy`.\n"]
     pub fn set_replacement_strategy(
         mut self,
@@ -2236,10 +2829,16 @@ impl Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl {
         self.replacement_strategy = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `termination_delay`.\n"]
+    pub fn set_termination_delay(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.termination_delay = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl {
-    type O = terrars::BlockAssignable<Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl>;
+impl terrars::ToListMappable for Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance {
+    type O = terrars::BlockAssignable<Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2250,34 +2849,37 @@ impl terrars::ToListMappable for Ec2FleetSpotOptionsElMaintenanceStrategiesElCap
     }
 }
 
-pub struct BuildEc2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl {}
+pub struct BuildEc2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance {}
 
-impl BuildEc2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl {
-    pub fn build(self) -> Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl {
-        Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl {
+impl BuildEc2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance {
+    pub fn build(self) -> Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance {
+        Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance {
             replacement_strategy: core::default::Default::default(),
+            termination_delay: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalanceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceElRef {
+impl terrars::Ref for Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalanceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceElRef {
-        Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceElRef {
+    ) -> Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalanceRef {
+        Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalanceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceElRef {
+impl Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalanceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2286,25 +2888,28 @@ impl Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceElRef {
     pub fn replacement_strategy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replacement_strategy", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `termination_delay` after provisioning.\n"]
+    pub fn termination_delay(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.termination_delay", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct Ec2FleetSpotOptionsElMaintenanceStrategiesElDynamic {
+struct Ec2Fleet_SpotOptions_MaintenanceStrategiesDynamic {
     capacity_rebalance: std
     ::option
-    ::Option<terrars::DynamicBlock<Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl>>,
+    ::Option<terrars::DynamicBlock<Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance>>,
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetSpotOptionsElMaintenanceStrategiesEl {
+pub struct Ec2Fleet_SpotOptions_MaintenanceStrategies {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    capacity_rebalance: std
-    ::option
-    ::Option<std::vec::Vec<Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl>>,
-    dynamic: Ec2FleetSpotOptionsElMaintenanceStrategiesElDynamic,
+    capacity_rebalance: std::option::Option<std::vec::Vec<Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance>>,
+    dynamic: Ec2Fleet_SpotOptions_MaintenanceStrategiesDynamic,
 }
 
-impl Ec2FleetSpotOptionsElMaintenanceStrategiesEl {
+impl Ec2Fleet_SpotOptions_MaintenanceStrategies {
     #[doc = "Set the field `capacity_rebalance`.\n"]
     pub fn set_capacity_rebalance(
         mut self,
@@ -2313,7 +2918,7 @@ impl Ec2FleetSpotOptionsElMaintenanceStrategiesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceEl>>,
+                    ::Into<terrars::BlockAssignable<Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalance>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2327,8 +2932,8 @@ impl Ec2FleetSpotOptionsElMaintenanceStrategiesEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetSpotOptionsElMaintenanceStrategiesEl {
-    type O = terrars::BlockAssignable<Ec2FleetSpotOptionsElMaintenanceStrategiesEl>;
+impl terrars::ToListMappable for Ec2Fleet_SpotOptions_MaintenanceStrategies {
+    type O = terrars::BlockAssignable<Ec2Fleet_SpotOptions_MaintenanceStrategies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2339,35 +2944,34 @@ impl terrars::ToListMappable for Ec2FleetSpotOptionsElMaintenanceStrategiesEl {
     }
 }
 
-pub struct BuildEc2FleetSpotOptionsElMaintenanceStrategiesEl {}
+pub struct BuildEc2Fleet_SpotOptions_MaintenanceStrategies {}
 
-impl BuildEc2FleetSpotOptionsElMaintenanceStrategiesEl {
-    pub fn build(self) -> Ec2FleetSpotOptionsElMaintenanceStrategiesEl {
-        Ec2FleetSpotOptionsElMaintenanceStrategiesEl {
+impl BuildEc2Fleet_SpotOptions_MaintenanceStrategies {
+    pub fn build(self) -> Ec2Fleet_SpotOptions_MaintenanceStrategies {
+        Ec2Fleet_SpotOptions_MaintenanceStrategies {
             capacity_rebalance: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2FleetSpotOptionsElMaintenanceStrategiesElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_SpotOptions_MaintenanceStrategiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetSpotOptionsElMaintenanceStrategiesElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> Ec2FleetSpotOptionsElMaintenanceStrategiesElRef {
-        Ec2FleetSpotOptionsElMaintenanceStrategiesElRef {
+impl terrars::Ref for Ec2Fleet_SpotOptions_MaintenanceStrategiesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2Fleet_SpotOptions_MaintenanceStrategiesRef {
+        Ec2Fleet_SpotOptions_MaintenanceStrategiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetSpotOptionsElMaintenanceStrategiesElRef {
+impl Ec2Fleet_SpotOptions_MaintenanceStrategiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2375,18 +2979,18 @@ impl Ec2FleetSpotOptionsElMaintenanceStrategiesElRef {
     #[doc = "Get a reference to the value of field `capacity_rebalance` after provisioning.\n"]
     pub fn capacity_rebalance(
         &self,
-    ) -> terrars::ListRef<Ec2FleetSpotOptionsElMaintenanceStrategiesElCapacityRebalanceElRef> {
+    ) -> terrars::ListRef<Ec2Fleet_SpotOptions_MaintenanceStrategies_CapacityRebalanceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_rebalance", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct Ec2FleetSpotOptionsElDynamic {
-    maintenance_strategies: std::option::Option<terrars::DynamicBlock<Ec2FleetSpotOptionsElMaintenanceStrategiesEl>>,
+struct Ec2Fleet_SpotOptionsDynamic {
+    maintenance_strategies: std::option::Option<terrars::DynamicBlock<Ec2Fleet_SpotOptions_MaintenanceStrategies>>,
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetSpotOptionsEl {
+pub struct Ec2Fleet_SpotOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allocation_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2394,11 +2998,19 @@ pub struct Ec2FleetSpotOptionsEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_pools_to_use_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    maintenance_strategies: std::option::Option<std::vec::Vec<Ec2FleetSpotOptionsElMaintenanceStrategiesEl>>,
-    dynamic: Ec2FleetSpotOptionsElDynamic,
+    max_total_price: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min_target_capacity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    single_availability_zone: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    single_instance_type: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maintenance_strategies: std::option::Option<std::vec::Vec<Ec2Fleet_SpotOptions_MaintenanceStrategies>>,
+    dynamic: Ec2Fleet_SpotOptionsDynamic,
 }
 
-impl Ec2FleetSpotOptionsEl {
+impl Ec2Fleet_SpotOptions {
     #[doc = "Set the field `allocation_strategy`.\n"]
     pub fn set_allocation_strategy(
         mut self,
@@ -2423,10 +3035,34 @@ impl Ec2FleetSpotOptionsEl {
         self
     }
 
+    #[doc = "Set the field `max_total_price`.\n"]
+    pub fn set_max_total_price(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.max_total_price = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min_target_capacity`.\n"]
+    pub fn set_min_target_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min_target_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `single_availability_zone`.\n"]
+    pub fn set_single_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.single_availability_zone = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `single_instance_type`.\n"]
+    pub fn set_single_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.single_instance_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `maintenance_strategies`.\n"]
     pub fn set_maintenance_strategies(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Ec2FleetSpotOptionsElMaintenanceStrategiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2Fleet_SpotOptions_MaintenanceStrategies>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2440,8 +3076,8 @@ impl Ec2FleetSpotOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetSpotOptionsEl {
-    type O = terrars::BlockAssignable<Ec2FleetSpotOptionsEl>;
+impl terrars::ToListMappable for Ec2Fleet_SpotOptions {
+    type O = terrars::BlockAssignable<Ec2Fleet_SpotOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2452,35 +3088,41 @@ impl terrars::ToListMappable for Ec2FleetSpotOptionsEl {
     }
 }
 
-pub struct BuildEc2FleetSpotOptionsEl {}
+pub struct BuildEc2Fleet_SpotOptions {}
 
-impl BuildEc2FleetSpotOptionsEl {
-    pub fn build(self) -> Ec2FleetSpotOptionsEl {
-        Ec2FleetSpotOptionsEl {
+impl BuildEc2Fleet_SpotOptions {
+    pub fn build(self) -> Ec2Fleet_SpotOptions {
+        Ec2Fleet_SpotOptions {
             allocation_strategy: core::default::Default::default(),
             instance_interruption_behavior: core::default::Default::default(),
             instance_pools_to_use_count: core::default::Default::default(),
+            max_total_price: core::default::Default::default(),
+            min_target_capacity: core::default::Default::default(),
+            single_availability_zone: core::default::Default::default(),
+            single_instance_type: core::default::Default::default(),
             maintenance_strategies: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct Ec2FleetSpotOptionsElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_SpotOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetSpotOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2FleetSpotOptionsElRef {
-        Ec2FleetSpotOptionsElRef {
+impl terrars::Ref for Ec2Fleet_SpotOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2Fleet_SpotOptionsRef {
+        Ec2Fleet_SpotOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetSpotOptionsElRef {
+impl Ec2Fleet_SpotOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2500,14 +3142,34 @@ impl Ec2FleetSpotOptionsElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_pools_to_use_count", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `max_total_price` after provisioning.\n"]
+    pub fn max_total_price(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_total_price", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min_target_capacity` after provisioning.\n"]
+    pub fn min_target_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_target_capacity", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `single_availability_zone` after provisioning.\n"]
+    pub fn single_availability_zone(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.single_availability_zone", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `single_instance_type` after provisioning.\n"]
+    pub fn single_instance_type(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.single_instance_type", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `maintenance_strategies` after provisioning.\n"]
-    pub fn maintenance_strategies(&self) -> terrars::ListRef<Ec2FleetSpotOptionsElMaintenanceStrategiesElRef> {
+    pub fn maintenance_strategies(&self) -> terrars::ListRef<Ec2Fleet_SpotOptions_MaintenanceStrategiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.maintenance_strategies", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetTargetCapacitySpecificationEl {
+pub struct Ec2Fleet_TargetCapacitySpecification {
     default_target_capacity_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     on_demand_target_capacity: std::option::Option<terrars::PrimField<f64>>,
@@ -2518,7 +3180,7 @@ pub struct Ec2FleetTargetCapacitySpecificationEl {
     total_target_capacity: terrars::PrimField<f64>,
 }
 
-impl Ec2FleetTargetCapacitySpecificationEl {
+impl Ec2Fleet_TargetCapacitySpecification {
     #[doc = "Set the field `on_demand_target_capacity`.\n"]
     pub fn set_on_demand_target_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.on_demand_target_capacity = std::option::Option::Some(v.into());
@@ -2541,8 +3203,8 @@ impl Ec2FleetTargetCapacitySpecificationEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetTargetCapacitySpecificationEl {
-    type O = terrars::BlockAssignable<Ec2FleetTargetCapacitySpecificationEl>;
+impl terrars::ToListMappable for Ec2Fleet_TargetCapacitySpecification {
+    type O = terrars::BlockAssignable<Ec2Fleet_TargetCapacitySpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2553,16 +3215,16 @@ impl terrars::ToListMappable for Ec2FleetTargetCapacitySpecificationEl {
     }
 }
 
-pub struct BuildEc2FleetTargetCapacitySpecificationEl {
+pub struct BuildEc2Fleet_TargetCapacitySpecification {
     #[doc = ""]
     pub default_target_capacity_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub total_target_capacity: terrars::PrimField<f64>,
 }
 
-impl BuildEc2FleetTargetCapacitySpecificationEl {
-    pub fn build(self) -> Ec2FleetTargetCapacitySpecificationEl {
-        Ec2FleetTargetCapacitySpecificationEl {
+impl BuildEc2Fleet_TargetCapacitySpecification {
+    pub fn build(self) -> Ec2Fleet_TargetCapacitySpecification {
+        Ec2Fleet_TargetCapacitySpecification {
             default_target_capacity_type: self.default_target_capacity_type,
             on_demand_target_capacity: core::default::Default::default(),
             spot_target_capacity: core::default::Default::default(),
@@ -2572,21 +3234,23 @@ impl BuildEc2FleetTargetCapacitySpecificationEl {
     }
 }
 
-pub struct Ec2FleetTargetCapacitySpecificationElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_TargetCapacitySpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetTargetCapacitySpecificationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2FleetTargetCapacitySpecificationElRef {
-        Ec2FleetTargetCapacitySpecificationElRef {
+impl terrars::Ref for Ec2Fleet_TargetCapacitySpecificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2Fleet_TargetCapacitySpecificationRef {
+        Ec2Fleet_TargetCapacitySpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetTargetCapacitySpecificationElRef {
+impl Ec2Fleet_TargetCapacitySpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2618,7 +3282,7 @@ impl Ec2FleetTargetCapacitySpecificationElRef {
 }
 
 #[derive(Serialize)]
-pub struct Ec2FleetTimeoutsEl {
+pub struct Ec2Fleet_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2627,7 +3291,7 @@ pub struct Ec2FleetTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Ec2FleetTimeoutsEl {
+impl Ec2Fleet_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -2647,8 +3311,8 @@ impl Ec2FleetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Ec2FleetTimeoutsEl {
-    type O = terrars::BlockAssignable<Ec2FleetTimeoutsEl>;
+impl terrars::ToListMappable for Ec2Fleet_Timeouts {
+    type O = terrars::BlockAssignable<Ec2Fleet_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2659,11 +3323,11 @@ impl terrars::ToListMappable for Ec2FleetTimeoutsEl {
     }
 }
 
-pub struct BuildEc2FleetTimeoutsEl {}
+pub struct BuildEc2Fleet_Timeouts {}
 
-impl BuildEc2FleetTimeoutsEl {
-    pub fn build(self) -> Ec2FleetTimeoutsEl {
-        Ec2FleetTimeoutsEl {
+impl BuildEc2Fleet_Timeouts {
+    pub fn build(self) -> Ec2Fleet_Timeouts {
+        Ec2Fleet_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -2671,21 +3335,23 @@ impl BuildEc2FleetTimeoutsEl {
     }
 }
 
-pub struct Ec2FleetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Ec2Fleet_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Ec2FleetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2FleetTimeoutsElRef {
-        Ec2FleetTimeoutsElRef {
+impl terrars::Ref for Ec2Fleet_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2Fleet_TimeoutsRef {
+        Ec2Fleet_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Ec2FleetTimeoutsElRef {
+impl Ec2Fleet_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2704,14 +3370,4 @@ impl Ec2FleetTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Ec2FleetDynamic {
-    launch_template_config: std::option::Option<terrars::DynamicBlock<Ec2FleetLaunchTemplateConfigEl>>,
-    on_demand_options: std::option::Option<terrars::DynamicBlock<Ec2FleetOnDemandOptionsEl>>,
-    spot_options: std::option::Option<terrars::DynamicBlock<Ec2FleetSpotOptionsEl>>,
-    target_capacity_specification: std
-    ::option
-    ::Option<terrars::DynamicBlock<Ec2FleetTargetCapacitySpecificationEl>>,
 }

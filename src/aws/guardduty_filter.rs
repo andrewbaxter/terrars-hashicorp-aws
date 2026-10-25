@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GuarddutyFilterData {
+struct GuarddutyFilterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,18 +29,20 @@ struct GuarddutyFilterData {
     name: terrars::PrimField<std::string::String>,
     rank: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    finding_criteria: std::option::Option<std::vec::Vec<GuarddutyFilterFindingCriteriaEl>>,
+    finding_criteria: std::option::Option<std::vec::Vec<GuarddutyFilter_FindingCriteria>>,
     dynamic: GuarddutyFilterDynamic,
 }
 
 struct GuarddutyFilter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GuarddutyFilterData>,
+    data: std::cell::RefCell<GuarddutyFilterData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl GuarddutyFilter {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -171,7 +182,7 @@ impl GuarddutyFilter {
     #[doc = "Set the field `finding_criteria`.\n"]
     pub fn set_finding_criteria(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyFilterFindingCriteriaEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyFilter_FindingCriteria>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -219,6 +230,12 @@ impl GuarddutyFilter {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rank", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -230,7 +247,7 @@ impl GuarddutyFilter {
     }
 
     #[doc = "Get a reference to the value of field `finding_criteria` after provisioning.\n"]
-    pub fn finding_criteria(&self) -> terrars::ListRef<GuarddutyFilterFindingCriteriaElRef> {
+    pub fn finding_criteria(&self) -> terrars::ListRef<GuarddutyFilter_FindingCriteriaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.finding_criteria", self.extract_ref()))
     }
 }
@@ -283,7 +300,7 @@ impl BuildGuarddutyFilter {
         let out = GuarddutyFilter(std::rc::Rc::new(GuarddutyFilter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GuarddutyFilterData {
+            data: std::cell::RefCell::new(GuarddutyFilterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -295,6 +312,7 @@ impl BuildGuarddutyFilter {
                 id: core::default::Default::default(),
                 name: self.name,
                 rank: self.rank,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 finding_criteria: core::default::Default::default(),
@@ -364,6 +382,12 @@ impl GuarddutyFilterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rank", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -375,13 +399,18 @@ impl GuarddutyFilterRef {
     }
 
     #[doc = "Get a reference to the value of field `finding_criteria` after provisioning.\n"]
-    pub fn finding_criteria(&self) -> terrars::ListRef<GuarddutyFilterFindingCriteriaElRef> {
+    pub fn finding_criteria(&self) -> terrars::ListRef<GuarddutyFilter_FindingCriteriaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.finding_criteria", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GuarddutyFilterDynamic {
+    finding_criteria: std::option::Option<terrars::DynamicBlock<GuarddutyFilter_FindingCriteria>>,
+}
+
 #[derive(Serialize)]
-pub struct GuarddutyFilterFindingCriteriaElCriterionEl {
+pub struct GuarddutyFilter_FindingCriteria_Criterion {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     equals: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     field: terrars::PrimField<std::string::String>,
@@ -394,10 +423,14 @@ pub struct GuarddutyFilterFindingCriteriaElCriterionEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     less_than_or_equal: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    matches: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     not_equals: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    not_matches: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl GuarddutyFilterFindingCriteriaElCriterionEl {
+impl GuarddutyFilter_FindingCriteria_Criterion {
     #[doc = "Set the field `equals`.\n"]
     pub fn set_equals(
         mut self,
@@ -437,6 +470,15 @@ impl GuarddutyFilterFindingCriteriaElCriterionEl {
         self
     }
 
+    #[doc = "Set the field `matches`.\n"]
+    pub fn set_matches(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.matches = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `not_equals`.\n"]
     pub fn set_not_equals(
         mut self,
@@ -445,10 +487,19 @@ impl GuarddutyFilterFindingCriteriaElCriterionEl {
         self.not_equals = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `not_matches`.\n"]
+    pub fn set_not_matches(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.not_matches = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for GuarddutyFilterFindingCriteriaElCriterionEl {
-    type O = terrars::BlockAssignable<GuarddutyFilterFindingCriteriaElCriterionEl>;
+impl terrars::ToListMappable for GuarddutyFilter_FindingCriteria_Criterion {
+    type O = terrars::BlockAssignable<GuarddutyFilter_FindingCriteria_Criterion>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -459,43 +510,44 @@ impl terrars::ToListMappable for GuarddutyFilterFindingCriteriaElCriterionEl {
     }
 }
 
-pub struct BuildGuarddutyFilterFindingCriteriaElCriterionEl {
+pub struct BuildGuarddutyFilter_FindingCriteria_Criterion {
     #[doc = ""]
     pub field: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGuarddutyFilterFindingCriteriaElCriterionEl {
-    pub fn build(self) -> GuarddutyFilterFindingCriteriaElCriterionEl {
-        GuarddutyFilterFindingCriteriaElCriterionEl {
+impl BuildGuarddutyFilter_FindingCriteria_Criterion {
+    pub fn build(self) -> GuarddutyFilter_FindingCriteria_Criterion {
+        GuarddutyFilter_FindingCriteria_Criterion {
             equals: core::default::Default::default(),
             field: self.field,
             greater_than: core::default::Default::default(),
             greater_than_or_equal: core::default::Default::default(),
             less_than: core::default::Default::default(),
             less_than_or_equal: core::default::Default::default(),
+            matches: core::default::Default::default(),
             not_equals: core::default::Default::default(),
+            not_matches: core::default::Default::default(),
         }
     }
 }
 
-pub struct GuarddutyFilterFindingCriteriaElCriterionElRef {
+#[allow(dead_code)]
+pub struct GuarddutyFilter_FindingCriteria_CriterionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GuarddutyFilterFindingCriteriaElCriterionElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> GuarddutyFilterFindingCriteriaElCriterionElRef {
-        GuarddutyFilterFindingCriteriaElCriterionElRef {
+impl terrars::Ref for GuarddutyFilter_FindingCriteria_CriterionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GuarddutyFilter_FindingCriteria_CriterionRef {
+        GuarddutyFilter_FindingCriteria_CriterionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GuarddutyFilterFindingCriteriaElCriterionElRef {
+impl GuarddutyFilter_FindingCriteria_CriterionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -530,29 +582,39 @@ impl GuarddutyFilterFindingCriteriaElCriterionElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.less_than_or_equal", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `matches` after provisioning.\n"]
+    pub fn matches(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.matches", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `not_equals` after provisioning.\n"]
     pub fn not_equals(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.not_equals", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `not_matches` after provisioning.\n"]
+    pub fn not_matches(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.not_matches", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct GuarddutyFilterFindingCriteriaElDynamic {
-    criterion: std::option::Option<terrars::DynamicBlock<GuarddutyFilterFindingCriteriaElCriterionEl>>,
+struct GuarddutyFilter_FindingCriteriaDynamic {
+    criterion: std::option::Option<terrars::DynamicBlock<GuarddutyFilter_FindingCriteria_Criterion>>,
 }
 
 #[derive(Serialize)]
-pub struct GuarddutyFilterFindingCriteriaEl {
+pub struct GuarddutyFilter_FindingCriteria {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    criterion: std::option::Option<std::vec::Vec<GuarddutyFilterFindingCriteriaElCriterionEl>>,
-    dynamic: GuarddutyFilterFindingCriteriaElDynamic,
+    criterion: std::option::Option<std::vec::Vec<GuarddutyFilter_FindingCriteria_Criterion>>,
+    dynamic: GuarddutyFilter_FindingCriteriaDynamic,
 }
 
-impl GuarddutyFilterFindingCriteriaEl {
+impl GuarddutyFilter_FindingCriteria {
     #[doc = "Set the field `criterion`.\n"]
     pub fn set_criterion(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyFilterFindingCriteriaElCriterionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GuarddutyFilter_FindingCriteria_Criterion>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -566,8 +628,8 @@ impl GuarddutyFilterFindingCriteriaEl {
     }
 }
 
-impl terrars::ToListMappable for GuarddutyFilterFindingCriteriaEl {
-    type O = terrars::BlockAssignable<GuarddutyFilterFindingCriteriaEl>;
+impl terrars::ToListMappable for GuarddutyFilter_FindingCriteria {
+    type O = terrars::BlockAssignable<GuarddutyFilter_FindingCriteria>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -578,38 +640,35 @@ impl terrars::ToListMappable for GuarddutyFilterFindingCriteriaEl {
     }
 }
 
-pub struct BuildGuarddutyFilterFindingCriteriaEl {}
+pub struct BuildGuarddutyFilter_FindingCriteria {}
 
-impl BuildGuarddutyFilterFindingCriteriaEl {
-    pub fn build(self) -> GuarddutyFilterFindingCriteriaEl {
-        GuarddutyFilterFindingCriteriaEl {
+impl BuildGuarddutyFilter_FindingCriteria {
+    pub fn build(self) -> GuarddutyFilter_FindingCriteria {
+        GuarddutyFilter_FindingCriteria {
             criterion: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct GuarddutyFilterFindingCriteriaElRef {
+#[allow(dead_code)]
+pub struct GuarddutyFilter_FindingCriteriaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GuarddutyFilterFindingCriteriaElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GuarddutyFilterFindingCriteriaElRef {
-        GuarddutyFilterFindingCriteriaElRef {
+impl terrars::Ref for GuarddutyFilter_FindingCriteriaRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GuarddutyFilter_FindingCriteriaRef {
+        GuarddutyFilter_FindingCriteriaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GuarddutyFilterFindingCriteriaElRef {
+impl GuarddutyFilter_FindingCriteriaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
-}
-
-#[derive(Serialize, Default)]
-struct GuarddutyFilterDynamic {
-    finding_criteria: std::option::Option<terrars::DynamicBlock<GuarddutyFilterFindingCriteriaEl>>,
 }

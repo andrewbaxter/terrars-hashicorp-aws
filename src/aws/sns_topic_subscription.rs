@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SnsTopicSubscriptionData {
+struct SnsTopicSubscriptionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,6 +39,10 @@ struct SnsTopicSubscriptionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     redrive_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replay_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subscription_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     topic_arn: terrars::PrimField<std::string::String>,
 }
@@ -44,7 +50,7 @@ struct SnsTopicSubscriptionData {
 struct SnsTopicSubscription_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SnsTopicSubscriptionData>,
+    data: std::cell::RefCell<SnsTopicSubscriptionData_>,
 }
 
 #[derive(Clone)]
@@ -192,6 +198,19 @@ impl SnsTopicSubscription {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `replay_policy`.\n"]
+    pub fn set_replay_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().replay_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `subscription_role_arn`.\n"]
     pub fn set_subscription_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().subscription_role_arn = std::option::Option::Some(v.into());
@@ -274,6 +293,17 @@ impl SnsTopicSubscription {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.redrive_policy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `replay_policy` after provisioning.\n"]
+    pub fn replay_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replay_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subscription_role_arn` after provisioning.\n"]
     pub fn subscription_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subscription_role_arn", self.extract_ref()))
@@ -331,7 +361,7 @@ impl BuildSnsTopicSubscription {
         let out = SnsTopicSubscription(std::rc::Rc::new(SnsTopicSubscription_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SnsTopicSubscriptionData {
+            data: std::cell::RefCell::new(SnsTopicSubscriptionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -347,6 +377,8 @@ impl BuildSnsTopicSubscription {
                 protocol: self.protocol,
                 raw_message_delivery: core::default::Default::default(),
                 redrive_policy: core::default::Default::default(),
+                region: core::default::Default::default(),
+                replay_policy: core::default::Default::default(),
                 subscription_role_arn: core::default::Default::default(),
                 topic_arn: self.topic_arn,
             }),
@@ -453,6 +485,17 @@ impl SnsTopicSubscriptionRef {
     #[doc = "Get a reference to the value of field `redrive_policy` after provisioning.\n"]
     pub fn redrive_policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.redrive_policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `replay_policy` after provisioning.\n"]
+    pub fn replay_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.replay_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subscription_role_arn` after provisioning.\n"]

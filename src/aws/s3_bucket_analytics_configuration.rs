@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketAnalyticsConfigurationData {
+struct S3BucketAnalyticsConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,16 +25,18 @@ struct S3BucketAnalyticsConfigurationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<S3BucketAnalyticsConfigurationFilterEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage_class_analysis: std::option::Option<std::vec::Vec<S3BucketAnalyticsConfigurationStorageClassAnalysisEl>>,
+    filter: std::option::Option<std::vec::Vec<S3BucketAnalyticsConfiguration_Filter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    storage_class_analysis: std::option::Option<std::vec::Vec<S3BucketAnalyticsConfiguration_StorageClassAnalysis>>,
     dynamic: S3BucketAnalyticsConfigurationDynamic,
 }
 
 struct S3BucketAnalyticsConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketAnalyticsConfigurationData>,
+    data: std::cell::RefCell<S3BucketAnalyticsConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -138,10 +142,17 @@ impl S3BucketAnalyticsConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketAnalyticsConfigurationFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketAnalyticsConfiguration_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -157,7 +168,7 @@ impl S3BucketAnalyticsConfiguration {
     #[doc = "Set the field `storage_class_analysis`.\n"]
     pub fn set_storage_class_analysis(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketAnalyticsConfigurationStorageClassAnalysisEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketAnalyticsConfiguration_StorageClassAnalysis>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -185,13 +196,19 @@ impl S3BucketAnalyticsConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<S3BucketAnalyticsConfigurationFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<S3BucketAnalyticsConfiguration_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_class_analysis` after provisioning.\n"]
-    pub fn storage_class_analysis(&self) -> terrars::ListRef<S3BucketAnalyticsConfigurationStorageClassAnalysisElRef> {
+    pub fn storage_class_analysis(&self) -> terrars::ListRef<S3BucketAnalyticsConfiguration_StorageClassAnalysisRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_class_analysis", self.extract_ref()))
     }
 }
@@ -240,7 +257,7 @@ impl BuildS3BucketAnalyticsConfiguration {
         let out = S3BucketAnalyticsConfiguration(std::rc::Rc::new(S3BucketAnalyticsConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketAnalyticsConfigurationData {
+            data: std::cell::RefCell::new(S3BucketAnalyticsConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -249,6 +266,7 @@ impl BuildS3BucketAnalyticsConfiguration {
                 bucket: self.bucket,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 storage_class_analysis: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -297,26 +315,40 @@ impl S3BucketAnalyticsConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<S3BucketAnalyticsConfigurationFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<S3BucketAnalyticsConfiguration_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `storage_class_analysis` after provisioning.\n"]
-    pub fn storage_class_analysis(&self) -> terrars::ListRef<S3BucketAnalyticsConfigurationStorageClassAnalysisElRef> {
+    pub fn storage_class_analysis(&self) -> terrars::ListRef<S3BucketAnalyticsConfiguration_StorageClassAnalysisRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.storage_class_analysis", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketAnalyticsConfigurationDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<S3BucketAnalyticsConfiguration_Filter>>,
+    storage_class_analysis: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3BucketAnalyticsConfiguration_StorageClassAnalysis>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketAnalyticsConfigurationFilterEl {
+pub struct S3BucketAnalyticsConfiguration_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl S3BucketAnalyticsConfigurationFilterEl {
+impl S3BucketAnalyticsConfiguration_Filter {
     #[doc = "Set the field `prefix`.\n"]
     pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix = std::option::Option::Some(v.into());
@@ -333,8 +365,8 @@ impl S3BucketAnalyticsConfigurationFilterEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketAnalyticsConfigurationFilterEl {
-    type O = terrars::BlockAssignable<S3BucketAnalyticsConfigurationFilterEl>;
+impl terrars::ToListMappable for S3BucketAnalyticsConfiguration_Filter {
+    type O = terrars::BlockAssignable<S3BucketAnalyticsConfiguration_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -345,32 +377,34 @@ impl terrars::ToListMappable for S3BucketAnalyticsConfigurationFilterEl {
     }
 }
 
-pub struct BuildS3BucketAnalyticsConfigurationFilterEl {}
+pub struct BuildS3BucketAnalyticsConfiguration_Filter {}
 
-impl BuildS3BucketAnalyticsConfigurationFilterEl {
-    pub fn build(self) -> S3BucketAnalyticsConfigurationFilterEl {
-        S3BucketAnalyticsConfigurationFilterEl {
+impl BuildS3BucketAnalyticsConfiguration_Filter {
+    pub fn build(self) -> S3BucketAnalyticsConfiguration_Filter {
+        S3BucketAnalyticsConfiguration_Filter {
             prefix: core::default::Default::default(),
             tags: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketAnalyticsConfigurationFilterElRef {
+#[allow(dead_code)]
+pub struct S3BucketAnalyticsConfiguration_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketAnalyticsConfigurationFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketAnalyticsConfigurationFilterElRef {
-        S3BucketAnalyticsConfigurationFilterElRef {
+impl terrars::Ref for S3BucketAnalyticsConfiguration_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketAnalyticsConfiguration_FilterRef {
+        S3BucketAnalyticsConfiguration_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketAnalyticsConfigurationFilterElRef {
+impl S3BucketAnalyticsConfiguration_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -387,7 +421,7 @@ impl S3BucketAnalyticsConfigurationFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl {
+pub struct S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_account_id: std::option::Option<terrars::PrimField<std::string::String>>,
     bucket_arn: terrars::PrimField<std::string::String>,
@@ -397,7 +431,7 @@ pub struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDesti
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl {
+impl S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination {
     #[doc = "Set the field `bucket_account_id`.\n"]
     pub fn set_bucket_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_account_id = std::option::Option::Some(v.into());
@@ -418,11 +452,11 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestination
 }
 
 impl terrars
-::ToListMappable for S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl {
+::ToListMappable for S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination {
     type O =
         terrars
         ::BlockAssignable<
-            S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl,
+            S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -434,16 +468,16 @@ impl terrars
     }
 }
 
-pub struct BuildS3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl {
+pub struct BuildS3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination {
     #[doc = ""]
     pub bucket_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl {
+impl BuildS3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination {
     pub fn build(
         self,
-    ) -> S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl {
-        S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl {
+    ) -> S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination {
+        S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination {
             bucket_account_id: core::default::Default::default(),
             bucket_arn: self.bucket_arn,
             format: core::default::Default::default(),
@@ -452,25 +486,27 @@ impl BuildS3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestin
     }
 }
 
-pub struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationElRef {
+#[allow(dead_code)]
+pub struct S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationElRef {
+::Ref for S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationElRef {
-        S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationElRef {
+    ) -> S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestinationRef {
+        S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationElRef {
+impl S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -497,31 +533,27 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestination
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElDynamic {
+struct S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_DestinationDynamic {
     s3_bucket_destination: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl,
-        >,
+        ::DynamicBlock<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl {
+pub struct S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_bucket_destination: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl>,
+        std::vec::Vec<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination>,
     >,
-    dynamic: S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElDynamic,
+    dynamic: S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_DestinationDynamic,
 }
 
-impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl {
+impl S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination {
     #[doc = "Set the field `s3_bucket_destination`.\n"]
     pub fn set_s3_bucket_destination(
         mut self,
@@ -533,7 +565,7 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestination
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationEl,
+                            S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestination,
                         >,
                     >,
     ) -> Self {
@@ -549,8 +581,8 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestination
     }
 }
 
-impl terrars::ToListMappable for S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl {
-    type O = terrars::BlockAssignable<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl>;
+impl terrars::ToListMappable for S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination {
+    type O = terrars::BlockAssignable<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -561,35 +593,37 @@ impl terrars::ToListMappable for S3BucketAnalyticsConfigurationStorageClassAnaly
     }
 }
 
-pub struct BuildS3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl {}
+pub struct BuildS3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination {}
 
-impl BuildS3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl {
-    pub fn build(self) -> S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl {
-        S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl {
+impl BuildS3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination {
+    pub fn build(self) -> S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination {
+        S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination {
             s3_bucket_destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElRef {
+#[allow(dead_code)]
+pub struct S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElRef {
+impl terrars::Ref for S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElRef {
-        S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElRef {
+    ) -> S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_DestinationRef {
+        S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElRef {
+impl S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -598,30 +632,30 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestination
     pub fn s3_bucket_destination(
         &self,
     ) -> terrars
-    ::ListRef<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElS3BucketDestinationElRef> {
+    ::ListRef<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination_S3BucketDestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_bucket_destination", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDynamic {
+struct S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExportDynamic {
     destination: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {
+pub struct S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     output_schema_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination: std
     ::option
-    ::Option<std::vec::Vec<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl>>,
-    dynamic: S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDynamic,
+    ::Option<std::vec::Vec<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination>>,
+    dynamic: S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExportDynamic,
 }
 
-impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {
+impl S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport {
     #[doc = "Set the field `output_schema_version`.\n"]
     pub fn set_output_schema_version(
         mut self,
@@ -641,9 +675,7 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationEl,
-                        >,
+                        ::BlockAssignable<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_Destination>,
                     >,
     ) -> Self {
         match v.into() {
@@ -658,8 +690,8 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {
-    type O = terrars::BlockAssignable<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl>;
+impl terrars::ToListMappable for S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport {
+    type O = terrars::BlockAssignable<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -670,11 +702,11 @@ impl terrars::ToListMappable for S3BucketAnalyticsConfigurationStorageClassAnaly
     }
 }
 
-pub struct BuildS3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {}
+pub struct BuildS3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport {}
 
-impl BuildS3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {
-    pub fn build(self) -> S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {
-        S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {
+impl BuildS3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport {
+    pub fn build(self) -> S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport {
+        S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport {
             output_schema_version: core::default::Default::default(),
             destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -682,24 +714,26 @@ impl BuildS3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl {
     }
 }
 
-pub struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElRef {
+#[allow(dead_code)]
+pub struct S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExportRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElRef {
+impl terrars::Ref for S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExportRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElRef {
-        S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElRef {
+    ) -> S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExportRef {
+        S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExportRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElRef {
+impl S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExportRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -712,26 +746,26 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElRef {
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
     pub fn destination(
         &self,
-    ) -> terrars::ListRef<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElDestinationElRef> {
+    ) -> terrars::ListRef<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketAnalyticsConfigurationStorageClassAnalysisElDynamic {
+struct S3BucketAnalyticsConfiguration_StorageClassAnalysisDynamic {
     data_export: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl>>,
+    ::Option<terrars::DynamicBlock<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketAnalyticsConfigurationStorageClassAnalysisEl {
+pub struct S3BucketAnalyticsConfiguration_StorageClassAnalysis {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_export: std::option::Option<std::vec::Vec<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl>>,
-    dynamic: S3BucketAnalyticsConfigurationStorageClassAnalysisElDynamic,
+    data_export: std::option::Option<std::vec::Vec<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport>>,
+    dynamic: S3BucketAnalyticsConfiguration_StorageClassAnalysisDynamic,
 }
 
-impl S3BucketAnalyticsConfigurationStorageClassAnalysisEl {
+impl S3BucketAnalyticsConfiguration_StorageClassAnalysis {
     #[doc = "Set the field `data_export`.\n"]
     pub fn set_data_export(
         mut self,
@@ -740,9 +774,7 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExport>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -756,8 +788,8 @@ impl S3BucketAnalyticsConfigurationStorageClassAnalysisEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketAnalyticsConfigurationStorageClassAnalysisEl {
-    type O = terrars::BlockAssignable<S3BucketAnalyticsConfigurationStorageClassAnalysisEl>;
+impl terrars::ToListMappable for S3BucketAnalyticsConfiguration_StorageClassAnalysis {
+    type O = terrars::BlockAssignable<S3BucketAnalyticsConfiguration_StorageClassAnalysis>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -768,49 +800,43 @@ impl terrars::ToListMappable for S3BucketAnalyticsConfigurationStorageClassAnaly
     }
 }
 
-pub struct BuildS3BucketAnalyticsConfigurationStorageClassAnalysisEl {}
+pub struct BuildS3BucketAnalyticsConfiguration_StorageClassAnalysis {}
 
-impl BuildS3BucketAnalyticsConfigurationStorageClassAnalysisEl {
-    pub fn build(self) -> S3BucketAnalyticsConfigurationStorageClassAnalysisEl {
-        S3BucketAnalyticsConfigurationStorageClassAnalysisEl {
+impl BuildS3BucketAnalyticsConfiguration_StorageClassAnalysis {
+    pub fn build(self) -> S3BucketAnalyticsConfiguration_StorageClassAnalysis {
+        S3BucketAnalyticsConfiguration_StorageClassAnalysis {
             data_export: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketAnalyticsConfigurationStorageClassAnalysisElRef {
+#[allow(dead_code)]
+pub struct S3BucketAnalyticsConfiguration_StorageClassAnalysisRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketAnalyticsConfigurationStorageClassAnalysisElRef {
+impl terrars::Ref for S3BucketAnalyticsConfiguration_StorageClassAnalysisRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketAnalyticsConfigurationStorageClassAnalysisElRef {
-        S3BucketAnalyticsConfigurationStorageClassAnalysisElRef {
+    ) -> S3BucketAnalyticsConfiguration_StorageClassAnalysisRef {
+        S3BucketAnalyticsConfiguration_StorageClassAnalysisRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketAnalyticsConfigurationStorageClassAnalysisElRef {
+impl S3BucketAnalyticsConfiguration_StorageClassAnalysisRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `data_export` after provisioning.\n"]
-    pub fn data_export(&self) -> terrars::ListRef<S3BucketAnalyticsConfigurationStorageClassAnalysisElDataExportElRef> {
+    pub fn data_export(&self) -> terrars::ListRef<S3BucketAnalyticsConfiguration_StorageClassAnalysis_DataExportRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_export", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketAnalyticsConfigurationDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<S3BucketAnalyticsConfigurationFilterEl>>,
-    storage_class_analysis: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3BucketAnalyticsConfigurationStorageClassAnalysisEl>>,
 }

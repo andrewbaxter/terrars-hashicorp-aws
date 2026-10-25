@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudhsmV2ClusterData {
+struct CloudhsmV2ClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,10 @@ struct CloudhsmV2ClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_backup_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,13 +35,13 @@ struct CloudhsmV2ClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudhsmV2ClusterTimeoutsEl>,
+    timeouts: std::option::Option<CloudhsmV2Cluster_Timeouts>,
 }
 
 struct CloudhsmV2Cluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudhsmV2ClusterData>,
+    data: std::cell::RefCell<CloudhsmV2ClusterData_>,
 }
 
 #[derive(Clone)]
@@ -141,6 +147,19 @@ impl CloudhsmV2Cluster {
         self
     }
 
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `source_backup_identifier`.\n"]
     pub fn set_source_backup_identifier(
         self,
@@ -169,13 +188,13 @@ impl CloudhsmV2Cluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudhsmV2ClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudhsmV2Cluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Get a reference to the value of field `cluster_certificates` after provisioning.\n"]
-    pub fn cluster_certificates(&self) -> terrars::ListRef<CloudhsmV2ClusterClusterCertificatesElRef> {
+    pub fn cluster_certificates(&self) -> terrars::ListRef<CloudhsmV2Cluster_ClusterCertificatesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_certificates", self.extract_ref()))
     }
 
@@ -197,6 +216,17 @@ impl CloudhsmV2Cluster {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -230,8 +260,8 @@ impl CloudhsmV2Cluster {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudhsmV2ClusterTimeoutsElRef {
-        CloudhsmV2ClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudhsmV2Cluster_TimeoutsRef {
+        CloudhsmV2Cluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -279,7 +309,7 @@ impl BuildCloudhsmV2Cluster {
         let out = CloudhsmV2Cluster(std::rc::Rc::new(CloudhsmV2Cluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudhsmV2ClusterData {
+            data: std::cell::RefCell::new(CloudhsmV2ClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -287,6 +317,8 @@ impl BuildCloudhsmV2Cluster {
                 provisioner: core::default::Default::default(),
                 hsm_type: self.hsm_type,
                 id: core::default::Default::default(),
+                mode: core::default::Default::default(),
+                region: core::default::Default::default(),
                 source_backup_identifier: core::default::Default::default(),
                 subnet_ids: self.subnet_ids,
                 tags: core::default::Default::default(),
@@ -323,7 +355,7 @@ impl CloudhsmV2ClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `cluster_certificates` after provisioning.\n"]
-    pub fn cluster_certificates(&self) -> terrars::ListRef<CloudhsmV2ClusterClusterCertificatesElRef> {
+    pub fn cluster_certificates(&self) -> terrars::ListRef<CloudhsmV2Cluster_ClusterCertificatesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_certificates", self.extract_ref()))
     }
 
@@ -345,6 +377,17 @@ impl CloudhsmV2ClusterRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -378,13 +421,13 @@ impl CloudhsmV2ClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudhsmV2ClusterTimeoutsElRef {
-        CloudhsmV2ClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudhsmV2Cluster_TimeoutsRef {
+        CloudhsmV2Cluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudhsmV2ClusterClusterCertificatesEl {
+pub struct CloudhsmV2Cluster_ClusterCertificates {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aws_hardware_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -397,7 +440,7 @@ pub struct CloudhsmV2ClusterClusterCertificatesEl {
     manufacturer_hardware_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudhsmV2ClusterClusterCertificatesEl {
+impl CloudhsmV2Cluster_ClusterCertificates {
     #[doc = "Set the field `aws_hardware_certificate`.\n"]
     pub fn set_aws_hardware_certificate(
         mut self,
@@ -438,8 +481,8 @@ impl CloudhsmV2ClusterClusterCertificatesEl {
     }
 }
 
-impl terrars::ToListMappable for CloudhsmV2ClusterClusterCertificatesEl {
-    type O = terrars::BlockAssignable<CloudhsmV2ClusterClusterCertificatesEl>;
+impl terrars::ToListMappable for CloudhsmV2Cluster_ClusterCertificates {
+    type O = terrars::BlockAssignable<CloudhsmV2Cluster_ClusterCertificates>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -450,11 +493,11 @@ impl terrars::ToListMappable for CloudhsmV2ClusterClusterCertificatesEl {
     }
 }
 
-pub struct BuildCloudhsmV2ClusterClusterCertificatesEl {}
+pub struct BuildCloudhsmV2Cluster_ClusterCertificates {}
 
-impl BuildCloudhsmV2ClusterClusterCertificatesEl {
-    pub fn build(self) -> CloudhsmV2ClusterClusterCertificatesEl {
-        CloudhsmV2ClusterClusterCertificatesEl {
+impl BuildCloudhsmV2Cluster_ClusterCertificates {
+    pub fn build(self) -> CloudhsmV2Cluster_ClusterCertificates {
+        CloudhsmV2Cluster_ClusterCertificates {
             aws_hardware_certificate: core::default::Default::default(),
             cluster_certificate: core::default::Default::default(),
             cluster_csr: core::default::Default::default(),
@@ -464,21 +507,23 @@ impl BuildCloudhsmV2ClusterClusterCertificatesEl {
     }
 }
 
-pub struct CloudhsmV2ClusterClusterCertificatesElRef {
+#[allow(dead_code)]
+pub struct CloudhsmV2Cluster_ClusterCertificatesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudhsmV2ClusterClusterCertificatesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudhsmV2ClusterClusterCertificatesElRef {
-        CloudhsmV2ClusterClusterCertificatesElRef {
+impl terrars::Ref for CloudhsmV2Cluster_ClusterCertificatesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudhsmV2Cluster_ClusterCertificatesRef {
+        CloudhsmV2Cluster_ClusterCertificatesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudhsmV2ClusterClusterCertificatesElRef {
+impl CloudhsmV2Cluster_ClusterCertificatesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -510,7 +555,7 @@ impl CloudhsmV2ClusterClusterCertificatesElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudhsmV2ClusterTimeoutsEl {
+pub struct CloudhsmV2Cluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -519,7 +564,7 @@ pub struct CloudhsmV2ClusterTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudhsmV2ClusterTimeoutsEl {
+impl CloudhsmV2Cluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -539,8 +584,8 @@ impl CloudhsmV2ClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudhsmV2ClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudhsmV2ClusterTimeoutsEl>;
+impl terrars::ToListMappable for CloudhsmV2Cluster_Timeouts {
+    type O = terrars::BlockAssignable<CloudhsmV2Cluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -551,11 +596,11 @@ impl terrars::ToListMappable for CloudhsmV2ClusterTimeoutsEl {
     }
 }
 
-pub struct BuildCloudhsmV2ClusterTimeoutsEl {}
+pub struct BuildCloudhsmV2Cluster_Timeouts {}
 
-impl BuildCloudhsmV2ClusterTimeoutsEl {
-    pub fn build(self) -> CloudhsmV2ClusterTimeoutsEl {
-        CloudhsmV2ClusterTimeoutsEl {
+impl BuildCloudhsmV2Cluster_Timeouts {
+    pub fn build(self) -> CloudhsmV2Cluster_Timeouts {
+        CloudhsmV2Cluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -563,21 +608,23 @@ impl BuildCloudhsmV2ClusterTimeoutsEl {
     }
 }
 
-pub struct CloudhsmV2ClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudhsmV2Cluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudhsmV2ClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudhsmV2ClusterTimeoutsElRef {
-        CloudhsmV2ClusterTimeoutsElRef {
+impl terrars::Ref for CloudhsmV2Cluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudhsmV2Cluster_TimeoutsRef {
+        CloudhsmV2Cluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudhsmV2ClusterTimeoutsElRef {
+impl CloudhsmV2Cluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodestarconnectionsHostData {
+struct CodestarconnectionsHostData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,16 +26,18 @@ struct CodestarconnectionsHostData {
     provider_endpoint: terrars::PrimField<std::string::String>,
     provider_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CodestarconnectionsHostTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_configuration: std::option::Option<std::vec::Vec<CodestarconnectionsHostVpcConfigurationEl>>,
+    timeouts: std::option::Option<CodestarconnectionsHost_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_configuration: std::option::Option<std::vec::Vec<CodestarconnectionsHost_VpcConfiguration>>,
     dynamic: CodestarconnectionsHostDynamic,
 }
 
 struct CodestarconnectionsHost_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodestarconnectionsHostData>,
+    data: std::cell::RefCell<CodestarconnectionsHostData_>,
 }
 
 #[derive(Clone)]
@@ -139,8 +143,15 @@ impl CodestarconnectionsHost {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CodestarconnectionsHostTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CodestarconnectionsHost_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -148,7 +159,7 @@ impl CodestarconnectionsHost {
     #[doc = "Set the field `vpc_configuration`.\n"]
     pub fn set_vpc_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodestarconnectionsHostVpcConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodestarconnectionsHost_VpcConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -186,18 +197,24 @@ impl CodestarconnectionsHost {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CodestarconnectionsHostTimeoutsElRef {
-        CodestarconnectionsHostTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CodestarconnectionsHost_TimeoutsRef {
+        CodestarconnectionsHost_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
-    pub fn vpc_configuration(&self) -> terrars::ListRef<CodestarconnectionsHostVpcConfigurationElRef> {
+    pub fn vpc_configuration(&self) -> terrars::ListRef<CodestarconnectionsHost_VpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.extract_ref()))
     }
 }
@@ -248,7 +265,7 @@ impl BuildCodestarconnectionsHost {
         let out = CodestarconnectionsHost(std::rc::Rc::new(CodestarconnectionsHost_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodestarconnectionsHostData {
+            data: std::cell::RefCell::new(CodestarconnectionsHostData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -258,6 +275,7 @@ impl BuildCodestarconnectionsHost {
                 name: self.name,
                 provider_endpoint: self.provider_endpoint,
                 provider_type: self.provider_type,
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 vpc_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -316,24 +334,35 @@ impl CodestarconnectionsHostRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CodestarconnectionsHostTimeoutsElRef {
-        CodestarconnectionsHostTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CodestarconnectionsHost_TimeoutsRef {
+        CodestarconnectionsHost_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_configuration` after provisioning.\n"]
-    pub fn vpc_configuration(&self) -> terrars::ListRef<CodestarconnectionsHostVpcConfigurationElRef> {
+    pub fn vpc_configuration(&self) -> terrars::ListRef<CodestarconnectionsHost_VpcConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CodestarconnectionsHostDynamic {
+    vpc_configuration: std::option::Option<terrars::DynamicBlock<CodestarconnectionsHost_VpcConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct CodestarconnectionsHostTimeoutsEl {
+pub struct CodestarconnectionsHost_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -342,7 +371,7 @@ pub struct CodestarconnectionsHostTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CodestarconnectionsHostTimeoutsEl {
+impl CodestarconnectionsHost_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -362,8 +391,8 @@ impl CodestarconnectionsHostTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CodestarconnectionsHostTimeoutsEl {
-    type O = terrars::BlockAssignable<CodestarconnectionsHostTimeoutsEl>;
+impl terrars::ToListMappable for CodestarconnectionsHost_Timeouts {
+    type O = terrars::BlockAssignable<CodestarconnectionsHost_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -374,11 +403,11 @@ impl terrars::ToListMappable for CodestarconnectionsHostTimeoutsEl {
     }
 }
 
-pub struct BuildCodestarconnectionsHostTimeoutsEl {}
+pub struct BuildCodestarconnectionsHost_Timeouts {}
 
-impl BuildCodestarconnectionsHostTimeoutsEl {
-    pub fn build(self) -> CodestarconnectionsHostTimeoutsEl {
-        CodestarconnectionsHostTimeoutsEl {
+impl BuildCodestarconnectionsHost_Timeouts {
+    pub fn build(self) -> CodestarconnectionsHost_Timeouts {
+        CodestarconnectionsHost_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -386,21 +415,23 @@ impl BuildCodestarconnectionsHostTimeoutsEl {
     }
 }
 
-pub struct CodestarconnectionsHostTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CodestarconnectionsHost_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodestarconnectionsHostTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodestarconnectionsHostTimeoutsElRef {
-        CodestarconnectionsHostTimeoutsElRef {
+impl terrars::Ref for CodestarconnectionsHost_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodestarconnectionsHost_TimeoutsRef {
+        CodestarconnectionsHost_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodestarconnectionsHostTimeoutsElRef {
+impl CodestarconnectionsHost_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -422,7 +453,7 @@ impl CodestarconnectionsHostTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodestarconnectionsHostVpcConfigurationEl {
+pub struct CodestarconnectionsHost_VpcConfiguration {
     security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -430,7 +461,7 @@ pub struct CodestarconnectionsHostVpcConfigurationEl {
     vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl CodestarconnectionsHostVpcConfigurationEl {
+impl CodestarconnectionsHost_VpcConfiguration {
     #[doc = "Set the field `tls_certificate`.\n"]
     pub fn set_tls_certificate(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.tls_certificate = std::option::Option::Some(v.into());
@@ -438,8 +469,8 @@ impl CodestarconnectionsHostVpcConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CodestarconnectionsHostVpcConfigurationEl {
-    type O = terrars::BlockAssignable<CodestarconnectionsHostVpcConfigurationEl>;
+impl terrars::ToListMappable for CodestarconnectionsHost_VpcConfiguration {
+    type O = terrars::BlockAssignable<CodestarconnectionsHost_VpcConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -450,7 +481,7 @@ impl terrars::ToListMappable for CodestarconnectionsHostVpcConfigurationEl {
     }
 }
 
-pub struct BuildCodestarconnectionsHostVpcConfigurationEl {
+pub struct BuildCodestarconnectionsHost_VpcConfiguration {
     #[doc = ""]
     pub security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
@@ -459,9 +490,9 @@ pub struct BuildCodestarconnectionsHostVpcConfigurationEl {
     pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodestarconnectionsHostVpcConfigurationEl {
-    pub fn build(self) -> CodestarconnectionsHostVpcConfigurationEl {
-        CodestarconnectionsHostVpcConfigurationEl {
+impl BuildCodestarconnectionsHost_VpcConfiguration {
+    pub fn build(self) -> CodestarconnectionsHost_VpcConfiguration {
+        CodestarconnectionsHost_VpcConfiguration {
             security_group_ids: self.security_group_ids,
             subnet_ids: self.subnet_ids,
             tls_certificate: core::default::Default::default(),
@@ -470,21 +501,23 @@ impl BuildCodestarconnectionsHostVpcConfigurationEl {
     }
 }
 
-pub struct CodestarconnectionsHostVpcConfigurationElRef {
+#[allow(dead_code)]
+pub struct CodestarconnectionsHost_VpcConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodestarconnectionsHostVpcConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodestarconnectionsHostVpcConfigurationElRef {
-        CodestarconnectionsHostVpcConfigurationElRef {
+impl terrars::Ref for CodestarconnectionsHost_VpcConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodestarconnectionsHost_VpcConfigurationRef {
+        CodestarconnectionsHost_VpcConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodestarconnectionsHostVpcConfigurationElRef {
+impl CodestarconnectionsHost_VpcConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -508,9 +541,4 @@ impl CodestarconnectionsHostVpcConfigurationElRef {
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CodestarconnectionsHostDynamic {
-    vpc_configuration: std::option::Option<terrars::DynamicBlock<CodestarconnectionsHostVpcConfigurationEl>>,
 }

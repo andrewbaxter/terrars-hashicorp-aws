@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataCognitoUserPoolClientData {
+struct DataCognitoUserPoolClientData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,13 +21,15 @@ struct DataCognitoUserPoolClientData {
     client_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     user_pool_id: terrars::PrimField<std::string::String>,
 }
 
 struct DataCognitoUserPoolClient_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCognitoUserPoolClientData>,
+    data: std::cell::RefCell<DataCognitoUserPoolClientData_>,
 }
 
 #[derive(Clone)]
@@ -76,6 +80,13 @@ impl DataCognitoUserPoolClient {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `access_token_validity` after provisioning.\n"]
     pub fn access_token_validity(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_token_validity", self.extract_ref()))
@@ -100,7 +111,7 @@ impl DataCognitoUserPoolClient {
     }
 
     #[doc = "Get a reference to the value of field `analytics_configuration` after provisioning.\n"]
-    pub fn analytics_configuration(&self) -> terrars::ListRef<DataCognitoUserPoolClientAnalyticsConfigurationElRef> {
+    pub fn analytics_configuration(&self) -> terrars::ListRef<DataCognitoUserPoolClient_AnalyticsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.analytics_configuration", self.extract_ref()))
     }
 
@@ -181,9 +192,20 @@ impl DataCognitoUserPoolClient {
         terrars::SetRef::new(self.shared().clone(), format!("{}.read_attributes", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `refresh_token_rotation` after provisioning.\n"]
+    pub fn refresh_token_rotation(&self) -> terrars::ListRef<DataCognitoUserPoolClient_RefreshTokenRotationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.refresh_token_rotation", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `refresh_token_validity` after provisioning.\n"]
     pub fn refresh_token_validity(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.refresh_token_validity", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `supported_identity_providers` after provisioning.\n"]
@@ -192,7 +214,7 @@ impl DataCognitoUserPoolClient {
     }
 
     #[doc = "Get a reference to the value of field `token_validity_units` after provisioning.\n"]
-    pub fn token_validity_units(&self) -> terrars::ListRef<DataCognitoUserPoolClientTokenValidityUnitsElRef> {
+    pub fn token_validity_units(&self) -> terrars::ListRef<DataCognitoUserPoolClient_TokenValidityUnitsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.token_validity_units", self.extract_ref()))
     }
 
@@ -251,13 +273,14 @@ impl BuildDataCognitoUserPoolClient {
         let out = DataCognitoUserPoolClient(std::rc::Rc::new(DataCognitoUserPoolClient_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCognitoUserPoolClientData {
+            data: std::cell::RefCell::new(DataCognitoUserPoolClientData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 client_id: self.client_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 user_pool_id: self.user_pool_id,
             }),
         }));
@@ -313,7 +336,7 @@ impl DataCognitoUserPoolClientRef {
     }
 
     #[doc = "Get a reference to the value of field `analytics_configuration` after provisioning.\n"]
-    pub fn analytics_configuration(&self) -> terrars::ListRef<DataCognitoUserPoolClientAnalyticsConfigurationElRef> {
+    pub fn analytics_configuration(&self) -> terrars::ListRef<DataCognitoUserPoolClient_AnalyticsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.analytics_configuration", self.extract_ref()))
     }
 
@@ -394,9 +417,20 @@ impl DataCognitoUserPoolClientRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.read_attributes", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `refresh_token_rotation` after provisioning.\n"]
+    pub fn refresh_token_rotation(&self) -> terrars::ListRef<DataCognitoUserPoolClient_RefreshTokenRotationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.refresh_token_rotation", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `refresh_token_validity` after provisioning.\n"]
     pub fn refresh_token_validity(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.refresh_token_validity", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `supported_identity_providers` after provisioning.\n"]
@@ -405,7 +439,7 @@ impl DataCognitoUserPoolClientRef {
     }
 
     #[doc = "Get a reference to the value of field `token_validity_units` after provisioning.\n"]
-    pub fn token_validity_units(&self) -> terrars::ListRef<DataCognitoUserPoolClientTokenValidityUnitsElRef> {
+    pub fn token_validity_units(&self) -> terrars::ListRef<DataCognitoUserPoolClient_TokenValidityUnitsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.token_validity_units", self.extract_ref()))
     }
 
@@ -421,7 +455,7 @@ impl DataCognitoUserPoolClientRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCognitoUserPoolClientAnalyticsConfigurationEl {
+pub struct DataCognitoUserPoolClient_AnalyticsConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     application_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -434,7 +468,7 @@ pub struct DataCognitoUserPoolClientAnalyticsConfigurationEl {
     user_data_shared: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataCognitoUserPoolClientAnalyticsConfigurationEl {
+impl DataCognitoUserPoolClient_AnalyticsConfiguration {
     #[doc = "Set the field `application_arn`.\n"]
     pub fn set_application_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.application_arn = std::option::Option::Some(v.into());
@@ -466,8 +500,8 @@ impl DataCognitoUserPoolClientAnalyticsConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataCognitoUserPoolClientAnalyticsConfigurationEl {
-    type O = terrars::BlockAssignable<DataCognitoUserPoolClientAnalyticsConfigurationEl>;
+impl terrars::ToListMappable for DataCognitoUserPoolClient_AnalyticsConfiguration {
+    type O = terrars::BlockAssignable<DataCognitoUserPoolClient_AnalyticsConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -478,11 +512,11 @@ impl terrars::ToListMappable for DataCognitoUserPoolClientAnalyticsConfiguration
     }
 }
 
-pub struct BuildDataCognitoUserPoolClientAnalyticsConfigurationEl {}
+pub struct BuildDataCognitoUserPoolClient_AnalyticsConfiguration {}
 
-impl BuildDataCognitoUserPoolClientAnalyticsConfigurationEl {
-    pub fn build(self) -> DataCognitoUserPoolClientAnalyticsConfigurationEl {
-        DataCognitoUserPoolClientAnalyticsConfigurationEl {
+impl BuildDataCognitoUserPoolClient_AnalyticsConfiguration {
+    pub fn build(self) -> DataCognitoUserPoolClient_AnalyticsConfiguration {
+        DataCognitoUserPoolClient_AnalyticsConfiguration {
             application_arn: core::default::Default::default(),
             application_id: core::default::Default::default(),
             external_id: core::default::Default::default(),
@@ -492,24 +526,26 @@ impl BuildDataCognitoUserPoolClientAnalyticsConfigurationEl {
     }
 }
 
-pub struct DataCognitoUserPoolClientAnalyticsConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataCognitoUserPoolClient_AnalyticsConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCognitoUserPoolClientAnalyticsConfigurationElRef {
+impl terrars::Ref for DataCognitoUserPoolClient_AnalyticsConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCognitoUserPoolClientAnalyticsConfigurationElRef {
-        DataCognitoUserPoolClientAnalyticsConfigurationElRef {
+    ) -> DataCognitoUserPoolClient_AnalyticsConfigurationRef {
+        DataCognitoUserPoolClient_AnalyticsConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCognitoUserPoolClientAnalyticsConfigurationElRef {
+impl DataCognitoUserPoolClient_AnalyticsConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -541,7 +577,87 @@ impl DataCognitoUserPoolClientAnalyticsConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCognitoUserPoolClientTokenValidityUnitsEl {
+pub struct DataCognitoUserPoolClient_RefreshTokenRotation {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    feature: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retry_grace_period_seconds: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DataCognitoUserPoolClient_RefreshTokenRotation {
+    #[doc = "Set the field `feature`.\n"]
+    pub fn set_feature(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.feature = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retry_grace_period_seconds`.\n"]
+    pub fn set_retry_grace_period_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.retry_grace_period_seconds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataCognitoUserPoolClient_RefreshTokenRotation {
+    type O = terrars::BlockAssignable<DataCognitoUserPoolClient_RefreshTokenRotation>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataCognitoUserPoolClient_RefreshTokenRotation {}
+
+impl BuildDataCognitoUserPoolClient_RefreshTokenRotation {
+    pub fn build(self) -> DataCognitoUserPoolClient_RefreshTokenRotation {
+        DataCognitoUserPoolClient_RefreshTokenRotation {
+            feature: core::default::Default::default(),
+            retry_grace_period_seconds: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataCognitoUserPoolClient_RefreshTokenRotationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataCognitoUserPoolClient_RefreshTokenRotationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataCognitoUserPoolClient_RefreshTokenRotationRef {
+        DataCognitoUserPoolClient_RefreshTokenRotationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataCognitoUserPoolClient_RefreshTokenRotationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `feature` after provisioning.\n"]
+    pub fn feature(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.feature", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `retry_grace_period_seconds` after provisioning.\n"]
+    pub fn retry_grace_period_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.retry_grace_period_seconds", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataCognitoUserPoolClient_TokenValidityUnits {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_token: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -550,7 +666,7 @@ pub struct DataCognitoUserPoolClientTokenValidityUnitsEl {
     refresh_token: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCognitoUserPoolClientTokenValidityUnitsEl {
+impl DataCognitoUserPoolClient_TokenValidityUnits {
     #[doc = "Set the field `access_token`.\n"]
     pub fn set_access_token(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.access_token = std::option::Option::Some(v.into());
@@ -570,8 +686,8 @@ impl DataCognitoUserPoolClientTokenValidityUnitsEl {
     }
 }
 
-impl terrars::ToListMappable for DataCognitoUserPoolClientTokenValidityUnitsEl {
-    type O = terrars::BlockAssignable<DataCognitoUserPoolClientTokenValidityUnitsEl>;
+impl terrars::ToListMappable for DataCognitoUserPoolClient_TokenValidityUnits {
+    type O = terrars::BlockAssignable<DataCognitoUserPoolClient_TokenValidityUnits>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -582,11 +698,11 @@ impl terrars::ToListMappable for DataCognitoUserPoolClientTokenValidityUnitsEl {
     }
 }
 
-pub struct BuildDataCognitoUserPoolClientTokenValidityUnitsEl {}
+pub struct BuildDataCognitoUserPoolClient_TokenValidityUnits {}
 
-impl BuildDataCognitoUserPoolClientTokenValidityUnitsEl {
-    pub fn build(self) -> DataCognitoUserPoolClientTokenValidityUnitsEl {
-        DataCognitoUserPoolClientTokenValidityUnitsEl {
+impl BuildDataCognitoUserPoolClient_TokenValidityUnits {
+    pub fn build(self) -> DataCognitoUserPoolClient_TokenValidityUnits {
+        DataCognitoUserPoolClient_TokenValidityUnits {
             access_token: core::default::Default::default(),
             id_token: core::default::Default::default(),
             refresh_token: core::default::Default::default(),
@@ -594,24 +710,26 @@ impl BuildDataCognitoUserPoolClientTokenValidityUnitsEl {
     }
 }
 
-pub struct DataCognitoUserPoolClientTokenValidityUnitsElRef {
+#[allow(dead_code)]
+pub struct DataCognitoUserPoolClient_TokenValidityUnitsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCognitoUserPoolClientTokenValidityUnitsElRef {
+impl terrars::Ref for DataCognitoUserPoolClient_TokenValidityUnitsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataCognitoUserPoolClientTokenValidityUnitsElRef {
-        DataCognitoUserPoolClientTokenValidityUnitsElRef {
+    ) -> DataCognitoUserPoolClient_TokenValidityUnitsRef {
+        DataCognitoUserPoolClient_TokenValidityUnitsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCognitoUserPoolClientTokenValidityUnitsElRef {
+impl DataCognitoUserPoolClient_TokenValidityUnitsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

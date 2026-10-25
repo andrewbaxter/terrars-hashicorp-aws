@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EcrReplicationConfigurationData {
+struct EcrReplicationConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,14 +23,16 @@ struct EcrReplicationConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replication_configuration: std::option::Option<std::vec::Vec<EcrReplicationConfigurationReplicationConfigurationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    replication_configuration: std::option::Option<std::vec::Vec<EcrReplicationConfiguration_ReplicationConfiguration>>,
     dynamic: EcrReplicationConfigurationDynamic,
 }
 
 struct EcrReplicationConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EcrReplicationConfigurationData>,
+    data: std::cell::RefCell<EcrReplicationConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -134,10 +138,17 @@ impl EcrReplicationConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `replication_configuration`.\n"]
     pub fn set_replication_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcrReplicationConfigurationReplicationConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcrReplicationConfiguration_ReplicationConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -155,15 +166,19 @@ impl EcrReplicationConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
     pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_configuration` after provisioning.\n"]
-    pub fn replication_configuration(
-        &self,
-    ) -> terrars::ListRef<EcrReplicationConfigurationReplicationConfigurationElRef> {
+    pub fn replication_configuration(&self) -> terrars::ListRef<EcrReplicationConfiguration_ReplicationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replication_configuration", self.extract_ref()))
     }
 }
@@ -208,13 +223,14 @@ impl BuildEcrReplicationConfiguration {
         let out = EcrReplicationConfiguration(std::rc::Rc::new(EcrReplicationConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EcrReplicationConfigurationData {
+            data: std::cell::RefCell::new(EcrReplicationConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 replication_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -252,29 +268,40 @@ impl EcrReplicationConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
     pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_configuration` after provisioning.\n"]
-    pub fn replication_configuration(
-        &self,
-    ) -> terrars::ListRef<EcrReplicationConfigurationReplicationConfigurationElRef> {
+    pub fn replication_configuration(&self) -> terrars::ListRef<EcrReplicationConfiguration_ReplicationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replication_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EcrReplicationConfigurationDynamic {
+    replication_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<EcrReplicationConfiguration_ReplicationConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl {
+pub struct EcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination {
     region: terrars::PrimField<std::string::String>,
     registry_id: terrars::PrimField<std::string::String>,
 }
 
-impl EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl { }
+impl EcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination { }
 
-impl terrars::ToListMappable for EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl {
-    type O = terrars::BlockAssignable<EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl>;
+impl terrars::ToListMappable for EcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination {
+    type O = terrars::BlockAssignable<EcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -285,40 +312,42 @@ impl terrars::ToListMappable for EcrReplicationConfigurationReplicationConfigura
     }
 }
 
-pub struct BuildEcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl {
+pub struct BuildEcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination {
     #[doc = ""]
     pub region: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub registry_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl {
-    pub fn build(self) -> EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl {
-        EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl {
+impl BuildEcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination {
+    pub fn build(self) -> EcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination {
+        EcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination {
             region: self.region,
             registry_id: self.registry_id,
         }
     }
 }
 
-pub struct EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationElRef {
+#[allow(dead_code)]
+pub struct EcrReplicationConfiguration_ReplicationConfiguration_Rule_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationElRef {
+impl terrars::Ref for EcrReplicationConfiguration_ReplicationConfiguration_Rule_DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationElRef {
-        EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationElRef {
+    ) -> EcrReplicationConfiguration_ReplicationConfiguration_Rule_DestinationRef {
+        EcrReplicationConfiguration_ReplicationConfiguration_Rule_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationElRef {
+impl EcrReplicationConfiguration_ReplicationConfiguration_Rule_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -335,15 +364,15 @@ impl EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationElRef
 }
 
 #[derive(Serialize)]
-pub struct EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl {
+pub struct EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter {
     filter: terrars::PrimField<std::string::String>,
     filter_type: terrars::PrimField<std::string::String>,
 }
 
-impl EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl { }
+impl EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter { }
 
-impl terrars::ToListMappable for EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl {
-    type O = terrars::BlockAssignable<EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl>;
+impl terrars::ToListMappable for EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter {
+    type O = terrars::BlockAssignable<EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -354,40 +383,42 @@ impl terrars::ToListMappable for EcrReplicationConfigurationReplicationConfigura
     }
 }
 
-pub struct BuildEcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl {
+pub struct BuildEcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter {
     #[doc = ""]
     pub filter: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub filter_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildEcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl {
-    pub fn build(self) -> EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl {
-        EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl {
+impl BuildEcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter {
+    pub fn build(self) -> EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter {
+        EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter {
             filter: self.filter,
             filter_type: self.filter_type,
         }
     }
 }
 
-pub struct EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterElRef {
+#[allow(dead_code)]
+pub struct EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterElRef {
+impl terrars::Ref for EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterElRef {
-        EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterElRef {
+    ) -> EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilterRef {
+        EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterElRef {
+impl EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -404,29 +435,29 @@ impl EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilter
 }
 
 #[derive(Serialize, Default)]
-struct EcrReplicationConfigurationReplicationConfigurationElRuleElDynamic {
+struct EcrReplicationConfiguration_ReplicationConfiguration_RuleDynamic {
     destination: std
     ::option
-    ::Option<terrars::DynamicBlock<EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl>>,
+    ::Option<terrars::DynamicBlock<EcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination>>,
     repository_filter: std
     ::option
-    ::Option<terrars::DynamicBlock<EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl>>,
+    ::Option<terrars::DynamicBlock<EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter>>,
 }
 
 #[derive(Serialize)]
-pub struct EcrReplicationConfigurationReplicationConfigurationElRuleEl {
+pub struct EcrReplicationConfiguration_ReplicationConfiguration_Rule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination: std
     ::option
-    ::Option<std::vec::Vec<EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl>>,
+    ::Option<std::vec::Vec<EcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repository_filter: std
     ::option
-    ::Option<std::vec::Vec<EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl>>,
-    dynamic: EcrReplicationConfigurationReplicationConfigurationElRuleElDynamic,
+    ::Option<std::vec::Vec<EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter>>,
+    dynamic: EcrReplicationConfiguration_ReplicationConfiguration_RuleDynamic,
 }
 
-impl EcrReplicationConfigurationReplicationConfigurationElRuleEl {
+impl EcrReplicationConfiguration_ReplicationConfiguration_Rule {
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(
         mut self,
@@ -437,7 +468,7 @@ impl EcrReplicationConfigurationReplicationConfigurationElRuleEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationEl>,
+                        ::BlockAssignable<EcrReplicationConfiguration_ReplicationConfiguration_Rule_Destination>,
                     >,
     ) -> Self {
         match v.into() {
@@ -461,9 +492,7 @@ impl EcrReplicationConfigurationReplicationConfigurationElRuleEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterEl,
-                        >,
+                        ::BlockAssignable<EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilter>,
                     >,
     ) -> Self {
         match v.into() {
@@ -478,8 +507,8 @@ impl EcrReplicationConfigurationReplicationConfigurationElRuleEl {
     }
 }
 
-impl terrars::ToListMappable for EcrReplicationConfigurationReplicationConfigurationElRuleEl {
-    type O = terrars::BlockAssignable<EcrReplicationConfigurationReplicationConfigurationElRuleEl>;
+impl terrars::ToListMappable for EcrReplicationConfiguration_ReplicationConfiguration_Rule {
+    type O = terrars::BlockAssignable<EcrReplicationConfiguration_ReplicationConfiguration_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,11 +519,11 @@ impl terrars::ToListMappable for EcrReplicationConfigurationReplicationConfigura
     }
 }
 
-pub struct BuildEcrReplicationConfigurationReplicationConfigurationElRuleEl {}
+pub struct BuildEcrReplicationConfiguration_ReplicationConfiguration_Rule {}
 
-impl BuildEcrReplicationConfigurationReplicationConfigurationElRuleEl {
-    pub fn build(self) -> EcrReplicationConfigurationReplicationConfigurationElRuleEl {
-        EcrReplicationConfigurationReplicationConfigurationElRuleEl {
+impl BuildEcrReplicationConfiguration_ReplicationConfiguration_Rule {
+    pub fn build(self) -> EcrReplicationConfiguration_ReplicationConfiguration_Rule {
+        EcrReplicationConfiguration_ReplicationConfiguration_Rule {
             destination: core::default::Default::default(),
             repository_filter: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -502,24 +531,26 @@ impl BuildEcrReplicationConfigurationReplicationConfigurationElRuleEl {
     }
 }
 
-pub struct EcrReplicationConfigurationReplicationConfigurationElRuleElRef {
+#[allow(dead_code)]
+pub struct EcrReplicationConfiguration_ReplicationConfiguration_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrReplicationConfigurationReplicationConfigurationElRuleElRef {
+impl terrars::Ref for EcrReplicationConfiguration_ReplicationConfiguration_RuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcrReplicationConfigurationReplicationConfigurationElRuleElRef {
-        EcrReplicationConfigurationReplicationConfigurationElRuleElRef {
+    ) -> EcrReplicationConfiguration_ReplicationConfiguration_RuleRef {
+        EcrReplicationConfiguration_ReplicationConfiguration_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrReplicationConfigurationReplicationConfigurationElRuleElRef {
+impl EcrReplicationConfiguration_ReplicationConfiguration_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -527,31 +558,31 @@ impl EcrReplicationConfigurationReplicationConfigurationElRuleElRef {
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
     pub fn destination(
         &self,
-    ) -> terrars::ListRef<EcrReplicationConfigurationReplicationConfigurationElRuleElDestinationElRef> {
+    ) -> terrars::ListRef<EcrReplicationConfiguration_ReplicationConfiguration_Rule_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.base))
     }
 
     #[doc = "Get a reference to the value of field `repository_filter` after provisioning.\n"]
     pub fn repository_filter(
         &self,
-    ) -> terrars::ListRef<EcrReplicationConfigurationReplicationConfigurationElRuleElRepositoryFilterElRef> {
+    ) -> terrars::ListRef<EcrReplicationConfiguration_ReplicationConfiguration_Rule_RepositoryFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.repository_filter", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct EcrReplicationConfigurationReplicationConfigurationElDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<EcrReplicationConfigurationReplicationConfigurationElRuleEl>>,
+struct EcrReplicationConfiguration_ReplicationConfigurationDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<EcrReplicationConfiguration_ReplicationConfiguration_Rule>>,
 }
 
 #[derive(Serialize)]
-pub struct EcrReplicationConfigurationReplicationConfigurationEl {
+pub struct EcrReplicationConfiguration_ReplicationConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<EcrReplicationConfigurationReplicationConfigurationElRuleEl>>,
-    dynamic: EcrReplicationConfigurationReplicationConfigurationElDynamic,
+    rule: std::option::Option<std::vec::Vec<EcrReplicationConfiguration_ReplicationConfiguration_Rule>>,
+    dynamic: EcrReplicationConfiguration_ReplicationConfigurationDynamic,
 }
 
-impl EcrReplicationConfigurationReplicationConfigurationEl {
+impl EcrReplicationConfiguration_ReplicationConfiguration {
     #[doc = "Set the field `rule`.\n"]
     pub fn set_rule(
         mut self,
@@ -560,7 +591,7 @@ impl EcrReplicationConfigurationReplicationConfigurationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<EcrReplicationConfigurationReplicationConfigurationElRuleEl>>,
+                    ::Into<terrars::BlockAssignable<EcrReplicationConfiguration_ReplicationConfiguration_Rule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -574,8 +605,8 @@ impl EcrReplicationConfigurationReplicationConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for EcrReplicationConfigurationReplicationConfigurationEl {
-    type O = terrars::BlockAssignable<EcrReplicationConfigurationReplicationConfigurationEl>;
+impl terrars::ToListMappable for EcrReplicationConfiguration_ReplicationConfiguration {
+    type O = terrars::BlockAssignable<EcrReplicationConfiguration_ReplicationConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -586,48 +617,43 @@ impl terrars::ToListMappable for EcrReplicationConfigurationReplicationConfigura
     }
 }
 
-pub struct BuildEcrReplicationConfigurationReplicationConfigurationEl {}
+pub struct BuildEcrReplicationConfiguration_ReplicationConfiguration {}
 
-impl BuildEcrReplicationConfigurationReplicationConfigurationEl {
-    pub fn build(self) -> EcrReplicationConfigurationReplicationConfigurationEl {
-        EcrReplicationConfigurationReplicationConfigurationEl {
+impl BuildEcrReplicationConfiguration_ReplicationConfiguration {
+    pub fn build(self) -> EcrReplicationConfiguration_ReplicationConfiguration {
+        EcrReplicationConfiguration_ReplicationConfiguration {
             rule: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct EcrReplicationConfigurationReplicationConfigurationElRef {
+#[allow(dead_code)]
+pub struct EcrReplicationConfiguration_ReplicationConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrReplicationConfigurationReplicationConfigurationElRef {
+impl terrars::Ref for EcrReplicationConfiguration_ReplicationConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EcrReplicationConfigurationReplicationConfigurationElRef {
-        EcrReplicationConfigurationReplicationConfigurationElRef {
+    ) -> EcrReplicationConfiguration_ReplicationConfigurationRef {
+        EcrReplicationConfiguration_ReplicationConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrReplicationConfigurationReplicationConfigurationElRef {
+impl EcrReplicationConfiguration_ReplicationConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<EcrReplicationConfigurationReplicationConfigurationElRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<EcrReplicationConfiguration_ReplicationConfiguration_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EcrReplicationConfigurationDynamic {
-    replication_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<EcrReplicationConfigurationReplicationConfigurationEl>>,
 }

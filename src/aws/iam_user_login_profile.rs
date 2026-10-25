@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IamUserLoginProfileData {
+struct IamUserLoginProfileData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,7 +34,7 @@ struct IamUserLoginProfileData {
 struct IamUserLoginProfile_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamUserLoginProfileData>,
+    data: std::cell::RefCell<IamUserLoginProfileData_>,
 }
 
 #[derive(Clone)]
@@ -239,7 +241,7 @@ impl BuildIamUserLoginProfile {
         let out = IamUserLoginProfile(std::rc::Rc::new(IamUserLoginProfile_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamUserLoginProfileData {
+            data: std::cell::RefCell::new(IamUserLoginProfileData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),

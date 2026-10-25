@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataLambdaInvocationData {
+struct DataLambdaInvocationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -22,12 +24,16 @@ struct DataLambdaInvocationData {
     input: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     qualifier: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tenant_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataLambdaInvocation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLambdaInvocationData>,
+    data: std::cell::RefCell<DataLambdaInvocationData_>,
 }
 
 #[derive(Clone)]
@@ -84,6 +90,19 @@ impl DataLambdaInvocation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tenant_id`.\n"]
+    pub fn set_tenant_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().tenant_id = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `function_name` after provisioning.\n"]
     pub fn function_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.function_name", self.extract_ref()))
@@ -104,9 +123,20 @@ impl DataLambdaInvocation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `result` after provisioning.\n"]
     pub fn result(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.result", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tenant_id` after provisioning.\n"]
+    pub fn tenant_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenant_id", self.extract_ref()))
     }
 }
 
@@ -154,7 +184,7 @@ impl BuildDataLambdaInvocation {
         let out = DataLambdaInvocation(std::rc::Rc::new(DataLambdaInvocation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLambdaInvocationData {
+            data: std::cell::RefCell::new(DataLambdaInvocationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -163,6 +193,8 @@ impl BuildDataLambdaInvocation {
                 id: core::default::Default::default(),
                 input: self.input,
                 qualifier: core::default::Default::default(),
+                region: core::default::Default::default(),
+                tenant_id: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -213,8 +245,19 @@ impl DataLambdaInvocationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `result` after provisioning.\n"]
     pub fn result(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.result", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tenant_id` after provisioning.\n"]
+    pub fn tenant_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenant_id", self.extract_ref()))
     }
 }

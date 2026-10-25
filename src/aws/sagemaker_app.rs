@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerAppData {
+struct SagemakerAppData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct SagemakerAppData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     space_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -32,14 +36,14 @@ struct SagemakerAppData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_profile_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_spec: std::option::Option<std::vec::Vec<SagemakerAppResourceSpecEl>>,
+    resource_spec: std::option::Option<std::vec::Vec<SagemakerApp_ResourceSpec>>,
     dynamic: SagemakerAppDynamic,
 }
 
 struct SagemakerApp_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerAppData>,
+    data: std::cell::RefCell<SagemakerAppData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +149,13 @@ impl SagemakerApp {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `space_name`.\n"]
     pub fn set_space_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().space_name = std::option::Option::Some(v.into());
@@ -178,7 +189,7 @@ impl SagemakerApp {
     #[doc = "Set the field `resource_spec`.\n"]
     pub fn set_resource_spec(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerAppResourceSpecEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerApp_ResourceSpec>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -216,6 +227,12 @@ impl SagemakerApp {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `space_name` after provisioning.\n"]
     pub fn space_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.space_name", self.extract_ref()))
@@ -237,7 +254,7 @@ impl SagemakerApp {
     }
 
     #[doc = "Get a reference to the value of field `resource_spec` after provisioning.\n"]
-    pub fn resource_spec(&self) -> terrars::ListRef<SagemakerAppResourceSpecElRef> {
+    pub fn resource_spec(&self) -> terrars::ListRef<SagemakerApp_ResourceSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_spec", self.extract_ref()))
     }
 }
@@ -288,7 +305,7 @@ impl BuildSagemakerApp {
         let out = SagemakerApp(std::rc::Rc::new(SagemakerApp_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerAppData {
+            data: std::cell::RefCell::new(SagemakerAppData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,6 +315,7 @@ impl BuildSagemakerApp {
                 app_type: self.app_type,
                 domain_id: self.domain_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 space_name: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -359,6 +377,12 @@ impl SagemakerAppRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `space_name` after provisioning.\n"]
     pub fn space_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.space_name", self.extract_ref()))
@@ -380,13 +404,18 @@ impl SagemakerAppRef {
     }
 
     #[doc = "Get a reference to the value of field `resource_spec` after provisioning.\n"]
-    pub fn resource_spec(&self) -> terrars::ListRef<SagemakerAppResourceSpecElRef> {
+    pub fn resource_spec(&self) -> terrars::ListRef<SagemakerApp_ResourceSpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_spec", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerAppDynamic {
+    resource_spec: std::option::Option<terrars::DynamicBlock<SagemakerApp_ResourceSpec>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerAppResourceSpecEl {
+pub struct SagemakerApp_ResourceSpec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -394,10 +423,12 @@ pub struct SagemakerAppResourceSpecEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sagemaker_image_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sagemaker_image_version_alias: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sagemaker_image_version_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SagemakerAppResourceSpecEl {
+impl SagemakerApp_ResourceSpec {
     #[doc = "Set the field `instance_type`.\n"]
     pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.instance_type = std::option::Option::Some(v.into());
@@ -422,6 +453,15 @@ impl SagemakerAppResourceSpecEl {
         self
     }
 
+    #[doc = "Set the field `sagemaker_image_version_alias`.\n"]
+    pub fn set_sagemaker_image_version_alias(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.sagemaker_image_version_alias = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `sagemaker_image_version_arn`.\n"]
     pub fn set_sagemaker_image_version_arn(
         mut self,
@@ -432,8 +472,8 @@ impl SagemakerAppResourceSpecEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerAppResourceSpecEl {
-    type O = terrars::BlockAssignable<SagemakerAppResourceSpecEl>;
+impl terrars::ToListMappable for SagemakerApp_ResourceSpec {
+    type O = terrars::BlockAssignable<SagemakerApp_ResourceSpec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -444,34 +484,37 @@ impl terrars::ToListMappable for SagemakerAppResourceSpecEl {
     }
 }
 
-pub struct BuildSagemakerAppResourceSpecEl {}
+pub struct BuildSagemakerApp_ResourceSpec {}
 
-impl BuildSagemakerAppResourceSpecEl {
-    pub fn build(self) -> SagemakerAppResourceSpecEl {
-        SagemakerAppResourceSpecEl {
+impl BuildSagemakerApp_ResourceSpec {
+    pub fn build(self) -> SagemakerApp_ResourceSpec {
+        SagemakerApp_ResourceSpec {
             instance_type: core::default::Default::default(),
             lifecycle_config_arn: core::default::Default::default(),
             sagemaker_image_arn: core::default::Default::default(),
+            sagemaker_image_version_alias: core::default::Default::default(),
             sagemaker_image_version_arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct SagemakerAppResourceSpecElRef {
+#[allow(dead_code)]
+pub struct SagemakerApp_ResourceSpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerAppResourceSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerAppResourceSpecElRef {
-        SagemakerAppResourceSpecElRef {
+impl terrars::Ref for SagemakerApp_ResourceSpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerApp_ResourceSpecRef {
+        SagemakerApp_ResourceSpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerAppResourceSpecElRef {
+impl SagemakerApp_ResourceSpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -491,13 +534,13 @@ impl SagemakerAppResourceSpecElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_arn", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `sagemaker_image_version_alias` after provisioning.\n"]
+    pub fn sagemaker_image_version_alias(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_alias", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `sagemaker_image_version_arn` after provisioning.\n"]
     pub fn sagemaker_image_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sagemaker_image_version_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SagemakerAppDynamic {
-    resource_spec: std::option::Option<terrars::DynamicBlock<SagemakerAppResourceSpecEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataRoute53TrafficPolicyDocumentData {
+struct DataRoute53TrafficPolicyDocumentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -27,16 +29,16 @@ struct DataRoute53TrafficPolicyDocumentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocumentEndpointEl>>,
+    endpoint: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocument_Endpoint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocumentRuleEl>>,
+    rule: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocument_Rule>>,
     dynamic: DataRoute53TrafficPolicyDocumentDynamic,
 }
 
 struct DataRoute53TrafficPolicyDocument_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRoute53TrafficPolicyDocumentData>,
+    data: std::cell::RefCell<DataRoute53TrafficPolicyDocumentData_>,
 }
 
 #[derive(Clone)]
@@ -114,7 +116,7 @@ impl DataRoute53TrafficPolicyDocument {
     #[doc = "Set the field `endpoint`.\n"]
     pub fn set_endpoint(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentEndpointEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Endpoint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -130,7 +132,7 @@ impl DataRoute53TrafficPolicyDocument {
     #[doc = "Set the field `rule`.\n"]
     pub fn set_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -214,7 +216,7 @@ impl BuildDataRoute53TrafficPolicyDocument {
         let out = DataRoute53TrafficPolicyDocument(std::rc::Rc::new(DataRoute53TrafficPolicyDocument_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRoute53TrafficPolicyDocumentData {
+            data: std::cell::RefCell::new(DataRoute53TrafficPolicyDocumentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -288,8 +290,14 @@ impl DataRoute53TrafficPolicyDocumentRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataRoute53TrafficPolicyDocumentDynamic {
+    endpoint: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocument_Endpoint>>,
+    rule: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocument_Rule>>,
+}
+
 #[derive(Serialize)]
-pub struct DataRoute53TrafficPolicyDocumentEndpointEl {
+pub struct DataRoute53TrafficPolicyDocument_Endpoint {
     id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -299,7 +307,7 @@ pub struct DataRoute53TrafficPolicyDocumentEndpointEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRoute53TrafficPolicyDocumentEndpointEl {
+impl DataRoute53TrafficPolicyDocument_Endpoint {
     #[doc = "Set the field `region`.\n"]
     pub fn set_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.region = std::option::Option::Some(v.into());
@@ -319,8 +327,8 @@ impl DataRoute53TrafficPolicyDocumentEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentEndpointEl {
-    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentEndpointEl>;
+impl terrars::ToListMappable for DataRoute53TrafficPolicyDocument_Endpoint {
+    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Endpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,14 +339,14 @@ impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentEndpointEl {
     }
 }
 
-pub struct BuildDataRoute53TrafficPolicyDocumentEndpointEl {
+pub struct BuildDataRoute53TrafficPolicyDocument_Endpoint {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataRoute53TrafficPolicyDocumentEndpointEl {
-    pub fn build(self) -> DataRoute53TrafficPolicyDocumentEndpointEl {
-        DataRoute53TrafficPolicyDocumentEndpointEl {
+impl BuildDataRoute53TrafficPolicyDocument_Endpoint {
+    pub fn build(self) -> DataRoute53TrafficPolicyDocument_Endpoint {
+        DataRoute53TrafficPolicyDocument_Endpoint {
             id: self.id,
             region: core::default::Default::default(),
             type_: core::default::Default::default(),
@@ -347,21 +355,23 @@ impl BuildDataRoute53TrafficPolicyDocumentEndpointEl {
     }
 }
 
-pub struct DataRoute53TrafficPolicyDocumentEndpointElRef {
+#[allow(dead_code)]
+pub struct DataRoute53TrafficPolicyDocument_EndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRoute53TrafficPolicyDocumentEndpointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRoute53TrafficPolicyDocumentEndpointElRef {
-        DataRoute53TrafficPolicyDocumentEndpointElRef {
+impl terrars::Ref for DataRoute53TrafficPolicyDocument_EndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRoute53TrafficPolicyDocument_EndpointRef {
+        DataRoute53TrafficPolicyDocument_EndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRoute53TrafficPolicyDocumentEndpointElRef {
+impl DataRoute53TrafficPolicyDocument_EndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -388,7 +398,7 @@ impl DataRoute53TrafficPolicyDocumentEndpointElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {
+pub struct DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bias: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -407,7 +417,7 @@ pub struct DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {
     rule_reference: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {
+impl DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation {
     #[doc = "Set the field `bias`.\n"]
     pub fn set_bias(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bias = std::option::Option::Some(v.into());
@@ -460,8 +470,8 @@ impl DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {
     }
 }
 
-impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {
-    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl>;
+impl terrars::ToListMappable for DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation {
+    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -472,11 +482,11 @@ impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElGeoProxim
     }
 }
 
-pub struct BuildDataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {}
+pub struct BuildDataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation {}
 
-impl BuildDataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {
-    pub fn build(self) -> DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {
-        DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {
+impl BuildDataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation {
+    pub fn build(self) -> DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation {
+        DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation {
             bias: core::default::Default::default(),
             endpoint_reference: core::default::Default::default(),
             evaluate_target_health: core::default::Default::default(),
@@ -489,24 +499,26 @@ impl BuildDataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl {
     }
 }
 
-pub struct DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationElRef {
+#[allow(dead_code)]
+pub struct DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationElRef {
+impl terrars::Ref for DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationElRef {
-        DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationElRef {
+    ) -> DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocationRef {
+        DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationElRef {
+impl DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -553,14 +565,14 @@ impl DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRoute53TrafficPolicyDocumentRuleElItemsEl {
+pub struct DataRoute53TrafficPolicyDocument_Rule_Items {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint_reference: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     health_check: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElItemsEl {
+impl DataRoute53TrafficPolicyDocument_Rule_Items {
     #[doc = "Set the field `endpoint_reference`.\n"]
     pub fn set_endpoint_reference(
         mut self,
@@ -577,8 +589,8 @@ impl DataRoute53TrafficPolicyDocumentRuleElItemsEl {
     }
 }
 
-impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElItemsEl {
-    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElItemsEl>;
+impl terrars::ToListMappable for DataRoute53TrafficPolicyDocument_Rule_Items {
+    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Items>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -589,35 +601,37 @@ impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElItemsEl {
     }
 }
 
-pub struct BuildDataRoute53TrafficPolicyDocumentRuleElItemsEl {}
+pub struct BuildDataRoute53TrafficPolicyDocument_Rule_Items {}
 
-impl BuildDataRoute53TrafficPolicyDocumentRuleElItemsEl {
-    pub fn build(self) -> DataRoute53TrafficPolicyDocumentRuleElItemsEl {
-        DataRoute53TrafficPolicyDocumentRuleElItemsEl {
+impl BuildDataRoute53TrafficPolicyDocument_Rule_Items {
+    pub fn build(self) -> DataRoute53TrafficPolicyDocument_Rule_Items {
+        DataRoute53TrafficPolicyDocument_Rule_Items {
             endpoint_reference: core::default::Default::default(),
             health_check: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataRoute53TrafficPolicyDocumentRuleElItemsElRef {
+#[allow(dead_code)]
+pub struct DataRoute53TrafficPolicyDocument_Rule_ItemsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRoute53TrafficPolicyDocumentRuleElItemsElRef {
+impl terrars::Ref for DataRoute53TrafficPolicyDocument_Rule_ItemsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataRoute53TrafficPolicyDocumentRuleElItemsElRef {
-        DataRoute53TrafficPolicyDocumentRuleElItemsElRef {
+    ) -> DataRoute53TrafficPolicyDocument_Rule_ItemsRef {
+        DataRoute53TrafficPolicyDocument_Rule_ItemsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElItemsElRef {
+impl DataRoute53TrafficPolicyDocument_Rule_ItemsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -634,7 +648,7 @@ impl DataRoute53TrafficPolicyDocumentRuleElItemsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRoute53TrafficPolicyDocumentRuleElLocationEl {
+pub struct DataRoute53TrafficPolicyDocument_Rule_Location {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     continent: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -653,7 +667,7 @@ pub struct DataRoute53TrafficPolicyDocumentRuleElLocationEl {
     subdivision: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElLocationEl {
+impl DataRoute53TrafficPolicyDocument_Rule_Location {
     #[doc = "Set the field `continent`.\n"]
     pub fn set_continent(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.continent = std::option::Option::Some(v.into());
@@ -706,8 +720,8 @@ impl DataRoute53TrafficPolicyDocumentRuleElLocationEl {
     }
 }
 
-impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElLocationEl {
-    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElLocationEl>;
+impl terrars::ToListMappable for DataRoute53TrafficPolicyDocument_Rule_Location {
+    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Location>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -718,11 +732,11 @@ impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElLocationE
     }
 }
 
-pub struct BuildDataRoute53TrafficPolicyDocumentRuleElLocationEl {}
+pub struct BuildDataRoute53TrafficPolicyDocument_Rule_Location {}
 
-impl BuildDataRoute53TrafficPolicyDocumentRuleElLocationEl {
-    pub fn build(self) -> DataRoute53TrafficPolicyDocumentRuleElLocationEl {
-        DataRoute53TrafficPolicyDocumentRuleElLocationEl {
+impl BuildDataRoute53TrafficPolicyDocument_Rule_Location {
+    pub fn build(self) -> DataRoute53TrafficPolicyDocument_Rule_Location {
+        DataRoute53TrafficPolicyDocument_Rule_Location {
             continent: core::default::Default::default(),
             country: core::default::Default::default(),
             endpoint_reference: core::default::Default::default(),
@@ -735,24 +749,26 @@ impl BuildDataRoute53TrafficPolicyDocumentRuleElLocationEl {
     }
 }
 
-pub struct DataRoute53TrafficPolicyDocumentRuleElLocationElRef {
+#[allow(dead_code)]
+pub struct DataRoute53TrafficPolicyDocument_Rule_LocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRoute53TrafficPolicyDocumentRuleElLocationElRef {
+impl terrars::Ref for DataRoute53TrafficPolicyDocument_Rule_LocationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataRoute53TrafficPolicyDocumentRuleElLocationElRef {
-        DataRoute53TrafficPolicyDocumentRuleElLocationElRef {
+    ) -> DataRoute53TrafficPolicyDocument_Rule_LocationRef {
+        DataRoute53TrafficPolicyDocument_Rule_LocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElLocationElRef {
+impl DataRoute53TrafficPolicyDocument_Rule_LocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -799,7 +815,7 @@ impl DataRoute53TrafficPolicyDocumentRuleElLocationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRoute53TrafficPolicyDocumentRuleElPrimaryEl {
+pub struct DataRoute53TrafficPolicyDocument_Rule_Primary {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint_reference: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -810,7 +826,7 @@ pub struct DataRoute53TrafficPolicyDocumentRuleElPrimaryEl {
     rule_reference: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElPrimaryEl {
+impl DataRoute53TrafficPolicyDocument_Rule_Primary {
     #[doc = "Set the field `endpoint_reference`.\n"]
     pub fn set_endpoint_reference(
         mut self,
@@ -839,8 +855,8 @@ impl DataRoute53TrafficPolicyDocumentRuleElPrimaryEl {
     }
 }
 
-impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElPrimaryEl {
-    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElPrimaryEl>;
+impl terrars::ToListMappable for DataRoute53TrafficPolicyDocument_Rule_Primary {
+    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Primary>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -851,11 +867,11 @@ impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElPrimaryEl
     }
 }
 
-pub struct BuildDataRoute53TrafficPolicyDocumentRuleElPrimaryEl {}
+pub struct BuildDataRoute53TrafficPolicyDocument_Rule_Primary {}
 
-impl BuildDataRoute53TrafficPolicyDocumentRuleElPrimaryEl {
-    pub fn build(self) -> DataRoute53TrafficPolicyDocumentRuleElPrimaryEl {
-        DataRoute53TrafficPolicyDocumentRuleElPrimaryEl {
+impl BuildDataRoute53TrafficPolicyDocument_Rule_Primary {
+    pub fn build(self) -> DataRoute53TrafficPolicyDocument_Rule_Primary {
+        DataRoute53TrafficPolicyDocument_Rule_Primary {
             endpoint_reference: core::default::Default::default(),
             evaluate_target_health: core::default::Default::default(),
             health_check: core::default::Default::default(),
@@ -864,24 +880,26 @@ impl BuildDataRoute53TrafficPolicyDocumentRuleElPrimaryEl {
     }
 }
 
-pub struct DataRoute53TrafficPolicyDocumentRuleElPrimaryElRef {
+#[allow(dead_code)]
+pub struct DataRoute53TrafficPolicyDocument_Rule_PrimaryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRoute53TrafficPolicyDocumentRuleElPrimaryElRef {
+impl terrars::Ref for DataRoute53TrafficPolicyDocument_Rule_PrimaryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataRoute53TrafficPolicyDocumentRuleElPrimaryElRef {
-        DataRoute53TrafficPolicyDocumentRuleElPrimaryElRef {
+    ) -> DataRoute53TrafficPolicyDocument_Rule_PrimaryRef {
+        DataRoute53TrafficPolicyDocument_Rule_PrimaryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElPrimaryElRef {
+impl DataRoute53TrafficPolicyDocument_Rule_PrimaryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -908,7 +926,7 @@ impl DataRoute53TrafficPolicyDocumentRuleElPrimaryElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRoute53TrafficPolicyDocumentRuleElRegionEl {
+pub struct DataRoute53TrafficPolicyDocument_Rule_Region {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint_reference: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -921,7 +939,7 @@ pub struct DataRoute53TrafficPolicyDocumentRuleElRegionEl {
     rule_reference: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElRegionEl {
+impl DataRoute53TrafficPolicyDocument_Rule_Region {
     #[doc = "Set the field `endpoint_reference`.\n"]
     pub fn set_endpoint_reference(
         mut self,
@@ -956,8 +974,8 @@ impl DataRoute53TrafficPolicyDocumentRuleElRegionEl {
     }
 }
 
-impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElRegionEl {
-    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElRegionEl>;
+impl terrars::ToListMappable for DataRoute53TrafficPolicyDocument_Rule_Region {
+    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Region>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -968,11 +986,11 @@ impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElRegionEl 
     }
 }
 
-pub struct BuildDataRoute53TrafficPolicyDocumentRuleElRegionEl {}
+pub struct BuildDataRoute53TrafficPolicyDocument_Rule_Region {}
 
-impl BuildDataRoute53TrafficPolicyDocumentRuleElRegionEl {
-    pub fn build(self) -> DataRoute53TrafficPolicyDocumentRuleElRegionEl {
-        DataRoute53TrafficPolicyDocumentRuleElRegionEl {
+impl BuildDataRoute53TrafficPolicyDocument_Rule_Region {
+    pub fn build(self) -> DataRoute53TrafficPolicyDocument_Rule_Region {
+        DataRoute53TrafficPolicyDocument_Rule_Region {
             endpoint_reference: core::default::Default::default(),
             evaluate_target_health: core::default::Default::default(),
             health_check: core::default::Default::default(),
@@ -982,24 +1000,26 @@ impl BuildDataRoute53TrafficPolicyDocumentRuleElRegionEl {
     }
 }
 
-pub struct DataRoute53TrafficPolicyDocumentRuleElRegionElRef {
+#[allow(dead_code)]
+pub struct DataRoute53TrafficPolicyDocument_Rule_RegionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRoute53TrafficPolicyDocumentRuleElRegionElRef {
+impl terrars::Ref for DataRoute53TrafficPolicyDocument_Rule_RegionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataRoute53TrafficPolicyDocumentRuleElRegionElRef {
-        DataRoute53TrafficPolicyDocumentRuleElRegionElRef {
+    ) -> DataRoute53TrafficPolicyDocument_Rule_RegionRef {
+        DataRoute53TrafficPolicyDocument_Rule_RegionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElRegionElRef {
+impl DataRoute53TrafficPolicyDocument_Rule_RegionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1031,7 +1051,7 @@ impl DataRoute53TrafficPolicyDocumentRuleElRegionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataRoute53TrafficPolicyDocumentRuleElSecondaryEl {
+pub struct DataRoute53TrafficPolicyDocument_Rule_Secondary {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint_reference: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1042,7 +1062,7 @@ pub struct DataRoute53TrafficPolicyDocumentRuleElSecondaryEl {
     rule_reference: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElSecondaryEl {
+impl DataRoute53TrafficPolicyDocument_Rule_Secondary {
     #[doc = "Set the field `endpoint_reference`.\n"]
     pub fn set_endpoint_reference(
         mut self,
@@ -1071,8 +1091,8 @@ impl DataRoute53TrafficPolicyDocumentRuleElSecondaryEl {
     }
 }
 
-impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElSecondaryEl {
-    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElSecondaryEl>;
+impl terrars::ToListMappable for DataRoute53TrafficPolicyDocument_Rule_Secondary {
+    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Secondary>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1083,11 +1103,11 @@ impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleElSecondary
     }
 }
 
-pub struct BuildDataRoute53TrafficPolicyDocumentRuleElSecondaryEl {}
+pub struct BuildDataRoute53TrafficPolicyDocument_Rule_Secondary {}
 
-impl BuildDataRoute53TrafficPolicyDocumentRuleElSecondaryEl {
-    pub fn build(self) -> DataRoute53TrafficPolicyDocumentRuleElSecondaryEl {
-        DataRoute53TrafficPolicyDocumentRuleElSecondaryEl {
+impl BuildDataRoute53TrafficPolicyDocument_Rule_Secondary {
+    pub fn build(self) -> DataRoute53TrafficPolicyDocument_Rule_Secondary {
+        DataRoute53TrafficPolicyDocument_Rule_Secondary {
             endpoint_reference: core::default::Default::default(),
             evaluate_target_health: core::default::Default::default(),
             health_check: core::default::Default::default(),
@@ -1096,24 +1116,26 @@ impl BuildDataRoute53TrafficPolicyDocumentRuleElSecondaryEl {
     }
 }
 
-pub struct DataRoute53TrafficPolicyDocumentRuleElSecondaryElRef {
+#[allow(dead_code)]
+pub struct DataRoute53TrafficPolicyDocument_Rule_SecondaryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRoute53TrafficPolicyDocumentRuleElSecondaryElRef {
+impl terrars::Ref for DataRoute53TrafficPolicyDocument_Rule_SecondaryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataRoute53TrafficPolicyDocumentRuleElSecondaryElRef {
-        DataRoute53TrafficPolicyDocumentRuleElSecondaryElRef {
+    ) -> DataRoute53TrafficPolicyDocument_Rule_SecondaryRef {
+        DataRoute53TrafficPolicyDocument_Rule_SecondaryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElSecondaryElRef {
+impl DataRoute53TrafficPolicyDocument_Rule_SecondaryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1140,40 +1162,40 @@ impl DataRoute53TrafficPolicyDocumentRuleElSecondaryElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DataRoute53TrafficPolicyDocumentRuleElDynamic {
+struct DataRoute53TrafficPolicyDocument_RuleDynamic {
     geo_proximity_location: std
     ::option
-    ::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl>>,
-    items: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocumentRuleElItemsEl>>,
-    location: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocumentRuleElLocationEl>>,
-    primary: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocumentRuleElPrimaryEl>>,
-    region: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocumentRuleElRegionEl>>,
-    secondary: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocumentRuleElSecondaryEl>>,
+    ::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation>>,
+    items: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocument_Rule_Items>>,
+    location: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocument_Rule_Location>>,
+    primary: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocument_Rule_Primary>>,
+    region: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocument_Rule_Region>>,
+    secondary: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocument_Rule_Secondary>>,
 }
 
 #[derive(Serialize)]
-pub struct DataRoute53TrafficPolicyDocumentRuleEl {
+pub struct DataRoute53TrafficPolicyDocument_Rule {
     id: terrars::PrimField<std::string::String>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     geo_proximity_location: std
     ::option
-    ::Option<std::vec::Vec<DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl>>,
+    ::Option<std::vec::Vec<DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    items: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocumentRuleElItemsEl>>,
+    items: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocument_Rule_Items>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    location: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocumentRuleElLocationEl>>,
+    location: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocument_Rule_Location>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    primary: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocumentRuleElPrimaryEl>>,
+    primary: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocument_Rule_Primary>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    region: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocumentRuleElRegionEl>>,
+    region: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocument_Rule_Region>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secondary: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocumentRuleElSecondaryEl>>,
-    dynamic: DataRoute53TrafficPolicyDocumentRuleElDynamic,
+    secondary: std::option::Option<std::vec::Vec<DataRoute53TrafficPolicyDocument_Rule_Secondary>>,
+    dynamic: DataRoute53TrafficPolicyDocument_RuleDynamic,
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleEl {
+impl DataRoute53TrafficPolicyDocument_Rule {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -1188,7 +1210,7 @@ impl DataRoute53TrafficPolicyDocumentRuleEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElGeoProximityLocationEl>>,
+                    ::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_GeoProximityLocation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1204,7 +1226,7 @@ impl DataRoute53TrafficPolicyDocumentRuleEl {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElItemsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Items>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1220,7 +1242,7 @@ impl DataRoute53TrafficPolicyDocumentRuleEl {
     #[doc = "Set the field `location`.\n"]
     pub fn set_location(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElLocationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Location>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1236,7 +1258,7 @@ impl DataRoute53TrafficPolicyDocumentRuleEl {
     #[doc = "Set the field `primary`.\n"]
     pub fn set_primary(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElPrimaryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Primary>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1252,7 +1274,7 @@ impl DataRoute53TrafficPolicyDocumentRuleEl {
     #[doc = "Set the field `region`.\n"]
     pub fn set_region(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElRegionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Region>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1268,7 +1290,7 @@ impl DataRoute53TrafficPolicyDocumentRuleEl {
     #[doc = "Set the field `secondary`.\n"]
     pub fn set_secondary(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleElSecondaryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule_Secondary>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1282,8 +1304,8 @@ impl DataRoute53TrafficPolicyDocumentRuleEl {
     }
 }
 
-impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleEl {
-    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocumentRuleEl>;
+impl terrars::ToListMappable for DataRoute53TrafficPolicyDocument_Rule {
+    type O = terrars::BlockAssignable<DataRoute53TrafficPolicyDocument_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1294,14 +1316,14 @@ impl terrars::ToListMappable for DataRoute53TrafficPolicyDocumentRuleEl {
     }
 }
 
-pub struct BuildDataRoute53TrafficPolicyDocumentRuleEl {
+pub struct BuildDataRoute53TrafficPolicyDocument_Rule {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataRoute53TrafficPolicyDocumentRuleEl {
-    pub fn build(self) -> DataRoute53TrafficPolicyDocumentRuleEl {
-        DataRoute53TrafficPolicyDocumentRuleEl {
+impl BuildDataRoute53TrafficPolicyDocument_Rule {
+    pub fn build(self) -> DataRoute53TrafficPolicyDocument_Rule {
+        DataRoute53TrafficPolicyDocument_Rule {
             id: self.id,
             type_: core::default::Default::default(),
             geo_proximity_location: core::default::Default::default(),
@@ -1315,21 +1337,23 @@ impl BuildDataRoute53TrafficPolicyDocumentRuleEl {
     }
 }
 
-pub struct DataRoute53TrafficPolicyDocumentRuleElRef {
+#[allow(dead_code)]
+pub struct DataRoute53TrafficPolicyDocument_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRoute53TrafficPolicyDocumentRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRoute53TrafficPolicyDocumentRuleElRef {
-        DataRoute53TrafficPolicyDocumentRuleElRef {
+impl terrars::Ref for DataRoute53TrafficPolicyDocument_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataRoute53TrafficPolicyDocument_RuleRef {
+        DataRoute53TrafficPolicyDocument_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRoute53TrafficPolicyDocumentRuleElRef {
+impl DataRoute53TrafficPolicyDocument_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1345,18 +1369,12 @@ impl DataRoute53TrafficPolicyDocumentRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `primary` after provisioning.\n"]
-    pub fn primary(&self) -> terrars::ListRef<DataRoute53TrafficPolicyDocumentRuleElPrimaryElRef> {
+    pub fn primary(&self) -> terrars::ListRef<DataRoute53TrafficPolicyDocument_Rule_PrimaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.primary", self.base))
     }
 
     #[doc = "Get a reference to the value of field `secondary` after provisioning.\n"]
-    pub fn secondary(&self) -> terrars::ListRef<DataRoute53TrafficPolicyDocumentRuleElSecondaryElRef> {
+    pub fn secondary(&self) -> terrars::ListRef<DataRoute53TrafficPolicyDocument_Rule_SecondaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.secondary", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataRoute53TrafficPolicyDocumentDynamic {
-    endpoint: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocumentEndpointEl>>,
-    rule: std::option::Option<terrars::DynamicBlock<DataRoute53TrafficPolicyDocumentRuleEl>>,
 }

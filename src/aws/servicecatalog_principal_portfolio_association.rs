@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ServicecatalogPrincipalPortfolioAssociationData {
+struct ServicecatalogPrincipalPortfolioAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,13 +29,15 @@ struct ServicecatalogPrincipalPortfolioAssociationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     principal_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ServicecatalogPrincipalPortfolioAssociationTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ServicecatalogPrincipalPortfolioAssociation_Timeouts>,
 }
 
 struct ServicecatalogPrincipalPortfolioAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ServicecatalogPrincipalPortfolioAssociationData>,
+    data: std::cell::RefCell<ServicecatalogPrincipalPortfolioAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -151,8 +155,15 @@ impl ServicecatalogPrincipalPortfolioAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogPrincipalPortfolioAssociationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogPrincipalPortfolioAssociation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -182,9 +193,15 @@ impl ServicecatalogPrincipalPortfolioAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogPrincipalPortfolioAssociationTimeoutsElRef {
-        ServicecatalogPrincipalPortfolioAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ServicecatalogPrincipalPortfolioAssociation_TimeoutsRef {
+        ServicecatalogPrincipalPortfolioAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -237,7 +254,7 @@ impl BuildServicecatalogPrincipalPortfolioAssociation {
                 std::rc::Rc::new(ServicecatalogPrincipalPortfolioAssociation_ {
                     shared: stack.shared.clone(),
                     tf_id: self.tf_id,
-                    data: std::cell::RefCell::new(ServicecatalogPrincipalPortfolioAssociationData {
+                    data: std::cell::RefCell::new(ServicecatalogPrincipalPortfolioAssociationData_ {
                         depends_on: core::default::Default::default(),
                         provider: std::option::Option::None,
                         lifecycle: core::default::Default::default(),
@@ -248,6 +265,7 @@ impl BuildServicecatalogPrincipalPortfolioAssociation {
                         portfolio_id: self.portfolio_id,
                         principal_arn: self.principal_arn,
                         principal_type: core::default::Default::default(),
+                        region: core::default::Default::default(),
                         timeouts: core::default::Default::default(),
                     }),
                 }),
@@ -305,9 +323,15 @@ impl ServicecatalogPrincipalPortfolioAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal_type", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogPrincipalPortfolioAssociationTimeoutsElRef {
-        ServicecatalogPrincipalPortfolioAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ServicecatalogPrincipalPortfolioAssociation_TimeoutsRef {
+        ServicecatalogPrincipalPortfolioAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -315,7 +339,7 @@ impl ServicecatalogPrincipalPortfolioAssociationRef {
 }
 
 #[derive(Serialize)]
-pub struct ServicecatalogPrincipalPortfolioAssociationTimeoutsEl {
+pub struct ServicecatalogPrincipalPortfolioAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -324,7 +348,7 @@ pub struct ServicecatalogPrincipalPortfolioAssociationTimeoutsEl {
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ServicecatalogPrincipalPortfolioAssociationTimeoutsEl {
+impl ServicecatalogPrincipalPortfolioAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -344,8 +368,8 @@ impl ServicecatalogPrincipalPortfolioAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ServicecatalogPrincipalPortfolioAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<ServicecatalogPrincipalPortfolioAssociationTimeoutsEl>;
+impl terrars::ToListMappable for ServicecatalogPrincipalPortfolioAssociation_Timeouts {
+    type O = terrars::BlockAssignable<ServicecatalogPrincipalPortfolioAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -356,11 +380,11 @@ impl terrars::ToListMappable for ServicecatalogPrincipalPortfolioAssociationTime
     }
 }
 
-pub struct BuildServicecatalogPrincipalPortfolioAssociationTimeoutsEl {}
+pub struct BuildServicecatalogPrincipalPortfolioAssociation_Timeouts {}
 
-impl BuildServicecatalogPrincipalPortfolioAssociationTimeoutsEl {
-    pub fn build(self) -> ServicecatalogPrincipalPortfolioAssociationTimeoutsEl {
-        ServicecatalogPrincipalPortfolioAssociationTimeoutsEl {
+impl BuildServicecatalogPrincipalPortfolioAssociation_Timeouts {
+    pub fn build(self) -> ServicecatalogPrincipalPortfolioAssociation_Timeouts {
+        ServicecatalogPrincipalPortfolioAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             read: core::default::Default::default(),
@@ -368,24 +392,26 @@ impl BuildServicecatalogPrincipalPortfolioAssociationTimeoutsEl {
     }
 }
 
-pub struct ServicecatalogPrincipalPortfolioAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ServicecatalogPrincipalPortfolioAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ServicecatalogPrincipalPortfolioAssociationTimeoutsElRef {
+impl terrars::Ref for ServicecatalogPrincipalPortfolioAssociation_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ServicecatalogPrincipalPortfolioAssociationTimeoutsElRef {
-        ServicecatalogPrincipalPortfolioAssociationTimeoutsElRef {
+    ) -> ServicecatalogPrincipalPortfolioAssociation_TimeoutsRef {
+        ServicecatalogPrincipalPortfolioAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ServicecatalogPrincipalPortfolioAssociationTimeoutsElRef {
+impl ServicecatalogPrincipalPortfolioAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

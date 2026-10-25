@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MskServerlessClusterData {
+struct MskServerlessClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,22 +24,24 @@ struct MskServerlessClusterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    client_authentication: std::option::Option<std::vec::Vec<MskServerlessClusterClientAuthenticationEl>>,
+    client_authentication: std::option::Option<std::vec::Vec<MskServerlessCluster_ClientAuthentication>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MskServerlessClusterTimeoutsEl>,
+    timeouts: std::option::Option<MskServerlessCluster_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_config: std::option::Option<std::vec::Vec<MskServerlessClusterVpcConfigEl>>,
+    vpc_config: std::option::Option<std::vec::Vec<MskServerlessCluster_VpcConfig>>,
     dynamic: MskServerlessClusterDynamic,
 }
 
 struct MskServerlessCluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MskServerlessClusterData>,
+    data: std::cell::RefCell<MskServerlessClusterData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl MskServerlessCluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -164,7 +175,7 @@ impl MskServerlessCluster {
     #[doc = "Set the field `client_authentication`.\n"]
     pub fn set_client_authentication(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessClusterClientAuthenticationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessCluster_ClientAuthentication>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -178,7 +189,7 @@ impl MskServerlessCluster {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MskServerlessClusterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MskServerlessCluster_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -186,7 +197,7 @@ impl MskServerlessCluster {
     #[doc = "Set the field `vpc_config`.\n"]
     pub fn set_vpc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessClusterVpcConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessCluster_VpcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -204,14 +215,30 @@ impl MskServerlessCluster {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_sasl_iam` after provisioning.\n"]
+    pub fn bootstrap_brokers_sasl_iam(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_sasl_iam", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
     pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_uuid` after provisioning.\n"]
+    pub fn cluster_uuid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_uuid", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -225,17 +252,17 @@ impl MskServerlessCluster {
     }
 
     #[doc = "Get a reference to the value of field `client_authentication` after provisioning.\n"]
-    pub fn client_authentication(&self) -> terrars::ListRef<MskServerlessClusterClientAuthenticationElRef> {
+    pub fn client_authentication(&self) -> terrars::ListRef<MskServerlessCluster_ClientAuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_authentication", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MskServerlessClusterTimeoutsElRef {
-        MskServerlessClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MskServerlessCluster_TimeoutsRef {
+        MskServerlessCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<MskServerlessClusterVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<MskServerlessCluster_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
@@ -282,7 +309,7 @@ impl BuildMskServerlessCluster {
         let out = MskServerlessCluster(std::rc::Rc::new(MskServerlessCluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MskServerlessClusterData {
+            data: std::cell::RefCell::new(MskServerlessClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -290,6 +317,7 @@ impl BuildMskServerlessCluster {
                 provisioner: core::default::Default::default(),
                 cluster_name: self.cluster_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 client_authentication: core::default::Default::default(),
@@ -331,14 +359,30 @@ impl MskServerlessClusterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bootstrap_brokers_sasl_iam` after provisioning.\n"]
+    pub fn bootstrap_brokers_sasl_iam(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bootstrap_brokers_sasl_iam", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `cluster_name` after provisioning.\n"]
     pub fn cluster_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cluster_uuid` after provisioning.\n"]
+    pub fn cluster_uuid(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cluster_uuid", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -352,30 +396,36 @@ impl MskServerlessClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `client_authentication` after provisioning.\n"]
-    pub fn client_authentication(&self) -> terrars::ListRef<MskServerlessClusterClientAuthenticationElRef> {
+    pub fn client_authentication(&self) -> terrars::ListRef<MskServerlessCluster_ClientAuthenticationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_authentication", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MskServerlessClusterTimeoutsElRef {
-        MskServerlessClusterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MskServerlessCluster_TimeoutsRef {
+        MskServerlessCluster_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<MskServerlessClusterVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<MskServerlessCluster_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MskServerlessClusterDynamic {
+    client_authentication: std::option::Option<terrars::DynamicBlock<MskServerlessCluster_ClientAuthentication>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<MskServerlessCluster_VpcConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct MskServerlessClusterClientAuthenticationElSaslElIamEl {
+pub struct MskServerlessCluster_ClientAuthentication_Sasl_Iam {
     enabled: terrars::PrimField<bool>,
 }
 
-impl MskServerlessClusterClientAuthenticationElSaslElIamEl { }
+impl MskServerlessCluster_ClientAuthentication_Sasl_Iam { }
 
-impl terrars::ToListMappable for MskServerlessClusterClientAuthenticationElSaslElIamEl {
-    type O = terrars::BlockAssignable<MskServerlessClusterClientAuthenticationElSaslElIamEl>;
+impl terrars::ToListMappable for MskServerlessCluster_ClientAuthentication_Sasl_Iam {
+    type O = terrars::BlockAssignable<MskServerlessCluster_ClientAuthentication_Sasl_Iam>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -386,35 +436,37 @@ impl terrars::ToListMappable for MskServerlessClusterClientAuthenticationElSaslE
     }
 }
 
-pub struct BuildMskServerlessClusterClientAuthenticationElSaslElIamEl {
+pub struct BuildMskServerlessCluster_ClientAuthentication_Sasl_Iam {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildMskServerlessClusterClientAuthenticationElSaslElIamEl {
-    pub fn build(self) -> MskServerlessClusterClientAuthenticationElSaslElIamEl {
-        MskServerlessClusterClientAuthenticationElSaslElIamEl { enabled: self.enabled }
+impl BuildMskServerlessCluster_ClientAuthentication_Sasl_Iam {
+    pub fn build(self) -> MskServerlessCluster_ClientAuthentication_Sasl_Iam {
+        MskServerlessCluster_ClientAuthentication_Sasl_Iam { enabled: self.enabled }
     }
 }
 
-pub struct MskServerlessClusterClientAuthenticationElSaslElIamElRef {
+#[allow(dead_code)]
+pub struct MskServerlessCluster_ClientAuthentication_Sasl_IamRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskServerlessClusterClientAuthenticationElSaslElIamElRef {
+impl terrars::Ref for MskServerlessCluster_ClientAuthentication_Sasl_IamRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskServerlessClusterClientAuthenticationElSaslElIamElRef {
-        MskServerlessClusterClientAuthenticationElSaslElIamElRef {
+    ) -> MskServerlessCluster_ClientAuthentication_Sasl_IamRef {
+        MskServerlessCluster_ClientAuthentication_Sasl_IamRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskServerlessClusterClientAuthenticationElSaslElIamElRef {
+impl MskServerlessCluster_ClientAuthentication_Sasl_IamRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -426,22 +478,22 @@ impl MskServerlessClusterClientAuthenticationElSaslElIamElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MskServerlessClusterClientAuthenticationElSaslElDynamic {
-    iam: std::option::Option<terrars::DynamicBlock<MskServerlessClusterClientAuthenticationElSaslElIamEl>>,
+struct MskServerlessCluster_ClientAuthentication_SaslDynamic {
+    iam: std::option::Option<terrars::DynamicBlock<MskServerlessCluster_ClientAuthentication_Sasl_Iam>>,
 }
 
 #[derive(Serialize)]
-pub struct MskServerlessClusterClientAuthenticationElSaslEl {
+pub struct MskServerlessCluster_ClientAuthentication_Sasl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    iam: std::option::Option<std::vec::Vec<MskServerlessClusterClientAuthenticationElSaslElIamEl>>,
-    dynamic: MskServerlessClusterClientAuthenticationElSaslElDynamic,
+    iam: std::option::Option<std::vec::Vec<MskServerlessCluster_ClientAuthentication_Sasl_Iam>>,
+    dynamic: MskServerlessCluster_ClientAuthentication_SaslDynamic,
 }
 
-impl MskServerlessClusterClientAuthenticationElSaslEl {
+impl MskServerlessCluster_ClientAuthentication_Sasl {
     #[doc = "Set the field `iam`.\n"]
     pub fn set_iam(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessClusterClientAuthenticationElSaslElIamEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessCluster_ClientAuthentication_Sasl_Iam>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -455,8 +507,8 @@ impl MskServerlessClusterClientAuthenticationElSaslEl {
     }
 }
 
-impl terrars::ToListMappable for MskServerlessClusterClientAuthenticationElSaslEl {
-    type O = terrars::BlockAssignable<MskServerlessClusterClientAuthenticationElSaslEl>;
+impl terrars::ToListMappable for MskServerlessCluster_ClientAuthentication_Sasl {
+    type O = terrars::BlockAssignable<MskServerlessCluster_ClientAuthentication_Sasl>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -467,62 +519,64 @@ impl terrars::ToListMappable for MskServerlessClusterClientAuthenticationElSaslE
     }
 }
 
-pub struct BuildMskServerlessClusterClientAuthenticationElSaslEl {}
+pub struct BuildMskServerlessCluster_ClientAuthentication_Sasl {}
 
-impl BuildMskServerlessClusterClientAuthenticationElSaslEl {
-    pub fn build(self) -> MskServerlessClusterClientAuthenticationElSaslEl {
-        MskServerlessClusterClientAuthenticationElSaslEl {
+impl BuildMskServerlessCluster_ClientAuthentication_Sasl {
+    pub fn build(self) -> MskServerlessCluster_ClientAuthentication_Sasl {
+        MskServerlessCluster_ClientAuthentication_Sasl {
             iam: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskServerlessClusterClientAuthenticationElSaslElRef {
+#[allow(dead_code)]
+pub struct MskServerlessCluster_ClientAuthentication_SaslRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskServerlessClusterClientAuthenticationElSaslElRef {
+impl terrars::Ref for MskServerlessCluster_ClientAuthentication_SaslRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> MskServerlessClusterClientAuthenticationElSaslElRef {
-        MskServerlessClusterClientAuthenticationElSaslElRef {
+    ) -> MskServerlessCluster_ClientAuthentication_SaslRef {
+        MskServerlessCluster_ClientAuthentication_SaslRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskServerlessClusterClientAuthenticationElSaslElRef {
+impl MskServerlessCluster_ClientAuthentication_SaslRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `iam` after provisioning.\n"]
-    pub fn iam(&self) -> terrars::ListRef<MskServerlessClusterClientAuthenticationElSaslElIamElRef> {
+    pub fn iam(&self) -> terrars::ListRef<MskServerlessCluster_ClientAuthentication_Sasl_IamRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.iam", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct MskServerlessClusterClientAuthenticationElDynamic {
-    sasl: std::option::Option<terrars::DynamicBlock<MskServerlessClusterClientAuthenticationElSaslEl>>,
+struct MskServerlessCluster_ClientAuthenticationDynamic {
+    sasl: std::option::Option<terrars::DynamicBlock<MskServerlessCluster_ClientAuthentication_Sasl>>,
 }
 
 #[derive(Serialize)]
-pub struct MskServerlessClusterClientAuthenticationEl {
+pub struct MskServerlessCluster_ClientAuthentication {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sasl: std::option::Option<std::vec::Vec<MskServerlessClusterClientAuthenticationElSaslEl>>,
-    dynamic: MskServerlessClusterClientAuthenticationElDynamic,
+    sasl: std::option::Option<std::vec::Vec<MskServerlessCluster_ClientAuthentication_Sasl>>,
+    dynamic: MskServerlessCluster_ClientAuthenticationDynamic,
 }
 
-impl MskServerlessClusterClientAuthenticationEl {
+impl MskServerlessCluster_ClientAuthentication {
     #[doc = "Set the field `sasl`.\n"]
     pub fn set_sasl(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessClusterClientAuthenticationElSaslEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskServerlessCluster_ClientAuthentication_Sasl>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -536,8 +590,8 @@ impl MskServerlessClusterClientAuthenticationEl {
     }
 }
 
-impl terrars::ToListMappable for MskServerlessClusterClientAuthenticationEl {
-    type O = terrars::BlockAssignable<MskServerlessClusterClientAuthenticationEl>;
+impl terrars::ToListMappable for MskServerlessCluster_ClientAuthentication {
+    type O = terrars::BlockAssignable<MskServerlessCluster_ClientAuthentication>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -548,51 +602,53 @@ impl terrars::ToListMappable for MskServerlessClusterClientAuthenticationEl {
     }
 }
 
-pub struct BuildMskServerlessClusterClientAuthenticationEl {}
+pub struct BuildMskServerlessCluster_ClientAuthentication {}
 
-impl BuildMskServerlessClusterClientAuthenticationEl {
-    pub fn build(self) -> MskServerlessClusterClientAuthenticationEl {
-        MskServerlessClusterClientAuthenticationEl {
+impl BuildMskServerlessCluster_ClientAuthentication {
+    pub fn build(self) -> MskServerlessCluster_ClientAuthentication {
+        MskServerlessCluster_ClientAuthentication {
             sasl: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskServerlessClusterClientAuthenticationElRef {
+#[allow(dead_code)]
+pub struct MskServerlessCluster_ClientAuthenticationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskServerlessClusterClientAuthenticationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskServerlessClusterClientAuthenticationElRef {
-        MskServerlessClusterClientAuthenticationElRef {
+impl terrars::Ref for MskServerlessCluster_ClientAuthenticationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskServerlessCluster_ClientAuthenticationRef {
+        MskServerlessCluster_ClientAuthenticationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskServerlessClusterClientAuthenticationElRef {
+impl MskServerlessCluster_ClientAuthenticationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `sasl` after provisioning.\n"]
-    pub fn sasl(&self) -> terrars::ListRef<MskServerlessClusterClientAuthenticationElSaslElRef> {
+    pub fn sasl(&self) -> terrars::ListRef<MskServerlessCluster_ClientAuthentication_SaslRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sasl", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MskServerlessClusterTimeoutsEl {
+pub struct MskServerlessCluster_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MskServerlessClusterTimeoutsEl {
+impl MskServerlessCluster_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -606,8 +662,8 @@ impl MskServerlessClusterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MskServerlessClusterTimeoutsEl {
-    type O = terrars::BlockAssignable<MskServerlessClusterTimeoutsEl>;
+impl terrars::ToListMappable for MskServerlessCluster_Timeouts {
+    type O = terrars::BlockAssignable<MskServerlessCluster_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -618,32 +674,34 @@ impl terrars::ToListMappable for MskServerlessClusterTimeoutsEl {
     }
 }
 
-pub struct BuildMskServerlessClusterTimeoutsEl {}
+pub struct BuildMskServerlessCluster_Timeouts {}
 
-impl BuildMskServerlessClusterTimeoutsEl {
-    pub fn build(self) -> MskServerlessClusterTimeoutsEl {
-        MskServerlessClusterTimeoutsEl {
+impl BuildMskServerlessCluster_Timeouts {
+    pub fn build(self) -> MskServerlessCluster_Timeouts {
+        MskServerlessCluster_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskServerlessClusterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MskServerlessCluster_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskServerlessClusterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskServerlessClusterTimeoutsElRef {
-        MskServerlessClusterTimeoutsElRef {
+impl terrars::Ref for MskServerlessCluster_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskServerlessCluster_TimeoutsRef {
+        MskServerlessCluster_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskServerlessClusterTimeoutsElRef {
+impl MskServerlessCluster_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -660,13 +718,13 @@ impl MskServerlessClusterTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MskServerlessClusterVpcConfigEl {
+pub struct MskServerlessCluster_VpcConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl MskServerlessClusterVpcConfigEl {
+impl MskServerlessCluster_VpcConfig {
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         mut self,
@@ -677,8 +735,8 @@ impl MskServerlessClusterVpcConfigEl {
     }
 }
 
-impl terrars::ToListMappable for MskServerlessClusterVpcConfigEl {
-    type O = terrars::BlockAssignable<MskServerlessClusterVpcConfigEl>;
+impl terrars::ToListMappable for MskServerlessCluster_VpcConfig {
+    type O = terrars::BlockAssignable<MskServerlessCluster_VpcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -689,35 +747,37 @@ impl terrars::ToListMappable for MskServerlessClusterVpcConfigEl {
     }
 }
 
-pub struct BuildMskServerlessClusterVpcConfigEl {
+pub struct BuildMskServerlessCluster_VpcConfig {
     #[doc = ""]
     pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildMskServerlessClusterVpcConfigEl {
-    pub fn build(self) -> MskServerlessClusterVpcConfigEl {
-        MskServerlessClusterVpcConfigEl {
+impl BuildMskServerlessCluster_VpcConfig {
+    pub fn build(self) -> MskServerlessCluster_VpcConfig {
+        MskServerlessCluster_VpcConfig {
             security_group_ids: core::default::Default::default(),
             subnet_ids: self.subnet_ids,
         }
     }
 }
 
-pub struct MskServerlessClusterVpcConfigElRef {
+#[allow(dead_code)]
+pub struct MskServerlessCluster_VpcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskServerlessClusterVpcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskServerlessClusterVpcConfigElRef {
-        MskServerlessClusterVpcConfigElRef {
+impl terrars::Ref for MskServerlessCluster_VpcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskServerlessCluster_VpcConfigRef {
+        MskServerlessCluster_VpcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskServerlessClusterVpcConfigElRef {
+impl MskServerlessCluster_VpcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -731,10 +791,4 @@ impl MskServerlessClusterVpcConfigElRef {
     pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MskServerlessClusterDynamic {
-    client_authentication: std::option::Option<terrars::DynamicBlock<MskServerlessClusterClientAuthenticationEl>>,
-    vpc_config: std::option::Option<terrars::DynamicBlock<MskServerlessClusterVpcConfigEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DatasyncLocationS3Data {
+struct DatasyncLocationS3Data_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,6 +24,8 @@ struct DatasyncLocationS3Data {
     agent_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     s3_bucket_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_storage_class: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -31,14 +35,14 @@ struct DatasyncLocationS3Data {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_config: std::option::Option<std::vec::Vec<DatasyncLocationS3S3ConfigEl>>,
+    s3_config: std::option::Option<std::vec::Vec<DatasyncLocationS3_S3Config>>,
     dynamic: DatasyncLocationS3Dynamic,
 }
 
 struct DatasyncLocationS3_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatasyncLocationS3Data>,
+    data: std::cell::RefCell<DatasyncLocationS3Data_>,
 }
 
 #[derive(Clone)]
@@ -153,6 +157,13 @@ impl DatasyncLocationS3 {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `s3_storage_class`.\n"]
     pub fn set_s3_storage_class(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().s3_storage_class = std::option::Option::Some(v.into());
@@ -180,7 +191,7 @@ impl DatasyncLocationS3 {
     #[doc = "Set the field `s3_config`.\n"]
     pub fn set_s3_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationS3S3ConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationS3_S3Config>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -206,6 +217,12 @@ impl DatasyncLocationS3 {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_bucket_arn` after provisioning.\n"]
@@ -239,7 +256,7 @@ impl DatasyncLocationS3 {
     }
 
     #[doc = "Get a reference to the value of field `s3_config` after provisioning.\n"]
-    pub fn s3_config(&self) -> terrars::ListRef<DatasyncLocationS3S3ConfigElRef> {
+    pub fn s3_config(&self) -> terrars::ListRef<DatasyncLocationS3_S3ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_config", self.extract_ref()))
     }
 }
@@ -288,7 +305,7 @@ impl BuildDatasyncLocationS3 {
         let out = DatasyncLocationS3(std::rc::Rc::new(DatasyncLocationS3_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatasyncLocationS3Data {
+            data: std::cell::RefCell::new(DatasyncLocationS3Data_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -296,6 +313,7 @@ impl BuildDatasyncLocationS3 {
                 provisioner: core::default::Default::default(),
                 agent_arns: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 s3_bucket_arn: self.s3_bucket_arn,
                 s3_storage_class: core::default::Default::default(),
                 subdirectory: self.subdirectory,
@@ -348,6 +366,12 @@ impl DatasyncLocationS3Ref {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `s3_bucket_arn` after provisioning.\n"]
     pub fn s3_bucket_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.s3_bucket_arn", self.extract_ref()))
@@ -379,20 +403,25 @@ impl DatasyncLocationS3Ref {
     }
 
     #[doc = "Get a reference to the value of field `s3_config` after provisioning.\n"]
-    pub fn s3_config(&self) -> terrars::ListRef<DatasyncLocationS3S3ConfigElRef> {
+    pub fn s3_config(&self) -> terrars::ListRef<DatasyncLocationS3_S3ConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatasyncLocationS3Dynamic {
+    s3_config: std::option::Option<terrars::DynamicBlock<DatasyncLocationS3_S3Config>>,
+}
+
 #[derive(Serialize)]
-pub struct DatasyncLocationS3S3ConfigEl {
+pub struct DatasyncLocationS3_S3Config {
     bucket_access_role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl DatasyncLocationS3S3ConfigEl { }
+impl DatasyncLocationS3_S3Config { }
 
-impl terrars::ToListMappable for DatasyncLocationS3S3ConfigEl {
-    type O = terrars::BlockAssignable<DatasyncLocationS3S3ConfigEl>;
+impl terrars::ToListMappable for DatasyncLocationS3_S3Config {
+    type O = terrars::BlockAssignable<DatasyncLocationS3_S3Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -403,32 +432,34 @@ impl terrars::ToListMappable for DatasyncLocationS3S3ConfigEl {
     }
 }
 
-pub struct BuildDatasyncLocationS3S3ConfigEl {
+pub struct BuildDatasyncLocationS3_S3Config {
     #[doc = ""]
     pub bucket_access_role_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDatasyncLocationS3S3ConfigEl {
-    pub fn build(self) -> DatasyncLocationS3S3ConfigEl {
-        DatasyncLocationS3S3ConfigEl { bucket_access_role_arn: self.bucket_access_role_arn }
+impl BuildDatasyncLocationS3_S3Config {
+    pub fn build(self) -> DatasyncLocationS3_S3Config {
+        DatasyncLocationS3_S3Config { bucket_access_role_arn: self.bucket_access_role_arn }
     }
 }
 
-pub struct DatasyncLocationS3S3ConfigElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationS3_S3ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationS3S3ConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationS3S3ConfigElRef {
-        DatasyncLocationS3S3ConfigElRef {
+impl terrars::Ref for DatasyncLocationS3_S3ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DatasyncLocationS3_S3ConfigRef {
+        DatasyncLocationS3_S3ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationS3S3ConfigElRef {
+impl DatasyncLocationS3_S3ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -437,9 +468,4 @@ impl DatasyncLocationS3S3ConfigElRef {
     pub fn bucket_access_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_access_role_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatasyncLocationS3Dynamic {
-    s3_config: std::option::Option<terrars::DynamicBlock<DatasyncLocationS3S3ConfigEl>>,
 }

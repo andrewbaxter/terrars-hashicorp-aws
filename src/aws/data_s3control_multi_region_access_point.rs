@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataS3controlMultiRegionAccessPointData {
+struct DataS3controlMultiRegionAccessPointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,12 +23,14 @@ struct DataS3controlMultiRegionAccessPointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataS3controlMultiRegionAccessPoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataS3controlMultiRegionAccessPointData>,
+    data: std::cell::RefCell<DataS3controlMultiRegionAccessPointData_>,
 }
 
 #[derive(Clone)]
@@ -83,6 +87,13 @@ impl DataS3controlMultiRegionAccessPoint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `account_id` after provisioning.\n"]
     pub fn account_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.account_id", self.extract_ref()))
@@ -119,12 +130,18 @@ impl DataS3controlMultiRegionAccessPoint {
     }
 
     #[doc = "Get a reference to the value of field `public_access_block` after provisioning.\n"]
-    pub fn public_access_block(&self) -> terrars::ListRef<DataS3controlMultiRegionAccessPointPublicAccessBlockElRef> {
+    pub fn public_access_block(&self) -> terrars::ListRef<DataS3controlMultiRegionAccessPoint_PublicAccessBlockRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_access_block", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `regions` after provisioning.\n"]
-    pub fn regions(&self) -> terrars::ListRef<DataS3controlMultiRegionAccessPointRegionsElRef> {
+    pub fn regions(&self) -> terrars::ListRef<DataS3controlMultiRegionAccessPoint_RegionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regions", self.extract_ref()))
     }
 
@@ -176,7 +193,7 @@ impl BuildDataS3controlMultiRegionAccessPoint {
         let out = DataS3controlMultiRegionAccessPoint(std::rc::Rc::new(DataS3controlMultiRegionAccessPoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataS3controlMultiRegionAccessPointData {
+            data: std::cell::RefCell::new(DataS3controlMultiRegionAccessPointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -184,6 +201,7 @@ impl BuildDataS3controlMultiRegionAccessPoint {
                 account_id: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -250,12 +268,18 @@ impl DataS3controlMultiRegionAccessPointRef {
     }
 
     #[doc = "Get a reference to the value of field `public_access_block` after provisioning.\n"]
-    pub fn public_access_block(&self) -> terrars::ListRef<DataS3controlMultiRegionAccessPointPublicAccessBlockElRef> {
+    pub fn public_access_block(&self) -> terrars::ListRef<DataS3controlMultiRegionAccessPoint_PublicAccessBlockRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_access_block", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `regions` after provisioning.\n"]
-    pub fn regions(&self) -> terrars::ListRef<DataS3controlMultiRegionAccessPointRegionsElRef> {
+    pub fn regions(&self) -> terrars::ListRef<DataS3controlMultiRegionAccessPoint_RegionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.regions", self.extract_ref()))
     }
 
@@ -266,7 +290,7 @@ impl DataS3controlMultiRegionAccessPointRef {
 }
 
 #[derive(Serialize)]
-pub struct DataS3controlMultiRegionAccessPointPublicAccessBlockEl {
+pub struct DataS3controlMultiRegionAccessPoint_PublicAccessBlock {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     block_public_acls: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -277,7 +301,7 @@ pub struct DataS3controlMultiRegionAccessPointPublicAccessBlockEl {
     restrict_public_buckets: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataS3controlMultiRegionAccessPointPublicAccessBlockEl {
+impl DataS3controlMultiRegionAccessPoint_PublicAccessBlock {
     #[doc = "Set the field `block_public_acls`.\n"]
     pub fn set_block_public_acls(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.block_public_acls = std::option::Option::Some(v.into());
@@ -303,8 +327,8 @@ impl DataS3controlMultiRegionAccessPointPublicAccessBlockEl {
     }
 }
 
-impl terrars::ToListMappable for DataS3controlMultiRegionAccessPointPublicAccessBlockEl {
-    type O = terrars::BlockAssignable<DataS3controlMultiRegionAccessPointPublicAccessBlockEl>;
+impl terrars::ToListMappable for DataS3controlMultiRegionAccessPoint_PublicAccessBlock {
+    type O = terrars::BlockAssignable<DataS3controlMultiRegionAccessPoint_PublicAccessBlock>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -315,11 +339,11 @@ impl terrars::ToListMappable for DataS3controlMultiRegionAccessPointPublicAccess
     }
 }
 
-pub struct BuildDataS3controlMultiRegionAccessPointPublicAccessBlockEl {}
+pub struct BuildDataS3controlMultiRegionAccessPoint_PublicAccessBlock {}
 
-impl BuildDataS3controlMultiRegionAccessPointPublicAccessBlockEl {
-    pub fn build(self) -> DataS3controlMultiRegionAccessPointPublicAccessBlockEl {
-        DataS3controlMultiRegionAccessPointPublicAccessBlockEl {
+impl BuildDataS3controlMultiRegionAccessPoint_PublicAccessBlock {
+    pub fn build(self) -> DataS3controlMultiRegionAccessPoint_PublicAccessBlock {
+        DataS3controlMultiRegionAccessPoint_PublicAccessBlock {
             block_public_acls: core::default::Default::default(),
             block_public_policy: core::default::Default::default(),
             ignore_public_acls: core::default::Default::default(),
@@ -328,24 +352,26 @@ impl BuildDataS3controlMultiRegionAccessPointPublicAccessBlockEl {
     }
 }
 
-pub struct DataS3controlMultiRegionAccessPointPublicAccessBlockElRef {
+#[allow(dead_code)]
+pub struct DataS3controlMultiRegionAccessPoint_PublicAccessBlockRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataS3controlMultiRegionAccessPointPublicAccessBlockElRef {
+impl terrars::Ref for DataS3controlMultiRegionAccessPoint_PublicAccessBlockRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataS3controlMultiRegionAccessPointPublicAccessBlockElRef {
-        DataS3controlMultiRegionAccessPointPublicAccessBlockElRef {
+    ) -> DataS3controlMultiRegionAccessPoint_PublicAccessBlockRef {
+        DataS3controlMultiRegionAccessPoint_PublicAccessBlockRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataS3controlMultiRegionAccessPointPublicAccessBlockElRef {
+impl DataS3controlMultiRegionAccessPoint_PublicAccessBlockRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -372,17 +398,25 @@ impl DataS3controlMultiRegionAccessPointPublicAccessBlockElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataS3controlMultiRegionAccessPointRegionsEl {
+pub struct DataS3controlMultiRegionAccessPoint_Regions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket_account_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataS3controlMultiRegionAccessPointRegionsEl {
+impl DataS3controlMultiRegionAccessPoint_Regions {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bucket_account_id`.\n"]
+    pub fn set_bucket_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket_account_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -393,8 +427,8 @@ impl DataS3controlMultiRegionAccessPointRegionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataS3controlMultiRegionAccessPointRegionsEl {
-    type O = terrars::BlockAssignable<DataS3controlMultiRegionAccessPointRegionsEl>;
+impl terrars::ToListMappable for DataS3controlMultiRegionAccessPoint_Regions {
+    type O = terrars::BlockAssignable<DataS3controlMultiRegionAccessPoint_Regions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -405,35 +439,38 @@ impl terrars::ToListMappable for DataS3controlMultiRegionAccessPointRegionsEl {
     }
 }
 
-pub struct BuildDataS3controlMultiRegionAccessPointRegionsEl {}
+pub struct BuildDataS3controlMultiRegionAccessPoint_Regions {}
 
-impl BuildDataS3controlMultiRegionAccessPointRegionsEl {
-    pub fn build(self) -> DataS3controlMultiRegionAccessPointRegionsEl {
-        DataS3controlMultiRegionAccessPointRegionsEl {
+impl BuildDataS3controlMultiRegionAccessPoint_Regions {
+    pub fn build(self) -> DataS3controlMultiRegionAccessPoint_Regions {
+        DataS3controlMultiRegionAccessPoint_Regions {
             bucket: core::default::Default::default(),
+            bucket_account_id: core::default::Default::default(),
             region: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataS3controlMultiRegionAccessPointRegionsElRef {
+#[allow(dead_code)]
+pub struct DataS3controlMultiRegionAccessPoint_RegionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataS3controlMultiRegionAccessPointRegionsElRef {
+impl terrars::Ref for DataS3controlMultiRegionAccessPoint_RegionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataS3controlMultiRegionAccessPointRegionsElRef {
-        DataS3controlMultiRegionAccessPointRegionsElRef {
+    ) -> DataS3controlMultiRegionAccessPoint_RegionsRef {
+        DataS3controlMultiRegionAccessPoint_RegionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataS3controlMultiRegionAccessPointRegionsElRef {
+impl DataS3controlMultiRegionAccessPoint_RegionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -441,6 +478,11 @@ impl DataS3controlMultiRegionAccessPointRegionsElRef {
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
     pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `bucket_account_id` after provisioning.\n"]
+    pub fn bucket_account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_account_id", self.base))
     }
 
     #[doc = "Get a reference to the value of field `region` after provisioning.\n"]

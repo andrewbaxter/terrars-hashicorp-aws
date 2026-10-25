@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataLexSlotTypeData {
+struct DataLexSlotTypeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataLexSlotTypeData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataLexSlotType_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLexSlotTypeData>,
+    data: std::cell::RefCell<DataLexSlotTypeData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataLexSlotType {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `version`.\n"]
     pub fn set_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().version = std::option::Option::Some(v.into());
@@ -99,7 +110,7 @@ impl DataLexSlotType {
     }
 
     #[doc = "Get a reference to the value of field `enumeration_value` after provisioning.\n"]
-    pub fn enumeration_value(&self) -> terrars::SetRef<DataLexSlotTypeEnumerationValueElRef> {
+    pub fn enumeration_value(&self) -> terrars::SetRef<DataLexSlotType_EnumerationValueRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.enumeration_value", self.extract_ref()))
     }
 
@@ -116,6 +127,12 @@ impl DataLexSlotType {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `value_selection_strategy` after provisioning.\n"]
@@ -171,13 +188,14 @@ impl BuildDataLexSlotType {
         let out = DataLexSlotType(std::rc::Rc::new(DataLexSlotType_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLexSlotTypeData {
+            data: std::cell::RefCell::new(DataLexSlotTypeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 version: core::default::Default::default(),
             }),
         }));
@@ -225,7 +243,7 @@ impl DataLexSlotTypeRef {
     }
 
     #[doc = "Get a reference to the value of field `enumeration_value` after provisioning.\n"]
-    pub fn enumeration_value(&self) -> terrars::SetRef<DataLexSlotTypeEnumerationValueElRef> {
+    pub fn enumeration_value(&self) -> terrars::SetRef<DataLexSlotType_EnumerationValueRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.enumeration_value", self.extract_ref()))
     }
 
@@ -244,6 +262,12 @@ impl DataLexSlotTypeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `value_selection_strategy` after provisioning.\n"]
     pub fn value_selection_strategy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value_selection_strategy", self.extract_ref()))
@@ -256,14 +280,14 @@ impl DataLexSlotTypeRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLexSlotTypeEnumerationValueEl {
+pub struct DataLexSlotType_EnumerationValue {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     synonyms: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataLexSlotTypeEnumerationValueEl {
+impl DataLexSlotType_EnumerationValue {
     #[doc = "Set the field `synonyms`.\n"]
     pub fn set_synonyms(
         mut self,
@@ -280,8 +304,8 @@ impl DataLexSlotTypeEnumerationValueEl {
     }
 }
 
-impl terrars::ToListMappable for DataLexSlotTypeEnumerationValueEl {
-    type O = terrars::BlockAssignable<DataLexSlotTypeEnumerationValueEl>;
+impl terrars::ToListMappable for DataLexSlotType_EnumerationValue {
+    type O = terrars::BlockAssignable<DataLexSlotType_EnumerationValue>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -292,32 +316,34 @@ impl terrars::ToListMappable for DataLexSlotTypeEnumerationValueEl {
     }
 }
 
-pub struct BuildDataLexSlotTypeEnumerationValueEl {}
+pub struct BuildDataLexSlotType_EnumerationValue {}
 
-impl BuildDataLexSlotTypeEnumerationValueEl {
-    pub fn build(self) -> DataLexSlotTypeEnumerationValueEl {
-        DataLexSlotTypeEnumerationValueEl {
+impl BuildDataLexSlotType_EnumerationValue {
+    pub fn build(self) -> DataLexSlotType_EnumerationValue {
+        DataLexSlotType_EnumerationValue {
             synonyms: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataLexSlotTypeEnumerationValueElRef {
+#[allow(dead_code)]
+pub struct DataLexSlotType_EnumerationValueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLexSlotTypeEnumerationValueElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLexSlotTypeEnumerationValueElRef {
-        DataLexSlotTypeEnumerationValueElRef {
+impl terrars::Ref for DataLexSlotType_EnumerationValueRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLexSlotType_EnumerationValueRef {
+        DataLexSlotType_EnumerationValueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLexSlotTypeEnumerationValueElRef {
+impl DataLexSlotType_EnumerationValueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

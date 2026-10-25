@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3controlMultiRegionAccessPointData {
+struct S3controlMultiRegionAccessPointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,16 +25,18 @@ struct S3controlMultiRegionAccessPointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    details: std::option::Option<std::vec::Vec<S3controlMultiRegionAccessPointDetailsEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<S3controlMultiRegionAccessPointTimeoutsEl>,
+    details: std::option::Option<std::vec::Vec<S3controlMultiRegionAccessPoint_Details>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<S3controlMultiRegionAccessPoint_Timeouts>,
     dynamic: S3controlMultiRegionAccessPointDynamic,
 }
 
 struct S3controlMultiRegionAccessPoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3controlMultiRegionAccessPointData>,
+    data: std::cell::RefCell<S3controlMultiRegionAccessPointData_>,
 }
 
 #[derive(Clone)]
@@ -144,10 +148,17 @@ impl S3controlMultiRegionAccessPoint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `details`.\n"]
     pub fn set_details(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3controlMultiRegionAccessPointDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3controlMultiRegionAccessPoint_Details>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -161,7 +172,7 @@ impl S3controlMultiRegionAccessPoint {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<S3controlMultiRegionAccessPointTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<S3controlMultiRegionAccessPoint_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -191,19 +202,30 @@ impl S3controlMultiRegionAccessPoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `details` after provisioning.\n"]
-    pub fn details(&self) -> terrars::ListRef<S3controlMultiRegionAccessPointDetailsElRef> {
+    pub fn details(&self) -> terrars::ListRef<S3controlMultiRegionAccessPoint_DetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> S3controlMultiRegionAccessPointTimeoutsElRef {
-        S3controlMultiRegionAccessPointTimeoutsElRef::new(
+    pub fn timeouts(&self) -> S3controlMultiRegionAccessPoint_TimeoutsRef {
+        S3controlMultiRegionAccessPoint_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -250,7 +272,7 @@ impl BuildS3controlMultiRegionAccessPoint {
         let out = S3controlMultiRegionAccessPoint(std::rc::Rc::new(S3controlMultiRegionAccessPoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3controlMultiRegionAccessPointData {
+            data: std::cell::RefCell::new(S3controlMultiRegionAccessPointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -258,6 +280,7 @@ impl BuildS3controlMultiRegionAccessPoint {
                 provisioner: core::default::Default::default(),
                 account_id: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 details: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -316,27 +339,43 @@ impl S3controlMultiRegionAccessPointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `details` after provisioning.\n"]
-    pub fn details(&self) -> terrars::ListRef<S3controlMultiRegionAccessPointDetailsElRef> {
+    pub fn details(&self) -> terrars::ListRef<S3controlMultiRegionAccessPoint_DetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.details", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> S3controlMultiRegionAccessPointTimeoutsElRef {
-        S3controlMultiRegionAccessPointTimeoutsElRef::new(
+    pub fn timeouts(&self) -> S3controlMultiRegionAccessPoint_TimeoutsRef {
+        S3controlMultiRegionAccessPoint_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3controlMultiRegionAccessPointDynamic {
+    details: std::option::Option<terrars::DynamicBlock<S3controlMultiRegionAccessPoint_Details>>,
+}
+
 #[derive(Serialize)]
-pub struct S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {
+pub struct S3controlMultiRegionAccessPoint_Details_PublicAccessBlock {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     block_public_acls: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -347,7 +386,7 @@ pub struct S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {
     restrict_public_buckets: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {
+impl S3controlMultiRegionAccessPoint_Details_PublicAccessBlock {
     #[doc = "Set the field `block_public_acls`.\n"]
     pub fn set_block_public_acls(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.block_public_acls = std::option::Option::Some(v.into());
@@ -373,8 +412,8 @@ impl S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {
-    type O = terrars::BlockAssignable<S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl>;
+impl terrars::ToListMappable for S3controlMultiRegionAccessPoint_Details_PublicAccessBlock {
+    type O = terrars::BlockAssignable<S3controlMultiRegionAccessPoint_Details_PublicAccessBlock>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -385,11 +424,11 @@ impl terrars::ToListMappable for S3controlMultiRegionAccessPointDetailsElPublicA
     }
 }
 
-pub struct BuildS3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {}
+pub struct BuildS3controlMultiRegionAccessPoint_Details_PublicAccessBlock {}
 
-impl BuildS3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {
-    pub fn build(self) -> S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {
-        S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {
+impl BuildS3controlMultiRegionAccessPoint_Details_PublicAccessBlock {
+    pub fn build(self) -> S3controlMultiRegionAccessPoint_Details_PublicAccessBlock {
+        S3controlMultiRegionAccessPoint_Details_PublicAccessBlock {
             block_public_acls: core::default::Default::default(),
             block_public_policy: core::default::Default::default(),
             ignore_public_acls: core::default::Default::default(),
@@ -398,24 +437,26 @@ impl BuildS3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl {
     }
 }
 
-pub struct S3controlMultiRegionAccessPointDetailsElPublicAccessBlockElRef {
+#[allow(dead_code)]
+pub struct S3controlMultiRegionAccessPoint_Details_PublicAccessBlockRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlMultiRegionAccessPointDetailsElPublicAccessBlockElRef {
+impl terrars::Ref for S3controlMultiRegionAccessPoint_Details_PublicAccessBlockRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlMultiRegionAccessPointDetailsElPublicAccessBlockElRef {
-        S3controlMultiRegionAccessPointDetailsElPublicAccessBlockElRef {
+    ) -> S3controlMultiRegionAccessPoint_Details_PublicAccessBlockRef {
+        S3controlMultiRegionAccessPoint_Details_PublicAccessBlockRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlMultiRegionAccessPointDetailsElPublicAccessBlockElRef {
+impl S3controlMultiRegionAccessPoint_Details_PublicAccessBlockRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -442,14 +483,22 @@ impl S3controlMultiRegionAccessPointDetailsElPublicAccessBlockElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3controlMultiRegionAccessPointDetailsElRegionEl {
+pub struct S3controlMultiRegionAccessPoint_Details_Region {
     bucket: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket_account_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3controlMultiRegionAccessPointDetailsElRegionEl { }
+impl S3controlMultiRegionAccessPoint_Details_Region {
+    #[doc = "Set the field `bucket_account_id`.\n"]
+    pub fn set_bucket_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bucket_account_id = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for S3controlMultiRegionAccessPointDetailsElRegionEl {
-    type O = terrars::BlockAssignable<S3controlMultiRegionAccessPointDetailsElRegionEl>;
+impl terrars::ToListMappable for S3controlMultiRegionAccessPoint_Details_Region {
+    type O = terrars::BlockAssignable<S3controlMultiRegionAccessPoint_Details_Region>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -460,35 +509,40 @@ impl terrars::ToListMappable for S3controlMultiRegionAccessPointDetailsElRegionE
     }
 }
 
-pub struct BuildS3controlMultiRegionAccessPointDetailsElRegionEl {
+pub struct BuildS3controlMultiRegionAccessPoint_Details_Region {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3controlMultiRegionAccessPointDetailsElRegionEl {
-    pub fn build(self) -> S3controlMultiRegionAccessPointDetailsElRegionEl {
-        S3controlMultiRegionAccessPointDetailsElRegionEl { bucket: self.bucket }
+impl BuildS3controlMultiRegionAccessPoint_Details_Region {
+    pub fn build(self) -> S3controlMultiRegionAccessPoint_Details_Region {
+        S3controlMultiRegionAccessPoint_Details_Region {
+            bucket: self.bucket,
+            bucket_account_id: core::default::Default::default(),
+        }
     }
 }
 
-pub struct S3controlMultiRegionAccessPointDetailsElRegionElRef {
+#[allow(dead_code)]
+pub struct S3controlMultiRegionAccessPoint_Details_RegionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlMultiRegionAccessPointDetailsElRegionElRef {
+impl terrars::Ref for S3controlMultiRegionAccessPoint_Details_RegionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3controlMultiRegionAccessPointDetailsElRegionElRef {
-        S3controlMultiRegionAccessPointDetailsElRegionElRef {
+    ) -> S3controlMultiRegionAccessPoint_Details_RegionRef {
+        S3controlMultiRegionAccessPoint_Details_RegionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlMultiRegionAccessPointDetailsElRegionElRef {
+impl S3controlMultiRegionAccessPoint_Details_RegionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -497,27 +551,37 @@ impl S3controlMultiRegionAccessPointDetailsElRegionElRef {
     pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `bucket_account_id` after provisioning.\n"]
+    pub fn bucket_account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_account_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct S3controlMultiRegionAccessPointDetailsElDynamic {
+struct S3controlMultiRegionAccessPoint_DetailsDynamic {
     public_access_block: std
     ::option
-    ::Option<terrars::DynamicBlock<S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl>>,
-    region: std::option::Option<terrars::DynamicBlock<S3controlMultiRegionAccessPointDetailsElRegionEl>>,
+    ::Option<terrars::DynamicBlock<S3controlMultiRegionAccessPoint_Details_PublicAccessBlock>>,
+    region: std::option::Option<terrars::DynamicBlock<S3controlMultiRegionAccessPoint_Details_Region>>,
 }
 
 #[derive(Serialize)]
-pub struct S3controlMultiRegionAccessPointDetailsEl {
+pub struct S3controlMultiRegionAccessPoint_Details {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    public_access_block: std::option::Option<std::vec::Vec<S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl>>,
+    public_access_block: std::option::Option<std::vec::Vec<S3controlMultiRegionAccessPoint_Details_PublicAccessBlock>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    region: std::option::Option<std::vec::Vec<S3controlMultiRegionAccessPointDetailsElRegionEl>>,
-    dynamic: S3controlMultiRegionAccessPointDetailsElDynamic,
+    region: std::option::Option<std::vec::Vec<S3controlMultiRegionAccessPoint_Details_Region>>,
+    dynamic: S3controlMultiRegionAccessPoint_DetailsDynamic,
 }
 
-impl S3controlMultiRegionAccessPointDetailsEl {
+impl S3controlMultiRegionAccessPoint_Details {
     #[doc = "Set the field `public_access_block`.\n"]
     pub fn set_public_access_block(
         mut self,
@@ -526,7 +590,7 @@ impl S3controlMultiRegionAccessPointDetailsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<S3controlMultiRegionAccessPointDetailsElPublicAccessBlockEl>>,
+                    ::Into<terrars::BlockAssignable<S3controlMultiRegionAccessPoint_Details_PublicAccessBlock>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -542,7 +606,7 @@ impl S3controlMultiRegionAccessPointDetailsEl {
     #[doc = "Set the field `region`.\n"]
     pub fn set_region(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3controlMultiRegionAccessPointDetailsElRegionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3controlMultiRegionAccessPoint_Details_Region>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -556,8 +620,8 @@ impl S3controlMultiRegionAccessPointDetailsEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlMultiRegionAccessPointDetailsEl {
-    type O = terrars::BlockAssignable<S3controlMultiRegionAccessPointDetailsEl>;
+impl terrars::ToListMappable for S3controlMultiRegionAccessPoint_Details {
+    type O = terrars::BlockAssignable<S3controlMultiRegionAccessPoint_Details>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -568,14 +632,14 @@ impl terrars::ToListMappable for S3controlMultiRegionAccessPointDetailsEl {
     }
 }
 
-pub struct BuildS3controlMultiRegionAccessPointDetailsEl {
+pub struct BuildS3controlMultiRegionAccessPoint_Details {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3controlMultiRegionAccessPointDetailsEl {
-    pub fn build(self) -> S3controlMultiRegionAccessPointDetailsEl {
-        S3controlMultiRegionAccessPointDetailsEl {
+impl BuildS3controlMultiRegionAccessPoint_Details {
+    pub fn build(self) -> S3controlMultiRegionAccessPoint_Details {
+        S3controlMultiRegionAccessPoint_Details {
             name: self.name,
             public_access_block: core::default::Default::default(),
             region: core::default::Default::default(),
@@ -584,21 +648,23 @@ impl BuildS3controlMultiRegionAccessPointDetailsEl {
     }
 }
 
-pub struct S3controlMultiRegionAccessPointDetailsElRef {
+#[allow(dead_code)]
+pub struct S3controlMultiRegionAccessPoint_DetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlMultiRegionAccessPointDetailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3controlMultiRegionAccessPointDetailsElRef {
-        S3controlMultiRegionAccessPointDetailsElRef {
+impl terrars::Ref for S3controlMultiRegionAccessPoint_DetailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3controlMultiRegionAccessPoint_DetailsRef {
+        S3controlMultiRegionAccessPoint_DetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlMultiRegionAccessPointDetailsElRef {
+impl S3controlMultiRegionAccessPoint_DetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -609,22 +675,20 @@ impl S3controlMultiRegionAccessPointDetailsElRef {
     }
 
     #[doc = "Get a reference to the value of field `public_access_block` after provisioning.\n"]
-    pub fn public_access_block(
-        &self,
-    ) -> terrars::ListRef<S3controlMultiRegionAccessPointDetailsElPublicAccessBlockElRef> {
+    pub fn public_access_block(&self) -> terrars::ListRef<S3controlMultiRegionAccessPoint_Details_PublicAccessBlockRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.public_access_block", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3controlMultiRegionAccessPointTimeoutsEl {
+pub struct S3controlMultiRegionAccessPoint_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3controlMultiRegionAccessPointTimeoutsEl {
+impl S3controlMultiRegionAccessPoint_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -638,8 +702,8 @@ impl S3controlMultiRegionAccessPointTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for S3controlMultiRegionAccessPointTimeoutsEl {
-    type O = terrars::BlockAssignable<S3controlMultiRegionAccessPointTimeoutsEl>;
+impl terrars::ToListMappable for S3controlMultiRegionAccessPoint_Timeouts {
+    type O = terrars::BlockAssignable<S3controlMultiRegionAccessPoint_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -650,32 +714,34 @@ impl terrars::ToListMappable for S3controlMultiRegionAccessPointTimeoutsEl {
     }
 }
 
-pub struct BuildS3controlMultiRegionAccessPointTimeoutsEl {}
+pub struct BuildS3controlMultiRegionAccessPoint_Timeouts {}
 
-impl BuildS3controlMultiRegionAccessPointTimeoutsEl {
-    pub fn build(self) -> S3controlMultiRegionAccessPointTimeoutsEl {
-        S3controlMultiRegionAccessPointTimeoutsEl {
+impl BuildS3controlMultiRegionAccessPoint_Timeouts {
+    pub fn build(self) -> S3controlMultiRegionAccessPoint_Timeouts {
+        S3controlMultiRegionAccessPoint_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3controlMultiRegionAccessPointTimeoutsElRef {
+#[allow(dead_code)]
+pub struct S3controlMultiRegionAccessPoint_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3controlMultiRegionAccessPointTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3controlMultiRegionAccessPointTimeoutsElRef {
-        S3controlMultiRegionAccessPointTimeoutsElRef {
+impl terrars::Ref for S3controlMultiRegionAccessPoint_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3controlMultiRegionAccessPoint_TimeoutsRef {
+        S3controlMultiRegionAccessPoint_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3controlMultiRegionAccessPointTimeoutsElRef {
+impl S3controlMultiRegionAccessPoint_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -689,9 +755,4 @@ impl S3controlMultiRegionAccessPointTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3controlMultiRegionAccessPointDynamic {
-    details: std::option::Option<terrars::DynamicBlock<S3controlMultiRegionAccessPointDetailsEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DxLagData {
+struct DxLagData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,6 +32,8 @@ struct DxLagData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     provider_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -38,7 +42,7 @@ struct DxLagData {
 struct DxLag_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DxLagData>,
+    data: std::cell::RefCell<DxLagData_>,
 }
 
 #[derive(Clone)]
@@ -162,6 +166,13 @@ impl DxLag {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -235,6 +246,17 @@ impl DxLag {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `rate_limiter_status` after provisioning.\n"]
+    pub fn rate_limiter_status(&self) -> terrars::ListRef<DxLag_RateLimiterStatusRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rate_limiter_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -292,7 +314,7 @@ impl BuildDxLag {
         let out = DxLag(std::rc::Rc::new(DxLag_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DxLagData {
+            data: std::cell::RefCell::new(DxLagData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -305,6 +327,7 @@ impl BuildDxLag {
                 location: self.location,
                 name: self.name,
                 provider_name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
             }),
@@ -392,6 +415,17 @@ impl DxLagRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `rate_limiter_status` after provisioning.\n"]
+    pub fn rate_limiter_status(&self) -> terrars::ListRef<DxLag_RateLimiterStatusRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rate_limiter_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -400,5 +434,110 @@ impl DxLagRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DxLag_RateLimiterStatus {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    in_use: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_allowed: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    remaining: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    total_bandwidth: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DxLag_RateLimiterStatus {
+    #[doc = "Set the field `in_use`.\n"]
+    pub fn set_in_use(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.in_use = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `max_allowed`.\n"]
+    pub fn set_max_allowed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_allowed = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `remaining`.\n"]
+    pub fn set_remaining(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.remaining = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `total_bandwidth`.\n"]
+    pub fn set_total_bandwidth(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.total_bandwidth = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DxLag_RateLimiterStatus {
+    type O = terrars::BlockAssignable<DxLag_RateLimiterStatus>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDxLag_RateLimiterStatus {}
+
+impl BuildDxLag_RateLimiterStatus {
+    pub fn build(self) -> DxLag_RateLimiterStatus {
+        DxLag_RateLimiterStatus {
+            in_use: core::default::Default::default(),
+            max_allowed: core::default::Default::default(),
+            remaining: core::default::Default::default(),
+            total_bandwidth: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DxLag_RateLimiterStatusRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DxLag_RateLimiterStatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DxLag_RateLimiterStatusRef {
+        DxLag_RateLimiterStatusRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DxLag_RateLimiterStatusRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `in_use` after provisioning.\n"]
+    pub fn in_use(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.in_use", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_allowed` after provisioning.\n"]
+    pub fn max_allowed(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_allowed", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `remaining` after provisioning.\n"]
+    pub fn remaining(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.remaining", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `total_bandwidth` after provisioning.\n"]
+    pub fn total_bandwidth(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_bandwidth", self.base))
     }
 }

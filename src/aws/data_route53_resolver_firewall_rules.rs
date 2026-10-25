@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataRoute53ResolverFirewallRulesData {
+struct DataRoute53ResolverFirewallRulesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,12 +25,14 @@ struct DataRoute53ResolverFirewallRulesData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     priority: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataRoute53ResolverFirewallRules_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRoute53ResolverFirewallRulesData>,
+    data: std::cell::RefCell<DataRoute53ResolverFirewallRulesData_>,
 }
 
 #[derive(Clone)]
@@ -91,6 +95,13 @@ impl DataRoute53ResolverFirewallRules {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
     pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.extract_ref()))
@@ -102,7 +113,7 @@ impl DataRoute53ResolverFirewallRules {
     }
 
     #[doc = "Get a reference to the value of field `firewall_rules` after provisioning.\n"]
-    pub fn firewall_rules(&self) -> terrars::ListRef<DataRoute53ResolverFirewallRulesFirewallRulesElRef> {
+    pub fn firewall_rules(&self) -> terrars::ListRef<DataRoute53ResolverFirewallRules_FirewallRulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.firewall_rules", self.extract_ref()))
     }
 
@@ -114,6 +125,12 @@ impl DataRoute53ResolverFirewallRules {
     #[doc = "Get a reference to the value of field `priority` after provisioning.\n"]
     pub fn priority(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -159,7 +176,7 @@ impl BuildDataRoute53ResolverFirewallRules {
         let out = DataRoute53ResolverFirewallRules(std::rc::Rc::new(DataRoute53ResolverFirewallRules_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRoute53ResolverFirewallRulesData {
+            data: std::cell::RefCell::new(DataRoute53ResolverFirewallRulesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -168,6 +185,7 @@ impl BuildDataRoute53ResolverFirewallRules {
                 firewall_rule_group_id: self.firewall_rule_group_id,
                 id: core::default::Default::default(),
                 priority: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -209,7 +227,7 @@ impl DataRoute53ResolverFirewallRulesRef {
     }
 
     #[doc = "Get a reference to the value of field `firewall_rules` after provisioning.\n"]
-    pub fn firewall_rules(&self) -> terrars::ListRef<DataRoute53ResolverFirewallRulesFirewallRulesElRef> {
+    pub fn firewall_rules(&self) -> terrars::ListRef<DataRoute53ResolverFirewallRules_FirewallRulesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.firewall_rules", self.extract_ref()))
     }
 
@@ -222,10 +240,16 @@ impl DataRoute53ResolverFirewallRulesRef {
     pub fn priority(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataRoute53ResolverFirewallRulesFirewallRulesEl {
+pub struct DataRoute53ResolverFirewallRules_FirewallRules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -237,22 +261,32 @@ pub struct DataRoute53ResolverFirewallRulesFirewallRulesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     block_response: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    confidence_threshold: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     creation_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     creator_request_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_threat_protection: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     firewall_domain_list_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    firewall_domain_redirection_action: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     firewall_rule_group_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    firewall_threat_protection_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     modification_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     priority: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    q_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataRoute53ResolverFirewallRulesFirewallRulesEl {
+impl DataRoute53ResolverFirewallRules_FirewallRules {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.action = std::option::Option::Some(v.into());
@@ -289,6 +323,15 @@ impl DataRoute53ResolverFirewallRulesFirewallRulesEl {
         self
     }
 
+    #[doc = "Set the field `confidence_threshold`.\n"]
+    pub fn set_confidence_threshold(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.confidence_threshold = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `creation_time`.\n"]
     pub fn set_creation_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.creation_time = std::option::Option::Some(v.into());
@@ -304,6 +347,15 @@ impl DataRoute53ResolverFirewallRulesFirewallRulesEl {
         self
     }
 
+    #[doc = "Set the field `dns_threat_protection`.\n"]
+    pub fn set_dns_threat_protection(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.dns_threat_protection = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `firewall_domain_list_id`.\n"]
     pub fn set_firewall_domain_list_id(
         mut self,
@@ -313,12 +365,30 @@ impl DataRoute53ResolverFirewallRulesFirewallRulesEl {
         self
     }
 
+    #[doc = "Set the field `firewall_domain_redirection_action`.\n"]
+    pub fn set_firewall_domain_redirection_action(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.firewall_domain_redirection_action = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `firewall_rule_group_id`.\n"]
     pub fn set_firewall_rule_group_id(
         mut self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.firewall_rule_group_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `firewall_threat_protection_id`.\n"]
+    pub fn set_firewall_threat_protection_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.firewall_threat_protection_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -339,10 +409,16 @@ impl DataRoute53ResolverFirewallRulesFirewallRulesEl {
         self.priority = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `q_type`.\n"]
+    pub fn set_q_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.q_type = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataRoute53ResolverFirewallRulesFirewallRulesEl {
-    type O = terrars::BlockAssignable<DataRoute53ResolverFirewallRulesFirewallRulesEl>;
+impl terrars::ToListMappable for DataRoute53ResolverFirewallRules_FirewallRules {
+    type O = terrars::BlockAssignable<DataRoute53ResolverFirewallRules_FirewallRules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -353,45 +429,52 @@ impl terrars::ToListMappable for DataRoute53ResolverFirewallRulesFirewallRulesEl
     }
 }
 
-pub struct BuildDataRoute53ResolverFirewallRulesFirewallRulesEl {}
+pub struct BuildDataRoute53ResolverFirewallRules_FirewallRules {}
 
-impl BuildDataRoute53ResolverFirewallRulesFirewallRulesEl {
-    pub fn build(self) -> DataRoute53ResolverFirewallRulesFirewallRulesEl {
-        DataRoute53ResolverFirewallRulesFirewallRulesEl {
+impl BuildDataRoute53ResolverFirewallRules_FirewallRules {
+    pub fn build(self) -> DataRoute53ResolverFirewallRules_FirewallRules {
+        DataRoute53ResolverFirewallRules_FirewallRules {
             action: core::default::Default::default(),
             block_override_dns_type: core::default::Default::default(),
             block_override_domain: core::default::Default::default(),
             block_override_ttl: core::default::Default::default(),
             block_response: core::default::Default::default(),
+            confidence_threshold: core::default::Default::default(),
             creation_time: core::default::Default::default(),
             creator_request_id: core::default::Default::default(),
+            dns_threat_protection: core::default::Default::default(),
             firewall_domain_list_id: core::default::Default::default(),
+            firewall_domain_redirection_action: core::default::Default::default(),
             firewall_rule_group_id: core::default::Default::default(),
+            firewall_threat_protection_id: core::default::Default::default(),
             modification_time: core::default::Default::default(),
             name: core::default::Default::default(),
             priority: core::default::Default::default(),
+            q_type: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataRoute53ResolverFirewallRulesFirewallRulesElRef {
+#[allow(dead_code)]
+pub struct DataRoute53ResolverFirewallRules_FirewallRulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataRoute53ResolverFirewallRulesFirewallRulesElRef {
+impl terrars::Ref for DataRoute53ResolverFirewallRules_FirewallRulesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataRoute53ResolverFirewallRulesFirewallRulesElRef {
-        DataRoute53ResolverFirewallRulesFirewallRulesElRef {
+    ) -> DataRoute53ResolverFirewallRules_FirewallRulesRef {
+        DataRoute53ResolverFirewallRules_FirewallRulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataRoute53ResolverFirewallRulesFirewallRulesElRef {
+impl DataRoute53ResolverFirewallRules_FirewallRulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -421,6 +504,11 @@ impl DataRoute53ResolverFirewallRulesFirewallRulesElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.block_response", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `confidence_threshold` after provisioning.\n"]
+    pub fn confidence_threshold(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.confidence_threshold", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `creation_time` after provisioning.\n"]
     pub fn creation_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_time", self.base))
@@ -431,14 +519,29 @@ impl DataRoute53ResolverFirewallRulesFirewallRulesElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creator_request_id", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `dns_threat_protection` after provisioning.\n"]
+    pub fn dns_threat_protection(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_threat_protection", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `firewall_domain_list_id` after provisioning.\n"]
     pub fn firewall_domain_list_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.firewall_domain_list_id", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `firewall_domain_redirection_action` after provisioning.\n"]
+    pub fn firewall_domain_redirection_action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.firewall_domain_redirection_action", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `firewall_rule_group_id` after provisioning.\n"]
     pub fn firewall_rule_group_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.firewall_rule_group_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `firewall_threat_protection_id` after provisioning.\n"]
+    pub fn firewall_threat_protection_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.firewall_threat_protection_id", self.base))
     }
 
     #[doc = "Get a reference to the value of field `modification_time` after provisioning.\n"]
@@ -454,5 +557,10 @@ impl DataRoute53ResolverFirewallRulesFirewallRulesElRef {
     #[doc = "Get a reference to the value of field `priority` after provisioning.\n"]
     pub fn priority(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.priority", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `q_type` after provisioning.\n"]
+    pub fn q_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.q_type", self.base))
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudwatchLogSubscriptionFilterData {
+struct CloudwatchLogSubscriptionFilterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,14 +20,20 @@ struct CloudwatchLogSubscriptionFilterData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    apply_on_transformed_logs: std::option::Option<terrars::PrimField<bool>>,
     destination_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     distribution: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    emit_system_fields: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     filter_pattern: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     log_group_name: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
@@ -33,7 +41,7 @@ struct CloudwatchLogSubscriptionFilterData {
 struct CloudwatchLogSubscriptionFilter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudwatchLogSubscriptionFilterData>,
+    data: std::cell::RefCell<CloudwatchLogSubscriptionFilterData_>,
 }
 
 #[derive(Clone)]
@@ -133,9 +141,24 @@ impl CloudwatchLogSubscriptionFilter {
         self
     }
 
+    #[doc = "Set the field `apply_on_transformed_logs`.\n"]
+    pub fn set_apply_on_transformed_logs(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().apply_on_transformed_logs = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `distribution`.\n"]
     pub fn set_distribution(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().distribution = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `emit_system_fields`.\n"]
+    pub fn set_emit_system_fields(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().emit_system_fields = std::option::Option::Some(v.into());
         self
     }
 
@@ -145,10 +168,22 @@ impl CloudwatchLogSubscriptionFilter {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `role_arn`.\n"]
     pub fn set_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().role_arn = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Get a reference to the value of field `apply_on_transformed_logs` after provisioning.\n"]
+    pub fn apply_on_transformed_logs(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.apply_on_transformed_logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `destination_arn` after provisioning.\n"]
@@ -159,6 +194,11 @@ impl CloudwatchLogSubscriptionFilter {
     #[doc = "Get a reference to the value of field `distribution` after provisioning.\n"]
     pub fn distribution(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.distribution", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `emit_system_fields` after provisioning.\n"]
+    pub fn emit_system_fields(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.emit_system_fields", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `filter_pattern` after provisioning.\n"]
@@ -179,6 +219,12 @@ impl CloudwatchLogSubscriptionFilter {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -235,18 +281,21 @@ impl BuildCloudwatchLogSubscriptionFilter {
         let out = CloudwatchLogSubscriptionFilter(std::rc::Rc::new(CloudwatchLogSubscriptionFilter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudwatchLogSubscriptionFilterData {
+            data: std::cell::RefCell::new(CloudwatchLogSubscriptionFilterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                apply_on_transformed_logs: core::default::Default::default(),
                 destination_arn: self.destination_arn,
                 distribution: core::default::Default::default(),
+                emit_system_fields: core::default::Default::default(),
                 filter_pattern: self.filter_pattern,
                 id: core::default::Default::default(),
                 log_group_name: self.log_group_name,
                 name: self.name,
+                region: core::default::Default::default(),
                 role_arn: core::default::Default::default(),
             }),
         }));
@@ -278,6 +327,11 @@ impl CloudwatchLogSubscriptionFilterRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `apply_on_transformed_logs` after provisioning.\n"]
+    pub fn apply_on_transformed_logs(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.apply_on_transformed_logs", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `destination_arn` after provisioning.\n"]
     pub fn destination_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_arn", self.extract_ref()))
@@ -286,6 +340,11 @@ impl CloudwatchLogSubscriptionFilterRef {
     #[doc = "Get a reference to the value of field `distribution` after provisioning.\n"]
     pub fn distribution(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.distribution", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `emit_system_fields` after provisioning.\n"]
+    pub fn emit_system_fields(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.emit_system_fields", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `filter_pattern` after provisioning.\n"]
@@ -306,6 +365,12 @@ impl CloudwatchLogSubscriptionFilterRef {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]

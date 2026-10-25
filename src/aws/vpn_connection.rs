@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct VpnConnectionData {
+struct VpnConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,6 +32,10 @@ struct VpnConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     outside_ip_address_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preshared_key_storage: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     remote_ipv4_network_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     remote_ipv6_network_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -47,6 +53,8 @@ struct VpnConnectionData {
     tunnel1_dpd_timeout_action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tunnel1_dpd_timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tunnel1_enable_tunnel_lifecycle_control: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tunnel1_ike_versions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -88,6 +96,8 @@ struct VpnConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tunnel2_dpd_timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tunnel2_enable_tunnel_lifecycle_control: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tunnel2_ike_versions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tunnel2_inside_cidr: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -124,22 +134,26 @@ struct VpnConnectionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tunnel2_startup_action: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tunnel_bandwidth: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tunnel_inside_ip_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpn_concentrator_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpn_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tunnel1_log_options: std::option::Option<std::vec::Vec<VpnConnectionTunnel1LogOptionsEl>>,
+    tunnel1_log_options: std::option::Option<std::vec::Vec<VpnConnection_Tunnel1LogOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tunnel2_log_options: std::option::Option<std::vec::Vec<VpnConnectionTunnel2LogOptionsEl>>,
+    tunnel2_log_options: std::option::Option<std::vec::Vec<VpnConnection_Tunnel2LogOptions>>,
     dynamic: VpnConnectionDynamic,
 }
 
 struct VpnConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpnConnectionData>,
+    data: std::cell::RefCell<VpnConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -278,6 +292,19 @@ impl VpnConnection {
         self
     }
 
+    #[doc = "Set the field `preshared_key_storage`.\n"]
+    pub fn set_preshared_key_storage(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().preshared_key_storage = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `remote_ipv4_network_cidr`.\n"]
     pub fn set_remote_ipv4_network_cidr(
         self,
@@ -347,6 +374,15 @@ impl VpnConnection {
     #[doc = "Set the field `tunnel1_dpd_timeout_seconds`.\n"]
     pub fn set_tunnel1_dpd_timeout_seconds(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().tunnel1_dpd_timeout_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tunnel1_enable_tunnel_lifecycle_control`.\n"]
+    pub fn set_tunnel1_enable_tunnel_lifecycle_control(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tunnel1_enable_tunnel_lifecycle_control = std::option::Option::Some(v.into());
         self
     }
 
@@ -488,6 +524,15 @@ impl VpnConnection {
         self
     }
 
+    #[doc = "Set the field `tunnel2_enable_tunnel_lifecycle_control`.\n"]
+    pub fn set_tunnel2_enable_tunnel_lifecycle_control(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<bool>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tunnel2_enable_tunnel_lifecycle_control = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tunnel2_ike_versions`.\n"]
     pub fn set_tunnel2_ike_versions(
         self,
@@ -611,12 +656,24 @@ impl VpnConnection {
         self
     }
 
+    #[doc = "Set the field `tunnel_bandwidth`.\n"]
+    pub fn set_tunnel_bandwidth(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().tunnel_bandwidth = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tunnel_inside_ip_version`.\n"]
     pub fn set_tunnel_inside_ip_version(
         self,
         v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
     ) -> Self {
         self.0.data.borrow_mut().tunnel_inside_ip_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `vpn_concentrator_id`.\n"]
+    pub fn set_vpn_concentrator_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().vpn_concentrator_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -629,7 +686,7 @@ impl VpnConnection {
     #[doc = "Set the field `tunnel1_log_options`.\n"]
     pub fn set_tunnel1_log_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VpnConnectionTunnel1LogOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VpnConnection_Tunnel1LogOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -645,7 +702,7 @@ impl VpnConnection {
     #[doc = "Set the field `tunnel2_log_options`.\n"]
     pub fn set_tunnel2_log_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VpnConnectionTunnel2LogOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VpnConnection_Tunnel2LogOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -711,6 +768,22 @@ impl VpnConnection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outside_ip_address_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `preshared_key_arn` after provisioning.\n"]
+    pub fn preshared_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preshared_key_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `preshared_key_storage` after provisioning.\n"]
+    pub fn preshared_key_storage(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preshared_key_storage", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `remote_ipv4_network_cidr` after provisioning.\n"]
     pub fn remote_ipv4_network_cidr(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.remote_ipv4_network_cidr", self.extract_ref()))
@@ -722,7 +795,7 @@ impl VpnConnection {
     }
 
     #[doc = "Get a reference to the value of field `routes` after provisioning.\n"]
-    pub fn routes(&self) -> terrars::SetRef<VpnConnectionRoutesElRef> {
+    pub fn routes(&self) -> terrars::SetRef<VpnConnection_RoutesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.routes", self.extract_ref()))
     }
 
@@ -790,6 +863,14 @@ impl VpnConnection {
     #[doc = "Get a reference to the value of field `tunnel1_dpd_timeout_seconds` after provisioning.\n"]
     pub fn tunnel1_dpd_timeout_seconds(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel1_dpd_timeout_seconds", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tunnel1_enable_tunnel_lifecycle_control` after provisioning.\n"]
+    pub fn tunnel1_enable_tunnel_lifecycle_control(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.tunnel1_enable_tunnel_lifecycle_control", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `tunnel1_ike_versions` after provisioning.\n"]
@@ -937,6 +1018,14 @@ impl VpnConnection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel2_dpd_timeout_seconds", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tunnel2_enable_tunnel_lifecycle_control` after provisioning.\n"]
+    pub fn tunnel2_enable_tunnel_lifecycle_control(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.tunnel2_enable_tunnel_lifecycle_control", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `tunnel2_ike_versions` after provisioning.\n"]
     pub fn tunnel2_ike_versions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.tunnel2_ike_versions", self.extract_ref()))
@@ -1052,6 +1141,11 @@ impl VpnConnection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel2_vgw_inside_address", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tunnel_bandwidth` after provisioning.\n"]
+    pub fn tunnel_bandwidth(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel_bandwidth", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tunnel_inside_ip_version` after provisioning.\n"]
     pub fn tunnel_inside_ip_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel_inside_ip_version", self.extract_ref()))
@@ -1063,8 +1157,13 @@ impl VpnConnection {
     }
 
     #[doc = "Get a reference to the value of field `vgw_telemetry` after provisioning.\n"]
-    pub fn vgw_telemetry(&self) -> terrars::SetRef<VpnConnectionVgwTelemetryElRef> {
+    pub fn vgw_telemetry(&self) -> terrars::SetRef<VpnConnection_VgwTelemetryRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vgw_telemetry", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpn_concentrator_id` after provisioning.\n"]
+    pub fn vpn_concentrator_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpn_concentrator_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpn_gateway_id` after provisioning.\n"]
@@ -1073,12 +1172,12 @@ impl VpnConnection {
     }
 
     #[doc = "Get a reference to the value of field `tunnel1_log_options` after provisioning.\n"]
-    pub fn tunnel1_log_options(&self) -> terrars::ListRef<VpnConnectionTunnel1LogOptionsElRef> {
+    pub fn tunnel1_log_options(&self) -> terrars::ListRef<VpnConnection_Tunnel1LogOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tunnel1_log_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tunnel2_log_options` after provisioning.\n"]
-    pub fn tunnel2_log_options(&self) -> terrars::ListRef<VpnConnectionTunnel2LogOptionsElRef> {
+    pub fn tunnel2_log_options(&self) -> terrars::ListRef<VpnConnection_Tunnel2LogOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tunnel2_log_options", self.extract_ref()))
     }
 }
@@ -1127,7 +1226,7 @@ impl BuildVpnConnection {
         let out = VpnConnection(std::rc::Rc::new(VpnConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpnConnectionData {
+            data: std::cell::RefCell::new(VpnConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -1139,6 +1238,8 @@ impl BuildVpnConnection {
                 local_ipv4_network_cidr: core::default::Default::default(),
                 local_ipv6_network_cidr: core::default::Default::default(),
                 outside_ip_address_type: core::default::Default::default(),
+                preshared_key_storage: core::default::Default::default(),
+                region: core::default::Default::default(),
                 remote_ipv4_network_cidr: core::default::Default::default(),
                 remote_ipv6_network_cidr: core::default::Default::default(),
                 static_routes_only: core::default::Default::default(),
@@ -1148,6 +1249,7 @@ impl BuildVpnConnection {
                 transport_transit_gateway_attachment_id: core::default::Default::default(),
                 tunnel1_dpd_timeout_action: core::default::Default::default(),
                 tunnel1_dpd_timeout_seconds: core::default::Default::default(),
+                tunnel1_enable_tunnel_lifecycle_control: core::default::Default::default(),
                 tunnel1_ike_versions: core::default::Default::default(),
                 tunnel1_inside_cidr: core::default::Default::default(),
                 tunnel1_inside_ipv6_cidr: core::default::Default::default(),
@@ -1166,6 +1268,7 @@ impl BuildVpnConnection {
                 tunnel1_startup_action: core::default::Default::default(),
                 tunnel2_dpd_timeout_action: core::default::Default::default(),
                 tunnel2_dpd_timeout_seconds: core::default::Default::default(),
+                tunnel2_enable_tunnel_lifecycle_control: core::default::Default::default(),
                 tunnel2_ike_versions: core::default::Default::default(),
                 tunnel2_inside_cidr: core::default::Default::default(),
                 tunnel2_inside_ipv6_cidr: core::default::Default::default(),
@@ -1182,8 +1285,10 @@ impl BuildVpnConnection {
                 tunnel2_rekey_margin_time_seconds: core::default::Default::default(),
                 tunnel2_replay_window_size: core::default::Default::default(),
                 tunnel2_startup_action: core::default::Default::default(),
+                tunnel_bandwidth: core::default::Default::default(),
                 tunnel_inside_ip_version: core::default::Default::default(),
                 type_: self.type_,
+                vpn_concentrator_id: core::default::Default::default(),
                 vpn_gateway_id: core::default::Default::default(),
                 tunnel1_log_options: core::default::Default::default(),
                 tunnel2_log_options: core::default::Default::default(),
@@ -1271,6 +1376,22 @@ impl VpnConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outside_ip_address_type", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `preshared_key_arn` after provisioning.\n"]
+    pub fn preshared_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preshared_key_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `preshared_key_storage` after provisioning.\n"]
+    pub fn preshared_key_storage(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.preshared_key_storage", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `remote_ipv4_network_cidr` after provisioning.\n"]
     pub fn remote_ipv4_network_cidr(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.remote_ipv4_network_cidr", self.extract_ref()))
@@ -1282,7 +1403,7 @@ impl VpnConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `routes` after provisioning.\n"]
-    pub fn routes(&self) -> terrars::SetRef<VpnConnectionRoutesElRef> {
+    pub fn routes(&self) -> terrars::SetRef<VpnConnection_RoutesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.routes", self.extract_ref()))
     }
 
@@ -1350,6 +1471,14 @@ impl VpnConnectionRef {
     #[doc = "Get a reference to the value of field `tunnel1_dpd_timeout_seconds` after provisioning.\n"]
     pub fn tunnel1_dpd_timeout_seconds(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel1_dpd_timeout_seconds", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tunnel1_enable_tunnel_lifecycle_control` after provisioning.\n"]
+    pub fn tunnel1_enable_tunnel_lifecycle_control(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.tunnel1_enable_tunnel_lifecycle_control", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `tunnel1_ike_versions` after provisioning.\n"]
@@ -1497,6 +1626,14 @@ impl VpnConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel2_dpd_timeout_seconds", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tunnel2_enable_tunnel_lifecycle_control` after provisioning.\n"]
+    pub fn tunnel2_enable_tunnel_lifecycle_control(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.tunnel2_enable_tunnel_lifecycle_control", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `tunnel2_ike_versions` after provisioning.\n"]
     pub fn tunnel2_ike_versions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.tunnel2_ike_versions", self.extract_ref()))
@@ -1612,6 +1749,11 @@ impl VpnConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel2_vgw_inside_address", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tunnel_bandwidth` after provisioning.\n"]
+    pub fn tunnel_bandwidth(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel_bandwidth", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tunnel_inside_ip_version` after provisioning.\n"]
     pub fn tunnel_inside_ip_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tunnel_inside_ip_version", self.extract_ref()))
@@ -1623,8 +1765,13 @@ impl VpnConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `vgw_telemetry` after provisioning.\n"]
-    pub fn vgw_telemetry(&self) -> terrars::SetRef<VpnConnectionVgwTelemetryElRef> {
+    pub fn vgw_telemetry(&self) -> terrars::SetRef<VpnConnection_VgwTelemetryRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vgw_telemetry", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpn_concentrator_id` after provisioning.\n"]
+    pub fn vpn_concentrator_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpn_concentrator_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpn_gateway_id` after provisioning.\n"]
@@ -1633,18 +1780,24 @@ impl VpnConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `tunnel1_log_options` after provisioning.\n"]
-    pub fn tunnel1_log_options(&self) -> terrars::ListRef<VpnConnectionTunnel1LogOptionsElRef> {
+    pub fn tunnel1_log_options(&self) -> terrars::ListRef<VpnConnection_Tunnel1LogOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tunnel1_log_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tunnel2_log_options` after provisioning.\n"]
-    pub fn tunnel2_log_options(&self) -> terrars::ListRef<VpnConnectionTunnel2LogOptionsElRef> {
+    pub fn tunnel2_log_options(&self) -> terrars::ListRef<VpnConnection_Tunnel2LogOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tunnel2_log_options", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct VpnConnectionDynamic {
+    tunnel1_log_options: std::option::Option<terrars::DynamicBlock<VpnConnection_Tunnel1LogOptions>>,
+    tunnel2_log_options: std::option::Option<terrars::DynamicBlock<VpnConnection_Tunnel2LogOptions>>,
+}
+
 #[derive(Serialize)]
-pub struct VpnConnectionRoutesEl {
+pub struct VpnConnection_Routes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     destination_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1653,7 +1806,7 @@ pub struct VpnConnectionRoutesEl {
     state: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpnConnectionRoutesEl {
+impl VpnConnection_Routes {
     #[doc = "Set the field `destination_cidr_block`.\n"]
     pub fn set_destination_cidr_block(
         mut self,
@@ -1676,8 +1829,8 @@ impl VpnConnectionRoutesEl {
     }
 }
 
-impl terrars::ToListMappable for VpnConnectionRoutesEl {
-    type O = terrars::BlockAssignable<VpnConnectionRoutesEl>;
+impl terrars::ToListMappable for VpnConnection_Routes {
+    type O = terrars::BlockAssignable<VpnConnection_Routes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1688,11 +1841,11 @@ impl terrars::ToListMappable for VpnConnectionRoutesEl {
     }
 }
 
-pub struct BuildVpnConnectionRoutesEl {}
+pub struct BuildVpnConnection_Routes {}
 
-impl BuildVpnConnectionRoutesEl {
-    pub fn build(self) -> VpnConnectionRoutesEl {
-        VpnConnectionRoutesEl {
+impl BuildVpnConnection_Routes {
+    pub fn build(self) -> VpnConnection_Routes {
+        VpnConnection_Routes {
             destination_cidr_block: core::default::Default::default(),
             source: core::default::Default::default(),
             state: core::default::Default::default(),
@@ -1700,21 +1853,23 @@ impl BuildVpnConnectionRoutesEl {
     }
 }
 
-pub struct VpnConnectionRoutesElRef {
+#[allow(dead_code)]
+pub struct VpnConnection_RoutesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpnConnectionRoutesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnConnectionRoutesElRef {
-        VpnConnectionRoutesElRef {
+impl terrars::Ref for VpnConnection_RoutesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnConnection_RoutesRef {
+        VpnConnection_RoutesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpnConnectionRoutesElRef {
+impl VpnConnection_RoutesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1736,7 +1891,7 @@ impl VpnConnectionRoutesElRef {
 }
 
 #[derive(Serialize)]
-pub struct VpnConnectionVgwTelemetryEl {
+pub struct VpnConnection_VgwTelemetry {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accepted_route_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1751,7 +1906,7 @@ pub struct VpnConnectionVgwTelemetryEl {
     status_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpnConnectionVgwTelemetryEl {
+impl VpnConnection_VgwTelemetry {
     #[doc = "Set the field `accepted_route_count`.\n"]
     pub fn set_accepted_route_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.accepted_route_count = std::option::Option::Some(v.into());
@@ -1795,8 +1950,8 @@ impl VpnConnectionVgwTelemetryEl {
     }
 }
 
-impl terrars::ToListMappable for VpnConnectionVgwTelemetryEl {
-    type O = terrars::BlockAssignable<VpnConnectionVgwTelemetryEl>;
+impl terrars::ToListMappable for VpnConnection_VgwTelemetry {
+    type O = terrars::BlockAssignable<VpnConnection_VgwTelemetry>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1807,11 +1962,11 @@ impl terrars::ToListMappable for VpnConnectionVgwTelemetryEl {
     }
 }
 
-pub struct BuildVpnConnectionVgwTelemetryEl {}
+pub struct BuildVpnConnection_VgwTelemetry {}
 
-impl BuildVpnConnectionVgwTelemetryEl {
-    pub fn build(self) -> VpnConnectionVgwTelemetryEl {
-        VpnConnectionVgwTelemetryEl {
+impl BuildVpnConnection_VgwTelemetry {
+    pub fn build(self) -> VpnConnection_VgwTelemetry {
+        VpnConnection_VgwTelemetry {
             accepted_route_count: core::default::Default::default(),
             certificate_arn: core::default::Default::default(),
             last_status_change: core::default::Default::default(),
@@ -1822,21 +1977,23 @@ impl BuildVpnConnectionVgwTelemetryEl {
     }
 }
 
-pub struct VpnConnectionVgwTelemetryElRef {
+#[allow(dead_code)]
+pub struct VpnConnection_VgwTelemetryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpnConnectionVgwTelemetryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnConnectionVgwTelemetryElRef {
-        VpnConnectionVgwTelemetryElRef {
+impl terrars::Ref for VpnConnection_VgwTelemetryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnConnection_VgwTelemetryRef {
+        VpnConnection_VgwTelemetryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpnConnectionVgwTelemetryElRef {
+impl VpnConnection_VgwTelemetryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1873,7 +2030,13 @@ impl VpnConnectionVgwTelemetryElRef {
 }
 
 #[derive(Serialize)]
-pub struct VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {
+pub struct VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_log_enabled: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_log_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bgp_log_output_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1882,7 +2045,28 @@ pub struct VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {
     log_output_format: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {
+impl VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions {
+    #[doc = "Set the field `bgp_log_enabled`.\n"]
+    pub fn set_bgp_log_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.bgp_log_enabled = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bgp_log_group_arn`.\n"]
+    pub fn set_bgp_log_group_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.bgp_log_group_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `bgp_log_output_format`.\n"]
+    pub fn set_bgp_log_output_format(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.bgp_log_output_format = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `log_enabled`.\n"]
     pub fn set_log_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.log_enabled = std::option::Option::Some(v.into());
@@ -1902,8 +2086,8 @@ impl VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {
-    type O = terrars::BlockAssignable<VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl>;
+impl terrars::ToListMappable for VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions {
+    type O = terrars::BlockAssignable<VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1914,11 +2098,14 @@ impl terrars::ToListMappable for VpnConnectionTunnel1LogOptionsElCloudwatchLogOp
     }
 }
 
-pub struct BuildVpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {}
+pub struct BuildVpnConnection_Tunnel1LogOptions_CloudwatchLogOptions {}
 
-impl BuildVpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {
-    pub fn build(self) -> VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {
-        VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {
+impl BuildVpnConnection_Tunnel1LogOptions_CloudwatchLogOptions {
+    pub fn build(self) -> VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions {
+        VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions {
+            bgp_log_enabled: core::default::Default::default(),
+            bgp_log_group_arn: core::default::Default::default(),
+            bgp_log_output_format: core::default::Default::default(),
             log_enabled: core::default::Default::default(),
             log_group_arn: core::default::Default::default(),
             log_output_format: core::default::Default::default(),
@@ -1926,26 +2113,43 @@ impl BuildVpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl {
     }
 }
 
-pub struct VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsElRef {
+#[allow(dead_code)]
+pub struct VpnConnection_Tunnel1LogOptions_CloudwatchLogOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsElRef {
+impl terrars::Ref for VpnConnection_Tunnel1LogOptions_CloudwatchLogOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsElRef {
-        VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsElRef {
+    ) -> VpnConnection_Tunnel1LogOptions_CloudwatchLogOptionsRef {
+        VpnConnection_Tunnel1LogOptions_CloudwatchLogOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsElRef {
+impl VpnConnection_Tunnel1LogOptions_CloudwatchLogOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `bgp_log_enabled` after provisioning.\n"]
+    pub fn bgp_log_enabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_log_enabled", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `bgp_log_group_arn` after provisioning.\n"]
+    pub fn bgp_log_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_log_group_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `bgp_log_output_format` after provisioning.\n"]
+    pub fn bgp_log_output_format(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bgp_log_output_format", self.base))
     }
 
     #[doc = "Get a reference to the value of field `log_enabled` after provisioning.\n"]
@@ -1965,24 +2169,24 @@ impl VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct VpnConnectionTunnel1LogOptionsElDynamic {
+struct VpnConnection_Tunnel1LogOptionsDynamic {
     cloudwatch_log_options: std
     ::option
-    ::Option<terrars::DynamicBlock<VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl>>,
+    ::Option<terrars::DynamicBlock<VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions>>,
 }
 
 #[derive(Serialize)]
-pub struct VpnConnectionTunnel1LogOptionsEl {
+pub struct VpnConnection_Tunnel1LogOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloudwatch_log_options: std::option::Option<std::vec::Vec<VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl>>,
-    dynamic: VpnConnectionTunnel1LogOptionsElDynamic,
+    cloudwatch_log_options: std::option::Option<std::vec::Vec<VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions>>,
+    dynamic: VpnConnection_Tunnel1LogOptionsDynamic,
 }
 
-impl VpnConnectionTunnel1LogOptionsEl {
+impl VpnConnection_Tunnel1LogOptions {
     #[doc = "Set the field `cloudwatch_log_options`.\n"]
     pub fn set_cloudwatch_log_options(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1996,8 +2200,8 @@ impl VpnConnectionTunnel1LogOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for VpnConnectionTunnel1LogOptionsEl {
-    type O = terrars::BlockAssignable<VpnConnectionTunnel1LogOptionsEl>;
+impl terrars::ToListMappable for VpnConnection_Tunnel1LogOptions {
+    type O = terrars::BlockAssignable<VpnConnection_Tunnel1LogOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2008,153 +2212,63 @@ impl terrars::ToListMappable for VpnConnectionTunnel1LogOptionsEl {
     }
 }
 
-pub struct BuildVpnConnectionTunnel1LogOptionsEl {}
+pub struct BuildVpnConnection_Tunnel1LogOptions {}
 
-impl BuildVpnConnectionTunnel1LogOptionsEl {
-    pub fn build(self) -> VpnConnectionTunnel1LogOptionsEl {
-        VpnConnectionTunnel1LogOptionsEl {
+impl BuildVpnConnection_Tunnel1LogOptions {
+    pub fn build(self) -> VpnConnection_Tunnel1LogOptions {
+        VpnConnection_Tunnel1LogOptions {
             cloudwatch_log_options: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct VpnConnectionTunnel1LogOptionsElRef {
+#[allow(dead_code)]
+pub struct VpnConnection_Tunnel1LogOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpnConnectionTunnel1LogOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnConnectionTunnel1LogOptionsElRef {
-        VpnConnectionTunnel1LogOptionsElRef {
+impl terrars::Ref for VpnConnection_Tunnel1LogOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnConnection_Tunnel1LogOptionsRef {
+        VpnConnection_Tunnel1LogOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpnConnectionTunnel1LogOptionsElRef {
+impl VpnConnection_Tunnel1LogOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cloudwatch_log_options` after provisioning.\n"]
-    pub fn cloudwatch_log_options(&self) -> terrars::ListRef<VpnConnectionTunnel1LogOptionsElCloudwatchLogOptionsElRef> {
+    pub fn cloudwatch_log_options(&self) -> terrars::ListRef<VpnConnection_Tunnel1LogOptions_CloudwatchLogOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_log_options", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_enabled: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_output_format: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl {
-    #[doc = "Set the field `log_enabled`.\n"]
-    pub fn set_log_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.log_enabled = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_group_arn`.\n"]
-    pub fn set_log_group_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_group_arn = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `log_output_format`.\n"]
-    pub fn set_log_output_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.log_output_format = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl {
-    type O = terrars::BlockAssignable<VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildVpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl {}
-
-impl BuildVpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl {
-    pub fn build(self) -> VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl {
-        VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl {
-            log_enabled: core::default::Default::default(),
-            log_group_arn: core::default::Default::default(),
-            log_output_format: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsElRef {
-        VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `log_enabled` after provisioning.\n"]
-    pub fn log_enabled(&self) -> terrars::PrimExpr<bool> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_enabled", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_group_arn` after provisioning.\n"]
-    pub fn log_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_arn", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `log_output_format` after provisioning.\n"]
-    pub fn log_output_format(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_output_format", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct VpnConnectionTunnel2LogOptionsElDynamic {
+struct VpnConnection_Tunnel2LogOptionsDynamic {
     cloudwatch_log_options: std
     ::option
-    ::Option<terrars::DynamicBlock<VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl>>,
+    ::Option<terrars::DynamicBlock<VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions>>,
 }
 
 #[derive(Serialize)]
-pub struct VpnConnectionTunnel2LogOptionsEl {
+pub struct VpnConnection_Tunnel2LogOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloudwatch_log_options: std::option::Option<std::vec::Vec<VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl>>,
-    dynamic: VpnConnectionTunnel2LogOptionsElDynamic,
+    cloudwatch_log_options: std::option::Option<std::vec::Vec<VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions>>,
+    dynamic: VpnConnection_Tunnel2LogOptionsDynamic,
 }
 
-impl VpnConnectionTunnel2LogOptionsEl {
+impl VpnConnection_Tunnel2LogOptions {
     #[doc = "Set the field `cloudwatch_log_options`.\n"]
     pub fn set_cloudwatch_log_options(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VpnConnection_Tunnel1LogOptions_CloudwatchLogOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2168,8 +2282,8 @@ impl VpnConnectionTunnel2LogOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for VpnConnectionTunnel2LogOptionsEl {
-    type O = terrars::BlockAssignable<VpnConnectionTunnel2LogOptionsEl>;
+impl terrars::ToListMappable for VpnConnection_Tunnel2LogOptions {
+    type O = terrars::BlockAssignable<VpnConnection_Tunnel2LogOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2180,44 +2294,40 @@ impl terrars::ToListMappable for VpnConnectionTunnel2LogOptionsEl {
     }
 }
 
-pub struct BuildVpnConnectionTunnel2LogOptionsEl {}
+pub struct BuildVpnConnection_Tunnel2LogOptions {}
 
-impl BuildVpnConnectionTunnel2LogOptionsEl {
-    pub fn build(self) -> VpnConnectionTunnel2LogOptionsEl {
-        VpnConnectionTunnel2LogOptionsEl {
+impl BuildVpnConnection_Tunnel2LogOptions {
+    pub fn build(self) -> VpnConnection_Tunnel2LogOptions {
+        VpnConnection_Tunnel2LogOptions {
             cloudwatch_log_options: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct VpnConnectionTunnel2LogOptionsElRef {
+#[allow(dead_code)]
+pub struct VpnConnection_Tunnel2LogOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpnConnectionTunnel2LogOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnConnectionTunnel2LogOptionsElRef {
-        VpnConnectionTunnel2LogOptionsElRef {
+impl terrars::Ref for VpnConnection_Tunnel2LogOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnConnection_Tunnel2LogOptionsRef {
+        VpnConnection_Tunnel2LogOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpnConnectionTunnel2LogOptionsElRef {
+impl VpnConnection_Tunnel2LogOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cloudwatch_log_options` after provisioning.\n"]
-    pub fn cloudwatch_log_options(&self) -> terrars::ListRef<VpnConnectionTunnel2LogOptionsElCloudwatchLogOptionsElRef> {
+    pub fn cloudwatch_log_options(&self) -> terrars::ListRef<VpnConnection_Tunnel1LogOptions_CloudwatchLogOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_log_options", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VpnConnectionDynamic {
-    tunnel1_log_options: std::option::Option<terrars::DynamicBlock<VpnConnectionTunnel1LogOptionsEl>>,
-    tunnel2_log_options: std::option::Option<terrars::DynamicBlock<VpnConnectionTunnel2LogOptionsEl>>,
 }

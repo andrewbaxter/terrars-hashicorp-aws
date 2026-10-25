@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataVpcEndpointServiceData {
+struct DataVpcEndpointServiceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,20 +25,22 @@ struct DataVpcEndpointServiceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_regions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataVpcEndpointServiceFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataVpcEndpointService_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataVpcEndpointServiceTimeoutsEl>,
+    timeouts: std::option::Option<DataVpcEndpointService_Timeouts>,
     dynamic: DataVpcEndpointServiceDynamic,
 }
 
 struct DataVpcEndpointService_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVpcEndpointServiceData>,
+    data: std::cell::RefCell<DataVpcEndpointServiceData_>,
 }
 
 #[derive(Clone)]
@@ -99,6 +103,15 @@ impl DataVpcEndpointService {
         self
     }
 
+    #[doc = "Set the field `service_regions`.\n"]
+    pub fn set_service_regions(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().service_regions = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `service_type`.\n"]
     pub fn set_service_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().service_type = std::option::Option::Some(v.into());
@@ -117,7 +130,7 @@ impl DataVpcEndpointService {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataVpcEndpointServiceFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataVpcEndpointService_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -131,7 +144,7 @@ impl DataVpcEndpointService {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcEndpointServiceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcEndpointService_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -176,6 +189,16 @@ impl DataVpcEndpointService {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_dns_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `private_dns_names` after provisioning.\n"]
+    pub fn private_dns_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.private_dns_names", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service` after provisioning.\n"]
     pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.extract_ref()))
@@ -189,6 +212,16 @@ impl DataVpcEndpointService {
     #[doc = "Get a reference to the value of field `service_name` after provisioning.\n"]
     pub fn service_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_region` after provisioning.\n"]
+    pub fn service_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_regions` after provisioning.\n"]
+    pub fn service_regions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.service_regions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_type` after provisioning.\n"]
@@ -215,8 +248,8 @@ impl DataVpcEndpointService {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcEndpointServiceTimeoutsElRef {
-        DataVpcEndpointServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpcEndpointService_TimeoutsRef {
+        DataVpcEndpointService_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -260,7 +293,7 @@ impl BuildDataVpcEndpointService {
         let out = DataVpcEndpointService(std::rc::Rc::new(DataVpcEndpointService_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVpcEndpointServiceData {
+            data: std::cell::RefCell::new(DataVpcEndpointServiceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -268,6 +301,7 @@ impl BuildDataVpcEndpointService {
                 id: core::default::Default::default(),
                 service: core::default::Default::default(),
                 service_name: core::default::Default::default(),
+                service_regions: core::default::Default::default(),
                 service_type: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
@@ -343,6 +377,16 @@ impl DataVpcEndpointServiceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.private_dns_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `private_dns_names` after provisioning.\n"]
+    pub fn private_dns_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.private_dns_names", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service` after provisioning.\n"]
     pub fn service(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service", self.extract_ref()))
@@ -356,6 +400,16 @@ impl DataVpcEndpointServiceRef {
     #[doc = "Get a reference to the value of field `service_name` after provisioning.\n"]
     pub fn service_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_region` after provisioning.\n"]
+    pub fn service_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `service_regions` after provisioning.\n"]
+    pub fn service_regions(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.service_regions", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_type` after provisioning.\n"]
@@ -382,21 +436,26 @@ impl DataVpcEndpointServiceRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcEndpointServiceTimeoutsElRef {
-        DataVpcEndpointServiceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataVpcEndpointService_TimeoutsRef {
+        DataVpcEndpointService_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataVpcEndpointServiceDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataVpcEndpointService_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataVpcEndpointServiceFilterEl {
+pub struct DataVpcEndpointService_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcEndpointServiceFilterEl { }
+impl DataVpcEndpointService_Filter { }
 
-impl terrars::ToListMappable for DataVpcEndpointServiceFilterEl {
-    type O = terrars::BlockAssignable<DataVpcEndpointServiceFilterEl>;
+impl terrars::ToListMappable for DataVpcEndpointService_Filter {
+    type O = terrars::BlockAssignable<DataVpcEndpointService_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -407,37 +466,39 @@ impl terrars::ToListMappable for DataVpcEndpointServiceFilterEl {
     }
 }
 
-pub struct BuildDataVpcEndpointServiceFilterEl {
+pub struct BuildDataVpcEndpointService_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataVpcEndpointServiceFilterEl {
-    pub fn build(self) -> DataVpcEndpointServiceFilterEl {
-        DataVpcEndpointServiceFilterEl {
+impl BuildDataVpcEndpointService_Filter {
+    pub fn build(self) -> DataVpcEndpointService_Filter {
+        DataVpcEndpointService_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataVpcEndpointServiceFilterElRef {
+#[allow(dead_code)]
+pub struct DataVpcEndpointService_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcEndpointServiceFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpointServiceFilterElRef {
-        DataVpcEndpointServiceFilterElRef {
+impl terrars::Ref for DataVpcEndpointService_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpointService_FilterRef {
+        DataVpcEndpointService_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcEndpointServiceFilterElRef {
+impl DataVpcEndpointService_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -454,12 +515,12 @@ impl DataVpcEndpointServiceFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcEndpointServiceTimeoutsEl {
+pub struct DataVpcEndpointService_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcEndpointServiceTimeoutsEl {
+impl DataVpcEndpointService_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -467,8 +528,8 @@ impl DataVpcEndpointServiceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcEndpointServiceTimeoutsEl {
-    type O = terrars::BlockAssignable<DataVpcEndpointServiceTimeoutsEl>;
+impl terrars::ToListMappable for DataVpcEndpointService_Timeouts {
+    type O = terrars::BlockAssignable<DataVpcEndpointService_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -479,29 +540,31 @@ impl terrars::ToListMappable for DataVpcEndpointServiceTimeoutsEl {
     }
 }
 
-pub struct BuildDataVpcEndpointServiceTimeoutsEl {}
+pub struct BuildDataVpcEndpointService_Timeouts {}
 
-impl BuildDataVpcEndpointServiceTimeoutsEl {
-    pub fn build(self) -> DataVpcEndpointServiceTimeoutsEl {
-        DataVpcEndpointServiceTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataVpcEndpointService_Timeouts {
+    pub fn build(self) -> DataVpcEndpointService_Timeouts {
+        DataVpcEndpointService_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataVpcEndpointServiceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataVpcEndpointService_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcEndpointServiceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpointServiceTimeoutsElRef {
-        DataVpcEndpointServiceTimeoutsElRef {
+impl terrars::Ref for DataVpcEndpointService_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcEndpointService_TimeoutsRef {
+        DataVpcEndpointService_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcEndpointServiceTimeoutsElRef {
+impl DataVpcEndpointService_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -510,9 +573,4 @@ impl DataVpcEndpointServiceTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataVpcEndpointServiceDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataVpcEndpointServiceFilterEl>>,
 }

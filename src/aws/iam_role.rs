@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IamRoleData {
+struct IamRoleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -42,14 +44,14 @@ struct IamRoleData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    inline_policy: std::option::Option<std::vec::Vec<IamRoleInlinePolicyEl>>,
+    inline_policy: std::option::Option<std::vec::Vec<IamRole_InlinePolicy>>,
     dynamic: IamRoleDynamic,
 }
 
 struct IamRole_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IamRoleData>,
+    data: std::cell::RefCell<IamRoleData_>,
 }
 
 #[derive(Clone)]
@@ -225,7 +227,7 @@ impl IamRole {
     }
 
     #[doc = "Set the field `inline_policy`.\n"]
-    pub fn set_inline_policy(self, v: impl std::convert::Into<terrars::BlockAssignable<IamRoleInlinePolicyEl>>) -> Self {
+    pub fn set_inline_policy(self, v: impl std::convert::Into<terrars::BlockAssignable<IamRole_InlinePolicy>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().inline_policy = std::option::Option::Some(v);
@@ -355,7 +357,7 @@ impl BuildIamRole {
         let out = IamRole(std::rc::Rc::new(IamRole_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IamRoleData {
+            data: std::cell::RefCell::new(IamRoleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -481,15 +483,20 @@ impl IamRoleRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct IamRoleDynamic {
+    inline_policy: std::option::Option<terrars::DynamicBlock<IamRole_InlinePolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct IamRoleInlinePolicyEl {
+pub struct IamRole_InlinePolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IamRoleInlinePolicyEl {
+impl IamRole_InlinePolicy {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -503,8 +510,8 @@ impl IamRoleInlinePolicyEl {
     }
 }
 
-impl terrars::ToListMappable for IamRoleInlinePolicyEl {
-    type O = terrars::BlockAssignable<IamRoleInlinePolicyEl>;
+impl terrars::ToListMappable for IamRole_InlinePolicy {
+    type O = terrars::BlockAssignable<IamRole_InlinePolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -515,32 +522,34 @@ impl terrars::ToListMappable for IamRoleInlinePolicyEl {
     }
 }
 
-pub struct BuildIamRoleInlinePolicyEl {}
+pub struct BuildIamRole_InlinePolicy {}
 
-impl BuildIamRoleInlinePolicyEl {
-    pub fn build(self) -> IamRoleInlinePolicyEl {
-        IamRoleInlinePolicyEl {
+impl BuildIamRole_InlinePolicy {
+    pub fn build(self) -> IamRole_InlinePolicy {
+        IamRole_InlinePolicy {
             name: core::default::Default::default(),
             policy: core::default::Default::default(),
         }
     }
 }
 
-pub struct IamRoleInlinePolicyElRef {
+#[allow(dead_code)]
+pub struct IamRole_InlinePolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IamRoleInlinePolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IamRoleInlinePolicyElRef {
-        IamRoleInlinePolicyElRef {
+impl terrars::Ref for IamRole_InlinePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IamRole_InlinePolicyRef {
+        IamRole_InlinePolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IamRoleInlinePolicyElRef {
+impl IamRole_InlinePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -554,9 +563,4 @@ impl IamRoleInlinePolicyElRef {
     pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct IamRoleDynamic {
-    inline_policy: std::option::Option<terrars::DynamicBlock<IamRoleInlinePolicyEl>>,
 }

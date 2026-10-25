@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct QuicksightUserData {
+struct QuicksightUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,6 +31,8 @@ struct QuicksightUserData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     namespace: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     session_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -38,7 +42,7 @@ struct QuicksightUserData {
 struct QuicksightUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<QuicksightUserData>,
+    data: std::cell::RefCell<QuicksightUserData_>,
 }
 
 #[derive(Clone)]
@@ -162,6 +166,13 @@ impl QuicksightUser {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `session_name`.\n"]
     pub fn set_session_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().session_name = std::option::Option::Some(v.into());
@@ -209,9 +220,20 @@ impl QuicksightUser {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `session_name` after provisioning.\n"]
     pub fn session_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.session_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `user_invitation_url` after provisioning.\n"]
+    pub fn user_invitation_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_invitation_url", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]
@@ -271,7 +293,7 @@ impl BuildQuicksightUser {
         let out = QuicksightUser(std::rc::Rc::new(QuicksightUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(QuicksightUserData {
+            data: std::cell::RefCell::new(QuicksightUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -283,6 +305,7 @@ impl BuildQuicksightUser {
                 id: core::default::Default::default(),
                 identity_type: self.identity_type,
                 namespace: core::default::Default::default(),
+                region: core::default::Default::default(),
                 session_name: core::default::Default::default(),
                 user_name: core::default::Default::default(),
                 user_role: self.user_role,
@@ -351,9 +374,20 @@ impl QuicksightUserRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `session_name` after provisioning.\n"]
     pub fn session_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.session_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `user_invitation_url` after provisioning.\n"]
+    pub fn user_invitation_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_invitation_url", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]

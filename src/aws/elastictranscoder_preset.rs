@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ElastictranscoderPresetData {
+struct ElastictranscoderPresetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,27 +27,29 @@ struct ElastictranscoderPresetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     video_codec_options: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    audio: std::option::Option<std::vec::Vec<ElastictranscoderPresetAudioEl>>,
+    audio: std::option::Option<std::vec::Vec<ElastictranscoderPreset_Audio>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    audio_codec_options: std::option::Option<std::vec::Vec<ElastictranscoderPresetAudioCodecOptionsEl>>,
+    audio_codec_options: std::option::Option<std::vec::Vec<ElastictranscoderPreset_AudioCodecOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    thumbnails: std::option::Option<std::vec::Vec<ElastictranscoderPresetThumbnailsEl>>,
+    thumbnails: std::option::Option<std::vec::Vec<ElastictranscoderPreset_Thumbnails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    video: std::option::Option<std::vec::Vec<ElastictranscoderPresetVideoEl>>,
+    video: std::option::Option<std::vec::Vec<ElastictranscoderPreset_Video>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    video_watermarks: std::option::Option<std::vec::Vec<ElastictranscoderPresetVideoWatermarksEl>>,
+    video_watermarks: std::option::Option<std::vec::Vec<ElastictranscoderPreset_VideoWatermarks>>,
     dynamic: ElastictranscoderPresetDynamic,
 }
 
 struct ElastictranscoderPreset_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ElastictranscoderPresetData>,
+    data: std::cell::RefCell<ElastictranscoderPresetData_>,
 }
 
 #[derive(Clone)]
@@ -163,6 +167,13 @@ impl ElastictranscoderPreset {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().type_ = std::option::Option::Some(v.into());
@@ -179,10 +190,7 @@ impl ElastictranscoderPreset {
     }
 
     #[doc = "Set the field `audio`.\n"]
-    pub fn set_audio(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPresetAudioEl>>,
-    ) -> Self {
+    pub fn set_audio(self, v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPreset_Audio>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().audio = std::option::Option::Some(v);
@@ -197,7 +205,7 @@ impl ElastictranscoderPreset {
     #[doc = "Set the field `audio_codec_options`.\n"]
     pub fn set_audio_codec_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPresetAudioCodecOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPreset_AudioCodecOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -213,7 +221,7 @@ impl ElastictranscoderPreset {
     #[doc = "Set the field `thumbnails`.\n"]
     pub fn set_thumbnails(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPresetThumbnailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPreset_Thumbnails>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -227,10 +235,7 @@ impl ElastictranscoderPreset {
     }
 
     #[doc = "Set the field `video`.\n"]
-    pub fn set_video(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPresetVideoEl>>,
-    ) -> Self {
+    pub fn set_video(self, v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPreset_Video>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().video = std::option::Option::Some(v);
@@ -245,7 +250,7 @@ impl ElastictranscoderPreset {
     #[doc = "Set the field `video_watermarks`.\n"]
     pub fn set_video_watermarks(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPresetVideoWatermarksEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPreset_VideoWatermarks>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -283,6 +288,12 @@ impl ElastictranscoderPreset {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
@@ -294,22 +305,22 @@ impl ElastictranscoderPreset {
     }
 
     #[doc = "Get a reference to the value of field `audio` after provisioning.\n"]
-    pub fn audio(&self) -> terrars::ListRef<ElastictranscoderPresetAudioElRef> {
+    pub fn audio(&self) -> terrars::ListRef<ElastictranscoderPreset_AudioRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audio", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `audio_codec_options` after provisioning.\n"]
-    pub fn audio_codec_options(&self) -> terrars::ListRef<ElastictranscoderPresetAudioCodecOptionsElRef> {
+    pub fn audio_codec_options(&self) -> terrars::ListRef<ElastictranscoderPreset_AudioCodecOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audio_codec_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `thumbnails` after provisioning.\n"]
-    pub fn thumbnails(&self) -> terrars::ListRef<ElastictranscoderPresetThumbnailsElRef> {
+    pub fn thumbnails(&self) -> terrars::ListRef<ElastictranscoderPreset_ThumbnailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.thumbnails", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `video` after provisioning.\n"]
-    pub fn video(&self) -> terrars::ListRef<ElastictranscoderPresetVideoElRef> {
+    pub fn video(&self) -> terrars::ListRef<ElastictranscoderPreset_VideoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.video", self.extract_ref()))
     }
 }
@@ -356,7 +367,7 @@ impl BuildElastictranscoderPreset {
         let out = ElastictranscoderPreset(std::rc::Rc::new(ElastictranscoderPreset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ElastictranscoderPresetData {
+            data: std::cell::RefCell::new(ElastictranscoderPresetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -366,6 +377,7 @@ impl BuildElastictranscoderPreset {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 type_: core::default::Default::default(),
                 video_codec_options: core::default::Default::default(),
                 audio: core::default::Default::default(),
@@ -429,6 +441,12 @@ impl ElastictranscoderPresetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
@@ -440,28 +458,37 @@ impl ElastictranscoderPresetRef {
     }
 
     #[doc = "Get a reference to the value of field `audio` after provisioning.\n"]
-    pub fn audio(&self) -> terrars::ListRef<ElastictranscoderPresetAudioElRef> {
+    pub fn audio(&self) -> terrars::ListRef<ElastictranscoderPreset_AudioRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audio", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `audio_codec_options` after provisioning.\n"]
-    pub fn audio_codec_options(&self) -> terrars::ListRef<ElastictranscoderPresetAudioCodecOptionsElRef> {
+    pub fn audio_codec_options(&self) -> terrars::ListRef<ElastictranscoderPreset_AudioCodecOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audio_codec_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `thumbnails` after provisioning.\n"]
-    pub fn thumbnails(&self) -> terrars::ListRef<ElastictranscoderPresetThumbnailsElRef> {
+    pub fn thumbnails(&self) -> terrars::ListRef<ElastictranscoderPreset_ThumbnailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.thumbnails", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `video` after provisioning.\n"]
-    pub fn video(&self) -> terrars::ListRef<ElastictranscoderPresetVideoElRef> {
+    pub fn video(&self) -> terrars::ListRef<ElastictranscoderPreset_VideoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.video", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ElastictranscoderPresetDynamic {
+    audio: std::option::Option<terrars::DynamicBlock<ElastictranscoderPreset_Audio>>,
+    audio_codec_options: std::option::Option<terrars::DynamicBlock<ElastictranscoderPreset_AudioCodecOptions>>,
+    thumbnails: std::option::Option<terrars::DynamicBlock<ElastictranscoderPreset_Thumbnails>>,
+    video: std::option::Option<terrars::DynamicBlock<ElastictranscoderPreset_Video>>,
+    video_watermarks: std::option::Option<terrars::DynamicBlock<ElastictranscoderPreset_VideoWatermarks>>,
+}
+
 #[derive(Serialize)]
-pub struct ElastictranscoderPresetAudioEl {
+pub struct ElastictranscoderPreset_Audio {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     audio_packing_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -474,7 +501,7 @@ pub struct ElastictranscoderPresetAudioEl {
     sample_rate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPresetAudioEl {
+impl ElastictranscoderPreset_Audio {
     #[doc = "Set the field `audio_packing_mode`.\n"]
     pub fn set_audio_packing_mode(
         mut self,
@@ -509,8 +536,8 @@ impl ElastictranscoderPresetAudioEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPresetAudioEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPresetAudioEl>;
+impl terrars::ToListMappable for ElastictranscoderPreset_Audio {
+    type O = terrars::BlockAssignable<ElastictranscoderPreset_Audio>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -521,11 +548,11 @@ impl terrars::ToListMappable for ElastictranscoderPresetAudioEl {
     }
 }
 
-pub struct BuildElastictranscoderPresetAudioEl {}
+pub struct BuildElastictranscoderPreset_Audio {}
 
-impl BuildElastictranscoderPresetAudioEl {
-    pub fn build(self) -> ElastictranscoderPresetAudioEl {
-        ElastictranscoderPresetAudioEl {
+impl BuildElastictranscoderPreset_Audio {
+    pub fn build(self) -> ElastictranscoderPreset_Audio {
+        ElastictranscoderPreset_Audio {
             audio_packing_mode: core::default::Default::default(),
             bit_rate: core::default::Default::default(),
             channels: core::default::Default::default(),
@@ -535,21 +562,23 @@ impl BuildElastictranscoderPresetAudioEl {
     }
 }
 
-pub struct ElastictranscoderPresetAudioElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPreset_AudioRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPresetAudioElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPresetAudioElRef {
-        ElastictranscoderPresetAudioElRef {
+impl terrars::Ref for ElastictranscoderPreset_AudioRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPreset_AudioRef {
+        ElastictranscoderPreset_AudioRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPresetAudioElRef {
+impl ElastictranscoderPreset_AudioRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -581,7 +610,7 @@ impl ElastictranscoderPresetAudioElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElastictranscoderPresetAudioCodecOptionsEl {
+pub struct ElastictranscoderPreset_AudioCodecOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bit_depth: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -592,7 +621,7 @@ pub struct ElastictranscoderPresetAudioCodecOptionsEl {
     signed: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPresetAudioCodecOptionsEl {
+impl ElastictranscoderPreset_AudioCodecOptions {
     #[doc = "Set the field `bit_depth`.\n"]
     pub fn set_bit_depth(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bit_depth = std::option::Option::Some(v.into());
@@ -618,8 +647,8 @@ impl ElastictranscoderPresetAudioCodecOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPresetAudioCodecOptionsEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPresetAudioCodecOptionsEl>;
+impl terrars::ToListMappable for ElastictranscoderPreset_AudioCodecOptions {
+    type O = terrars::BlockAssignable<ElastictranscoderPreset_AudioCodecOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -630,11 +659,11 @@ impl terrars::ToListMappable for ElastictranscoderPresetAudioCodecOptionsEl {
     }
 }
 
-pub struct BuildElastictranscoderPresetAudioCodecOptionsEl {}
+pub struct BuildElastictranscoderPreset_AudioCodecOptions {}
 
-impl BuildElastictranscoderPresetAudioCodecOptionsEl {
-    pub fn build(self) -> ElastictranscoderPresetAudioCodecOptionsEl {
-        ElastictranscoderPresetAudioCodecOptionsEl {
+impl BuildElastictranscoderPreset_AudioCodecOptions {
+    pub fn build(self) -> ElastictranscoderPreset_AudioCodecOptions {
+        ElastictranscoderPreset_AudioCodecOptions {
             bit_depth: core::default::Default::default(),
             bit_order: core::default::Default::default(),
             profile: core::default::Default::default(),
@@ -643,21 +672,23 @@ impl BuildElastictranscoderPresetAudioCodecOptionsEl {
     }
 }
 
-pub struct ElastictranscoderPresetAudioCodecOptionsElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPreset_AudioCodecOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPresetAudioCodecOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPresetAudioCodecOptionsElRef {
-        ElastictranscoderPresetAudioCodecOptionsElRef {
+impl terrars::Ref for ElastictranscoderPreset_AudioCodecOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPreset_AudioCodecOptionsRef {
+        ElastictranscoderPreset_AudioCodecOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPresetAudioCodecOptionsElRef {
+impl ElastictranscoderPreset_AudioCodecOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -684,7 +715,7 @@ impl ElastictranscoderPresetAudioCodecOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElastictranscoderPresetThumbnailsEl {
+pub struct ElastictranscoderPreset_Thumbnails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aspect_ratio: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -703,7 +734,7 @@ pub struct ElastictranscoderPresetThumbnailsEl {
     sizing_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPresetThumbnailsEl {
+impl ElastictranscoderPreset_Thumbnails {
     #[doc = "Set the field `aspect_ratio`.\n"]
     pub fn set_aspect_ratio(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.aspect_ratio = std::option::Option::Some(v.into());
@@ -753,8 +784,8 @@ impl ElastictranscoderPresetThumbnailsEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPresetThumbnailsEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPresetThumbnailsEl>;
+impl terrars::ToListMappable for ElastictranscoderPreset_Thumbnails {
+    type O = terrars::BlockAssignable<ElastictranscoderPreset_Thumbnails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -765,11 +796,11 @@ impl terrars::ToListMappable for ElastictranscoderPresetThumbnailsEl {
     }
 }
 
-pub struct BuildElastictranscoderPresetThumbnailsEl {}
+pub struct BuildElastictranscoderPreset_Thumbnails {}
 
-impl BuildElastictranscoderPresetThumbnailsEl {
-    pub fn build(self) -> ElastictranscoderPresetThumbnailsEl {
-        ElastictranscoderPresetThumbnailsEl {
+impl BuildElastictranscoderPreset_Thumbnails {
+    pub fn build(self) -> ElastictranscoderPreset_Thumbnails {
+        ElastictranscoderPreset_Thumbnails {
             aspect_ratio: core::default::Default::default(),
             format: core::default::Default::default(),
             interval: core::default::Default::default(),
@@ -782,21 +813,23 @@ impl BuildElastictranscoderPresetThumbnailsEl {
     }
 }
 
-pub struct ElastictranscoderPresetThumbnailsElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPreset_ThumbnailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPresetThumbnailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPresetThumbnailsElRef {
-        ElastictranscoderPresetThumbnailsElRef {
+impl terrars::Ref for ElastictranscoderPreset_ThumbnailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPreset_ThumbnailsRef {
+        ElastictranscoderPreset_ThumbnailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPresetThumbnailsElRef {
+impl ElastictranscoderPreset_ThumbnailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -843,7 +876,7 @@ impl ElastictranscoderPresetThumbnailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElastictranscoderPresetVideoEl {
+pub struct ElastictranscoderPreset_Video {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aspect_ratio: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -872,7 +905,7 @@ pub struct ElastictranscoderPresetVideoEl {
     sizing_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPresetVideoEl {
+impl ElastictranscoderPreset_Video {
     #[doc = "Set the field `aspect_ratio`.\n"]
     pub fn set_aspect_ratio(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.aspect_ratio = std::option::Option::Some(v.into());
@@ -958,8 +991,8 @@ impl ElastictranscoderPresetVideoEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPresetVideoEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPresetVideoEl>;
+impl terrars::ToListMappable for ElastictranscoderPreset_Video {
+    type O = terrars::BlockAssignable<ElastictranscoderPreset_Video>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -970,11 +1003,11 @@ impl terrars::ToListMappable for ElastictranscoderPresetVideoEl {
     }
 }
 
-pub struct BuildElastictranscoderPresetVideoEl {}
+pub struct BuildElastictranscoderPreset_Video {}
 
-impl BuildElastictranscoderPresetVideoEl {
-    pub fn build(self) -> ElastictranscoderPresetVideoEl {
-        ElastictranscoderPresetVideoEl {
+impl BuildElastictranscoderPreset_Video {
+    pub fn build(self) -> ElastictranscoderPreset_Video {
+        ElastictranscoderPreset_Video {
             aspect_ratio: core::default::Default::default(),
             bit_rate: core::default::Default::default(),
             codec: core::default::Default::default(),
@@ -992,21 +1025,23 @@ impl BuildElastictranscoderPresetVideoEl {
     }
 }
 
-pub struct ElastictranscoderPresetVideoElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPreset_VideoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPresetVideoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPresetVideoElRef {
-        ElastictranscoderPresetVideoElRef {
+impl terrars::Ref for ElastictranscoderPreset_VideoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPreset_VideoRef {
+        ElastictranscoderPreset_VideoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPresetVideoElRef {
+impl ElastictranscoderPreset_VideoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1078,7 +1113,7 @@ impl ElastictranscoderPresetVideoElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElastictranscoderPresetVideoWatermarksEl {
+pub struct ElastictranscoderPreset_VideoWatermarks {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     horizontal_align: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1101,7 +1136,7 @@ pub struct ElastictranscoderPresetVideoWatermarksEl {
     vertical_offset: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPresetVideoWatermarksEl {
+impl ElastictranscoderPreset_VideoWatermarks {
     #[doc = "Set the field `horizontal_align`.\n"]
     pub fn set_horizontal_align(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.horizontal_align = std::option::Option::Some(v.into());
@@ -1163,8 +1198,8 @@ impl ElastictranscoderPresetVideoWatermarksEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPresetVideoWatermarksEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPresetVideoWatermarksEl>;
+impl terrars::ToListMappable for ElastictranscoderPreset_VideoWatermarks {
+    type O = terrars::BlockAssignable<ElastictranscoderPreset_VideoWatermarks>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1175,11 +1210,11 @@ impl terrars::ToListMappable for ElastictranscoderPresetVideoWatermarksEl {
     }
 }
 
-pub struct BuildElastictranscoderPresetVideoWatermarksEl {}
+pub struct BuildElastictranscoderPreset_VideoWatermarks {}
 
-impl BuildElastictranscoderPresetVideoWatermarksEl {
-    pub fn build(self) -> ElastictranscoderPresetVideoWatermarksEl {
-        ElastictranscoderPresetVideoWatermarksEl {
+impl BuildElastictranscoderPreset_VideoWatermarks {
+    pub fn build(self) -> ElastictranscoderPreset_VideoWatermarks {
+        ElastictranscoderPreset_VideoWatermarks {
             horizontal_align: core::default::Default::default(),
             horizontal_offset: core::default::Default::default(),
             id: core::default::Default::default(),
@@ -1194,21 +1229,23 @@ impl BuildElastictranscoderPresetVideoWatermarksEl {
     }
 }
 
-pub struct ElastictranscoderPresetVideoWatermarksElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPreset_VideoWatermarksRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPresetVideoWatermarksElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPresetVideoWatermarksElRef {
-        ElastictranscoderPresetVideoWatermarksElRef {
+impl terrars::Ref for ElastictranscoderPreset_VideoWatermarksRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPreset_VideoWatermarksRef {
+        ElastictranscoderPreset_VideoWatermarksRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPresetVideoWatermarksElRef {
+impl ElastictranscoderPreset_VideoWatermarksRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1262,13 +1299,4 @@ impl ElastictranscoderPresetVideoWatermarksElRef {
     pub fn vertical_offset(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vertical_offset", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ElastictranscoderPresetDynamic {
-    audio: std::option::Option<terrars::DynamicBlock<ElastictranscoderPresetAudioEl>>,
-    audio_codec_options: std::option::Option<terrars::DynamicBlock<ElastictranscoderPresetAudioCodecOptionsEl>>,
-    thumbnails: std::option::Option<terrars::DynamicBlock<ElastictranscoderPresetThumbnailsEl>>,
-    video: std::option::Option<terrars::DynamicBlock<ElastictranscoderPresetVideoEl>>,
-    video_watermarks: std::option::Option<terrars::DynamicBlock<ElastictranscoderPresetVideoWatermarksEl>>,
 }

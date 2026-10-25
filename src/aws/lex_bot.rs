@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LexBotData {
+struct LexBotData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,22 +41,24 @@ struct LexBotData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     process_behavior: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     voice_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    abort_statement: std::option::Option<std::vec::Vec<LexBotAbortStatementEl>>,
+    abort_statement: std::option::Option<std::vec::Vec<LexBot_AbortStatement>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    clarification_prompt: std::option::Option<std::vec::Vec<LexBotClarificationPromptEl>>,
+    clarification_prompt: std::option::Option<std::vec::Vec<LexBot_ClarificationPrompt>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    intent: std::option::Option<std::vec::Vec<LexBotIntentEl>>,
+    intent: std::option::Option<std::vec::Vec<LexBot_Intent>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LexBotTimeoutsEl>,
+    timeouts: std::option::Option<LexBot_Timeouts>,
     dynamic: LexBotDynamic,
 }
 
 struct LexBot_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LexBotData>,
+    data: std::cell::RefCell<LexBotData_>,
 }
 
 #[derive(Clone)]
@@ -208,6 +212,13 @@ impl LexBot {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `voice_id`.\n"]
     pub fn set_voice_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().voice_id = std::option::Option::Some(v.into());
@@ -217,7 +228,7 @@ impl LexBot {
     #[doc = "Set the field `abort_statement`.\n"]
     pub fn set_abort_statement(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexBotAbortStatementEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexBot_AbortStatement>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -233,7 +244,7 @@ impl LexBot {
     #[doc = "Set the field `clarification_prompt`.\n"]
     pub fn set_clarification_prompt(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexBotClarificationPromptEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexBot_ClarificationPrompt>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -247,7 +258,7 @@ impl LexBot {
     }
 
     #[doc = "Set the field `intent`.\n"]
-    pub fn set_intent(self, v: impl std::convert::Into<terrars::BlockAssignable<LexBotIntentEl>>) -> Self {
+    pub fn set_intent(self, v: impl std::convert::Into<terrars::BlockAssignable<LexBot_Intent>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().intent = std::option::Option::Some(v);
@@ -260,7 +271,7 @@ impl LexBot {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LexBotTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LexBot_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -348,6 +359,12 @@ impl LexBot {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.process_behavior", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -364,18 +381,18 @@ impl LexBot {
     }
 
     #[doc = "Get a reference to the value of field `abort_statement` after provisioning.\n"]
-    pub fn abort_statement(&self) -> terrars::ListRef<LexBotAbortStatementElRef> {
+    pub fn abort_statement(&self) -> terrars::ListRef<LexBot_AbortStatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.abort_statement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `clarification_prompt` after provisioning.\n"]
-    pub fn clarification_prompt(&self) -> terrars::ListRef<LexBotClarificationPromptElRef> {
+    pub fn clarification_prompt(&self) -> terrars::ListRef<LexBot_ClarificationPromptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.clarification_prompt", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LexBotTimeoutsElRef {
-        LexBotTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LexBot_TimeoutsRef {
+        LexBot_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -423,7 +440,7 @@ impl BuildLexBot {
         let out = LexBot(std::rc::Rc::new(LexBot_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LexBotData {
+            data: std::cell::RefCell::new(LexBotData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -440,6 +457,7 @@ impl BuildLexBot {
                 name: self.name,
                 nlu_intent_confidence_threshold: core::default::Default::default(),
                 process_behavior: core::default::Default::default(),
+                region: core::default::Default::default(),
                 voice_id: core::default::Default::default(),
                 abort_statement: core::default::Default::default(),
                 clarification_prompt: core::default::Default::default(),
@@ -559,6 +577,12 @@ impl LexBotRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.process_behavior", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -575,30 +599,37 @@ impl LexBotRef {
     }
 
     #[doc = "Get a reference to the value of field `abort_statement` after provisioning.\n"]
-    pub fn abort_statement(&self) -> terrars::ListRef<LexBotAbortStatementElRef> {
+    pub fn abort_statement(&self) -> terrars::ListRef<LexBot_AbortStatementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.abort_statement", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `clarification_prompt` after provisioning.\n"]
-    pub fn clarification_prompt(&self) -> terrars::ListRef<LexBotClarificationPromptElRef> {
+    pub fn clarification_prompt(&self) -> terrars::ListRef<LexBot_ClarificationPromptRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.clarification_prompt", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LexBotTimeoutsElRef {
-        LexBotTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> LexBot_TimeoutsRef {
+        LexBot_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LexBotDynamic {
+    abort_statement: std::option::Option<terrars::DynamicBlock<LexBot_AbortStatement>>,
+    clarification_prompt: std::option::Option<terrars::DynamicBlock<LexBot_ClarificationPrompt>>,
+    intent: std::option::Option<terrars::DynamicBlock<LexBot_Intent>>,
+}
+
 #[derive(Serialize)]
-pub struct LexBotAbortStatementElMessageEl {
+pub struct LexBot_AbortStatement_Message {
     content: terrars::PrimField<std::string::String>,
     content_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     group_number: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl LexBotAbortStatementElMessageEl {
+impl LexBot_AbortStatement_Message {
     #[doc = "Set the field `group_number`.\n"]
     pub fn set_group_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.group_number = std::option::Option::Some(v.into());
@@ -606,8 +637,8 @@ impl LexBotAbortStatementElMessageEl {
     }
 }
 
-impl terrars::ToListMappable for LexBotAbortStatementElMessageEl {
-    type O = terrars::BlockAssignable<LexBotAbortStatementElMessageEl>;
+impl terrars::ToListMappable for LexBot_AbortStatement_Message {
+    type O = terrars::BlockAssignable<LexBot_AbortStatement_Message>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -618,16 +649,16 @@ impl terrars::ToListMappable for LexBotAbortStatementElMessageEl {
     }
 }
 
-pub struct BuildLexBotAbortStatementElMessageEl {
+pub struct BuildLexBot_AbortStatement_Message {
     #[doc = ""]
     pub content: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub content_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexBotAbortStatementElMessageEl {
-    pub fn build(self) -> LexBotAbortStatementElMessageEl {
-        LexBotAbortStatementElMessageEl {
+impl BuildLexBot_AbortStatement_Message {
+    pub fn build(self) -> LexBot_AbortStatement_Message {
+        LexBot_AbortStatement_Message {
             content: self.content,
             content_type: self.content_type,
             group_number: core::default::Default::default(),
@@ -635,21 +666,23 @@ impl BuildLexBotAbortStatementElMessageEl {
     }
 }
 
-pub struct LexBotAbortStatementElMessageElRef {
+#[allow(dead_code)]
+pub struct LexBot_AbortStatement_MessageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexBotAbortStatementElMessageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotAbortStatementElMessageElRef {
-        LexBotAbortStatementElMessageElRef {
+impl terrars::Ref for LexBot_AbortStatement_MessageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBot_AbortStatement_MessageRef {
+        LexBot_AbortStatement_MessageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexBotAbortStatementElMessageElRef {
+impl LexBot_AbortStatement_MessageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -671,20 +704,20 @@ impl LexBotAbortStatementElMessageElRef {
 }
 
 #[derive(Serialize, Default)]
-struct LexBotAbortStatementElDynamic {
-    message: std::option::Option<terrars::DynamicBlock<LexBotAbortStatementElMessageEl>>,
+struct LexBot_AbortStatementDynamic {
+    message: std::option::Option<terrars::DynamicBlock<LexBot_AbortStatement_Message>>,
 }
 
 #[derive(Serialize)]
-pub struct LexBotAbortStatementEl {
+pub struct LexBot_AbortStatement {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_card: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message: std::option::Option<std::vec::Vec<LexBotAbortStatementElMessageEl>>,
-    dynamic: LexBotAbortStatementElDynamic,
+    message: std::option::Option<std::vec::Vec<LexBot_AbortStatement_Message>>,
+    dynamic: LexBot_AbortStatementDynamic,
 }
 
-impl LexBotAbortStatementEl {
+impl LexBot_AbortStatement {
     #[doc = "Set the field `response_card`.\n"]
     pub fn set_response_card(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.response_card = std::option::Option::Some(v.into());
@@ -694,7 +727,7 @@ impl LexBotAbortStatementEl {
     #[doc = "Set the field `message`.\n"]
     pub fn set_message(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexBotAbortStatementElMessageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexBot_AbortStatement_Message>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -708,8 +741,8 @@ impl LexBotAbortStatementEl {
     }
 }
 
-impl terrars::ToListMappable for LexBotAbortStatementEl {
-    type O = terrars::BlockAssignable<LexBotAbortStatementEl>;
+impl terrars::ToListMappable for LexBot_AbortStatement {
+    type O = terrars::BlockAssignable<LexBot_AbortStatement>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -720,11 +753,11 @@ impl terrars::ToListMappable for LexBotAbortStatementEl {
     }
 }
 
-pub struct BuildLexBotAbortStatementEl {}
+pub struct BuildLexBot_AbortStatement {}
 
-impl BuildLexBotAbortStatementEl {
-    pub fn build(self) -> LexBotAbortStatementEl {
-        LexBotAbortStatementEl {
+impl BuildLexBot_AbortStatement {
+    pub fn build(self) -> LexBot_AbortStatement {
+        LexBot_AbortStatement {
             response_card: core::default::Default::default(),
             message: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -732,21 +765,23 @@ impl BuildLexBotAbortStatementEl {
     }
 }
 
-pub struct LexBotAbortStatementElRef {
+#[allow(dead_code)]
+pub struct LexBot_AbortStatementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexBotAbortStatementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotAbortStatementElRef {
-        LexBotAbortStatementElRef {
+impl terrars::Ref for LexBot_AbortStatementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBot_AbortStatementRef {
+        LexBot_AbortStatementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexBotAbortStatementElRef {
+impl LexBot_AbortStatementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -757,102 +792,22 @@ impl LexBotAbortStatementElRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct LexBotClarificationPromptElMessageEl {
-    content: terrars::PrimField<std::string::String>,
-    content_type: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    group_number: std::option::Option<terrars::PrimField<f64>>,
-}
-
-impl LexBotClarificationPromptElMessageEl {
-    #[doc = "Set the field `group_number`.\n"]
-    pub fn set_group_number(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.group_number = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for LexBotClarificationPromptElMessageEl {
-    type O = terrars::BlockAssignable<LexBotClarificationPromptElMessageEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildLexBotClarificationPromptElMessageEl {
-    #[doc = ""]
-    pub content: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub content_type: terrars::PrimField<std::string::String>,
-}
-
-impl BuildLexBotClarificationPromptElMessageEl {
-    pub fn build(self) -> LexBotClarificationPromptElMessageEl {
-        LexBotClarificationPromptElMessageEl {
-            content: self.content,
-            content_type: self.content_type,
-            group_number: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct LexBotClarificationPromptElMessageElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for LexBotClarificationPromptElMessageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotClarificationPromptElMessageElRef {
-        LexBotClarificationPromptElMessageElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl LexBotClarificationPromptElMessageElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `content` after provisioning.\n"]
-    pub fn content(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
-    pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `group_number` after provisioning.\n"]
-    pub fn group_number(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.group_number", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct LexBotClarificationPromptElDynamic {
-    message: std::option::Option<terrars::DynamicBlock<LexBotClarificationPromptElMessageEl>>,
+struct LexBot_ClarificationPromptDynamic {
+    message: std::option::Option<terrars::DynamicBlock<LexBot_AbortStatement_Message>>,
 }
 
 #[derive(Serialize)]
-pub struct LexBotClarificationPromptEl {
+pub struct LexBot_ClarificationPrompt {
     max_attempts: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     response_card: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    message: std::option::Option<std::vec::Vec<LexBotClarificationPromptElMessageEl>>,
-    dynamic: LexBotClarificationPromptElDynamic,
+    message: std::option::Option<std::vec::Vec<LexBot_AbortStatement_Message>>,
+    dynamic: LexBot_ClarificationPromptDynamic,
 }
 
-impl LexBotClarificationPromptEl {
+impl LexBot_ClarificationPrompt {
     #[doc = "Set the field `response_card`.\n"]
     pub fn set_response_card(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.response_card = std::option::Option::Some(v.into());
@@ -862,7 +817,7 @@ impl LexBotClarificationPromptEl {
     #[doc = "Set the field `message`.\n"]
     pub fn set_message(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LexBotClarificationPromptElMessageEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LexBot_AbortStatement_Message>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -876,8 +831,8 @@ impl LexBotClarificationPromptEl {
     }
 }
 
-impl terrars::ToListMappable for LexBotClarificationPromptEl {
-    type O = terrars::BlockAssignable<LexBotClarificationPromptEl>;
+impl terrars::ToListMappable for LexBot_ClarificationPrompt {
+    type O = terrars::BlockAssignable<LexBot_ClarificationPrompt>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -888,14 +843,14 @@ impl terrars::ToListMappable for LexBotClarificationPromptEl {
     }
 }
 
-pub struct BuildLexBotClarificationPromptEl {
+pub struct BuildLexBot_ClarificationPrompt {
     #[doc = ""]
     pub max_attempts: terrars::PrimField<f64>,
 }
 
-impl BuildLexBotClarificationPromptEl {
-    pub fn build(self) -> LexBotClarificationPromptEl {
-        LexBotClarificationPromptEl {
+impl BuildLexBot_ClarificationPrompt {
+    pub fn build(self) -> LexBot_ClarificationPrompt {
+        LexBot_ClarificationPrompt {
             max_attempts: self.max_attempts,
             response_card: core::default::Default::default(),
             message: core::default::Default::default(),
@@ -904,21 +859,23 @@ impl BuildLexBotClarificationPromptEl {
     }
 }
 
-pub struct LexBotClarificationPromptElRef {
+#[allow(dead_code)]
+pub struct LexBot_ClarificationPromptRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexBotClarificationPromptElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotClarificationPromptElRef {
-        LexBotClarificationPromptElRef {
+impl terrars::Ref for LexBot_ClarificationPromptRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBot_ClarificationPromptRef {
+        LexBot_ClarificationPromptRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexBotClarificationPromptElRef {
+impl LexBot_ClarificationPromptRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -935,15 +892,15 @@ impl LexBotClarificationPromptElRef {
 }
 
 #[derive(Serialize)]
-pub struct LexBotIntentEl {
+pub struct LexBot_Intent {
     intent_name: terrars::PrimField<std::string::String>,
     intent_version: terrars::PrimField<std::string::String>,
 }
 
-impl LexBotIntentEl { }
+impl LexBot_Intent { }
 
-impl terrars::ToListMappable for LexBotIntentEl {
-    type O = terrars::BlockAssignable<LexBotIntentEl>;
+impl terrars::ToListMappable for LexBot_Intent {
+    type O = terrars::BlockAssignable<LexBot_Intent>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -954,37 +911,39 @@ impl terrars::ToListMappable for LexBotIntentEl {
     }
 }
 
-pub struct BuildLexBotIntentEl {
+pub struct BuildLexBot_Intent {
     #[doc = ""]
     pub intent_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub intent_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLexBotIntentEl {
-    pub fn build(self) -> LexBotIntentEl {
-        LexBotIntentEl {
+impl BuildLexBot_Intent {
+    pub fn build(self) -> LexBot_Intent {
+        LexBot_Intent {
             intent_name: self.intent_name,
             intent_version: self.intent_version,
         }
     }
 }
 
-pub struct LexBotIntentElRef {
+#[allow(dead_code)]
+pub struct LexBot_IntentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexBotIntentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotIntentElRef {
-        LexBotIntentElRef {
+impl terrars::Ref for LexBot_IntentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBot_IntentRef {
+        LexBot_IntentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexBotIntentElRef {
+impl LexBot_IntentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1001,7 +960,7 @@ impl LexBotIntentElRef {
 }
 
 #[derive(Serialize)]
-pub struct LexBotTimeoutsEl {
+pub struct LexBot_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1010,7 +969,7 @@ pub struct LexBotTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LexBotTimeoutsEl {
+impl LexBot_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1030,8 +989,8 @@ impl LexBotTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LexBotTimeoutsEl {
-    type O = terrars::BlockAssignable<LexBotTimeoutsEl>;
+impl terrars::ToListMappable for LexBot_Timeouts {
+    type O = terrars::BlockAssignable<LexBot_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1042,11 +1001,11 @@ impl terrars::ToListMappable for LexBotTimeoutsEl {
     }
 }
 
-pub struct BuildLexBotTimeoutsEl {}
+pub struct BuildLexBot_Timeouts {}
 
-impl BuildLexBotTimeoutsEl {
-    pub fn build(self) -> LexBotTimeoutsEl {
-        LexBotTimeoutsEl {
+impl BuildLexBot_Timeouts {
+    pub fn build(self) -> LexBot_Timeouts {
+        LexBot_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1054,21 +1013,23 @@ impl BuildLexBotTimeoutsEl {
     }
 }
 
-pub struct LexBotTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LexBot_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LexBotTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBotTimeoutsElRef {
-        LexBotTimeoutsElRef {
+impl terrars::Ref for LexBot_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LexBot_TimeoutsRef {
+        LexBot_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LexBotTimeoutsElRef {
+impl LexBot_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1087,11 +1048,4 @@ impl LexBotTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LexBotDynamic {
-    abort_statement: std::option::Option<terrars::DynamicBlock<LexBotAbortStatementEl>>,
-    clarification_prompt: std::option::Option<terrars::DynamicBlock<LexBotClarificationPromptEl>>,
-    intent: std::option::Option<terrars::DynamicBlock<LexBotIntentEl>>,
 }

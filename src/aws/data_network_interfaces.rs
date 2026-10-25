@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataNetworkInterfacesData {
+struct DataNetworkInterfacesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,18 +21,20 @@ struct DataNetworkInterfacesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataNetworkInterfacesFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataNetworkInterfaces_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataNetworkInterfacesTimeoutsEl>,
+    timeouts: std::option::Option<DataNetworkInterfaces_Timeouts>,
     dynamic: DataNetworkInterfacesDynamic,
 }
 
 struct DataNetworkInterfaces_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataNetworkInterfacesData>,
+    data: std::cell::RefCell<DataNetworkInterfacesData_>,
 }
 
 #[derive(Clone)]
@@ -81,6 +85,13 @@ impl DataNetworkInterfaces {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -91,10 +102,7 @@ impl DataNetworkInterfaces {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataNetworkInterfacesFilterEl>>,
-    ) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataNetworkInterfaces_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -107,7 +115,7 @@ impl DataNetworkInterfaces {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataNetworkInterfacesTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataNetworkInterfaces_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -122,14 +130,20 @@ impl DataNetworkInterfaces {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataNetworkInterfacesTimeoutsElRef {
-        DataNetworkInterfacesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataNetworkInterfaces_TimeoutsRef {
+        DataNetworkInterfaces_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -173,12 +187,13 @@ impl BuildDataNetworkInterfaces {
         let out = DataNetworkInterfaces(std::rc::Rc::new(DataNetworkInterfaces_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataNetworkInterfacesData {
+            data: std::cell::RefCell::new(DataNetworkInterfacesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -223,27 +238,38 @@ impl DataNetworkInterfacesRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ids", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataNetworkInterfacesTimeoutsElRef {
-        DataNetworkInterfacesTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataNetworkInterfaces_TimeoutsRef {
+        DataNetworkInterfaces_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataNetworkInterfacesFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct DataNetworkInterfacesDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataNetworkInterfaces_Filter>>,
 }
 
-impl DataNetworkInterfacesFilterEl { }
+#[derive(Serialize)]
+pub struct DataNetworkInterfaces_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for DataNetworkInterfacesFilterEl {
-    type O = terrars::BlockAssignable<DataNetworkInterfacesFilterEl>;
+impl DataNetworkInterfaces_Filter { }
+
+impl terrars::ToListMappable for DataNetworkInterfaces_Filter {
+    type O = terrars::BlockAssignable<DataNetworkInterfaces_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -254,37 +280,39 @@ impl terrars::ToListMappable for DataNetworkInterfacesFilterEl {
     }
 }
 
-pub struct BuildDataNetworkInterfacesFilterEl {
+pub struct BuildDataNetworkInterfaces_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataNetworkInterfacesFilterEl {
-    pub fn build(self) -> DataNetworkInterfacesFilterEl {
-        DataNetworkInterfacesFilterEl {
+impl BuildDataNetworkInterfaces_Filter {
+    pub fn build(self) -> DataNetworkInterfaces_Filter {
+        DataNetworkInterfaces_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataNetworkInterfacesFilterElRef {
+#[allow(dead_code)]
+pub struct DataNetworkInterfaces_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkInterfacesFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkInterfacesFilterElRef {
-        DataNetworkInterfacesFilterElRef {
+impl terrars::Ref for DataNetworkInterfaces_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkInterfaces_FilterRef {
+        DataNetworkInterfaces_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkInterfacesFilterElRef {
+impl DataNetworkInterfaces_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -295,18 +323,18 @@ impl DataNetworkInterfacesFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkInterfacesTimeoutsEl {
+pub struct DataNetworkInterfaces_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataNetworkInterfacesTimeoutsEl {
+impl DataNetworkInterfaces_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -314,8 +342,8 @@ impl DataNetworkInterfacesTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkInterfacesTimeoutsEl {
-    type O = terrars::BlockAssignable<DataNetworkInterfacesTimeoutsEl>;
+impl terrars::ToListMappable for DataNetworkInterfaces_Timeouts {
+    type O = terrars::BlockAssignable<DataNetworkInterfaces_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -326,29 +354,31 @@ impl terrars::ToListMappable for DataNetworkInterfacesTimeoutsEl {
     }
 }
 
-pub struct BuildDataNetworkInterfacesTimeoutsEl {}
+pub struct BuildDataNetworkInterfaces_Timeouts {}
 
-impl BuildDataNetworkInterfacesTimeoutsEl {
-    pub fn build(self) -> DataNetworkInterfacesTimeoutsEl {
-        DataNetworkInterfacesTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataNetworkInterfaces_Timeouts {
+    pub fn build(self) -> DataNetworkInterfaces_Timeouts {
+        DataNetworkInterfaces_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataNetworkInterfacesTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataNetworkInterfaces_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkInterfacesTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkInterfacesTimeoutsElRef {
-        DataNetworkInterfacesTimeoutsElRef {
+impl terrars::Ref for DataNetworkInterfaces_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkInterfaces_TimeoutsRef {
+        DataNetworkInterfaces_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkInterfacesTimeoutsElRef {
+impl DataNetworkInterfaces_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -357,9 +387,4 @@ impl DataNetworkInterfacesTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataNetworkInterfacesDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataNetworkInterfacesFilterEl>>,
 }

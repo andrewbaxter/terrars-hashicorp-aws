@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SyntheticsCanaryData {
+struct SyntheticsCanaryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,7 +29,11 @@ struct SyntheticsCanaryData {
     handler: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     runtime_version: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_bucket: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -46,20 +52,20 @@ struct SyntheticsCanaryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zip_file: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    artifact_config: std::option::Option<std::vec::Vec<SyntheticsCanaryArtifactConfigEl>>,
+    artifact_config: std::option::Option<std::vec::Vec<SyntheticsCanary_ArtifactConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    run_config: std::option::Option<std::vec::Vec<SyntheticsCanaryRunConfigEl>>,
+    run_config: std::option::Option<std::vec::Vec<SyntheticsCanary_RunConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schedule: std::option::Option<std::vec::Vec<SyntheticsCanaryScheduleEl>>,
+    schedule: std::option::Option<std::vec::Vec<SyntheticsCanary_Schedule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_config: std::option::Option<std::vec::Vec<SyntheticsCanaryVpcConfigEl>>,
+    vpc_config: std::option::Option<std::vec::Vec<SyntheticsCanary_VpcConfig>>,
     dynamic: SyntheticsCanaryDynamic,
 }
 
 struct SyntheticsCanary_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SyntheticsCanaryData>,
+    data: std::cell::RefCell<SyntheticsCanaryData_>,
 }
 
 #[derive(Clone)]
@@ -177,6 +183,19 @@ impl SyntheticsCanary {
         self
     }
 
+    #[doc = "Set the field `kms_key_arn`.\n"]
+    pub fn set_kms_key_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().kms_key_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `s3_bucket`.\n"]
     pub fn set_s3_bucket(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().s3_bucket = std::option::Option::Some(v.into());
@@ -234,7 +253,7 @@ impl SyntheticsCanary {
     #[doc = "Set the field `artifact_config`.\n"]
     pub fn set_artifact_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanaryArtifactConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanary_ArtifactConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -250,7 +269,7 @@ impl SyntheticsCanary {
     #[doc = "Set the field `run_config`.\n"]
     pub fn set_run_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanaryRunConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanary_RunConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -264,7 +283,7 @@ impl SyntheticsCanary {
     }
 
     #[doc = "Set the field `schedule`.\n"]
-    pub fn set_schedule(self, v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanaryScheduleEl>>) -> Self {
+    pub fn set_schedule(self, v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanary_Schedule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().schedule = std::option::Option::Some(v);
@@ -279,7 +298,7 @@ impl SyntheticsCanary {
     #[doc = "Set the field `vpc_config`.\n"]
     pub fn set_vpc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanaryVpcConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanary_VpcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -332,9 +351,20 @@ impl SyntheticsCanary {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `runtime_version` after provisioning.\n"]
@@ -388,7 +418,7 @@ impl SyntheticsCanary {
     }
 
     #[doc = "Get a reference to the value of field `timeline` after provisioning.\n"]
-    pub fn timeline(&self) -> terrars::ListRef<SyntheticsCanaryTimelineElRef> {
+    pub fn timeline(&self) -> terrars::ListRef<SyntheticsCanary_TimelineRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeline", self.extract_ref()))
     }
 
@@ -398,22 +428,22 @@ impl SyntheticsCanary {
     }
 
     #[doc = "Get a reference to the value of field `artifact_config` after provisioning.\n"]
-    pub fn artifact_config(&self) -> terrars::ListRef<SyntheticsCanaryArtifactConfigElRef> {
+    pub fn artifact_config(&self) -> terrars::ListRef<SyntheticsCanary_ArtifactConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.artifact_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `run_config` after provisioning.\n"]
-    pub fn run_config(&self) -> terrars::ListRef<SyntheticsCanaryRunConfigElRef> {
+    pub fn run_config(&self) -> terrars::ListRef<SyntheticsCanary_RunConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.run_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<SyntheticsCanaryScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<SyntheticsCanary_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<SyntheticsCanaryVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<SyntheticsCanary_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
@@ -468,7 +498,7 @@ impl BuildSyntheticsCanary {
         let out = SyntheticsCanary(std::rc::Rc::new(SyntheticsCanary_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SyntheticsCanaryData {
+            data: std::cell::RefCell::new(SyntheticsCanaryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -480,7 +510,9 @@ impl BuildSyntheticsCanary {
                 failure_retention_period: core::default::Default::default(),
                 handler: self.handler,
                 id: core::default::Default::default(),
+                kms_key_arn: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 runtime_version: self.runtime_version,
                 s3_bucket: core::default::Default::default(),
                 s3_key: core::default::Default::default(),
@@ -565,9 +597,20 @@ impl SyntheticsCanaryRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kms_key_arn` after provisioning.\n"]
+    pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `runtime_version` after provisioning.\n"]
@@ -621,7 +664,7 @@ impl SyntheticsCanaryRef {
     }
 
     #[doc = "Get a reference to the value of field `timeline` after provisioning.\n"]
-    pub fn timeline(&self) -> terrars::ListRef<SyntheticsCanaryTimelineElRef> {
+    pub fn timeline(&self) -> terrars::ListRef<SyntheticsCanary_TimelineRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.timeline", self.extract_ref()))
     }
 
@@ -631,28 +674,36 @@ impl SyntheticsCanaryRef {
     }
 
     #[doc = "Get a reference to the value of field `artifact_config` after provisioning.\n"]
-    pub fn artifact_config(&self) -> terrars::ListRef<SyntheticsCanaryArtifactConfigElRef> {
+    pub fn artifact_config(&self) -> terrars::ListRef<SyntheticsCanary_ArtifactConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.artifact_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `run_config` after provisioning.\n"]
-    pub fn run_config(&self) -> terrars::ListRef<SyntheticsCanaryRunConfigElRef> {
+    pub fn run_config(&self) -> terrars::ListRef<SyntheticsCanary_RunConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.run_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `schedule` after provisioning.\n"]
-    pub fn schedule(&self) -> terrars::ListRef<SyntheticsCanaryScheduleElRef> {
+    pub fn schedule(&self) -> terrars::ListRef<SyntheticsCanary_ScheduleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.schedule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<SyntheticsCanaryVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<SyntheticsCanary_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SyntheticsCanaryDynamic {
+    artifact_config: std::option::Option<terrars::DynamicBlock<SyntheticsCanary_ArtifactConfig>>,
+    run_config: std::option::Option<terrars::DynamicBlock<SyntheticsCanary_RunConfig>>,
+    schedule: std::option::Option<terrars::DynamicBlock<SyntheticsCanary_Schedule>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<SyntheticsCanary_VpcConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct SyntheticsCanaryTimelineEl {
+pub struct SyntheticsCanary_Timeline {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     created: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -663,7 +714,7 @@ pub struct SyntheticsCanaryTimelineEl {
     last_stopped: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SyntheticsCanaryTimelineEl {
+impl SyntheticsCanary_Timeline {
     #[doc = "Set the field `created`.\n"]
     pub fn set_created(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.created = std::option::Option::Some(v.into());
@@ -689,8 +740,8 @@ impl SyntheticsCanaryTimelineEl {
     }
 }
 
-impl terrars::ToListMappable for SyntheticsCanaryTimelineEl {
-    type O = terrars::BlockAssignable<SyntheticsCanaryTimelineEl>;
+impl terrars::ToListMappable for SyntheticsCanary_Timeline {
+    type O = terrars::BlockAssignable<SyntheticsCanary_Timeline>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -701,11 +752,11 @@ impl terrars::ToListMappable for SyntheticsCanaryTimelineEl {
     }
 }
 
-pub struct BuildSyntheticsCanaryTimelineEl {}
+pub struct BuildSyntheticsCanary_Timeline {}
 
-impl BuildSyntheticsCanaryTimelineEl {
-    pub fn build(self) -> SyntheticsCanaryTimelineEl {
-        SyntheticsCanaryTimelineEl {
+impl BuildSyntheticsCanary_Timeline {
+    pub fn build(self) -> SyntheticsCanary_Timeline {
+        SyntheticsCanary_Timeline {
             created: core::default::Default::default(),
             last_modified: core::default::Default::default(),
             last_started: core::default::Default::default(),
@@ -714,21 +765,23 @@ impl BuildSyntheticsCanaryTimelineEl {
     }
 }
 
-pub struct SyntheticsCanaryTimelineElRef {
+#[allow(dead_code)]
+pub struct SyntheticsCanary_TimelineRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SyntheticsCanaryTimelineElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanaryTimelineElRef {
-        SyntheticsCanaryTimelineElRef {
+impl terrars::Ref for SyntheticsCanary_TimelineRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanary_TimelineRef {
+        SyntheticsCanary_TimelineRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SyntheticsCanaryTimelineElRef {
+impl SyntheticsCanary_TimelineRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -755,14 +808,14 @@ impl SyntheticsCanaryTimelineElRef {
 }
 
 #[derive(Serialize)]
-pub struct SyntheticsCanaryArtifactConfigElS3EncryptionEl {
+pub struct SyntheticsCanary_ArtifactConfig_S3Encryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SyntheticsCanaryArtifactConfigElS3EncryptionEl {
+impl SyntheticsCanary_ArtifactConfig_S3Encryption {
     #[doc = "Set the field `encryption_mode`.\n"]
     pub fn set_encryption_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.encryption_mode = std::option::Option::Some(v.into());
@@ -776,8 +829,8 @@ impl SyntheticsCanaryArtifactConfigElS3EncryptionEl {
     }
 }
 
-impl terrars::ToListMappable for SyntheticsCanaryArtifactConfigElS3EncryptionEl {
-    type O = terrars::BlockAssignable<SyntheticsCanaryArtifactConfigElS3EncryptionEl>;
+impl terrars::ToListMappable for SyntheticsCanary_ArtifactConfig_S3Encryption {
+    type O = terrars::BlockAssignable<SyntheticsCanary_ArtifactConfig_S3Encryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -788,35 +841,37 @@ impl terrars::ToListMappable for SyntheticsCanaryArtifactConfigElS3EncryptionEl 
     }
 }
 
-pub struct BuildSyntheticsCanaryArtifactConfigElS3EncryptionEl {}
+pub struct BuildSyntheticsCanary_ArtifactConfig_S3Encryption {}
 
-impl BuildSyntheticsCanaryArtifactConfigElS3EncryptionEl {
-    pub fn build(self) -> SyntheticsCanaryArtifactConfigElS3EncryptionEl {
-        SyntheticsCanaryArtifactConfigElS3EncryptionEl {
+impl BuildSyntheticsCanary_ArtifactConfig_S3Encryption {
+    pub fn build(self) -> SyntheticsCanary_ArtifactConfig_S3Encryption {
+        SyntheticsCanary_ArtifactConfig_S3Encryption {
             encryption_mode: core::default::Default::default(),
             kms_key_arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct SyntheticsCanaryArtifactConfigElS3EncryptionElRef {
+#[allow(dead_code)]
+pub struct SyntheticsCanary_ArtifactConfig_S3EncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SyntheticsCanaryArtifactConfigElS3EncryptionElRef {
+impl terrars::Ref for SyntheticsCanary_ArtifactConfig_S3EncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SyntheticsCanaryArtifactConfigElS3EncryptionElRef {
-        SyntheticsCanaryArtifactConfigElS3EncryptionElRef {
+    ) -> SyntheticsCanary_ArtifactConfig_S3EncryptionRef {
+        SyntheticsCanary_ArtifactConfig_S3EncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SyntheticsCanaryArtifactConfigElS3EncryptionElRef {
+impl SyntheticsCanary_ArtifactConfig_S3EncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -833,22 +888,22 @@ impl SyntheticsCanaryArtifactConfigElS3EncryptionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct SyntheticsCanaryArtifactConfigElDynamic {
-    s3_encryption: std::option::Option<terrars::DynamicBlock<SyntheticsCanaryArtifactConfigElS3EncryptionEl>>,
+struct SyntheticsCanary_ArtifactConfigDynamic {
+    s3_encryption: std::option::Option<terrars::DynamicBlock<SyntheticsCanary_ArtifactConfig_S3Encryption>>,
 }
 
 #[derive(Serialize)]
-pub struct SyntheticsCanaryArtifactConfigEl {
+pub struct SyntheticsCanary_ArtifactConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_encryption: std::option::Option<std::vec::Vec<SyntheticsCanaryArtifactConfigElS3EncryptionEl>>,
-    dynamic: SyntheticsCanaryArtifactConfigElDynamic,
+    s3_encryption: std::option::Option<std::vec::Vec<SyntheticsCanary_ArtifactConfig_S3Encryption>>,
+    dynamic: SyntheticsCanary_ArtifactConfigDynamic,
 }
 
-impl SyntheticsCanaryArtifactConfigEl {
+impl SyntheticsCanary_ArtifactConfig {
     #[doc = "Set the field `s3_encryption`.\n"]
     pub fn set_s3_encryption(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanaryArtifactConfigElS3EncryptionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanary_ArtifactConfig_S3Encryption>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -862,8 +917,8 @@ impl SyntheticsCanaryArtifactConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SyntheticsCanaryArtifactConfigEl {
-    type O = terrars::BlockAssignable<SyntheticsCanaryArtifactConfigEl>;
+impl terrars::ToListMappable for SyntheticsCanary_ArtifactConfig {
+    type O = terrars::BlockAssignable<SyntheticsCanary_ArtifactConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -874,55 +929,59 @@ impl terrars::ToListMappable for SyntheticsCanaryArtifactConfigEl {
     }
 }
 
-pub struct BuildSyntheticsCanaryArtifactConfigEl {}
+pub struct BuildSyntheticsCanary_ArtifactConfig {}
 
-impl BuildSyntheticsCanaryArtifactConfigEl {
-    pub fn build(self) -> SyntheticsCanaryArtifactConfigEl {
-        SyntheticsCanaryArtifactConfigEl {
+impl BuildSyntheticsCanary_ArtifactConfig {
+    pub fn build(self) -> SyntheticsCanary_ArtifactConfig {
+        SyntheticsCanary_ArtifactConfig {
             s3_encryption: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SyntheticsCanaryArtifactConfigElRef {
+#[allow(dead_code)]
+pub struct SyntheticsCanary_ArtifactConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SyntheticsCanaryArtifactConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanaryArtifactConfigElRef {
-        SyntheticsCanaryArtifactConfigElRef {
+impl terrars::Ref for SyntheticsCanary_ArtifactConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanary_ArtifactConfigRef {
+        SyntheticsCanary_ArtifactConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SyntheticsCanaryArtifactConfigElRef {
+impl SyntheticsCanary_ArtifactConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `s3_encryption` after provisioning.\n"]
-    pub fn s3_encryption(&self) -> terrars::ListRef<SyntheticsCanaryArtifactConfigElS3EncryptionElRef> {
+    pub fn s3_encryption(&self) -> terrars::ListRef<SyntheticsCanary_ArtifactConfig_S3EncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_encryption", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct SyntheticsCanaryRunConfigEl {
+pub struct SyntheticsCanary_RunConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     active_tracing: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     environment_variables: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ephemeral_storage: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     memory_in_mb: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl SyntheticsCanaryRunConfigEl {
+impl SyntheticsCanary_RunConfig {
     #[doc = "Set the field `active_tracing`.\n"]
     pub fn set_active_tracing(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.active_tracing = std::option::Option::Some(v.into());
@@ -935,6 +994,12 @@ impl SyntheticsCanaryRunConfigEl {
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.environment_variables = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ephemeral_storage`.\n"]
+    pub fn set_ephemeral_storage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.ephemeral_storage = std::option::Option::Some(v.into());
         self
     }
 
@@ -951,8 +1016,8 @@ impl SyntheticsCanaryRunConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SyntheticsCanaryRunConfigEl {
-    type O = terrars::BlockAssignable<SyntheticsCanaryRunConfigEl>;
+impl terrars::ToListMappable for SyntheticsCanary_RunConfig {
+    type O = terrars::BlockAssignable<SyntheticsCanary_RunConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -963,34 +1028,37 @@ impl terrars::ToListMappable for SyntheticsCanaryRunConfigEl {
     }
 }
 
-pub struct BuildSyntheticsCanaryRunConfigEl {}
+pub struct BuildSyntheticsCanary_RunConfig {}
 
-impl BuildSyntheticsCanaryRunConfigEl {
-    pub fn build(self) -> SyntheticsCanaryRunConfigEl {
-        SyntheticsCanaryRunConfigEl {
+impl BuildSyntheticsCanary_RunConfig {
+    pub fn build(self) -> SyntheticsCanary_RunConfig {
+        SyntheticsCanary_RunConfig {
             active_tracing: core::default::Default::default(),
             environment_variables: core::default::Default::default(),
+            ephemeral_storage: core::default::Default::default(),
             memory_in_mb: core::default::Default::default(),
             timeout_in_seconds: core::default::Default::default(),
         }
     }
 }
 
-pub struct SyntheticsCanaryRunConfigElRef {
+#[allow(dead_code)]
+pub struct SyntheticsCanary_RunConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SyntheticsCanaryRunConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanaryRunConfigElRef {
-        SyntheticsCanaryRunConfigElRef {
+impl terrars::Ref for SyntheticsCanary_RunConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanary_RunConfigRef {
+        SyntheticsCanary_RunConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SyntheticsCanaryRunConfigElRef {
+impl SyntheticsCanary_RunConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1005,6 +1073,11 @@ impl SyntheticsCanaryRunConfigElRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.environment_variables", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `ephemeral_storage` after provisioning.\n"]
+    pub fn ephemeral_storage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ephemeral_storage", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `memory_in_mb` after provisioning.\n"]
     pub fn memory_in_mb(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.memory_in_mb", self.base))
@@ -1017,22 +1090,14 @@ impl SyntheticsCanaryRunConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct SyntheticsCanaryScheduleEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    duration_in_seconds: std::option::Option<terrars::PrimField<f64>>,
-    expression: terrars::PrimField<std::string::String>,
+pub struct SyntheticsCanary_Schedule_RetryConfig {
+    max_retries: terrars::PrimField<f64>,
 }
 
-impl SyntheticsCanaryScheduleEl {
-    #[doc = "Set the field `duration_in_seconds`.\n"]
-    pub fn set_duration_in_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.duration_in_seconds = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl SyntheticsCanary_Schedule_RetryConfig { }
 
-impl terrars::ToListMappable for SyntheticsCanaryScheduleEl {
-    type O = terrars::BlockAssignable<SyntheticsCanaryScheduleEl>;
+impl terrars::ToListMappable for SyntheticsCanary_Schedule_RetryConfig {
+    type O = terrars::BlockAssignable<SyntheticsCanary_Schedule_RetryConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1043,35 +1108,128 @@ impl terrars::ToListMappable for SyntheticsCanaryScheduleEl {
     }
 }
 
-pub struct BuildSyntheticsCanaryScheduleEl {
+pub struct BuildSyntheticsCanary_Schedule_RetryConfig {
     #[doc = ""]
-    pub expression: terrars::PrimField<std::string::String>,
+    pub max_retries: terrars::PrimField<f64>,
 }
 
-impl BuildSyntheticsCanaryScheduleEl {
-    pub fn build(self) -> SyntheticsCanaryScheduleEl {
-        SyntheticsCanaryScheduleEl {
-            duration_in_seconds: core::default::Default::default(),
-            expression: self.expression,
-        }
+impl BuildSyntheticsCanary_Schedule_RetryConfig {
+    pub fn build(self) -> SyntheticsCanary_Schedule_RetryConfig {
+        SyntheticsCanary_Schedule_RetryConfig { max_retries: self.max_retries }
     }
 }
 
-pub struct SyntheticsCanaryScheduleElRef {
+#[allow(dead_code)]
+pub struct SyntheticsCanary_Schedule_RetryConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SyntheticsCanaryScheduleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanaryScheduleElRef {
-        SyntheticsCanaryScheduleElRef {
+impl terrars::Ref for SyntheticsCanary_Schedule_RetryConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanary_Schedule_RetryConfigRef {
+        SyntheticsCanary_Schedule_RetryConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SyntheticsCanaryScheduleElRef {
+impl SyntheticsCanary_Schedule_RetryConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_retries` after provisioning.\n"]
+    pub fn max_retries(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_retries", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct SyntheticsCanary_ScheduleDynamic {
+    retry_config: std::option::Option<terrars::DynamicBlock<SyntheticsCanary_Schedule_RetryConfig>>,
+}
+
+#[derive(Serialize)]
+pub struct SyntheticsCanary_Schedule {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    duration_in_seconds: std::option::Option<terrars::PrimField<f64>>,
+    expression: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retry_config: std::option::Option<std::vec::Vec<SyntheticsCanary_Schedule_RetryConfig>>,
+    dynamic: SyntheticsCanary_ScheduleDynamic,
+}
+
+impl SyntheticsCanary_Schedule {
+    #[doc = "Set the field `duration_in_seconds`.\n"]
+    pub fn set_duration_in_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.duration_in_seconds = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `retry_config`.\n"]
+    pub fn set_retry_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SyntheticsCanary_Schedule_RetryConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.retry_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.retry_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for SyntheticsCanary_Schedule {
+    type O = terrars::BlockAssignable<SyntheticsCanary_Schedule>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSyntheticsCanary_Schedule {
+    #[doc = ""]
+    pub expression: terrars::PrimField<std::string::String>,
+}
+
+impl BuildSyntheticsCanary_Schedule {
+    pub fn build(self) -> SyntheticsCanary_Schedule {
+        SyntheticsCanary_Schedule {
+            duration_in_seconds: core::default::Default::default(),
+            expression: self.expression,
+            retry_config: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SyntheticsCanary_ScheduleRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SyntheticsCanary_ScheduleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanary_ScheduleRef {
+        SyntheticsCanary_ScheduleRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SyntheticsCanary_ScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1085,17 +1243,30 @@ impl SyntheticsCanaryScheduleElRef {
     pub fn expression(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.expression", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `retry_config` after provisioning.\n"]
+    pub fn retry_config(&self) -> terrars::ListRef<SyntheticsCanary_Schedule_RetryConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retry_config", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct SyntheticsCanaryVpcConfigEl {
+pub struct SyntheticsCanary_VpcConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_allowed_for_dual_stack: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl SyntheticsCanaryVpcConfigEl {
+impl SyntheticsCanary_VpcConfig {
+    #[doc = "Set the field `ipv6_allowed_for_dual_stack`.\n"]
+    pub fn set_ipv6_allowed_for_dual_stack(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.ipv6_allowed_for_dual_stack = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         mut self,
@@ -1115,8 +1286,8 @@ impl SyntheticsCanaryVpcConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SyntheticsCanaryVpcConfigEl {
-    type O = terrars::BlockAssignable<SyntheticsCanaryVpcConfigEl>;
+impl terrars::ToListMappable for SyntheticsCanary_VpcConfig {
+    type O = terrars::BlockAssignable<SyntheticsCanary_VpcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1127,34 +1298,42 @@ impl terrars::ToListMappable for SyntheticsCanaryVpcConfigEl {
     }
 }
 
-pub struct BuildSyntheticsCanaryVpcConfigEl {}
+pub struct BuildSyntheticsCanary_VpcConfig {}
 
-impl BuildSyntheticsCanaryVpcConfigEl {
-    pub fn build(self) -> SyntheticsCanaryVpcConfigEl {
-        SyntheticsCanaryVpcConfigEl {
+impl BuildSyntheticsCanary_VpcConfig {
+    pub fn build(self) -> SyntheticsCanary_VpcConfig {
+        SyntheticsCanary_VpcConfig {
+            ipv6_allowed_for_dual_stack: core::default::Default::default(),
             security_group_ids: core::default::Default::default(),
             subnet_ids: core::default::Default::default(),
         }
     }
 }
 
-pub struct SyntheticsCanaryVpcConfigElRef {
+#[allow(dead_code)]
+pub struct SyntheticsCanary_VpcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SyntheticsCanaryVpcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanaryVpcConfigElRef {
-        SyntheticsCanaryVpcConfigElRef {
+impl terrars::Ref for SyntheticsCanary_VpcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SyntheticsCanary_VpcConfigRef {
+        SyntheticsCanary_VpcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SyntheticsCanaryVpcConfigElRef {
+impl SyntheticsCanary_VpcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_allowed_for_dual_stack` after provisioning.\n"]
+    pub fn ipv6_allowed_for_dual_stack(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_allowed_for_dual_stack", self.base))
     }
 
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
@@ -1171,12 +1350,4 @@ impl SyntheticsCanaryVpcConfigElRef {
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SyntheticsCanaryDynamic {
-    artifact_config: std::option::Option<terrars::DynamicBlock<SyntheticsCanaryArtifactConfigEl>>,
-    run_config: std::option::Option<terrars::DynamicBlock<SyntheticsCanaryRunConfigEl>>,
-    schedule: std::option::Option<terrars::DynamicBlock<SyntheticsCanaryScheduleEl>>,
-    vpc_config: std::option::Option<terrars::DynamicBlock<SyntheticsCanaryVpcConfigEl>>,
 }

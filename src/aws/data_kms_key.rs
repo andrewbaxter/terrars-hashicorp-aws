@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataKmsKeyData {
+struct DataKmsKeyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,12 +23,14 @@ struct DataKmsKeyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     key_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataKmsKey_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataKmsKeyData>,
+    data: std::cell::RefCell<DataKmsKeyData_>,
 }
 
 #[derive(Clone)]
@@ -86,6 +90,13 @@ impl DataKmsKey {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -96,9 +107,19 @@ impl DataKmsKey {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.aws_account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cloud_hsm_cluster_id` after provisioning.\n"]
+    pub fn cloud_hsm_cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloud_hsm_cluster_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `creation_date` after provisioning.\n"]
     pub fn creation_date(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_date", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_key_store_id` after provisioning.\n"]
+    pub fn custom_key_store_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_key_store_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `customer_master_key_spec` after provisioning.\n"]
@@ -146,6 +167,11 @@ impl DataKmsKey {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_manager", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `key_spec` after provisioning.\n"]
+    pub fn key_spec(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `key_state` after provisioning.\n"]
     pub fn key_state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_state", self.extract_ref()))
@@ -162,7 +188,7 @@ impl DataKmsKey {
     }
 
     #[doc = "Get a reference to the value of field `multi_region_configuration` after provisioning.\n"]
-    pub fn multi_region_configuration(&self) -> terrars::ListRef<DataKmsKeyMultiRegionConfigurationElRef> {
+    pub fn multi_region_configuration(&self) -> terrars::ListRef<DataKmsKey_MultiRegionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.multi_region_configuration", self.extract_ref()))
     }
 
@@ -171,9 +197,28 @@ impl DataKmsKey {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `pending_deletion_window_in_days` after provisioning.\n"]
+    pub fn pending_deletion_window_in_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.pending_deletion_window_in_days", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `valid_to` after provisioning.\n"]
     pub fn valid_to(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_to", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `xks_key_configuration` after provisioning.\n"]
+    pub fn xks_key_configuration(&self) -> terrars::ListRef<DataKmsKey_XksKeyConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.xks_key_configuration", self.extract_ref()))
     }
 }
 
@@ -219,7 +264,7 @@ impl BuildDataKmsKey {
         let out = DataKmsKey(std::rc::Rc::new(DataKmsKey_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataKmsKeyData {
+            data: std::cell::RefCell::new(DataKmsKeyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -227,6 +272,7 @@ impl BuildDataKmsKey {
                 grant_tokens: core::default::Default::default(),
                 id: core::default::Default::default(),
                 key_id: self.key_id,
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -267,9 +313,19 @@ impl DataKmsKeyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.aws_account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cloud_hsm_cluster_id` after provisioning.\n"]
+    pub fn cloud_hsm_cluster_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cloud_hsm_cluster_id", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `creation_date` after provisioning.\n"]
     pub fn creation_date(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_date", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_key_store_id` after provisioning.\n"]
+    pub fn custom_key_store_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_key_store_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `customer_master_key_spec` after provisioning.\n"]
@@ -317,6 +373,11 @@ impl DataKmsKeyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_manager", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `key_spec` after provisioning.\n"]
+    pub fn key_spec(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_spec", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `key_state` after provisioning.\n"]
     pub fn key_state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_state", self.extract_ref()))
@@ -333,7 +394,7 @@ impl DataKmsKeyRef {
     }
 
     #[doc = "Get a reference to the value of field `multi_region_configuration` after provisioning.\n"]
-    pub fn multi_region_configuration(&self) -> terrars::ListRef<DataKmsKeyMultiRegionConfigurationElRef> {
+    pub fn multi_region_configuration(&self) -> terrars::ListRef<DataKmsKey_MultiRegionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.multi_region_configuration", self.extract_ref()))
     }
 
@@ -342,21 +403,40 @@ impl DataKmsKeyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.origin", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `pending_deletion_window_in_days` after provisioning.\n"]
+    pub fn pending_deletion_window_in_days(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.pending_deletion_window_in_days", self.extract_ref()),
+        )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `valid_to` after provisioning.\n"]
     pub fn valid_to(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.valid_to", self.extract_ref()))
     }
+
+    #[doc = "Get a reference to the value of field `xks_key_configuration` after provisioning.\n"]
+    pub fn xks_key_configuration(&self) -> terrars::ListRef<DataKmsKey_XksKeyConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.xks_key_configuration", self.extract_ref()))
+    }
 }
 
 #[derive(Serialize)]
-pub struct DataKmsKeyMultiRegionConfigurationElPrimaryKeyEl {
+pub struct DataKmsKey_MultiRegionConfiguration_PrimaryKey {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataKmsKeyMultiRegionConfigurationElPrimaryKeyEl {
+impl DataKmsKey_MultiRegionConfiguration_PrimaryKey {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -370,8 +450,8 @@ impl DataKmsKeyMultiRegionConfigurationElPrimaryKeyEl {
     }
 }
 
-impl terrars::ToListMappable for DataKmsKeyMultiRegionConfigurationElPrimaryKeyEl {
-    type O = terrars::BlockAssignable<DataKmsKeyMultiRegionConfigurationElPrimaryKeyEl>;
+impl terrars::ToListMappable for DataKmsKey_MultiRegionConfiguration_PrimaryKey {
+    type O = terrars::BlockAssignable<DataKmsKey_MultiRegionConfiguration_PrimaryKey>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -382,35 +462,37 @@ impl terrars::ToListMappable for DataKmsKeyMultiRegionConfigurationElPrimaryKeyE
     }
 }
 
-pub struct BuildDataKmsKeyMultiRegionConfigurationElPrimaryKeyEl {}
+pub struct BuildDataKmsKey_MultiRegionConfiguration_PrimaryKey {}
 
-impl BuildDataKmsKeyMultiRegionConfigurationElPrimaryKeyEl {
-    pub fn build(self) -> DataKmsKeyMultiRegionConfigurationElPrimaryKeyEl {
-        DataKmsKeyMultiRegionConfigurationElPrimaryKeyEl {
+impl BuildDataKmsKey_MultiRegionConfiguration_PrimaryKey {
+    pub fn build(self) -> DataKmsKey_MultiRegionConfiguration_PrimaryKey {
+        DataKmsKey_MultiRegionConfiguration_PrimaryKey {
             arn: core::default::Default::default(),
             region: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataKmsKeyMultiRegionConfigurationElPrimaryKeyElRef {
+#[allow(dead_code)]
+pub struct DataKmsKey_MultiRegionConfiguration_PrimaryKeyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKmsKeyMultiRegionConfigurationElPrimaryKeyElRef {
+impl terrars::Ref for DataKmsKey_MultiRegionConfiguration_PrimaryKeyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataKmsKeyMultiRegionConfigurationElPrimaryKeyElRef {
-        DataKmsKeyMultiRegionConfigurationElPrimaryKeyElRef {
+    ) -> DataKmsKey_MultiRegionConfiguration_PrimaryKeyRef {
+        DataKmsKey_MultiRegionConfiguration_PrimaryKeyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKmsKeyMultiRegionConfigurationElPrimaryKeyElRef {
+impl DataKmsKey_MultiRegionConfiguration_PrimaryKeyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -427,14 +509,14 @@ impl DataKmsKeyMultiRegionConfigurationElPrimaryKeyElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataKmsKeyMultiRegionConfigurationElReplicaKeysEl {
+pub struct DataKmsKey_MultiRegionConfiguration_ReplicaKeys {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataKmsKeyMultiRegionConfigurationElReplicaKeysEl {
+impl DataKmsKey_MultiRegionConfiguration_ReplicaKeys {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -448,8 +530,8 @@ impl DataKmsKeyMultiRegionConfigurationElReplicaKeysEl {
     }
 }
 
-impl terrars::ToListMappable for DataKmsKeyMultiRegionConfigurationElReplicaKeysEl {
-    type O = terrars::BlockAssignable<DataKmsKeyMultiRegionConfigurationElReplicaKeysEl>;
+impl terrars::ToListMappable for DataKmsKey_MultiRegionConfiguration_ReplicaKeys {
+    type O = terrars::BlockAssignable<DataKmsKey_MultiRegionConfiguration_ReplicaKeys>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -460,35 +542,37 @@ impl terrars::ToListMappable for DataKmsKeyMultiRegionConfigurationElReplicaKeys
     }
 }
 
-pub struct BuildDataKmsKeyMultiRegionConfigurationElReplicaKeysEl {}
+pub struct BuildDataKmsKey_MultiRegionConfiguration_ReplicaKeys {}
 
-impl BuildDataKmsKeyMultiRegionConfigurationElReplicaKeysEl {
-    pub fn build(self) -> DataKmsKeyMultiRegionConfigurationElReplicaKeysEl {
-        DataKmsKeyMultiRegionConfigurationElReplicaKeysEl {
+impl BuildDataKmsKey_MultiRegionConfiguration_ReplicaKeys {
+    pub fn build(self) -> DataKmsKey_MultiRegionConfiguration_ReplicaKeys {
+        DataKmsKey_MultiRegionConfiguration_ReplicaKeys {
             arn: core::default::Default::default(),
             region: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataKmsKeyMultiRegionConfigurationElReplicaKeysElRef {
+#[allow(dead_code)]
+pub struct DataKmsKey_MultiRegionConfiguration_ReplicaKeysRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKmsKeyMultiRegionConfigurationElReplicaKeysElRef {
+impl terrars::Ref for DataKmsKey_MultiRegionConfiguration_ReplicaKeysRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataKmsKeyMultiRegionConfigurationElReplicaKeysElRef {
-        DataKmsKeyMultiRegionConfigurationElReplicaKeysElRef {
+    ) -> DataKmsKey_MultiRegionConfiguration_ReplicaKeysRef {
+        DataKmsKey_MultiRegionConfiguration_ReplicaKeysRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKmsKeyMultiRegionConfigurationElReplicaKeysElRef {
+impl DataKmsKey_MultiRegionConfiguration_ReplicaKeysRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -505,16 +589,16 @@ impl DataKmsKeyMultiRegionConfigurationElReplicaKeysElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataKmsKeyMultiRegionConfigurationEl {
+pub struct DataKmsKey_MultiRegionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     multi_region_key_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    primary_key: std::option::Option<terrars::ListField<DataKmsKeyMultiRegionConfigurationElPrimaryKeyEl>>,
+    primary_key: std::option::Option<terrars::ListField<DataKmsKey_MultiRegionConfiguration_PrimaryKey>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replica_keys: std::option::Option<terrars::ListField<DataKmsKeyMultiRegionConfigurationElReplicaKeysEl>>,
+    replica_keys: std::option::Option<terrars::ListField<DataKmsKey_MultiRegionConfiguration_ReplicaKeys>>,
 }
 
-impl DataKmsKeyMultiRegionConfigurationEl {
+impl DataKmsKey_MultiRegionConfiguration {
     #[doc = "Set the field `multi_region_key_type`.\n"]
     pub fn set_multi_region_key_type(
         mut self,
@@ -527,7 +611,7 @@ impl DataKmsKeyMultiRegionConfigurationEl {
     #[doc = "Set the field `primary_key`.\n"]
     pub fn set_primary_key(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataKmsKeyMultiRegionConfigurationElPrimaryKeyEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataKmsKey_MultiRegionConfiguration_PrimaryKey>>,
     ) -> Self {
         self.primary_key = std::option::Option::Some(v.into());
         self
@@ -536,15 +620,15 @@ impl DataKmsKeyMultiRegionConfigurationEl {
     #[doc = "Set the field `replica_keys`.\n"]
     pub fn set_replica_keys(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataKmsKeyMultiRegionConfigurationElReplicaKeysEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataKmsKey_MultiRegionConfiguration_ReplicaKeys>>,
     ) -> Self {
         self.replica_keys = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataKmsKeyMultiRegionConfigurationEl {
-    type O = terrars::BlockAssignable<DataKmsKeyMultiRegionConfigurationEl>;
+impl terrars::ToListMappable for DataKmsKey_MultiRegionConfiguration {
+    type O = terrars::BlockAssignable<DataKmsKey_MultiRegionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -555,11 +639,11 @@ impl terrars::ToListMappable for DataKmsKeyMultiRegionConfigurationEl {
     }
 }
 
-pub struct BuildDataKmsKeyMultiRegionConfigurationEl {}
+pub struct BuildDataKmsKey_MultiRegionConfiguration {}
 
-impl BuildDataKmsKeyMultiRegionConfigurationEl {
-    pub fn build(self) -> DataKmsKeyMultiRegionConfigurationEl {
-        DataKmsKeyMultiRegionConfigurationEl {
+impl BuildDataKmsKey_MultiRegionConfiguration {
+    pub fn build(self) -> DataKmsKey_MultiRegionConfiguration {
+        DataKmsKey_MultiRegionConfiguration {
             multi_region_key_type: core::default::Default::default(),
             primary_key: core::default::Default::default(),
             replica_keys: core::default::Default::default(),
@@ -567,21 +651,23 @@ impl BuildDataKmsKeyMultiRegionConfigurationEl {
     }
 }
 
-pub struct DataKmsKeyMultiRegionConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataKmsKey_MultiRegionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKmsKeyMultiRegionConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsKeyMultiRegionConfigurationElRef {
-        DataKmsKeyMultiRegionConfigurationElRef {
+impl terrars::Ref for DataKmsKey_MultiRegionConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsKey_MultiRegionConfigurationRef {
+        DataKmsKey_MultiRegionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKmsKeyMultiRegionConfigurationElRef {
+impl DataKmsKey_MultiRegionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -592,12 +678,73 @@ impl DataKmsKeyMultiRegionConfigurationElRef {
     }
 
     #[doc = "Get a reference to the value of field `primary_key` after provisioning.\n"]
-    pub fn primary_key(&self) -> terrars::ListRef<DataKmsKeyMultiRegionConfigurationElPrimaryKeyElRef> {
+    pub fn primary_key(&self) -> terrars::ListRef<DataKmsKey_MultiRegionConfiguration_PrimaryKeyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.primary_key", self.base))
     }
 
     #[doc = "Get a reference to the value of field `replica_keys` after provisioning.\n"]
-    pub fn replica_keys(&self) -> terrars::ListRef<DataKmsKeyMultiRegionConfigurationElReplicaKeysElRef> {
+    pub fn replica_keys(&self) -> terrars::ListRef<DataKmsKey_MultiRegionConfiguration_ReplicaKeysRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replica_keys", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataKmsKey_XksKeyConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataKmsKey_XksKeyConfiguration {
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataKmsKey_XksKeyConfiguration {
+    type O = terrars::BlockAssignable<DataKmsKey_XksKeyConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataKmsKey_XksKeyConfiguration {}
+
+impl BuildDataKmsKey_XksKeyConfiguration {
+    pub fn build(self) -> DataKmsKey_XksKeyConfiguration {
+        DataKmsKey_XksKeyConfiguration { id: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataKmsKey_XksKeyConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataKmsKey_XksKeyConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsKey_XksKeyConfigurationRef {
+        DataKmsKey_XksKeyConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataKmsKey_XksKeyConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
     }
 }

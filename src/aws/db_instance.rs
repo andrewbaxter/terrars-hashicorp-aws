@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbInstanceData {
+struct DbInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,6 +33,8 @@ struct DbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backup_retention_period: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    backup_target: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     backup_window: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ca_cert_identifier: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -43,9 +47,13 @@ struct DbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customer_owned_ip_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    database_insights_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     db_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     db_subnet_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dedicated_log_volume: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_automated_backups: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -53,11 +61,21 @@ struct DbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_auth_secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_dns_ips: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_fqdn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     domain_iam_role_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_ou: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled_cloudwatch_logs_exports: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    engine_lifecycle_support: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -80,6 +98,10 @@ struct DbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maintenance_window: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    manage_master_user_password: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    master_user_secret_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_allocated_storage: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     monitoring_interval: std::option::Option<terrars::PrimField<f64>>,
@@ -87,8 +109,6 @@ struct DbInstanceData {
     monitoring_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     multi_az: std::option::Option<terrars::PrimField<bool>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     nchar_character_set_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -100,6 +120,10 @@ struct DbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     password: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo_version: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     performance_insights_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     performance_insights_kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -110,11 +134,11 @@ struct DbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publicly_accessible: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replica_mode: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replicate_source_db: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    security_group_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skip_final_snapshot: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -132,24 +156,28 @@ struct DbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     timezone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    upgrade_storage_config: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     username: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    blue_green_update: std::option::Option<std::vec::Vec<DbInstanceBlueGreenUpdateEl>>,
+    warning_event_categories: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    restore_to_point_in_time: std::option::Option<std::vec::Vec<DbInstanceRestoreToPointInTimeEl>>,
+    blue_green_update: std::option::Option<std::vec::Vec<DbInstance_BlueGreenUpdate>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_import: std::option::Option<std::vec::Vec<DbInstanceS3ImportEl>>,
+    restore_to_point_in_time: std::option::Option<std::vec::Vec<DbInstance_RestoreToPointInTime>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DbInstanceTimeoutsEl>,
+    s3_import: std::option::Option<std::vec::Vec<DbInstance_S3Import>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DbInstance_Timeouts>,
     dynamic: DbInstanceDynamic,
 }
 
 struct DbInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbInstanceData>,
+    data: std::cell::RefCell<DbInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -285,6 +313,12 @@ impl DbInstance {
         self
     }
 
+    #[doc = "Set the field `backup_target`.\n"]
+    pub fn set_backup_target(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().backup_target = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `backup_window`.\n"]
     pub fn set_backup_window(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().backup_window = std::option::Option::Some(v.into());
@@ -324,6 +358,15 @@ impl DbInstance {
         self
     }
 
+    #[doc = "Set the field `database_insights_mode`.\n"]
+    pub fn set_database_insights_mode(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().database_insights_mode = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `db_name`.\n"]
     pub fn set_db_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().db_name = std::option::Option::Some(v.into());
@@ -333,6 +376,12 @@ impl DbInstance {
     #[doc = "Set the field `db_subnet_group_name`.\n"]
     pub fn set_db_subnet_group_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().db_subnet_group_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `dedicated_log_volume`.\n"]
+    pub fn set_dedicated_log_volume(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().dedicated_log_volume = std::option::Option::Some(v.into());
         self
     }
 
@@ -354,9 +403,39 @@ impl DbInstance {
         self
     }
 
+    #[doc = "Set the field `domain_auth_secret_arn`.\n"]
+    pub fn set_domain_auth_secret_arn(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().domain_auth_secret_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `domain_dns_ips`.\n"]
+    pub fn set_domain_dns_ips(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().domain_dns_ips = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `domain_fqdn`.\n"]
+    pub fn set_domain_fqdn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().domain_fqdn = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `domain_iam_role_name`.\n"]
     pub fn set_domain_iam_role_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().domain_iam_role_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `domain_ou`.\n"]
+    pub fn set_domain_ou(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().domain_ou = std::option::Option::Some(v.into());
         self
     }
 
@@ -372,6 +451,15 @@ impl DbInstance {
     #[doc = "Set the field `engine`.\n"]
     pub fn set_engine(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().engine = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `engine_lifecycle_support`.\n"]
+    pub fn set_engine_lifecycle_support(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().engine_lifecycle_support = std::option::Option::Some(v.into());
         self
     }
 
@@ -438,6 +526,21 @@ impl DbInstance {
         self
     }
 
+    #[doc = "Set the field `manage_master_user_password`.\n"]
+    pub fn set_manage_master_user_password(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().manage_master_user_password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `master_user_secret_kms_key_id`.\n"]
+    pub fn set_master_user_secret_kms_key_id(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().master_user_secret_kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `max_allocated_storage`.\n"]
     pub fn set_max_allocated_storage(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().max_allocated_storage = std::option::Option::Some(v.into());
@@ -459,12 +562,6 @@ impl DbInstance {
     #[doc = "Set the field `multi_az`.\n"]
     pub fn set_multi_az(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().multi_az = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `name`.\n"]
-    pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
         self
     }
 
@@ -501,6 +598,18 @@ impl DbInstance {
         self
     }
 
+    #[doc = "Set the field `password_wo`.\n"]
+    pub fn set_password_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().password_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `password_wo_version`.\n"]
+    pub fn set_password_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().password_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `performance_insights_enabled`.\n"]
     pub fn set_performance_insights_enabled(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().performance_insights_enabled = std::option::Option::Some(v.into());
@@ -534,6 +643,13 @@ impl DbInstance {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `replica_mode`.\n"]
     pub fn set_replica_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().replica_mode = std::option::Option::Some(v.into());
@@ -543,15 +659,6 @@ impl DbInstance {
     #[doc = "Set the field `replicate_source_db`.\n"]
     pub fn set_replicate_source_db(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().replicate_source_db = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `security_group_names`.\n"]
-    pub fn set_security_group_names(
-        self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.0.data.borrow_mut().security_group_names = std::option::Option::Some(v.into());
         self
     }
 
@@ -609,6 +716,12 @@ impl DbInstance {
         self
     }
 
+    #[doc = "Set the field `upgrade_storage_config`.\n"]
+    pub fn set_upgrade_storage_config(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().upgrade_storage_config = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `username`.\n"]
     pub fn set_username(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().username = std::option::Option::Some(v.into());
@@ -624,10 +737,19 @@ impl DbInstance {
         self
     }
 
+    #[doc = "Set the field `warning_event_categories`.\n"]
+    pub fn set_warning_event_categories(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().warning_event_categories = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `blue_green_update`.\n"]
     pub fn set_blue_green_update(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DbInstanceBlueGreenUpdateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DbInstance_BlueGreenUpdate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -643,7 +765,7 @@ impl DbInstance {
     #[doc = "Set the field `restore_to_point_in_time`.\n"]
     pub fn set_restore_to_point_in_time(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DbInstanceRestoreToPointInTimeEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DbInstance_RestoreToPointInTime>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -657,7 +779,7 @@ impl DbInstance {
     }
 
     #[doc = "Set the field `s3_import`.\n"]
-    pub fn set_s3_import(self, v: impl std::convert::Into<terrars::BlockAssignable<DbInstanceS3ImportEl>>) -> Self {
+    pub fn set_s3_import(self, v: impl std::convert::Into<terrars::BlockAssignable<DbInstance_S3Import>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().s3_import = std::option::Option::Some(v);
@@ -670,7 +792,7 @@ impl DbInstance {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DbInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DbInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -715,6 +837,11 @@ impl DbInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_retention_period", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `backup_target` after provisioning.\n"]
+    pub fn backup_target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `backup_window` after provisioning.\n"]
     pub fn backup_window(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_window", self.extract_ref()))
@@ -745,6 +872,11 @@ impl DbInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_owned_ip_enabled", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `database_insights_mode` after provisioning.\n"]
+    pub fn database_insights_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_insights_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `db_name` after provisioning.\n"]
     pub fn db_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_name", self.extract_ref()))
@@ -753,6 +885,11 @@ impl DbInstance {
     #[doc = "Get a reference to the value of field `db_subnet_group_name` after provisioning.\n"]
     pub fn db_subnet_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_subnet_group_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dedicated_log_volume` after provisioning.\n"]
+    pub fn dedicated_log_volume(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dedicated_log_volume", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `delete_automated_backups` after provisioning.\n"]
@@ -770,9 +907,29 @@ impl DbInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `domain_auth_secret_arn` after provisioning.\n"]
+    pub fn domain_auth_secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_auth_secret_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_dns_ips` after provisioning.\n"]
+    pub fn domain_dns_ips(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.domain_dns_ips", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_fqdn` after provisioning.\n"]
+    pub fn domain_fqdn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_fqdn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `domain_iam_role_name` after provisioning.\n"]
     pub fn domain_iam_role_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_iam_role_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_ou` after provisioning.\n"]
+    pub fn domain_ou(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_ou", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enabled_cloudwatch_logs_exports` after provisioning.\n"]
@@ -791,6 +948,11 @@ impl DbInstance {
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
     pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine_lifecycle_support` after provisioning.\n"]
+    pub fn engine_lifecycle_support(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_lifecycle_support", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
@@ -861,9 +1023,32 @@ impl DbInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_model", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `listener_endpoint` after provisioning.\n"]
+    pub fn listener_endpoint(&self) -> terrars::ListRef<DbInstance_ListenerEndpointRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.listener_endpoint", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
     pub fn maintenance_window(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_window", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `manage_master_user_password` after provisioning.\n"]
+    pub fn manage_master_user_password(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_master_user_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_user_secret` after provisioning.\n"]
+    pub fn master_user_secret(&self) -> terrars::ListRef<DbInstance_MasterUserSecretRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_user_secret", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_user_secret_kms_key_id` after provisioning.\n"]
+    pub fn master_user_secret_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.master_user_secret_kms_key_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `max_allocated_storage` after provisioning.\n"]
@@ -884,11 +1069,6 @@ impl DbInstance {
     #[doc = "Get a reference to the value of field `multi_az` after provisioning.\n"]
     pub fn multi_az(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.multi_az", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `nchar_character_set_name` after provisioning.\n"]
@@ -914,6 +1094,16 @@ impl DbInstance {
     #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
     pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `password_wo` after provisioning.\n"]
+    pub fn password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `password_wo_version` after provisioning.\n"]
+    pub fn password_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `performance_insights_enabled` after provisioning.\n"]
@@ -947,6 +1137,12 @@ impl DbInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `replica_mode` after provisioning.\n"]
     pub fn replica_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replica_mode", self.extract_ref()))
@@ -965,11 +1161,6 @@ impl DbInstance {
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
     pub fn resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `security_group_names` after provisioning.\n"]
-    pub fn security_group_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_names", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `skip_final_snapshot` after provisioning.\n"]
@@ -1017,6 +1208,16 @@ impl DbInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.timezone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `upgrade_rollout_order` after provisioning.\n"]
+    pub fn upgrade_rollout_order(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upgrade_rollout_order", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `upgrade_storage_config` after provisioning.\n"]
+    pub fn upgrade_storage_config(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upgrade_storage_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `username` after provisioning.\n"]
     pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
@@ -1027,24 +1228,29 @@ impl DbInstance {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `warning_event_categories` after provisioning.\n"]
+    pub fn warning_event_categories(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.warning_event_categories", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `blue_green_update` after provisioning.\n"]
-    pub fn blue_green_update(&self) -> terrars::ListRef<DbInstanceBlueGreenUpdateElRef> {
+    pub fn blue_green_update(&self) -> terrars::ListRef<DbInstance_BlueGreenUpdateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.blue_green_update", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `restore_to_point_in_time` after provisioning.\n"]
-    pub fn restore_to_point_in_time(&self) -> terrars::ListRef<DbInstanceRestoreToPointInTimeElRef> {
+    pub fn restore_to_point_in_time(&self) -> terrars::ListRef<DbInstance_RestoreToPointInTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_to_point_in_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_import` after provisioning.\n"]
-    pub fn s3_import(&self) -> terrars::ListRef<DbInstanceS3ImportElRef> {
+    pub fn s3_import(&self) -> terrars::ListRef<DbInstance_S3ImportRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_import", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbInstanceTimeoutsElRef {
-        DbInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbInstance_TimeoutsRef {
+        DbInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -1090,7 +1296,7 @@ impl BuildDbInstance {
         let out = DbInstance(std::rc::Rc::new(DbInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbInstanceData {
+            data: std::cell::RefCell::new(DbInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -1102,20 +1308,28 @@ impl BuildDbInstance {
                 auto_minor_version_upgrade: core::default::Default::default(),
                 availability_zone: core::default::Default::default(),
                 backup_retention_period: core::default::Default::default(),
+                backup_target: core::default::Default::default(),
                 backup_window: core::default::Default::default(),
                 ca_cert_identifier: core::default::Default::default(),
                 character_set_name: core::default::Default::default(),
                 copy_tags_to_snapshot: core::default::Default::default(),
                 custom_iam_instance_profile: core::default::Default::default(),
                 customer_owned_ip_enabled: core::default::Default::default(),
+                database_insights_mode: core::default::Default::default(),
                 db_name: core::default::Default::default(),
                 db_subnet_group_name: core::default::Default::default(),
+                dedicated_log_volume: core::default::Default::default(),
                 delete_automated_backups: core::default::Default::default(),
                 deletion_protection: core::default::Default::default(),
                 domain: core::default::Default::default(),
+                domain_auth_secret_arn: core::default::Default::default(),
+                domain_dns_ips: core::default::Default::default(),
+                domain_fqdn: core::default::Default::default(),
                 domain_iam_role_name: core::default::Default::default(),
+                domain_ou: core::default::Default::default(),
                 enabled_cloudwatch_logs_exports: core::default::Default::default(),
                 engine: core::default::Default::default(),
+                engine_lifecycle_support: core::default::Default::default(),
                 engine_version: core::default::Default::default(),
                 final_snapshot_identifier: core::default::Default::default(),
                 iam_database_authentication_enabled: core::default::Default::default(),
@@ -1127,24 +1341,27 @@ impl BuildDbInstance {
                 kms_key_id: core::default::Default::default(),
                 license_model: core::default::Default::default(),
                 maintenance_window: core::default::Default::default(),
+                manage_master_user_password: core::default::Default::default(),
+                master_user_secret_kms_key_id: core::default::Default::default(),
                 max_allocated_storage: core::default::Default::default(),
                 monitoring_interval: core::default::Default::default(),
                 monitoring_role_arn: core::default::Default::default(),
                 multi_az: core::default::Default::default(),
-                name: core::default::Default::default(),
                 nchar_character_set_name: core::default::Default::default(),
                 network_type: core::default::Default::default(),
                 option_group_name: core::default::Default::default(),
                 parameter_group_name: core::default::Default::default(),
                 password: core::default::Default::default(),
+                password_wo: core::default::Default::default(),
+                password_wo_version: core::default::Default::default(),
                 performance_insights_enabled: core::default::Default::default(),
                 performance_insights_kms_key_id: core::default::Default::default(),
                 performance_insights_retention_period: core::default::Default::default(),
                 port: core::default::Default::default(),
                 publicly_accessible: core::default::Default::default(),
+                region: core::default::Default::default(),
                 replica_mode: core::default::Default::default(),
                 replicate_source_db: core::default::Default::default(),
-                security_group_names: core::default::Default::default(),
                 skip_final_snapshot: core::default::Default::default(),
                 snapshot_identifier: core::default::Default::default(),
                 storage_encrypted: core::default::Default::default(),
@@ -1153,8 +1370,10 @@ impl BuildDbInstance {
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 timezone: core::default::Default::default(),
+                upgrade_storage_config: core::default::Default::default(),
                 username: core::default::Default::default(),
                 vpc_security_group_ids: core::default::Default::default(),
+                warning_event_categories: core::default::Default::default(),
                 blue_green_update: core::default::Default::default(),
                 restore_to_point_in_time: core::default::Default::default(),
                 s3_import: core::default::Default::default(),
@@ -1230,6 +1449,11 @@ impl DbInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_retention_period", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `backup_target` after provisioning.\n"]
+    pub fn backup_target(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_target", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `backup_window` after provisioning.\n"]
     pub fn backup_window(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.backup_window", self.extract_ref()))
@@ -1260,6 +1484,11 @@ impl DbInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_owned_ip_enabled", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `database_insights_mode` after provisioning.\n"]
+    pub fn database_insights_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.database_insights_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `db_name` after provisioning.\n"]
     pub fn db_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_name", self.extract_ref()))
@@ -1268,6 +1497,11 @@ impl DbInstanceRef {
     #[doc = "Get a reference to the value of field `db_subnet_group_name` after provisioning.\n"]
     pub fn db_subnet_group_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.db_subnet_group_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `dedicated_log_volume` after provisioning.\n"]
+    pub fn dedicated_log_volume(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dedicated_log_volume", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `delete_automated_backups` after provisioning.\n"]
@@ -1285,9 +1519,29 @@ impl DbInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `domain_auth_secret_arn` after provisioning.\n"]
+    pub fn domain_auth_secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_auth_secret_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_dns_ips` after provisioning.\n"]
+    pub fn domain_dns_ips(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.domain_dns_ips", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_fqdn` after provisioning.\n"]
+    pub fn domain_fqdn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_fqdn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `domain_iam_role_name` after provisioning.\n"]
     pub fn domain_iam_role_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_iam_role_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_ou` after provisioning.\n"]
+    pub fn domain_ou(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_ou", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `enabled_cloudwatch_logs_exports` after provisioning.\n"]
@@ -1306,6 +1560,11 @@ impl DbInstanceRef {
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
     pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine_lifecycle_support` after provisioning.\n"]
+    pub fn engine_lifecycle_support(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_lifecycle_support", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
@@ -1376,9 +1635,32 @@ impl DbInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_model", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `listener_endpoint` after provisioning.\n"]
+    pub fn listener_endpoint(&self) -> terrars::ListRef<DbInstance_ListenerEndpointRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.listener_endpoint", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `maintenance_window` after provisioning.\n"]
     pub fn maintenance_window(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.maintenance_window", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `manage_master_user_password` after provisioning.\n"]
+    pub fn manage_master_user_password(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_master_user_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_user_secret` after provisioning.\n"]
+    pub fn master_user_secret(&self) -> terrars::ListRef<DbInstance_MasterUserSecretRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.master_user_secret", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `master_user_secret_kms_key_id` after provisioning.\n"]
+    pub fn master_user_secret_kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.master_user_secret_kms_key_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `max_allocated_storage` after provisioning.\n"]
@@ -1399,11 +1681,6 @@ impl DbInstanceRef {
     #[doc = "Get a reference to the value of field `multi_az` after provisioning.\n"]
     pub fn multi_az(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.multi_az", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
-    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `nchar_character_set_name` after provisioning.\n"]
@@ -1429,6 +1706,16 @@ impl DbInstanceRef {
     #[doc = "Get a reference to the value of field `password` after provisioning.\n"]
     pub fn password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `password_wo` after provisioning.\n"]
+    pub fn password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `password_wo_version` after provisioning.\n"]
+    pub fn password_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `performance_insights_enabled` after provisioning.\n"]
@@ -1462,6 +1749,12 @@ impl DbInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `replica_mode` after provisioning.\n"]
     pub fn replica_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.replica_mode", self.extract_ref()))
@@ -1480,11 +1773,6 @@ impl DbInstanceRef {
     #[doc = "Get a reference to the value of field `resource_id` after provisioning.\n"]
     pub fn resource_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_id", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `security_group_names` after provisioning.\n"]
-    pub fn security_group_names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_names", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `skip_final_snapshot` after provisioning.\n"]
@@ -1532,6 +1820,16 @@ impl DbInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.timezone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `upgrade_rollout_order` after provisioning.\n"]
+    pub fn upgrade_rollout_order(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upgrade_rollout_order", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `upgrade_storage_config` after provisioning.\n"]
+    pub fn upgrade_storage_config(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.upgrade_storage_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `username` after provisioning.\n"]
     pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.extract_ref()))
@@ -1542,43 +1840,71 @@ impl DbInstanceRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `warning_event_categories` after provisioning.\n"]
+    pub fn warning_event_categories(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.warning_event_categories", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `blue_green_update` after provisioning.\n"]
-    pub fn blue_green_update(&self) -> terrars::ListRef<DbInstanceBlueGreenUpdateElRef> {
+    pub fn blue_green_update(&self) -> terrars::ListRef<DbInstance_BlueGreenUpdateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.blue_green_update", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `restore_to_point_in_time` after provisioning.\n"]
-    pub fn restore_to_point_in_time(&self) -> terrars::ListRef<DbInstanceRestoreToPointInTimeElRef> {
+    pub fn restore_to_point_in_time(&self) -> terrars::ListRef<DbInstance_RestoreToPointInTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.restore_to_point_in_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `s3_import` after provisioning.\n"]
-    pub fn s3_import(&self) -> terrars::ListRef<DbInstanceS3ImportElRef> {
+    pub fn s3_import(&self) -> terrars::ListRef<DbInstance_S3ImportRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_import", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbInstanceTimeoutsElRef {
-        DbInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbInstance_TimeoutsRef {
+        DbInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DbInstanceBlueGreenUpdateEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    enabled: std::option::Option<terrars::PrimField<bool>>,
+#[derive(Serialize, Default)]
+struct DbInstanceDynamic {
+    blue_green_update: std::option::Option<terrars::DynamicBlock<DbInstance_BlueGreenUpdate>>,
+    restore_to_point_in_time: std::option::Option<terrars::DynamicBlock<DbInstance_RestoreToPointInTime>>,
+    s3_import: std::option::Option<terrars::DynamicBlock<DbInstance_S3Import>>,
 }
 
-impl DbInstanceBlueGreenUpdateEl {
-    #[doc = "Set the field `enabled`.\n"]
-    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.enabled = std::option::Option::Some(v.into());
+#[derive(Serialize)]
+pub struct DbInstance_ListenerEndpoint {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    address: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    hosted_zone_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    port: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl DbInstance_ListenerEndpoint {
+    #[doc = "Set the field `address`.\n"]
+    pub fn set_address(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.address = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `hosted_zone_id`.\n"]
+    pub fn set_hosted_zone_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.hosted_zone_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `port`.\n"]
+    pub fn set_port(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.port = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DbInstanceBlueGreenUpdateEl {
-    type O = terrars::BlockAssignable<DbInstanceBlueGreenUpdateEl>;
+impl terrars::ToListMappable for DbInstance_ListenerEndpoint {
+    type O = terrars::BlockAssignable<DbInstance_ListenerEndpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1589,29 +1915,197 @@ impl terrars::ToListMappable for DbInstanceBlueGreenUpdateEl {
     }
 }
 
-pub struct BuildDbInstanceBlueGreenUpdateEl {}
+pub struct BuildDbInstance_ListenerEndpoint {}
 
-impl BuildDbInstanceBlueGreenUpdateEl {
-    pub fn build(self) -> DbInstanceBlueGreenUpdateEl {
-        DbInstanceBlueGreenUpdateEl { enabled: core::default::Default::default() }
+impl BuildDbInstance_ListenerEndpoint {
+    pub fn build(self) -> DbInstance_ListenerEndpoint {
+        DbInstance_ListenerEndpoint {
+            address: core::default::Default::default(),
+            hosted_zone_id: core::default::Default::default(),
+            port: core::default::Default::default(),
+        }
     }
 }
 
-pub struct DbInstanceBlueGreenUpdateElRef {
+#[allow(dead_code)]
+pub struct DbInstance_ListenerEndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbInstanceBlueGreenUpdateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstanceBlueGreenUpdateElRef {
-        DbInstanceBlueGreenUpdateElRef {
+impl terrars::Ref for DbInstance_ListenerEndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstance_ListenerEndpointRef {
+        DbInstance_ListenerEndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbInstanceBlueGreenUpdateElRef {
+impl DbInstance_ListenerEndpointRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `address` after provisioning.\n"]
+    pub fn address(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.address", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `hosted_zone_id` after provisioning.\n"]
+    pub fn hosted_zone_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hosted_zone_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
+    pub fn port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DbInstance_MasterUserSecret {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_status: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DbInstance_MasterUserSecret {
+    #[doc = "Set the field `kms_key_id`.\n"]
+    pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_arn`.\n"]
+    pub fn set_secret_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_status`.\n"]
+    pub fn set_secret_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.secret_status = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DbInstance_MasterUserSecret {
+    type O = terrars::BlockAssignable<DbInstance_MasterUserSecret>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDbInstance_MasterUserSecret {}
+
+impl BuildDbInstance_MasterUserSecret {
+    pub fn build(self) -> DbInstance_MasterUserSecret {
+        DbInstance_MasterUserSecret {
+            kms_key_id: core::default::Default::default(),
+            secret_arn: core::default::Default::default(),
+            secret_status: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DbInstance_MasterUserSecretRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DbInstance_MasterUserSecretRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstance_MasterUserSecretRef {
+        DbInstance_MasterUserSecretRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DbInstance_MasterUserSecretRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `kms_key_id` after provisioning.\n"]
+    pub fn kms_key_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
+    pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_status` after provisioning.\n"]
+    pub fn secret_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_status", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DbInstance_BlueGreenUpdate {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DbInstance_BlueGreenUpdate {
+    #[doc = "Set the field `enabled`.\n"]
+    pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DbInstance_BlueGreenUpdate {
+    type O = terrars::BlockAssignable<DbInstance_BlueGreenUpdate>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDbInstance_BlueGreenUpdate {}
+
+impl BuildDbInstance_BlueGreenUpdate {
+    pub fn build(self) -> DbInstance_BlueGreenUpdate {
+        DbInstance_BlueGreenUpdate { enabled: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DbInstance_BlueGreenUpdateRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DbInstance_BlueGreenUpdateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstance_BlueGreenUpdateRef {
+        DbInstance_BlueGreenUpdateRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DbInstance_BlueGreenUpdateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1623,7 +2117,7 @@ impl DbInstanceBlueGreenUpdateElRef {
 }
 
 #[derive(Serialize)]
-pub struct DbInstanceRestoreToPointInTimeEl {
+pub struct DbInstance_RestoreToPointInTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     restore_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1636,7 +2130,7 @@ pub struct DbInstanceRestoreToPointInTimeEl {
     use_latest_restorable_time: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DbInstanceRestoreToPointInTimeEl {
+impl DbInstance_RestoreToPointInTime {
     #[doc = "Set the field `restore_time`.\n"]
     pub fn set_restore_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.restore_time = std::option::Option::Some(v.into());
@@ -1677,8 +2171,8 @@ impl DbInstanceRestoreToPointInTimeEl {
     }
 }
 
-impl terrars::ToListMappable for DbInstanceRestoreToPointInTimeEl {
-    type O = terrars::BlockAssignable<DbInstanceRestoreToPointInTimeEl>;
+impl terrars::ToListMappable for DbInstance_RestoreToPointInTime {
+    type O = terrars::BlockAssignable<DbInstance_RestoreToPointInTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1689,11 +2183,11 @@ impl terrars::ToListMappable for DbInstanceRestoreToPointInTimeEl {
     }
 }
 
-pub struct BuildDbInstanceRestoreToPointInTimeEl {}
+pub struct BuildDbInstance_RestoreToPointInTime {}
 
-impl BuildDbInstanceRestoreToPointInTimeEl {
-    pub fn build(self) -> DbInstanceRestoreToPointInTimeEl {
-        DbInstanceRestoreToPointInTimeEl {
+impl BuildDbInstance_RestoreToPointInTime {
+    pub fn build(self) -> DbInstance_RestoreToPointInTime {
+        DbInstance_RestoreToPointInTime {
             restore_time: core::default::Default::default(),
             source_db_instance_automated_backups_arn: core::default::Default::default(),
             source_db_instance_identifier: core::default::Default::default(),
@@ -1703,21 +2197,23 @@ impl BuildDbInstanceRestoreToPointInTimeEl {
     }
 }
 
-pub struct DbInstanceRestoreToPointInTimeElRef {
+#[allow(dead_code)]
+pub struct DbInstance_RestoreToPointInTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbInstanceRestoreToPointInTimeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstanceRestoreToPointInTimeElRef {
-        DbInstanceRestoreToPointInTimeElRef {
+impl terrars::Ref for DbInstance_RestoreToPointInTimeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstance_RestoreToPointInTimeRef {
+        DbInstance_RestoreToPointInTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbInstanceRestoreToPointInTimeElRef {
+impl DbInstance_RestoreToPointInTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1752,7 +2248,7 @@ impl DbInstanceRestoreToPointInTimeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DbInstanceS3ImportEl {
+pub struct DbInstance_S3Import {
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -1761,7 +2257,7 @@ pub struct DbInstanceS3ImportEl {
     source_engine_version: terrars::PrimField<std::string::String>,
 }
 
-impl DbInstanceS3ImportEl {
+impl DbInstance_S3Import {
     #[doc = "Set the field `bucket_prefix`.\n"]
     pub fn set_bucket_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket_prefix = std::option::Option::Some(v.into());
@@ -1769,8 +2265,8 @@ impl DbInstanceS3ImportEl {
     }
 }
 
-impl terrars::ToListMappable for DbInstanceS3ImportEl {
-    type O = terrars::BlockAssignable<DbInstanceS3ImportEl>;
+impl terrars::ToListMappable for DbInstance_S3Import {
+    type O = terrars::BlockAssignable<DbInstance_S3Import>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1781,7 +2277,7 @@ impl terrars::ToListMappable for DbInstanceS3ImportEl {
     }
 }
 
-pub struct BuildDbInstanceS3ImportEl {
+pub struct BuildDbInstance_S3Import {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -1792,9 +2288,9 @@ pub struct BuildDbInstanceS3ImportEl {
     pub source_engine_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDbInstanceS3ImportEl {
-    pub fn build(self) -> DbInstanceS3ImportEl {
-        DbInstanceS3ImportEl {
+impl BuildDbInstance_S3Import {
+    pub fn build(self) -> DbInstance_S3Import {
+        DbInstance_S3Import {
             bucket_name: self.bucket_name,
             bucket_prefix: core::default::Default::default(),
             ingestion_role: self.ingestion_role,
@@ -1804,21 +2300,23 @@ impl BuildDbInstanceS3ImportEl {
     }
 }
 
-pub struct DbInstanceS3ImportElRef {
+#[allow(dead_code)]
+pub struct DbInstance_S3ImportRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbInstanceS3ImportElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstanceS3ImportElRef {
-        DbInstanceS3ImportElRef {
+impl terrars::Ref for DbInstance_S3ImportRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstance_S3ImportRef {
+        DbInstance_S3ImportRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbInstanceS3ImportElRef {
+impl DbInstance_S3ImportRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1850,7 +2348,7 @@ impl DbInstanceS3ImportElRef {
 }
 
 #[derive(Serialize)]
-pub struct DbInstanceTimeoutsEl {
+pub struct DbInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1859,7 +2357,7 @@ pub struct DbInstanceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DbInstanceTimeoutsEl {
+impl DbInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1879,8 +2377,8 @@ impl DbInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DbInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<DbInstanceTimeoutsEl>;
+impl terrars::ToListMappable for DbInstance_Timeouts {
+    type O = terrars::BlockAssignable<DbInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1891,11 +2389,11 @@ impl terrars::ToListMappable for DbInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildDbInstanceTimeoutsEl {}
+pub struct BuildDbInstance_Timeouts {}
 
-impl BuildDbInstanceTimeoutsEl {
-    pub fn build(self) -> DbInstanceTimeoutsEl {
-        DbInstanceTimeoutsEl {
+impl BuildDbInstance_Timeouts {
+    pub fn build(self) -> DbInstance_Timeouts {
+        DbInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1903,21 +2401,23 @@ impl BuildDbInstanceTimeoutsEl {
     }
 }
 
-pub struct DbInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DbInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstanceTimeoutsElRef {
-        DbInstanceTimeoutsElRef {
+impl terrars::Ref for DbInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbInstance_TimeoutsRef {
+        DbInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbInstanceTimeoutsElRef {
+impl DbInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1936,11 +2436,4 @@ impl DbInstanceTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DbInstanceDynamic {
-    blue_green_update: std::option::Option<terrars::DynamicBlock<DbInstanceBlueGreenUpdateEl>>,
-    restore_to_point_in_time: std::option::Option<terrars::DynamicBlock<DbInstanceRestoreToPointInTimeEl>>,
-    s3_import: std::option::Option<terrars::DynamicBlock<DbInstanceS3ImportEl>>,
 }

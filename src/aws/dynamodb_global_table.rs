@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DynamodbGlobalTableData {
+struct DynamodbGlobalTableData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,16 +24,18 @@ struct DynamodbGlobalTableData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replica: std::option::Option<std::vec::Vec<DynamodbGlobalTableReplicaEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DynamodbGlobalTableTimeoutsEl>,
+    replica: std::option::Option<std::vec::Vec<DynamodbGlobalTable_Replica>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DynamodbGlobalTable_Timeouts>,
     dynamic: DynamodbGlobalTableDynamic,
 }
 
 struct DynamodbGlobalTable_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DynamodbGlobalTableData>,
+    data: std::cell::RefCell<DynamodbGlobalTableData_>,
 }
 
 #[derive(Clone)]
@@ -137,11 +141,15 @@ impl DynamodbGlobalTable {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `replica`.\n"]
-    pub fn set_replica(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DynamodbGlobalTableReplicaEl>>,
-    ) -> Self {
+    pub fn set_replica(self, v: impl std::convert::Into<terrars::BlockAssignable<DynamodbGlobalTable_Replica>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().replica = std::option::Option::Some(v);
@@ -154,7 +162,7 @@ impl DynamodbGlobalTable {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DynamodbGlobalTableTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DynamodbGlobalTable_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -174,9 +182,15 @@ impl DynamodbGlobalTable {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DynamodbGlobalTableTimeoutsElRef {
-        DynamodbGlobalTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DynamodbGlobalTable_TimeoutsRef {
+        DynamodbGlobalTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -222,7 +236,7 @@ impl BuildDynamodbGlobalTable {
         let out = DynamodbGlobalTable(std::rc::Rc::new(DynamodbGlobalTable_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DynamodbGlobalTableData {
+            data: std::cell::RefCell::new(DynamodbGlobalTableData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -230,6 +244,7 @@ impl BuildDynamodbGlobalTable {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 replica: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -278,21 +293,32 @@ impl DynamodbGlobalTableRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DynamodbGlobalTableTimeoutsElRef {
-        DynamodbGlobalTableTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DynamodbGlobalTable_TimeoutsRef {
+        DynamodbGlobalTable_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DynamodbGlobalTableDynamic {
+    replica: std::option::Option<terrars::DynamicBlock<DynamodbGlobalTable_Replica>>,
+}
+
 #[derive(Serialize)]
-pub struct DynamodbGlobalTableReplicaEl {
+pub struct DynamodbGlobalTable_Replica {
     region_name: terrars::PrimField<std::string::String>,
 }
 
-impl DynamodbGlobalTableReplicaEl { }
+impl DynamodbGlobalTable_Replica { }
 
-impl terrars::ToListMappable for DynamodbGlobalTableReplicaEl {
-    type O = terrars::BlockAssignable<DynamodbGlobalTableReplicaEl>;
+impl terrars::ToListMappable for DynamodbGlobalTable_Replica {
+    type O = terrars::BlockAssignable<DynamodbGlobalTable_Replica>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -303,32 +329,34 @@ impl terrars::ToListMappable for DynamodbGlobalTableReplicaEl {
     }
 }
 
-pub struct BuildDynamodbGlobalTableReplicaEl {
+pub struct BuildDynamodbGlobalTable_Replica {
     #[doc = ""]
     pub region_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDynamodbGlobalTableReplicaEl {
-    pub fn build(self) -> DynamodbGlobalTableReplicaEl {
-        DynamodbGlobalTableReplicaEl { region_name: self.region_name }
+impl BuildDynamodbGlobalTable_Replica {
+    pub fn build(self) -> DynamodbGlobalTable_Replica {
+        DynamodbGlobalTable_Replica { region_name: self.region_name }
     }
 }
 
-pub struct DynamodbGlobalTableReplicaElRef {
+#[allow(dead_code)]
+pub struct DynamodbGlobalTable_ReplicaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DynamodbGlobalTableReplicaElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DynamodbGlobalTableReplicaElRef {
-        DynamodbGlobalTableReplicaElRef {
+impl terrars::Ref for DynamodbGlobalTable_ReplicaRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DynamodbGlobalTable_ReplicaRef {
+        DynamodbGlobalTable_ReplicaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DynamodbGlobalTableReplicaElRef {
+impl DynamodbGlobalTable_ReplicaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -340,7 +368,7 @@ impl DynamodbGlobalTableReplicaElRef {
 }
 
 #[derive(Serialize)]
-pub struct DynamodbGlobalTableTimeoutsEl {
+pub struct DynamodbGlobalTable_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -349,7 +377,7 @@ pub struct DynamodbGlobalTableTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DynamodbGlobalTableTimeoutsEl {
+impl DynamodbGlobalTable_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -369,8 +397,8 @@ impl DynamodbGlobalTableTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DynamodbGlobalTableTimeoutsEl {
-    type O = terrars::BlockAssignable<DynamodbGlobalTableTimeoutsEl>;
+impl terrars::ToListMappable for DynamodbGlobalTable_Timeouts {
+    type O = terrars::BlockAssignable<DynamodbGlobalTable_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,11 +409,11 @@ impl terrars::ToListMappable for DynamodbGlobalTableTimeoutsEl {
     }
 }
 
-pub struct BuildDynamodbGlobalTableTimeoutsEl {}
+pub struct BuildDynamodbGlobalTable_Timeouts {}
 
-impl BuildDynamodbGlobalTableTimeoutsEl {
-    pub fn build(self) -> DynamodbGlobalTableTimeoutsEl {
-        DynamodbGlobalTableTimeoutsEl {
+impl BuildDynamodbGlobalTable_Timeouts {
+    pub fn build(self) -> DynamodbGlobalTable_Timeouts {
+        DynamodbGlobalTable_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -393,21 +421,23 @@ impl BuildDynamodbGlobalTableTimeoutsEl {
     }
 }
 
-pub struct DynamodbGlobalTableTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DynamodbGlobalTable_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DynamodbGlobalTableTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DynamodbGlobalTableTimeoutsElRef {
-        DynamodbGlobalTableTimeoutsElRef {
+impl terrars::Ref for DynamodbGlobalTable_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DynamodbGlobalTable_TimeoutsRef {
+        DynamodbGlobalTable_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DynamodbGlobalTableTimeoutsElRef {
+impl DynamodbGlobalTable_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -426,9 +456,4 @@ impl DynamodbGlobalTableTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DynamodbGlobalTableDynamic {
-    replica: std::option::Option<terrars::DynamicBlock<DynamodbGlobalTableReplicaEl>>,
 }

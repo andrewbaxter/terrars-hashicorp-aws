@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct PinpointSmsChannelData {
+struct PinpointSmsChannelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct PinpointSmsChannelData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sender_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     short_code: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -32,7 +36,7 @@ struct PinpointSmsChannelData {
 struct PinpointSmsChannel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<PinpointSmsChannelData>,
+    data: std::cell::RefCell<PinpointSmsChannelData_>,
 }
 
 #[derive(Clone)]
@@ -144,6 +148,13 @@ impl PinpointSmsChannel {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `sender_id`.\n"]
     pub fn set_sender_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().sender_id = std::option::Option::Some(v.into());
@@ -177,6 +188,12 @@ impl PinpointSmsChannel {
             self.shared().clone(),
             format!("{}.promotional_messages_per_second", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sender_id` after provisioning.\n"]
@@ -240,7 +257,7 @@ impl BuildPinpointSmsChannel {
         let out = PinpointSmsChannel(std::rc::Rc::new(PinpointSmsChannel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(PinpointSmsChannelData {
+            data: std::cell::RefCell::new(PinpointSmsChannelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -249,6 +266,7 @@ impl BuildPinpointSmsChannel {
                 application_id: self.application_id,
                 enabled: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 sender_id: core::default::Default::default(),
                 short_code: core::default::Default::default(),
             }),
@@ -302,6 +320,12 @@ impl PinpointSmsChannelRef {
             self.shared().clone(),
             format!("{}.promotional_messages_per_second", self.extract_ref()),
         )
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sender_id` after provisioning.\n"]

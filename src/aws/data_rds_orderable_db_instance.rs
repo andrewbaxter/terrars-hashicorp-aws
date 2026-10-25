@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataRdsOrderableDbInstanceData {
+struct DataRdsOrderableDbInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,6 +21,8 @@ struct DataRdsOrderableDbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone_group: std::option::Option<terrars::PrimField<std::string::String>>,
     engine: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    engine_latest_version: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -32,7 +36,17 @@ struct DataRdsOrderableDbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_instance_classes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read_replica_capable: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    supported_engine_modes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    supported_network_types: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    supports_clusters: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     supports_enhanced_monitoring: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -43,6 +57,8 @@ struct DataRdsOrderableDbInstanceData {
     supports_iops: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     supports_kerberos_authentication: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    supports_multi_az: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     supports_performance_insights: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -56,7 +72,7 @@ struct DataRdsOrderableDbInstanceData {
 struct DataRdsOrderableDbInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRdsOrderableDbInstanceData>,
+    data: std::cell::RefCell<DataRdsOrderableDbInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -110,6 +126,12 @@ impl DataRdsOrderableDbInstance {
         self
     }
 
+    #[doc = "Set the field `engine_latest_version`.\n"]
+    pub fn set_engine_latest_version(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().engine_latest_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `engine_version`.\n"]
     pub fn set_engine_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().engine_version = std::option::Option::Some(v.into());
@@ -152,9 +174,46 @@ impl DataRdsOrderableDbInstance {
         self
     }
 
+    #[doc = "Set the field `read_replica_capable`.\n"]
+    pub fn set_read_replica_capable(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().read_replica_capable = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `storage_type`.\n"]
     pub fn set_storage_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().storage_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `supported_engine_modes`.\n"]
+    pub fn set_supported_engine_modes(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().supported_engine_modes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `supported_network_types`.\n"]
+    pub fn set_supported_network_types(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().supported_network_types = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `supports_clusters`.\n"]
+    pub fn set_supports_clusters(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().supports_clusters = std::option::Option::Some(v.into());
         self
     }
 
@@ -185,6 +244,12 @@ impl DataRdsOrderableDbInstance {
     #[doc = "Set the field `supports_kerberos_authentication`.\n"]
     pub fn set_supports_kerberos_authentication(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().supports_kerberos_authentication = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `supports_multi_az`.\n"]
+    pub fn set_supports_multi_az(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().supports_multi_az = std::option::Option::Some(v.into());
         self
     }
 
@@ -225,6 +290,11 @@ impl DataRdsOrderableDbInstance {
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
     pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine_latest_version` after provisioning.\n"]
+    pub fn engine_latest_version(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_latest_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
@@ -302,6 +372,12 @@ impl DataRdsOrderableDbInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read_replica_capable", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
     pub fn storage_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_type", self.extract_ref()))
@@ -315,6 +391,11 @@ impl DataRdsOrderableDbInstance {
     #[doc = "Get a reference to the value of field `supported_network_types` after provisioning.\n"]
     pub fn supported_network_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.supported_network_types", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `supports_clusters` after provisioning.\n"]
+    pub fn supports_clusters(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.supports_clusters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `supports_enhanced_monitoring` after provisioning.\n"]
@@ -346,6 +427,11 @@ impl DataRdsOrderableDbInstance {
             self.shared().clone(),
             format!("{}.supports_kerberos_authentication", self.extract_ref()),
         )
+    }
+
+    #[doc = "Get a reference to the value of field `supports_multi_az` after provisioning.\n"]
+    pub fn supports_multi_az(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.supports_multi_az", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `supports_performance_insights` after provisioning.\n"]
@@ -414,25 +500,32 @@ impl BuildDataRdsOrderableDbInstance {
         let out = DataRdsOrderableDbInstance(std::rc::Rc::new(DataRdsOrderableDbInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRdsOrderableDbInstanceData {
+            data: std::cell::RefCell::new(DataRdsOrderableDbInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 availability_zone_group: core::default::Default::default(),
                 engine: self.engine,
+                engine_latest_version: core::default::Default::default(),
                 engine_version: core::default::Default::default(),
                 id: core::default::Default::default(),
                 instance_class: core::default::Default::default(),
                 license_model: core::default::Default::default(),
                 preferred_engine_versions: core::default::Default::default(),
                 preferred_instance_classes: core::default::Default::default(),
+                read_replica_capable: core::default::Default::default(),
+                region: core::default::Default::default(),
                 storage_type: core::default::Default::default(),
+                supported_engine_modes: core::default::Default::default(),
+                supported_network_types: core::default::Default::default(),
+                supports_clusters: core::default::Default::default(),
                 supports_enhanced_monitoring: core::default::Default::default(),
                 supports_global_databases: core::default::Default::default(),
                 supports_iam_database_authentication: core::default::Default::default(),
                 supports_iops: core::default::Default::default(),
                 supports_kerberos_authentication: core::default::Default::default(),
+                supports_multi_az: core::default::Default::default(),
                 supports_performance_insights: core::default::Default::default(),
                 supports_storage_autoscaling: core::default::Default::default(),
                 supports_storage_encryption: core::default::Default::default(),
@@ -480,6 +573,11 @@ impl DataRdsOrderableDbInstanceRef {
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
     pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `engine_latest_version` after provisioning.\n"]
+    pub fn engine_latest_version(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_latest_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
@@ -557,6 +655,12 @@ impl DataRdsOrderableDbInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read_replica_capable", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `storage_type` after provisioning.\n"]
     pub fn storage_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.storage_type", self.extract_ref()))
@@ -570,6 +674,11 @@ impl DataRdsOrderableDbInstanceRef {
     #[doc = "Get a reference to the value of field `supported_network_types` after provisioning.\n"]
     pub fn supported_network_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.supported_network_types", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `supports_clusters` after provisioning.\n"]
+    pub fn supports_clusters(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.supports_clusters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `supports_enhanced_monitoring` after provisioning.\n"]
@@ -601,6 +710,11 @@ impl DataRdsOrderableDbInstanceRef {
             self.shared().clone(),
             format!("{}.supports_kerberos_authentication", self.extract_ref()),
         )
+    }
+
+    #[doc = "Get a reference to the value of field `supports_multi_az` after provisioning.\n"]
+    pub fn supports_multi_az(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.supports_multi_az", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `supports_performance_insights` after provisioning.\n"]

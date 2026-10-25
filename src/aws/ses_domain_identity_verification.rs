@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SesDomainIdentityVerificationData {
+struct SesDomainIdentityVerificationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,13 +24,15 @@ struct SesDomainIdentityVerificationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<SesDomainIdentityVerificationTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<SesDomainIdentityVerification_Timeouts>,
 }
 
 struct SesDomainIdentityVerification_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SesDomainIdentityVerificationData>,
+    data: std::cell::RefCell<SesDomainIdentityVerificationData_>,
 }
 
 #[derive(Clone)]
@@ -134,8 +138,15 @@ impl SesDomainIdentityVerification {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<SesDomainIdentityVerificationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<SesDomainIdentityVerification_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -155,9 +166,15 @@ impl SesDomainIdentityVerification {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SesDomainIdentityVerificationTimeoutsElRef {
-        SesDomainIdentityVerificationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> SesDomainIdentityVerification_TimeoutsRef {
+        SesDomainIdentityVerification_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -206,7 +223,7 @@ impl BuildSesDomainIdentityVerification {
         let out = SesDomainIdentityVerification(std::rc::Rc::new(SesDomainIdentityVerification_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SesDomainIdentityVerificationData {
+            data: std::cell::RefCell::new(SesDomainIdentityVerificationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -214,6 +231,7 @@ impl BuildSesDomainIdentityVerification {
                 provisioner: core::default::Default::default(),
                 domain: self.domain,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -260,9 +278,15 @@ impl SesDomainIdentityVerificationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> SesDomainIdentityVerificationTimeoutsElRef {
-        SesDomainIdentityVerificationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> SesDomainIdentityVerification_TimeoutsRef {
+        SesDomainIdentityVerification_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -270,12 +294,12 @@ impl SesDomainIdentityVerificationRef {
 }
 
 #[derive(Serialize)]
-pub struct SesDomainIdentityVerificationTimeoutsEl {
+pub struct SesDomainIdentityVerification_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SesDomainIdentityVerificationTimeoutsEl {
+impl SesDomainIdentityVerification_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -283,8 +307,8 @@ impl SesDomainIdentityVerificationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for SesDomainIdentityVerificationTimeoutsEl {
-    type O = terrars::BlockAssignable<SesDomainIdentityVerificationTimeoutsEl>;
+impl terrars::ToListMappable for SesDomainIdentityVerification_Timeouts {
+    type O = terrars::BlockAssignable<SesDomainIdentityVerification_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -295,29 +319,31 @@ impl terrars::ToListMappable for SesDomainIdentityVerificationTimeoutsEl {
     }
 }
 
-pub struct BuildSesDomainIdentityVerificationTimeoutsEl {}
+pub struct BuildSesDomainIdentityVerification_Timeouts {}
 
-impl BuildSesDomainIdentityVerificationTimeoutsEl {
-    pub fn build(self) -> SesDomainIdentityVerificationTimeoutsEl {
-        SesDomainIdentityVerificationTimeoutsEl { create: core::default::Default::default() }
+impl BuildSesDomainIdentityVerification_Timeouts {
+    pub fn build(self) -> SesDomainIdentityVerification_Timeouts {
+        SesDomainIdentityVerification_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct SesDomainIdentityVerificationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct SesDomainIdentityVerification_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SesDomainIdentityVerificationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SesDomainIdentityVerificationTimeoutsElRef {
-        SesDomainIdentityVerificationTimeoutsElRef {
+impl terrars::Ref for SesDomainIdentityVerification_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SesDomainIdentityVerification_TimeoutsRef {
+        SesDomainIdentityVerification_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SesDomainIdentityVerificationTimeoutsElRef {
+impl SesDomainIdentityVerification_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

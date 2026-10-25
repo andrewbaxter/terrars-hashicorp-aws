@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DirectoryServiceRegionData {
+struct DirectoryServiceRegionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,22 +25,24 @@ struct DirectoryServiceRegionData {
     directory_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     region_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DirectoryServiceRegionTimeoutsEl>,
+    timeouts: std::option::Option<DirectoryServiceRegion_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_settings: std::option::Option<std::vec::Vec<DirectoryServiceRegionVpcSettingsEl>>,
+    vpc_settings: std::option::Option<std::vec::Vec<DirectoryServiceRegion_VpcSettings>>,
     dynamic: DirectoryServiceRegionDynamic,
 }
 
 struct DirectoryServiceRegion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DirectoryServiceRegionData>,
+    data: std::cell::RefCell<DirectoryServiceRegionData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +154,13 @@ impl DirectoryServiceRegion {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -169,7 +180,7 @@ impl DirectoryServiceRegion {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DirectoryServiceRegionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DirectoryServiceRegion_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -177,7 +188,7 @@ impl DirectoryServiceRegion {
     #[doc = "Set the field `vpc_settings`.\n"]
     pub fn set_vpc_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DirectoryServiceRegionVpcSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DirectoryServiceRegion_VpcSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -208,6 +219,12 @@ impl DirectoryServiceRegion {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `region_name` after provisioning.\n"]
     pub fn region_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.region_name", self.extract_ref()))
@@ -224,12 +241,12 @@ impl DirectoryServiceRegion {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DirectoryServiceRegionTimeoutsElRef {
-        DirectoryServiceRegionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DirectoryServiceRegion_TimeoutsRef {
+        DirectoryServiceRegion_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_settings` after provisioning.\n"]
-    pub fn vpc_settings(&self) -> terrars::ListRef<DirectoryServiceRegionVpcSettingsElRef> {
+    pub fn vpc_settings(&self) -> terrars::ListRef<DirectoryServiceRegion_VpcSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_settings", self.extract_ref()))
     }
 }
@@ -278,7 +295,7 @@ impl BuildDirectoryServiceRegion {
         let out = DirectoryServiceRegion(std::rc::Rc::new(DirectoryServiceRegion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DirectoryServiceRegionData {
+            data: std::cell::RefCell::new(DirectoryServiceRegionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -287,6 +304,7 @@ impl BuildDirectoryServiceRegion {
                 desired_number_of_domain_controllers: core::default::Default::default(),
                 directory_id: self.directory_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 region_name: self.region_name,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -341,6 +359,12 @@ impl DirectoryServiceRegionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `region_name` after provisioning.\n"]
     pub fn region_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.region_name", self.extract_ref()))
@@ -357,18 +381,23 @@ impl DirectoryServiceRegionRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DirectoryServiceRegionTimeoutsElRef {
-        DirectoryServiceRegionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DirectoryServiceRegion_TimeoutsRef {
+        DirectoryServiceRegion_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_settings` after provisioning.\n"]
-    pub fn vpc_settings(&self) -> terrars::ListRef<DirectoryServiceRegionVpcSettingsElRef> {
+    pub fn vpc_settings(&self) -> terrars::ListRef<DirectoryServiceRegion_VpcSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DirectoryServiceRegionDynamic {
+    vpc_settings: std::option::Option<terrars::DynamicBlock<DirectoryServiceRegion_VpcSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct DirectoryServiceRegionTimeoutsEl {
+pub struct DirectoryServiceRegion_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -377,7 +406,7 @@ pub struct DirectoryServiceRegionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DirectoryServiceRegionTimeoutsEl {
+impl DirectoryServiceRegion_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -397,8 +426,8 @@ impl DirectoryServiceRegionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DirectoryServiceRegionTimeoutsEl {
-    type O = terrars::BlockAssignable<DirectoryServiceRegionTimeoutsEl>;
+impl terrars::ToListMappable for DirectoryServiceRegion_Timeouts {
+    type O = terrars::BlockAssignable<DirectoryServiceRegion_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -409,11 +438,11 @@ impl terrars::ToListMappable for DirectoryServiceRegionTimeoutsEl {
     }
 }
 
-pub struct BuildDirectoryServiceRegionTimeoutsEl {}
+pub struct BuildDirectoryServiceRegion_Timeouts {}
 
-impl BuildDirectoryServiceRegionTimeoutsEl {
-    pub fn build(self) -> DirectoryServiceRegionTimeoutsEl {
-        DirectoryServiceRegionTimeoutsEl {
+impl BuildDirectoryServiceRegion_Timeouts {
+    pub fn build(self) -> DirectoryServiceRegion_Timeouts {
+        DirectoryServiceRegion_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -421,21 +450,23 @@ impl BuildDirectoryServiceRegionTimeoutsEl {
     }
 }
 
-pub struct DirectoryServiceRegionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DirectoryServiceRegion_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DirectoryServiceRegionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceRegionTimeoutsElRef {
-        DirectoryServiceRegionTimeoutsElRef {
+impl terrars::Ref for DirectoryServiceRegion_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceRegion_TimeoutsRef {
+        DirectoryServiceRegion_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DirectoryServiceRegionTimeoutsElRef {
+impl DirectoryServiceRegion_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -457,15 +488,15 @@ impl DirectoryServiceRegionTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DirectoryServiceRegionVpcSettingsEl {
+pub struct DirectoryServiceRegion_VpcSettings {
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl DirectoryServiceRegionVpcSettingsEl { }
+impl DirectoryServiceRegion_VpcSettings { }
 
-impl terrars::ToListMappable for DirectoryServiceRegionVpcSettingsEl {
-    type O = terrars::BlockAssignable<DirectoryServiceRegionVpcSettingsEl>;
+impl terrars::ToListMappable for DirectoryServiceRegion_VpcSettings {
+    type O = terrars::BlockAssignable<DirectoryServiceRegion_VpcSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -476,37 +507,39 @@ impl terrars::ToListMappable for DirectoryServiceRegionVpcSettingsEl {
     }
 }
 
-pub struct BuildDirectoryServiceRegionVpcSettingsEl {
+pub struct BuildDirectoryServiceRegion_VpcSettings {
     #[doc = ""]
     pub subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDirectoryServiceRegionVpcSettingsEl {
-    pub fn build(self) -> DirectoryServiceRegionVpcSettingsEl {
-        DirectoryServiceRegionVpcSettingsEl {
+impl BuildDirectoryServiceRegion_VpcSettings {
+    pub fn build(self) -> DirectoryServiceRegion_VpcSettings {
+        DirectoryServiceRegion_VpcSettings {
             subnet_ids: self.subnet_ids,
             vpc_id: self.vpc_id,
         }
     }
 }
 
-pub struct DirectoryServiceRegionVpcSettingsElRef {
+#[allow(dead_code)]
+pub struct DirectoryServiceRegion_VpcSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DirectoryServiceRegionVpcSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceRegionVpcSettingsElRef {
-        DirectoryServiceRegionVpcSettingsElRef {
+impl terrars::Ref for DirectoryServiceRegion_VpcSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceRegion_VpcSettingsRef {
+        DirectoryServiceRegion_VpcSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DirectoryServiceRegionVpcSettingsElRef {
+impl DirectoryServiceRegion_VpcSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -520,9 +553,4 @@ impl DirectoryServiceRegionVpcSettingsElRef {
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DirectoryServiceRegionDynamic {
-    vpc_settings: std::option::Option<terrars::DynamicBlock<DirectoryServiceRegionVpcSettingsEl>>,
 }

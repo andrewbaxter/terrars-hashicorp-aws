@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53recoveryreadinessCellData {
+struct Route53recoveryreadinessCellData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,13 +30,13 @@ struct Route53recoveryreadinessCellData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Route53recoveryreadinessCellTimeoutsEl>,
+    timeouts: std::option::Option<Route53recoveryreadinessCell_Timeouts>,
 }
 
 struct Route53recoveryreadinessCell_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53recoveryreadinessCellData>,
+    data: std::cell::RefCell<Route53recoveryreadinessCellData_>,
 }
 
 #[derive(Clone)]
@@ -168,7 +170,7 @@ impl Route53recoveryreadinessCell {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Route53recoveryreadinessCellTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Route53recoveryreadinessCell_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -209,8 +211,8 @@ impl Route53recoveryreadinessCell {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53recoveryreadinessCellTimeoutsElRef {
-        Route53recoveryreadinessCellTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53recoveryreadinessCell_TimeoutsRef {
+        Route53recoveryreadinessCell_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -259,7 +261,7 @@ impl BuildRoute53recoveryreadinessCell {
         let out = Route53recoveryreadinessCell(std::rc::Rc::new(Route53recoveryreadinessCell_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53recoveryreadinessCellData {
+            data: std::cell::RefCell::new(Route53recoveryreadinessCellData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -337,8 +339,8 @@ impl Route53recoveryreadinessCellRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53recoveryreadinessCellTimeoutsElRef {
-        Route53recoveryreadinessCellTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53recoveryreadinessCell_TimeoutsRef {
+        Route53recoveryreadinessCell_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -346,12 +348,12 @@ impl Route53recoveryreadinessCellRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53recoveryreadinessCellTimeoutsEl {
+pub struct Route53recoveryreadinessCell_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53recoveryreadinessCellTimeoutsEl {
+impl Route53recoveryreadinessCell_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -359,8 +361,8 @@ impl Route53recoveryreadinessCellTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Route53recoveryreadinessCellTimeoutsEl {
-    type O = terrars::BlockAssignable<Route53recoveryreadinessCellTimeoutsEl>;
+impl terrars::ToListMappable for Route53recoveryreadinessCell_Timeouts {
+    type O = terrars::BlockAssignable<Route53recoveryreadinessCell_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -371,29 +373,31 @@ impl terrars::ToListMappable for Route53recoveryreadinessCellTimeoutsEl {
     }
 }
 
-pub struct BuildRoute53recoveryreadinessCellTimeoutsEl {}
+pub struct BuildRoute53recoveryreadinessCell_Timeouts {}
 
-impl BuildRoute53recoveryreadinessCellTimeoutsEl {
-    pub fn build(self) -> Route53recoveryreadinessCellTimeoutsEl {
-        Route53recoveryreadinessCellTimeoutsEl { delete: core::default::Default::default() }
+impl BuildRoute53recoveryreadinessCell_Timeouts {
+    pub fn build(self) -> Route53recoveryreadinessCell_Timeouts {
+        Route53recoveryreadinessCell_Timeouts { delete: core::default::Default::default() }
     }
 }
 
-pub struct Route53recoveryreadinessCellTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Route53recoveryreadinessCell_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53recoveryreadinessCellTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53recoveryreadinessCellTimeoutsElRef {
-        Route53recoveryreadinessCellTimeoutsElRef {
+impl terrars::Ref for Route53recoveryreadinessCell_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53recoveryreadinessCell_TimeoutsRef {
+        Route53recoveryreadinessCell_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53recoveryreadinessCellTimeoutsElRef {
+impl Route53recoveryreadinessCell_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

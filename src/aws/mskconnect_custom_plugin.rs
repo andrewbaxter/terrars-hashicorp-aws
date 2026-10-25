@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MskconnectCustomPluginData {
+struct MskconnectCustomPluginData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,16 +27,22 @@ struct MskconnectCustomPluginData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    location: std::option::Option<std::vec::Vec<MskconnectCustomPluginLocationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MskconnectCustomPluginTimeoutsEl>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    location: std::option::Option<std::vec::Vec<MskconnectCustomPlugin_Location>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<MskconnectCustomPlugin_Timeouts>,
     dynamic: MskconnectCustomPluginDynamic,
 }
 
 struct MskconnectCustomPlugin_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MskconnectCustomPluginData>,
+    data: std::cell::RefCell<MskconnectCustomPluginData_>,
 }
 
 #[derive(Clone)]
@@ -146,10 +154,35 @@ impl MskconnectCustomPlugin {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `location`.\n"]
     pub fn set_location(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectCustomPluginLocationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectCustomPlugin_Location>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -163,7 +196,7 @@ impl MskconnectCustomPlugin {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MskconnectCustomPluginTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MskconnectCustomPlugin_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -198,19 +231,35 @@ impl MskconnectCustomPlugin {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> terrars::ListRef<MskconnectCustomPluginLocationElRef> {
+    pub fn location(&self) -> terrars::ListRef<MskconnectCustomPlugin_LocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MskconnectCustomPluginTimeoutsElRef {
-        MskconnectCustomPluginTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MskconnectCustomPlugin_TimeoutsRef {
+        MskconnectCustomPlugin_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -258,7 +307,7 @@ impl BuildMskconnectCustomPlugin {
         let out = MskconnectCustomPlugin(std::rc::Rc::new(MskconnectCustomPlugin_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MskconnectCustomPluginData {
+            data: std::cell::RefCell::new(MskconnectCustomPluginData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -268,6 +317,9 @@ impl BuildMskconnectCustomPlugin {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
                 location: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -331,31 +383,52 @@ impl MskconnectCustomPluginRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `location` after provisioning.\n"]
-    pub fn location(&self) -> terrars::ListRef<MskconnectCustomPluginLocationElRef> {
+    pub fn location(&self) -> terrars::ListRef<MskconnectCustomPlugin_LocationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.location", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MskconnectCustomPluginTimeoutsElRef {
-        MskconnectCustomPluginTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MskconnectCustomPlugin_TimeoutsRef {
+        MskconnectCustomPlugin_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MskconnectCustomPluginDynamic {
+    location: std::option::Option<terrars::DynamicBlock<MskconnectCustomPlugin_Location>>,
+}
+
 #[derive(Serialize)]
-pub struct MskconnectCustomPluginLocationElS3El {
+pub struct MskconnectCustomPlugin_Location_S3 {
     bucket_arn: terrars::PrimField<std::string::String>,
     file_key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MskconnectCustomPluginLocationElS3El {
+impl MskconnectCustomPlugin_Location_S3 {
     #[doc = "Set the field `object_version`.\n"]
     pub fn set_object_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.object_version = std::option::Option::Some(v.into());
@@ -363,8 +436,8 @@ impl MskconnectCustomPluginLocationElS3El {
     }
 }
 
-impl terrars::ToListMappable for MskconnectCustomPluginLocationElS3El {
-    type O = terrars::BlockAssignable<MskconnectCustomPluginLocationElS3El>;
+impl terrars::ToListMappable for MskconnectCustomPlugin_Location_S3 {
+    type O = terrars::BlockAssignable<MskconnectCustomPlugin_Location_S3>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -375,16 +448,16 @@ impl terrars::ToListMappable for MskconnectCustomPluginLocationElS3El {
     }
 }
 
-pub struct BuildMskconnectCustomPluginLocationElS3El {
+pub struct BuildMskconnectCustomPlugin_Location_S3 {
     #[doc = ""]
     pub bucket_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub file_key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMskconnectCustomPluginLocationElS3El {
-    pub fn build(self) -> MskconnectCustomPluginLocationElS3El {
-        MskconnectCustomPluginLocationElS3El {
+impl BuildMskconnectCustomPlugin_Location_S3 {
+    pub fn build(self) -> MskconnectCustomPlugin_Location_S3 {
+        MskconnectCustomPlugin_Location_S3 {
             bucket_arn: self.bucket_arn,
             file_key: self.file_key,
             object_version: core::default::Default::default(),
@@ -392,21 +465,23 @@ impl BuildMskconnectCustomPluginLocationElS3El {
     }
 }
 
-pub struct MskconnectCustomPluginLocationElS3ElRef {
+#[allow(dead_code)]
+pub struct MskconnectCustomPlugin_Location_S3Ref {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskconnectCustomPluginLocationElS3ElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectCustomPluginLocationElS3ElRef {
-        MskconnectCustomPluginLocationElS3ElRef {
+impl terrars::Ref for MskconnectCustomPlugin_Location_S3Ref {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectCustomPlugin_Location_S3Ref {
+        MskconnectCustomPlugin_Location_S3Ref {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskconnectCustomPluginLocationElS3ElRef {
+impl MskconnectCustomPlugin_Location_S3Ref {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -428,22 +503,22 @@ impl MskconnectCustomPluginLocationElS3ElRef {
 }
 
 #[derive(Serialize, Default)]
-struct MskconnectCustomPluginLocationElDynamic {
-    s3: std::option::Option<terrars::DynamicBlock<MskconnectCustomPluginLocationElS3El>>,
+struct MskconnectCustomPlugin_LocationDynamic {
+    s3: std::option::Option<terrars::DynamicBlock<MskconnectCustomPlugin_Location_S3>>,
 }
 
 #[derive(Serialize)]
-pub struct MskconnectCustomPluginLocationEl {
+pub struct MskconnectCustomPlugin_Location {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3: std::option::Option<std::vec::Vec<MskconnectCustomPluginLocationElS3El>>,
-    dynamic: MskconnectCustomPluginLocationElDynamic,
+    s3: std::option::Option<std::vec::Vec<MskconnectCustomPlugin_Location_S3>>,
+    dynamic: MskconnectCustomPlugin_LocationDynamic,
 }
 
-impl MskconnectCustomPluginLocationEl {
+impl MskconnectCustomPlugin_Location {
     #[doc = "Set the field `s3`.\n"]
     pub fn set_s3(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectCustomPluginLocationElS3El>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MskconnectCustomPlugin_Location_S3>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -457,8 +532,8 @@ impl MskconnectCustomPluginLocationEl {
     }
 }
 
-impl terrars::ToListMappable for MskconnectCustomPluginLocationEl {
-    type O = terrars::BlockAssignable<MskconnectCustomPluginLocationEl>;
+impl terrars::ToListMappable for MskconnectCustomPlugin_Location {
+    type O = terrars::BlockAssignable<MskconnectCustomPlugin_Location>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -469,51 +544,53 @@ impl terrars::ToListMappable for MskconnectCustomPluginLocationEl {
     }
 }
 
-pub struct BuildMskconnectCustomPluginLocationEl {}
+pub struct BuildMskconnectCustomPlugin_Location {}
 
-impl BuildMskconnectCustomPluginLocationEl {
-    pub fn build(self) -> MskconnectCustomPluginLocationEl {
-        MskconnectCustomPluginLocationEl {
+impl BuildMskconnectCustomPlugin_Location {
+    pub fn build(self) -> MskconnectCustomPlugin_Location {
+        MskconnectCustomPlugin_Location {
             s3: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskconnectCustomPluginLocationElRef {
+#[allow(dead_code)]
+pub struct MskconnectCustomPlugin_LocationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskconnectCustomPluginLocationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectCustomPluginLocationElRef {
-        MskconnectCustomPluginLocationElRef {
+impl terrars::Ref for MskconnectCustomPlugin_LocationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectCustomPlugin_LocationRef {
+        MskconnectCustomPlugin_LocationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskconnectCustomPluginLocationElRef {
+impl MskconnectCustomPlugin_LocationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `s3` after provisioning.\n"]
-    pub fn s3(&self) -> terrars::ListRef<MskconnectCustomPluginLocationElS3ElRef> {
+    pub fn s3(&self) -> terrars::ListRef<MskconnectCustomPlugin_Location_S3Ref> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct MskconnectCustomPluginTimeoutsEl {
+pub struct MskconnectCustomPlugin_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MskconnectCustomPluginTimeoutsEl {
+impl MskconnectCustomPlugin_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -527,8 +604,8 @@ impl MskconnectCustomPluginTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MskconnectCustomPluginTimeoutsEl {
-    type O = terrars::BlockAssignable<MskconnectCustomPluginTimeoutsEl>;
+impl terrars::ToListMappable for MskconnectCustomPlugin_Timeouts {
+    type O = terrars::BlockAssignable<MskconnectCustomPlugin_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -539,32 +616,34 @@ impl terrars::ToListMappable for MskconnectCustomPluginTimeoutsEl {
     }
 }
 
-pub struct BuildMskconnectCustomPluginTimeoutsEl {}
+pub struct BuildMskconnectCustomPlugin_Timeouts {}
 
-impl BuildMskconnectCustomPluginTimeoutsEl {
-    pub fn build(self) -> MskconnectCustomPluginTimeoutsEl {
-        MskconnectCustomPluginTimeoutsEl {
+impl BuildMskconnectCustomPlugin_Timeouts {
+    pub fn build(self) -> MskconnectCustomPlugin_Timeouts {
+        MskconnectCustomPlugin_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct MskconnectCustomPluginTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MskconnectCustomPlugin_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MskconnectCustomPluginTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectCustomPluginTimeoutsElRef {
-        MskconnectCustomPluginTimeoutsElRef {
+impl terrars::Ref for MskconnectCustomPlugin_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MskconnectCustomPlugin_TimeoutsRef {
+        MskconnectCustomPlugin_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MskconnectCustomPluginTimeoutsElRef {
+impl MskconnectCustomPlugin_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -578,9 +657,4 @@ impl MskconnectCustomPluginTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MskconnectCustomPluginDynamic {
-    location: std::option::Option<terrars::DynamicBlock<MskconnectCustomPluginLocationEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EcrRepositoryData {
+struct EcrRepositoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,22 +28,28 @@ struct EcrRepositoryData {
     image_tag_mutability: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_configuration: std::option::Option<std::vec::Vec<EcrRepositoryEncryptionConfigurationEl>>,
+    encryption_configuration: std::option::Option<std::vec::Vec<EcrRepository_EncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    image_scanning_configuration: std::option::Option<std::vec::Vec<EcrRepositoryImageScanningConfigurationEl>>,
+    image_scanning_configuration: std::option::Option<std::vec::Vec<EcrRepository_ImageScanningConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EcrRepositoryTimeoutsEl>,
+    image_tag_mutability_exclusion_filter: std
+    ::option
+    ::Option<std::vec::Vec<EcrRepository_ImageTagMutabilityExclusionFilter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<EcrRepository_Timeouts>,
     dynamic: EcrRepositoryDynamic,
 }
 
 struct EcrRepository_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EcrRepositoryData>,
+    data: std::cell::RefCell<EcrRepositoryData_>,
 }
 
 #[derive(Clone)]
@@ -159,6 +167,13 @@ impl EcrRepository {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -180,7 +195,7 @@ impl EcrRepository {
     #[doc = "Set the field `encryption_configuration`.\n"]
     pub fn set_encryption_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcrRepositoryEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcrRepository_EncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -196,7 +211,7 @@ impl EcrRepository {
     #[doc = "Set the field `image_scanning_configuration`.\n"]
     pub fn set_image_scanning_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EcrRepositoryImageScanningConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcrRepository_ImageScanningConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,8 +224,25 @@ impl EcrRepository {
         self
     }
 
+    #[doc = "Set the field `image_tag_mutability_exclusion_filter`.\n"]
+    pub fn set_image_tag_mutability_exclusion_filter(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<EcrRepository_ImageTagMutabilityExclusionFilter>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().image_tag_mutability_exclusion_filter = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.image_tag_mutability_exclusion_filter =
+                    std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EcrRepositoryTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EcrRepository_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -240,6 +272,12 @@ impl EcrRepository {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
     pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
@@ -261,18 +299,28 @@ impl EcrRepository {
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::ListRef<EcrRepositoryEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<EcrRepository_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `image_scanning_configuration` after provisioning.\n"]
-    pub fn image_scanning_configuration(&self) -> terrars::ListRef<EcrRepositoryImageScanningConfigurationElRef> {
+    pub fn image_scanning_configuration(&self) -> terrars::ListRef<EcrRepository_ImageScanningConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_scanning_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `image_tag_mutability_exclusion_filter` after provisioning.\n"]
+    pub fn image_tag_mutability_exclusion_filter(
+        &self,
+    ) -> terrars::ListRef<EcrRepository_ImageTagMutabilityExclusionFilterRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.image_tag_mutability_exclusion_filter", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EcrRepositoryTimeoutsElRef {
-        EcrRepositoryTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EcrRepository_TimeoutsRef {
+        EcrRepository_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -318,7 +366,7 @@ impl BuildEcrRepository {
         let out = EcrRepository(std::rc::Rc::new(EcrRepository_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EcrRepositoryData {
+            data: std::cell::RefCell::new(EcrRepositoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -328,10 +376,12 @@ impl BuildEcrRepository {
                 id: core::default::Default::default(),
                 image_tag_mutability: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 encryption_configuration: core::default::Default::default(),
                 image_scanning_configuration: core::default::Default::default(),
+                image_tag_mutability_exclusion_filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -389,6 +439,12 @@ impl EcrRepositoryRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `registry_id` after provisioning.\n"]
     pub fn registry_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.registry_id", self.extract_ref()))
@@ -410,30 +466,51 @@ impl EcrRepositoryRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::ListRef<EcrRepositoryEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<EcrRepository_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `image_scanning_configuration` after provisioning.\n"]
-    pub fn image_scanning_configuration(&self) -> terrars::ListRef<EcrRepositoryImageScanningConfigurationElRef> {
+    pub fn image_scanning_configuration(&self) -> terrars::ListRef<EcrRepository_ImageScanningConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.image_scanning_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `image_tag_mutability_exclusion_filter` after provisioning.\n"]
+    pub fn image_tag_mutability_exclusion_filter(
+        &self,
+    ) -> terrars::ListRef<EcrRepository_ImageTagMutabilityExclusionFilterRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.image_tag_mutability_exclusion_filter", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EcrRepositoryTimeoutsElRef {
-        EcrRepositoryTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EcrRepository_TimeoutsRef {
+        EcrRepository_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EcrRepositoryDynamic {
+    encryption_configuration: std::option::Option<terrars::DynamicBlock<EcrRepository_EncryptionConfiguration>>,
+    image_scanning_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<EcrRepository_ImageScanningConfiguration>>,
+    image_tag_mutability_exclusion_filter: std
+    ::option
+    ::Option<terrars::DynamicBlock<EcrRepository_ImageTagMutabilityExclusionFilter>>,
+}
+
 #[derive(Serialize)]
-pub struct EcrRepositoryEncryptionConfigurationEl {
+pub struct EcrRepository_EncryptionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encryption_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EcrRepositoryEncryptionConfigurationEl {
+impl EcrRepository_EncryptionConfiguration {
     #[doc = "Set the field `encryption_type`.\n"]
     pub fn set_encryption_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.encryption_type = std::option::Option::Some(v.into());
@@ -447,8 +524,8 @@ impl EcrRepositoryEncryptionConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for EcrRepositoryEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<EcrRepositoryEncryptionConfigurationEl>;
+impl terrars::ToListMappable for EcrRepository_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<EcrRepository_EncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -459,32 +536,34 @@ impl terrars::ToListMappable for EcrRepositoryEncryptionConfigurationEl {
     }
 }
 
-pub struct BuildEcrRepositoryEncryptionConfigurationEl {}
+pub struct BuildEcrRepository_EncryptionConfiguration {}
 
-impl BuildEcrRepositoryEncryptionConfigurationEl {
-    pub fn build(self) -> EcrRepositoryEncryptionConfigurationEl {
-        EcrRepositoryEncryptionConfigurationEl {
+impl BuildEcrRepository_EncryptionConfiguration {
+    pub fn build(self) -> EcrRepository_EncryptionConfiguration {
+        EcrRepository_EncryptionConfiguration {
             encryption_type: core::default::Default::default(),
             kms_key: core::default::Default::default(),
         }
     }
 }
 
-pub struct EcrRepositoryEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct EcrRepository_EncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrRepositoryEncryptionConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrRepositoryEncryptionConfigurationElRef {
-        EcrRepositoryEncryptionConfigurationElRef {
+impl terrars::Ref for EcrRepository_EncryptionConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrRepository_EncryptionConfigurationRef {
+        EcrRepository_EncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrRepositoryEncryptionConfigurationElRef {
+impl EcrRepository_EncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -501,14 +580,14 @@ impl EcrRepositoryEncryptionConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcrRepositoryImageScanningConfigurationEl {
+pub struct EcrRepository_ImageScanningConfiguration {
     scan_on_push: terrars::PrimField<bool>,
 }
 
-impl EcrRepositoryImageScanningConfigurationEl { }
+impl EcrRepository_ImageScanningConfiguration { }
 
-impl terrars::ToListMappable for EcrRepositoryImageScanningConfigurationEl {
-    type O = terrars::BlockAssignable<EcrRepositoryImageScanningConfigurationEl>;
+impl terrars::ToListMappable for EcrRepository_ImageScanningConfiguration {
+    type O = terrars::BlockAssignable<EcrRepository_ImageScanningConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -519,32 +598,34 @@ impl terrars::ToListMappable for EcrRepositoryImageScanningConfigurationEl {
     }
 }
 
-pub struct BuildEcrRepositoryImageScanningConfigurationEl {
+pub struct BuildEcrRepository_ImageScanningConfiguration {
     #[doc = ""]
     pub scan_on_push: terrars::PrimField<bool>,
 }
 
-impl BuildEcrRepositoryImageScanningConfigurationEl {
-    pub fn build(self) -> EcrRepositoryImageScanningConfigurationEl {
-        EcrRepositoryImageScanningConfigurationEl { scan_on_push: self.scan_on_push }
+impl BuildEcrRepository_ImageScanningConfiguration {
+    pub fn build(self) -> EcrRepository_ImageScanningConfiguration {
+        EcrRepository_ImageScanningConfiguration { scan_on_push: self.scan_on_push }
     }
 }
 
-pub struct EcrRepositoryImageScanningConfigurationElRef {
+#[allow(dead_code)]
+pub struct EcrRepository_ImageScanningConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrRepositoryImageScanningConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrRepositoryImageScanningConfigurationElRef {
-        EcrRepositoryImageScanningConfigurationElRef {
+impl terrars::Ref for EcrRepository_ImageScanningConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrRepository_ImageScanningConfigurationRef {
+        EcrRepository_ImageScanningConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrRepositoryImageScanningConfigurationElRef {
+impl EcrRepository_ImageScanningConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -556,21 +637,15 @@ impl EcrRepositoryImageScanningConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct EcrRepositoryTimeoutsEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+pub struct EcrRepository_ImageTagMutabilityExclusionFilter {
+    filter: terrars::PrimField<std::string::String>,
+    filter_type: terrars::PrimField<std::string::String>,
 }
 
-impl EcrRepositoryTimeoutsEl {
-    #[doc = "Set the field `delete`.\n"]
-    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.delete = std::option::Option::Some(v.into());
-        self
-    }
-}
+impl EcrRepository_ImageTagMutabilityExclusionFilter { }
 
-impl terrars::ToListMappable for EcrRepositoryTimeoutsEl {
-    type O = terrars::BlockAssignable<EcrRepositoryTimeoutsEl>;
+impl terrars::ToListMappable for EcrRepository_ImageTagMutabilityExclusionFilter {
+    type O = terrars::BlockAssignable<EcrRepository_ImageTagMutabilityExclusionFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -581,29 +656,108 @@ impl terrars::ToListMappable for EcrRepositoryTimeoutsEl {
     }
 }
 
-pub struct BuildEcrRepositoryTimeoutsEl {}
+pub struct BuildEcrRepository_ImageTagMutabilityExclusionFilter {
+    #[doc = ""]
+    pub filter: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub filter_type: terrars::PrimField<std::string::String>,
+}
 
-impl BuildEcrRepositoryTimeoutsEl {
-    pub fn build(self) -> EcrRepositoryTimeoutsEl {
-        EcrRepositoryTimeoutsEl { delete: core::default::Default::default() }
+impl BuildEcrRepository_ImageTagMutabilityExclusionFilter {
+    pub fn build(self) -> EcrRepository_ImageTagMutabilityExclusionFilter {
+        EcrRepository_ImageTagMutabilityExclusionFilter {
+            filter: self.filter,
+            filter_type: self.filter_type,
+        }
     }
 }
 
-pub struct EcrRepositoryTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EcrRepository_ImageTagMutabilityExclusionFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EcrRepositoryTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrRepositoryTimeoutsElRef {
-        EcrRepositoryTimeoutsElRef {
+impl terrars::Ref for EcrRepository_ImageTagMutabilityExclusionFilterRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> EcrRepository_ImageTagMutabilityExclusionFilterRef {
+        EcrRepository_ImageTagMutabilityExclusionFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EcrRepositoryTimeoutsElRef {
+impl EcrRepository_ImageTagMutabilityExclusionFilterRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
+    pub fn filter(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `filter_type` after provisioning.\n"]
+    pub fn filter_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.filter_type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct EcrRepository_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl EcrRepository_Timeouts {
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for EcrRepository_Timeouts {
+    type O = terrars::BlockAssignable<EcrRepository_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEcrRepository_Timeouts {}
+
+impl BuildEcrRepository_Timeouts {
+    pub fn build(self) -> EcrRepository_Timeouts {
+        EcrRepository_Timeouts { delete: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct EcrRepository_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for EcrRepository_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EcrRepository_TimeoutsRef {
+        EcrRepository_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl EcrRepository_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -612,12 +766,4 @@ impl EcrRepositoryTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EcrRepositoryDynamic {
-    encryption_configuration: std::option::Option<terrars::DynamicBlock<EcrRepositoryEncryptionConfigurationEl>>,
-    image_scanning_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<EcrRepositoryImageScanningConfigurationEl>>,
 }

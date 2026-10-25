@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Ec2TransitGatewayPeeringAttachmentData {
+struct Ec2TransitGatewayPeeringAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,16 +27,21 @@ struct Ec2TransitGatewayPeeringAttachmentData {
     peer_region: terrars::PrimField<std::string::String>,
     peer_transit_gateway_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     transit_gateway_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    options: std::option::Option<std::vec::Vec<Ec2TransitGatewayPeeringAttachment_Options>>,
+    dynamic: Ec2TransitGatewayPeeringAttachmentDynamic,
 }
 
 struct Ec2TransitGatewayPeeringAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Ec2TransitGatewayPeeringAttachmentData>,
+    data: std::cell::RefCell<Ec2TransitGatewayPeeringAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -146,6 +153,13 @@ impl Ec2TransitGatewayPeeringAttachment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -162,6 +176,27 @@ impl Ec2TransitGatewayPeeringAttachment {
     ) -> Self {
         self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Set the field `options`.\n"]
+    pub fn set_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ec2TransitGatewayPeeringAttachment_Options>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -184,6 +219,17 @@ impl Ec2TransitGatewayPeeringAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_transit_gateway_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -197,6 +243,11 @@ impl Ec2TransitGatewayPeeringAttachment {
     #[doc = "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
     pub fn transit_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
+    pub fn options(&self) -> terrars::ListRef<Ec2TransitGatewayPeeringAttachment_OptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
     }
 }
 
@@ -246,7 +297,7 @@ impl BuildEc2TransitGatewayPeeringAttachment {
         let out = Ec2TransitGatewayPeeringAttachment(std::rc::Rc::new(Ec2TransitGatewayPeeringAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Ec2TransitGatewayPeeringAttachmentData {
+            data: std::cell::RefCell::new(Ec2TransitGatewayPeeringAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -256,9 +307,12 @@ impl BuildEc2TransitGatewayPeeringAttachment {
                 peer_account_id: core::default::Default::default(),
                 peer_region: self.peer_region,
                 peer_transit_gateway_id: self.peer_transit_gateway_id,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 transit_gateway_id: self.transit_gateway_id,
+                options: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -289,6 +343,11 @@ impl Ec2TransitGatewayPeeringAttachmentRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -309,6 +368,17 @@ impl Ec2TransitGatewayPeeringAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_transit_gateway_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -322,5 +392,76 @@ impl Ec2TransitGatewayPeeringAttachmentRef {
     #[doc = "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
     pub fn transit_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `options` after provisioning.\n"]
+    pub fn options(&self) -> terrars::ListRef<Ec2TransitGatewayPeeringAttachment_OptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.options", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct Ec2TransitGatewayPeeringAttachmentDynamic {
+    options: std::option::Option<terrars::DynamicBlock<Ec2TransitGatewayPeeringAttachment_Options>>,
+}
+
+#[derive(Serialize)]
+pub struct Ec2TransitGatewayPeeringAttachment_Options {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dynamic_routing: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Ec2TransitGatewayPeeringAttachment_Options {
+    #[doc = "Set the field `dynamic_routing`.\n"]
+    pub fn set_dynamic_routing(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.dynamic_routing = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Ec2TransitGatewayPeeringAttachment_Options {
+    type O = terrars::BlockAssignable<Ec2TransitGatewayPeeringAttachment_Options>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEc2TransitGatewayPeeringAttachment_Options {}
+
+impl BuildEc2TransitGatewayPeeringAttachment_Options {
+    pub fn build(self) -> Ec2TransitGatewayPeeringAttachment_Options {
+        Ec2TransitGatewayPeeringAttachment_Options { dynamic_routing: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Ec2TransitGatewayPeeringAttachment_OptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Ec2TransitGatewayPeeringAttachment_OptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ec2TransitGatewayPeeringAttachment_OptionsRef {
+        Ec2TransitGatewayPeeringAttachment_OptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Ec2TransitGatewayPeeringAttachment_OptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `dynamic_routing` after provisioning.\n"]
+    pub fn dynamic_routing(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dynamic_routing", self.base))
     }
 }

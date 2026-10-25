@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataLambdaLayerVersionData {
+struct DataLambdaLayerVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -22,7 +24,12 @@ struct DataLambdaLayerVersionData {
     compatible_runtime: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
-    layer_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    layer_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    layer_version_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<f64>>,
 }
@@ -30,7 +37,7 @@ struct DataLambdaLayerVersionData {
 struct DataLambdaLayerVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLambdaLayerVersionData>,
+    data: std::cell::RefCell<DataLambdaLayerVersionData_>,
 }
 
 #[derive(Clone)]
@@ -96,6 +103,25 @@ impl DataLambdaLayerVersion {
         self
     }
 
+    #[doc = "Set the field `layer_name`.\n"]
+    pub fn set_layer_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().layer_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `layer_version_arn`.\n"]
+    pub fn set_layer_version_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().layer_version_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `version`.\n"]
     pub fn set_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().version = std::option::Option::Some(v.into());
@@ -105,6 +131,11 @@ impl DataLambdaLayerVersion {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `code_sha256` after provisioning.\n"]
+    pub fn code_sha256(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code_sha256", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `compatible_architecture` after provisioning.\n"]
@@ -152,9 +183,20 @@ impl DataLambdaLayerVersion {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.layer_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `layer_version_arn` after provisioning.\n"]
+    pub fn layer_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.layer_version_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `license_info` after provisioning.\n"]
     pub fn license_info(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_info", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `signing_job_arn` after provisioning.\n"]
@@ -216,8 +258,6 @@ impl terrars::Datasource_ for DataLambdaLayerVersion_ {
 
 pub struct BuildDataLambdaLayerVersion {
     pub tf_id: std::string::String,
-    #[doc = ""]
-    pub layer_name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataLambdaLayerVersion {
@@ -225,7 +265,7 @@ impl BuildDataLambdaLayerVersion {
         let out = DataLambdaLayerVersion(std::rc::Rc::new(DataLambdaLayerVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLambdaLayerVersionData {
+            data: std::cell::RefCell::new(DataLambdaLayerVersionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -233,7 +273,9 @@ impl BuildDataLambdaLayerVersion {
                 compatible_architecture: core::default::Default::default(),
                 compatible_runtime: core::default::Default::default(),
                 id: core::default::Default::default(),
-                layer_name: self.layer_name,
+                layer_name: core::default::Default::default(),
+                layer_version_arn: core::default::Default::default(),
+                region: core::default::Default::default(),
                 version: core::default::Default::default(),
             }),
         }));
@@ -268,6 +310,11 @@ impl DataLambdaLayerVersionRef {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `code_sha256` after provisioning.\n"]
+    pub fn code_sha256(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.code_sha256", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `compatible_architecture` after provisioning.\n"]
@@ -315,9 +362,20 @@ impl DataLambdaLayerVersionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.layer_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `layer_version_arn` after provisioning.\n"]
+    pub fn layer_version_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.layer_version_arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `license_info` after provisioning.\n"]
     pub fn license_info(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.license_info", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `signing_job_arn` after provisioning.\n"]

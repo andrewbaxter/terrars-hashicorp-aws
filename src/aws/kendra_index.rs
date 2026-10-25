@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct KendraIndexData {
+struct KendraIndexData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct KendraIndexData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -33,30 +37,28 @@ struct KendraIndexData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_context_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    capacity_units: std::option::Option<std::vec::Vec<KendraIndexCapacityUnitsEl>>,
+    capacity_units: std::option::Option<std::vec::Vec<KendraIndex_CapacityUnits>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     document_metadata_configuration_updates: std
     ::option
-    ::Option<std::vec::Vec<KendraIndexDocumentMetadataConfigurationUpdatesEl>>,
+    ::Option<std::vec::Vec<KendraIndex_DocumentMetadataConfigurationUpdates>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     server_side_encryption_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraIndexServerSideEncryptionConfigurationEl>>,
+    ::Option<std::vec::Vec<KendraIndex_ServerSideEncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<KendraIndexTimeoutsEl>,
+    timeouts: std::option::Option<KendraIndex_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_group_resolution_configuration: std
-    ::option
-    ::Option<std::vec::Vec<KendraIndexUserGroupResolutionConfigurationEl>>,
+    user_group_resolution_configuration: std::option::Option<std::vec::Vec<KendraIndex_UserGroupResolutionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_token_configurations: std::option::Option<std::vec::Vec<KendraIndexUserTokenConfigurationsEl>>,
+    user_token_configurations: std::option::Option<std::vec::Vec<KendraIndex_UserTokenConfigurations>>,
     dynamic: KendraIndexDynamic,
 }
 
 struct KendraIndex_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<KendraIndexData>,
+    data: std::cell::RefCell<KendraIndexData_>,
 }
 
 #[derive(Clone)]
@@ -174,6 +176,13 @@ impl KendraIndex {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -201,7 +210,7 @@ impl KendraIndex {
     #[doc = "Set the field `capacity_units`.\n"]
     pub fn set_capacity_units(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndexCapacityUnitsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndex_CapacityUnits>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -217,7 +226,7 @@ impl KendraIndex {
     #[doc = "Set the field `document_metadata_configuration_updates`.\n"]
     pub fn set_document_metadata_configuration_updates(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndexDocumentMetadataConfigurationUpdatesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndex_DocumentMetadataConfigurationUpdates>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -234,7 +243,7 @@ impl KendraIndex {
     #[doc = "Set the field `server_side_encryption_configuration`.\n"]
     pub fn set_server_side_encryption_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndexServerSideEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndex_ServerSideEncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -248,7 +257,7 @@ impl KendraIndex {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<KendraIndexTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<KendraIndex_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -256,7 +265,7 @@ impl KendraIndex {
     #[doc = "Set the field `user_group_resolution_configuration`.\n"]
     pub fn set_user_group_resolution_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndexUserGroupResolutionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndex_UserGroupResolutionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -272,7 +281,7 @@ impl KendraIndex {
     #[doc = "Set the field `user_token_configurations`.\n"]
     pub fn set_user_token_configurations(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndexUserTokenConfigurationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<KendraIndex_UserTokenConfigurations>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -316,13 +325,19 @@ impl KendraIndex {
     }
 
     #[doc = "Get a reference to the value of field `index_statistics` after provisioning.\n"]
-    pub fn index_statistics(&self) -> terrars::ListRef<KendraIndexIndexStatisticsElRef> {
+    pub fn index_statistics(&self) -> terrars::ListRef<KendraIndex_IndexStatisticsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.index_statistics", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -356,14 +371,14 @@ impl KendraIndex {
     }
 
     #[doc = "Get a reference to the value of field `capacity_units` after provisioning.\n"]
-    pub fn capacity_units(&self) -> terrars::ListRef<KendraIndexCapacityUnitsElRef> {
+    pub fn capacity_units(&self) -> terrars::ListRef<KendraIndex_CapacityUnitsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_units", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption_configuration` after provisioning.\n"]
     pub fn server_side_encryption_configuration(
         &self,
-    ) -> terrars::ListRef<KendraIndexServerSideEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<KendraIndex_ServerSideEncryptionConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.server_side_encryption_configuration", self.extract_ref()),
@@ -371,14 +386,14 @@ impl KendraIndex {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KendraIndexTimeoutsElRef {
-        KendraIndexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KendraIndex_TimeoutsRef {
+        KendraIndex_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_group_resolution_configuration` after provisioning.\n"]
     pub fn user_group_resolution_configuration(
         &self,
-    ) -> terrars::ListRef<KendraIndexUserGroupResolutionConfigurationElRef> {
+    ) -> terrars::ListRef<KendraIndex_UserGroupResolutionConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.user_group_resolution_configuration", self.extract_ref()),
@@ -386,7 +401,7 @@ impl KendraIndex {
     }
 
     #[doc = "Get a reference to the value of field `user_token_configurations` after provisioning.\n"]
-    pub fn user_token_configurations(&self) -> terrars::ListRef<KendraIndexUserTokenConfigurationsElRef> {
+    pub fn user_token_configurations(&self) -> terrars::ListRef<KendraIndex_UserTokenConfigurationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_token_configurations", self.extract_ref()))
     }
 }
@@ -435,7 +450,7 @@ impl BuildKendraIndex {
         let out = KendraIndex(std::rc::Rc::new(KendraIndex_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(KendraIndexData {
+            data: std::cell::RefCell::new(KendraIndexData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -445,6 +460,7 @@ impl BuildKendraIndex {
                 edition: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 role_arn: self.role_arn,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -517,13 +533,19 @@ impl KendraIndexRef {
     }
 
     #[doc = "Get a reference to the value of field `index_statistics` after provisioning.\n"]
-    pub fn index_statistics(&self) -> terrars::ListRef<KendraIndexIndexStatisticsElRef> {
+    pub fn index_statistics(&self) -> terrars::ListRef<KendraIndex_IndexStatisticsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.index_statistics", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
@@ -557,14 +579,14 @@ impl KendraIndexRef {
     }
 
     #[doc = "Get a reference to the value of field `capacity_units` after provisioning.\n"]
-    pub fn capacity_units(&self) -> terrars::ListRef<KendraIndexCapacityUnitsElRef> {
+    pub fn capacity_units(&self) -> terrars::ListRef<KendraIndex_CapacityUnitsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_units", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption_configuration` after provisioning.\n"]
     pub fn server_side_encryption_configuration(
         &self,
-    ) -> terrars::ListRef<KendraIndexServerSideEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<KendraIndex_ServerSideEncryptionConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.server_side_encryption_configuration", self.extract_ref()),
@@ -572,14 +594,14 @@ impl KendraIndexRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> KendraIndexTimeoutsElRef {
-        KendraIndexTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> KendraIndex_TimeoutsRef {
+        KendraIndex_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_group_resolution_configuration` after provisioning.\n"]
     pub fn user_group_resolution_configuration(
         &self,
-    ) -> terrars::ListRef<KendraIndexUserGroupResolutionConfigurationElRef> {
+    ) -> terrars::ListRef<KendraIndex_UserGroupResolutionConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.user_group_resolution_configuration", self.extract_ref()),
@@ -587,18 +609,33 @@ impl KendraIndexRef {
     }
 
     #[doc = "Get a reference to the value of field `user_token_configurations` after provisioning.\n"]
-    pub fn user_token_configurations(&self) -> terrars::ListRef<KendraIndexUserTokenConfigurationsElRef> {
+    pub fn user_token_configurations(&self) -> terrars::ListRef<KendraIndex_UserTokenConfigurationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_token_configurations", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct KendraIndexDynamic {
+    capacity_units: std::option::Option<terrars::DynamicBlock<KendraIndex_CapacityUnits>>,
+    document_metadata_configuration_updates: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraIndex_DocumentMetadataConfigurationUpdates>>,
+    server_side_encryption_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraIndex_ServerSideEncryptionConfiguration>>,
+    user_group_resolution_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<KendraIndex_UserGroupResolutionConfiguration>>,
+    user_token_configurations: std::option::Option<terrars::DynamicBlock<KendraIndex_UserTokenConfigurations>>,
+}
+
 #[derive(Serialize)]
-pub struct KendraIndexIndexStatisticsElFaqStatisticsEl {
+pub struct KendraIndex_IndexStatistics_FaqStatistics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     indexed_question_answers_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl KendraIndexIndexStatisticsElFaqStatisticsEl {
+impl KendraIndex_IndexStatistics_FaqStatistics {
     #[doc = "Set the field `indexed_question_answers_count`.\n"]
     pub fn set_indexed_question_answers_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.indexed_question_answers_count = std::option::Option::Some(v.into());
@@ -606,8 +643,8 @@ impl KendraIndexIndexStatisticsElFaqStatisticsEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexIndexStatisticsElFaqStatisticsEl {
-    type O = terrars::BlockAssignable<KendraIndexIndexStatisticsElFaqStatisticsEl>;
+impl terrars::ToListMappable for KendraIndex_IndexStatistics_FaqStatistics {
+    type O = terrars::BlockAssignable<KendraIndex_IndexStatistics_FaqStatistics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -618,34 +655,33 @@ impl terrars::ToListMappable for KendraIndexIndexStatisticsElFaqStatisticsEl {
     }
 }
 
-pub struct BuildKendraIndexIndexStatisticsElFaqStatisticsEl {}
+pub struct BuildKendraIndex_IndexStatistics_FaqStatistics {}
 
-impl BuildKendraIndexIndexStatisticsElFaqStatisticsEl {
-    pub fn build(self) -> KendraIndexIndexStatisticsElFaqStatisticsEl {
-        KendraIndexIndexStatisticsElFaqStatisticsEl {
+impl BuildKendraIndex_IndexStatistics_FaqStatistics {
+    pub fn build(self) -> KendraIndex_IndexStatistics_FaqStatistics {
+        KendraIndex_IndexStatistics_FaqStatistics {
             indexed_question_answers_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraIndexIndexStatisticsElFaqStatisticsElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_IndexStatistics_FaqStatisticsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexIndexStatisticsElFaqStatisticsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> KendraIndexIndexStatisticsElFaqStatisticsElRef {
-        KendraIndexIndexStatisticsElFaqStatisticsElRef {
+impl terrars::Ref for KendraIndex_IndexStatistics_FaqStatisticsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraIndex_IndexStatistics_FaqStatisticsRef {
+        KendraIndex_IndexStatistics_FaqStatisticsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexIndexStatisticsElFaqStatisticsElRef {
+impl KendraIndex_IndexStatistics_FaqStatisticsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -657,14 +693,14 @@ impl KendraIndexIndexStatisticsElFaqStatisticsElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexIndexStatisticsElTextDocumentStatisticsEl {
+pub struct KendraIndex_IndexStatistics_TextDocumentStatistics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     indexed_text_bytes: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     indexed_text_documents_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl KendraIndexIndexStatisticsElTextDocumentStatisticsEl {
+impl KendraIndex_IndexStatistics_TextDocumentStatistics {
     #[doc = "Set the field `indexed_text_bytes`.\n"]
     pub fn set_indexed_text_bytes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.indexed_text_bytes = std::option::Option::Some(v.into());
@@ -678,8 +714,8 @@ impl KendraIndexIndexStatisticsElTextDocumentStatisticsEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexIndexStatisticsElTextDocumentStatisticsEl {
-    type O = terrars::BlockAssignable<KendraIndexIndexStatisticsElTextDocumentStatisticsEl>;
+impl terrars::ToListMappable for KendraIndex_IndexStatistics_TextDocumentStatistics {
+    type O = terrars::BlockAssignable<KendraIndex_IndexStatistics_TextDocumentStatistics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -690,35 +726,37 @@ impl terrars::ToListMappable for KendraIndexIndexStatisticsElTextDocumentStatist
     }
 }
 
-pub struct BuildKendraIndexIndexStatisticsElTextDocumentStatisticsEl {}
+pub struct BuildKendraIndex_IndexStatistics_TextDocumentStatistics {}
 
-impl BuildKendraIndexIndexStatisticsElTextDocumentStatisticsEl {
-    pub fn build(self) -> KendraIndexIndexStatisticsElTextDocumentStatisticsEl {
-        KendraIndexIndexStatisticsElTextDocumentStatisticsEl {
+impl BuildKendraIndex_IndexStatistics_TextDocumentStatistics {
+    pub fn build(self) -> KendraIndex_IndexStatistics_TextDocumentStatistics {
+        KendraIndex_IndexStatistics_TextDocumentStatistics {
             indexed_text_bytes: core::default::Default::default(),
             indexed_text_documents_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraIndexIndexStatisticsElTextDocumentStatisticsElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_IndexStatistics_TextDocumentStatisticsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexIndexStatisticsElTextDocumentStatisticsElRef {
+impl terrars::Ref for KendraIndex_IndexStatistics_TextDocumentStatisticsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraIndexIndexStatisticsElTextDocumentStatisticsElRef {
-        KendraIndexIndexStatisticsElTextDocumentStatisticsElRef {
+    ) -> KendraIndex_IndexStatistics_TextDocumentStatisticsRef {
+        KendraIndex_IndexStatistics_TextDocumentStatisticsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexIndexStatisticsElTextDocumentStatisticsElRef {
+impl KendraIndex_IndexStatistics_TextDocumentStatisticsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -735,20 +773,20 @@ impl KendraIndexIndexStatisticsElTextDocumentStatisticsElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexIndexStatisticsEl {
+pub struct KendraIndex_IndexStatistics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    faq_statistics: std::option::Option<terrars::ListField<KendraIndexIndexStatisticsElFaqStatisticsEl>>,
+    faq_statistics: std::option::Option<terrars::ListField<KendraIndex_IndexStatistics_FaqStatistics>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     text_document_statistics: std
     ::option
-    ::Option<terrars::ListField<KendraIndexIndexStatisticsElTextDocumentStatisticsEl>>,
+    ::Option<terrars::ListField<KendraIndex_IndexStatistics_TextDocumentStatistics>>,
 }
 
-impl KendraIndexIndexStatisticsEl {
+impl KendraIndex_IndexStatistics {
     #[doc = "Set the field `faq_statistics`.\n"]
     pub fn set_faq_statistics(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<KendraIndexIndexStatisticsElFaqStatisticsEl>>,
+        v: impl std::convert::Into<terrars::ListField<KendraIndex_IndexStatistics_FaqStatistics>>,
     ) -> Self {
         self.faq_statistics = std::option::Option::Some(v.into());
         self
@@ -757,15 +795,15 @@ impl KendraIndexIndexStatisticsEl {
     #[doc = "Set the field `text_document_statistics`.\n"]
     pub fn set_text_document_statistics(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<KendraIndexIndexStatisticsElTextDocumentStatisticsEl>>,
+        v: impl std::convert::Into<terrars::ListField<KendraIndex_IndexStatistics_TextDocumentStatistics>>,
     ) -> Self {
         self.text_document_statistics = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for KendraIndexIndexStatisticsEl {
-    type O = terrars::BlockAssignable<KendraIndexIndexStatisticsEl>;
+impl terrars::ToListMappable for KendraIndex_IndexStatistics {
+    type O = terrars::BlockAssignable<KendraIndex_IndexStatistics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -776,56 +814,58 @@ impl terrars::ToListMappable for KendraIndexIndexStatisticsEl {
     }
 }
 
-pub struct BuildKendraIndexIndexStatisticsEl {}
+pub struct BuildKendraIndex_IndexStatistics {}
 
-impl BuildKendraIndexIndexStatisticsEl {
-    pub fn build(self) -> KendraIndexIndexStatisticsEl {
-        KendraIndexIndexStatisticsEl {
+impl BuildKendraIndex_IndexStatistics {
+    pub fn build(self) -> KendraIndex_IndexStatistics {
+        KendraIndex_IndexStatistics {
             faq_statistics: core::default::Default::default(),
             text_document_statistics: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraIndexIndexStatisticsElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_IndexStatisticsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexIndexStatisticsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraIndexIndexStatisticsElRef {
-        KendraIndexIndexStatisticsElRef {
+impl terrars::Ref for KendraIndex_IndexStatisticsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraIndex_IndexStatisticsRef {
+        KendraIndex_IndexStatisticsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexIndexStatisticsElRef {
+impl KendraIndex_IndexStatisticsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `faq_statistics` after provisioning.\n"]
-    pub fn faq_statistics(&self) -> terrars::ListRef<KendraIndexIndexStatisticsElFaqStatisticsElRef> {
+    pub fn faq_statistics(&self) -> terrars::ListRef<KendraIndex_IndexStatistics_FaqStatisticsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.faq_statistics", self.base))
     }
 
     #[doc = "Get a reference to the value of field `text_document_statistics` after provisioning.\n"]
-    pub fn text_document_statistics(&self) -> terrars::ListRef<KendraIndexIndexStatisticsElTextDocumentStatisticsElRef> {
+    pub fn text_document_statistics(&self) -> terrars::ListRef<KendraIndex_IndexStatistics_TextDocumentStatisticsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.text_document_statistics", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexCapacityUnitsEl {
+pub struct KendraIndex_CapacityUnits {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     query_capacity_units: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_capacity_units: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl KendraIndexCapacityUnitsEl {
+impl KendraIndex_CapacityUnits {
     #[doc = "Set the field `query_capacity_units`.\n"]
     pub fn set_query_capacity_units(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.query_capacity_units = std::option::Option::Some(v.into());
@@ -839,8 +879,8 @@ impl KendraIndexCapacityUnitsEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexCapacityUnitsEl {
-    type O = terrars::BlockAssignable<KendraIndexCapacityUnitsEl>;
+impl terrars::ToListMappable for KendraIndex_CapacityUnits {
+    type O = terrars::BlockAssignable<KendraIndex_CapacityUnits>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -851,32 +891,34 @@ impl terrars::ToListMappable for KendraIndexCapacityUnitsEl {
     }
 }
 
-pub struct BuildKendraIndexCapacityUnitsEl {}
+pub struct BuildKendraIndex_CapacityUnits {}
 
-impl BuildKendraIndexCapacityUnitsEl {
-    pub fn build(self) -> KendraIndexCapacityUnitsEl {
-        KendraIndexCapacityUnitsEl {
+impl BuildKendraIndex_CapacityUnits {
+    pub fn build(self) -> KendraIndex_CapacityUnits {
+        KendraIndex_CapacityUnits {
             query_capacity_units: core::default::Default::default(),
             storage_capacity_units: core::default::Default::default(),
         }
     }
 }
 
-pub struct KendraIndexCapacityUnitsElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_CapacityUnitsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexCapacityUnitsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraIndexCapacityUnitsElRef {
-        KendraIndexCapacityUnitsElRef {
+impl terrars::Ref for KendraIndex_CapacityUnitsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraIndex_CapacityUnitsRef {
+        KendraIndex_CapacityUnitsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexCapacityUnitsElRef {
+impl KendraIndex_CapacityUnitsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -893,7 +935,7 @@ impl KendraIndexCapacityUnitsElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {
+pub struct KendraIndex_DocumentMetadataConfigurationUpdates_Relevance {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     duration: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -906,7 +948,7 @@ pub struct KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {
     values_importance_map: std::option::Option<terrars::RecField<terrars::PrimField<f64>>>,
 }
 
-impl KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {
+impl KendraIndex_DocumentMetadataConfigurationUpdates_Relevance {
     #[doc = "Set the field `duration`.\n"]
     pub fn set_duration(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.duration = std::option::Option::Some(v.into());
@@ -941,8 +983,8 @@ impl KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {
-    type O = terrars::BlockAssignable<KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl>;
+impl terrars::ToListMappable for KendraIndex_DocumentMetadataConfigurationUpdates_Relevance {
+    type O = terrars::BlockAssignable<KendraIndex_DocumentMetadataConfigurationUpdates_Relevance>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -953,11 +995,11 @@ impl terrars::ToListMappable for KendraIndexDocumentMetadataConfigurationUpdates
     }
 }
 
-pub struct BuildKendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {}
+pub struct BuildKendraIndex_DocumentMetadataConfigurationUpdates_Relevance {}
 
-impl BuildKendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {
-    pub fn build(self) -> KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {
-        KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {
+impl BuildKendraIndex_DocumentMetadataConfigurationUpdates_Relevance {
+    pub fn build(self) -> KendraIndex_DocumentMetadataConfigurationUpdates_Relevance {
+        KendraIndex_DocumentMetadataConfigurationUpdates_Relevance {
             duration: core::default::Default::default(),
             freshness: core::default::Default::default(),
             importance: core::default::Default::default(),
@@ -967,24 +1009,26 @@ impl BuildKendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl {
     }
 }
 
-pub struct KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_DocumentMetadataConfigurationUpdates_RelevanceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceElRef {
+impl terrars::Ref for KendraIndex_DocumentMetadataConfigurationUpdates_RelevanceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceElRef {
-        KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceElRef {
+    ) -> KendraIndex_DocumentMetadataConfigurationUpdates_RelevanceRef {
+        KendraIndex_DocumentMetadataConfigurationUpdates_RelevanceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceElRef {
+impl KendraIndex_DocumentMetadataConfigurationUpdates_RelevanceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1016,7 +1060,7 @@ impl KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {
+pub struct KendraIndex_DocumentMetadataConfigurationUpdates_Search {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     displayable: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1027,7 +1071,7 @@ pub struct KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {
     sortable: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {
+impl KendraIndex_DocumentMetadataConfigurationUpdates_Search {
     #[doc = "Set the field `displayable`.\n"]
     pub fn set_displayable(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.displayable = std::option::Option::Some(v.into());
@@ -1053,8 +1097,8 @@ impl KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {
-    type O = terrars::BlockAssignable<KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl>;
+impl terrars::ToListMappable for KendraIndex_DocumentMetadataConfigurationUpdates_Search {
+    type O = terrars::BlockAssignable<KendraIndex_DocumentMetadataConfigurationUpdates_Search>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1065,11 +1109,11 @@ impl terrars::ToListMappable for KendraIndexDocumentMetadataConfigurationUpdates
     }
 }
 
-pub struct BuildKendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {}
+pub struct BuildKendraIndex_DocumentMetadataConfigurationUpdates_Search {}
 
-impl BuildKendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {
-    pub fn build(self) -> KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {
-        KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {
+impl BuildKendraIndex_DocumentMetadataConfigurationUpdates_Search {
+    pub fn build(self) -> KendraIndex_DocumentMetadataConfigurationUpdates_Search {
+        KendraIndex_DocumentMetadataConfigurationUpdates_Search {
             displayable: core::default::Default::default(),
             facetable: core::default::Default::default(),
             searchable: core::default::Default::default(),
@@ -1078,24 +1122,26 @@ impl BuildKendraIndexDocumentMetadataConfigurationUpdatesElSearchEl {
     }
 }
 
-pub struct KendraIndexDocumentMetadataConfigurationUpdatesElSearchElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_DocumentMetadataConfigurationUpdates_SearchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexDocumentMetadataConfigurationUpdatesElSearchElRef {
+impl terrars::Ref for KendraIndex_DocumentMetadataConfigurationUpdates_SearchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraIndexDocumentMetadataConfigurationUpdatesElSearchElRef {
-        KendraIndexDocumentMetadataConfigurationUpdatesElSearchElRef {
+    ) -> KendraIndex_DocumentMetadataConfigurationUpdates_SearchRef {
+        KendraIndex_DocumentMetadataConfigurationUpdates_SearchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexDocumentMetadataConfigurationUpdatesElSearchElRef {
+impl KendraIndex_DocumentMetadataConfigurationUpdates_SearchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1122,26 +1168,24 @@ impl KendraIndexDocumentMetadataConfigurationUpdatesElSearchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct KendraIndexDocumentMetadataConfigurationUpdatesElDynamic {
-    relevance: std
-    ::option
-    ::Option<terrars::DynamicBlock<KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl>>,
-    search: std::option::Option<terrars::DynamicBlock<KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl>>,
+struct KendraIndex_DocumentMetadataConfigurationUpdatesDynamic {
+    relevance: std::option::Option<terrars::DynamicBlock<KendraIndex_DocumentMetadataConfigurationUpdates_Relevance>>,
+    search: std::option::Option<terrars::DynamicBlock<KendraIndex_DocumentMetadataConfigurationUpdates_Search>>,
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexDocumentMetadataConfigurationUpdatesEl {
+pub struct KendraIndex_DocumentMetadataConfigurationUpdates {
     name: terrars::PrimField<std::string::String>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    relevance: std::option::Option<std::vec::Vec<KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl>>,
+    relevance: std::option::Option<std::vec::Vec<KendraIndex_DocumentMetadataConfigurationUpdates_Relevance>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    search: std::option::Option<std::vec::Vec<KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl>>,
-    dynamic: KendraIndexDocumentMetadataConfigurationUpdatesElDynamic,
+    search: std::option::Option<std::vec::Vec<KendraIndex_DocumentMetadataConfigurationUpdates_Search>>,
+    dynamic: KendraIndex_DocumentMetadataConfigurationUpdatesDynamic,
 }
 
-impl KendraIndexDocumentMetadataConfigurationUpdatesEl {
+impl KendraIndex_DocumentMetadataConfigurationUpdates {
     #[doc = "Set the field `relevance`.\n"]
     pub fn set_relevance(
         mut self,
@@ -1150,7 +1194,7 @@ impl KendraIndexDocumentMetadataConfigurationUpdatesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceEl>>,
+                    ::Into<terrars::BlockAssignable<KendraIndex_DocumentMetadataConfigurationUpdates_Relevance>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1171,7 +1215,7 @@ impl KendraIndexDocumentMetadataConfigurationUpdatesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<KendraIndexDocumentMetadataConfigurationUpdatesElSearchEl>>,
+                    ::Into<terrars::BlockAssignable<KendraIndex_DocumentMetadataConfigurationUpdates_Search>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1185,8 +1229,8 @@ impl KendraIndexDocumentMetadataConfigurationUpdatesEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexDocumentMetadataConfigurationUpdatesEl {
-    type O = terrars::BlockAssignable<KendraIndexDocumentMetadataConfigurationUpdatesEl>;
+impl terrars::ToListMappable for KendraIndex_DocumentMetadataConfigurationUpdates {
+    type O = terrars::BlockAssignable<KendraIndex_DocumentMetadataConfigurationUpdates>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1197,16 +1241,16 @@ impl terrars::ToListMappable for KendraIndexDocumentMetadataConfigurationUpdates
     }
 }
 
-pub struct BuildKendraIndexDocumentMetadataConfigurationUpdatesEl {
+pub struct BuildKendraIndex_DocumentMetadataConfigurationUpdates {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraIndexDocumentMetadataConfigurationUpdatesEl {
-    pub fn build(self) -> KendraIndexDocumentMetadataConfigurationUpdatesEl {
-        KendraIndexDocumentMetadataConfigurationUpdatesEl {
+impl BuildKendraIndex_DocumentMetadataConfigurationUpdates {
+    pub fn build(self) -> KendraIndex_DocumentMetadataConfigurationUpdates {
+        KendraIndex_DocumentMetadataConfigurationUpdates {
             name: self.name,
             type_: self.type_,
             relevance: core::default::Default::default(),
@@ -1216,24 +1260,26 @@ impl BuildKendraIndexDocumentMetadataConfigurationUpdatesEl {
     }
 }
 
-pub struct KendraIndexDocumentMetadataConfigurationUpdatesElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_DocumentMetadataConfigurationUpdatesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexDocumentMetadataConfigurationUpdatesElRef {
+impl terrars::Ref for KendraIndex_DocumentMetadataConfigurationUpdatesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraIndexDocumentMetadataConfigurationUpdatesElRef {
-        KendraIndexDocumentMetadataConfigurationUpdatesElRef {
+    ) -> KendraIndex_DocumentMetadataConfigurationUpdatesRef {
+        KendraIndex_DocumentMetadataConfigurationUpdatesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexDocumentMetadataConfigurationUpdatesElRef {
+impl KendraIndex_DocumentMetadataConfigurationUpdatesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1249,23 +1295,23 @@ impl KendraIndexDocumentMetadataConfigurationUpdatesElRef {
     }
 
     #[doc = "Get a reference to the value of field `relevance` after provisioning.\n"]
-    pub fn relevance(&self) -> terrars::ListRef<KendraIndexDocumentMetadataConfigurationUpdatesElRelevanceElRef> {
+    pub fn relevance(&self) -> terrars::ListRef<KendraIndex_DocumentMetadataConfigurationUpdates_RelevanceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.relevance", self.base))
     }
 
     #[doc = "Get a reference to the value of field `search` after provisioning.\n"]
-    pub fn search(&self) -> terrars::ListRef<KendraIndexDocumentMetadataConfigurationUpdatesElSearchElRef> {
+    pub fn search(&self) -> terrars::ListRef<KendraIndex_DocumentMetadataConfigurationUpdates_SearchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.search", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexServerSideEncryptionConfigurationEl {
+pub struct KendraIndex_ServerSideEncryptionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraIndexServerSideEncryptionConfigurationEl {
+impl KendraIndex_ServerSideEncryptionConfiguration {
     #[doc = "Set the field `kms_key_id`.\n"]
     pub fn set_kms_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_id = std::option::Option::Some(v.into());
@@ -1273,8 +1319,8 @@ impl KendraIndexServerSideEncryptionConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexServerSideEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<KendraIndexServerSideEncryptionConfigurationEl>;
+impl terrars::ToListMappable for KendraIndex_ServerSideEncryptionConfiguration {
+    type O = terrars::BlockAssignable<KendraIndex_ServerSideEncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1285,32 +1331,34 @@ impl terrars::ToListMappable for KendraIndexServerSideEncryptionConfigurationEl 
     }
 }
 
-pub struct BuildKendraIndexServerSideEncryptionConfigurationEl {}
+pub struct BuildKendraIndex_ServerSideEncryptionConfiguration {}
 
-impl BuildKendraIndexServerSideEncryptionConfigurationEl {
-    pub fn build(self) -> KendraIndexServerSideEncryptionConfigurationEl {
-        KendraIndexServerSideEncryptionConfigurationEl { kms_key_id: core::default::Default::default() }
+impl BuildKendraIndex_ServerSideEncryptionConfiguration {
+    pub fn build(self) -> KendraIndex_ServerSideEncryptionConfiguration {
+        KendraIndex_ServerSideEncryptionConfiguration { kms_key_id: core::default::Default::default() }
     }
 }
 
-pub struct KendraIndexServerSideEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_ServerSideEncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexServerSideEncryptionConfigurationElRef {
+impl terrars::Ref for KendraIndex_ServerSideEncryptionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraIndexServerSideEncryptionConfigurationElRef {
-        KendraIndexServerSideEncryptionConfigurationElRef {
+    ) -> KendraIndex_ServerSideEncryptionConfigurationRef {
+        KendraIndex_ServerSideEncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexServerSideEncryptionConfigurationElRef {
+impl KendraIndex_ServerSideEncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1322,7 +1370,7 @@ impl KendraIndexServerSideEncryptionConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexTimeoutsEl {
+pub struct KendraIndex_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1331,7 +1379,7 @@ pub struct KendraIndexTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraIndexTimeoutsEl {
+impl KendraIndex_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -1351,8 +1399,8 @@ impl KendraIndexTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexTimeoutsEl {
-    type O = terrars::BlockAssignable<KendraIndexTimeoutsEl>;
+impl terrars::ToListMappable for KendraIndex_Timeouts {
+    type O = terrars::BlockAssignable<KendraIndex_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1363,11 +1411,11 @@ impl terrars::ToListMappable for KendraIndexTimeoutsEl {
     }
 }
 
-pub struct BuildKendraIndexTimeoutsEl {}
+pub struct BuildKendraIndex_Timeouts {}
 
-impl BuildKendraIndexTimeoutsEl {
-    pub fn build(self) -> KendraIndexTimeoutsEl {
-        KendraIndexTimeoutsEl {
+impl BuildKendraIndex_Timeouts {
+    pub fn build(self) -> KendraIndex_Timeouts {
+        KendraIndex_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1375,21 +1423,23 @@ impl BuildKendraIndexTimeoutsEl {
     }
 }
 
-pub struct KendraIndexTimeoutsElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraIndexTimeoutsElRef {
-        KendraIndexTimeoutsElRef {
+impl terrars::Ref for KendraIndex_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraIndex_TimeoutsRef {
+        KendraIndex_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexTimeoutsElRef {
+impl KendraIndex_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1411,14 +1461,14 @@ impl KendraIndexTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexUserGroupResolutionConfigurationEl {
+pub struct KendraIndex_UserGroupResolutionConfiguration {
     user_group_resolution_mode: terrars::PrimField<std::string::String>,
 }
 
-impl KendraIndexUserGroupResolutionConfigurationEl { }
+impl KendraIndex_UserGroupResolutionConfiguration { }
 
-impl terrars::ToListMappable for KendraIndexUserGroupResolutionConfigurationEl {
-    type O = terrars::BlockAssignable<KendraIndexUserGroupResolutionConfigurationEl>;
+impl terrars::ToListMappable for KendraIndex_UserGroupResolutionConfiguration {
+    type O = terrars::BlockAssignable<KendraIndex_UserGroupResolutionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1429,35 +1479,37 @@ impl terrars::ToListMappable for KendraIndexUserGroupResolutionConfigurationEl {
     }
 }
 
-pub struct BuildKendraIndexUserGroupResolutionConfigurationEl {
+pub struct BuildKendraIndex_UserGroupResolutionConfiguration {
     #[doc = ""]
     pub user_group_resolution_mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraIndexUserGroupResolutionConfigurationEl {
-    pub fn build(self) -> KendraIndexUserGroupResolutionConfigurationEl {
-        KendraIndexUserGroupResolutionConfigurationEl { user_group_resolution_mode: self.user_group_resolution_mode }
+impl BuildKendraIndex_UserGroupResolutionConfiguration {
+    pub fn build(self) -> KendraIndex_UserGroupResolutionConfiguration {
+        KendraIndex_UserGroupResolutionConfiguration { user_group_resolution_mode: self.user_group_resolution_mode }
     }
 }
 
-pub struct KendraIndexUserGroupResolutionConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_UserGroupResolutionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexUserGroupResolutionConfigurationElRef {
+impl terrars::Ref for KendraIndex_UserGroupResolutionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraIndexUserGroupResolutionConfigurationElRef {
-        KendraIndexUserGroupResolutionConfigurationElRef {
+    ) -> KendraIndex_UserGroupResolutionConfigurationRef {
+        KendraIndex_UserGroupResolutionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexUserGroupResolutionConfigurationElRef {
+impl KendraIndex_UserGroupResolutionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1469,15 +1521,15 @@ impl KendraIndexUserGroupResolutionConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl {
+pub struct KendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration {
     group_attribute_field: terrars::PrimField<std::string::String>,
     user_name_attribute_field: terrars::PrimField<std::string::String>,
 }
 
-impl KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl { }
+impl KendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration { }
 
-impl terrars::ToListMappable for KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl {
-    type O = terrars::BlockAssignable<KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl>;
+impl terrars::ToListMappable for KendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration {
+    type O = terrars::BlockAssignable<KendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1488,40 +1540,42 @@ impl terrars::ToListMappable for KendraIndexUserTokenConfigurationsElJsonTokenTy
     }
 }
 
-pub struct BuildKendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl {
+pub struct BuildKendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration {
     #[doc = ""]
     pub group_attribute_field: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub user_name_attribute_field: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl {
-    pub fn build(self) -> KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl {
-        KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl {
+impl BuildKendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration {
+    pub fn build(self) -> KendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration {
+        KendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration {
             group_attribute_field: self.group_attribute_field,
             user_name_attribute_field: self.user_name_attribute_field,
         }
     }
 }
 
-pub struct KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_UserTokenConfigurations_JsonTokenTypeConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationElRef {
+impl terrars::Ref for KendraIndex_UserTokenConfigurations_JsonTokenTypeConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationElRef {
-        KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationElRef {
+    ) -> KendraIndex_UserTokenConfigurations_JsonTokenTypeConfigurationRef {
+        KendraIndex_UserTokenConfigurations_JsonTokenTypeConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationElRef {
+impl KendraIndex_UserTokenConfigurations_JsonTokenTypeConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1538,7 +1592,7 @@ impl KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
+pub struct KendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     claim_regex: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1554,7 +1608,7 @@ pub struct KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
     user_name_attribute_field: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
+impl KendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration {
     #[doc = "Set the field `claim_regex`.\n"]
     pub fn set_claim_regex(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.claim_regex = std::option::Option::Some(v.into());
@@ -1601,8 +1655,8 @@ impl KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
-    type O = terrars::BlockAssignable<KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl>;
+impl terrars::ToListMappable for KendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration {
+    type O = terrars::BlockAssignable<KendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1613,14 +1667,14 @@ impl terrars::ToListMappable for KendraIndexUserTokenConfigurationsElJwtTokenTyp
     }
 }
 
-pub struct BuildKendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
+pub struct BuildKendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration {
     #[doc = ""]
     pub key_location: terrars::PrimField<std::string::String>,
 }
 
-impl BuildKendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
-    pub fn build(self) -> KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
-        KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
+impl BuildKendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration {
+    pub fn build(self) -> KendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration {
+        KendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration {
             claim_regex: core::default::Default::default(),
             group_attribute_field: core::default::Default::default(),
             issuer: core::default::Default::default(),
@@ -1632,24 +1686,26 @@ impl BuildKendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl {
     }
 }
 
-pub struct KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_UserTokenConfigurations_JwtTokenTypeConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationElRef {
+impl terrars::Ref for KendraIndex_UserTokenConfigurations_JwtTokenTypeConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationElRef {
-        KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationElRef {
+    ) -> KendraIndex_UserTokenConfigurations_JwtTokenTypeConfigurationRef {
+        KendraIndex_UserTokenConfigurations_JwtTokenTypeConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationElRef {
+impl KendraIndex_UserTokenConfigurations_JwtTokenTypeConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1691,29 +1747,29 @@ impl KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationElRef {
 }
 
 #[derive(Serialize, Default)]
-struct KendraIndexUserTokenConfigurationsElDynamic {
+struct KendraIndex_UserTokenConfigurationsDynamic {
     json_token_type_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<KendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration>>,
     jwt_token_type_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<KendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct KendraIndexUserTokenConfigurationsEl {
+pub struct KendraIndex_UserTokenConfigurations {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     json_token_type_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl>>,
+    ::Option<std::vec::Vec<KendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     jwt_token_type_configuration: std
     ::option
-    ::Option<std::vec::Vec<KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl>>,
-    dynamic: KendraIndexUserTokenConfigurationsElDynamic,
+    ::Option<std::vec::Vec<KendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration>>,
+    dynamic: KendraIndex_UserTokenConfigurationsDynamic,
 }
 
-impl KendraIndexUserTokenConfigurationsEl {
+impl KendraIndex_UserTokenConfigurations {
     #[doc = "Set the field `json_token_type_configuration`.\n"]
     pub fn set_json_token_type_configuration(
         mut self,
@@ -1722,9 +1778,7 @@ impl KendraIndexUserTokenConfigurationsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<KendraIndex_UserTokenConfigurations_JsonTokenTypeConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1745,7 +1799,7 @@ impl KendraIndexUserTokenConfigurationsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<KendraIndex_UserTokenConfigurations_JwtTokenTypeConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1759,8 +1813,8 @@ impl KendraIndexUserTokenConfigurationsEl {
     }
 }
 
-impl terrars::ToListMappable for KendraIndexUserTokenConfigurationsEl {
-    type O = terrars::BlockAssignable<KendraIndexUserTokenConfigurationsEl>;
+impl terrars::ToListMappable for KendraIndex_UserTokenConfigurations {
+    type O = terrars::BlockAssignable<KendraIndex_UserTokenConfigurations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1771,11 +1825,11 @@ impl terrars::ToListMappable for KendraIndexUserTokenConfigurationsEl {
     }
 }
 
-pub struct BuildKendraIndexUserTokenConfigurationsEl {}
+pub struct BuildKendraIndex_UserTokenConfigurations {}
 
-impl BuildKendraIndexUserTokenConfigurationsEl {
-    pub fn build(self) -> KendraIndexUserTokenConfigurationsEl {
-        KendraIndexUserTokenConfigurationsEl {
+impl BuildKendraIndex_UserTokenConfigurations {
+    pub fn build(self) -> KendraIndex_UserTokenConfigurations {
+        KendraIndex_UserTokenConfigurations {
             json_token_type_configuration: core::default::Default::default(),
             jwt_token_type_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1783,21 +1837,23 @@ impl BuildKendraIndexUserTokenConfigurationsEl {
     }
 }
 
-pub struct KendraIndexUserTokenConfigurationsElRef {
+#[allow(dead_code)]
+pub struct KendraIndex_UserTokenConfigurationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for KendraIndexUserTokenConfigurationsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraIndexUserTokenConfigurationsElRef {
-        KendraIndexUserTokenConfigurationsElRef {
+impl terrars::Ref for KendraIndex_UserTokenConfigurationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> KendraIndex_UserTokenConfigurationsRef {
+        KendraIndex_UserTokenConfigurationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl KendraIndexUserTokenConfigurationsElRef {
+impl KendraIndex_UserTokenConfigurationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1805,29 +1861,14 @@ impl KendraIndexUserTokenConfigurationsElRef {
     #[doc = "Get a reference to the value of field `json_token_type_configuration` after provisioning.\n"]
     pub fn json_token_type_configuration(
         &self,
-    ) -> terrars::ListRef<KendraIndexUserTokenConfigurationsElJsonTokenTypeConfigurationElRef> {
+    ) -> terrars::ListRef<KendraIndex_UserTokenConfigurations_JsonTokenTypeConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.json_token_type_configuration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `jwt_token_type_configuration` after provisioning.\n"]
     pub fn jwt_token_type_configuration(
         &self,
-    ) -> terrars::ListRef<KendraIndexUserTokenConfigurationsElJwtTokenTypeConfigurationElRef> {
+    ) -> terrars::ListRef<KendraIndex_UserTokenConfigurations_JwtTokenTypeConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.jwt_token_type_configuration", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct KendraIndexDynamic {
-    capacity_units: std::option::Option<terrars::DynamicBlock<KendraIndexCapacityUnitsEl>>,
-    document_metadata_configuration_updates: std
-    ::option
-    ::Option<terrars::DynamicBlock<KendraIndexDocumentMetadataConfigurationUpdatesEl>>,
-    server_side_encryption_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<KendraIndexServerSideEncryptionConfigurationEl>>,
-    user_group_resolution_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<KendraIndexUserGroupResolutionConfigurationEl>>,
-    user_token_configurations: std::option::Option<terrars::DynamicBlock<KendraIndexUserTokenConfigurationsEl>>,
 }

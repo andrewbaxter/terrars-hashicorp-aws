@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ChimeVoiceConnectorStreamingData {
+struct ChimeVoiceConnectorStreamingData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,21 @@ struct ChimeVoiceConnectorStreamingData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     streaming_notification_targets: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     voice_connector_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    media_insights_configuration: std
+    ::option
+    ::Option<std::vec::Vec<ChimeVoiceConnectorStreaming_MediaInsightsConfiguration>>,
+    dynamic: ChimeVoiceConnectorStreamingDynamic,
 }
 
 struct ChimeVoiceConnectorStreaming_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ChimeVoiceConnectorStreamingData>,
+    data: std::cell::RefCell<ChimeVoiceConnectorStreamingData_>,
 }
 
 #[derive(Clone)]
@@ -143,12 +152,40 @@ impl ChimeVoiceConnectorStreaming {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `streaming_notification_targets`.\n"]
     pub fn set_streaming_notification_targets(
         self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().streaming_notification_targets = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `media_insights_configuration`.\n"]
+    pub fn set_media_insights_configuration(
+        self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<ChimeVoiceConnectorStreaming_MediaInsightsConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().media_insights_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.media_insights_configuration = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -167,6 +204,12 @@ impl ChimeVoiceConnectorStreaming {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `streaming_notification_targets` after provisioning.\n"]
     pub fn streaming_notification_targets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.streaming_notification_targets", self.extract_ref()))
@@ -175,6 +218,13 @@ impl ChimeVoiceConnectorStreaming {
     #[doc = "Get a reference to the value of field `voice_connector_id` after provisioning.\n"]
     pub fn voice_connector_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.voice_connector_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `media_insights_configuration` after provisioning.\n"]
+    pub fn media_insights_configuration(
+        &self,
+    ) -> terrars::ListRef<ChimeVoiceConnectorStreaming_MediaInsightsConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.media_insights_configuration", self.extract_ref()))
     }
 }
 
@@ -222,7 +272,7 @@ impl BuildChimeVoiceConnectorStreaming {
         let out = ChimeVoiceConnectorStreaming(std::rc::Rc::new(ChimeVoiceConnectorStreaming_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ChimeVoiceConnectorStreamingData {
+            data: std::cell::RefCell::new(ChimeVoiceConnectorStreamingData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -231,8 +281,11 @@ impl BuildChimeVoiceConnectorStreaming {
                 data_retention: self.data_retention,
                 disabled: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 streaming_notification_targets: core::default::Default::default(),
                 voice_connector_id: self.voice_connector_id,
+                media_insights_configuration: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -278,6 +331,12 @@ impl ChimeVoiceConnectorStreamingRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `streaming_notification_targets` after provisioning.\n"]
     pub fn streaming_notification_targets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.streaming_notification_targets", self.extract_ref()))
@@ -286,5 +345,99 @@ impl ChimeVoiceConnectorStreamingRef {
     #[doc = "Get a reference to the value of field `voice_connector_id` after provisioning.\n"]
     pub fn voice_connector_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.voice_connector_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `media_insights_configuration` after provisioning.\n"]
+    pub fn media_insights_configuration(
+        &self,
+    ) -> terrars::ListRef<ChimeVoiceConnectorStreaming_MediaInsightsConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.media_insights_configuration", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ChimeVoiceConnectorStreamingDynamic {
+    media_insights_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<ChimeVoiceConnectorStreaming_MediaInsightsConfiguration>>,
+}
+
+#[derive(Serialize)]
+pub struct ChimeVoiceConnectorStreaming_MediaInsightsConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    configuration_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    disabled: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl ChimeVoiceConnectorStreaming_MediaInsightsConfiguration {
+    #[doc = "Set the field `configuration_arn`.\n"]
+    pub fn set_configuration_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.configuration_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `disabled`.\n"]
+    pub fn set_disabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.disabled = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ChimeVoiceConnectorStreaming_MediaInsightsConfiguration {
+    type O = terrars::BlockAssignable<ChimeVoiceConnectorStreaming_MediaInsightsConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildChimeVoiceConnectorStreaming_MediaInsightsConfiguration {}
+
+impl BuildChimeVoiceConnectorStreaming_MediaInsightsConfiguration {
+    pub fn build(self) -> ChimeVoiceConnectorStreaming_MediaInsightsConfiguration {
+        ChimeVoiceConnectorStreaming_MediaInsightsConfiguration {
+            configuration_arn: core::default::Default::default(),
+            disabled: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ChimeVoiceConnectorStreaming_MediaInsightsConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ChimeVoiceConnectorStreaming_MediaInsightsConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ChimeVoiceConnectorStreaming_MediaInsightsConfigurationRef {
+        ChimeVoiceConnectorStreaming_MediaInsightsConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ChimeVoiceConnectorStreaming_MediaInsightsConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `configuration_arn` after provisioning.\n"]
+    pub fn configuration_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.configuration_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `disabled` after provisioning.\n"]
+    pub fn disabled(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.disabled", self.base))
     }
 }

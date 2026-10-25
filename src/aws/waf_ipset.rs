@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafIpsetData {
+struct WafIpsetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,14 @@ struct WafIpsetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ip_set_descriptors: std::option::Option<std::vec::Vec<WafIpsetIpSetDescriptorsEl>>,
+    ip_set_descriptors: std::option::Option<std::vec::Vec<WafIpset_IpSetDescriptors>>,
     dynamic: WafIpsetDynamic,
 }
 
 struct WafIpset_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafIpsetData>,
+    data: std::cell::RefCell<WafIpsetData_>,
 }
 
 #[derive(Clone)]
@@ -138,7 +140,7 @@ impl WafIpset {
     #[doc = "Set the field `ip_set_descriptors`.\n"]
     pub fn set_ip_set_descriptors(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafIpsetIpSetDescriptorsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafIpset_IpSetDescriptors>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -209,7 +211,7 @@ impl BuildWafIpset {
         let out = WafIpset(std::rc::Rc::new(WafIpset_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafIpsetData {
+            data: std::cell::RefCell::new(WafIpsetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -265,17 +267,22 @@ impl WafIpsetRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafIpsetDynamic {
+    ip_set_descriptors: std::option::Option<terrars::DynamicBlock<WafIpset_IpSetDescriptors>>,
+}
+
 #[derive(Serialize)]
-pub struct WafIpsetIpSetDescriptorsEl {
+pub struct WafIpset_IpSetDescriptors {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl WafIpsetIpSetDescriptorsEl { }
+impl WafIpset_IpSetDescriptors { }
 
-impl terrars::ToListMappable for WafIpsetIpSetDescriptorsEl {
-    type O = terrars::BlockAssignable<WafIpsetIpSetDescriptorsEl>;
+impl terrars::ToListMappable for WafIpset_IpSetDescriptors {
+    type O = terrars::BlockAssignable<WafIpset_IpSetDescriptors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -286,37 +293,39 @@ impl terrars::ToListMappable for WafIpsetIpSetDescriptorsEl {
     }
 }
 
-pub struct BuildWafIpsetIpSetDescriptorsEl {
+pub struct BuildWafIpset_IpSetDescriptors {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafIpsetIpSetDescriptorsEl {
-    pub fn build(self) -> WafIpsetIpSetDescriptorsEl {
-        WafIpsetIpSetDescriptorsEl {
+impl BuildWafIpset_IpSetDescriptors {
+    pub fn build(self) -> WafIpset_IpSetDescriptors {
+        WafIpset_IpSetDescriptors {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct WafIpsetIpSetDescriptorsElRef {
+#[allow(dead_code)]
+pub struct WafIpset_IpSetDescriptorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafIpsetIpSetDescriptorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafIpsetIpSetDescriptorsElRef {
-        WafIpsetIpSetDescriptorsElRef {
+impl terrars::Ref for WafIpset_IpSetDescriptorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafIpset_IpSetDescriptorsRef {
+        WafIpset_IpSetDescriptorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafIpsetIpSetDescriptorsElRef {
+impl WafIpset_IpSetDescriptorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -330,9 +339,4 @@ impl WafIpsetIpSetDescriptorsElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafIpsetDynamic {
-    ip_set_descriptors: std::option::Option<terrars::DynamicBlock<WafIpsetIpSetDescriptorsEl>>,
 }

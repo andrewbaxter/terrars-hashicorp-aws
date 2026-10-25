@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafregionalSqlInjectionMatchSetData {
+struct WafregionalSqlInjectionMatchSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,16 +24,16 @@ struct WafregionalSqlInjectionMatchSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sql_injection_match_tuple: std
-    ::option
-    ::Option<std::vec::Vec<WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sql_injection_match_tuple: std::option::Option<std::vec::Vec<WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple>>,
     dynamic: WafregionalSqlInjectionMatchSetDynamic,
 }
 
 struct WafregionalSqlInjectionMatchSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafregionalSqlInjectionMatchSetData>,
+    data: std::cell::RefCell<WafregionalSqlInjectionMatchSetData_>,
 }
 
 #[derive(Clone)]
@@ -137,15 +139,17 @@ impl WafregionalSqlInjectionMatchSet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `sql_injection_match_tuple`.\n"]
     pub fn set_sql_injection_match_tuple(
         self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -166,6 +170,12 @@ impl WafregionalSqlInjectionMatchSet {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -211,7 +221,7 @@ impl BuildWafregionalSqlInjectionMatchSet {
         let out = WafregionalSqlInjectionMatchSet(std::rc::Rc::new(WafregionalSqlInjectionMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafregionalSqlInjectionMatchSetData {
+            data: std::cell::RefCell::new(WafregionalSqlInjectionMatchSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -219,6 +229,7 @@ impl BuildWafregionalSqlInjectionMatchSet {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 sql_injection_match_tuple: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -260,17 +271,30 @@ impl WafregionalSqlInjectionMatchSetRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct WafregionalSqlInjectionMatchSetDynamic {
+    sql_injection_match_tuple: std
+    ::option
+    ::Option<terrars::DynamicBlock<WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple>>,
 }
 
 #[derive(Serialize)]
-pub struct WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl {
+pub struct WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl {
+impl WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -278,8 +302,8 @@ impl WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl {
     }
 }
 
-impl terrars::ToListMappable for WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl {
-    type O = terrars::BlockAssignable<WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl>;
+impl terrars::ToListMappable for WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch {
+    type O = terrars::BlockAssignable<WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -290,38 +314,40 @@ impl terrars::ToListMappable for WafregionalSqlInjectionMatchSetSqlInjectionMatc
     }
 }
 
-pub struct BuildWafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl {
+pub struct BuildWafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl {
-    pub fn build(self) -> WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl {
-        WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl {
+impl BuildWafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch {
+    pub fn build(self) -> WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch {
+        WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch {
             data: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchElRef {
+#[allow(dead_code)]
+pub struct WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchElRef {
+impl terrars::Ref for WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchElRef {
-        WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchElRef {
+    ) -> WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatchRef {
+        WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchElRef {
+impl WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -338,23 +364,23 @@ impl WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElDynamic {
+struct WafregionalSqlInjectionMatchSet_SqlInjectionMatchTupleDynamic {
     field_to_match: std
     ::option
-    ::Option<terrars::DynamicBlock<WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl>>,
+    ::Option<terrars::DynamicBlock<WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
+pub struct WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple {
     text_transformation: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     field_to_match: std
     ::option
-    ::Option<std::vec::Vec<WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl>>,
-    dynamic: WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElDynamic,
+    ::Option<std::vec::Vec<WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch>>,
+    dynamic: WafregionalSqlInjectionMatchSet_SqlInjectionMatchTupleDynamic,
 }
 
-impl WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
+impl WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple {
     #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
@@ -364,8 +390,7 @@ impl WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchEl>,
+                        terrars::BlockAssignable<WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatch>,
                     >,
     ) -> Self {
         match v.into() {
@@ -380,8 +405,8 @@ impl WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
     }
 }
 
-impl terrars::ToListMappable for WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
-    type O = terrars::BlockAssignable<WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl>;
+impl terrars::ToListMappable for WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple {
+    type O = terrars::BlockAssignable<WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -392,14 +417,14 @@ impl terrars::ToListMappable for WafregionalSqlInjectionMatchSetSqlInjectionMatc
     }
 }
 
-pub struct BuildWafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
+pub struct BuildWafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple {
     #[doc = ""]
     pub text_transformation: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
-    pub fn build(self) -> WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
-        WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
+impl BuildWafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple {
+    pub fn build(self) -> WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple {
+        WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple {
             text_transformation: self.text_transformation,
             field_to_match: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -407,24 +432,26 @@ impl BuildWafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl {
     }
 }
 
-pub struct WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElRef {
+#[allow(dead_code)]
+pub struct WafregionalSqlInjectionMatchSet_SqlInjectionMatchTupleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElRef {
+impl terrars::Ref for WafregionalSqlInjectionMatchSet_SqlInjectionMatchTupleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElRef {
-        WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElRef {
+    ) -> WafregionalSqlInjectionMatchSet_SqlInjectionMatchTupleRef {
+        WafregionalSqlInjectionMatchSet_SqlInjectionMatchTupleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElRef {
+impl WafregionalSqlInjectionMatchSet_SqlInjectionMatchTupleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -437,14 +464,7 @@ impl WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElRef {
     #[doc = "Get a reference to the value of field `field_to_match` after provisioning.\n"]
     pub fn field_to_match(
         &self,
-    ) -> terrars::ListRef<WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleElFieldToMatchElRef> {
+    ) -> terrars::ListRef<WafregionalSqlInjectionMatchSet_SqlInjectionMatchTuple_FieldToMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafregionalSqlInjectionMatchSetDynamic {
-    sql_injection_match_tuple: std
-    ::option
-    ::Option<terrars::DynamicBlock<WafregionalSqlInjectionMatchSetSqlInjectionMatchTupleEl>>,
 }

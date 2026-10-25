@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DefaultNetworkAclData {
+struct DefaultNetworkAclData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,22 +24,24 @@ struct DefaultNetworkAclData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress: std::option::Option<std::vec::Vec<DefaultNetworkAclEgressEl>>,
+    egress: std::option::Option<std::vec::Vec<DefaultNetworkAcl_Egress>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ingress: std::option::Option<std::vec::Vec<DefaultNetworkAclIngressEl>>,
+    ingress: std::option::Option<std::vec::Vec<DefaultNetworkAcl_Ingress>>,
     dynamic: DefaultNetworkAclDynamic,
 }
 
 struct DefaultNetworkAcl_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DefaultNetworkAclData>,
+    data: std::cell::RefCell<DefaultNetworkAclData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl DefaultNetworkAcl {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `subnet_ids`.\n"]
     pub fn set_subnet_ids(
         self,
@@ -171,7 +182,7 @@ impl DefaultNetworkAcl {
     }
 
     #[doc = "Set the field `egress`.\n"]
-    pub fn set_egress(self, v: impl std::convert::Into<terrars::BlockAssignable<DefaultNetworkAclEgressEl>>) -> Self {
+    pub fn set_egress(self, v: impl std::convert::Into<terrars::BlockAssignable<DefaultNetworkAcl_Egress>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().egress = std::option::Option::Some(v);
@@ -184,7 +195,7 @@ impl DefaultNetworkAcl {
     }
 
     #[doc = "Set the field `ingress`.\n"]
-    pub fn set_ingress(self, v: impl std::convert::Into<terrars::BlockAssignable<DefaultNetworkAclIngressEl>>) -> Self {
+    pub fn set_ingress(self, v: impl std::convert::Into<terrars::BlockAssignable<DefaultNetworkAcl_Ingress>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().ingress = std::option::Option::Some(v);
@@ -214,6 +225,12 @@ impl DefaultNetworkAcl {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
@@ -279,7 +296,7 @@ impl BuildDefaultNetworkAcl {
         let out = DefaultNetworkAcl(std::rc::Rc::new(DefaultNetworkAcl_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DefaultNetworkAclData {
+            data: std::cell::RefCell::new(DefaultNetworkAclData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -287,6 +304,7 @@ impl BuildDefaultNetworkAcl {
                 provisioner: core::default::Default::default(),
                 default_network_acl_id: self.default_network_acl_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 subnet_ids: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -343,6 +361,12 @@ impl DefaultNetworkAclRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_ids` after provisioning.\n"]
     pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.extract_ref()))
@@ -364,306 +388,310 @@ impl DefaultNetworkAclRef {
     }
 }
 
-#[derive(Serialize)]
-pub struct DefaultNetworkAclEgressEl {
-    action: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
-    from_port: terrars::PrimField<f64>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    icmp_code: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    icmp_type: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
-    protocol: terrars::PrimField<std::string::String>,
-    rule_no: terrars::PrimField<f64>,
-    to_port: terrars::PrimField<f64>,
-}
-
-impl DefaultNetworkAclEgressEl {
-    #[doc = "Set the field `cidr_block`.\n"]
-    pub fn set_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cidr_block = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `icmp_code`.\n"]
-    pub fn set_icmp_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.icmp_code = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `icmp_type`.\n"]
-    pub fn set_icmp_type(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.icmp_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `ipv6_cidr_block`.\n"]
-    pub fn set_ipv6_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.ipv6_cidr_block = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DefaultNetworkAclEgressEl {
-    type O = terrars::BlockAssignable<DefaultNetworkAclEgressEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDefaultNetworkAclEgressEl {
-    #[doc = ""]
-    pub action: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub from_port: terrars::PrimField<f64>,
-    #[doc = ""]
-    pub protocol: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub rule_no: terrars::PrimField<f64>,
-    #[doc = ""]
-    pub to_port: terrars::PrimField<f64>,
-}
-
-impl BuildDefaultNetworkAclEgressEl {
-    pub fn build(self) -> DefaultNetworkAclEgressEl {
-        DefaultNetworkAclEgressEl {
-            action: self.action,
-            cidr_block: core::default::Default::default(),
-            from_port: self.from_port,
-            icmp_code: core::default::Default::default(),
-            icmp_type: core::default::Default::default(),
-            ipv6_cidr_block: core::default::Default::default(),
-            protocol: self.protocol,
-            rule_no: self.rule_no,
-            to_port: self.to_port,
-        }
-    }
-}
-
-pub struct DefaultNetworkAclEgressElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DefaultNetworkAclEgressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultNetworkAclEgressElRef {
-        DefaultNetworkAclEgressElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DefaultNetworkAclEgressElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `cidr_block` after provisioning.\n"]
-    pub fn cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr_block", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `from_port` after provisioning.\n"]
-    pub fn from_port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from_port", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `icmp_code` after provisioning.\n"]
-    pub fn icmp_code(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.icmp_code", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `icmp_type` after provisioning.\n"]
-    pub fn icmp_type(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.icmp_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
-    pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `rule_no` after provisioning.\n"]
-    pub fn rule_no(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_no", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to_port` after provisioning.\n"]
-    pub fn to_port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to_port", self.base))
-    }
-}
-
-#[derive(Serialize)]
-pub struct DefaultNetworkAclIngressEl {
-    action: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
-    from_port: terrars::PrimField<f64>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    icmp_code: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    icmp_type: std::option::Option<terrars::PrimField<f64>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
-    protocol: terrars::PrimField<std::string::String>,
-    rule_no: terrars::PrimField<f64>,
-    to_port: terrars::PrimField<f64>,
-}
-
-impl DefaultNetworkAclIngressEl {
-    #[doc = "Set the field `cidr_block`.\n"]
-    pub fn set_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.cidr_block = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `icmp_code`.\n"]
-    pub fn set_icmp_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.icmp_code = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `icmp_type`.\n"]
-    pub fn set_icmp_type(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.icmp_type = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `ipv6_cidr_block`.\n"]
-    pub fn set_ipv6_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.ipv6_cidr_block = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars::ToListMappable for DefaultNetworkAclIngressEl {
-    type O = terrars::BlockAssignable<DefaultNetworkAclIngressEl>;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildDefaultNetworkAclIngressEl {
-    #[doc = ""]
-    pub action: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub from_port: terrars::PrimField<f64>,
-    #[doc = ""]
-    pub protocol: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub rule_no: terrars::PrimField<f64>,
-    #[doc = ""]
-    pub to_port: terrars::PrimField<f64>,
-}
-
-impl BuildDefaultNetworkAclIngressEl {
-    pub fn build(self) -> DefaultNetworkAclIngressEl {
-        DefaultNetworkAclIngressEl {
-            action: self.action,
-            cidr_block: core::default::Default::default(),
-            from_port: self.from_port,
-            icmp_code: core::default::Default::default(),
-            icmp_type: core::default::Default::default(),
-            ipv6_cidr_block: core::default::Default::default(),
-            protocol: self.protocol,
-            rule_no: self.rule_no,
-            to_port: self.to_port,
-        }
-    }
-}
-
-pub struct DefaultNetworkAclIngressElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for DefaultNetworkAclIngressElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultNetworkAclIngressElRef {
-        DefaultNetworkAclIngressElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl DefaultNetworkAclIngressElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `cidr_block` after provisioning.\n"]
-    pub fn cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr_block", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `from_port` after provisioning.\n"]
-    pub fn from_port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from_port", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `icmp_code` after provisioning.\n"]
-    pub fn icmp_code(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.icmp_code", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `icmp_type` after provisioning.\n"]
-    pub fn icmp_type(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.icmp_type", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
-    pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `rule_no` after provisioning.\n"]
-    pub fn rule_no(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_no", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `to_port` after provisioning.\n"]
-    pub fn to_port(&self) -> terrars::PrimExpr<f64> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to_port", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
 struct DefaultNetworkAclDynamic {
-    egress: std::option::Option<terrars::DynamicBlock<DefaultNetworkAclEgressEl>>,
-    ingress: std::option::Option<terrars::DynamicBlock<DefaultNetworkAclIngressEl>>,
+    egress: std::option::Option<terrars::DynamicBlock<DefaultNetworkAcl_Egress>>,
+    ingress: std::option::Option<terrars::DynamicBlock<DefaultNetworkAcl_Ingress>>,
+}
+
+#[derive(Serialize)]
+pub struct DefaultNetworkAcl_Egress {
+    action: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    from_port: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    icmp_code: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    icmp_type: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    protocol: terrars::PrimField<std::string::String>,
+    rule_no: terrars::PrimField<f64>,
+    to_port: terrars::PrimField<f64>,
+}
+
+impl DefaultNetworkAcl_Egress {
+    #[doc = "Set the field `cidr_block`.\n"]
+    pub fn set_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cidr_block = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `icmp_code`.\n"]
+    pub fn set_icmp_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.icmp_code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `icmp_type`.\n"]
+    pub fn set_icmp_type(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.icmp_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv6_cidr_block`.\n"]
+    pub fn set_ipv6_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6_cidr_block = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DefaultNetworkAcl_Egress {
+    type O = terrars::BlockAssignable<DefaultNetworkAcl_Egress>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDefaultNetworkAcl_Egress {
+    #[doc = ""]
+    pub action: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub from_port: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub protocol: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub rule_no: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub to_port: terrars::PrimField<f64>,
+}
+
+impl BuildDefaultNetworkAcl_Egress {
+    pub fn build(self) -> DefaultNetworkAcl_Egress {
+        DefaultNetworkAcl_Egress {
+            action: self.action,
+            cidr_block: core::default::Default::default(),
+            from_port: self.from_port,
+            icmp_code: core::default::Default::default(),
+            icmp_type: core::default::Default::default(),
+            ipv6_cidr_block: core::default::Default::default(),
+            protocol: self.protocol,
+            rule_no: self.rule_no,
+            to_port: self.to_port,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DefaultNetworkAcl_EgressRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DefaultNetworkAcl_EgressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultNetworkAcl_EgressRef {
+        DefaultNetworkAcl_EgressRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DefaultNetworkAcl_EgressRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
+    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cidr_block` after provisioning.\n"]
+    pub fn cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr_block", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `from_port` after provisioning.\n"]
+    pub fn from_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from_port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `icmp_code` after provisioning.\n"]
+    pub fn icmp_code(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.icmp_code", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `icmp_type` after provisioning.\n"]
+    pub fn icmp_type(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.icmp_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
+    pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
+    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `rule_no` after provisioning.\n"]
+    pub fn rule_no(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_no", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `to_port` after provisioning.\n"]
+    pub fn to_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to_port", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DefaultNetworkAcl_Ingress {
+    action: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    from_port: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    icmp_code: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    icmp_type: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ipv6_cidr_block: std::option::Option<terrars::PrimField<std::string::String>>,
+    protocol: terrars::PrimField<std::string::String>,
+    rule_no: terrars::PrimField<f64>,
+    to_port: terrars::PrimField<f64>,
+}
+
+impl DefaultNetworkAcl_Ingress {
+    #[doc = "Set the field `cidr_block`.\n"]
+    pub fn set_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.cidr_block = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `icmp_code`.\n"]
+    pub fn set_icmp_code(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.icmp_code = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `icmp_type`.\n"]
+    pub fn set_icmp_type(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.icmp_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ipv6_cidr_block`.\n"]
+    pub fn set_ipv6_cidr_block(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ipv6_cidr_block = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DefaultNetworkAcl_Ingress {
+    type O = terrars::BlockAssignable<DefaultNetworkAcl_Ingress>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDefaultNetworkAcl_Ingress {
+    #[doc = ""]
+    pub action: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub from_port: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub protocol: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub rule_no: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub to_port: terrars::PrimField<f64>,
+}
+
+impl BuildDefaultNetworkAcl_Ingress {
+    pub fn build(self) -> DefaultNetworkAcl_Ingress {
+        DefaultNetworkAcl_Ingress {
+            action: self.action,
+            cidr_block: core::default::Default::default(),
+            from_port: self.from_port,
+            icmp_code: core::default::Default::default(),
+            icmp_type: core::default::Default::default(),
+            ipv6_cidr_block: core::default::Default::default(),
+            protocol: self.protocol,
+            rule_no: self.rule_no,
+            to_port: self.to_port,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DefaultNetworkAcl_IngressRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DefaultNetworkAcl_IngressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DefaultNetworkAcl_IngressRef {
+        DefaultNetworkAcl_IngressRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DefaultNetworkAcl_IngressRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
+    pub fn action(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.action", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `cidr_block` after provisioning.\n"]
+    pub fn cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cidr_block", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `from_port` after provisioning.\n"]
+    pub fn from_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.from_port", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `icmp_code` after provisioning.\n"]
+    pub fn icmp_code(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.icmp_code", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `icmp_type` after provisioning.\n"]
+    pub fn icmp_type(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.icmp_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ipv6_cidr_block` after provisioning.\n"]
+    pub fn ipv6_cidr_block(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ipv6_cidr_block", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
+    pub fn protocol(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `rule_no` after provisioning.\n"]
+    pub fn rule_no(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_no", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `to_port` after provisioning.\n"]
+    pub fn to_port(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.to_port", self.base))
+    }
 }

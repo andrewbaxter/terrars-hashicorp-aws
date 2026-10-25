@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodeartifactDomainPermissionsPolicyData {
+struct CodeartifactDomainPermissionsPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,15 +25,18 @@ struct CodeartifactDomainPermissionsPolicyData {
     domain_owner: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
-    policy_document: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_document: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy_revision: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct CodeartifactDomainPermissionsPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodeartifactDomainPermissionsPolicyData>,
+    data: std::cell::RefCell<CodeartifactDomainPermissionsPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -143,9 +148,22 @@ impl CodeartifactDomainPermissionsPolicy {
         self
     }
 
+    #[doc = "Set the field `policy_document`.\n"]
+    pub fn set_policy_document(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().policy_document = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `policy_revision`.\n"]
     pub fn set_policy_revision(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().policy_revision = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -172,6 +190,12 @@ impl CodeartifactDomainPermissionsPolicy {
     #[doc = "Get a reference to the value of field `policy_revision` after provisioning.\n"]
     pub fn policy_revision(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_revision", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]
@@ -215,8 +239,6 @@ pub struct BuildCodeartifactDomainPermissionsPolicy {
     pub tf_id: std::string::String,
     #[doc = ""]
     pub domain: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub policy_document: terrars::PrimField<std::string::String>,
 }
 
 impl BuildCodeartifactDomainPermissionsPolicy {
@@ -224,7 +246,7 @@ impl BuildCodeartifactDomainPermissionsPolicy {
         let out = CodeartifactDomainPermissionsPolicy(std::rc::Rc::new(CodeartifactDomainPermissionsPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodeartifactDomainPermissionsPolicyData {
+            data: std::cell::RefCell::new(CodeartifactDomainPermissionsPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -233,8 +255,9 @@ impl BuildCodeartifactDomainPermissionsPolicy {
                 domain: self.domain,
                 domain_owner: core::default::Default::default(),
                 id: core::default::Default::default(),
-                policy_document: self.policy_document,
+                policy_document: core::default::Default::default(),
                 policy_revision: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -288,6 +311,12 @@ impl CodeartifactDomainPermissionsPolicyRef {
     #[doc = "Get a reference to the value of field `policy_revision` after provisioning.\n"]
     pub fn policy_revision(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy_revision", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resource_arn` after provisioning.\n"]

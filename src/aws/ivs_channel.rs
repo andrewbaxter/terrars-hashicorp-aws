@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct IvsChannelData {
+struct IvsChannelData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,19 +31,21 @@ struct IvsChannelData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     recording_configuration_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<IvsChannelTimeoutsEl>,
+    timeouts: std::option::Option<IvsChannel_Timeouts>,
 }
 
 struct IvsChannel_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<IvsChannelData>,
+    data: std::cell::RefCell<IvsChannelData_>,
 }
 
 #[derive(Clone)]
@@ -174,6 +178,13 @@ impl IvsChannel {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -199,7 +210,7 @@ impl IvsChannel {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<IvsChannelTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<IvsChannel_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -244,6 +255,12 @@ impl IvsChannel {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.recording_configuration_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -260,8 +277,8 @@ impl IvsChannel {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IvsChannelTimeoutsElRef {
-        IvsChannelTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IvsChannel_TimeoutsRef {
+        IvsChannel_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -305,7 +322,7 @@ impl BuildIvsChannel {
         let out = IvsChannel(std::rc::Rc::new(IvsChannel_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(IvsChannelData {
+            data: std::cell::RefCell::new(IvsChannelData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -316,6 +333,7 @@ impl BuildIvsChannel {
                 latency_mode: core::default::Default::default(),
                 name: core::default::Default::default(),
                 recording_configuration_arn: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 type_: core::default::Default::default(),
@@ -390,6 +408,12 @@ impl IvsChannelRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.recording_configuration_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -406,13 +430,13 @@ impl IvsChannelRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> IvsChannelTimeoutsElRef {
-        IvsChannelTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> IvsChannel_TimeoutsRef {
+        IvsChannel_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct IvsChannelTimeoutsEl {
+pub struct IvsChannel_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -421,7 +445,7 @@ pub struct IvsChannelTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl IvsChannelTimeoutsEl {
+impl IvsChannel_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -441,8 +465,8 @@ impl IvsChannelTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for IvsChannelTimeoutsEl {
-    type O = terrars::BlockAssignable<IvsChannelTimeoutsEl>;
+impl terrars::ToListMappable for IvsChannel_Timeouts {
+    type O = terrars::BlockAssignable<IvsChannel_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -453,11 +477,11 @@ impl terrars::ToListMappable for IvsChannelTimeoutsEl {
     }
 }
 
-pub struct BuildIvsChannelTimeoutsEl {}
+pub struct BuildIvsChannel_Timeouts {}
 
-impl BuildIvsChannelTimeoutsEl {
-    pub fn build(self) -> IvsChannelTimeoutsEl {
-        IvsChannelTimeoutsEl {
+impl BuildIvsChannel_Timeouts {
+    pub fn build(self) -> IvsChannel_Timeouts {
+        IvsChannel_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -465,21 +489,23 @@ impl BuildIvsChannelTimeoutsEl {
     }
 }
 
-pub struct IvsChannelTimeoutsElRef {
+#[allow(dead_code)]
+pub struct IvsChannel_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for IvsChannelTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> IvsChannelTimeoutsElRef {
-        IvsChannelTimeoutsElRef {
+impl terrars::Ref for IvsChannel_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> IvsChannel_TimeoutsRef {
+        IvsChannel_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl IvsChannelTimeoutsElRef {
+impl IvsChannel_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataConnectBotAssociationData {
+struct DataConnectBotAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,14 +22,16 @@ struct DataConnectBotAssociationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     instance_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lex_bot: std::option::Option<std::vec::Vec<DataConnectBotAssociationLexBotEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    lex_bot: std::option::Option<std::vec::Vec<DataConnectBotAssociation_LexBot>>,
     dynamic: DataConnectBotAssociationDynamic,
 }
 
 struct DataConnectBotAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataConnectBotAssociationData>,
+    data: std::cell::RefCell<DataConnectBotAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -78,10 +82,17 @@ impl DataConnectBotAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `lex_bot`.\n"]
     pub fn set_lex_bot(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataConnectBotAssociationLexBotEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataConnectBotAssociation_LexBot>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -104,8 +115,14 @@ impl DataConnectBotAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `lex_bot` after provisioning.\n"]
-    pub fn lex_bot(&self) -> terrars::ListRef<DataConnectBotAssociationLexBotElRef> {
+    pub fn lex_bot(&self) -> terrars::ListRef<DataConnectBotAssociation_LexBotRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lex_bot", self.extract_ref()))
     }
 }
@@ -152,13 +169,14 @@ impl BuildDataConnectBotAssociation {
         let out = DataConnectBotAssociation(std::rc::Rc::new(DataConnectBotAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataConnectBotAssociationData {
+            data: std::cell::RefCell::new(DataConnectBotAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
+                region: core::default::Default::default(),
                 lex_bot: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -201,20 +219,31 @@ impl DataConnectBotAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `lex_bot` after provisioning.\n"]
-    pub fn lex_bot(&self) -> terrars::ListRef<DataConnectBotAssociationLexBotElRef> {
+    pub fn lex_bot(&self) -> terrars::ListRef<DataConnectBotAssociation_LexBotRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lex_bot", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataConnectBotAssociationDynamic {
+    lex_bot: std::option::Option<terrars::DynamicBlock<DataConnectBotAssociation_LexBot>>,
+}
+
 #[derive(Serialize)]
-pub struct DataConnectBotAssociationLexBotEl {
+pub struct DataConnectBotAssociation_LexBot {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lex_region: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
 }
 
-impl DataConnectBotAssociationLexBotEl {
+impl DataConnectBotAssociation_LexBot {
     #[doc = "Set the field `lex_region`.\n"]
     pub fn set_lex_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.lex_region = std::option::Option::Some(v.into());
@@ -222,8 +251,8 @@ impl DataConnectBotAssociationLexBotEl {
     }
 }
 
-impl terrars::ToListMappable for DataConnectBotAssociationLexBotEl {
-    type O = terrars::BlockAssignable<DataConnectBotAssociationLexBotEl>;
+impl terrars::ToListMappable for DataConnectBotAssociation_LexBot {
+    type O = terrars::BlockAssignable<DataConnectBotAssociation_LexBot>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -234,35 +263,37 @@ impl terrars::ToListMappable for DataConnectBotAssociationLexBotEl {
     }
 }
 
-pub struct BuildDataConnectBotAssociationLexBotEl {
+pub struct BuildDataConnectBotAssociation_LexBot {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataConnectBotAssociationLexBotEl {
-    pub fn build(self) -> DataConnectBotAssociationLexBotEl {
-        DataConnectBotAssociationLexBotEl {
+impl BuildDataConnectBotAssociation_LexBot {
+    pub fn build(self) -> DataConnectBotAssociation_LexBot {
+        DataConnectBotAssociation_LexBot {
             lex_region: core::default::Default::default(),
             name: self.name,
         }
     }
 }
 
-pub struct DataConnectBotAssociationLexBotElRef {
+#[allow(dead_code)]
+pub struct DataConnectBotAssociation_LexBotRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectBotAssociationLexBotElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataConnectBotAssociationLexBotElRef {
-        DataConnectBotAssociationLexBotElRef {
+impl terrars::Ref for DataConnectBotAssociation_LexBotRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataConnectBotAssociation_LexBotRef {
+        DataConnectBotAssociation_LexBotRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectBotAssociationLexBotElRef {
+impl DataConnectBotAssociation_LexBotRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -276,9 +307,4 @@ impl DataConnectBotAssociationLexBotElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataConnectBotAssociationDynamic {
-    lex_bot: std::option::Option<terrars::DynamicBlock<DataConnectBotAssociationLexBotEl>>,
 }

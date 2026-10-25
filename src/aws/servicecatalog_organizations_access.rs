@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ServicecatalogOrganizationsAccessData {
+struct ServicecatalogOrganizationsAccessData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,13 +24,13 @@ struct ServicecatalogOrganizationsAccessData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ServicecatalogOrganizationsAccessTimeoutsEl>,
+    timeouts: std::option::Option<ServicecatalogOrganizationsAccess_Timeouts>,
 }
 
 struct ServicecatalogOrganizationsAccess_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ServicecatalogOrganizationsAccessData>,
+    data: std::cell::RefCell<ServicecatalogOrganizationsAccessData_>,
 }
 
 #[derive(Clone)]
@@ -135,7 +137,7 @@ impl ServicecatalogOrganizationsAccess {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogOrganizationsAccessTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogOrganizationsAccess_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -151,8 +153,8 @@ impl ServicecatalogOrganizationsAccess {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogOrganizationsAccessTimeoutsElRef {
-        ServicecatalogOrganizationsAccessTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ServicecatalogOrganizationsAccess_TimeoutsRef {
+        ServicecatalogOrganizationsAccess_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -201,7 +203,7 @@ impl BuildServicecatalogOrganizationsAccess {
         let out = ServicecatalogOrganizationsAccess(std::rc::Rc::new(ServicecatalogOrganizationsAccess_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ServicecatalogOrganizationsAccessData {
+            data: std::cell::RefCell::new(ServicecatalogOrganizationsAccessData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -251,8 +253,8 @@ impl ServicecatalogOrganizationsAccessRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogOrganizationsAccessTimeoutsElRef {
-        ServicecatalogOrganizationsAccessTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ServicecatalogOrganizationsAccess_TimeoutsRef {
+        ServicecatalogOrganizationsAccess_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -260,12 +262,12 @@ impl ServicecatalogOrganizationsAccessRef {
 }
 
 #[derive(Serialize)]
-pub struct ServicecatalogOrganizationsAccessTimeoutsEl {
+pub struct ServicecatalogOrganizationsAccess_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ServicecatalogOrganizationsAccessTimeoutsEl {
+impl ServicecatalogOrganizationsAccess_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -273,8 +275,8 @@ impl ServicecatalogOrganizationsAccessTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ServicecatalogOrganizationsAccessTimeoutsEl {
-    type O = terrars::BlockAssignable<ServicecatalogOrganizationsAccessTimeoutsEl>;
+impl terrars::ToListMappable for ServicecatalogOrganizationsAccess_Timeouts {
+    type O = terrars::BlockAssignable<ServicecatalogOrganizationsAccess_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -285,32 +287,31 @@ impl terrars::ToListMappable for ServicecatalogOrganizationsAccessTimeoutsEl {
     }
 }
 
-pub struct BuildServicecatalogOrganizationsAccessTimeoutsEl {}
+pub struct BuildServicecatalogOrganizationsAccess_Timeouts {}
 
-impl BuildServicecatalogOrganizationsAccessTimeoutsEl {
-    pub fn build(self) -> ServicecatalogOrganizationsAccessTimeoutsEl {
-        ServicecatalogOrganizationsAccessTimeoutsEl { read: core::default::Default::default() }
+impl BuildServicecatalogOrganizationsAccess_Timeouts {
+    pub fn build(self) -> ServicecatalogOrganizationsAccess_Timeouts {
+        ServicecatalogOrganizationsAccess_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct ServicecatalogOrganizationsAccessTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ServicecatalogOrganizationsAccess_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ServicecatalogOrganizationsAccessTimeoutsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> ServicecatalogOrganizationsAccessTimeoutsElRef {
-        ServicecatalogOrganizationsAccessTimeoutsElRef {
+impl terrars::Ref for ServicecatalogOrganizationsAccess_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ServicecatalogOrganizationsAccess_TimeoutsRef {
+        ServicecatalogOrganizationsAccess_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ServicecatalogOrganizationsAccessTimeoutsElRef {
+impl ServicecatalogOrganizationsAccess_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataConnectHoursOfOperationData {
+struct DataConnectHoursOfOperationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,13 +26,15 @@ struct DataConnectHoursOfOperationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataConnectHoursOfOperation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataConnectHoursOfOperationData>,
+    data: std::cell::RefCell<DataConnectHoursOfOperationData_>,
 }
 
 #[derive(Clone)]
@@ -93,6 +97,13 @@ impl DataConnectHoursOfOperation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -108,18 +119,13 @@ impl DataConnectHoursOfOperation {
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::SetRef<DataConnectHoursOfOperationConfigElRef> {
+    pub fn config(&self) -> terrars::SetRef<DataConnectHoursOfOperation_ConfigRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `hours_of_operation_arn` after provisioning.\n"]
-    pub fn hours_of_operation_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hours_of_operation_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `hours_of_operation_id` after provisioning.\n"]
@@ -140,6 +146,12 @@ impl DataConnectHoursOfOperation {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -195,7 +207,7 @@ impl BuildDataConnectHoursOfOperation {
         let out = DataConnectHoursOfOperation(std::rc::Rc::new(DataConnectHoursOfOperation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataConnectHoursOfOperationData {
+            data: std::cell::RefCell::new(DataConnectHoursOfOperationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -204,6 +216,7 @@ impl BuildDataConnectHoursOfOperation {
                 id: core::default::Default::default(),
                 instance_id: self.instance_id,
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -241,18 +254,13 @@ impl DataConnectHoursOfOperationRef {
     }
 
     #[doc = "Get a reference to the value of field `config` after provisioning.\n"]
-    pub fn config(&self) -> terrars::SetRef<DataConnectHoursOfOperationConfigElRef> {
+    pub fn config(&self) -> terrars::SetRef<DataConnectHoursOfOperation_ConfigRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `hours_of_operation_arn` after provisioning.\n"]
-    pub fn hours_of_operation_arn(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hours_of_operation_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `hours_of_operation_id` after provisioning.\n"]
@@ -275,6 +283,12 @@ impl DataConnectHoursOfOperationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -287,14 +301,14 @@ impl DataConnectHoursOfOperationRef {
 }
 
 #[derive(Serialize)]
-pub struct DataConnectHoursOfOperationConfigElEndTimeEl {
+pub struct DataConnectHoursOfOperation_Config_EndTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hours: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     minutes: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataConnectHoursOfOperationConfigElEndTimeEl {
+impl DataConnectHoursOfOperation_Config_EndTime {
     #[doc = "Set the field `hours`.\n"]
     pub fn set_hours(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.hours = std::option::Option::Some(v.into());
@@ -308,8 +322,8 @@ impl DataConnectHoursOfOperationConfigElEndTimeEl {
     }
 }
 
-impl terrars::ToListMappable for DataConnectHoursOfOperationConfigElEndTimeEl {
-    type O = terrars::BlockAssignable<DataConnectHoursOfOperationConfigElEndTimeEl>;
+impl terrars::ToListMappable for DataConnectHoursOfOperation_Config_EndTime {
+    type O = terrars::BlockAssignable<DataConnectHoursOfOperation_Config_EndTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -320,35 +334,34 @@ impl terrars::ToListMappable for DataConnectHoursOfOperationConfigElEndTimeEl {
     }
 }
 
-pub struct BuildDataConnectHoursOfOperationConfigElEndTimeEl {}
+pub struct BuildDataConnectHoursOfOperation_Config_EndTime {}
 
-impl BuildDataConnectHoursOfOperationConfigElEndTimeEl {
-    pub fn build(self) -> DataConnectHoursOfOperationConfigElEndTimeEl {
-        DataConnectHoursOfOperationConfigElEndTimeEl {
+impl BuildDataConnectHoursOfOperation_Config_EndTime {
+    pub fn build(self) -> DataConnectHoursOfOperation_Config_EndTime {
+        DataConnectHoursOfOperation_Config_EndTime {
             hours: core::default::Default::default(),
             minutes: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataConnectHoursOfOperationConfigElEndTimeElRef {
+#[allow(dead_code)]
+pub struct DataConnectHoursOfOperation_Config_EndTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectHoursOfOperationConfigElEndTimeElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataConnectHoursOfOperationConfigElEndTimeElRef {
-        DataConnectHoursOfOperationConfigElEndTimeElRef {
+impl terrars::Ref for DataConnectHoursOfOperation_Config_EndTimeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataConnectHoursOfOperation_Config_EndTimeRef {
+        DataConnectHoursOfOperation_Config_EndTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectHoursOfOperationConfigElEndTimeElRef {
+impl DataConnectHoursOfOperation_Config_EndTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -365,14 +378,14 @@ impl DataConnectHoursOfOperationConfigElEndTimeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataConnectHoursOfOperationConfigElStartTimeEl {
+pub struct DataConnectHoursOfOperation_Config_StartTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     hours: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     minutes: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataConnectHoursOfOperationConfigElStartTimeEl {
+impl DataConnectHoursOfOperation_Config_StartTime {
     #[doc = "Set the field `hours`.\n"]
     pub fn set_hours(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.hours = std::option::Option::Some(v.into());
@@ -386,8 +399,8 @@ impl DataConnectHoursOfOperationConfigElStartTimeEl {
     }
 }
 
-impl terrars::ToListMappable for DataConnectHoursOfOperationConfigElStartTimeEl {
-    type O = terrars::BlockAssignable<DataConnectHoursOfOperationConfigElStartTimeEl>;
+impl terrars::ToListMappable for DataConnectHoursOfOperation_Config_StartTime {
+    type O = terrars::BlockAssignable<DataConnectHoursOfOperation_Config_StartTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -398,35 +411,37 @@ impl terrars::ToListMappable for DataConnectHoursOfOperationConfigElStartTimeEl 
     }
 }
 
-pub struct BuildDataConnectHoursOfOperationConfigElStartTimeEl {}
+pub struct BuildDataConnectHoursOfOperation_Config_StartTime {}
 
-impl BuildDataConnectHoursOfOperationConfigElStartTimeEl {
-    pub fn build(self) -> DataConnectHoursOfOperationConfigElStartTimeEl {
-        DataConnectHoursOfOperationConfigElStartTimeEl {
+impl BuildDataConnectHoursOfOperation_Config_StartTime {
+    pub fn build(self) -> DataConnectHoursOfOperation_Config_StartTime {
+        DataConnectHoursOfOperation_Config_StartTime {
             hours: core::default::Default::default(),
             minutes: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataConnectHoursOfOperationConfigElStartTimeElRef {
+#[allow(dead_code)]
+pub struct DataConnectHoursOfOperation_Config_StartTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectHoursOfOperationConfigElStartTimeElRef {
+impl terrars::Ref for DataConnectHoursOfOperation_Config_StartTimeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataConnectHoursOfOperationConfigElStartTimeElRef {
-        DataConnectHoursOfOperationConfigElStartTimeElRef {
+    ) -> DataConnectHoursOfOperation_Config_StartTimeRef {
+        DataConnectHoursOfOperation_Config_StartTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectHoursOfOperationConfigElStartTimeElRef {
+impl DataConnectHoursOfOperation_Config_StartTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -443,16 +458,16 @@ impl DataConnectHoursOfOperationConfigElStartTimeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataConnectHoursOfOperationConfigEl {
+pub struct DataConnectHoursOfOperation_Config {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     day: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    end_time: std::option::Option<terrars::ListField<DataConnectHoursOfOperationConfigElEndTimeEl>>,
+    end_time: std::option::Option<terrars::ListField<DataConnectHoursOfOperation_Config_EndTime>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    start_time: std::option::Option<terrars::ListField<DataConnectHoursOfOperationConfigElStartTimeEl>>,
+    start_time: std::option::Option<terrars::ListField<DataConnectHoursOfOperation_Config_StartTime>>,
 }
 
-impl DataConnectHoursOfOperationConfigEl {
+impl DataConnectHoursOfOperation_Config {
     #[doc = "Set the field `day`.\n"]
     pub fn set_day(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.day = std::option::Option::Some(v.into());
@@ -462,7 +477,7 @@ impl DataConnectHoursOfOperationConfigEl {
     #[doc = "Set the field `end_time`.\n"]
     pub fn set_end_time(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataConnectHoursOfOperationConfigElEndTimeEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataConnectHoursOfOperation_Config_EndTime>>,
     ) -> Self {
         self.end_time = std::option::Option::Some(v.into());
         self
@@ -471,15 +486,15 @@ impl DataConnectHoursOfOperationConfigEl {
     #[doc = "Set the field `start_time`.\n"]
     pub fn set_start_time(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataConnectHoursOfOperationConfigElStartTimeEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataConnectHoursOfOperation_Config_StartTime>>,
     ) -> Self {
         self.start_time = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataConnectHoursOfOperationConfigEl {
-    type O = terrars::BlockAssignable<DataConnectHoursOfOperationConfigEl>;
+impl terrars::ToListMappable for DataConnectHoursOfOperation_Config {
+    type O = terrars::BlockAssignable<DataConnectHoursOfOperation_Config>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -490,11 +505,11 @@ impl terrars::ToListMappable for DataConnectHoursOfOperationConfigEl {
     }
 }
 
-pub struct BuildDataConnectHoursOfOperationConfigEl {}
+pub struct BuildDataConnectHoursOfOperation_Config {}
 
-impl BuildDataConnectHoursOfOperationConfigEl {
-    pub fn build(self) -> DataConnectHoursOfOperationConfigEl {
-        DataConnectHoursOfOperationConfigEl {
+impl BuildDataConnectHoursOfOperation_Config {
+    pub fn build(self) -> DataConnectHoursOfOperation_Config {
+        DataConnectHoursOfOperation_Config {
             day: core::default::Default::default(),
             end_time: core::default::Default::default(),
             start_time: core::default::Default::default(),
@@ -502,21 +517,23 @@ impl BuildDataConnectHoursOfOperationConfigEl {
     }
 }
 
-pub struct DataConnectHoursOfOperationConfigElRef {
+#[allow(dead_code)]
+pub struct DataConnectHoursOfOperation_ConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataConnectHoursOfOperationConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataConnectHoursOfOperationConfigElRef {
-        DataConnectHoursOfOperationConfigElRef {
+impl terrars::Ref for DataConnectHoursOfOperation_ConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataConnectHoursOfOperation_ConfigRef {
+        DataConnectHoursOfOperation_ConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataConnectHoursOfOperationConfigElRef {
+impl DataConnectHoursOfOperation_ConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -527,12 +544,12 @@ impl DataConnectHoursOfOperationConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `end_time` after provisioning.\n"]
-    pub fn end_time(&self) -> terrars::ListRef<DataConnectHoursOfOperationConfigElEndTimeElRef> {
+    pub fn end_time(&self) -> terrars::ListRef<DataConnectHoursOfOperation_Config_EndTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.end_time", self.base))
     }
 
     #[doc = "Get a reference to the value of field `start_time` after provisioning.\n"]
-    pub fn start_time(&self) -> terrars::ListRef<DataConnectHoursOfOperationConfigElStartTimeElRef> {
+    pub fn start_time(&self) -> terrars::ListRef<DataConnectHoursOfOperation_Config_StartTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.start_time", self.base))
     }
 }

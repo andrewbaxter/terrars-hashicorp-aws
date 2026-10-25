@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Inspector2EnablerData {
+struct Inspector2EnablerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,15 +23,17 @@ struct Inspector2EnablerData {
     account_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     resource_types: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Inspector2EnablerTimeoutsEl>,
+    timeouts: std::option::Option<Inspector2Enabler_Timeouts>,
 }
 
 struct Inspector2Enabler_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Inspector2EnablerData>,
+    data: std::cell::RefCell<Inspector2EnablerData_>,
 }
 
 #[derive(Clone)]
@@ -135,8 +139,15 @@ impl Inspector2Enabler {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Inspector2EnablerTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Inspector2Enabler_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -151,14 +162,20 @@ impl Inspector2Enabler {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_types` after provisioning.\n"]
     pub fn resource_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.resource_types", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Inspector2EnablerTimeoutsElRef {
-        Inspector2EnablerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Inspector2Enabler_TimeoutsRef {
+        Inspector2Enabler_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -206,7 +223,7 @@ impl BuildInspector2Enabler {
         let out = Inspector2Enabler(std::rc::Rc::new(Inspector2Enabler_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Inspector2EnablerData {
+            data: std::cell::RefCell::new(Inspector2EnablerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -214,6 +231,7 @@ impl BuildInspector2Enabler {
                 provisioner: core::default::Default::default(),
                 account_ids: self.account_ids,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resource_types: self.resource_types,
                 timeouts: core::default::Default::default(),
             }),
@@ -256,19 +274,25 @@ impl Inspector2EnablerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_types` after provisioning.\n"]
     pub fn resource_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.resource_types", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Inspector2EnablerTimeoutsElRef {
-        Inspector2EnablerTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Inspector2Enabler_TimeoutsRef {
+        Inspector2Enabler_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct Inspector2EnablerTimeoutsEl {
+pub struct Inspector2Enabler_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -277,7 +301,7 @@ pub struct Inspector2EnablerTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Inspector2EnablerTimeoutsEl {
+impl Inspector2Enabler_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -297,8 +321,8 @@ impl Inspector2EnablerTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Inspector2EnablerTimeoutsEl {
-    type O = terrars::BlockAssignable<Inspector2EnablerTimeoutsEl>;
+impl terrars::ToListMappable for Inspector2Enabler_Timeouts {
+    type O = terrars::BlockAssignable<Inspector2Enabler_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -309,11 +333,11 @@ impl terrars::ToListMappable for Inspector2EnablerTimeoutsEl {
     }
 }
 
-pub struct BuildInspector2EnablerTimeoutsEl {}
+pub struct BuildInspector2Enabler_Timeouts {}
 
-impl BuildInspector2EnablerTimeoutsEl {
-    pub fn build(self) -> Inspector2EnablerTimeoutsEl {
-        Inspector2EnablerTimeoutsEl {
+impl BuildInspector2Enabler_Timeouts {
+    pub fn build(self) -> Inspector2Enabler_Timeouts {
+        Inspector2Enabler_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -321,21 +345,23 @@ impl BuildInspector2EnablerTimeoutsEl {
     }
 }
 
-pub struct Inspector2EnablerTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Inspector2Enabler_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Inspector2EnablerTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Inspector2EnablerTimeoutsElRef {
-        Inspector2EnablerTimeoutsElRef {
+impl terrars::Ref for Inspector2Enabler_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Inspector2Enabler_TimeoutsRef {
+        Inspector2Enabler_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Inspector2EnablerTimeoutsElRef {
+impl Inspector2Enabler_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

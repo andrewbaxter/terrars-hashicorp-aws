@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct StoragegatewayFileSystemAssociationData {
+struct StoragegatewayFileSystemAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,19 +28,23 @@ struct StoragegatewayFileSystemAssociationData {
     location_arn: terrars::PrimField<std::string::String>,
     password: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     username: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cache_attributes: std::option::Option<std::vec::Vec<StoragegatewayFileSystemAssociationCacheAttributesEl>>,
+    cache_attributes: std::option::Option<std::vec::Vec<StoragegatewayFileSystemAssociation_CacheAttributes>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<StoragegatewayFileSystemAssociation_Timeouts>,
     dynamic: StoragegatewayFileSystemAssociationDynamic,
 }
 
 struct StoragegatewayFileSystemAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<StoragegatewayFileSystemAssociationData>,
+    data: std::cell::RefCell<StoragegatewayFileSystemAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -150,6 +156,13 @@ impl StoragegatewayFileSystemAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -171,7 +184,7 @@ impl StoragegatewayFileSystemAssociation {
     #[doc = "Set the field `cache_attributes`.\n"]
     pub fn set_cache_attributes(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<StoragegatewayFileSystemAssociationCacheAttributesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<StoragegatewayFileSystemAssociation_CacheAttributes>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,6 +194,12 @@ impl StoragegatewayFileSystemAssociation {
                 self.0.data.borrow_mut().dynamic.cache_attributes = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<StoragegatewayFileSystemAssociation_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -214,6 +233,12 @@ impl StoragegatewayFileSystemAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -230,8 +255,16 @@ impl StoragegatewayFileSystemAssociation {
     }
 
     #[doc = "Get a reference to the value of field `cache_attributes` after provisioning.\n"]
-    pub fn cache_attributes(&self) -> terrars::ListRef<StoragegatewayFileSystemAssociationCacheAttributesElRef> {
+    pub fn cache_attributes(&self) -> terrars::ListRef<StoragegatewayFileSystemAssociation_CacheAttributesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cache_attributes", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> StoragegatewayFileSystemAssociation_TimeoutsRef {
+        StoragegatewayFileSystemAssociation_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
@@ -283,7 +316,7 @@ impl BuildStoragegatewayFileSystemAssociation {
         let out = StoragegatewayFileSystemAssociation(std::rc::Rc::new(StoragegatewayFileSystemAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(StoragegatewayFileSystemAssociationData {
+            data: std::cell::RefCell::new(StoragegatewayFileSystemAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -294,10 +327,12 @@ impl BuildStoragegatewayFileSystemAssociation {
                 id: core::default::Default::default(),
                 location_arn: self.location_arn,
                 password: self.password,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 username: self.username,
                 cache_attributes: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -359,6 +394,12 @@ impl StoragegatewayFileSystemAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -375,18 +416,33 @@ impl StoragegatewayFileSystemAssociationRef {
     }
 
     #[doc = "Get a reference to the value of field `cache_attributes` after provisioning.\n"]
-    pub fn cache_attributes(&self) -> terrars::ListRef<StoragegatewayFileSystemAssociationCacheAttributesElRef> {
+    pub fn cache_attributes(&self) -> terrars::ListRef<StoragegatewayFileSystemAssociation_CacheAttributesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cache_attributes", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> StoragegatewayFileSystemAssociation_TimeoutsRef {
+        StoragegatewayFileSystemAssociation_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
+#[derive(Serialize, Default)]
+struct StoragegatewayFileSystemAssociationDynamic {
+    cache_attributes: std
+    ::option
+    ::Option<terrars::DynamicBlock<StoragegatewayFileSystemAssociation_CacheAttributes>>,
+}
+
 #[derive(Serialize)]
-pub struct StoragegatewayFileSystemAssociationCacheAttributesEl {
+pub struct StoragegatewayFileSystemAssociation_CacheAttributes {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_stale_timeout_in_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl StoragegatewayFileSystemAssociationCacheAttributesEl {
+impl StoragegatewayFileSystemAssociation_CacheAttributes {
     #[doc = "Set the field `cache_stale_timeout_in_seconds`.\n"]
     pub fn set_cache_stale_timeout_in_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.cache_stale_timeout_in_seconds = std::option::Option::Some(v.into());
@@ -394,8 +450,8 @@ impl StoragegatewayFileSystemAssociationCacheAttributesEl {
     }
 }
 
-impl terrars::ToListMappable for StoragegatewayFileSystemAssociationCacheAttributesEl {
-    type O = terrars::BlockAssignable<StoragegatewayFileSystemAssociationCacheAttributesEl>;
+impl terrars::ToListMappable for StoragegatewayFileSystemAssociation_CacheAttributes {
+    type O = terrars::BlockAssignable<StoragegatewayFileSystemAssociation_CacheAttributes>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -406,34 +462,36 @@ impl terrars::ToListMappable for StoragegatewayFileSystemAssociationCacheAttribu
     }
 }
 
-pub struct BuildStoragegatewayFileSystemAssociationCacheAttributesEl {}
+pub struct BuildStoragegatewayFileSystemAssociation_CacheAttributes {}
 
-impl BuildStoragegatewayFileSystemAssociationCacheAttributesEl {
-    pub fn build(self) -> StoragegatewayFileSystemAssociationCacheAttributesEl {
-        StoragegatewayFileSystemAssociationCacheAttributesEl {
+impl BuildStoragegatewayFileSystemAssociation_CacheAttributes {
+    pub fn build(self) -> StoragegatewayFileSystemAssociation_CacheAttributes {
+        StoragegatewayFileSystemAssociation_CacheAttributes {
             cache_stale_timeout_in_seconds: core::default::Default::default(),
         }
     }
 }
 
-pub struct StoragegatewayFileSystemAssociationCacheAttributesElRef {
+#[allow(dead_code)]
+pub struct StoragegatewayFileSystemAssociation_CacheAttributesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for StoragegatewayFileSystemAssociationCacheAttributesElRef {
+impl terrars::Ref for StoragegatewayFileSystemAssociation_CacheAttributesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> StoragegatewayFileSystemAssociationCacheAttributesElRef {
-        StoragegatewayFileSystemAssociationCacheAttributesElRef {
+    ) -> StoragegatewayFileSystemAssociation_CacheAttributesRef {
+        StoragegatewayFileSystemAssociation_CacheAttributesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl StoragegatewayFileSystemAssociationCacheAttributesElRef {
+impl StoragegatewayFileSystemAssociation_CacheAttributesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -444,9 +502,96 @@ impl StoragegatewayFileSystemAssociationCacheAttributesElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct StoragegatewayFileSystemAssociationDynamic {
-    cache_attributes: std
-    ::option
-    ::Option<terrars::DynamicBlock<StoragegatewayFileSystemAssociationCacheAttributesEl>>,
+#[derive(Serialize)]
+pub struct StoragegatewayFileSystemAssociation_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl StoragegatewayFileSystemAssociation_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for StoragegatewayFileSystemAssociation_Timeouts {
+    type O = terrars::BlockAssignable<StoragegatewayFileSystemAssociation_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildStoragegatewayFileSystemAssociation_Timeouts {}
+
+impl BuildStoragegatewayFileSystemAssociation_Timeouts {
+    pub fn build(self) -> StoragegatewayFileSystemAssociation_Timeouts {
+        StoragegatewayFileSystemAssociation_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct StoragegatewayFileSystemAssociation_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for StoragegatewayFileSystemAssociation_TimeoutsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> StoragegatewayFileSystemAssociation_TimeoutsRef {
+        StoragegatewayFileSystemAssociation_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl StoragegatewayFileSystemAssociation_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

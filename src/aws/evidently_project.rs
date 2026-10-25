@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EvidentlyProjectData {
+struct EvidentlyProjectData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,22 @@ struct EvidentlyProjectData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    data_delivery: std::option::Option<std::vec::Vec<EvidentlyProjectDataDeliveryEl>>,
+    data_delivery: std::option::Option<std::vec::Vec<EvidentlyProject_DataDelivery>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EvidentlyProjectTimeoutsEl>,
+    timeouts: std::option::Option<EvidentlyProject_Timeouts>,
     dynamic: EvidentlyProjectDynamic,
 }
 
 struct EvidentlyProject_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EvidentlyProjectData>,
+    data: std::cell::RefCell<EvidentlyProjectData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl EvidentlyProject {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -170,7 +181,7 @@ impl EvidentlyProject {
     #[doc = "Set the field `data_delivery`.\n"]
     pub fn set_data_delivery(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyProjectDataDeliveryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyProject_DataDelivery>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +195,7 @@ impl EvidentlyProject {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EvidentlyProjectTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EvidentlyProject_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -244,6 +255,12 @@ impl EvidentlyProject {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -260,13 +277,13 @@ impl EvidentlyProject {
     }
 
     #[doc = "Get a reference to the value of field `data_delivery` after provisioning.\n"]
-    pub fn data_delivery(&self) -> terrars::ListRef<EvidentlyProjectDataDeliveryElRef> {
+    pub fn data_delivery(&self) -> terrars::ListRef<EvidentlyProject_DataDeliveryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_delivery", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EvidentlyProjectTimeoutsElRef {
-        EvidentlyProjectTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EvidentlyProject_TimeoutsRef {
+        EvidentlyProject_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -312,7 +329,7 @@ impl BuildEvidentlyProject {
         let out = EvidentlyProject(std::rc::Rc::new(EvidentlyProject_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EvidentlyProjectData {
+            data: std::cell::RefCell::new(EvidentlyProjectData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -321,6 +338,7 @@ impl BuildEvidentlyProject {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 data_delivery: core::default::Default::default(),
@@ -411,6 +429,12 @@ impl EvidentlyProjectRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
     pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
@@ -427,23 +451,28 @@ impl EvidentlyProjectRef {
     }
 
     #[doc = "Get a reference to the value of field `data_delivery` after provisioning.\n"]
-    pub fn data_delivery(&self) -> terrars::ListRef<EvidentlyProjectDataDeliveryElRef> {
+    pub fn data_delivery(&self) -> terrars::ListRef<EvidentlyProject_DataDeliveryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.data_delivery", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EvidentlyProjectTimeoutsElRef {
-        EvidentlyProjectTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EvidentlyProject_TimeoutsRef {
+        EvidentlyProject_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct EvidentlyProjectDynamic {
+    data_delivery: std::option::Option<terrars::DynamicBlock<EvidentlyProject_DataDelivery>>,
+}
+
 #[derive(Serialize)]
-pub struct EvidentlyProjectDataDeliveryElCloudwatchLogsEl {
+pub struct EvidentlyProject_DataDelivery_CloudwatchLogs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_group: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EvidentlyProjectDataDeliveryElCloudwatchLogsEl {
+impl EvidentlyProject_DataDelivery_CloudwatchLogs {
     #[doc = "Set the field `log_group`.\n"]
     pub fn set_log_group(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.log_group = std::option::Option::Some(v.into());
@@ -451,8 +480,8 @@ impl EvidentlyProjectDataDeliveryElCloudwatchLogsEl {
     }
 }
 
-impl terrars::ToListMappable for EvidentlyProjectDataDeliveryElCloudwatchLogsEl {
-    type O = terrars::BlockAssignable<EvidentlyProjectDataDeliveryElCloudwatchLogsEl>;
+impl terrars::ToListMappable for EvidentlyProject_DataDelivery_CloudwatchLogs {
+    type O = terrars::BlockAssignable<EvidentlyProject_DataDelivery_CloudwatchLogs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -463,32 +492,34 @@ impl terrars::ToListMappable for EvidentlyProjectDataDeliveryElCloudwatchLogsEl 
     }
 }
 
-pub struct BuildEvidentlyProjectDataDeliveryElCloudwatchLogsEl {}
+pub struct BuildEvidentlyProject_DataDelivery_CloudwatchLogs {}
 
-impl BuildEvidentlyProjectDataDeliveryElCloudwatchLogsEl {
-    pub fn build(self) -> EvidentlyProjectDataDeliveryElCloudwatchLogsEl {
-        EvidentlyProjectDataDeliveryElCloudwatchLogsEl { log_group: core::default::Default::default() }
+impl BuildEvidentlyProject_DataDelivery_CloudwatchLogs {
+    pub fn build(self) -> EvidentlyProject_DataDelivery_CloudwatchLogs {
+        EvidentlyProject_DataDelivery_CloudwatchLogs { log_group: core::default::Default::default() }
     }
 }
 
-pub struct EvidentlyProjectDataDeliveryElCloudwatchLogsElRef {
+#[allow(dead_code)]
+pub struct EvidentlyProject_DataDelivery_CloudwatchLogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EvidentlyProjectDataDeliveryElCloudwatchLogsElRef {
+impl terrars::Ref for EvidentlyProject_DataDelivery_CloudwatchLogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EvidentlyProjectDataDeliveryElCloudwatchLogsElRef {
-        EvidentlyProjectDataDeliveryElCloudwatchLogsElRef {
+    ) -> EvidentlyProject_DataDelivery_CloudwatchLogsRef {
+        EvidentlyProject_DataDelivery_CloudwatchLogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EvidentlyProjectDataDeliveryElCloudwatchLogsElRef {
+impl EvidentlyProject_DataDelivery_CloudwatchLogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -500,14 +531,14 @@ impl EvidentlyProjectDataDeliveryElCloudwatchLogsElRef {
 }
 
 #[derive(Serialize)]
-pub struct EvidentlyProjectDataDeliveryElS3DestinationEl {
+pub struct EvidentlyProject_DataDelivery_S3Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EvidentlyProjectDataDeliveryElS3DestinationEl {
+impl EvidentlyProject_DataDelivery_S3Destination {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -521,8 +552,8 @@ impl EvidentlyProjectDataDeliveryElS3DestinationEl {
     }
 }
 
-impl terrars::ToListMappable for EvidentlyProjectDataDeliveryElS3DestinationEl {
-    type O = terrars::BlockAssignable<EvidentlyProjectDataDeliveryElS3DestinationEl>;
+impl terrars::ToListMappable for EvidentlyProject_DataDelivery_S3Destination {
+    type O = terrars::BlockAssignable<EvidentlyProject_DataDelivery_S3Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -533,35 +564,37 @@ impl terrars::ToListMappable for EvidentlyProjectDataDeliveryElS3DestinationEl {
     }
 }
 
-pub struct BuildEvidentlyProjectDataDeliveryElS3DestinationEl {}
+pub struct BuildEvidentlyProject_DataDelivery_S3Destination {}
 
-impl BuildEvidentlyProjectDataDeliveryElS3DestinationEl {
-    pub fn build(self) -> EvidentlyProjectDataDeliveryElS3DestinationEl {
-        EvidentlyProjectDataDeliveryElS3DestinationEl {
+impl BuildEvidentlyProject_DataDelivery_S3Destination {
+    pub fn build(self) -> EvidentlyProject_DataDelivery_S3Destination {
+        EvidentlyProject_DataDelivery_S3Destination {
             bucket: core::default::Default::default(),
             prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct EvidentlyProjectDataDeliveryElS3DestinationElRef {
+#[allow(dead_code)]
+pub struct EvidentlyProject_DataDelivery_S3DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EvidentlyProjectDataDeliveryElS3DestinationElRef {
+impl terrars::Ref for EvidentlyProject_DataDelivery_S3DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> EvidentlyProjectDataDeliveryElS3DestinationElRef {
-        EvidentlyProjectDataDeliveryElS3DestinationElRef {
+    ) -> EvidentlyProject_DataDelivery_S3DestinationRef {
+        EvidentlyProject_DataDelivery_S3DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EvidentlyProjectDataDeliveryElS3DestinationElRef {
+impl EvidentlyProject_DataDelivery_S3DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -578,25 +611,25 @@ impl EvidentlyProjectDataDeliveryElS3DestinationElRef {
 }
 
 #[derive(Serialize, Default)]
-struct EvidentlyProjectDataDeliveryElDynamic {
-    cloudwatch_logs: std::option::Option<terrars::DynamicBlock<EvidentlyProjectDataDeliveryElCloudwatchLogsEl>>,
-    s3_destination: std::option::Option<terrars::DynamicBlock<EvidentlyProjectDataDeliveryElS3DestinationEl>>,
+struct EvidentlyProject_DataDeliveryDynamic {
+    cloudwatch_logs: std::option::Option<terrars::DynamicBlock<EvidentlyProject_DataDelivery_CloudwatchLogs>>,
+    s3_destination: std::option::Option<terrars::DynamicBlock<EvidentlyProject_DataDelivery_S3Destination>>,
 }
 
 #[derive(Serialize)]
-pub struct EvidentlyProjectDataDeliveryEl {
+pub struct EvidentlyProject_DataDelivery {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cloudwatch_logs: std::option::Option<std::vec::Vec<EvidentlyProjectDataDeliveryElCloudwatchLogsEl>>,
+    cloudwatch_logs: std::option::Option<std::vec::Vec<EvidentlyProject_DataDelivery_CloudwatchLogs>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_destination: std::option::Option<std::vec::Vec<EvidentlyProjectDataDeliveryElS3DestinationEl>>,
-    dynamic: EvidentlyProjectDataDeliveryElDynamic,
+    s3_destination: std::option::Option<std::vec::Vec<EvidentlyProject_DataDelivery_S3Destination>>,
+    dynamic: EvidentlyProject_DataDeliveryDynamic,
 }
 
-impl EvidentlyProjectDataDeliveryEl {
+impl EvidentlyProject_DataDelivery {
     #[doc = "Set the field `cloudwatch_logs`.\n"]
     pub fn set_cloudwatch_logs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyProjectDataDeliveryElCloudwatchLogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyProject_DataDelivery_CloudwatchLogs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -612,7 +645,7 @@ impl EvidentlyProjectDataDeliveryEl {
     #[doc = "Set the field `s3_destination`.\n"]
     pub fn set_s3_destination(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyProjectDataDeliveryElS3DestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<EvidentlyProject_DataDelivery_S3Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -626,8 +659,8 @@ impl EvidentlyProjectDataDeliveryEl {
     }
 }
 
-impl terrars::ToListMappable for EvidentlyProjectDataDeliveryEl {
-    type O = terrars::BlockAssignable<EvidentlyProjectDataDeliveryEl>;
+impl terrars::ToListMappable for EvidentlyProject_DataDelivery {
+    type O = terrars::BlockAssignable<EvidentlyProject_DataDelivery>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -638,11 +671,11 @@ impl terrars::ToListMappable for EvidentlyProjectDataDeliveryEl {
     }
 }
 
-pub struct BuildEvidentlyProjectDataDeliveryEl {}
+pub struct BuildEvidentlyProject_DataDelivery {}
 
-impl BuildEvidentlyProjectDataDeliveryEl {
-    pub fn build(self) -> EvidentlyProjectDataDeliveryEl {
-        EvidentlyProjectDataDeliveryEl {
+impl BuildEvidentlyProject_DataDelivery {
+    pub fn build(self) -> EvidentlyProject_DataDelivery {
+        EvidentlyProject_DataDelivery {
             cloudwatch_logs: core::default::Default::default(),
             s3_destination: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -650,38 +683,40 @@ impl BuildEvidentlyProjectDataDeliveryEl {
     }
 }
 
-pub struct EvidentlyProjectDataDeliveryElRef {
+#[allow(dead_code)]
+pub struct EvidentlyProject_DataDeliveryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EvidentlyProjectDataDeliveryElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyProjectDataDeliveryElRef {
-        EvidentlyProjectDataDeliveryElRef {
+impl terrars::Ref for EvidentlyProject_DataDeliveryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyProject_DataDeliveryRef {
+        EvidentlyProject_DataDeliveryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EvidentlyProjectDataDeliveryElRef {
+impl EvidentlyProject_DataDeliveryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cloudwatch_logs` after provisioning.\n"]
-    pub fn cloudwatch_logs(&self) -> terrars::ListRef<EvidentlyProjectDataDeliveryElCloudwatchLogsElRef> {
+    pub fn cloudwatch_logs(&self) -> terrars::ListRef<EvidentlyProject_DataDelivery_CloudwatchLogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cloudwatch_logs", self.base))
     }
 
     #[doc = "Get a reference to the value of field `s3_destination` after provisioning.\n"]
-    pub fn s3_destination(&self) -> terrars::ListRef<EvidentlyProjectDataDeliveryElS3DestinationElRef> {
+    pub fn s3_destination(&self) -> terrars::ListRef<EvidentlyProject_DataDelivery_S3DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_destination", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EvidentlyProjectTimeoutsEl {
+pub struct EvidentlyProject_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -690,7 +725,7 @@ pub struct EvidentlyProjectTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EvidentlyProjectTimeoutsEl {
+impl EvidentlyProject_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -710,8 +745,8 @@ impl EvidentlyProjectTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EvidentlyProjectTimeoutsEl {
-    type O = terrars::BlockAssignable<EvidentlyProjectTimeoutsEl>;
+impl terrars::ToListMappable for EvidentlyProject_Timeouts {
+    type O = terrars::BlockAssignable<EvidentlyProject_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -722,11 +757,11 @@ impl terrars::ToListMappable for EvidentlyProjectTimeoutsEl {
     }
 }
 
-pub struct BuildEvidentlyProjectTimeoutsEl {}
+pub struct BuildEvidentlyProject_Timeouts {}
 
-impl BuildEvidentlyProjectTimeoutsEl {
-    pub fn build(self) -> EvidentlyProjectTimeoutsEl {
-        EvidentlyProjectTimeoutsEl {
+impl BuildEvidentlyProject_Timeouts {
+    pub fn build(self) -> EvidentlyProject_Timeouts {
+        EvidentlyProject_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -734,21 +769,23 @@ impl BuildEvidentlyProjectTimeoutsEl {
     }
 }
 
-pub struct EvidentlyProjectTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EvidentlyProject_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EvidentlyProjectTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyProjectTimeoutsElRef {
-        EvidentlyProjectTimeoutsElRef {
+impl terrars::Ref for EvidentlyProject_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EvidentlyProject_TimeoutsRef {
+        EvidentlyProject_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EvidentlyProjectTimeoutsElRef {
+impl EvidentlyProject_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -767,9 +804,4 @@ impl EvidentlyProjectTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct EvidentlyProjectDynamic {
-    data_delivery: std::option::Option<terrars::DynamicBlock<EvidentlyProjectDataDeliveryEl>>,
 }

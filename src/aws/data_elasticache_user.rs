@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataElasticacheUserData {
+struct DataElasticacheUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -26,15 +28,20 @@ struct DataElasticacheUserData {
     no_password_required: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     passwords: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     user_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authentication_mode: std::option::Option<std::vec::Vec<DataElasticacheUser_AuthenticationMode>>,
+    dynamic: DataElasticacheUserDynamic,
 }
 
 struct DataElasticacheUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataElasticacheUserData>,
+    data: std::cell::RefCell<DataElasticacheUserData_>,
 }
 
 #[derive(Clone)]
@@ -112,9 +119,32 @@ impl DataElasticacheUser {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `user_name`.\n"]
     pub fn set_user_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().user_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `authentication_mode`.\n"]
+    pub fn set_authentication_mode(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataElasticacheUser_AuthenticationMode>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().authentication_mode = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.authentication_mode = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -143,6 +173,12 @@ impl DataElasticacheUser {
         terrars::SetRef::new(self.shared().clone(), format!("{}.passwords", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_id` after provisioning.\n"]
     pub fn user_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_id", self.extract_ref()))
@@ -151,6 +187,11 @@ impl DataElasticacheUser {
     #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]
     pub fn user_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `authentication_mode` after provisioning.\n"]
+    pub fn authentication_mode(&self) -> terrars::ListRef<DataElasticacheUser_AuthenticationModeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_mode", self.extract_ref()))
     }
 }
 
@@ -196,7 +237,7 @@ impl BuildDataElasticacheUser {
         let out = DataElasticacheUser(std::rc::Rc::new(DataElasticacheUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataElasticacheUserData {
+            data: std::cell::RefCell::new(DataElasticacheUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -206,8 +247,11 @@ impl BuildDataElasticacheUser {
                 id: core::default::Default::default(),
                 no_password_required: core::default::Default::default(),
                 passwords: core::default::Default::default(),
+                region: core::default::Default::default(),
                 user_id: self.user_id,
                 user_name: core::default::Default::default(),
+                authentication_mode: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -263,6 +307,12 @@ impl DataElasticacheUserRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.passwords", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_id` after provisioning.\n"]
     pub fn user_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_id", self.extract_ref()))
@@ -271,5 +321,92 @@ impl DataElasticacheUserRef {
     #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]
     pub fn user_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `authentication_mode` after provisioning.\n"]
+    pub fn authentication_mode(&self) -> terrars::ListRef<DataElasticacheUser_AuthenticationModeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_mode", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataElasticacheUserDynamic {
+    authentication_mode: std::option::Option<terrars::DynamicBlock<DataElasticacheUser_AuthenticationMode>>,
+}
+
+#[derive(Serialize)]
+pub struct DataElasticacheUser_AuthenticationMode {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataElasticacheUser_AuthenticationMode {
+    #[doc = "Set the field `password_count`.\n"]
+    pub fn set_password_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.password_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataElasticacheUser_AuthenticationMode {
+    type O = terrars::BlockAssignable<DataElasticacheUser_AuthenticationMode>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataElasticacheUser_AuthenticationMode {}
+
+impl BuildDataElasticacheUser_AuthenticationMode {
+    pub fn build(self) -> DataElasticacheUser_AuthenticationMode {
+        DataElasticacheUser_AuthenticationMode {
+            password_count: core::default::Default::default(),
+            type_: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataElasticacheUser_AuthenticationModeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataElasticacheUser_AuthenticationModeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticacheUser_AuthenticationModeRef {
+        DataElasticacheUser_AuthenticationModeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataElasticacheUser_AuthenticationModeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `password_count` after provisioning.\n"]
+    pub fn password_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
 }

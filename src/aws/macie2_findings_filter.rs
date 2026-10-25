@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Macie2FindingsFilterData {
+struct Macie2FindingsFilterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -30,18 +32,22 @@ struct Macie2FindingsFilterData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     position: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    finding_criteria: std::option::Option<std::vec::Vec<Macie2FindingsFilterFindingCriteriaEl>>,
+    finding_criteria: std::option::Option<std::vec::Vec<Macie2FindingsFilter_FindingCriteria>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<Macie2FindingsFilter_Timeouts>,
     dynamic: Macie2FindingsFilterDynamic,
 }
 
 struct Macie2FindingsFilter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Macie2FindingsFilterData>,
+    data: std::cell::RefCell<Macie2FindingsFilterData_>,
 }
 
 #[derive(Clone)]
@@ -171,6 +177,13 @@ impl Macie2FindingsFilter {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -192,7 +205,7 @@ impl Macie2FindingsFilter {
     #[doc = "Set the field `finding_criteria`.\n"]
     pub fn set_finding_criteria(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Macie2FindingsFilterFindingCriteriaEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Macie2FindingsFilter_FindingCriteria>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -202,6 +215,12 @@ impl Macie2FindingsFilter {
                 self.0.data.borrow_mut().dynamic.finding_criteria = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<Macie2FindingsFilter_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -240,6 +259,12 @@ impl Macie2FindingsFilter {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.position", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -251,8 +276,13 @@ impl Macie2FindingsFilter {
     }
 
     #[doc = "Get a reference to the value of field `finding_criteria` after provisioning.\n"]
-    pub fn finding_criteria(&self) -> terrars::ListRef<Macie2FindingsFilterFindingCriteriaElRef> {
+    pub fn finding_criteria(&self) -> terrars::ListRef<Macie2FindingsFilter_FindingCriteriaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.finding_criteria", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Macie2FindingsFilter_TimeoutsRef {
+        Macie2FindingsFilter_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -298,7 +328,7 @@ impl BuildMacie2FindingsFilter {
         let out = Macie2FindingsFilter(std::rc::Rc::new(Macie2FindingsFilter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Macie2FindingsFilterData {
+            data: std::cell::RefCell::new(Macie2FindingsFilterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -310,9 +340,11 @@ impl BuildMacie2FindingsFilter {
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
                 position: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 finding_criteria: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -379,6 +411,12 @@ impl Macie2FindingsFilterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.position", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -390,13 +428,23 @@ impl Macie2FindingsFilterRef {
     }
 
     #[doc = "Get a reference to the value of field `finding_criteria` after provisioning.\n"]
-    pub fn finding_criteria(&self) -> terrars::ListRef<Macie2FindingsFilterFindingCriteriaElRef> {
+    pub fn finding_criteria(&self) -> terrars::ListRef<Macie2FindingsFilter_FindingCriteriaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.finding_criteria", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> Macie2FindingsFilter_TimeoutsRef {
+        Macie2FindingsFilter_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Macie2FindingsFilterDynamic {
+    finding_criteria: std::option::Option<terrars::DynamicBlock<Macie2FindingsFilter_FindingCriteria>>,
+}
+
 #[derive(Serialize)]
-pub struct Macie2FindingsFilterFindingCriteriaElCriterionEl {
+pub struct Macie2FindingsFilter_FindingCriteria_Criterion {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     eq: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -414,7 +462,7 @@ pub struct Macie2FindingsFilterFindingCriteriaElCriterionEl {
     neq: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl Macie2FindingsFilterFindingCriteriaElCriterionEl {
+impl Macie2FindingsFilter_FindingCriteria_Criterion {
     #[doc = "Set the field `eq`.\n"]
     pub fn set_eq(
         mut self,
@@ -467,8 +515,8 @@ impl Macie2FindingsFilterFindingCriteriaElCriterionEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2FindingsFilterFindingCriteriaElCriterionEl {
-    type O = terrars::BlockAssignable<Macie2FindingsFilterFindingCriteriaElCriterionEl>;
+impl terrars::ToListMappable for Macie2FindingsFilter_FindingCriteria_Criterion {
+    type O = terrars::BlockAssignable<Macie2FindingsFilter_FindingCriteria_Criterion>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -479,14 +527,14 @@ impl terrars::ToListMappable for Macie2FindingsFilterFindingCriteriaElCriterionE
     }
 }
 
-pub struct BuildMacie2FindingsFilterFindingCriteriaElCriterionEl {
+pub struct BuildMacie2FindingsFilter_FindingCriteria_Criterion {
     #[doc = ""]
     pub field: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMacie2FindingsFilterFindingCriteriaElCriterionEl {
-    pub fn build(self) -> Macie2FindingsFilterFindingCriteriaElCriterionEl {
-        Macie2FindingsFilterFindingCriteriaElCriterionEl {
+impl BuildMacie2FindingsFilter_FindingCriteria_Criterion {
+    pub fn build(self) -> Macie2FindingsFilter_FindingCriteria_Criterion {
+        Macie2FindingsFilter_FindingCriteria_Criterion {
             eq: core::default::Default::default(),
             eq_exact_match: core::default::Default::default(),
             field: self.field,
@@ -499,24 +547,26 @@ impl BuildMacie2FindingsFilterFindingCriteriaElCriterionEl {
     }
 }
 
-pub struct Macie2FindingsFilterFindingCriteriaElCriterionElRef {
+#[allow(dead_code)]
+pub struct Macie2FindingsFilter_FindingCriteria_CriterionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2FindingsFilterFindingCriteriaElCriterionElRef {
+impl terrars::Ref for Macie2FindingsFilter_FindingCriteria_CriterionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2FindingsFilterFindingCriteriaElCriterionElRef {
-        Macie2FindingsFilterFindingCriteriaElCriterionElRef {
+    ) -> Macie2FindingsFilter_FindingCriteria_CriterionRef {
+        Macie2FindingsFilter_FindingCriteria_CriterionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2FindingsFilterFindingCriteriaElCriterionElRef {
+impl Macie2FindingsFilter_FindingCriteria_CriterionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -563,22 +613,22 @@ impl Macie2FindingsFilterFindingCriteriaElCriterionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct Macie2FindingsFilterFindingCriteriaElDynamic {
-    criterion: std::option::Option<terrars::DynamicBlock<Macie2FindingsFilterFindingCriteriaElCriterionEl>>,
+struct Macie2FindingsFilter_FindingCriteriaDynamic {
+    criterion: std::option::Option<terrars::DynamicBlock<Macie2FindingsFilter_FindingCriteria_Criterion>>,
 }
 
 #[derive(Serialize)]
-pub struct Macie2FindingsFilterFindingCriteriaEl {
+pub struct Macie2FindingsFilter_FindingCriteria {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    criterion: std::option::Option<std::vec::Vec<Macie2FindingsFilterFindingCriteriaElCriterionEl>>,
-    dynamic: Macie2FindingsFilterFindingCriteriaElDynamic,
+    criterion: std::option::Option<std::vec::Vec<Macie2FindingsFilter_FindingCriteria_Criterion>>,
+    dynamic: Macie2FindingsFilter_FindingCriteriaDynamic,
 }
 
-impl Macie2FindingsFilterFindingCriteriaEl {
+impl Macie2FindingsFilter_FindingCriteria {
     #[doc = "Set the field `criterion`.\n"]
     pub fn set_criterion(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Macie2FindingsFilterFindingCriteriaElCriterionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Macie2FindingsFilter_FindingCriteria_Criterion>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -592,8 +642,8 @@ impl Macie2FindingsFilterFindingCriteriaEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2FindingsFilterFindingCriteriaEl {
-    type O = terrars::BlockAssignable<Macie2FindingsFilterFindingCriteriaEl>;
+impl terrars::ToListMappable for Macie2FindingsFilter_FindingCriteria {
+    type O = terrars::BlockAssignable<Macie2FindingsFilter_FindingCriteria>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -604,38 +654,96 @@ impl terrars::ToListMappable for Macie2FindingsFilterFindingCriteriaEl {
     }
 }
 
-pub struct BuildMacie2FindingsFilterFindingCriteriaEl {}
+pub struct BuildMacie2FindingsFilter_FindingCriteria {}
 
-impl BuildMacie2FindingsFilterFindingCriteriaEl {
-    pub fn build(self) -> Macie2FindingsFilterFindingCriteriaEl {
-        Macie2FindingsFilterFindingCriteriaEl {
+impl BuildMacie2FindingsFilter_FindingCriteria {
+    pub fn build(self) -> Macie2FindingsFilter_FindingCriteria {
+        Macie2FindingsFilter_FindingCriteria {
             criterion: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct Macie2FindingsFilterFindingCriteriaElRef {
+#[allow(dead_code)]
+pub struct Macie2FindingsFilter_FindingCriteriaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2FindingsFilterFindingCriteriaElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2FindingsFilterFindingCriteriaElRef {
-        Macie2FindingsFilterFindingCriteriaElRef {
+impl terrars::Ref for Macie2FindingsFilter_FindingCriteriaRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2FindingsFilter_FindingCriteriaRef {
+        Macie2FindingsFilter_FindingCriteriaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2FindingsFilterFindingCriteriaElRef {
+impl Macie2FindingsFilter_FindingCriteriaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
-#[derive(Serialize, Default)]
-struct Macie2FindingsFilterDynamic {
-    finding_criteria: std::option::Option<terrars::DynamicBlock<Macie2FindingsFilterFindingCriteriaEl>>,
+#[derive(Serialize)]
+pub struct Macie2FindingsFilter_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl Macie2FindingsFilter_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for Macie2FindingsFilter_Timeouts {
+    type O = terrars::BlockAssignable<Macie2FindingsFilter_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildMacie2FindingsFilter_Timeouts {}
+
+impl BuildMacie2FindingsFilter_Timeouts {
+    pub fn build(self) -> Macie2FindingsFilter_Timeouts {
+        Macie2FindingsFilter_Timeouts { create: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct Macie2FindingsFilter_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for Macie2FindingsFilter_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Macie2FindingsFilter_TimeoutsRef {
+        Macie2FindingsFilter_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl Macie2FindingsFilter_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
 }

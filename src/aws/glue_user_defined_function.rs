@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlueUserDefinedFunctionData {
+struct GlueUserDefinedFunctionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,14 +30,16 @@ struct GlueUserDefinedFunctionData {
     owner_name: terrars::PrimField<std::string::String>,
     owner_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resource_uris: std::option::Option<std::vec::Vec<GlueUserDefinedFunctionResourceUrisEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_uris: std::option::Option<std::vec::Vec<GlueUserDefinedFunction_ResourceUris>>,
     dynamic: GlueUserDefinedFunctionDynamic,
 }
 
 struct GlueUserDefinedFunction_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlueUserDefinedFunctionData>,
+    data: std::cell::RefCell<GlueUserDefinedFunctionData_>,
 }
 
 #[derive(Clone)]
@@ -147,10 +151,17 @@ impl GlueUserDefinedFunction {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resource_uris`.\n"]
     pub fn set_resource_uris(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlueUserDefinedFunctionResourceUrisEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlueUserDefinedFunction_ResourceUris>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -207,6 +218,12 @@ impl GlueUserDefinedFunction {
     pub fn owner_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_type", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
 }
 
 impl terrars::Referable for GlueUserDefinedFunction {
@@ -259,7 +276,7 @@ impl BuildGlueUserDefinedFunction {
         let out = GlueUserDefinedFunction(std::rc::Rc::new(GlueUserDefinedFunction_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlueUserDefinedFunctionData {
+            data: std::cell::RefCell::new(GlueUserDefinedFunctionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -272,6 +289,7 @@ impl BuildGlueUserDefinedFunction {
                 name: self.name,
                 owner_name: self.owner_name,
                 owner_type: self.owner_type,
+                region: core::default::Default::default(),
                 resource_uris: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -348,18 +366,29 @@ impl GlueUserDefinedFunctionRef {
     pub fn owner_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_type", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct GlueUserDefinedFunctionDynamic {
+    resource_uris: std::option::Option<terrars::DynamicBlock<GlueUserDefinedFunction_ResourceUris>>,
 }
 
 #[derive(Serialize)]
-pub struct GlueUserDefinedFunctionResourceUrisEl {
+pub struct GlueUserDefinedFunction_ResourceUris {
     resource_type: terrars::PrimField<std::string::String>,
     uri: terrars::PrimField<std::string::String>,
 }
 
-impl GlueUserDefinedFunctionResourceUrisEl { }
+impl GlueUserDefinedFunction_ResourceUris { }
 
-impl terrars::ToListMappable for GlueUserDefinedFunctionResourceUrisEl {
-    type O = terrars::BlockAssignable<GlueUserDefinedFunctionResourceUrisEl>;
+impl terrars::ToListMappable for GlueUserDefinedFunction_ResourceUris {
+    type O = terrars::BlockAssignable<GlueUserDefinedFunction_ResourceUris>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -370,37 +399,39 @@ impl terrars::ToListMappable for GlueUserDefinedFunctionResourceUrisEl {
     }
 }
 
-pub struct BuildGlueUserDefinedFunctionResourceUrisEl {
+pub struct BuildGlueUserDefinedFunction_ResourceUris {
     #[doc = ""]
     pub resource_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub uri: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlueUserDefinedFunctionResourceUrisEl {
-    pub fn build(self) -> GlueUserDefinedFunctionResourceUrisEl {
-        GlueUserDefinedFunctionResourceUrisEl {
+impl BuildGlueUserDefinedFunction_ResourceUris {
+    pub fn build(self) -> GlueUserDefinedFunction_ResourceUris {
+        GlueUserDefinedFunction_ResourceUris {
             resource_type: self.resource_type,
             uri: self.uri,
         }
     }
 }
 
-pub struct GlueUserDefinedFunctionResourceUrisElRef {
+#[allow(dead_code)]
+pub struct GlueUserDefinedFunction_ResourceUrisRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlueUserDefinedFunctionResourceUrisElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueUserDefinedFunctionResourceUrisElRef {
-        GlueUserDefinedFunctionResourceUrisElRef {
+impl terrars::Ref for GlueUserDefinedFunction_ResourceUrisRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlueUserDefinedFunction_ResourceUrisRef {
+        GlueUserDefinedFunction_ResourceUrisRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlueUserDefinedFunctionResourceUrisElRef {
+impl GlueUserDefinedFunction_ResourceUrisRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -414,9 +445,4 @@ impl GlueUserDefinedFunctionResourceUrisElRef {
     pub fn uri(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.uri", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GlueUserDefinedFunctionDynamic {
-    resource_uris: std::option::Option<terrars::DynamicBlock<GlueUserDefinedFunctionResourceUrisEl>>,
 }

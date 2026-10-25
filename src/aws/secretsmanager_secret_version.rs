@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SecretsmanagerSecretVersionData {
+struct SecretsmanagerSecretVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,10 +23,16 @@ struct SecretsmanagerSecretVersionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret_binary: std::option::Option<terrars::PrimField<std::string::String>>,
     secret_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret_string: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_string_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret_string_wo_version: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version_stages: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
@@ -32,7 +40,7 @@ struct SecretsmanagerSecretVersionData {
 struct SecretsmanagerSecretVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SecretsmanagerSecretVersionData>,
+    data: std::cell::RefCell<SecretsmanagerSecretVersionData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +146,13 @@ impl SecretsmanagerSecretVersion {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `secret_binary`.\n"]
     pub fn set_secret_binary(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().secret_binary = std::option::Option::Some(v.into());
@@ -147,6 +162,18 @@ impl SecretsmanagerSecretVersion {
     #[doc = "Set the field `secret_string`.\n"]
     pub fn set_secret_string(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().secret_string = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_string_wo`.\n"]
+    pub fn set_secret_string_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().secret_string_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secret_string_wo_version`.\n"]
+    pub fn set_secret_string_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().secret_string_wo_version = std::option::Option::Some(v.into());
         self
     }
 
@@ -164,9 +191,25 @@ impl SecretsmanagerSecretVersion {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `has_secret_string_wo` after provisioning.\n"]
+    pub fn has_secret_string_wo(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_secret_string_wo", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
+    pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret_binary` after provisioning.\n"]
@@ -182,6 +225,16 @@ impl SecretsmanagerSecretVersion {
     #[doc = "Get a reference to the value of field `secret_string` after provisioning.\n"]
     pub fn secret_string(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_string", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_string_wo` after provisioning.\n"]
+    pub fn secret_string_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_string_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_string_wo_version` after provisioning.\n"]
+    pub fn secret_string_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_string_wo_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version_id` after provisioning.\n"]
@@ -237,16 +290,19 @@ impl BuildSecretsmanagerSecretVersion {
         let out = SecretsmanagerSecretVersion(std::rc::Rc::new(SecretsmanagerSecretVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SecretsmanagerSecretVersionData {
+            data: std::cell::RefCell::new(SecretsmanagerSecretVersionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 secret_binary: core::default::Default::default(),
                 secret_id: self.secret_id,
                 secret_string: core::default::Default::default(),
+                secret_string_wo: core::default::Default::default(),
+                secret_string_wo_version: core::default::Default::default(),
                 version_stages: core::default::Default::default(),
             }),
         }));
@@ -283,9 +339,25 @@ impl SecretsmanagerSecretVersionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `has_secret_string_wo` after provisioning.\n"]
+    pub fn has_secret_string_wo(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_secret_string_wo", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
+    pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret_binary` after provisioning.\n"]
@@ -301,6 +373,16 @@ impl SecretsmanagerSecretVersionRef {
     #[doc = "Get a reference to the value of field `secret_string` after provisioning.\n"]
     pub fn secret_string(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_string", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_string_wo` after provisioning.\n"]
+    pub fn secret_string_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_string_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secret_string_wo_version` after provisioning.\n"]
+    pub fn secret_string_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_string_wo_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version_id` after provisioning.\n"]

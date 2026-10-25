@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2CoipPoolData {
+struct DataEc2CoipPoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,18 +25,20 @@ struct DataEc2CoipPoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pool_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2CoipPoolFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEc2CoipPool_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEc2CoipPoolTimeoutsEl>,
+    timeouts: std::option::Option<DataEc2CoipPool_Timeouts>,
     dynamic: DataEc2CoipPoolDynamic,
 }
 
 struct DataEc2CoipPool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2CoipPoolData>,
+    data: std::cell::RefCell<DataEc2CoipPoolData_>,
 }
 
 #[derive(Clone)]
@@ -100,6 +104,13 @@ impl DataEc2CoipPool {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -110,7 +121,7 @@ impl DataEc2CoipPool {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEc2CoipPoolFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEc2CoipPool_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -123,7 +134,7 @@ impl DataEc2CoipPool {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2CoipPoolTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2CoipPool_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -153,14 +164,20 @@ impl DataEc2CoipPool {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2CoipPoolTimeoutsElRef {
-        DataEc2CoipPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEc2CoipPool_TimeoutsRef {
+        DataEc2CoipPool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -204,7 +221,7 @@ impl BuildDataEc2CoipPool {
         let out = DataEc2CoipPool(std::rc::Rc::new(DataEc2CoipPool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2CoipPoolData {
+            data: std::cell::RefCell::new(DataEc2CoipPoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -212,6 +229,7 @@ impl BuildDataEc2CoipPool {
                 id: core::default::Default::default(),
                 local_gateway_route_table_id: core::default::Default::default(),
                 pool_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -271,27 +289,38 @@ impl DataEc2CoipPoolRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pool_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2CoipPoolTimeoutsElRef {
-        DataEc2CoipPoolTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEc2CoipPool_TimeoutsRef {
+        DataEc2CoipPool_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataEc2CoipPoolDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2CoipPool_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataEc2CoipPoolFilterEl {
+pub struct DataEc2CoipPool_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2CoipPoolFilterEl { }
+impl DataEc2CoipPool_Filter { }
 
-impl terrars::ToListMappable for DataEc2CoipPoolFilterEl {
-    type O = terrars::BlockAssignable<DataEc2CoipPoolFilterEl>;
+impl terrars::ToListMappable for DataEc2CoipPool_Filter {
+    type O = terrars::BlockAssignable<DataEc2CoipPool_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -302,37 +331,39 @@ impl terrars::ToListMappable for DataEc2CoipPoolFilterEl {
     }
 }
 
-pub struct BuildDataEc2CoipPoolFilterEl {
+pub struct BuildDataEc2CoipPool_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEc2CoipPoolFilterEl {
-    pub fn build(self) -> DataEc2CoipPoolFilterEl {
-        DataEc2CoipPoolFilterEl {
+impl BuildDataEc2CoipPool_Filter {
+    pub fn build(self) -> DataEc2CoipPool_Filter {
+        DataEc2CoipPool_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEc2CoipPoolFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2CoipPool_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2CoipPoolFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2CoipPoolFilterElRef {
-        DataEc2CoipPoolFilterElRef {
+impl terrars::Ref for DataEc2CoipPool_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2CoipPool_FilterRef {
+        DataEc2CoipPool_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2CoipPoolFilterElRef {
+impl DataEc2CoipPool_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -349,12 +380,12 @@ impl DataEc2CoipPoolFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2CoipPoolTimeoutsEl {
+pub struct DataEc2CoipPool_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2CoipPoolTimeoutsEl {
+impl DataEc2CoipPool_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -362,8 +393,8 @@ impl DataEc2CoipPoolTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2CoipPoolTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEc2CoipPoolTimeoutsEl>;
+impl terrars::ToListMappable for DataEc2CoipPool_Timeouts {
+    type O = terrars::BlockAssignable<DataEc2CoipPool_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -374,29 +405,31 @@ impl terrars::ToListMappable for DataEc2CoipPoolTimeoutsEl {
     }
 }
 
-pub struct BuildDataEc2CoipPoolTimeoutsEl {}
+pub struct BuildDataEc2CoipPool_Timeouts {}
 
-impl BuildDataEc2CoipPoolTimeoutsEl {
-    pub fn build(self) -> DataEc2CoipPoolTimeoutsEl {
-        DataEc2CoipPoolTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEc2CoipPool_Timeouts {
+    pub fn build(self) -> DataEc2CoipPool_Timeouts {
+        DataEc2CoipPool_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEc2CoipPoolTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEc2CoipPool_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2CoipPoolTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2CoipPoolTimeoutsElRef {
-        DataEc2CoipPoolTimeoutsElRef {
+impl terrars::Ref for DataEc2CoipPool_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2CoipPool_TimeoutsRef {
+        DataEc2CoipPool_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2CoipPoolTimeoutsElRef {
+impl DataEc2CoipPool_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -405,9 +438,4 @@ impl DataEc2CoipPoolTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2CoipPoolDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2CoipPoolFilterEl>>,
 }

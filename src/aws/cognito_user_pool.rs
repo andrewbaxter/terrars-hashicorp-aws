@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CognitoUserPoolData {
+struct CognitoUserPoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -34,6 +36,8 @@ struct CognitoUserPoolData {
     mfa_configuration: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sms_authentication_message: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sms_verification_message: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -42,40 +46,48 @@ struct CognitoUserPoolData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_pool_tier: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     username_attributes: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    account_recovery_setting: std::option::Option<std::vec::Vec<CognitoUserPoolAccountRecoverySettingEl>>,
+    account_recovery_setting: std::option::Option<std::vec::Vec<CognitoUserPool_AccountRecoverySetting>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    admin_create_user_config: std::option::Option<std::vec::Vec<CognitoUserPoolAdminCreateUserConfigEl>>,
+    admin_create_user_config: std::option::Option<std::vec::Vec<CognitoUserPool_AdminCreateUserConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    device_configuration: std::option::Option<std::vec::Vec<CognitoUserPoolDeviceConfigurationEl>>,
+    device_configuration: std::option::Option<std::vec::Vec<CognitoUserPool_DeviceConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    email_configuration: std::option::Option<std::vec::Vec<CognitoUserPoolEmailConfigurationEl>>,
+    email_configuration: std::option::Option<std::vec::Vec<CognitoUserPool_EmailConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lambda_config: std::option::Option<std::vec::Vec<CognitoUserPoolLambdaConfigEl>>,
+    email_mfa_configuration: std::option::Option<std::vec::Vec<CognitoUserPool_EmailMfaConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    password_policy: std::option::Option<std::vec::Vec<CognitoUserPoolPasswordPolicyEl>>,
+    lambda_config: std::option::Option<std::vec::Vec<CognitoUserPool_LambdaConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    schema: std::option::Option<std::vec::Vec<CognitoUserPoolSchemaEl>>,
+    password_policy: std::option::Option<std::vec::Vec<CognitoUserPool_PasswordPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sms_configuration: std::option::Option<std::vec::Vec<CognitoUserPoolSmsConfigurationEl>>,
+    schema: std::option::Option<std::vec::Vec<CognitoUserPool_Schema>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    software_token_mfa_configuration: std::option::Option<std::vec::Vec<CognitoUserPoolSoftwareTokenMfaConfigurationEl>>,
+    sign_in_policy: std::option::Option<std::vec::Vec<CognitoUserPool_SignInPolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_attribute_update_settings: std::option::Option<std::vec::Vec<CognitoUserPoolUserAttributeUpdateSettingsEl>>,
+    sms_configuration: std::option::Option<std::vec::Vec<CognitoUserPool_SmsConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    user_pool_add_ons: std::option::Option<std::vec::Vec<CognitoUserPoolUserPoolAddOnsEl>>,
+    software_token_mfa_configuration: std::option::Option<std::vec::Vec<CognitoUserPool_SoftwareTokenMfaConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    username_configuration: std::option::Option<std::vec::Vec<CognitoUserPoolUsernameConfigurationEl>>,
+    user_attribute_update_settings: std::option::Option<std::vec::Vec<CognitoUserPool_UserAttributeUpdateSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    verification_message_template: std::option::Option<std::vec::Vec<CognitoUserPoolVerificationMessageTemplateEl>>,
+    user_pool_add_ons: std::option::Option<std::vec::Vec<CognitoUserPool_UserPoolAddOns>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    username_configuration: std::option::Option<std::vec::Vec<CognitoUserPool_UsernameConfiguration>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    verification_message_template: std::option::Option<std::vec::Vec<CognitoUserPool_VerificationMessageTemplate>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    web_authn_configuration: std::option::Option<std::vec::Vec<CognitoUserPool_WebAuthnConfiguration>>,
     dynamic: CognitoUserPoolDynamic,
 }
 
 struct CognitoUserPool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CognitoUserPoolData>,
+    data: std::cell::RefCell<CognitoUserPoolData_>,
 }
 
 #[derive(Clone)]
@@ -229,6 +241,13 @@ impl CognitoUserPool {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `sms_authentication_message`.\n"]
     pub fn set_sms_authentication_message(
         self,
@@ -265,6 +284,12 @@ impl CognitoUserPool {
         self
     }
 
+    #[doc = "Set the field `user_pool_tier`.\n"]
+    pub fn set_user_pool_tier(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().user_pool_tier = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `username_attributes`.\n"]
     pub fn set_username_attributes(
         self,
@@ -277,7 +302,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `account_recovery_setting`.\n"]
     pub fn set_account_recovery_setting(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolAccountRecoverySettingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_AccountRecoverySetting>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -293,7 +318,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `admin_create_user_config`.\n"]
     pub fn set_admin_create_user_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolAdminCreateUserConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_AdminCreateUserConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -309,7 +334,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `device_configuration`.\n"]
     pub fn set_device_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolDeviceConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_DeviceConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -325,7 +350,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `email_configuration`.\n"]
     pub fn set_email_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolEmailConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_EmailConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -338,10 +363,26 @@ impl CognitoUserPool {
         self
     }
 
+    #[doc = "Set the field `email_mfa_configuration`.\n"]
+    pub fn set_email_mfa_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_EmailMfaConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().email_mfa_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.email_mfa_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `lambda_config`.\n"]
     pub fn set_lambda_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolLambdaConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_LambdaConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -357,7 +398,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `password_policy`.\n"]
     pub fn set_password_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolPasswordPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_PasswordPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -371,7 +412,7 @@ impl CognitoUserPool {
     }
 
     #[doc = "Set the field `schema`.\n"]
-    pub fn set_schema(self, v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolSchemaEl>>) -> Self {
+    pub fn set_schema(self, v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_Schema>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().schema = std::option::Option::Some(v);
@@ -383,10 +424,26 @@ impl CognitoUserPool {
         self
     }
 
+    #[doc = "Set the field `sign_in_policy`.\n"]
+    pub fn set_sign_in_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_SignInPolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().sign_in_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.sign_in_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `sms_configuration`.\n"]
     pub fn set_sms_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolSmsConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_SmsConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -402,7 +459,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `software_token_mfa_configuration`.\n"]
     pub fn set_software_token_mfa_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolSoftwareTokenMfaConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_SoftwareTokenMfaConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -418,7 +475,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `user_attribute_update_settings`.\n"]
     pub fn set_user_attribute_update_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolUserAttributeUpdateSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_UserAttributeUpdateSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -434,7 +491,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `user_pool_add_ons`.\n"]
     pub fn set_user_pool_add_ons(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolUserPoolAddOnsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_UserPoolAddOns>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -450,7 +507,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `username_configuration`.\n"]
     pub fn set_username_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolUsernameConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_UsernameConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -466,7 +523,7 @@ impl CognitoUserPool {
     #[doc = "Set the field `verification_message_template`.\n"]
     pub fn set_verification_message_template(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolVerificationMessageTemplateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_VerificationMessageTemplate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -474,6 +531,22 @@ impl CognitoUserPool {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.verification_message_template = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `web_authn_configuration`.\n"]
+    pub fn set_web_authn_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_WebAuthnConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().web_authn_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.web_authn_configuration = std::option::Option::Some(d);
             },
         }
         self
@@ -554,6 +627,12 @@ impl CognitoUserPool {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sms_authentication_message` after provisioning.\n"]
     pub fn sms_authentication_message(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sms_authentication_message", self.extract_ref()))
@@ -574,50 +653,63 @@ impl CognitoUserPool {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `user_pool_tier` after provisioning.\n"]
+    pub fn user_pool_tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_pool_tier", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `username_attributes` after provisioning.\n"]
     pub fn username_attributes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.username_attributes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `account_recovery_setting` after provisioning.\n"]
-    pub fn account_recovery_setting(&self) -> terrars::ListRef<CognitoUserPoolAccountRecoverySettingElRef> {
+    pub fn account_recovery_setting(&self) -> terrars::ListRef<CognitoUserPool_AccountRecoverySettingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.account_recovery_setting", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `admin_create_user_config` after provisioning.\n"]
-    pub fn admin_create_user_config(&self) -> terrars::ListRef<CognitoUserPoolAdminCreateUserConfigElRef> {
+    pub fn admin_create_user_config(&self) -> terrars::ListRef<CognitoUserPool_AdminCreateUserConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_create_user_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `device_configuration` after provisioning.\n"]
-    pub fn device_configuration(&self) -> terrars::ListRef<CognitoUserPoolDeviceConfigurationElRef> {
+    pub fn device_configuration(&self) -> terrars::ListRef<CognitoUserPool_DeviceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.device_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `email_configuration` after provisioning.\n"]
-    pub fn email_configuration(&self) -> terrars::ListRef<CognitoUserPoolEmailConfigurationElRef> {
+    pub fn email_configuration(&self) -> terrars::ListRef<CognitoUserPool_EmailConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.email_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `email_mfa_configuration` after provisioning.\n"]
+    pub fn email_mfa_configuration(&self) -> terrars::ListRef<CognitoUserPool_EmailMfaConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.email_mfa_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `lambda_config` after provisioning.\n"]
-    pub fn lambda_config(&self) -> terrars::ListRef<CognitoUserPoolLambdaConfigElRef> {
+    pub fn lambda_config(&self) -> terrars::ListRef<CognitoUserPool_LambdaConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `password_policy` after provisioning.\n"]
-    pub fn password_policy(&self) -> terrars::ListRef<CognitoUserPoolPasswordPolicyElRef> {
+    pub fn password_policy(&self) -> terrars::ListRef<CognitoUserPool_PasswordPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.password_policy", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `sign_in_policy` after provisioning.\n"]
+    pub fn sign_in_policy(&self) -> terrars::ListRef<CognitoUserPool_SignInPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sign_in_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sms_configuration` after provisioning.\n"]
-    pub fn sms_configuration(&self) -> terrars::ListRef<CognitoUserPoolSmsConfigurationElRef> {
+    pub fn sms_configuration(&self) -> terrars::ListRef<CognitoUserPool_SmsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sms_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `software_token_mfa_configuration` after provisioning.\n"]
-    pub fn software_token_mfa_configuration(
-        &self,
-    ) -> terrars::ListRef<CognitoUserPoolSoftwareTokenMfaConfigurationElRef> {
+    pub fn software_token_mfa_configuration(&self) -> terrars::ListRef<CognitoUserPool_SoftwareTokenMfaConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.software_token_mfa_configuration", self.extract_ref()),
@@ -625,7 +717,7 @@ impl CognitoUserPool {
     }
 
     #[doc = "Get a reference to the value of field `user_attribute_update_settings` after provisioning.\n"]
-    pub fn user_attribute_update_settings(&self) -> terrars::ListRef<CognitoUserPoolUserAttributeUpdateSettingsElRef> {
+    pub fn user_attribute_update_settings(&self) -> terrars::ListRef<CognitoUserPool_UserAttributeUpdateSettingsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.user_attribute_update_settings", self.extract_ref()),
@@ -633,18 +725,23 @@ impl CognitoUserPool {
     }
 
     #[doc = "Get a reference to the value of field `user_pool_add_ons` after provisioning.\n"]
-    pub fn user_pool_add_ons(&self) -> terrars::ListRef<CognitoUserPoolUserPoolAddOnsElRef> {
+    pub fn user_pool_add_ons(&self) -> terrars::ListRef<CognitoUserPool_UserPoolAddOnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_pool_add_ons", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `username_configuration` after provisioning.\n"]
-    pub fn username_configuration(&self) -> terrars::ListRef<CognitoUserPoolUsernameConfigurationElRef> {
+    pub fn username_configuration(&self) -> terrars::ListRef<CognitoUserPool_UsernameConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.username_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `verification_message_template` after provisioning.\n"]
-    pub fn verification_message_template(&self) -> terrars::ListRef<CognitoUserPoolVerificationMessageTemplateElRef> {
+    pub fn verification_message_template(&self) -> terrars::ListRef<CognitoUserPool_VerificationMessageTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.verification_message_template", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `web_authn_configuration` after provisioning.\n"]
+    pub fn web_authn_configuration(&self) -> terrars::ListRef<CognitoUserPool_WebAuthnConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.web_authn_configuration", self.extract_ref()))
     }
 }
 
@@ -690,7 +787,7 @@ impl BuildCognitoUserPool {
         let out = CognitoUserPool(std::rc::Rc::new(CognitoUserPool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CognitoUserPoolData {
+            data: std::cell::RefCell::new(CognitoUserPoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -704,24 +801,29 @@ impl BuildCognitoUserPool {
                 id: core::default::Default::default(),
                 mfa_configuration: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 sms_authentication_message: core::default::Default::default(),
                 sms_verification_message: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                user_pool_tier: core::default::Default::default(),
                 username_attributes: core::default::Default::default(),
                 account_recovery_setting: core::default::Default::default(),
                 admin_create_user_config: core::default::Default::default(),
                 device_configuration: core::default::Default::default(),
                 email_configuration: core::default::Default::default(),
+                email_mfa_configuration: core::default::Default::default(),
                 lambda_config: core::default::Default::default(),
                 password_policy: core::default::Default::default(),
                 schema: core::default::Default::default(),
+                sign_in_policy: core::default::Default::default(),
                 sms_configuration: core::default::Default::default(),
                 software_token_mfa_configuration: core::default::Default::default(),
                 user_attribute_update_settings: core::default::Default::default(),
                 user_pool_add_ons: core::default::Default::default(),
                 username_configuration: core::default::Default::default(),
                 verification_message_template: core::default::Default::default(),
+                web_authn_configuration: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -828,6 +930,12 @@ impl CognitoUserPoolRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sms_authentication_message` after provisioning.\n"]
     pub fn sms_authentication_message(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sms_authentication_message", self.extract_ref()))
@@ -848,50 +956,63 @@ impl CognitoUserPoolRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `user_pool_tier` after provisioning.\n"]
+    pub fn user_pool_tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_pool_tier", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `username_attributes` after provisioning.\n"]
     pub fn username_attributes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.username_attributes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `account_recovery_setting` after provisioning.\n"]
-    pub fn account_recovery_setting(&self) -> terrars::ListRef<CognitoUserPoolAccountRecoverySettingElRef> {
+    pub fn account_recovery_setting(&self) -> terrars::ListRef<CognitoUserPool_AccountRecoverySettingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.account_recovery_setting", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `admin_create_user_config` after provisioning.\n"]
-    pub fn admin_create_user_config(&self) -> terrars::ListRef<CognitoUserPoolAdminCreateUserConfigElRef> {
+    pub fn admin_create_user_config(&self) -> terrars::ListRef<CognitoUserPool_AdminCreateUserConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.admin_create_user_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `device_configuration` after provisioning.\n"]
-    pub fn device_configuration(&self) -> terrars::ListRef<CognitoUserPoolDeviceConfigurationElRef> {
+    pub fn device_configuration(&self) -> terrars::ListRef<CognitoUserPool_DeviceConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.device_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `email_configuration` after provisioning.\n"]
-    pub fn email_configuration(&self) -> terrars::ListRef<CognitoUserPoolEmailConfigurationElRef> {
+    pub fn email_configuration(&self) -> terrars::ListRef<CognitoUserPool_EmailConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.email_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `email_mfa_configuration` after provisioning.\n"]
+    pub fn email_mfa_configuration(&self) -> terrars::ListRef<CognitoUserPool_EmailMfaConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.email_mfa_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `lambda_config` after provisioning.\n"]
-    pub fn lambda_config(&self) -> terrars::ListRef<CognitoUserPoolLambdaConfigElRef> {
+    pub fn lambda_config(&self) -> terrars::ListRef<CognitoUserPool_LambdaConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `password_policy` after provisioning.\n"]
-    pub fn password_policy(&self) -> terrars::ListRef<CognitoUserPoolPasswordPolicyElRef> {
+    pub fn password_policy(&self) -> terrars::ListRef<CognitoUserPool_PasswordPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.password_policy", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `sign_in_policy` after provisioning.\n"]
+    pub fn sign_in_policy(&self) -> terrars::ListRef<CognitoUserPool_SignInPolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.sign_in_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sms_configuration` after provisioning.\n"]
-    pub fn sms_configuration(&self) -> terrars::ListRef<CognitoUserPoolSmsConfigurationElRef> {
+    pub fn sms_configuration(&self) -> terrars::ListRef<CognitoUserPool_SmsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sms_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `software_token_mfa_configuration` after provisioning.\n"]
-    pub fn software_token_mfa_configuration(
-        &self,
-    ) -> terrars::ListRef<CognitoUserPoolSoftwareTokenMfaConfigurationElRef> {
+    pub fn software_token_mfa_configuration(&self) -> terrars::ListRef<CognitoUserPool_SoftwareTokenMfaConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.software_token_mfa_configuration", self.extract_ref()),
@@ -899,7 +1020,7 @@ impl CognitoUserPoolRef {
     }
 
     #[doc = "Get a reference to the value of field `user_attribute_update_settings` after provisioning.\n"]
-    pub fn user_attribute_update_settings(&self) -> terrars::ListRef<CognitoUserPoolUserAttributeUpdateSettingsElRef> {
+    pub fn user_attribute_update_settings(&self) -> terrars::ListRef<CognitoUserPool_UserAttributeUpdateSettingsRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.user_attribute_update_settings", self.extract_ref()),
@@ -907,31 +1028,62 @@ impl CognitoUserPoolRef {
     }
 
     #[doc = "Get a reference to the value of field `user_pool_add_ons` after provisioning.\n"]
-    pub fn user_pool_add_ons(&self) -> terrars::ListRef<CognitoUserPoolUserPoolAddOnsElRef> {
+    pub fn user_pool_add_ons(&self) -> terrars::ListRef<CognitoUserPool_UserPoolAddOnsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_pool_add_ons", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `username_configuration` after provisioning.\n"]
-    pub fn username_configuration(&self) -> terrars::ListRef<CognitoUserPoolUsernameConfigurationElRef> {
+    pub fn username_configuration(&self) -> terrars::ListRef<CognitoUserPool_UsernameConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.username_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `verification_message_template` after provisioning.\n"]
-    pub fn verification_message_template(&self) -> terrars::ListRef<CognitoUserPoolVerificationMessageTemplateElRef> {
+    pub fn verification_message_template(&self) -> terrars::ListRef<CognitoUserPool_VerificationMessageTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.verification_message_template", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `web_authn_configuration` after provisioning.\n"]
+    pub fn web_authn_configuration(&self) -> terrars::ListRef<CognitoUserPool_WebAuthnConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.web_authn_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CognitoUserPoolDynamic {
+    account_recovery_setting: std::option::Option<terrars::DynamicBlock<CognitoUserPool_AccountRecoverySetting>>,
+    admin_create_user_config: std::option::Option<terrars::DynamicBlock<CognitoUserPool_AdminCreateUserConfig>>,
+    device_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPool_DeviceConfiguration>>,
+    email_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPool_EmailConfiguration>>,
+    email_mfa_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPool_EmailMfaConfiguration>>,
+    lambda_config: std::option::Option<terrars::DynamicBlock<CognitoUserPool_LambdaConfig>>,
+    password_policy: std::option::Option<terrars::DynamicBlock<CognitoUserPool_PasswordPolicy>>,
+    schema: std::option::Option<terrars::DynamicBlock<CognitoUserPool_Schema>>,
+    sign_in_policy: std::option::Option<terrars::DynamicBlock<CognitoUserPool_SignInPolicy>>,
+    sms_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPool_SmsConfiguration>>,
+    software_token_mfa_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoUserPool_SoftwareTokenMfaConfiguration>>,
+    user_attribute_update_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoUserPool_UserAttributeUpdateSettings>>,
+    user_pool_add_ons: std::option::Option<terrars::DynamicBlock<CognitoUserPool_UserPoolAddOns>>,
+    username_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPool_UsernameConfiguration>>,
+    verification_message_template: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoUserPool_VerificationMessageTemplate>>,
+    web_authn_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPool_WebAuthnConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct CognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl {
+pub struct CognitoUserPool_AccountRecoverySetting_RecoveryMechanism {
     name: terrars::PrimField<std::string::String>,
     priority: terrars::PrimField<f64>,
 }
 
-impl CognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl { }
+impl CognitoUserPool_AccountRecoverySetting_RecoveryMechanism { }
 
-impl terrars::ToListMappable for CognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl>;
+impl terrars::ToListMappable for CognitoUserPool_AccountRecoverySetting_RecoveryMechanism {
+    type O = terrars::BlockAssignable<CognitoUserPool_AccountRecoverySetting_RecoveryMechanism>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -942,40 +1094,42 @@ impl terrars::ToListMappable for CognitoUserPoolAccountRecoverySettingElRecovery
     }
 }
 
-pub struct BuildCognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl {
+pub struct BuildCognitoUserPool_AccountRecoverySetting_RecoveryMechanism {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub priority: terrars::PrimField<f64>,
 }
 
-impl BuildCognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl {
-    pub fn build(self) -> CognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl {
-        CognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl {
+impl BuildCognitoUserPool_AccountRecoverySetting_RecoveryMechanism {
+    pub fn build(self) -> CognitoUserPool_AccountRecoverySetting_RecoveryMechanism {
+        CognitoUserPool_AccountRecoverySetting_RecoveryMechanism {
             name: self.name,
             priority: self.priority,
         }
     }
 }
 
-pub struct CognitoUserPoolAccountRecoverySettingElRecoveryMechanismElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_AccountRecoverySetting_RecoveryMechanismRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolAccountRecoverySettingElRecoveryMechanismElRef {
+impl terrars::Ref for CognitoUserPool_AccountRecoverySetting_RecoveryMechanismRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoUserPoolAccountRecoverySettingElRecoveryMechanismElRef {
-        CognitoUserPoolAccountRecoverySettingElRecoveryMechanismElRef {
+    ) -> CognitoUserPool_AccountRecoverySetting_RecoveryMechanismRef {
+        CognitoUserPool_AccountRecoverySetting_RecoveryMechanismRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolAccountRecoverySettingElRecoveryMechanismElRef {
+impl CognitoUserPool_AccountRecoverySetting_RecoveryMechanismRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -992,20 +1146,20 @@ impl CognitoUserPoolAccountRecoverySettingElRecoveryMechanismElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CognitoUserPoolAccountRecoverySettingElDynamic {
+struct CognitoUserPool_AccountRecoverySettingDynamic {
     recovery_mechanism: std
     ::option
-    ::Option<terrars::DynamicBlock<CognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl>>,
+    ::Option<terrars::DynamicBlock<CognitoUserPool_AccountRecoverySetting_RecoveryMechanism>>,
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolAccountRecoverySettingEl {
+pub struct CognitoUserPool_AccountRecoverySetting {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    recovery_mechanism: std::option::Option<std::vec::Vec<CognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl>>,
-    dynamic: CognitoUserPoolAccountRecoverySettingElDynamic,
+    recovery_mechanism: std::option::Option<std::vec::Vec<CognitoUserPool_AccountRecoverySetting_RecoveryMechanism>>,
+    dynamic: CognitoUserPool_AccountRecoverySettingDynamic,
 }
 
-impl CognitoUserPoolAccountRecoverySettingEl {
+impl CognitoUserPool_AccountRecoverySetting {
     #[doc = "Set the field `recovery_mechanism`.\n"]
     pub fn set_recovery_mechanism(
         mut self,
@@ -1014,7 +1168,7 @@ impl CognitoUserPoolAccountRecoverySettingEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CognitoUserPoolAccountRecoverySettingElRecoveryMechanismEl>>,
+                    ::Into<terrars::BlockAssignable<CognitoUserPool_AccountRecoverySetting_RecoveryMechanism>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1028,8 +1182,8 @@ impl CognitoUserPoolAccountRecoverySettingEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolAccountRecoverySettingEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolAccountRecoverySettingEl>;
+impl terrars::ToListMappable for CognitoUserPool_AccountRecoverySetting {
+    type O = terrars::BlockAssignable<CognitoUserPool_AccountRecoverySetting>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1040,39 +1194,41 @@ impl terrars::ToListMappable for CognitoUserPoolAccountRecoverySettingEl {
     }
 }
 
-pub struct BuildCognitoUserPoolAccountRecoverySettingEl {}
+pub struct BuildCognitoUserPool_AccountRecoverySetting {}
 
-impl BuildCognitoUserPoolAccountRecoverySettingEl {
-    pub fn build(self) -> CognitoUserPoolAccountRecoverySettingEl {
-        CognitoUserPoolAccountRecoverySettingEl {
+impl BuildCognitoUserPool_AccountRecoverySetting {
+    pub fn build(self) -> CognitoUserPool_AccountRecoverySetting {
+        CognitoUserPool_AccountRecoverySetting {
             recovery_mechanism: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CognitoUserPoolAccountRecoverySettingElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_AccountRecoverySettingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolAccountRecoverySettingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolAccountRecoverySettingElRef {
-        CognitoUserPoolAccountRecoverySettingElRef {
+impl terrars::Ref for CognitoUserPool_AccountRecoverySettingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_AccountRecoverySettingRef {
+        CognitoUserPool_AccountRecoverySettingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolAccountRecoverySettingElRef {
+impl CognitoUserPool_AccountRecoverySettingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {
+pub struct CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     email_message: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1081,7 +1237,7 @@ pub struct CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {
     sms_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {
+impl CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate {
     #[doc = "Set the field `email_message`.\n"]
     pub fn set_email_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.email_message = std::option::Option::Some(v.into());
@@ -1101,8 +1257,8 @@ impl CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl>;
+impl terrars::ToListMappable for CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate {
+    type O = terrars::BlockAssignable<CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1113,11 +1269,11 @@ impl terrars::ToListMappable for CognitoUserPoolAdminCreateUserConfigElInviteMes
     }
 }
 
-pub struct BuildCognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {}
+pub struct BuildCognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate {}
 
-impl BuildCognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {
-    pub fn build(self) -> CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {
-        CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {
+impl BuildCognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate {
+    pub fn build(self) -> CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate {
+        CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate {
             email_message: core::default::Default::default(),
             email_subject: core::default::Default::default(),
             sms_message: core::default::Default::default(),
@@ -1125,24 +1281,26 @@ impl BuildCognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl {
     }
 }
 
-pub struct CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateElRef {
+impl terrars::Ref for CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateElRef {
-        CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateElRef {
+    ) -> CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplateRef {
+        CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateElRef {
+impl CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1164,24 +1322,24 @@ impl CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CognitoUserPoolAdminCreateUserConfigElDynamic {
+struct CognitoUserPool_AdminCreateUserConfigDynamic {
     invite_message_template: std
     ::option
-    ::Option<terrars::DynamicBlock<CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl>>,
+    ::Option<terrars::DynamicBlock<CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate>>,
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolAdminCreateUserConfigEl {
+pub struct CognitoUserPool_AdminCreateUserConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_admin_create_user_only: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     invite_message_template: std
     ::option
-    ::Option<std::vec::Vec<CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl>>,
-    dynamic: CognitoUserPoolAdminCreateUserConfigElDynamic,
+    ::Option<std::vec::Vec<CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate>>,
+    dynamic: CognitoUserPool_AdminCreateUserConfigDynamic,
 }
 
-impl CognitoUserPoolAdminCreateUserConfigEl {
+impl CognitoUserPool_AdminCreateUserConfig {
     #[doc = "Set the field `allow_admin_create_user_only`.\n"]
     pub fn set_allow_admin_create_user_only(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_admin_create_user_only = std::option::Option::Some(v.into());
@@ -1196,7 +1354,7 @@ impl CognitoUserPoolAdminCreateUserConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateEl>>,
+                    ::Into<terrars::BlockAssignable<CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1210,8 +1368,8 @@ impl CognitoUserPoolAdminCreateUserConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolAdminCreateUserConfigEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolAdminCreateUserConfigEl>;
+impl terrars::ToListMappable for CognitoUserPool_AdminCreateUserConfig {
+    type O = terrars::BlockAssignable<CognitoUserPool_AdminCreateUserConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1222,11 +1380,11 @@ impl terrars::ToListMappable for CognitoUserPoolAdminCreateUserConfigEl {
     }
 }
 
-pub struct BuildCognitoUserPoolAdminCreateUserConfigEl {}
+pub struct BuildCognitoUserPool_AdminCreateUserConfig {}
 
-impl BuildCognitoUserPoolAdminCreateUserConfigEl {
-    pub fn build(self) -> CognitoUserPoolAdminCreateUserConfigEl {
-        CognitoUserPoolAdminCreateUserConfigEl {
+impl BuildCognitoUserPool_AdminCreateUserConfig {
+    pub fn build(self) -> CognitoUserPool_AdminCreateUserConfig {
+        CognitoUserPool_AdminCreateUserConfig {
             allow_admin_create_user_only: core::default::Default::default(),
             invite_message_template: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1234,21 +1392,23 @@ impl BuildCognitoUserPoolAdminCreateUserConfigEl {
     }
 }
 
-pub struct CognitoUserPoolAdminCreateUserConfigElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_AdminCreateUserConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolAdminCreateUserConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolAdminCreateUserConfigElRef {
-        CognitoUserPoolAdminCreateUserConfigElRef {
+impl terrars::Ref for CognitoUserPool_AdminCreateUserConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_AdminCreateUserConfigRef {
+        CognitoUserPool_AdminCreateUserConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolAdminCreateUserConfigElRef {
+impl CognitoUserPool_AdminCreateUserConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1261,20 +1421,20 @@ impl CognitoUserPoolAdminCreateUserConfigElRef {
     #[doc = "Get a reference to the value of field `invite_message_template` after provisioning.\n"]
     pub fn invite_message_template(
         &self,
-    ) -> terrars::ListRef<CognitoUserPoolAdminCreateUserConfigElInviteMessageTemplateElRef> {
+    ) -> terrars::ListRef<CognitoUserPool_AdminCreateUserConfig_InviteMessageTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.invite_message_template", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolDeviceConfigurationEl {
+pub struct CognitoUserPool_DeviceConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     challenge_required_on_new_device: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     device_only_remembered_on_user_prompt: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl CognitoUserPoolDeviceConfigurationEl {
+impl CognitoUserPool_DeviceConfiguration {
     #[doc = "Set the field `challenge_required_on_new_device`.\n"]
     pub fn set_challenge_required_on_new_device(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.challenge_required_on_new_device = std::option::Option::Some(v.into());
@@ -1291,8 +1451,8 @@ impl CognitoUserPoolDeviceConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolDeviceConfigurationEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolDeviceConfigurationEl>;
+impl terrars::ToListMappable for CognitoUserPool_DeviceConfiguration {
+    type O = terrars::BlockAssignable<CognitoUserPool_DeviceConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1303,32 +1463,34 @@ impl terrars::ToListMappable for CognitoUserPoolDeviceConfigurationEl {
     }
 }
 
-pub struct BuildCognitoUserPoolDeviceConfigurationEl {}
+pub struct BuildCognitoUserPool_DeviceConfiguration {}
 
-impl BuildCognitoUserPoolDeviceConfigurationEl {
-    pub fn build(self) -> CognitoUserPoolDeviceConfigurationEl {
-        CognitoUserPoolDeviceConfigurationEl {
+impl BuildCognitoUserPool_DeviceConfiguration {
+    pub fn build(self) -> CognitoUserPool_DeviceConfiguration {
+        CognitoUserPool_DeviceConfiguration {
             challenge_required_on_new_device: core::default::Default::default(),
             device_only_remembered_on_user_prompt: core::default::Default::default(),
         }
     }
 }
 
-pub struct CognitoUserPoolDeviceConfigurationElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_DeviceConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolDeviceConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolDeviceConfigurationElRef {
-        CognitoUserPoolDeviceConfigurationElRef {
+impl terrars::Ref for CognitoUserPool_DeviceConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_DeviceConfigurationRef {
+        CognitoUserPool_DeviceConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolDeviceConfigurationElRef {
+impl CognitoUserPool_DeviceConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1345,7 +1507,7 @@ impl CognitoUserPoolDeviceConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolEmailConfigurationEl {
+pub struct CognitoUserPool_EmailConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     configuration_set: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1358,7 +1520,7 @@ pub struct CognitoUserPoolEmailConfigurationEl {
     source_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CognitoUserPoolEmailConfigurationEl {
+impl CognitoUserPool_EmailConfiguration {
     #[doc = "Set the field `configuration_set`.\n"]
     pub fn set_configuration_set(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.configuration_set = std::option::Option::Some(v.into());
@@ -1399,8 +1561,8 @@ impl CognitoUserPoolEmailConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolEmailConfigurationEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolEmailConfigurationEl>;
+impl terrars::ToListMappable for CognitoUserPool_EmailConfiguration {
+    type O = terrars::BlockAssignable<CognitoUserPool_EmailConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1411,11 +1573,11 @@ impl terrars::ToListMappable for CognitoUserPoolEmailConfigurationEl {
     }
 }
 
-pub struct BuildCognitoUserPoolEmailConfigurationEl {}
+pub struct BuildCognitoUserPool_EmailConfiguration {}
 
-impl BuildCognitoUserPoolEmailConfigurationEl {
-    pub fn build(self) -> CognitoUserPoolEmailConfigurationEl {
-        CognitoUserPoolEmailConfigurationEl {
+impl BuildCognitoUserPool_EmailConfiguration {
+    pub fn build(self) -> CognitoUserPool_EmailConfiguration {
+        CognitoUserPool_EmailConfiguration {
             configuration_set: core::default::Default::default(),
             email_sending_account: core::default::Default::default(),
             from_email_address: core::default::Default::default(),
@@ -1425,21 +1587,23 @@ impl BuildCognitoUserPoolEmailConfigurationEl {
     }
 }
 
-pub struct CognitoUserPoolEmailConfigurationElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_EmailConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolEmailConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolEmailConfigurationElRef {
-        CognitoUserPoolEmailConfigurationElRef {
+impl terrars::Ref for CognitoUserPool_EmailConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_EmailConfigurationRef {
+        CognitoUserPool_EmailConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolEmailConfigurationElRef {
+impl CognitoUserPool_EmailConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1471,15 +1635,29 @@ impl CognitoUserPoolEmailConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolLambdaConfigElCustomEmailSenderEl {
-    lambda_arn: terrars::PrimField<std::string::String>,
-    lambda_version: terrars::PrimField<std::string::String>,
+pub struct CognitoUserPool_EmailMfaConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    message: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subject: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CognitoUserPoolLambdaConfigElCustomEmailSenderEl { }
+impl CognitoUserPool_EmailMfaConfiguration {
+    #[doc = "Set the field `message`.\n"]
+    pub fn set_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.message = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for CognitoUserPoolLambdaConfigElCustomEmailSenderEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolLambdaConfigElCustomEmailSenderEl>;
+    #[doc = "Set the field `subject`.\n"]
+    pub fn set_subject(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.subject = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CognitoUserPool_EmailMfaConfiguration {
+    type O = terrars::BlockAssignable<CognitoUserPool_EmailMfaConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1490,40 +1668,105 @@ impl terrars::ToListMappable for CognitoUserPoolLambdaConfigElCustomEmailSenderE
     }
 }
 
-pub struct BuildCognitoUserPoolLambdaConfigElCustomEmailSenderEl {
-    #[doc = ""]
-    pub lambda_arn: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub lambda_version: terrars::PrimField<std::string::String>,
-}
+pub struct BuildCognitoUserPool_EmailMfaConfiguration {}
 
-impl BuildCognitoUserPoolLambdaConfigElCustomEmailSenderEl {
-    pub fn build(self) -> CognitoUserPoolLambdaConfigElCustomEmailSenderEl {
-        CognitoUserPoolLambdaConfigElCustomEmailSenderEl {
-            lambda_arn: self.lambda_arn,
-            lambda_version: self.lambda_version,
+impl BuildCognitoUserPool_EmailMfaConfiguration {
+    pub fn build(self) -> CognitoUserPool_EmailMfaConfiguration {
+        CognitoUserPool_EmailMfaConfiguration {
+            message: core::default::Default::default(),
+            subject: core::default::Default::default(),
         }
     }
 }
 
-pub struct CognitoUserPoolLambdaConfigElCustomEmailSenderElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_EmailMfaConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolLambdaConfigElCustomEmailSenderElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CognitoUserPoolLambdaConfigElCustomEmailSenderElRef {
-        CognitoUserPoolLambdaConfigElCustomEmailSenderElRef {
+impl terrars::Ref for CognitoUserPool_EmailMfaConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_EmailMfaConfigurationRef {
+        CognitoUserPool_EmailMfaConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolLambdaConfigElCustomEmailSenderElRef {
+impl CognitoUserPool_EmailMfaConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `message` after provisioning.\n"]
+    pub fn message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.message", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `subject` after provisioning.\n"]
+    pub fn subject(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.subject", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CognitoUserPool_LambdaConfig_CustomEmailSender {
+    lambda_arn: terrars::PrimField<std::string::String>,
+    lambda_version: terrars::PrimField<std::string::String>,
+}
+
+impl CognitoUserPool_LambdaConfig_CustomEmailSender { }
+
+impl terrars::ToListMappable for CognitoUserPool_LambdaConfig_CustomEmailSender {
+    type O = terrars::BlockAssignable<CognitoUserPool_LambdaConfig_CustomEmailSender>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCognitoUserPool_LambdaConfig_CustomEmailSender {
+    #[doc = ""]
+    pub lambda_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub lambda_version: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCognitoUserPool_LambdaConfig_CustomEmailSender {
+    pub fn build(self) -> CognitoUserPool_LambdaConfig_CustomEmailSender {
+        CognitoUserPool_LambdaConfig_CustomEmailSender {
+            lambda_arn: self.lambda_arn,
+            lambda_version: self.lambda_version,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CognitoUserPool_LambdaConfig_CustomEmailSenderRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CognitoUserPool_LambdaConfig_CustomEmailSenderRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CognitoUserPool_LambdaConfig_CustomEmailSenderRef {
+        CognitoUserPool_LambdaConfig_CustomEmailSenderRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CognitoUserPool_LambdaConfig_CustomEmailSenderRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1540,15 +1783,15 @@ impl CognitoUserPoolLambdaConfigElCustomEmailSenderElRef {
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolLambdaConfigElCustomSmsSenderEl {
+pub struct CognitoUserPool_LambdaConfig_CustomSmsSender {
     lambda_arn: terrars::PrimField<std::string::String>,
     lambda_version: terrars::PrimField<std::string::String>,
 }
 
-impl CognitoUserPoolLambdaConfigElCustomSmsSenderEl { }
+impl CognitoUserPool_LambdaConfig_CustomSmsSender { }
 
-impl terrars::ToListMappable for CognitoUserPoolLambdaConfigElCustomSmsSenderEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolLambdaConfigElCustomSmsSenderEl>;
+impl terrars::ToListMappable for CognitoUserPool_LambdaConfig_CustomSmsSender {
+    type O = terrars::BlockAssignable<CognitoUserPool_LambdaConfig_CustomSmsSender>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1559,40 +1802,113 @@ impl terrars::ToListMappable for CognitoUserPoolLambdaConfigElCustomSmsSenderEl 
     }
 }
 
-pub struct BuildCognitoUserPoolLambdaConfigElCustomSmsSenderEl {
+pub struct BuildCognitoUserPool_LambdaConfig_CustomSmsSender {
     #[doc = ""]
     pub lambda_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub lambda_version: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCognitoUserPoolLambdaConfigElCustomSmsSenderEl {
-    pub fn build(self) -> CognitoUserPoolLambdaConfigElCustomSmsSenderEl {
-        CognitoUserPoolLambdaConfigElCustomSmsSenderEl {
+impl BuildCognitoUserPool_LambdaConfig_CustomSmsSender {
+    pub fn build(self) -> CognitoUserPool_LambdaConfig_CustomSmsSender {
+        CognitoUserPool_LambdaConfig_CustomSmsSender {
             lambda_arn: self.lambda_arn,
             lambda_version: self.lambda_version,
         }
     }
 }
 
-pub struct CognitoUserPoolLambdaConfigElCustomSmsSenderElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_LambdaConfig_CustomSmsSenderRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolLambdaConfigElCustomSmsSenderElRef {
+impl terrars::Ref for CognitoUserPool_LambdaConfig_CustomSmsSenderRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoUserPoolLambdaConfigElCustomSmsSenderElRef {
-        CognitoUserPoolLambdaConfigElCustomSmsSenderElRef {
+    ) -> CognitoUserPool_LambdaConfig_CustomSmsSenderRef {
+        CognitoUserPool_LambdaConfig_CustomSmsSenderRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolLambdaConfigElCustomSmsSenderElRef {
+impl CognitoUserPool_LambdaConfig_CustomSmsSenderRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `lambda_arn` after provisioning.\n"]
+    pub fn lambda_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lambda_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `lambda_version` after provisioning.\n"]
+    pub fn lambda_version(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.lambda_version", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CognitoUserPool_LambdaConfig_PreTokenGenerationConfig {
+    lambda_arn: terrars::PrimField<std::string::String>,
+    lambda_version: terrars::PrimField<std::string::String>,
+}
+
+impl CognitoUserPool_LambdaConfig_PreTokenGenerationConfig { }
+
+impl terrars::ToListMappable for CognitoUserPool_LambdaConfig_PreTokenGenerationConfig {
+    type O = terrars::BlockAssignable<CognitoUserPool_LambdaConfig_PreTokenGenerationConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCognitoUserPool_LambdaConfig_PreTokenGenerationConfig {
+    #[doc = ""]
+    pub lambda_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub lambda_version: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCognitoUserPool_LambdaConfig_PreTokenGenerationConfig {
+    pub fn build(self) -> CognitoUserPool_LambdaConfig_PreTokenGenerationConfig {
+        CognitoUserPool_LambdaConfig_PreTokenGenerationConfig {
+            lambda_arn: self.lambda_arn,
+            lambda_version: self.lambda_version,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CognitoUserPool_LambdaConfig_PreTokenGenerationConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CognitoUserPool_LambdaConfig_PreTokenGenerationConfigRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CognitoUserPool_LambdaConfig_PreTokenGenerationConfigRef {
+        CognitoUserPool_LambdaConfig_PreTokenGenerationConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CognitoUserPool_LambdaConfig_PreTokenGenerationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1609,13 +1925,16 @@ impl CognitoUserPoolLambdaConfigElCustomSmsSenderElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CognitoUserPoolLambdaConfigElDynamic {
-    custom_email_sender: std::option::Option<terrars::DynamicBlock<CognitoUserPoolLambdaConfigElCustomEmailSenderEl>>,
-    custom_sms_sender: std::option::Option<terrars::DynamicBlock<CognitoUserPoolLambdaConfigElCustomSmsSenderEl>>,
+struct CognitoUserPool_LambdaConfigDynamic {
+    custom_email_sender: std::option::Option<terrars::DynamicBlock<CognitoUserPool_LambdaConfig_CustomEmailSender>>,
+    custom_sms_sender: std::option::Option<terrars::DynamicBlock<CognitoUserPool_LambdaConfig_CustomSmsSender>>,
+    pre_token_generation_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoUserPool_LambdaConfig_PreTokenGenerationConfig>>,
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolLambdaConfigEl {
+pub struct CognitoUserPool_LambdaConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create_auth_challenge: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1639,13 +1958,17 @@ pub struct CognitoUserPoolLambdaConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     verify_auth_challenge_response: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_email_sender: std::option::Option<std::vec::Vec<CognitoUserPoolLambdaConfigElCustomEmailSenderEl>>,
+    custom_email_sender: std::option::Option<std::vec::Vec<CognitoUserPool_LambdaConfig_CustomEmailSender>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_sms_sender: std::option::Option<std::vec::Vec<CognitoUserPoolLambdaConfigElCustomSmsSenderEl>>,
-    dynamic: CognitoUserPoolLambdaConfigElDynamic,
+    custom_sms_sender: std::option::Option<std::vec::Vec<CognitoUserPool_LambdaConfig_CustomSmsSender>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pre_token_generation_config: std
+    ::option
+    ::Option<std::vec::Vec<CognitoUserPool_LambdaConfig_PreTokenGenerationConfig>>,
+    dynamic: CognitoUserPool_LambdaConfigDynamic,
 }
 
-impl CognitoUserPoolLambdaConfigEl {
+impl CognitoUserPool_LambdaConfig {
     #[doc = "Set the field `create_auth_challenge`.\n"]
     pub fn set_create_auth_challenge(
         mut self,
@@ -1733,7 +2056,7 @@ impl CognitoUserPoolLambdaConfigEl {
     #[doc = "Set the field `custom_email_sender`.\n"]
     pub fn set_custom_email_sender(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolLambdaConfigElCustomEmailSenderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_LambdaConfig_CustomEmailSender>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1749,7 +2072,7 @@ impl CognitoUserPoolLambdaConfigEl {
     #[doc = "Set the field `custom_sms_sender`.\n"]
     pub fn set_custom_sms_sender(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolLambdaConfigElCustomSmsSenderEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_LambdaConfig_CustomSmsSender>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1761,10 +2084,26 @@ impl CognitoUserPoolLambdaConfigEl {
         }
         self
     }
+
+    #[doc = "Set the field `pre_token_generation_config`.\n"]
+    pub fn set_pre_token_generation_config(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_LambdaConfig_PreTokenGenerationConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.pre_token_generation_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.pre_token_generation_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolLambdaConfigEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolLambdaConfigEl>;
+impl terrars::ToListMappable for CognitoUserPool_LambdaConfig {
+    type O = terrars::BlockAssignable<CognitoUserPool_LambdaConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1775,11 +2114,11 @@ impl terrars::ToListMappable for CognitoUserPoolLambdaConfigEl {
     }
 }
 
-pub struct BuildCognitoUserPoolLambdaConfigEl {}
+pub struct BuildCognitoUserPool_LambdaConfig {}
 
-impl BuildCognitoUserPoolLambdaConfigEl {
-    pub fn build(self) -> CognitoUserPoolLambdaConfigEl {
-        CognitoUserPoolLambdaConfigEl {
+impl BuildCognitoUserPool_LambdaConfig {
+    pub fn build(self) -> CognitoUserPool_LambdaConfig {
+        CognitoUserPool_LambdaConfig {
             create_auth_challenge: core::default::Default::default(),
             custom_message: core::default::Default::default(),
             define_auth_challenge: core::default::Default::default(),
@@ -1793,26 +2132,29 @@ impl BuildCognitoUserPoolLambdaConfigEl {
             verify_auth_challenge_response: core::default::Default::default(),
             custom_email_sender: core::default::Default::default(),
             custom_sms_sender: core::default::Default::default(),
+            pre_token_generation_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CognitoUserPoolLambdaConfigElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_LambdaConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolLambdaConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolLambdaConfigElRef {
-        CognitoUserPoolLambdaConfigElRef {
+impl terrars::Ref for CognitoUserPool_LambdaConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_LambdaConfigRef {
+        CognitoUserPool_LambdaConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolLambdaConfigElRef {
+impl CognitoUserPool_LambdaConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1873,20 +2215,29 @@ impl CognitoUserPoolLambdaConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `custom_email_sender` after provisioning.\n"]
-    pub fn custom_email_sender(&self) -> terrars::ListRef<CognitoUserPoolLambdaConfigElCustomEmailSenderElRef> {
+    pub fn custom_email_sender(&self) -> terrars::ListRef<CognitoUserPool_LambdaConfig_CustomEmailSenderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_email_sender", self.base))
     }
 
     #[doc = "Get a reference to the value of field `custom_sms_sender` after provisioning.\n"]
-    pub fn custom_sms_sender(&self) -> terrars::ListRef<CognitoUserPoolLambdaConfigElCustomSmsSenderElRef> {
+    pub fn custom_sms_sender(&self) -> terrars::ListRef<CognitoUserPool_LambdaConfig_CustomSmsSenderRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_sms_sender", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `pre_token_generation_config` after provisioning.\n"]
+    pub fn pre_token_generation_config(
+        &self,
+    ) -> terrars::ListRef<CognitoUserPool_LambdaConfig_PreTokenGenerationConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.pre_token_generation_config", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolPasswordPolicyEl {
+pub struct CognitoUserPool_PasswordPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     minimum_length: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_history_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     require_lowercase: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1899,10 +2250,16 @@ pub struct CognitoUserPoolPasswordPolicyEl {
     temporary_password_validity_days: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl CognitoUserPoolPasswordPolicyEl {
+impl CognitoUserPool_PasswordPolicy {
     #[doc = "Set the field `minimum_length`.\n"]
     pub fn set_minimum_length(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.minimum_length = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `password_history_size`.\n"]
+    pub fn set_password_history_size(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.password_history_size = std::option::Option::Some(v.into());
         self
     }
 
@@ -1937,8 +2294,8 @@ impl CognitoUserPoolPasswordPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolPasswordPolicyEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolPasswordPolicyEl>;
+impl terrars::ToListMappable for CognitoUserPool_PasswordPolicy {
+    type O = terrars::BlockAssignable<CognitoUserPool_PasswordPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1949,12 +2306,13 @@ impl terrars::ToListMappable for CognitoUserPoolPasswordPolicyEl {
     }
 }
 
-pub struct BuildCognitoUserPoolPasswordPolicyEl {}
+pub struct BuildCognitoUserPool_PasswordPolicy {}
 
-impl BuildCognitoUserPoolPasswordPolicyEl {
-    pub fn build(self) -> CognitoUserPoolPasswordPolicyEl {
-        CognitoUserPoolPasswordPolicyEl {
+impl BuildCognitoUserPool_PasswordPolicy {
+    pub fn build(self) -> CognitoUserPool_PasswordPolicy {
+        CognitoUserPool_PasswordPolicy {
             minimum_length: core::default::Default::default(),
+            password_history_size: core::default::Default::default(),
             require_lowercase: core::default::Default::default(),
             require_numbers: core::default::Default::default(),
             require_symbols: core::default::Default::default(),
@@ -1964,21 +2322,23 @@ impl BuildCognitoUserPoolPasswordPolicyEl {
     }
 }
 
-pub struct CognitoUserPoolPasswordPolicyElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_PasswordPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolPasswordPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolPasswordPolicyElRef {
-        CognitoUserPoolPasswordPolicyElRef {
+impl terrars::Ref for CognitoUserPool_PasswordPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_PasswordPolicyRef {
+        CognitoUserPool_PasswordPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolPasswordPolicyElRef {
+impl CognitoUserPool_PasswordPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1986,6 +2346,11 @@ impl CognitoUserPoolPasswordPolicyElRef {
     #[doc = "Get a reference to the value of field `minimum_length` after provisioning.\n"]
     pub fn minimum_length(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.minimum_length", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `password_history_size` after provisioning.\n"]
+    pub fn password_history_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_history_size", self.base))
     }
 
     #[doc = "Get a reference to the value of field `require_lowercase` after provisioning.\n"]
@@ -2015,14 +2380,14 @@ impl CognitoUserPoolPasswordPolicyElRef {
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolSchemaElNumberAttributeConstraintsEl {
+pub struct CognitoUserPool_Schema_NumberAttributeConstraints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CognitoUserPoolSchemaElNumberAttributeConstraintsEl {
+impl CognitoUserPool_Schema_NumberAttributeConstraints {
     #[doc = "Set the field `max_value`.\n"]
     pub fn set_max_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.max_value = std::option::Option::Some(v.into());
@@ -2036,8 +2401,8 @@ impl CognitoUserPoolSchemaElNumberAttributeConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolSchemaElNumberAttributeConstraintsEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolSchemaElNumberAttributeConstraintsEl>;
+impl terrars::ToListMappable for CognitoUserPool_Schema_NumberAttributeConstraints {
+    type O = terrars::BlockAssignable<CognitoUserPool_Schema_NumberAttributeConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2048,35 +2413,37 @@ impl terrars::ToListMappable for CognitoUserPoolSchemaElNumberAttributeConstrain
     }
 }
 
-pub struct BuildCognitoUserPoolSchemaElNumberAttributeConstraintsEl {}
+pub struct BuildCognitoUserPool_Schema_NumberAttributeConstraints {}
 
-impl BuildCognitoUserPoolSchemaElNumberAttributeConstraintsEl {
-    pub fn build(self) -> CognitoUserPoolSchemaElNumberAttributeConstraintsEl {
-        CognitoUserPoolSchemaElNumberAttributeConstraintsEl {
+impl BuildCognitoUserPool_Schema_NumberAttributeConstraints {
+    pub fn build(self) -> CognitoUserPool_Schema_NumberAttributeConstraints {
+        CognitoUserPool_Schema_NumberAttributeConstraints {
             max_value: core::default::Default::default(),
             min_value: core::default::Default::default(),
         }
     }
 }
 
-pub struct CognitoUserPoolSchemaElNumberAttributeConstraintsElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_Schema_NumberAttributeConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolSchemaElNumberAttributeConstraintsElRef {
+impl terrars::Ref for CognitoUserPool_Schema_NumberAttributeConstraintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoUserPoolSchemaElNumberAttributeConstraintsElRef {
-        CognitoUserPoolSchemaElNumberAttributeConstraintsElRef {
+    ) -> CognitoUserPool_Schema_NumberAttributeConstraintsRef {
+        CognitoUserPool_Schema_NumberAttributeConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolSchemaElNumberAttributeConstraintsElRef {
+impl CognitoUserPool_Schema_NumberAttributeConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2093,14 +2460,14 @@ impl CognitoUserPoolSchemaElNumberAttributeConstraintsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolSchemaElStringAttributeConstraintsEl {
+pub struct CognitoUserPool_Schema_StringAttributeConstraints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_length: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_length: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CognitoUserPoolSchemaElStringAttributeConstraintsEl {
+impl CognitoUserPool_Schema_StringAttributeConstraints {
     #[doc = "Set the field `max_length`.\n"]
     pub fn set_max_length(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.max_length = std::option::Option::Some(v.into());
@@ -2114,8 +2481,8 @@ impl CognitoUserPoolSchemaElStringAttributeConstraintsEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolSchemaElStringAttributeConstraintsEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolSchemaElStringAttributeConstraintsEl>;
+impl terrars::ToListMappable for CognitoUserPool_Schema_StringAttributeConstraints {
+    type O = terrars::BlockAssignable<CognitoUserPool_Schema_StringAttributeConstraints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2126,35 +2493,37 @@ impl terrars::ToListMappable for CognitoUserPoolSchemaElStringAttributeConstrain
     }
 }
 
-pub struct BuildCognitoUserPoolSchemaElStringAttributeConstraintsEl {}
+pub struct BuildCognitoUserPool_Schema_StringAttributeConstraints {}
 
-impl BuildCognitoUserPoolSchemaElStringAttributeConstraintsEl {
-    pub fn build(self) -> CognitoUserPoolSchemaElStringAttributeConstraintsEl {
-        CognitoUserPoolSchemaElStringAttributeConstraintsEl {
+impl BuildCognitoUserPool_Schema_StringAttributeConstraints {
+    pub fn build(self) -> CognitoUserPool_Schema_StringAttributeConstraints {
+        CognitoUserPool_Schema_StringAttributeConstraints {
             max_length: core::default::Default::default(),
             min_length: core::default::Default::default(),
         }
     }
 }
 
-pub struct CognitoUserPoolSchemaElStringAttributeConstraintsElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_Schema_StringAttributeConstraintsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolSchemaElStringAttributeConstraintsElRef {
+impl terrars::Ref for CognitoUserPool_Schema_StringAttributeConstraintsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoUserPoolSchemaElStringAttributeConstraintsElRef {
-        CognitoUserPoolSchemaElStringAttributeConstraintsElRef {
+    ) -> CognitoUserPool_Schema_StringAttributeConstraintsRef {
+        CognitoUserPool_Schema_StringAttributeConstraintsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolSchemaElStringAttributeConstraintsElRef {
+impl CognitoUserPool_Schema_StringAttributeConstraintsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2171,17 +2540,17 @@ impl CognitoUserPoolSchemaElStringAttributeConstraintsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CognitoUserPoolSchemaElDynamic {
+struct CognitoUserPool_SchemaDynamic {
     number_attribute_constraints: std
     ::option
-    ::Option<terrars::DynamicBlock<CognitoUserPoolSchemaElNumberAttributeConstraintsEl>>,
+    ::Option<terrars::DynamicBlock<CognitoUserPool_Schema_NumberAttributeConstraints>>,
     string_attribute_constraints: std
     ::option
-    ::Option<terrars::DynamicBlock<CognitoUserPoolSchemaElStringAttributeConstraintsEl>>,
+    ::Option<terrars::DynamicBlock<CognitoUserPool_Schema_StringAttributeConstraints>>,
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolSchemaEl {
+pub struct CognitoUserPool_Schema {
     attribute_data_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     developer_only_attribute: std::option::Option<terrars::PrimField<bool>>,
@@ -2191,13 +2560,13 @@ pub struct CognitoUserPoolSchemaEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     required: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    number_attribute_constraints: std::option::Option<std::vec::Vec<CognitoUserPoolSchemaElNumberAttributeConstraintsEl>>,
+    number_attribute_constraints: std::option::Option<std::vec::Vec<CognitoUserPool_Schema_NumberAttributeConstraints>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    string_attribute_constraints: std::option::Option<std::vec::Vec<CognitoUserPoolSchemaElStringAttributeConstraintsEl>>,
-    dynamic: CognitoUserPoolSchemaElDynamic,
+    string_attribute_constraints: std::option::Option<std::vec::Vec<CognitoUserPool_Schema_StringAttributeConstraints>>,
+    dynamic: CognitoUserPool_SchemaDynamic,
 }
 
-impl CognitoUserPoolSchemaEl {
+impl CognitoUserPool_Schema {
     #[doc = "Set the field `developer_only_attribute`.\n"]
     pub fn set_developer_only_attribute(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.developer_only_attribute = std::option::Option::Some(v.into());
@@ -2219,7 +2588,7 @@ impl CognitoUserPoolSchemaEl {
     #[doc = "Set the field `number_attribute_constraints`.\n"]
     pub fn set_number_attribute_constraints(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolSchemaElNumberAttributeConstraintsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_Schema_NumberAttributeConstraints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2235,7 +2604,7 @@ impl CognitoUserPoolSchemaEl {
     #[doc = "Set the field `string_attribute_constraints`.\n"]
     pub fn set_string_attribute_constraints(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPoolSchemaElStringAttributeConstraintsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoUserPool_Schema_StringAttributeConstraints>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2249,8 +2618,8 @@ impl CognitoUserPoolSchemaEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolSchemaEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolSchemaEl>;
+impl terrars::ToListMappable for CognitoUserPool_Schema {
+    type O = terrars::BlockAssignable<CognitoUserPool_Schema>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2261,16 +2630,16 @@ impl terrars::ToListMappable for CognitoUserPoolSchemaEl {
     }
 }
 
-pub struct BuildCognitoUserPoolSchemaEl {
+pub struct BuildCognitoUserPool_Schema {
     #[doc = ""]
     pub attribute_data_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCognitoUserPoolSchemaEl {
-    pub fn build(self) -> CognitoUserPoolSchemaEl {
-        CognitoUserPoolSchemaEl {
+impl BuildCognitoUserPool_Schema {
+    pub fn build(self) -> CognitoUserPool_Schema {
+        CognitoUserPool_Schema {
             attribute_data_type: self.attribute_data_type,
             developer_only_attribute: core::default::Default::default(),
             mutable: core::default::Default::default(),
@@ -2283,21 +2652,23 @@ impl BuildCognitoUserPoolSchemaEl {
     }
 }
 
-pub struct CognitoUserPoolSchemaElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_SchemaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolSchemaElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolSchemaElRef {
-        CognitoUserPoolSchemaElRef {
+impl terrars::Ref for CognitoUserPool_SchemaRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_SchemaRef {
+        CognitoUserPool_SchemaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolSchemaElRef {
+impl CognitoUserPool_SchemaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2328,38 +2699,35 @@ impl CognitoUserPoolSchemaElRef {
     }
 
     #[doc = "Get a reference to the value of field `number_attribute_constraints` after provisioning.\n"]
-    pub fn number_attribute_constraints(
-        &self,
-    ) -> terrars::ListRef<CognitoUserPoolSchemaElNumberAttributeConstraintsElRef> {
+    pub fn number_attribute_constraints(&self) -> terrars::ListRef<CognitoUserPool_Schema_NumberAttributeConstraintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.number_attribute_constraints", self.base))
     }
 
     #[doc = "Get a reference to the value of field `string_attribute_constraints` after provisioning.\n"]
-    pub fn string_attribute_constraints(
-        &self,
-    ) -> terrars::ListRef<CognitoUserPoolSchemaElStringAttributeConstraintsElRef> {
+    pub fn string_attribute_constraints(&self) -> terrars::ListRef<CognitoUserPool_Schema_StringAttributeConstraintsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.string_attribute_constraints", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolSmsConfigurationEl {
-    external_id: terrars::PrimField<std::string::String>,
-    sns_caller_arn: terrars::PrimField<std::string::String>,
+pub struct CognitoUserPool_SignInPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sns_region: std::option::Option<terrars::PrimField<std::string::String>>,
+    allowed_first_auth_factors: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CognitoUserPoolSmsConfigurationEl {
-    #[doc = "Set the field `sns_region`.\n"]
-    pub fn set_sns_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.sns_region = std::option::Option::Some(v.into());
+impl CognitoUserPool_SignInPolicy {
+    #[doc = "Set the field `allowed_first_auth_factors`.\n"]
+    pub fn set_allowed_first_auth_factors(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_first_auth_factors = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolSmsConfigurationEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolSmsConfigurationEl>;
+impl terrars::ToListMappable for CognitoUserPool_SignInPolicy {
+    type O = terrars::BlockAssignable<CognitoUserPool_SignInPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2370,16 +2738,79 @@ impl terrars::ToListMappable for CognitoUserPoolSmsConfigurationEl {
     }
 }
 
-pub struct BuildCognitoUserPoolSmsConfigurationEl {
+pub struct BuildCognitoUserPool_SignInPolicy {}
+
+impl BuildCognitoUserPool_SignInPolicy {
+    pub fn build(self) -> CognitoUserPool_SignInPolicy {
+        CognitoUserPool_SignInPolicy { allowed_first_auth_factors: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CognitoUserPool_SignInPolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CognitoUserPool_SignInPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_SignInPolicyRef {
+        CognitoUserPool_SignInPolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CognitoUserPool_SignInPolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `allowed_first_auth_factors` after provisioning.\n"]
+    pub fn allowed_first_auth_factors(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_first_auth_factors", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CognitoUserPool_SmsConfiguration {
+    external_id: terrars::PrimField<std::string::String>,
+    sns_caller_arn: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sns_region: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl CognitoUserPool_SmsConfiguration {
+    #[doc = "Set the field `sns_region`.\n"]
+    pub fn set_sns_region(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.sns_region = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CognitoUserPool_SmsConfiguration {
+    type O = terrars::BlockAssignable<CognitoUserPool_SmsConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCognitoUserPool_SmsConfiguration {
     #[doc = ""]
     pub external_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub sns_caller_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCognitoUserPoolSmsConfigurationEl {
-    pub fn build(self) -> CognitoUserPoolSmsConfigurationEl {
-        CognitoUserPoolSmsConfigurationEl {
+impl BuildCognitoUserPool_SmsConfiguration {
+    pub fn build(self) -> CognitoUserPool_SmsConfiguration {
+        CognitoUserPool_SmsConfiguration {
             external_id: self.external_id,
             sns_caller_arn: self.sns_caller_arn,
             sns_region: core::default::Default::default(),
@@ -2387,21 +2818,23 @@ impl BuildCognitoUserPoolSmsConfigurationEl {
     }
 }
 
-pub struct CognitoUserPoolSmsConfigurationElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_SmsConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolSmsConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolSmsConfigurationElRef {
-        CognitoUserPoolSmsConfigurationElRef {
+impl terrars::Ref for CognitoUserPool_SmsConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_SmsConfigurationRef {
+        CognitoUserPool_SmsConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolSmsConfigurationElRef {
+impl CognitoUserPool_SmsConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2423,14 +2856,14 @@ impl CognitoUserPoolSmsConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolSoftwareTokenMfaConfigurationEl {
+pub struct CognitoUserPool_SoftwareTokenMfaConfiguration {
     enabled: terrars::PrimField<bool>,
 }
 
-impl CognitoUserPoolSoftwareTokenMfaConfigurationEl { }
+impl CognitoUserPool_SoftwareTokenMfaConfiguration { }
 
-impl terrars::ToListMappable for CognitoUserPoolSoftwareTokenMfaConfigurationEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolSoftwareTokenMfaConfigurationEl>;
+impl terrars::ToListMappable for CognitoUserPool_SoftwareTokenMfaConfiguration {
+    type O = terrars::BlockAssignable<CognitoUserPool_SoftwareTokenMfaConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2441,35 +2874,37 @@ impl terrars::ToListMappable for CognitoUserPoolSoftwareTokenMfaConfigurationEl 
     }
 }
 
-pub struct BuildCognitoUserPoolSoftwareTokenMfaConfigurationEl {
+pub struct BuildCognitoUserPool_SoftwareTokenMfaConfiguration {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildCognitoUserPoolSoftwareTokenMfaConfigurationEl {
-    pub fn build(self) -> CognitoUserPoolSoftwareTokenMfaConfigurationEl {
-        CognitoUserPoolSoftwareTokenMfaConfigurationEl { enabled: self.enabled }
+impl BuildCognitoUserPool_SoftwareTokenMfaConfiguration {
+    pub fn build(self) -> CognitoUserPool_SoftwareTokenMfaConfiguration {
+        CognitoUserPool_SoftwareTokenMfaConfiguration { enabled: self.enabled }
     }
 }
 
-pub struct CognitoUserPoolSoftwareTokenMfaConfigurationElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_SoftwareTokenMfaConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolSoftwareTokenMfaConfigurationElRef {
+impl terrars::Ref for CognitoUserPool_SoftwareTokenMfaConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoUserPoolSoftwareTokenMfaConfigurationElRef {
-        CognitoUserPoolSoftwareTokenMfaConfigurationElRef {
+    ) -> CognitoUserPool_SoftwareTokenMfaConfigurationRef {
+        CognitoUserPool_SoftwareTokenMfaConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolSoftwareTokenMfaConfigurationElRef {
+impl CognitoUserPool_SoftwareTokenMfaConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2481,14 +2916,14 @@ impl CognitoUserPoolSoftwareTokenMfaConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolUserAttributeUpdateSettingsEl {
+pub struct CognitoUserPool_UserAttributeUpdateSettings {
     attributes_require_verification_before_update: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl CognitoUserPoolUserAttributeUpdateSettingsEl { }
+impl CognitoUserPool_UserAttributeUpdateSettings { }
 
-impl terrars::ToListMappable for CognitoUserPoolUserAttributeUpdateSettingsEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolUserAttributeUpdateSettingsEl>;
+impl terrars::ToListMappable for CognitoUserPool_UserAttributeUpdateSettings {
+    type O = terrars::BlockAssignable<CognitoUserPool_UserAttributeUpdateSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2499,37 +2934,39 @@ impl terrars::ToListMappable for CognitoUserPoolUserAttributeUpdateSettingsEl {
     }
 }
 
-pub struct BuildCognitoUserPoolUserAttributeUpdateSettingsEl {
+pub struct BuildCognitoUserPool_UserAttributeUpdateSettings {
     #[doc = ""]
     pub attributes_require_verification_before_update: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildCognitoUserPoolUserAttributeUpdateSettingsEl {
-    pub fn build(self) -> CognitoUserPoolUserAttributeUpdateSettingsEl {
-        CognitoUserPoolUserAttributeUpdateSettingsEl {
+impl BuildCognitoUserPool_UserAttributeUpdateSettings {
+    pub fn build(self) -> CognitoUserPool_UserAttributeUpdateSettings {
+        CognitoUserPool_UserAttributeUpdateSettings {
             attributes_require_verification_before_update: self.attributes_require_verification_before_update,
         }
     }
 }
 
-pub struct CognitoUserPoolUserAttributeUpdateSettingsElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_UserAttributeUpdateSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolUserAttributeUpdateSettingsElRef {
+impl terrars::Ref for CognitoUserPool_UserAttributeUpdateSettingsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoUserPoolUserAttributeUpdateSettingsElRef {
-        CognitoUserPoolUserAttributeUpdateSettingsElRef {
+    ) -> CognitoUserPool_UserAttributeUpdateSettingsRef {
+        CognitoUserPool_UserAttributeUpdateSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolUserAttributeUpdateSettingsElRef {
+impl CognitoUserPool_UserAttributeUpdateSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2547,14 +2984,21 @@ impl CognitoUserPoolUserAttributeUpdateSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolUserPoolAddOnsEl {
-    advanced_security_mode: terrars::PrimField<std::string::String>,
+pub struct CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_auth_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CognitoUserPoolUserPoolAddOnsEl { }
+impl CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows {
+    #[doc = "Set the field `custom_auth_mode`.\n"]
+    pub fn set_custom_auth_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.custom_auth_mode = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for CognitoUserPoolUserPoolAddOnsEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolUserPoolAddOnsEl>;
+impl terrars::ToListMappable for CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows {
+    type O = terrars::BlockAssignable<CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2565,32 +3009,130 @@ impl terrars::ToListMappable for CognitoUserPoolUserPoolAddOnsEl {
     }
 }
 
-pub struct BuildCognitoUserPoolUserPoolAddOnsEl {
-    #[doc = ""]
-    pub advanced_security_mode: terrars::PrimField<std::string::String>,
-}
+pub struct BuildCognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows {}
 
-impl BuildCognitoUserPoolUserPoolAddOnsEl {
-    pub fn build(self) -> CognitoUserPoolUserPoolAddOnsEl {
-        CognitoUserPoolUserPoolAddOnsEl { advanced_security_mode: self.advanced_security_mode }
+impl BuildCognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows {
+    pub fn build(self) -> CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows {
+        CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows {
+            custom_auth_mode: core::default::Default::default(),
+        }
     }
 }
 
-pub struct CognitoUserPoolUserPoolAddOnsElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlowsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolUserPoolAddOnsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolUserPoolAddOnsElRef {
-        CognitoUserPoolUserPoolAddOnsElRef {
+impl terrars::Ref for CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlowsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlowsRef {
+        CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlowsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolUserPoolAddOnsElRef {
+impl CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlowsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `custom_auth_mode` after provisioning.\n"]
+    pub fn custom_auth_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_auth_mode", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct CognitoUserPool_UserPoolAddOnsDynamic {
+    advanced_security_additional_flows: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows>>,
+}
+
+#[derive(Serialize)]
+pub struct CognitoUserPool_UserPoolAddOns {
+    advanced_security_mode: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    advanced_security_additional_flows: std
+    ::option
+    ::Option<std::vec::Vec<CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows>>,
+    dynamic: CognitoUserPool_UserPoolAddOnsDynamic,
+}
+
+impl CognitoUserPool_UserPoolAddOns {
+    #[doc = "Set the field `advanced_security_additional_flows`.\n"]
+    pub fn set_advanced_security_additional_flows(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlows>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.advanced_security_additional_flows = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.advanced_security_additional_flows = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for CognitoUserPool_UserPoolAddOns {
+    type O = terrars::BlockAssignable<CognitoUserPool_UserPoolAddOns>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCognitoUserPool_UserPoolAddOns {
+    #[doc = ""]
+    pub advanced_security_mode: terrars::PrimField<std::string::String>,
+}
+
+impl BuildCognitoUserPool_UserPoolAddOns {
+    pub fn build(self) -> CognitoUserPool_UserPoolAddOns {
+        CognitoUserPool_UserPoolAddOns {
+            advanced_security_mode: self.advanced_security_mode,
+            advanced_security_additional_flows: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CognitoUserPool_UserPoolAddOnsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CognitoUserPool_UserPoolAddOnsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_UserPoolAddOnsRef {
+        CognitoUserPool_UserPoolAddOnsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CognitoUserPool_UserPoolAddOnsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2599,17 +3141,31 @@ impl CognitoUserPoolUserPoolAddOnsElRef {
     pub fn advanced_security_mode(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.advanced_security_mode", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `advanced_security_additional_flows` after provisioning.\n"]
+    pub fn advanced_security_additional_flows(
+        &self,
+    ) -> terrars::ListRef<CognitoUserPool_UserPoolAddOns_AdvancedSecurityAdditionalFlowsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_security_additional_flows", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolUsernameConfigurationEl {
-    case_sensitive: terrars::PrimField<bool>,
+pub struct CognitoUserPool_UsernameConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    case_sensitive: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl CognitoUserPoolUsernameConfigurationEl { }
+impl CognitoUserPool_UsernameConfiguration {
+    #[doc = "Set the field `case_sensitive`.\n"]
+    pub fn set_case_sensitive(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.case_sensitive = std::option::Option::Some(v.into());
+        self
+    }
+}
 
-impl terrars::ToListMappable for CognitoUserPoolUsernameConfigurationEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolUsernameConfigurationEl>;
+impl terrars::ToListMappable for CognitoUserPool_UsernameConfiguration {
+    type O = terrars::BlockAssignable<CognitoUserPool_UsernameConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2620,32 +3176,31 @@ impl terrars::ToListMappable for CognitoUserPoolUsernameConfigurationEl {
     }
 }
 
-pub struct BuildCognitoUserPoolUsernameConfigurationEl {
-    #[doc = ""]
-    pub case_sensitive: terrars::PrimField<bool>,
-}
+pub struct BuildCognitoUserPool_UsernameConfiguration {}
 
-impl BuildCognitoUserPoolUsernameConfigurationEl {
-    pub fn build(self) -> CognitoUserPoolUsernameConfigurationEl {
-        CognitoUserPoolUsernameConfigurationEl { case_sensitive: self.case_sensitive }
+impl BuildCognitoUserPool_UsernameConfiguration {
+    pub fn build(self) -> CognitoUserPool_UsernameConfiguration {
+        CognitoUserPool_UsernameConfiguration { case_sensitive: core::default::Default::default() }
     }
 }
 
-pub struct CognitoUserPoolUsernameConfigurationElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_UsernameConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolUsernameConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPoolUsernameConfigurationElRef {
-        CognitoUserPoolUsernameConfigurationElRef {
+impl terrars::Ref for CognitoUserPool_UsernameConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_UsernameConfigurationRef {
+        CognitoUserPool_UsernameConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolUsernameConfigurationElRef {
+impl CognitoUserPool_UsernameConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2657,7 +3212,7 @@ impl CognitoUserPoolUsernameConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct CognitoUserPoolVerificationMessageTemplateEl {
+pub struct CognitoUserPool_VerificationMessageTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_email_option: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2672,7 +3227,7 @@ pub struct CognitoUserPoolVerificationMessageTemplateEl {
     sms_message: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CognitoUserPoolVerificationMessageTemplateEl {
+impl CognitoUserPool_VerificationMessageTemplate {
     #[doc = "Set the field `default_email_option`.\n"]
     pub fn set_default_email_option(
         mut self,
@@ -2719,8 +3274,8 @@ impl CognitoUserPoolVerificationMessageTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoUserPoolVerificationMessageTemplateEl {
-    type O = terrars::BlockAssignable<CognitoUserPoolVerificationMessageTemplateEl>;
+impl terrars::ToListMappable for CognitoUserPool_VerificationMessageTemplate {
+    type O = terrars::BlockAssignable<CognitoUserPool_VerificationMessageTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2731,11 +3286,11 @@ impl terrars::ToListMappable for CognitoUserPoolVerificationMessageTemplateEl {
     }
 }
 
-pub struct BuildCognitoUserPoolVerificationMessageTemplateEl {}
+pub struct BuildCognitoUserPool_VerificationMessageTemplate {}
 
-impl BuildCognitoUserPoolVerificationMessageTemplateEl {
-    pub fn build(self) -> CognitoUserPoolVerificationMessageTemplateEl {
-        CognitoUserPoolVerificationMessageTemplateEl {
+impl BuildCognitoUserPool_VerificationMessageTemplate {
+    pub fn build(self) -> CognitoUserPool_VerificationMessageTemplate {
+        CognitoUserPool_VerificationMessageTemplate {
             default_email_option: core::default::Default::default(),
             email_message: core::default::Default::default(),
             email_message_by_link: core::default::Default::default(),
@@ -2746,24 +3301,26 @@ impl BuildCognitoUserPoolVerificationMessageTemplateEl {
     }
 }
 
-pub struct CognitoUserPoolVerificationMessageTemplateElRef {
+#[allow(dead_code)]
+pub struct CognitoUserPool_VerificationMessageTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoUserPoolVerificationMessageTemplateElRef {
+impl terrars::Ref for CognitoUserPool_VerificationMessageTemplateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoUserPoolVerificationMessageTemplateElRef {
-        CognitoUserPoolVerificationMessageTemplateElRef {
+    ) -> CognitoUserPool_VerificationMessageTemplateRef {
+        CognitoUserPool_VerificationMessageTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoUserPoolVerificationMessageTemplateElRef {
+impl CognitoUserPool_VerificationMessageTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2799,25 +3356,79 @@ impl CognitoUserPoolVerificationMessageTemplateElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct CognitoUserPoolDynamic {
-    account_recovery_setting: std::option::Option<terrars::DynamicBlock<CognitoUserPoolAccountRecoverySettingEl>>,
-    admin_create_user_config: std::option::Option<terrars::DynamicBlock<CognitoUserPoolAdminCreateUserConfigEl>>,
-    device_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPoolDeviceConfigurationEl>>,
-    email_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPoolEmailConfigurationEl>>,
-    lambda_config: std::option::Option<terrars::DynamicBlock<CognitoUserPoolLambdaConfigEl>>,
-    password_policy: std::option::Option<terrars::DynamicBlock<CognitoUserPoolPasswordPolicyEl>>,
-    schema: std::option::Option<terrars::DynamicBlock<CognitoUserPoolSchemaEl>>,
-    sms_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPoolSmsConfigurationEl>>,
-    software_token_mfa_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<CognitoUserPoolSoftwareTokenMfaConfigurationEl>>,
-    user_attribute_update_settings: std
-    ::option
-    ::Option<terrars::DynamicBlock<CognitoUserPoolUserAttributeUpdateSettingsEl>>,
-    user_pool_add_ons: std::option::Option<terrars::DynamicBlock<CognitoUserPoolUserPoolAddOnsEl>>,
-    username_configuration: std::option::Option<terrars::DynamicBlock<CognitoUserPoolUsernameConfigurationEl>>,
-    verification_message_template: std
-    ::option
-    ::Option<terrars::DynamicBlock<CognitoUserPoolVerificationMessageTemplateEl>>,
+#[derive(Serialize)]
+pub struct CognitoUserPool_WebAuthnConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    relying_party_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    user_verification: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl CognitoUserPool_WebAuthnConfiguration {
+    #[doc = "Set the field `relying_party_id`.\n"]
+    pub fn set_relying_party_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.relying_party_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `user_verification`.\n"]
+    pub fn set_user_verification(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.user_verification = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CognitoUserPool_WebAuthnConfiguration {
+    type O = terrars::BlockAssignable<CognitoUserPool_WebAuthnConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCognitoUserPool_WebAuthnConfiguration {}
+
+impl BuildCognitoUserPool_WebAuthnConfiguration {
+    pub fn build(self) -> CognitoUserPool_WebAuthnConfiguration {
+        CognitoUserPool_WebAuthnConfiguration {
+            relying_party_id: core::default::Default::default(),
+            user_verification: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CognitoUserPool_WebAuthnConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CognitoUserPool_WebAuthnConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CognitoUserPool_WebAuthnConfigurationRef {
+        CognitoUserPool_WebAuthnConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CognitoUserPool_WebAuthnConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `relying_party_id` after provisioning.\n"]
+    pub fn relying_party_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.relying_party_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `user_verification` after provisioning.\n"]
+    pub fn user_verification(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_verification", self.base))
+    }
 }

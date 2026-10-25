@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsmMaintenanceWindowTargetData {
+struct SsmMaintenanceWindowTargetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,17 +28,19 @@ struct SsmMaintenanceWindowTargetData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     owner_information: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     resource_type: terrars::PrimField<std::string::String>,
     window_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    targets: std::option::Option<std::vec::Vec<SsmMaintenanceWindowTargetTargetsEl>>,
+    targets: std::option::Option<std::vec::Vec<SsmMaintenanceWindowTarget_Targets>>,
     dynamic: SsmMaintenanceWindowTargetDynamic,
 }
 
 struct SsmMaintenanceWindowTarget_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsmMaintenanceWindowTargetData>,
+    data: std::cell::RefCell<SsmMaintenanceWindowTargetData_>,
 }
 
 #[derive(Clone)]
@@ -160,10 +164,17 @@ impl SsmMaintenanceWindowTarget {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `targets`.\n"]
     pub fn set_targets(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SsmMaintenanceWindowTargetTargetsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmMaintenanceWindowTarget_Targets>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -196,6 +207,12 @@ impl SsmMaintenanceWindowTarget {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_information", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
     pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
@@ -207,7 +224,7 @@ impl SsmMaintenanceWindowTarget {
     }
 
     #[doc = "Get a reference to the value of field `targets` after provisioning.\n"]
-    pub fn targets(&self) -> terrars::ListRef<SsmMaintenanceWindowTargetTargetsElRef> {
+    pub fn targets(&self) -> terrars::ListRef<SsmMaintenanceWindowTarget_TargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.targets", self.extract_ref()))
     }
 }
@@ -256,7 +273,7 @@ impl BuildSsmMaintenanceWindowTarget {
         let out = SsmMaintenanceWindowTarget(std::rc::Rc::new(SsmMaintenanceWindowTarget_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsmMaintenanceWindowTargetData {
+            data: std::cell::RefCell::new(SsmMaintenanceWindowTargetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -266,6 +283,7 @@ impl BuildSsmMaintenanceWindowTarget {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 owner_information: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resource_type: self.resource_type,
                 window_id: self.window_id,
                 targets: core::default::Default::default(),
@@ -320,6 +338,12 @@ impl SsmMaintenanceWindowTargetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_information", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
     pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.extract_ref()))
@@ -331,21 +355,26 @@ impl SsmMaintenanceWindowTargetRef {
     }
 
     #[doc = "Get a reference to the value of field `targets` after provisioning.\n"]
-    pub fn targets(&self) -> terrars::ListRef<SsmMaintenanceWindowTargetTargetsElRef> {
+    pub fn targets(&self) -> terrars::ListRef<SsmMaintenanceWindowTarget_TargetsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.targets", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SsmMaintenanceWindowTargetDynamic {
+    targets: std::option::Option<terrars::DynamicBlock<SsmMaintenanceWindowTarget_Targets>>,
+}
+
 #[derive(Serialize)]
-pub struct SsmMaintenanceWindowTargetTargetsEl {
+pub struct SsmMaintenanceWindowTarget_Targets {
     key: terrars::PrimField<std::string::String>,
     values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl SsmMaintenanceWindowTargetTargetsEl { }
+impl SsmMaintenanceWindowTarget_Targets { }
 
-impl terrars::ToListMappable for SsmMaintenanceWindowTargetTargetsEl {
-    type O = terrars::BlockAssignable<SsmMaintenanceWindowTargetTargetsEl>;
+impl terrars::ToListMappable for SsmMaintenanceWindowTarget_Targets {
+    type O = terrars::BlockAssignable<SsmMaintenanceWindowTarget_Targets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -356,37 +385,39 @@ impl terrars::ToListMappable for SsmMaintenanceWindowTargetTargetsEl {
     }
 }
 
-pub struct BuildSsmMaintenanceWindowTargetTargetsEl {
+pub struct BuildSsmMaintenanceWindowTarget_Targets {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildSsmMaintenanceWindowTargetTargetsEl {
-    pub fn build(self) -> SsmMaintenanceWindowTargetTargetsEl {
-        SsmMaintenanceWindowTargetTargetsEl {
+impl BuildSsmMaintenanceWindowTarget_Targets {
+    pub fn build(self) -> SsmMaintenanceWindowTarget_Targets {
+        SsmMaintenanceWindowTarget_Targets {
             key: self.key,
             values: self.values,
         }
     }
 }
 
-pub struct SsmMaintenanceWindowTargetTargetsElRef {
+#[allow(dead_code)]
+pub struct SsmMaintenanceWindowTarget_TargetsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmMaintenanceWindowTargetTargetsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmMaintenanceWindowTargetTargetsElRef {
-        SsmMaintenanceWindowTargetTargetsElRef {
+impl terrars::Ref for SsmMaintenanceWindowTarget_TargetsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmMaintenanceWindowTarget_TargetsRef {
+        SsmMaintenanceWindowTarget_TargetsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmMaintenanceWindowTargetTargetsElRef {
+impl SsmMaintenanceWindowTarget_TargetsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -400,9 +431,4 @@ impl SsmMaintenanceWindowTargetTargetsElRef {
     pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SsmMaintenanceWindowTargetDynamic {
-    targets: std::option::Option<terrars::DynamicBlock<SsmMaintenanceWindowTargetTargetsEl>>,
 }

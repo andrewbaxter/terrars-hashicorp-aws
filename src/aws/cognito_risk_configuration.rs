@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CognitoRiskConfigurationData {
+struct CognitoRiskConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,26 +24,26 @@ struct CognitoRiskConfigurationData {
     client_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     user_pool_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account_takeover_risk_configuration: std
     ::option
-    ::Option<std::vec::Vec<CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl>>,
+    ::Option<std::vec::Vec<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compromised_credentials_risk_configuration: std
     ::option
-    ::Option<std::vec::Vec<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl>>,
+    ::Option<std::vec::Vec<CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    risk_exception_configuration: std
-    ::option
-    ::Option<std::vec::Vec<CognitoRiskConfigurationRiskExceptionConfigurationEl>>,
+    risk_exception_configuration: std::option::Option<std::vec::Vec<CognitoRiskConfiguration_RiskExceptionConfiguration>>,
     dynamic: CognitoRiskConfigurationDynamic,
 }
 
 struct CognitoRiskConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CognitoRiskConfigurationData>,
+    data: std::cell::RefCell<CognitoRiskConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -153,6 +155,13 @@ impl CognitoRiskConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `account_takeover_risk_configuration`.\n"]
     pub fn set_account_takeover_risk_configuration(
         self,
@@ -161,7 +170,7 @@ impl CognitoRiskConfiguration {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl>>,
+                    ::Into<terrars::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -183,7 +192,7 @@ impl CognitoRiskConfiguration {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl>,
+                        terrars::BlockAssignable<CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration>,
                     >,
     ) -> Self {
         match v.into() {
@@ -201,7 +210,7 @@ impl CognitoRiskConfiguration {
     #[doc = "Set the field `risk_exception_configuration`.\n"]
     pub fn set_risk_exception_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CognitoRiskConfigurationRiskExceptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CognitoRiskConfiguration_RiskExceptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -224,6 +233,12 @@ impl CognitoRiskConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_pool_id` after provisioning.\n"]
     pub fn user_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_pool_id", self.extract_ref()))
@@ -232,7 +247,7 @@ impl CognitoRiskConfiguration {
     #[doc = "Get a reference to the value of field `account_takeover_risk_configuration` after provisioning.\n"]
     pub fn account_takeover_risk_configuration(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.account_takeover_risk_configuration", self.extract_ref()),
@@ -242,7 +257,7 @@ impl CognitoRiskConfiguration {
     #[doc = "Get a reference to the value of field `compromised_credentials_risk_configuration` after provisioning.\n"]
     pub fn compromised_credentials_risk_configuration(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_CompromisedCredentialsRiskConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.compromised_credentials_risk_configuration", self.extract_ref()),
@@ -252,7 +267,7 @@ impl CognitoRiskConfiguration {
     #[doc = "Get a reference to the value of field `risk_exception_configuration` after provisioning.\n"]
     pub fn risk_exception_configuration(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationRiskExceptionConfigurationElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_RiskExceptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.risk_exception_configuration", self.extract_ref()))
     }
 }
@@ -299,7 +314,7 @@ impl BuildCognitoRiskConfiguration {
         let out = CognitoRiskConfiguration(std::rc::Rc::new(CognitoRiskConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CognitoRiskConfigurationData {
+            data: std::cell::RefCell::new(CognitoRiskConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -307,6 +322,7 @@ impl BuildCognitoRiskConfiguration {
                 provisioner: core::default::Default::default(),
                 client_id: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 user_pool_id: self.user_pool_id,
                 account_takeover_risk_configuration: core::default::Default::default(),
                 compromised_credentials_risk_configuration: core::default::Default::default(),
@@ -352,6 +368,12 @@ impl CognitoRiskConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `user_pool_id` after provisioning.\n"]
     pub fn user_pool_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_pool_id", self.extract_ref()))
@@ -360,7 +382,7 @@ impl CognitoRiskConfigurationRef {
     #[doc = "Get a reference to the value of field `account_takeover_risk_configuration` after provisioning.\n"]
     pub fn account_takeover_risk_configuration(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.account_takeover_risk_configuration", self.extract_ref()),
@@ -370,7 +392,7 @@ impl CognitoRiskConfigurationRef {
     #[doc = "Get a reference to the value of field `compromised_credentials_risk_configuration` after provisioning.\n"]
     pub fn compromised_credentials_risk_configuration(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_CompromisedCredentialsRiskConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.compromised_credentials_risk_configuration", self.extract_ref()),
@@ -380,22 +402,34 @@ impl CognitoRiskConfigurationRef {
     #[doc = "Get a reference to the value of field `risk_exception_configuration` after provisioning.\n"]
     pub fn risk_exception_configuration(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationRiskExceptionConfigurationElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_RiskExceptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.risk_exception_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CognitoRiskConfigurationDynamic {
+    account_takeover_risk_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration>>,
+    compromised_credentials_risk_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration>>,
+    risk_exception_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<CognitoRiskConfiguration_RiskExceptionConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl {
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction {
     event_action: terrars::PrimField<std::string::String>,
     notify: terrars::PrimField<bool>,
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl { }
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction { }
 
-impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl {
-    type O =
-        terrars::BlockAssignable<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl>;
+impl terrars::ToListMappable for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction {
+    type O = terrars::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -406,40 +440,42 @@ impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConf
     }
 }
 
-pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl {
+pub struct BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction {
     #[doc = ""]
     pub event_action: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub notify: terrars::PrimField<bool>,
 }
 
-impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl {
-    pub fn build(self) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl {
+impl BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction {
+    pub fn build(self) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction {
             event_action: self.event_action,
             notify: self.notify,
         }
     }
 }
 
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionElRef {
+impl terrars::Ref for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionElRef {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionElRef {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighActionRef {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionElRef {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -456,16 +492,15 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActi
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl {
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction {
     event_action: terrars::PrimField<std::string::String>,
     notify: terrars::PrimField<bool>,
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl { }
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction { }
 
-impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl {
-    type O =
-        terrars::BlockAssignable<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl>;
+impl terrars::ToListMappable for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction {
+    type O = terrars::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -476,40 +511,42 @@ impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConf
     }
 }
 
-pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl {
+pub struct BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction {
     #[doc = ""]
     pub event_action: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub notify: terrars::PrimField<bool>,
 }
 
-impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl {
-    pub fn build(self) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl {
+impl BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction {
+    pub fn build(self) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction {
             event_action: self.event_action,
             notify: self.notify,
         }
     }
 }
 
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionElRef {
+impl terrars::Ref for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionElRef {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionElRef {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowActionRef {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionElRef {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -526,16 +563,16 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActio
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl {
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction {
     event_action: terrars::PrimField<std::string::String>,
     notify: terrars::PrimField<bool>,
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl { }
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction { }
 
-impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl {
+impl terrars::ToListMappable for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction {
     type O =
-        terrars::BlockAssignable<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl>;
+        terrars::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -546,40 +583,42 @@ impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConf
     }
 }
 
-pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl {
+pub struct BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction {
     #[doc = ""]
     pub event_action: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub notify: terrars::PrimField<bool>,
 }
 
-impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl {
-    pub fn build(self) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl {
+impl BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction {
+    pub fn build(self) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction {
             event_action: self.event_action,
             notify: self.notify,
         }
     }
 }
 
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionElRef {
+impl terrars::Ref for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionElRef {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionElRef {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumActionRef {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionElRef {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -596,38 +635,36 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumAc
 }
 
 #[derive(Serialize, Default)]
-struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElDynamic {
+struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_ActionsDynamic {
     high_action: std
     ::option
-    ::Option<terrars::DynamicBlock<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl>>,
+    ::Option<terrars::DynamicBlock<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction>>,
     low_action: std
     ::option
-    ::Option<terrars::DynamicBlock<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl>>,
+    ::Option<terrars::DynamicBlock<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction>>,
     medium_action: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl>,
-    >,
+    ::Option<terrars::DynamicBlock<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction>>,
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     high_action: std
     ::option
-    ::Option<std::vec::Vec<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl>>,
+    ::Option<std::vec::Vec<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     low_action: std
     ::option
-    ::Option<std::vec::Vec<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl>>,
+    ::Option<std::vec::Vec<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     medium_action: std
     ::option
-    ::Option<std::vec::Vec<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl>>,
-    dynamic: CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElDynamic,
+    ::Option<std::vec::Vec<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction>>,
+    dynamic: CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_ActionsDynamic,
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions {
     #[doc = "Set the field `high_action`.\n"]
     pub fn set_high_action(
         mut self,
@@ -639,7 +676,7 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionEl,
+                            CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighAction,
                         >,
                     >,
     ) -> Self {
@@ -664,9 +701,7 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<
-                            CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionEl,
-                        >,
+                        ::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowAction>,
                     >,
     ) -> Self {
         match v.into() {
@@ -691,7 +726,7 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionEl,
+                            CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumAction,
                         >,
                     >,
     ) -> Self {
@@ -707,8 +742,8 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
-    type O = terrars::BlockAssignable<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl>;
+impl terrars::ToListMappable for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions {
+    type O = terrars::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -719,11 +754,11 @@ impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConf
     }
 }
 
-pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {}
+pub struct BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions {}
 
-impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
-    pub fn build(self) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
+impl BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions {
+    pub fn build(self) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions {
             high_action: core::default::Default::default(),
             low_action: core::default::Default::default(),
             medium_action: core::default::Default::default(),
@@ -732,24 +767,26 @@ impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl {
     }
 }
 
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_ActionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElRef {
+impl terrars::Ref for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_ActionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElRef {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElRef {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_ActionsRef {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_ActionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElRef {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_ActionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -757,41 +794,39 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElRef {
     #[doc = "Get a reference to the value of field `high_action` after provisioning.\n"]
     pub fn high_action(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElHighActionElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_HighActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.high_action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `low_action` after provisioning.\n"]
     pub fn low_action(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElLowActionElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_LowActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.low_action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `medium_action` after provisioning.\n"]
     pub fn medium_action(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElMediumActionElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions_MediumActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.medium_action", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl {
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail {
     html_body: terrars::PrimField<std::string::String>,
     subject: terrars::PrimField<std::string::String>,
     text_body: terrars::PrimField<std::string::String>,
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl { }
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail { }
 
 impl terrars
-::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl {
+::ToListMappable for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail {
     type O =
         terrars
-        ::BlockAssignable<
-            CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl,
-        >;
+        ::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -802,7 +837,7 @@ impl terrars
     }
 }
 
-pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl {
+pub struct BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail {
     #[doc = ""]
     pub html_body: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -811,11 +846,9 @@ pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotify
     pub text_body: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl {
-    pub fn build(
-        self,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl {
+impl BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail {
+    pub fn build(self) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail {
             html_body: self.html_body,
             subject: self.subject,
             text_body: self.text_body,
@@ -823,24 +856,26 @@ impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfig
     }
 }
 
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmailRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailElRef {
+impl terrars::Ref for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmailRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailElRef {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailElRef {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmailRef {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmailRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailElRef {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -862,19 +897,19 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurati
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl {
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail {
     html_body: terrars::PrimField<std::string::String>,
     subject: terrars::PrimField<std::string::String>,
     text_body: terrars::PrimField<std::string::String>,
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl { }
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail { }
 
 impl terrars
-::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl {
+::ToListMappable for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail {
     type O =
         terrars
-        ::BlockAssignable<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl>;
+        ::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -885,7 +920,7 @@ impl terrars
     }
 }
 
-pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl {
+pub struct BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail {
     #[doc = ""]
     pub html_body: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -894,9 +929,9 @@ pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotify
     pub text_body: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl {
-    pub fn build(self) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl {
+impl BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail {
+    pub fn build(self) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail {
             html_body: self.html_body,
             subject: self.subject,
             text_body: self.text_body,
@@ -904,24 +939,26 @@ impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfig
     }
 }
 
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmailRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailElRef {
+impl terrars::Ref for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmailRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailElRef {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailElRef {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmailRef {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmailRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailElRef {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -943,20 +980,20 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurati
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl {
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail {
     html_body: terrars::PrimField<std::string::String>,
     subject: terrars::PrimField<std::string::String>,
     text_body: terrars::PrimField<std::string::String>,
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl { }
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail { }
 
 impl terrars
-::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl {
+::ToListMappable for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail {
     type O =
         terrars
         ::BlockAssignable<
-            CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl,
+            CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -968,7 +1005,7 @@ impl terrars
     }
 }
 
-pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl {
+pub struct BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail {
     #[doc = ""]
     pub html_body: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -977,11 +1014,11 @@ pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotify
     pub text_body: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl {
+impl BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail {
     pub fn build(
         self,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail {
             html_body: self.html_body,
             subject: self.subject,
             text_body: self.text_body,
@@ -989,25 +1026,26 @@ impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfig
     }
 }
 
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmailRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailElRef {
+impl terrars::Ref for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmailRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailElRef {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailElRef {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmailRef {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmailRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailElRef {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmailRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1029,29 +1067,28 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurati
 }
 
 #[derive(Serialize, Default)]
-struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElDynamic {
+struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfigurationDynamic {
     block_email: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl>,
+        ::DynamicBlock<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail>,
     >,
     mfa_email: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl>,
+        terrars::DynamicBlock<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail>,
     >,
     no_action_email: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl>,
+        ::DynamicBlock<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl {
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     from: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1060,25 +1097,21 @@ pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfi
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     block_email: std
     ::option
-    ::Option<
-        std::vec::Vec<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl>,
-    >,
+    ::Option<std::vec::Vec<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mfa_email: std
     ::option
-    ::Option<
-        std::vec::Vec<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl>,
-    >,
+    ::Option<std::vec::Vec<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     no_action_email: std
     ::option
     ::Option<
-        std::vec::Vec<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl>,
+        std::vec::Vec<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail>,
     >,
-    dynamic: CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElDynamic,
+    dynamic: CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfigurationDynamic,
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration {
     #[doc = "Set the field `from`.\n"]
     pub fn set_from(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.from = std::option::Option::Some(v.into());
@@ -1102,7 +1135,7 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurati
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailEl,
+                            CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmail,
                         >,
                     >,
     ) -> Self {
@@ -1128,7 +1161,7 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurati
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailEl,
+                            CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmail,
                         >,
                     >,
     ) -> Self {
@@ -1154,7 +1187,7 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurati
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailEl,
+                            CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmail,
                         >,
                     >,
     ) -> Self {
@@ -1170,9 +1203,8 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurati
     }
 }
 
-impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl {
-    type O =
-        terrars::BlockAssignable<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl>;
+impl terrars::ToListMappable for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration {
+    type O = terrars::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1183,14 +1215,14 @@ impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConf
     }
 }
 
-pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl {
+pub struct BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration {
     #[doc = ""]
     pub source_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl {
-    pub fn build(self) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl {
+impl BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration {
+    pub fn build(self) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration {
             from: core::default::Default::default(),
             reply_to: core::default::Default::default(),
             source_arn: self.source_arn,
@@ -1202,24 +1234,26 @@ impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfig
     }
 }
 
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElRef {
+impl terrars::Ref for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElRef {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElRef {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfigurationRef {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElRef {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1243,15 +1277,14 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurati
     pub fn block_email(
         &self,
     ) -> terrars
-    ::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElBlockEmailElRef> {
+    ::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_BlockEmailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.block_email", self.base))
     }
 
     #[doc = "Get a reference to the value of field `mfa_email` after provisioning.\n"]
     pub fn mfa_email(
         &self,
-    ) -> terrars
-    ::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElMfaEmailElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_MfaEmailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mfa_email", self.base))
     }
 
@@ -1259,33 +1292,33 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurati
     pub fn no_action_email(
         &self,
     ) -> terrars
-    ::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElNoActionEmailElRef> {
+    ::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration_NoActionEmailRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.no_action_email", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElDynamic {
+struct CognitoRiskConfiguration_AccountTakeoverRiskConfigurationDynamic {
     actions: std
     ::option
-    ::Option<terrars::DynamicBlock<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl>>,
+    ::Option<terrars::DynamicBlock<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions>>,
     notify_configuration: std
     ::option
-    ::Option<terrars::DynamicBlock<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl>>,
+    ::Option<terrars::DynamicBlock<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration>>,
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    actions: std::option::Option<std::vec::Vec<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl>>,
+    actions: std::option::Option<std::vec::Vec<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     notify_configuration: std
     ::option
-    ::Option<std::vec::Vec<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl>>,
-    dynamic: CognitoRiskConfigurationAccountTakeoverRiskConfigurationElDynamic,
+    ::Option<std::vec::Vec<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration>>,
+    dynamic: CognitoRiskConfiguration_AccountTakeoverRiskConfigurationDynamic,
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfiguration {
     #[doc = "Set the field `actions`.\n"]
     pub fn set_actions(
         mut self,
@@ -1295,7 +1328,7 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsEl>,
+                        terrars::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_Actions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1320,7 +1353,7 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationEl,
+                            CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfiguration,
                         >,
                     >,
     ) -> Self {
@@ -1336,8 +1369,8 @@ impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
-    type O = terrars::BlockAssignable<CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl>;
+impl terrars::ToListMappable for CognitoRiskConfiguration_AccountTakeoverRiskConfiguration {
+    type O = terrars::BlockAssignable<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1348,11 +1381,11 @@ impl terrars::ToListMappable for CognitoRiskConfigurationAccountTakeoverRiskConf
     }
 }
 
-pub struct BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {}
+pub struct BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration {}
 
-impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
-    pub fn build(self) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
+impl BuildCognitoRiskConfiguration_AccountTakeoverRiskConfiguration {
+    pub fn build(self) -> CognitoRiskConfiguration_AccountTakeoverRiskConfiguration {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfiguration {
             actions: core::default::Default::default(),
             notify_configuration: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1360,50 +1393,52 @@ impl BuildCognitoRiskConfigurationAccountTakeoverRiskConfigurationEl {
     }
 }
 
-pub struct CognitoRiskConfigurationAccountTakeoverRiskConfigurationElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_AccountTakeoverRiskConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationAccountTakeoverRiskConfigurationElRef {
+impl terrars::Ref for CognitoRiskConfiguration_AccountTakeoverRiskConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationAccountTakeoverRiskConfigurationElRef {
-        CognitoRiskConfigurationAccountTakeoverRiskConfigurationElRef {
+    ) -> CognitoRiskConfiguration_AccountTakeoverRiskConfigurationRef {
+        CognitoRiskConfiguration_AccountTakeoverRiskConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationAccountTakeoverRiskConfigurationElRef {
+impl CognitoRiskConfiguration_AccountTakeoverRiskConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `actions` after provisioning.\n"]
-    pub fn actions(&self) -> terrars::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElActionsElRef> {
+    pub fn actions(&self) -> terrars::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_ActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.actions", self.base))
     }
 
     #[doc = "Get a reference to the value of field `notify_configuration` after provisioning.\n"]
     pub fn notify_configuration(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationAccountTakeoverRiskConfigurationElNotifyConfigurationElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_AccountTakeoverRiskConfiguration_NotifyConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notify_configuration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl {
+pub struct CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions {
     event_action: terrars::PrimField<std::string::String>,
 }
 
-impl CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl { }
+impl CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions { }
 
-impl terrars::ToListMappable for CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl {
-    type O = terrars::BlockAssignable<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl>;
+impl terrars::ToListMappable for CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions {
+    type O = terrars::BlockAssignable<CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1414,37 +1449,37 @@ impl terrars::ToListMappable for CognitoRiskConfigurationCompromisedCredentialsR
     }
 }
 
-pub struct BuildCognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl {
+pub struct BuildCognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions {
     #[doc = ""]
     pub event_action: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl {
-    pub fn build(self) -> CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl {
-        CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl {
-            event_action: self.event_action,
-        }
+impl BuildCognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions {
+    pub fn build(self) -> CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions {
+        CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions { event_action: self.event_action }
     }
 }
 
-pub struct CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_ActionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsElRef {
+impl terrars::Ref for CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_ActionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsElRef {
-        CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsElRef {
+    ) -> CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_ActionsRef {
+        CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_ActionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsElRef {
+impl CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_ActionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1456,24 +1491,22 @@ impl CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsElR
 }
 
 #[derive(Serialize, Default)]
-struct CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElDynamic {
+struct CognitoRiskConfiguration_CompromisedCredentialsRiskConfigurationDynamic {
     actions: std
     ::option
-    ::Option<terrars::DynamicBlock<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl>>,
+    ::Option<terrars::DynamicBlock<CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions>>,
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {
+pub struct CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     event_filter: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    actions: std
-    ::option
-    ::Option<std::vec::Vec<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl>>,
-    dynamic: CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElDynamic,
+    actions: std::option::Option<std::vec::Vec<CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions>>,
+    dynamic: CognitoRiskConfiguration_CompromisedCredentialsRiskConfigurationDynamic,
 }
 
-impl CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {
+impl CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration {
     #[doc = "Set the field `event_filter`.\n"]
     pub fn set_event_filter(
         mut self,
@@ -1493,7 +1526,7 @@ impl CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsEl>,
+                        ::BlockAssignable<CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_Actions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1508,8 +1541,8 @@ impl CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {
-    type O = terrars::BlockAssignable<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl>;
+impl terrars::ToListMappable for CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration {
+    type O = terrars::BlockAssignable<CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1520,11 +1553,11 @@ impl terrars::ToListMappable for CognitoRiskConfigurationCompromisedCredentialsR
     }
 }
 
-pub struct BuildCognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {}
+pub struct BuildCognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration {}
 
-impl BuildCognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {
-    pub fn build(self) -> CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {
-        CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {
+impl BuildCognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration {
+    pub fn build(self) -> CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration {
+        CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration {
             event_filter: core::default::Default::default(),
             actions: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1532,24 +1565,26 @@ impl BuildCognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl {
     }
 }
 
-pub struct CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_CompromisedCredentialsRiskConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElRef {
+impl terrars::Ref for CognitoRiskConfiguration_CompromisedCredentialsRiskConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElRef {
-        CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElRef {
+    ) -> CognitoRiskConfiguration_CompromisedCredentialsRiskConfigurationRef {
+        CognitoRiskConfiguration_CompromisedCredentialsRiskConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElRef {
+impl CognitoRiskConfiguration_CompromisedCredentialsRiskConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1562,20 +1597,20 @@ impl CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElRef {
     #[doc = "Get a reference to the value of field `actions` after provisioning.\n"]
     pub fn actions(
         &self,
-    ) -> terrars::ListRef<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationElActionsElRef> {
+    ) -> terrars::ListRef<CognitoRiskConfiguration_CompromisedCredentialsRiskConfiguration_ActionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.actions", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CognitoRiskConfigurationRiskExceptionConfigurationEl {
+pub struct CognitoRiskConfiguration_RiskExceptionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     blocked_ip_range_list: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skipped_ip_range_list: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CognitoRiskConfigurationRiskExceptionConfigurationEl {
+impl CognitoRiskConfiguration_RiskExceptionConfiguration {
     #[doc = "Set the field `blocked_ip_range_list`.\n"]
     pub fn set_blocked_ip_range_list(
         mut self,
@@ -1595,8 +1630,8 @@ impl CognitoRiskConfigurationRiskExceptionConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for CognitoRiskConfigurationRiskExceptionConfigurationEl {
-    type O = terrars::BlockAssignable<CognitoRiskConfigurationRiskExceptionConfigurationEl>;
+impl terrars::ToListMappable for CognitoRiskConfiguration_RiskExceptionConfiguration {
+    type O = terrars::BlockAssignable<CognitoRiskConfiguration_RiskExceptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1607,35 +1642,37 @@ impl terrars::ToListMappable for CognitoRiskConfigurationRiskExceptionConfigurat
     }
 }
 
-pub struct BuildCognitoRiskConfigurationRiskExceptionConfigurationEl {}
+pub struct BuildCognitoRiskConfiguration_RiskExceptionConfiguration {}
 
-impl BuildCognitoRiskConfigurationRiskExceptionConfigurationEl {
-    pub fn build(self) -> CognitoRiskConfigurationRiskExceptionConfigurationEl {
-        CognitoRiskConfigurationRiskExceptionConfigurationEl {
+impl BuildCognitoRiskConfiguration_RiskExceptionConfiguration {
+    pub fn build(self) -> CognitoRiskConfiguration_RiskExceptionConfiguration {
+        CognitoRiskConfiguration_RiskExceptionConfiguration {
             blocked_ip_range_list: core::default::Default::default(),
             skipped_ip_range_list: core::default::Default::default(),
         }
     }
 }
 
-pub struct CognitoRiskConfigurationRiskExceptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct CognitoRiskConfiguration_RiskExceptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CognitoRiskConfigurationRiskExceptionConfigurationElRef {
+impl terrars::Ref for CognitoRiskConfiguration_RiskExceptionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CognitoRiskConfigurationRiskExceptionConfigurationElRef {
-        CognitoRiskConfigurationRiskExceptionConfigurationElRef {
+    ) -> CognitoRiskConfiguration_RiskExceptionConfigurationRef {
+        CognitoRiskConfiguration_RiskExceptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CognitoRiskConfigurationRiskExceptionConfigurationElRef {
+impl CognitoRiskConfiguration_RiskExceptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1649,17 +1686,4 @@ impl CognitoRiskConfigurationRiskExceptionConfigurationElRef {
     pub fn skipped_ip_range_list(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.skipped_ip_range_list", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CognitoRiskConfigurationDynamic {
-    account_takeover_risk_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<CognitoRiskConfigurationAccountTakeoverRiskConfigurationEl>>,
-    compromised_credentials_risk_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<CognitoRiskConfigurationCompromisedCredentialsRiskConfigurationEl>>,
-    risk_exception_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<CognitoRiskConfigurationRiskExceptionConfigurationEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SignerSigningProfileData {
+struct SignerSigningProfileData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,18 +28,24 @@ struct SignerSigningProfileData {
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     platform_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    signing_parameters: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    signature_validity_period: std::option::Option<std::vec::Vec<SignerSigningProfileSignatureValidityPeriodEl>>,
+    signature_validity_period: std::option::Option<std::vec::Vec<SignerSigningProfile_SignatureValidityPeriod>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    signing_material: std::option::Option<std::vec::Vec<SignerSigningProfile_SigningMaterial>>,
     dynamic: SignerSigningProfileDynamic,
 }
 
 struct SignerSigningProfile_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SignerSigningProfileData>,
+    data: std::cell::RefCell<SignerSigningProfileData_>,
 }
 
 #[derive(Clone)]
@@ -155,6 +163,22 @@ impl SignerSigningProfile {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `signing_parameters`.\n"]
+    pub fn set_signing_parameters(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().signing_parameters = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -176,7 +200,7 @@ impl SignerSigningProfile {
     #[doc = "Set the field `signature_validity_period`.\n"]
     pub fn set_signature_validity_period(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningProfileSignatureValidityPeriodEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningProfile_SignatureValidityPeriod>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,6 +208,22 @@ impl SignerSigningProfile {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.signature_validity_period = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `signing_material`.\n"]
+    pub fn set_signing_material(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<SignerSigningProfile_SigningMaterial>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().signing_material = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.signing_material = std::option::Option::Some(d);
             },
         }
         self
@@ -219,9 +259,20 @@ impl SignerSigningProfile {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `revocation_record` after provisioning.\n"]
-    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningProfileRevocationRecordElRef> {
+    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningProfile_RevocationRecordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.revocation_record", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `signing_parameters` after provisioning.\n"]
+    pub fn signing_parameters(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.signing_parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -250,8 +301,13 @@ impl SignerSigningProfile {
     }
 
     #[doc = "Get a reference to the value of field `signature_validity_period` after provisioning.\n"]
-    pub fn signature_validity_period(&self) -> terrars::ListRef<SignerSigningProfileSignatureValidityPeriodElRef> {
+    pub fn signature_validity_period(&self) -> terrars::ListRef<SignerSigningProfile_SignatureValidityPeriodRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.signature_validity_period", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `signing_material` after provisioning.\n"]
+    pub fn signing_material(&self) -> terrars::ListRef<SignerSigningProfile_SigningMaterialRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.signing_material", self.extract_ref()))
     }
 }
 
@@ -297,7 +353,7 @@ impl BuildSignerSigningProfile {
         let out = SignerSigningProfile(std::rc::Rc::new(SignerSigningProfile_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SignerSigningProfileData {
+            data: std::cell::RefCell::new(SignerSigningProfileData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -307,9 +363,12 @@ impl BuildSignerSigningProfile {
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
                 platform_id: self.platform_id,
+                region: core::default::Default::default(),
+                signing_parameters: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 signature_validity_period: core::default::Default::default(),
+                signing_material: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -371,9 +430,20 @@ impl SignerSigningProfileRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.platform_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `revocation_record` after provisioning.\n"]
-    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningProfileRevocationRecordElRef> {
+    pub fn revocation_record(&self) -> terrars::ListRef<SignerSigningProfile_RevocationRecordRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.revocation_record", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `signing_parameters` after provisioning.\n"]
+    pub fn signing_parameters(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.signing_parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -402,13 +472,26 @@ impl SignerSigningProfileRef {
     }
 
     #[doc = "Get a reference to the value of field `signature_validity_period` after provisioning.\n"]
-    pub fn signature_validity_period(&self) -> terrars::ListRef<SignerSigningProfileSignatureValidityPeriodElRef> {
+    pub fn signature_validity_period(&self) -> terrars::ListRef<SignerSigningProfile_SignatureValidityPeriodRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.signature_validity_period", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `signing_material` after provisioning.\n"]
+    pub fn signing_material(&self) -> terrars::ListRef<SignerSigningProfile_SigningMaterialRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.signing_material", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SignerSigningProfileDynamic {
+    signature_validity_period: std
+    ::option
+    ::Option<terrars::DynamicBlock<SignerSigningProfile_SignatureValidityPeriod>>,
+    signing_material: std::option::Option<terrars::DynamicBlock<SignerSigningProfile_SigningMaterial>>,
+}
+
 #[derive(Serialize)]
-pub struct SignerSigningProfileRevocationRecordEl {
+pub struct SignerSigningProfile_RevocationRecord {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     revocation_effective_from: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -417,7 +500,7 @@ pub struct SignerSigningProfileRevocationRecordEl {
     revoked_by: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SignerSigningProfileRevocationRecordEl {
+impl SignerSigningProfile_RevocationRecord {
     #[doc = "Set the field `revocation_effective_from`.\n"]
     pub fn set_revocation_effective_from(
         mut self,
@@ -440,8 +523,8 @@ impl SignerSigningProfileRevocationRecordEl {
     }
 }
 
-impl terrars::ToListMappable for SignerSigningProfileRevocationRecordEl {
-    type O = terrars::BlockAssignable<SignerSigningProfileRevocationRecordEl>;
+impl terrars::ToListMappable for SignerSigningProfile_RevocationRecord {
+    type O = terrars::BlockAssignable<SignerSigningProfile_RevocationRecord>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -452,11 +535,11 @@ impl terrars::ToListMappable for SignerSigningProfileRevocationRecordEl {
     }
 }
 
-pub struct BuildSignerSigningProfileRevocationRecordEl {}
+pub struct BuildSignerSigningProfile_RevocationRecord {}
 
-impl BuildSignerSigningProfileRevocationRecordEl {
-    pub fn build(self) -> SignerSigningProfileRevocationRecordEl {
-        SignerSigningProfileRevocationRecordEl {
+impl BuildSignerSigningProfile_RevocationRecord {
+    pub fn build(self) -> SignerSigningProfile_RevocationRecord {
+        SignerSigningProfile_RevocationRecord {
             revocation_effective_from: core::default::Default::default(),
             revoked_at: core::default::Default::default(),
             revoked_by: core::default::Default::default(),
@@ -464,21 +547,23 @@ impl BuildSignerSigningProfileRevocationRecordEl {
     }
 }
 
-pub struct SignerSigningProfileRevocationRecordElRef {
+#[allow(dead_code)]
+pub struct SignerSigningProfile_RevocationRecordRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SignerSigningProfileRevocationRecordElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningProfileRevocationRecordElRef {
-        SignerSigningProfileRevocationRecordElRef {
+impl terrars::Ref for SignerSigningProfile_RevocationRecordRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningProfile_RevocationRecordRef {
+        SignerSigningProfile_RevocationRecordRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SignerSigningProfileRevocationRecordElRef {
+impl SignerSigningProfile_RevocationRecordRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -500,16 +585,16 @@ impl SignerSigningProfileRevocationRecordElRef {
 }
 
 #[derive(Serialize)]
-pub struct SignerSigningProfileSignatureValidityPeriodEl {
+pub struct SignerSigningProfile_SignatureValidityPeriod {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<f64>,
 }
 
-impl SignerSigningProfileSignatureValidityPeriodEl { }
+impl SignerSigningProfile_SignatureValidityPeriod { }
 
-impl terrars::ToListMappable for SignerSigningProfileSignatureValidityPeriodEl {
-    type O = terrars::BlockAssignable<SignerSigningProfileSignatureValidityPeriodEl>;
+impl terrars::ToListMappable for SignerSigningProfile_SignatureValidityPeriod {
+    type O = terrars::BlockAssignable<SignerSigningProfile_SignatureValidityPeriod>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -520,40 +605,42 @@ impl terrars::ToListMappable for SignerSigningProfileSignatureValidityPeriodEl {
     }
 }
 
-pub struct BuildSignerSigningProfileSignatureValidityPeriodEl {
+pub struct BuildSignerSigningProfile_SignatureValidityPeriod {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<f64>,
 }
 
-impl BuildSignerSigningProfileSignatureValidityPeriodEl {
-    pub fn build(self) -> SignerSigningProfileSignatureValidityPeriodEl {
-        SignerSigningProfileSignatureValidityPeriodEl {
+impl BuildSignerSigningProfile_SignatureValidityPeriod {
+    pub fn build(self) -> SignerSigningProfile_SignatureValidityPeriod {
+        SignerSigningProfile_SignatureValidityPeriod {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct SignerSigningProfileSignatureValidityPeriodElRef {
+#[allow(dead_code)]
+pub struct SignerSigningProfile_SignatureValidityPeriodRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SignerSigningProfileSignatureValidityPeriodElRef {
+impl terrars::Ref for SignerSigningProfile_SignatureValidityPeriodRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SignerSigningProfileSignatureValidityPeriodElRef {
-        SignerSigningProfileSignatureValidityPeriodElRef {
+    ) -> SignerSigningProfile_SignatureValidityPeriodRef {
+        SignerSigningProfile_SignatureValidityPeriodRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SignerSigningProfileSignatureValidityPeriodElRef {
+impl SignerSigningProfile_SignatureValidityPeriodRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -569,9 +656,59 @@ impl SignerSigningProfileSignatureValidityPeriodElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct SignerSigningProfileDynamic {
-    signature_validity_period: std
-    ::option
-    ::Option<terrars::DynamicBlock<SignerSigningProfileSignatureValidityPeriodEl>>,
+#[derive(Serialize)]
+pub struct SignerSigningProfile_SigningMaterial {
+    certificate_arn: terrars::PrimField<std::string::String>,
+}
+
+impl SignerSigningProfile_SigningMaterial { }
+
+impl terrars::ToListMappable for SignerSigningProfile_SigningMaterial {
+    type O = terrars::BlockAssignable<SignerSigningProfile_SigningMaterial>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSignerSigningProfile_SigningMaterial {
+    #[doc = ""]
+    pub certificate_arn: terrars::PrimField<std::string::String>,
+}
+
+impl BuildSignerSigningProfile_SigningMaterial {
+    pub fn build(self) -> SignerSigningProfile_SigningMaterial {
+        SignerSigningProfile_SigningMaterial { certificate_arn: self.certificate_arn }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SignerSigningProfile_SigningMaterialRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SignerSigningProfile_SigningMaterialRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SignerSigningProfile_SigningMaterialRef {
+        SignerSigningProfile_SigningMaterialRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SignerSigningProfile_SigningMaterialRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `certificate_arn` after provisioning.\n"]
+    pub fn certificate_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.certificate_arn", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudsearchDomainData {
+struct CloudsearchDomainData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,22 @@ struct CloudsearchDomainData {
     multi_az: std::option::Option<terrars::PrimField<bool>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint_options: std::option::Option<std::vec::Vec<CloudsearchDomainEndpointOptionsEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    index_field: std::option::Option<std::vec::Vec<CloudsearchDomainIndexFieldEl>>,
+    endpoint_options: std::option::Option<std::vec::Vec<CloudsearchDomain_EndpointOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scaling_parameters: std::option::Option<std::vec::Vec<CloudsearchDomainScalingParametersEl>>,
+    index_field: std::option::Option<std::vec::Vec<CloudsearchDomain_IndexField>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudsearchDomainTimeoutsEl>,
+    scaling_parameters: std::option::Option<std::vec::Vec<CloudsearchDomain_ScalingParameters>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<CloudsearchDomain_Timeouts>,
     dynamic: CloudsearchDomainDynamic,
 }
 
 struct CloudsearchDomain_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudsearchDomainData>,
+    data: std::cell::RefCell<CloudsearchDomainData_>,
 }
 
 #[derive(Clone)]
@@ -149,10 +153,17 @@ impl CloudsearchDomain {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `endpoint_options`.\n"]
     pub fn set_endpoint_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudsearchDomainEndpointOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudsearchDomain_EndpointOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -168,7 +179,7 @@ impl CloudsearchDomain {
     #[doc = "Set the field `index_field`.\n"]
     pub fn set_index_field(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudsearchDomainIndexFieldEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudsearchDomain_IndexField>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -184,7 +195,7 @@ impl CloudsearchDomain {
     #[doc = "Set the field `scaling_parameters`.\n"]
     pub fn set_scaling_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudsearchDomainScalingParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudsearchDomain_ScalingParameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -198,7 +209,7 @@ impl CloudsearchDomain {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudsearchDomainTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudsearchDomain_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -233,24 +244,30 @@ impl CloudsearchDomain {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `search_service_endpoint` after provisioning.\n"]
     pub fn search_service_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.search_service_endpoint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `endpoint_options` after provisioning.\n"]
-    pub fn endpoint_options(&self) -> terrars::ListRef<CloudsearchDomainEndpointOptionsElRef> {
+    pub fn endpoint_options(&self) -> terrars::ListRef<CloudsearchDomain_EndpointOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scaling_parameters` after provisioning.\n"]
-    pub fn scaling_parameters(&self) -> terrars::ListRef<CloudsearchDomainScalingParametersElRef> {
+    pub fn scaling_parameters(&self) -> terrars::ListRef<CloudsearchDomain_ScalingParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scaling_parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudsearchDomainTimeoutsElRef {
-        CloudsearchDomainTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudsearchDomain_TimeoutsRef {
+        CloudsearchDomain_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -296,7 +313,7 @@ impl BuildCloudsearchDomain {
         let out = CloudsearchDomain(std::rc::Rc::new(CloudsearchDomain_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudsearchDomainData {
+            data: std::cell::RefCell::new(CloudsearchDomainData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -305,6 +322,7 @@ impl BuildCloudsearchDomain {
                 id: core::default::Default::default(),
                 multi_az: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 endpoint_options: core::default::Default::default(),
                 index_field: core::default::Default::default(),
                 scaling_parameters: core::default::Default::default(),
@@ -370,36 +388,49 @@ impl CloudsearchDomainRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `search_service_endpoint` after provisioning.\n"]
     pub fn search_service_endpoint(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.search_service_endpoint", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `endpoint_options` after provisioning.\n"]
-    pub fn endpoint_options(&self) -> terrars::ListRef<CloudsearchDomainEndpointOptionsElRef> {
+    pub fn endpoint_options(&self) -> terrars::ListRef<CloudsearchDomain_EndpointOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scaling_parameters` after provisioning.\n"]
-    pub fn scaling_parameters(&self) -> terrars::ListRef<CloudsearchDomainScalingParametersElRef> {
+    pub fn scaling_parameters(&self) -> terrars::ListRef<CloudsearchDomain_ScalingParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scaling_parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudsearchDomainTimeoutsElRef {
-        CloudsearchDomainTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudsearchDomain_TimeoutsRef {
+        CloudsearchDomain_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudsearchDomainDynamic {
+    endpoint_options: std::option::Option<terrars::DynamicBlock<CloudsearchDomain_EndpointOptions>>,
+    index_field: std::option::Option<terrars::DynamicBlock<CloudsearchDomain_IndexField>>,
+    scaling_parameters: std::option::Option<terrars::DynamicBlock<CloudsearchDomain_ScalingParameters>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudsearchDomainEndpointOptionsEl {
+pub struct CloudsearchDomain_EndpointOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enforce_https: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tls_security_policy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudsearchDomainEndpointOptionsEl {
+impl CloudsearchDomain_EndpointOptions {
     #[doc = "Set the field `enforce_https`.\n"]
     pub fn set_enforce_https(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enforce_https = std::option::Option::Some(v.into());
@@ -416,8 +447,8 @@ impl CloudsearchDomainEndpointOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudsearchDomainEndpointOptionsEl {
-    type O = terrars::BlockAssignable<CloudsearchDomainEndpointOptionsEl>;
+impl terrars::ToListMappable for CloudsearchDomain_EndpointOptions {
+    type O = terrars::BlockAssignable<CloudsearchDomain_EndpointOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -428,32 +459,34 @@ impl terrars::ToListMappable for CloudsearchDomainEndpointOptionsEl {
     }
 }
 
-pub struct BuildCloudsearchDomainEndpointOptionsEl {}
+pub struct BuildCloudsearchDomain_EndpointOptions {}
 
-impl BuildCloudsearchDomainEndpointOptionsEl {
-    pub fn build(self) -> CloudsearchDomainEndpointOptionsEl {
-        CloudsearchDomainEndpointOptionsEl {
+impl BuildCloudsearchDomain_EndpointOptions {
+    pub fn build(self) -> CloudsearchDomain_EndpointOptions {
+        CloudsearchDomain_EndpointOptions {
             enforce_https: core::default::Default::default(),
             tls_security_policy: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudsearchDomainEndpointOptionsElRef {
+#[allow(dead_code)]
+pub struct CloudsearchDomain_EndpointOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudsearchDomainEndpointOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudsearchDomainEndpointOptionsElRef {
-        CloudsearchDomainEndpointOptionsElRef {
+impl terrars::Ref for CloudsearchDomain_EndpointOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudsearchDomain_EndpointOptionsRef {
+        CloudsearchDomain_EndpointOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudsearchDomainEndpointOptionsElRef {
+impl CloudsearchDomain_EndpointOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -470,7 +503,7 @@ impl CloudsearchDomainEndpointOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudsearchDomainIndexFieldEl {
+pub struct CloudsearchDomain_IndexField {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     analysis_scheme: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -492,7 +525,7 @@ pub struct CloudsearchDomainIndexFieldEl {
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl CloudsearchDomainIndexFieldEl {
+impl CloudsearchDomain_IndexField {
     #[doc = "Set the field `analysis_scheme`.\n"]
     pub fn set_analysis_scheme(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.analysis_scheme = std::option::Option::Some(v.into());
@@ -542,8 +575,8 @@ impl CloudsearchDomainIndexFieldEl {
     }
 }
 
-impl terrars::ToListMappable for CloudsearchDomainIndexFieldEl {
-    type O = terrars::BlockAssignable<CloudsearchDomainIndexFieldEl>;
+impl terrars::ToListMappable for CloudsearchDomain_IndexField {
+    type O = terrars::BlockAssignable<CloudsearchDomain_IndexField>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -554,16 +587,16 @@ impl terrars::ToListMappable for CloudsearchDomainIndexFieldEl {
     }
 }
 
-pub struct BuildCloudsearchDomainIndexFieldEl {
+pub struct BuildCloudsearchDomain_IndexField {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudsearchDomainIndexFieldEl {
-    pub fn build(self) -> CloudsearchDomainIndexFieldEl {
-        CloudsearchDomainIndexFieldEl {
+impl BuildCloudsearchDomain_IndexField {
+    pub fn build(self) -> CloudsearchDomain_IndexField {
+        CloudsearchDomain_IndexField {
             analysis_scheme: core::default::Default::default(),
             default_value: core::default::Default::default(),
             facet: core::default::Default::default(),
@@ -578,21 +611,23 @@ impl BuildCloudsearchDomainIndexFieldEl {
     }
 }
 
-pub struct CloudsearchDomainIndexFieldElRef {
+#[allow(dead_code)]
+pub struct CloudsearchDomain_IndexFieldRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudsearchDomainIndexFieldElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudsearchDomainIndexFieldElRef {
-        CloudsearchDomainIndexFieldElRef {
+impl terrars::Ref for CloudsearchDomain_IndexFieldRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudsearchDomain_IndexFieldRef {
+        CloudsearchDomain_IndexFieldRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudsearchDomainIndexFieldElRef {
+impl CloudsearchDomain_IndexFieldRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -649,7 +684,7 @@ impl CloudsearchDomainIndexFieldElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudsearchDomainScalingParametersEl {
+pub struct CloudsearchDomain_ScalingParameters {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     desired_instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -658,7 +693,7 @@ pub struct CloudsearchDomainScalingParametersEl {
     desired_replication_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl CloudsearchDomainScalingParametersEl {
+impl CloudsearchDomain_ScalingParameters {
     #[doc = "Set the field `desired_instance_type`.\n"]
     pub fn set_desired_instance_type(
         mut self,
@@ -681,8 +716,8 @@ impl CloudsearchDomainScalingParametersEl {
     }
 }
 
-impl terrars::ToListMappable for CloudsearchDomainScalingParametersEl {
-    type O = terrars::BlockAssignable<CloudsearchDomainScalingParametersEl>;
+impl terrars::ToListMappable for CloudsearchDomain_ScalingParameters {
+    type O = terrars::BlockAssignable<CloudsearchDomain_ScalingParameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -693,11 +728,11 @@ impl terrars::ToListMappable for CloudsearchDomainScalingParametersEl {
     }
 }
 
-pub struct BuildCloudsearchDomainScalingParametersEl {}
+pub struct BuildCloudsearchDomain_ScalingParameters {}
 
-impl BuildCloudsearchDomainScalingParametersEl {
-    pub fn build(self) -> CloudsearchDomainScalingParametersEl {
-        CloudsearchDomainScalingParametersEl {
+impl BuildCloudsearchDomain_ScalingParameters {
+    pub fn build(self) -> CloudsearchDomain_ScalingParameters {
+        CloudsearchDomain_ScalingParameters {
             desired_instance_type: core::default::Default::default(),
             desired_partition_count: core::default::Default::default(),
             desired_replication_count: core::default::Default::default(),
@@ -705,21 +740,23 @@ impl BuildCloudsearchDomainScalingParametersEl {
     }
 }
 
-pub struct CloudsearchDomainScalingParametersElRef {
+#[allow(dead_code)]
+pub struct CloudsearchDomain_ScalingParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudsearchDomainScalingParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudsearchDomainScalingParametersElRef {
-        CloudsearchDomainScalingParametersElRef {
+impl terrars::Ref for CloudsearchDomain_ScalingParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudsearchDomain_ScalingParametersRef {
+        CloudsearchDomain_ScalingParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudsearchDomainScalingParametersElRef {
+impl CloudsearchDomain_ScalingParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -741,7 +778,7 @@ impl CloudsearchDomainScalingParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudsearchDomainTimeoutsEl {
+pub struct CloudsearchDomain_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -750,7 +787,7 @@ pub struct CloudsearchDomainTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudsearchDomainTimeoutsEl {
+impl CloudsearchDomain_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -770,8 +807,8 @@ impl CloudsearchDomainTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudsearchDomainTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudsearchDomainTimeoutsEl>;
+impl terrars::ToListMappable for CloudsearchDomain_Timeouts {
+    type O = terrars::BlockAssignable<CloudsearchDomain_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -782,11 +819,11 @@ impl terrars::ToListMappable for CloudsearchDomainTimeoutsEl {
     }
 }
 
-pub struct BuildCloudsearchDomainTimeoutsEl {}
+pub struct BuildCloudsearchDomain_Timeouts {}
 
-impl BuildCloudsearchDomainTimeoutsEl {
-    pub fn build(self) -> CloudsearchDomainTimeoutsEl {
-        CloudsearchDomainTimeoutsEl {
+impl BuildCloudsearchDomain_Timeouts {
+    pub fn build(self) -> CloudsearchDomain_Timeouts {
+        CloudsearchDomain_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -794,21 +831,23 @@ impl BuildCloudsearchDomainTimeoutsEl {
     }
 }
 
-pub struct CloudsearchDomainTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudsearchDomain_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudsearchDomainTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudsearchDomainTimeoutsElRef {
-        CloudsearchDomainTimeoutsElRef {
+impl terrars::Ref for CloudsearchDomain_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudsearchDomain_TimeoutsRef {
+        CloudsearchDomain_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudsearchDomainTimeoutsElRef {
+impl CloudsearchDomain_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -827,11 +866,4 @@ impl CloudsearchDomainTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudsearchDomainDynamic {
-    endpoint_options: std::option::Option<terrars::DynamicBlock<CloudsearchDomainEndpointOptionsEl>>,
-    index_field: std::option::Option<terrars::DynamicBlock<CloudsearchDomainIndexFieldEl>>,
-    scaling_parameters: std::option::Option<terrars::DynamicBlock<CloudsearchDomainScalingParametersEl>>,
 }

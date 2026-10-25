@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AccessanalyzerAnalyzerData {
+struct AccessanalyzerAnalyzerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,17 +24,22 @@ struct AccessanalyzerAnalyzerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    configuration: std::option::Option<std::vec::Vec<AccessanalyzerAnalyzer_Configuration>>,
+    dynamic: AccessanalyzerAnalyzerDynamic,
 }
 
 struct AccessanalyzerAnalyzer_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AccessanalyzerAnalyzerData>,
+    data: std::cell::RefCell<AccessanalyzerAnalyzerData_>,
 }
 
 #[derive(Clone)]
@@ -138,6 +145,13 @@ impl AccessanalyzerAnalyzer {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -162,6 +176,22 @@ impl AccessanalyzerAnalyzer {
         self
     }
 
+    #[doc = "Set the field `configuration`.\n"]
+    pub fn set_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Get a reference to the value of field `analyzer_name` after provisioning.\n"]
     pub fn analyzer_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.analyzer_name", self.extract_ref()))
@@ -177,6 +207,12 @@ impl AccessanalyzerAnalyzer {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -190,6 +226,11 @@ impl AccessanalyzerAnalyzer {
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<AccessanalyzerAnalyzer_ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
     }
 }
 
@@ -235,7 +276,7 @@ impl BuildAccessanalyzerAnalyzer {
         let out = AccessanalyzerAnalyzer(std::rc::Rc::new(AccessanalyzerAnalyzer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AccessanalyzerAnalyzerData {
+            data: std::cell::RefCell::new(AccessanalyzerAnalyzerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -243,9 +284,12 @@ impl BuildAccessanalyzerAnalyzer {
                 provisioner: core::default::Default::default(),
                 analyzer_name: self.analyzer_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 type_: core::default::Default::default(),
+                configuration: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -291,6 +335,12 @@ impl AccessanalyzerAnalyzerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -304,5 +354,699 @@ impl AccessanalyzerAnalyzerRef {
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `configuration` after provisioning.\n"]
+    pub fn configuration(&self) -> terrars::ListRef<AccessanalyzerAnalyzer_ConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.configuration", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessanalyzerAnalyzerDynamic {
+    configuration: std::option::Option<terrars::DynamicBlock<AccessanalyzerAnalyzer_Configuration>>,
+}
+
+#[derive(Serialize)]
+pub struct AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    account_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_arns: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_types: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion {
+    #[doc = "Set the field `account_ids`.\n"]
+    pub fn set_account_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.account_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resource_arns`.\n"]
+    pub fn set_resource_arns(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_arns = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resource_types`.\n"]
+    pub fn set_resource_types(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.resource_types = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion {
+    type O = terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion {}
+
+impl BuildAccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion {
+    pub fn build(self) -> AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion {
+        AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion {
+            account_ids: core::default::Default::default(),
+            resource_arns: core::default::Default::default(),
+            resource_types: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_InclusionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_InclusionRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_InclusionRef {
+        AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_InclusionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_InclusionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `account_ids` after provisioning.\n"]
+    pub fn account_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.account_ids", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_arns` after provisioning.\n"]
+    pub fn resource_arns(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_arns", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_types` after provisioning.\n"]
+    pub fn resource_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_types", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRuleDynamic {
+    inclusion: std
+    ::option
+    ::Option<terrars::DynamicBlock<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion>>,
+}
+
+#[derive(Serialize)]
+pub struct AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    inclusion: std
+    ::option
+    ::Option<std::vec::Vec<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion>>,
+    dynamic: AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRuleDynamic,
+}
+
+impl AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule {
+    #[doc = "Set the field `inclusion`.\n"]
+    pub fn set_inclusion(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_Inclusion>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.inclusion = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.inclusion = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule {
+    type O = terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule {}
+
+impl BuildAccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule {
+    pub fn build(self) -> AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule {
+        AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule {
+            inclusion: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRuleRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRuleRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRuleRef {
+        AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRuleRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRuleRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `inclusion` after provisioning.\n"]
+    pub fn inclusion(
+        &self,
+    ) -> terrars::ListRef<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule_InclusionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.inclusion", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessanalyzerAnalyzer_Configuration_InternalAccessDynamic {
+    analysis_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule>>,
+}
+
+#[derive(Serialize)]
+pub struct AccessanalyzerAnalyzer_Configuration_InternalAccess {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    analysis_rule: std::option::Option<std::vec::Vec<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule>>,
+    dynamic: AccessanalyzerAnalyzer_Configuration_InternalAccessDynamic,
+}
+
+impl AccessanalyzerAnalyzer_Configuration_InternalAccess {
+    #[doc = "Set the field `analysis_rule`.\n"]
+    pub fn set_analysis_rule(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRule>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.analysis_rule = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.analysis_rule = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AccessanalyzerAnalyzer_Configuration_InternalAccess {
+    type O = terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_InternalAccess>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessanalyzerAnalyzer_Configuration_InternalAccess {}
+
+impl BuildAccessanalyzerAnalyzer_Configuration_InternalAccess {
+    pub fn build(self) -> AccessanalyzerAnalyzer_Configuration_InternalAccess {
+        AccessanalyzerAnalyzer_Configuration_InternalAccess {
+            analysis_rule: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessanalyzerAnalyzer_Configuration_InternalAccessRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AccessanalyzerAnalyzer_Configuration_InternalAccessRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessanalyzerAnalyzer_Configuration_InternalAccessRef {
+        AccessanalyzerAnalyzer_Configuration_InternalAccessRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessanalyzerAnalyzer_Configuration_InternalAccessRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `analysis_rule` after provisioning.\n"]
+    pub fn analysis_rule(&self) -> terrars::ListRef<AccessanalyzerAnalyzer_Configuration_InternalAccess_AnalysisRuleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.analysis_rule", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    account_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resource_tags: std::option::Option<terrars::ListField<terrars::RecField<terrars::PrimField<std::string::String>>>>,
+}
+
+impl AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion {
+    #[doc = "Set the field `account_ids`.\n"]
+    pub fn set_account_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.account_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resource_tags`.\n"]
+    pub fn set_resource_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::RecField<terrars::PrimField<std::string::String>>>>,
+    ) -> Self {
+        self.resource_tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion {
+    type O = terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion {}
+
+impl BuildAccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion {
+    pub fn build(self) -> AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion {
+        AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion {
+            account_ids: core::default::Default::default(),
+            resource_tags: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_ExclusionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_ExclusionRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_ExclusionRef {
+        AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_ExclusionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_ExclusionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `account_ids` after provisioning.\n"]
+    pub fn account_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.account_ids", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `resource_tags` after provisioning.\n"]
+    pub fn resource_tags(&self) -> terrars::ListRef<terrars::RecRef<terrars::PrimExpr<std::string::String>>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.resource_tags", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRuleDynamic {
+    exclusion: std
+    ::option
+    ::Option<terrars::DynamicBlock<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion>>,
+}
+
+#[derive(Serialize)]
+pub struct AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    exclusion: std
+    ::option
+    ::Option<std::vec::Vec<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion>>,
+    dynamic: AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRuleDynamic,
+}
+
+impl AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule {
+    #[doc = "Set the field `exclusion`.\n"]
+    pub fn set_exclusion(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_Exclusion>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.exclusion = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.exclusion = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule {
+    type O = terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule {}
+
+impl BuildAccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule {
+    pub fn build(self) -> AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule {
+        AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule {
+            exclusion: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRuleRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRuleRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRuleRef {
+        AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRuleRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRuleRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `exclusion` after provisioning.\n"]
+    pub fn exclusion(
+        &self,
+    ) -> terrars::ListRef<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule_ExclusionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.exclusion", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessanalyzerAnalyzer_Configuration_UnusedAccessDynamic {
+    analysis_rule: std
+    ::option
+    ::Option<terrars::DynamicBlock<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule>>,
+}
+
+#[derive(Serialize)]
+pub struct AccessanalyzerAnalyzer_Configuration_UnusedAccess {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unused_access_age: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    analysis_rule: std::option::Option<std::vec::Vec<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule>>,
+    dynamic: AccessanalyzerAnalyzer_Configuration_UnusedAccessDynamic,
+}
+
+impl AccessanalyzerAnalyzer_Configuration_UnusedAccess {
+    #[doc = "Set the field `unused_access_age`.\n"]
+    pub fn set_unused_access_age(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.unused_access_age = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `analysis_rule`.\n"]
+    pub fn set_analysis_rule(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRule>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.analysis_rule = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.analysis_rule = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AccessanalyzerAnalyzer_Configuration_UnusedAccess {
+    type O = terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_UnusedAccess>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessanalyzerAnalyzer_Configuration_UnusedAccess {}
+
+impl BuildAccessanalyzerAnalyzer_Configuration_UnusedAccess {
+    pub fn build(self) -> AccessanalyzerAnalyzer_Configuration_UnusedAccess {
+        AccessanalyzerAnalyzer_Configuration_UnusedAccess {
+            unused_access_age: core::default::Default::default(),
+            analysis_rule: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessanalyzerAnalyzer_Configuration_UnusedAccessRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AccessanalyzerAnalyzer_Configuration_UnusedAccessRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AccessanalyzerAnalyzer_Configuration_UnusedAccessRef {
+        AccessanalyzerAnalyzer_Configuration_UnusedAccessRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessanalyzerAnalyzer_Configuration_UnusedAccessRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `unused_access_age` after provisioning.\n"]
+    pub fn unused_access_age(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.unused_access_age", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `analysis_rule` after provisioning.\n"]
+    pub fn analysis_rule(&self) -> terrars::ListRef<AccessanalyzerAnalyzer_Configuration_UnusedAccess_AnalysisRuleRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.analysis_rule", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AccessanalyzerAnalyzer_ConfigurationDynamic {
+    internal_access: std::option::Option<terrars::DynamicBlock<AccessanalyzerAnalyzer_Configuration_InternalAccess>>,
+    unused_access: std::option::Option<terrars::DynamicBlock<AccessanalyzerAnalyzer_Configuration_UnusedAccess>>,
+}
+
+#[derive(Serialize)]
+pub struct AccessanalyzerAnalyzer_Configuration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    internal_access: std::option::Option<std::vec::Vec<AccessanalyzerAnalyzer_Configuration_InternalAccess>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    unused_access: std::option::Option<std::vec::Vec<AccessanalyzerAnalyzer_Configuration_UnusedAccess>>,
+    dynamic: AccessanalyzerAnalyzer_ConfigurationDynamic,
+}
+
+impl AccessanalyzerAnalyzer_Configuration {
+    #[doc = "Set the field `internal_access`.\n"]
+    pub fn set_internal_access(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_InternalAccess>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.internal_access = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.internal_access = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `unused_access`.\n"]
+    pub fn set_unused_access(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration_UnusedAccess>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.unused_access = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.unused_access = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AccessanalyzerAnalyzer_Configuration {
+    type O = terrars::BlockAssignable<AccessanalyzerAnalyzer_Configuration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAccessanalyzerAnalyzer_Configuration {}
+
+impl BuildAccessanalyzerAnalyzer_Configuration {
+    pub fn build(self) -> AccessanalyzerAnalyzer_Configuration {
+        AccessanalyzerAnalyzer_Configuration {
+            internal_access: core::default::Default::default(),
+            unused_access: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AccessanalyzerAnalyzer_ConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AccessanalyzerAnalyzer_ConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AccessanalyzerAnalyzer_ConfigurationRef {
+        AccessanalyzerAnalyzer_ConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AccessanalyzerAnalyzer_ConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `internal_access` after provisioning.\n"]
+    pub fn internal_access(&self) -> terrars::ListRef<AccessanalyzerAnalyzer_Configuration_InternalAccessRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.internal_access", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `unused_access` after provisioning.\n"]
+    pub fn unused_access(&self) -> terrars::ListRef<AccessanalyzerAnalyzer_Configuration_UnusedAccessRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.unused_access", self.base))
     }
 }

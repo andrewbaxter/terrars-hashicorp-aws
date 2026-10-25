@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NatGatewayData {
+struct NatGatewayData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,22 +23,40 @@ struct NatGatewayData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allocation_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     connectivity_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     private_ip: std::option::Option<terrars::PrimField<std::string::String>>,
-    subnet_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_allocation_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_private_ip_address_count: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secondary_private_ip_addresses: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone_address: std::option::Option<std::vec::Vec<NatGateway_AvailabilityZoneAddress>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<NatGateway_Timeouts>,
+    dynamic: NatGatewayDynamic,
 }
 
 struct NatGateway_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NatGatewayData>,
+    data: std::cell::RefCell<NatGatewayData_>,
 }
 
 #[derive(Clone)]
@@ -142,6 +162,12 @@ impl NatGateway {
         self
     }
 
+    #[doc = "Set the field `availability_mode`.\n"]
+    pub fn set_availability_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().availability_mode = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `connectivity_type`.\n"]
     pub fn set_connectivity_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().connectivity_type = std::option::Option::Some(v.into());
@@ -157,6 +183,43 @@ impl NatGateway {
     #[doc = "Set the field `private_ip`.\n"]
     pub fn set_private_ip(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().private_ip = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secondary_allocation_ids`.\n"]
+    pub fn set_secondary_allocation_ids(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().secondary_allocation_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secondary_private_ip_address_count`.\n"]
+    pub fn set_secondary_private_ip_address_count(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().secondary_private_ip_address_count = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `secondary_private_ip_addresses`.\n"]
+    pub fn set_secondary_private_ip_addresses(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().secondary_private_ip_addresses = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `subnet_id`.\n"]
+    pub fn set_subnet_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().subnet_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -178,9 +241,57 @@ impl NatGateway {
         self
     }
 
+    #[doc = "Set the field `vpc_id`.\n"]
+    pub fn set_vpc_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().vpc_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `availability_zone_address`.\n"]
+    pub fn set_availability_zone_address(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<NatGateway_AvailabilityZoneAddress>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().availability_zone_address = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.availability_zone_address = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<NatGateway_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `allocation_id` after provisioning.\n"]
     pub fn allocation_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.allocation_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `association_id` after provisioning.\n"]
+    pub fn association_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.association_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `auto_provision_zones` after provisioning.\n"]
+    pub fn auto_provision_zones(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_provision_zones", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `auto_scaling_ips` after provisioning.\n"]
+    pub fn auto_scaling_ips(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_scaling_ips", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_mode` after provisioning.\n"]
+    pub fn availability_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_mode", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `connectivity_type` after provisioning.\n"]
@@ -208,6 +319,48 @@ impl NatGateway {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_ip", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `regional_nat_gateway_address` after provisioning.\n"]
+    pub fn regional_nat_gateway_address(&self) -> terrars::SetRef<NatGateway_RegionalNatGatewayAddressRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.regional_nat_gateway_address", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `regional_nat_gateway_auto_mode` after provisioning.\n"]
+    pub fn regional_nat_gateway_auto_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.regional_nat_gateway_auto_mode", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `route_table_id` after provisioning.\n"]
+    pub fn route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_table_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_allocation_ids` after provisioning.\n"]
+    pub fn secondary_allocation_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.secondary_allocation_ids", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_private_ip_address_count` after provisioning.\n"]
+    pub fn secondary_private_ip_address_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.secondary_private_ip_address_count", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_private_ip_addresses` after provisioning.\n"]
+    pub fn secondary_private_ip_addresses(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.secondary_private_ip_addresses", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
     pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.extract_ref()))
@@ -221,6 +374,16 @@ impl NatGateway {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> NatGateway_TimeoutsRef {
+        NatGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -257,8 +420,6 @@ impl terrars::Resource_ for NatGateway_ {
 
 pub struct BuildNatGateway {
     pub tf_id: std::string::String,
-    #[doc = ""]
-    pub subnet_id: terrars::PrimField<std::string::String>,
 }
 
 impl BuildNatGateway {
@@ -266,19 +427,28 @@ impl BuildNatGateway {
         let out = NatGateway(std::rc::Rc::new(NatGateway_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NatGatewayData {
+            data: std::cell::RefCell::new(NatGatewayData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 allocation_id: core::default::Default::default(),
+                availability_mode: core::default::Default::default(),
                 connectivity_type: core::default::Default::default(),
                 id: core::default::Default::default(),
                 private_ip: core::default::Default::default(),
-                subnet_id: self.subnet_id,
+                region: core::default::Default::default(),
+                secondary_allocation_ids: core::default::Default::default(),
+                secondary_private_ip_address_count: core::default::Default::default(),
+                secondary_private_ip_addresses: core::default::Default::default(),
+                subnet_id: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                vpc_id: core::default::Default::default(),
+                availability_zone_address: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -314,6 +484,26 @@ impl NatGatewayRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.allocation_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `association_id` after provisioning.\n"]
+    pub fn association_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.association_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `auto_provision_zones` after provisioning.\n"]
+    pub fn auto_provision_zones(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_provision_zones", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `auto_scaling_ips` after provisioning.\n"]
+    pub fn auto_scaling_ips(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_scaling_ips", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_mode` after provisioning.\n"]
+    pub fn availability_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `connectivity_type` after provisioning.\n"]
     pub fn connectivity_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.connectivity_type", self.extract_ref()))
@@ -339,6 +529,48 @@ impl NatGatewayRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_ip", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `regional_nat_gateway_address` after provisioning.\n"]
+    pub fn regional_nat_gateway_address(&self) -> terrars::SetRef<NatGateway_RegionalNatGatewayAddressRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.regional_nat_gateway_address", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `regional_nat_gateway_auto_mode` after provisioning.\n"]
+    pub fn regional_nat_gateway_auto_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.regional_nat_gateway_auto_mode", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `route_table_id` after provisioning.\n"]
+    pub fn route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_table_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_allocation_ids` after provisioning.\n"]
+    pub fn secondary_allocation_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.secondary_allocation_ids", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_private_ip_address_count` after provisioning.\n"]
+    pub fn secondary_private_ip_address_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.secondary_private_ip_address_count", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `secondary_private_ip_addresses` after provisioning.\n"]
+    pub fn secondary_private_ip_addresses(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.secondary_private_ip_addresses", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
     pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.extract_ref()))
@@ -352,5 +584,361 @@ impl NatGatewayRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
+    pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> NatGateway_TimeoutsRef {
+        NatGateway_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct NatGatewayDynamic {
+    availability_zone_address: std::option::Option<terrars::DynamicBlock<NatGateway_AvailabilityZoneAddress>>,
+}
+
+#[derive(Serialize)]
+pub struct NatGateway_RegionalNatGatewayAddress {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allocation_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    association_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    public_ip: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl NatGateway_RegionalNatGatewayAddress {
+    #[doc = "Set the field `allocation_id`.\n"]
+    pub fn set_allocation_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.allocation_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `association_id`.\n"]
+    pub fn set_association_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.association_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `availability_zone`.\n"]
+    pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.availability_zone = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `availability_zone_id`.\n"]
+    pub fn set_availability_zone_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.availability_zone_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `network_interface_id`.\n"]
+    pub fn set_network_interface_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.network_interface_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `public_ip`.\n"]
+    pub fn set_public_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.public_ip = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `status`.\n"]
+    pub fn set_status(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for NatGateway_RegionalNatGatewayAddress {
+    type O = terrars::BlockAssignable<NatGateway_RegionalNatGatewayAddress>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNatGateway_RegionalNatGatewayAddress {}
+
+impl BuildNatGateway_RegionalNatGatewayAddress {
+    pub fn build(self) -> NatGateway_RegionalNatGatewayAddress {
+        NatGateway_RegionalNatGatewayAddress {
+            allocation_id: core::default::Default::default(),
+            association_id: core::default::Default::default(),
+            availability_zone: core::default::Default::default(),
+            availability_zone_id: core::default::Default::default(),
+            network_interface_id: core::default::Default::default(),
+            public_ip: core::default::Default::default(),
+            status: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NatGateway_RegionalNatGatewayAddressRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NatGateway_RegionalNatGatewayAddressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NatGateway_RegionalNatGatewayAddressRef {
+        NatGateway_RegionalNatGatewayAddressRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NatGateway_RegionalNatGatewayAddressRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `allocation_id` after provisioning.\n"]
+    pub fn allocation_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.allocation_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `association_id` after provisioning.\n"]
+    pub fn association_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.association_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone` after provisioning.\n"]
+    pub fn availability_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone_id` after provisioning.\n"]
+    pub fn availability_zone_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `network_interface_id` after provisioning.\n"]
+    pub fn network_interface_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_interface_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `public_ip` after provisioning.\n"]
+    pub fn public_ip(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_ip", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
+    pub fn status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct NatGateway_AvailabilityZoneAddress {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allocation_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl NatGateway_AvailabilityZoneAddress {
+    #[doc = "Set the field `allocation_ids`.\n"]
+    pub fn set_allocation_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allocation_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `availability_zone`.\n"]
+    pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.availability_zone = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `availability_zone_id`.\n"]
+    pub fn set_availability_zone_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.availability_zone_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for NatGateway_AvailabilityZoneAddress {
+    type O = terrars::BlockAssignable<NatGateway_AvailabilityZoneAddress>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNatGateway_AvailabilityZoneAddress {}
+
+impl BuildNatGateway_AvailabilityZoneAddress {
+    pub fn build(self) -> NatGateway_AvailabilityZoneAddress {
+        NatGateway_AvailabilityZoneAddress {
+            allocation_ids: core::default::Default::default(),
+            availability_zone: core::default::Default::default(),
+            availability_zone_id: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NatGateway_AvailabilityZoneAddressRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NatGateway_AvailabilityZoneAddressRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NatGateway_AvailabilityZoneAddressRef {
+        NatGateway_AvailabilityZoneAddressRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NatGateway_AvailabilityZoneAddressRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `allocation_ids` after provisioning.\n"]
+    pub fn allocation_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allocation_ids", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone` after provisioning.\n"]
+    pub fn availability_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone_id` after provisioning.\n"]
+    pub fn availability_zone_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct NatGateway_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl NatGateway_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for NatGateway_Timeouts {
+    type O = terrars::BlockAssignable<NatGateway_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNatGateway_Timeouts {}
+
+impl BuildNatGateway_Timeouts {
+    pub fn build(self) -> NatGateway_Timeouts {
+        NatGateway_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NatGateway_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NatGateway_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NatGateway_TimeoutsRef {
+        NatGateway_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NatGateway_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }

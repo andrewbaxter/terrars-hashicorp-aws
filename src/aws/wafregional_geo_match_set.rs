@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafregionalGeoMatchSetData {
+struct WafregionalGeoMatchSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct WafregionalGeoMatchSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    geo_match_constraint: std::option::Option<std::vec::Vec<WafregionalGeoMatchSetGeoMatchConstraintEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    geo_match_constraint: std::option::Option<std::vec::Vec<WafregionalGeoMatchSet_GeoMatchConstraint>>,
     dynamic: WafregionalGeoMatchSetDynamic,
 }
 
 struct WafregionalGeoMatchSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafregionalGeoMatchSetData>,
+    data: std::cell::RefCell<WafregionalGeoMatchSetData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl WafregionalGeoMatchSet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `geo_match_constraint`.\n"]
     pub fn set_geo_match_constraint(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalGeoMatchSetGeoMatchConstraintEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalGeoMatchSet_GeoMatchConstraint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -159,6 +170,12 @@ impl WafregionalGeoMatchSet {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -204,7 +221,7 @@ impl BuildWafregionalGeoMatchSet {
         let out = WafregionalGeoMatchSet(std::rc::Rc::new(WafregionalGeoMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafregionalGeoMatchSetData {
+            data: std::cell::RefCell::new(WafregionalGeoMatchSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -212,6 +229,7 @@ impl BuildWafregionalGeoMatchSet {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 geo_match_constraint: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -253,19 +271,30 @@ impl WafregionalGeoMatchSetRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct WafregionalGeoMatchSetDynamic {
+    geo_match_constraint: std::option::Option<terrars::DynamicBlock<WafregionalGeoMatchSet_GeoMatchConstraint>>,
 }
 
 #[derive(Serialize)]
-pub struct WafregionalGeoMatchSetGeoMatchConstraintEl {
+pub struct WafregionalGeoMatchSet_GeoMatchConstraint {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl WafregionalGeoMatchSetGeoMatchConstraintEl { }
+impl WafregionalGeoMatchSet_GeoMatchConstraint { }
 
-impl terrars::ToListMappable for WafregionalGeoMatchSetGeoMatchConstraintEl {
-    type O = terrars::BlockAssignable<WafregionalGeoMatchSetGeoMatchConstraintEl>;
+impl terrars::ToListMappable for WafregionalGeoMatchSet_GeoMatchConstraint {
+    type O = terrars::BlockAssignable<WafregionalGeoMatchSet_GeoMatchConstraint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -276,37 +305,39 @@ impl terrars::ToListMappable for WafregionalGeoMatchSetGeoMatchConstraintEl {
     }
 }
 
-pub struct BuildWafregionalGeoMatchSetGeoMatchConstraintEl {
+pub struct BuildWafregionalGeoMatchSet_GeoMatchConstraint {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafregionalGeoMatchSetGeoMatchConstraintEl {
-    pub fn build(self) -> WafregionalGeoMatchSetGeoMatchConstraintEl {
-        WafregionalGeoMatchSetGeoMatchConstraintEl {
+impl BuildWafregionalGeoMatchSet_GeoMatchConstraint {
+    pub fn build(self) -> WafregionalGeoMatchSet_GeoMatchConstraint {
+        WafregionalGeoMatchSet_GeoMatchConstraint {
             type_: self.type_,
             value: self.value,
         }
     }
 }
 
-pub struct WafregionalGeoMatchSetGeoMatchConstraintElRef {
+#[allow(dead_code)]
+pub struct WafregionalGeoMatchSet_GeoMatchConstraintRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafregionalGeoMatchSetGeoMatchConstraintElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalGeoMatchSetGeoMatchConstraintElRef {
-        WafregionalGeoMatchSetGeoMatchConstraintElRef {
+impl terrars::Ref for WafregionalGeoMatchSet_GeoMatchConstraintRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalGeoMatchSet_GeoMatchConstraintRef {
+        WafregionalGeoMatchSet_GeoMatchConstraintRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafregionalGeoMatchSetGeoMatchConstraintElRef {
+impl WafregionalGeoMatchSet_GeoMatchConstraintRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -320,9 +351,4 @@ impl WafregionalGeoMatchSetGeoMatchConstraintElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafregionalGeoMatchSetDynamic {
-    geo_match_constraint: std::option::Option<terrars::DynamicBlock<WafregionalGeoMatchSetGeoMatchConstraintEl>>,
 }

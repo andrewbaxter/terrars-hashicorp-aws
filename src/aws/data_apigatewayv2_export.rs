@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataApigatewayv2ExportData {
+struct DataApigatewayv2ExportData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,6 +26,8 @@ struct DataApigatewayv2ExportData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     include_extensions: std::option::Option<terrars::PrimField<bool>>,
     output_type: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     specification: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stage_name: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -32,7 +36,7 @@ struct DataApigatewayv2ExportData {
 struct DataApigatewayv2Export_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataApigatewayv2ExportData>,
+    data: std::cell::RefCell<DataApigatewayv2ExportData_>,
 }
 
 #[derive(Clone)]
@@ -95,6 +99,13 @@ impl DataApigatewayv2Export {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `stage_name`.\n"]
     pub fn set_stage_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().stage_name = std::option::Option::Some(v.into());
@@ -129,6 +140,12 @@ impl DataApigatewayv2Export {
     #[doc = "Get a reference to the value of field `output_type` after provisioning.\n"]
     pub fn output_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `specification` after provisioning.\n"]
@@ -188,7 +205,7 @@ impl BuildDataApigatewayv2Export {
         let out = DataApigatewayv2Export(std::rc::Rc::new(DataApigatewayv2Export_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataApigatewayv2ExportData {
+            data: std::cell::RefCell::new(DataApigatewayv2ExportData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -198,6 +215,7 @@ impl BuildDataApigatewayv2Export {
                 id: core::default::Default::default(),
                 include_extensions: core::default::Default::default(),
                 output_type: self.output_type,
+                region: core::default::Default::default(),
                 specification: self.specification,
                 stage_name: core::default::Default::default(),
             }),
@@ -258,6 +276,12 @@ impl DataApigatewayv2ExportRef {
     #[doc = "Get a reference to the value of field `output_type` after provisioning.\n"]
     pub fn output_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `specification` after provisioning.\n"]

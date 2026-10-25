@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SagemakerCodeRepositoryData {
+struct SagemakerCodeRepositoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,20 @@ struct SagemakerCodeRepositoryData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    git_config: std::option::Option<std::vec::Vec<SagemakerCodeRepositoryGitConfigEl>>,
+    git_config: std::option::Option<std::vec::Vec<SagemakerCodeRepository_GitConfig>>,
     dynamic: SagemakerCodeRepositoryDynamic,
 }
 
 struct SagemakerCodeRepository_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SagemakerCodeRepositoryData>,
+    data: std::cell::RefCell<SagemakerCodeRepositoryData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl SagemakerCodeRepository {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -160,7 +171,7 @@ impl SagemakerCodeRepository {
     #[doc = "Set the field `git_config`.\n"]
     pub fn set_git_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerCodeRepositoryGitConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SagemakerCodeRepository_GitConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -188,6 +199,12 @@ impl SagemakerCodeRepository {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -199,7 +216,7 @@ impl SagemakerCodeRepository {
     }
 
     #[doc = "Get a reference to the value of field `git_config` after provisioning.\n"]
-    pub fn git_config(&self) -> terrars::ListRef<SagemakerCodeRepositoryGitConfigElRef> {
+    pub fn git_config(&self) -> terrars::ListRef<SagemakerCodeRepository_GitConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git_config", self.extract_ref()))
     }
 }
@@ -246,7 +263,7 @@ impl BuildSagemakerCodeRepository {
         let out = SagemakerCodeRepository(std::rc::Rc::new(SagemakerCodeRepository_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SagemakerCodeRepositoryData {
+            data: std::cell::RefCell::new(SagemakerCodeRepositoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -254,6 +271,7 @@ impl BuildSagemakerCodeRepository {
                 provisioner: core::default::Default::default(),
                 code_repository_name: self.code_repository_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 git_config: core::default::Default::default(),
@@ -303,6 +321,12 @@ impl SagemakerCodeRepositoryRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -314,13 +338,18 @@ impl SagemakerCodeRepositoryRef {
     }
 
     #[doc = "Get a reference to the value of field `git_config` after provisioning.\n"]
-    pub fn git_config(&self) -> terrars::ListRef<SagemakerCodeRepositoryGitConfigElRef> {
+    pub fn git_config(&self) -> terrars::ListRef<SagemakerCodeRepository_GitConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.git_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SagemakerCodeRepositoryDynamic {
+    git_config: std::option::Option<terrars::DynamicBlock<SagemakerCodeRepository_GitConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct SagemakerCodeRepositoryGitConfigEl {
+pub struct SagemakerCodeRepository_GitConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch: std::option::Option<terrars::PrimField<std::string::String>>,
     repository_url: terrars::PrimField<std::string::String>,
@@ -328,7 +357,7 @@ pub struct SagemakerCodeRepositoryGitConfigEl {
     secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SagemakerCodeRepositoryGitConfigEl {
+impl SagemakerCodeRepository_GitConfig {
     #[doc = "Set the field `branch`.\n"]
     pub fn set_branch(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch = std::option::Option::Some(v.into());
@@ -342,8 +371,8 @@ impl SagemakerCodeRepositoryGitConfigEl {
     }
 }
 
-impl terrars::ToListMappable for SagemakerCodeRepositoryGitConfigEl {
-    type O = terrars::BlockAssignable<SagemakerCodeRepositoryGitConfigEl>;
+impl terrars::ToListMappable for SagemakerCodeRepository_GitConfig {
+    type O = terrars::BlockAssignable<SagemakerCodeRepository_GitConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -354,14 +383,14 @@ impl terrars::ToListMappable for SagemakerCodeRepositoryGitConfigEl {
     }
 }
 
-pub struct BuildSagemakerCodeRepositoryGitConfigEl {
+pub struct BuildSagemakerCodeRepository_GitConfig {
     #[doc = ""]
     pub repository_url: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSagemakerCodeRepositoryGitConfigEl {
-    pub fn build(self) -> SagemakerCodeRepositoryGitConfigEl {
-        SagemakerCodeRepositoryGitConfigEl {
+impl BuildSagemakerCodeRepository_GitConfig {
+    pub fn build(self) -> SagemakerCodeRepository_GitConfig {
+        SagemakerCodeRepository_GitConfig {
             branch: core::default::Default::default(),
             repository_url: self.repository_url,
             secret_arn: core::default::Default::default(),
@@ -369,21 +398,23 @@ impl BuildSagemakerCodeRepositoryGitConfigEl {
     }
 }
 
-pub struct SagemakerCodeRepositoryGitConfigElRef {
+#[allow(dead_code)]
+pub struct SagemakerCodeRepository_GitConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SagemakerCodeRepositoryGitConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerCodeRepositoryGitConfigElRef {
-        SagemakerCodeRepositoryGitConfigElRef {
+impl terrars::Ref for SagemakerCodeRepository_GitConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SagemakerCodeRepository_GitConfigRef {
+        SagemakerCodeRepository_GitConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SagemakerCodeRepositoryGitConfigElRef {
+impl SagemakerCodeRepository_GitConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -402,9 +433,4 @@ impl SagemakerCodeRepositoryGitConfigElRef {
     pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct SagemakerCodeRepositoryDynamic {
-    git_config: std::option::Option<terrars::DynamicBlock<SagemakerCodeRepositoryGitConfigEl>>,
 }

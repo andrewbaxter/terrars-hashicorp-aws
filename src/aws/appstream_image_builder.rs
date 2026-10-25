@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppstreamImageBuilderData {
+struct AppstreamImageBuilderData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,22 +39,24 @@ struct AppstreamImageBuilderData {
     instance_type: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_endpoint: std::option::Option<std::vec::Vec<AppstreamImageBuilderAccessEndpointEl>>,
+    access_endpoint: std::option::Option<std::vec::Vec<AppstreamImageBuilder_AccessEndpoint>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    domain_join_info: std::option::Option<std::vec::Vec<AppstreamImageBuilderDomainJoinInfoEl>>,
+    domain_join_info: std::option::Option<std::vec::Vec<AppstreamImageBuilder_DomainJoinInfo>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_config: std::option::Option<std::vec::Vec<AppstreamImageBuilderVpcConfigEl>>,
+    vpc_config: std::option::Option<std::vec::Vec<AppstreamImageBuilder_VpcConfig>>,
     dynamic: AppstreamImageBuilderDynamic,
 }
 
 struct AppstreamImageBuilder_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppstreamImageBuilderData>,
+    data: std::cell::RefCell<AppstreamImageBuilderData_>,
 }
 
 #[derive(Clone)]
@@ -203,6 +207,13 @@ impl AppstreamImageBuilder {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -224,7 +235,7 @@ impl AppstreamImageBuilder {
     #[doc = "Set the field `access_endpoint`.\n"]
     pub fn set_access_endpoint(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamImageBuilderAccessEndpointEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamImageBuilder_AccessEndpoint>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -240,7 +251,7 @@ impl AppstreamImageBuilder {
     #[doc = "Set the field `domain_join_info`.\n"]
     pub fn set_domain_join_info(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamImageBuilderDomainJoinInfoEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamImageBuilder_DomainJoinInfo>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -256,7 +267,7 @@ impl AppstreamImageBuilder {
     #[doc = "Set the field `vpc_config`.\n"]
     pub fn set_vpc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamImageBuilderVpcConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppstreamImageBuilder_VpcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -332,6 +343,12 @@ impl AppstreamImageBuilder {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -348,12 +365,12 @@ impl AppstreamImageBuilder {
     }
 
     #[doc = "Get a reference to the value of field `domain_join_info` after provisioning.\n"]
-    pub fn domain_join_info(&self) -> terrars::ListRef<AppstreamImageBuilderDomainJoinInfoElRef> {
+    pub fn domain_join_info(&self) -> terrars::ListRef<AppstreamImageBuilder_DomainJoinInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.domain_join_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<AppstreamImageBuilderVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<AppstreamImageBuilder_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
@@ -402,7 +419,7 @@ impl BuildAppstreamImageBuilder {
         let out = AppstreamImageBuilder(std::rc::Rc::new(AppstreamImageBuilder_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppstreamImageBuilderData {
+            data: std::cell::RefCell::new(AppstreamImageBuilderData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -418,6 +435,7 @@ impl BuildAppstreamImageBuilder {
                 image_name: core::default::Default::default(),
                 instance_type: self.instance_type,
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 access_endpoint: core::default::Default::default(),
@@ -517,6 +535,12 @@ impl AppstreamImageBuilderRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
     pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
@@ -533,24 +557,31 @@ impl AppstreamImageBuilderRef {
     }
 
     #[doc = "Get a reference to the value of field `domain_join_info` after provisioning.\n"]
-    pub fn domain_join_info(&self) -> terrars::ListRef<AppstreamImageBuilderDomainJoinInfoElRef> {
+    pub fn domain_join_info(&self) -> terrars::ListRef<AppstreamImageBuilder_DomainJoinInfoRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.domain_join_info", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<AppstreamImageBuilderVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<AppstreamImageBuilder_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppstreamImageBuilderDynamic {
+    access_endpoint: std::option::Option<terrars::DynamicBlock<AppstreamImageBuilder_AccessEndpoint>>,
+    domain_join_info: std::option::Option<terrars::DynamicBlock<AppstreamImageBuilder_DomainJoinInfo>>,
+    vpc_config: std::option::Option<terrars::DynamicBlock<AppstreamImageBuilder_VpcConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct AppstreamImageBuilderAccessEndpointEl {
+pub struct AppstreamImageBuilder_AccessEndpoint {
     endpoint_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpce_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppstreamImageBuilderAccessEndpointEl {
+impl AppstreamImageBuilder_AccessEndpoint {
     #[doc = "Set the field `vpce_id`.\n"]
     pub fn set_vpce_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.vpce_id = std::option::Option::Some(v.into());
@@ -558,8 +589,8 @@ impl AppstreamImageBuilderAccessEndpointEl {
     }
 }
 
-impl terrars::ToListMappable for AppstreamImageBuilderAccessEndpointEl {
-    type O = terrars::BlockAssignable<AppstreamImageBuilderAccessEndpointEl>;
+impl terrars::ToListMappable for AppstreamImageBuilder_AccessEndpoint {
+    type O = terrars::BlockAssignable<AppstreamImageBuilder_AccessEndpoint>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -570,35 +601,37 @@ impl terrars::ToListMappable for AppstreamImageBuilderAccessEndpointEl {
     }
 }
 
-pub struct BuildAppstreamImageBuilderAccessEndpointEl {
+pub struct BuildAppstreamImageBuilder_AccessEndpoint {
     #[doc = ""]
     pub endpoint_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAppstreamImageBuilderAccessEndpointEl {
-    pub fn build(self) -> AppstreamImageBuilderAccessEndpointEl {
-        AppstreamImageBuilderAccessEndpointEl {
+impl BuildAppstreamImageBuilder_AccessEndpoint {
+    pub fn build(self) -> AppstreamImageBuilder_AccessEndpoint {
+        AppstreamImageBuilder_AccessEndpoint {
             endpoint_type: self.endpoint_type,
             vpce_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppstreamImageBuilderAccessEndpointElRef {
+#[allow(dead_code)]
+pub struct AppstreamImageBuilder_AccessEndpointRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamImageBuilderAccessEndpointElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamImageBuilderAccessEndpointElRef {
-        AppstreamImageBuilderAccessEndpointElRef {
+impl terrars::Ref for AppstreamImageBuilder_AccessEndpointRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamImageBuilder_AccessEndpointRef {
+        AppstreamImageBuilder_AccessEndpointRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamImageBuilderAccessEndpointElRef {
+impl AppstreamImageBuilder_AccessEndpointRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -615,14 +648,14 @@ impl AppstreamImageBuilderAccessEndpointElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppstreamImageBuilderDomainJoinInfoEl {
+pub struct AppstreamImageBuilder_DomainJoinInfo {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     directory_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     organizational_unit_distinguished_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppstreamImageBuilderDomainJoinInfoEl {
+impl AppstreamImageBuilder_DomainJoinInfo {
     #[doc = "Set the field `directory_name`.\n"]
     pub fn set_directory_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.directory_name = std::option::Option::Some(v.into());
@@ -639,8 +672,8 @@ impl AppstreamImageBuilderDomainJoinInfoEl {
     }
 }
 
-impl terrars::ToListMappable for AppstreamImageBuilderDomainJoinInfoEl {
-    type O = terrars::BlockAssignable<AppstreamImageBuilderDomainJoinInfoEl>;
+impl terrars::ToListMappable for AppstreamImageBuilder_DomainJoinInfo {
+    type O = terrars::BlockAssignable<AppstreamImageBuilder_DomainJoinInfo>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -651,32 +684,34 @@ impl terrars::ToListMappable for AppstreamImageBuilderDomainJoinInfoEl {
     }
 }
 
-pub struct BuildAppstreamImageBuilderDomainJoinInfoEl {}
+pub struct BuildAppstreamImageBuilder_DomainJoinInfo {}
 
-impl BuildAppstreamImageBuilderDomainJoinInfoEl {
-    pub fn build(self) -> AppstreamImageBuilderDomainJoinInfoEl {
-        AppstreamImageBuilderDomainJoinInfoEl {
+impl BuildAppstreamImageBuilder_DomainJoinInfo {
+    pub fn build(self) -> AppstreamImageBuilder_DomainJoinInfo {
+        AppstreamImageBuilder_DomainJoinInfo {
             directory_name: core::default::Default::default(),
             organizational_unit_distinguished_name: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppstreamImageBuilderDomainJoinInfoElRef {
+#[allow(dead_code)]
+pub struct AppstreamImageBuilder_DomainJoinInfoRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamImageBuilderDomainJoinInfoElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamImageBuilderDomainJoinInfoElRef {
-        AppstreamImageBuilderDomainJoinInfoElRef {
+impl terrars::Ref for AppstreamImageBuilder_DomainJoinInfoRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamImageBuilder_DomainJoinInfoRef {
+        AppstreamImageBuilder_DomainJoinInfoRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamImageBuilderDomainJoinInfoElRef {
+impl AppstreamImageBuilder_DomainJoinInfoRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -696,14 +731,14 @@ impl AppstreamImageBuilderDomainJoinInfoElRef {
 }
 
 #[derive(Serialize)]
-pub struct AppstreamImageBuilderVpcConfigEl {
+pub struct AppstreamImageBuilder_VpcConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl AppstreamImageBuilderVpcConfigEl {
+impl AppstreamImageBuilder_VpcConfig {
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         mut self,
@@ -723,8 +758,8 @@ impl AppstreamImageBuilderVpcConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AppstreamImageBuilderVpcConfigEl {
-    type O = terrars::BlockAssignable<AppstreamImageBuilderVpcConfigEl>;
+impl terrars::ToListMappable for AppstreamImageBuilder_VpcConfig {
+    type O = terrars::BlockAssignable<AppstreamImageBuilder_VpcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -735,32 +770,34 @@ impl terrars::ToListMappable for AppstreamImageBuilderVpcConfigEl {
     }
 }
 
-pub struct BuildAppstreamImageBuilderVpcConfigEl {}
+pub struct BuildAppstreamImageBuilder_VpcConfig {}
 
-impl BuildAppstreamImageBuilderVpcConfigEl {
-    pub fn build(self) -> AppstreamImageBuilderVpcConfigEl {
-        AppstreamImageBuilderVpcConfigEl {
+impl BuildAppstreamImageBuilder_VpcConfig {
+    pub fn build(self) -> AppstreamImageBuilder_VpcConfig {
+        AppstreamImageBuilder_VpcConfig {
             security_group_ids: core::default::Default::default(),
             subnet_ids: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppstreamImageBuilderVpcConfigElRef {
+#[allow(dead_code)]
+pub struct AppstreamImageBuilder_VpcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppstreamImageBuilderVpcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamImageBuilderVpcConfigElRef {
-        AppstreamImageBuilderVpcConfigElRef {
+impl terrars::Ref for AppstreamImageBuilder_VpcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppstreamImageBuilder_VpcConfigRef {
+        AppstreamImageBuilder_VpcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppstreamImageBuilderVpcConfigElRef {
+impl AppstreamImageBuilder_VpcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -774,11 +811,4 @@ impl AppstreamImageBuilderVpcConfigElRef {
     pub fn subnet_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AppstreamImageBuilderDynamic {
-    access_endpoint: std::option::Option<terrars::DynamicBlock<AppstreamImageBuilderAccessEndpointEl>>,
-    domain_join_info: std::option::Option<terrars::DynamicBlock<AppstreamImageBuilderDomainJoinInfoEl>>,
-    vpc_config: std::option::Option<terrars::DynamicBlock<AppstreamImageBuilderVpcConfigEl>>,
 }

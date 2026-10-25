@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataLambdaFunctionUrlData {
+struct DataLambdaFunctionUrlData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,12 +23,14 @@ struct DataLambdaFunctionUrlData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     qualifier: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataLambdaFunctionUrl_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataLambdaFunctionUrlData>,
+    data: std::cell::RefCell<DataLambdaFunctionUrlData_>,
 }
 
 #[derive(Clone)]
@@ -83,13 +87,20 @@ impl DataLambdaFunctionUrl {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `authorization_type` after provisioning.\n"]
     pub fn authorization_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.authorization_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cors` after provisioning.\n"]
-    pub fn cors(&self) -> terrars::ListRef<DataLambdaFunctionUrlCorsElRef> {
+    pub fn cors(&self) -> terrars::ListRef<DataLambdaFunctionUrl_CorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors", self.extract_ref()))
     }
 
@@ -118,6 +129,11 @@ impl DataLambdaFunctionUrl {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `invoke_mode` after provisioning.\n"]
+    pub fn invoke_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invoke_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `last_modified_time` after provisioning.\n"]
     pub fn last_modified_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_time", self.extract_ref()))
@@ -126,6 +142,12 @@ impl DataLambdaFunctionUrl {
     #[doc = "Get a reference to the value of field `qualifier` after provisioning.\n"]
     pub fn qualifier(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `url_id` after provisioning.\n"]
@@ -176,7 +198,7 @@ impl BuildDataLambdaFunctionUrl {
         let out = DataLambdaFunctionUrl(std::rc::Rc::new(DataLambdaFunctionUrl_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataLambdaFunctionUrlData {
+            data: std::cell::RefCell::new(DataLambdaFunctionUrlData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -184,6 +206,7 @@ impl BuildDataLambdaFunctionUrl {
                 function_name: self.function_name,
                 id: core::default::Default::default(),
                 qualifier: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -220,7 +243,7 @@ impl DataLambdaFunctionUrlRef {
     }
 
     #[doc = "Get a reference to the value of field `cors` after provisioning.\n"]
-    pub fn cors(&self) -> terrars::ListRef<DataLambdaFunctionUrlCorsElRef> {
+    pub fn cors(&self) -> terrars::ListRef<DataLambdaFunctionUrl_CorsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors", self.extract_ref()))
     }
 
@@ -249,6 +272,11 @@ impl DataLambdaFunctionUrlRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `invoke_mode` after provisioning.\n"]
+    pub fn invoke_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.invoke_mode", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `last_modified_time` after provisioning.\n"]
     pub fn last_modified_time(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_modified_time", self.extract_ref()))
@@ -259,6 +287,12 @@ impl DataLambdaFunctionUrlRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `url_id` after provisioning.\n"]
     pub fn url_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.url_id", self.extract_ref()))
@@ -266,7 +300,7 @@ impl DataLambdaFunctionUrlRef {
 }
 
 #[derive(Serialize)]
-pub struct DataLambdaFunctionUrlCorsEl {
+pub struct DataLambdaFunctionUrl_Cors {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -281,7 +315,7 @@ pub struct DataLambdaFunctionUrlCorsEl {
     max_age: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataLambdaFunctionUrlCorsEl {
+impl DataLambdaFunctionUrl_Cors {
     #[doc = "Set the field `allow_credentials`.\n"]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_credentials = std::option::Option::Some(v.into());
@@ -331,8 +365,8 @@ impl DataLambdaFunctionUrlCorsEl {
     }
 }
 
-impl terrars::ToListMappable for DataLambdaFunctionUrlCorsEl {
-    type O = terrars::BlockAssignable<DataLambdaFunctionUrlCorsEl>;
+impl terrars::ToListMappable for DataLambdaFunctionUrl_Cors {
+    type O = terrars::BlockAssignable<DataLambdaFunctionUrl_Cors>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -343,11 +377,11 @@ impl terrars::ToListMappable for DataLambdaFunctionUrlCorsEl {
     }
 }
 
-pub struct BuildDataLambdaFunctionUrlCorsEl {}
+pub struct BuildDataLambdaFunctionUrl_Cors {}
 
-impl BuildDataLambdaFunctionUrlCorsEl {
-    pub fn build(self) -> DataLambdaFunctionUrlCorsEl {
-        DataLambdaFunctionUrlCorsEl {
+impl BuildDataLambdaFunctionUrl_Cors {
+    pub fn build(self) -> DataLambdaFunctionUrl_Cors {
+        DataLambdaFunctionUrl_Cors {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -358,21 +392,23 @@ impl BuildDataLambdaFunctionUrlCorsEl {
     }
 }
 
-pub struct DataLambdaFunctionUrlCorsElRef {
+#[allow(dead_code)]
+pub struct DataLambdaFunctionUrl_CorsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataLambdaFunctionUrlCorsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLambdaFunctionUrlCorsElRef {
-        DataLambdaFunctionUrlCorsElRef {
+impl terrars::Ref for DataLambdaFunctionUrl_CorsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataLambdaFunctionUrl_CorsRef {
+        DataLambdaFunctionUrl_CorsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataLambdaFunctionUrlCorsElRef {
+impl DataLambdaFunctionUrl_CorsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

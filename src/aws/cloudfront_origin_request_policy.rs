@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudfrontOriginRequestPolicyData {
+struct CloudfrontOriginRequestPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,18 @@ struct CloudfrontOriginRequestPolicyData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cookies_config: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicyCookiesConfigEl>>,
+    cookies_config: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicy_CookiesConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    headers_config: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicyHeadersConfigEl>>,
+    headers_config: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicy_HeadersConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query_strings_config: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicyQueryStringsConfigEl>>,
+    query_strings_config: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicy_QueryStringsConfig>>,
     dynamic: CloudfrontOriginRequestPolicyDynamic,
 }
 
 struct CloudfrontOriginRequestPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudfrontOriginRequestPolicyData>,
+    data: std::cell::RefCell<CloudfrontOriginRequestPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -150,7 +152,7 @@ impl CloudfrontOriginRequestPolicy {
     #[doc = "Set the field `cookies_config`.\n"]
     pub fn set_cookies_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicyCookiesConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicy_CookiesConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -166,7 +168,7 @@ impl CloudfrontOriginRequestPolicy {
     #[doc = "Set the field `headers_config`.\n"]
     pub fn set_headers_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicyHeadersConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicy_HeadersConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -182,7 +184,7 @@ impl CloudfrontOriginRequestPolicy {
     #[doc = "Set the field `query_strings_config`.\n"]
     pub fn set_query_strings_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicyQueryStringsConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicy_QueryStringsConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -193,6 +195,11 @@ impl CloudfrontOriginRequestPolicy {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
@@ -216,17 +223,17 @@ impl CloudfrontOriginRequestPolicy {
     }
 
     #[doc = "Get a reference to the value of field `cookies_config` after provisioning.\n"]
-    pub fn cookies_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicyCookiesConfigElRef> {
+    pub fn cookies_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicy_CookiesConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cookies_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `headers_config` after provisioning.\n"]
-    pub fn headers_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicyHeadersConfigElRef> {
+    pub fn headers_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicy_HeadersConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.headers_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `query_strings_config` after provisioning.\n"]
-    pub fn query_strings_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicyQueryStringsConfigElRef> {
+    pub fn query_strings_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicy_QueryStringsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_strings_config", self.extract_ref()))
     }
 }
@@ -273,7 +280,7 @@ impl BuildCloudfrontOriginRequestPolicy {
         let out = CloudfrontOriginRequestPolicy(std::rc::Rc::new(CloudfrontOriginRequestPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudfrontOriginRequestPolicyData {
+            data: std::cell::RefCell::new(CloudfrontOriginRequestPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -316,6 +323,11 @@ impl CloudfrontOriginRequestPolicyRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `comment` after provisioning.\n"]
     pub fn comment(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.comment", self.extract_ref()))
@@ -337,28 +349,37 @@ impl CloudfrontOriginRequestPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `cookies_config` after provisioning.\n"]
-    pub fn cookies_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicyCookiesConfigElRef> {
+    pub fn cookies_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicy_CookiesConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cookies_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `headers_config` after provisioning.\n"]
-    pub fn headers_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicyHeadersConfigElRef> {
+    pub fn headers_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicy_HeadersConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.headers_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `query_strings_config` after provisioning.\n"]
-    pub fn query_strings_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicyQueryStringsConfigElRef> {
+    pub fn query_strings_config(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicy_QueryStringsConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_strings_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudfrontOriginRequestPolicyDynamic {
+    cookies_config: std::option::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicy_CookiesConfig>>,
+    headers_config: std::option::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicy_HeadersConfig>>,
+    query_strings_config: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicy_QueryStringsConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl {
+pub struct CloudfrontOriginRequestPolicy_CookiesConfig_Cookies {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl {
+impl CloudfrontOriginRequestPolicy_CookiesConfig_Cookies {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
@@ -369,8 +390,8 @@ impl CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl {
-    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl>;
+impl terrars::ToListMappable for CloudfrontOriginRequestPolicy_CookiesConfig_Cookies {
+    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicy_CookiesConfig_Cookies>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,32 +402,34 @@ impl terrars::ToListMappable for CloudfrontOriginRequestPolicyCookiesConfigElCoo
     }
 }
 
-pub struct BuildCloudfrontOriginRequestPolicyCookiesConfigElCookiesEl {}
+pub struct BuildCloudfrontOriginRequestPolicy_CookiesConfig_Cookies {}
 
-impl BuildCloudfrontOriginRequestPolicyCookiesConfigElCookiesEl {
-    pub fn build(self) -> CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl {
-        CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl { items: core::default::Default::default() }
+impl BuildCloudfrontOriginRequestPolicy_CookiesConfig_Cookies {
+    pub fn build(self) -> CloudfrontOriginRequestPolicy_CookiesConfig_Cookies {
+        CloudfrontOriginRequestPolicy_CookiesConfig_Cookies { items: core::default::Default::default() }
     }
 }
 
-pub struct CloudfrontOriginRequestPolicyCookiesConfigElCookiesElRef {
+#[allow(dead_code)]
+pub struct CloudfrontOriginRequestPolicy_CookiesConfig_CookiesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontOriginRequestPolicyCookiesConfigElCookiesElRef {
+impl terrars::Ref for CloudfrontOriginRequestPolicy_CookiesConfig_CookiesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontOriginRequestPolicyCookiesConfigElCookiesElRef {
-        CloudfrontOriginRequestPolicyCookiesConfigElCookiesElRef {
+    ) -> CloudfrontOriginRequestPolicy_CookiesConfig_CookiesRef {
+        CloudfrontOriginRequestPolicy_CookiesConfig_CookiesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontOriginRequestPolicyCookiesConfigElCookiesElRef {
+impl CloudfrontOriginRequestPolicy_CookiesConfig_CookiesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -418,23 +441,23 @@ impl CloudfrontOriginRequestPolicyCookiesConfigElCookiesElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontOriginRequestPolicyCookiesConfigElDynamic {
-    cookies: std::option::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl>>,
+struct CloudfrontOriginRequestPolicy_CookiesConfigDynamic {
+    cookies: std::option::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicy_CookiesConfig_Cookies>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontOriginRequestPolicyCookiesConfigEl {
+pub struct CloudfrontOriginRequestPolicy_CookiesConfig {
     cookie_behavior: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cookies: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl>>,
-    dynamic: CloudfrontOriginRequestPolicyCookiesConfigElDynamic,
+    cookies: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicy_CookiesConfig_Cookies>>,
+    dynamic: CloudfrontOriginRequestPolicy_CookiesConfigDynamic,
 }
 
-impl CloudfrontOriginRequestPolicyCookiesConfigEl {
+impl CloudfrontOriginRequestPolicy_CookiesConfig {
     #[doc = "Set the field `cookies`.\n"]
     pub fn set_cookies(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicyCookiesConfigElCookiesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicy_CookiesConfig_Cookies>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -448,8 +471,8 @@ impl CloudfrontOriginRequestPolicyCookiesConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontOriginRequestPolicyCookiesConfigEl {
-    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicyCookiesConfigEl>;
+impl terrars::ToListMappable for CloudfrontOriginRequestPolicy_CookiesConfig {
+    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicy_CookiesConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -460,14 +483,14 @@ impl terrars::ToListMappable for CloudfrontOriginRequestPolicyCookiesConfigEl {
     }
 }
 
-pub struct BuildCloudfrontOriginRequestPolicyCookiesConfigEl {
+pub struct BuildCloudfrontOriginRequestPolicy_CookiesConfig {
     #[doc = ""]
     pub cookie_behavior: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontOriginRequestPolicyCookiesConfigEl {
-    pub fn build(self) -> CloudfrontOriginRequestPolicyCookiesConfigEl {
-        CloudfrontOriginRequestPolicyCookiesConfigEl {
+impl BuildCloudfrontOriginRequestPolicy_CookiesConfig {
+    pub fn build(self) -> CloudfrontOriginRequestPolicy_CookiesConfig {
+        CloudfrontOriginRequestPolicy_CookiesConfig {
             cookie_behavior: self.cookie_behavior,
             cookies: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -475,24 +498,26 @@ impl BuildCloudfrontOriginRequestPolicyCookiesConfigEl {
     }
 }
 
-pub struct CloudfrontOriginRequestPolicyCookiesConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontOriginRequestPolicy_CookiesConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontOriginRequestPolicyCookiesConfigElRef {
+impl terrars::Ref for CloudfrontOriginRequestPolicy_CookiesConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontOriginRequestPolicyCookiesConfigElRef {
-        CloudfrontOriginRequestPolicyCookiesConfigElRef {
+    ) -> CloudfrontOriginRequestPolicy_CookiesConfigRef {
+        CloudfrontOriginRequestPolicy_CookiesConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontOriginRequestPolicyCookiesConfigElRef {
+impl CloudfrontOriginRequestPolicy_CookiesConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -503,18 +528,18 @@ impl CloudfrontOriginRequestPolicyCookiesConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `cookies` after provisioning.\n"]
-    pub fn cookies(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicyCookiesConfigElCookiesElRef> {
+    pub fn cookies(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicy_CookiesConfig_CookiesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cookies", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl {
+pub struct CloudfrontOriginRequestPolicy_HeadersConfig_Headers {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl {
+impl CloudfrontOriginRequestPolicy_HeadersConfig_Headers {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
@@ -525,8 +550,8 @@ impl CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl {
-    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl>;
+impl terrars::ToListMappable for CloudfrontOriginRequestPolicy_HeadersConfig_Headers {
+    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicy_HeadersConfig_Headers>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -537,32 +562,34 @@ impl terrars::ToListMappable for CloudfrontOriginRequestPolicyHeadersConfigElHea
     }
 }
 
-pub struct BuildCloudfrontOriginRequestPolicyHeadersConfigElHeadersEl {}
+pub struct BuildCloudfrontOriginRequestPolicy_HeadersConfig_Headers {}
 
-impl BuildCloudfrontOriginRequestPolicyHeadersConfigElHeadersEl {
-    pub fn build(self) -> CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl {
-        CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl { items: core::default::Default::default() }
+impl BuildCloudfrontOriginRequestPolicy_HeadersConfig_Headers {
+    pub fn build(self) -> CloudfrontOriginRequestPolicy_HeadersConfig_Headers {
+        CloudfrontOriginRequestPolicy_HeadersConfig_Headers { items: core::default::Default::default() }
     }
 }
 
-pub struct CloudfrontOriginRequestPolicyHeadersConfigElHeadersElRef {
+#[allow(dead_code)]
+pub struct CloudfrontOriginRequestPolicy_HeadersConfig_HeadersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontOriginRequestPolicyHeadersConfigElHeadersElRef {
+impl terrars::Ref for CloudfrontOriginRequestPolicy_HeadersConfig_HeadersRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontOriginRequestPolicyHeadersConfigElHeadersElRef {
-        CloudfrontOriginRequestPolicyHeadersConfigElHeadersElRef {
+    ) -> CloudfrontOriginRequestPolicy_HeadersConfig_HeadersRef {
+        CloudfrontOriginRequestPolicy_HeadersConfig_HeadersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontOriginRequestPolicyHeadersConfigElHeadersElRef {
+impl CloudfrontOriginRequestPolicy_HeadersConfig_HeadersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -574,20 +601,20 @@ impl CloudfrontOriginRequestPolicyHeadersConfigElHeadersElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontOriginRequestPolicyHeadersConfigElDynamic {
-    headers: std::option::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl>>,
+struct CloudfrontOriginRequestPolicy_HeadersConfigDynamic {
+    headers: std::option::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicy_HeadersConfig_Headers>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontOriginRequestPolicyHeadersConfigEl {
+pub struct CloudfrontOriginRequestPolicy_HeadersConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     header_behavior: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    headers: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl>>,
-    dynamic: CloudfrontOriginRequestPolicyHeadersConfigElDynamic,
+    headers: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicy_HeadersConfig_Headers>>,
+    dynamic: CloudfrontOriginRequestPolicy_HeadersConfigDynamic,
 }
 
-impl CloudfrontOriginRequestPolicyHeadersConfigEl {
+impl CloudfrontOriginRequestPolicy_HeadersConfig {
     #[doc = "Set the field `header_behavior`.\n"]
     pub fn set_header_behavior(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.header_behavior = std::option::Option::Some(v.into());
@@ -597,7 +624,7 @@ impl CloudfrontOriginRequestPolicyHeadersConfigEl {
     #[doc = "Set the field `headers`.\n"]
     pub fn set_headers(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicyHeadersConfigElHeadersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicy_HeadersConfig_Headers>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -611,8 +638,8 @@ impl CloudfrontOriginRequestPolicyHeadersConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontOriginRequestPolicyHeadersConfigEl {
-    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicyHeadersConfigEl>;
+impl terrars::ToListMappable for CloudfrontOriginRequestPolicy_HeadersConfig {
+    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicy_HeadersConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -623,11 +650,11 @@ impl terrars::ToListMappable for CloudfrontOriginRequestPolicyHeadersConfigEl {
     }
 }
 
-pub struct BuildCloudfrontOriginRequestPolicyHeadersConfigEl {}
+pub struct BuildCloudfrontOriginRequestPolicy_HeadersConfig {}
 
-impl BuildCloudfrontOriginRequestPolicyHeadersConfigEl {
-    pub fn build(self) -> CloudfrontOriginRequestPolicyHeadersConfigEl {
-        CloudfrontOriginRequestPolicyHeadersConfigEl {
+impl BuildCloudfrontOriginRequestPolicy_HeadersConfig {
+    pub fn build(self) -> CloudfrontOriginRequestPolicy_HeadersConfig {
+        CloudfrontOriginRequestPolicy_HeadersConfig {
             header_behavior: core::default::Default::default(),
             headers: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -635,24 +662,26 @@ impl BuildCloudfrontOriginRequestPolicyHeadersConfigEl {
     }
 }
 
-pub struct CloudfrontOriginRequestPolicyHeadersConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontOriginRequestPolicy_HeadersConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontOriginRequestPolicyHeadersConfigElRef {
+impl terrars::Ref for CloudfrontOriginRequestPolicy_HeadersConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontOriginRequestPolicyHeadersConfigElRef {
-        CloudfrontOriginRequestPolicyHeadersConfigElRef {
+    ) -> CloudfrontOriginRequestPolicy_HeadersConfigRef {
+        CloudfrontOriginRequestPolicy_HeadersConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontOriginRequestPolicyHeadersConfigElRef {
+impl CloudfrontOriginRequestPolicy_HeadersConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -663,18 +692,18 @@ impl CloudfrontOriginRequestPolicyHeadersConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `headers` after provisioning.\n"]
-    pub fn headers(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicyHeadersConfigElHeadersElRef> {
+    pub fn headers(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicy_HeadersConfig_HeadersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.headers", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl {
+pub struct CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     items: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl {
+impl CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings {
     #[doc = "Set the field `items`.\n"]
     pub fn set_items(
         mut self,
@@ -685,8 +714,8 @@ impl CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl {
-    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl>;
+impl terrars::ToListMappable for CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings {
+    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -697,32 +726,34 @@ impl terrars::ToListMappable for CloudfrontOriginRequestPolicyQueryStringsConfig
     }
 }
 
-pub struct BuildCloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl {}
+pub struct BuildCloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings {}
 
-impl BuildCloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl {
-    pub fn build(self) -> CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl {
-        CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl { items: core::default::Default::default() }
+impl BuildCloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings {
+    pub fn build(self) -> CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings {
+        CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings { items: core::default::Default::default() }
     }
 }
 
-pub struct CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsElRef {
+#[allow(dead_code)]
+pub struct CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStringsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsElRef {
+impl terrars::Ref for CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStringsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsElRef {
-        CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsElRef {
+    ) -> CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStringsRef {
+        CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStringsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsElRef {
+impl CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStringsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -734,21 +765,21 @@ impl CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontOriginRequestPolicyQueryStringsConfigElDynamic {
+struct CloudfrontOriginRequestPolicy_QueryStringsConfigDynamic {
     query_strings: std
     ::option
-    ::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl>>,
+    ::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings>>,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontOriginRequestPolicyQueryStringsConfigEl {
+pub struct CloudfrontOriginRequestPolicy_QueryStringsConfig {
     query_string_behavior: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    query_strings: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl>>,
-    dynamic: CloudfrontOriginRequestPolicyQueryStringsConfigElDynamic,
+    query_strings: std::option::Option<std::vec::Vec<CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings>>,
+    dynamic: CloudfrontOriginRequestPolicy_QueryStringsConfigDynamic,
 }
 
-impl CloudfrontOriginRequestPolicyQueryStringsConfigEl {
+impl CloudfrontOriginRequestPolicy_QueryStringsConfig {
     #[doc = "Set the field `query_strings`.\n"]
     pub fn set_query_strings(
         mut self,
@@ -757,7 +788,7 @@ impl CloudfrontOriginRequestPolicyQueryStringsConfigEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsEl>>,
+                    ::Into<terrars::BlockAssignable<CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStrings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -771,8 +802,8 @@ impl CloudfrontOriginRequestPolicyQueryStringsConfigEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontOriginRequestPolicyQueryStringsConfigEl {
-    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicyQueryStringsConfigEl>;
+impl terrars::ToListMappable for CloudfrontOriginRequestPolicy_QueryStringsConfig {
+    type O = terrars::BlockAssignable<CloudfrontOriginRequestPolicy_QueryStringsConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -783,14 +814,14 @@ impl terrars::ToListMappable for CloudfrontOriginRequestPolicyQueryStringsConfig
     }
 }
 
-pub struct BuildCloudfrontOriginRequestPolicyQueryStringsConfigEl {
+pub struct BuildCloudfrontOriginRequestPolicy_QueryStringsConfig {
     #[doc = ""]
     pub query_string_behavior: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontOriginRequestPolicyQueryStringsConfigEl {
-    pub fn build(self) -> CloudfrontOriginRequestPolicyQueryStringsConfigEl {
-        CloudfrontOriginRequestPolicyQueryStringsConfigEl {
+impl BuildCloudfrontOriginRequestPolicy_QueryStringsConfig {
+    pub fn build(self) -> CloudfrontOriginRequestPolicy_QueryStringsConfig {
+        CloudfrontOriginRequestPolicy_QueryStringsConfig {
             query_string_behavior: self.query_string_behavior,
             query_strings: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -798,24 +829,26 @@ impl BuildCloudfrontOriginRequestPolicyQueryStringsConfigEl {
     }
 }
 
-pub struct CloudfrontOriginRequestPolicyQueryStringsConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontOriginRequestPolicy_QueryStringsConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontOriginRequestPolicyQueryStringsConfigElRef {
+impl terrars::Ref for CloudfrontOriginRequestPolicy_QueryStringsConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontOriginRequestPolicyQueryStringsConfigElRef {
-        CloudfrontOriginRequestPolicyQueryStringsConfigElRef {
+    ) -> CloudfrontOriginRequestPolicy_QueryStringsConfigRef {
+        CloudfrontOriginRequestPolicy_QueryStringsConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontOriginRequestPolicyQueryStringsConfigElRef {
+impl CloudfrontOriginRequestPolicy_QueryStringsConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -826,16 +859,7 @@ impl CloudfrontOriginRequestPolicyQueryStringsConfigElRef {
     }
 
     #[doc = "Get a reference to the value of field `query_strings` after provisioning.\n"]
-    pub fn query_strings(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicyQueryStringsConfigElQueryStringsElRef> {
+    pub fn query_strings(&self) -> terrars::ListRef<CloudfrontOriginRequestPolicy_QueryStringsConfig_QueryStringsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.query_strings", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudfrontOriginRequestPolicyDynamic {
-    cookies_config: std::option::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicyCookiesConfigEl>>,
-    headers_config: std::option::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicyHeadersConfigEl>>,
-    query_strings_config: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudfrontOriginRequestPolicyQueryStringsConfigEl>>,
 }

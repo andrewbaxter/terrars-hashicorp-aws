@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataWorkspacesBundleData {
+struct DataWorkspacesBundleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,12 +26,14 @@ struct DataWorkspacesBundleData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     owner: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataWorkspacesBundle_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataWorkspacesBundleData>,
+    data: std::cell::RefCell<DataWorkspacesBundleData_>,
 }
 
 #[derive(Clone)]
@@ -98,13 +102,20 @@ impl DataWorkspacesBundle {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `bundle_id` after provisioning.\n"]
     pub fn bundle_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bundle_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `compute_type` after provisioning.\n"]
-    pub fn compute_type(&self) -> terrars::ListRef<DataWorkspacesBundleComputeTypeElRef> {
+    pub fn compute_type(&self) -> terrars::ListRef<DataWorkspacesBundle_ComputeTypeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compute_type", self.extract_ref()))
     }
 
@@ -128,13 +139,19 @@ impl DataWorkspacesBundle {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_storage` after provisioning.\n"]
-    pub fn root_storage(&self) -> terrars::ListRef<DataWorkspacesBundleRootStorageElRef> {
+    pub fn root_storage(&self) -> terrars::ListRef<DataWorkspacesBundle_RootStorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_storage", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_storage` after provisioning.\n"]
-    pub fn user_storage(&self) -> terrars::ListRef<DataWorkspacesBundleUserStorageElRef> {
+    pub fn user_storage(&self) -> terrars::ListRef<DataWorkspacesBundle_UserStorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_storage", self.extract_ref()))
     }
 }
@@ -179,7 +196,7 @@ impl BuildDataWorkspacesBundle {
         let out = DataWorkspacesBundle(std::rc::Rc::new(DataWorkspacesBundle_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataWorkspacesBundleData {
+            data: std::cell::RefCell::new(DataWorkspacesBundleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -188,6 +205,7 @@ impl BuildDataWorkspacesBundle {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 owner: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -224,7 +242,7 @@ impl DataWorkspacesBundleRef {
     }
 
     #[doc = "Get a reference to the value of field `compute_type` after provisioning.\n"]
-    pub fn compute_type(&self) -> terrars::ListRef<DataWorkspacesBundleComputeTypeElRef> {
+    pub fn compute_type(&self) -> terrars::ListRef<DataWorkspacesBundle_ComputeTypeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compute_type", self.extract_ref()))
     }
 
@@ -248,24 +266,30 @@ impl DataWorkspacesBundleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_storage` after provisioning.\n"]
-    pub fn root_storage(&self) -> terrars::ListRef<DataWorkspacesBundleRootStorageElRef> {
+    pub fn root_storage(&self) -> terrars::ListRef<DataWorkspacesBundle_RootStorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_storage", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `user_storage` after provisioning.\n"]
-    pub fn user_storage(&self) -> terrars::ListRef<DataWorkspacesBundleUserStorageElRef> {
+    pub fn user_storage(&self) -> terrars::ListRef<DataWorkspacesBundle_UserStorageRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.user_storage", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataWorkspacesBundleComputeTypeEl {
+pub struct DataWorkspacesBundle_ComputeType {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataWorkspacesBundleComputeTypeEl {
+impl DataWorkspacesBundle_ComputeType {
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.name = std::option::Option::Some(v.into());
@@ -273,8 +297,8 @@ impl DataWorkspacesBundleComputeTypeEl {
     }
 }
 
-impl terrars::ToListMappable for DataWorkspacesBundleComputeTypeEl {
-    type O = terrars::BlockAssignable<DataWorkspacesBundleComputeTypeEl>;
+impl terrars::ToListMappable for DataWorkspacesBundle_ComputeType {
+    type O = terrars::BlockAssignable<DataWorkspacesBundle_ComputeType>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -285,29 +309,31 @@ impl terrars::ToListMappable for DataWorkspacesBundleComputeTypeEl {
     }
 }
 
-pub struct BuildDataWorkspacesBundleComputeTypeEl {}
+pub struct BuildDataWorkspacesBundle_ComputeType {}
 
-impl BuildDataWorkspacesBundleComputeTypeEl {
-    pub fn build(self) -> DataWorkspacesBundleComputeTypeEl {
-        DataWorkspacesBundleComputeTypeEl { name: core::default::Default::default() }
+impl BuildDataWorkspacesBundle_ComputeType {
+    pub fn build(self) -> DataWorkspacesBundle_ComputeType {
+        DataWorkspacesBundle_ComputeType { name: core::default::Default::default() }
     }
 }
 
-pub struct DataWorkspacesBundleComputeTypeElRef {
+#[allow(dead_code)]
+pub struct DataWorkspacesBundle_ComputeTypeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataWorkspacesBundleComputeTypeElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataWorkspacesBundleComputeTypeElRef {
-        DataWorkspacesBundleComputeTypeElRef {
+impl terrars::Ref for DataWorkspacesBundle_ComputeTypeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataWorkspacesBundle_ComputeTypeRef {
+        DataWorkspacesBundle_ComputeTypeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataWorkspacesBundleComputeTypeElRef {
+impl DataWorkspacesBundle_ComputeTypeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -319,12 +345,12 @@ impl DataWorkspacesBundleComputeTypeElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataWorkspacesBundleRootStorageEl {
+pub struct DataWorkspacesBundle_RootStorage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataWorkspacesBundleRootStorageEl {
+impl DataWorkspacesBundle_RootStorage {
     #[doc = "Set the field `capacity`.\n"]
     pub fn set_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.capacity = std::option::Option::Some(v.into());
@@ -332,8 +358,8 @@ impl DataWorkspacesBundleRootStorageEl {
     }
 }
 
-impl terrars::ToListMappable for DataWorkspacesBundleRootStorageEl {
-    type O = terrars::BlockAssignable<DataWorkspacesBundleRootStorageEl>;
+impl terrars::ToListMappable for DataWorkspacesBundle_RootStorage {
+    type O = terrars::BlockAssignable<DataWorkspacesBundle_RootStorage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -344,29 +370,31 @@ impl terrars::ToListMappable for DataWorkspacesBundleRootStorageEl {
     }
 }
 
-pub struct BuildDataWorkspacesBundleRootStorageEl {}
+pub struct BuildDataWorkspacesBundle_RootStorage {}
 
-impl BuildDataWorkspacesBundleRootStorageEl {
-    pub fn build(self) -> DataWorkspacesBundleRootStorageEl {
-        DataWorkspacesBundleRootStorageEl { capacity: core::default::Default::default() }
+impl BuildDataWorkspacesBundle_RootStorage {
+    pub fn build(self) -> DataWorkspacesBundle_RootStorage {
+        DataWorkspacesBundle_RootStorage { capacity: core::default::Default::default() }
     }
 }
 
-pub struct DataWorkspacesBundleRootStorageElRef {
+#[allow(dead_code)]
+pub struct DataWorkspacesBundle_RootStorageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataWorkspacesBundleRootStorageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataWorkspacesBundleRootStorageElRef {
-        DataWorkspacesBundleRootStorageElRef {
+impl terrars::Ref for DataWorkspacesBundle_RootStorageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataWorkspacesBundle_RootStorageRef {
+        DataWorkspacesBundle_RootStorageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataWorkspacesBundleRootStorageElRef {
+impl DataWorkspacesBundle_RootStorageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -378,12 +406,12 @@ impl DataWorkspacesBundleRootStorageElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataWorkspacesBundleUserStorageEl {
+pub struct DataWorkspacesBundle_UserStorage {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataWorkspacesBundleUserStorageEl {
+impl DataWorkspacesBundle_UserStorage {
     #[doc = "Set the field `capacity`.\n"]
     pub fn set_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.capacity = std::option::Option::Some(v.into());
@@ -391,8 +419,8 @@ impl DataWorkspacesBundleUserStorageEl {
     }
 }
 
-impl terrars::ToListMappable for DataWorkspacesBundleUserStorageEl {
-    type O = terrars::BlockAssignable<DataWorkspacesBundleUserStorageEl>;
+impl terrars::ToListMappable for DataWorkspacesBundle_UserStorage {
+    type O = terrars::BlockAssignable<DataWorkspacesBundle_UserStorage>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -403,29 +431,31 @@ impl terrars::ToListMappable for DataWorkspacesBundleUserStorageEl {
     }
 }
 
-pub struct BuildDataWorkspacesBundleUserStorageEl {}
+pub struct BuildDataWorkspacesBundle_UserStorage {}
 
-impl BuildDataWorkspacesBundleUserStorageEl {
-    pub fn build(self) -> DataWorkspacesBundleUserStorageEl {
-        DataWorkspacesBundleUserStorageEl { capacity: core::default::Default::default() }
+impl BuildDataWorkspacesBundle_UserStorage {
+    pub fn build(self) -> DataWorkspacesBundle_UserStorage {
+        DataWorkspacesBundle_UserStorage { capacity: core::default::Default::default() }
     }
 }
 
-pub struct DataWorkspacesBundleUserStorageElRef {
+#[allow(dead_code)]
+pub struct DataWorkspacesBundle_UserStorageRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataWorkspacesBundleUserStorageElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataWorkspacesBundleUserStorageElRef {
-        DataWorkspacesBundleUserStorageElRef {
+impl terrars::Ref for DataWorkspacesBundle_UserStorageRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataWorkspacesBundle_UserStorageRef {
+        DataWorkspacesBundle_UserStorageRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataWorkspacesBundleUserStorageElRef {
+impl DataWorkspacesBundle_UserStorageRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

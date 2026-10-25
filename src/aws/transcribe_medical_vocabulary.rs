@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct TranscribeMedicalVocabularyData {
+struct TranscribeMedicalVocabularyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,19 +24,21 @@ struct TranscribeMedicalVocabularyData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     language_code: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     vocabulary_file_uri: terrars::PrimField<std::string::String>,
     vocabulary_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<TranscribeMedicalVocabularyTimeoutsEl>,
+    timeouts: std::option::Option<TranscribeMedicalVocabulary_Timeouts>,
 }
 
 struct TranscribeMedicalVocabulary_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<TranscribeMedicalVocabularyData>,
+    data: std::cell::RefCell<TranscribeMedicalVocabularyData_>,
 }
 
 #[derive(Clone)]
@@ -140,6 +144,13 @@ impl TranscribeMedicalVocabulary {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -159,7 +170,7 @@ impl TranscribeMedicalVocabulary {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<TranscribeMedicalVocabularyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<TranscribeMedicalVocabulary_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -184,6 +195,12 @@ impl TranscribeMedicalVocabulary {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -205,8 +222,8 @@ impl TranscribeMedicalVocabulary {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> TranscribeMedicalVocabularyTimeoutsElRef {
-        TranscribeMedicalVocabularyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> TranscribeMedicalVocabulary_TimeoutsRef {
+        TranscribeMedicalVocabulary_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -259,7 +276,7 @@ impl BuildTranscribeMedicalVocabulary {
         let out = TranscribeMedicalVocabulary(std::rc::Rc::new(TranscribeMedicalVocabulary_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(TranscribeMedicalVocabularyData {
+            data: std::cell::RefCell::new(TranscribeMedicalVocabularyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -267,6 +284,7 @@ impl BuildTranscribeMedicalVocabulary {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 language_code: self.language_code,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 vocabulary_file_uri: self.vocabulary_file_uri,
@@ -322,6 +340,12 @@ impl TranscribeMedicalVocabularyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.language_code", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -343,8 +367,8 @@ impl TranscribeMedicalVocabularyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> TranscribeMedicalVocabularyTimeoutsElRef {
-        TranscribeMedicalVocabularyTimeoutsElRef::new(
+    pub fn timeouts(&self) -> TranscribeMedicalVocabulary_TimeoutsRef {
+        TranscribeMedicalVocabulary_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -352,7 +376,7 @@ impl TranscribeMedicalVocabularyRef {
 }
 
 #[derive(Serialize)]
-pub struct TranscribeMedicalVocabularyTimeoutsEl {
+pub struct TranscribeMedicalVocabulary_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -361,7 +385,7 @@ pub struct TranscribeMedicalVocabularyTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl TranscribeMedicalVocabularyTimeoutsEl {
+impl TranscribeMedicalVocabulary_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -381,8 +405,8 @@ impl TranscribeMedicalVocabularyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for TranscribeMedicalVocabularyTimeoutsEl {
-    type O = terrars::BlockAssignable<TranscribeMedicalVocabularyTimeoutsEl>;
+impl terrars::ToListMappable for TranscribeMedicalVocabulary_Timeouts {
+    type O = terrars::BlockAssignable<TranscribeMedicalVocabulary_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -393,11 +417,11 @@ impl terrars::ToListMappable for TranscribeMedicalVocabularyTimeoutsEl {
     }
 }
 
-pub struct BuildTranscribeMedicalVocabularyTimeoutsEl {}
+pub struct BuildTranscribeMedicalVocabulary_Timeouts {}
 
-impl BuildTranscribeMedicalVocabularyTimeoutsEl {
-    pub fn build(self) -> TranscribeMedicalVocabularyTimeoutsEl {
-        TranscribeMedicalVocabularyTimeoutsEl {
+impl BuildTranscribeMedicalVocabulary_Timeouts {
+    pub fn build(self) -> TranscribeMedicalVocabulary_Timeouts {
+        TranscribeMedicalVocabulary_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -405,21 +429,23 @@ impl BuildTranscribeMedicalVocabularyTimeoutsEl {
     }
 }
 
-pub struct TranscribeMedicalVocabularyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct TranscribeMedicalVocabulary_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TranscribeMedicalVocabularyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TranscribeMedicalVocabularyTimeoutsElRef {
-        TranscribeMedicalVocabularyTimeoutsElRef {
+impl terrars::Ref for TranscribeMedicalVocabulary_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TranscribeMedicalVocabulary_TimeoutsRef {
+        TranscribeMedicalVocabulary_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TranscribeMedicalVocabularyTimeoutsElRef {
+impl TranscribeMedicalVocabulary_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

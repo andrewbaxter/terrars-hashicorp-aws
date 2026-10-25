@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkmanagerGlobalNetworkData {
+struct NetworkmanagerGlobalNetworkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,13 +29,13 @@ struct NetworkmanagerGlobalNetworkData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<NetworkmanagerGlobalNetworkTimeoutsEl>,
+    timeouts: std::option::Option<NetworkmanagerGlobalNetwork_Timeouts>,
 }
 
 struct NetworkmanagerGlobalNetwork_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkmanagerGlobalNetworkData>,
+    data: std::cell::RefCell<NetworkmanagerGlobalNetworkData_>,
 }
 
 #[derive(Clone)]
@@ -164,7 +166,7 @@ impl NetworkmanagerGlobalNetwork {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerGlobalNetworkTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<NetworkmanagerGlobalNetwork_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -195,8 +197,8 @@ impl NetworkmanagerGlobalNetwork {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerGlobalNetworkTimeoutsElRef {
-        NetworkmanagerGlobalNetworkTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerGlobalNetwork_TimeoutsRef {
+        NetworkmanagerGlobalNetwork_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -243,7 +245,7 @@ impl BuildNetworkmanagerGlobalNetwork {
         let out = NetworkmanagerGlobalNetwork(std::rc::Rc::new(NetworkmanagerGlobalNetwork_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkmanagerGlobalNetworkData {
+            data: std::cell::RefCell::new(NetworkmanagerGlobalNetworkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -310,8 +312,8 @@ impl NetworkmanagerGlobalNetworkRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> NetworkmanagerGlobalNetworkTimeoutsElRef {
-        NetworkmanagerGlobalNetworkTimeoutsElRef::new(
+    pub fn timeouts(&self) -> NetworkmanagerGlobalNetwork_TimeoutsRef {
+        NetworkmanagerGlobalNetwork_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -319,7 +321,7 @@ impl NetworkmanagerGlobalNetworkRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkmanagerGlobalNetworkTimeoutsEl {
+pub struct NetworkmanagerGlobalNetwork_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -328,7 +330,7 @@ pub struct NetworkmanagerGlobalNetworkTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkmanagerGlobalNetworkTimeoutsEl {
+impl NetworkmanagerGlobalNetwork_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -348,8 +350,8 @@ impl NetworkmanagerGlobalNetworkTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkmanagerGlobalNetworkTimeoutsEl {
-    type O = terrars::BlockAssignable<NetworkmanagerGlobalNetworkTimeoutsEl>;
+impl terrars::ToListMappable for NetworkmanagerGlobalNetwork_Timeouts {
+    type O = terrars::BlockAssignable<NetworkmanagerGlobalNetwork_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -360,11 +362,11 @@ impl terrars::ToListMappable for NetworkmanagerGlobalNetworkTimeoutsEl {
     }
 }
 
-pub struct BuildNetworkmanagerGlobalNetworkTimeoutsEl {}
+pub struct BuildNetworkmanagerGlobalNetwork_Timeouts {}
 
-impl BuildNetworkmanagerGlobalNetworkTimeoutsEl {
-    pub fn build(self) -> NetworkmanagerGlobalNetworkTimeoutsEl {
-        NetworkmanagerGlobalNetworkTimeoutsEl {
+impl BuildNetworkmanagerGlobalNetwork_Timeouts {
+    pub fn build(self) -> NetworkmanagerGlobalNetwork_Timeouts {
+        NetworkmanagerGlobalNetwork_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -372,21 +374,23 @@ impl BuildNetworkmanagerGlobalNetworkTimeoutsEl {
     }
 }
 
-pub struct NetworkmanagerGlobalNetworkTimeoutsElRef {
+#[allow(dead_code)]
+pub struct NetworkmanagerGlobalNetwork_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkmanagerGlobalNetworkTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerGlobalNetworkTimeoutsElRef {
-        NetworkmanagerGlobalNetworkTimeoutsElRef {
+impl terrars::Ref for NetworkmanagerGlobalNetwork_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> NetworkmanagerGlobalNetwork_TimeoutsRef {
+        NetworkmanagerGlobalNetwork_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkmanagerGlobalNetworkTimeoutsElRef {
+impl NetworkmanagerGlobalNetwork_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ConnectInstanceData {
+struct ConnectInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -38,13 +40,19 @@ struct ConnectInstanceData {
     multi_party_conference_enabled: std::option::Option<terrars::PrimField<bool>>,
     outbound_calls_enabled: terrars::PrimField<bool>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ConnectInstanceTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ConnectInstance_Timeouts>,
 }
 
 struct ConnectInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ConnectInstanceData>,
+    data: std::cell::RefCell<ConnectInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -192,8 +200,33 @@ impl ConnectInstance {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ConnectInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ConnectInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -269,6 +302,12 @@ impl ConnectInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outbound_calls_enabled", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
     pub fn service_role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role", self.extract_ref()))
@@ -279,9 +318,19 @@ impl ConnectInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ConnectInstanceTimeoutsElRef {
-        ConnectInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ConnectInstance_TimeoutsRef {
+        ConnectInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -331,7 +380,7 @@ impl BuildConnectInstance {
         let out = ConnectInstance(std::rc::Rc::new(ConnectInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ConnectInstanceData {
+            data: std::cell::RefCell::new(ConnectInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -348,6 +397,9 @@ impl BuildConnectInstance {
                 instance_alias: core::default::Default::default(),
                 multi_party_conference_enabled: core::default::Default::default(),
                 outbound_calls_enabled: self.outbound_calls_enabled,
+                region: core::default::Default::default(),
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -450,6 +502,12 @@ impl ConnectInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outbound_calls_enabled", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
     pub fn service_role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_role", self.extract_ref()))
@@ -460,21 +518,31 @@ impl ConnectInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ConnectInstanceTimeoutsElRef {
-        ConnectInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> ConnectInstance_TimeoutsRef {
+        ConnectInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct ConnectInstanceTimeoutsEl {
+pub struct ConnectInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ConnectInstanceTimeoutsEl {
+impl ConnectInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -488,8 +556,8 @@ impl ConnectInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ConnectInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<ConnectInstanceTimeoutsEl>;
+impl terrars::ToListMappable for ConnectInstance_Timeouts {
+    type O = terrars::BlockAssignable<ConnectInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -500,32 +568,34 @@ impl terrars::ToListMappable for ConnectInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildConnectInstanceTimeoutsEl {}
+pub struct BuildConnectInstance_Timeouts {}
 
-impl BuildConnectInstanceTimeoutsEl {
-    pub fn build(self) -> ConnectInstanceTimeoutsEl {
-        ConnectInstanceTimeoutsEl {
+impl BuildConnectInstance_Timeouts {
+    pub fn build(self) -> ConnectInstance_Timeouts {
+        ConnectInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct ConnectInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ConnectInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ConnectInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectInstanceTimeoutsElRef {
-        ConnectInstanceTimeoutsElRef {
+impl terrars::Ref for ConnectInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ConnectInstance_TimeoutsRef {
+        ConnectInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ConnectInstanceTimeoutsElRef {
+impl ConnectInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

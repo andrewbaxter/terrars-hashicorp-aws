@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataBatchComputeEnvironmentData {
+struct DataBatchComputeEnvironmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -16,9 +18,11 @@ struct DataBatchComputeEnvironmentData {
     lifecycle: terrars::DatasourceLifecycle,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     for_each: std::option::Option<std::string::String>,
-    compute_environment_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
@@ -26,7 +30,7 @@ struct DataBatchComputeEnvironmentData {
 struct DataBatchComputeEnvironment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataBatchComputeEnvironmentData>,
+    data: std::cell::RefCell<DataBatchComputeEnvironmentData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataBatchComputeEnvironment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -91,11 +102,6 @@ impl DataBatchComputeEnvironment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `compute_environment_name` after provisioning.\n"]
-    pub fn compute_environment_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compute_environment_name", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `ecs_cluster_arn` after provisioning.\n"]
     pub fn ecs_cluster_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ecs_cluster_arn", self.extract_ref()))
@@ -104,6 +110,17 @@ impl DataBatchComputeEnvironment {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
@@ -134,6 +151,11 @@ impl DataBatchComputeEnvironment {
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `update_policy` after provisioning.\n"]
+    pub fn update_policy(&self) -> terrars::ListRef<DataBatchComputeEnvironment_UpdatePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.update_policy", self.extract_ref()))
     }
 }
 
@@ -171,7 +193,7 @@ impl terrars::Datasource_ for DataBatchComputeEnvironment_ {
 pub struct BuildDataBatchComputeEnvironment {
     pub tf_id: std::string::String,
     #[doc = ""]
-    pub compute_environment_name: terrars::PrimField<std::string::String>,
+    pub name: terrars::PrimField<std::string::String>,
 }
 
 impl BuildDataBatchComputeEnvironment {
@@ -179,13 +201,14 @@ impl BuildDataBatchComputeEnvironment {
         let out = DataBatchComputeEnvironment(std::rc::Rc::new(DataBatchComputeEnvironment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataBatchComputeEnvironmentData {
+            data: std::cell::RefCell::new(DataBatchComputeEnvironmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
-                compute_environment_name: self.compute_environment_name,
                 id: core::default::Default::default(),
+                name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -222,11 +245,6 @@ impl DataBatchComputeEnvironmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `compute_environment_name` after provisioning.\n"]
-    pub fn compute_environment_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compute_environment_name", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `ecs_cluster_arn` after provisioning.\n"]
     pub fn ecs_cluster_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ecs_cluster_arn", self.extract_ref()))
@@ -235,6 +253,17 @@ impl DataBatchComputeEnvironmentRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_role` after provisioning.\n"]
@@ -265,5 +294,87 @@ impl DataBatchComputeEnvironmentRef {
     #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `update_policy` after provisioning.\n"]
+    pub fn update_policy(&self) -> terrars::ListRef<DataBatchComputeEnvironment_UpdatePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.update_policy", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataBatchComputeEnvironment_UpdatePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    job_execution_timeout_minutes: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    terminate_jobs_on_update: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataBatchComputeEnvironment_UpdatePolicy {
+    #[doc = "Set the field `job_execution_timeout_minutes`.\n"]
+    pub fn set_job_execution_timeout_minutes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.job_execution_timeout_minutes = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `terminate_jobs_on_update`.\n"]
+    pub fn set_terminate_jobs_on_update(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.terminate_jobs_on_update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataBatchComputeEnvironment_UpdatePolicy {
+    type O = terrars::BlockAssignable<DataBatchComputeEnvironment_UpdatePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataBatchComputeEnvironment_UpdatePolicy {}
+
+impl BuildDataBatchComputeEnvironment_UpdatePolicy {
+    pub fn build(self) -> DataBatchComputeEnvironment_UpdatePolicy {
+        DataBatchComputeEnvironment_UpdatePolicy {
+            job_execution_timeout_minutes: core::default::Default::default(),
+            terminate_jobs_on_update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataBatchComputeEnvironment_UpdatePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataBatchComputeEnvironment_UpdatePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataBatchComputeEnvironment_UpdatePolicyRef {
+        DataBatchComputeEnvironment_UpdatePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataBatchComputeEnvironment_UpdatePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `job_execution_timeout_minutes` after provisioning.\n"]
+    pub fn job_execution_timeout_minutes(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.job_execution_timeout_minutes", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `terminate_jobs_on_update` after provisioning.\n"]
+    pub fn terminate_jobs_on_update(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.terminate_jobs_on_update", self.base))
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3outpostsEndpointData {
+struct S3outpostsEndpointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,8 +21,14 @@ struct S3outpostsEndpointData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    access_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    customer_owned_ipv4_pool: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     outpost_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     security_group_id: terrars::PrimField<std::string::String>,
     subnet_id: terrars::PrimField<std::string::String>,
 }
@@ -28,7 +36,7 @@ struct S3outpostsEndpointData {
 struct S3outpostsEndpoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3outpostsEndpointData>,
+    data: std::cell::RefCell<S3outpostsEndpointData_>,
 }
 
 #[derive(Clone)]
@@ -128,10 +136,37 @@ impl S3outpostsEndpoint {
         self
     }
 
+    #[doc = "Set the field `access_type`.\n"]
+    pub fn set_access_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().access_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `customer_owned_ipv4_pool`.\n"]
+    pub fn set_customer_owned_ipv4_pool(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().customer_owned_ipv4_pool = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `access_type` after provisioning.\n"]
+    pub fn access_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
@@ -149,19 +184,30 @@ impl S3outpostsEndpoint {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `customer_owned_ipv4_pool` after provisioning.\n"]
+    pub fn customer_owned_ipv4_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_owned_ipv4_pool", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_interfaces` after provisioning.\n"]
-    pub fn network_interfaces(&self) -> terrars::SetRef<S3outpostsEndpointNetworkInterfacesElRef> {
+    pub fn network_interfaces(&self) -> terrars::SetRef<S3outpostsEndpoint_NetworkInterfacesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.network_interfaces", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `outpost_id` after provisioning.\n"]
     pub fn outpost_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outpost_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -221,14 +267,17 @@ impl BuildS3outpostsEndpoint {
         let out = S3outpostsEndpoint(std::rc::Rc::new(S3outpostsEndpoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3outpostsEndpointData {
+            data: std::cell::RefCell::new(S3outpostsEndpointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                access_type: core::default::Default::default(),
+                customer_owned_ipv4_pool: core::default::Default::default(),
                 id: core::default::Default::default(),
                 outpost_id: self.outpost_id,
+                region: core::default::Default::default(),
                 security_group_id: self.security_group_id,
                 subnet_id: self.subnet_id,
             }),
@@ -261,6 +310,11 @@ impl S3outpostsEndpointRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `access_type` after provisioning.\n"]
+    pub fn access_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.access_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
@@ -276,19 +330,30 @@ impl S3outpostsEndpointRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.creation_time", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `customer_owned_ipv4_pool` after provisioning.\n"]
+    pub fn customer_owned_ipv4_pool(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.customer_owned_ipv4_pool", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `network_interfaces` after provisioning.\n"]
-    pub fn network_interfaces(&self) -> terrars::SetRef<S3outpostsEndpointNetworkInterfacesElRef> {
+    pub fn network_interfaces(&self) -> terrars::SetRef<S3outpostsEndpoint_NetworkInterfacesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.network_interfaces", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `outpost_id` after provisioning.\n"]
     pub fn outpost_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outpost_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -303,12 +368,12 @@ impl S3outpostsEndpointRef {
 }
 
 #[derive(Serialize)]
-pub struct S3outpostsEndpointNetworkInterfacesEl {
+pub struct S3outpostsEndpoint_NetworkInterfaces {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3outpostsEndpointNetworkInterfacesEl {
+impl S3outpostsEndpoint_NetworkInterfaces {
     #[doc = "Set the field `network_interface_id`.\n"]
     pub fn set_network_interface_id(
         mut self,
@@ -319,8 +384,8 @@ impl S3outpostsEndpointNetworkInterfacesEl {
     }
 }
 
-impl terrars::ToListMappable for S3outpostsEndpointNetworkInterfacesEl {
-    type O = terrars::BlockAssignable<S3outpostsEndpointNetworkInterfacesEl>;
+impl terrars::ToListMappable for S3outpostsEndpoint_NetworkInterfaces {
+    type O = terrars::BlockAssignable<S3outpostsEndpoint_NetworkInterfaces>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -331,29 +396,31 @@ impl terrars::ToListMappable for S3outpostsEndpointNetworkInterfacesEl {
     }
 }
 
-pub struct BuildS3outpostsEndpointNetworkInterfacesEl {}
+pub struct BuildS3outpostsEndpoint_NetworkInterfaces {}
 
-impl BuildS3outpostsEndpointNetworkInterfacesEl {
-    pub fn build(self) -> S3outpostsEndpointNetworkInterfacesEl {
-        S3outpostsEndpointNetworkInterfacesEl { network_interface_id: core::default::Default::default() }
+impl BuildS3outpostsEndpoint_NetworkInterfaces {
+    pub fn build(self) -> S3outpostsEndpoint_NetworkInterfaces {
+        S3outpostsEndpoint_NetworkInterfaces { network_interface_id: core::default::Default::default() }
     }
 }
 
-pub struct S3outpostsEndpointNetworkInterfacesElRef {
+#[allow(dead_code)]
+pub struct S3outpostsEndpoint_NetworkInterfacesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3outpostsEndpointNetworkInterfacesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3outpostsEndpointNetworkInterfacesElRef {
-        S3outpostsEndpointNetworkInterfacesElRef {
+impl terrars::Ref for S3outpostsEndpoint_NetworkInterfacesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3outpostsEndpoint_NetworkInterfacesRef {
+        S3outpostsEndpoint_NetworkInterfacesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3outpostsEndpointNetworkInterfacesElRef {
+impl S3outpostsEndpoint_NetworkInterfacesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

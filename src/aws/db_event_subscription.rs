@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbEventSubscriptionData {
+struct DbEventSubscriptionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,6 +30,8 @@ struct DbEventSubscriptionData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     sns_topic: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -38,13 +42,13 @@ struct DbEventSubscriptionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DbEventSubscriptionTimeoutsEl>,
+    timeouts: std::option::Option<DbEventSubscription_Timeouts>,
 }
 
 struct DbEventSubscription_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbEventSubscriptionData>,
+    data: std::cell::RefCell<DbEventSubscriptionData_>,
 }
 
 #[derive(Clone)]
@@ -177,6 +181,13 @@ impl DbEventSubscription {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `source_ids`.\n"]
     pub fn set_source_ids(
         self,
@@ -211,7 +222,7 @@ impl DbEventSubscription {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DbEventSubscriptionTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DbEventSubscription_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -251,6 +262,12 @@ impl DbEventSubscription {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sns_topic` after provisioning.\n"]
     pub fn sns_topic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sns_topic", self.extract_ref()))
@@ -277,8 +294,8 @@ impl DbEventSubscription {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbEventSubscriptionTimeoutsElRef {
-        DbEventSubscriptionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbEventSubscription_TimeoutsRef {
+        DbEventSubscription_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -324,7 +341,7 @@ impl BuildDbEventSubscription {
         let out = DbEventSubscription(std::rc::Rc::new(DbEventSubscription_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbEventSubscriptionData {
+            data: std::cell::RefCell::new(DbEventSubscriptionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -335,6 +352,7 @@ impl BuildDbEventSubscription {
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
+                region: core::default::Default::default(),
                 sns_topic: self.sns_topic,
                 source_ids: core::default::Default::default(),
                 source_type: core::default::Default::default(),
@@ -406,6 +424,12 @@ impl DbEventSubscriptionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name_prefix", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `sns_topic` after provisioning.\n"]
     pub fn sns_topic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sns_topic", self.extract_ref()))
@@ -432,13 +456,13 @@ impl DbEventSubscriptionRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbEventSubscriptionTimeoutsElRef {
-        DbEventSubscriptionTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbEventSubscription_TimeoutsRef {
+        DbEventSubscription_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DbEventSubscriptionTimeoutsEl {
+pub struct DbEventSubscription_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -447,7 +471,7 @@ pub struct DbEventSubscriptionTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DbEventSubscriptionTimeoutsEl {
+impl DbEventSubscription_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -467,8 +491,8 @@ impl DbEventSubscriptionTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DbEventSubscriptionTimeoutsEl {
-    type O = terrars::BlockAssignable<DbEventSubscriptionTimeoutsEl>;
+impl terrars::ToListMappable for DbEventSubscription_Timeouts {
+    type O = terrars::BlockAssignable<DbEventSubscription_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -479,11 +503,11 @@ impl terrars::ToListMappable for DbEventSubscriptionTimeoutsEl {
     }
 }
 
-pub struct BuildDbEventSubscriptionTimeoutsEl {}
+pub struct BuildDbEventSubscription_Timeouts {}
 
-impl BuildDbEventSubscriptionTimeoutsEl {
-    pub fn build(self) -> DbEventSubscriptionTimeoutsEl {
-        DbEventSubscriptionTimeoutsEl {
+impl BuildDbEventSubscription_Timeouts {
+    pub fn build(self) -> DbEventSubscription_Timeouts {
+        DbEventSubscription_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -491,21 +515,23 @@ impl BuildDbEventSubscriptionTimeoutsEl {
     }
 }
 
-pub struct DbEventSubscriptionTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DbEventSubscription_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbEventSubscriptionTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbEventSubscriptionTimeoutsElRef {
-        DbEventSubscriptionTimeoutsElRef {
+impl terrars::Ref for DbEventSubscription_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbEventSubscription_TimeoutsRef {
+        DbEventSubscription_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbEventSubscriptionTimeoutsElRef {
+impl DbEventSubscription_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

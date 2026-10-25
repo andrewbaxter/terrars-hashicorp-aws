@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataSecretsmanagerSecretsData {
+struct DataSecretsmanagerSecretsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,14 +21,16 @@ struct DataSecretsmanagerSecretsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataSecretsmanagerSecretsFilterEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    filter: std::option::Option<std::vec::Vec<DataSecretsmanagerSecrets_Filter>>,
     dynamic: DataSecretsmanagerSecretsDynamic,
 }
 
 struct DataSecretsmanagerSecrets_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataSecretsmanagerSecretsData>,
+    data: std::cell::RefCell<DataSecretsmanagerSecretsData_>,
 }
 
 #[derive(Clone)]
@@ -77,10 +81,17 @@ impl DataSecretsmanagerSecrets {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataSecretsmanagerSecretsFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataSecretsmanagerSecrets_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -106,6 +117,12 @@ impl DataSecretsmanagerSecrets {
     #[doc = "Get a reference to the value of field `names` after provisioning.\n"]
     pub fn names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.names", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -149,12 +166,13 @@ impl BuildDataSecretsmanagerSecrets {
         let out = DataSecretsmanagerSecrets(std::rc::Rc::new(DataSecretsmanagerSecrets_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataSecretsmanagerSecretsData {
+            data: std::cell::RefCell::new(DataSecretsmanagerSecretsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -201,18 +219,29 @@ impl DataSecretsmanagerSecretsRef {
     pub fn names(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.names", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataSecretsmanagerSecretsDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataSecretsmanagerSecrets_Filter>>,
 }
 
 #[derive(Serialize)]
-pub struct DataSecretsmanagerSecretsFilterEl {
+pub struct DataSecretsmanagerSecrets_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataSecretsmanagerSecretsFilterEl { }
+impl DataSecretsmanagerSecrets_Filter { }
 
-impl terrars::ToListMappable for DataSecretsmanagerSecretsFilterEl {
-    type O = terrars::BlockAssignable<DataSecretsmanagerSecretsFilterEl>;
+impl terrars::ToListMappable for DataSecretsmanagerSecrets_Filter {
+    type O = terrars::BlockAssignable<DataSecretsmanagerSecrets_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -223,37 +252,39 @@ impl terrars::ToListMappable for DataSecretsmanagerSecretsFilterEl {
     }
 }
 
-pub struct BuildDataSecretsmanagerSecretsFilterEl {
+pub struct BuildDataSecretsmanagerSecrets_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataSecretsmanagerSecretsFilterEl {
-    pub fn build(self) -> DataSecretsmanagerSecretsFilterEl {
-        DataSecretsmanagerSecretsFilterEl {
+impl BuildDataSecretsmanagerSecrets_Filter {
+    pub fn build(self) -> DataSecretsmanagerSecrets_Filter {
+        DataSecretsmanagerSecrets_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataSecretsmanagerSecretsFilterElRef {
+#[allow(dead_code)]
+pub struct DataSecretsmanagerSecrets_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataSecretsmanagerSecretsFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretsmanagerSecretsFilterElRef {
-        DataSecretsmanagerSecretsFilterElRef {
+impl terrars::Ref for DataSecretsmanagerSecrets_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataSecretsmanagerSecrets_FilterRef {
+        DataSecretsmanagerSecrets_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataSecretsmanagerSecretsFilterElRef {
+impl DataSecretsmanagerSecrets_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -267,9 +298,4 @@ impl DataSecretsmanagerSecretsFilterElRef {
     pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataSecretsmanagerSecretsDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataSecretsmanagerSecretsFilterEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudformationStackSetData {
+struct CloudformationStackSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -36,6 +38,8 @@ struct CloudformationStackSetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     permission_model: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -44,18 +48,20 @@ struct CloudformationStackSetData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     template_url: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_deployment: std::option::Option<std::vec::Vec<CloudformationStackSetAutoDeploymentEl>>,
+    auto_deployment: std::option::Option<std::vec::Vec<CloudformationStackSet_AutoDeployment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    operation_preferences: std::option::Option<std::vec::Vec<CloudformationStackSetOperationPreferencesEl>>,
+    managed_execution: std::option::Option<std::vec::Vec<CloudformationStackSet_ManagedExecution>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<CloudformationStackSetTimeoutsEl>,
+    operation_preferences: std::option::Option<std::vec::Vec<CloudformationStackSet_OperationPreferences>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<CloudformationStackSet_Timeouts>,
     dynamic: CloudformationStackSetDynamic,
 }
 
 struct CloudformationStackSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudformationStackSetData>,
+    data: std::cell::RefCell<CloudformationStackSetData_>,
 }
 
 #[derive(Clone)]
@@ -212,6 +218,13 @@ impl CloudformationStackSet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -245,7 +258,7 @@ impl CloudformationStackSet {
     #[doc = "Set the field `auto_deployment`.\n"]
     pub fn set_auto_deployment(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudformationStackSetAutoDeploymentEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudformationStackSet_AutoDeployment>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -258,10 +271,26 @@ impl CloudformationStackSet {
         self
     }
 
+    #[doc = "Set the field `managed_execution`.\n"]
+    pub fn set_managed_execution(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudformationStackSet_ManagedExecution>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().managed_execution = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.managed_execution = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `operation_preferences`.\n"]
     pub fn set_operation_preferences(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudformationStackSetOperationPreferencesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudformationStackSet_OperationPreferences>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -275,7 +304,7 @@ impl CloudformationStackSet {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<CloudformationStackSetTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<CloudformationStackSet_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -330,6 +359,12 @@ impl CloudformationStackSet {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission_model", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stack_set_id` after provisioning.\n"]
     pub fn stack_set_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.stack_set_id", self.extract_ref()))
@@ -356,18 +391,23 @@ impl CloudformationStackSet {
     }
 
     #[doc = "Get a reference to the value of field `auto_deployment` after provisioning.\n"]
-    pub fn auto_deployment(&self) -> terrars::ListRef<CloudformationStackSetAutoDeploymentElRef> {
+    pub fn auto_deployment(&self) -> terrars::ListRef<CloudformationStackSet_AutoDeploymentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_deployment", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `managed_execution` after provisioning.\n"]
+    pub fn managed_execution(&self) -> terrars::ListRef<CloudformationStackSet_ManagedExecutionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.managed_execution", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `operation_preferences` after provisioning.\n"]
-    pub fn operation_preferences(&self) -> terrars::ListRef<CloudformationStackSetOperationPreferencesElRef> {
+    pub fn operation_preferences(&self) -> terrars::ListRef<CloudformationStackSet_OperationPreferencesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.operation_preferences", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudformationStackSetTimeoutsElRef {
-        CloudformationStackSetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudformationStackSet_TimeoutsRef {
+        CloudformationStackSet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -413,7 +453,7 @@ impl BuildCloudformationStackSet {
         let out = CloudformationStackSet(std::rc::Rc::new(CloudformationStackSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudformationStackSetData {
+            data: std::cell::RefCell::new(CloudformationStackSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -428,11 +468,13 @@ impl BuildCloudformationStackSet {
                 name: self.name,
                 parameters: core::default::Default::default(),
                 permission_model: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 template_body: core::default::Default::default(),
                 template_url: core::default::Default::default(),
                 auto_deployment: core::default::Default::default(),
+                managed_execution: core::default::Default::default(),
                 operation_preferences: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -516,6 +558,12 @@ impl CloudformationStackSetRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission_model", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `stack_set_id` after provisioning.\n"]
     pub fn stack_set_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.stack_set_id", self.extract_ref()))
@@ -542,30 +590,53 @@ impl CloudformationStackSetRef {
     }
 
     #[doc = "Get a reference to the value of field `auto_deployment` after provisioning.\n"]
-    pub fn auto_deployment(&self) -> terrars::ListRef<CloudformationStackSetAutoDeploymentElRef> {
+    pub fn auto_deployment(&self) -> terrars::ListRef<CloudformationStackSet_AutoDeploymentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_deployment", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `managed_execution` after provisioning.\n"]
+    pub fn managed_execution(&self) -> terrars::ListRef<CloudformationStackSet_ManagedExecutionRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.managed_execution", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `operation_preferences` after provisioning.\n"]
-    pub fn operation_preferences(&self) -> terrars::ListRef<CloudformationStackSetOperationPreferencesElRef> {
+    pub fn operation_preferences(&self) -> terrars::ListRef<CloudformationStackSet_OperationPreferencesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.operation_preferences", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> CloudformationStackSetTimeoutsElRef {
-        CloudformationStackSetTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> CloudformationStackSet_TimeoutsRef {
+        CloudformationStackSet_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudformationStackSetDynamic {
+    auto_deployment: std::option::Option<terrars::DynamicBlock<CloudformationStackSet_AutoDeployment>>,
+    managed_execution: std::option::Option<terrars::DynamicBlock<CloudformationStackSet_ManagedExecution>>,
+    operation_preferences: std::option::Option<terrars::DynamicBlock<CloudformationStackSet_OperationPreferences>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudformationStackSetAutoDeploymentEl {
+pub struct CloudformationStackSet_AutoDeployment {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    depends_on_stack_sets: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     retain_stacks_on_account_removal: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl CloudformationStackSetAutoDeploymentEl {
+impl CloudformationStackSet_AutoDeployment {
+    #[doc = "Set the field `depends_on_stack_sets`.\n"]
+    pub fn set_depends_on_stack_sets(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.depends_on_stack_sets = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -579,8 +650,8 @@ impl CloudformationStackSetAutoDeploymentEl {
     }
 }
 
-impl terrars::ToListMappable for CloudformationStackSetAutoDeploymentEl {
-    type O = terrars::BlockAssignable<CloudformationStackSetAutoDeploymentEl>;
+impl terrars::ToListMappable for CloudformationStackSet_AutoDeployment {
+    type O = terrars::BlockAssignable<CloudformationStackSet_AutoDeployment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -591,34 +662,42 @@ impl terrars::ToListMappable for CloudformationStackSetAutoDeploymentEl {
     }
 }
 
-pub struct BuildCloudformationStackSetAutoDeploymentEl {}
+pub struct BuildCloudformationStackSet_AutoDeployment {}
 
-impl BuildCloudformationStackSetAutoDeploymentEl {
-    pub fn build(self) -> CloudformationStackSetAutoDeploymentEl {
-        CloudformationStackSetAutoDeploymentEl {
+impl BuildCloudformationStackSet_AutoDeployment {
+    pub fn build(self) -> CloudformationStackSet_AutoDeployment {
+        CloudformationStackSet_AutoDeployment {
+            depends_on_stack_sets: core::default::Default::default(),
             enabled: core::default::Default::default(),
             retain_stacks_on_account_removal: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudformationStackSetAutoDeploymentElRef {
+#[allow(dead_code)]
+pub struct CloudformationStackSet_AutoDeploymentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudformationStackSetAutoDeploymentElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudformationStackSetAutoDeploymentElRef {
-        CloudformationStackSetAutoDeploymentElRef {
+impl terrars::Ref for CloudformationStackSet_AutoDeploymentRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudformationStackSet_AutoDeploymentRef {
+        CloudformationStackSet_AutoDeploymentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudformationStackSetAutoDeploymentElRef {
+impl CloudformationStackSet_AutoDeploymentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `depends_on_stack_sets` after provisioning.\n"]
+    pub fn depends_on_stack_sets(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.depends_on_stack_sets", self.base))
     }
 
     #[doc = "Get a reference to the value of field `enabled` after provisioning.\n"]
@@ -633,7 +712,68 @@ impl CloudformationStackSetAutoDeploymentElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudformationStackSetOperationPreferencesEl {
+pub struct CloudformationStackSet_ManagedExecution {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    active: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl CloudformationStackSet_ManagedExecution {
+    #[doc = "Set the field `active`.\n"]
+    pub fn set_active(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.active = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for CloudformationStackSet_ManagedExecution {
+    type O = terrars::BlockAssignable<CloudformationStackSet_ManagedExecution>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildCloudformationStackSet_ManagedExecution {}
+
+impl BuildCloudformationStackSet_ManagedExecution {
+    pub fn build(self) -> CloudformationStackSet_ManagedExecution {
+        CloudformationStackSet_ManagedExecution { active: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct CloudformationStackSet_ManagedExecutionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for CloudformationStackSet_ManagedExecutionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudformationStackSet_ManagedExecutionRef {
+        CloudformationStackSet_ManagedExecutionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl CloudformationStackSet_ManagedExecutionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `active` after provisioning.\n"]
+    pub fn active(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.active", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct CloudformationStackSet_OperationPreferences {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     failure_tolerance_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -648,7 +788,7 @@ pub struct CloudformationStackSetOperationPreferencesEl {
     region_order: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
 }
 
-impl CloudformationStackSetOperationPreferencesEl {
+impl CloudformationStackSet_OperationPreferences {
     #[doc = "Set the field `failure_tolerance_count`.\n"]
     pub fn set_failure_tolerance_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.failure_tolerance_count = std::option::Option::Some(v.into());
@@ -692,8 +832,8 @@ impl CloudformationStackSetOperationPreferencesEl {
     }
 }
 
-impl terrars::ToListMappable for CloudformationStackSetOperationPreferencesEl {
-    type O = terrars::BlockAssignable<CloudformationStackSetOperationPreferencesEl>;
+impl terrars::ToListMappable for CloudformationStackSet_OperationPreferences {
+    type O = terrars::BlockAssignable<CloudformationStackSet_OperationPreferences>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -704,11 +844,11 @@ impl terrars::ToListMappable for CloudformationStackSetOperationPreferencesEl {
     }
 }
 
-pub struct BuildCloudformationStackSetOperationPreferencesEl {}
+pub struct BuildCloudformationStackSet_OperationPreferences {}
 
-impl BuildCloudformationStackSetOperationPreferencesEl {
-    pub fn build(self) -> CloudformationStackSetOperationPreferencesEl {
-        CloudformationStackSetOperationPreferencesEl {
+impl BuildCloudformationStackSet_OperationPreferences {
+    pub fn build(self) -> CloudformationStackSet_OperationPreferences {
+        CloudformationStackSet_OperationPreferences {
             failure_tolerance_count: core::default::Default::default(),
             failure_tolerance_percentage: core::default::Default::default(),
             max_concurrent_count: core::default::Default::default(),
@@ -719,24 +859,26 @@ impl BuildCloudformationStackSetOperationPreferencesEl {
     }
 }
 
-pub struct CloudformationStackSetOperationPreferencesElRef {
+#[allow(dead_code)]
+pub struct CloudformationStackSet_OperationPreferencesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudformationStackSetOperationPreferencesElRef {
+impl terrars::Ref for CloudformationStackSet_OperationPreferencesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudformationStackSetOperationPreferencesElRef {
-        CloudformationStackSetOperationPreferencesElRef {
+    ) -> CloudformationStackSet_OperationPreferencesRef {
+        CloudformationStackSet_OperationPreferencesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudformationStackSetOperationPreferencesElRef {
+impl CloudformationStackSet_OperationPreferencesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -773,12 +915,12 @@ impl CloudformationStackSetOperationPreferencesElRef {
 }
 
 #[derive(Serialize)]
-pub struct CloudformationStackSetTimeoutsEl {
+pub struct CloudformationStackSet_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl CloudformationStackSetTimeoutsEl {
+impl CloudformationStackSet_Timeouts {
     #[doc = "Set the field `update`.\n"]
     pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.update = std::option::Option::Some(v.into());
@@ -786,8 +928,8 @@ impl CloudformationStackSetTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for CloudformationStackSetTimeoutsEl {
-    type O = terrars::BlockAssignable<CloudformationStackSetTimeoutsEl>;
+impl terrars::ToListMappable for CloudformationStackSet_Timeouts {
+    type O = terrars::BlockAssignable<CloudformationStackSet_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -798,29 +940,31 @@ impl terrars::ToListMappable for CloudformationStackSetTimeoutsEl {
     }
 }
 
-pub struct BuildCloudformationStackSetTimeoutsEl {}
+pub struct BuildCloudformationStackSet_Timeouts {}
 
-impl BuildCloudformationStackSetTimeoutsEl {
-    pub fn build(self) -> CloudformationStackSetTimeoutsEl {
-        CloudformationStackSetTimeoutsEl { update: core::default::Default::default() }
+impl BuildCloudformationStackSet_Timeouts {
+    pub fn build(self) -> CloudformationStackSet_Timeouts {
+        CloudformationStackSet_Timeouts { update: core::default::Default::default() }
     }
 }
 
-pub struct CloudformationStackSetTimeoutsElRef {
+#[allow(dead_code)]
+pub struct CloudformationStackSet_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudformationStackSetTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudformationStackSetTimeoutsElRef {
-        CloudformationStackSetTimeoutsElRef {
+impl terrars::Ref for CloudformationStackSet_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CloudformationStackSet_TimeoutsRef {
+        CloudformationStackSet_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudformationStackSetTimeoutsElRef {
+impl CloudformationStackSet_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -829,10 +973,4 @@ impl CloudformationStackSetTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudformationStackSetDynamic {
-    auto_deployment: std::option::Option<terrars::DynamicBlock<CloudformationStackSetAutoDeploymentEl>>,
-    operation_preferences: std::option::Option<terrars::DynamicBlock<CloudformationStackSetOperationPreferencesEl>>,
 }

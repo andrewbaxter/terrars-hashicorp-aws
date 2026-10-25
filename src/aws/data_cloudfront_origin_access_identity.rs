@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataCloudfrontOriginAccessIdentityData {
+struct DataCloudfrontOriginAccessIdentityData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -22,7 +24,7 @@ struct DataCloudfrontOriginAccessIdentityData {
 struct DataCloudfrontOriginAccessIdentity_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudfrontOriginAccessIdentityData>,
+    data: std::cell::RefCell<DataCloudfrontOriginAccessIdentityData_>,
 }
 
 #[derive(Clone)]
@@ -65,6 +67,11 @@ impl DataCloudfrontOriginAccessIdentity {
             error_message: error_message.into(),
         });
         self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `caller_reference` after provisioning.\n"]
@@ -148,7 +155,7 @@ impl BuildDataCloudfrontOriginAccessIdentity {
         let out = DataCloudfrontOriginAccessIdentity(std::rc::Rc::new(DataCloudfrontOriginAccessIdentity_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudfrontOriginAccessIdentityData {
+            data: std::cell::RefCell::new(DataCloudfrontOriginAccessIdentityData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -182,6 +189,11 @@ impl DataCloudfrontOriginAccessIdentityRef {
 
     fn extract_ref(&self) -> std::string::String {
         self.base.clone()
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `caller_reference` after provisioning.\n"]

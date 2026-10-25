@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SnsTopicData {
+struct SnsTopicData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,11 +27,15 @@ struct SnsTopicData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     application_success_feedback_sample_rate: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    archive_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content_based_deduplication: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delivery_policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     display_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    fifo_throughput_scope: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fifo_topic: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -55,11 +61,17 @@ struct SnsTopicData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lambda_success_feedback_sample_rate: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    maximum_message_size: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    signature_version: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sqs_failure_feedback_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -70,12 +82,14 @@ struct SnsTopicData {
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tracing_config: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct SnsTopic_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SnsTopicData>,
+    data: std::cell::RefCell<SnsTopicData_>,
 }
 
 #[derive(Clone)]
@@ -202,6 +216,12 @@ impl SnsTopic {
         self
     }
 
+    #[doc = "Set the field `archive_policy`.\n"]
+    pub fn set_archive_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().archive_policy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `content_based_deduplication`.\n"]
     pub fn set_content_based_deduplication(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().content_based_deduplication = std::option::Option::Some(v.into());
@@ -217,6 +237,12 @@ impl SnsTopic {
     #[doc = "Set the field `display_name`.\n"]
     pub fn set_display_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().display_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `fifo_throughput_scope`.\n"]
+    pub fn set_fifo_throughput_scope(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().fifo_throughput_scope = std::option::Option::Some(v.into());
         self
     }
 
@@ -310,6 +336,12 @@ impl SnsTopic {
         self
     }
 
+    #[doc = "Set the field `maximum_message_size`.\n"]
+    pub fn set_maximum_message_size(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().maximum_message_size = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `name`.\n"]
     pub fn set_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().name = std::option::Option::Some(v.into());
@@ -325,6 +357,19 @@ impl SnsTopic {
     #[doc = "Set the field `policy`.\n"]
     pub fn set_policy(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `signature_version`.\n"]
+    pub fn set_signature_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().signature_version = std::option::Option::Some(v.into());
         self
     }
 
@@ -370,6 +415,12 @@ impl SnsTopic {
         self
     }
 
+    #[doc = "Set the field `tracing_config`.\n"]
+    pub fn set_tracing_config(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().tracing_config = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `application_failure_feedback_role_arn` after provisioning.\n"]
     pub fn application_failure_feedback_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(
@@ -394,9 +445,19 @@ impl SnsTopic {
         )
     }
 
+    #[doc = "Get a reference to the value of field `archive_policy` after provisioning.\n"]
+    pub fn archive_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.archive_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `beginning_archive_time` after provisioning.\n"]
+    pub fn beginning_archive_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.beginning_archive_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `content_based_deduplication` after provisioning.\n"]
@@ -412,6 +473,11 @@ impl SnsTopic {
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fifo_throughput_scope` after provisioning.\n"]
+    pub fn fifo_throughput_scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fifo_throughput_scope", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fifo_topic` after provisioning.\n"]
@@ -501,6 +567,11 @@ impl SnsTopic {
         )
     }
 
+    #[doc = "Get a reference to the value of field `maximum_message_size` after provisioning.\n"]
+    pub fn maximum_message_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_message_size", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -519,6 +590,17 @@ impl SnsTopic {
     #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
     pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `signature_version` after provisioning.\n"]
+    pub fn signature_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.signature_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sqs_failure_feedback_role_arn` after provisioning.\n"]
@@ -553,6 +635,11 @@ impl SnsTopic {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tracing_config` after provisioning.\n"]
+    pub fn tracing_config(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tracing_config", self.extract_ref()))
     }
 }
 
@@ -596,7 +683,7 @@ impl BuildSnsTopic {
         let out = SnsTopic(std::rc::Rc::new(SnsTopic_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SnsTopicData {
+            data: std::cell::RefCell::new(SnsTopicData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -605,9 +692,11 @@ impl BuildSnsTopic {
                 application_failure_feedback_role_arn: core::default::Default::default(),
                 application_success_feedback_role_arn: core::default::Default::default(),
                 application_success_feedback_sample_rate: core::default::Default::default(),
+                archive_policy: core::default::Default::default(),
                 content_based_deduplication: core::default::Default::default(),
                 delivery_policy: core::default::Default::default(),
                 display_name: core::default::Default::default(),
+                fifo_throughput_scope: core::default::Default::default(),
                 fifo_topic: core::default::Default::default(),
                 firehose_failure_feedback_role_arn: core::default::Default::default(),
                 firehose_success_feedback_role_arn: core::default::Default::default(),
@@ -620,14 +709,18 @@ impl BuildSnsTopic {
                 lambda_failure_feedback_role_arn: core::default::Default::default(),
                 lambda_success_feedback_role_arn: core::default::Default::default(),
                 lambda_success_feedback_sample_rate: core::default::Default::default(),
+                maximum_message_size: core::default::Default::default(),
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
                 policy: core::default::Default::default(),
+                region: core::default::Default::default(),
+                signature_version: core::default::Default::default(),
                 sqs_failure_feedback_role_arn: core::default::Default::default(),
                 sqs_success_feedback_role_arn: core::default::Default::default(),
                 sqs_success_feedback_sample_rate: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                tracing_config: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -682,9 +775,19 @@ impl SnsTopicRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `archive_policy` after provisioning.\n"]
+    pub fn archive_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.archive_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `beginning_archive_time` after provisioning.\n"]
+    pub fn beginning_archive_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.beginning_archive_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `content_based_deduplication` after provisioning.\n"]
@@ -700,6 +803,11 @@ impl SnsTopicRef {
     #[doc = "Get a reference to the value of field `display_name` after provisioning.\n"]
     pub fn display_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.display_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `fifo_throughput_scope` after provisioning.\n"]
+    pub fn fifo_throughput_scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.fifo_throughput_scope", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fifo_topic` after provisioning.\n"]
@@ -789,6 +897,11 @@ impl SnsTopicRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `maximum_message_size` after provisioning.\n"]
+    pub fn maximum_message_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.maximum_message_size", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -807,6 +920,17 @@ impl SnsTopicRef {
     #[doc = "Get a reference to the value of field `policy` after provisioning.\n"]
     pub fn policy(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `signature_version` after provisioning.\n"]
+    pub fn signature_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.signature_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `sqs_failure_feedback_role_arn` after provisioning.\n"]
@@ -841,5 +965,10 @@ impl SnsTopicRef {
     #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
     pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tracing_config` after provisioning.\n"]
+    pub fn tracing_config(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tracing_config", self.extract_ref()))
     }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudwatchLogMetricFilterData {
+struct CloudwatchLogMetricFilterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,19 +21,23 @@ struct CloudwatchLogMetricFilterData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    apply_on_transformed_logs: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     log_group_name: terrars::PrimField<std::string::String>,
     name: terrars::PrimField<std::string::String>,
     pattern: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metric_transformation: std::option::Option<std::vec::Vec<CloudwatchLogMetricFilterMetricTransformationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metric_transformation: std::option::Option<std::vec::Vec<CloudwatchLogMetricFilter_MetricTransformation>>,
     dynamic: CloudwatchLogMetricFilterDynamic,
 }
 
 struct CloudwatchLogMetricFilter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudwatchLogMetricFilterData>,
+    data: std::cell::RefCell<CloudwatchLogMetricFilterData_>,
 }
 
 #[derive(Clone)]
@@ -131,16 +137,29 @@ impl CloudwatchLogMetricFilter {
         self
     }
 
+    #[doc = "Set the field `apply_on_transformed_logs`.\n"]
+    pub fn set_apply_on_transformed_logs(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().apply_on_transformed_logs = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `metric_transformation`.\n"]
     pub fn set_metric_transformation(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchLogMetricFilterMetricTransformationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CloudwatchLogMetricFilter_MetricTransformation>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -151,6 +170,11 @@ impl CloudwatchLogMetricFilter {
             },
         }
         self
+    }
+
+    #[doc = "Get a reference to the value of field `apply_on_transformed_logs` after provisioning.\n"]
+    pub fn apply_on_transformed_logs(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.apply_on_transformed_logs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -173,8 +197,14 @@ impl CloudwatchLogMetricFilter {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `metric_transformation` after provisioning.\n"]
-    pub fn metric_transformation(&self) -> terrars::ListRef<CloudwatchLogMetricFilterMetricTransformationElRef> {
+    pub fn metric_transformation(&self) -> terrars::ListRef<CloudwatchLogMetricFilter_MetricTransformationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metric_transformation", self.extract_ref()))
     }
 }
@@ -225,16 +255,18 @@ impl BuildCloudwatchLogMetricFilter {
         let out = CloudwatchLogMetricFilter(std::rc::Rc::new(CloudwatchLogMetricFilter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudwatchLogMetricFilterData {
+            data: std::cell::RefCell::new(CloudwatchLogMetricFilterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                apply_on_transformed_logs: core::default::Default::default(),
                 id: core::default::Default::default(),
                 log_group_name: self.log_group_name,
                 name: self.name,
                 pattern: self.pattern,
+                region: core::default::Default::default(),
                 metric_transformation: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -267,6 +299,11 @@ impl CloudwatchLogMetricFilterRef {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `apply_on_transformed_logs` after provisioning.\n"]
+    pub fn apply_on_transformed_logs(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.apply_on_transformed_logs", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -287,14 +324,27 @@ impl CloudwatchLogMetricFilterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.pattern", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `metric_transformation` after provisioning.\n"]
-    pub fn metric_transformation(&self) -> terrars::ListRef<CloudwatchLogMetricFilterMetricTransformationElRef> {
+    pub fn metric_transformation(&self) -> terrars::ListRef<CloudwatchLogMetricFilter_MetricTransformationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metric_transformation", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudwatchLogMetricFilterDynamic {
+    metric_transformation: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudwatchLogMetricFilter_MetricTransformation>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudwatchLogMetricFilterMetricTransformationEl {
+pub struct CloudwatchLogMetricFilter_MetricTransformation {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_value: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -306,7 +356,7 @@ pub struct CloudwatchLogMetricFilterMetricTransformationEl {
     value: terrars::PrimField<std::string::String>,
 }
 
-impl CloudwatchLogMetricFilterMetricTransformationEl {
+impl CloudwatchLogMetricFilter_MetricTransformation {
     #[doc = "Set the field `default_value`.\n"]
     pub fn set_default_value(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.default_value = std::option::Option::Some(v.into());
@@ -329,8 +379,8 @@ impl CloudwatchLogMetricFilterMetricTransformationEl {
     }
 }
 
-impl terrars::ToListMappable for CloudwatchLogMetricFilterMetricTransformationEl {
-    type O = terrars::BlockAssignable<CloudwatchLogMetricFilterMetricTransformationEl>;
+impl terrars::ToListMappable for CloudwatchLogMetricFilter_MetricTransformation {
+    type O = terrars::BlockAssignable<CloudwatchLogMetricFilter_MetricTransformation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -341,7 +391,7 @@ impl terrars::ToListMappable for CloudwatchLogMetricFilterMetricTransformationEl
     }
 }
 
-pub struct BuildCloudwatchLogMetricFilterMetricTransformationEl {
+pub struct BuildCloudwatchLogMetricFilter_MetricTransformation {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -350,9 +400,9 @@ pub struct BuildCloudwatchLogMetricFilterMetricTransformationEl {
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudwatchLogMetricFilterMetricTransformationEl {
-    pub fn build(self) -> CloudwatchLogMetricFilterMetricTransformationEl {
-        CloudwatchLogMetricFilterMetricTransformationEl {
+impl BuildCloudwatchLogMetricFilter_MetricTransformation {
+    pub fn build(self) -> CloudwatchLogMetricFilter_MetricTransformation {
+        CloudwatchLogMetricFilter_MetricTransformation {
             default_value: core::default::Default::default(),
             dimensions: core::default::Default::default(),
             name: self.name,
@@ -363,24 +413,26 @@ impl BuildCloudwatchLogMetricFilterMetricTransformationEl {
     }
 }
 
-pub struct CloudwatchLogMetricFilterMetricTransformationElRef {
+#[allow(dead_code)]
+pub struct CloudwatchLogMetricFilter_MetricTransformationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudwatchLogMetricFilterMetricTransformationElRef {
+impl terrars::Ref for CloudwatchLogMetricFilter_MetricTransformationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudwatchLogMetricFilterMetricTransformationElRef {
-        CloudwatchLogMetricFilterMetricTransformationElRef {
+    ) -> CloudwatchLogMetricFilter_MetricTransformationRef {
+        CloudwatchLogMetricFilter_MetricTransformationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudwatchLogMetricFilterMetricTransformationElRef {
+impl CloudwatchLogMetricFilter_MetricTransformationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -414,11 +466,4 @@ impl CloudwatchLogMetricFilterMetricTransformationElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudwatchLogMetricFilterDynamic {
-    metric_transformation: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudwatchLogMetricFilterMetricTransformationEl>>,
 }

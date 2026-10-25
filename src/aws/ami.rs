@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AmiData {
+struct AmiData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -40,6 +42,8 @@ struct AmiData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ramdisk_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     root_device_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sriov_net_support: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -50,20 +54,22 @@ struct AmiData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tpm_support: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    uefi_data: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     virtualization_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ebs_block_device: std::option::Option<std::vec::Vec<AmiEbsBlockDeviceEl>>,
+    ebs_block_device: std::option::Option<std::vec::Vec<Ami_EbsBlockDevice>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ephemeral_block_device: std::option::Option<std::vec::Vec<AmiEphemeralBlockDeviceEl>>,
+    ephemeral_block_device: std::option::Option<std::vec::Vec<Ami_EphemeralBlockDevice>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AmiTimeoutsEl>,
+    timeouts: std::option::Option<Ami_Timeouts>,
     dynamic: AmiDynamic,
 }
 
 struct Ami_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AmiData>,
+    data: std::cell::RefCell<AmiData_>,
 }
 
 #[derive(Clone)]
@@ -223,6 +229,13 @@ impl Ami {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `root_device_name`.\n"]
     pub fn set_root_device_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().root_device_name = std::option::Option::Some(v.into());
@@ -259,6 +272,12 @@ impl Ami {
         self
     }
 
+    #[doc = "Set the field `uefi_data`.\n"]
+    pub fn set_uefi_data(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().uefi_data = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `virtualization_type`.\n"]
     pub fn set_virtualization_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().virtualization_type = std::option::Option::Some(v.into());
@@ -266,10 +285,7 @@ impl Ami {
     }
 
     #[doc = "Set the field `ebs_block_device`.\n"]
-    pub fn set_ebs_block_device(
-        self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AmiEbsBlockDeviceEl>>,
-    ) -> Self {
+    pub fn set_ebs_block_device(self, v: impl std::convert::Into<terrars::BlockAssignable<Ami_EbsBlockDevice>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().ebs_block_device = std::option::Option::Some(v);
@@ -284,7 +300,7 @@ impl Ami {
     #[doc = "Set the field `ephemeral_block_device`.\n"]
     pub fn set_ephemeral_block_device(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AmiEphemeralBlockDeviceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Ami_EphemeralBlockDevice>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -298,7 +314,7 @@ impl Ami {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AmiTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Ami_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -368,6 +384,11 @@ impl Ami {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kernel_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `last_launched_time` after provisioning.\n"]
+    pub fn last_launched_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_launched_time", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `manage_ebs_snapshots` after provisioning.\n"]
     pub fn manage_ebs_snapshots(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_ebs_snapshots", self.extract_ref()))
@@ -403,6 +424,12 @@ impl Ami {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ramdisk_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_device_name` after provisioning.\n"]
     pub fn root_device_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_device_name", self.extract_ref()))
@@ -433,6 +460,11 @@ impl Ami {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tpm_support", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `uefi_data` after provisioning.\n"]
+    pub fn uefi_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uefi_data", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `usage_operation` after provisioning.\n"]
     pub fn usage_operation(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.usage_operation", self.extract_ref()))
@@ -444,8 +476,8 @@ impl Ami {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AmiTimeoutsElRef {
-        AmiTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Ami_TimeoutsRef {
+        Ami_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -491,7 +523,7 @@ impl BuildAmi {
         let out = Ami(std::rc::Rc::new(Ami_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AmiData {
+            data: std::cell::RefCell::new(AmiData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -508,11 +540,13 @@ impl BuildAmi {
                 kernel_id: core::default::Default::default(),
                 name: self.name,
                 ramdisk_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 root_device_name: core::default::Default::default(),
                 sriov_net_support: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 tpm_support: core::default::Default::default(),
+                uefi_data: core::default::Default::default(),
                 virtualization_type: core::default::Default::default(),
                 ebs_block_device: core::default::Default::default(),
                 ephemeral_block_device: core::default::Default::default(),
@@ -613,6 +647,11 @@ impl AmiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kernel_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `last_launched_time` after provisioning.\n"]
+    pub fn last_launched_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.last_launched_time", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `manage_ebs_snapshots` after provisioning.\n"]
     pub fn manage_ebs_snapshots(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.manage_ebs_snapshots", self.extract_ref()))
@@ -648,6 +687,12 @@ impl AmiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ramdisk_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `root_device_name` after provisioning.\n"]
     pub fn root_device_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.root_device_name", self.extract_ref()))
@@ -678,6 +723,11 @@ impl AmiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.tpm_support", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `uefi_data` after provisioning.\n"]
+    pub fn uefi_data(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.uefi_data", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `usage_operation` after provisioning.\n"]
     pub fn usage_operation(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.usage_operation", self.extract_ref()))
@@ -689,13 +739,19 @@ impl AmiRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AmiTimeoutsElRef {
-        AmiTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> Ami_TimeoutsRef {
+        Ami_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AmiDynamic {
+    ebs_block_device: std::option::Option<terrars::DynamicBlock<Ami_EbsBlockDevice>>,
+    ephemeral_block_device: std::option::Option<terrars::DynamicBlock<Ami_EphemeralBlockDevice>>,
+}
+
 #[derive(Serialize)]
-pub struct AmiEbsBlockDeviceEl {
+pub struct Ami_EbsBlockDevice {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_on_termination: std::option::Option<terrars::PrimField<bool>>,
     device_name: terrars::PrimField<std::string::String>,
@@ -715,7 +771,7 @@ pub struct AmiEbsBlockDeviceEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AmiEbsBlockDeviceEl {
+impl Ami_EbsBlockDevice {
     #[doc = "Set the field `delete_on_termination`.\n"]
     pub fn set_delete_on_termination(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.delete_on_termination = std::option::Option::Some(v.into());
@@ -765,8 +821,8 @@ impl AmiEbsBlockDeviceEl {
     }
 }
 
-impl terrars::ToListMappable for AmiEbsBlockDeviceEl {
-    type O = terrars::BlockAssignable<AmiEbsBlockDeviceEl>;
+impl terrars::ToListMappable for Ami_EbsBlockDevice {
+    type O = terrars::BlockAssignable<Ami_EbsBlockDevice>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -777,14 +833,14 @@ impl terrars::ToListMappable for AmiEbsBlockDeviceEl {
     }
 }
 
-pub struct BuildAmiEbsBlockDeviceEl {
+pub struct BuildAmi_EbsBlockDevice {
     #[doc = ""]
     pub device_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAmiEbsBlockDeviceEl {
-    pub fn build(self) -> AmiEbsBlockDeviceEl {
-        AmiEbsBlockDeviceEl {
+impl BuildAmi_EbsBlockDevice {
+    pub fn build(self) -> Ami_EbsBlockDevice {
+        Ami_EbsBlockDevice {
             delete_on_termination: core::default::Default::default(),
             device_name: self.device_name,
             encrypted: core::default::Default::default(),
@@ -798,21 +854,23 @@ impl BuildAmiEbsBlockDeviceEl {
     }
 }
 
-pub struct AmiEbsBlockDeviceElRef {
+#[allow(dead_code)]
+pub struct Ami_EbsBlockDeviceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AmiEbsBlockDeviceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AmiEbsBlockDeviceElRef {
-        AmiEbsBlockDeviceElRef {
+impl terrars::Ref for Ami_EbsBlockDeviceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ami_EbsBlockDeviceRef {
+        Ami_EbsBlockDeviceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AmiEbsBlockDeviceElRef {
+impl Ami_EbsBlockDeviceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -864,15 +922,15 @@ impl AmiEbsBlockDeviceElRef {
 }
 
 #[derive(Serialize)]
-pub struct AmiEphemeralBlockDeviceEl {
+pub struct Ami_EphemeralBlockDevice {
     device_name: terrars::PrimField<std::string::String>,
     virtual_name: terrars::PrimField<std::string::String>,
 }
 
-impl AmiEphemeralBlockDeviceEl { }
+impl Ami_EphemeralBlockDevice { }
 
-impl terrars::ToListMappable for AmiEphemeralBlockDeviceEl {
-    type O = terrars::BlockAssignable<AmiEphemeralBlockDeviceEl>;
+impl terrars::ToListMappable for Ami_EphemeralBlockDevice {
+    type O = terrars::BlockAssignable<Ami_EphemeralBlockDevice>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -883,37 +941,39 @@ impl terrars::ToListMappable for AmiEphemeralBlockDeviceEl {
     }
 }
 
-pub struct BuildAmiEphemeralBlockDeviceEl {
+pub struct BuildAmi_EphemeralBlockDevice {
     #[doc = ""]
     pub device_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub virtual_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAmiEphemeralBlockDeviceEl {
-    pub fn build(self) -> AmiEphemeralBlockDeviceEl {
-        AmiEphemeralBlockDeviceEl {
+impl BuildAmi_EphemeralBlockDevice {
+    pub fn build(self) -> Ami_EphemeralBlockDevice {
+        Ami_EphemeralBlockDevice {
             device_name: self.device_name,
             virtual_name: self.virtual_name,
         }
     }
 }
 
-pub struct AmiEphemeralBlockDeviceElRef {
+#[allow(dead_code)]
+pub struct Ami_EphemeralBlockDeviceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AmiEphemeralBlockDeviceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AmiEphemeralBlockDeviceElRef {
-        AmiEphemeralBlockDeviceElRef {
+impl terrars::Ref for Ami_EphemeralBlockDeviceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ami_EphemeralBlockDeviceRef {
+        Ami_EphemeralBlockDeviceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AmiEphemeralBlockDeviceElRef {
+impl Ami_EphemeralBlockDeviceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -930,7 +990,7 @@ impl AmiEphemeralBlockDeviceElRef {
 }
 
 #[derive(Serialize)]
-pub struct AmiTimeoutsEl {
+pub struct Ami_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -939,7 +999,7 @@ pub struct AmiTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AmiTimeoutsEl {
+impl Ami_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -959,8 +1019,8 @@ impl AmiTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AmiTimeoutsEl {
-    type O = terrars::BlockAssignable<AmiTimeoutsEl>;
+impl terrars::ToListMappable for Ami_Timeouts {
+    type O = terrars::BlockAssignable<Ami_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -971,11 +1031,11 @@ impl terrars::ToListMappable for AmiTimeoutsEl {
     }
 }
 
-pub struct BuildAmiTimeoutsEl {}
+pub struct BuildAmi_Timeouts {}
 
-impl BuildAmiTimeoutsEl {
-    pub fn build(self) -> AmiTimeoutsEl {
-        AmiTimeoutsEl {
+impl BuildAmi_Timeouts {
+    pub fn build(self) -> Ami_Timeouts {
+        Ami_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -983,21 +1043,23 @@ impl BuildAmiTimeoutsEl {
     }
 }
 
-pub struct AmiTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Ami_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AmiTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AmiTimeoutsElRef {
-        AmiTimeoutsElRef {
+impl terrars::Ref for Ami_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Ami_TimeoutsRef {
+        Ami_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AmiTimeoutsElRef {
+impl Ami_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1016,10 +1078,4 @@ impl AmiTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AmiDynamic {
-    ebs_block_device: std::option::Option<terrars::DynamicBlock<AmiEbsBlockDeviceEl>>,
-    ephemeral_block_device: std::option::Option<terrars::DynamicBlock<AmiEphemeralBlockDeviceEl>>,
 }

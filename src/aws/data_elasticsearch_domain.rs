@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataElasticsearchDomainData {
+struct DataElasticsearchDomainData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataElasticsearchDomainData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataElasticsearchDomain_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataElasticsearchDomainData>,
+    data: std::cell::RefCell<DataElasticsearchDomainData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataElasticsearchDomain {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -97,7 +108,7 @@ impl DataElasticsearchDomain {
     }
 
     #[doc = "Get a reference to the value of field `advanced_security_options` after provisioning.\n"]
-    pub fn advanced_security_options(&self) -> terrars::ListRef<DataElasticsearchDomainAdvancedSecurityOptionsElRef> {
+    pub fn advanced_security_options(&self) -> terrars::ListRef<DataElasticsearchDomain_AdvancedSecurityOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_security_options", self.extract_ref()))
     }
 
@@ -107,17 +118,17 @@ impl DataElasticsearchDomain {
     }
 
     #[doc = "Get a reference to the value of field `auto_tune_options` after provisioning.\n"]
-    pub fn auto_tune_options(&self) -> terrars::ListRef<DataElasticsearchDomainAutoTuneOptionsElRef> {
+    pub fn auto_tune_options(&self) -> terrars::ListRef<DataElasticsearchDomain_AutoTuneOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_tune_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster_config` after provisioning.\n"]
-    pub fn cluster_config(&self) -> terrars::ListRef<DataElasticsearchDomainClusterConfigElRef> {
+    pub fn cluster_config(&self) -> terrars::ListRef<DataElasticsearchDomain_ClusterConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cognito_options` after provisioning.\n"]
-    pub fn cognito_options(&self) -> terrars::ListRef<DataElasticsearchDomainCognitoOptionsElRef> {
+    pub fn cognito_options(&self) -> terrars::ListRef<DataElasticsearchDomain_CognitoOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cognito_options", self.extract_ref()))
     }
 
@@ -142,7 +153,7 @@ impl DataElasticsearchDomain {
     }
 
     #[doc = "Get a reference to the value of field `ebs_options` after provisioning.\n"]
-    pub fn ebs_options(&self) -> terrars::ListRef<DataElasticsearchDomainEbsOptionsElRef> {
+    pub fn ebs_options(&self) -> terrars::ListRef<DataElasticsearchDomain_EbsOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ebs_options", self.extract_ref()))
     }
 
@@ -152,7 +163,7 @@ impl DataElasticsearchDomain {
     }
 
     #[doc = "Get a reference to the value of field `encryption_at_rest` after provisioning.\n"]
-    pub fn encryption_at_rest(&self) -> terrars::ListRef<DataElasticsearchDomainEncryptionAtRestElRef> {
+    pub fn encryption_at_rest(&self) -> terrars::ListRef<DataElasticsearchDomain_EncryptionAtRestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_at_rest", self.extract_ref()))
     }
 
@@ -172,12 +183,12 @@ impl DataElasticsearchDomain {
     }
 
     #[doc = "Get a reference to the value of field `log_publishing_options` after provisioning.\n"]
-    pub fn log_publishing_options(&self) -> terrars::SetRef<DataElasticsearchDomainLogPublishingOptionsElRef> {
+    pub fn log_publishing_options(&self) -> terrars::SetRef<DataElasticsearchDomain_LogPublishingOptionsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.log_publishing_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_to_node_encryption` after provisioning.\n"]
-    pub fn node_to_node_encryption(&self) -> terrars::ListRef<DataElasticsearchDomainNodeToNodeEncryptionElRef> {
+    pub fn node_to_node_encryption(&self) -> terrars::ListRef<DataElasticsearchDomain_NodeToNodeEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_to_node_encryption", self.extract_ref()))
     }
 
@@ -186,8 +197,14 @@ impl DataElasticsearchDomain {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.processing", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_options` after provisioning.\n"]
-    pub fn snapshot_options(&self) -> terrars::ListRef<DataElasticsearchDomainSnapshotOptionsElRef> {
+    pub fn snapshot_options(&self) -> terrars::ListRef<DataElasticsearchDomain_SnapshotOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_options", self.extract_ref()))
     }
 
@@ -197,7 +214,7 @@ impl DataElasticsearchDomain {
     }
 
     #[doc = "Get a reference to the value of field `vpc_options` after provisioning.\n"]
-    pub fn vpc_options(&self) -> terrars::ListRef<DataElasticsearchDomainVpcOptionsElRef> {
+    pub fn vpc_options(&self) -> terrars::ListRef<DataElasticsearchDomain_VpcOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_options", self.extract_ref()))
     }
 }
@@ -244,13 +261,14 @@ impl BuildDataElasticsearchDomain {
         let out = DataElasticsearchDomain(std::rc::Rc::new(DataElasticsearchDomain_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataElasticsearchDomainData {
+            data: std::cell::RefCell::new(DataElasticsearchDomainData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 domain_name: self.domain_name,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -293,7 +311,7 @@ impl DataElasticsearchDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `advanced_security_options` after provisioning.\n"]
-    pub fn advanced_security_options(&self) -> terrars::ListRef<DataElasticsearchDomainAdvancedSecurityOptionsElRef> {
+    pub fn advanced_security_options(&self) -> terrars::ListRef<DataElasticsearchDomain_AdvancedSecurityOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.advanced_security_options", self.extract_ref()))
     }
 
@@ -303,17 +321,17 @@ impl DataElasticsearchDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `auto_tune_options` after provisioning.\n"]
-    pub fn auto_tune_options(&self) -> terrars::ListRef<DataElasticsearchDomainAutoTuneOptionsElRef> {
+    pub fn auto_tune_options(&self) -> terrars::ListRef<DataElasticsearchDomain_AutoTuneOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_tune_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cluster_config` after provisioning.\n"]
-    pub fn cluster_config(&self) -> terrars::ListRef<DataElasticsearchDomainClusterConfigElRef> {
+    pub fn cluster_config(&self) -> terrars::ListRef<DataElasticsearchDomain_ClusterConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `cognito_options` after provisioning.\n"]
-    pub fn cognito_options(&self) -> terrars::ListRef<DataElasticsearchDomainCognitoOptionsElRef> {
+    pub fn cognito_options(&self) -> terrars::ListRef<DataElasticsearchDomain_CognitoOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cognito_options", self.extract_ref()))
     }
 
@@ -338,7 +356,7 @@ impl DataElasticsearchDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `ebs_options` after provisioning.\n"]
-    pub fn ebs_options(&self) -> terrars::ListRef<DataElasticsearchDomainEbsOptionsElRef> {
+    pub fn ebs_options(&self) -> terrars::ListRef<DataElasticsearchDomain_EbsOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ebs_options", self.extract_ref()))
     }
 
@@ -348,7 +366,7 @@ impl DataElasticsearchDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_at_rest` after provisioning.\n"]
-    pub fn encryption_at_rest(&self) -> terrars::ListRef<DataElasticsearchDomainEncryptionAtRestElRef> {
+    pub fn encryption_at_rest(&self) -> terrars::ListRef<DataElasticsearchDomain_EncryptionAtRestRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_at_rest", self.extract_ref()))
     }
 
@@ -368,12 +386,12 @@ impl DataElasticsearchDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `log_publishing_options` after provisioning.\n"]
-    pub fn log_publishing_options(&self) -> terrars::SetRef<DataElasticsearchDomainLogPublishingOptionsElRef> {
+    pub fn log_publishing_options(&self) -> terrars::SetRef<DataElasticsearchDomain_LogPublishingOptionsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.log_publishing_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `node_to_node_encryption` after provisioning.\n"]
-    pub fn node_to_node_encryption(&self) -> terrars::ListRef<DataElasticsearchDomainNodeToNodeEncryptionElRef> {
+    pub fn node_to_node_encryption(&self) -> terrars::ListRef<DataElasticsearchDomain_NodeToNodeEncryptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.node_to_node_encryption", self.extract_ref()))
     }
 
@@ -382,8 +400,14 @@ impl DataElasticsearchDomainRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.processing", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `snapshot_options` after provisioning.\n"]
-    pub fn snapshot_options(&self) -> terrars::ListRef<DataElasticsearchDomainSnapshotOptionsElRef> {
+    pub fn snapshot_options(&self) -> terrars::ListRef<DataElasticsearchDomain_SnapshotOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.snapshot_options", self.extract_ref()))
     }
 
@@ -393,20 +417,20 @@ impl DataElasticsearchDomainRef {
     }
 
     #[doc = "Get a reference to the value of field `vpc_options` after provisioning.\n"]
-    pub fn vpc_options(&self) -> terrars::ListRef<DataElasticsearchDomainVpcOptionsElRef> {
+    pub fn vpc_options(&self) -> terrars::ListRef<DataElasticsearchDomain_VpcOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_options", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainAdvancedSecurityOptionsEl {
+pub struct DataElasticsearchDomain_AdvancedSecurityOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     internal_user_database_enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataElasticsearchDomainAdvancedSecurityOptionsEl {
+impl DataElasticsearchDomain_AdvancedSecurityOptions {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -420,8 +444,8 @@ impl DataElasticsearchDomainAdvancedSecurityOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainAdvancedSecurityOptionsEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainAdvancedSecurityOptionsEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_AdvancedSecurityOptions {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_AdvancedSecurityOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -432,35 +456,37 @@ impl terrars::ToListMappable for DataElasticsearchDomainAdvancedSecurityOptionsE
     }
 }
 
-pub struct BuildDataElasticsearchDomainAdvancedSecurityOptionsEl {}
+pub struct BuildDataElasticsearchDomain_AdvancedSecurityOptions {}
 
-impl BuildDataElasticsearchDomainAdvancedSecurityOptionsEl {
-    pub fn build(self) -> DataElasticsearchDomainAdvancedSecurityOptionsEl {
-        DataElasticsearchDomainAdvancedSecurityOptionsEl {
+impl BuildDataElasticsearchDomain_AdvancedSecurityOptions {
+    pub fn build(self) -> DataElasticsearchDomain_AdvancedSecurityOptions {
+        DataElasticsearchDomain_AdvancedSecurityOptions {
             enabled: core::default::Default::default(),
             internal_user_database_enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataElasticsearchDomainAdvancedSecurityOptionsElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_AdvancedSecurityOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainAdvancedSecurityOptionsElRef {
+impl terrars::Ref for DataElasticsearchDomain_AdvancedSecurityOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataElasticsearchDomainAdvancedSecurityOptionsElRef {
-        DataElasticsearchDomainAdvancedSecurityOptionsElRef {
+    ) -> DataElasticsearchDomain_AdvancedSecurityOptionsRef {
+        DataElasticsearchDomain_AdvancedSecurityOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainAdvancedSecurityOptionsElRef {
+impl DataElasticsearchDomain_AdvancedSecurityOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -477,14 +503,14 @@ impl DataElasticsearchDomainAdvancedSecurityOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
+pub struct DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     unit: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     value: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
+impl DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration {
     #[doc = "Set the field `unit`.\n"]
     pub fn set_unit(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.unit = std::option::Option::Some(v.into());
@@ -498,8 +524,8 @@ impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -510,35 +536,37 @@ impl terrars::ToListMappable for DataElasticsearchDomainAutoTuneOptionsElMainten
     }
 }
 
-pub struct BuildDataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {}
+pub struct BuildDataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration {}
 
-impl BuildDataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
-    pub fn build(self) -> DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
-        DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl {
+impl BuildDataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration {
+    pub fn build(self) -> DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration {
+        DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration {
             unit: core::default::Default::default(),
             value: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_DurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
+impl terrars::Ref for DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_DurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
-        DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
+    ) -> DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_DurationRef {
+        DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_DurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef {
+impl DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_DurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -555,18 +583,18 @@ impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef 
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
+pub struct DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cron_expression_for_recurrence: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     duration: std
     ::option
-    ::Option<terrars::ListField<DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>>,
+    ::Option<terrars::ListField<DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     start_at: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
+impl DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule {
     #[doc = "Set the field `cron_expression_for_recurrence`.\n"]
     pub fn set_cron_expression_for_recurrence(
         mut self,
@@ -584,9 +612,7 @@ impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::ListField<DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationEl>,
-                    >,
+                    ::Into<terrars::ListField<DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_Duration>>,
     ) -> Self {
         self.duration = std::option::Option::Some(v.into());
         self
@@ -599,8 +625,8 @@ impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -611,11 +637,11 @@ impl terrars::ToListMappable for DataElasticsearchDomainAutoTuneOptionsElMainten
     }
 }
 
-pub struct BuildDataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {}
+pub struct BuildDataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule {}
 
-impl BuildDataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
-    pub fn build(self) -> DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
-        DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
+impl BuildDataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule {
+    pub fn build(self) -> DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule {
+        DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule {
             cron_expression_for_recurrence: core::default::Default::default(),
             duration: core::default::Default::default(),
             start_at: core::default::Default::default(),
@@ -623,24 +649,26 @@ impl BuildDataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl {
     }
 }
 
-pub struct DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_AutoTuneOptions_MaintenanceScheduleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
+impl terrars::Ref for DataElasticsearchDomain_AutoTuneOptions_MaintenanceScheduleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
-        DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
+    ) -> DataElasticsearchDomain_AutoTuneOptions_MaintenanceScheduleRef {
+        DataElasticsearchDomain_AutoTuneOptions_MaintenanceScheduleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
+impl DataElasticsearchDomain_AutoTuneOptions_MaintenanceScheduleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -651,9 +679,7 @@ impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
     }
 
     #[doc = "Get a reference to the value of field `duration` after provisioning.\n"]
-    pub fn duration(
-        &self,
-    ) -> terrars::ListRef<DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElDurationElRef> {
+    pub fn duration(&self) -> terrars::ListRef<DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule_DurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.duration", self.base))
     }
 
@@ -664,18 +690,18 @@ impl DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainAutoTuneOptionsEl {
+pub struct DataElasticsearchDomain_AutoTuneOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     desired_state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     maintenance_schedule: std
     ::option
-    ::Option<terrars::SetField<DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl>>,
+    ::Option<terrars::SetField<DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rollback_on_disable: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataElasticsearchDomainAutoTuneOptionsEl {
+impl DataElasticsearchDomain_AutoTuneOptions {
     #[doc = "Set the field `desired_state`.\n"]
     pub fn set_desired_state(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.desired_state = std::option::Option::Some(v.into());
@@ -685,7 +711,7 @@ impl DataElasticsearchDomainAutoTuneOptionsEl {
     #[doc = "Set the field `maintenance_schedule`.\n"]
     pub fn set_maintenance_schedule(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataElasticsearchDomain_AutoTuneOptions_MaintenanceSchedule>>,
     ) -> Self {
         self.maintenance_schedule = std::option::Option::Some(v.into());
         self
@@ -701,8 +727,8 @@ impl DataElasticsearchDomainAutoTuneOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainAutoTuneOptionsEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainAutoTuneOptionsEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_AutoTuneOptions {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_AutoTuneOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -713,11 +739,11 @@ impl terrars::ToListMappable for DataElasticsearchDomainAutoTuneOptionsEl {
     }
 }
 
-pub struct BuildDataElasticsearchDomainAutoTuneOptionsEl {}
+pub struct BuildDataElasticsearchDomain_AutoTuneOptions {}
 
-impl BuildDataElasticsearchDomainAutoTuneOptionsEl {
-    pub fn build(self) -> DataElasticsearchDomainAutoTuneOptionsEl {
-        DataElasticsearchDomainAutoTuneOptionsEl {
+impl BuildDataElasticsearchDomain_AutoTuneOptions {
+    pub fn build(self) -> DataElasticsearchDomain_AutoTuneOptions {
+        DataElasticsearchDomain_AutoTuneOptions {
             desired_state: core::default::Default::default(),
             maintenance_schedule: core::default::Default::default(),
             rollback_on_disable: core::default::Default::default(),
@@ -725,21 +751,23 @@ impl BuildDataElasticsearchDomainAutoTuneOptionsEl {
     }
 }
 
-pub struct DataElasticsearchDomainAutoTuneOptionsElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_AutoTuneOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainAutoTuneOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomainAutoTuneOptionsElRef {
-        DataElasticsearchDomainAutoTuneOptionsElRef {
+impl terrars::Ref for DataElasticsearchDomain_AutoTuneOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomain_AutoTuneOptionsRef {
+        DataElasticsearchDomain_AutoTuneOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainAutoTuneOptionsElRef {
+impl DataElasticsearchDomain_AutoTuneOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -752,7 +780,7 @@ impl DataElasticsearchDomainAutoTuneOptionsElRef {
     #[doc = "Get a reference to the value of field `maintenance_schedule` after provisioning.\n"]
     pub fn maintenance_schedule(
         &self,
-    ) -> terrars::SetRef<DataElasticsearchDomainAutoTuneOptionsElMaintenanceScheduleElRef> {
+    ) -> terrars::SetRef<DataElasticsearchDomain_AutoTuneOptions_MaintenanceScheduleRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.maintenance_schedule", self.base))
     }
 
@@ -763,12 +791,12 @@ impl DataElasticsearchDomainAutoTuneOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainClusterConfigElColdStorageOptionsEl {
+pub struct DataElasticsearchDomain_ClusterConfig_ColdStorageOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataElasticsearchDomainClusterConfigElColdStorageOptionsEl {
+impl DataElasticsearchDomain_ClusterConfig_ColdStorageOptions {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -776,8 +804,8 @@ impl DataElasticsearchDomainClusterConfigElColdStorageOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainClusterConfigElColdStorageOptionsEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainClusterConfigElColdStorageOptionsEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_ClusterConfig_ColdStorageOptions {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_ClusterConfig_ColdStorageOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -788,32 +816,34 @@ impl terrars::ToListMappable for DataElasticsearchDomainClusterConfigElColdStora
     }
 }
 
-pub struct BuildDataElasticsearchDomainClusterConfigElColdStorageOptionsEl {}
+pub struct BuildDataElasticsearchDomain_ClusterConfig_ColdStorageOptions {}
 
-impl BuildDataElasticsearchDomainClusterConfigElColdStorageOptionsEl {
-    pub fn build(self) -> DataElasticsearchDomainClusterConfigElColdStorageOptionsEl {
-        DataElasticsearchDomainClusterConfigElColdStorageOptionsEl { enabled: core::default::Default::default() }
+impl BuildDataElasticsearchDomain_ClusterConfig_ColdStorageOptions {
+    pub fn build(self) -> DataElasticsearchDomain_ClusterConfig_ColdStorageOptions {
+        DataElasticsearchDomain_ClusterConfig_ColdStorageOptions { enabled: core::default::Default::default() }
     }
 }
 
-pub struct DataElasticsearchDomainClusterConfigElColdStorageOptionsElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_ClusterConfig_ColdStorageOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainClusterConfigElColdStorageOptionsElRef {
+impl terrars::Ref for DataElasticsearchDomain_ClusterConfig_ColdStorageOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataElasticsearchDomainClusterConfigElColdStorageOptionsElRef {
-        DataElasticsearchDomainClusterConfigElColdStorageOptionsElRef {
+    ) -> DataElasticsearchDomain_ClusterConfig_ColdStorageOptionsRef {
+        DataElasticsearchDomain_ClusterConfig_ColdStorageOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainClusterConfigElColdStorageOptionsElRef {
+impl DataElasticsearchDomain_ClusterConfig_ColdStorageOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -825,12 +855,12 @@ impl DataElasticsearchDomainClusterConfigElColdStorageOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl {
+pub struct DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl {
+impl DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig {
     #[doc = "Set the field `availability_zone_count`.\n"]
     pub fn set_availability_zone_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.availability_zone_count = std::option::Option::Some(v.into());
@@ -838,8 +868,8 @@ impl DataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -850,34 +880,36 @@ impl terrars::ToListMappable for DataElasticsearchDomainClusterConfigElZoneAware
     }
 }
 
-pub struct BuildDataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl {}
+pub struct BuildDataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig {}
 
-impl BuildDataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl {
-    pub fn build(self) -> DataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl {
-        DataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl {
+impl BuildDataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig {
+    pub fn build(self) -> DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig {
+        DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig {
             availability_zone_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataElasticsearchDomainClusterConfigElZoneAwarenessConfigElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainClusterConfigElZoneAwarenessConfigElRef {
+impl terrars::Ref for DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataElasticsearchDomainClusterConfigElZoneAwarenessConfigElRef {
-        DataElasticsearchDomainClusterConfigElZoneAwarenessConfigElRef {
+    ) -> DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfigRef {
+        DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainClusterConfigElZoneAwarenessConfigElRef {
+impl DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -889,11 +921,11 @@ impl DataElasticsearchDomainClusterConfigElZoneAwarenessConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainClusterConfigEl {
+pub struct DataElasticsearchDomain_ClusterConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cold_storage_options: std
     ::option
-    ::Option<terrars::ListField<DataElasticsearchDomainClusterConfigElColdStorageOptionsEl>>,
+    ::Option<terrars::ListField<DataElasticsearchDomain_ClusterConfig_ColdStorageOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dedicated_master_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -913,16 +945,16 @@ pub struct DataElasticsearchDomainClusterConfigEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone_awareness_config: std
     ::option
-    ::Option<terrars::ListField<DataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl>>,
+    ::Option<terrars::ListField<DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     zone_awareness_enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataElasticsearchDomainClusterConfigEl {
+impl DataElasticsearchDomain_ClusterConfig {
     #[doc = "Set the field `cold_storage_options`.\n"]
     pub fn set_cold_storage_options(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataElasticsearchDomainClusterConfigElColdStorageOptionsEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataElasticsearchDomain_ClusterConfig_ColdStorageOptions>>,
     ) -> Self {
         self.cold_storage_options = std::option::Option::Some(v.into());
         self
@@ -982,7 +1014,7 @@ impl DataElasticsearchDomainClusterConfigEl {
     #[doc = "Set the field `zone_awareness_config`.\n"]
     pub fn set_zone_awareness_config(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<DataElasticsearchDomainClusterConfigElZoneAwarenessConfigEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfig>>,
     ) -> Self {
         self.zone_awareness_config = std::option::Option::Some(v.into());
         self
@@ -995,8 +1027,8 @@ impl DataElasticsearchDomainClusterConfigEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainClusterConfigEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainClusterConfigEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_ClusterConfig {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_ClusterConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1007,11 +1039,11 @@ impl terrars::ToListMappable for DataElasticsearchDomainClusterConfigEl {
     }
 }
 
-pub struct BuildDataElasticsearchDomainClusterConfigEl {}
+pub struct BuildDataElasticsearchDomain_ClusterConfig {}
 
-impl BuildDataElasticsearchDomainClusterConfigEl {
-    pub fn build(self) -> DataElasticsearchDomainClusterConfigEl {
-        DataElasticsearchDomainClusterConfigEl {
+impl BuildDataElasticsearchDomain_ClusterConfig {
+    pub fn build(self) -> DataElasticsearchDomain_ClusterConfig {
+        DataElasticsearchDomain_ClusterConfig {
             cold_storage_options: core::default::Default::default(),
             dedicated_master_count: core::default::Default::default(),
             dedicated_master_enabled: core::default::Default::default(),
@@ -1027,29 +1059,29 @@ impl BuildDataElasticsearchDomainClusterConfigEl {
     }
 }
 
-pub struct DataElasticsearchDomainClusterConfigElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_ClusterConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainClusterConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomainClusterConfigElRef {
-        DataElasticsearchDomainClusterConfigElRef {
+impl terrars::Ref for DataElasticsearchDomain_ClusterConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomain_ClusterConfigRef {
+        DataElasticsearchDomain_ClusterConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainClusterConfigElRef {
+impl DataElasticsearchDomain_ClusterConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cold_storage_options` after provisioning.\n"]
-    pub fn cold_storage_options(
-        &self,
-    ) -> terrars::ListRef<DataElasticsearchDomainClusterConfigElColdStorageOptionsElRef> {
+    pub fn cold_storage_options(&self) -> terrars::ListRef<DataElasticsearchDomain_ClusterConfig_ColdStorageOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cold_storage_options", self.base))
     }
 
@@ -1096,7 +1128,7 @@ impl DataElasticsearchDomainClusterConfigElRef {
     #[doc = "Get a reference to the value of field `zone_awareness_config` after provisioning.\n"]
     pub fn zone_awareness_config(
         &self,
-    ) -> terrars::ListRef<DataElasticsearchDomainClusterConfigElZoneAwarenessConfigElRef> {
+    ) -> terrars::ListRef<DataElasticsearchDomain_ClusterConfig_ZoneAwarenessConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.zone_awareness_config", self.base))
     }
 
@@ -1107,7 +1139,7 @@ impl DataElasticsearchDomainClusterConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainCognitoOptionsEl {
+pub struct DataElasticsearchDomain_CognitoOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1118,7 +1150,7 @@ pub struct DataElasticsearchDomainCognitoOptionsEl {
     user_pool_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataElasticsearchDomainCognitoOptionsEl {
+impl DataElasticsearchDomain_CognitoOptions {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1144,8 +1176,8 @@ impl DataElasticsearchDomainCognitoOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainCognitoOptionsEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainCognitoOptionsEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_CognitoOptions {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_CognitoOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1156,11 +1188,11 @@ impl terrars::ToListMappable for DataElasticsearchDomainCognitoOptionsEl {
     }
 }
 
-pub struct BuildDataElasticsearchDomainCognitoOptionsEl {}
+pub struct BuildDataElasticsearchDomain_CognitoOptions {}
 
-impl BuildDataElasticsearchDomainCognitoOptionsEl {
-    pub fn build(self) -> DataElasticsearchDomainCognitoOptionsEl {
-        DataElasticsearchDomainCognitoOptionsEl {
+impl BuildDataElasticsearchDomain_CognitoOptions {
+    pub fn build(self) -> DataElasticsearchDomain_CognitoOptions {
+        DataElasticsearchDomain_CognitoOptions {
             enabled: core::default::Default::default(),
             identity_pool_id: core::default::Default::default(),
             role_arn: core::default::Default::default(),
@@ -1169,21 +1201,23 @@ impl BuildDataElasticsearchDomainCognitoOptionsEl {
     }
 }
 
-pub struct DataElasticsearchDomainCognitoOptionsElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_CognitoOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainCognitoOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomainCognitoOptionsElRef {
-        DataElasticsearchDomainCognitoOptionsElRef {
+impl terrars::Ref for DataElasticsearchDomain_CognitoOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomain_CognitoOptionsRef {
+        DataElasticsearchDomain_CognitoOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainCognitoOptionsElRef {
+impl DataElasticsearchDomain_CognitoOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1210,7 +1244,7 @@ impl DataElasticsearchDomainCognitoOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainEbsOptionsEl {
+pub struct DataElasticsearchDomain_EbsOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ebs_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1223,7 +1257,7 @@ pub struct DataElasticsearchDomainEbsOptionsEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataElasticsearchDomainEbsOptionsEl {
+impl DataElasticsearchDomain_EbsOptions {
     #[doc = "Set the field `ebs_enabled`.\n"]
     pub fn set_ebs_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.ebs_enabled = std::option::Option::Some(v.into());
@@ -1255,8 +1289,8 @@ impl DataElasticsearchDomainEbsOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainEbsOptionsEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainEbsOptionsEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_EbsOptions {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_EbsOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1267,11 +1301,11 @@ impl terrars::ToListMappable for DataElasticsearchDomainEbsOptionsEl {
     }
 }
 
-pub struct BuildDataElasticsearchDomainEbsOptionsEl {}
+pub struct BuildDataElasticsearchDomain_EbsOptions {}
 
-impl BuildDataElasticsearchDomainEbsOptionsEl {
-    pub fn build(self) -> DataElasticsearchDomainEbsOptionsEl {
-        DataElasticsearchDomainEbsOptionsEl {
+impl BuildDataElasticsearchDomain_EbsOptions {
+    pub fn build(self) -> DataElasticsearchDomain_EbsOptions {
+        DataElasticsearchDomain_EbsOptions {
             ebs_enabled: core::default::Default::default(),
             iops: core::default::Default::default(),
             throughput: core::default::Default::default(),
@@ -1281,21 +1315,23 @@ impl BuildDataElasticsearchDomainEbsOptionsEl {
     }
 }
 
-pub struct DataElasticsearchDomainEbsOptionsElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_EbsOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainEbsOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomainEbsOptionsElRef {
-        DataElasticsearchDomainEbsOptionsElRef {
+impl terrars::Ref for DataElasticsearchDomain_EbsOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomain_EbsOptionsRef {
+        DataElasticsearchDomain_EbsOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainEbsOptionsElRef {
+impl DataElasticsearchDomain_EbsOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1327,14 +1363,14 @@ impl DataElasticsearchDomainEbsOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainEncryptionAtRestEl {
+pub struct DataElasticsearchDomain_EncryptionAtRest {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataElasticsearchDomainEncryptionAtRestEl {
+impl DataElasticsearchDomain_EncryptionAtRest {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1348,8 +1384,8 @@ impl DataElasticsearchDomainEncryptionAtRestEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainEncryptionAtRestEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainEncryptionAtRestEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_EncryptionAtRest {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_EncryptionAtRest>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1360,32 +1396,34 @@ impl terrars::ToListMappable for DataElasticsearchDomainEncryptionAtRestEl {
     }
 }
 
-pub struct BuildDataElasticsearchDomainEncryptionAtRestEl {}
+pub struct BuildDataElasticsearchDomain_EncryptionAtRest {}
 
-impl BuildDataElasticsearchDomainEncryptionAtRestEl {
-    pub fn build(self) -> DataElasticsearchDomainEncryptionAtRestEl {
-        DataElasticsearchDomainEncryptionAtRestEl {
+impl BuildDataElasticsearchDomain_EncryptionAtRest {
+    pub fn build(self) -> DataElasticsearchDomain_EncryptionAtRest {
+        DataElasticsearchDomain_EncryptionAtRest {
             enabled: core::default::Default::default(),
             kms_key_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataElasticsearchDomainEncryptionAtRestElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_EncryptionAtRestRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainEncryptionAtRestElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomainEncryptionAtRestElRef {
-        DataElasticsearchDomainEncryptionAtRestElRef {
+impl terrars::Ref for DataElasticsearchDomain_EncryptionAtRestRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomain_EncryptionAtRestRef {
+        DataElasticsearchDomain_EncryptionAtRestRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainEncryptionAtRestElRef {
+impl DataElasticsearchDomain_EncryptionAtRestRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1402,7 +1440,7 @@ impl DataElasticsearchDomainEncryptionAtRestElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainLogPublishingOptionsEl {
+pub struct DataElasticsearchDomain_LogPublishingOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_log_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1411,7 +1449,7 @@ pub struct DataElasticsearchDomainLogPublishingOptionsEl {
     log_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataElasticsearchDomainLogPublishingOptionsEl {
+impl DataElasticsearchDomain_LogPublishingOptions {
     #[doc = "Set the field `cloudwatch_log_group_arn`.\n"]
     pub fn set_cloudwatch_log_group_arn(
         mut self,
@@ -1434,8 +1472,8 @@ impl DataElasticsearchDomainLogPublishingOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainLogPublishingOptionsEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainLogPublishingOptionsEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_LogPublishingOptions {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_LogPublishingOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1446,11 +1484,11 @@ impl terrars::ToListMappable for DataElasticsearchDomainLogPublishingOptionsEl {
     }
 }
 
-pub struct BuildDataElasticsearchDomainLogPublishingOptionsEl {}
+pub struct BuildDataElasticsearchDomain_LogPublishingOptions {}
 
-impl BuildDataElasticsearchDomainLogPublishingOptionsEl {
-    pub fn build(self) -> DataElasticsearchDomainLogPublishingOptionsEl {
-        DataElasticsearchDomainLogPublishingOptionsEl {
+impl BuildDataElasticsearchDomain_LogPublishingOptions {
+    pub fn build(self) -> DataElasticsearchDomain_LogPublishingOptions {
+        DataElasticsearchDomain_LogPublishingOptions {
             cloudwatch_log_group_arn: core::default::Default::default(),
             enabled: core::default::Default::default(),
             log_type: core::default::Default::default(),
@@ -1458,24 +1496,26 @@ impl BuildDataElasticsearchDomainLogPublishingOptionsEl {
     }
 }
 
-pub struct DataElasticsearchDomainLogPublishingOptionsElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_LogPublishingOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainLogPublishingOptionsElRef {
+impl terrars::Ref for DataElasticsearchDomain_LogPublishingOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataElasticsearchDomainLogPublishingOptionsElRef {
-        DataElasticsearchDomainLogPublishingOptionsElRef {
+    ) -> DataElasticsearchDomain_LogPublishingOptionsRef {
+        DataElasticsearchDomain_LogPublishingOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainLogPublishingOptionsElRef {
+impl DataElasticsearchDomain_LogPublishingOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1497,12 +1537,12 @@ impl DataElasticsearchDomainLogPublishingOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainNodeToNodeEncryptionEl {
+pub struct DataElasticsearchDomain_NodeToNodeEncryption {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataElasticsearchDomainNodeToNodeEncryptionEl {
+impl DataElasticsearchDomain_NodeToNodeEncryption {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -1510,8 +1550,8 @@ impl DataElasticsearchDomainNodeToNodeEncryptionEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainNodeToNodeEncryptionEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainNodeToNodeEncryptionEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_NodeToNodeEncryption {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_NodeToNodeEncryption>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1522,32 +1562,34 @@ impl terrars::ToListMappable for DataElasticsearchDomainNodeToNodeEncryptionEl {
     }
 }
 
-pub struct BuildDataElasticsearchDomainNodeToNodeEncryptionEl {}
+pub struct BuildDataElasticsearchDomain_NodeToNodeEncryption {}
 
-impl BuildDataElasticsearchDomainNodeToNodeEncryptionEl {
-    pub fn build(self) -> DataElasticsearchDomainNodeToNodeEncryptionEl {
-        DataElasticsearchDomainNodeToNodeEncryptionEl { enabled: core::default::Default::default() }
+impl BuildDataElasticsearchDomain_NodeToNodeEncryption {
+    pub fn build(self) -> DataElasticsearchDomain_NodeToNodeEncryption {
+        DataElasticsearchDomain_NodeToNodeEncryption { enabled: core::default::Default::default() }
     }
 }
 
-pub struct DataElasticsearchDomainNodeToNodeEncryptionElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_NodeToNodeEncryptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainNodeToNodeEncryptionElRef {
+impl terrars::Ref for DataElasticsearchDomain_NodeToNodeEncryptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataElasticsearchDomainNodeToNodeEncryptionElRef {
-        DataElasticsearchDomainNodeToNodeEncryptionElRef {
+    ) -> DataElasticsearchDomain_NodeToNodeEncryptionRef {
+        DataElasticsearchDomain_NodeToNodeEncryptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainNodeToNodeEncryptionElRef {
+impl DataElasticsearchDomain_NodeToNodeEncryptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1559,12 +1601,12 @@ impl DataElasticsearchDomainNodeToNodeEncryptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainSnapshotOptionsEl {
+pub struct DataElasticsearchDomain_SnapshotOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     automated_snapshot_start_hour: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataElasticsearchDomainSnapshotOptionsEl {
+impl DataElasticsearchDomain_SnapshotOptions {
     #[doc = "Set the field `automated_snapshot_start_hour`.\n"]
     pub fn set_automated_snapshot_start_hour(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.automated_snapshot_start_hour = std::option::Option::Some(v.into());
@@ -1572,8 +1614,8 @@ impl DataElasticsearchDomainSnapshotOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainSnapshotOptionsEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainSnapshotOptionsEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_SnapshotOptions {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_SnapshotOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1584,29 +1626,31 @@ impl terrars::ToListMappable for DataElasticsearchDomainSnapshotOptionsEl {
     }
 }
 
-pub struct BuildDataElasticsearchDomainSnapshotOptionsEl {}
+pub struct BuildDataElasticsearchDomain_SnapshotOptions {}
 
-impl BuildDataElasticsearchDomainSnapshotOptionsEl {
-    pub fn build(self) -> DataElasticsearchDomainSnapshotOptionsEl {
-        DataElasticsearchDomainSnapshotOptionsEl { automated_snapshot_start_hour: core::default::Default::default() }
+impl BuildDataElasticsearchDomain_SnapshotOptions {
+    pub fn build(self) -> DataElasticsearchDomain_SnapshotOptions {
+        DataElasticsearchDomain_SnapshotOptions { automated_snapshot_start_hour: core::default::Default::default() }
     }
 }
 
-pub struct DataElasticsearchDomainSnapshotOptionsElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_SnapshotOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainSnapshotOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomainSnapshotOptionsElRef {
-        DataElasticsearchDomainSnapshotOptionsElRef {
+impl terrars::Ref for DataElasticsearchDomain_SnapshotOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomain_SnapshotOptionsRef {
+        DataElasticsearchDomain_SnapshotOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainSnapshotOptionsElRef {
+impl DataElasticsearchDomain_SnapshotOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1618,7 +1662,7 @@ impl DataElasticsearchDomainSnapshotOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataElasticsearchDomainVpcOptionsEl {
+pub struct DataElasticsearchDomain_VpcOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zones: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1629,7 +1673,7 @@ pub struct DataElasticsearchDomainVpcOptionsEl {
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataElasticsearchDomainVpcOptionsEl {
+impl DataElasticsearchDomain_VpcOptions {
     #[doc = "Set the field `availability_zones`.\n"]
     pub fn set_availability_zones(
         mut self,
@@ -1664,8 +1708,8 @@ impl DataElasticsearchDomainVpcOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataElasticsearchDomainVpcOptionsEl {
-    type O = terrars::BlockAssignable<DataElasticsearchDomainVpcOptionsEl>;
+impl terrars::ToListMappable for DataElasticsearchDomain_VpcOptions {
+    type O = terrars::BlockAssignable<DataElasticsearchDomain_VpcOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1676,11 +1720,11 @@ impl terrars::ToListMappable for DataElasticsearchDomainVpcOptionsEl {
     }
 }
 
-pub struct BuildDataElasticsearchDomainVpcOptionsEl {}
+pub struct BuildDataElasticsearchDomain_VpcOptions {}
 
-impl BuildDataElasticsearchDomainVpcOptionsEl {
-    pub fn build(self) -> DataElasticsearchDomainVpcOptionsEl {
-        DataElasticsearchDomainVpcOptionsEl {
+impl BuildDataElasticsearchDomain_VpcOptions {
+    pub fn build(self) -> DataElasticsearchDomain_VpcOptions {
+        DataElasticsearchDomain_VpcOptions {
             availability_zones: core::default::Default::default(),
             security_group_ids: core::default::Default::default(),
             subnet_ids: core::default::Default::default(),
@@ -1689,21 +1733,23 @@ impl BuildDataElasticsearchDomainVpcOptionsEl {
     }
 }
 
-pub struct DataElasticsearchDomainVpcOptionsElRef {
+#[allow(dead_code)]
+pub struct DataElasticsearchDomain_VpcOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataElasticsearchDomainVpcOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomainVpcOptionsElRef {
-        DataElasticsearchDomainVpcOptionsElRef {
+impl terrars::Ref for DataElasticsearchDomain_VpcOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataElasticsearchDomain_VpcOptionsRef {
+        DataElasticsearchDomain_VpcOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataElasticsearchDomainVpcOptionsElRef {
+impl DataElasticsearchDomain_VpcOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

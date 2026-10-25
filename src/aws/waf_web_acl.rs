@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafWebAclData {
+struct WafWebAclData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,18 +29,18 @@ struct WafWebAclData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_action: std::option::Option<std::vec::Vec<WafWebAclDefaultActionEl>>,
+    default_action: std::option::Option<std::vec::Vec<WafWebAcl_DefaultAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging_configuration: std::option::Option<std::vec::Vec<WafWebAclLoggingConfigurationEl>>,
+    logging_configuration: std::option::Option<std::vec::Vec<WafWebAcl_LoggingConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rules: std::option::Option<std::vec::Vec<WafWebAclRulesEl>>,
+    rules: std::option::Option<std::vec::Vec<WafWebAcl_Rules>>,
     dynamic: WafWebAclDynamic,
 }
 
 struct WafWebAcl_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafWebAclData>,
+    data: std::cell::RefCell<WafWebAclData_>,
 }
 
 #[derive(Clone)]
@@ -165,7 +167,7 @@ impl WafWebAcl {
     #[doc = "Set the field `default_action`.\n"]
     pub fn set_default_action(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafWebAclDefaultActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafWebAcl_DefaultAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -181,7 +183,7 @@ impl WafWebAcl {
     #[doc = "Set the field `logging_configuration`.\n"]
     pub fn set_logging_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafWebAclLoggingConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafWebAcl_LoggingConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -195,7 +197,7 @@ impl WafWebAcl {
     }
 
     #[doc = "Set the field `rules`.\n"]
-    pub fn set_rules(self, v: impl std::convert::Into<terrars::BlockAssignable<WafWebAclRulesEl>>) -> Self {
+    pub fn set_rules(self, v: impl std::convert::Into<terrars::BlockAssignable<WafWebAcl_Rules>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().rules = std::option::Option::Some(v);
@@ -238,12 +240,12 @@ impl WafWebAcl {
     }
 
     #[doc = "Get a reference to the value of field `default_action` after provisioning.\n"]
-    pub fn default_action(&self) -> terrars::ListRef<WafWebAclDefaultActionElRef> {
+    pub fn default_action(&self) -> terrars::ListRef<WafWebAcl_DefaultActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(&self) -> terrars::ListRef<WafWebAclLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<WafWebAcl_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 }
@@ -292,7 +294,7 @@ impl BuildWafWebAcl {
         let out = WafWebAcl(std::rc::Rc::new(WafWebAcl_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafWebAclData {
+            data: std::cell::RefCell::new(WafWebAclData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -368,26 +370,33 @@ impl WafWebAclRef {
     }
 
     #[doc = "Get a reference to the value of field `default_action` after provisioning.\n"]
-    pub fn default_action(&self) -> terrars::ListRef<WafWebAclDefaultActionElRef> {
+    pub fn default_action(&self) -> terrars::ListRef<WafWebAcl_DefaultActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_action", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging_configuration` after provisioning.\n"]
-    pub fn logging_configuration(&self) -> terrars::ListRef<WafWebAclLoggingConfigurationElRef> {
+    pub fn logging_configuration(&self) -> terrars::ListRef<WafWebAcl_LoggingConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging_configuration", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct WafWebAclDynamic {
+    default_action: std::option::Option<terrars::DynamicBlock<WafWebAcl_DefaultAction>>,
+    logging_configuration: std::option::Option<terrars::DynamicBlock<WafWebAcl_LoggingConfiguration>>,
+    rules: std::option::Option<terrars::DynamicBlock<WafWebAcl_Rules>>,
+}
+
 #[derive(Serialize)]
-pub struct WafWebAclDefaultActionEl {
+pub struct WafWebAcl_DefaultAction {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafWebAclDefaultActionEl { }
+impl WafWebAcl_DefaultAction { }
 
-impl terrars::ToListMappable for WafWebAclDefaultActionEl {
-    type O = terrars::BlockAssignable<WafWebAclDefaultActionEl>;
+impl terrars::ToListMappable for WafWebAcl_DefaultAction {
+    type O = terrars::BlockAssignable<WafWebAcl_DefaultAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -398,32 +407,34 @@ impl terrars::ToListMappable for WafWebAclDefaultActionEl {
     }
 }
 
-pub struct BuildWafWebAclDefaultActionEl {
+pub struct BuildWafWebAcl_DefaultAction {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafWebAclDefaultActionEl {
-    pub fn build(self) -> WafWebAclDefaultActionEl {
-        WafWebAclDefaultActionEl { type_: self.type_ }
+impl BuildWafWebAcl_DefaultAction {
+    pub fn build(self) -> WafWebAcl_DefaultAction {
+        WafWebAcl_DefaultAction { type_: self.type_ }
     }
 }
 
-pub struct WafWebAclDefaultActionElRef {
+#[allow(dead_code)]
+pub struct WafWebAcl_DefaultActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafWebAclDefaultActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAclDefaultActionElRef {
-        WafWebAclDefaultActionElRef {
+impl terrars::Ref for WafWebAcl_DefaultActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAcl_DefaultActionRef {
+        WafWebAcl_DefaultActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafWebAclDefaultActionElRef {
+impl WafWebAcl_DefaultActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -435,14 +446,14 @@ impl WafWebAclDefaultActionElRef {
 }
 
 #[derive(Serialize)]
-pub struct WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl {
+pub struct WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl {
+impl WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -450,8 +461,8 @@ impl WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl {
     }
 }
 
-impl terrars::ToListMappable for WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl {
-    type O = terrars::BlockAssignable<WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl>;
+impl terrars::ToListMappable for WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch {
+    type O = terrars::BlockAssignable<WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -462,38 +473,40 @@ impl terrars::ToListMappable for WafWebAclLoggingConfigurationElRedactedFieldsEl
     }
 }
 
-pub struct BuildWafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl {
+pub struct BuildWafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl {
-    pub fn build(self) -> WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl {
-        WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl {
+impl BuildWafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch {
+    pub fn build(self) -> WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch {
+        WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch {
             data: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchElRef {
+#[allow(dead_code)]
+pub struct WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchElRef {
+impl terrars::Ref for WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchElRef {
-        WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchElRef {
+    ) -> WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatchRef {
+        WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchElRef {
+impl WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -510,20 +523,20 @@ impl WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafWebAclLoggingConfigurationElRedactedFieldsElDynamic {
+struct WafWebAcl_LoggingConfiguration_RedactedFieldsDynamic {
     field_to_match: std
     ::option
-    ::Option<terrars::DynamicBlock<WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl>>,
+    ::Option<terrars::DynamicBlock<WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct WafWebAclLoggingConfigurationElRedactedFieldsEl {
+pub struct WafWebAcl_LoggingConfiguration_RedactedFields {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_to_match: std::option::Option<std::vec::Vec<WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl>>,
-    dynamic: WafWebAclLoggingConfigurationElRedactedFieldsElDynamic,
+    field_to_match: std::option::Option<std::vec::Vec<WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch>>,
+    dynamic: WafWebAcl_LoggingConfiguration_RedactedFieldsDynamic,
 }
 
-impl WafWebAclLoggingConfigurationElRedactedFieldsEl {
+impl WafWebAcl_LoggingConfiguration_RedactedFields {
     #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
@@ -532,7 +545,7 @@ impl WafWebAclLoggingConfigurationElRedactedFieldsEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<WafWebAclLoggingConfigurationElRedactedFieldsElFieldToMatchEl>>,
+                    ::Into<terrars::BlockAssignable<WafWebAcl_LoggingConfiguration_RedactedFields_FieldToMatch>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -546,8 +559,8 @@ impl WafWebAclLoggingConfigurationElRedactedFieldsEl {
     }
 }
 
-impl terrars::ToListMappable for WafWebAclLoggingConfigurationElRedactedFieldsEl {
-    type O = terrars::BlockAssignable<WafWebAclLoggingConfigurationElRedactedFieldsEl>;
+impl terrars::ToListMappable for WafWebAcl_LoggingConfiguration_RedactedFields {
+    type O = terrars::BlockAssignable<WafWebAcl_LoggingConfiguration_RedactedFields>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -558,58 +571,60 @@ impl terrars::ToListMappable for WafWebAclLoggingConfigurationElRedactedFieldsEl
     }
 }
 
-pub struct BuildWafWebAclLoggingConfigurationElRedactedFieldsEl {}
+pub struct BuildWafWebAcl_LoggingConfiguration_RedactedFields {}
 
-impl BuildWafWebAclLoggingConfigurationElRedactedFieldsEl {
-    pub fn build(self) -> WafWebAclLoggingConfigurationElRedactedFieldsEl {
-        WafWebAclLoggingConfigurationElRedactedFieldsEl {
+impl BuildWafWebAcl_LoggingConfiguration_RedactedFields {
+    pub fn build(self) -> WafWebAcl_LoggingConfiguration_RedactedFields {
+        WafWebAcl_LoggingConfiguration_RedactedFields {
             field_to_match: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct WafWebAclLoggingConfigurationElRedactedFieldsElRef {
+#[allow(dead_code)]
+pub struct WafWebAcl_LoggingConfiguration_RedactedFieldsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafWebAclLoggingConfigurationElRedactedFieldsElRef {
+impl terrars::Ref for WafWebAcl_LoggingConfiguration_RedactedFieldsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafWebAclLoggingConfigurationElRedactedFieldsElRef {
-        WafWebAclLoggingConfigurationElRedactedFieldsElRef {
+    ) -> WafWebAcl_LoggingConfiguration_RedactedFieldsRef {
+        WafWebAcl_LoggingConfiguration_RedactedFieldsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafWebAclLoggingConfigurationElRedactedFieldsElRef {
+impl WafWebAcl_LoggingConfiguration_RedactedFieldsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct WafWebAclLoggingConfigurationElDynamic {
-    redacted_fields: std::option::Option<terrars::DynamicBlock<WafWebAclLoggingConfigurationElRedactedFieldsEl>>,
+struct WafWebAcl_LoggingConfigurationDynamic {
+    redacted_fields: std::option::Option<terrars::DynamicBlock<WafWebAcl_LoggingConfiguration_RedactedFields>>,
 }
 
 #[derive(Serialize)]
-pub struct WafWebAclLoggingConfigurationEl {
+pub struct WafWebAcl_LoggingConfiguration {
     log_destination: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    redacted_fields: std::option::Option<std::vec::Vec<WafWebAclLoggingConfigurationElRedactedFieldsEl>>,
-    dynamic: WafWebAclLoggingConfigurationElDynamic,
+    redacted_fields: std::option::Option<std::vec::Vec<WafWebAcl_LoggingConfiguration_RedactedFields>>,
+    dynamic: WafWebAcl_LoggingConfigurationDynamic,
 }
 
-impl WafWebAclLoggingConfigurationEl {
+impl WafWebAcl_LoggingConfiguration {
     #[doc = "Set the field `redacted_fields`.\n"]
     pub fn set_redacted_fields(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafWebAclLoggingConfigurationElRedactedFieldsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafWebAcl_LoggingConfiguration_RedactedFields>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -623,8 +638,8 @@ impl WafWebAclLoggingConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for WafWebAclLoggingConfigurationEl {
-    type O = terrars::BlockAssignable<WafWebAclLoggingConfigurationEl>;
+impl terrars::ToListMappable for WafWebAcl_LoggingConfiguration {
+    type O = terrars::BlockAssignable<WafWebAcl_LoggingConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -635,14 +650,14 @@ impl terrars::ToListMappable for WafWebAclLoggingConfigurationEl {
     }
 }
 
-pub struct BuildWafWebAclLoggingConfigurationEl {
+pub struct BuildWafWebAcl_LoggingConfiguration {
     #[doc = ""]
     pub log_destination: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafWebAclLoggingConfigurationEl {
-    pub fn build(self) -> WafWebAclLoggingConfigurationEl {
-        WafWebAclLoggingConfigurationEl {
+impl BuildWafWebAcl_LoggingConfiguration {
+    pub fn build(self) -> WafWebAcl_LoggingConfiguration {
+        WafWebAcl_LoggingConfiguration {
             log_destination: self.log_destination,
             redacted_fields: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -650,21 +665,23 @@ impl BuildWafWebAclLoggingConfigurationEl {
     }
 }
 
-pub struct WafWebAclLoggingConfigurationElRef {
+#[allow(dead_code)]
+pub struct WafWebAcl_LoggingConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafWebAclLoggingConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAclLoggingConfigurationElRef {
-        WafWebAclLoggingConfigurationElRef {
+impl terrars::Ref for WafWebAcl_LoggingConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAcl_LoggingConfigurationRef {
+        WafWebAcl_LoggingConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafWebAclLoggingConfigurationElRef {
+impl WafWebAcl_LoggingConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -675,21 +692,21 @@ impl WafWebAclLoggingConfigurationElRef {
     }
 
     #[doc = "Get a reference to the value of field `redacted_fields` after provisioning.\n"]
-    pub fn redacted_fields(&self) -> terrars::ListRef<WafWebAclLoggingConfigurationElRedactedFieldsElRef> {
+    pub fn redacted_fields(&self) -> terrars::ListRef<WafWebAcl_LoggingConfiguration_RedactedFieldsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.redacted_fields", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct WafWebAclRulesElActionEl {
+pub struct WafWebAcl_Rules_Action {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafWebAclRulesElActionEl { }
+impl WafWebAcl_Rules_Action { }
 
-impl terrars::ToListMappable for WafWebAclRulesElActionEl {
-    type O = terrars::BlockAssignable<WafWebAclRulesElActionEl>;
+impl terrars::ToListMappable for WafWebAcl_Rules_Action {
+    type O = terrars::BlockAssignable<WafWebAcl_Rules_Action>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -700,32 +717,34 @@ impl terrars::ToListMappable for WafWebAclRulesElActionEl {
     }
 }
 
-pub struct BuildWafWebAclRulesElActionEl {
+pub struct BuildWafWebAcl_Rules_Action {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafWebAclRulesElActionEl {
-    pub fn build(self) -> WafWebAclRulesElActionEl {
-        WafWebAclRulesElActionEl { type_: self.type_ }
+impl BuildWafWebAcl_Rules_Action {
+    pub fn build(self) -> WafWebAcl_Rules_Action {
+        WafWebAcl_Rules_Action { type_: self.type_ }
     }
 }
 
-pub struct WafWebAclRulesElActionElRef {
+#[allow(dead_code)]
+pub struct WafWebAcl_Rules_ActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafWebAclRulesElActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAclRulesElActionElRef {
-        WafWebAclRulesElActionElRef {
+impl terrars::Ref for WafWebAcl_Rules_ActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAcl_Rules_ActionRef {
+        WafWebAcl_Rules_ActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafWebAclRulesElActionElRef {
+impl WafWebAcl_Rules_ActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -737,15 +756,15 @@ impl WafWebAclRulesElActionElRef {
 }
 
 #[derive(Serialize)]
-pub struct WafWebAclRulesElOverrideActionEl {
+pub struct WafWebAcl_Rules_OverrideAction {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafWebAclRulesElOverrideActionEl { }
+impl WafWebAcl_Rules_OverrideAction { }
 
-impl terrars::ToListMappable for WafWebAclRulesElOverrideActionEl {
-    type O = terrars::BlockAssignable<WafWebAclRulesElOverrideActionEl>;
+impl terrars::ToListMappable for WafWebAcl_Rules_OverrideAction {
+    type O = terrars::BlockAssignable<WafWebAcl_Rules_OverrideAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -756,32 +775,34 @@ impl terrars::ToListMappable for WafWebAclRulesElOverrideActionEl {
     }
 }
 
-pub struct BuildWafWebAclRulesElOverrideActionEl {
+pub struct BuildWafWebAcl_Rules_OverrideAction {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafWebAclRulesElOverrideActionEl {
-    pub fn build(self) -> WafWebAclRulesElOverrideActionEl {
-        WafWebAclRulesElOverrideActionEl { type_: self.type_ }
+impl BuildWafWebAcl_Rules_OverrideAction {
+    pub fn build(self) -> WafWebAcl_Rules_OverrideAction {
+        WafWebAcl_Rules_OverrideAction { type_: self.type_ }
     }
 }
 
-pub struct WafWebAclRulesElOverrideActionElRef {
+#[allow(dead_code)]
+pub struct WafWebAcl_Rules_OverrideActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafWebAclRulesElOverrideActionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAclRulesElOverrideActionElRef {
-        WafWebAclRulesElOverrideActionElRef {
+impl terrars::Ref for WafWebAcl_Rules_OverrideActionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAcl_Rules_OverrideActionRef {
+        WafWebAcl_Rules_OverrideActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafWebAclRulesElOverrideActionElRef {
+impl WafWebAcl_Rules_OverrideActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -793,25 +814,25 @@ impl WafWebAclRulesElOverrideActionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafWebAclRulesElDynamic {
-    action: std::option::Option<terrars::DynamicBlock<WafWebAclRulesElActionEl>>,
-    override_action: std::option::Option<terrars::DynamicBlock<WafWebAclRulesElOverrideActionEl>>,
+struct WafWebAcl_RulesDynamic {
+    action: std::option::Option<terrars::DynamicBlock<WafWebAcl_Rules_Action>>,
+    override_action: std::option::Option<terrars::DynamicBlock<WafWebAcl_Rules_OverrideAction>>,
 }
 
 #[derive(Serialize)]
-pub struct WafWebAclRulesEl {
+pub struct WafWebAcl_Rules {
     priority: terrars::PrimField<f64>,
     rule_id: terrars::PrimField<std::string::String>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action: std::option::Option<std::vec::Vec<WafWebAclRulesElActionEl>>,
+    action: std::option::Option<std::vec::Vec<WafWebAcl_Rules_Action>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    override_action: std::option::Option<std::vec::Vec<WafWebAclRulesElOverrideActionEl>>,
-    dynamic: WafWebAclRulesElDynamic,
+    override_action: std::option::Option<std::vec::Vec<WafWebAcl_Rules_OverrideAction>>,
+    dynamic: WafWebAcl_RulesDynamic,
 }
 
-impl WafWebAclRulesEl {
+impl WafWebAcl_Rules {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -819,7 +840,7 @@ impl WafWebAclRulesEl {
     }
 
     #[doc = "Set the field `action`.\n"]
-    pub fn set_action(mut self, v: impl std::convert::Into<terrars::BlockAssignable<WafWebAclRulesElActionEl>>) -> Self {
+    pub fn set_action(mut self, v: impl std::convert::Into<terrars::BlockAssignable<WafWebAcl_Rules_Action>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.action = std::option::Option::Some(v);
@@ -834,7 +855,7 @@ impl WafWebAclRulesEl {
     #[doc = "Set the field `override_action`.\n"]
     pub fn set_override_action(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafWebAclRulesElOverrideActionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafWebAcl_Rules_OverrideAction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -848,8 +869,8 @@ impl WafWebAclRulesEl {
     }
 }
 
-impl terrars::ToListMappable for WafWebAclRulesEl {
-    type O = terrars::BlockAssignable<WafWebAclRulesEl>;
+impl terrars::ToListMappable for WafWebAcl_Rules {
+    type O = terrars::BlockAssignable<WafWebAcl_Rules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -860,16 +881,16 @@ impl terrars::ToListMappable for WafWebAclRulesEl {
     }
 }
 
-pub struct BuildWafWebAclRulesEl {
+pub struct BuildWafWebAcl_Rules {
     #[doc = ""]
     pub priority: terrars::PrimField<f64>,
     #[doc = ""]
     pub rule_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafWebAclRulesEl {
-    pub fn build(self) -> WafWebAclRulesEl {
-        WafWebAclRulesEl {
+impl BuildWafWebAcl_Rules {
+    pub fn build(self) -> WafWebAcl_Rules {
+        WafWebAcl_Rules {
             priority: self.priority,
             rule_id: self.rule_id,
             type_: core::default::Default::default(),
@@ -880,21 +901,23 @@ impl BuildWafWebAclRulesEl {
     }
 }
 
-pub struct WafWebAclRulesElRef {
+#[allow(dead_code)]
+pub struct WafWebAcl_RulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafWebAclRulesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAclRulesElRef {
-        WafWebAclRulesElRef {
+impl terrars::Ref for WafWebAcl_RulesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafWebAcl_RulesRef {
+        WafWebAcl_RulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafWebAclRulesElRef {
+impl WafWebAcl_RulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -915,19 +938,12 @@ impl WafWebAclRulesElRef {
     }
 
     #[doc = "Get a reference to the value of field `action` after provisioning.\n"]
-    pub fn action(&self) -> terrars::ListRef<WafWebAclRulesElActionElRef> {
+    pub fn action(&self) -> terrars::ListRef<WafWebAcl_Rules_ActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action", self.base))
     }
 
     #[doc = "Get a reference to the value of field `override_action` after provisioning.\n"]
-    pub fn override_action(&self) -> terrars::ListRef<WafWebAclRulesElOverrideActionElRef> {
+    pub fn override_action(&self) -> terrars::ListRef<WafWebAcl_Rules_OverrideActionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.override_action", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafWebAclDynamic {
-    default_action: std::option::Option<terrars::DynamicBlock<WafWebAclDefaultActionEl>>,
-    logging_configuration: std::option::Option<terrars::DynamicBlock<WafWebAclLoggingConfigurationEl>>,
-    rules: std::option::Option<terrars::DynamicBlock<WafWebAclRulesEl>>,
 }

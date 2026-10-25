@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct WafregionalRegexMatchSetData {
+struct WafregionalRegexMatchSetData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct WafregionalRegexMatchSetData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    regex_match_tuple: std::option::Option<std::vec::Vec<WafregionalRegexMatchSetRegexMatchTupleEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regex_match_tuple: std::option::Option<std::vec::Vec<WafregionalRegexMatchSet_RegexMatchTuple>>,
     dynamic: WafregionalRegexMatchSetDynamic,
 }
 
 struct WafregionalRegexMatchSet_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<WafregionalRegexMatchSetData>,
+    data: std::cell::RefCell<WafregionalRegexMatchSetData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl WafregionalRegexMatchSet {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `regex_match_tuple`.\n"]
     pub fn set_regex_match_tuple(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalRegexMatchSetRegexMatchTupleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalRegexMatchSet_RegexMatchTuple>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -159,6 +170,12 @@ impl WafregionalRegexMatchSet {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -204,7 +221,7 @@ impl BuildWafregionalRegexMatchSet {
         let out = WafregionalRegexMatchSet(std::rc::Rc::new(WafregionalRegexMatchSet_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(WafregionalRegexMatchSetData {
+            data: std::cell::RefCell::new(WafregionalRegexMatchSetData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -212,6 +229,7 @@ impl BuildWafregionalRegexMatchSet {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 regex_match_tuple: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -253,17 +271,28 @@ impl WafregionalRegexMatchSetRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct WafregionalRegexMatchSetDynamic {
+    regex_match_tuple: std::option::Option<terrars::DynamicBlock<WafregionalRegexMatchSet_RegexMatchTuple>>,
 }
 
 #[derive(Serialize)]
-pub struct WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl {
+pub struct WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     data: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl {
+impl WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch {
     #[doc = "Set the field `data`.\n"]
     pub fn set_data(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.data = std::option::Option::Some(v.into());
@@ -271,8 +300,8 @@ impl WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl {
     }
 }
 
-impl terrars::ToListMappable for WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl {
-    type O = terrars::BlockAssignable<WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl>;
+impl terrars::ToListMappable for WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch {
+    type O = terrars::BlockAssignable<WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -283,38 +312,40 @@ impl terrars::ToListMappable for WafregionalRegexMatchSetRegexMatchTupleElFieldT
     }
 }
 
-pub struct BuildWafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl {
+pub struct BuildWafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl {
-    pub fn build(self) -> WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl {
-        WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl {
+impl BuildWafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch {
+    pub fn build(self) -> WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch {
+        WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch {
             data: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
+#[allow(dead_code)]
+pub struct WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
+impl terrars::Ref for WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
-        WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
+    ) -> WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
+        WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
+impl WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -331,31 +362,26 @@ impl WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchElRef {
 }
 
 #[derive(Serialize, Default)]
-struct WafregionalRegexMatchSetRegexMatchTupleElDynamic {
+struct WafregionalRegexMatchSet_RegexMatchTupleDynamic {
     field_to_match: std
     ::option
-    ::Option<terrars::DynamicBlock<WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl>>,
+    ::Option<terrars::DynamicBlock<WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch>>,
 }
 
 #[derive(Serialize)]
-pub struct WafregionalRegexMatchSetRegexMatchTupleEl {
+pub struct WafregionalRegexMatchSet_RegexMatchTuple {
     regex_pattern_set_id: terrars::PrimField<std::string::String>,
     text_transformation: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    field_to_match: std::option::Option<std::vec::Vec<WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl>>,
-    dynamic: WafregionalRegexMatchSetRegexMatchTupleElDynamic,
+    field_to_match: std::option::Option<std::vec::Vec<WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch>>,
+    dynamic: WafregionalRegexMatchSet_RegexMatchTupleDynamic,
 }
 
-impl WafregionalRegexMatchSetRegexMatchTupleEl {
+impl WafregionalRegexMatchSet_RegexMatchTuple {
     #[doc = "Set the field `field_to_match`.\n"]
     pub fn set_field_to_match(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatch>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -369,8 +395,8 @@ impl WafregionalRegexMatchSetRegexMatchTupleEl {
     }
 }
 
-impl terrars::ToListMappable for WafregionalRegexMatchSetRegexMatchTupleEl {
-    type O = terrars::BlockAssignable<WafregionalRegexMatchSetRegexMatchTupleEl>;
+impl terrars::ToListMappable for WafregionalRegexMatchSet_RegexMatchTuple {
+    type O = terrars::BlockAssignable<WafregionalRegexMatchSet_RegexMatchTuple>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -381,16 +407,16 @@ impl terrars::ToListMappable for WafregionalRegexMatchSetRegexMatchTupleEl {
     }
 }
 
-pub struct BuildWafregionalRegexMatchSetRegexMatchTupleEl {
+pub struct BuildWafregionalRegexMatchSet_RegexMatchTuple {
     #[doc = ""]
     pub regex_pattern_set_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub text_transformation: terrars::PrimField<std::string::String>,
 }
 
-impl BuildWafregionalRegexMatchSetRegexMatchTupleEl {
-    pub fn build(self) -> WafregionalRegexMatchSetRegexMatchTupleEl {
-        WafregionalRegexMatchSetRegexMatchTupleEl {
+impl BuildWafregionalRegexMatchSet_RegexMatchTuple {
+    pub fn build(self) -> WafregionalRegexMatchSet_RegexMatchTuple {
+        WafregionalRegexMatchSet_RegexMatchTuple {
             regex_pattern_set_id: self.regex_pattern_set_id,
             text_transformation: self.text_transformation,
             field_to_match: core::default::Default::default(),
@@ -399,21 +425,23 @@ impl BuildWafregionalRegexMatchSetRegexMatchTupleEl {
     }
 }
 
-pub struct WafregionalRegexMatchSetRegexMatchTupleElRef {
+#[allow(dead_code)]
+pub struct WafregionalRegexMatchSet_RegexMatchTupleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for WafregionalRegexMatchSetRegexMatchTupleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalRegexMatchSetRegexMatchTupleElRef {
-        WafregionalRegexMatchSetRegexMatchTupleElRef {
+impl terrars::Ref for WafregionalRegexMatchSet_RegexMatchTupleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> WafregionalRegexMatchSet_RegexMatchTupleRef {
+        WafregionalRegexMatchSet_RegexMatchTupleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl WafregionalRegexMatchSetRegexMatchTupleElRef {
+impl WafregionalRegexMatchSet_RegexMatchTupleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -429,12 +457,7 @@ impl WafregionalRegexMatchSetRegexMatchTupleElRef {
     }
 
     #[doc = "Get a reference to the value of field `field_to_match` after provisioning.\n"]
-    pub fn field_to_match(&self) -> terrars::ListRef<WafregionalRegexMatchSetRegexMatchTupleElFieldToMatchElRef> {
+    pub fn field_to_match(&self) -> terrars::ListRef<WafregionalRegexMatchSet_RegexMatchTuple_FieldToMatchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.field_to_match", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct WafregionalRegexMatchSetDynamic {
-    regex_match_tuple: std::option::Option<terrars::DynamicBlock<WafregionalRegexMatchSetRegexMatchTupleEl>>,
 }

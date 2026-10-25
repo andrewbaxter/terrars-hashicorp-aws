@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FsxWindowsFileSystemData {
+struct FsxWindowsFileSystemData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -33,11 +35,17 @@ struct FsxWindowsFileSystemData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     deployment_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    final_backup_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -55,18 +63,20 @@ struct FsxWindowsFileSystemData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weekly_maintenance_start_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    audit_log_configuration: std::option::Option<std::vec::Vec<FsxWindowsFileSystemAuditLogConfigurationEl>>,
+    audit_log_configuration: std::option::Option<std::vec::Vec<FsxWindowsFileSystem_AuditLogConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    self_managed_active_directory: std::option::Option<std::vec::Vec<FsxWindowsFileSystemSelfManagedActiveDirectoryEl>>,
+    disk_iops_configuration: std::option::Option<std::vec::Vec<FsxWindowsFileSystem_DiskIopsConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FsxWindowsFileSystemTimeoutsEl>,
+    self_managed_active_directory: std::option::Option<std::vec::Vec<FsxWindowsFileSystem_SelfManagedActiveDirectory>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<FsxWindowsFileSystem_Timeouts>,
     dynamic: FsxWindowsFileSystemDynamic,
 }
 
 struct FsxWindowsFileSystem_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FsxWindowsFileSystemData>,
+    data: std::cell::RefCell<FsxWindowsFileSystemData_>,
 }
 
 #[derive(Clone)]
@@ -214,6 +224,15 @@ impl FsxWindowsFileSystem {
         self
     }
 
+    #[doc = "Set the field `final_backup_tags`.\n"]
+    pub fn set_final_backup_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().final_backup_tags = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -226,9 +245,22 @@ impl FsxWindowsFileSystem {
         self
     }
 
+    #[doc = "Set the field `network_type`.\n"]
+    pub fn set_network_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().network_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `preferred_subnet_id`.\n"]
     pub fn set_preferred_subnet_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().preferred_subnet_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -289,7 +321,7 @@ impl FsxWindowsFileSystem {
     #[doc = "Set the field `audit_log_configuration`.\n"]
     pub fn set_audit_log_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxWindowsFileSystemAuditLogConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxWindowsFileSystem_AuditLogConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -302,10 +334,26 @@ impl FsxWindowsFileSystem {
         self
     }
 
+    #[doc = "Set the field `disk_iops_configuration`.\n"]
+    pub fn set_disk_iops_configuration(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxWindowsFileSystem_DiskIopsConfiguration>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().disk_iops_configuration = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.disk_iops_configuration = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `self_managed_active_directory`.\n"]
     pub fn set_self_managed_active_directory(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxWindowsFileSystemSelfManagedActiveDirectoryEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxWindowsFileSystem_SelfManagedActiveDirectory>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -319,7 +367,7 @@ impl FsxWindowsFileSystem {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FsxWindowsFileSystemTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FsxWindowsFileSystem_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -375,6 +423,11 @@ impl FsxWindowsFileSystem {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `final_backup_tags` after provisioning.\n"]
+    pub fn final_backup_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.final_backup_tags", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -390,6 +443,11 @@ impl FsxWindowsFileSystem {
         terrars::SetRef::new(self.shared().clone(), format!("{}.network_interface_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
@@ -403,6 +461,12 @@ impl FsxWindowsFileSystem {
     #[doc = "Get a reference to the value of field `preferred_subnet_id` after provisioning.\n"]
     pub fn preferred_subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_subnet_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `remote_administration_endpoint` after provisioning.\n"]
@@ -467,18 +531,23 @@ impl FsxWindowsFileSystem {
     }
 
     #[doc = "Get a reference to the value of field `audit_log_configuration` after provisioning.\n"]
-    pub fn audit_log_configuration(&self) -> terrars::ListRef<FsxWindowsFileSystemAuditLogConfigurationElRef> {
+    pub fn audit_log_configuration(&self) -> terrars::ListRef<FsxWindowsFileSystem_AuditLogConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audit_log_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `disk_iops_configuration` after provisioning.\n"]
+    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxWindowsFileSystem_DiskIopsConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.disk_iops_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `self_managed_active_directory` after provisioning.\n"]
-    pub fn self_managed_active_directory(&self) -> terrars::ListRef<FsxWindowsFileSystemSelfManagedActiveDirectoryElRef> {
+    pub fn self_managed_active_directory(&self) -> terrars::ListRef<FsxWindowsFileSystem_SelfManagedActiveDirectoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.self_managed_active_directory", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxWindowsFileSystemTimeoutsElRef {
-        FsxWindowsFileSystemTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxWindowsFileSystem_TimeoutsRef {
+        FsxWindowsFileSystem_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -526,7 +595,7 @@ impl BuildFsxWindowsFileSystem {
         let out = FsxWindowsFileSystem(std::rc::Rc::new(FsxWindowsFileSystem_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FsxWindowsFileSystemData {
+            data: std::cell::RefCell::new(FsxWindowsFileSystemData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -539,9 +608,12 @@ impl BuildFsxWindowsFileSystem {
                 copy_tags_to_backups: core::default::Default::default(),
                 daily_automatic_backup_start_time: core::default::Default::default(),
                 deployment_type: core::default::Default::default(),
+                final_backup_tags: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
+                network_type: core::default::Default::default(),
                 preferred_subnet_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_group_ids: core::default::Default::default(),
                 skip_final_backup: core::default::Default::default(),
                 storage_capacity: core::default::Default::default(),
@@ -552,6 +624,7 @@ impl BuildFsxWindowsFileSystem {
                 throughput_capacity: self.throughput_capacity,
                 weekly_maintenance_start_time: core::default::Default::default(),
                 audit_log_configuration: core::default::Default::default(),
+                disk_iops_configuration: core::default::Default::default(),
                 self_managed_active_directory: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -636,6 +709,11 @@ impl FsxWindowsFileSystemRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `final_backup_tags` after provisioning.\n"]
+    pub fn final_backup_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.final_backup_tags", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -651,6 +729,11 @@ impl FsxWindowsFileSystemRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.network_interface_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
@@ -664,6 +747,12 @@ impl FsxWindowsFileSystemRef {
     #[doc = "Get a reference to the value of field `preferred_subnet_id` after provisioning.\n"]
     pub fn preferred_subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_subnet_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `remote_administration_endpoint` after provisioning.\n"]
@@ -728,23 +817,37 @@ impl FsxWindowsFileSystemRef {
     }
 
     #[doc = "Get a reference to the value of field `audit_log_configuration` after provisioning.\n"]
-    pub fn audit_log_configuration(&self) -> terrars::ListRef<FsxWindowsFileSystemAuditLogConfigurationElRef> {
+    pub fn audit_log_configuration(&self) -> terrars::ListRef<FsxWindowsFileSystem_AuditLogConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.audit_log_configuration", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `disk_iops_configuration` after provisioning.\n"]
+    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxWindowsFileSystem_DiskIopsConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.disk_iops_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `self_managed_active_directory` after provisioning.\n"]
-    pub fn self_managed_active_directory(&self) -> terrars::ListRef<FsxWindowsFileSystemSelfManagedActiveDirectoryElRef> {
+    pub fn self_managed_active_directory(&self) -> terrars::ListRef<FsxWindowsFileSystem_SelfManagedActiveDirectoryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.self_managed_active_directory", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxWindowsFileSystemTimeoutsElRef {
-        FsxWindowsFileSystemTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxWindowsFileSystem_TimeoutsRef {
+        FsxWindowsFileSystem_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FsxWindowsFileSystemDynamic {
+    audit_log_configuration: std::option::Option<terrars::DynamicBlock<FsxWindowsFileSystem_AuditLogConfiguration>>,
+    disk_iops_configuration: std::option::Option<terrars::DynamicBlock<FsxWindowsFileSystem_DiskIopsConfiguration>>,
+    self_managed_active_directory: std
+    ::option
+    ::Option<terrars::DynamicBlock<FsxWindowsFileSystem_SelfManagedActiveDirectory>>,
+}
+
 #[derive(Serialize)]
-pub struct FsxWindowsFileSystemAuditLogConfigurationEl {
+pub struct FsxWindowsFileSystem_AuditLogConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     audit_log_destination: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -753,7 +856,7 @@ pub struct FsxWindowsFileSystemAuditLogConfigurationEl {
     file_share_access_audit_log_level: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxWindowsFileSystemAuditLogConfigurationEl {
+impl FsxWindowsFileSystem_AuditLogConfiguration {
     #[doc = "Set the field `audit_log_destination`.\n"]
     pub fn set_audit_log_destination(
         mut self,
@@ -782,8 +885,8 @@ impl FsxWindowsFileSystemAuditLogConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for FsxWindowsFileSystemAuditLogConfigurationEl {
-    type O = terrars::BlockAssignable<FsxWindowsFileSystemAuditLogConfigurationEl>;
+impl terrars::ToListMappable for FsxWindowsFileSystem_AuditLogConfiguration {
+    type O = terrars::BlockAssignable<FsxWindowsFileSystem_AuditLogConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -794,11 +897,11 @@ impl terrars::ToListMappable for FsxWindowsFileSystemAuditLogConfigurationEl {
     }
 }
 
-pub struct BuildFsxWindowsFileSystemAuditLogConfigurationEl {}
+pub struct BuildFsxWindowsFileSystem_AuditLogConfiguration {}
 
-impl BuildFsxWindowsFileSystemAuditLogConfigurationEl {
-    pub fn build(self) -> FsxWindowsFileSystemAuditLogConfigurationEl {
-        FsxWindowsFileSystemAuditLogConfigurationEl {
+impl BuildFsxWindowsFileSystem_AuditLogConfiguration {
+    pub fn build(self) -> FsxWindowsFileSystem_AuditLogConfiguration {
+        FsxWindowsFileSystem_AuditLogConfiguration {
             audit_log_destination: core::default::Default::default(),
             file_access_audit_log_level: core::default::Default::default(),
             file_share_access_audit_log_level: core::default::Default::default(),
@@ -806,24 +909,23 @@ impl BuildFsxWindowsFileSystemAuditLogConfigurationEl {
     }
 }
 
-pub struct FsxWindowsFileSystemAuditLogConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxWindowsFileSystem_AuditLogConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxWindowsFileSystemAuditLogConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> FsxWindowsFileSystemAuditLogConfigurationElRef {
-        FsxWindowsFileSystemAuditLogConfigurationElRef {
+impl terrars::Ref for FsxWindowsFileSystem_AuditLogConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxWindowsFileSystem_AuditLogConfigurationRef {
+        FsxWindowsFileSystem_AuditLogConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxWindowsFileSystemAuditLogConfigurationElRef {
+impl FsxWindowsFileSystem_AuditLogConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -845,18 +947,112 @@ impl FsxWindowsFileSystemAuditLogConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxWindowsFileSystemSelfManagedActiveDirectoryEl {
+pub struct FsxWindowsFileSystem_DiskIopsConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    iops: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mode: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl FsxWindowsFileSystem_DiskIopsConfiguration {
+    #[doc = "Set the field `iops`.\n"]
+    pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.iops = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `mode`.\n"]
+    pub fn set_mode(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.mode = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for FsxWindowsFileSystem_DiskIopsConfiguration {
+    type O = terrars::BlockAssignable<FsxWindowsFileSystem_DiskIopsConfiguration>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFsxWindowsFileSystem_DiskIopsConfiguration {}
+
+impl BuildFsxWindowsFileSystem_DiskIopsConfiguration {
+    pub fn build(self) -> FsxWindowsFileSystem_DiskIopsConfiguration {
+        FsxWindowsFileSystem_DiskIopsConfiguration {
+            iops: core::default::Default::default(),
+            mode: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FsxWindowsFileSystem_DiskIopsConfigurationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FsxWindowsFileSystem_DiskIopsConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxWindowsFileSystem_DiskIopsConfigurationRef {
+        FsxWindowsFileSystem_DiskIopsConfigurationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FsxWindowsFileSystem_DiskIopsConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `iops` after provisioning.\n"]
+    pub fn iops(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.iops", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `mode` after provisioning.\n"]
+    pub fn mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct FsxWindowsFileSystem_SelfManagedActiveDirectory {
     dns_ips: terrars::SetField<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    domain_join_service_account_secret: std::option::Option<terrars::PrimField<std::string::String>>,
     domain_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_system_administrators_group: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     organizational_unit_distinguished_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    password: terrars::PrimField<std::string::String>,
-    username: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    password_wo_version: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    username: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxWindowsFileSystemSelfManagedActiveDirectoryEl {
+impl FsxWindowsFileSystem_SelfManagedActiveDirectory {
+    #[doc = "Set the field `domain_join_service_account_secret`.\n"]
+    pub fn set_domain_join_service_account_secret(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.domain_join_service_account_secret = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `file_system_administrators_group`.\n"]
     pub fn set_file_system_administrators_group(
         mut self,
@@ -874,10 +1070,34 @@ impl FsxWindowsFileSystemSelfManagedActiveDirectoryEl {
         self.organizational_unit_distinguished_name = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `password`.\n"]
+    pub fn set_password(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `password_wo`.\n"]
+    pub fn set_password_wo(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.password_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `password_wo_version`.\n"]
+    pub fn set_password_wo_version(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.password_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `username`.\n"]
+    pub fn set_username(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.username = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for FsxWindowsFileSystemSelfManagedActiveDirectoryEl {
-    type O = terrars::BlockAssignable<FsxWindowsFileSystemSelfManagedActiveDirectoryEl>;
+impl terrars::ToListMappable for FsxWindowsFileSystem_SelfManagedActiveDirectory {
+    type O = terrars::BlockAssignable<FsxWindowsFileSystem_SelfManagedActiveDirectory>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -888,48 +1108,49 @@ impl terrars::ToListMappable for FsxWindowsFileSystemSelfManagedActiveDirectoryE
     }
 }
 
-pub struct BuildFsxWindowsFileSystemSelfManagedActiveDirectoryEl {
+pub struct BuildFsxWindowsFileSystem_SelfManagedActiveDirectory {
     #[doc = ""]
     pub dns_ips: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub domain_name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub password: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildFsxWindowsFileSystemSelfManagedActiveDirectoryEl {
-    pub fn build(self) -> FsxWindowsFileSystemSelfManagedActiveDirectoryEl {
-        FsxWindowsFileSystemSelfManagedActiveDirectoryEl {
+impl BuildFsxWindowsFileSystem_SelfManagedActiveDirectory {
+    pub fn build(self) -> FsxWindowsFileSystem_SelfManagedActiveDirectory {
+        FsxWindowsFileSystem_SelfManagedActiveDirectory {
             dns_ips: self.dns_ips,
+            domain_join_service_account_secret: core::default::Default::default(),
             domain_name: self.domain_name,
             file_system_administrators_group: core::default::Default::default(),
             organizational_unit_distinguished_name: core::default::Default::default(),
-            password: self.password,
-            username: self.username,
+            password: core::default::Default::default(),
+            password_wo: core::default::Default::default(),
+            password_wo_version: core::default::Default::default(),
+            username: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxWindowsFileSystemSelfManagedActiveDirectoryElRef {
+#[allow(dead_code)]
+pub struct FsxWindowsFileSystem_SelfManagedActiveDirectoryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxWindowsFileSystemSelfManagedActiveDirectoryElRef {
+impl terrars::Ref for FsxWindowsFileSystem_SelfManagedActiveDirectoryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> FsxWindowsFileSystemSelfManagedActiveDirectoryElRef {
-        FsxWindowsFileSystemSelfManagedActiveDirectoryElRef {
+    ) -> FsxWindowsFileSystem_SelfManagedActiveDirectoryRef {
+        FsxWindowsFileSystem_SelfManagedActiveDirectoryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxWindowsFileSystemSelfManagedActiveDirectoryElRef {
+impl FsxWindowsFileSystem_SelfManagedActiveDirectoryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -937,6 +1158,11 @@ impl FsxWindowsFileSystemSelfManagedActiveDirectoryElRef {
     #[doc = "Get a reference to the value of field `dns_ips` after provisioning.\n"]
     pub fn dns_ips(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.dns_ips", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `domain_join_service_account_secret` after provisioning.\n"]
+    pub fn domain_join_service_account_secret(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.domain_join_service_account_secret", self.base))
     }
 
     #[doc = "Get a reference to the value of field `domain_name` after provisioning.\n"]
@@ -962,6 +1188,16 @@ impl FsxWindowsFileSystemSelfManagedActiveDirectoryElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.password", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `password_wo` after provisioning.\n"]
+    pub fn password_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `password_wo_version` after provisioning.\n"]
+    pub fn password_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_wo_version", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `username` after provisioning.\n"]
     pub fn username(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.username", self.base))
@@ -969,7 +1205,7 @@ impl FsxWindowsFileSystemSelfManagedActiveDirectoryElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxWindowsFileSystemTimeoutsEl {
+pub struct FsxWindowsFileSystem_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -978,7 +1214,7 @@ pub struct FsxWindowsFileSystemTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxWindowsFileSystemTimeoutsEl {
+impl FsxWindowsFileSystem_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -998,8 +1234,8 @@ impl FsxWindowsFileSystemTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxWindowsFileSystemTimeoutsEl {
-    type O = terrars::BlockAssignable<FsxWindowsFileSystemTimeoutsEl>;
+impl terrars::ToListMappable for FsxWindowsFileSystem_Timeouts {
+    type O = terrars::BlockAssignable<FsxWindowsFileSystem_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1010,11 +1246,11 @@ impl terrars::ToListMappable for FsxWindowsFileSystemTimeoutsEl {
     }
 }
 
-pub struct BuildFsxWindowsFileSystemTimeoutsEl {}
+pub struct BuildFsxWindowsFileSystem_Timeouts {}
 
-impl BuildFsxWindowsFileSystemTimeoutsEl {
-    pub fn build(self) -> FsxWindowsFileSystemTimeoutsEl {
-        FsxWindowsFileSystemTimeoutsEl {
+impl BuildFsxWindowsFileSystem_Timeouts {
+    pub fn build(self) -> FsxWindowsFileSystem_Timeouts {
+        FsxWindowsFileSystem_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1022,21 +1258,23 @@ impl BuildFsxWindowsFileSystemTimeoutsEl {
     }
 }
 
-pub struct FsxWindowsFileSystemTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FsxWindowsFileSystem_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxWindowsFileSystemTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxWindowsFileSystemTimeoutsElRef {
-        FsxWindowsFileSystemTimeoutsElRef {
+impl terrars::Ref for FsxWindowsFileSystem_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxWindowsFileSystem_TimeoutsRef {
+        FsxWindowsFileSystem_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxWindowsFileSystemTimeoutsElRef {
+impl FsxWindowsFileSystem_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1055,12 +1293,4 @@ impl FsxWindowsFileSystemTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FsxWindowsFileSystemDynamic {
-    audit_log_configuration: std::option::Option<terrars::DynamicBlock<FsxWindowsFileSystemAuditLogConfigurationEl>>,
-    self_managed_active_directory: std
-    ::option
-    ::Option<terrars::DynamicBlock<FsxWindowsFileSystemSelfManagedActiveDirectoryEl>>,
 }

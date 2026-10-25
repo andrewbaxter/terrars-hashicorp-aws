@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FlowLogData {
+struct FlowLogData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -18,6 +20,8 @@ struct FlowLogData {
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deliver_cross_account_role: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     eni_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,9 +35,11 @@ struct FlowLogData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     log_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    log_group_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_aggregation_interval: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    regional_nat_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -49,14 +55,16 @@ struct FlowLogData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination_options: std::option::Option<std::vec::Vec<FlowLogDestinationOptionsEl>>,
+    destination_options: std::option::Option<std::vec::Vec<FlowLog_DestinationOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag_field_specification: std::option::Option<std::vec::Vec<FlowLog_TagFieldSpecification>>,
     dynamic: FlowLogDynamic,
 }
 
 struct FlowLog_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FlowLogData>,
+    data: std::cell::RefCell<FlowLogData_>,
 }
 
 #[derive(Clone)]
@@ -156,6 +164,15 @@ impl FlowLog {
         self
     }
 
+    #[doc = "Set the field `deliver_cross_account_role`.\n"]
+    pub fn set_deliver_cross_account_role(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().deliver_cross_account_role = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `eni_id`.\n"]
     pub fn set_eni_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().eni_id = std::option::Option::Some(v.into());
@@ -192,15 +209,25 @@ impl FlowLog {
         self
     }
 
-    #[doc = "Set the field `log_group_name`.\n"]
-    pub fn set_log_group_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().log_group_name = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `max_aggregation_interval`.\n"]
     pub fn set_max_aggregation_interval(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.0.data.borrow_mut().max_aggregation_interval = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `regional_nat_gateway_id`.\n"]
+    pub fn set_regional_nat_gateway_id(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().regional_nat_gateway_id = std::option::Option::Some(v.into());
         self
     }
 
@@ -258,7 +285,7 @@ impl FlowLog {
     #[doc = "Set the field `destination_options`.\n"]
     pub fn set_destination_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FlowLogDestinationOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FlowLog_DestinationOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -271,9 +298,30 @@ impl FlowLog {
         self
     }
 
+    #[doc = "Set the field `tag_field_specification`.\n"]
+    pub fn set_tag_field_specification(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<FlowLog_TagFieldSpecification>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().tag_field_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.tag_field_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `deliver_cross_account_role` after provisioning.\n"]
+    pub fn deliver_cross_account_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deliver_cross_account_role", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `eni_id` after provisioning.\n"]
@@ -306,14 +354,20 @@ impl FlowLog {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_format", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `max_aggregation_interval` after provisioning.\n"]
     pub fn max_aggregation_interval(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_aggregation_interval", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `regional_nat_gateway_id` after provisioning.\n"]
+    pub fn regional_nat_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.regional_nat_gateway_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
@@ -355,7 +409,7 @@ impl FlowLog {
     }
 
     #[doc = "Get a reference to the value of field `destination_options` after provisioning.\n"]
-    pub fn destination_options(&self) -> terrars::ListRef<FlowLogDestinationOptionsElRef> {
+    pub fn destination_options(&self) -> terrars::ListRef<FlowLog_DestinationOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_options", self.extract_ref()))
     }
 }
@@ -400,20 +454,22 @@ impl BuildFlowLog {
         let out = FlowLog(std::rc::Rc::new(FlowLog_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FlowLogData {
+            data: std::cell::RefCell::new(FlowLogData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                deliver_cross_account_role: core::default::Default::default(),
                 eni_id: core::default::Default::default(),
                 iam_role_arn: core::default::Default::default(),
                 id: core::default::Default::default(),
                 log_destination: core::default::Default::default(),
                 log_destination_type: core::default::Default::default(),
                 log_format: core::default::Default::default(),
-                log_group_name: core::default::Default::default(),
                 max_aggregation_interval: core::default::Default::default(),
+                region: core::default::Default::default(),
+                regional_nat_gateway_id: core::default::Default::default(),
                 subnet_id: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -422,6 +478,7 @@ impl BuildFlowLog {
                 transit_gateway_id: core::default::Default::default(),
                 vpc_id: core::default::Default::default(),
                 destination_options: core::default::Default::default(),
+                tag_field_specification: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -458,6 +515,11 @@ impl FlowLogRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `deliver_cross_account_role` after provisioning.\n"]
+    pub fn deliver_cross_account_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deliver_cross_account_role", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `eni_id` after provisioning.\n"]
     pub fn eni_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.eni_id", self.extract_ref()))
@@ -488,14 +550,20 @@ impl FlowLogRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_format", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `log_group_name` after provisioning.\n"]
-    pub fn log_group_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.log_group_name", self.extract_ref()))
-    }
-
     #[doc = "Get a reference to the value of field `max_aggregation_interval` after provisioning.\n"]
     pub fn max_aggregation_interval(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_aggregation_interval", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `regional_nat_gateway_id` after provisioning.\n"]
+    pub fn regional_nat_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.regional_nat_gateway_id", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
@@ -537,13 +605,19 @@ impl FlowLogRef {
     }
 
     #[doc = "Get a reference to the value of field `destination_options` after provisioning.\n"]
-    pub fn destination_options(&self) -> terrars::ListRef<FlowLogDestinationOptionsElRef> {
+    pub fn destination_options(&self) -> terrars::ListRef<FlowLog_DestinationOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination_options", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FlowLogDynamic {
+    destination_options: std::option::Option<terrars::DynamicBlock<FlowLog_DestinationOptions>>,
+    tag_field_specification: std::option::Option<terrars::DynamicBlock<FlowLog_TagFieldSpecification>>,
+}
+
 #[derive(Serialize)]
-pub struct FlowLogDestinationOptionsEl {
+pub struct FlowLog_DestinationOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     file_format: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -552,7 +626,7 @@ pub struct FlowLogDestinationOptionsEl {
     per_hour_partition: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl FlowLogDestinationOptionsEl {
+impl FlowLog_DestinationOptions {
     #[doc = "Set the field `file_format`.\n"]
     pub fn set_file_format(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.file_format = std::option::Option::Some(v.into());
@@ -572,8 +646,8 @@ impl FlowLogDestinationOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for FlowLogDestinationOptionsEl {
-    type O = terrars::BlockAssignable<FlowLogDestinationOptionsEl>;
+impl terrars::ToListMappable for FlowLog_DestinationOptions {
+    type O = terrars::BlockAssignable<FlowLog_DestinationOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -584,11 +658,11 @@ impl terrars::ToListMappable for FlowLogDestinationOptionsEl {
     }
 }
 
-pub struct BuildFlowLogDestinationOptionsEl {}
+pub struct BuildFlowLog_DestinationOptions {}
 
-impl BuildFlowLogDestinationOptionsEl {
-    pub fn build(self) -> FlowLogDestinationOptionsEl {
-        FlowLogDestinationOptionsEl {
+impl BuildFlowLog_DestinationOptions {
+    pub fn build(self) -> FlowLog_DestinationOptions {
+        FlowLog_DestinationOptions {
             file_format: core::default::Default::default(),
             hive_compatible_partitions: core::default::Default::default(),
             per_hour_partition: core::default::Default::default(),
@@ -596,21 +670,23 @@ impl BuildFlowLogDestinationOptionsEl {
     }
 }
 
-pub struct FlowLogDestinationOptionsElRef {
+#[allow(dead_code)]
+pub struct FlowLog_DestinationOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FlowLogDestinationOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FlowLogDestinationOptionsElRef {
-        FlowLogDestinationOptionsElRef {
+impl terrars::Ref for FlowLog_DestinationOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FlowLog_DestinationOptionsRef {
+        FlowLog_DestinationOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FlowLogDestinationOptionsElRef {
+impl FlowLog_DestinationOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -631,7 +707,70 @@ impl FlowLogDestinationOptionsElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct FlowLogDynamic {
-    destination_options: std::option::Option<terrars::DynamicBlock<FlowLogDestinationOptionsEl>>,
+#[derive(Serialize)]
+pub struct FlowLog_TagFieldSpecification {
+    resource_type: terrars::PrimField<std::string::String>,
+    tag_keys: terrars::ListField<terrars::PrimField<std::string::String>>,
+}
+
+impl FlowLog_TagFieldSpecification { }
+
+impl terrars::ToListMappable for FlowLog_TagFieldSpecification {
+    type O = terrars::BlockAssignable<FlowLog_TagFieldSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildFlowLog_TagFieldSpecification {
+    #[doc = ""]
+    pub resource_type: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub tag_keys: terrars::ListField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildFlowLog_TagFieldSpecification {
+    pub fn build(self) -> FlowLog_TagFieldSpecification {
+        FlowLog_TagFieldSpecification {
+            resource_type: self.resource_type,
+            tag_keys: self.tag_keys,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct FlowLog_TagFieldSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for FlowLog_TagFieldSpecificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FlowLog_TagFieldSpecificationRef {
+        FlowLog_TagFieldSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl FlowLog_TagFieldSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `resource_type` after provisioning.\n"]
+    pub fn resource_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_type", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tag_keys` after provisioning.\n"]
+    pub fn tag_keys(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.tag_keys", self.base))
+    }
 }

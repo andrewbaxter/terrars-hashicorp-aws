@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LambdaProvisionedConcurrencyConfigData {
+struct LambdaProvisionedConcurrencyConfigData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,13 +26,17 @@ struct LambdaProvisionedConcurrencyConfigData {
     provisioned_concurrent_executions: terrars::PrimField<f64>,
     qualifier: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<LambdaProvisionedConcurrencyConfigTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<LambdaProvisionedConcurrencyConfig_Timeouts>,
 }
 
 struct LambdaProvisionedConcurrencyConfig_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LambdaProvisionedConcurrencyConfigData>,
+    data: std::cell::RefCell<LambdaProvisionedConcurrencyConfigData_>,
 }
 
 #[derive(Clone)]
@@ -136,8 +142,21 @@ impl LambdaProvisionedConcurrencyConfig {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `skip_destroy`.\n"]
+    pub fn set_skip_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<LambdaProvisionedConcurrencyConfigTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<LambdaProvisionedConcurrencyConfig_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -165,9 +184,20 @@ impl LambdaProvisionedConcurrencyConfig {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LambdaProvisionedConcurrencyConfigTimeoutsElRef {
-        LambdaProvisionedConcurrencyConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> LambdaProvisionedConcurrencyConfig_TimeoutsRef {
+        LambdaProvisionedConcurrencyConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -220,7 +250,7 @@ impl BuildLambdaProvisionedConcurrencyConfig {
         let out = LambdaProvisionedConcurrencyConfig(std::rc::Rc::new(LambdaProvisionedConcurrencyConfig_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LambdaProvisionedConcurrencyConfigData {
+            data: std::cell::RefCell::new(LambdaProvisionedConcurrencyConfigData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -230,6 +260,8 @@ impl BuildLambdaProvisionedConcurrencyConfig {
                 id: core::default::Default::default(),
                 provisioned_concurrent_executions: self.provisioned_concurrent_executions,
                 qualifier: self.qualifier,
+                region: core::default::Default::default(),
+                skip_destroy: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -284,9 +316,20 @@ impl LambdaProvisionedConcurrencyConfigRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.qualifier", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> LambdaProvisionedConcurrencyConfigTimeoutsElRef {
-        LambdaProvisionedConcurrencyConfigTimeoutsElRef::new(
+    pub fn timeouts(&self) -> LambdaProvisionedConcurrencyConfig_TimeoutsRef {
+        LambdaProvisionedConcurrencyConfig_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -294,14 +337,14 @@ impl LambdaProvisionedConcurrencyConfigRef {
 }
 
 #[derive(Serialize)]
-pub struct LambdaProvisionedConcurrencyConfigTimeoutsEl {
+pub struct LambdaProvisionedConcurrencyConfig_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LambdaProvisionedConcurrencyConfigTimeoutsEl {
+impl LambdaProvisionedConcurrencyConfig_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -315,8 +358,8 @@ impl LambdaProvisionedConcurrencyConfigTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for LambdaProvisionedConcurrencyConfigTimeoutsEl {
-    type O = terrars::BlockAssignable<LambdaProvisionedConcurrencyConfigTimeoutsEl>;
+impl terrars::ToListMappable for LambdaProvisionedConcurrencyConfig_Timeouts {
+    type O = terrars::BlockAssignable<LambdaProvisionedConcurrencyConfig_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -327,35 +370,37 @@ impl terrars::ToListMappable for LambdaProvisionedConcurrencyConfigTimeoutsEl {
     }
 }
 
-pub struct BuildLambdaProvisionedConcurrencyConfigTimeoutsEl {}
+pub struct BuildLambdaProvisionedConcurrencyConfig_Timeouts {}
 
-impl BuildLambdaProvisionedConcurrencyConfigTimeoutsEl {
-    pub fn build(self) -> LambdaProvisionedConcurrencyConfigTimeoutsEl {
-        LambdaProvisionedConcurrencyConfigTimeoutsEl {
+impl BuildLambdaProvisionedConcurrencyConfig_Timeouts {
+    pub fn build(self) -> LambdaProvisionedConcurrencyConfig_Timeouts {
+        LambdaProvisionedConcurrencyConfig_Timeouts {
             create: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct LambdaProvisionedConcurrencyConfigTimeoutsElRef {
+#[allow(dead_code)]
+pub struct LambdaProvisionedConcurrencyConfig_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LambdaProvisionedConcurrencyConfigTimeoutsElRef {
+impl terrars::Ref for LambdaProvisionedConcurrencyConfig_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> LambdaProvisionedConcurrencyConfigTimeoutsElRef {
-        LambdaProvisionedConcurrencyConfigTimeoutsElRef {
+    ) -> LambdaProvisionedConcurrencyConfig_TimeoutsRef {
+        LambdaProvisionedConcurrencyConfig_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LambdaProvisionedConcurrencyConfigTimeoutsElRef {
+impl LambdaProvisionedConcurrencyConfig_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

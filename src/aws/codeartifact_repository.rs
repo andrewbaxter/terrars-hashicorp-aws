@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CodeartifactRepositoryData {
+struct CodeartifactRepositoryData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,22 +27,24 @@ struct CodeartifactRepositoryData {
     domain_owner: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     repository: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    external_connections: std::option::Option<std::vec::Vec<CodeartifactRepositoryExternalConnectionsEl>>,
+    external_connections: std::option::Option<std::vec::Vec<CodeartifactRepository_ExternalConnections>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    upstream: std::option::Option<std::vec::Vec<CodeartifactRepositoryUpstreamEl>>,
+    upstream: std::option::Option<std::vec::Vec<CodeartifactRepository_Upstream>>,
     dynamic: CodeartifactRepositoryDynamic,
 }
 
 struct CodeartifactRepository_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CodeartifactRepositoryData>,
+    data: std::cell::RefCell<CodeartifactRepositoryData_>,
 }
 
 #[derive(Clone)]
@@ -158,6 +162,13 @@ impl CodeartifactRepository {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -179,7 +190,7 @@ impl CodeartifactRepository {
     #[doc = "Set the field `external_connections`.\n"]
     pub fn set_external_connections(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodeartifactRepositoryExternalConnectionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodeartifactRepository_ExternalConnections>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -195,7 +206,7 @@ impl CodeartifactRepository {
     #[doc = "Set the field `upstream`.\n"]
     pub fn set_upstream(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<CodeartifactRepositoryUpstreamEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<CodeartifactRepository_Upstream>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -238,6 +249,12 @@ impl CodeartifactRepository {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `repository` after provisioning.\n"]
     pub fn repository(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository", self.extract_ref()))
@@ -254,12 +271,12 @@ impl CodeartifactRepository {
     }
 
     #[doc = "Get a reference to the value of field `external_connections` after provisioning.\n"]
-    pub fn external_connections(&self) -> terrars::ListRef<CodeartifactRepositoryExternalConnectionsElRef> {
+    pub fn external_connections(&self) -> terrars::ListRef<CodeartifactRepository_ExternalConnectionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_connections", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `upstream` after provisioning.\n"]
-    pub fn upstream(&self) -> terrars::ListRef<CodeartifactRepositoryUpstreamElRef> {
+    pub fn upstream(&self) -> terrars::ListRef<CodeartifactRepository_UpstreamRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.upstream", self.extract_ref()))
     }
 }
@@ -308,7 +325,7 @@ impl BuildCodeartifactRepository {
         let out = CodeartifactRepository(std::rc::Rc::new(CodeartifactRepository_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CodeartifactRepositoryData {
+            data: std::cell::RefCell::new(CodeartifactRepositoryData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -318,6 +335,7 @@ impl BuildCodeartifactRepository {
                 domain: self.domain,
                 domain_owner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 repository: self.repository,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -384,6 +402,12 @@ impl CodeartifactRepositoryRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `repository` after provisioning.\n"]
     pub fn repository(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository", self.extract_ref()))
@@ -400,25 +424,31 @@ impl CodeartifactRepositoryRef {
     }
 
     #[doc = "Get a reference to the value of field `external_connections` after provisioning.\n"]
-    pub fn external_connections(&self) -> terrars::ListRef<CodeartifactRepositoryExternalConnectionsElRef> {
+    pub fn external_connections(&self) -> terrars::ListRef<CodeartifactRepository_ExternalConnectionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.external_connections", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `upstream` after provisioning.\n"]
-    pub fn upstream(&self) -> terrars::ListRef<CodeartifactRepositoryUpstreamElRef> {
+    pub fn upstream(&self) -> terrars::ListRef<CodeartifactRepository_UpstreamRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.upstream", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CodeartifactRepositoryDynamic {
+    external_connections: std::option::Option<terrars::DynamicBlock<CodeartifactRepository_ExternalConnections>>,
+    upstream: std::option::Option<terrars::DynamicBlock<CodeartifactRepository_Upstream>>,
+}
+
 #[derive(Serialize)]
-pub struct CodeartifactRepositoryExternalConnectionsEl {
+pub struct CodeartifactRepository_ExternalConnections {
     external_connection_name: terrars::PrimField<std::string::String>,
 }
 
-impl CodeartifactRepositoryExternalConnectionsEl { }
+impl CodeartifactRepository_ExternalConnections { }
 
-impl terrars::ToListMappable for CodeartifactRepositoryExternalConnectionsEl {
-    type O = terrars::BlockAssignable<CodeartifactRepositoryExternalConnectionsEl>;
+impl terrars::ToListMappable for CodeartifactRepository_ExternalConnections {
+    type O = terrars::BlockAssignable<CodeartifactRepository_ExternalConnections>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -429,35 +459,34 @@ impl terrars::ToListMappable for CodeartifactRepositoryExternalConnectionsEl {
     }
 }
 
-pub struct BuildCodeartifactRepositoryExternalConnectionsEl {
+pub struct BuildCodeartifactRepository_ExternalConnections {
     #[doc = ""]
     pub external_connection_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodeartifactRepositoryExternalConnectionsEl {
-    pub fn build(self) -> CodeartifactRepositoryExternalConnectionsEl {
-        CodeartifactRepositoryExternalConnectionsEl { external_connection_name: self.external_connection_name }
+impl BuildCodeartifactRepository_ExternalConnections {
+    pub fn build(self) -> CodeartifactRepository_ExternalConnections {
+        CodeartifactRepository_ExternalConnections { external_connection_name: self.external_connection_name }
     }
 }
 
-pub struct CodeartifactRepositoryExternalConnectionsElRef {
+#[allow(dead_code)]
+pub struct CodeartifactRepository_ExternalConnectionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodeartifactRepositoryExternalConnectionsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> CodeartifactRepositoryExternalConnectionsElRef {
-        CodeartifactRepositoryExternalConnectionsElRef {
+impl terrars::Ref for CodeartifactRepository_ExternalConnectionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodeartifactRepository_ExternalConnectionsRef {
+        CodeartifactRepository_ExternalConnectionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodeartifactRepositoryExternalConnectionsElRef {
+impl CodeartifactRepository_ExternalConnectionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -479,14 +508,14 @@ impl CodeartifactRepositoryExternalConnectionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct CodeartifactRepositoryUpstreamEl {
+pub struct CodeartifactRepository_Upstream {
     repository_name: terrars::PrimField<std::string::String>,
 }
 
-impl CodeartifactRepositoryUpstreamEl { }
+impl CodeartifactRepository_Upstream { }
 
-impl terrars::ToListMappable for CodeartifactRepositoryUpstreamEl {
-    type O = terrars::BlockAssignable<CodeartifactRepositoryUpstreamEl>;
+impl terrars::ToListMappable for CodeartifactRepository_Upstream {
+    type O = terrars::BlockAssignable<CodeartifactRepository_Upstream>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -497,32 +526,34 @@ impl terrars::ToListMappable for CodeartifactRepositoryUpstreamEl {
     }
 }
 
-pub struct BuildCodeartifactRepositoryUpstreamEl {
+pub struct BuildCodeartifactRepository_Upstream {
     #[doc = ""]
     pub repository_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCodeartifactRepositoryUpstreamEl {
-    pub fn build(self) -> CodeartifactRepositoryUpstreamEl {
-        CodeartifactRepositoryUpstreamEl { repository_name: self.repository_name }
+impl BuildCodeartifactRepository_Upstream {
+    pub fn build(self) -> CodeartifactRepository_Upstream {
+        CodeartifactRepository_Upstream { repository_name: self.repository_name }
     }
 }
 
-pub struct CodeartifactRepositoryUpstreamElRef {
+#[allow(dead_code)]
+pub struct CodeartifactRepository_UpstreamRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CodeartifactRepositoryUpstreamElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> CodeartifactRepositoryUpstreamElRef {
-        CodeartifactRepositoryUpstreamElRef {
+impl terrars::Ref for CodeartifactRepository_UpstreamRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> CodeartifactRepository_UpstreamRef {
+        CodeartifactRepository_UpstreamRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CodeartifactRepositoryUpstreamElRef {
+impl CodeartifactRepository_UpstreamRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -531,10 +562,4 @@ impl CodeartifactRepositoryUpstreamElRef {
     pub fn repository_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.repository_name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CodeartifactRepositoryDynamic {
-    external_connections: std::option::Option<terrars::DynamicBlock<CodeartifactRepositoryExternalConnectionsEl>>,
-    upstream: std::option::Option<terrars::DynamicBlock<CodeartifactRepositoryUpstreamEl>>,
 }

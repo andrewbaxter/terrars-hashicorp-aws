@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataResourcegroupstaggingapiResourcesData {
+struct DataResourcegroupstaggingapiResourcesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,18 +25,20 @@ struct DataResourcegroupstaggingapiResourcesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     include_compliance_details: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_arn_list: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_type_filters: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag_filter: std::option::Option<std::vec::Vec<DataResourcegroupstaggingapiResourcesTagFilterEl>>,
+    tag_filter: std::option::Option<std::vec::Vec<DataResourcegroupstaggingapiResources_TagFilter>>,
     dynamic: DataResourcegroupstaggingapiResourcesDynamic,
 }
 
 struct DataResourcegroupstaggingapiResources_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataResourcegroupstaggingapiResourcesData>,
+    data: std::cell::RefCell<DataResourcegroupstaggingapiResourcesData_>,
 }
 
 #[derive(Clone)]
@@ -97,6 +101,13 @@ impl DataResourcegroupstaggingapiResources {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resource_arn_list`.\n"]
     pub fn set_resource_arn_list(
         self,
@@ -118,7 +129,7 @@ impl DataResourcegroupstaggingapiResources {
     #[doc = "Set the field `tag_filter`.\n"]
     pub fn set_tag_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataResourcegroupstaggingapiResourcesTagFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataResourcegroupstaggingapiResources_TagFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -146,6 +157,12 @@ impl DataResourcegroupstaggingapiResources {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_compliance_details", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_arn_list` after provisioning.\n"]
     pub fn resource_arn_list(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.resource_arn_list", self.extract_ref()))
@@ -154,7 +171,7 @@ impl DataResourcegroupstaggingapiResources {
     #[doc = "Get a reference to the value of field `resource_tag_mapping_list` after provisioning.\n"]
     pub fn resource_tag_mapping_list(
         &self,
-    ) -> terrars::ListRef<DataResourcegroupstaggingapiResourcesResourceTagMappingListElRef> {
+    ) -> terrars::ListRef<DataResourcegroupstaggingapiResources_ResourceTagMappingListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_tag_mapping_list", self.extract_ref()))
     }
 
@@ -164,7 +181,7 @@ impl DataResourcegroupstaggingapiResources {
     }
 
     #[doc = "Get a reference to the value of field `tag_filter` after provisioning.\n"]
-    pub fn tag_filter(&self) -> terrars::ListRef<DataResourcegroupstaggingapiResourcesTagFilterElRef> {
+    pub fn tag_filter(&self) -> terrars::ListRef<DataResourcegroupstaggingapiResources_TagFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag_filter", self.extract_ref()))
     }
 }
@@ -209,7 +226,7 @@ impl BuildDataResourcegroupstaggingapiResources {
         let out = DataResourcegroupstaggingapiResources(std::rc::Rc::new(DataResourcegroupstaggingapiResources_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataResourcegroupstaggingapiResourcesData {
+            data: std::cell::RefCell::new(DataResourcegroupstaggingapiResourcesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -217,6 +234,7 @@ impl BuildDataResourcegroupstaggingapiResources {
                 exclude_compliant_resources: core::default::Default::default(),
                 id: core::default::Default::default(),
                 include_compliance_details: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resource_arn_list: core::default::Default::default(),
                 resource_type_filters: core::default::Default::default(),
                 tag_filter: core::default::Default::default(),
@@ -266,6 +284,12 @@ impl DataResourcegroupstaggingapiResourcesRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.include_compliance_details", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_arn_list` after provisioning.\n"]
     pub fn resource_arn_list(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.resource_arn_list", self.extract_ref()))
@@ -274,7 +298,7 @@ impl DataResourcegroupstaggingapiResourcesRef {
     #[doc = "Get a reference to the value of field `resource_tag_mapping_list` after provisioning.\n"]
     pub fn resource_tag_mapping_list(
         &self,
-    ) -> terrars::ListRef<DataResourcegroupstaggingapiResourcesResourceTagMappingListElRef> {
+    ) -> terrars::ListRef<DataResourcegroupstaggingapiResources_ResourceTagMappingListRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resource_tag_mapping_list", self.extract_ref()))
     }
 
@@ -284,13 +308,18 @@ impl DataResourcegroupstaggingapiResourcesRef {
     }
 
     #[doc = "Get a reference to the value of field `tag_filter` after provisioning.\n"]
-    pub fn tag_filter(&self) -> terrars::ListRef<DataResourcegroupstaggingapiResourcesTagFilterElRef> {
+    pub fn tag_filter(&self) -> terrars::ListRef<DataResourcegroupstaggingapiResources_TagFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.tag_filter", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataResourcegroupstaggingapiResourcesDynamic {
+    tag_filter: std::option::Option<terrars::DynamicBlock<DataResourcegroupstaggingapiResources_TagFilter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl {
+pub struct DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compliance_status: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -299,7 +328,7 @@ pub struct DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplian
     non_compliant_keys: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl {
+impl DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails {
     #[doc = "Set the field `compliance_status`.\n"]
     pub fn set_compliance_status(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.compliance_status = std::option::Option::Some(v.into());
@@ -325,9 +354,9 @@ impl DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDeta
     }
 }
 
-impl terrars::ToListMappable for DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl {
+impl terrars::ToListMappable for DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails {
     type O =
-        terrars::BlockAssignable<DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl>;
+        terrars::BlockAssignable<DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -338,11 +367,11 @@ impl terrars::ToListMappable for DataResourcegroupstaggingapiResourcesResourceTa
     }
 }
 
-pub struct BuildDataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl {}
+pub struct BuildDataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails {}
 
-impl BuildDataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl {
-    pub fn build(self) -> DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl {
-        DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl {
+impl BuildDataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails {
+    pub fn build(self) -> DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails {
+        DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails {
             compliance_status: core::default::Default::default(),
             keys_with_noncompliant_values: core::default::Default::default(),
             non_compliant_keys: core::default::Default::default(),
@@ -350,24 +379,26 @@ impl BuildDataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianc
     }
 }
 
-pub struct DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsElRef {
+#[allow(dead_code)]
+pub struct DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsElRef {
+impl terrars::Ref for DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetailsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsElRef {
-        DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsElRef {
+    ) -> DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetailsRef {
+        DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsElRef {
+impl DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -389,18 +420,18 @@ impl DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDeta
 }
 
 #[derive(Serialize)]
-pub struct DataResourcegroupstaggingapiResourcesResourceTagMappingListEl {
+pub struct DataResourcegroupstaggingapiResources_ResourceTagMappingList {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     compliance_details: std
     ::option
-    ::Option<terrars::ListField<DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl>>,
+    ::Option<terrars::ListField<DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataResourcegroupstaggingapiResourcesResourceTagMappingListEl {
+impl DataResourcegroupstaggingapiResources_ResourceTagMappingList {
     #[doc = "Set the field `compliance_details`.\n"]
     pub fn set_compliance_details(
         mut self,
@@ -411,7 +442,7 @@ impl DataResourcegroupstaggingapiResourcesResourceTagMappingListEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::ListField<DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsEl>,
+                        ::ListField<DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetails>,
                     >,
     ) -> Self {
         self.compliance_details = std::option::Option::Some(v.into());
@@ -434,8 +465,8 @@ impl DataResourcegroupstaggingapiResourcesResourceTagMappingListEl {
     }
 }
 
-impl terrars::ToListMappable for DataResourcegroupstaggingapiResourcesResourceTagMappingListEl {
-    type O = terrars::BlockAssignable<DataResourcegroupstaggingapiResourcesResourceTagMappingListEl>;
+impl terrars::ToListMappable for DataResourcegroupstaggingapiResources_ResourceTagMappingList {
+    type O = terrars::BlockAssignable<DataResourcegroupstaggingapiResources_ResourceTagMappingList>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -446,11 +477,11 @@ impl terrars::ToListMappable for DataResourcegroupstaggingapiResourcesResourceTa
     }
 }
 
-pub struct BuildDataResourcegroupstaggingapiResourcesResourceTagMappingListEl {}
+pub struct BuildDataResourcegroupstaggingapiResources_ResourceTagMappingList {}
 
-impl BuildDataResourcegroupstaggingapiResourcesResourceTagMappingListEl {
-    pub fn build(self) -> DataResourcegroupstaggingapiResourcesResourceTagMappingListEl {
-        DataResourcegroupstaggingapiResourcesResourceTagMappingListEl {
+impl BuildDataResourcegroupstaggingapiResources_ResourceTagMappingList {
+    pub fn build(self) -> DataResourcegroupstaggingapiResources_ResourceTagMappingList {
+        DataResourcegroupstaggingapiResources_ResourceTagMappingList {
             compliance_details: core::default::Default::default(),
             resource_arn: core::default::Default::default(),
             tags: core::default::Default::default(),
@@ -458,24 +489,26 @@ impl BuildDataResourcegroupstaggingapiResourcesResourceTagMappingListEl {
     }
 }
 
-pub struct DataResourcegroupstaggingapiResourcesResourceTagMappingListElRef {
+#[allow(dead_code)]
+pub struct DataResourcegroupstaggingapiResources_ResourceTagMappingListRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataResourcegroupstaggingapiResourcesResourceTagMappingListElRef {
+impl terrars::Ref for DataResourcegroupstaggingapiResources_ResourceTagMappingListRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataResourcegroupstaggingapiResourcesResourceTagMappingListElRef {
-        DataResourcegroupstaggingapiResourcesResourceTagMappingListElRef {
+    ) -> DataResourcegroupstaggingapiResources_ResourceTagMappingListRef {
+        DataResourcegroupstaggingapiResources_ResourceTagMappingListRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataResourcegroupstaggingapiResourcesResourceTagMappingListElRef {
+impl DataResourcegroupstaggingapiResources_ResourceTagMappingListRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -483,7 +516,7 @@ impl DataResourcegroupstaggingapiResourcesResourceTagMappingListElRef {
     #[doc = "Get a reference to the value of field `compliance_details` after provisioning.\n"]
     pub fn compliance_details(
         &self,
-    ) -> terrars::ListRef<DataResourcegroupstaggingapiResourcesResourceTagMappingListElComplianceDetailsElRef> {
+    ) -> terrars::ListRef<DataResourcegroupstaggingapiResources_ResourceTagMappingList_ComplianceDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.compliance_details", self.base))
     }
 
@@ -499,13 +532,13 @@ impl DataResourcegroupstaggingapiResourcesResourceTagMappingListElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataResourcegroupstaggingapiResourcesTagFilterEl {
+pub struct DataResourcegroupstaggingapiResources_TagFilter {
     key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     values: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataResourcegroupstaggingapiResourcesTagFilterEl {
+impl DataResourcegroupstaggingapiResources_TagFilter {
     #[doc = "Set the field `values`.\n"]
     pub fn set_values(
         mut self,
@@ -516,8 +549,8 @@ impl DataResourcegroupstaggingapiResourcesTagFilterEl {
     }
 }
 
-impl terrars::ToListMappable for DataResourcegroupstaggingapiResourcesTagFilterEl {
-    type O = terrars::BlockAssignable<DataResourcegroupstaggingapiResourcesTagFilterEl>;
+impl terrars::ToListMappable for DataResourcegroupstaggingapiResources_TagFilter {
+    type O = terrars::BlockAssignable<DataResourcegroupstaggingapiResources_TagFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -528,38 +561,40 @@ impl terrars::ToListMappable for DataResourcegroupstaggingapiResourcesTagFilterE
     }
 }
 
-pub struct BuildDataResourcegroupstaggingapiResourcesTagFilterEl {
+pub struct BuildDataResourcegroupstaggingapiResources_TagFilter {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataResourcegroupstaggingapiResourcesTagFilterEl {
-    pub fn build(self) -> DataResourcegroupstaggingapiResourcesTagFilterEl {
-        DataResourcegroupstaggingapiResourcesTagFilterEl {
+impl BuildDataResourcegroupstaggingapiResources_TagFilter {
+    pub fn build(self) -> DataResourcegroupstaggingapiResources_TagFilter {
+        DataResourcegroupstaggingapiResources_TagFilter {
             key: self.key,
             values: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataResourcegroupstaggingapiResourcesTagFilterElRef {
+#[allow(dead_code)]
+pub struct DataResourcegroupstaggingapiResources_TagFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataResourcegroupstaggingapiResourcesTagFilterElRef {
+impl terrars::Ref for DataResourcegroupstaggingapiResources_TagFilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataResourcegroupstaggingapiResourcesTagFilterElRef {
-        DataResourcegroupstaggingapiResourcesTagFilterElRef {
+    ) -> DataResourcegroupstaggingapiResources_TagFilterRef {
+        DataResourcegroupstaggingapiResources_TagFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataResourcegroupstaggingapiResourcesTagFilterElRef {
+impl DataResourcegroupstaggingapiResources_TagFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -573,9 +608,4 @@ impl DataResourcegroupstaggingapiResourcesTagFilterElRef {
     pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataResourcegroupstaggingapiResourcesDynamic {
-    tag_filter: std::option::Option<terrars::DynamicBlock<DataResourcegroupstaggingapiResourcesTagFilterEl>>,
 }

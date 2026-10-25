@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApiGatewayUsagePlanData {
+struct ApiGatewayUsagePlanData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,22 +28,24 @@ struct ApiGatewayUsagePlanData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     product_code: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    api_stages: std::option::Option<std::vec::Vec<ApiGatewayUsagePlanApiStagesEl>>,
+    api_stages: std::option::Option<std::vec::Vec<ApiGatewayUsagePlan_ApiStages>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    quota_settings: std::option::Option<std::vec::Vec<ApiGatewayUsagePlanQuotaSettingsEl>>,
+    quota_settings: std::option::Option<std::vec::Vec<ApiGatewayUsagePlan_QuotaSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    throttle_settings: std::option::Option<std::vec::Vec<ApiGatewayUsagePlanThrottleSettingsEl>>,
+    throttle_settings: std::option::Option<std::vec::Vec<ApiGatewayUsagePlan_ThrottleSettings>>,
     dynamic: ApiGatewayUsagePlanDynamic,
 }
 
 struct ApiGatewayUsagePlan_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApiGatewayUsagePlanData>,
+    data: std::cell::RefCell<ApiGatewayUsagePlanData_>,
 }
 
 #[derive(Clone)]
@@ -159,6 +163,13 @@ impl ApiGatewayUsagePlan {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -180,7 +191,7 @@ impl ApiGatewayUsagePlan {
     #[doc = "Set the field `api_stages`.\n"]
     pub fn set_api_stages(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayUsagePlanApiStagesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayUsagePlan_ApiStages>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -196,7 +207,7 @@ impl ApiGatewayUsagePlan {
     #[doc = "Set the field `quota_settings`.\n"]
     pub fn set_quota_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayUsagePlanQuotaSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayUsagePlan_QuotaSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -212,7 +223,7 @@ impl ApiGatewayUsagePlan {
     #[doc = "Set the field `throttle_settings`.\n"]
     pub fn set_throttle_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayUsagePlanThrottleSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayUsagePlan_ThrottleSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -250,6 +261,12 @@ impl ApiGatewayUsagePlan {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_code", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -261,12 +278,12 @@ impl ApiGatewayUsagePlan {
     }
 
     #[doc = "Get a reference to the value of field `quota_settings` after provisioning.\n"]
-    pub fn quota_settings(&self) -> terrars::ListRef<ApiGatewayUsagePlanQuotaSettingsElRef> {
+    pub fn quota_settings(&self) -> terrars::ListRef<ApiGatewayUsagePlan_QuotaSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.quota_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `throttle_settings` after provisioning.\n"]
-    pub fn throttle_settings(&self) -> terrars::ListRef<ApiGatewayUsagePlanThrottleSettingsElRef> {
+    pub fn throttle_settings(&self) -> terrars::ListRef<ApiGatewayUsagePlan_ThrottleSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.throttle_settings", self.extract_ref()))
     }
 }
@@ -313,7 +330,7 @@ impl BuildApiGatewayUsagePlan {
         let out = ApiGatewayUsagePlan(std::rc::Rc::new(ApiGatewayUsagePlan_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApiGatewayUsagePlanData {
+            data: std::cell::RefCell::new(ApiGatewayUsagePlanData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -323,6 +340,7 @@ impl BuildApiGatewayUsagePlan {
                 id: core::default::Default::default(),
                 name: self.name,
                 product_code: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 api_stages: core::default::Default::default(),
@@ -384,6 +402,12 @@ impl ApiGatewayUsagePlanRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_code", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -395,18 +419,25 @@ impl ApiGatewayUsagePlanRef {
     }
 
     #[doc = "Get a reference to the value of field `quota_settings` after provisioning.\n"]
-    pub fn quota_settings(&self) -> terrars::ListRef<ApiGatewayUsagePlanQuotaSettingsElRef> {
+    pub fn quota_settings(&self) -> terrars::ListRef<ApiGatewayUsagePlan_QuotaSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.quota_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `throttle_settings` after provisioning.\n"]
-    pub fn throttle_settings(&self) -> terrars::ListRef<ApiGatewayUsagePlanThrottleSettingsElRef> {
+    pub fn throttle_settings(&self) -> terrars::ListRef<ApiGatewayUsagePlan_ThrottleSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.throttle_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApiGatewayUsagePlanDynamic {
+    api_stages: std::option::Option<terrars::DynamicBlock<ApiGatewayUsagePlan_ApiStages>>,
+    quota_settings: std::option::Option<terrars::DynamicBlock<ApiGatewayUsagePlan_QuotaSettings>>,
+    throttle_settings: std::option::Option<terrars::DynamicBlock<ApiGatewayUsagePlan_ThrottleSettings>>,
+}
+
 #[derive(Serialize)]
-pub struct ApiGatewayUsagePlanApiStagesElThrottleEl {
+pub struct ApiGatewayUsagePlan_ApiStages_Throttle {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     burst_limit: std::option::Option<terrars::PrimField<f64>>,
     path: terrars::PrimField<std::string::String>,
@@ -414,7 +445,7 @@ pub struct ApiGatewayUsagePlanApiStagesElThrottleEl {
     rate_limit: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ApiGatewayUsagePlanApiStagesElThrottleEl {
+impl ApiGatewayUsagePlan_ApiStages_Throttle {
     #[doc = "Set the field `burst_limit`.\n"]
     pub fn set_burst_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.burst_limit = std::option::Option::Some(v.into());
@@ -428,8 +459,8 @@ impl ApiGatewayUsagePlanApiStagesElThrottleEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayUsagePlanApiStagesElThrottleEl {
-    type O = terrars::BlockAssignable<ApiGatewayUsagePlanApiStagesElThrottleEl>;
+impl terrars::ToListMappable for ApiGatewayUsagePlan_ApiStages_Throttle {
+    type O = terrars::BlockAssignable<ApiGatewayUsagePlan_ApiStages_Throttle>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -440,14 +471,14 @@ impl terrars::ToListMappable for ApiGatewayUsagePlanApiStagesElThrottleEl {
     }
 }
 
-pub struct BuildApiGatewayUsagePlanApiStagesElThrottleEl {
+pub struct BuildApiGatewayUsagePlan_ApiStages_Throttle {
     #[doc = ""]
     pub path: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApiGatewayUsagePlanApiStagesElThrottleEl {
-    pub fn build(self) -> ApiGatewayUsagePlanApiStagesElThrottleEl {
-        ApiGatewayUsagePlanApiStagesElThrottleEl {
+impl BuildApiGatewayUsagePlan_ApiStages_Throttle {
+    pub fn build(self) -> ApiGatewayUsagePlan_ApiStages_Throttle {
+        ApiGatewayUsagePlan_ApiStages_Throttle {
             burst_limit: core::default::Default::default(),
             path: self.path,
             rate_limit: core::default::Default::default(),
@@ -455,21 +486,23 @@ impl BuildApiGatewayUsagePlanApiStagesElThrottleEl {
     }
 }
 
-pub struct ApiGatewayUsagePlanApiStagesElThrottleElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayUsagePlan_ApiStages_ThrottleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayUsagePlanApiStagesElThrottleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayUsagePlanApiStagesElThrottleElRef {
-        ApiGatewayUsagePlanApiStagesElThrottleElRef {
+impl terrars::Ref for ApiGatewayUsagePlan_ApiStages_ThrottleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayUsagePlan_ApiStages_ThrottleRef {
+        ApiGatewayUsagePlan_ApiStages_ThrottleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayUsagePlanApiStagesElThrottleElRef {
+impl ApiGatewayUsagePlan_ApiStages_ThrottleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -491,24 +524,24 @@ impl ApiGatewayUsagePlanApiStagesElThrottleElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ApiGatewayUsagePlanApiStagesElDynamic {
-    throttle: std::option::Option<terrars::DynamicBlock<ApiGatewayUsagePlanApiStagesElThrottleEl>>,
+struct ApiGatewayUsagePlan_ApiStagesDynamic {
+    throttle: std::option::Option<terrars::DynamicBlock<ApiGatewayUsagePlan_ApiStages_Throttle>>,
 }
 
 #[derive(Serialize)]
-pub struct ApiGatewayUsagePlanApiStagesEl {
+pub struct ApiGatewayUsagePlan_ApiStages {
     api_id: terrars::PrimField<std::string::String>,
     stage: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    throttle: std::option::Option<std::vec::Vec<ApiGatewayUsagePlanApiStagesElThrottleEl>>,
-    dynamic: ApiGatewayUsagePlanApiStagesElDynamic,
+    throttle: std::option::Option<std::vec::Vec<ApiGatewayUsagePlan_ApiStages_Throttle>>,
+    dynamic: ApiGatewayUsagePlan_ApiStagesDynamic,
 }
 
-impl ApiGatewayUsagePlanApiStagesEl {
+impl ApiGatewayUsagePlan_ApiStages {
     #[doc = "Set the field `throttle`.\n"]
     pub fn set_throttle(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayUsagePlanApiStagesElThrottleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayUsagePlan_ApiStages_Throttle>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -522,8 +555,8 @@ impl ApiGatewayUsagePlanApiStagesEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayUsagePlanApiStagesEl {
-    type O = terrars::BlockAssignable<ApiGatewayUsagePlanApiStagesEl>;
+impl terrars::ToListMappable for ApiGatewayUsagePlan_ApiStages {
+    type O = terrars::BlockAssignable<ApiGatewayUsagePlan_ApiStages>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -534,16 +567,16 @@ impl terrars::ToListMappable for ApiGatewayUsagePlanApiStagesEl {
     }
 }
 
-pub struct BuildApiGatewayUsagePlanApiStagesEl {
+pub struct BuildApiGatewayUsagePlan_ApiStages {
     #[doc = ""]
     pub api_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub stage: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApiGatewayUsagePlanApiStagesEl {
-    pub fn build(self) -> ApiGatewayUsagePlanApiStagesEl {
-        ApiGatewayUsagePlanApiStagesEl {
+impl BuildApiGatewayUsagePlan_ApiStages {
+    pub fn build(self) -> ApiGatewayUsagePlan_ApiStages {
+        ApiGatewayUsagePlan_ApiStages {
             api_id: self.api_id,
             stage: self.stage,
             throttle: core::default::Default::default(),
@@ -552,21 +585,23 @@ impl BuildApiGatewayUsagePlanApiStagesEl {
     }
 }
 
-pub struct ApiGatewayUsagePlanApiStagesElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayUsagePlan_ApiStagesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayUsagePlanApiStagesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayUsagePlanApiStagesElRef {
-        ApiGatewayUsagePlanApiStagesElRef {
+impl terrars::Ref for ApiGatewayUsagePlan_ApiStagesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayUsagePlan_ApiStagesRef {
+        ApiGatewayUsagePlan_ApiStagesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayUsagePlanApiStagesElRef {
+impl ApiGatewayUsagePlan_ApiStagesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -583,14 +618,14 @@ impl ApiGatewayUsagePlanApiStagesElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApiGatewayUsagePlanQuotaSettingsEl {
+pub struct ApiGatewayUsagePlan_QuotaSettings {
     limit: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     offset: std::option::Option<terrars::PrimField<f64>>,
     period: terrars::PrimField<std::string::String>,
 }
 
-impl ApiGatewayUsagePlanQuotaSettingsEl {
+impl ApiGatewayUsagePlan_QuotaSettings {
     #[doc = "Set the field `offset`.\n"]
     pub fn set_offset(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.offset = std::option::Option::Some(v.into());
@@ -598,8 +633,8 @@ impl ApiGatewayUsagePlanQuotaSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayUsagePlanQuotaSettingsEl {
-    type O = terrars::BlockAssignable<ApiGatewayUsagePlanQuotaSettingsEl>;
+impl terrars::ToListMappable for ApiGatewayUsagePlan_QuotaSettings {
+    type O = terrars::BlockAssignable<ApiGatewayUsagePlan_QuotaSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -610,16 +645,16 @@ impl terrars::ToListMappable for ApiGatewayUsagePlanQuotaSettingsEl {
     }
 }
 
-pub struct BuildApiGatewayUsagePlanQuotaSettingsEl {
+pub struct BuildApiGatewayUsagePlan_QuotaSettings {
     #[doc = ""]
     pub limit: terrars::PrimField<f64>,
     #[doc = ""]
     pub period: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApiGatewayUsagePlanQuotaSettingsEl {
-    pub fn build(self) -> ApiGatewayUsagePlanQuotaSettingsEl {
-        ApiGatewayUsagePlanQuotaSettingsEl {
+impl BuildApiGatewayUsagePlan_QuotaSettings {
+    pub fn build(self) -> ApiGatewayUsagePlan_QuotaSettings {
+        ApiGatewayUsagePlan_QuotaSettings {
             limit: self.limit,
             offset: core::default::Default::default(),
             period: self.period,
@@ -627,21 +662,23 @@ impl BuildApiGatewayUsagePlanQuotaSettingsEl {
     }
 }
 
-pub struct ApiGatewayUsagePlanQuotaSettingsElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayUsagePlan_QuotaSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayUsagePlanQuotaSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayUsagePlanQuotaSettingsElRef {
-        ApiGatewayUsagePlanQuotaSettingsElRef {
+impl terrars::Ref for ApiGatewayUsagePlan_QuotaSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayUsagePlan_QuotaSettingsRef {
+        ApiGatewayUsagePlan_QuotaSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayUsagePlanQuotaSettingsElRef {
+impl ApiGatewayUsagePlan_QuotaSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -663,14 +700,14 @@ impl ApiGatewayUsagePlanQuotaSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApiGatewayUsagePlanThrottleSettingsEl {
+pub struct ApiGatewayUsagePlan_ThrottleSettings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     burst_limit: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rate_limit: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl ApiGatewayUsagePlanThrottleSettingsEl {
+impl ApiGatewayUsagePlan_ThrottleSettings {
     #[doc = "Set the field `burst_limit`.\n"]
     pub fn set_burst_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.burst_limit = std::option::Option::Some(v.into());
@@ -684,8 +721,8 @@ impl ApiGatewayUsagePlanThrottleSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayUsagePlanThrottleSettingsEl {
-    type O = terrars::BlockAssignable<ApiGatewayUsagePlanThrottleSettingsEl>;
+impl terrars::ToListMappable for ApiGatewayUsagePlan_ThrottleSettings {
+    type O = terrars::BlockAssignable<ApiGatewayUsagePlan_ThrottleSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -696,32 +733,34 @@ impl terrars::ToListMappable for ApiGatewayUsagePlanThrottleSettingsEl {
     }
 }
 
-pub struct BuildApiGatewayUsagePlanThrottleSettingsEl {}
+pub struct BuildApiGatewayUsagePlan_ThrottleSettings {}
 
-impl BuildApiGatewayUsagePlanThrottleSettingsEl {
-    pub fn build(self) -> ApiGatewayUsagePlanThrottleSettingsEl {
-        ApiGatewayUsagePlanThrottleSettingsEl {
+impl BuildApiGatewayUsagePlan_ThrottleSettings {
+    pub fn build(self) -> ApiGatewayUsagePlan_ThrottleSettings {
+        ApiGatewayUsagePlan_ThrottleSettings {
             burst_limit: core::default::Default::default(),
             rate_limit: core::default::Default::default(),
         }
     }
 }
 
-pub struct ApiGatewayUsagePlanThrottleSettingsElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayUsagePlan_ThrottleSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayUsagePlanThrottleSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayUsagePlanThrottleSettingsElRef {
-        ApiGatewayUsagePlanThrottleSettingsElRef {
+impl terrars::Ref for ApiGatewayUsagePlan_ThrottleSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayUsagePlan_ThrottleSettingsRef {
+        ApiGatewayUsagePlan_ThrottleSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayUsagePlanThrottleSettingsElRef {
+impl ApiGatewayUsagePlan_ThrottleSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -735,11 +774,4 @@ impl ApiGatewayUsagePlanThrottleSettingsElRef {
     pub fn rate_limit(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rate_limit", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApiGatewayUsagePlanDynamic {
-    api_stages: std::option::Option<terrars::DynamicBlock<ApiGatewayUsagePlanApiStagesEl>>,
-    quota_settings: std::option::Option<terrars::DynamicBlock<ApiGatewayUsagePlanQuotaSettingsEl>>,
-    throttle_settings: std::option::Option<terrars::DynamicBlock<ApiGatewayUsagePlanThrottleSettingsEl>>,
 }

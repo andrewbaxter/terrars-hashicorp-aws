@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataServicecatalogLaunchPathsData {
+struct DataServicecatalogLaunchPathsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -22,13 +24,15 @@ struct DataServicecatalogLaunchPathsData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     product_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataServicecatalogLaunchPathsTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataServicecatalogLaunchPaths_Timeouts>,
 }
 
 struct DataServicecatalogLaunchPaths_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataServicecatalogLaunchPathsData>,
+    data: std::cell::RefCell<DataServicecatalogLaunchPathsData_>,
 }
 
 #[derive(Clone)]
@@ -85,8 +89,15 @@ impl DataServicecatalogLaunchPaths {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataServicecatalogLaunchPathsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataServicecatalogLaunchPaths_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -106,14 +117,20 @@ impl DataServicecatalogLaunchPaths {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `summaries` after provisioning.\n"]
-    pub fn summaries(&self) -> terrars::ListRef<DataServicecatalogLaunchPathsSummariesElRef> {
+    pub fn summaries(&self) -> terrars::ListRef<DataServicecatalogLaunchPaths_SummariesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.summaries", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataServicecatalogLaunchPathsTimeoutsElRef {
-        DataServicecatalogLaunchPathsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataServicecatalogLaunchPaths_TimeoutsRef {
+        DataServicecatalogLaunchPaths_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -162,7 +179,7 @@ impl BuildDataServicecatalogLaunchPaths {
         let out = DataServicecatalogLaunchPaths(std::rc::Rc::new(DataServicecatalogLaunchPaths_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataServicecatalogLaunchPathsData {
+            data: std::cell::RefCell::new(DataServicecatalogLaunchPathsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -170,6 +187,7 @@ impl BuildDataServicecatalogLaunchPaths {
                 accept_language: core::default::Default::default(),
                 id: core::default::Default::default(),
                 product_id: self.product_id,
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -216,14 +234,20 @@ impl DataServicecatalogLaunchPathsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `summaries` after provisioning.\n"]
-    pub fn summaries(&self) -> terrars::ListRef<DataServicecatalogLaunchPathsSummariesElRef> {
+    pub fn summaries(&self) -> terrars::ListRef<DataServicecatalogLaunchPaths_SummariesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.summaries", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataServicecatalogLaunchPathsTimeoutsElRef {
-        DataServicecatalogLaunchPathsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataServicecatalogLaunchPaths_TimeoutsRef {
+        DataServicecatalogLaunchPaths_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -231,14 +255,14 @@ impl DataServicecatalogLaunchPathsRef {
 }
 
 #[derive(Serialize)]
-pub struct DataServicecatalogLaunchPathsSummariesElConstraintSummariesEl {
+pub struct DataServicecatalogLaunchPaths_Summaries_ConstraintSummaries {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataServicecatalogLaunchPathsSummariesElConstraintSummariesEl {
+impl DataServicecatalogLaunchPaths_Summaries_ConstraintSummaries {
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.description = std::option::Option::Some(v.into());
@@ -252,8 +276,8 @@ impl DataServicecatalogLaunchPathsSummariesElConstraintSummariesEl {
     }
 }
 
-impl terrars::ToListMappable for DataServicecatalogLaunchPathsSummariesElConstraintSummariesEl {
-    type O = terrars::BlockAssignable<DataServicecatalogLaunchPathsSummariesElConstraintSummariesEl>;
+impl terrars::ToListMappable for DataServicecatalogLaunchPaths_Summaries_ConstraintSummaries {
+    type O = terrars::BlockAssignable<DataServicecatalogLaunchPaths_Summaries_ConstraintSummaries>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -264,35 +288,37 @@ impl terrars::ToListMappable for DataServicecatalogLaunchPathsSummariesElConstra
     }
 }
 
-pub struct BuildDataServicecatalogLaunchPathsSummariesElConstraintSummariesEl {}
+pub struct BuildDataServicecatalogLaunchPaths_Summaries_ConstraintSummaries {}
 
-impl BuildDataServicecatalogLaunchPathsSummariesElConstraintSummariesEl {
-    pub fn build(self) -> DataServicecatalogLaunchPathsSummariesElConstraintSummariesEl {
-        DataServicecatalogLaunchPathsSummariesElConstraintSummariesEl {
+impl BuildDataServicecatalogLaunchPaths_Summaries_ConstraintSummaries {
+    pub fn build(self) -> DataServicecatalogLaunchPaths_Summaries_ConstraintSummaries {
+        DataServicecatalogLaunchPaths_Summaries_ConstraintSummaries {
             description: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataServicecatalogLaunchPathsSummariesElConstraintSummariesElRef {
+#[allow(dead_code)]
+pub struct DataServicecatalogLaunchPaths_Summaries_ConstraintSummariesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataServicecatalogLaunchPathsSummariesElConstraintSummariesElRef {
+impl terrars::Ref for DataServicecatalogLaunchPaths_Summaries_ConstraintSummariesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataServicecatalogLaunchPathsSummariesElConstraintSummariesElRef {
-        DataServicecatalogLaunchPathsSummariesElConstraintSummariesElRef {
+    ) -> DataServicecatalogLaunchPaths_Summaries_ConstraintSummariesRef {
+        DataServicecatalogLaunchPaths_Summaries_ConstraintSummariesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataServicecatalogLaunchPathsSummariesElConstraintSummariesElRef {
+impl DataServicecatalogLaunchPaths_Summaries_ConstraintSummariesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -309,11 +335,11 @@ impl DataServicecatalogLaunchPathsSummariesElConstraintSummariesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataServicecatalogLaunchPathsSummariesEl {
+pub struct DataServicecatalogLaunchPaths_Summaries {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     constraint_summaries: std
     ::option
-    ::Option<terrars::ListField<DataServicecatalogLaunchPathsSummariesElConstraintSummariesEl>>,
+    ::Option<terrars::ListField<DataServicecatalogLaunchPaths_Summaries_ConstraintSummaries>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -322,16 +348,11 @@ pub struct DataServicecatalogLaunchPathsSummariesEl {
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl DataServicecatalogLaunchPathsSummariesEl {
+impl DataServicecatalogLaunchPaths_Summaries {
     #[doc = "Set the field `constraint_summaries`.\n"]
     pub fn set_constraint_summaries(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::ListField<DataServicecatalogLaunchPathsSummariesElConstraintSummariesEl>>,
+        v: impl std::convert::Into<terrars::ListField<DataServicecatalogLaunchPaths_Summaries_ConstraintSummaries>>,
     ) -> Self {
         self.constraint_summaries = std::option::Option::Some(v.into());
         self
@@ -359,8 +380,8 @@ impl DataServicecatalogLaunchPathsSummariesEl {
     }
 }
 
-impl terrars::ToListMappable for DataServicecatalogLaunchPathsSummariesEl {
-    type O = terrars::BlockAssignable<DataServicecatalogLaunchPathsSummariesEl>;
+impl terrars::ToListMappable for DataServicecatalogLaunchPaths_Summaries {
+    type O = terrars::BlockAssignable<DataServicecatalogLaunchPaths_Summaries>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -371,11 +392,11 @@ impl terrars::ToListMappable for DataServicecatalogLaunchPathsSummariesEl {
     }
 }
 
-pub struct BuildDataServicecatalogLaunchPathsSummariesEl {}
+pub struct BuildDataServicecatalogLaunchPaths_Summaries {}
 
-impl BuildDataServicecatalogLaunchPathsSummariesEl {
-    pub fn build(self) -> DataServicecatalogLaunchPathsSummariesEl {
-        DataServicecatalogLaunchPathsSummariesEl {
+impl BuildDataServicecatalogLaunchPaths_Summaries {
+    pub fn build(self) -> DataServicecatalogLaunchPaths_Summaries {
+        DataServicecatalogLaunchPaths_Summaries {
             constraint_summaries: core::default::Default::default(),
             name: core::default::Default::default(),
             path_id: core::default::Default::default(),
@@ -384,21 +405,23 @@ impl BuildDataServicecatalogLaunchPathsSummariesEl {
     }
 }
 
-pub struct DataServicecatalogLaunchPathsSummariesElRef {
+#[allow(dead_code)]
+pub struct DataServicecatalogLaunchPaths_SummariesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataServicecatalogLaunchPathsSummariesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataServicecatalogLaunchPathsSummariesElRef {
-        DataServicecatalogLaunchPathsSummariesElRef {
+impl terrars::Ref for DataServicecatalogLaunchPaths_SummariesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataServicecatalogLaunchPaths_SummariesRef {
+        DataServicecatalogLaunchPaths_SummariesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataServicecatalogLaunchPathsSummariesElRef {
+impl DataServicecatalogLaunchPaths_SummariesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -406,7 +429,7 @@ impl DataServicecatalogLaunchPathsSummariesElRef {
     #[doc = "Get a reference to the value of field `constraint_summaries` after provisioning.\n"]
     pub fn constraint_summaries(
         &self,
-    ) -> terrars::ListRef<DataServicecatalogLaunchPathsSummariesElConstraintSummariesElRef> {
+    ) -> terrars::ListRef<DataServicecatalogLaunchPaths_Summaries_ConstraintSummariesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.constraint_summaries", self.base))
     }
 
@@ -427,12 +450,12 @@ impl DataServicecatalogLaunchPathsSummariesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataServicecatalogLaunchPathsTimeoutsEl {
+pub struct DataServicecatalogLaunchPaths_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataServicecatalogLaunchPathsTimeoutsEl {
+impl DataServicecatalogLaunchPaths_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -440,8 +463,8 @@ impl DataServicecatalogLaunchPathsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataServicecatalogLaunchPathsTimeoutsEl {
-    type O = terrars::BlockAssignable<DataServicecatalogLaunchPathsTimeoutsEl>;
+impl terrars::ToListMappable for DataServicecatalogLaunchPaths_Timeouts {
+    type O = terrars::BlockAssignable<DataServicecatalogLaunchPaths_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -452,29 +475,31 @@ impl terrars::ToListMappable for DataServicecatalogLaunchPathsTimeoutsEl {
     }
 }
 
-pub struct BuildDataServicecatalogLaunchPathsTimeoutsEl {}
+pub struct BuildDataServicecatalogLaunchPaths_Timeouts {}
 
-impl BuildDataServicecatalogLaunchPathsTimeoutsEl {
-    pub fn build(self) -> DataServicecatalogLaunchPathsTimeoutsEl {
-        DataServicecatalogLaunchPathsTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataServicecatalogLaunchPaths_Timeouts {
+    pub fn build(self) -> DataServicecatalogLaunchPaths_Timeouts {
+        DataServicecatalogLaunchPaths_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataServicecatalogLaunchPathsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataServicecatalogLaunchPaths_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataServicecatalogLaunchPathsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataServicecatalogLaunchPathsTimeoutsElRef {
-        DataServicecatalogLaunchPathsTimeoutsElRef {
+impl terrars::Ref for DataServicecatalogLaunchPaths_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataServicecatalogLaunchPaths_TimeoutsRef {
+        DataServicecatalogLaunchPaths_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataServicecatalogLaunchPathsTimeoutsElRef {
+impl DataServicecatalogLaunchPaths_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

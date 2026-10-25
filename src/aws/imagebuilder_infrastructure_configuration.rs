@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ImagebuilderInfrastructureConfigurationData {
+struct ImagebuilderInfrastructureConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,6 +31,8 @@ struct ImagebuilderInfrastructureConfigurationData {
     key_pair: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resource_tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -45,16 +49,18 @@ struct ImagebuilderInfrastructureConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_metadata_options: std
     ::option
-    ::Option<std::vec::Vec<ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl>>,
+    ::Option<std::vec::Vec<ImagebuilderInfrastructureConfiguration_InstanceMetadataOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging: std::option::Option<std::vec::Vec<ImagebuilderInfrastructureConfigurationLoggingEl>>,
+    logging: std::option::Option<std::vec::Vec<ImagebuilderInfrastructureConfiguration_Logging>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    placement: std::option::Option<std::vec::Vec<ImagebuilderInfrastructureConfiguration_Placement>>,
     dynamic: ImagebuilderInfrastructureConfigurationDynamic,
 }
 
 struct ImagebuilderInfrastructureConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ImagebuilderInfrastructureConfigurationData>,
+    data: std::cell::RefCell<ImagebuilderInfrastructureConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -181,6 +187,13 @@ impl ImagebuilderInfrastructureConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resource_tags`.\n"]
     pub fn set_resource_tags(
         self,
@@ -243,9 +256,7 @@ impl ImagebuilderInfrastructureConfiguration {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<ImagebuilderInfrastructureConfiguration_InstanceMetadataOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -261,7 +272,7 @@ impl ImagebuilderInfrastructureConfiguration {
     #[doc = "Set the field `logging`.\n"]
     pub fn set_logging(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderInfrastructureConfigurationLoggingEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderInfrastructureConfiguration_Logging>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -269,6 +280,22 @@ impl ImagebuilderInfrastructureConfiguration {
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.logging = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `placement`.\n"]
+    pub fn set_placement(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderInfrastructureConfiguration_Placement>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().placement = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.placement = std::option::Option::Some(d);
             },
         }
         self
@@ -319,6 +346,12 @@ impl ImagebuilderInfrastructureConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_tags` after provisioning.\n"]
     pub fn resource_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.resource_tags", self.extract_ref()))
@@ -360,13 +393,18 @@ impl ImagebuilderInfrastructureConfiguration {
     #[doc = "Get a reference to the value of field `instance_metadata_options` after provisioning.\n"]
     pub fn instance_metadata_options(
         &self,
-    ) -> terrars::ListRef<ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsElRef> {
+    ) -> terrars::ListRef<ImagebuilderInfrastructureConfiguration_InstanceMetadataOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_metadata_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging` after provisioning.\n"]
-    pub fn logging(&self) -> terrars::ListRef<ImagebuilderInfrastructureConfigurationLoggingElRef> {
+    pub fn logging(&self) -> terrars::ListRef<ImagebuilderInfrastructureConfiguration_LoggingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `placement` after provisioning.\n"]
+    pub fn placement(&self) -> terrars::ListRef<ImagebuilderInfrastructureConfiguration_PlacementRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.placement", self.extract_ref()))
     }
 }
 
@@ -414,7 +452,7 @@ impl BuildImagebuilderInfrastructureConfiguration {
         let out = ImagebuilderInfrastructureConfiguration(std::rc::Rc::new(ImagebuilderInfrastructureConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ImagebuilderInfrastructureConfigurationData {
+            data: std::cell::RefCell::new(ImagebuilderInfrastructureConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -426,6 +464,7 @@ impl BuildImagebuilderInfrastructureConfiguration {
                 instance_types: core::default::Default::default(),
                 key_pair: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 resource_tags: core::default::Default::default(),
                 security_group_ids: core::default::Default::default(),
                 sns_topic_arn: core::default::Default::default(),
@@ -435,6 +474,7 @@ impl BuildImagebuilderInfrastructureConfiguration {
                 terminate_instance_on_failure: core::default::Default::default(),
                 instance_metadata_options: core::default::Default::default(),
                 logging: core::default::Default::default(),
+                placement: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -511,6 +551,12 @@ impl ImagebuilderInfrastructureConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_tags` after provisioning.\n"]
     pub fn resource_tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.resource_tags", self.extract_ref()))
@@ -552,25 +598,39 @@ impl ImagebuilderInfrastructureConfigurationRef {
     #[doc = "Get a reference to the value of field `instance_metadata_options` after provisioning.\n"]
     pub fn instance_metadata_options(
         &self,
-    ) -> terrars::ListRef<ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsElRef> {
+    ) -> terrars::ListRef<ImagebuilderInfrastructureConfiguration_InstanceMetadataOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_metadata_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging` after provisioning.\n"]
-    pub fn logging(&self) -> terrars::ListRef<ImagebuilderInfrastructureConfigurationLoggingElRef> {
+    pub fn logging(&self) -> terrars::ListRef<ImagebuilderInfrastructureConfiguration_LoggingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `placement` after provisioning.\n"]
+    pub fn placement(&self) -> terrars::ListRef<ImagebuilderInfrastructureConfiguration_PlacementRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.placement", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ImagebuilderInfrastructureConfigurationDynamic {
+    instance_metadata_options: std
+    ::option
+    ::Option<terrars::DynamicBlock<ImagebuilderInfrastructureConfiguration_InstanceMetadataOptions>>,
+    logging: std::option::Option<terrars::DynamicBlock<ImagebuilderInfrastructureConfiguration_Logging>>,
+    placement: std::option::Option<terrars::DynamicBlock<ImagebuilderInfrastructureConfiguration_Placement>>,
+}
+
 #[derive(Serialize)]
-pub struct ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl {
+pub struct ImagebuilderInfrastructureConfiguration_InstanceMetadataOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_put_response_hop_limit: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_tokens: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl {
+impl ImagebuilderInfrastructureConfiguration_InstanceMetadataOptions {
     #[doc = "Set the field `http_put_response_hop_limit`.\n"]
     pub fn set_http_put_response_hop_limit(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.http_put_response_hop_limit = std::option::Option::Some(v.into());
@@ -584,8 +644,8 @@ impl ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl {
-    type O = terrars::BlockAssignable<ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl>;
+impl terrars::ToListMappable for ImagebuilderInfrastructureConfiguration_InstanceMetadataOptions {
+    type O = terrars::BlockAssignable<ImagebuilderInfrastructureConfiguration_InstanceMetadataOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -596,35 +656,37 @@ impl terrars::ToListMappable for ImagebuilderInfrastructureConfigurationInstance
     }
 }
 
-pub struct BuildImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl {}
+pub struct BuildImagebuilderInfrastructureConfiguration_InstanceMetadataOptions {}
 
-impl BuildImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl {
-    pub fn build(self) -> ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl {
-        ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl {
+impl BuildImagebuilderInfrastructureConfiguration_InstanceMetadataOptions {
+    pub fn build(self) -> ImagebuilderInfrastructureConfiguration_InstanceMetadataOptions {
+        ImagebuilderInfrastructureConfiguration_InstanceMetadataOptions {
             http_put_response_hop_limit: core::default::Default::default(),
             http_tokens: core::default::Default::default(),
         }
     }
 }
 
-pub struct ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderInfrastructureConfiguration_InstanceMetadataOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsElRef {
+impl terrars::Ref for ImagebuilderInfrastructureConfiguration_InstanceMetadataOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsElRef {
-        ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsElRef {
+    ) -> ImagebuilderInfrastructureConfiguration_InstanceMetadataOptionsRef {
+        ImagebuilderInfrastructureConfiguration_InstanceMetadataOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsElRef {
+impl ImagebuilderInfrastructureConfiguration_InstanceMetadataOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -641,13 +703,13 @@ impl ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl {
+pub struct ImagebuilderInfrastructureConfiguration_Logging_S3Logs {
     s3_bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     s3_key_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl {
+impl ImagebuilderInfrastructureConfiguration_Logging_S3Logs {
     #[doc = "Set the field `s3_key_prefix`.\n"]
     pub fn set_s3_key_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.s3_key_prefix = std::option::Option::Some(v.into());
@@ -655,8 +717,8 @@ impl ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl {
     }
 }
 
-impl terrars::ToListMappable for ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl {
-    type O = terrars::BlockAssignable<ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl>;
+impl terrars::ToListMappable for ImagebuilderInfrastructureConfiguration_Logging_S3Logs {
+    type O = terrars::BlockAssignable<ImagebuilderInfrastructureConfiguration_Logging_S3Logs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -667,38 +729,40 @@ impl terrars::ToListMappable for ImagebuilderInfrastructureConfigurationLoggingE
     }
 }
 
-pub struct BuildImagebuilderInfrastructureConfigurationLoggingElS3LogsEl {
+pub struct BuildImagebuilderInfrastructureConfiguration_Logging_S3Logs {
     #[doc = ""]
     pub s3_bucket_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildImagebuilderInfrastructureConfigurationLoggingElS3LogsEl {
-    pub fn build(self) -> ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl {
-        ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl {
+impl BuildImagebuilderInfrastructureConfiguration_Logging_S3Logs {
+    pub fn build(self) -> ImagebuilderInfrastructureConfiguration_Logging_S3Logs {
+        ImagebuilderInfrastructureConfiguration_Logging_S3Logs {
             s3_bucket_name: self.s3_bucket_name,
             s3_key_prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct ImagebuilderInfrastructureConfigurationLoggingElS3LogsElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderInfrastructureConfiguration_Logging_S3LogsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderInfrastructureConfigurationLoggingElS3LogsElRef {
+impl terrars::Ref for ImagebuilderInfrastructureConfiguration_Logging_S3LogsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderInfrastructureConfigurationLoggingElS3LogsElRef {
-        ImagebuilderInfrastructureConfigurationLoggingElS3LogsElRef {
+    ) -> ImagebuilderInfrastructureConfiguration_Logging_S3LogsRef {
+        ImagebuilderInfrastructureConfiguration_Logging_S3LogsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderInfrastructureConfigurationLoggingElS3LogsElRef {
+impl ImagebuilderInfrastructureConfiguration_Logging_S3LogsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -715,27 +779,22 @@ impl ImagebuilderInfrastructureConfigurationLoggingElS3LogsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct ImagebuilderInfrastructureConfigurationLoggingElDynamic {
-    s3_logs: std::option::Option<terrars::DynamicBlock<ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl>>,
+struct ImagebuilderInfrastructureConfiguration_LoggingDynamic {
+    s3_logs: std::option::Option<terrars::DynamicBlock<ImagebuilderInfrastructureConfiguration_Logging_S3Logs>>,
 }
 
 #[derive(Serialize)]
-pub struct ImagebuilderInfrastructureConfigurationLoggingEl {
+pub struct ImagebuilderInfrastructureConfiguration_Logging {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_logs: std::option::Option<std::vec::Vec<ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl>>,
-    dynamic: ImagebuilderInfrastructureConfigurationLoggingElDynamic,
+    s3_logs: std::option::Option<std::vec::Vec<ImagebuilderInfrastructureConfiguration_Logging_S3Logs>>,
+    dynamic: ImagebuilderInfrastructureConfiguration_LoggingDynamic,
 }
 
-impl ImagebuilderInfrastructureConfigurationLoggingEl {
+impl ImagebuilderInfrastructureConfiguration_Logging {
     #[doc = "Set the field `s3_logs`.\n"]
     pub fn set_s3_logs(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<ImagebuilderInfrastructureConfigurationLoggingElS3LogsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ImagebuilderInfrastructureConfiguration_Logging_S3Logs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -749,8 +808,8 @@ impl ImagebuilderInfrastructureConfigurationLoggingEl {
     }
 }
 
-impl terrars::ToListMappable for ImagebuilderInfrastructureConfigurationLoggingEl {
-    type O = terrars::BlockAssignable<ImagebuilderInfrastructureConfigurationLoggingEl>;
+impl terrars::ToListMappable for ImagebuilderInfrastructureConfiguration_Logging {
+    type O = terrars::BlockAssignable<ImagebuilderInfrastructureConfiguration_Logging>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -761,49 +820,154 @@ impl terrars::ToListMappable for ImagebuilderInfrastructureConfigurationLoggingE
     }
 }
 
-pub struct BuildImagebuilderInfrastructureConfigurationLoggingEl {}
+pub struct BuildImagebuilderInfrastructureConfiguration_Logging {}
 
-impl BuildImagebuilderInfrastructureConfigurationLoggingEl {
-    pub fn build(self) -> ImagebuilderInfrastructureConfigurationLoggingEl {
-        ImagebuilderInfrastructureConfigurationLoggingEl {
+impl BuildImagebuilderInfrastructureConfiguration_Logging {
+    pub fn build(self) -> ImagebuilderInfrastructureConfiguration_Logging {
+        ImagebuilderInfrastructureConfiguration_Logging {
             s3_logs: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct ImagebuilderInfrastructureConfigurationLoggingElRef {
+#[allow(dead_code)]
+pub struct ImagebuilderInfrastructureConfiguration_LoggingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ImagebuilderInfrastructureConfigurationLoggingElRef {
+impl terrars::Ref for ImagebuilderInfrastructureConfiguration_LoggingRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ImagebuilderInfrastructureConfigurationLoggingElRef {
-        ImagebuilderInfrastructureConfigurationLoggingElRef {
+    ) -> ImagebuilderInfrastructureConfiguration_LoggingRef {
+        ImagebuilderInfrastructureConfiguration_LoggingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ImagebuilderInfrastructureConfigurationLoggingElRef {
+impl ImagebuilderInfrastructureConfiguration_LoggingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `s3_logs` after provisioning.\n"]
-    pub fn s3_logs(&self) -> terrars::ListRef<ImagebuilderInfrastructureConfigurationLoggingElS3LogsElRef> {
+    pub fn s3_logs(&self) -> terrars::ListRef<ImagebuilderInfrastructureConfiguration_Logging_S3LogsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_logs", self.base))
     }
 }
 
-#[derive(Serialize, Default)]
-struct ImagebuilderInfrastructureConfigurationDynamic {
-    instance_metadata_options: std
-    ::option
-    ::Option<terrars::DynamicBlock<ImagebuilderInfrastructureConfigurationInstanceMetadataOptionsEl>>,
-    logging: std::option::Option<terrars::DynamicBlock<ImagebuilderInfrastructureConfigurationLoggingEl>>,
+#[derive(Serialize)]
+pub struct ImagebuilderInfrastructureConfiguration_Placement {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    host_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    host_resource_group_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tenancy: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ImagebuilderInfrastructureConfiguration_Placement {
+    #[doc = "Set the field `availability_zone`.\n"]
+    pub fn set_availability_zone(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.availability_zone = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `host_id`.\n"]
+    pub fn set_host_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.host_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `host_resource_group_arn`.\n"]
+    pub fn set_host_resource_group_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.host_resource_group_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tenancy`.\n"]
+    pub fn set_tenancy(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.tenancy = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ImagebuilderInfrastructureConfiguration_Placement {
+    type O = terrars::BlockAssignable<ImagebuilderInfrastructureConfiguration_Placement>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildImagebuilderInfrastructureConfiguration_Placement {}
+
+impl BuildImagebuilderInfrastructureConfiguration_Placement {
+    pub fn build(self) -> ImagebuilderInfrastructureConfiguration_Placement {
+        ImagebuilderInfrastructureConfiguration_Placement {
+            availability_zone: core::default::Default::default(),
+            host_id: core::default::Default::default(),
+            host_resource_group_arn: core::default::Default::default(),
+            tenancy: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ImagebuilderInfrastructureConfiguration_PlacementRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ImagebuilderInfrastructureConfiguration_PlacementRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> ImagebuilderInfrastructureConfiguration_PlacementRef {
+        ImagebuilderInfrastructureConfiguration_PlacementRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ImagebuilderInfrastructureConfiguration_PlacementRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone` after provisioning.\n"]
+    pub fn availability_zone(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `host_id` after provisioning.\n"]
+    pub fn host_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `host_resource_group_arn` after provisioning.\n"]
+    pub fn host_resource_group_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.host_resource_group_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tenancy` after provisioning.\n"]
+    pub fn tenancy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tenancy", self.base))
+    }
 }

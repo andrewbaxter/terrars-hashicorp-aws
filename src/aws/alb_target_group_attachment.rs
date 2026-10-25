@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AlbTargetGroupAttachmentData {
+struct AlbTargetGroupAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,10 @@ struct AlbTargetGroupAttachmentData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     port: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    quic_server_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     target_group_arn: terrars::PrimField<std::string::String>,
     target_id: terrars::PrimField<std::string::String>,
 }
@@ -31,7 +37,7 @@ struct AlbTargetGroupAttachmentData {
 struct AlbTargetGroupAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AlbTargetGroupAttachmentData>,
+    data: std::cell::RefCell<AlbTargetGroupAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +155,19 @@ impl AlbTargetGroupAttachment {
         self
     }
 
+    #[doc = "Set the field `quic_server_id`.\n"]
+    pub fn set_quic_server_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().quic_server_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `availability_zone` after provisioning.\n"]
     pub fn availability_zone(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.extract_ref()))
@@ -162,6 +181,17 @@ impl AlbTargetGroupAttachment {
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
     pub fn port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `quic_server_id` after provisioning.\n"]
+    pub fn quic_server_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.quic_server_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_group_arn` after provisioning.\n"]
@@ -219,7 +249,7 @@ impl BuildAlbTargetGroupAttachment {
         let out = AlbTargetGroupAttachment(std::rc::Rc::new(AlbTargetGroupAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AlbTargetGroupAttachmentData {
+            data: std::cell::RefCell::new(AlbTargetGroupAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -228,6 +258,8 @@ impl BuildAlbTargetGroupAttachment {
                 availability_zone: core::default::Default::default(),
                 id: core::default::Default::default(),
                 port: core::default::Default::default(),
+                quic_server_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 target_group_arn: self.target_group_arn,
                 target_id: self.target_id,
             }),
@@ -273,6 +305,17 @@ impl AlbTargetGroupAttachmentRef {
     #[doc = "Get a reference to the value of field `port` after provisioning.\n"]
     pub fn port(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.port", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `quic_server_id` after provisioning.\n"]
+    pub fn quic_server_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.quic_server_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_group_arn` after provisioning.\n"]

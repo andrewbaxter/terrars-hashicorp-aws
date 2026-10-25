@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApiGatewayMethodSettingsData {
+struct ApiGatewayMethodSettingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,17 +23,19 @@ struct ApiGatewayMethodSettingsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     method_path: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     rest_api_id: terrars::PrimField<std::string::String>,
     stage_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    settings: std::option::Option<std::vec::Vec<ApiGatewayMethodSettingsSettingsEl>>,
+    settings: std::option::Option<std::vec::Vec<ApiGatewayMethodSettings_Settings>>,
     dynamic: ApiGatewayMethodSettingsDynamic,
 }
 
 struct ApiGatewayMethodSettings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApiGatewayMethodSettingsData>,
+    data: std::cell::RefCell<ApiGatewayMethodSettingsData_>,
 }
 
 #[derive(Clone)]
@@ -137,10 +141,17 @@ impl ApiGatewayMethodSettings {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `settings`.\n"]
     pub fn set_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayMethodSettingsSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayMethodSettings_Settings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -163,6 +174,12 @@ impl ApiGatewayMethodSettings {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.method_path", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]
     pub fn rest_api_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rest_api_id", self.extract_ref()))
@@ -174,7 +191,7 @@ impl ApiGatewayMethodSettings {
     }
 
     #[doc = "Get a reference to the value of field `settings` after provisioning.\n"]
-    pub fn settings(&self) -> terrars::ListRef<ApiGatewayMethodSettingsSettingsElRef> {
+    pub fn settings(&self) -> terrars::ListRef<ApiGatewayMethodSettings_SettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.settings", self.extract_ref()))
     }
 }
@@ -225,7 +242,7 @@ impl BuildApiGatewayMethodSettings {
         let out = ApiGatewayMethodSettings(std::rc::Rc::new(ApiGatewayMethodSettings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApiGatewayMethodSettingsData {
+            data: std::cell::RefCell::new(ApiGatewayMethodSettingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -233,6 +250,7 @@ impl BuildApiGatewayMethodSettings {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 method_path: self.method_path,
+                region: core::default::Default::default(),
                 rest_api_id: self.rest_api_id,
                 stage_name: self.stage_name,
                 settings: core::default::Default::default(),
@@ -277,6 +295,12 @@ impl ApiGatewayMethodSettingsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.method_path", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]
     pub fn rest_api_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rest_api_id", self.extract_ref()))
@@ -288,13 +312,18 @@ impl ApiGatewayMethodSettingsRef {
     }
 
     #[doc = "Get a reference to the value of field `settings` after provisioning.\n"]
-    pub fn settings(&self) -> terrars::ListRef<ApiGatewayMethodSettingsSettingsElRef> {
+    pub fn settings(&self) -> terrars::ListRef<ApiGatewayMethodSettings_SettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApiGatewayMethodSettingsDynamic {
+    settings: std::option::Option<terrars::DynamicBlock<ApiGatewayMethodSettings_Settings>>,
+}
+
 #[derive(Serialize)]
-pub struct ApiGatewayMethodSettingsSettingsEl {
+pub struct ApiGatewayMethodSettings_Settings {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_data_encrypted: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -317,7 +346,7 @@ pub struct ApiGatewayMethodSettingsSettingsEl {
     unauthorized_cache_control_header_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ApiGatewayMethodSettingsSettingsEl {
+impl ApiGatewayMethodSettings_Settings {
     #[doc = "Set the field `cache_data_encrypted`.\n"]
     pub fn set_cache_data_encrypted(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.cache_data_encrypted = std::option::Option::Some(v.into());
@@ -385,8 +414,8 @@ impl ApiGatewayMethodSettingsSettingsEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayMethodSettingsSettingsEl {
-    type O = terrars::BlockAssignable<ApiGatewayMethodSettingsSettingsEl>;
+impl terrars::ToListMappable for ApiGatewayMethodSettings_Settings {
+    type O = terrars::BlockAssignable<ApiGatewayMethodSettings_Settings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -397,11 +426,11 @@ impl terrars::ToListMappable for ApiGatewayMethodSettingsSettingsEl {
     }
 }
 
-pub struct BuildApiGatewayMethodSettingsSettingsEl {}
+pub struct BuildApiGatewayMethodSettings_Settings {}
 
-impl BuildApiGatewayMethodSettingsSettingsEl {
-    pub fn build(self) -> ApiGatewayMethodSettingsSettingsEl {
-        ApiGatewayMethodSettingsSettingsEl {
+impl BuildApiGatewayMethodSettings_Settings {
+    pub fn build(self) -> ApiGatewayMethodSettings_Settings {
+        ApiGatewayMethodSettings_Settings {
             cache_data_encrypted: core::default::Default::default(),
             cache_ttl_in_seconds: core::default::Default::default(),
             caching_enabled: core::default::Default::default(),
@@ -416,21 +445,23 @@ impl BuildApiGatewayMethodSettingsSettingsEl {
     }
 }
 
-pub struct ApiGatewayMethodSettingsSettingsElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayMethodSettings_SettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayMethodSettingsSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayMethodSettingsSettingsElRef {
-        ApiGatewayMethodSettingsSettingsElRef {
+impl terrars::Ref for ApiGatewayMethodSettings_SettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayMethodSettings_SettingsRef {
+        ApiGatewayMethodSettings_SettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayMethodSettingsSettingsElRef {
+impl ApiGatewayMethodSettings_SettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -490,9 +521,4 @@ impl ApiGatewayMethodSettingsSettingsElRef {
             format!("{}.unauthorized_cache_control_header_strategy", self.base),
         )
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApiGatewayMethodSettingsDynamic {
-    settings: std::option::Option<terrars::DynamicBlock<ApiGatewayMethodSettingsSettingsEl>>,
 }

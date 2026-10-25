@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataDocdbOrderableDbInstanceData {
+struct DataDocdbOrderableDbInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -29,13 +31,15 @@ struct DataDocdbOrderableDbInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_instance_classes: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc: std::option::Option<terrars::PrimField<bool>>,
 }
 
 struct DataDocdbOrderableDbInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDocdbOrderableDbInstanceData>,
+    data: std::cell::RefCell<DataDocdbOrderableDbInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -119,6 +123,13 @@ impl DataDocdbOrderableDbInstance {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `vpc`.\n"]
     pub fn set_vpc(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().vpc = std::option::Option::Some(v.into());
@@ -158,6 +169,12 @@ impl DataDocdbOrderableDbInstance {
     #[doc = "Get a reference to the value of field `preferred_instance_classes` after provisioning.\n"]
     pub fn preferred_instance_classes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_instance_classes", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
@@ -206,7 +223,7 @@ impl BuildDataDocdbOrderableDbInstance {
         let out = DataDocdbOrderableDbInstance(std::rc::Rc::new(DataDocdbOrderableDbInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDocdbOrderableDbInstanceData {
+            data: std::cell::RefCell::new(DataDocdbOrderableDbInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -217,6 +234,7 @@ impl BuildDataDocdbOrderableDbInstance {
                 instance_class: core::default::Default::default(),
                 license_model: core::default::Default::default(),
                 preferred_instance_classes: core::default::Default::default(),
+                region: core::default::Default::default(),
                 vpc: core::default::Default::default(),
             }),
         }));
@@ -281,6 +299,12 @@ impl DataDocdbOrderableDbInstanceRef {
     #[doc = "Get a reference to the value of field `preferred_instance_classes` after provisioning.\n"]
     pub fn preferred_instance_classes(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_instance_classes", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]

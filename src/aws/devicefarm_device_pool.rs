@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DevicefarmDevicePoolData {
+struct DevicefarmDevicePoolData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,18 +29,20 @@ struct DevicefarmDevicePoolData {
     name: terrars::PrimField<std::string::String>,
     project_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<DevicefarmDevicePoolRuleEl>>,
+    rule: std::option::Option<std::vec::Vec<DevicefarmDevicePool_Rule>>,
     dynamic: DevicefarmDevicePoolDynamic,
 }
 
 struct DevicefarmDevicePool_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DevicefarmDevicePoolData>,
+    data: std::cell::RefCell<DevicefarmDevicePoolData_>,
 }
 
 #[derive(Clone)]
@@ -156,6 +160,13 @@ impl DevicefarmDevicePool {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -175,7 +186,7 @@ impl DevicefarmDevicePool {
     }
 
     #[doc = "Set the field `rule`.\n"]
-    pub fn set_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<DevicefarmDevicePoolRuleEl>>) -> Self {
+    pub fn set_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<DevicefarmDevicePool_Rule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().rule = std::option::Option::Some(v);
@@ -215,6 +226,12 @@ impl DevicefarmDevicePool {
     #[doc = "Get a reference to the value of field `project_arn` after provisioning.\n"]
     pub fn project_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_arn", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -277,7 +294,7 @@ impl BuildDevicefarmDevicePool {
         let out = DevicefarmDevicePool(std::rc::Rc::new(DevicefarmDevicePool_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DevicefarmDevicePoolData {
+            data: std::cell::RefCell::new(DevicefarmDevicePoolData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -288,6 +305,7 @@ impl BuildDevicefarmDevicePool {
                 max_devices: core::default::Default::default(),
                 name: self.name,
                 project_arn: self.project_arn,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 rule: core::default::Default::default(),
@@ -352,6 +370,12 @@ impl DevicefarmDevicePoolRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.project_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -368,8 +392,13 @@ impl DevicefarmDevicePoolRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct DevicefarmDevicePoolDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<DevicefarmDevicePool_Rule>>,
+}
+
 #[derive(Serialize)]
-pub struct DevicefarmDevicePoolRuleEl {
+pub struct DevicefarmDevicePool_Rule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     attribute: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -378,7 +407,7 @@ pub struct DevicefarmDevicePoolRuleEl {
     value: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DevicefarmDevicePoolRuleEl {
+impl DevicefarmDevicePool_Rule {
     #[doc = "Set the field `attribute`.\n"]
     pub fn set_attribute(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.attribute = std::option::Option::Some(v.into());
@@ -398,8 +427,8 @@ impl DevicefarmDevicePoolRuleEl {
     }
 }
 
-impl terrars::ToListMappable for DevicefarmDevicePoolRuleEl {
-    type O = terrars::BlockAssignable<DevicefarmDevicePoolRuleEl>;
+impl terrars::ToListMappable for DevicefarmDevicePool_Rule {
+    type O = terrars::BlockAssignable<DevicefarmDevicePool_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -410,11 +439,11 @@ impl terrars::ToListMappable for DevicefarmDevicePoolRuleEl {
     }
 }
 
-pub struct BuildDevicefarmDevicePoolRuleEl {}
+pub struct BuildDevicefarmDevicePool_Rule {}
 
-impl BuildDevicefarmDevicePoolRuleEl {
-    pub fn build(self) -> DevicefarmDevicePoolRuleEl {
-        DevicefarmDevicePoolRuleEl {
+impl BuildDevicefarmDevicePool_Rule {
+    pub fn build(self) -> DevicefarmDevicePool_Rule {
+        DevicefarmDevicePool_Rule {
             attribute: core::default::Default::default(),
             operator: core::default::Default::default(),
             value: core::default::Default::default(),
@@ -422,21 +451,23 @@ impl BuildDevicefarmDevicePoolRuleEl {
     }
 }
 
-pub struct DevicefarmDevicePoolRuleElRef {
+#[allow(dead_code)]
+pub struct DevicefarmDevicePool_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DevicefarmDevicePoolRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DevicefarmDevicePoolRuleElRef {
-        DevicefarmDevicePoolRuleElRef {
+impl terrars::Ref for DevicefarmDevicePool_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DevicefarmDevicePool_RuleRef {
+        DevicefarmDevicePool_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DevicefarmDevicePoolRuleElRef {
+impl DevicefarmDevicePool_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -455,9 +486,4 @@ impl DevicefarmDevicePoolRuleElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DevicefarmDevicePoolDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<DevicefarmDevicePoolRuleEl>>,
 }

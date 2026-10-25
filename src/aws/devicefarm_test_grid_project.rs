@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DevicefarmTestGridProjectData {
+struct DevicefarmTestGridProjectData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct DevicefarmTestGridProjectData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_config: std::option::Option<std::vec::Vec<DevicefarmTestGridProjectVpcConfigEl>>,
+    vpc_config: std::option::Option<std::vec::Vec<DevicefarmTestGridProject_VpcConfig>>,
     dynamic: DevicefarmTestGridProjectDynamic,
 }
 
 struct DevicefarmTestGridProject_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DevicefarmTestGridProjectData>,
+    data: std::cell::RefCell<DevicefarmTestGridProjectData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl DevicefarmTestGridProject {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl DevicefarmTestGridProject {
     #[doc = "Set the field `vpc_config`.\n"]
     pub fn set_vpc_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DevicefarmTestGridProjectVpcConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DevicefarmTestGridProject_VpcConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -201,6 +212,12 @@ impl DevicefarmTestGridProject {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -212,7 +229,7 @@ impl DevicefarmTestGridProject {
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<DevicefarmTestGridProjectVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<DevicefarmTestGridProject_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
@@ -259,7 +276,7 @@ impl BuildDevicefarmTestGridProject {
         let out = DevicefarmTestGridProject(std::rc::Rc::new(DevicefarmTestGridProject_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DevicefarmTestGridProjectData {
+            data: std::cell::RefCell::new(DevicefarmTestGridProjectData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -268,6 +285,7 @@ impl BuildDevicefarmTestGridProject {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 vpc_config: core::default::Default::default(),
@@ -322,6 +340,12 @@ impl DevicefarmTestGridProjectRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -333,22 +357,27 @@ impl DevicefarmTestGridProjectRef {
     }
 
     #[doc = "Get a reference to the value of field `vpc_config` after provisioning.\n"]
-    pub fn vpc_config(&self) -> terrars::ListRef<DevicefarmTestGridProjectVpcConfigElRef> {
+    pub fn vpc_config(&self) -> terrars::ListRef<DevicefarmTestGridProject_VpcConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DevicefarmTestGridProjectDynamic {
+    vpc_config: std::option::Option<terrars::DynamicBlock<DevicefarmTestGridProject_VpcConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct DevicefarmTestGridProjectVpcConfigEl {
+pub struct DevicefarmTestGridProject_VpcConfig {
     security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     subnet_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl DevicefarmTestGridProjectVpcConfigEl { }
+impl DevicefarmTestGridProject_VpcConfig { }
 
-impl terrars::ToListMappable for DevicefarmTestGridProjectVpcConfigEl {
-    type O = terrars::BlockAssignable<DevicefarmTestGridProjectVpcConfigEl>;
+impl terrars::ToListMappable for DevicefarmTestGridProject_VpcConfig {
+    type O = terrars::BlockAssignable<DevicefarmTestGridProject_VpcConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -359,7 +388,7 @@ impl terrars::ToListMappable for DevicefarmTestGridProjectVpcConfigEl {
     }
 }
 
-pub struct BuildDevicefarmTestGridProjectVpcConfigEl {
+pub struct BuildDevicefarmTestGridProject_VpcConfig {
     #[doc = ""]
     pub security_group_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
@@ -368,9 +397,9 @@ pub struct BuildDevicefarmTestGridProjectVpcConfigEl {
     pub vpc_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDevicefarmTestGridProjectVpcConfigEl {
-    pub fn build(self) -> DevicefarmTestGridProjectVpcConfigEl {
-        DevicefarmTestGridProjectVpcConfigEl {
+impl BuildDevicefarmTestGridProject_VpcConfig {
+    pub fn build(self) -> DevicefarmTestGridProject_VpcConfig {
+        DevicefarmTestGridProject_VpcConfig {
             security_group_ids: self.security_group_ids,
             subnet_ids: self.subnet_ids,
             vpc_id: self.vpc_id,
@@ -378,21 +407,23 @@ impl BuildDevicefarmTestGridProjectVpcConfigEl {
     }
 }
 
-pub struct DevicefarmTestGridProjectVpcConfigElRef {
+#[allow(dead_code)]
+pub struct DevicefarmTestGridProject_VpcConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DevicefarmTestGridProjectVpcConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DevicefarmTestGridProjectVpcConfigElRef {
-        DevicefarmTestGridProjectVpcConfigElRef {
+impl terrars::Ref for DevicefarmTestGridProject_VpcConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DevicefarmTestGridProject_VpcConfigRef {
+        DevicefarmTestGridProject_VpcConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DevicefarmTestGridProjectVpcConfigElRef {
+impl DevicefarmTestGridProject_VpcConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -411,9 +442,4 @@ impl DevicefarmTestGridProjectVpcConfigElRef {
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DevicefarmTestGridProjectDynamic {
-    vpc_config: std::option::Option<terrars::DynamicBlock<DevicefarmTestGridProjectVpcConfigEl>>,
 }

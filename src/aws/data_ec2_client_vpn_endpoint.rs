@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2ClientVpnEndpointData {
+struct DataEc2ClientVpnEndpointData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,18 +23,20 @@ struct DataEc2ClientVpnEndpointData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2ClientVpnEndpointFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEc2ClientVpnEndpoint_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEc2ClientVpnEndpointTimeoutsEl>,
+    timeouts: std::option::Option<DataEc2ClientVpnEndpoint_Timeouts>,
     dynamic: DataEc2ClientVpnEndpointDynamic,
 }
 
 struct DataEc2ClientVpnEndpoint_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2ClientVpnEndpointData>,
+    data: std::cell::RefCell<DataEc2ClientVpnEndpointData_>,
 }
 
 #[derive(Clone)]
@@ -92,6 +96,13 @@ impl DataEc2ClientVpnEndpoint {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -104,7 +115,7 @@ impl DataEc2ClientVpnEndpoint {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2ClientVpnEndpointFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2ClientVpnEndpoint_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -118,7 +129,7 @@ impl DataEc2ClientVpnEndpoint {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2ClientVpnEndpointTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2ClientVpnEndpoint_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -129,7 +140,7 @@ impl DataEc2ClientVpnEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `authentication_options` after provisioning.\n"]
-    pub fn authentication_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpointAuthenticationOptionsElRef> {
+    pub fn authentication_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpoint_AuthenticationOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_options", self.extract_ref()))
     }
 
@@ -139,13 +150,23 @@ impl DataEc2ClientVpnEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `client_connect_options` after provisioning.\n"]
-    pub fn client_connect_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpointClientConnectOptionsElRef> {
+    pub fn client_connect_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpoint_ClientConnectOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_connect_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `client_login_banner_options` after provisioning.\n"]
-    pub fn client_login_banner_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpointClientLoginBannerOptionsElRef> {
+    pub fn client_login_banner_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpoint_ClientLoginBannerOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_login_banner_options", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `client_route_enforcement_options` after provisioning.\n"]
+    pub fn client_route_enforcement_options(
+        &self,
+    ) -> terrars::ListRef<DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptionsRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.client_route_enforcement_options", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `client_vpn_endpoint_id` after provisioning.\n"]
@@ -154,7 +175,7 @@ impl DataEc2ClientVpnEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `connection_log_options` after provisioning.\n"]
-    pub fn connection_log_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpointConnectionLogOptionsElRef> {
+    pub fn connection_log_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpoint_ConnectionLogOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connection_log_options", self.extract_ref()))
     }
 
@@ -173,9 +194,20 @@ impl DataEc2ClientVpnEndpoint {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_servers", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `endpoint_ip_address_type` after provisioning.\n"]
+    pub fn endpoint_ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_ip_address_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
@@ -186,6 +218,11 @@ impl DataEc2ClientVpnEndpoint {
     #[doc = "Get a reference to the value of field `self_service_portal` after provisioning.\n"]
     pub fn self_service_portal(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_service_portal", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `self_service_portal_url` after provisioning.\n"]
+    pub fn self_service_portal_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_service_portal_url", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_certificate_arn` after provisioning.\n"]
@@ -208,6 +245,18 @@ impl DataEc2ClientVpnEndpoint {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `traffic_ip_address_type` after provisioning.\n"]
+    pub fn traffic_ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.traffic_ip_address_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_configuration` after provisioning.\n"]
+    pub fn transit_gateway_configuration(
+        &self,
+    ) -> terrars::ListRef<DataEc2ClientVpnEndpoint_TransitGatewayConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `transport_protocol` after provisioning.\n"]
     pub fn transport_protocol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.transport_protocol", self.extract_ref()))
@@ -224,8 +273,8 @@ impl DataEc2ClientVpnEndpoint {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2ClientVpnEndpointTimeoutsElRef {
-        DataEc2ClientVpnEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEc2ClientVpnEndpoint_TimeoutsRef {
+        DataEc2ClientVpnEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -269,13 +318,14 @@ impl BuildDataEc2ClientVpnEndpoint {
         let out = DataEc2ClientVpnEndpoint(std::rc::Rc::new(DataEc2ClientVpnEndpoint_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2ClientVpnEndpointData {
+            data: std::cell::RefCell::new(DataEc2ClientVpnEndpointData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 client_vpn_endpoint_id: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -316,7 +366,7 @@ impl DataEc2ClientVpnEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `authentication_options` after provisioning.\n"]
-    pub fn authentication_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpointAuthenticationOptionsElRef> {
+    pub fn authentication_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpoint_AuthenticationOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_options", self.extract_ref()))
     }
 
@@ -326,13 +376,23 @@ impl DataEc2ClientVpnEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `client_connect_options` after provisioning.\n"]
-    pub fn client_connect_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpointClientConnectOptionsElRef> {
+    pub fn client_connect_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpoint_ClientConnectOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_connect_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `client_login_banner_options` after provisioning.\n"]
-    pub fn client_login_banner_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpointClientLoginBannerOptionsElRef> {
+    pub fn client_login_banner_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpoint_ClientLoginBannerOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.client_login_banner_options", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `client_route_enforcement_options` after provisioning.\n"]
+    pub fn client_route_enforcement_options(
+        &self,
+    ) -> terrars::ListRef<DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptionsRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.client_route_enforcement_options", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `client_vpn_endpoint_id` after provisioning.\n"]
@@ -341,7 +401,7 @@ impl DataEc2ClientVpnEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `connection_log_options` after provisioning.\n"]
-    pub fn connection_log_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpointConnectionLogOptionsElRef> {
+    pub fn connection_log_options(&self) -> terrars::ListRef<DataEc2ClientVpnEndpoint_ConnectionLogOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.connection_log_options", self.extract_ref()))
     }
 
@@ -360,9 +420,20 @@ impl DataEc2ClientVpnEndpointRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.dns_servers", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `endpoint_ip_address_type` after provisioning.\n"]
+    pub fn endpoint_ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.endpoint_ip_address_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_ids` after provisioning.\n"]
@@ -373,6 +444,11 @@ impl DataEc2ClientVpnEndpointRef {
     #[doc = "Get a reference to the value of field `self_service_portal` after provisioning.\n"]
     pub fn self_service_portal(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_service_portal", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `self_service_portal_url` after provisioning.\n"]
+    pub fn self_service_portal_url(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.self_service_portal_url", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_certificate_arn` after provisioning.\n"]
@@ -395,6 +471,18 @@ impl DataEc2ClientVpnEndpointRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `traffic_ip_address_type` after provisioning.\n"]
+    pub fn traffic_ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.traffic_ip_address_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_configuration` after provisioning.\n"]
+    pub fn transit_gateway_configuration(
+        &self,
+    ) -> terrars::ListRef<DataEc2ClientVpnEndpoint_TransitGatewayConfigurationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway_configuration", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `transport_protocol` after provisioning.\n"]
     pub fn transport_protocol(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.transport_protocol", self.extract_ref()))
@@ -411,13 +499,18 @@ impl DataEc2ClientVpnEndpointRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2ClientVpnEndpointTimeoutsElRef {
-        DataEc2ClientVpnEndpointTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEc2ClientVpnEndpoint_TimeoutsRef {
+        DataEc2ClientVpnEndpoint_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataEc2ClientVpnEndpointDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2ClientVpnEndpoint_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataEc2ClientVpnEndpointAuthenticationOptionsEl {
+pub struct DataEc2ClientVpnEndpoint_AuthenticationOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     active_directory_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -430,7 +523,7 @@ pub struct DataEc2ClientVpnEndpointAuthenticationOptionsEl {
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2ClientVpnEndpointAuthenticationOptionsEl {
+impl DataEc2ClientVpnEndpoint_AuthenticationOptions {
     #[doc = "Set the field `active_directory_id`.\n"]
     pub fn set_active_directory_id(
         mut self,
@@ -471,8 +564,8 @@ impl DataEc2ClientVpnEndpointAuthenticationOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2ClientVpnEndpointAuthenticationOptionsEl {
-    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpointAuthenticationOptionsEl>;
+impl terrars::ToListMappable for DataEc2ClientVpnEndpoint_AuthenticationOptions {
+    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpoint_AuthenticationOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -483,11 +576,11 @@ impl terrars::ToListMappable for DataEc2ClientVpnEndpointAuthenticationOptionsEl
     }
 }
 
-pub struct BuildDataEc2ClientVpnEndpointAuthenticationOptionsEl {}
+pub struct BuildDataEc2ClientVpnEndpoint_AuthenticationOptions {}
 
-impl BuildDataEc2ClientVpnEndpointAuthenticationOptionsEl {
-    pub fn build(self) -> DataEc2ClientVpnEndpointAuthenticationOptionsEl {
-        DataEc2ClientVpnEndpointAuthenticationOptionsEl {
+impl BuildDataEc2ClientVpnEndpoint_AuthenticationOptions {
+    pub fn build(self) -> DataEc2ClientVpnEndpoint_AuthenticationOptions {
+        DataEc2ClientVpnEndpoint_AuthenticationOptions {
             active_directory_id: core::default::Default::default(),
             root_certificate_chain_arn: core::default::Default::default(),
             saml_provider_arn: core::default::Default::default(),
@@ -497,24 +590,26 @@ impl BuildDataEc2ClientVpnEndpointAuthenticationOptionsEl {
     }
 }
 
-pub struct DataEc2ClientVpnEndpointAuthenticationOptionsElRef {
+#[allow(dead_code)]
+pub struct DataEc2ClientVpnEndpoint_AuthenticationOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2ClientVpnEndpointAuthenticationOptionsElRef {
+impl terrars::Ref for DataEc2ClientVpnEndpoint_AuthenticationOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2ClientVpnEndpointAuthenticationOptionsElRef {
-        DataEc2ClientVpnEndpointAuthenticationOptionsElRef {
+    ) -> DataEc2ClientVpnEndpoint_AuthenticationOptionsRef {
+        DataEc2ClientVpnEndpoint_AuthenticationOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2ClientVpnEndpointAuthenticationOptionsElRef {
+impl DataEc2ClientVpnEndpoint_AuthenticationOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -546,14 +641,14 @@ impl DataEc2ClientVpnEndpointAuthenticationOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2ClientVpnEndpointClientConnectOptionsEl {
+pub struct DataEc2ClientVpnEndpoint_ClientConnectOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     lambda_function_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2ClientVpnEndpointClientConnectOptionsEl {
+impl DataEc2ClientVpnEndpoint_ClientConnectOptions {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -570,8 +665,8 @@ impl DataEc2ClientVpnEndpointClientConnectOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2ClientVpnEndpointClientConnectOptionsEl {
-    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpointClientConnectOptionsEl>;
+impl terrars::ToListMappable for DataEc2ClientVpnEndpoint_ClientConnectOptions {
+    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpoint_ClientConnectOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -582,35 +677,37 @@ impl terrars::ToListMappable for DataEc2ClientVpnEndpointClientConnectOptionsEl 
     }
 }
 
-pub struct BuildDataEc2ClientVpnEndpointClientConnectOptionsEl {}
+pub struct BuildDataEc2ClientVpnEndpoint_ClientConnectOptions {}
 
-impl BuildDataEc2ClientVpnEndpointClientConnectOptionsEl {
-    pub fn build(self) -> DataEc2ClientVpnEndpointClientConnectOptionsEl {
-        DataEc2ClientVpnEndpointClientConnectOptionsEl {
+impl BuildDataEc2ClientVpnEndpoint_ClientConnectOptions {
+    pub fn build(self) -> DataEc2ClientVpnEndpoint_ClientConnectOptions {
+        DataEc2ClientVpnEndpoint_ClientConnectOptions {
             enabled: core::default::Default::default(),
             lambda_function_arn: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2ClientVpnEndpointClientConnectOptionsElRef {
+#[allow(dead_code)]
+pub struct DataEc2ClientVpnEndpoint_ClientConnectOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2ClientVpnEndpointClientConnectOptionsElRef {
+impl terrars::Ref for DataEc2ClientVpnEndpoint_ClientConnectOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2ClientVpnEndpointClientConnectOptionsElRef {
-        DataEc2ClientVpnEndpointClientConnectOptionsElRef {
+    ) -> DataEc2ClientVpnEndpoint_ClientConnectOptionsRef {
+        DataEc2ClientVpnEndpoint_ClientConnectOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2ClientVpnEndpointClientConnectOptionsElRef {
+impl DataEc2ClientVpnEndpoint_ClientConnectOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -627,14 +724,14 @@ impl DataEc2ClientVpnEndpointClientConnectOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2ClientVpnEndpointClientLoginBannerOptionsEl {
+pub struct DataEc2ClientVpnEndpoint_ClientLoginBannerOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     banner_text: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataEc2ClientVpnEndpointClientLoginBannerOptionsEl {
+impl DataEc2ClientVpnEndpoint_ClientLoginBannerOptions {
     #[doc = "Set the field `banner_text`.\n"]
     pub fn set_banner_text(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.banner_text = std::option::Option::Some(v.into());
@@ -648,8 +745,8 @@ impl DataEc2ClientVpnEndpointClientLoginBannerOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2ClientVpnEndpointClientLoginBannerOptionsEl {
-    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpointClientLoginBannerOptionsEl>;
+impl terrars::ToListMappable for DataEc2ClientVpnEndpoint_ClientLoginBannerOptions {
+    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpoint_ClientLoginBannerOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -660,35 +757,37 @@ impl terrars::ToListMappable for DataEc2ClientVpnEndpointClientLoginBannerOption
     }
 }
 
-pub struct BuildDataEc2ClientVpnEndpointClientLoginBannerOptionsEl {}
+pub struct BuildDataEc2ClientVpnEndpoint_ClientLoginBannerOptions {}
 
-impl BuildDataEc2ClientVpnEndpointClientLoginBannerOptionsEl {
-    pub fn build(self) -> DataEc2ClientVpnEndpointClientLoginBannerOptionsEl {
-        DataEc2ClientVpnEndpointClientLoginBannerOptionsEl {
+impl BuildDataEc2ClientVpnEndpoint_ClientLoginBannerOptions {
+    pub fn build(self) -> DataEc2ClientVpnEndpoint_ClientLoginBannerOptions {
+        DataEc2ClientVpnEndpoint_ClientLoginBannerOptions {
             banner_text: core::default::Default::default(),
             enabled: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2ClientVpnEndpointClientLoginBannerOptionsElRef {
+#[allow(dead_code)]
+pub struct DataEc2ClientVpnEndpoint_ClientLoginBannerOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2ClientVpnEndpointClientLoginBannerOptionsElRef {
+impl terrars::Ref for DataEc2ClientVpnEndpoint_ClientLoginBannerOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2ClientVpnEndpointClientLoginBannerOptionsElRef {
-        DataEc2ClientVpnEndpointClientLoginBannerOptionsElRef {
+    ) -> DataEc2ClientVpnEndpoint_ClientLoginBannerOptionsRef {
+        DataEc2ClientVpnEndpoint_ClientLoginBannerOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2ClientVpnEndpointClientLoginBannerOptionsElRef {
+impl DataEc2ClientVpnEndpoint_ClientLoginBannerOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -705,7 +804,71 @@ impl DataEc2ClientVpnEndpointClientLoginBannerOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2ClientVpnEndpointConnectionLogOptionsEl {
+pub struct DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enforced: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptions {
+    #[doc = "Set the field `enforced`.\n"]
+    pub fn set_enforced(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enforced = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptions {
+    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataEc2ClientVpnEndpoint_ClientRouteEnforcementOptions {}
+
+impl BuildDataEc2ClientVpnEndpoint_ClientRouteEnforcementOptions {
+    pub fn build(self) -> DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptions {
+        DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptions { enforced: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptionsRef {
+        DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataEc2ClientVpnEndpoint_ClientRouteEnforcementOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enforced` after provisioning.\n"]
+    pub fn enforced(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enforced", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataEc2ClientVpnEndpoint_ConnectionLogOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cloudwatch_log_group: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -714,7 +877,7 @@ pub struct DataEc2ClientVpnEndpointConnectionLogOptionsEl {
     enabled: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl DataEc2ClientVpnEndpointConnectionLogOptionsEl {
+impl DataEc2ClientVpnEndpoint_ConnectionLogOptions {
     #[doc = "Set the field `cloudwatch_log_group`.\n"]
     pub fn set_cloudwatch_log_group(
         mut self,
@@ -740,8 +903,8 @@ impl DataEc2ClientVpnEndpointConnectionLogOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2ClientVpnEndpointConnectionLogOptionsEl {
-    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpointConnectionLogOptionsEl>;
+impl terrars::ToListMappable for DataEc2ClientVpnEndpoint_ConnectionLogOptions {
+    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpoint_ConnectionLogOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -752,11 +915,11 @@ impl terrars::ToListMappable for DataEc2ClientVpnEndpointConnectionLogOptionsEl 
     }
 }
 
-pub struct BuildDataEc2ClientVpnEndpointConnectionLogOptionsEl {}
+pub struct BuildDataEc2ClientVpnEndpoint_ConnectionLogOptions {}
 
-impl BuildDataEc2ClientVpnEndpointConnectionLogOptionsEl {
-    pub fn build(self) -> DataEc2ClientVpnEndpointConnectionLogOptionsEl {
-        DataEc2ClientVpnEndpointConnectionLogOptionsEl {
+impl BuildDataEc2ClientVpnEndpoint_ConnectionLogOptions {
+    pub fn build(self) -> DataEc2ClientVpnEndpoint_ConnectionLogOptions {
+        DataEc2ClientVpnEndpoint_ConnectionLogOptions {
             cloudwatch_log_group: core::default::Default::default(),
             cloudwatch_log_stream: core::default::Default::default(),
             enabled: core::default::Default::default(),
@@ -764,24 +927,26 @@ impl BuildDataEc2ClientVpnEndpointConnectionLogOptionsEl {
     }
 }
 
-pub struct DataEc2ClientVpnEndpointConnectionLogOptionsElRef {
+#[allow(dead_code)]
+pub struct DataEc2ClientVpnEndpoint_ConnectionLogOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2ClientVpnEndpointConnectionLogOptionsElRef {
+impl terrars::Ref for DataEc2ClientVpnEndpoint_ConnectionLogOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2ClientVpnEndpointConnectionLogOptionsElRef {
-        DataEc2ClientVpnEndpointConnectionLogOptionsElRef {
+    ) -> DataEc2ClientVpnEndpoint_ConnectionLogOptionsRef {
+        DataEc2ClientVpnEndpoint_ConnectionLogOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2ClientVpnEndpointConnectionLogOptionsElRef {
+impl DataEc2ClientVpnEndpoint_ConnectionLogOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -803,15 +968,57 @@ impl DataEc2ClientVpnEndpointConnectionLogOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2ClientVpnEndpointFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+pub struct DataEc2ClientVpnEndpoint_TransitGatewayConfiguration {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zones: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transit_gateway_attachment_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transit_gateway_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2ClientVpnEndpointFilterEl { }
+impl DataEc2ClientVpnEndpoint_TransitGatewayConfiguration {
+    #[doc = "Set the field `availability_zone_ids`.\n"]
+    pub fn set_availability_zone_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.availability_zone_ids = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for DataEc2ClientVpnEndpointFilterEl {
-    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpointFilterEl>;
+    #[doc = "Set the field `availability_zones`.\n"]
+    pub fn set_availability_zones(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.availability_zones = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `transit_gateway_attachment_id`.\n"]
+    pub fn set_transit_gateway_attachment_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.transit_gateway_attachment_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `transit_gateway_id`.\n"]
+    pub fn set_transit_gateway_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.transit_gateway_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataEc2ClientVpnEndpoint_TransitGatewayConfiguration {
+    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpoint_TransitGatewayConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -822,37 +1029,117 @@ impl terrars::ToListMappable for DataEc2ClientVpnEndpointFilterEl {
     }
 }
 
-pub struct BuildDataEc2ClientVpnEndpointFilterEl {
-    #[doc = ""]
-    pub name: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
-}
+pub struct BuildDataEc2ClientVpnEndpoint_TransitGatewayConfiguration {}
 
-impl BuildDataEc2ClientVpnEndpointFilterEl {
-    pub fn build(self) -> DataEc2ClientVpnEndpointFilterEl {
-        DataEc2ClientVpnEndpointFilterEl {
-            name: self.name,
-            values: self.values,
+impl BuildDataEc2ClientVpnEndpoint_TransitGatewayConfiguration {
+    pub fn build(self) -> DataEc2ClientVpnEndpoint_TransitGatewayConfiguration {
+        DataEc2ClientVpnEndpoint_TransitGatewayConfiguration {
+            availability_zone_ids: core::default::Default::default(),
+            availability_zones: core::default::Default::default(),
+            transit_gateway_attachment_id: core::default::Default::default(),
+            transit_gateway_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataEc2ClientVpnEndpointFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2ClientVpnEndpoint_TransitGatewayConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2ClientVpnEndpointFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2ClientVpnEndpointFilterElRef {
-        DataEc2ClientVpnEndpointFilterElRef {
+impl terrars::Ref for DataEc2ClientVpnEndpoint_TransitGatewayConfigurationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataEc2ClientVpnEndpoint_TransitGatewayConfigurationRef {
+        DataEc2ClientVpnEndpoint_TransitGatewayConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2ClientVpnEndpointFilterElRef {
+impl DataEc2ClientVpnEndpoint_TransitGatewayConfigurationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone_ids` after provisioning.\n"]
+    pub fn availability_zone_ids(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.availability_zone_ids", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zones` after provisioning.\n"]
+    pub fn availability_zones(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.availability_zones", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_attachment_id` after provisioning.\n"]
+    pub fn transit_gateway_attachment_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_attachment_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
+    pub fn transit_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataEc2ClientVpnEndpoint_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl DataEc2ClientVpnEndpoint_Filter { }
+
+impl terrars::ToListMappable for DataEc2ClientVpnEndpoint_Filter {
+    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpoint_Filter>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataEc2ClientVpnEndpoint_Filter {
+    #[doc = ""]
+    pub name: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
+
+impl BuildDataEc2ClientVpnEndpoint_Filter {
+    pub fn build(self) -> DataEc2ClientVpnEndpoint_Filter {
+        DataEc2ClientVpnEndpoint_Filter {
+            name: self.name,
+            values: self.values,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataEc2ClientVpnEndpoint_FilterRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataEc2ClientVpnEndpoint_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2ClientVpnEndpoint_FilterRef {
+        DataEc2ClientVpnEndpoint_FilterRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataEc2ClientVpnEndpoint_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -863,18 +1150,18 @@ impl DataEc2ClientVpnEndpointFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEc2ClientVpnEndpointTimeoutsEl {
+pub struct DataEc2ClientVpnEndpoint_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2ClientVpnEndpointTimeoutsEl {
+impl DataEc2ClientVpnEndpoint_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -882,8 +1169,8 @@ impl DataEc2ClientVpnEndpointTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2ClientVpnEndpointTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpointTimeoutsEl>;
+impl terrars::ToListMappable for DataEc2ClientVpnEndpoint_Timeouts {
+    type O = terrars::BlockAssignable<DataEc2ClientVpnEndpoint_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -894,29 +1181,31 @@ impl terrars::ToListMappable for DataEc2ClientVpnEndpointTimeoutsEl {
     }
 }
 
-pub struct BuildDataEc2ClientVpnEndpointTimeoutsEl {}
+pub struct BuildDataEc2ClientVpnEndpoint_Timeouts {}
 
-impl BuildDataEc2ClientVpnEndpointTimeoutsEl {
-    pub fn build(self) -> DataEc2ClientVpnEndpointTimeoutsEl {
-        DataEc2ClientVpnEndpointTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEc2ClientVpnEndpoint_Timeouts {
+    pub fn build(self) -> DataEc2ClientVpnEndpoint_Timeouts {
+        DataEc2ClientVpnEndpoint_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEc2ClientVpnEndpointTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEc2ClientVpnEndpoint_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2ClientVpnEndpointTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2ClientVpnEndpointTimeoutsElRef {
-        DataEc2ClientVpnEndpointTimeoutsElRef {
+impl terrars::Ref for DataEc2ClientVpnEndpoint_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2ClientVpnEndpoint_TimeoutsRef {
+        DataEc2ClientVpnEndpoint_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2ClientVpnEndpointTimeoutsElRef {
+impl DataEc2ClientVpnEndpoint_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -925,9 +1214,4 @@ impl DataEc2ClientVpnEndpointTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2ClientVpnEndpointDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2ClientVpnEndpointFilterEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EksAddonData {
+struct EksAddonData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,7 +31,11 @@ struct EksAddonData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preserve: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    resolve_conflicts: std::option::Option<terrars::PrimField<std::string::String>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resolve_conflicts_on_create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    resolve_conflicts_on_update: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_account_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -37,13 +43,18 @@ struct EksAddonData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EksAddonTimeoutsEl>,
+    namespace_config: std::option::Option<std::vec::Vec<EksAddon_NamespaceConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    pod_identity_association: std::option::Option<std::vec::Vec<EksAddon_PodIdentityAssociation>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<EksAddon_Timeouts>,
+    dynamic: EksAddonDynamic,
 }
 
 struct EksAddon_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EksAddonData>,
+    data: std::cell::RefCell<EksAddonData_>,
 }
 
 #[derive(Clone)]
@@ -167,9 +178,28 @@ impl EksAddon {
         self
     }
 
-    #[doc = "Set the field `resolve_conflicts`.\n"]
-    pub fn set_resolve_conflicts(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().resolve_conflicts = std::option::Option::Some(v.into());
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resolve_conflicts_on_create`.\n"]
+    pub fn set_resolve_conflicts_on_create(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().resolve_conflicts_on_create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `resolve_conflicts_on_update`.\n"]
+    pub fn set_resolve_conflicts_on_update(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().resolve_conflicts_on_update = std::option::Option::Some(v.into());
         self
     }
 
@@ -200,8 +230,40 @@ impl EksAddon {
         self
     }
 
+    #[doc = "Set the field `namespace_config`.\n"]
+    pub fn set_namespace_config(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<EksAddon_NamespaceConfig>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().namespace_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.namespace_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `pod_identity_association`.\n"]
+    pub fn set_pod_identity_association(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<EksAddon_PodIdentityAssociation>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().pod_identity_association = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.pod_identity_association = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EksAddonTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EksAddon_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -251,9 +313,20 @@ impl EksAddon {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `resolve_conflicts` after provisioning.\n"]
-    pub fn resolve_conflicts(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolve_conflicts", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resolve_conflicts_on_create` after provisioning.\n"]
+    pub fn resolve_conflicts_on_create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolve_conflicts_on_create", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resolve_conflicts_on_update` after provisioning.\n"]
+    pub fn resolve_conflicts_on_update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolve_conflicts_on_update", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_account_role_arn` after provisioning.\n"]
@@ -271,9 +344,14 @@ impl EksAddon {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `namespace_config` after provisioning.\n"]
+    pub fn namespace_config(&self) -> terrars::ListRef<EksAddon_NamespaceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.namespace_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EksAddonTimeoutsElRef {
-        EksAddonTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EksAddon_TimeoutsRef {
+        EksAddon_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -321,7 +399,7 @@ impl BuildEksAddon {
         let out = EksAddon(std::rc::Rc::new(EksAddon_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EksAddonData {
+            data: std::cell::RefCell::new(EksAddonData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -333,11 +411,16 @@ impl BuildEksAddon {
                 configuration_values: core::default::Default::default(),
                 id: core::default::Default::default(),
                 preserve: core::default::Default::default(),
-                resolve_conflicts: core::default::Default::default(),
+                region: core::default::Default::default(),
+                resolve_conflicts_on_create: core::default::Default::default(),
+                resolve_conflicts_on_update: core::default::Default::default(),
                 service_account_role_arn: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                namespace_config: core::default::Default::default(),
+                pod_identity_association: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -413,9 +496,20 @@ impl EksAddonRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preserve", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `resolve_conflicts` after provisioning.\n"]
-    pub fn resolve_conflicts(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolve_conflicts", self.extract_ref()))
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resolve_conflicts_on_create` after provisioning.\n"]
+    pub fn resolve_conflicts_on_create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolve_conflicts_on_create", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `resolve_conflicts_on_update` after provisioning.\n"]
+    pub fn resolve_conflicts_on_update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolve_conflicts_on_update", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_account_role_arn` after provisioning.\n"]
@@ -433,14 +527,154 @@ impl EksAddonRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `namespace_config` after provisioning.\n"]
+    pub fn namespace_config(&self) -> terrars::ListRef<EksAddon_NamespaceConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.namespace_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EksAddonTimeoutsElRef {
-        EksAddonTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EksAddon_TimeoutsRef {
+        EksAddon_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct EksAddonDynamic {
+    namespace_config: std::option::Option<terrars::DynamicBlock<EksAddon_NamespaceConfig>>,
+    pod_identity_association: std::option::Option<terrars::DynamicBlock<EksAddon_PodIdentityAssociation>>,
+}
+
+#[derive(Serialize)]
+pub struct EksAddon_NamespaceConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    namespace: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl EksAddon_NamespaceConfig {
+    #[doc = "Set the field `namespace`.\n"]
+    pub fn set_namespace(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.namespace = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for EksAddon_NamespaceConfig {
+    type O = terrars::BlockAssignable<EksAddon_NamespaceConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEksAddon_NamespaceConfig {}
+
+impl BuildEksAddon_NamespaceConfig {
+    pub fn build(self) -> EksAddon_NamespaceConfig {
+        EksAddon_NamespaceConfig { namespace: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct EksAddon_NamespaceConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for EksAddon_NamespaceConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksAddon_NamespaceConfigRef {
+        EksAddon_NamespaceConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl EksAddon_NamespaceConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `namespace` after provisioning.\n"]
+    pub fn namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.namespace", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct EksAddonTimeoutsEl {
+pub struct EksAddon_PodIdentityAssociation {
+    role_arn: terrars::PrimField<std::string::String>,
+    service_account: terrars::PrimField<std::string::String>,
+}
+
+impl EksAddon_PodIdentityAssociation { }
+
+impl terrars::ToListMappable for EksAddon_PodIdentityAssociation {
+    type O = terrars::BlockAssignable<EksAddon_PodIdentityAssociation>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildEksAddon_PodIdentityAssociation {
+    #[doc = ""]
+    pub role_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub service_account: terrars::PrimField<std::string::String>,
+}
+
+impl BuildEksAddon_PodIdentityAssociation {
+    pub fn build(self) -> EksAddon_PodIdentityAssociation {
+        EksAddon_PodIdentityAssociation {
+            role_arn: self.role_arn,
+            service_account: self.service_account,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct EksAddon_PodIdentityAssociationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for EksAddon_PodIdentityAssociationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksAddon_PodIdentityAssociationRef {
+        EksAddon_PodIdentityAssociationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl EksAddon_PodIdentityAssociationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
+    pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `service_account` after provisioning.\n"]
+    pub fn service_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.service_account", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct EksAddon_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -449,7 +683,7 @@ pub struct EksAddonTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EksAddonTimeoutsEl {
+impl EksAddon_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -469,8 +703,8 @@ impl EksAddonTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EksAddonTimeoutsEl {
-    type O = terrars::BlockAssignable<EksAddonTimeoutsEl>;
+impl terrars::ToListMappable for EksAddon_Timeouts {
+    type O = terrars::BlockAssignable<EksAddon_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -481,11 +715,11 @@ impl terrars::ToListMappable for EksAddonTimeoutsEl {
     }
 }
 
-pub struct BuildEksAddonTimeoutsEl {}
+pub struct BuildEksAddon_Timeouts {}
 
-impl BuildEksAddonTimeoutsEl {
-    pub fn build(self) -> EksAddonTimeoutsEl {
-        EksAddonTimeoutsEl {
+impl BuildEksAddon_Timeouts {
+    pub fn build(self) -> EksAddon_Timeouts {
+        EksAddon_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -493,21 +727,23 @@ impl BuildEksAddonTimeoutsEl {
     }
 }
 
-pub struct EksAddonTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EksAddon_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EksAddonTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EksAddonTimeoutsElRef {
-        EksAddonTimeoutsElRef {
+impl terrars::Ref for EksAddon_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EksAddon_TimeoutsRef {
+        EksAddon_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EksAddonTimeoutsElRef {
+impl EksAddon_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

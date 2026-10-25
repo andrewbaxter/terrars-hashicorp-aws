@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct LaunchConfigurationData {
+struct LaunchConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,6 +41,8 @@ struct LaunchConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     placement_tenancy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     spot_price: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -47,24 +51,20 @@ struct LaunchConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     user_data_base64: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_classic_link_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    ebs_block_device: std::option::Option<std::vec::Vec<LaunchConfiguration_EbsBlockDevice>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc_classic_link_security_groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ephemeral_block_device: std::option::Option<std::vec::Vec<LaunchConfiguration_EphemeralBlockDevice>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ebs_block_device: std::option::Option<std::vec::Vec<LaunchConfigurationEbsBlockDeviceEl>>,
+    metadata_options: std::option::Option<std::vec::Vec<LaunchConfiguration_MetadataOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ephemeral_block_device: std::option::Option<std::vec::Vec<LaunchConfigurationEphemeralBlockDeviceEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metadata_options: std::option::Option<std::vec::Vec<LaunchConfigurationMetadataOptionsEl>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    root_block_device: std::option::Option<std::vec::Vec<LaunchConfigurationRootBlockDeviceEl>>,
+    root_block_device: std::option::Option<std::vec::Vec<LaunchConfiguration_RootBlockDevice>>,
     dynamic: LaunchConfigurationDynamic,
 }
 
 struct LaunchConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<LaunchConfigurationData>,
+    data: std::cell::RefCell<LaunchConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -218,6 +218,13 @@ impl LaunchConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_groups`.\n"]
     pub fn set_security_groups(
         self,
@@ -245,25 +252,10 @@ impl LaunchConfiguration {
         self
     }
 
-    #[doc = "Set the field `vpc_classic_link_id`.\n"]
-    pub fn set_vpc_classic_link_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().vpc_classic_link_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `vpc_classic_link_security_groups`.\n"]
-    pub fn set_vpc_classic_link_security_groups(
-        self,
-        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    ) -> Self {
-        self.0.data.borrow_mut().vpc_classic_link_security_groups = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `ebs_block_device`.\n"]
     pub fn set_ebs_block_device(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchConfigurationEbsBlockDeviceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchConfiguration_EbsBlockDevice>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -279,7 +271,7 @@ impl LaunchConfiguration {
     #[doc = "Set the field `ephemeral_block_device`.\n"]
     pub fn set_ephemeral_block_device(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchConfigurationEphemeralBlockDeviceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchConfiguration_EphemeralBlockDevice>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -295,7 +287,7 @@ impl LaunchConfiguration {
     #[doc = "Set the field `metadata_options`.\n"]
     pub fn set_metadata_options(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchConfigurationMetadataOptionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchConfiguration_MetadataOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -311,7 +303,7 @@ impl LaunchConfiguration {
     #[doc = "Set the field `root_block_device`.\n"]
     pub fn set_root_block_device(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<LaunchConfigurationRootBlockDeviceEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<LaunchConfiguration_RootBlockDevice>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -384,6 +376,12 @@ impl LaunchConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.placement_tenancy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
@@ -404,26 +402,13 @@ impl LaunchConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_data_base64", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `vpc_classic_link_id` after provisioning.\n"]
-    pub fn vpc_classic_link_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_classic_link_id", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `vpc_classic_link_security_groups` after provisioning.\n"]
-    pub fn vpc_classic_link_security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(
-            self.shared().clone(),
-            format!("{}.vpc_classic_link_security_groups", self.extract_ref()),
-        )
-    }
-
     #[doc = "Get a reference to the value of field `metadata_options` after provisioning.\n"]
-    pub fn metadata_options(&self) -> terrars::ListRef<LaunchConfigurationMetadataOptionsElRef> {
+    pub fn metadata_options(&self) -> terrars::ListRef<LaunchConfiguration_MetadataOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_block_device` after provisioning.\n"]
-    pub fn root_block_device(&self) -> terrars::ListRef<LaunchConfigurationRootBlockDeviceElRef> {
+    pub fn root_block_device(&self) -> terrars::ListRef<LaunchConfiguration_RootBlockDeviceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_block_device", self.extract_ref()))
     }
 }
@@ -472,7 +457,7 @@ impl BuildLaunchConfiguration {
         let out = LaunchConfiguration(std::rc::Rc::new(LaunchConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(LaunchConfigurationData {
+            data: std::cell::RefCell::new(LaunchConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -489,12 +474,11 @@ impl BuildLaunchConfiguration {
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
                 placement_tenancy: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_groups: core::default::Default::default(),
                 spot_price: core::default::Default::default(),
                 user_data: core::default::Default::default(),
                 user_data_base64: core::default::Default::default(),
-                vpc_classic_link_id: core::default::Default::default(),
-                vpc_classic_link_security_groups: core::default::Default::default(),
                 ebs_block_device: core::default::Default::default(),
                 ephemeral_block_device: core::default::Default::default(),
                 metadata_options: core::default::Default::default(),
@@ -590,6 +574,12 @@ impl LaunchConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.placement_tenancy", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_groups` after provisioning.\n"]
     pub fn security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_groups", self.extract_ref()))
@@ -610,32 +600,27 @@ impl LaunchConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_data_base64", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `vpc_classic_link_id` after provisioning.\n"]
-    pub fn vpc_classic_link_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_classic_link_id", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `vpc_classic_link_security_groups` after provisioning.\n"]
-    pub fn vpc_classic_link_security_groups(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
-        terrars::SetRef::new(
-            self.shared().clone(),
-            format!("{}.vpc_classic_link_security_groups", self.extract_ref()),
-        )
-    }
-
     #[doc = "Get a reference to the value of field `metadata_options` after provisioning.\n"]
-    pub fn metadata_options(&self) -> terrars::ListRef<LaunchConfigurationMetadataOptionsElRef> {
+    pub fn metadata_options(&self) -> terrars::ListRef<LaunchConfiguration_MetadataOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metadata_options", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `root_block_device` after provisioning.\n"]
-    pub fn root_block_device(&self) -> terrars::ListRef<LaunchConfigurationRootBlockDeviceElRef> {
+    pub fn root_block_device(&self) -> terrars::ListRef<LaunchConfiguration_RootBlockDeviceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.root_block_device", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct LaunchConfigurationDynamic {
+    ebs_block_device: std::option::Option<terrars::DynamicBlock<LaunchConfiguration_EbsBlockDevice>>,
+    ephemeral_block_device: std::option::Option<terrars::DynamicBlock<LaunchConfiguration_EphemeralBlockDevice>>,
+    metadata_options: std::option::Option<terrars::DynamicBlock<LaunchConfiguration_MetadataOptions>>,
+    root_block_device: std::option::Option<terrars::DynamicBlock<LaunchConfiguration_RootBlockDevice>>,
+}
+
 #[derive(Serialize)]
-pub struct LaunchConfigurationEbsBlockDeviceEl {
+pub struct LaunchConfiguration_EbsBlockDevice {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_on_termination: std::option::Option<terrars::PrimField<bool>>,
     device_name: terrars::PrimField<std::string::String>,
@@ -655,7 +640,7 @@ pub struct LaunchConfigurationEbsBlockDeviceEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchConfigurationEbsBlockDeviceEl {
+impl LaunchConfiguration_EbsBlockDevice {
     #[doc = "Set the field `delete_on_termination`.\n"]
     pub fn set_delete_on_termination(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.delete_on_termination = std::option::Option::Some(v.into());
@@ -705,8 +690,8 @@ impl LaunchConfigurationEbsBlockDeviceEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchConfigurationEbsBlockDeviceEl {
-    type O = terrars::BlockAssignable<LaunchConfigurationEbsBlockDeviceEl>;
+impl terrars::ToListMappable for LaunchConfiguration_EbsBlockDevice {
+    type O = terrars::BlockAssignable<LaunchConfiguration_EbsBlockDevice>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -717,14 +702,14 @@ impl terrars::ToListMappable for LaunchConfigurationEbsBlockDeviceEl {
     }
 }
 
-pub struct BuildLaunchConfigurationEbsBlockDeviceEl {
+pub struct BuildLaunchConfiguration_EbsBlockDevice {
     #[doc = ""]
     pub device_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLaunchConfigurationEbsBlockDeviceEl {
-    pub fn build(self) -> LaunchConfigurationEbsBlockDeviceEl {
-        LaunchConfigurationEbsBlockDeviceEl {
+impl BuildLaunchConfiguration_EbsBlockDevice {
+    pub fn build(self) -> LaunchConfiguration_EbsBlockDevice {
+        LaunchConfiguration_EbsBlockDevice {
             delete_on_termination: core::default::Default::default(),
             device_name: self.device_name,
             encrypted: core::default::Default::default(),
@@ -738,21 +723,23 @@ impl BuildLaunchConfigurationEbsBlockDeviceEl {
     }
 }
 
-pub struct LaunchConfigurationEbsBlockDeviceElRef {
+#[allow(dead_code)]
+pub struct LaunchConfiguration_EbsBlockDeviceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchConfigurationEbsBlockDeviceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchConfigurationEbsBlockDeviceElRef {
-        LaunchConfigurationEbsBlockDeviceElRef {
+impl terrars::Ref for LaunchConfiguration_EbsBlockDeviceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchConfiguration_EbsBlockDeviceRef {
+        LaunchConfiguration_EbsBlockDeviceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchConfigurationEbsBlockDeviceElRef {
+impl LaunchConfiguration_EbsBlockDeviceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -804,7 +791,7 @@ impl LaunchConfigurationEbsBlockDeviceElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchConfigurationEphemeralBlockDeviceEl {
+pub struct LaunchConfiguration_EphemeralBlockDevice {
     device_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     no_device: std::option::Option<terrars::PrimField<bool>>,
@@ -812,7 +799,7 @@ pub struct LaunchConfigurationEphemeralBlockDeviceEl {
     virtual_name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchConfigurationEphemeralBlockDeviceEl {
+impl LaunchConfiguration_EphemeralBlockDevice {
     #[doc = "Set the field `no_device`.\n"]
     pub fn set_no_device(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.no_device = std::option::Option::Some(v.into());
@@ -826,8 +813,8 @@ impl LaunchConfigurationEphemeralBlockDeviceEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchConfigurationEphemeralBlockDeviceEl {
-    type O = terrars::BlockAssignable<LaunchConfigurationEphemeralBlockDeviceEl>;
+impl terrars::ToListMappable for LaunchConfiguration_EphemeralBlockDevice {
+    type O = terrars::BlockAssignable<LaunchConfiguration_EphemeralBlockDevice>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -838,14 +825,14 @@ impl terrars::ToListMappable for LaunchConfigurationEphemeralBlockDeviceEl {
     }
 }
 
-pub struct BuildLaunchConfigurationEphemeralBlockDeviceEl {
+pub struct BuildLaunchConfiguration_EphemeralBlockDevice {
     #[doc = ""]
     pub device_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildLaunchConfigurationEphemeralBlockDeviceEl {
-    pub fn build(self) -> LaunchConfigurationEphemeralBlockDeviceEl {
-        LaunchConfigurationEphemeralBlockDeviceEl {
+impl BuildLaunchConfiguration_EphemeralBlockDevice {
+    pub fn build(self) -> LaunchConfiguration_EphemeralBlockDevice {
+        LaunchConfiguration_EphemeralBlockDevice {
             device_name: self.device_name,
             no_device: core::default::Default::default(),
             virtual_name: core::default::Default::default(),
@@ -853,21 +840,23 @@ impl BuildLaunchConfigurationEphemeralBlockDeviceEl {
     }
 }
 
-pub struct LaunchConfigurationEphemeralBlockDeviceElRef {
+#[allow(dead_code)]
+pub struct LaunchConfiguration_EphemeralBlockDeviceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchConfigurationEphemeralBlockDeviceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchConfigurationEphemeralBlockDeviceElRef {
-        LaunchConfigurationEphemeralBlockDeviceElRef {
+impl terrars::Ref for LaunchConfiguration_EphemeralBlockDeviceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchConfiguration_EphemeralBlockDeviceRef {
+        LaunchConfiguration_EphemeralBlockDeviceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchConfigurationEphemeralBlockDeviceElRef {
+impl LaunchConfiguration_EphemeralBlockDeviceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -889,7 +878,7 @@ impl LaunchConfigurationEphemeralBlockDeviceElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchConfigurationMetadataOptionsEl {
+pub struct LaunchConfiguration_MetadataOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     http_endpoint: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -898,7 +887,7 @@ pub struct LaunchConfigurationMetadataOptionsEl {
     http_tokens: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchConfigurationMetadataOptionsEl {
+impl LaunchConfiguration_MetadataOptions {
     #[doc = "Set the field `http_endpoint`.\n"]
     pub fn set_http_endpoint(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.http_endpoint = std::option::Option::Some(v.into());
@@ -918,8 +907,8 @@ impl LaunchConfigurationMetadataOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchConfigurationMetadataOptionsEl {
-    type O = terrars::BlockAssignable<LaunchConfigurationMetadataOptionsEl>;
+impl terrars::ToListMappable for LaunchConfiguration_MetadataOptions {
+    type O = terrars::BlockAssignable<LaunchConfiguration_MetadataOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -930,11 +919,11 @@ impl terrars::ToListMappable for LaunchConfigurationMetadataOptionsEl {
     }
 }
 
-pub struct BuildLaunchConfigurationMetadataOptionsEl {}
+pub struct BuildLaunchConfiguration_MetadataOptions {}
 
-impl BuildLaunchConfigurationMetadataOptionsEl {
-    pub fn build(self) -> LaunchConfigurationMetadataOptionsEl {
-        LaunchConfigurationMetadataOptionsEl {
+impl BuildLaunchConfiguration_MetadataOptions {
+    pub fn build(self) -> LaunchConfiguration_MetadataOptions {
+        LaunchConfiguration_MetadataOptions {
             http_endpoint: core::default::Default::default(),
             http_put_response_hop_limit: core::default::Default::default(),
             http_tokens: core::default::Default::default(),
@@ -942,21 +931,23 @@ impl BuildLaunchConfigurationMetadataOptionsEl {
     }
 }
 
-pub struct LaunchConfigurationMetadataOptionsElRef {
+#[allow(dead_code)]
+pub struct LaunchConfiguration_MetadataOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchConfigurationMetadataOptionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchConfigurationMetadataOptionsElRef {
-        LaunchConfigurationMetadataOptionsElRef {
+impl terrars::Ref for LaunchConfiguration_MetadataOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchConfiguration_MetadataOptionsRef {
+        LaunchConfiguration_MetadataOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchConfigurationMetadataOptionsElRef {
+impl LaunchConfiguration_MetadataOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -978,7 +969,7 @@ impl LaunchConfigurationMetadataOptionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct LaunchConfigurationRootBlockDeviceEl {
+pub struct LaunchConfiguration_RootBlockDevice {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_on_termination: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -993,7 +984,7 @@ pub struct LaunchConfigurationRootBlockDeviceEl {
     volume_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl LaunchConfigurationRootBlockDeviceEl {
+impl LaunchConfiguration_RootBlockDevice {
     #[doc = "Set the field `delete_on_termination`.\n"]
     pub fn set_delete_on_termination(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.delete_on_termination = std::option::Option::Some(v.into());
@@ -1031,8 +1022,8 @@ impl LaunchConfigurationRootBlockDeviceEl {
     }
 }
 
-impl terrars::ToListMappable for LaunchConfigurationRootBlockDeviceEl {
-    type O = terrars::BlockAssignable<LaunchConfigurationRootBlockDeviceEl>;
+impl terrars::ToListMappable for LaunchConfiguration_RootBlockDevice {
+    type O = terrars::BlockAssignable<LaunchConfiguration_RootBlockDevice>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1043,11 +1034,11 @@ impl terrars::ToListMappable for LaunchConfigurationRootBlockDeviceEl {
     }
 }
 
-pub struct BuildLaunchConfigurationRootBlockDeviceEl {}
+pub struct BuildLaunchConfiguration_RootBlockDevice {}
 
-impl BuildLaunchConfigurationRootBlockDeviceEl {
-    pub fn build(self) -> LaunchConfigurationRootBlockDeviceEl {
-        LaunchConfigurationRootBlockDeviceEl {
+impl BuildLaunchConfiguration_RootBlockDevice {
+    pub fn build(self) -> LaunchConfiguration_RootBlockDevice {
+        LaunchConfiguration_RootBlockDevice {
             delete_on_termination: core::default::Default::default(),
             encrypted: core::default::Default::default(),
             iops: core::default::Default::default(),
@@ -1058,21 +1049,23 @@ impl BuildLaunchConfigurationRootBlockDeviceEl {
     }
 }
 
-pub struct LaunchConfigurationRootBlockDeviceElRef {
+#[allow(dead_code)]
+pub struct LaunchConfiguration_RootBlockDeviceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for LaunchConfigurationRootBlockDeviceElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchConfigurationRootBlockDeviceElRef {
-        LaunchConfigurationRootBlockDeviceElRef {
+impl terrars::Ref for LaunchConfiguration_RootBlockDeviceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> LaunchConfiguration_RootBlockDeviceRef {
+        LaunchConfiguration_RootBlockDeviceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl LaunchConfigurationRootBlockDeviceElRef {
+impl LaunchConfiguration_RootBlockDeviceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1106,12 +1099,4 @@ impl LaunchConfigurationRootBlockDeviceElRef {
     pub fn volume_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct LaunchConfigurationDynamic {
-    ebs_block_device: std::option::Option<terrars::DynamicBlock<LaunchConfigurationEbsBlockDeviceEl>>,
-    ephemeral_block_device: std::option::Option<terrars::DynamicBlock<LaunchConfigurationEphemeralBlockDeviceEl>>,
-    metadata_options: std::option::Option<terrars::DynamicBlock<LaunchConfigurationMetadataOptionsEl>>,
-    root_block_device: std::option::Option<terrars::DynamicBlock<LaunchConfigurationRootBlockDeviceEl>>,
 }

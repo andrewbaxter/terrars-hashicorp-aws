@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct TransferServerData {
+struct TransferServerData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,6 +41,8 @@ struct TransferServerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     invocation_role: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_address_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     logging_role: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     post_authentication_login_banner: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -47,7 +51,13 @@ struct TransferServerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protocols: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_policy_name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    sftp_authentication_methods: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    structured_log_destinations: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -55,16 +65,20 @@ struct TransferServerData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     url: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    endpoint_details: std::option::Option<std::vec::Vec<TransferServerEndpointDetailsEl>>,
+    endpoint_details: std::option::Option<std::vec::Vec<TransferServer_EndpointDetails>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    workflow_details: std::option::Option<std::vec::Vec<TransferServerWorkflowDetailsEl>>,
+    protocol_details: std::option::Option<std::vec::Vec<TransferServer_ProtocolDetails>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_storage_options: std::option::Option<std::vec::Vec<TransferServer_S3StorageOptions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    workflow_details: std::option::Option<std::vec::Vec<TransferServer_WorkflowDetails>>,
     dynamic: TransferServerDynamic,
 }
 
 struct TransferServer_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<TransferServerData>,
+    data: std::cell::RefCell<TransferServerData_>,
 }
 
 #[derive(Clone)]
@@ -227,6 +241,12 @@ impl TransferServer {
         self
     }
 
+    #[doc = "Set the field `ip_address_type`.\n"]
+    pub fn set_ip_address_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ip_address_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `logging_role`.\n"]
     pub fn set_logging_role(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().logging_role = std::option::Option::Some(v.into());
@@ -260,9 +280,35 @@ impl TransferServer {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `security_policy_name`.\n"]
     pub fn set_security_policy_name(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().security_policy_name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `sftp_authentication_methods`.\n"]
+    pub fn set_sftp_authentication_methods(
+        self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().sftp_authentication_methods = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `structured_log_destinations`.\nThis is a set of arns of destinations that will receive structured logs from the transfer server"]
+    pub fn set_structured_log_destinations(
+        self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().structured_log_destinations = std::option::Option::Some(v.into());
         self
     }
 
@@ -293,7 +339,7 @@ impl TransferServer {
     #[doc = "Set the field `endpoint_details`.\n"]
     pub fn set_endpoint_details(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<TransferServerEndpointDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferServer_EndpointDetails>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -306,10 +352,42 @@ impl TransferServer {
         self
     }
 
+    #[doc = "Set the field `protocol_details`.\n"]
+    pub fn set_protocol_details(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferServer_ProtocolDetails>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().protocol_details = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.protocol_details = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `s3_storage_options`.\n"]
+    pub fn set_s3_storage_options(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferServer_S3StorageOptions>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().s3_storage_options = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.s3_storage_options = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `workflow_details`.\n"]
     pub fn set_workflow_details(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<TransferServerWorkflowDetailsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferServer_WorkflowDetails>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -387,6 +465,11 @@ impl TransferServer {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.invocation_role", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `logging_role` after provisioning.\n"]
     pub fn logging_role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.logging_role", self.extract_ref()))
@@ -413,9 +496,26 @@ impl TransferServer {
         terrars::SetRef::new(self.shared().clone(), format!("{}.protocols", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_policy_name` after provisioning.\n"]
     pub fn security_policy_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `sftp_authentication_methods` after provisioning.\n"]
+    pub fn sftp_authentication_methods(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sftp_authentication_methods", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `structured_log_destinations` after provisioning.\nThis is a set of arns of destinations that will receive structured logs from the transfer server"]
+    pub fn structured_log_destinations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.structured_log_destinations", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -434,12 +534,22 @@ impl TransferServer {
     }
 
     #[doc = "Get a reference to the value of field `endpoint_details` after provisioning.\n"]
-    pub fn endpoint_details(&self) -> terrars::ListRef<TransferServerEndpointDetailsElRef> {
+    pub fn endpoint_details(&self) -> terrars::ListRef<TransferServer_EndpointDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_details", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `protocol_details` after provisioning.\n"]
+    pub fn protocol_details(&self) -> terrars::ListRef<TransferServer_ProtocolDetailsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.protocol_details", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_storage_options` after provisioning.\n"]
+    pub fn s3_storage_options(&self) -> terrars::ListRef<TransferServer_S3StorageOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_storage_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `workflow_details` after provisioning.\n"]
-    pub fn workflow_details(&self) -> terrars::ListRef<TransferServerWorkflowDetailsElRef> {
+    pub fn workflow_details(&self) -> terrars::ListRef<TransferServer_WorkflowDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workflow_details", self.extract_ref()))
     }
 }
@@ -484,7 +594,7 @@ impl BuildTransferServer {
         let out = TransferServer(std::rc::Rc::new(TransferServer_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(TransferServerData {
+            data: std::cell::RefCell::new(TransferServerData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -500,15 +610,21 @@ impl BuildTransferServer {
                 id: core::default::Default::default(),
                 identity_provider_type: core::default::Default::default(),
                 invocation_role: core::default::Default::default(),
+                ip_address_type: core::default::Default::default(),
                 logging_role: core::default::Default::default(),
                 post_authentication_login_banner: core::default::Default::default(),
                 pre_authentication_login_banner: core::default::Default::default(),
                 protocols: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_policy_name: core::default::Default::default(),
+                sftp_authentication_methods: core::default::Default::default(),
+                structured_log_destinations: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 url: core::default::Default::default(),
                 endpoint_details: core::default::Default::default(),
+                protocol_details: core::default::Default::default(),
+                s3_storage_options: core::default::Default::default(),
                 workflow_details: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -606,6 +722,11 @@ impl TransferServerRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.invocation_role", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `logging_role` after provisioning.\n"]
     pub fn logging_role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.logging_role", self.extract_ref()))
@@ -632,9 +753,26 @@ impl TransferServerRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.protocols", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_policy_name` after provisioning.\n"]
     pub fn security_policy_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.security_policy_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `sftp_authentication_methods` after provisioning.\n"]
+    pub fn sftp_authentication_methods(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.sftp_authentication_methods", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `structured_log_destinations` after provisioning.\nThis is a set of arns of destinations that will receive structured logs from the transfer server"]
+    pub fn structured_log_destinations(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.structured_log_destinations", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -653,18 +791,36 @@ impl TransferServerRef {
     }
 
     #[doc = "Get a reference to the value of field `endpoint_details` after provisioning.\n"]
-    pub fn endpoint_details(&self) -> terrars::ListRef<TransferServerEndpointDetailsElRef> {
+    pub fn endpoint_details(&self) -> terrars::ListRef<TransferServer_EndpointDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoint_details", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `protocol_details` after provisioning.\n"]
+    pub fn protocol_details(&self) -> terrars::ListRef<TransferServer_ProtocolDetailsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.protocol_details", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `s3_storage_options` after provisioning.\n"]
+    pub fn s3_storage_options(&self) -> terrars::ListRef<TransferServer_S3StorageOptionsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.s3_storage_options", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `workflow_details` after provisioning.\n"]
-    pub fn workflow_details(&self) -> terrars::ListRef<TransferServerWorkflowDetailsElRef> {
+    pub fn workflow_details(&self) -> terrars::ListRef<TransferServer_WorkflowDetailsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.workflow_details", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct TransferServerDynamic {
+    endpoint_details: std::option::Option<terrars::DynamicBlock<TransferServer_EndpointDetails>>,
+    protocol_details: std::option::Option<terrars::DynamicBlock<TransferServer_ProtocolDetails>>,
+    s3_storage_options: std::option::Option<terrars::DynamicBlock<TransferServer_S3StorageOptions>>,
+    workflow_details: std::option::Option<terrars::DynamicBlock<TransferServer_WorkflowDetails>>,
+}
+
 #[derive(Serialize)]
-pub struct TransferServerEndpointDetailsEl {
+pub struct TransferServer_EndpointDetails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     address_allocation_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -677,7 +833,7 @@ pub struct TransferServerEndpointDetailsEl {
     vpc_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl TransferServerEndpointDetailsEl {
+impl TransferServer_EndpointDetails {
     #[doc = "Set the field `address_allocation_ids`.\n"]
     pub fn set_address_allocation_ids(
         mut self,
@@ -718,8 +874,8 @@ impl TransferServerEndpointDetailsEl {
     }
 }
 
-impl terrars::ToListMappable for TransferServerEndpointDetailsEl {
-    type O = terrars::BlockAssignable<TransferServerEndpointDetailsEl>;
+impl terrars::ToListMappable for TransferServer_EndpointDetails {
+    type O = terrars::BlockAssignable<TransferServer_EndpointDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -730,11 +886,11 @@ impl terrars::ToListMappable for TransferServerEndpointDetailsEl {
     }
 }
 
-pub struct BuildTransferServerEndpointDetailsEl {}
+pub struct BuildTransferServer_EndpointDetails {}
 
-impl BuildTransferServerEndpointDetailsEl {
-    pub fn build(self) -> TransferServerEndpointDetailsEl {
-        TransferServerEndpointDetailsEl {
+impl BuildTransferServer_EndpointDetails {
+    pub fn build(self) -> TransferServer_EndpointDetails {
+        TransferServer_EndpointDetails {
             address_allocation_ids: core::default::Default::default(),
             security_group_ids: core::default::Default::default(),
             subnet_ids: core::default::Default::default(),
@@ -744,21 +900,23 @@ impl BuildTransferServerEndpointDetailsEl {
     }
 }
 
-pub struct TransferServerEndpointDetailsElRef {
+#[allow(dead_code)]
+pub struct TransferServer_EndpointDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TransferServerEndpointDetailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferServerEndpointDetailsElRef {
-        TransferServerEndpointDetailsElRef {
+impl terrars::Ref for TransferServer_EndpointDetailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferServer_EndpointDetailsRef {
+        TransferServer_EndpointDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TransferServerEndpointDetailsElRef {
+impl TransferServer_EndpointDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -790,15 +948,51 @@ impl TransferServerEndpointDetailsElRef {
 }
 
 #[derive(Serialize)]
-pub struct TransferServerWorkflowDetailsElOnUploadEl {
-    execution_role: terrars::PrimField<std::string::String>,
-    workflow_id: terrars::PrimField<std::string::String>,
+pub struct TransferServer_ProtocolDetails {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    as2_transports: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    passive_ip: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    set_stat_option: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tls_session_resumption_mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl TransferServerWorkflowDetailsElOnUploadEl { }
+impl TransferServer_ProtocolDetails {
+    #[doc = "Set the field `as2_transports`.\n"]
+    pub fn set_as2_transports(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.as2_transports = std::option::Option::Some(v.into());
+        self
+    }
 
-impl terrars::ToListMappable for TransferServerWorkflowDetailsElOnUploadEl {
-    type O = terrars::BlockAssignable<TransferServerWorkflowDetailsElOnUploadEl>;
+    #[doc = "Set the field `passive_ip`.\n"]
+    pub fn set_passive_ip(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.passive_ip = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `set_stat_option`.\n"]
+    pub fn set_set_stat_option(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.set_stat_option = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tls_session_resumption_mode`.\n"]
+    pub fn set_tls_session_resumption_mode(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.tls_session_resumption_mode = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for TransferServer_ProtocolDetails {
+    type O = terrars::BlockAssignable<TransferServer_ProtocolDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -809,37 +1003,249 @@ impl terrars::ToListMappable for TransferServerWorkflowDetailsElOnUploadEl {
     }
 }
 
-pub struct BuildTransferServerWorkflowDetailsElOnUploadEl {
-    #[doc = ""]
-    pub execution_role: terrars::PrimField<std::string::String>,
-    #[doc = ""]
-    pub workflow_id: terrars::PrimField<std::string::String>,
-}
+pub struct BuildTransferServer_ProtocolDetails {}
 
-impl BuildTransferServerWorkflowDetailsElOnUploadEl {
-    pub fn build(self) -> TransferServerWorkflowDetailsElOnUploadEl {
-        TransferServerWorkflowDetailsElOnUploadEl {
-            execution_role: self.execution_role,
-            workflow_id: self.workflow_id,
+impl BuildTransferServer_ProtocolDetails {
+    pub fn build(self) -> TransferServer_ProtocolDetails {
+        TransferServer_ProtocolDetails {
+            as2_transports: core::default::Default::default(),
+            passive_ip: core::default::Default::default(),
+            set_stat_option: core::default::Default::default(),
+            tls_session_resumption_mode: core::default::Default::default(),
         }
     }
 }
 
-pub struct TransferServerWorkflowDetailsElOnUploadElRef {
+#[allow(dead_code)]
+pub struct TransferServer_ProtocolDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TransferServerWorkflowDetailsElOnUploadElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferServerWorkflowDetailsElOnUploadElRef {
-        TransferServerWorkflowDetailsElOnUploadElRef {
+impl terrars::Ref for TransferServer_ProtocolDetailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferServer_ProtocolDetailsRef {
+        TransferServer_ProtocolDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TransferServerWorkflowDetailsElOnUploadElRef {
+impl TransferServer_ProtocolDetailsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `as2_transports` after provisioning.\n"]
+    pub fn as2_transports(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.as2_transports", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `passive_ip` after provisioning.\n"]
+    pub fn passive_ip(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.passive_ip", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `set_stat_option` after provisioning.\n"]
+    pub fn set_stat_option(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.set_stat_option", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `tls_session_resumption_mode` after provisioning.\n"]
+    pub fn tls_session_resumption_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tls_session_resumption_mode", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct TransferServer_S3StorageOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    directory_listing_optimization: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl TransferServer_S3StorageOptions {
+    #[doc = "Set the field `directory_listing_optimization`.\n"]
+    pub fn set_directory_listing_optimization(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.directory_listing_optimization = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for TransferServer_S3StorageOptions {
+    type O = terrars::BlockAssignable<TransferServer_S3StorageOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildTransferServer_S3StorageOptions {}
+
+impl BuildTransferServer_S3StorageOptions {
+    pub fn build(self) -> TransferServer_S3StorageOptions {
+        TransferServer_S3StorageOptions { directory_listing_optimization: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct TransferServer_S3StorageOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for TransferServer_S3StorageOptionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferServer_S3StorageOptionsRef {
+        TransferServer_S3StorageOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl TransferServer_S3StorageOptionsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `directory_listing_optimization` after provisioning.\n"]
+    pub fn directory_listing_optimization(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.directory_listing_optimization", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct TransferServer_WorkflowDetails_OnPartialUpload {
+    execution_role: terrars::PrimField<std::string::String>,
+    workflow_id: terrars::PrimField<std::string::String>,
+}
+
+impl TransferServer_WorkflowDetails_OnPartialUpload { }
+
+impl terrars::ToListMappable for TransferServer_WorkflowDetails_OnPartialUpload {
+    type O = terrars::BlockAssignable<TransferServer_WorkflowDetails_OnPartialUpload>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildTransferServer_WorkflowDetails_OnPartialUpload {
+    #[doc = ""]
+    pub execution_role: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub workflow_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildTransferServer_WorkflowDetails_OnPartialUpload {
+    pub fn build(self) -> TransferServer_WorkflowDetails_OnPartialUpload {
+        TransferServer_WorkflowDetails_OnPartialUpload {
+            execution_role: self.execution_role,
+            workflow_id: self.workflow_id,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct TransferServer_WorkflowDetails_OnPartialUploadRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for TransferServer_WorkflowDetails_OnPartialUploadRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> TransferServer_WorkflowDetails_OnPartialUploadRef {
+        TransferServer_WorkflowDetails_OnPartialUploadRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl TransferServer_WorkflowDetails_OnPartialUploadRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `execution_role` after provisioning.\n"]
+    pub fn execution_role(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.execution_role", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `workflow_id` after provisioning.\n"]
+    pub fn workflow_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.workflow_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct TransferServer_WorkflowDetails_OnUpload {
+    execution_role: terrars::PrimField<std::string::String>,
+    workflow_id: terrars::PrimField<std::string::String>,
+}
+
+impl TransferServer_WorkflowDetails_OnUpload { }
+
+impl terrars::ToListMappable for TransferServer_WorkflowDetails_OnUpload {
+    type O = terrars::BlockAssignable<TransferServer_WorkflowDetails_OnUpload>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildTransferServer_WorkflowDetails_OnUpload {
+    #[doc = ""]
+    pub execution_role: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub workflow_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildTransferServer_WorkflowDetails_OnUpload {
+    pub fn build(self) -> TransferServer_WorkflowDetails_OnUpload {
+        TransferServer_WorkflowDetails_OnUpload {
+            execution_role: self.execution_role,
+            workflow_id: self.workflow_id,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct TransferServer_WorkflowDetails_OnUploadRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for TransferServer_WorkflowDetails_OnUploadRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferServer_WorkflowDetails_OnUploadRef {
+        TransferServer_WorkflowDetails_OnUploadRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl TransferServer_WorkflowDetails_OnUploadRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -856,22 +1262,41 @@ impl TransferServerWorkflowDetailsElOnUploadElRef {
 }
 
 #[derive(Serialize, Default)]
-struct TransferServerWorkflowDetailsElDynamic {
-    on_upload: std::option::Option<terrars::DynamicBlock<TransferServerWorkflowDetailsElOnUploadEl>>,
+struct TransferServer_WorkflowDetailsDynamic {
+    on_partial_upload: std::option::Option<terrars::DynamicBlock<TransferServer_WorkflowDetails_OnPartialUpload>>,
+    on_upload: std::option::Option<terrars::DynamicBlock<TransferServer_WorkflowDetails_OnUpload>>,
 }
 
 #[derive(Serialize)]
-pub struct TransferServerWorkflowDetailsEl {
+pub struct TransferServer_WorkflowDetails {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    on_upload: std::option::Option<std::vec::Vec<TransferServerWorkflowDetailsElOnUploadEl>>,
-    dynamic: TransferServerWorkflowDetailsElDynamic,
+    on_partial_upload: std::option::Option<std::vec::Vec<TransferServer_WorkflowDetails_OnPartialUpload>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    on_upload: std::option::Option<std::vec::Vec<TransferServer_WorkflowDetails_OnUpload>>,
+    dynamic: TransferServer_WorkflowDetailsDynamic,
 }
 
-impl TransferServerWorkflowDetailsEl {
+impl TransferServer_WorkflowDetails {
+    #[doc = "Set the field `on_partial_upload`.\n"]
+    pub fn set_on_partial_upload(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferServer_WorkflowDetails_OnPartialUpload>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.on_partial_upload = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.on_partial_upload = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `on_upload`.\n"]
     pub fn set_on_upload(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<TransferServerWorkflowDetailsElOnUploadEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<TransferServer_WorkflowDetails_OnUpload>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -885,8 +1310,8 @@ impl TransferServerWorkflowDetailsEl {
     }
 }
 
-impl terrars::ToListMappable for TransferServerWorkflowDetailsEl {
-    type O = terrars::BlockAssignable<TransferServerWorkflowDetailsEl>;
+impl terrars::ToListMappable for TransferServer_WorkflowDetails {
+    type O = terrars::BlockAssignable<TransferServer_WorkflowDetails>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -897,44 +1322,46 @@ impl terrars::ToListMappable for TransferServerWorkflowDetailsEl {
     }
 }
 
-pub struct BuildTransferServerWorkflowDetailsEl {}
+pub struct BuildTransferServer_WorkflowDetails {}
 
-impl BuildTransferServerWorkflowDetailsEl {
-    pub fn build(self) -> TransferServerWorkflowDetailsEl {
-        TransferServerWorkflowDetailsEl {
+impl BuildTransferServer_WorkflowDetails {
+    pub fn build(self) -> TransferServer_WorkflowDetails {
+        TransferServer_WorkflowDetails {
+            on_partial_upload: core::default::Default::default(),
             on_upload: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct TransferServerWorkflowDetailsElRef {
+#[allow(dead_code)]
+pub struct TransferServer_WorkflowDetailsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for TransferServerWorkflowDetailsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferServerWorkflowDetailsElRef {
-        TransferServerWorkflowDetailsElRef {
+impl terrars::Ref for TransferServer_WorkflowDetailsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> TransferServer_WorkflowDetailsRef {
+        TransferServer_WorkflowDetailsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl TransferServerWorkflowDetailsElRef {
+impl TransferServer_WorkflowDetailsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
+    #[doc = "Get a reference to the value of field `on_partial_upload` after provisioning.\n"]
+    pub fn on_partial_upload(&self) -> terrars::ListRef<TransferServer_WorkflowDetails_OnPartialUploadRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.on_partial_upload", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `on_upload` after provisioning.\n"]
-    pub fn on_upload(&self) -> terrars::ListRef<TransferServerWorkflowDetailsElOnUploadElRef> {
+    pub fn on_upload(&self) -> terrars::ListRef<TransferServer_WorkflowDetails_OnUploadRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.on_upload", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct TransferServerDynamic {
-    endpoint_details: std::option::Option<terrars::DynamicBlock<TransferServerEndpointDetailsEl>>,
-    workflow_details: std::option::Option<terrars::DynamicBlock<TransferServerWorkflowDetailsEl>>,
 }

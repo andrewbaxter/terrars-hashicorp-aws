@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DatasyncLocationFsxOpenzfsFileSystemData {
+struct DatasyncLocationFsxOpenzfsFileSystemData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,6 +23,8 @@ struct DatasyncLocationFsxOpenzfsFileSystemData {
     fsx_filesystem_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     security_group_arns: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subdirectory: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,14 +33,14 @@ struct DatasyncLocationFsxOpenzfsFileSystemData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    protocol: std::option::Option<std::vec::Vec<DatasyncLocationFsxOpenzfsFileSystemProtocolEl>>,
+    protocol: std::option::Option<std::vec::Vec<DatasyncLocationFsxOpenzfsFileSystem_Protocol>>,
     dynamic: DatasyncLocationFsxOpenzfsFileSystemDynamic,
 }
 
 struct DatasyncLocationFsxOpenzfsFileSystem_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DatasyncLocationFsxOpenzfsFileSystemData>,
+    data: std::cell::RefCell<DatasyncLocationFsxOpenzfsFileSystemData_>,
 }
 
 #[derive(Clone)]
@@ -142,6 +146,13 @@ impl DatasyncLocationFsxOpenzfsFileSystem {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `subdirectory`.\n"]
     pub fn set_subdirectory(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().subdirectory = std::option::Option::Some(v.into());
@@ -169,7 +180,7 @@ impl DatasyncLocationFsxOpenzfsFileSystem {
     #[doc = "Set the field `protocol`.\n"]
     pub fn set_protocol(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystemProtocolEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystem_Protocol>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -202,6 +213,12 @@ impl DatasyncLocationFsxOpenzfsFileSystem {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_arns` after provisioning.\n"]
     pub fn security_group_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_arns", self.extract_ref()))
@@ -228,7 +245,7 @@ impl DatasyncLocationFsxOpenzfsFileSystem {
     }
 
     #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::ListRef<DatasyncLocationFsxOpenzfsFileSystemProtocolElRef> {
+    pub fn protocol(&self) -> terrars::ListRef<DatasyncLocationFsxOpenzfsFileSystem_ProtocolRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 }
@@ -277,7 +294,7 @@ impl BuildDatasyncLocationFsxOpenzfsFileSystem {
         let out = DatasyncLocationFsxOpenzfsFileSystem(std::rc::Rc::new(DatasyncLocationFsxOpenzfsFileSystem_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DatasyncLocationFsxOpenzfsFileSystemData {
+            data: std::cell::RefCell::new(DatasyncLocationFsxOpenzfsFileSystemData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -285,6 +302,7 @@ impl BuildDatasyncLocationFsxOpenzfsFileSystem {
                 provisioner: core::default::Default::default(),
                 fsx_filesystem_arn: self.fsx_filesystem_arn,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 security_group_arns: self.security_group_arns,
                 subdirectory: core::default::Default::default(),
                 tags: core::default::Default::default(),
@@ -341,6 +359,12 @@ impl DatasyncLocationFsxOpenzfsFileSystemRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `security_group_arns` after provisioning.\n"]
     pub fn security_group_arns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.security_group_arns", self.extract_ref()))
@@ -367,18 +391,23 @@ impl DatasyncLocationFsxOpenzfsFileSystemRef {
     }
 
     #[doc = "Get a reference to the value of field `protocol` after provisioning.\n"]
-    pub fn protocol(&self) -> terrars::ListRef<DatasyncLocationFsxOpenzfsFileSystemProtocolElRef> {
+    pub fn protocol(&self) -> terrars::ListRef<DatasyncLocationFsxOpenzfsFileSystem_ProtocolRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.protocol", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DatasyncLocationFsxOpenzfsFileSystemDynamic {
+    protocol: std::option::Option<terrars::DynamicBlock<DatasyncLocationFsxOpenzfsFileSystem_Protocol>>,
+}
+
 #[derive(Serialize)]
-pub struct DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl {
+pub struct DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl {
+impl DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions {
     #[doc = "Set the field `version`.\n"]
     pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.version = std::option::Option::Some(v.into());
@@ -386,8 +415,8 @@ impl DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl {
-    type O = terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl>;
+impl terrars::ToListMappable for DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions {
+    type O = terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -398,34 +427,34 @@ impl terrars::ToListMappable for DatasyncLocationFsxOpenzfsFileSystemProtocolElN
     }
 }
 
-pub struct BuildDatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl {}
+pub struct BuildDatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions {}
 
-impl BuildDatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl {
-    pub fn build(self) -> DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl {
-        DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl {
-            version: core::default::Default::default(),
-        }
+impl BuildDatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions {
+    pub fn build(self) -> DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions {
+        DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions { version: core::default::Default::default() }
     }
 }
 
-pub struct DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsElRef {
+impl terrars::Ref for DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsElRef {
-        DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsElRef {
+    ) -> DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptionsRef {
+        DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsElRef {
+impl DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -437,20 +466,20 @@ impl DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElDynamic {
+struct DatasyncLocationFsxOpenzfsFileSystem_Protocol_NfsDynamic {
     mount_options: std
     ::option
-    ::Option<terrars::DynamicBlock<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl>>,
+    ::Option<terrars::DynamicBlock<DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions>>,
 }
 
 #[derive(Serialize)]
-pub struct DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl {
+pub struct DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    mount_options: std::option::Option<std::vec::Vec<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl>>,
-    dynamic: DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElDynamic,
+    mount_options: std::option::Option<std::vec::Vec<DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions>>,
+    dynamic: DatasyncLocationFsxOpenzfsFileSystem_Protocol_NfsDynamic,
 }
 
-impl DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl {
+impl DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs {
     #[doc = "Set the field `mount_options`.\n"]
     pub fn set_mount_options(
         mut self,
@@ -459,9 +488,7 @@ impl DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -475,8 +502,8 @@ impl DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl {
-    type O = terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl>;
+impl terrars::ToListMappable for DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs {
+    type O = terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -487,64 +514,64 @@ impl terrars::ToListMappable for DatasyncLocationFsxOpenzfsFileSystemProtocolElN
     }
 }
 
-pub struct BuildDatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl {}
+pub struct BuildDatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs {}
 
-impl BuildDatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl {
-    pub fn build(self) -> DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl {
-        DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl {
+impl BuildDatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs {
+    pub fn build(self) -> DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs {
+        DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs {
             mount_options: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationFsxOpenzfsFileSystem_Protocol_NfsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElRef {
+impl terrars::Ref for DatasyncLocationFsxOpenzfsFileSystem_Protocol_NfsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElRef {
-        DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElRef {
+    ) -> DatasyncLocationFsxOpenzfsFileSystem_Protocol_NfsRef {
+        DatasyncLocationFsxOpenzfsFileSystem_Protocol_NfsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElRef {
+impl DatasyncLocationFsxOpenzfsFileSystem_Protocol_NfsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `mount_options` after provisioning.\n"]
-    pub fn mount_options(
-        &self,
-    ) -> terrars::ListRef<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElMountOptionsElRef> {
+    pub fn mount_options(&self) -> terrars::ListRef<DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs_MountOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mount_options", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct DatasyncLocationFsxOpenzfsFileSystemProtocolElDynamic {
-    nfs: std::option::Option<terrars::DynamicBlock<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl>>,
+struct DatasyncLocationFsxOpenzfsFileSystem_ProtocolDynamic {
+    nfs: std::option::Option<terrars::DynamicBlock<DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs>>,
 }
 
 #[derive(Serialize)]
-pub struct DatasyncLocationFsxOpenzfsFileSystemProtocolEl {
+pub struct DatasyncLocationFsxOpenzfsFileSystem_Protocol {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    nfs: std::option::Option<std::vec::Vec<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl>>,
-    dynamic: DatasyncLocationFsxOpenzfsFileSystemProtocolElDynamic,
+    nfs: std::option::Option<std::vec::Vec<DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs>>,
+    dynamic: DatasyncLocationFsxOpenzfsFileSystem_ProtocolDynamic,
 }
 
-impl DatasyncLocationFsxOpenzfsFileSystemProtocolEl {
+impl DatasyncLocationFsxOpenzfsFileSystem_Protocol {
     #[doc = "Set the field `nfs`.\n"]
     pub fn set_nfs(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystem_Protocol_Nfs>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -558,8 +585,8 @@ impl DatasyncLocationFsxOpenzfsFileSystemProtocolEl {
     }
 }
 
-impl terrars::ToListMappable for DatasyncLocationFsxOpenzfsFileSystemProtocolEl {
-    type O = terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystemProtocolEl>;
+impl terrars::ToListMappable for DatasyncLocationFsxOpenzfsFileSystem_Protocol {
+    type O = terrars::BlockAssignable<DatasyncLocationFsxOpenzfsFileSystem_Protocol>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -570,46 +597,43 @@ impl terrars::ToListMappable for DatasyncLocationFsxOpenzfsFileSystemProtocolEl 
     }
 }
 
-pub struct BuildDatasyncLocationFsxOpenzfsFileSystemProtocolEl {}
+pub struct BuildDatasyncLocationFsxOpenzfsFileSystem_Protocol {}
 
-impl BuildDatasyncLocationFsxOpenzfsFileSystemProtocolEl {
-    pub fn build(self) -> DatasyncLocationFsxOpenzfsFileSystemProtocolEl {
-        DatasyncLocationFsxOpenzfsFileSystemProtocolEl {
+impl BuildDatasyncLocationFsxOpenzfsFileSystem_Protocol {
+    pub fn build(self) -> DatasyncLocationFsxOpenzfsFileSystem_Protocol {
+        DatasyncLocationFsxOpenzfsFileSystem_Protocol {
             nfs: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct DatasyncLocationFsxOpenzfsFileSystemProtocolElRef {
+#[allow(dead_code)]
+pub struct DatasyncLocationFsxOpenzfsFileSystem_ProtocolRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DatasyncLocationFsxOpenzfsFileSystemProtocolElRef {
+impl terrars::Ref for DatasyncLocationFsxOpenzfsFileSystem_ProtocolRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DatasyncLocationFsxOpenzfsFileSystemProtocolElRef {
-        DatasyncLocationFsxOpenzfsFileSystemProtocolElRef {
+    ) -> DatasyncLocationFsxOpenzfsFileSystem_ProtocolRef {
+        DatasyncLocationFsxOpenzfsFileSystem_ProtocolRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DatasyncLocationFsxOpenzfsFileSystemProtocolElRef {
+impl DatasyncLocationFsxOpenzfsFileSystem_ProtocolRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `nfs` after provisioning.\n"]
-    pub fn nfs(&self) -> terrars::ListRef<DatasyncLocationFsxOpenzfsFileSystemProtocolElNfsElRef> {
+    pub fn nfs(&self) -> terrars::ListRef<DatasyncLocationFsxOpenzfsFileSystem_Protocol_NfsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.nfs", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DatasyncLocationFsxOpenzfsFileSystemDynamic {
-    protocol: std::option::Option<terrars::DynamicBlock<DatasyncLocationFsxOpenzfsFileSystemProtocolEl>>,
 }

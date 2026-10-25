@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct MedialiveInputData {
+struct MedialiveInputData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,6 +26,8 @@ struct MedialiveInputData {
     input_security_groups: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -32,24 +36,24 @@ struct MedialiveInputData {
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destinations: std::option::Option<std::vec::Vec<MedialiveInputDestinationsEl>>,
+    destinations: std::option::Option<std::vec::Vec<MedialiveInput_Destinations>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    input_devices: std::option::Option<std::vec::Vec<MedialiveInputInputDevicesEl>>,
+    input_devices: std::option::Option<std::vec::Vec<MedialiveInput_InputDevices>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    media_connect_flows: std::option::Option<std::vec::Vec<MedialiveInputMediaConnectFlowsEl>>,
+    media_connect_flows: std::option::Option<std::vec::Vec<MedialiveInput_MediaConnectFlows>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sources: std::option::Option<std::vec::Vec<MedialiveInputSourcesEl>>,
+    sources: std::option::Option<std::vec::Vec<MedialiveInput_Sources>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<MedialiveInputTimeoutsEl>,
+    timeouts: std::option::Option<MedialiveInput_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    vpc: std::option::Option<std::vec::Vec<MedialiveInputVpcEl>>,
+    vpc: std::option::Option<std::vec::Vec<MedialiveInput_Vpc>>,
     dynamic: MedialiveInputDynamic,
 }
 
 struct MedialiveInput_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<MedialiveInputData>,
+    data: std::cell::RefCell<MedialiveInputData_>,
 }
 
 #[derive(Clone)]
@@ -164,6 +168,13 @@ impl MedialiveInput {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `role_arn`.\n"]
     pub fn set_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().role_arn = std::option::Option::Some(v.into());
@@ -191,7 +202,7 @@ impl MedialiveInput {
     #[doc = "Set the field `destinations`.\n"]
     pub fn set_destinations(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInputDestinationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInput_Destinations>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -207,7 +218,7 @@ impl MedialiveInput {
     #[doc = "Set the field `input_devices`.\n"]
     pub fn set_input_devices(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInputInputDevicesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInput_InputDevices>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -223,7 +234,7 @@ impl MedialiveInput {
     #[doc = "Set the field `media_connect_flows`.\n"]
     pub fn set_media_connect_flows(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInputMediaConnectFlowsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInput_MediaConnectFlows>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -237,7 +248,7 @@ impl MedialiveInput {
     }
 
     #[doc = "Set the field `sources`.\n"]
-    pub fn set_sources(self, v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInputSourcesEl>>) -> Self {
+    pub fn set_sources(self, v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInput_Sources>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().sources = std::option::Option::Some(v);
@@ -250,13 +261,13 @@ impl MedialiveInput {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<MedialiveInputTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<MedialiveInput_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `vpc`.\n"]
-    pub fn set_vpc(self, v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInputVpcEl>>) -> Self {
+    pub fn set_vpc(self, v: impl std::convert::Into<terrars::BlockAssignable<MedialiveInput_Vpc>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().vpc = std::option::Option::Some(v);
@@ -308,6 +319,12 @@ impl MedialiveInput {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -329,12 +346,12 @@ impl MedialiveInput {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MedialiveInputTimeoutsElRef {
-        MedialiveInputTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MedialiveInput_TimeoutsRef {
+        MedialiveInput_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
-    pub fn vpc(&self) -> terrars::ListRef<MedialiveInputVpcElRef> {
+    pub fn vpc(&self) -> terrars::ListRef<MedialiveInput_VpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc", self.extract_ref()))
     }
 }
@@ -383,7 +400,7 @@ impl BuildMedialiveInput {
         let out = MedialiveInput(std::rc::Rc::new(MedialiveInput_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(MedialiveInputData {
+            data: std::cell::RefCell::new(MedialiveInputData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -392,6 +409,7 @@ impl BuildMedialiveInput {
                 id: core::default::Default::default(),
                 input_security_groups: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 role_arn: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -473,6 +491,12 @@ impl MedialiveInputRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role_arn` after provisioning.\n"]
     pub fn role_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role_arn", self.extract_ref()))
@@ -494,25 +518,34 @@ impl MedialiveInputRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> MedialiveInputTimeoutsElRef {
-        MedialiveInputTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> MedialiveInput_TimeoutsRef {
+        MedialiveInput_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `vpc` after provisioning.\n"]
-    pub fn vpc(&self) -> terrars::ListRef<MedialiveInputVpcElRef> {
+    pub fn vpc(&self) -> terrars::ListRef<MedialiveInput_VpcRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vpc", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct MedialiveInputDynamic {
+    destinations: std::option::Option<terrars::DynamicBlock<MedialiveInput_Destinations>>,
+    input_devices: std::option::Option<terrars::DynamicBlock<MedialiveInput_InputDevices>>,
+    media_connect_flows: std::option::Option<terrars::DynamicBlock<MedialiveInput_MediaConnectFlows>>,
+    sources: std::option::Option<terrars::DynamicBlock<MedialiveInput_Sources>>,
+    vpc: std::option::Option<terrars::DynamicBlock<MedialiveInput_Vpc>>,
+}
+
 #[derive(Serialize)]
-pub struct MedialiveInputDestinationsEl {
+pub struct MedialiveInput_Destinations {
     stream_name: terrars::PrimField<std::string::String>,
 }
 
-impl MedialiveInputDestinationsEl { }
+impl MedialiveInput_Destinations { }
 
-impl terrars::ToListMappable for MedialiveInputDestinationsEl {
-    type O = terrars::BlockAssignable<MedialiveInputDestinationsEl>;
+impl terrars::ToListMappable for MedialiveInput_Destinations {
+    type O = terrars::BlockAssignable<MedialiveInput_Destinations>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -523,32 +556,34 @@ impl terrars::ToListMappable for MedialiveInputDestinationsEl {
     }
 }
 
-pub struct BuildMedialiveInputDestinationsEl {
+pub struct BuildMedialiveInput_Destinations {
     #[doc = ""]
     pub stream_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMedialiveInputDestinationsEl {
-    pub fn build(self) -> MedialiveInputDestinationsEl {
-        MedialiveInputDestinationsEl { stream_name: self.stream_name }
+impl BuildMedialiveInput_Destinations {
+    pub fn build(self) -> MedialiveInput_Destinations {
+        MedialiveInput_Destinations { stream_name: self.stream_name }
     }
 }
 
-pub struct MedialiveInputDestinationsElRef {
+#[allow(dead_code)]
+pub struct MedialiveInput_DestinationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveInputDestinationsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInputDestinationsElRef {
-        MedialiveInputDestinationsElRef {
+impl terrars::Ref for MedialiveInput_DestinationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInput_DestinationsRef {
+        MedialiveInput_DestinationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveInputDestinationsElRef {
+impl MedialiveInput_DestinationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -560,14 +595,14 @@ impl MedialiveInputDestinationsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MedialiveInputInputDevicesEl {
+pub struct MedialiveInput_InputDevices {
     id: terrars::PrimField<std::string::String>,
 }
 
-impl MedialiveInputInputDevicesEl { }
+impl MedialiveInput_InputDevices { }
 
-impl terrars::ToListMappable for MedialiveInputInputDevicesEl {
-    type O = terrars::BlockAssignable<MedialiveInputInputDevicesEl>;
+impl terrars::ToListMappable for MedialiveInput_InputDevices {
+    type O = terrars::BlockAssignable<MedialiveInput_InputDevices>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -578,32 +613,34 @@ impl terrars::ToListMappable for MedialiveInputInputDevicesEl {
     }
 }
 
-pub struct BuildMedialiveInputInputDevicesEl {
+pub struct BuildMedialiveInput_InputDevices {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMedialiveInputInputDevicesEl {
-    pub fn build(self) -> MedialiveInputInputDevicesEl {
-        MedialiveInputInputDevicesEl { id: self.id }
+impl BuildMedialiveInput_InputDevices {
+    pub fn build(self) -> MedialiveInput_InputDevices {
+        MedialiveInput_InputDevices { id: self.id }
     }
 }
 
-pub struct MedialiveInputInputDevicesElRef {
+#[allow(dead_code)]
+pub struct MedialiveInput_InputDevicesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveInputInputDevicesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInputInputDevicesElRef {
-        MedialiveInputInputDevicesElRef {
+impl terrars::Ref for MedialiveInput_InputDevicesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInput_InputDevicesRef {
+        MedialiveInput_InputDevicesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveInputInputDevicesElRef {
+impl MedialiveInput_InputDevicesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -615,14 +652,14 @@ impl MedialiveInputInputDevicesElRef {
 }
 
 #[derive(Serialize)]
-pub struct MedialiveInputMediaConnectFlowsEl {
+pub struct MedialiveInput_MediaConnectFlows {
     flow_arn: terrars::PrimField<std::string::String>,
 }
 
-impl MedialiveInputMediaConnectFlowsEl { }
+impl MedialiveInput_MediaConnectFlows { }
 
-impl terrars::ToListMappable for MedialiveInputMediaConnectFlowsEl {
-    type O = terrars::BlockAssignable<MedialiveInputMediaConnectFlowsEl>;
+impl terrars::ToListMappable for MedialiveInput_MediaConnectFlows {
+    type O = terrars::BlockAssignable<MedialiveInput_MediaConnectFlows>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -633,32 +670,34 @@ impl terrars::ToListMappable for MedialiveInputMediaConnectFlowsEl {
     }
 }
 
-pub struct BuildMedialiveInputMediaConnectFlowsEl {
+pub struct BuildMedialiveInput_MediaConnectFlows {
     #[doc = ""]
     pub flow_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMedialiveInputMediaConnectFlowsEl {
-    pub fn build(self) -> MedialiveInputMediaConnectFlowsEl {
-        MedialiveInputMediaConnectFlowsEl { flow_arn: self.flow_arn }
+impl BuildMedialiveInput_MediaConnectFlows {
+    pub fn build(self) -> MedialiveInput_MediaConnectFlows {
+        MedialiveInput_MediaConnectFlows { flow_arn: self.flow_arn }
     }
 }
 
-pub struct MedialiveInputMediaConnectFlowsElRef {
+#[allow(dead_code)]
+pub struct MedialiveInput_MediaConnectFlowsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveInputMediaConnectFlowsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInputMediaConnectFlowsElRef {
-        MedialiveInputMediaConnectFlowsElRef {
+impl terrars::Ref for MedialiveInput_MediaConnectFlowsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInput_MediaConnectFlowsRef {
+        MedialiveInput_MediaConnectFlowsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveInputMediaConnectFlowsElRef {
+impl MedialiveInput_MediaConnectFlowsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -670,16 +709,16 @@ impl MedialiveInputMediaConnectFlowsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MedialiveInputSourcesEl {
+pub struct MedialiveInput_Sources {
     password_param: terrars::PrimField<std::string::String>,
     url: terrars::PrimField<std::string::String>,
     username: terrars::PrimField<std::string::String>,
 }
 
-impl MedialiveInputSourcesEl { }
+impl MedialiveInput_Sources { }
 
-impl terrars::ToListMappable for MedialiveInputSourcesEl {
-    type O = terrars::BlockAssignable<MedialiveInputSourcesEl>;
+impl terrars::ToListMappable for MedialiveInput_Sources {
+    type O = terrars::BlockAssignable<MedialiveInput_Sources>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -690,7 +729,7 @@ impl terrars::ToListMappable for MedialiveInputSourcesEl {
     }
 }
 
-pub struct BuildMedialiveInputSourcesEl {
+pub struct BuildMedialiveInput_Sources {
     #[doc = ""]
     pub password_param: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -699,9 +738,9 @@ pub struct BuildMedialiveInputSourcesEl {
     pub username: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMedialiveInputSourcesEl {
-    pub fn build(self) -> MedialiveInputSourcesEl {
-        MedialiveInputSourcesEl {
+impl BuildMedialiveInput_Sources {
+    pub fn build(self) -> MedialiveInput_Sources {
+        MedialiveInput_Sources {
             password_param: self.password_param,
             url: self.url,
             username: self.username,
@@ -709,21 +748,23 @@ impl BuildMedialiveInputSourcesEl {
     }
 }
 
-pub struct MedialiveInputSourcesElRef {
+#[allow(dead_code)]
+pub struct MedialiveInput_SourcesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveInputSourcesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInputSourcesElRef {
-        MedialiveInputSourcesElRef {
+impl terrars::Ref for MedialiveInput_SourcesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInput_SourcesRef {
+        MedialiveInput_SourcesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveInputSourcesElRef {
+impl MedialiveInput_SourcesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -745,7 +786,7 @@ impl MedialiveInputSourcesElRef {
 }
 
 #[derive(Serialize)]
-pub struct MedialiveInputTimeoutsEl {
+pub struct MedialiveInput_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -754,7 +795,7 @@ pub struct MedialiveInputTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl MedialiveInputTimeoutsEl {
+impl MedialiveInput_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -774,8 +815,8 @@ impl MedialiveInputTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for MedialiveInputTimeoutsEl {
-    type O = terrars::BlockAssignable<MedialiveInputTimeoutsEl>;
+impl terrars::ToListMappable for MedialiveInput_Timeouts {
+    type O = terrars::BlockAssignable<MedialiveInput_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -786,11 +827,11 @@ impl terrars::ToListMappable for MedialiveInputTimeoutsEl {
     }
 }
 
-pub struct BuildMedialiveInputTimeoutsEl {}
+pub struct BuildMedialiveInput_Timeouts {}
 
-impl BuildMedialiveInputTimeoutsEl {
-    pub fn build(self) -> MedialiveInputTimeoutsEl {
-        MedialiveInputTimeoutsEl {
+impl BuildMedialiveInput_Timeouts {
+    pub fn build(self) -> MedialiveInput_Timeouts {
+        MedialiveInput_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -798,21 +839,23 @@ impl BuildMedialiveInputTimeoutsEl {
     }
 }
 
-pub struct MedialiveInputTimeoutsElRef {
+#[allow(dead_code)]
+pub struct MedialiveInput_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveInputTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInputTimeoutsElRef {
-        MedialiveInputTimeoutsElRef {
+impl terrars::Ref for MedialiveInput_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInput_TimeoutsRef {
+        MedialiveInput_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveInputTimeoutsElRef {
+impl MedialiveInput_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -834,13 +877,13 @@ impl MedialiveInputTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct MedialiveInputVpcEl {
+pub struct MedialiveInput_Vpc {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     subnet_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl MedialiveInputVpcEl {
+impl MedialiveInput_Vpc {
     #[doc = "Set the field `security_group_ids`.\n"]
     pub fn set_security_group_ids(
         mut self,
@@ -851,8 +894,8 @@ impl MedialiveInputVpcEl {
     }
 }
 
-impl terrars::ToListMappable for MedialiveInputVpcEl {
-    type O = terrars::BlockAssignable<MedialiveInputVpcEl>;
+impl terrars::ToListMappable for MedialiveInput_Vpc {
+    type O = terrars::BlockAssignable<MedialiveInput_Vpc>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -863,35 +906,37 @@ impl terrars::ToListMappable for MedialiveInputVpcEl {
     }
 }
 
-pub struct BuildMedialiveInputVpcEl {
+pub struct BuildMedialiveInput_Vpc {
     #[doc = ""]
     pub subnet_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildMedialiveInputVpcEl {
-    pub fn build(self) -> MedialiveInputVpcEl {
-        MedialiveInputVpcEl {
+impl BuildMedialiveInput_Vpc {
+    pub fn build(self) -> MedialiveInput_Vpc {
+        MedialiveInput_Vpc {
             security_group_ids: core::default::Default::default(),
             subnet_ids: self.subnet_ids,
         }
     }
 }
 
-pub struct MedialiveInputVpcElRef {
+#[allow(dead_code)]
+pub struct MedialiveInput_VpcRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for MedialiveInputVpcElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInputVpcElRef {
-        MedialiveInputVpcElRef {
+impl terrars::Ref for MedialiveInput_VpcRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> MedialiveInput_VpcRef {
+        MedialiveInput_VpcRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl MedialiveInputVpcElRef {
+impl MedialiveInput_VpcRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -905,13 +950,4 @@ impl MedialiveInputVpcElRef {
     pub fn subnet_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.subnet_ids", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct MedialiveInputDynamic {
-    destinations: std::option::Option<terrars::DynamicBlock<MedialiveInputDestinationsEl>>,
-    input_devices: std::option::Option<terrars::DynamicBlock<MedialiveInputInputDevicesEl>>,
-    media_connect_flows: std::option::Option<terrars::DynamicBlock<MedialiveInputMediaConnectFlowsEl>>,
-    sources: std::option::Option<terrars::DynamicBlock<MedialiveInputSourcesEl>>,
-    vpc: std::option::Option<terrars::DynamicBlock<MedialiveInputVpcEl>>,
 }

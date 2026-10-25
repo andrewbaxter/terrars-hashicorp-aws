@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ChimeVoiceConnectorGroupData {
+struct ChimeVoiceConnectorGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct ChimeVoiceConnectorGroupData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    connector: std::option::Option<std::vec::Vec<ChimeVoiceConnectorGroupConnectorEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    connector: std::option::Option<std::vec::Vec<ChimeVoiceConnectorGroup_Connector>>,
     dynamic: ChimeVoiceConnectorGroupDynamic,
 }
 
 struct ChimeVoiceConnectorGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ChimeVoiceConnectorGroupData>,
+    data: std::cell::RefCell<ChimeVoiceConnectorGroupData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl ChimeVoiceConnectorGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `connector`.\n"]
     pub fn set_connector(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ChimeVoiceConnectorGroupConnectorEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ChimeVoiceConnectorGroup_Connector>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -159,6 +170,12 @@ impl ChimeVoiceConnectorGroup {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -204,7 +221,7 @@ impl BuildChimeVoiceConnectorGroup {
         let out = ChimeVoiceConnectorGroup(std::rc::Rc::new(ChimeVoiceConnectorGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ChimeVoiceConnectorGroupData {
+            data: std::cell::RefCell::new(ChimeVoiceConnectorGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -212,6 +229,7 @@ impl BuildChimeVoiceConnectorGroup {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 connector: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -253,18 +271,29 @@ impl ChimeVoiceConnectorGroupRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ChimeVoiceConnectorGroupDynamic {
+    connector: std::option::Option<terrars::DynamicBlock<ChimeVoiceConnectorGroup_Connector>>,
 }
 
 #[derive(Serialize)]
-pub struct ChimeVoiceConnectorGroupConnectorEl {
+pub struct ChimeVoiceConnectorGroup_Connector {
     priority: terrars::PrimField<f64>,
     voice_connector_id: terrars::PrimField<std::string::String>,
 }
 
-impl ChimeVoiceConnectorGroupConnectorEl { }
+impl ChimeVoiceConnectorGroup_Connector { }
 
-impl terrars::ToListMappable for ChimeVoiceConnectorGroupConnectorEl {
-    type O = terrars::BlockAssignable<ChimeVoiceConnectorGroupConnectorEl>;
+impl terrars::ToListMappable for ChimeVoiceConnectorGroup_Connector {
+    type O = terrars::BlockAssignable<ChimeVoiceConnectorGroup_Connector>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -275,37 +304,39 @@ impl terrars::ToListMappable for ChimeVoiceConnectorGroupConnectorEl {
     }
 }
 
-pub struct BuildChimeVoiceConnectorGroupConnectorEl {
+pub struct BuildChimeVoiceConnectorGroup_Connector {
     #[doc = ""]
     pub priority: terrars::PrimField<f64>,
     #[doc = ""]
     pub voice_connector_id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildChimeVoiceConnectorGroupConnectorEl {
-    pub fn build(self) -> ChimeVoiceConnectorGroupConnectorEl {
-        ChimeVoiceConnectorGroupConnectorEl {
+impl BuildChimeVoiceConnectorGroup_Connector {
+    pub fn build(self) -> ChimeVoiceConnectorGroup_Connector {
+        ChimeVoiceConnectorGroup_Connector {
             priority: self.priority,
             voice_connector_id: self.voice_connector_id,
         }
     }
 }
 
-pub struct ChimeVoiceConnectorGroupConnectorElRef {
+#[allow(dead_code)]
+pub struct ChimeVoiceConnectorGroup_ConnectorRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ChimeVoiceConnectorGroupConnectorElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ChimeVoiceConnectorGroupConnectorElRef {
-        ChimeVoiceConnectorGroupConnectorElRef {
+impl terrars::Ref for ChimeVoiceConnectorGroup_ConnectorRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ChimeVoiceConnectorGroup_ConnectorRef {
+        ChimeVoiceConnectorGroup_ConnectorRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ChimeVoiceConnectorGroupConnectorElRef {
+impl ChimeVoiceConnectorGroup_ConnectorRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -319,9 +350,4 @@ impl ChimeVoiceConnectorGroupConnectorElRef {
     pub fn voice_connector_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.voice_connector_id", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ChimeVoiceConnectorGroupDynamic {
-    connector: std::option::Option<terrars::DynamicBlock<ChimeVoiceConnectorGroupConnectorEl>>,
 }

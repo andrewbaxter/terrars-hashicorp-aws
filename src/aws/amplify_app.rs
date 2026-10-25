@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AmplifyAppData {
+struct AmplifyAppData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,6 +28,10 @@ struct AmplifyAppData {
     basic_auth_credentials: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     build_spec: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    compute_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_headers: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -48,22 +54,28 @@ struct AmplifyAppData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     platform: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     repository: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    auto_branch_creation_config: std::option::Option<std::vec::Vec<AmplifyAppAutoBranchCreationConfigEl>>,
+    auto_branch_creation_config: std::option::Option<std::vec::Vec<AmplifyApp_AutoBranchCreationConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    custom_rule: std::option::Option<std::vec::Vec<AmplifyAppCustomRuleEl>>,
+    cache_config: std::option::Option<std::vec::Vec<AmplifyApp_CacheConfig>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    custom_rule: std::option::Option<std::vec::Vec<AmplifyApp_CustomRule>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    job_config: std::option::Option<std::vec::Vec<AmplifyApp_JobConfig>>,
     dynamic: AmplifyAppDynamic,
 }
 
 struct AmplifyApp_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AmplifyAppData>,
+    data: std::cell::RefCell<AmplifyAppData_>,
 }
 
 #[derive(Clone)]
@@ -193,6 +205,18 @@ impl AmplifyApp {
         self
     }
 
+    #[doc = "Set the field `compute_role_arn`.\n"]
+    pub fn set_compute_role_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().compute_role_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `custom_headers`.\n"]
+    pub fn set_custom_headers(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().custom_headers = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -256,6 +280,13 @@ impl AmplifyApp {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `repository`.\n"]
     pub fn set_repository(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().repository = std::option::Option::Some(v.into());
@@ -283,7 +314,7 @@ impl AmplifyApp {
     #[doc = "Set the field `auto_branch_creation_config`.\n"]
     pub fn set_auto_branch_creation_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AmplifyAppAutoBranchCreationConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AmplifyApp_AutoBranchCreationConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -296,14 +327,40 @@ impl AmplifyApp {
         self
     }
 
+    #[doc = "Set the field `cache_config`.\n"]
+    pub fn set_cache_config(self, v: impl std::convert::Into<terrars::BlockAssignable<AmplifyApp_CacheConfig>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().cache_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.cache_config = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `custom_rule`.\n"]
-    pub fn set_custom_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<AmplifyAppCustomRuleEl>>) -> Self {
+    pub fn set_custom_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<AmplifyApp_CustomRule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().custom_rule = std::option::Option::Some(v);
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.0.data.borrow_mut().dynamic.custom_rule = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `job_config`.\n"]
+    pub fn set_job_config(self, v: impl std::convert::Into<terrars::BlockAssignable<AmplifyApp_JobConfig>>) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().job_config = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.job_config = std::option::Option::Some(d);
             },
         }
         self
@@ -332,6 +389,16 @@ impl AmplifyApp {
     #[doc = "Get a reference to the value of field `build_spec` after provisioning.\n"]
     pub fn build_spec(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.build_spec", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `compute_role_arn` after provisioning.\n"]
+    pub fn compute_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compute_role_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_headers` after provisioning.\n"]
+    pub fn custom_headers(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_headers", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `default_domain` after provisioning.\n"]
@@ -395,8 +462,14 @@ impl AmplifyApp {
     }
 
     #[doc = "Get a reference to the value of field `production_branch` after provisioning.\n"]
-    pub fn production_branch(&self) -> terrars::ListRef<AmplifyAppProductionBranchElRef> {
+    pub fn production_branch(&self) -> terrars::ListRef<AmplifyApp_ProductionBranchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.production_branch", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `repository` after provisioning.\n"]
@@ -415,13 +488,23 @@ impl AmplifyApp {
     }
 
     #[doc = "Get a reference to the value of field `auto_branch_creation_config` after provisioning.\n"]
-    pub fn auto_branch_creation_config(&self) -> terrars::ListRef<AmplifyAppAutoBranchCreationConfigElRef> {
+    pub fn auto_branch_creation_config(&self) -> terrars::ListRef<AmplifyApp_AutoBranchCreationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_branch_creation_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cache_config` after provisioning.\n"]
+    pub fn cache_config(&self) -> terrars::ListRef<AmplifyApp_CacheConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `custom_rule` after provisioning.\n"]
-    pub fn custom_rule(&self) -> terrars::ListRef<AmplifyAppCustomRuleElRef> {
+    pub fn custom_rule(&self) -> terrars::ListRef<AmplifyApp_CustomRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_rule", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `job_config` after provisioning.\n"]
+    pub fn job_config(&self) -> terrars::ListRef<AmplifyApp_JobConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.job_config", self.extract_ref()))
     }
 }
 
@@ -467,7 +550,7 @@ impl BuildAmplifyApp {
         let out = AmplifyApp(std::rc::Rc::new(AmplifyApp_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AmplifyAppData {
+            data: std::cell::RefCell::new(AmplifyAppData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -477,6 +560,8 @@ impl BuildAmplifyApp {
                 auto_branch_creation_patterns: core::default::Default::default(),
                 basic_auth_credentials: core::default::Default::default(),
                 build_spec: core::default::Default::default(),
+                compute_role_arn: core::default::Default::default(),
+                custom_headers: core::default::Default::default(),
                 description: core::default::Default::default(),
                 enable_auto_branch_creation: core::default::Default::default(),
                 enable_basic_auth: core::default::Default::default(),
@@ -488,11 +573,14 @@ impl BuildAmplifyApp {
                 name: self.name,
                 oauth_token: core::default::Default::default(),
                 platform: core::default::Default::default(),
+                region: core::default::Default::default(),
                 repository: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 auto_branch_creation_config: core::default::Default::default(),
+                cache_config: core::default::Default::default(),
                 custom_rule: core::default::Default::default(),
+                job_config: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -549,6 +637,16 @@ impl AmplifyAppRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.build_spec", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `compute_role_arn` after provisioning.\n"]
+    pub fn compute_role_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.compute_role_arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `custom_headers` after provisioning.\n"]
+    pub fn custom_headers(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.custom_headers", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `default_domain` after provisioning.\n"]
     pub fn default_domain(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_domain", self.extract_ref()))
@@ -610,8 +708,14 @@ impl AmplifyAppRef {
     }
 
     #[doc = "Get a reference to the value of field `production_branch` after provisioning.\n"]
-    pub fn production_branch(&self) -> terrars::ListRef<AmplifyAppProductionBranchElRef> {
+    pub fn production_branch(&self) -> terrars::ListRef<AmplifyApp_ProductionBranchRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.production_branch", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `repository` after provisioning.\n"]
@@ -630,18 +734,36 @@ impl AmplifyAppRef {
     }
 
     #[doc = "Get a reference to the value of field `auto_branch_creation_config` after provisioning.\n"]
-    pub fn auto_branch_creation_config(&self) -> terrars::ListRef<AmplifyAppAutoBranchCreationConfigElRef> {
+    pub fn auto_branch_creation_config(&self) -> terrars::ListRef<AmplifyApp_AutoBranchCreationConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.auto_branch_creation_config", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cache_config` after provisioning.\n"]
+    pub fn cache_config(&self) -> terrars::ListRef<AmplifyApp_CacheConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.cache_config", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `custom_rule` after provisioning.\n"]
-    pub fn custom_rule(&self) -> terrars::ListRef<AmplifyAppCustomRuleElRef> {
+    pub fn custom_rule(&self) -> terrars::ListRef<AmplifyApp_CustomRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.custom_rule", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `job_config` after provisioning.\n"]
+    pub fn job_config(&self) -> terrars::ListRef<AmplifyApp_JobConfigRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.job_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AmplifyAppDynamic {
+    auto_branch_creation_config: std::option::Option<terrars::DynamicBlock<AmplifyApp_AutoBranchCreationConfig>>,
+    cache_config: std::option::Option<terrars::DynamicBlock<AmplifyApp_CacheConfig>>,
+    custom_rule: std::option::Option<terrars::DynamicBlock<AmplifyApp_CustomRule>>,
+    job_config: std::option::Option<terrars::DynamicBlock<AmplifyApp_JobConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct AmplifyAppProductionBranchEl {
+pub struct AmplifyApp_ProductionBranch {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     branch_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -652,7 +774,7 @@ pub struct AmplifyAppProductionBranchEl {
     thumbnail_url: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AmplifyAppProductionBranchEl {
+impl AmplifyApp_ProductionBranch {
     #[doc = "Set the field `branch_name`.\n"]
     pub fn set_branch_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.branch_name = std::option::Option::Some(v.into());
@@ -678,8 +800,8 @@ impl AmplifyAppProductionBranchEl {
     }
 }
 
-impl terrars::ToListMappable for AmplifyAppProductionBranchEl {
-    type O = terrars::BlockAssignable<AmplifyAppProductionBranchEl>;
+impl terrars::ToListMappable for AmplifyApp_ProductionBranch {
+    type O = terrars::BlockAssignable<AmplifyApp_ProductionBranch>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -690,11 +812,11 @@ impl terrars::ToListMappable for AmplifyAppProductionBranchEl {
     }
 }
 
-pub struct BuildAmplifyAppProductionBranchEl {}
+pub struct BuildAmplifyApp_ProductionBranch {}
 
-impl BuildAmplifyAppProductionBranchEl {
-    pub fn build(self) -> AmplifyAppProductionBranchEl {
-        AmplifyAppProductionBranchEl {
+impl BuildAmplifyApp_ProductionBranch {
+    pub fn build(self) -> AmplifyApp_ProductionBranch {
+        AmplifyApp_ProductionBranch {
             branch_name: core::default::Default::default(),
             last_deploy_time: core::default::Default::default(),
             status: core::default::Default::default(),
@@ -703,21 +825,23 @@ impl BuildAmplifyAppProductionBranchEl {
     }
 }
 
-pub struct AmplifyAppProductionBranchElRef {
+#[allow(dead_code)]
+pub struct AmplifyApp_ProductionBranchRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AmplifyAppProductionBranchElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyAppProductionBranchElRef {
-        AmplifyAppProductionBranchElRef {
+impl terrars::Ref for AmplifyApp_ProductionBranchRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyApp_ProductionBranchRef {
+        AmplifyApp_ProductionBranchRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AmplifyAppProductionBranchElRef {
+impl AmplifyApp_ProductionBranchRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -744,7 +868,7 @@ impl AmplifyAppProductionBranchElRef {
 }
 
 #[derive(Serialize)]
-pub struct AmplifyAppAutoBranchCreationConfigEl {
+pub struct AmplifyApp_AutoBranchCreationConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     basic_auth_credentials: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -767,7 +891,7 @@ pub struct AmplifyAppAutoBranchCreationConfigEl {
     stage: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AmplifyAppAutoBranchCreationConfigEl {
+impl AmplifyApp_AutoBranchCreationConfig {
     #[doc = "Set the field `basic_auth_credentials`.\n"]
     pub fn set_basic_auth_credentials(
         mut self,
@@ -838,8 +962,8 @@ impl AmplifyAppAutoBranchCreationConfigEl {
     }
 }
 
-impl terrars::ToListMappable for AmplifyAppAutoBranchCreationConfigEl {
-    type O = terrars::BlockAssignable<AmplifyAppAutoBranchCreationConfigEl>;
+impl terrars::ToListMappable for AmplifyApp_AutoBranchCreationConfig {
+    type O = terrars::BlockAssignable<AmplifyApp_AutoBranchCreationConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -850,11 +974,11 @@ impl terrars::ToListMappable for AmplifyAppAutoBranchCreationConfigEl {
     }
 }
 
-pub struct BuildAmplifyAppAutoBranchCreationConfigEl {}
+pub struct BuildAmplifyApp_AutoBranchCreationConfig {}
 
-impl BuildAmplifyAppAutoBranchCreationConfigEl {
-    pub fn build(self) -> AmplifyAppAutoBranchCreationConfigEl {
-        AmplifyAppAutoBranchCreationConfigEl {
+impl BuildAmplifyApp_AutoBranchCreationConfig {
+    pub fn build(self) -> AmplifyApp_AutoBranchCreationConfig {
+        AmplifyApp_AutoBranchCreationConfig {
             basic_auth_credentials: core::default::Default::default(),
             build_spec: core::default::Default::default(),
             enable_auto_build: core::default::Default::default(),
@@ -869,21 +993,23 @@ impl BuildAmplifyAppAutoBranchCreationConfigEl {
     }
 }
 
-pub struct AmplifyAppAutoBranchCreationConfigElRef {
+#[allow(dead_code)]
+pub struct AmplifyApp_AutoBranchCreationConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AmplifyAppAutoBranchCreationConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyAppAutoBranchCreationConfigElRef {
-        AmplifyAppAutoBranchCreationConfigElRef {
+impl terrars::Ref for AmplifyApp_AutoBranchCreationConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyApp_AutoBranchCreationConfigRef {
+        AmplifyApp_AutoBranchCreationConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AmplifyAppAutoBranchCreationConfigElRef {
+impl AmplifyApp_AutoBranchCreationConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -940,7 +1066,65 @@ impl AmplifyAppAutoBranchCreationConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct AmplifyAppCustomRuleEl {
+pub struct AmplifyApp_CacheConfig {
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
+}
+
+impl AmplifyApp_CacheConfig { }
+
+impl terrars::ToListMappable for AmplifyApp_CacheConfig {
+    type O = terrars::BlockAssignable<AmplifyApp_CacheConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAmplifyApp_CacheConfig {
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
+}
+
+impl BuildAmplifyApp_CacheConfig {
+    pub fn build(self) -> AmplifyApp_CacheConfig {
+        AmplifyApp_CacheConfig { type_: self.type_ }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AmplifyApp_CacheConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AmplifyApp_CacheConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyApp_CacheConfigRef {
+        AmplifyApp_CacheConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AmplifyApp_CacheConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AmplifyApp_CustomRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     condition: std::option::Option<terrars::PrimField<std::string::String>>,
     source: terrars::PrimField<std::string::String>,
@@ -949,7 +1133,7 @@ pub struct AmplifyAppCustomRuleEl {
     target: terrars::PrimField<std::string::String>,
 }
 
-impl AmplifyAppCustomRuleEl {
+impl AmplifyApp_CustomRule {
     #[doc = "Set the field `condition`.\n"]
     pub fn set_condition(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.condition = std::option::Option::Some(v.into());
@@ -963,8 +1147,8 @@ impl AmplifyAppCustomRuleEl {
     }
 }
 
-impl terrars::ToListMappable for AmplifyAppCustomRuleEl {
-    type O = terrars::BlockAssignable<AmplifyAppCustomRuleEl>;
+impl terrars::ToListMappable for AmplifyApp_CustomRule {
+    type O = terrars::BlockAssignable<AmplifyApp_CustomRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -975,16 +1159,16 @@ impl terrars::ToListMappable for AmplifyAppCustomRuleEl {
     }
 }
 
-pub struct BuildAmplifyAppCustomRuleEl {
+pub struct BuildAmplifyApp_CustomRule {
     #[doc = ""]
     pub source: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub target: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAmplifyAppCustomRuleEl {
-    pub fn build(self) -> AmplifyAppCustomRuleEl {
-        AmplifyAppCustomRuleEl {
+impl BuildAmplifyApp_CustomRule {
+    pub fn build(self) -> AmplifyApp_CustomRule {
+        AmplifyApp_CustomRule {
             condition: core::default::Default::default(),
             source: self.source,
             status: core::default::Default::default(),
@@ -993,21 +1177,23 @@ impl BuildAmplifyAppCustomRuleEl {
     }
 }
 
-pub struct AmplifyAppCustomRuleElRef {
+#[allow(dead_code)]
+pub struct AmplifyApp_CustomRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AmplifyAppCustomRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyAppCustomRuleElRef {
-        AmplifyAppCustomRuleElRef {
+impl terrars::Ref for AmplifyApp_CustomRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyApp_CustomRuleRef {
+        AmplifyApp_CustomRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AmplifyAppCustomRuleElRef {
+impl AmplifyApp_CustomRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1033,8 +1219,66 @@ impl AmplifyAppCustomRuleElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct AmplifyAppDynamic {
-    auto_branch_creation_config: std::option::Option<terrars::DynamicBlock<AmplifyAppAutoBranchCreationConfigEl>>,
-    custom_rule: std::option::Option<terrars::DynamicBlock<AmplifyAppCustomRuleEl>>,
+#[derive(Serialize)]
+pub struct AmplifyApp_JobConfig {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    build_compute_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AmplifyApp_JobConfig {
+    #[doc = "Set the field `build_compute_type`.\n"]
+    pub fn set_build_compute_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.build_compute_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AmplifyApp_JobConfig {
+    type O = terrars::BlockAssignable<AmplifyApp_JobConfig>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAmplifyApp_JobConfig {}
+
+impl BuildAmplifyApp_JobConfig {
+    pub fn build(self) -> AmplifyApp_JobConfig {
+        AmplifyApp_JobConfig { build_compute_type: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AmplifyApp_JobConfigRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AmplifyApp_JobConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AmplifyApp_JobConfigRef {
+        AmplifyApp_JobConfigRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AmplifyApp_JobConfigRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `build_compute_type` after provisioning.\n"]
+    pub fn build_compute_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.build_compute_type", self.base))
+    }
 }

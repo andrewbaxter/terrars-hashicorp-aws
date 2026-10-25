@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DmsReplicationInstanceData {
+struct DmsReplicationInstanceData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,6 +31,8 @@ struct DmsReplicationInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    dns_name_servers: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -37,9 +41,13 @@ struct DmsReplicationInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     multi_az: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_type: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_maintenance_window: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publicly_accessible: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     replication_instance_class: terrars::PrimField<std::string::String>,
     replication_instance_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -51,13 +59,18 @@ struct DmsReplicationInstanceData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DmsReplicationInstanceTimeoutsEl>,
+    kerberos_authentication_settings: std
+    ::option
+    ::Option<std::vec::Vec<DmsReplicationInstance_KerberosAuthenticationSettings>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DmsReplicationInstance_Timeouts>,
+    dynamic: DmsReplicationInstanceDynamic,
 }
 
 struct DmsReplicationInstance_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DmsReplicationInstanceData>,
+    data: std::cell::RefCell<DmsReplicationInstanceData_>,
 }
 
 #[derive(Clone)]
@@ -187,6 +200,12 @@ impl DmsReplicationInstance {
         self
     }
 
+    #[doc = "Set the field `dns_name_servers`.\n"]
+    pub fn set_dns_name_servers(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().dns_name_servers = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `engine_version`.\n"]
     pub fn set_engine_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().engine_version = std::option::Option::Some(v.into());
@@ -211,6 +230,12 @@ impl DmsReplicationInstance {
         self
     }
 
+    #[doc = "Set the field `network_type`.\n"]
+    pub fn set_network_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().network_type = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `preferred_maintenance_window`.\n"]
     pub fn set_preferred_maintenance_window(
         self,
@@ -223,6 +248,13 @@ impl DmsReplicationInstance {
     #[doc = "Set the field `publicly_accessible`.\n"]
     pub fn set_publicly_accessible(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().publicly_accessible = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -262,8 +294,24 @@ impl DmsReplicationInstance {
         self
     }
 
+    #[doc = "Set the field `kerberos_authentication_settings`.\n"]
+    pub fn set_kerberos_authentication_settings(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<DmsReplicationInstance_KerberosAuthenticationSettings>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().kerberos_authentication_settings = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.kerberos_authentication_settings = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DmsReplicationInstanceTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DmsReplicationInstance_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -293,6 +341,11 @@ impl DmsReplicationInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `dns_name_servers` after provisioning.\n"]
+    pub fn dns_name_servers(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name_servers", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
     pub fn engine_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
@@ -313,6 +366,11 @@ impl DmsReplicationInstance {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.multi_az", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `preferred_maintenance_window` after provisioning.\n"]
     pub fn preferred_maintenance_window(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_maintenance_window", self.extract_ref()))
@@ -321,6 +379,12 @@ impl DmsReplicationInstance {
     #[doc = "Get a reference to the value of field `publicly_accessible` after provisioning.\n"]
     pub fn publicly_accessible(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_instance_arn` after provisioning.\n"]
@@ -374,9 +438,19 @@ impl DmsReplicationInstance {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kerberos_authentication_settings` after provisioning.\n"]
+    pub fn kerberos_authentication_settings(
+        &self,
+    ) -> terrars::ListRef<DmsReplicationInstance_KerberosAuthenticationSettingsRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.kerberos_authentication_settings", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DmsReplicationInstanceTimeoutsElRef {
-        DmsReplicationInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DmsReplicationInstance_TimeoutsRef {
+        DmsReplicationInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -424,7 +498,7 @@ impl BuildDmsReplicationInstance {
         let out = DmsReplicationInstance(std::rc::Rc::new(DmsReplicationInstance_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DmsReplicationInstanceData {
+            data: std::cell::RefCell::new(DmsReplicationInstanceData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -435,19 +509,24 @@ impl BuildDmsReplicationInstance {
                 apply_immediately: core::default::Default::default(),
                 auto_minor_version_upgrade: core::default::Default::default(),
                 availability_zone: core::default::Default::default(),
+                dns_name_servers: core::default::Default::default(),
                 engine_version: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kms_key_arn: core::default::Default::default(),
                 multi_az: core::default::Default::default(),
+                network_type: core::default::Default::default(),
                 preferred_maintenance_window: core::default::Default::default(),
                 publicly_accessible: core::default::Default::default(),
+                region: core::default::Default::default(),
                 replication_instance_class: self.replication_instance_class,
                 replication_instance_id: self.replication_instance_id,
                 replication_subnet_group_id: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 vpc_security_group_ids: core::default::Default::default(),
+                kerberos_authentication_settings: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -503,6 +582,11 @@ impl DmsReplicationInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `dns_name_servers` after provisioning.\n"]
+    pub fn dns_name_servers(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.dns_name_servers", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `engine_version` after provisioning.\n"]
     pub fn engine_version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine_version", self.extract_ref()))
@@ -523,6 +607,11 @@ impl DmsReplicationInstanceRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.multi_az", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `preferred_maintenance_window` after provisioning.\n"]
     pub fn preferred_maintenance_window(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_maintenance_window", self.extract_ref()))
@@ -531,6 +620,12 @@ impl DmsReplicationInstanceRef {
     #[doc = "Get a reference to the value of field `publicly_accessible` after provisioning.\n"]
     pub fn publicly_accessible(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.publicly_accessible", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_instance_arn` after provisioning.\n"]
@@ -584,14 +679,111 @@ impl DmsReplicationInstanceRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.vpc_security_group_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `kerberos_authentication_settings` after provisioning.\n"]
+    pub fn kerberos_authentication_settings(
+        &self,
+    ) -> terrars::ListRef<DmsReplicationInstance_KerberosAuthenticationSettingsRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.kerberos_authentication_settings", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DmsReplicationInstanceTimeoutsElRef {
-        DmsReplicationInstanceTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DmsReplicationInstance_TimeoutsRef {
+        DmsReplicationInstance_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DmsReplicationInstanceDynamic {
+    kerberos_authentication_settings: std
+    ::option
+    ::Option<terrars::DynamicBlock<DmsReplicationInstance_KerberosAuthenticationSettings>>,
+}
+
+#[derive(Serialize)]
+pub struct DmsReplicationInstance_KerberosAuthenticationSettings {
+    key_cache_secret_iam_arn: terrars::PrimField<std::string::String>,
+    key_cache_secret_id: terrars::PrimField<std::string::String>,
+    krb5_file_contents: terrars::PrimField<std::string::String>,
+}
+
+impl DmsReplicationInstance_KerberosAuthenticationSettings { }
+
+impl terrars::ToListMappable for DmsReplicationInstance_KerberosAuthenticationSettings {
+    type O = terrars::BlockAssignable<DmsReplicationInstance_KerberosAuthenticationSettings>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDmsReplicationInstance_KerberosAuthenticationSettings {
+    #[doc = ""]
+    pub key_cache_secret_iam_arn: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub key_cache_secret_id: terrars::PrimField<std::string::String>,
+    #[doc = ""]
+    pub krb5_file_contents: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDmsReplicationInstance_KerberosAuthenticationSettings {
+    pub fn build(self) -> DmsReplicationInstance_KerberosAuthenticationSettings {
+        DmsReplicationInstance_KerberosAuthenticationSettings {
+            key_cache_secret_iam_arn: self.key_cache_secret_iam_arn,
+            key_cache_secret_id: self.key_cache_secret_id,
+            krb5_file_contents: self.krb5_file_contents,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DmsReplicationInstance_KerberosAuthenticationSettingsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DmsReplicationInstance_KerberosAuthenticationSettingsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DmsReplicationInstance_KerberosAuthenticationSettingsRef {
+        DmsReplicationInstance_KerberosAuthenticationSettingsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DmsReplicationInstance_KerberosAuthenticationSettingsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `key_cache_secret_iam_arn` after provisioning.\n"]
+    pub fn key_cache_secret_iam_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_cache_secret_iam_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `key_cache_secret_id` after provisioning.\n"]
+    pub fn key_cache_secret_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key_cache_secret_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `krb5_file_contents` after provisioning.\n"]
+    pub fn krb5_file_contents(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.krb5_file_contents", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DmsReplicationInstanceTimeoutsEl {
+pub struct DmsReplicationInstance_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -600,7 +792,7 @@ pub struct DmsReplicationInstanceTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DmsReplicationInstanceTimeoutsEl {
+impl DmsReplicationInstance_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -620,8 +812,8 @@ impl DmsReplicationInstanceTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DmsReplicationInstanceTimeoutsEl {
-    type O = terrars::BlockAssignable<DmsReplicationInstanceTimeoutsEl>;
+impl terrars::ToListMappable for DmsReplicationInstance_Timeouts {
+    type O = terrars::BlockAssignable<DmsReplicationInstance_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -632,11 +824,11 @@ impl terrars::ToListMappable for DmsReplicationInstanceTimeoutsEl {
     }
 }
 
-pub struct BuildDmsReplicationInstanceTimeoutsEl {}
+pub struct BuildDmsReplicationInstance_Timeouts {}
 
-impl BuildDmsReplicationInstanceTimeoutsEl {
-    pub fn build(self) -> DmsReplicationInstanceTimeoutsEl {
-        DmsReplicationInstanceTimeoutsEl {
+impl BuildDmsReplicationInstance_Timeouts {
+    pub fn build(self) -> DmsReplicationInstance_Timeouts {
+        DmsReplicationInstance_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -644,21 +836,23 @@ impl BuildDmsReplicationInstanceTimeoutsEl {
     }
 }
 
-pub struct DmsReplicationInstanceTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DmsReplicationInstance_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DmsReplicationInstanceTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DmsReplicationInstanceTimeoutsElRef {
-        DmsReplicationInstanceTimeoutsElRef {
+impl terrars::Ref for DmsReplicationInstance_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DmsReplicationInstance_TimeoutsRef {
+        DmsReplicationInstance_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DmsReplicationInstanceTimeoutsElRef {
+impl DmsReplicationInstance_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

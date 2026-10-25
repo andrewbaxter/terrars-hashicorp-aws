@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ElastictranscoderPipelineData {
+struct ElastictranscoderPipelineData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,26 +29,28 @@ struct ElastictranscoderPipelineData {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     output_bucket: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    content_config: std::option::Option<std::vec::Vec<ElastictranscoderPipelineContentConfigEl>>,
+    content_config: std::option::Option<std::vec::Vec<ElastictranscoderPipeline_ContentConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    content_config_permissions: std::option::Option<std::vec::Vec<ElastictranscoderPipelineContentConfigPermissionsEl>>,
+    content_config_permissions: std::option::Option<std::vec::Vec<ElastictranscoderPipeline_ContentConfigPermissions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notifications: std::option::Option<std::vec::Vec<ElastictranscoderPipelineNotificationsEl>>,
+    notifications: std::option::Option<std::vec::Vec<ElastictranscoderPipeline_Notifications>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    thumbnail_config: std::option::Option<std::vec::Vec<ElastictranscoderPipelineThumbnailConfigEl>>,
+    thumbnail_config: std::option::Option<std::vec::Vec<ElastictranscoderPipeline_ThumbnailConfig>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     thumbnail_config_permissions: std
     ::option
-    ::Option<std::vec::Vec<ElastictranscoderPipelineThumbnailConfigPermissionsEl>>,
+    ::Option<std::vec::Vec<ElastictranscoderPipeline_ThumbnailConfigPermissions>>,
     dynamic: ElastictranscoderPipelineDynamic,
 }
 
 struct ElastictranscoderPipeline_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ElastictranscoderPipelineData>,
+    data: std::cell::RefCell<ElastictranscoderPipelineData_>,
 }
 
 #[derive(Clone)]
@@ -170,10 +174,17 @@ impl ElastictranscoderPipeline {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `content_config`.\n"]
     pub fn set_content_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipelineContentConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipeline_ContentConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -189,7 +200,7 @@ impl ElastictranscoderPipeline {
     #[doc = "Set the field `content_config_permissions`.\n"]
     pub fn set_content_config_permissions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipelineContentConfigPermissionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipeline_ContentConfigPermissions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -205,7 +216,7 @@ impl ElastictranscoderPipeline {
     #[doc = "Set the field `notifications`.\n"]
     pub fn set_notifications(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipelineNotificationsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipeline_Notifications>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -221,7 +232,7 @@ impl ElastictranscoderPipeline {
     #[doc = "Set the field `thumbnail_config`.\n"]
     pub fn set_thumbnail_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipelineThumbnailConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipeline_ThumbnailConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -237,7 +248,7 @@ impl ElastictranscoderPipeline {
     #[doc = "Set the field `thumbnail_config_permissions`.\n"]
     pub fn set_thumbnail_config_permissions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipelineThumbnailConfigPermissionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElastictranscoderPipeline_ThumbnailConfigPermissions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -280,23 +291,29 @@ impl ElastictranscoderPipeline {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_bucket", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
     pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `content_config` after provisioning.\n"]
-    pub fn content_config(&self) -> terrars::ListRef<ElastictranscoderPipelineContentConfigElRef> {
+    pub fn content_config(&self) -> terrars::ListRef<ElastictranscoderPipeline_ContentConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.content_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `notifications` after provisioning.\n"]
-    pub fn notifications(&self) -> terrars::ListRef<ElastictranscoderPipelineNotificationsElRef> {
+    pub fn notifications(&self) -> terrars::ListRef<ElastictranscoderPipeline_NotificationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notifications", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `thumbnail_config` after provisioning.\n"]
-    pub fn thumbnail_config(&self) -> terrars::ListRef<ElastictranscoderPipelineThumbnailConfigElRef> {
+    pub fn thumbnail_config(&self) -> terrars::ListRef<ElastictranscoderPipeline_ThumbnailConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.thumbnail_config", self.extract_ref()))
     }
 }
@@ -345,7 +362,7 @@ impl BuildElastictranscoderPipeline {
         let out = ElastictranscoderPipeline(std::rc::Rc::new(ElastictranscoderPipeline_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ElastictranscoderPipelineData {
+            data: std::cell::RefCell::new(ElastictranscoderPipelineData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -356,6 +373,7 @@ impl BuildElastictranscoderPipeline {
                 input_bucket: self.input_bucket,
                 name: core::default::Default::default(),
                 output_bucket: core::default::Default::default(),
+                region: core::default::Default::default(),
                 role: self.role,
                 content_config: core::default::Default::default(),
                 content_config_permissions: core::default::Default::default(),
@@ -423,36 +441,55 @@ impl ElastictranscoderPipelineRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.output_bucket", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `role` after provisioning.\n"]
     pub fn role(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.role", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `content_config` after provisioning.\n"]
-    pub fn content_config(&self) -> terrars::ListRef<ElastictranscoderPipelineContentConfigElRef> {
+    pub fn content_config(&self) -> terrars::ListRef<ElastictranscoderPipeline_ContentConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.content_config", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `notifications` after provisioning.\n"]
-    pub fn notifications(&self) -> terrars::ListRef<ElastictranscoderPipelineNotificationsElRef> {
+    pub fn notifications(&self) -> terrars::ListRef<ElastictranscoderPipeline_NotificationsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notifications", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `thumbnail_config` after provisioning.\n"]
-    pub fn thumbnail_config(&self) -> terrars::ListRef<ElastictranscoderPipelineThumbnailConfigElRef> {
+    pub fn thumbnail_config(&self) -> terrars::ListRef<ElastictranscoderPipeline_ThumbnailConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.thumbnail_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ElastictranscoderPipelineDynamic {
+    content_config: std::option::Option<terrars::DynamicBlock<ElastictranscoderPipeline_ContentConfig>>,
+    content_config_permissions: std
+    ::option
+    ::Option<terrars::DynamicBlock<ElastictranscoderPipeline_ContentConfigPermissions>>,
+    notifications: std::option::Option<terrars::DynamicBlock<ElastictranscoderPipeline_Notifications>>,
+    thumbnail_config: std::option::Option<terrars::DynamicBlock<ElastictranscoderPipeline_ThumbnailConfig>>,
+    thumbnail_config_permissions: std
+    ::option
+    ::Option<terrars::DynamicBlock<ElastictranscoderPipeline_ThumbnailConfigPermissions>>,
+}
+
 #[derive(Serialize)]
-pub struct ElastictranscoderPipelineContentConfigEl {
+pub struct ElastictranscoderPipeline_ContentConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_class: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPipelineContentConfigEl {
+impl ElastictranscoderPipeline_ContentConfig {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -466,8 +503,8 @@ impl ElastictranscoderPipelineContentConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPipelineContentConfigEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPipelineContentConfigEl>;
+impl terrars::ToListMappable for ElastictranscoderPipeline_ContentConfig {
+    type O = terrars::BlockAssignable<ElastictranscoderPipeline_ContentConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -478,32 +515,34 @@ impl terrars::ToListMappable for ElastictranscoderPipelineContentConfigEl {
     }
 }
 
-pub struct BuildElastictranscoderPipelineContentConfigEl {}
+pub struct BuildElastictranscoderPipeline_ContentConfig {}
 
-impl BuildElastictranscoderPipelineContentConfigEl {
-    pub fn build(self) -> ElastictranscoderPipelineContentConfigEl {
-        ElastictranscoderPipelineContentConfigEl {
+impl BuildElastictranscoderPipeline_ContentConfig {
+    pub fn build(self) -> ElastictranscoderPipeline_ContentConfig {
+        ElastictranscoderPipeline_ContentConfig {
             bucket: core::default::Default::default(),
             storage_class: core::default::Default::default(),
         }
     }
 }
 
-pub struct ElastictranscoderPipelineContentConfigElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPipeline_ContentConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPipelineContentConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPipelineContentConfigElRef {
-        ElastictranscoderPipelineContentConfigElRef {
+impl terrars::Ref for ElastictranscoderPipeline_ContentConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPipeline_ContentConfigRef {
+        ElastictranscoderPipeline_ContentConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPipelineContentConfigElRef {
+impl ElastictranscoderPipeline_ContentConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -520,7 +559,7 @@ impl ElastictranscoderPipelineContentConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElastictranscoderPipelineContentConfigPermissionsEl {
+pub struct ElastictranscoderPipeline_ContentConfigPermissions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -529,7 +568,7 @@ pub struct ElastictranscoderPipelineContentConfigPermissionsEl {
     grantee_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPipelineContentConfigPermissionsEl {
+impl ElastictranscoderPipeline_ContentConfigPermissions {
     #[doc = "Set the field `access`.\n"]
     pub fn set_access(
         mut self,
@@ -552,8 +591,8 @@ impl ElastictranscoderPipelineContentConfigPermissionsEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPipelineContentConfigPermissionsEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPipelineContentConfigPermissionsEl>;
+impl terrars::ToListMappable for ElastictranscoderPipeline_ContentConfigPermissions {
+    type O = terrars::BlockAssignable<ElastictranscoderPipeline_ContentConfigPermissions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -564,11 +603,11 @@ impl terrars::ToListMappable for ElastictranscoderPipelineContentConfigPermissio
     }
 }
 
-pub struct BuildElastictranscoderPipelineContentConfigPermissionsEl {}
+pub struct BuildElastictranscoderPipeline_ContentConfigPermissions {}
 
-impl BuildElastictranscoderPipelineContentConfigPermissionsEl {
-    pub fn build(self) -> ElastictranscoderPipelineContentConfigPermissionsEl {
-        ElastictranscoderPipelineContentConfigPermissionsEl {
+impl BuildElastictranscoderPipeline_ContentConfigPermissions {
+    pub fn build(self) -> ElastictranscoderPipeline_ContentConfigPermissions {
+        ElastictranscoderPipeline_ContentConfigPermissions {
             access: core::default::Default::default(),
             grantee: core::default::Default::default(),
             grantee_type: core::default::Default::default(),
@@ -576,24 +615,26 @@ impl BuildElastictranscoderPipelineContentConfigPermissionsEl {
     }
 }
 
-pub struct ElastictranscoderPipelineContentConfigPermissionsElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPipeline_ContentConfigPermissionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPipelineContentConfigPermissionsElRef {
+impl terrars::Ref for ElastictranscoderPipeline_ContentConfigPermissionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ElastictranscoderPipelineContentConfigPermissionsElRef {
-        ElastictranscoderPipelineContentConfigPermissionsElRef {
+    ) -> ElastictranscoderPipeline_ContentConfigPermissionsRef {
+        ElastictranscoderPipeline_ContentConfigPermissionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPipelineContentConfigPermissionsElRef {
+impl ElastictranscoderPipeline_ContentConfigPermissionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -615,7 +656,7 @@ impl ElastictranscoderPipelineContentConfigPermissionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElastictranscoderPipelineNotificationsEl {
+pub struct ElastictranscoderPipeline_Notifications {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     completed: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -626,7 +667,7 @@ pub struct ElastictranscoderPipelineNotificationsEl {
     warning: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPipelineNotificationsEl {
+impl ElastictranscoderPipeline_Notifications {
     #[doc = "Set the field `completed`.\n"]
     pub fn set_completed(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.completed = std::option::Option::Some(v.into());
@@ -652,8 +693,8 @@ impl ElastictranscoderPipelineNotificationsEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPipelineNotificationsEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPipelineNotificationsEl>;
+impl terrars::ToListMappable for ElastictranscoderPipeline_Notifications {
+    type O = terrars::BlockAssignable<ElastictranscoderPipeline_Notifications>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -664,11 +705,11 @@ impl terrars::ToListMappable for ElastictranscoderPipelineNotificationsEl {
     }
 }
 
-pub struct BuildElastictranscoderPipelineNotificationsEl {}
+pub struct BuildElastictranscoderPipeline_Notifications {}
 
-impl BuildElastictranscoderPipelineNotificationsEl {
-    pub fn build(self) -> ElastictranscoderPipelineNotificationsEl {
-        ElastictranscoderPipelineNotificationsEl {
+impl BuildElastictranscoderPipeline_Notifications {
+    pub fn build(self) -> ElastictranscoderPipeline_Notifications {
+        ElastictranscoderPipeline_Notifications {
             completed: core::default::Default::default(),
             error: core::default::Default::default(),
             progressing: core::default::Default::default(),
@@ -677,21 +718,23 @@ impl BuildElastictranscoderPipelineNotificationsEl {
     }
 }
 
-pub struct ElastictranscoderPipelineNotificationsElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPipeline_NotificationsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPipelineNotificationsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPipelineNotificationsElRef {
-        ElastictranscoderPipelineNotificationsElRef {
+impl terrars::Ref for ElastictranscoderPipeline_NotificationsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPipeline_NotificationsRef {
+        ElastictranscoderPipeline_NotificationsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPipelineNotificationsElRef {
+impl ElastictranscoderPipeline_NotificationsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -718,14 +761,14 @@ impl ElastictranscoderPipelineNotificationsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElastictranscoderPipelineThumbnailConfigEl {
+pub struct ElastictranscoderPipeline_ThumbnailConfig {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_class: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPipelineThumbnailConfigEl {
+impl ElastictranscoderPipeline_ThumbnailConfig {
     #[doc = "Set the field `bucket`.\n"]
     pub fn set_bucket(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.bucket = std::option::Option::Some(v.into());
@@ -739,8 +782,8 @@ impl ElastictranscoderPipelineThumbnailConfigEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPipelineThumbnailConfigEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPipelineThumbnailConfigEl>;
+impl terrars::ToListMappable for ElastictranscoderPipeline_ThumbnailConfig {
+    type O = terrars::BlockAssignable<ElastictranscoderPipeline_ThumbnailConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -751,32 +794,34 @@ impl terrars::ToListMappable for ElastictranscoderPipelineThumbnailConfigEl {
     }
 }
 
-pub struct BuildElastictranscoderPipelineThumbnailConfigEl {}
+pub struct BuildElastictranscoderPipeline_ThumbnailConfig {}
 
-impl BuildElastictranscoderPipelineThumbnailConfigEl {
-    pub fn build(self) -> ElastictranscoderPipelineThumbnailConfigEl {
-        ElastictranscoderPipelineThumbnailConfigEl {
+impl BuildElastictranscoderPipeline_ThumbnailConfig {
+    pub fn build(self) -> ElastictranscoderPipeline_ThumbnailConfig {
+        ElastictranscoderPipeline_ThumbnailConfig {
             bucket: core::default::Default::default(),
             storage_class: core::default::Default::default(),
         }
     }
 }
 
-pub struct ElastictranscoderPipelineThumbnailConfigElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPipeline_ThumbnailConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPipelineThumbnailConfigElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPipelineThumbnailConfigElRef {
-        ElastictranscoderPipelineThumbnailConfigElRef {
+impl terrars::Ref for ElastictranscoderPipeline_ThumbnailConfigRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElastictranscoderPipeline_ThumbnailConfigRef {
+        ElastictranscoderPipeline_ThumbnailConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPipelineThumbnailConfigElRef {
+impl ElastictranscoderPipeline_ThumbnailConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -793,7 +838,7 @@ impl ElastictranscoderPipelineThumbnailConfigElRef {
 }
 
 #[derive(Serialize)]
-pub struct ElastictranscoderPipelineThumbnailConfigPermissionsEl {
+pub struct ElastictranscoderPipeline_ThumbnailConfigPermissions {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -802,7 +847,7 @@ pub struct ElastictranscoderPipelineThumbnailConfigPermissionsEl {
     grantee_type: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ElastictranscoderPipelineThumbnailConfigPermissionsEl {
+impl ElastictranscoderPipeline_ThumbnailConfigPermissions {
     #[doc = "Set the field `access`.\n"]
     pub fn set_access(
         mut self,
@@ -825,8 +870,8 @@ impl ElastictranscoderPipelineThumbnailConfigPermissionsEl {
     }
 }
 
-impl terrars::ToListMappable for ElastictranscoderPipelineThumbnailConfigPermissionsEl {
-    type O = terrars::BlockAssignable<ElastictranscoderPipelineThumbnailConfigPermissionsEl>;
+impl terrars::ToListMappable for ElastictranscoderPipeline_ThumbnailConfigPermissions {
+    type O = terrars::BlockAssignable<ElastictranscoderPipeline_ThumbnailConfigPermissions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -837,11 +882,11 @@ impl terrars::ToListMappable for ElastictranscoderPipelineThumbnailConfigPermiss
     }
 }
 
-pub struct BuildElastictranscoderPipelineThumbnailConfigPermissionsEl {}
+pub struct BuildElastictranscoderPipeline_ThumbnailConfigPermissions {}
 
-impl BuildElastictranscoderPipelineThumbnailConfigPermissionsEl {
-    pub fn build(self) -> ElastictranscoderPipelineThumbnailConfigPermissionsEl {
-        ElastictranscoderPipelineThumbnailConfigPermissionsEl {
+impl BuildElastictranscoderPipeline_ThumbnailConfigPermissions {
+    pub fn build(self) -> ElastictranscoderPipeline_ThumbnailConfigPermissions {
+        ElastictranscoderPipeline_ThumbnailConfigPermissions {
             access: core::default::Default::default(),
             grantee: core::default::Default::default(),
             grantee_type: core::default::Default::default(),
@@ -849,24 +894,26 @@ impl BuildElastictranscoderPipelineThumbnailConfigPermissionsEl {
     }
 }
 
-pub struct ElastictranscoderPipelineThumbnailConfigPermissionsElRef {
+#[allow(dead_code)]
+pub struct ElastictranscoderPipeline_ThumbnailConfigPermissionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ElastictranscoderPipelineThumbnailConfigPermissionsElRef {
+impl terrars::Ref for ElastictranscoderPipeline_ThumbnailConfigPermissionsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> ElastictranscoderPipelineThumbnailConfigPermissionsElRef {
-        ElastictranscoderPipelineThumbnailConfigPermissionsElRef {
+    ) -> ElastictranscoderPipeline_ThumbnailConfigPermissionsRef {
+        ElastictranscoderPipeline_ThumbnailConfigPermissionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ElastictranscoderPipelineThumbnailConfigPermissionsElRef {
+impl ElastictranscoderPipeline_ThumbnailConfigPermissionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -885,17 +932,4 @@ impl ElastictranscoderPipelineThumbnailConfigPermissionsElRef {
     pub fn grantee_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.grantee_type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ElastictranscoderPipelineDynamic {
-    content_config: std::option::Option<terrars::DynamicBlock<ElastictranscoderPipelineContentConfigEl>>,
-    content_config_permissions: std
-    ::option
-    ::Option<terrars::DynamicBlock<ElastictranscoderPipelineContentConfigPermissionsEl>>,
-    notifications: std::option::Option<terrars::DynamicBlock<ElastictranscoderPipelineNotificationsEl>>,
-    thumbnail_config: std::option::Option<terrars::DynamicBlock<ElastictranscoderPipelineThumbnailConfigEl>>,
-    thumbnail_config_permissions: std
-    ::option
-    ::Option<terrars::DynamicBlock<ElastictranscoderPipelineThumbnailConfigPermissionsEl>>,
 }

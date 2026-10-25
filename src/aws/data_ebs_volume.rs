@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEbsVolumeData {
+struct DataEbsVolumeData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,18 +23,20 @@ struct DataEbsVolumeData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     most_recent: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEbsVolumeFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEbsVolume_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEbsVolumeTimeoutsEl>,
+    timeouts: std::option::Option<DataEbsVolume_Timeouts>,
     dynamic: DataEbsVolumeDynamic,
 }
 
 struct DataEbsVolume_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEbsVolumeData>,
+    data: std::cell::RefCell<DataEbsVolumeData_>,
 }
 
 #[derive(Clone)]
@@ -89,6 +93,13 @@ impl DataEbsVolume {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -99,7 +110,7 @@ impl DataEbsVolume {
     }
 
     #[doc = "Set the field `filter`.\n"]
-    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEbsVolumeFilterEl>>) -> Self {
+    pub fn set_filter(self, v: impl std::convert::Into<terrars::BlockAssignable<DataEbsVolume_Filter>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().filter = std::option::Option::Some(v);
@@ -112,7 +123,7 @@ impl DataEbsVolume {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEbsVolumeTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEbsVolume_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -125,6 +136,11 @@ impl DataEbsVolume {
     #[doc = "Get a reference to the value of field `availability_zone` after provisioning.\n"]
     pub fn availability_zone(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `encrypted` after provisioning.\n"]
@@ -162,6 +178,12 @@ impl DataEbsVolume {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outpost_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `size` after provisioning.\n"]
     pub fn size(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.size", self.extract_ref()))
@@ -187,14 +209,19 @@ impl DataEbsVolume {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `volume_initialization_rate` after provisioning.\n"]
+    pub fn volume_initialization_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_initialization_rate", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `volume_type` after provisioning.\n"]
     pub fn volume_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEbsVolumeTimeoutsElRef {
-        DataEbsVolumeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEbsVolume_TimeoutsRef {
+        DataEbsVolume_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -238,13 +265,14 @@ impl BuildDataEbsVolume {
         let out = DataEbsVolume(std::rc::Rc::new(DataEbsVolume_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEbsVolumeData {
+            data: std::cell::RefCell::new(DataEbsVolumeData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 most_recent: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -289,6 +317,11 @@ impl DataEbsVolumeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `create_time` after provisioning.\n"]
+    pub fn create_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create_time", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `encrypted` after provisioning.\n"]
     pub fn encrypted(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.encrypted", self.extract_ref()))
@@ -324,6 +357,12 @@ impl DataEbsVolumeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.outpost_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `size` after provisioning.\n"]
     pub fn size(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.size", self.extract_ref()))
@@ -349,27 +388,37 @@ impl DataEbsVolumeRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `volume_initialization_rate` after provisioning.\n"]
+    pub fn volume_initialization_rate(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_initialization_rate", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `volume_type` after provisioning.\n"]
     pub fn volume_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.volume_type", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEbsVolumeTimeoutsElRef {
-        DataEbsVolumeTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DataEbsVolume_TimeoutsRef {
+        DataEbsVolume_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
-#[derive(Serialize)]
-pub struct DataEbsVolumeFilterEl {
-    name: terrars::PrimField<std::string::String>,
-    values: terrars::ListField<terrars::PrimField<std::string::String>>,
+#[derive(Serialize, Default)]
+struct DataEbsVolumeDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEbsVolume_Filter>>,
 }
 
-impl DataEbsVolumeFilterEl { }
+#[derive(Serialize)]
+pub struct DataEbsVolume_Filter {
+    name: terrars::PrimField<std::string::String>,
+    values: terrars::SetField<terrars::PrimField<std::string::String>>,
+}
 
-impl terrars::ToListMappable for DataEbsVolumeFilterEl {
-    type O = terrars::BlockAssignable<DataEbsVolumeFilterEl>;
+impl DataEbsVolume_Filter { }
+
+impl terrars::ToListMappable for DataEbsVolume_Filter {
+    type O = terrars::BlockAssignable<DataEbsVolume_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -380,37 +429,39 @@ impl terrars::ToListMappable for DataEbsVolumeFilterEl {
     }
 }
 
-pub struct BuildDataEbsVolumeFilterEl {
+pub struct BuildDataEbsVolume_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub values: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEbsVolumeFilterEl {
-    pub fn build(self) -> DataEbsVolumeFilterEl {
-        DataEbsVolumeFilterEl {
+impl BuildDataEbsVolume_Filter {
+    pub fn build(self) -> DataEbsVolume_Filter {
+        DataEbsVolume_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEbsVolumeFilterElRef {
+#[allow(dead_code)]
+pub struct DataEbsVolume_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEbsVolumeFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsVolumeFilterElRef {
-        DataEbsVolumeFilterElRef {
+impl terrars::Ref for DataEbsVolume_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsVolume_FilterRef {
+        DataEbsVolume_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEbsVolumeFilterElRef {
+impl DataEbsVolume_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -421,18 +472,18 @@ impl DataEbsVolumeFilterElRef {
     }
 
     #[doc = "Get a reference to the value of field `values` after provisioning.\n"]
-    pub fn values(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.values", self.base))
+    pub fn values(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.values", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataEbsVolumeTimeoutsEl {
+pub struct DataEbsVolume_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEbsVolumeTimeoutsEl {
+impl DataEbsVolume_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -440,8 +491,8 @@ impl DataEbsVolumeTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEbsVolumeTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEbsVolumeTimeoutsEl>;
+impl terrars::ToListMappable for DataEbsVolume_Timeouts {
+    type O = terrars::BlockAssignable<DataEbsVolume_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -452,29 +503,31 @@ impl terrars::ToListMappable for DataEbsVolumeTimeoutsEl {
     }
 }
 
-pub struct BuildDataEbsVolumeTimeoutsEl {}
+pub struct BuildDataEbsVolume_Timeouts {}
 
-impl BuildDataEbsVolumeTimeoutsEl {
-    pub fn build(self) -> DataEbsVolumeTimeoutsEl {
-        DataEbsVolumeTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEbsVolume_Timeouts {
+    pub fn build(self) -> DataEbsVolume_Timeouts {
+        DataEbsVolume_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEbsVolumeTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEbsVolume_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEbsVolumeTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsVolumeTimeoutsElRef {
-        DataEbsVolumeTimeoutsElRef {
+impl terrars::Ref for DataEbsVolume_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEbsVolume_TimeoutsRef {
+        DataEbsVolume_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEbsVolumeTimeoutsElRef {
+impl DataEbsVolume_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -483,9 +536,4 @@ impl DataEbsVolumeTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEbsVolumeDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEbsVolumeFilterEl>>,
 }

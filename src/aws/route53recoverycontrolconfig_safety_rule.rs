@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53recoverycontrolconfigSafetyRuleData {
+struct Route53recoverycontrolconfigSafetyRuleData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,17 +29,21 @@ struct Route53recoverycontrolconfigSafetyRuleData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_controls: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     wait_period_ms: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule_config: std::option::Option<std::vec::Vec<Route53recoverycontrolconfigSafetyRuleRuleConfigEl>>,
+    rule_config: std::option::Option<std::vec::Vec<Route53recoverycontrolconfigSafetyRule_RuleConfig>>,
     dynamic: Route53recoverycontrolconfigSafetyRuleDynamic,
 }
 
 struct Route53recoverycontrolconfigSafetyRule_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53recoverycontrolconfigSafetyRuleData>,
+    data: std::cell::RefCell<Route53recoverycontrolconfigSafetyRuleData_>,
 }
 
 #[derive(Clone)]
@@ -161,6 +167,24 @@ impl Route53recoverycontrolconfigSafetyRule {
         self
     }
 
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `target_controls`.\n"]
     pub fn set_target_controls(
         self,
@@ -173,7 +197,7 @@ impl Route53recoverycontrolconfigSafetyRule {
     #[doc = "Set the field `rule_config`.\n"]
     pub fn set_rule_config(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Route53recoverycontrolconfigSafetyRuleRuleConfigEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Route53recoverycontrolconfigSafetyRule_RuleConfig>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -221,6 +245,16 @@ impl Route53recoverycontrolconfigSafetyRule {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_controls` after provisioning.\n"]
     pub fn target_controls(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_controls", self.extract_ref()))
@@ -232,7 +266,7 @@ impl Route53recoverycontrolconfigSafetyRule {
     }
 
     #[doc = "Get a reference to the value of field `rule_config` after provisioning.\n"]
-    pub fn rule_config(&self) -> terrars::ListRef<Route53recoverycontrolconfigSafetyRuleRuleConfigElRef> {
+    pub fn rule_config(&self) -> terrars::ListRef<Route53recoverycontrolconfigSafetyRule_RuleConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule_config", self.extract_ref()))
     }
 }
@@ -283,7 +317,7 @@ impl BuildRoute53recoverycontrolconfigSafetyRule {
         let out = Route53recoverycontrolconfigSafetyRule(std::rc::Rc::new(Route53recoverycontrolconfigSafetyRule_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53recoverycontrolconfigSafetyRuleData {
+            data: std::cell::RefCell::new(Route53recoverycontrolconfigSafetyRuleData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -294,6 +328,8 @@ impl BuildRoute53recoverycontrolconfigSafetyRule {
                 gating_controls: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
                 target_controls: core::default::Default::default(),
                 wait_period_ms: self.wait_period_ms,
                 rule_config: core::default::Default::default(),
@@ -363,6 +399,16 @@ impl Route53recoverycontrolconfigSafetyRuleRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `target_controls` after provisioning.\n"]
     pub fn target_controls(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.target_controls", self.extract_ref()))
@@ -374,23 +420,28 @@ impl Route53recoverycontrolconfigSafetyRuleRef {
     }
 
     #[doc = "Get a reference to the value of field `rule_config` after provisioning.\n"]
-    pub fn rule_config(&self) -> terrars::ListRef<Route53recoverycontrolconfigSafetyRuleRuleConfigElRef> {
+    pub fn rule_config(&self) -> terrars::ListRef<Route53recoverycontrolconfigSafetyRule_RuleConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule_config", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Route53recoverycontrolconfigSafetyRuleDynamic {
+    rule_config: std::option::Option<terrars::DynamicBlock<Route53recoverycontrolconfigSafetyRule_RuleConfig>>,
+}
+
 #[derive(Serialize)]
-pub struct Route53recoverycontrolconfigSafetyRuleRuleConfigEl {
+pub struct Route53recoverycontrolconfigSafetyRule_RuleConfig {
     inverted: terrars::PrimField<bool>,
     threshold: terrars::PrimField<f64>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl Route53recoverycontrolconfigSafetyRuleRuleConfigEl { }
+impl Route53recoverycontrolconfigSafetyRule_RuleConfig { }
 
-impl terrars::ToListMappable for Route53recoverycontrolconfigSafetyRuleRuleConfigEl {
-    type O = terrars::BlockAssignable<Route53recoverycontrolconfigSafetyRuleRuleConfigEl>;
+impl terrars::ToListMappable for Route53recoverycontrolconfigSafetyRule_RuleConfig {
+    type O = terrars::BlockAssignable<Route53recoverycontrolconfigSafetyRule_RuleConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -401,7 +452,7 @@ impl terrars::ToListMappable for Route53recoverycontrolconfigSafetyRuleRuleConfi
     }
 }
 
-pub struct BuildRoute53recoverycontrolconfigSafetyRuleRuleConfigEl {
+pub struct BuildRoute53recoverycontrolconfigSafetyRule_RuleConfig {
     #[doc = ""]
     pub inverted: terrars::PrimField<bool>,
     #[doc = ""]
@@ -410,9 +461,9 @@ pub struct BuildRoute53recoverycontrolconfigSafetyRuleRuleConfigEl {
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRoute53recoverycontrolconfigSafetyRuleRuleConfigEl {
-    pub fn build(self) -> Route53recoverycontrolconfigSafetyRuleRuleConfigEl {
-        Route53recoverycontrolconfigSafetyRuleRuleConfigEl {
+impl BuildRoute53recoverycontrolconfigSafetyRule_RuleConfig {
+    pub fn build(self) -> Route53recoverycontrolconfigSafetyRule_RuleConfig {
+        Route53recoverycontrolconfigSafetyRule_RuleConfig {
             inverted: self.inverted,
             threshold: self.threshold,
             type_: self.type_,
@@ -420,24 +471,26 @@ impl BuildRoute53recoverycontrolconfigSafetyRuleRuleConfigEl {
     }
 }
 
-pub struct Route53recoverycontrolconfigSafetyRuleRuleConfigElRef {
+#[allow(dead_code)]
+pub struct Route53recoverycontrolconfigSafetyRule_RuleConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53recoverycontrolconfigSafetyRuleRuleConfigElRef {
+impl terrars::Ref for Route53recoverycontrolconfigSafetyRule_RuleConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Route53recoverycontrolconfigSafetyRuleRuleConfigElRef {
-        Route53recoverycontrolconfigSafetyRuleRuleConfigElRef {
+    ) -> Route53recoverycontrolconfigSafetyRule_RuleConfigRef {
+        Route53recoverycontrolconfigSafetyRule_RuleConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53recoverycontrolconfigSafetyRuleRuleConfigElRef {
+impl Route53recoverycontrolconfigSafetyRule_RuleConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -456,9 +509,4 @@ impl Route53recoverycontrolconfigSafetyRuleRuleConfigElRef {
     pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Route53recoverycontrolconfigSafetyRuleDynamic {
-    rule_config: std::option::Option<terrars::DynamicBlock<Route53recoverycontrolconfigSafetyRuleRuleConfigEl>>,
 }

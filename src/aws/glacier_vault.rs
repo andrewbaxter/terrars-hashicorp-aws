@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct GlacierVaultData {
+struct GlacierVaultData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct GlacierVaultData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    notification: std::option::Option<std::vec::Vec<GlacierVaultNotificationEl>>,
+    notification: std::option::Option<std::vec::Vec<GlacierVault_Notification>>,
     dynamic: GlacierVaultDynamic,
 }
 
 struct GlacierVault_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<GlacierVaultData>,
+    data: std::cell::RefCell<GlacierVaultData_>,
 }
 
 #[derive(Clone)]
@@ -147,6 +151,13 @@ impl GlacierVault {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -168,7 +179,7 @@ impl GlacierVault {
     #[doc = "Set the field `notification`.\n"]
     pub fn set_notification(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<GlacierVaultNotificationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<GlacierVault_Notification>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -206,6 +217,12 @@ impl GlacierVault {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -217,7 +234,7 @@ impl GlacierVault {
     }
 
     #[doc = "Get a reference to the value of field `notification` after provisioning.\n"]
-    pub fn notification(&self) -> terrars::ListRef<GlacierVaultNotificationElRef> {
+    pub fn notification(&self) -> terrars::ListRef<GlacierVault_NotificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification", self.extract_ref()))
     }
 }
@@ -264,7 +281,7 @@ impl BuildGlacierVault {
         let out = GlacierVault(std::rc::Rc::new(GlacierVault_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(GlacierVaultData {
+            data: std::cell::RefCell::new(GlacierVaultData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -273,6 +290,7 @@ impl BuildGlacierVault {
                 access_policy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 notification: core::default::Default::default(),
@@ -332,6 +350,12 @@ impl GlacierVaultRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -343,21 +367,26 @@ impl GlacierVaultRef {
     }
 
     #[doc = "Get a reference to the value of field `notification` after provisioning.\n"]
-    pub fn notification(&self) -> terrars::ListRef<GlacierVaultNotificationElRef> {
+    pub fn notification(&self) -> terrars::ListRef<GlacierVault_NotificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.notification", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct GlacierVaultDynamic {
+    notification: std::option::Option<terrars::DynamicBlock<GlacierVault_Notification>>,
+}
+
 #[derive(Serialize)]
-pub struct GlacierVaultNotificationEl {
+pub struct GlacierVault_Notification {
     events: terrars::SetField<terrars::PrimField<std::string::String>>,
     sns_topic: terrars::PrimField<std::string::String>,
 }
 
-impl GlacierVaultNotificationEl { }
+impl GlacierVault_Notification { }
 
-impl terrars::ToListMappable for GlacierVaultNotificationEl {
-    type O = terrars::BlockAssignable<GlacierVaultNotificationEl>;
+impl terrars::ToListMappable for GlacierVault_Notification {
+    type O = terrars::BlockAssignable<GlacierVault_Notification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -368,37 +397,39 @@ impl terrars::ToListMappable for GlacierVaultNotificationEl {
     }
 }
 
-pub struct BuildGlacierVaultNotificationEl {
+pub struct BuildGlacierVault_Notification {
     #[doc = ""]
     pub events: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub sns_topic: terrars::PrimField<std::string::String>,
 }
 
-impl BuildGlacierVaultNotificationEl {
-    pub fn build(self) -> GlacierVaultNotificationEl {
-        GlacierVaultNotificationEl {
+impl BuildGlacierVault_Notification {
+    pub fn build(self) -> GlacierVault_Notification {
+        GlacierVault_Notification {
             events: self.events,
             sns_topic: self.sns_topic,
         }
     }
 }
 
-pub struct GlacierVaultNotificationElRef {
+#[allow(dead_code)]
+pub struct GlacierVault_NotificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for GlacierVaultNotificationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> GlacierVaultNotificationElRef {
-        GlacierVaultNotificationElRef {
+impl terrars::Ref for GlacierVault_NotificationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> GlacierVault_NotificationRef {
+        GlacierVault_NotificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl GlacierVaultNotificationElRef {
+impl GlacierVault_NotificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -412,9 +443,4 @@ impl GlacierVaultNotificationElRef {
     pub fn sns_topic(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sns_topic", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct GlacierVaultDynamic {
-    notification: std::option::Option<terrars::DynamicBlock<GlacierVaultNotificationEl>>,
 }

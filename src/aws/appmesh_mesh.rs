@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AppmeshMeshData {
+struct AppmeshMeshData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,20 @@ struct AppmeshMeshData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    spec: std::option::Option<std::vec::Vec<AppmeshMeshSpecEl>>,
+    spec: std::option::Option<std::vec::Vec<AppmeshMesh_Spec>>,
     dynamic: AppmeshMeshDynamic,
 }
 
 struct AppmeshMesh_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AppmeshMeshData>,
+    data: std::cell::RefCell<AppmeshMeshData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +143,13 @@ impl AppmeshMesh {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -158,7 +169,7 @@ impl AppmeshMesh {
     }
 
     #[doc = "Set the field `spec`.\n"]
-    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshMeshSpecEl>>) -> Self {
+    pub fn set_spec(self, v: impl std::convert::Into<terrars::BlockAssignable<AppmeshMesh_Spec>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().spec = std::option::Option::Some(v);
@@ -200,6 +211,12 @@ impl AppmeshMesh {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -216,7 +233,7 @@ impl AppmeshMesh {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshMeshSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshMesh_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
@@ -263,7 +280,7 @@ impl BuildAppmeshMesh {
         let out = AppmeshMesh(std::rc::Rc::new(AppmeshMesh_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AppmeshMeshData {
+            data: std::cell::RefCell::new(AppmeshMeshData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -271,6 +288,7 @@ impl BuildAppmeshMesh {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 spec: core::default::Default::default(),
@@ -335,6 +353,12 @@ impl AppmeshMeshRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resource_owner` after provisioning.\n"]
     pub fn resource_owner(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resource_owner", self.extract_ref()))
@@ -351,18 +375,23 @@ impl AppmeshMeshRef {
     }
 
     #[doc = "Get a reference to the value of field `spec` after provisioning.\n"]
-    pub fn spec(&self) -> terrars::ListRef<AppmeshMeshSpecElRef> {
+    pub fn spec(&self) -> terrars::ListRef<AppmeshMesh_SpecRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.spec", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AppmeshMeshDynamic {
+    spec: std::option::Option<terrars::DynamicBlock<AppmeshMesh_Spec>>,
+}
+
 #[derive(Serialize)]
-pub struct AppmeshMeshSpecElEgressFilterEl {
+pub struct AppmeshMesh_Spec_EgressFilter {
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AppmeshMeshSpecElEgressFilterEl {
+impl AppmeshMesh_Spec_EgressFilter {
     #[doc = "Set the field `type_`.\n"]
     pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.type_ = std::option::Option::Some(v.into());
@@ -370,8 +399,8 @@ impl AppmeshMeshSpecElEgressFilterEl {
     }
 }
 
-impl terrars::ToListMappable for AppmeshMeshSpecElEgressFilterEl {
-    type O = terrars::BlockAssignable<AppmeshMeshSpecElEgressFilterEl>;
+impl terrars::ToListMappable for AppmeshMesh_Spec_EgressFilter {
+    type O = terrars::BlockAssignable<AppmeshMesh_Spec_EgressFilter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -382,29 +411,31 @@ impl terrars::ToListMappable for AppmeshMeshSpecElEgressFilterEl {
     }
 }
 
-pub struct BuildAppmeshMeshSpecElEgressFilterEl {}
+pub struct BuildAppmeshMesh_Spec_EgressFilter {}
 
-impl BuildAppmeshMeshSpecElEgressFilterEl {
-    pub fn build(self) -> AppmeshMeshSpecElEgressFilterEl {
-        AppmeshMeshSpecElEgressFilterEl { type_: core::default::Default::default() }
+impl BuildAppmeshMesh_Spec_EgressFilter {
+    pub fn build(self) -> AppmeshMesh_Spec_EgressFilter {
+        AppmeshMesh_Spec_EgressFilter { type_: core::default::Default::default() }
     }
 }
 
-pub struct AppmeshMeshSpecElEgressFilterElRef {
+#[allow(dead_code)]
+pub struct AppmeshMesh_Spec_EgressFilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshMeshSpecElEgressFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshMeshSpecElEgressFilterElRef {
-        AppmeshMeshSpecElEgressFilterElRef {
+impl terrars::Ref for AppmeshMesh_Spec_EgressFilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshMesh_Spec_EgressFilterRef {
+        AppmeshMesh_Spec_EgressFilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshMeshSpecElEgressFilterElRef {
+impl AppmeshMesh_Spec_EgressFilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -415,23 +446,87 @@ impl AppmeshMeshSpecElEgressFilterElRef {
     }
 }
 
+#[derive(Serialize)]
+pub struct AppmeshMesh_Spec_ServiceDiscovery {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_preference: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AppmeshMesh_Spec_ServiceDiscovery {
+    #[doc = "Set the field `ip_preference`.\n"]
+    pub fn set_ip_preference(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.ip_preference = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AppmeshMesh_Spec_ServiceDiscovery {
+    type O = terrars::BlockAssignable<AppmeshMesh_Spec_ServiceDiscovery>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAppmeshMesh_Spec_ServiceDiscovery {}
+
+impl BuildAppmeshMesh_Spec_ServiceDiscovery {
+    pub fn build(self) -> AppmeshMesh_Spec_ServiceDiscovery {
+        AppmeshMesh_Spec_ServiceDiscovery { ip_preference: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AppmeshMesh_Spec_ServiceDiscoveryRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AppmeshMesh_Spec_ServiceDiscoveryRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshMesh_Spec_ServiceDiscoveryRef {
+        AppmeshMesh_Spec_ServiceDiscoveryRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AppmeshMesh_Spec_ServiceDiscoveryRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `ip_preference` after provisioning.\n"]
+    pub fn ip_preference(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_preference", self.base))
+    }
+}
+
 #[derive(Serialize, Default)]
-struct AppmeshMeshSpecElDynamic {
-    egress_filter: std::option::Option<terrars::DynamicBlock<AppmeshMeshSpecElEgressFilterEl>>,
+struct AppmeshMesh_SpecDynamic {
+    egress_filter: std::option::Option<terrars::DynamicBlock<AppmeshMesh_Spec_EgressFilter>>,
+    service_discovery: std::option::Option<terrars::DynamicBlock<AppmeshMesh_Spec_ServiceDiscovery>>,
 }
 
 #[derive(Serialize)]
-pub struct AppmeshMeshSpecEl {
+pub struct AppmeshMesh_Spec {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    egress_filter: std::option::Option<std::vec::Vec<AppmeshMeshSpecElEgressFilterEl>>,
-    dynamic: AppmeshMeshSpecElDynamic,
+    egress_filter: std::option::Option<std::vec::Vec<AppmeshMesh_Spec_EgressFilter>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    service_discovery: std::option::Option<std::vec::Vec<AppmeshMesh_Spec_ServiceDiscovery>>,
+    dynamic: AppmeshMesh_SpecDynamic,
 }
 
-impl AppmeshMeshSpecEl {
+impl AppmeshMesh_Spec {
     #[doc = "Set the field `egress_filter`.\n"]
     pub fn set_egress_filter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshMeshSpecElEgressFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshMesh_Spec_EgressFilter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -443,10 +538,26 @@ impl AppmeshMeshSpecEl {
         }
         self
     }
+
+    #[doc = "Set the field `service_discovery`.\n"]
+    pub fn set_service_discovery(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AppmeshMesh_Spec_ServiceDiscovery>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.service_discovery = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.service_discovery = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for AppmeshMeshSpecEl {
-    type O = terrars::BlockAssignable<AppmeshMeshSpecEl>;
+impl terrars::ToListMappable for AppmeshMesh_Spec {
+    type O = terrars::BlockAssignable<AppmeshMesh_Spec>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -457,43 +568,46 @@ impl terrars::ToListMappable for AppmeshMeshSpecEl {
     }
 }
 
-pub struct BuildAppmeshMeshSpecEl {}
+pub struct BuildAppmeshMesh_Spec {}
 
-impl BuildAppmeshMeshSpecEl {
-    pub fn build(self) -> AppmeshMeshSpecEl {
-        AppmeshMeshSpecEl {
+impl BuildAppmeshMesh_Spec {
+    pub fn build(self) -> AppmeshMesh_Spec {
+        AppmeshMesh_Spec {
             egress_filter: core::default::Default::default(),
+            service_discovery: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AppmeshMeshSpecElRef {
+#[allow(dead_code)]
+pub struct AppmeshMesh_SpecRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AppmeshMeshSpecElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshMeshSpecElRef {
-        AppmeshMeshSpecElRef {
+impl terrars::Ref for AppmeshMesh_SpecRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AppmeshMesh_SpecRef {
+        AppmeshMesh_SpecRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AppmeshMeshSpecElRef {
+impl AppmeshMesh_SpecRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `egress_filter` after provisioning.\n"]
-    pub fn egress_filter(&self) -> terrars::ListRef<AppmeshMeshSpecElEgressFilterElRef> {
+    pub fn egress_filter(&self) -> terrars::ListRef<AppmeshMesh_Spec_EgressFilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.egress_filter", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct AppmeshMeshDynamic {
-    spec: std::option::Option<terrars::DynamicBlock<AppmeshMeshSpecEl>>,
+    #[doc = "Get a reference to the value of field `service_discovery` after provisioning.\n"]
+    pub fn service_discovery(&self) -> terrars::ListRef<AppmeshMesh_Spec_ServiceDiscoveryRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.service_discovery", self.base))
+    }
 }

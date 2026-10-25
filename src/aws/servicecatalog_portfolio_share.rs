@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ServicecatalogPortfolioShareData {
+struct ServicecatalogPortfolioShareData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct ServicecatalogPortfolioShareData {
     portfolio_id: terrars::PrimField<std::string::String>,
     principal_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     share_principals: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     share_tag_options: std::option::Option<terrars::PrimField<bool>>,
@@ -33,13 +37,13 @@ struct ServicecatalogPortfolioShareData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_for_acceptance: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<ServicecatalogPortfolioShareTimeoutsEl>,
+    timeouts: std::option::Option<ServicecatalogPortfolioShare_Timeouts>,
 }
 
 struct ServicecatalogPortfolioShare_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ServicecatalogPortfolioShareData>,
+    data: std::cell::RefCell<ServicecatalogPortfolioShareData_>,
 }
 
 #[derive(Clone)]
@@ -151,6 +155,13 @@ impl ServicecatalogPortfolioShare {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `share_principals`.\n"]
     pub fn set_share_principals(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().share_principals = std::option::Option::Some(v.into());
@@ -170,7 +181,7 @@ impl ServicecatalogPortfolioShare {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogPortfolioShareTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<ServicecatalogPortfolioShare_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -200,6 +211,12 @@ impl ServicecatalogPortfolioShare {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `share_principals` after provisioning.\n"]
     pub fn share_principals(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.share_principals", self.extract_ref()))
@@ -221,8 +238,8 @@ impl ServicecatalogPortfolioShare {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogPortfolioShareTimeoutsElRef {
-        ServicecatalogPortfolioShareTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ServicecatalogPortfolioShare_TimeoutsRef {
+        ServicecatalogPortfolioShare_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -275,7 +292,7 @@ impl BuildServicecatalogPortfolioShare {
         let out = ServicecatalogPortfolioShare(std::rc::Rc::new(ServicecatalogPortfolioShare_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ServicecatalogPortfolioShareData {
+            data: std::cell::RefCell::new(ServicecatalogPortfolioShareData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -285,6 +302,7 @@ impl BuildServicecatalogPortfolioShare {
                 id: core::default::Default::default(),
                 portfolio_id: self.portfolio_id,
                 principal_id: self.principal_id,
+                region: core::default::Default::default(),
                 share_principals: core::default::Default::default(),
                 share_tag_options: core::default::Default::default(),
                 type_: self.type_,
@@ -345,6 +363,12 @@ impl ServicecatalogPortfolioShareRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.principal_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `share_principals` after provisioning.\n"]
     pub fn share_principals(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.share_principals", self.extract_ref()))
@@ -366,8 +390,8 @@ impl ServicecatalogPortfolioShareRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> ServicecatalogPortfolioShareTimeoutsElRef {
-        ServicecatalogPortfolioShareTimeoutsElRef::new(
+    pub fn timeouts(&self) -> ServicecatalogPortfolioShare_TimeoutsRef {
+        ServicecatalogPortfolioShare_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -375,7 +399,7 @@ impl ServicecatalogPortfolioShareRef {
 }
 
 #[derive(Serialize)]
-pub struct ServicecatalogPortfolioShareTimeoutsEl {
+pub struct ServicecatalogPortfolioShare_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -386,7 +410,7 @@ pub struct ServicecatalogPortfolioShareTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl ServicecatalogPortfolioShareTimeoutsEl {
+impl ServicecatalogPortfolioShare_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -412,8 +436,8 @@ impl ServicecatalogPortfolioShareTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for ServicecatalogPortfolioShareTimeoutsEl {
-    type O = terrars::BlockAssignable<ServicecatalogPortfolioShareTimeoutsEl>;
+impl terrars::ToListMappable for ServicecatalogPortfolioShare_Timeouts {
+    type O = terrars::BlockAssignable<ServicecatalogPortfolioShare_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -424,11 +448,11 @@ impl terrars::ToListMappable for ServicecatalogPortfolioShareTimeoutsEl {
     }
 }
 
-pub struct BuildServicecatalogPortfolioShareTimeoutsEl {}
+pub struct BuildServicecatalogPortfolioShare_Timeouts {}
 
-impl BuildServicecatalogPortfolioShareTimeoutsEl {
-    pub fn build(self) -> ServicecatalogPortfolioShareTimeoutsEl {
-        ServicecatalogPortfolioShareTimeoutsEl {
+impl BuildServicecatalogPortfolioShare_Timeouts {
+    pub fn build(self) -> ServicecatalogPortfolioShare_Timeouts {
+        ServicecatalogPortfolioShare_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             read: core::default::Default::default(),
@@ -437,21 +461,23 @@ impl BuildServicecatalogPortfolioShareTimeoutsEl {
     }
 }
 
-pub struct ServicecatalogPortfolioShareTimeoutsElRef {
+#[allow(dead_code)]
+pub struct ServicecatalogPortfolioShare_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ServicecatalogPortfolioShareTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ServicecatalogPortfolioShareTimeoutsElRef {
-        ServicecatalogPortfolioShareTimeoutsElRef {
+impl terrars::Ref for ServicecatalogPortfolioShare_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ServicecatalogPortfolioShare_TimeoutsRef {
+        ServicecatalogPortfolioShare_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ServicecatalogPortfolioShareTimeoutsElRef {
+impl ServicecatalogPortfolioShare_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

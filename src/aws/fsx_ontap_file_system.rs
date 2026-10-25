@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct FsxOntapFileSystemData {
+struct FsxOntapFileSystemData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,16 +30,21 @@ struct FsxOntapFileSystemData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     fsx_admin_password: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ha_pairs: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_type: std::option::Option<terrars::PrimField<std::string::String>>,
     preferred_subnet_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     route_table_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     security_group_ids: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    storage_capacity: std::option::Option<terrars::PrimField<f64>>,
+    storage_capacity: terrars::PrimField<f64>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     storage_type: std::option::Option<terrars::PrimField<std::string::String>>,
     subnet_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -45,20 +52,23 @@ struct FsxOntapFileSystemData {
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
-    throughput_capacity: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    throughput_capacity: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    throughput_capacity_per_ha_pair: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     weekly_maintenance_start_time: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    disk_iops_configuration: std::option::Option<std::vec::Vec<FsxOntapFileSystemDiskIopsConfigurationEl>>,
+    disk_iops_configuration: std::option::Option<std::vec::Vec<FsxOntapFileSystem_DiskIopsConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<FsxOntapFileSystemTimeoutsEl>,
+    timeouts: std::option::Option<FsxOntapFileSystem_Timeouts>,
     dynamic: FsxOntapFileSystemDynamic,
 }
 
 struct FsxOntapFileSystem_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<FsxOntapFileSystemData>,
+    data: std::cell::RefCell<FsxOntapFileSystemData_>,
 }
 
 #[derive(Clone)]
@@ -188,6 +198,12 @@ impl FsxOntapFileSystem {
         self
     }
 
+    #[doc = "Set the field `ha_pairs`.\n"]
+    pub fn set_ha_pairs(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().ha_pairs = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -197,6 +213,19 @@ impl FsxOntapFileSystem {
     #[doc = "Set the field `kms_key_id`.\n"]
     pub fn set_kms_key_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().kms_key_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `network_type`.\n"]
+    pub fn set_network_type(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().network_type = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -215,12 +244,6 @@ impl FsxOntapFileSystem {
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().security_group_ids = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `storage_capacity`.\n"]
-    pub fn set_storage_capacity(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
-        self.0.data.borrow_mut().storage_capacity = std::option::Option::Some(v.into());
         self
     }
 
@@ -248,6 +271,18 @@ impl FsxOntapFileSystem {
         self
     }
 
+    #[doc = "Set the field `throughput_capacity`.\n"]
+    pub fn set_throughput_capacity(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().throughput_capacity = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `throughput_capacity_per_ha_pair`.\n"]
+    pub fn set_throughput_capacity_per_ha_pair(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().throughput_capacity_per_ha_pair = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `weekly_maintenance_start_time`.\n"]
     pub fn set_weekly_maintenance_start_time(
         self,
@@ -260,7 +295,7 @@ impl FsxOntapFileSystem {
     #[doc = "Set the field `disk_iops_configuration`.\n"]
     pub fn set_disk_iops_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<FsxOntapFileSystemDiskIopsConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<FsxOntapFileSystem_DiskIopsConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -274,7 +309,7 @@ impl FsxOntapFileSystem {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<FsxOntapFileSystemTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<FsxOntapFileSystem_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -316,13 +351,18 @@ impl FsxOntapFileSystem {
     }
 
     #[doc = "Get a reference to the value of field `endpoints` after provisioning.\n"]
-    pub fn endpoints(&self) -> terrars::ListRef<FsxOntapFileSystemEndpointsElRef> {
+    pub fn endpoints(&self) -> terrars::ListRef<FsxOntapFileSystem_EndpointsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoints", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fsx_admin_password` after provisioning.\n"]
     pub fn fsx_admin_password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.fsx_admin_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ha_pairs` after provisioning.\n"]
+    pub fn ha_pairs(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ha_pairs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -340,6 +380,11 @@ impl FsxOntapFileSystem {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
@@ -348,6 +393,12 @@ impl FsxOntapFileSystem {
     #[doc = "Get a reference to the value of field `preferred_subnet_id` after provisioning.\n"]
     pub fn preferred_subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_subnet_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `route_table_ids` after provisioning.\n"]
@@ -390,6 +441,14 @@ impl FsxOntapFileSystem {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.throughput_capacity", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `throughput_capacity_per_ha_pair` after provisioning.\n"]
+    pub fn throughput_capacity_per_ha_pair(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.throughput_capacity_per_ha_pair", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
@@ -404,13 +463,13 @@ impl FsxOntapFileSystem {
     }
 
     #[doc = "Get a reference to the value of field `disk_iops_configuration` after provisioning.\n"]
-    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxOntapFileSystemDiskIopsConfigurationElRef> {
+    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxOntapFileSystem_DiskIopsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_iops_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxOntapFileSystemTimeoutsElRef {
-        FsxOntapFileSystemTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxOntapFileSystem_TimeoutsRef {
+        FsxOntapFileSystem_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -452,9 +511,9 @@ pub struct BuildFsxOntapFileSystem {
     #[doc = ""]
     pub preferred_subnet_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
-    pub subnet_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
+    pub storage_capacity: terrars::PrimField<f64>,
     #[doc = ""]
-    pub throughput_capacity: terrars::PrimField<f64>,
+    pub subnet_ids: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
 impl BuildFsxOntapFileSystem {
@@ -462,7 +521,7 @@ impl BuildFsxOntapFileSystem {
         let out = FsxOntapFileSystem(std::rc::Rc::new(FsxOntapFileSystem_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(FsxOntapFileSystemData {
+            data: std::cell::RefCell::new(FsxOntapFileSystemData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -473,17 +532,21 @@ impl BuildFsxOntapFileSystem {
                 deployment_type: self.deployment_type,
                 endpoint_ip_address_range: core::default::Default::default(),
                 fsx_admin_password: core::default::Default::default(),
+                ha_pairs: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
+                network_type: core::default::Default::default(),
                 preferred_subnet_id: self.preferred_subnet_id,
+                region: core::default::Default::default(),
                 route_table_ids: core::default::Default::default(),
                 security_group_ids: core::default::Default::default(),
-                storage_capacity: core::default::Default::default(),
+                storage_capacity: self.storage_capacity,
                 storage_type: core::default::Default::default(),
                 subnet_ids: self.subnet_ids,
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
-                throughput_capacity: self.throughput_capacity,
+                throughput_capacity: core::default::Default::default(),
+                throughput_capacity_per_ha_pair: core::default::Default::default(),
                 weekly_maintenance_start_time: core::default::Default::default(),
                 disk_iops_configuration: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -555,13 +618,18 @@ impl FsxOntapFileSystemRef {
     }
 
     #[doc = "Get a reference to the value of field `endpoints` after provisioning.\n"]
-    pub fn endpoints(&self) -> terrars::ListRef<FsxOntapFileSystemEndpointsElRef> {
+    pub fn endpoints(&self) -> terrars::ListRef<FsxOntapFileSystem_EndpointsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.endpoints", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `fsx_admin_password` after provisioning.\n"]
     pub fn fsx_admin_password(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.fsx_admin_password", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ha_pairs` after provisioning.\n"]
+    pub fn ha_pairs(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ha_pairs", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -579,6 +647,11 @@ impl FsxOntapFileSystemRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface_ids", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `network_type` after provisioning.\n"]
+    pub fn network_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.network_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
@@ -587,6 +660,12 @@ impl FsxOntapFileSystemRef {
     #[doc = "Get a reference to the value of field `preferred_subnet_id` after provisioning.\n"]
     pub fn preferred_subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.preferred_subnet_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `route_table_ids` after provisioning.\n"]
@@ -629,6 +708,14 @@ impl FsxOntapFileSystemRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.throughput_capacity", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `throughput_capacity_per_ha_pair` after provisioning.\n"]
+    pub fn throughput_capacity_per_ha_pair(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.throughput_capacity_per_ha_pair", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `vpc_id` after provisioning.\n"]
     pub fn vpc_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vpc_id", self.extract_ref()))
@@ -643,25 +730,30 @@ impl FsxOntapFileSystemRef {
     }
 
     #[doc = "Get a reference to the value of field `disk_iops_configuration` after provisioning.\n"]
-    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxOntapFileSystemDiskIopsConfigurationElRef> {
+    pub fn disk_iops_configuration(&self) -> terrars::ListRef<FsxOntapFileSystem_DiskIopsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.disk_iops_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> FsxOntapFileSystemTimeoutsElRef {
-        FsxOntapFileSystemTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> FsxOntapFileSystem_TimeoutsRef {
+        FsxOntapFileSystem_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct FsxOntapFileSystemDynamic {
+    disk_iops_configuration: std::option::Option<terrars::DynamicBlock<FsxOntapFileSystem_DiskIopsConfiguration>>,
+}
+
 #[derive(Serialize)]
-pub struct FsxOntapFileSystemEndpointsElInterclusterEl {
+pub struct FsxOntapFileSystem_Endpoints_Intercluster {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_addresses: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl FsxOntapFileSystemEndpointsElInterclusterEl {
+impl FsxOntapFileSystem_Endpoints_Intercluster {
     #[doc = "Set the field `dns_name`.\n"]
     pub fn set_dns_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dns_name = std::option::Option::Some(v.into());
@@ -678,8 +770,8 @@ impl FsxOntapFileSystemEndpointsElInterclusterEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapFileSystemEndpointsElInterclusterEl {
-    type O = terrars::BlockAssignable<FsxOntapFileSystemEndpointsElInterclusterEl>;
+impl terrars::ToListMappable for FsxOntapFileSystem_Endpoints_Intercluster {
+    type O = terrars::BlockAssignable<FsxOntapFileSystem_Endpoints_Intercluster>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -690,35 +782,34 @@ impl terrars::ToListMappable for FsxOntapFileSystemEndpointsElInterclusterEl {
     }
 }
 
-pub struct BuildFsxOntapFileSystemEndpointsElInterclusterEl {}
+pub struct BuildFsxOntapFileSystem_Endpoints_Intercluster {}
 
-impl BuildFsxOntapFileSystemEndpointsElInterclusterEl {
-    pub fn build(self) -> FsxOntapFileSystemEndpointsElInterclusterEl {
-        FsxOntapFileSystemEndpointsElInterclusterEl {
+impl BuildFsxOntapFileSystem_Endpoints_Intercluster {
+    pub fn build(self) -> FsxOntapFileSystem_Endpoints_Intercluster {
+        FsxOntapFileSystem_Endpoints_Intercluster {
             dns_name: core::default::Default::default(),
             ip_addresses: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOntapFileSystemEndpointsElInterclusterElRef {
+#[allow(dead_code)]
+pub struct FsxOntapFileSystem_Endpoints_InterclusterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapFileSystemEndpointsElInterclusterElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> FsxOntapFileSystemEndpointsElInterclusterElRef {
-        FsxOntapFileSystemEndpointsElInterclusterElRef {
+impl terrars::Ref for FsxOntapFileSystem_Endpoints_InterclusterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapFileSystem_Endpoints_InterclusterRef {
+        FsxOntapFileSystem_Endpoints_InterclusterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapFileSystemEndpointsElInterclusterElRef {
+impl FsxOntapFileSystem_Endpoints_InterclusterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -735,14 +826,14 @@ impl FsxOntapFileSystemEndpointsElInterclusterElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapFileSystemEndpointsElManagementEl {
+pub struct FsxOntapFileSystem_Endpoints_Management {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dns_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_addresses: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl FsxOntapFileSystemEndpointsElManagementEl {
+impl FsxOntapFileSystem_Endpoints_Management {
     #[doc = "Set the field `dns_name`.\n"]
     pub fn set_dns_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.dns_name = std::option::Option::Some(v.into());
@@ -759,8 +850,8 @@ impl FsxOntapFileSystemEndpointsElManagementEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapFileSystemEndpointsElManagementEl {
-    type O = terrars::BlockAssignable<FsxOntapFileSystemEndpointsElManagementEl>;
+impl terrars::ToListMappable for FsxOntapFileSystem_Endpoints_Management {
+    type O = terrars::BlockAssignable<FsxOntapFileSystem_Endpoints_Management>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -771,32 +862,34 @@ impl terrars::ToListMappable for FsxOntapFileSystemEndpointsElManagementEl {
     }
 }
 
-pub struct BuildFsxOntapFileSystemEndpointsElManagementEl {}
+pub struct BuildFsxOntapFileSystem_Endpoints_Management {}
 
-impl BuildFsxOntapFileSystemEndpointsElManagementEl {
-    pub fn build(self) -> FsxOntapFileSystemEndpointsElManagementEl {
-        FsxOntapFileSystemEndpointsElManagementEl {
+impl BuildFsxOntapFileSystem_Endpoints_Management {
+    pub fn build(self) -> FsxOntapFileSystem_Endpoints_Management {
+        FsxOntapFileSystem_Endpoints_Management {
             dns_name: core::default::Default::default(),
             ip_addresses: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOntapFileSystemEndpointsElManagementElRef {
+#[allow(dead_code)]
+pub struct FsxOntapFileSystem_Endpoints_ManagementRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapFileSystemEndpointsElManagementElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapFileSystemEndpointsElManagementElRef {
-        FsxOntapFileSystemEndpointsElManagementElRef {
+impl terrars::Ref for FsxOntapFileSystem_Endpoints_ManagementRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapFileSystem_Endpoints_ManagementRef {
+        FsxOntapFileSystem_Endpoints_ManagementRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapFileSystemEndpointsElManagementElRef {
+impl FsxOntapFileSystem_Endpoints_ManagementRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -813,18 +906,18 @@ impl FsxOntapFileSystemEndpointsElManagementElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapFileSystemEndpointsEl {
+pub struct FsxOntapFileSystem_Endpoints {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    intercluster: std::option::Option<terrars::ListField<FsxOntapFileSystemEndpointsElInterclusterEl>>,
+    intercluster: std::option::Option<terrars::ListField<FsxOntapFileSystem_Endpoints_Intercluster>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    management: std::option::Option<terrars::ListField<FsxOntapFileSystemEndpointsElManagementEl>>,
+    management: std::option::Option<terrars::ListField<FsxOntapFileSystem_Endpoints_Management>>,
 }
 
-impl FsxOntapFileSystemEndpointsEl {
+impl FsxOntapFileSystem_Endpoints {
     #[doc = "Set the field `intercluster`.\n"]
     pub fn set_intercluster(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<FsxOntapFileSystemEndpointsElInterclusterEl>>,
+        v: impl std::convert::Into<terrars::ListField<FsxOntapFileSystem_Endpoints_Intercluster>>,
     ) -> Self {
         self.intercluster = std::option::Option::Some(v.into());
         self
@@ -833,15 +926,15 @@ impl FsxOntapFileSystemEndpointsEl {
     #[doc = "Set the field `management`.\n"]
     pub fn set_management(
         mut self,
-        v: impl std::convert::Into<terrars::ListField<FsxOntapFileSystemEndpointsElManagementEl>>,
+        v: impl std::convert::Into<terrars::ListField<FsxOntapFileSystem_Endpoints_Management>>,
     ) -> Self {
         self.management = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for FsxOntapFileSystemEndpointsEl {
-    type O = terrars::BlockAssignable<FsxOntapFileSystemEndpointsEl>;
+impl terrars::ToListMappable for FsxOntapFileSystem_Endpoints {
+    type O = terrars::BlockAssignable<FsxOntapFileSystem_Endpoints>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -852,56 +945,58 @@ impl terrars::ToListMappable for FsxOntapFileSystemEndpointsEl {
     }
 }
 
-pub struct BuildFsxOntapFileSystemEndpointsEl {}
+pub struct BuildFsxOntapFileSystem_Endpoints {}
 
-impl BuildFsxOntapFileSystemEndpointsEl {
-    pub fn build(self) -> FsxOntapFileSystemEndpointsEl {
-        FsxOntapFileSystemEndpointsEl {
+impl BuildFsxOntapFileSystem_Endpoints {
+    pub fn build(self) -> FsxOntapFileSystem_Endpoints {
+        FsxOntapFileSystem_Endpoints {
             intercluster: core::default::Default::default(),
             management: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOntapFileSystemEndpointsElRef {
+#[allow(dead_code)]
+pub struct FsxOntapFileSystem_EndpointsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapFileSystemEndpointsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapFileSystemEndpointsElRef {
-        FsxOntapFileSystemEndpointsElRef {
+impl terrars::Ref for FsxOntapFileSystem_EndpointsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapFileSystem_EndpointsRef {
+        FsxOntapFileSystem_EndpointsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapFileSystemEndpointsElRef {
+impl FsxOntapFileSystem_EndpointsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `intercluster` after provisioning.\n"]
-    pub fn intercluster(&self) -> terrars::ListRef<FsxOntapFileSystemEndpointsElInterclusterElRef> {
+    pub fn intercluster(&self) -> terrars::ListRef<FsxOntapFileSystem_Endpoints_InterclusterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.intercluster", self.base))
     }
 
     #[doc = "Get a reference to the value of field `management` after provisioning.\n"]
-    pub fn management(&self) -> terrars::ListRef<FsxOntapFileSystemEndpointsElManagementElRef> {
+    pub fn management(&self) -> terrars::ListRef<FsxOntapFileSystem_Endpoints_ManagementRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.management", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapFileSystemDiskIopsConfigurationEl {
+pub struct FsxOntapFileSystem_DiskIopsConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     iops: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mode: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxOntapFileSystemDiskIopsConfigurationEl {
+impl FsxOntapFileSystem_DiskIopsConfiguration {
     #[doc = "Set the field `iops`.\n"]
     pub fn set_iops(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.iops = std::option::Option::Some(v.into());
@@ -915,8 +1010,8 @@ impl FsxOntapFileSystemDiskIopsConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapFileSystemDiskIopsConfigurationEl {
-    type O = terrars::BlockAssignable<FsxOntapFileSystemDiskIopsConfigurationEl>;
+impl terrars::ToListMappable for FsxOntapFileSystem_DiskIopsConfiguration {
+    type O = terrars::BlockAssignable<FsxOntapFileSystem_DiskIopsConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -927,32 +1022,34 @@ impl terrars::ToListMappable for FsxOntapFileSystemDiskIopsConfigurationEl {
     }
 }
 
-pub struct BuildFsxOntapFileSystemDiskIopsConfigurationEl {}
+pub struct BuildFsxOntapFileSystem_DiskIopsConfiguration {}
 
-impl BuildFsxOntapFileSystemDiskIopsConfigurationEl {
-    pub fn build(self) -> FsxOntapFileSystemDiskIopsConfigurationEl {
-        FsxOntapFileSystemDiskIopsConfigurationEl {
+impl BuildFsxOntapFileSystem_DiskIopsConfiguration {
+    pub fn build(self) -> FsxOntapFileSystem_DiskIopsConfiguration {
+        FsxOntapFileSystem_DiskIopsConfiguration {
             iops: core::default::Default::default(),
             mode: core::default::Default::default(),
         }
     }
 }
 
-pub struct FsxOntapFileSystemDiskIopsConfigurationElRef {
+#[allow(dead_code)]
+pub struct FsxOntapFileSystem_DiskIopsConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapFileSystemDiskIopsConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapFileSystemDiskIopsConfigurationElRef {
-        FsxOntapFileSystemDiskIopsConfigurationElRef {
+impl terrars::Ref for FsxOntapFileSystem_DiskIopsConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapFileSystem_DiskIopsConfigurationRef {
+        FsxOntapFileSystem_DiskIopsConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapFileSystemDiskIopsConfigurationElRef {
+impl FsxOntapFileSystem_DiskIopsConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -969,7 +1066,7 @@ impl FsxOntapFileSystemDiskIopsConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct FsxOntapFileSystemTimeoutsEl {
+pub struct FsxOntapFileSystem_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -978,7 +1075,7 @@ pub struct FsxOntapFileSystemTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl FsxOntapFileSystemTimeoutsEl {
+impl FsxOntapFileSystem_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -998,8 +1095,8 @@ impl FsxOntapFileSystemTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for FsxOntapFileSystemTimeoutsEl {
-    type O = terrars::BlockAssignable<FsxOntapFileSystemTimeoutsEl>;
+impl terrars::ToListMappable for FsxOntapFileSystem_Timeouts {
+    type O = terrars::BlockAssignable<FsxOntapFileSystem_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1010,11 +1107,11 @@ impl terrars::ToListMappable for FsxOntapFileSystemTimeoutsEl {
     }
 }
 
-pub struct BuildFsxOntapFileSystemTimeoutsEl {}
+pub struct BuildFsxOntapFileSystem_Timeouts {}
 
-impl BuildFsxOntapFileSystemTimeoutsEl {
-    pub fn build(self) -> FsxOntapFileSystemTimeoutsEl {
-        FsxOntapFileSystemTimeoutsEl {
+impl BuildFsxOntapFileSystem_Timeouts {
+    pub fn build(self) -> FsxOntapFileSystem_Timeouts {
+        FsxOntapFileSystem_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -1022,21 +1119,23 @@ impl BuildFsxOntapFileSystemTimeoutsEl {
     }
 }
 
-pub struct FsxOntapFileSystemTimeoutsElRef {
+#[allow(dead_code)]
+pub struct FsxOntapFileSystem_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for FsxOntapFileSystemTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapFileSystemTimeoutsElRef {
-        FsxOntapFileSystemTimeoutsElRef {
+impl terrars::Ref for FsxOntapFileSystem_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> FsxOntapFileSystem_TimeoutsRef {
+        FsxOntapFileSystem_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl FsxOntapFileSystemTimeoutsElRef {
+impl FsxOntapFileSystem_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1055,9 +1154,4 @@ impl FsxOntapFileSystemTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct FsxOntapFileSystemDynamic {
-    disk_iops_configuration: std::option::Option<terrars::DynamicBlock<FsxOntapFileSystemDiskIopsConfigurationEl>>,
 }

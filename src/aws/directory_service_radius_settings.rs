@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DirectoryServiceRadiusSettingsData {
+struct DirectoryServiceRadiusSettingsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -27,17 +29,19 @@ struct DirectoryServiceRadiusSettingsData {
     radius_retries: terrars::PrimField<f64>,
     radius_servers: terrars::SetField<terrars::PrimField<std::string::String>>,
     radius_timeout: terrars::PrimField<f64>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     shared_secret: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     use_same_username: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DirectoryServiceRadiusSettingsTimeoutsEl>,
+    timeouts: std::option::Option<DirectoryServiceRadiusSettings_Timeouts>,
 }
 
 struct DirectoryServiceRadiusSettings_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DirectoryServiceRadiusSettingsData>,
+    data: std::cell::RefCell<DirectoryServiceRadiusSettingsData_>,
 }
 
 #[derive(Clone)]
@@ -143,6 +147,13 @@ impl DirectoryServiceRadiusSettings {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `use_same_username`.\n"]
     pub fn set_use_same_username(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().use_same_username = std::option::Option::Some(v.into());
@@ -150,7 +161,7 @@ impl DirectoryServiceRadiusSettings {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DirectoryServiceRadiusSettingsTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DirectoryServiceRadiusSettings_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -195,6 +206,12 @@ impl DirectoryServiceRadiusSettings {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.radius_timeout", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `shared_secret` after provisioning.\n"]
     pub fn shared_secret(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_secret", self.extract_ref()))
@@ -206,8 +223,8 @@ impl DirectoryServiceRadiusSettings {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DirectoryServiceRadiusSettingsTimeoutsElRef {
-        DirectoryServiceRadiusSettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DirectoryServiceRadiusSettings_TimeoutsRef {
+        DirectoryServiceRadiusSettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -270,7 +287,7 @@ impl BuildDirectoryServiceRadiusSettings {
         let out = DirectoryServiceRadiusSettings(std::rc::Rc::new(DirectoryServiceRadiusSettings_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DirectoryServiceRadiusSettingsData {
+            data: std::cell::RefCell::new(DirectoryServiceRadiusSettingsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -284,6 +301,7 @@ impl BuildDirectoryServiceRadiusSettings {
                 radius_retries: self.radius_retries,
                 radius_servers: self.radius_servers,
                 radius_timeout: self.radius_timeout,
+                region: core::default::Default::default(),
                 shared_secret: self.shared_secret,
                 use_same_username: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -357,6 +375,12 @@ impl DirectoryServiceRadiusSettingsRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.radius_timeout", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `shared_secret` after provisioning.\n"]
     pub fn shared_secret(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.shared_secret", self.extract_ref()))
@@ -368,8 +392,8 @@ impl DirectoryServiceRadiusSettingsRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DirectoryServiceRadiusSettingsTimeoutsElRef {
-        DirectoryServiceRadiusSettingsTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DirectoryServiceRadiusSettings_TimeoutsRef {
+        DirectoryServiceRadiusSettings_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -377,14 +401,14 @@ impl DirectoryServiceRadiusSettingsRef {
 }
 
 #[derive(Serialize)]
-pub struct DirectoryServiceRadiusSettingsTimeoutsEl {
+pub struct DirectoryServiceRadiusSettings_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DirectoryServiceRadiusSettingsTimeoutsEl {
+impl DirectoryServiceRadiusSettings_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -398,8 +422,8 @@ impl DirectoryServiceRadiusSettingsTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DirectoryServiceRadiusSettingsTimeoutsEl {
-    type O = terrars::BlockAssignable<DirectoryServiceRadiusSettingsTimeoutsEl>;
+impl terrars::ToListMappable for DirectoryServiceRadiusSettings_Timeouts {
+    type O = terrars::BlockAssignable<DirectoryServiceRadiusSettings_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -410,32 +434,34 @@ impl terrars::ToListMappable for DirectoryServiceRadiusSettingsTimeoutsEl {
     }
 }
 
-pub struct BuildDirectoryServiceRadiusSettingsTimeoutsEl {}
+pub struct BuildDirectoryServiceRadiusSettings_Timeouts {}
 
-impl BuildDirectoryServiceRadiusSettingsTimeoutsEl {
-    pub fn build(self) -> DirectoryServiceRadiusSettingsTimeoutsEl {
-        DirectoryServiceRadiusSettingsTimeoutsEl {
+impl BuildDirectoryServiceRadiusSettings_Timeouts {
+    pub fn build(self) -> DirectoryServiceRadiusSettings_Timeouts {
+        DirectoryServiceRadiusSettings_Timeouts {
             create: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct DirectoryServiceRadiusSettingsTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DirectoryServiceRadiusSettings_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DirectoryServiceRadiusSettingsTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceRadiusSettingsTimeoutsElRef {
-        DirectoryServiceRadiusSettingsTimeoutsElRef {
+impl terrars::Ref for DirectoryServiceRadiusSettings_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DirectoryServiceRadiusSettings_TimeoutsRef {
+        DirectoryServiceRadiusSettings_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DirectoryServiceRadiusSettingsTimeoutsElRef {
+impl DirectoryServiceRadiusSettings_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

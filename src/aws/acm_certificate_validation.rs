@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AcmCertificateValidationData {
+struct AcmCertificateValidationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,15 +24,17 @@ struct AcmCertificateValidationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     validation_record_fqdns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AcmCertificateValidationTimeoutsEl>,
+    timeouts: std::option::Option<AcmCertificateValidation_Timeouts>,
 }
 
 struct AcmCertificateValidation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AcmCertificateValidationData>,
+    data: std::cell::RefCell<AcmCertificateValidationData_>,
 }
 
 #[derive(Clone)]
@@ -136,6 +140,13 @@ impl AcmCertificateValidation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `validation_record_fqdns`.\n"]
     pub fn set_validation_record_fqdns(
         self,
@@ -146,7 +157,7 @@ impl AcmCertificateValidation {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AcmCertificateValidationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AcmCertificateValidation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -161,14 +172,20 @@ impl AcmCertificateValidation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `validation_record_fqdns` after provisioning.\n"]
     pub fn validation_record_fqdns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.validation_record_fqdns", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AcmCertificateValidationTimeoutsElRef {
-        AcmCertificateValidationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AcmCertificateValidation_TimeoutsRef {
+        AcmCertificateValidation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -214,7 +231,7 @@ impl BuildAcmCertificateValidation {
         let out = AcmCertificateValidation(std::rc::Rc::new(AcmCertificateValidation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AcmCertificateValidationData {
+            data: std::cell::RefCell::new(AcmCertificateValidationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -222,6 +239,7 @@ impl BuildAcmCertificateValidation {
                 provisioner: core::default::Default::default(),
                 certificate_arn: self.certificate_arn,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 validation_record_fqdns: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
@@ -264,24 +282,30 @@ impl AcmCertificateValidationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `validation_record_fqdns` after provisioning.\n"]
     pub fn validation_record_fqdns(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.validation_record_fqdns", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AcmCertificateValidationTimeoutsElRef {
-        AcmCertificateValidationTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AcmCertificateValidation_TimeoutsRef {
+        AcmCertificateValidation_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct AcmCertificateValidationTimeoutsEl {
+pub struct AcmCertificateValidation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AcmCertificateValidationTimeoutsEl {
+impl AcmCertificateValidation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -289,8 +313,8 @@ impl AcmCertificateValidationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AcmCertificateValidationTimeoutsEl {
-    type O = terrars::BlockAssignable<AcmCertificateValidationTimeoutsEl>;
+impl terrars::ToListMappable for AcmCertificateValidation_Timeouts {
+    type O = terrars::BlockAssignable<AcmCertificateValidation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -301,29 +325,31 @@ impl terrars::ToListMappable for AcmCertificateValidationTimeoutsEl {
     }
 }
 
-pub struct BuildAcmCertificateValidationTimeoutsEl {}
+pub struct BuildAcmCertificateValidation_Timeouts {}
 
-impl BuildAcmCertificateValidationTimeoutsEl {
-    pub fn build(self) -> AcmCertificateValidationTimeoutsEl {
-        AcmCertificateValidationTimeoutsEl { create: core::default::Default::default() }
+impl BuildAcmCertificateValidation_Timeouts {
+    pub fn build(self) -> AcmCertificateValidation_Timeouts {
+        AcmCertificateValidation_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct AcmCertificateValidationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AcmCertificateValidation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AcmCertificateValidationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificateValidationTimeoutsElRef {
-        AcmCertificateValidationTimeoutsElRef {
+impl terrars::Ref for AcmCertificateValidation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AcmCertificateValidation_TimeoutsRef {
+        AcmCertificateValidation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AcmCertificateValidationTimeoutsElRef {
+impl AcmCertificateValidation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

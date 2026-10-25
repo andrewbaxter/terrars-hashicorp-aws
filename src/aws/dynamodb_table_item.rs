@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DynamodbTableItemData {
+struct DynamodbTableItemData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,13 +26,15 @@ struct DynamodbTableItemData {
     item: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     range_key: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     table_name: terrars::PrimField<std::string::String>,
 }
 
 struct DynamodbTableItem_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DynamodbTableItemData>,
+    data: std::cell::RefCell<DynamodbTableItemData_>,
 }
 
 #[derive(Clone)]
@@ -142,9 +146,21 @@ impl DynamodbTableItem {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `hash_key` after provisioning.\n"]
     pub fn hash_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `hash_key_value` after provisioning.\n"]
+    pub fn hash_key_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key_value", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -160,6 +176,17 @@ impl DynamodbTableItem {
     #[doc = "Get a reference to the value of field `range_key` after provisioning.\n"]
     pub fn range_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `range_key_value` after provisioning.\n"]
+    pub fn range_key_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key_value", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]
@@ -214,7 +241,7 @@ impl BuildDynamodbTableItem {
         let out = DynamodbTableItem(std::rc::Rc::new(DynamodbTableItem_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DynamodbTableItemData {
+            data: std::cell::RefCell::new(DynamodbTableItemData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -224,6 +251,7 @@ impl BuildDynamodbTableItem {
                 id: core::default::Default::default(),
                 item: self.item,
                 range_key: core::default::Default::default(),
+                region: core::default::Default::default(),
                 table_name: self.table_name,
             }),
         }));
@@ -260,6 +288,11 @@ impl DynamodbTableItemRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `hash_key_value` after provisioning.\n"]
+    pub fn hash_key_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.hash_key_value", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -273,6 +306,17 @@ impl DynamodbTableItemRef {
     #[doc = "Get a reference to the value of field `range_key` after provisioning.\n"]
     pub fn range_key(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `range_key_value` after provisioning.\n"]
+    pub fn range_key_value(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.range_key_value", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `table_name` after provisioning.\n"]

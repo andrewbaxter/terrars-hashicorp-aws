@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApprunnerAutoScalingConfigurationVersionData {
+struct ApprunnerAutoScalingConfigurationVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,6 +30,8 @@ struct ApprunnerAutoScalingConfigurationVersionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_size: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
@@ -36,7 +40,7 @@ struct ApprunnerAutoScalingConfigurationVersionData {
 struct ApprunnerAutoScalingConfigurationVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApprunnerAutoScalingConfigurationVersionData>,
+    data: std::cell::RefCell<ApprunnerAutoScalingConfigurationVersionData_>,
 }
 
 #[derive(Clone)]
@@ -160,6 +164,13 @@ impl ApprunnerAutoScalingConfigurationVersion {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -199,9 +210,19 @@ impl ApprunnerAutoScalingConfigurationVersion {
         )
     }
 
+    #[doc = "Get a reference to the value of field `has_associated_service` after provisioning.\n"]
+    pub fn has_associated_service(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_associated_service", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `is_default` after provisioning.\n"]
+    pub fn is_default(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_default", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `latest` after provisioning.\n"]
@@ -222,6 +243,12 @@ impl ApprunnerAutoScalingConfigurationVersion {
     #[doc = "Get a reference to the value of field `min_size` after provisioning.\n"]
     pub fn min_size(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_size", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]
@@ -283,7 +310,7 @@ impl BuildApprunnerAutoScalingConfigurationVersion {
             ApprunnerAutoScalingConfigurationVersion(std::rc::Rc::new(ApprunnerAutoScalingConfigurationVersion_ {
                 shared: stack.shared.clone(),
                 tf_id: self.tf_id,
-                data: std::cell::RefCell::new(ApprunnerAutoScalingConfigurationVersionData {
+                data: std::cell::RefCell::new(ApprunnerAutoScalingConfigurationVersionData_ {
                     depends_on: core::default::Default::default(),
                     provider: std::option::Option::None,
                     lifecycle: core::default::Default::default(),
@@ -294,6 +321,7 @@ impl BuildApprunnerAutoScalingConfigurationVersion {
                     max_concurrency: core::default::Default::default(),
                     max_size: core::default::Default::default(),
                     min_size: core::default::Default::default(),
+                    region: core::default::Default::default(),
                     tags: core::default::Default::default(),
                     tags_all: core::default::Default::default(),
                 }),
@@ -347,9 +375,19 @@ impl ApprunnerAutoScalingConfigurationVersionRef {
         )
     }
 
+    #[doc = "Get a reference to the value of field `has_associated_service` after provisioning.\n"]
+    pub fn has_associated_service(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_associated_service", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `is_default` after provisioning.\n"]
+    pub fn is_default(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.is_default", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `latest` after provisioning.\n"]
@@ -370,6 +408,12 @@ impl ApprunnerAutoScalingConfigurationVersionRef {
     #[doc = "Get a reference to the value of field `min_size` after provisioning.\n"]
     pub fn min_size(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_size", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `status` after provisioning.\n"]

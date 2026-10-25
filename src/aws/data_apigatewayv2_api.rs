@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataApigatewayv2ApiData {
+struct DataApigatewayv2ApiData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataApigatewayv2ApiData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataApigatewayv2Api_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataApigatewayv2ApiData>,
+    data: std::cell::RefCell<DataApigatewayv2ApiData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataApigatewayv2Api {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -107,7 +118,7 @@ impl DataApigatewayv2Api {
     }
 
     #[doc = "Get a reference to the value of field `cors_configuration` after provisioning.\n"]
-    pub fn cors_configuration(&self) -> terrars::ListRef<DataApigatewayv2ApiCorsConfigurationElRef> {
+    pub fn cors_configuration(&self) -> terrars::ListRef<DataApigatewayv2Api_CorsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_configuration", self.extract_ref()))
     }
 
@@ -131,6 +142,11 @@ impl DataApigatewayv2Api {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -139,6 +155,12 @@ impl DataApigatewayv2Api {
     #[doc = "Get a reference to the value of field `protocol_type` after provisioning.\n"]
     pub fn protocol_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `route_selection_expression` after provisioning.\n"]
@@ -199,13 +221,14 @@ impl BuildDataApigatewayv2Api {
         let out = DataApigatewayv2Api(std::rc::Rc::new(DataApigatewayv2Api_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataApigatewayv2ApiData {
+            data: std::cell::RefCell::new(DataApigatewayv2ApiData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 api_id: self.api_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -258,7 +281,7 @@ impl DataApigatewayv2ApiRef {
     }
 
     #[doc = "Get a reference to the value of field `cors_configuration` after provisioning.\n"]
-    pub fn cors_configuration(&self) -> terrars::ListRef<DataApigatewayv2ApiCorsConfigurationElRef> {
+    pub fn cors_configuration(&self) -> terrars::ListRef<DataApigatewayv2Api_CorsConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_configuration", self.extract_ref()))
     }
 
@@ -282,6 +305,11 @@ impl DataApigatewayv2ApiRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ip_address_type` after provisioning.\n"]
+    pub fn ip_address_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ip_address_type", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
@@ -290,6 +318,12 @@ impl DataApigatewayv2ApiRef {
     #[doc = "Get a reference to the value of field `protocol_type` after provisioning.\n"]
     pub fn protocol_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protocol_type", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `route_selection_expression` after provisioning.\n"]
@@ -309,7 +343,7 @@ impl DataApigatewayv2ApiRef {
 }
 
 #[derive(Serialize)]
-pub struct DataApigatewayv2ApiCorsConfigurationEl {
+pub struct DataApigatewayv2Api_CorsConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allow_credentials: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -324,7 +358,7 @@ pub struct DataApigatewayv2ApiCorsConfigurationEl {
     max_age: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataApigatewayv2ApiCorsConfigurationEl {
+impl DataApigatewayv2Api_CorsConfiguration {
     #[doc = "Set the field `allow_credentials`.\n"]
     pub fn set_allow_credentials(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.allow_credentials = std::option::Option::Some(v.into());
@@ -374,8 +408,8 @@ impl DataApigatewayv2ApiCorsConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataApigatewayv2ApiCorsConfigurationEl {
-    type O = terrars::BlockAssignable<DataApigatewayv2ApiCorsConfigurationEl>;
+impl terrars::ToListMappable for DataApigatewayv2Api_CorsConfiguration {
+    type O = terrars::BlockAssignable<DataApigatewayv2Api_CorsConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -386,11 +420,11 @@ impl terrars::ToListMappable for DataApigatewayv2ApiCorsConfigurationEl {
     }
 }
 
-pub struct BuildDataApigatewayv2ApiCorsConfigurationEl {}
+pub struct BuildDataApigatewayv2Api_CorsConfiguration {}
 
-impl BuildDataApigatewayv2ApiCorsConfigurationEl {
-    pub fn build(self) -> DataApigatewayv2ApiCorsConfigurationEl {
-        DataApigatewayv2ApiCorsConfigurationEl {
+impl BuildDataApigatewayv2Api_CorsConfiguration {
+    pub fn build(self) -> DataApigatewayv2Api_CorsConfiguration {
+        DataApigatewayv2Api_CorsConfiguration {
             allow_credentials: core::default::Default::default(),
             allow_headers: core::default::Default::default(),
             allow_methods: core::default::Default::default(),
@@ -401,21 +435,23 @@ impl BuildDataApigatewayv2ApiCorsConfigurationEl {
     }
 }
 
-pub struct DataApigatewayv2ApiCorsConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataApigatewayv2Api_CorsConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataApigatewayv2ApiCorsConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApigatewayv2ApiCorsConfigurationElRef {
-        DataApigatewayv2ApiCorsConfigurationElRef {
+impl terrars::Ref for DataApigatewayv2Api_CorsConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataApigatewayv2Api_CorsConfigurationRef {
+        DataApigatewayv2Api_CorsConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataApigatewayv2ApiCorsConfigurationElRef {
+impl DataApigatewayv2Api_CorsConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

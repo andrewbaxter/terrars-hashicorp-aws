@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataOrganizationsOrganizationalUnitsData {
+struct DataOrganizationsOrganizationalUnitsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,7 +26,7 @@ struct DataOrganizationsOrganizationalUnitsData {
 struct DataOrganizationsOrganizationalUnits_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataOrganizationsOrganizationalUnitsData>,
+    data: std::cell::RefCell<DataOrganizationsOrganizationalUnitsData_>,
 }
 
 #[derive(Clone)]
@@ -76,7 +78,7 @@ impl DataOrganizationsOrganizationalUnits {
     }
 
     #[doc = "Get a reference to the value of field `children` after provisioning.\n"]
-    pub fn children(&self) -> terrars::ListRef<DataOrganizationsOrganizationalUnitsChildrenElRef> {
+    pub fn children(&self) -> terrars::ListRef<DataOrganizationsOrganizationalUnits_ChildrenRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.children", self.extract_ref()))
     }
 
@@ -133,7 +135,7 @@ impl BuildDataOrganizationsOrganizationalUnits {
         let out = DataOrganizationsOrganizationalUnits(std::rc::Rc::new(DataOrganizationsOrganizationalUnits_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataOrganizationsOrganizationalUnitsData {
+            data: std::cell::RefCell::new(DataOrganizationsOrganizationalUnitsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -171,7 +173,7 @@ impl DataOrganizationsOrganizationalUnitsRef {
     }
 
     #[doc = "Get a reference to the value of field `children` after provisioning.\n"]
-    pub fn children(&self) -> terrars::ListRef<DataOrganizationsOrganizationalUnitsChildrenElRef> {
+    pub fn children(&self) -> terrars::ListRef<DataOrganizationsOrganizationalUnits_ChildrenRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.children", self.extract_ref()))
     }
 
@@ -187,7 +189,7 @@ impl DataOrganizationsOrganizationalUnitsRef {
 }
 
 #[derive(Serialize)]
-pub struct DataOrganizationsOrganizationalUnitsChildrenEl {
+pub struct DataOrganizationsOrganizationalUnits_Children {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -196,7 +198,7 @@ pub struct DataOrganizationsOrganizationalUnitsChildrenEl {
     name: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataOrganizationsOrganizationalUnitsChildrenEl {
+impl DataOrganizationsOrganizationalUnits_Children {
     #[doc = "Set the field `arn`.\n"]
     pub fn set_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.arn = std::option::Option::Some(v.into());
@@ -216,8 +218,8 @@ impl DataOrganizationsOrganizationalUnitsChildrenEl {
     }
 }
 
-impl terrars::ToListMappable for DataOrganizationsOrganizationalUnitsChildrenEl {
-    type O = terrars::BlockAssignable<DataOrganizationsOrganizationalUnitsChildrenEl>;
+impl terrars::ToListMappable for DataOrganizationsOrganizationalUnits_Children {
+    type O = terrars::BlockAssignable<DataOrganizationsOrganizationalUnits_Children>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -228,11 +230,11 @@ impl terrars::ToListMappable for DataOrganizationsOrganizationalUnitsChildrenEl 
     }
 }
 
-pub struct BuildDataOrganizationsOrganizationalUnitsChildrenEl {}
+pub struct BuildDataOrganizationsOrganizationalUnits_Children {}
 
-impl BuildDataOrganizationsOrganizationalUnitsChildrenEl {
-    pub fn build(self) -> DataOrganizationsOrganizationalUnitsChildrenEl {
-        DataOrganizationsOrganizationalUnitsChildrenEl {
+impl BuildDataOrganizationsOrganizationalUnits_Children {
+    pub fn build(self) -> DataOrganizationsOrganizationalUnits_Children {
+        DataOrganizationsOrganizationalUnits_Children {
             arn: core::default::Default::default(),
             id: core::default::Default::default(),
             name: core::default::Default::default(),
@@ -240,24 +242,26 @@ impl BuildDataOrganizationsOrganizationalUnitsChildrenEl {
     }
 }
 
-pub struct DataOrganizationsOrganizationalUnitsChildrenElRef {
+#[allow(dead_code)]
+pub struct DataOrganizationsOrganizationalUnits_ChildrenRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataOrganizationsOrganizationalUnitsChildrenElRef {
+impl terrars::Ref for DataOrganizationsOrganizationalUnits_ChildrenRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataOrganizationsOrganizationalUnitsChildrenElRef {
-        DataOrganizationsOrganizationalUnitsChildrenElRef {
+    ) -> DataOrganizationsOrganizationalUnits_ChildrenRef {
+        DataOrganizationsOrganizationalUnits_ChildrenRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataOrganizationsOrganizationalUnitsChildrenElRef {
+impl DataOrganizationsOrganizationalUnits_ChildrenRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct EbsSnapshotCopyData {
+struct EbsSnapshotCopyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,6 +21,8 @@ struct EbsSnapshotCopyData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    completion_duration_minutes: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     encrypted: std::option::Option<terrars::PrimField<bool>>,
@@ -28,6 +32,8 @@ struct EbsSnapshotCopyData {
     kms_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     permanent_restore: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     source_region: terrars::PrimField<std::string::String>,
     source_snapshot_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -39,13 +45,13 @@ struct EbsSnapshotCopyData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     temporary_restore_days: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<EbsSnapshotCopyTimeoutsEl>,
+    timeouts: std::option::Option<EbsSnapshotCopy_Timeouts>,
 }
 
 struct EbsSnapshotCopy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<EbsSnapshotCopyData>,
+    data: std::cell::RefCell<EbsSnapshotCopyData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +151,12 @@ impl EbsSnapshotCopy {
         self
     }
 
+    #[doc = "Set the field `completion_duration_minutes`.\n"]
+    pub fn set_completion_duration_minutes(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().completion_duration_minutes = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `description`.\n"]
     pub fn set_description(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().description = std::option::Option::Some(v.into());
@@ -172,6 +184,13 @@ impl EbsSnapshotCopy {
     #[doc = "Set the field `permanent_restore`.\n"]
     pub fn set_permanent_restore(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.0.data.borrow_mut().permanent_restore = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -206,7 +225,7 @@ impl EbsSnapshotCopy {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<EbsSnapshotCopyTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<EbsSnapshotCopy_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -214,6 +233,11 @@ impl EbsSnapshotCopy {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `completion_duration_minutes` after provisioning.\n"]
+    pub fn completion_duration_minutes(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.completion_duration_minutes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `data_encryption_key_id` after provisioning.\n"]
@@ -261,6 +285,12 @@ impl EbsSnapshotCopy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permanent_restore", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_region` after provisioning.\n"]
     pub fn source_region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_region", self.extract_ref()))
@@ -302,8 +332,8 @@ impl EbsSnapshotCopy {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EbsSnapshotCopyTimeoutsElRef {
-        EbsSnapshotCopyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EbsSnapshotCopy_TimeoutsRef {
+        EbsSnapshotCopy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -351,17 +381,19 @@ impl BuildEbsSnapshotCopy {
         let out = EbsSnapshotCopy(std::rc::Rc::new(EbsSnapshotCopy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(EbsSnapshotCopyData {
+            data: std::cell::RefCell::new(EbsSnapshotCopyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
+                completion_duration_minutes: core::default::Default::default(),
                 description: core::default::Default::default(),
                 encrypted: core::default::Default::default(),
                 id: core::default::Default::default(),
                 kms_key_id: core::default::Default::default(),
                 permanent_restore: core::default::Default::default(),
+                region: core::default::Default::default(),
                 source_region: self.source_region,
                 source_snapshot_id: self.source_snapshot_id,
                 storage_tier: core::default::Default::default(),
@@ -402,6 +434,11 @@ impl EbsSnapshotCopyRef {
     #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
     pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `completion_duration_minutes` after provisioning.\n"]
+    pub fn completion_duration_minutes(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.completion_duration_minutes", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `data_encryption_key_id` after provisioning.\n"]
@@ -449,6 +486,12 @@ impl EbsSnapshotCopyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permanent_restore", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `source_region` after provisioning.\n"]
     pub fn source_region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.source_region", self.extract_ref()))
@@ -490,20 +533,20 @@ impl EbsSnapshotCopyRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> EbsSnapshotCopyTimeoutsElRef {
-        EbsSnapshotCopyTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> EbsSnapshotCopy_TimeoutsRef {
+        EbsSnapshotCopy_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct EbsSnapshotCopyTimeoutsEl {
+pub struct EbsSnapshotCopy_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl EbsSnapshotCopyTimeoutsEl {
+impl EbsSnapshotCopy_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -517,8 +560,8 @@ impl EbsSnapshotCopyTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for EbsSnapshotCopyTimeoutsEl {
-    type O = terrars::BlockAssignable<EbsSnapshotCopyTimeoutsEl>;
+impl terrars::ToListMappable for EbsSnapshotCopy_Timeouts {
+    type O = terrars::BlockAssignable<EbsSnapshotCopy_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -529,32 +572,34 @@ impl terrars::ToListMappable for EbsSnapshotCopyTimeoutsEl {
     }
 }
 
-pub struct BuildEbsSnapshotCopyTimeoutsEl {}
+pub struct BuildEbsSnapshotCopy_Timeouts {}
 
-impl BuildEbsSnapshotCopyTimeoutsEl {
-    pub fn build(self) -> EbsSnapshotCopyTimeoutsEl {
-        EbsSnapshotCopyTimeoutsEl {
+impl BuildEbsSnapshotCopy_Timeouts {
+    pub fn build(self) -> EbsSnapshotCopy_Timeouts {
+        EbsSnapshotCopy_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct EbsSnapshotCopyTimeoutsElRef {
+#[allow(dead_code)]
+pub struct EbsSnapshotCopy_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for EbsSnapshotCopyTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> EbsSnapshotCopyTimeoutsElRef {
-        EbsSnapshotCopyTimeoutsElRef {
+impl terrars::Ref for EbsSnapshotCopy_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> EbsSnapshotCopy_TimeoutsRef {
+        EbsSnapshotCopy_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl EbsSnapshotCopyTimeoutsElRef {
+impl EbsSnapshotCopy_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

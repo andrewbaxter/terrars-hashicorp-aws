@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataRoute53ResolverRulesData {
+struct DataRoute53ResolverRulesData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,6 +25,8 @@ struct DataRoute53ResolverRulesData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     owner_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resolver_endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     rule_type: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -33,7 +37,7 @@ struct DataRoute53ResolverRulesData {
 struct DataRoute53ResolverRules_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataRoute53ResolverRulesData>,
+    data: std::cell::RefCell<DataRoute53ResolverRulesData_>,
 }
 
 #[derive(Clone)]
@@ -96,6 +100,13 @@ impl DataRoute53ResolverRules {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `resolver_endpoint_id`.\n"]
     pub fn set_resolver_endpoint_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().resolver_endpoint_id = std::option::Option::Some(v.into());
@@ -127,6 +138,12 @@ impl DataRoute53ResolverRules {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resolver_endpoint_id` after provisioning.\n"]
@@ -190,7 +207,7 @@ impl BuildDataRoute53ResolverRules {
         let out = DataRoute53ResolverRules(std::rc::Rc::new(DataRoute53ResolverRules_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataRoute53ResolverRulesData {
+            data: std::cell::RefCell::new(DataRoute53ResolverRulesData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -198,6 +215,7 @@ impl BuildDataRoute53ResolverRules {
                 id: core::default::Default::default(),
                 name_regex: core::default::Default::default(),
                 owner_id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resolver_endpoint_id: core::default::Default::default(),
                 rule_type: core::default::Default::default(),
                 share_status: core::default::Default::default(),
@@ -244,6 +262,12 @@ impl DataRoute53ResolverRulesRef {
     #[doc = "Get a reference to the value of field `owner_id` after provisioning.\n"]
     pub fn owner_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resolver_endpoint_id` after provisioning.\n"]

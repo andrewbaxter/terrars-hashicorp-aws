@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataNeptuneEngineVersionData {
+struct DataNeptuneEngineVersionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -17,13 +19,27 @@ struct DataNeptuneEngineVersionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     for_each: std::option::Option<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_only: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     engine: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    has_major_target: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    has_minor_target: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    latest: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     parameter_group_family: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preferred_major_targets: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    preferred_upgrade_targets: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     preferred_versions: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
@@ -31,7 +47,7 @@ struct DataNeptuneEngineVersionData {
 struct DataNeptuneEngineVersion_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataNeptuneEngineVersionData>,
+    data: std::cell::RefCell<DataNeptuneEngineVersionData_>,
 }
 
 #[derive(Clone)]
@@ -76,15 +92,39 @@ impl DataNeptuneEngineVersion {
         self
     }
 
+    #[doc = "Set the field `default_only`.\n"]
+    pub fn set_default_only(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().default_only = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `engine`.\n"]
     pub fn set_engine(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().engine = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `has_major_target`.\n"]
+    pub fn set_has_major_target(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().has_major_target = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `has_minor_target`.\n"]
+    pub fn set_has_minor_target(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().has_minor_target = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `latest`.\n"]
+    pub fn set_latest(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().latest = std::option::Option::Some(v.into());
         self
     }
 
@@ -97,6 +137,24 @@ impl DataNeptuneEngineVersion {
         self
     }
 
+    #[doc = "Set the field `preferred_major_targets`.\n"]
+    pub fn set_preferred_major_targets(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().preferred_major_targets = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `preferred_upgrade_targets`.\n"]
+    pub fn set_preferred_upgrade_targets(
+        self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().preferred_upgrade_targets = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `preferred_versions`.\n"]
     pub fn set_preferred_versions(
         self,
@@ -106,10 +164,27 @@ impl DataNeptuneEngineVersion {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `version`.\n"]
     pub fn set_version(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().version = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Get a reference to the value of field `default_character_set` after provisioning.\n"]
+    pub fn default_character_set(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_character_set", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `default_only` after provisioning.\n"]
+    pub fn default_only(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_only", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
@@ -123,8 +198,18 @@ impl DataNeptuneEngineVersion {
     }
 
     #[doc = "Get a reference to the value of field `exportable_log_types` after provisioning.\n"]
-    pub fn exportable_log_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.exportable_log_types", self.extract_ref()))
+    pub fn exportable_log_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.exportable_log_types", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `has_major_target` after provisioning.\n"]
+    pub fn has_major_target(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_major_target", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `has_minor_target` after provisioning.\n"]
+    pub fn has_minor_target(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_minor_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -132,9 +217,24 @@ impl DataNeptuneEngineVersion {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `latest` after provisioning.\n"]
+    pub fn latest(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `parameter_group_family` after provisioning.\n"]
     pub fn parameter_group_family(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_group_family", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `preferred_major_targets` after provisioning.\n"]
+    pub fn preferred_major_targets(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_major_targets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `preferred_upgrade_targets` after provisioning.\n"]
+    pub fn preferred_upgrade_targets(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_upgrade_targets", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `preferred_versions` after provisioning.\n"]
@@ -142,9 +242,25 @@ impl DataNeptuneEngineVersion {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_versions", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `supported_character_sets` after provisioning.\n"]
+    pub fn supported_character_sets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.supported_character_sets", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `supported_timezones` after provisioning.\n"]
     pub fn supported_timezones(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.supported_timezones", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `supports_global_databases` after provisioning.\n"]
+    pub fn supports_global_databases(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.supports_global_databases", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `supports_log_exports_to_cloudwatch` after provisioning.\n"]
@@ -160,6 +276,16 @@ impl DataNeptuneEngineVersion {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.supports_read_replica", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `valid_major_targets` after provisioning.\n"]
+    pub fn valid_major_targets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.valid_major_targets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `valid_minor_targets` after provisioning.\n"]
+    pub fn valid_minor_targets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.valid_minor_targets", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `valid_upgrade_targets` after provisioning.\n"]
     pub fn valid_upgrade_targets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.valid_upgrade_targets", self.extract_ref()))
@@ -168,6 +294,11 @@ impl DataNeptuneEngineVersion {
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
     pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `version_actual` after provisioning.\n"]
+    pub fn version_actual(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_actual", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version_description` after provisioning.\n"]
@@ -216,15 +347,22 @@ impl BuildDataNeptuneEngineVersion {
         let out = DataNeptuneEngineVersion(std::rc::Rc::new(DataNeptuneEngineVersion_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataNeptuneEngineVersionData {
+            data: std::cell::RefCell::new(DataNeptuneEngineVersionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
+                default_only: core::default::Default::default(),
                 engine: core::default::Default::default(),
+                has_major_target: core::default::Default::default(),
+                has_minor_target: core::default::Default::default(),
                 id: core::default::Default::default(),
+                latest: core::default::Default::default(),
                 parameter_group_family: core::default::Default::default(),
+                preferred_major_targets: core::default::Default::default(),
+                preferred_upgrade_targets: core::default::Default::default(),
                 preferred_versions: core::default::Default::default(),
+                region: core::default::Default::default(),
                 version: core::default::Default::default(),
             }),
         }));
@@ -256,6 +394,16 @@ impl DataNeptuneEngineVersionRef {
         self.base.clone()
     }
 
+    #[doc = "Get a reference to the value of field `default_character_set` after provisioning.\n"]
+    pub fn default_character_set(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_character_set", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `default_only` after provisioning.\n"]
+    pub fn default_only(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.default_only", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `engine` after provisioning.\n"]
     pub fn engine(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.engine", self.extract_ref()))
@@ -267,8 +415,18 @@ impl DataNeptuneEngineVersionRef {
     }
 
     #[doc = "Get a reference to the value of field `exportable_log_types` after provisioning.\n"]
-    pub fn exportable_log_types(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
-        terrars::ListRef::new(self.shared().clone(), format!("{}.exportable_log_types", self.extract_ref()))
+    pub fn exportable_log_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.exportable_log_types", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `has_major_target` after provisioning.\n"]
+    pub fn has_major_target(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_major_target", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `has_minor_target` after provisioning.\n"]
+    pub fn has_minor_target(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.has_minor_target", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -276,9 +434,24 @@ impl DataNeptuneEngineVersionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `latest` after provisioning.\n"]
+    pub fn latest(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.latest", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `parameter_group_family` after provisioning.\n"]
     pub fn parameter_group_family(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.parameter_group_family", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `preferred_major_targets` after provisioning.\n"]
+    pub fn preferred_major_targets(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_major_targets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `preferred_upgrade_targets` after provisioning.\n"]
+    pub fn preferred_upgrade_targets(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_upgrade_targets", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `preferred_versions` after provisioning.\n"]
@@ -286,9 +459,25 @@ impl DataNeptuneEngineVersionRef {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preferred_versions", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `supported_character_sets` after provisioning.\n"]
+    pub fn supported_character_sets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.supported_character_sets", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `supported_timezones` after provisioning.\n"]
     pub fn supported_timezones(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.supported_timezones", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `supports_global_databases` after provisioning.\n"]
+    pub fn supports_global_databases(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.supports_global_databases", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `supports_log_exports_to_cloudwatch` after provisioning.\n"]
@@ -304,6 +493,16 @@ impl DataNeptuneEngineVersionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.supports_read_replica", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `valid_major_targets` after provisioning.\n"]
+    pub fn valid_major_targets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.valid_major_targets", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `valid_minor_targets` after provisioning.\n"]
+    pub fn valid_minor_targets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.valid_minor_targets", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `valid_upgrade_targets` after provisioning.\n"]
     pub fn valid_upgrade_targets(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.valid_upgrade_targets", self.extract_ref()))
@@ -312,6 +511,11 @@ impl DataNeptuneEngineVersionRef {
     #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
     pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `version_actual` after provisioning.\n"]
+    pub fn version_actual(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version_actual", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `version_description` after provisioning.\n"]

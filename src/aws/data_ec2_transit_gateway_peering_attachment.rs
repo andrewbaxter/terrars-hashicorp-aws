@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2TransitGatewayPeeringAttachmentData {
+struct DataEc2TransitGatewayPeeringAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,18 +21,20 @@ struct DataEc2TransitGatewayPeeringAttachmentData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2TransitGatewayPeeringAttachmentFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEc2TransitGatewayPeeringAttachment_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEc2TransitGatewayPeeringAttachmentTimeoutsEl>,
+    timeouts: std::option::Option<DataEc2TransitGatewayPeeringAttachment_Timeouts>,
     dynamic: DataEc2TransitGatewayPeeringAttachmentDynamic,
 }
 
 struct DataEc2TransitGatewayPeeringAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2TransitGatewayPeeringAttachmentData>,
+    data: std::cell::RefCell<DataEc2TransitGatewayPeeringAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -81,6 +85,13 @@ impl DataEc2TransitGatewayPeeringAttachment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -93,7 +104,7 @@ impl DataEc2TransitGatewayPeeringAttachment {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2TransitGatewayPeeringAttachmentFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2TransitGatewayPeeringAttachment_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -107,9 +118,14 @@ impl DataEc2TransitGatewayPeeringAttachment {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2TransitGatewayPeeringAttachmentTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2TransitGatewayPeeringAttachment_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
@@ -132,6 +148,17 @@ impl DataEc2TransitGatewayPeeringAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_transit_gateway_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -143,8 +170,8 @@ impl DataEc2TransitGatewayPeeringAttachment {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef {
-        DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2TransitGatewayPeeringAttachment_TimeoutsRef {
+        DataEc2TransitGatewayPeeringAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -191,12 +218,13 @@ impl BuildDataEc2TransitGatewayPeeringAttachment {
         let out = DataEc2TransitGatewayPeeringAttachment(std::rc::Rc::new(DataEc2TransitGatewayPeeringAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2TransitGatewayPeeringAttachmentData {
+            data: std::cell::RefCell::new(DataEc2TransitGatewayPeeringAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -231,6 +259,11 @@ impl DataEc2TransitGatewayPeeringAttachmentRef {
         self.base.clone()
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
@@ -251,6 +284,17 @@ impl DataEc2TransitGatewayPeeringAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.peer_transit_gateway_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -262,24 +306,29 @@ impl DataEc2TransitGatewayPeeringAttachmentRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef {
-        DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2TransitGatewayPeeringAttachment_TimeoutsRef {
+        DataEc2TransitGatewayPeeringAttachment_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataEc2TransitGatewayPeeringAttachmentDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2TransitGatewayPeeringAttachment_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayPeeringAttachmentFilterEl {
+pub struct DataEc2TransitGatewayPeeringAttachment_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayPeeringAttachmentFilterEl { }
+impl DataEc2TransitGatewayPeeringAttachment_Filter { }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayPeeringAttachmentFilterEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayPeeringAttachmentFilterEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayPeeringAttachment_Filter {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayPeeringAttachment_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -290,40 +339,42 @@ impl terrars::ToListMappable for DataEc2TransitGatewayPeeringAttachmentFilterEl 
     }
 }
 
-pub struct BuildDataEc2TransitGatewayPeeringAttachmentFilterEl {
+pub struct BuildDataEc2TransitGatewayPeeringAttachment_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEc2TransitGatewayPeeringAttachmentFilterEl {
-    pub fn build(self) -> DataEc2TransitGatewayPeeringAttachmentFilterEl {
-        DataEc2TransitGatewayPeeringAttachmentFilterEl {
+impl BuildDataEc2TransitGatewayPeeringAttachment_Filter {
+    pub fn build(self) -> DataEc2TransitGatewayPeeringAttachment_Filter {
+        DataEc2TransitGatewayPeeringAttachment_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEc2TransitGatewayPeeringAttachmentFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayPeeringAttachment_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayPeeringAttachmentFilterElRef {
+impl terrars::Ref for DataEc2TransitGatewayPeeringAttachment_FilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2TransitGatewayPeeringAttachmentFilterElRef {
-        DataEc2TransitGatewayPeeringAttachmentFilterElRef {
+    ) -> DataEc2TransitGatewayPeeringAttachment_FilterRef {
+        DataEc2TransitGatewayPeeringAttachment_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayPeeringAttachmentFilterElRef {
+impl DataEc2TransitGatewayPeeringAttachment_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -340,12 +391,12 @@ impl DataEc2TransitGatewayPeeringAttachmentFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayPeeringAttachmentTimeoutsEl {
+pub struct DataEc2TransitGatewayPeeringAttachment_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayPeeringAttachmentTimeoutsEl {
+impl DataEc2TransitGatewayPeeringAttachment_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -353,8 +404,8 @@ impl DataEc2TransitGatewayPeeringAttachmentTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayPeeringAttachmentTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayPeeringAttachmentTimeoutsEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayPeeringAttachment_Timeouts {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayPeeringAttachment_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -365,32 +416,34 @@ impl terrars::ToListMappable for DataEc2TransitGatewayPeeringAttachmentTimeoutsE
     }
 }
 
-pub struct BuildDataEc2TransitGatewayPeeringAttachmentTimeoutsEl {}
+pub struct BuildDataEc2TransitGatewayPeeringAttachment_Timeouts {}
 
-impl BuildDataEc2TransitGatewayPeeringAttachmentTimeoutsEl {
-    pub fn build(self) -> DataEc2TransitGatewayPeeringAttachmentTimeoutsEl {
-        DataEc2TransitGatewayPeeringAttachmentTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEc2TransitGatewayPeeringAttachment_Timeouts {
+    pub fn build(self) -> DataEc2TransitGatewayPeeringAttachment_Timeouts {
+        DataEc2TransitGatewayPeeringAttachment_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayPeeringAttachment_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef {
+impl terrars::Ref for DataEc2TransitGatewayPeeringAttachment_TimeoutsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef {
-        DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef {
+    ) -> DataEc2TransitGatewayPeeringAttachment_TimeoutsRef {
+        DataEc2TransitGatewayPeeringAttachment_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef {
+impl DataEc2TransitGatewayPeeringAttachment_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -399,9 +452,4 @@ impl DataEc2TransitGatewayPeeringAttachmentTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2TransitGatewayPeeringAttachmentDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2TransitGatewayPeeringAttachmentFilterEl>>,
 }

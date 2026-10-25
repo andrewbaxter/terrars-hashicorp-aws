@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsmResourceDataSyncData {
+struct SsmResourceDataSyncData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,16 @@ struct SsmResourceDataSyncData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_destination: std::option::Option<std::vec::Vec<SsmResourceDataSyncS3DestinationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_destination: std::option::Option<std::vec::Vec<SsmResourceDataSync_S3Destination>>,
     dynamic: SsmResourceDataSyncDynamic,
 }
 
 struct SsmResourceDataSync_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsmResourceDataSyncData>,
+    data: std::cell::RefCell<SsmResourceDataSyncData_>,
 }
 
 #[derive(Clone)]
@@ -135,10 +139,17 @@ impl SsmResourceDataSync {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `s3_destination`.\n"]
     pub fn set_s3_destination(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<SsmResourceDataSyncS3DestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<SsmResourceDataSync_S3Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -161,8 +172,14 @@ impl SsmResourceDataSync {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `s3_destination` after provisioning.\n"]
-    pub fn s3_destination(&self) -> terrars::ListRef<SsmResourceDataSyncS3DestinationElRef> {
+    pub fn s3_destination(&self) -> terrars::ListRef<SsmResourceDataSync_S3DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_destination", self.extract_ref()))
     }
 }
@@ -209,7 +226,7 @@ impl BuildSsmResourceDataSync {
         let out = SsmResourceDataSync(std::rc::Rc::new(SsmResourceDataSync_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsmResourceDataSyncData {
+            data: std::cell::RefCell::new(SsmResourceDataSyncData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -217,6 +234,7 @@ impl BuildSsmResourceDataSync {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 s3_destination: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -259,14 +277,101 @@ impl SsmResourceDataSyncRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `s3_destination` after provisioning.\n"]
-    pub fn s3_destination(&self) -> terrars::ListRef<SsmResourceDataSyncS3DestinationElRef> {
+    pub fn s3_destination(&self) -> terrars::ListRef<SsmResourceDataSync_S3DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_destination", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct SsmResourceDataSyncDynamic {
+    s3_destination: std::option::Option<terrars::DynamicBlock<SsmResourceDataSync_S3Destination>>,
+}
+
 #[derive(Serialize)]
-pub struct SsmResourceDataSyncS3DestinationEl {
+pub struct SsmResourceDataSync_S3Destination_DestinationDataSharing {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_data_sharing_type: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl SsmResourceDataSync_S3Destination_DestinationDataSharing {
+    #[doc = "Set the field `destination_data_sharing_type`.\n"]
+    pub fn set_destination_data_sharing_type(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.destination_data_sharing_type = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SsmResourceDataSync_S3Destination_DestinationDataSharing {
+    type O = terrars::BlockAssignable<SsmResourceDataSync_S3Destination_DestinationDataSharing>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSsmResourceDataSync_S3Destination_DestinationDataSharing {}
+
+impl BuildSsmResourceDataSync_S3Destination_DestinationDataSharing {
+    pub fn build(self) -> SsmResourceDataSync_S3Destination_DestinationDataSharing {
+        SsmResourceDataSync_S3Destination_DestinationDataSharing {
+            destination_data_sharing_type: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SsmResourceDataSync_S3Destination_DestinationDataSharingRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SsmResourceDataSync_S3Destination_DestinationDataSharingRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SsmResourceDataSync_S3Destination_DestinationDataSharingRef {
+        SsmResourceDataSync_S3Destination_DestinationDataSharingRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SsmResourceDataSync_S3Destination_DestinationDataSharingRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `destination_data_sharing_type` after provisioning.\n"]
+    pub fn destination_data_sharing_type(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.destination_data_sharing_type", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct SsmResourceDataSync_S3DestinationDynamic {
+    destination_data_sharing: std
+    ::option
+    ::Option<terrars::DynamicBlock<SsmResourceDataSync_S3Destination_DestinationDataSharing>>,
+}
+
+#[derive(Serialize)]
+pub struct SsmResourceDataSync_S3Destination {
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_key_arn: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -275,9 +380,14 @@ pub struct SsmResourceDataSyncS3DestinationEl {
     region: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sync_format: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    destination_data_sharing: std
+    ::option
+    ::Option<std::vec::Vec<SsmResourceDataSync_S3Destination_DestinationDataSharing>>,
+    dynamic: SsmResourceDataSync_S3DestinationDynamic,
 }
 
-impl SsmResourceDataSyncS3DestinationEl {
+impl SsmResourceDataSync_S3Destination {
     #[doc = "Set the field `kms_key_arn`.\n"]
     pub fn set_kms_key_arn(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_key_arn = std::option::Option::Some(v.into());
@@ -295,10 +405,31 @@ impl SsmResourceDataSyncS3DestinationEl {
         self.sync_format = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `destination_data_sharing`.\n"]
+    pub fn set_destination_data_sharing(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<SsmResourceDataSync_S3Destination_DestinationDataSharing>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.destination_data_sharing = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.destination_data_sharing = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for SsmResourceDataSyncS3DestinationEl {
-    type O = terrars::BlockAssignable<SsmResourceDataSyncS3DestinationEl>;
+impl terrars::ToListMappable for SsmResourceDataSync_S3Destination {
+    type O = terrars::BlockAssignable<SsmResourceDataSync_S3Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -309,40 +440,44 @@ impl terrars::ToListMappable for SsmResourceDataSyncS3DestinationEl {
     }
 }
 
-pub struct BuildSsmResourceDataSyncS3DestinationEl {
+pub struct BuildSsmResourceDataSync_S3Destination {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub region: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSsmResourceDataSyncS3DestinationEl {
-    pub fn build(self) -> SsmResourceDataSyncS3DestinationEl {
-        SsmResourceDataSyncS3DestinationEl {
+impl BuildSsmResourceDataSync_S3Destination {
+    pub fn build(self) -> SsmResourceDataSync_S3Destination {
+        SsmResourceDataSync_S3Destination {
             bucket_name: self.bucket_name,
             kms_key_arn: core::default::Default::default(),
             prefix: core::default::Default::default(),
             region: self.region,
             sync_format: core::default::Default::default(),
+            destination_data_sharing: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct SsmResourceDataSyncS3DestinationElRef {
+#[allow(dead_code)]
+pub struct SsmResourceDataSync_S3DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsmResourceDataSyncS3DestinationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmResourceDataSyncS3DestinationElRef {
-        SsmResourceDataSyncS3DestinationElRef {
+impl terrars::Ref for SsmResourceDataSync_S3DestinationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> SsmResourceDataSync_S3DestinationRef {
+        SsmResourceDataSync_S3DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsmResourceDataSyncS3DestinationElRef {
+impl SsmResourceDataSync_S3DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -371,9 +506,11 @@ impl SsmResourceDataSyncS3DestinationElRef {
     pub fn sync_format(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.sync_format", self.base))
     }
-}
 
-#[derive(Serialize, Default)]
-struct SsmResourceDataSyncDynamic {
-    s3_destination: std::option::Option<terrars::DynamicBlock<SsmResourceDataSyncS3DestinationEl>>,
+    #[doc = "Get a reference to the value of field `destination_data_sharing` after provisioning.\n"]
+    pub fn destination_data_sharing(
+        &self,
+    ) -> terrars::ListRef<SsmResourceDataSync_S3Destination_DestinationDataSharingRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.destination_data_sharing", self.base))
+    }
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Resourceexplorer2ViewData {
+struct Resourceexplorer2ViewData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,18 +24,22 @@ struct Resourceexplorer2ViewData {
     default_view: std::option::Option<terrars::PrimField<bool>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scope: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filters: std::option::Option<std::vec::Vec<Resourceexplorer2ViewFiltersEl>>,
+    filters: std::option::Option<std::vec::Vec<Resourceexplorer2View_Filters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    included_property: std::option::Option<std::vec::Vec<Resourceexplorer2ViewIncludedPropertyEl>>,
+    included_property: std::option::Option<std::vec::Vec<Resourceexplorer2View_IncludedProperty>>,
     dynamic: Resourceexplorer2ViewDynamic,
 }
 
 struct Resourceexplorer2View_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Resourceexplorer2ViewData>,
+    data: std::cell::RefCell<Resourceexplorer2ViewData_>,
 }
 
 #[derive(Clone)]
@@ -139,6 +145,19 @@ impl Resourceexplorer2View {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scope`.\n"]
+    pub fn set_scope(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().scope = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -151,7 +170,7 @@ impl Resourceexplorer2View {
     #[doc = "Set the field `filters`.\n"]
     pub fn set_filters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Resourceexplorer2ViewFiltersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Resourceexplorer2View_Filters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -167,7 +186,7 @@ impl Resourceexplorer2View {
     #[doc = "Set the field `included_property`.\n"]
     pub fn set_included_property(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Resourceexplorer2ViewIncludedPropertyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Resourceexplorer2View_IncludedProperty>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -200,6 +219,17 @@ impl Resourceexplorer2View {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
+    pub fn scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -211,12 +241,12 @@ impl Resourceexplorer2View {
     }
 
     #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> terrars::ListRef<Resourceexplorer2ViewFiltersElRef> {
+    pub fn filters(&self) -> terrars::ListRef<Resourceexplorer2View_FiltersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `included_property` after provisioning.\n"]
-    pub fn included_property(&self) -> terrars::ListRef<Resourceexplorer2ViewIncludedPropertyElRef> {
+    pub fn included_property(&self) -> terrars::ListRef<Resourceexplorer2View_IncludedPropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.included_property", self.extract_ref()))
     }
 }
@@ -263,7 +293,7 @@ impl BuildResourceexplorer2View {
         let out = Resourceexplorer2View(std::rc::Rc::new(Resourceexplorer2View_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Resourceexplorer2ViewData {
+            data: std::cell::RefCell::new(Resourceexplorer2ViewData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -271,6 +301,8 @@ impl BuildResourceexplorer2View {
                 provisioner: core::default::Default::default(),
                 default_view: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
+                scope: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filters: core::default::Default::default(),
                 included_property: core::default::Default::default(),
@@ -325,6 +357,17 @@ impl Resourceexplorer2ViewRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `scope` after provisioning.\n"]
+    pub fn scope(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scope", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -336,25 +379,31 @@ impl Resourceexplorer2ViewRef {
     }
 
     #[doc = "Get a reference to the value of field `filters` after provisioning.\n"]
-    pub fn filters(&self) -> terrars::ListRef<Resourceexplorer2ViewFiltersElRef> {
+    pub fn filters(&self) -> terrars::ListRef<Resourceexplorer2View_FiltersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `included_property` after provisioning.\n"]
-    pub fn included_property(&self) -> terrars::ListRef<Resourceexplorer2ViewIncludedPropertyElRef> {
+    pub fn included_property(&self) -> terrars::ListRef<Resourceexplorer2View_IncludedPropertyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.included_property", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Resourceexplorer2ViewDynamic {
+    filters: std::option::Option<terrars::DynamicBlock<Resourceexplorer2View_Filters>>,
+    included_property: std::option::Option<terrars::DynamicBlock<Resourceexplorer2View_IncludedProperty>>,
+}
+
 #[derive(Serialize)]
-pub struct Resourceexplorer2ViewFiltersEl {
+pub struct Resourceexplorer2View_Filters {
     filter_string: terrars::PrimField<std::string::String>,
 }
 
-impl Resourceexplorer2ViewFiltersEl { }
+impl Resourceexplorer2View_Filters { }
 
-impl terrars::ToListMappable for Resourceexplorer2ViewFiltersEl {
-    type O = terrars::BlockAssignable<Resourceexplorer2ViewFiltersEl>;
+impl terrars::ToListMappable for Resourceexplorer2View_Filters {
+    type O = terrars::BlockAssignable<Resourceexplorer2View_Filters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -365,32 +414,34 @@ impl terrars::ToListMappable for Resourceexplorer2ViewFiltersEl {
     }
 }
 
-pub struct BuildResourceexplorer2ViewFiltersEl {
+pub struct BuildResourceexplorer2View_Filters {
     #[doc = ""]
     pub filter_string: terrars::PrimField<std::string::String>,
 }
 
-impl BuildResourceexplorer2ViewFiltersEl {
-    pub fn build(self) -> Resourceexplorer2ViewFiltersEl {
-        Resourceexplorer2ViewFiltersEl { filter_string: self.filter_string }
+impl BuildResourceexplorer2View_Filters {
+    pub fn build(self) -> Resourceexplorer2View_Filters {
+        Resourceexplorer2View_Filters { filter_string: self.filter_string }
     }
 }
 
-pub struct Resourceexplorer2ViewFiltersElRef {
+#[allow(dead_code)]
+pub struct Resourceexplorer2View_FiltersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Resourceexplorer2ViewFiltersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Resourceexplorer2ViewFiltersElRef {
-        Resourceexplorer2ViewFiltersElRef {
+impl terrars::Ref for Resourceexplorer2View_FiltersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Resourceexplorer2View_FiltersRef {
+        Resourceexplorer2View_FiltersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Resourceexplorer2ViewFiltersElRef {
+impl Resourceexplorer2View_FiltersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -402,14 +453,14 @@ impl Resourceexplorer2ViewFiltersElRef {
 }
 
 #[derive(Serialize)]
-pub struct Resourceexplorer2ViewIncludedPropertyEl {
+pub struct Resourceexplorer2View_IncludedProperty {
     name: terrars::PrimField<std::string::String>,
 }
 
-impl Resourceexplorer2ViewIncludedPropertyEl { }
+impl Resourceexplorer2View_IncludedProperty { }
 
-impl terrars::ToListMappable for Resourceexplorer2ViewIncludedPropertyEl {
-    type O = terrars::BlockAssignable<Resourceexplorer2ViewIncludedPropertyEl>;
+impl terrars::ToListMappable for Resourceexplorer2View_IncludedProperty {
+    type O = terrars::BlockAssignable<Resourceexplorer2View_IncludedProperty>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -420,32 +471,34 @@ impl terrars::ToListMappable for Resourceexplorer2ViewIncludedPropertyEl {
     }
 }
 
-pub struct BuildResourceexplorer2ViewIncludedPropertyEl {
+pub struct BuildResourceexplorer2View_IncludedProperty {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildResourceexplorer2ViewIncludedPropertyEl {
-    pub fn build(self) -> Resourceexplorer2ViewIncludedPropertyEl {
-        Resourceexplorer2ViewIncludedPropertyEl { name: self.name }
+impl BuildResourceexplorer2View_IncludedProperty {
+    pub fn build(self) -> Resourceexplorer2View_IncludedProperty {
+        Resourceexplorer2View_IncludedProperty { name: self.name }
     }
 }
 
-pub struct Resourceexplorer2ViewIncludedPropertyElRef {
+#[allow(dead_code)]
+pub struct Resourceexplorer2View_IncludedPropertyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Resourceexplorer2ViewIncludedPropertyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Resourceexplorer2ViewIncludedPropertyElRef {
-        Resourceexplorer2ViewIncludedPropertyElRef {
+impl terrars::Ref for Resourceexplorer2View_IncludedPropertyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Resourceexplorer2View_IncludedPropertyRef {
+        Resourceexplorer2View_IncludedPropertyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Resourceexplorer2ViewIncludedPropertyElRef {
+impl Resourceexplorer2View_IncludedPropertyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -454,10 +507,4 @@ impl Resourceexplorer2ViewIncludedPropertyElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Resourceexplorer2ViewDynamic {
-    filters: std::option::Option<terrars::DynamicBlock<Resourceexplorer2ViewFiltersEl>>,
-    included_property: std::option::Option<terrars::DynamicBlock<Resourceexplorer2ViewIncludedPropertyEl>>,
 }

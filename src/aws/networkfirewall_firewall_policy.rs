@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct NetworkfirewallFirewallPolicyData {
+struct NetworkfirewallFirewallPolicyData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,20 +26,22 @@ struct NetworkfirewallFirewallPolicyData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    encryption_configuration: std::option::Option<std::vec::Vec<NetworkfirewallFirewallPolicyEncryptionConfigurationEl>>,
+    encryption_configuration: std::option::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_EncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    firewall_policy: std::option::Option<std::vec::Vec<NetworkfirewallFirewallPolicyFirewallPolicyEl>>,
+    firewall_policy: std::option::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy>>,
     dynamic: NetworkfirewallFirewallPolicyDynamic,
 }
 
 struct NetworkfirewallFirewallPolicy_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<NetworkfirewallFirewallPolicyData>,
+    data: std::cell::RefCell<NetworkfirewallFirewallPolicyData_>,
 }
 
 #[derive(Clone)]
@@ -149,6 +153,13 @@ impl NetworkfirewallFirewallPolicy {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -170,7 +181,7 @@ impl NetworkfirewallFirewallPolicy {
     #[doc = "Set the field `encryption_configuration`.\n"]
     pub fn set_encryption_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkfirewallFirewallPolicyEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkfirewallFirewallPolicy_EncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -186,7 +197,7 @@ impl NetworkfirewallFirewallPolicy {
     #[doc = "Set the field `firewall_policy`.\n"]
     pub fn set_firewall_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -219,6 +230,12 @@ impl NetworkfirewallFirewallPolicy {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -235,14 +252,12 @@ impl NetworkfirewallFirewallPolicy {
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(
-        &self,
-    ) -> terrars::ListRef<NetworkfirewallFirewallPolicyEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<NetworkfirewallFirewallPolicy_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `firewall_policy` after provisioning.\n"]
-    pub fn firewall_policy(&self) -> terrars::ListRef<NetworkfirewallFirewallPolicyFirewallPolicyElRef> {
+    pub fn firewall_policy(&self) -> terrars::ListRef<NetworkfirewallFirewallPolicy_FirewallPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.firewall_policy", self.extract_ref()))
     }
 }
@@ -289,7 +304,7 @@ impl BuildNetworkfirewallFirewallPolicy {
         let out = NetworkfirewallFirewallPolicy(std::rc::Rc::new(NetworkfirewallFirewallPolicy_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(NetworkfirewallFirewallPolicyData {
+            data: std::cell::RefCell::new(NetworkfirewallFirewallPolicyData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -298,6 +313,7 @@ impl BuildNetworkfirewallFirewallPolicy {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 encryption_configuration: core::default::Default::default(),
@@ -353,6 +369,12 @@ impl NetworkfirewallFirewallPolicyRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -369,27 +391,33 @@ impl NetworkfirewallFirewallPolicyRef {
     }
 
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(
-        &self,
-    ) -> terrars::ListRef<NetworkfirewallFirewallPolicyEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::ListRef<NetworkfirewallFirewallPolicy_EncryptionConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `firewall_policy` after provisioning.\n"]
-    pub fn firewall_policy(&self) -> terrars::ListRef<NetworkfirewallFirewallPolicyFirewallPolicyElRef> {
+    pub fn firewall_policy(&self) -> terrars::ListRef<NetworkfirewallFirewallPolicy_FirewallPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.firewall_policy", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct NetworkfirewallFirewallPolicyDynamic {
+    encryption_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicy_EncryptionConfiguration>>,
+    firewall_policy: std::option::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy>>,
+}
+
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyEncryptionConfigurationEl {
+pub struct NetworkfirewallFirewallPolicy_EncryptionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type")]
     type_: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkfirewallFirewallPolicyEncryptionConfigurationEl {
+impl NetworkfirewallFirewallPolicy_EncryptionConfiguration {
     #[doc = "Set the field `key_id`.\n"]
     pub fn set_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key_id = std::option::Option::Some(v.into());
@@ -397,8 +425,8 @@ impl NetworkfirewallFirewallPolicyEncryptionConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkfirewallFirewallPolicyEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicyEncryptionConfigurationEl>;
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicy_EncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -409,38 +437,40 @@ impl terrars::ToListMappable for NetworkfirewallFirewallPolicyEncryptionConfigur
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyEncryptionConfigurationEl {
+pub struct BuildNetworkfirewallFirewallPolicy_EncryptionConfiguration {
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkfirewallFirewallPolicyEncryptionConfigurationEl {
-    pub fn build(self) -> NetworkfirewallFirewallPolicyEncryptionConfigurationEl {
-        NetworkfirewallFirewallPolicyEncryptionConfigurationEl {
+impl BuildNetworkfirewallFirewallPolicy_EncryptionConfiguration {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_EncryptionConfiguration {
+        NetworkfirewallFirewallPolicy_EncryptionConfiguration {
             key_id: core::default::Default::default(),
             type_: self.type_,
         }
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_EncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallFirewallPolicyEncryptionConfigurationElRef {
+impl terrars::Ref for NetworkfirewallFirewallPolicy_EncryptionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyEncryptionConfigurationElRef {
-        NetworkfirewallFirewallPolicyEncryptionConfigurationElRef {
+    ) -> NetworkfirewallFirewallPolicy_EncryptionConfigurationRef {
+        NetworkfirewallFirewallPolicy_EncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyEncryptionConfigurationElRef {
+impl NetworkfirewallFirewallPolicy_EncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -457,14 +487,15 @@ impl NetworkfirewallFirewallPolicyEncryptionConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl {
-    rule_order: terrars::PrimField<std::string::String>,
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet {
+    definition: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl { }
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet { }
 
-impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl {
-    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>;
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet {
+    type O =
+        terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -475,35 +506,425 @@ impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElSt
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl {
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet {
     #[doc = ""]
-    pub rule_order: terrars::PrimField<std::string::String>,
+    pub definition: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl {
-    pub fn build(self) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl { rule_order: self.rule_order }
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet {
+            definition: self.definition,
+        }
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSetRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSetRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSetRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSetRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `definition` after provisioning.\n"]
+    pub fn definition(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.definition", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariablesDynamic {
+    ip_set: std
+    ::option
+    ::Option<
+        terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet>,
+    >,
+}
+
+#[derive(Serialize)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables {
+    key: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ip_set: std
+    ::option
+    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet>>,
+    dynamic: NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariablesDynamic,
+}
+
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables {
+    #[doc = "Set the field `ip_set`.\n"]
+    pub fn set_ip_set(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSet,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.ip_set = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.ip_set = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables {
+    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables {
+    #[doc = ""]
+    pub key: terrars::PrimField<std::string::String>,
+}
+
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables {
+            key: self.key,
+            ip_set: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariablesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariablesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariablesRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariablesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariablesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `key` after provisioning.\n"]
+    pub fn key(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.key", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `ip_set` after provisioning.\n"]
+    pub fn ip_set(
+        &self,
+    ) -> terrars::ListRef<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables_IpSetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.ip_set", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariablesDynamic {
+    rule_variables: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables>>,
+}
+
+#[derive(Serialize)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rule_variables: std
+    ::option
+    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables>>,
+    dynamic: NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariablesDynamic,
+}
+
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables {
+    #[doc = "Set the field `rule_variables`.\n"]
+    pub fn set_rule_variables(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables_RuleVariables>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.rule_variables = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.rule_variables = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables {
+    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables {}
+
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables {
+            rule_variables: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariablesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariablesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariablesRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariablesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariablesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+}
+
+#[derive(Serialize)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tcp_idle_timeout_seconds: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts {
+    #[doc = "Set the field `tcp_idle_timeout_seconds`.\n"]
+    pub fn set_tcp_idle_timeout_seconds(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.tcp_idle_timeout_seconds = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts {
+    type O =
+        terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts {}
+
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts {
+            tcp_idle_timeout_seconds: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeoutsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeoutsRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `tcp_idle_timeout_seconds` after provisioning.\n"]
+    pub fn tcp_idle_timeout_seconds(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tcp_idle_timeout_seconds", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptionsDynamic {
+    flow_timeouts: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts>>,
+}
+
+#[derive(Serialize)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    rule_order: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    stream_exception_policy: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    flow_timeouts: std
+    ::option
+    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts>>,
+    dynamic: NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptionsDynamic,
+}
+
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions {
+    #[doc = "Set the field `rule_order`.\n"]
+    pub fn set_rule_order(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.rule_order = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `stream_exception_policy`.\n"]
+    pub fn set_stream_exception_policy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.stream_exception_policy = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `flow_timeouts`.\n"]
+    pub fn set_flow_timeouts(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeouts,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.flow_timeouts = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.flow_timeouts = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions {
+    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions {}
+
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions {
+            rule_order: core::default::Default::default(),
+            stream_exception_policy: core::default::Default::default(),
+            flow_timeouts: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptionsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptionsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptionsRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptionsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -512,15 +933,27 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef {
     pub fn rule_order(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rule_order", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `stream_exception_policy` after provisioning.\n"]
+    pub fn stream_exception_policy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.stream_exception_policy", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `flow_timeouts` after provisioning.\n"]
+    pub fn flow_timeouts(
+        &self,
+    ) -> terrars::ListRef<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions_FlowTimeoutsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.flow_timeouts", self.base))
+    }
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl {
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override {
     #[doc = "Set the field `action`.\n"]
     pub fn set_action(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.action = std::option::Option::Some(v.into());
@@ -528,10 +961,9 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOv
     }
 }
 
-impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl {
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override {
     type O =
-        terrars
-        ::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl>;
+        terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -542,34 +974,36 @@ impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElSt
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl {}
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override {}
 
-impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl {
-    pub fn build(self) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl {
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override {
             action: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_OverrideRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideElRef {
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_OverrideRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideElRef {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideElRef {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_OverrideRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_OverrideRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideElRef {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_OverrideRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -581,27 +1015,38 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOv
 }
 
 #[derive(Serialize, Default)]
-struct NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElDynamic {
+struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReferenceDynamic {
     override_: std
     ::option
     ::Option<
-        terrars::DynamicBlock<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl>,
+        terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    deep_threat_inspection: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     priority: std::option::Option<terrars::PrimField<f64>>,
     resource_arn: terrars::PrimField<std::string::String>,
     #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
     override_: std
     ::option
-    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl>>,
-    dynamic: NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElDynamic,
+    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override>>,
+    dynamic: NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReferenceDynamic,
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference {
+    #[doc = "Set the field `deep_threat_inspection`.\n"]
+    pub fn set_deep_threat_inspection(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.deep_threat_inspection = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `priority`.\n"]
     pub fn set_priority(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.priority = std::option::Option::Some(v.into());
@@ -619,7 +1064,7 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideEl,
+                            NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_Override,
                         >,
                     >,
     ) -> Self {
@@ -635,8 +1080,8 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
-    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>;
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference {
+    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -647,14 +1092,15 @@ impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElSt
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference {
     #[doc = ""]
     pub resource_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
-    pub fn build(self) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl {
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference {
+            deep_threat_inspection: core::default::Default::default(),
             priority: core::default::Default::default(),
             resource_arn: self.resource_arn,
             override_: core::default::Default::default(),
@@ -663,26 +1109,33 @@ impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenc
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReferenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReferenceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReferenceRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReferenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRef {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReferenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `deep_threat_inspection` after provisioning.\n"]
+    pub fn deep_threat_inspection(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deep_threat_inspection", self.base))
     }
 
     #[doc = "Get a reference to the value of field `priority` after provisioning.\n"]
@@ -698,26 +1151,26 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElRe
     #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
     pub fn override_(
         &self,
-    ) -> terrars::ListRef<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceElOverrideElRef> {
+    ) -> terrars::ListRef<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference_OverrideRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.override", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension {
     value: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension {
 
 }
 
 impl terrars
-::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
+::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl,
+            NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -729,40 +1182,42 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension {
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension {
     pub fn build(
         self,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension {
             value: self.value,
         }
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_DimensionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
+::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_DimensionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_DimensionRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_DimensionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionElRef {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_DimensionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -774,19 +1229,19 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionD
 }
 
 #[derive(Serialize, Default)]
-struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDynamic {
+struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricActionDynamic {
     dimension: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl,
+            NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     dimension: std
     ::option
@@ -794,13 +1249,13 @@ pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElA
         std
         ::vec
         ::Vec<
-            NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl,
+            NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension,
         >,
     >,
-    dynamic: NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDynamic,
+    dynamic: NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricActionDynamic,
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction {
     #[doc = "Set the field `dimension`.\n"]
     pub fn set_dimension(
         mut self,
@@ -812,7 +1267,7 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionD
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElDimensionEl,
+                            NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction_Dimension,
                         >,
                     >,
     ) -> Self {
@@ -829,11 +1284,11 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionD
 }
 
 impl terrars
-::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
+::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction {
     type O =
         terrars
         ::BlockAssignable<
-            NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl,
+            NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -845,71 +1300,71 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {}
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction {}
 
-impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction {
     pub fn build(
         self,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction {
             dimension: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
+::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricActionRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 }
 
 #[derive(Serialize, Default)]
-struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElDynamic {
+struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinitionDynamic {
     publish_metric_action: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl,
+            NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction,
         >,
     >,
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     publish_metric_action: std
     ::option
     ::Option<
         std
         ::vec
-        ::Vec<
-            NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl,
-        >,
+        ::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction>,
     >,
-    dynamic: NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElDynamic,
+    dynamic: NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinitionDynamic,
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition {
     #[doc = "Set the field `publish_metric_action`.\n"]
     pub fn set_publish_metric_action(
         mut self,
@@ -921,7 +1376,7 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionD
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionEl,
+                            NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricAction,
                         >,
                     >,
     ) -> Self {
@@ -937,11 +1392,10 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionD
     }
 }
 
-impl terrars
-::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition {
     type O =
         terrars
-        ::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl>;
+        ::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -952,35 +1406,37 @@ impl terrars
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {}
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition {}
 
-impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
-    pub fn build(self) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl {
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition {
             publish_metric_action: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinitionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinitionRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -990,32 +1446,32 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionD
         &self,
     ) -> terrars
     ::ListRef<
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElPublishMetricActionElRef,
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition_PublishMetricActionRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.publish_metric_action", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElDynamic {
+struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomActionDynamic {
     action_definition: std
     ::option
     ::Option<
-        terrars::DynamicBlock<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl>,
+        terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction {
     action_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     action_definition: std
     ::option
-    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl>>,
-    dynamic: NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElDynamic,
+    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition>>,
+    dynamic: NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomActionDynamic,
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction {
     #[doc = "Set the field `action_definition`.\n"]
     pub fn set_action_definition(
         mut self,
@@ -1027,7 +1483,7 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionEl,
+                            NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinition,
                         >,
                     >,
     ) -> Self {
@@ -1043,8 +1499,8 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
-    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>;
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction {
+    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1055,14 +1511,14 @@ impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElSt
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction {
     #[doc = ""]
     pub action_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
-    pub fn build(self) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction {
             action_name: self.action_name,
             action_definition: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1070,24 +1526,26 @@ impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl {
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomActionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomActionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomActionRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomActionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomActionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1100,21 +1558,21 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElRef {
     #[doc = "Get a reference to the value of field `action_definition` after provisioning.\n"]
     pub fn action_definition(
         &self,
-    ) -> terrars::ListRef<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionElActionDefinitionElRef> {
+    ) -> terrars::ListRef<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction_ActionDefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action_definition", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference {
     priority: terrars::PrimField<f64>,
     resource_arn: terrars::PrimField<std::string::String>,
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl { }
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference { }
 
-impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
-    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>;
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference {
+    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1125,40 +1583,42 @@ impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyElSt
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference {
     #[doc = ""]
     pub priority: terrars::PrimField<f64>,
     #[doc = ""]
     pub resource_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildNetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
-    pub fn build(self) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl {
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference {
             priority: self.priority,
             resource_arn: self.resource_arn,
         }
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReferenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReferenceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
-        NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReferenceRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReferenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElRef {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReferenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1175,53 +1635,98 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceElR
 }
 
 #[derive(Serialize, Default)]
-struct NetworkfirewallFirewallPolicyFirewallPolicyElDynamic {
+struct NetworkfirewallFirewallPolicy_FirewallPolicyDynamic {
+    policy_variables: std
+    ::option
+    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables>>,
     stateful_engine_options: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>>,
+    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions>>,
     stateful_rule_group_reference: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>>,
+    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference>>,
     stateless_custom_action: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>>,
+    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction>>,
     stateless_rule_group_reference: std
     ::option
-    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>>,
+    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference>>,
 }
 
 #[derive(Serialize)]
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyEl {
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_tls_session_holding: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stateful_default_actions: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     stateless_default_actions: terrars::SetField<terrars::PrimField<std::string::String>>,
     stateless_fragment_default_actions: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tls_inspection_configuration_arn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    policy_variables: std::option::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stateful_engine_options: std
     ::option
-    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>>,
+    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stateful_rule_group_reference: std
     ::option
-    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>>,
+    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stateless_custom_action: std
     ::option
-    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>>,
+    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     stateless_rule_group_reference: std
     ::option
-    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>>,
-    dynamic: NetworkfirewallFirewallPolicyFirewallPolicyElDynamic,
+    ::Option<std::vec::Vec<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference>>,
+    dynamic: NetworkfirewallFirewallPolicy_FirewallPolicyDynamic,
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyEl {
+impl NetworkfirewallFirewallPolicy_FirewallPolicy {
+    #[doc = "Set the field `enable_tls_session_holding`.\n"]
+    pub fn set_enable_tls_session_holding(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.enable_tls_session_holding = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `stateful_default_actions`.\n"]
     pub fn set_stateful_default_actions(
         mut self,
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.stateful_default_actions = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tls_inspection_configuration_arn`.\n"]
+    pub fn set_tls_inspection_configuration_arn(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.tls_inspection_configuration_arn = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `policy_variables`.\n"]
+    pub fn set_policy_variables(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariables>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.policy_variables = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.policy_variables = std::option::Option::Some(d);
+            },
+        }
         self
     }
 
@@ -1234,7 +1739,7 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsEl>,
+                        terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptions>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1258,7 +1763,7 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulRuleGroupReferenceEl>,
+                        ::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulRuleGroupReference>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1281,7 +1786,7 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyEl {
                     std
                     ::convert
                     ::Into<
-                        terrars::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessCustomActionEl>,
+                        terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessCustomAction>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1305,7 +1810,7 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyEl {
                     ::convert
                     ::Into<
                         terrars
-                        ::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyElStatelessRuleGroupReferenceEl>,
+                        ::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy_StatelessRuleGroupReference>,
                     >,
     ) -> Self {
         match v.into() {
@@ -1320,8 +1825,8 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyEl {
-    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicyFirewallPolicyEl>;
+impl terrars::ToListMappable for NetworkfirewallFirewallPolicy_FirewallPolicy {
+    type O = terrars::BlockAssignable<NetworkfirewallFirewallPolicy_FirewallPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1332,19 +1837,22 @@ impl terrars::ToListMappable for NetworkfirewallFirewallPolicyFirewallPolicyEl {
     }
 }
 
-pub struct BuildNetworkfirewallFirewallPolicyFirewallPolicyEl {
+pub struct BuildNetworkfirewallFirewallPolicy_FirewallPolicy {
     #[doc = ""]
     pub stateless_default_actions: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub stateless_fragment_default_actions: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildNetworkfirewallFirewallPolicyFirewallPolicyEl {
-    pub fn build(self) -> NetworkfirewallFirewallPolicyFirewallPolicyEl {
-        NetworkfirewallFirewallPolicyFirewallPolicyEl {
+impl BuildNetworkfirewallFirewallPolicy_FirewallPolicy {
+    pub fn build(self) -> NetworkfirewallFirewallPolicy_FirewallPolicy {
+        NetworkfirewallFirewallPolicy_FirewallPolicy {
+            enable_tls_session_holding: core::default::Default::default(),
             stateful_default_actions: core::default::Default::default(),
             stateless_default_actions: self.stateless_default_actions,
             stateless_fragment_default_actions: self.stateless_fragment_default_actions,
+            tls_inspection_configuration_arn: core::default::Default::default(),
+            policy_variables: core::default::Default::default(),
             stateful_engine_options: core::default::Default::default(),
             stateful_rule_group_reference: core::default::Default::default(),
             stateless_custom_action: core::default::Default::default(),
@@ -1354,26 +1862,33 @@ impl BuildNetworkfirewallFirewallPolicyFirewallPolicyEl {
     }
 }
 
-pub struct NetworkfirewallFirewallPolicyFirewallPolicyElRef {
+#[allow(dead_code)]
+pub struct NetworkfirewallFirewallPolicy_FirewallPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for NetworkfirewallFirewallPolicyFirewallPolicyElRef {
+impl terrars::Ref for NetworkfirewallFirewallPolicy_FirewallPolicyRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> NetworkfirewallFirewallPolicyFirewallPolicyElRef {
-        NetworkfirewallFirewallPolicyFirewallPolicyElRef {
+    ) -> NetworkfirewallFirewallPolicy_FirewallPolicyRef {
+        NetworkfirewallFirewallPolicy_FirewallPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl NetworkfirewallFirewallPolicyFirewallPolicyElRef {
+impl NetworkfirewallFirewallPolicy_FirewallPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `enable_tls_session_holding` after provisioning.\n"]
+    pub fn enable_tls_session_holding(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_tls_session_holding", self.base))
     }
 
     #[doc = "Get a reference to the value of field `stateful_default_actions` after provisioning.\n"]
@@ -1391,18 +1906,20 @@ impl NetworkfirewallFirewallPolicyFirewallPolicyElRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.stateless_fragment_default_actions", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `tls_inspection_configuration_arn` after provisioning.\n"]
+    pub fn tls_inspection_configuration_arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tls_inspection_configuration_arn", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `policy_variables` after provisioning.\n"]
+    pub fn policy_variables(&self) -> terrars::ListRef<NetworkfirewallFirewallPolicy_FirewallPolicy_PolicyVariablesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.policy_variables", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `stateful_engine_options` after provisioning.\n"]
     pub fn stateful_engine_options(
         &self,
-    ) -> terrars::ListRef<NetworkfirewallFirewallPolicyFirewallPolicyElStatefulEngineOptionsElRef> {
+    ) -> terrars::ListRef<NetworkfirewallFirewallPolicy_FirewallPolicy_StatefulEngineOptionsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.stateful_engine_options", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct NetworkfirewallFirewallPolicyDynamic {
-    encryption_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicyEncryptionConfigurationEl>>,
-    firewall_policy: std::option::Option<terrars::DynamicBlock<NetworkfirewallFirewallPolicyFirewallPolicyEl>>,
 }

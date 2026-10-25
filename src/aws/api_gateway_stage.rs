@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ApiGatewayStageData {
+struct ApiGatewayStageData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,6 +33,8 @@ struct ApiGatewayStageData {
     documentation_version: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     rest_api_id: terrars::PrimField<std::string::String>,
     stage_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -42,16 +46,16 @@ struct ApiGatewayStageData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     xray_tracing_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    access_log_settings: std::option::Option<std::vec::Vec<ApiGatewayStageAccessLogSettingsEl>>,
+    access_log_settings: std::option::Option<std::vec::Vec<ApiGatewayStage_AccessLogSettings>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    canary_settings: std::option::Option<std::vec::Vec<ApiGatewayStageCanarySettingsEl>>,
+    canary_settings: std::option::Option<std::vec::Vec<ApiGatewayStage_CanarySettings>>,
     dynamic: ApiGatewayStageDynamic,
 }
 
 struct ApiGatewayStage_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ApiGatewayStageData>,
+    data: std::cell::RefCell<ApiGatewayStageData_>,
 }
 
 #[derive(Clone)]
@@ -187,6 +191,13 @@ impl ApiGatewayStage {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -223,7 +234,7 @@ impl ApiGatewayStage {
     #[doc = "Set the field `access_log_settings`.\n"]
     pub fn set_access_log_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayStageAccessLogSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayStage_AccessLogSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -239,7 +250,7 @@ impl ApiGatewayStage {
     #[doc = "Set the field `canary_settings`.\n"]
     pub fn set_canary_settings(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayStageCanarySettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<ApiGatewayStage_CanarySettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -302,6 +313,12 @@ impl ApiGatewayStage {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.invoke_url", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]
     pub fn rest_api_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rest_api_id", self.extract_ref()))
@@ -338,12 +355,12 @@ impl ApiGatewayStage {
     }
 
     #[doc = "Get a reference to the value of field `access_log_settings` after provisioning.\n"]
-    pub fn access_log_settings(&self) -> terrars::ListRef<ApiGatewayStageAccessLogSettingsElRef> {
+    pub fn access_log_settings(&self) -> terrars::ListRef<ApiGatewayStage_AccessLogSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_log_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `canary_settings` after provisioning.\n"]
-    pub fn canary_settings(&self) -> terrars::ListRef<ApiGatewayStageCanarySettingsElRef> {
+    pub fn canary_settings(&self) -> terrars::ListRef<ApiGatewayStage_CanarySettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.canary_settings", self.extract_ref()))
     }
 }
@@ -394,7 +411,7 @@ impl BuildApiGatewayStage {
         let out = ApiGatewayStage(std::rc::Rc::new(ApiGatewayStage_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ApiGatewayStageData {
+            data: std::cell::RefCell::new(ApiGatewayStageData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -407,6 +424,7 @@ impl BuildApiGatewayStage {
                 description: core::default::Default::default(),
                 documentation_version: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 rest_api_id: self.rest_api_id,
                 stage_name: self.stage_name,
                 tags: core::default::Default::default(),
@@ -496,6 +514,12 @@ impl ApiGatewayStageRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.invoke_url", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `rest_api_id` after provisioning.\n"]
     pub fn rest_api_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.rest_api_id", self.extract_ref()))
@@ -532,26 +556,32 @@ impl ApiGatewayStageRef {
     }
 
     #[doc = "Get a reference to the value of field `access_log_settings` after provisioning.\n"]
-    pub fn access_log_settings(&self) -> terrars::ListRef<ApiGatewayStageAccessLogSettingsElRef> {
+    pub fn access_log_settings(&self) -> terrars::ListRef<ApiGatewayStage_AccessLogSettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_log_settings", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `canary_settings` after provisioning.\n"]
-    pub fn canary_settings(&self) -> terrars::ListRef<ApiGatewayStageCanarySettingsElRef> {
+    pub fn canary_settings(&self) -> terrars::ListRef<ApiGatewayStage_CanarySettingsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.canary_settings", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct ApiGatewayStageDynamic {
+    access_log_settings: std::option::Option<terrars::DynamicBlock<ApiGatewayStage_AccessLogSettings>>,
+    canary_settings: std::option::Option<terrars::DynamicBlock<ApiGatewayStage_CanarySettings>>,
+}
+
 #[derive(Serialize)]
-pub struct ApiGatewayStageAccessLogSettingsEl {
+pub struct ApiGatewayStage_AccessLogSettings {
     destination_arn: terrars::PrimField<std::string::String>,
     format: terrars::PrimField<std::string::String>,
 }
 
-impl ApiGatewayStageAccessLogSettingsEl { }
+impl ApiGatewayStage_AccessLogSettings { }
 
-impl terrars::ToListMappable for ApiGatewayStageAccessLogSettingsEl {
-    type O = terrars::BlockAssignable<ApiGatewayStageAccessLogSettingsEl>;
+impl terrars::ToListMappable for ApiGatewayStage_AccessLogSettings {
+    type O = terrars::BlockAssignable<ApiGatewayStage_AccessLogSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -562,37 +592,39 @@ impl terrars::ToListMappable for ApiGatewayStageAccessLogSettingsEl {
     }
 }
 
-pub struct BuildApiGatewayStageAccessLogSettingsEl {
+pub struct BuildApiGatewayStage_AccessLogSettings {
     #[doc = ""]
     pub destination_arn: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub format: terrars::PrimField<std::string::String>,
 }
 
-impl BuildApiGatewayStageAccessLogSettingsEl {
-    pub fn build(self) -> ApiGatewayStageAccessLogSettingsEl {
-        ApiGatewayStageAccessLogSettingsEl {
+impl BuildApiGatewayStage_AccessLogSettings {
+    pub fn build(self) -> ApiGatewayStage_AccessLogSettings {
+        ApiGatewayStage_AccessLogSettings {
             destination_arn: self.destination_arn,
             format: self.format,
         }
     }
 }
 
-pub struct ApiGatewayStageAccessLogSettingsElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayStage_AccessLogSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayStageAccessLogSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayStageAccessLogSettingsElRef {
-        ApiGatewayStageAccessLogSettingsElRef {
+impl terrars::Ref for ApiGatewayStage_AccessLogSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayStage_AccessLogSettingsRef {
+        ApiGatewayStage_AccessLogSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayStageAccessLogSettingsElRef {
+impl ApiGatewayStage_AccessLogSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -609,7 +641,8 @@ impl ApiGatewayStageAccessLogSettingsElRef {
 }
 
 #[derive(Serialize)]
-pub struct ApiGatewayStageCanarySettingsEl {
+pub struct ApiGatewayStage_CanarySettings {
+    deployment_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     percent_traffic: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -618,7 +651,7 @@ pub struct ApiGatewayStageCanarySettingsEl {
     use_stage_cache: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl ApiGatewayStageCanarySettingsEl {
+impl ApiGatewayStage_CanarySettings {
     #[doc = "Set the field `percent_traffic`.\n"]
     pub fn set_percent_traffic(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.percent_traffic = std::option::Option::Some(v.into());
@@ -641,8 +674,8 @@ impl ApiGatewayStageCanarySettingsEl {
     }
 }
 
-impl terrars::ToListMappable for ApiGatewayStageCanarySettingsEl {
-    type O = terrars::BlockAssignable<ApiGatewayStageCanarySettingsEl>;
+impl terrars::ToListMappable for ApiGatewayStage_CanarySettings {
+    type O = terrars::BlockAssignable<ApiGatewayStage_CanarySettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -653,11 +686,15 @@ impl terrars::ToListMappable for ApiGatewayStageCanarySettingsEl {
     }
 }
 
-pub struct BuildApiGatewayStageCanarySettingsEl {}
+pub struct BuildApiGatewayStage_CanarySettings {
+    #[doc = ""]
+    pub deployment_id: terrars::PrimField<std::string::String>,
+}
 
-impl BuildApiGatewayStageCanarySettingsEl {
-    pub fn build(self) -> ApiGatewayStageCanarySettingsEl {
-        ApiGatewayStageCanarySettingsEl {
+impl BuildApiGatewayStage_CanarySettings {
+    pub fn build(self) -> ApiGatewayStage_CanarySettings {
+        ApiGatewayStage_CanarySettings {
+            deployment_id: self.deployment_id,
             percent_traffic: core::default::Default::default(),
             stage_variable_overrides: core::default::Default::default(),
             use_stage_cache: core::default::Default::default(),
@@ -665,23 +702,30 @@ impl BuildApiGatewayStageCanarySettingsEl {
     }
 }
 
-pub struct ApiGatewayStageCanarySettingsElRef {
+#[allow(dead_code)]
+pub struct ApiGatewayStage_CanarySettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for ApiGatewayStageCanarySettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayStageCanarySettingsElRef {
-        ApiGatewayStageCanarySettingsElRef {
+impl terrars::Ref for ApiGatewayStage_CanarySettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ApiGatewayStage_CanarySettingsRef {
+        ApiGatewayStage_CanarySettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl ApiGatewayStageCanarySettingsElRef {
+impl ApiGatewayStage_CanarySettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `deployment_id` after provisioning.\n"]
+    pub fn deployment_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.deployment_id", self.base))
     }
 
     #[doc = "Get a reference to the value of field `percent_traffic` after provisioning.\n"]
@@ -698,10 +742,4 @@ impl ApiGatewayStageCanarySettingsElRef {
     pub fn use_stage_cache(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.use_stage_cache", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct ApiGatewayStageDynamic {
-    access_log_settings: std::option::Option<terrars::DynamicBlock<ApiGatewayStageAccessLogSettingsEl>>,
-    canary_settings: std::option::Option<terrars::DynamicBlock<ApiGatewayStageCanarySettingsEl>>,
 }

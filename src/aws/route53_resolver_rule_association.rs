@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Route53ResolverRuleAssociationData {
+struct Route53ResolverRuleAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,16 +24,18 @@ struct Route53ResolverRuleAssociationData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     resolver_rule_id: terrars::PrimField<std::string::String>,
     vpc_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<Route53ResolverRuleAssociationTimeoutsEl>,
+    timeouts: std::option::Option<Route53ResolverRuleAssociation_Timeouts>,
 }
 
 struct Route53ResolverRuleAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Route53ResolverRuleAssociationData>,
+    data: std::cell::RefCell<Route53ResolverRuleAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -143,8 +147,15 @@ impl Route53ResolverRuleAssociation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<Route53ResolverRuleAssociationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<Route53ResolverRuleAssociation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -159,6 +170,12 @@ impl Route53ResolverRuleAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resolver_rule_id` after provisioning.\n"]
     pub fn resolver_rule_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolver_rule_id", self.extract_ref()))
@@ -170,8 +187,8 @@ impl Route53ResolverRuleAssociation {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53ResolverRuleAssociationTimeoutsElRef {
-        Route53ResolverRuleAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53ResolverRuleAssociation_TimeoutsRef {
+        Route53ResolverRuleAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -222,7 +239,7 @@ impl BuildRoute53ResolverRuleAssociation {
         let out = Route53ResolverRuleAssociation(std::rc::Rc::new(Route53ResolverRuleAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Route53ResolverRuleAssociationData {
+            data: std::cell::RefCell::new(Route53ResolverRuleAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -230,6 +247,7 @@ impl BuildRoute53ResolverRuleAssociation {
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 resolver_rule_id: self.resolver_rule_id,
                 vpc_id: self.vpc_id,
                 timeouts: core::default::Default::default(),
@@ -273,6 +291,12 @@ impl Route53ResolverRuleAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resolver_rule_id` after provisioning.\n"]
     pub fn resolver_rule_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.resolver_rule_id", self.extract_ref()))
@@ -284,8 +308,8 @@ impl Route53ResolverRuleAssociationRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> Route53ResolverRuleAssociationTimeoutsElRef {
-        Route53ResolverRuleAssociationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> Route53ResolverRuleAssociation_TimeoutsRef {
+        Route53ResolverRuleAssociation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -293,14 +317,14 @@ impl Route53ResolverRuleAssociationRef {
 }
 
 #[derive(Serialize)]
-pub struct Route53ResolverRuleAssociationTimeoutsEl {
+pub struct Route53ResolverRuleAssociation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl Route53ResolverRuleAssociationTimeoutsEl {
+impl Route53ResolverRuleAssociation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -314,8 +338,8 @@ impl Route53ResolverRuleAssociationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for Route53ResolverRuleAssociationTimeoutsEl {
-    type O = terrars::BlockAssignable<Route53ResolverRuleAssociationTimeoutsEl>;
+impl terrars::ToListMappable for Route53ResolverRuleAssociation_Timeouts {
+    type O = terrars::BlockAssignable<Route53ResolverRuleAssociation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -326,32 +350,34 @@ impl terrars::ToListMappable for Route53ResolverRuleAssociationTimeoutsEl {
     }
 }
 
-pub struct BuildRoute53ResolverRuleAssociationTimeoutsEl {}
+pub struct BuildRoute53ResolverRuleAssociation_Timeouts {}
 
-impl BuildRoute53ResolverRuleAssociationTimeoutsEl {
-    pub fn build(self) -> Route53ResolverRuleAssociationTimeoutsEl {
-        Route53ResolverRuleAssociationTimeoutsEl {
+impl BuildRoute53ResolverRuleAssociation_Timeouts {
+    pub fn build(self) -> Route53ResolverRuleAssociation_Timeouts {
+        Route53ResolverRuleAssociation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct Route53ResolverRuleAssociationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct Route53ResolverRuleAssociation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Route53ResolverRuleAssociationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53ResolverRuleAssociationTimeoutsElRef {
-        Route53ResolverRuleAssociationTimeoutsElRef {
+impl terrars::Ref for Route53ResolverRuleAssociation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Route53ResolverRuleAssociation_TimeoutsRef {
+        Route53ResolverRuleAssociation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Route53ResolverRuleAssociationTimeoutsElRef {
+impl Route53ResolverRuleAssociation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

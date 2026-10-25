@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketNotificationData {
+struct S3BucketNotificationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,18 +26,20 @@ struct S3BucketNotificationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lambda_function: std::option::Option<std::vec::Vec<S3BucketNotificationLambdaFunctionEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    queue: std::option::Option<std::vec::Vec<S3BucketNotificationQueueEl>>,
+    lambda_function: std::option::Option<std::vec::Vec<S3BucketNotification_LambdaFunction>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    topic: std::option::Option<std::vec::Vec<S3BucketNotificationTopicEl>>,
+    queue: std::option::Option<std::vec::Vec<S3BucketNotification_Queue>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    topic: std::option::Option<std::vec::Vec<S3BucketNotification_Topic>>,
     dynamic: S3BucketNotificationDynamic,
 }
 
 struct S3BucketNotification_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketNotificationData>,
+    data: std::cell::RefCell<S3BucketNotificationData_>,
 }
 
 #[derive(Clone)]
@@ -147,10 +151,17 @@ impl S3BucketNotification {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `lambda_function`.\n"]
     pub fn set_lambda_function(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketNotificationLambdaFunctionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketNotification_LambdaFunction>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -164,7 +175,7 @@ impl S3BucketNotification {
     }
 
     #[doc = "Set the field `queue`.\n"]
-    pub fn set_queue(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketNotificationQueueEl>>) -> Self {
+    pub fn set_queue(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketNotification_Queue>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().queue = std::option::Option::Some(v);
@@ -177,7 +188,7 @@ impl S3BucketNotification {
     }
 
     #[doc = "Set the field `topic`.\n"]
-    pub fn set_topic(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketNotificationTopicEl>>) -> Self {
+    pub fn set_topic(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketNotification_Topic>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().topic = std::option::Option::Some(v);
@@ -204,18 +215,24 @@ impl S3BucketNotification {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `lambda_function` after provisioning.\n"]
-    pub fn lambda_function(&self) -> terrars::ListRef<S3BucketNotificationLambdaFunctionElRef> {
+    pub fn lambda_function(&self) -> terrars::ListRef<S3BucketNotification_LambdaFunctionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_function", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `queue` after provisioning.\n"]
-    pub fn queue(&self) -> terrars::ListRef<S3BucketNotificationQueueElRef> {
+    pub fn queue(&self) -> terrars::ListRef<S3BucketNotification_QueueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.queue", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `topic` after provisioning.\n"]
-    pub fn topic(&self) -> terrars::ListRef<S3BucketNotificationTopicElRef> {
+    pub fn topic(&self) -> terrars::ListRef<S3BucketNotification_TopicRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
     }
 }
@@ -262,7 +279,7 @@ impl BuildS3BucketNotification {
         let out = S3BucketNotification(std::rc::Rc::new(S3BucketNotification_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketNotificationData {
+            data: std::cell::RefCell::new(S3BucketNotificationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -271,6 +288,7 @@ impl BuildS3BucketNotification {
                 bucket: self.bucket,
                 eventbridge: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 lambda_function: core::default::Default::default(),
                 queue: core::default::Default::default(),
                 topic: core::default::Default::default(),
@@ -320,24 +338,37 @@ impl S3BucketNotificationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `lambda_function` after provisioning.\n"]
-    pub fn lambda_function(&self) -> terrars::ListRef<S3BucketNotificationLambdaFunctionElRef> {
+    pub fn lambda_function(&self) -> terrars::ListRef<S3BucketNotification_LambdaFunctionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lambda_function", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `queue` after provisioning.\n"]
-    pub fn queue(&self) -> terrars::ListRef<S3BucketNotificationQueueElRef> {
+    pub fn queue(&self) -> terrars::ListRef<S3BucketNotification_QueueRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.queue", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `topic` after provisioning.\n"]
-    pub fn topic(&self) -> terrars::ListRef<S3BucketNotificationTopicElRef> {
+    pub fn topic(&self) -> terrars::ListRef<S3BucketNotification_TopicRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.topic", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketNotificationDynamic {
+    lambda_function: std::option::Option<terrars::DynamicBlock<S3BucketNotification_LambdaFunction>>,
+    queue: std::option::Option<terrars::DynamicBlock<S3BucketNotification_Queue>>,
+    topic: std::option::Option<terrars::DynamicBlock<S3BucketNotification_Topic>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketNotificationLambdaFunctionEl {
+pub struct S3BucketNotification_LambdaFunction {
     events: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     filter_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -349,7 +380,7 @@ pub struct S3BucketNotificationLambdaFunctionEl {
     lambda_function_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketNotificationLambdaFunctionEl {
+impl S3BucketNotification_LambdaFunction {
     #[doc = "Set the field `filter_prefix`.\n"]
     pub fn set_filter_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.filter_prefix = std::option::Option::Some(v.into());
@@ -378,8 +409,8 @@ impl S3BucketNotificationLambdaFunctionEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketNotificationLambdaFunctionEl {
-    type O = terrars::BlockAssignable<S3BucketNotificationLambdaFunctionEl>;
+impl terrars::ToListMappable for S3BucketNotification_LambdaFunction {
+    type O = terrars::BlockAssignable<S3BucketNotification_LambdaFunction>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -390,14 +421,14 @@ impl terrars::ToListMappable for S3BucketNotificationLambdaFunctionEl {
     }
 }
 
-pub struct BuildS3BucketNotificationLambdaFunctionEl {
+pub struct BuildS3BucketNotification_LambdaFunction {
     #[doc = ""]
     pub events: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildS3BucketNotificationLambdaFunctionEl {
-    pub fn build(self) -> S3BucketNotificationLambdaFunctionEl {
-        S3BucketNotificationLambdaFunctionEl {
+impl BuildS3BucketNotification_LambdaFunction {
+    pub fn build(self) -> S3BucketNotification_LambdaFunction {
+        S3BucketNotification_LambdaFunction {
             events: self.events,
             filter_prefix: core::default::Default::default(),
             filter_suffix: core::default::Default::default(),
@@ -407,21 +438,23 @@ impl BuildS3BucketNotificationLambdaFunctionEl {
     }
 }
 
-pub struct S3BucketNotificationLambdaFunctionElRef {
+#[allow(dead_code)]
+pub struct S3BucketNotification_LambdaFunctionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketNotificationLambdaFunctionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketNotificationLambdaFunctionElRef {
-        S3BucketNotificationLambdaFunctionElRef {
+impl terrars::Ref for S3BucketNotification_LambdaFunctionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketNotification_LambdaFunctionRef {
+        S3BucketNotification_LambdaFunctionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketNotificationLambdaFunctionElRef {
+impl S3BucketNotification_LambdaFunctionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -453,7 +486,7 @@ impl S3BucketNotificationLambdaFunctionElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketNotificationQueueEl {
+pub struct S3BucketNotification_Queue {
     events: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     filter_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -464,7 +497,7 @@ pub struct S3BucketNotificationQueueEl {
     queue_arn: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketNotificationQueueEl {
+impl S3BucketNotification_Queue {
     #[doc = "Set the field `filter_prefix`.\n"]
     pub fn set_filter_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.filter_prefix = std::option::Option::Some(v.into());
@@ -484,8 +517,8 @@ impl S3BucketNotificationQueueEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketNotificationQueueEl {
-    type O = terrars::BlockAssignable<S3BucketNotificationQueueEl>;
+impl terrars::ToListMappable for S3BucketNotification_Queue {
+    type O = terrars::BlockAssignable<S3BucketNotification_Queue>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -496,16 +529,16 @@ impl terrars::ToListMappable for S3BucketNotificationQueueEl {
     }
 }
 
-pub struct BuildS3BucketNotificationQueueEl {
+pub struct BuildS3BucketNotification_Queue {
     #[doc = ""]
     pub events: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub queue_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketNotificationQueueEl {
-    pub fn build(self) -> S3BucketNotificationQueueEl {
-        S3BucketNotificationQueueEl {
+impl BuildS3BucketNotification_Queue {
+    pub fn build(self) -> S3BucketNotification_Queue {
+        S3BucketNotification_Queue {
             events: self.events,
             filter_prefix: core::default::Default::default(),
             filter_suffix: core::default::Default::default(),
@@ -515,21 +548,23 @@ impl BuildS3BucketNotificationQueueEl {
     }
 }
 
-pub struct S3BucketNotificationQueueElRef {
+#[allow(dead_code)]
+pub struct S3BucketNotification_QueueRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketNotificationQueueElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketNotificationQueueElRef {
-        S3BucketNotificationQueueElRef {
+impl terrars::Ref for S3BucketNotification_QueueRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketNotification_QueueRef {
+        S3BucketNotification_QueueRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketNotificationQueueElRef {
+impl S3BucketNotification_QueueRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -561,7 +596,7 @@ impl S3BucketNotificationQueueElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketNotificationTopicEl {
+pub struct S3BucketNotification_Topic {
     events: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     filter_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -572,7 +607,7 @@ pub struct S3BucketNotificationTopicEl {
     topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketNotificationTopicEl {
+impl S3BucketNotification_Topic {
     #[doc = "Set the field `filter_prefix`.\n"]
     pub fn set_filter_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.filter_prefix = std::option::Option::Some(v.into());
@@ -592,8 +627,8 @@ impl S3BucketNotificationTopicEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketNotificationTopicEl {
-    type O = terrars::BlockAssignable<S3BucketNotificationTopicEl>;
+impl terrars::ToListMappable for S3BucketNotification_Topic {
+    type O = terrars::BlockAssignable<S3BucketNotification_Topic>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -604,16 +639,16 @@ impl terrars::ToListMappable for S3BucketNotificationTopicEl {
     }
 }
 
-pub struct BuildS3BucketNotificationTopicEl {
+pub struct BuildS3BucketNotification_Topic {
     #[doc = ""]
     pub events: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub topic_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketNotificationTopicEl {
-    pub fn build(self) -> S3BucketNotificationTopicEl {
-        S3BucketNotificationTopicEl {
+impl BuildS3BucketNotification_Topic {
+    pub fn build(self) -> S3BucketNotification_Topic {
+        S3BucketNotification_Topic {
             events: self.events,
             filter_prefix: core::default::Default::default(),
             filter_suffix: core::default::Default::default(),
@@ -623,21 +658,23 @@ impl BuildS3BucketNotificationTopicEl {
     }
 }
 
-pub struct S3BucketNotificationTopicElRef {
+#[allow(dead_code)]
+pub struct S3BucketNotification_TopicRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketNotificationTopicElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketNotificationTopicElRef {
-        S3BucketNotificationTopicElRef {
+impl terrars::Ref for S3BucketNotification_TopicRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketNotification_TopicRef {
+        S3BucketNotification_TopicRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketNotificationTopicElRef {
+impl S3BucketNotification_TopicRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -666,11 +703,4 @@ impl S3BucketNotificationTopicElRef {
     pub fn topic_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.topic_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketNotificationDynamic {
-    lambda_function: std::option::Option<terrars::DynamicBlock<S3BucketNotificationLambdaFunctionEl>>,
-    queue: std::option::Option<terrars::DynamicBlock<S3BucketNotificationQueueEl>>,
-    topic: std::option::Option<terrars::DynamicBlock<S3BucketNotificationTopicEl>>,
 }

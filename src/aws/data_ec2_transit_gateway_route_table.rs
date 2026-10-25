@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataEc2TransitGatewayRouteTableData {
+struct DataEc2TransitGatewayRouteTableData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,18 +21,20 @@ struct DataEc2TransitGatewayRouteTableData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<DataEc2TransitGatewayRouteTableFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<DataEc2TransitGatewayRouteTable_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataEc2TransitGatewayRouteTableTimeoutsEl>,
+    timeouts: std::option::Option<DataEc2TransitGatewayRouteTable_Timeouts>,
     dynamic: DataEc2TransitGatewayRouteTableDynamic,
 }
 
 struct DataEc2TransitGatewayRouteTable_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataEc2TransitGatewayRouteTableData>,
+    data: std::cell::RefCell<DataEc2TransitGatewayRouteTableData_>,
 }
 
 #[derive(Clone)]
@@ -81,6 +85,13 @@ impl DataEc2TransitGatewayRouteTable {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -93,7 +104,7 @@ impl DataEc2TransitGatewayRouteTable {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2TransitGatewayRouteTableFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DataEc2TransitGatewayRouteTable_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -107,7 +118,7 @@ impl DataEc2TransitGatewayRouteTable {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2TransitGatewayRouteTableTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataEc2TransitGatewayRouteTable_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -138,6 +149,12 @@ impl DataEc2TransitGatewayRouteTable {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -149,8 +166,8 @@ impl DataEc2TransitGatewayRouteTable {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2TransitGatewayRouteTableTimeoutsElRef {
-        DataEc2TransitGatewayRouteTableTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2TransitGatewayRouteTable_TimeoutsRef {
+        DataEc2TransitGatewayRouteTable_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -197,12 +214,13 @@ impl BuildDataEc2TransitGatewayRouteTable {
         let out = DataEc2TransitGatewayRouteTable(std::rc::Rc::new(DataEc2TransitGatewayRouteTable_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataEc2TransitGatewayRouteTableData {
+            data: std::cell::RefCell::new(DataEc2TransitGatewayRouteTableData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 filter: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
@@ -263,6 +281,12 @@ impl DataEc2TransitGatewayRouteTableRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -274,24 +298,29 @@ impl DataEc2TransitGatewayRouteTableRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataEc2TransitGatewayRouteTableTimeoutsElRef {
-        DataEc2TransitGatewayRouteTableTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataEc2TransitGatewayRouteTable_TimeoutsRef {
+        DataEc2TransitGatewayRouteTable_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
     }
 }
 
+#[derive(Serialize, Default)]
+struct DataEc2TransitGatewayRouteTableDynamic {
+    filter: std::option::Option<terrars::DynamicBlock<DataEc2TransitGatewayRouteTable_Filter>>,
+}
+
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayRouteTableFilterEl {
+pub struct DataEc2TransitGatewayRouteTable_Filter {
     name: terrars::PrimField<std::string::String>,
     values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayRouteTableFilterEl { }
+impl DataEc2TransitGatewayRouteTable_Filter { }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayRouteTableFilterEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayRouteTableFilterEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayRouteTable_Filter {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayRouteTable_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -302,37 +331,39 @@ impl terrars::ToListMappable for DataEc2TransitGatewayRouteTableFilterEl {
     }
 }
 
-pub struct BuildDataEc2TransitGatewayRouteTableFilterEl {
+pub struct BuildDataEc2TransitGatewayRouteTable_Filter {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub values: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildDataEc2TransitGatewayRouteTableFilterEl {
-    pub fn build(self) -> DataEc2TransitGatewayRouteTableFilterEl {
-        DataEc2TransitGatewayRouteTableFilterEl {
+impl BuildDataEc2TransitGatewayRouteTable_Filter {
+    pub fn build(self) -> DataEc2TransitGatewayRouteTable_Filter {
+        DataEc2TransitGatewayRouteTable_Filter {
             name: self.name,
             values: self.values,
         }
     }
 }
 
-pub struct DataEc2TransitGatewayRouteTableFilterElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayRouteTable_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayRouteTableFilterElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2TransitGatewayRouteTableFilterElRef {
-        DataEc2TransitGatewayRouteTableFilterElRef {
+impl terrars::Ref for DataEc2TransitGatewayRouteTable_FilterRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2TransitGatewayRouteTable_FilterRef {
+        DataEc2TransitGatewayRouteTable_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayRouteTableFilterElRef {
+impl DataEc2TransitGatewayRouteTable_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -349,12 +380,12 @@ impl DataEc2TransitGatewayRouteTableFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataEc2TransitGatewayRouteTableTimeoutsEl {
+pub struct DataEc2TransitGatewayRouteTable_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataEc2TransitGatewayRouteTableTimeoutsEl {
+impl DataEc2TransitGatewayRouteTable_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -362,8 +393,8 @@ impl DataEc2TransitGatewayRouteTableTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataEc2TransitGatewayRouteTableTimeoutsEl {
-    type O = terrars::BlockAssignable<DataEc2TransitGatewayRouteTableTimeoutsEl>;
+impl terrars::ToListMappable for DataEc2TransitGatewayRouteTable_Timeouts {
+    type O = terrars::BlockAssignable<DataEc2TransitGatewayRouteTable_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -374,29 +405,31 @@ impl terrars::ToListMappable for DataEc2TransitGatewayRouteTableTimeoutsEl {
     }
 }
 
-pub struct BuildDataEc2TransitGatewayRouteTableTimeoutsEl {}
+pub struct BuildDataEc2TransitGatewayRouteTable_Timeouts {}
 
-impl BuildDataEc2TransitGatewayRouteTableTimeoutsEl {
-    pub fn build(self) -> DataEc2TransitGatewayRouteTableTimeoutsEl {
-        DataEc2TransitGatewayRouteTableTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataEc2TransitGatewayRouteTable_Timeouts {
+    pub fn build(self) -> DataEc2TransitGatewayRouteTable_Timeouts {
+        DataEc2TransitGatewayRouteTable_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataEc2TransitGatewayRouteTableTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataEc2TransitGatewayRouteTable_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataEc2TransitGatewayRouteTableTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2TransitGatewayRouteTableTimeoutsElRef {
-        DataEc2TransitGatewayRouteTableTimeoutsElRef {
+impl terrars::Ref for DataEc2TransitGatewayRouteTable_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataEc2TransitGatewayRouteTable_TimeoutsRef {
+        DataEc2TransitGatewayRouteTable_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataEc2TransitGatewayRouteTableTimeoutsElRef {
+impl DataEc2TransitGatewayRouteTable_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -405,9 +438,4 @@ impl DataEc2TransitGatewayRouteTableTimeoutsElRef {
     pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataEc2TransitGatewayRouteTableDynamic {
-    filter: std::option::Option<terrars::DynamicBlock<DataEc2TransitGatewayRouteTableFilterEl>>,
 }

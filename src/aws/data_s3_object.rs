@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataS3ObjectData {
+struct DataS3ObjectData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -18,10 +20,16 @@ struct DataS3ObjectData {
     for_each: std::option::Option<std::string::String>,
     bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    checksum_mode: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    download_body: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     key: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     range: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -31,7 +39,7 @@ struct DataS3ObjectData {
 struct DataS3Object_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataS3ObjectData>,
+    data: std::cell::RefCell<DataS3ObjectData_>,
 }
 
 #[derive(Clone)]
@@ -76,6 +84,18 @@ impl DataS3Object {
         self
     }
 
+    #[doc = "Set the field `checksum_mode`.\n"]
+    pub fn set_checksum_mode(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().checksum_mode = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `download_body`.\n"]
+    pub fn set_download_body(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().download_body = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -85,6 +105,13 @@ impl DataS3Object {
     #[doc = "Set the field `range`.\n"]
     pub fn set_range(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().range = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -103,9 +130,19 @@ impl DataS3Object {
         self
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `body` after provisioning.\n"]
     pub fn body(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.body", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `body_base64` after provisioning.\n"]
+    pub fn body_base64(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.body_base64", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
@@ -121,6 +158,36 @@ impl DataS3Object {
     #[doc = "Get a reference to the value of field `cache_control` after provisioning.\n"]
     pub fn cache_control(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cache_control", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc32` after provisioning.\n"]
+    pub fn checksum_crc32(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc32", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc32c` after provisioning.\n"]
+    pub fn checksum_crc32c(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc32c", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc64nvme` after provisioning.\n"]
+    pub fn checksum_crc64nvme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc64nvme", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_mode` after provisioning.\n"]
+    pub fn checksum_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_mode", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_sha1` after provisioning.\n"]
+    pub fn checksum_sha1(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_sha1", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_sha256` after provisioning.\n"]
+    pub fn checksum_sha256(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_sha256", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `content_disposition` after provisioning.\n"]
@@ -146,6 +213,11 @@ impl DataS3Object {
     #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
     pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `download_body` after provisioning.\n"]
+    pub fn download_body(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.download_body", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
@@ -207,6 +279,12 @@ impl DataS3Object {
     #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
     pub fn range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.range", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]
@@ -284,15 +362,18 @@ impl BuildDataS3Object {
         let out = DataS3Object(std::rc::Rc::new(DataS3Object_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataS3ObjectData {
+            data: std::cell::RefCell::new(DataS3ObjectData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 bucket: self.bucket,
+                checksum_mode: core::default::Default::default(),
+                download_body: core::default::Default::default(),
                 id: core::default::Default::default(),
                 key: self.key,
                 range: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 version_id: core::default::Default::default(),
             }),
@@ -325,9 +406,19 @@ impl DataS3ObjectRef {
         self.base.clone()
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `body` after provisioning.\n"]
     pub fn body(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.body", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `body_base64` after provisioning.\n"]
+    pub fn body_base64(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.body_base64", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
@@ -343,6 +434,36 @@ impl DataS3ObjectRef {
     #[doc = "Get a reference to the value of field `cache_control` after provisioning.\n"]
     pub fn cache_control(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cache_control", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc32` after provisioning.\n"]
+    pub fn checksum_crc32(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc32", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc32c` after provisioning.\n"]
+    pub fn checksum_crc32c(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc32c", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc64nvme` after provisioning.\n"]
+    pub fn checksum_crc64nvme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc64nvme", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_mode` after provisioning.\n"]
+    pub fn checksum_mode(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_mode", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_sha1` after provisioning.\n"]
+    pub fn checksum_sha1(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_sha1", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_sha256` after provisioning.\n"]
+    pub fn checksum_sha256(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_sha256", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `content_disposition` after provisioning.\n"]
@@ -368,6 +489,11 @@ impl DataS3ObjectRef {
     #[doc = "Get a reference to the value of field `content_type` after provisioning.\n"]
     pub fn content_type(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.content_type", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `download_body` after provisioning.\n"]
+    pub fn download_body(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.download_body", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `etag` after provisioning.\n"]
@@ -429,6 +555,12 @@ impl DataS3ObjectRef {
     #[doc = "Get a reference to the value of field `range` after provisioning.\n"]
     pub fn range(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.range", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]

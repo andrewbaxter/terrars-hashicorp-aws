@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataVpcIpamPreviewNextCidrData {
+struct DataVpcIpamPreviewNextCidrData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -24,13 +26,15 @@ struct DataVpcIpamPreviewNextCidrData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     netmask_length: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DataVpcIpamPreviewNextCidrTimeoutsEl>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataVpcIpamPreviewNextCidr_Timeouts>,
 }
 
 struct DataVpcIpamPreviewNextCidr_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataVpcIpamPreviewNextCidrData>,
+    data: std::cell::RefCell<DataVpcIpamPreviewNextCidrData_>,
 }
 
 #[derive(Clone)]
@@ -96,8 +100,15 @@ impl DataVpcIpamPreviewNextCidr {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcIpamPreviewNextCidrTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataVpcIpamPreviewNextCidr_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -127,9 +138,15 @@ impl DataVpcIpamPreviewNextCidr {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.netmask_length", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcIpamPreviewNextCidrTimeoutsElRef {
-        DataVpcIpamPreviewNextCidrTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataVpcIpamPreviewNextCidr_TimeoutsRef {
+        DataVpcIpamPreviewNextCidr_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -178,7 +195,7 @@ impl BuildDataVpcIpamPreviewNextCidr {
         let out = DataVpcIpamPreviewNextCidr(std::rc::Rc::new(DataVpcIpamPreviewNextCidr_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataVpcIpamPreviewNextCidrData {
+            data: std::cell::RefCell::new(DataVpcIpamPreviewNextCidrData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -187,6 +204,7 @@ impl BuildDataVpcIpamPreviewNextCidr {
                 id: core::default::Default::default(),
                 ipam_pool_id: self.ipam_pool_id,
                 netmask_length: core::default::Default::default(),
+                region: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
             }),
         }));
@@ -243,9 +261,15 @@ impl DataVpcIpamPreviewNextCidrRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.netmask_length", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DataVpcIpamPreviewNextCidrTimeoutsElRef {
-        DataVpcIpamPreviewNextCidrTimeoutsElRef::new(
+    pub fn timeouts(&self) -> DataVpcIpamPreviewNextCidr_TimeoutsRef {
+        DataVpcIpamPreviewNextCidr_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -253,12 +277,12 @@ impl DataVpcIpamPreviewNextCidrRef {
 }
 
 #[derive(Serialize)]
-pub struct DataVpcIpamPreviewNextCidrTimeoutsEl {
+pub struct DataVpcIpamPreviewNextCidr_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     read: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataVpcIpamPreviewNextCidrTimeoutsEl {
+impl DataVpcIpamPreviewNextCidr_Timeouts {
     #[doc = "Set the field `read`.\n"]
     pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.read = std::option::Option::Some(v.into());
@@ -266,8 +290,8 @@ impl DataVpcIpamPreviewNextCidrTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DataVpcIpamPreviewNextCidrTimeoutsEl {
-    type O = terrars::BlockAssignable<DataVpcIpamPreviewNextCidrTimeoutsEl>;
+impl terrars::ToListMappable for DataVpcIpamPreviewNextCidr_Timeouts {
+    type O = terrars::BlockAssignable<DataVpcIpamPreviewNextCidr_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -278,29 +302,31 @@ impl terrars::ToListMappable for DataVpcIpamPreviewNextCidrTimeoutsEl {
     }
 }
 
-pub struct BuildDataVpcIpamPreviewNextCidrTimeoutsEl {}
+pub struct BuildDataVpcIpamPreviewNextCidr_Timeouts {}
 
-impl BuildDataVpcIpamPreviewNextCidrTimeoutsEl {
-    pub fn build(self) -> DataVpcIpamPreviewNextCidrTimeoutsEl {
-        DataVpcIpamPreviewNextCidrTimeoutsEl { read: core::default::Default::default() }
+impl BuildDataVpcIpamPreviewNextCidr_Timeouts {
+    pub fn build(self) -> DataVpcIpamPreviewNextCidr_Timeouts {
+        DataVpcIpamPreviewNextCidr_Timeouts { read: core::default::Default::default() }
     }
 }
 
-pub struct DataVpcIpamPreviewNextCidrTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DataVpcIpamPreviewNextCidr_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataVpcIpamPreviewNextCidrTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcIpamPreviewNextCidrTimeoutsElRef {
-        DataVpcIpamPreviewNextCidrTimeoutsElRef {
+impl terrars::Ref for DataVpcIpamPreviewNextCidr_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataVpcIpamPreviewNextCidr_TimeoutsRef {
+        DataVpcIpamPreviewNextCidr_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataVpcIpamPreviewNextCidrTimeoutsElRef {
+impl DataVpcIpamPreviewNextCidr_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3BucketData {
+struct S3BucketData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct S3BucketData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    bucket_namespace: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     force_destroy: std::option::Option<terrars::PrimField<bool>>,
@@ -35,38 +39,40 @@ struct S3BucketData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     policy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     request_payer: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cors_rule: std::option::Option<std::vec::Vec<S3BucketCorsRuleEl>>,
+    cors_rule: std::option::Option<std::vec::Vec<S3Bucket_CorsRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    grant: std::option::Option<std::vec::Vec<S3BucketGrantEl>>,
+    grant: std::option::Option<std::vec::Vec<S3Bucket_Grant>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    lifecycle_rule: std::option::Option<std::vec::Vec<S3BucketLifecycleRuleEl>>,
+    lifecycle_rule: std::option::Option<std::vec::Vec<S3Bucket_LifecycleRule>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    logging: std::option::Option<std::vec::Vec<S3BucketLoggingEl>>,
+    logging: std::option::Option<std::vec::Vec<S3Bucket_Logging>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    object_lock_configuration: std::option::Option<std::vec::Vec<S3BucketObjectLockConfigurationEl>>,
+    object_lock_configuration: std::option::Option<std::vec::Vec<S3Bucket_ObjectLockConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    replication_configuration: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationEl>>,
+    replication_configuration: std::option::Option<std::vec::Vec<S3Bucket_ReplicationConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    server_side_encryption_configuration: std::option::Option<std::vec::Vec<S3BucketServerSideEncryptionConfigurationEl>>,
+    server_side_encryption_configuration: std::option::Option<std::vec::Vec<S3Bucket_ServerSideEncryptionConfiguration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<S3BucketTimeoutsEl>,
+    timeouts: std::option::Option<S3Bucket_Timeouts>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    versioning: std::option::Option<std::vec::Vec<S3BucketVersioningEl>>,
+    versioning: std::option::Option<std::vec::Vec<S3Bucket_Versioning>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    website: std::option::Option<std::vec::Vec<S3BucketWebsiteEl>>,
+    website: std::option::Option<std::vec::Vec<S3Bucket_Website>>,
     dynamic: S3BucketDynamic,
 }
 
 struct S3Bucket_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3BucketData>,
+    data: std::cell::RefCell<S3BucketData_>,
 }
 
 #[derive(Clone)]
@@ -184,6 +190,12 @@ impl S3Bucket {
         self
     }
 
+    #[doc = "Set the field `bucket_namespace`.\n"]
+    pub fn set_bucket_namespace(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().bucket_namespace = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `bucket_prefix`.\n"]
     pub fn set_bucket_prefix(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().bucket_prefix = std::option::Option::Some(v.into());
@@ -214,6 +226,13 @@ impl S3Bucket {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `request_payer`.\n"]
     pub fn set_request_payer(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().request_payer = std::option::Option::Some(v.into());
@@ -239,7 +258,7 @@ impl S3Bucket {
     }
 
     #[doc = "Set the field `cors_rule`.\n"]
-    pub fn set_cors_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketCorsRuleEl>>) -> Self {
+    pub fn set_cors_rule(self, v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_CorsRule>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().cors_rule = std::option::Option::Some(v);
@@ -252,7 +271,7 @@ impl S3Bucket {
     }
 
     #[doc = "Set the field `grant`.\n"]
-    pub fn set_grant(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketGrantEl>>) -> Self {
+    pub fn set_grant(self, v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_Grant>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().grant = std::option::Option::Some(v);
@@ -267,7 +286,7 @@ impl S3Bucket {
     #[doc = "Set the field `lifecycle_rule`.\n"]
     pub fn set_lifecycle_rule(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_LifecycleRule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -281,7 +300,7 @@ impl S3Bucket {
     }
 
     #[doc = "Set the field `logging`.\n"]
-    pub fn set_logging(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLoggingEl>>) -> Self {
+    pub fn set_logging(self, v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_Logging>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().logging = std::option::Option::Some(v);
@@ -296,7 +315,7 @@ impl S3Bucket {
     #[doc = "Set the field `object_lock_configuration`.\n"]
     pub fn set_object_lock_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketObjectLockConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_ObjectLockConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -312,7 +331,7 @@ impl S3Bucket {
     #[doc = "Set the field `replication_configuration`.\n"]
     pub fn set_replication_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_ReplicationConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -328,7 +347,7 @@ impl S3Bucket {
     #[doc = "Set the field `server_side_encryption_configuration`.\n"]
     pub fn set_server_side_encryption_configuration(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketServerSideEncryptionConfigurationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_ServerSideEncryptionConfiguration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -342,13 +361,13 @@ impl S3Bucket {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<S3BucketTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<S3Bucket_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
     #[doc = "Set the field `versioning`.\n"]
-    pub fn set_versioning(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketVersioningEl>>) -> Self {
+    pub fn set_versioning(self, v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_Versioning>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().versioning = std::option::Option::Some(v);
@@ -361,7 +380,7 @@ impl S3Bucket {
     }
 
     #[doc = "Set the field `website`.\n"]
-    pub fn set_website(self, v: impl std::convert::Into<terrars::BlockAssignable<S3BucketWebsiteEl>>) -> Self {
+    pub fn set_website(self, v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_Website>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().website = std::option::Option::Some(v);
@@ -398,9 +417,19 @@ impl S3Bucket {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_domain_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bucket_namespace` after provisioning.\n"]
+    pub fn bucket_namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_namespace", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
     pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bucket_region` after provisioning.\n"]
+    pub fn bucket_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `bucket_regional_domain_name` after provisioning.\n"]
@@ -433,7 +462,8 @@ impl S3Bucket {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
     pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
@@ -464,34 +494,34 @@ impl S3Bucket {
     }
 
     #[doc = "Get a reference to the value of field `cors_rule` after provisioning.\n"]
-    pub fn cors_rule(&self) -> terrars::ListRef<S3BucketCorsRuleElRef> {
+    pub fn cors_rule(&self) -> terrars::ListRef<S3Bucket_CorsRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lifecycle_rule` after provisioning.\n"]
-    pub fn lifecycle_rule(&self) -> terrars::ListRef<S3BucketLifecycleRuleElRef> {
+    pub fn lifecycle_rule(&self) -> terrars::ListRef<S3Bucket_LifecycleRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lifecycle_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging` after provisioning.\n"]
-    pub fn logging(&self) -> terrars::ListRef<S3BucketLoggingElRef> {
+    pub fn logging(&self) -> terrars::ListRef<S3Bucket_LoggingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `object_lock_configuration` after provisioning.\n"]
-    pub fn object_lock_configuration(&self) -> terrars::ListRef<S3BucketObjectLockConfigurationElRef> {
+    pub fn object_lock_configuration(&self) -> terrars::ListRef<S3Bucket_ObjectLockConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.object_lock_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_configuration` after provisioning.\n"]
-    pub fn replication_configuration(&self) -> terrars::ListRef<S3BucketReplicationConfigurationElRef> {
+    pub fn replication_configuration(&self) -> terrars::ListRef<S3Bucket_ReplicationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replication_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption_configuration` after provisioning.\n"]
     pub fn server_side_encryption_configuration(
         &self,
-    ) -> terrars::ListRef<S3BucketServerSideEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<S3Bucket_ServerSideEncryptionConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.server_side_encryption_configuration", self.extract_ref()),
@@ -499,17 +529,17 @@ impl S3Bucket {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> S3BucketTimeoutsElRef {
-        S3BucketTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> S3Bucket_TimeoutsRef {
+        S3Bucket_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `versioning` after provisioning.\n"]
-    pub fn versioning(&self) -> terrars::ListRef<S3BucketVersioningElRef> {
+    pub fn versioning(&self) -> terrars::ListRef<S3Bucket_VersioningRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.versioning", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `website` after provisioning.\n"]
-    pub fn website(&self) -> terrars::ListRef<S3BucketWebsiteElRef> {
+    pub fn website(&self) -> terrars::ListRef<S3Bucket_WebsiteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.website", self.extract_ref()))
     }
 }
@@ -554,7 +584,7 @@ impl BuildS3Bucket {
         let out = S3Bucket(std::rc::Rc::new(S3Bucket_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3BucketData {
+            data: std::cell::RefCell::new(S3BucketData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -563,11 +593,13 @@ impl BuildS3Bucket {
                 acceleration_status: core::default::Default::default(),
                 acl: core::default::Default::default(),
                 bucket: core::default::Default::default(),
+                bucket_namespace: core::default::Default::default(),
                 bucket_prefix: core::default::Default::default(),
                 force_destroy: core::default::Default::default(),
                 id: core::default::Default::default(),
                 object_lock_enabled: core::default::Default::default(),
                 policy: core::default::Default::default(),
+                region: core::default::Default::default(),
                 request_payer: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
@@ -637,9 +669,19 @@ impl S3BucketRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_domain_name", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `bucket_namespace` after provisioning.\n"]
+    pub fn bucket_namespace(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_namespace", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `bucket_prefix` after provisioning.\n"]
     pub fn bucket_prefix(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_prefix", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `bucket_region` after provisioning.\n"]
+    pub fn bucket_region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket_region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `bucket_regional_domain_name` after provisioning.\n"]
@@ -672,7 +714,8 @@ impl S3BucketRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.policy", self.extract_ref()))
     }
 
-    #[doc = "Get a reference to the value of field `region` after provisioning.\n"]
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
     pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
@@ -703,34 +746,34 @@ impl S3BucketRef {
     }
 
     #[doc = "Get a reference to the value of field `cors_rule` after provisioning.\n"]
-    pub fn cors_rule(&self) -> terrars::ListRef<S3BucketCorsRuleElRef> {
+    pub fn cors_rule(&self) -> terrars::ListRef<S3Bucket_CorsRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cors_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `lifecycle_rule` after provisioning.\n"]
-    pub fn lifecycle_rule(&self) -> terrars::ListRef<S3BucketLifecycleRuleElRef> {
+    pub fn lifecycle_rule(&self) -> terrars::ListRef<S3Bucket_LifecycleRuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.lifecycle_rule", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `logging` after provisioning.\n"]
-    pub fn logging(&self) -> terrars::ListRef<S3BucketLoggingElRef> {
+    pub fn logging(&self) -> terrars::ListRef<S3Bucket_LoggingRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.logging", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `object_lock_configuration` after provisioning.\n"]
-    pub fn object_lock_configuration(&self) -> terrars::ListRef<S3BucketObjectLockConfigurationElRef> {
+    pub fn object_lock_configuration(&self) -> terrars::ListRef<S3Bucket_ObjectLockConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.object_lock_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `replication_configuration` after provisioning.\n"]
-    pub fn replication_configuration(&self) -> terrars::ListRef<S3BucketReplicationConfigurationElRef> {
+    pub fn replication_configuration(&self) -> terrars::ListRef<S3Bucket_ReplicationConfigurationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replication_configuration", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `server_side_encryption_configuration` after provisioning.\n"]
     pub fn server_side_encryption_configuration(
         &self,
-    ) -> terrars::ListRef<S3BucketServerSideEncryptionConfigurationElRef> {
+    ) -> terrars::ListRef<S3Bucket_ServerSideEncryptionConfigurationRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.server_side_encryption_configuration", self.extract_ref()),
@@ -738,23 +781,38 @@ impl S3BucketRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> S3BucketTimeoutsElRef {
-        S3BucketTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> S3Bucket_TimeoutsRef {
+        S3Bucket_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `versioning` after provisioning.\n"]
-    pub fn versioning(&self) -> terrars::ListRef<S3BucketVersioningElRef> {
+    pub fn versioning(&self) -> terrars::ListRef<S3Bucket_VersioningRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.versioning", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `website` after provisioning.\n"]
-    pub fn website(&self) -> terrars::ListRef<S3BucketWebsiteElRef> {
+    pub fn website(&self) -> terrars::ListRef<S3Bucket_WebsiteRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.website", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct S3BucketDynamic {
+    cors_rule: std::option::Option<terrars::DynamicBlock<S3Bucket_CorsRule>>,
+    grant: std::option::Option<terrars::DynamicBlock<S3Bucket_Grant>>,
+    lifecycle_rule: std::option::Option<terrars::DynamicBlock<S3Bucket_LifecycleRule>>,
+    logging: std::option::Option<terrars::DynamicBlock<S3Bucket_Logging>>,
+    object_lock_configuration: std::option::Option<terrars::DynamicBlock<S3Bucket_ObjectLockConfiguration>>,
+    replication_configuration: std::option::Option<terrars::DynamicBlock<S3Bucket_ReplicationConfiguration>>,
+    server_side_encryption_configuration: std
+    ::option
+    ::Option<terrars::DynamicBlock<S3Bucket_ServerSideEncryptionConfiguration>>,
+    versioning: std::option::Option<terrars::DynamicBlock<S3Bucket_Versioning>>,
+    website: std::option::Option<terrars::DynamicBlock<S3Bucket_Website>>,
+}
+
 #[derive(Serialize)]
-pub struct S3BucketCorsRuleEl {
+pub struct S3Bucket_CorsRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     allowed_headers: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
     allowed_methods: terrars::ListField<terrars::PrimField<std::string::String>>,
@@ -765,7 +823,7 @@ pub struct S3BucketCorsRuleEl {
     max_age_seconds: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl S3BucketCorsRuleEl {
+impl S3Bucket_CorsRule {
     #[doc = "Set the field `allowed_headers`.\n"]
     pub fn set_allowed_headers(
         mut self,
@@ -791,8 +849,8 @@ impl S3BucketCorsRuleEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketCorsRuleEl {
-    type O = terrars::BlockAssignable<S3BucketCorsRuleEl>;
+impl terrars::ToListMappable for S3Bucket_CorsRule {
+    type O = terrars::BlockAssignable<S3Bucket_CorsRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -803,16 +861,16 @@ impl terrars::ToListMappable for S3BucketCorsRuleEl {
     }
 }
 
-pub struct BuildS3BucketCorsRuleEl {
+pub struct BuildS3Bucket_CorsRule {
     #[doc = ""]
     pub allowed_methods: terrars::ListField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub allowed_origins: terrars::ListField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildS3BucketCorsRuleEl {
-    pub fn build(self) -> S3BucketCorsRuleEl {
-        S3BucketCorsRuleEl {
+impl BuildS3Bucket_CorsRule {
+    pub fn build(self) -> S3Bucket_CorsRule {
+        S3Bucket_CorsRule {
             allowed_headers: core::default::Default::default(),
             allowed_methods: self.allowed_methods,
             allowed_origins: self.allowed_origins,
@@ -822,21 +880,23 @@ impl BuildS3BucketCorsRuleEl {
     }
 }
 
-pub struct S3BucketCorsRuleElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_CorsRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketCorsRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketCorsRuleElRef {
-        S3BucketCorsRuleElRef {
+impl terrars::Ref for S3Bucket_CorsRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_CorsRuleRef {
+        S3Bucket_CorsRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketCorsRuleElRef {
+impl S3Bucket_CorsRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -868,7 +928,7 @@ impl S3BucketCorsRuleElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketGrantEl {
+pub struct S3Bucket_Grant {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     permissions: terrars::SetField<terrars::PrimField<std::string::String>>,
@@ -878,7 +938,7 @@ pub struct S3BucketGrantEl {
     uri: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketGrantEl {
+impl S3Bucket_Grant {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -892,8 +952,8 @@ impl S3BucketGrantEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketGrantEl {
-    type O = terrars::BlockAssignable<S3BucketGrantEl>;
+impl terrars::ToListMappable for S3Bucket_Grant {
+    type O = terrars::BlockAssignable<S3Bucket_Grant>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -904,16 +964,16 @@ impl terrars::ToListMappable for S3BucketGrantEl {
     }
 }
 
-pub struct BuildS3BucketGrantEl {
+pub struct BuildS3Bucket_Grant {
     #[doc = ""]
     pub permissions: terrars::SetField<terrars::PrimField<std::string::String>>,
     #[doc = ""]
     pub type_: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketGrantEl {
-    pub fn build(self) -> S3BucketGrantEl {
-        S3BucketGrantEl {
+impl BuildS3Bucket_Grant {
+    pub fn build(self) -> S3Bucket_Grant {
+        S3Bucket_Grant {
             id: core::default::Default::default(),
             permissions: self.permissions,
             type_: self.type_,
@@ -922,21 +982,23 @@ impl BuildS3BucketGrantEl {
     }
 }
 
-pub struct S3BucketGrantElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_GrantRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketGrantElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketGrantElRef {
-        S3BucketGrantElRef {
+impl terrars::Ref for S3Bucket_GrantRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_GrantRef {
+        S3Bucket_GrantRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketGrantElRef {
+impl S3Bucket_GrantRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -963,7 +1025,7 @@ impl S3BucketGrantElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketLifecycleRuleElExpirationEl {
+pub struct S3Bucket_LifecycleRule_Expiration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     date: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -972,7 +1034,7 @@ pub struct S3BucketLifecycleRuleElExpirationEl {
     expired_object_delete_marker: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3BucketLifecycleRuleElExpirationEl {
+impl S3Bucket_LifecycleRule_Expiration {
     #[doc = "Set the field `date`.\n"]
     pub fn set_date(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.date = std::option::Option::Some(v.into());
@@ -992,8 +1054,8 @@ impl S3BucketLifecycleRuleElExpirationEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketLifecycleRuleElExpirationEl {
-    type O = terrars::BlockAssignable<S3BucketLifecycleRuleElExpirationEl>;
+impl terrars::ToListMappable for S3Bucket_LifecycleRule_Expiration {
+    type O = terrars::BlockAssignable<S3Bucket_LifecycleRule_Expiration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1004,11 +1066,11 @@ impl terrars::ToListMappable for S3BucketLifecycleRuleElExpirationEl {
     }
 }
 
-pub struct BuildS3BucketLifecycleRuleElExpirationEl {}
+pub struct BuildS3Bucket_LifecycleRule_Expiration {}
 
-impl BuildS3BucketLifecycleRuleElExpirationEl {
-    pub fn build(self) -> S3BucketLifecycleRuleElExpirationEl {
-        S3BucketLifecycleRuleElExpirationEl {
+impl BuildS3Bucket_LifecycleRule_Expiration {
+    pub fn build(self) -> S3Bucket_LifecycleRule_Expiration {
+        S3Bucket_LifecycleRule_Expiration {
             date: core::default::Default::default(),
             days: core::default::Default::default(),
             expired_object_delete_marker: core::default::Default::default(),
@@ -1016,21 +1078,23 @@ impl BuildS3BucketLifecycleRuleElExpirationEl {
     }
 }
 
-pub struct S3BucketLifecycleRuleElExpirationElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_LifecycleRule_ExpirationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketLifecycleRuleElExpirationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLifecycleRuleElExpirationElRef {
-        S3BucketLifecycleRuleElExpirationElRef {
+impl terrars::Ref for S3Bucket_LifecycleRule_ExpirationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_LifecycleRule_ExpirationRef {
+        S3Bucket_LifecycleRule_ExpirationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketLifecycleRuleElExpirationElRef {
+impl S3Bucket_LifecycleRule_ExpirationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1052,12 +1116,12 @@ impl S3BucketLifecycleRuleElExpirationElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketLifecycleRuleElNoncurrentVersionExpirationEl {
+pub struct S3Bucket_LifecycleRule_NoncurrentVersionExpiration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     days: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl S3BucketLifecycleRuleElNoncurrentVersionExpirationEl {
+impl S3Bucket_LifecycleRule_NoncurrentVersionExpiration {
     #[doc = "Set the field `days`.\n"]
     pub fn set_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.days = std::option::Option::Some(v.into());
@@ -1065,8 +1129,8 @@ impl S3BucketLifecycleRuleElNoncurrentVersionExpirationEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketLifecycleRuleElNoncurrentVersionExpirationEl {
-    type O = terrars::BlockAssignable<S3BucketLifecycleRuleElNoncurrentVersionExpirationEl>;
+impl terrars::ToListMappable for S3Bucket_LifecycleRule_NoncurrentVersionExpiration {
+    type O = terrars::BlockAssignable<S3Bucket_LifecycleRule_NoncurrentVersionExpiration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1077,32 +1141,34 @@ impl terrars::ToListMappable for S3BucketLifecycleRuleElNoncurrentVersionExpirat
     }
 }
 
-pub struct BuildS3BucketLifecycleRuleElNoncurrentVersionExpirationEl {}
+pub struct BuildS3Bucket_LifecycleRule_NoncurrentVersionExpiration {}
 
-impl BuildS3BucketLifecycleRuleElNoncurrentVersionExpirationEl {
-    pub fn build(self) -> S3BucketLifecycleRuleElNoncurrentVersionExpirationEl {
-        S3BucketLifecycleRuleElNoncurrentVersionExpirationEl { days: core::default::Default::default() }
+impl BuildS3Bucket_LifecycleRule_NoncurrentVersionExpiration {
+    pub fn build(self) -> S3Bucket_LifecycleRule_NoncurrentVersionExpiration {
+        S3Bucket_LifecycleRule_NoncurrentVersionExpiration { days: core::default::Default::default() }
     }
 }
 
-pub struct S3BucketLifecycleRuleElNoncurrentVersionExpirationElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_LifecycleRule_NoncurrentVersionExpirationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketLifecycleRuleElNoncurrentVersionExpirationElRef {
+impl terrars::Ref for S3Bucket_LifecycleRule_NoncurrentVersionExpirationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketLifecycleRuleElNoncurrentVersionExpirationElRef {
-        S3BucketLifecycleRuleElNoncurrentVersionExpirationElRef {
+    ) -> S3Bucket_LifecycleRule_NoncurrentVersionExpirationRef {
+        S3Bucket_LifecycleRule_NoncurrentVersionExpirationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketLifecycleRuleElNoncurrentVersionExpirationElRef {
+impl S3Bucket_LifecycleRule_NoncurrentVersionExpirationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1114,13 +1180,13 @@ impl S3BucketLifecycleRuleElNoncurrentVersionExpirationElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketLifecycleRuleElNoncurrentVersionTransitionEl {
+pub struct S3Bucket_LifecycleRule_NoncurrentVersionTransition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     days: std::option::Option<terrars::PrimField<f64>>,
     storage_class: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketLifecycleRuleElNoncurrentVersionTransitionEl {
+impl S3Bucket_LifecycleRule_NoncurrentVersionTransition {
     #[doc = "Set the field `days`.\n"]
     pub fn set_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.days = std::option::Option::Some(v.into());
@@ -1128,8 +1194,8 @@ impl S3BucketLifecycleRuleElNoncurrentVersionTransitionEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketLifecycleRuleElNoncurrentVersionTransitionEl {
-    type O = terrars::BlockAssignable<S3BucketLifecycleRuleElNoncurrentVersionTransitionEl>;
+impl terrars::ToListMappable for S3Bucket_LifecycleRule_NoncurrentVersionTransition {
+    type O = terrars::BlockAssignable<S3Bucket_LifecycleRule_NoncurrentVersionTransition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1140,38 +1206,40 @@ impl terrars::ToListMappable for S3BucketLifecycleRuleElNoncurrentVersionTransit
     }
 }
 
-pub struct BuildS3BucketLifecycleRuleElNoncurrentVersionTransitionEl {
+pub struct BuildS3Bucket_LifecycleRule_NoncurrentVersionTransition {
     #[doc = ""]
     pub storage_class: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketLifecycleRuleElNoncurrentVersionTransitionEl {
-    pub fn build(self) -> S3BucketLifecycleRuleElNoncurrentVersionTransitionEl {
-        S3BucketLifecycleRuleElNoncurrentVersionTransitionEl {
+impl BuildS3Bucket_LifecycleRule_NoncurrentVersionTransition {
+    pub fn build(self) -> S3Bucket_LifecycleRule_NoncurrentVersionTransition {
+        S3Bucket_LifecycleRule_NoncurrentVersionTransition {
             days: core::default::Default::default(),
             storage_class: self.storage_class,
         }
     }
 }
 
-pub struct S3BucketLifecycleRuleElNoncurrentVersionTransitionElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_LifecycleRule_NoncurrentVersionTransitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketLifecycleRuleElNoncurrentVersionTransitionElRef {
+impl terrars::Ref for S3Bucket_LifecycleRule_NoncurrentVersionTransitionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketLifecycleRuleElNoncurrentVersionTransitionElRef {
-        S3BucketLifecycleRuleElNoncurrentVersionTransitionElRef {
+    ) -> S3Bucket_LifecycleRule_NoncurrentVersionTransitionRef {
+        S3Bucket_LifecycleRule_NoncurrentVersionTransitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketLifecycleRuleElNoncurrentVersionTransitionElRef {
+impl S3Bucket_LifecycleRule_NoncurrentVersionTransitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1188,7 +1256,7 @@ impl S3BucketLifecycleRuleElNoncurrentVersionTransitionElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketLifecycleRuleElTransitionEl {
+pub struct S3Bucket_LifecycleRule_Transition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     date: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1196,7 +1264,7 @@ pub struct S3BucketLifecycleRuleElTransitionEl {
     storage_class: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketLifecycleRuleElTransitionEl {
+impl S3Bucket_LifecycleRule_Transition {
     #[doc = "Set the field `date`.\n"]
     pub fn set_date(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.date = std::option::Option::Some(v.into());
@@ -1210,8 +1278,8 @@ impl S3BucketLifecycleRuleElTransitionEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketLifecycleRuleElTransitionEl {
-    type O = terrars::BlockAssignable<S3BucketLifecycleRuleElTransitionEl>;
+impl terrars::ToListMappable for S3Bucket_LifecycleRule_Transition {
+    type O = terrars::BlockAssignable<S3Bucket_LifecycleRule_Transition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1222,14 +1290,14 @@ impl terrars::ToListMappable for S3BucketLifecycleRuleElTransitionEl {
     }
 }
 
-pub struct BuildS3BucketLifecycleRuleElTransitionEl {
+pub struct BuildS3Bucket_LifecycleRule_Transition {
     #[doc = ""]
     pub storage_class: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketLifecycleRuleElTransitionEl {
-    pub fn build(self) -> S3BucketLifecycleRuleElTransitionEl {
-        S3BucketLifecycleRuleElTransitionEl {
+impl BuildS3Bucket_LifecycleRule_Transition {
+    pub fn build(self) -> S3Bucket_LifecycleRule_Transition {
+        S3Bucket_LifecycleRule_Transition {
             date: core::default::Default::default(),
             days: core::default::Default::default(),
             storage_class: self.storage_class,
@@ -1237,21 +1305,23 @@ impl BuildS3BucketLifecycleRuleElTransitionEl {
     }
 }
 
-pub struct S3BucketLifecycleRuleElTransitionElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_LifecycleRule_TransitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketLifecycleRuleElTransitionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLifecycleRuleElTransitionElRef {
-        S3BucketLifecycleRuleElTransitionElRef {
+impl terrars::Ref for S3Bucket_LifecycleRule_TransitionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_LifecycleRule_TransitionRef {
+        S3Bucket_LifecycleRule_TransitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketLifecycleRuleElTransitionElRef {
+impl S3Bucket_LifecycleRule_TransitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1273,19 +1343,19 @@ impl S3BucketLifecycleRuleElTransitionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketLifecycleRuleElDynamic {
-    expiration: std::option::Option<terrars::DynamicBlock<S3BucketLifecycleRuleElExpirationEl>>,
+struct S3Bucket_LifecycleRuleDynamic {
+    expiration: std::option::Option<terrars::DynamicBlock<S3Bucket_LifecycleRule_Expiration>>,
     noncurrent_version_expiration: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketLifecycleRuleElNoncurrentVersionExpirationEl>>,
+    ::Option<terrars::DynamicBlock<S3Bucket_LifecycleRule_NoncurrentVersionExpiration>>,
     noncurrent_version_transition: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketLifecycleRuleElNoncurrentVersionTransitionEl>>,
-    transition: std::option::Option<terrars::DynamicBlock<S3BucketLifecycleRuleElTransitionEl>>,
+    ::Option<terrars::DynamicBlock<S3Bucket_LifecycleRule_NoncurrentVersionTransition>>,
+    transition: std::option::Option<terrars::DynamicBlock<S3Bucket_LifecycleRule_Transition>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketLifecycleRuleEl {
+pub struct S3Bucket_LifecycleRule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     abort_incomplete_multipart_upload_days: std::option::Option<terrars::PrimField<f64>>,
     enabled: terrars::PrimField<bool>,
@@ -1296,21 +1366,17 @@ pub struct S3BucketLifecycleRuleEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    expiration: std::option::Option<std::vec::Vec<S3BucketLifecycleRuleElExpirationEl>>,
+    expiration: std::option::Option<std::vec::Vec<S3Bucket_LifecycleRule_Expiration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    noncurrent_version_expiration: std
-    ::option
-    ::Option<std::vec::Vec<S3BucketLifecycleRuleElNoncurrentVersionExpirationEl>>,
+    noncurrent_version_expiration: std::option::Option<std::vec::Vec<S3Bucket_LifecycleRule_NoncurrentVersionExpiration>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    noncurrent_version_transition: std
-    ::option
-    ::Option<std::vec::Vec<S3BucketLifecycleRuleElNoncurrentVersionTransitionEl>>,
+    noncurrent_version_transition: std::option::Option<std::vec::Vec<S3Bucket_LifecycleRule_NoncurrentVersionTransition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    transition: std::option::Option<std::vec::Vec<S3BucketLifecycleRuleElTransitionEl>>,
-    dynamic: S3BucketLifecycleRuleElDynamic,
+    transition: std::option::Option<std::vec::Vec<S3Bucket_LifecycleRule_Transition>>,
+    dynamic: S3Bucket_LifecycleRuleDynamic,
 }
 
-impl S3BucketLifecycleRuleEl {
+impl S3Bucket_LifecycleRule {
     #[doc = "Set the field `abort_incomplete_multipart_upload_days`.\n"]
     pub fn set_abort_incomplete_multipart_upload_days(
         mut self,
@@ -1344,7 +1410,7 @@ impl S3BucketLifecycleRuleEl {
     #[doc = "Set the field `expiration`.\n"]
     pub fn set_expiration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleRuleElExpirationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_LifecycleRule_Expiration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1360,7 +1426,7 @@ impl S3BucketLifecycleRuleEl {
     #[doc = "Set the field `noncurrent_version_expiration`.\n"]
     pub fn set_noncurrent_version_expiration(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleRuleElNoncurrentVersionExpirationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_LifecycleRule_NoncurrentVersionExpiration>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1376,7 +1442,7 @@ impl S3BucketLifecycleRuleEl {
     #[doc = "Set the field `noncurrent_version_transition`.\n"]
     pub fn set_noncurrent_version_transition(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleRuleElNoncurrentVersionTransitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_LifecycleRule_NoncurrentVersionTransition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1392,7 +1458,7 @@ impl S3BucketLifecycleRuleEl {
     #[doc = "Set the field `transition`.\n"]
     pub fn set_transition(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketLifecycleRuleElTransitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_LifecycleRule_Transition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1406,8 +1472,8 @@ impl S3BucketLifecycleRuleEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketLifecycleRuleEl {
-    type O = terrars::BlockAssignable<S3BucketLifecycleRuleEl>;
+impl terrars::ToListMappable for S3Bucket_LifecycleRule {
+    type O = terrars::BlockAssignable<S3Bucket_LifecycleRule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1418,14 +1484,14 @@ impl terrars::ToListMappable for S3BucketLifecycleRuleEl {
     }
 }
 
-pub struct BuildS3BucketLifecycleRuleEl {
+pub struct BuildS3Bucket_LifecycleRule {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildS3BucketLifecycleRuleEl {
-    pub fn build(self) -> S3BucketLifecycleRuleEl {
-        S3BucketLifecycleRuleEl {
+impl BuildS3Bucket_LifecycleRule {
+    pub fn build(self) -> S3Bucket_LifecycleRule {
+        S3Bucket_LifecycleRule {
             abort_incomplete_multipart_upload_days: core::default::Default::default(),
             enabled: self.enabled,
             id: core::default::Default::default(),
@@ -1440,21 +1506,23 @@ impl BuildS3BucketLifecycleRuleEl {
     }
 }
 
-pub struct S3BucketLifecycleRuleElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_LifecycleRuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketLifecycleRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLifecycleRuleElRef {
-        S3BucketLifecycleRuleElRef {
+impl terrars::Ref for S3Bucket_LifecycleRuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_LifecycleRuleRef {
+        S3Bucket_LifecycleRuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketLifecycleRuleElRef {
+impl S3Bucket_LifecycleRuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1488,26 +1556,26 @@ impl S3BucketLifecycleRuleElRef {
     }
 
     #[doc = "Get a reference to the value of field `expiration` after provisioning.\n"]
-    pub fn expiration(&self) -> terrars::ListRef<S3BucketLifecycleRuleElExpirationElRef> {
+    pub fn expiration(&self) -> terrars::ListRef<S3Bucket_LifecycleRule_ExpirationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.expiration", self.base))
     }
 
     #[doc = "Get a reference to the value of field `noncurrent_version_expiration` after provisioning.\n"]
     pub fn noncurrent_version_expiration(
         &self,
-    ) -> terrars::ListRef<S3BucketLifecycleRuleElNoncurrentVersionExpirationElRef> {
+    ) -> terrars::ListRef<S3Bucket_LifecycleRule_NoncurrentVersionExpirationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.noncurrent_version_expiration", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3BucketLoggingEl {
+pub struct S3Bucket_Logging {
     target_bucket: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketLoggingEl {
+impl S3Bucket_Logging {
     #[doc = "Set the field `target_prefix`.\n"]
     pub fn set_target_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.target_prefix = std::option::Option::Some(v.into());
@@ -1515,8 +1583,8 @@ impl S3BucketLoggingEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketLoggingEl {
-    type O = terrars::BlockAssignable<S3BucketLoggingEl>;
+impl terrars::ToListMappable for S3Bucket_Logging {
+    type O = terrars::BlockAssignable<S3Bucket_Logging>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1527,35 +1595,37 @@ impl terrars::ToListMappable for S3BucketLoggingEl {
     }
 }
 
-pub struct BuildS3BucketLoggingEl {
+pub struct BuildS3Bucket_Logging {
     #[doc = ""]
     pub target_bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketLoggingEl {
-    pub fn build(self) -> S3BucketLoggingEl {
-        S3BucketLoggingEl {
+impl BuildS3Bucket_Logging {
+    pub fn build(self) -> S3Bucket_Logging {
+        S3Bucket_Logging {
             target_bucket: self.target_bucket,
             target_prefix: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketLoggingElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_LoggingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketLoggingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketLoggingElRef {
-        S3BucketLoggingElRef {
+impl terrars::Ref for S3Bucket_LoggingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_LoggingRef {
+        S3Bucket_LoggingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketLoggingElRef {
+impl S3Bucket_LoggingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1572,7 +1642,7 @@ impl S3BucketLoggingElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
+pub struct S3Bucket_ObjectLockConfiguration_Rule_DefaultRetention {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     days: std::option::Option<terrars::PrimField<f64>>,
     mode: terrars::PrimField<std::string::String>,
@@ -1580,7 +1650,7 @@ pub struct S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
     years: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
+impl S3Bucket_ObjectLockConfiguration_Rule_DefaultRetention {
     #[doc = "Set the field `days`.\n"]
     pub fn set_days(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.days = std::option::Option::Some(v.into());
@@ -1594,8 +1664,8 @@ impl S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
-    type O = terrars::BlockAssignable<S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl>;
+impl terrars::ToListMappable for S3Bucket_ObjectLockConfiguration_Rule_DefaultRetention {
+    type O = terrars::BlockAssignable<S3Bucket_ObjectLockConfiguration_Rule_DefaultRetention>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1606,14 +1676,14 @@ impl terrars::ToListMappable for S3BucketObjectLockConfigurationElRuleElDefaultR
     }
 }
 
-pub struct BuildS3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
+pub struct BuildS3Bucket_ObjectLockConfiguration_Rule_DefaultRetention {
     #[doc = ""]
     pub mode: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
-    pub fn build(self) -> S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
-        S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
+impl BuildS3Bucket_ObjectLockConfiguration_Rule_DefaultRetention {
+    pub fn build(self) -> S3Bucket_ObjectLockConfiguration_Rule_DefaultRetention {
+        S3Bucket_ObjectLockConfiguration_Rule_DefaultRetention {
             days: core::default::Default::default(),
             mode: self.mode,
             years: core::default::Default::default(),
@@ -1621,24 +1691,26 @@ impl BuildS3BucketObjectLockConfigurationElRuleElDefaultRetentionEl {
     }
 }
 
-pub struct S3BucketObjectLockConfigurationElRuleElDefaultRetentionElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ObjectLockConfiguration_Rule_DefaultRetentionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketObjectLockConfigurationElRuleElDefaultRetentionElRef {
+impl terrars::Ref for S3Bucket_ObjectLockConfiguration_Rule_DefaultRetentionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketObjectLockConfigurationElRuleElDefaultRetentionElRef {
-        S3BucketObjectLockConfigurationElRuleElDefaultRetentionElRef {
+    ) -> S3Bucket_ObjectLockConfiguration_Rule_DefaultRetentionRef {
+        S3Bucket_ObjectLockConfiguration_Rule_DefaultRetentionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketObjectLockConfigurationElRuleElDefaultRetentionElRef {
+impl S3Bucket_ObjectLockConfiguration_Rule_DefaultRetentionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1660,29 +1732,24 @@ impl S3BucketObjectLockConfigurationElRuleElDefaultRetentionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketObjectLockConfigurationElRuleElDynamic {
+struct S3Bucket_ObjectLockConfiguration_RuleDynamic {
     default_retention: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl>>,
+    ::Option<terrars::DynamicBlock<S3Bucket_ObjectLockConfiguration_Rule_DefaultRetention>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketObjectLockConfigurationElRuleEl {
+pub struct S3Bucket_ObjectLockConfiguration_Rule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    default_retention: std::option::Option<std::vec::Vec<S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl>>,
-    dynamic: S3BucketObjectLockConfigurationElRuleElDynamic,
+    default_retention: std::option::Option<std::vec::Vec<S3Bucket_ObjectLockConfiguration_Rule_DefaultRetention>>,
+    dynamic: S3Bucket_ObjectLockConfiguration_RuleDynamic,
 }
 
-impl S3BucketObjectLockConfigurationElRuleEl {
+impl S3Bucket_ObjectLockConfiguration_Rule {
     #[doc = "Set the field `default_retention`.\n"]
     pub fn set_default_retention(
         mut self,
-        v:
-            impl
-
-                    std
-                    ::convert
-                    ::Into<terrars::BlockAssignable<S3BucketObjectLockConfigurationElRuleElDefaultRetentionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_ObjectLockConfiguration_Rule_DefaultRetention>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1696,8 +1763,8 @@ impl S3BucketObjectLockConfigurationElRuleEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketObjectLockConfigurationElRuleEl {
-    type O = terrars::BlockAssignable<S3BucketObjectLockConfigurationElRuleEl>;
+impl terrars::ToListMappable for S3Bucket_ObjectLockConfiguration_Rule {
+    type O = terrars::BlockAssignable<S3Bucket_ObjectLockConfiguration_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1708,57 +1775,59 @@ impl terrars::ToListMappable for S3BucketObjectLockConfigurationElRuleEl {
     }
 }
 
-pub struct BuildS3BucketObjectLockConfigurationElRuleEl {}
+pub struct BuildS3Bucket_ObjectLockConfiguration_Rule {}
 
-impl BuildS3BucketObjectLockConfigurationElRuleEl {
-    pub fn build(self) -> S3BucketObjectLockConfigurationElRuleEl {
-        S3BucketObjectLockConfigurationElRuleEl {
+impl BuildS3Bucket_ObjectLockConfiguration_Rule {
+    pub fn build(self) -> S3Bucket_ObjectLockConfiguration_Rule {
+        S3Bucket_ObjectLockConfiguration_Rule {
             default_retention: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketObjectLockConfigurationElRuleElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ObjectLockConfiguration_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketObjectLockConfigurationElRuleElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketObjectLockConfigurationElRuleElRef {
-        S3BucketObjectLockConfigurationElRuleElRef {
+impl terrars::Ref for S3Bucket_ObjectLockConfiguration_RuleRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_ObjectLockConfiguration_RuleRef {
+        S3Bucket_ObjectLockConfiguration_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketObjectLockConfigurationElRuleElRef {
+impl S3Bucket_ObjectLockConfiguration_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `default_retention` after provisioning.\n"]
-    pub fn default_retention(&self) -> terrars::ListRef<S3BucketObjectLockConfigurationElRuleElDefaultRetentionElRef> {
+    pub fn default_retention(&self) -> terrars::ListRef<S3Bucket_ObjectLockConfiguration_Rule_DefaultRetentionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.default_retention", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketObjectLockConfigurationElDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<S3BucketObjectLockConfigurationElRuleEl>>,
+struct S3Bucket_ObjectLockConfigurationDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<S3Bucket_ObjectLockConfiguration_Rule>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketObjectLockConfigurationEl {
+pub struct S3Bucket_ObjectLockConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_lock_enabled: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<S3BucketObjectLockConfigurationElRuleEl>>,
-    dynamic: S3BucketObjectLockConfigurationElDynamic,
+    rule: std::option::Option<std::vec::Vec<S3Bucket_ObjectLockConfiguration_Rule>>,
+    dynamic: S3Bucket_ObjectLockConfigurationDynamic,
 }
 
-impl S3BucketObjectLockConfigurationEl {
+impl S3Bucket_ObjectLockConfiguration {
     #[doc = "Set the field `object_lock_enabled`.\n"]
     pub fn set_object_lock_enabled(
         mut self,
@@ -1771,7 +1840,7 @@ impl S3BucketObjectLockConfigurationEl {
     #[doc = "Set the field `rule`.\n"]
     pub fn set_rule(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketObjectLockConfigurationElRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_ObjectLockConfiguration_Rule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1785,8 +1854,8 @@ impl S3BucketObjectLockConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketObjectLockConfigurationEl {
-    type O = terrars::BlockAssignable<S3BucketObjectLockConfigurationEl>;
+impl terrars::ToListMappable for S3Bucket_ObjectLockConfiguration {
+    type O = terrars::BlockAssignable<S3Bucket_ObjectLockConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1797,11 +1866,11 @@ impl terrars::ToListMappable for S3BucketObjectLockConfigurationEl {
     }
 }
 
-pub struct BuildS3BucketObjectLockConfigurationEl {}
+pub struct BuildS3Bucket_ObjectLockConfiguration {}
 
-impl BuildS3BucketObjectLockConfigurationEl {
-    pub fn build(self) -> S3BucketObjectLockConfigurationEl {
-        S3BucketObjectLockConfigurationEl {
+impl BuildS3Bucket_ObjectLockConfiguration {
+    pub fn build(self) -> S3Bucket_ObjectLockConfiguration {
+        S3Bucket_ObjectLockConfiguration {
             object_lock_enabled: core::default::Default::default(),
             rule: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -1809,21 +1878,23 @@ impl BuildS3BucketObjectLockConfigurationEl {
     }
 }
 
-pub struct S3BucketObjectLockConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ObjectLockConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketObjectLockConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketObjectLockConfigurationElRef {
-        S3BucketObjectLockConfigurationElRef {
+impl terrars::Ref for S3Bucket_ObjectLockConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_ObjectLockConfigurationRef {
+        S3Bucket_ObjectLockConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketObjectLockConfigurationElRef {
+impl S3Bucket_ObjectLockConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1834,21 +1905,20 @@ impl S3BucketObjectLockConfigurationElRef {
     }
 
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<S3BucketObjectLockConfigurationElRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<S3Bucket_ObjectLockConfiguration_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl {
+pub struct S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation {
     owner: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl { }
+impl S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation { }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl {
-    type O =
-        terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl>;
+impl terrars::ToListMappable for S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation {
+    type O = terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1859,35 +1929,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElDestin
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl {
+pub struct BuildS3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation {
     #[doc = ""]
     pub owner: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl {
-        S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl { owner: self.owner }
+impl BuildS3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation {
+    pub fn build(self) -> S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation {
+        S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation { owner: self.owner }
     }
 }
 
-pub struct S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationElRef {
+impl terrars::Ref for S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationElRef {
-        S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationElRef {
+    ) -> S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslationRef {
+        S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationElRef {
+impl S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1899,14 +1971,14 @@ impl S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslat
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl {
+pub struct S3Bucket_ReplicationConfiguration_Rules_Destination_Metrics {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     minutes: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl {
+impl S3Bucket_ReplicationConfiguration_Rules_Destination_Metrics {
     #[doc = "Set the field `minutes`.\n"]
     pub fn set_minutes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.minutes = std::option::Option::Some(v.into());
@@ -1920,8 +1992,8 @@ impl S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl>;
+impl terrars::ToListMappable for S3Bucket_ReplicationConfiguration_Rules_Destination_Metrics {
+    type O = terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_Destination_Metrics>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1932,35 +2004,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElDestin
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationElRulesElDestinationElMetricsEl {}
+pub struct BuildS3Bucket_ReplicationConfiguration_Rules_Destination_Metrics {}
 
-impl BuildS3BucketReplicationConfigurationElRulesElDestinationElMetricsEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl {
-        S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl {
+impl BuildS3Bucket_ReplicationConfiguration_Rules_Destination_Metrics {
+    pub fn build(self) -> S3Bucket_ReplicationConfiguration_Rules_Destination_Metrics {
+        S3Bucket_ReplicationConfiguration_Rules_Destination_Metrics {
             minutes: core::default::Default::default(),
             status: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketReplicationConfigurationElRulesElDestinationElMetricsElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ReplicationConfiguration_Rules_Destination_MetricsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationElRulesElDestinationElMetricsElRef {
+impl terrars::Ref for S3Bucket_ReplicationConfiguration_Rules_Destination_MetricsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationElRulesElDestinationElMetricsElRef {
-        S3BucketReplicationConfigurationElRulesElDestinationElMetricsElRef {
+    ) -> S3Bucket_ReplicationConfiguration_Rules_Destination_MetricsRef {
+        S3Bucket_ReplicationConfiguration_Rules_Destination_MetricsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationElRulesElDestinationElMetricsElRef {
+impl S3Bucket_ReplicationConfiguration_Rules_Destination_MetricsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1977,14 +2051,14 @@ impl S3BucketReplicationConfigurationElRulesElDestinationElMetricsElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl {
+pub struct S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     minutes: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl {
+impl S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime {
     #[doc = "Set the field `minutes`.\n"]
     pub fn set_minutes(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.minutes = std::option::Option::Some(v.into());
@@ -1998,8 +2072,8 @@ impl S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl>;
+impl terrars::ToListMappable for S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime {
+    type O = terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2010,35 +2084,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElDestin
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl {}
+pub struct BuildS3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime {}
 
-impl BuildS3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl {
-        S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl {
+impl BuildS3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime {
+    pub fn build(self) -> S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime {
+        S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime {
             minutes: core::default::Default::default(),
             status: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTimeRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeElRef {
+impl terrars::Ref for S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTimeRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeElRef {
-        S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeElRef {
+    ) -> S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTimeRef {
+        S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTimeRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeElRef {
+impl S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTimeRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2055,20 +2131,18 @@ impl S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeElRef 
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationElRulesElDestinationElDynamic {
+struct S3Bucket_ReplicationConfiguration_Rules_DestinationDynamic {
     access_control_translation: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl>>,
-    metrics: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl>>,
+    ::Option<terrars::DynamicBlock<S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation>>,
+    metrics: std::option::Option<terrars::DynamicBlock<S3Bucket_ReplicationConfiguration_Rules_Destination_Metrics>>,
     replication_time: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl>>,
+    ::Option<terrars::DynamicBlock<S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationElRulesElDestinationEl {
+pub struct S3Bucket_ReplicationConfiguration_Rules_Destination {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     account_id: std::option::Option<terrars::PrimField<std::string::String>>,
     bucket: terrars::PrimField<std::string::String>,
@@ -2079,17 +2153,17 @@ pub struct S3BucketReplicationConfigurationElRulesElDestinationEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     access_control_translation: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl>>,
+    ::Option<std::vec::Vec<S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    metrics: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl>>,
+    metrics: std::option::Option<std::vec::Vec<S3Bucket_ReplicationConfiguration_Rules_Destination_Metrics>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     replication_time: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl>>,
-    dynamic: S3BucketReplicationConfigurationElRulesElDestinationElDynamic,
+    ::Option<std::vec::Vec<S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime>>,
+    dynamic: S3Bucket_ReplicationConfiguration_Rules_DestinationDynamic,
 }
 
-impl S3BucketReplicationConfigurationElRulesElDestinationEl {
+impl S3Bucket_ReplicationConfiguration_Rules_Destination {
     #[doc = "Set the field `account_id`.\n"]
     pub fn set_account_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.account_id = std::option::Option::Some(v.into());
@@ -2122,7 +2196,7 @@ impl S3BucketReplicationConfigurationElRulesElDestinationEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationEl,
+                            S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslation,
                         >,
                     >,
     ) -> Self {
@@ -2145,7 +2219,7 @@ impl S3BucketReplicationConfigurationElRulesElDestinationEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElDestinationElMetricsEl>>,
+                    ::Into<terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_Destination_Metrics>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2167,8 +2241,7 @@ impl S3BucketReplicationConfigurationElRulesElDestinationEl {
                     std
                     ::convert
                     ::Into<
-                        terrars
-                        ::BlockAssignable<S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeEl>,
+                        terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTime>,
                     >,
     ) -> Self {
         match v.into() {
@@ -2183,8 +2256,8 @@ impl S3BucketReplicationConfigurationElRulesElDestinationEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElDestinationEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElDestinationEl>;
+impl terrars::ToListMappable for S3Bucket_ReplicationConfiguration_Rules_Destination {
+    type O = terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2195,14 +2268,14 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElDestin
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationElRulesElDestinationEl {
+pub struct BuildS3Bucket_ReplicationConfiguration_Rules_Destination {
     #[doc = ""]
     pub bucket: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationElRulesElDestinationEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationElRulesElDestinationEl {
-        S3BucketReplicationConfigurationElRulesElDestinationEl {
+impl BuildS3Bucket_ReplicationConfiguration_Rules_Destination {
+    pub fn build(self) -> S3Bucket_ReplicationConfiguration_Rules_Destination {
+        S3Bucket_ReplicationConfiguration_Rules_Destination {
             account_id: core::default::Default::default(),
             bucket: self.bucket,
             replica_kms_key_id: core::default::Default::default(),
@@ -2215,24 +2288,26 @@ impl BuildS3BucketReplicationConfigurationElRulesElDestinationEl {
     }
 }
 
-pub struct S3BucketReplicationConfigurationElRulesElDestinationElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ReplicationConfiguration_Rules_DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationElRulesElDestinationElRef {
+impl terrars::Ref for S3Bucket_ReplicationConfiguration_Rules_DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationElRulesElDestinationElRef {
-        S3BucketReplicationConfigurationElRulesElDestinationElRef {
+    ) -> S3Bucket_ReplicationConfiguration_Rules_DestinationRef {
+        S3Bucket_ReplicationConfiguration_Rules_DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationElRulesElDestinationElRef {
+impl S3Bucket_ReplicationConfiguration_Rules_DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2260,32 +2335,32 @@ impl S3BucketReplicationConfigurationElRulesElDestinationElRef {
     #[doc = "Get a reference to the value of field `access_control_translation` after provisioning.\n"]
     pub fn access_control_translation(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationElRulesElDestinationElAccessControlTranslationElRef> {
+    ) -> terrars::ListRef<S3Bucket_ReplicationConfiguration_Rules_Destination_AccessControlTranslationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.access_control_translation", self.base))
     }
 
     #[doc = "Get a reference to the value of field `metrics` after provisioning.\n"]
-    pub fn metrics(&self) -> terrars::ListRef<S3BucketReplicationConfigurationElRulesElDestinationElMetricsElRef> {
+    pub fn metrics(&self) -> terrars::ListRef<S3Bucket_ReplicationConfiguration_Rules_Destination_MetricsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.metrics", self.base))
     }
 
     #[doc = "Get a reference to the value of field `replication_time` after provisioning.\n"]
     pub fn replication_time(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationElRulesElDestinationElReplicationTimeElRef> {
+    ) -> terrars::ListRef<S3Bucket_ReplicationConfiguration_Rules_Destination_ReplicationTimeRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.replication_time", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationElRulesElFilterEl {
+pub struct S3Bucket_ReplicationConfiguration_Rules_Filter {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
-impl S3BucketReplicationConfigurationElRulesElFilterEl {
+impl S3Bucket_ReplicationConfiguration_Rules_Filter {
     #[doc = "Set the field `prefix`.\n"]
     pub fn set_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.prefix = std::option::Option::Some(v.into());
@@ -2302,8 +2377,8 @@ impl S3BucketReplicationConfigurationElRulesElFilterEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElFilterEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElFilterEl>;
+impl terrars::ToListMappable for S3Bucket_ReplicationConfiguration_Rules_Filter {
+    type O = terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_Filter>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2314,35 +2389,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElFilter
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationElRulesElFilterEl {}
+pub struct BuildS3Bucket_ReplicationConfiguration_Rules_Filter {}
 
-impl BuildS3BucketReplicationConfigurationElRulesElFilterEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationElRulesElFilterEl {
-        S3BucketReplicationConfigurationElRulesElFilterEl {
+impl BuildS3Bucket_ReplicationConfiguration_Rules_Filter {
+    pub fn build(self) -> S3Bucket_ReplicationConfiguration_Rules_Filter {
+        S3Bucket_ReplicationConfiguration_Rules_Filter {
             prefix: core::default::Default::default(),
             tags: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketReplicationConfigurationElRulesElFilterElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ReplicationConfiguration_Rules_FilterRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationElRulesElFilterElRef {
+impl terrars::Ref for S3Bucket_ReplicationConfiguration_Rules_FilterRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationElRulesElFilterElRef {
-        S3BucketReplicationConfigurationElRulesElFilterElRef {
+    ) -> S3Bucket_ReplicationConfiguration_Rules_FilterRef {
+        S3Bucket_ReplicationConfiguration_Rules_FilterRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationElRulesElFilterElRef {
+impl S3Bucket_ReplicationConfiguration_Rules_FilterRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2359,17 +2436,17 @@ impl S3BucketReplicationConfigurationElRulesElFilterElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
+pub struct S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects {
     enabled: terrars::PrimField<bool>,
 }
 
-impl S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl { }
+impl S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects { }
 
 impl terrars
-::ToListMappable for S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
+::ToListMappable for S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects {
     type O =
         terrars
-        ::BlockAssignable<S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl>;
+        ::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2380,37 +2457,39 @@ impl terrars
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
+pub struct BuildS3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects {
     #[doc = ""]
     pub enabled: terrars::PrimField<bool>,
 }
 
-impl BuildS3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
-        S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl {
+impl BuildS3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects {
+    pub fn build(self) -> S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects {
+        S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects {
             enabled: self.enabled,
         }
     }
 }
 
-pub struct S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
+impl terrars::Ref for S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
-        S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
+    ) -> S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
+        S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef {
+impl S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjectsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2422,27 +2501,24 @@ impl S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEnc
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElDynamic {
+struct S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteriaDynamic {
     sse_kms_encrypted_objects: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl>,
+        terrars::DynamicBlock<S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl {
+pub struct S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     sse_kms_encrypted_objects: std
     ::option
-    ::Option<
-        std::vec::Vec<S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl>,
-    >,
-    dynamic: S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElDynamic,
+    ::Option<std::vec::Vec<S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects>>,
+    dynamic: S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteriaDynamic,
 }
 
-impl S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl {
+impl S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria {
     #[doc = "Set the field `sse_kms_encrypted_objects`.\n"]
     pub fn set_sse_kms_encrypted_objects(
         mut self,
@@ -2454,7 +2530,7 @@ impl S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsEl,
+                            S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjects,
                         >,
                     >,
     ) -> Self {
@@ -2470,8 +2546,8 @@ impl S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl>;
+impl terrars::ToListMappable for S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria {
+    type O = terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2482,35 +2558,37 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesElSource
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl {}
+pub struct BuildS3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria {}
 
-impl BuildS3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl {
-        S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl {
+impl BuildS3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria {
+    pub fn build(self) -> S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria {
+        S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria {
             sse_kms_encrypted_objects: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteriaRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElRef {
+impl terrars::Ref for S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteriaRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElRef {
-        S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElRef {
+    ) -> S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteriaRef {
+        S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteriaRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElRef {
+impl S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteriaRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2518,23 +2596,22 @@ impl S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElRef {
     #[doc = "Get a reference to the value of field `sse_kms_encrypted_objects` after provisioning.\n"]
     pub fn sse_kms_encrypted_objects(
         &self,
-    ) -> terrars
-    ::ListRef<S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElSseKmsEncryptedObjectsElRef> {
+    ) -> terrars::ListRef<S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria_SseKmsEncryptedObjectsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.sse_kms_encrypted_objects", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationElRulesElDynamic {
-    destination: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationElRulesElDestinationEl>>,
-    filter: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationElRulesElFilterEl>>,
+struct S3Bucket_ReplicationConfiguration_RulesDynamic {
+    destination: std::option::Option<terrars::DynamicBlock<S3Bucket_ReplicationConfiguration_Rules_Destination>>,
+    filter: std::option::Option<terrars::DynamicBlock<S3Bucket_ReplicationConfiguration_Rules_Filter>>,
     source_selection_criteria: std
     ::option
-    ::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl>>,
+    ::Option<terrars::DynamicBlock<S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationElRulesEl {
+pub struct S3Bucket_ReplicationConfiguration_Rules {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete_marker_replication_status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2545,17 +2622,17 @@ pub struct S3BucketReplicationConfigurationElRulesEl {
     priority: std::option::Option<terrars::PrimField<f64>>,
     status: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    destination: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationElRulesElDestinationEl>>,
+    destination: std::option::Option<std::vec::Vec<S3Bucket_ReplicationConfiguration_Rules_Destination>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    filter: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationElRulesElFilterEl>>,
+    filter: std::option::Option<std::vec::Vec<S3Bucket_ReplicationConfiguration_Rules_Filter>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source_selection_criteria: std
     ::option
-    ::Option<std::vec::Vec<S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl>>,
-    dynamic: S3BucketReplicationConfigurationElRulesElDynamic,
+    ::Option<std::vec::Vec<S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria>>,
+    dynamic: S3Bucket_ReplicationConfiguration_RulesDynamic,
 }
 
-impl S3BucketReplicationConfigurationElRulesEl {
+impl S3Bucket_ReplicationConfiguration_Rules {
     #[doc = "Set the field `delete_marker_replication_status`.\n"]
     pub fn set_delete_marker_replication_status(
         mut self,
@@ -2586,7 +2663,7 @@ impl S3BucketReplicationConfigurationElRulesEl {
     #[doc = "Set the field `destination`.\n"]
     pub fn set_destination(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElDestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2602,7 +2679,7 @@ impl S3BucketReplicationConfigurationElRulesEl {
     #[doc = "Set the field `filter`.\n"]
     pub fn set_filter(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElFilterEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_Filter>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2623,9 +2700,7 @@ impl S3BucketReplicationConfigurationElRulesEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteria>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2639,8 +2714,8 @@ impl S3BucketReplicationConfigurationElRulesEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesEl>;
+impl terrars::ToListMappable for S3Bucket_ReplicationConfiguration_Rules {
+    type O = terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2651,14 +2726,14 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationElRulesEl {
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationElRulesEl {
+pub struct BuildS3Bucket_ReplicationConfiguration_Rules {
     #[doc = ""]
     pub status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationElRulesEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationElRulesEl {
-        S3BucketReplicationConfigurationElRulesEl {
+impl BuildS3Bucket_ReplicationConfiguration_Rules {
+    pub fn build(self) -> S3Bucket_ReplicationConfiguration_Rules {
+        S3Bucket_ReplicationConfiguration_Rules {
             delete_marker_replication_status: core::default::Default::default(),
             id: core::default::Default::default(),
             prefix: core::default::Default::default(),
@@ -2672,21 +2747,23 @@ impl BuildS3BucketReplicationConfigurationElRulesEl {
     }
 }
 
-pub struct S3BucketReplicationConfigurationElRulesElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ReplicationConfiguration_RulesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationElRulesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketReplicationConfigurationElRulesElRef {
-        S3BucketReplicationConfigurationElRulesElRef {
+impl terrars::Ref for S3Bucket_ReplicationConfiguration_RulesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_ReplicationConfiguration_RulesRef {
+        S3Bucket_ReplicationConfiguration_RulesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationElRulesElRef {
+impl S3Bucket_ReplicationConfiguration_RulesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2717,41 +2794,41 @@ impl S3BucketReplicationConfigurationElRulesElRef {
     }
 
     #[doc = "Get a reference to the value of field `destination` after provisioning.\n"]
-    pub fn destination(&self) -> terrars::ListRef<S3BucketReplicationConfigurationElRulesElDestinationElRef> {
+    pub fn destination(&self) -> terrars::ListRef<S3Bucket_ReplicationConfiguration_Rules_DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.destination", self.base))
     }
 
     #[doc = "Get a reference to the value of field `filter` after provisioning.\n"]
-    pub fn filter(&self) -> terrars::ListRef<S3BucketReplicationConfigurationElRulesElFilterElRef> {
+    pub fn filter(&self) -> terrars::ListRef<S3Bucket_ReplicationConfiguration_Rules_FilterRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.filter", self.base))
     }
 
     #[doc = "Get a reference to the value of field `source_selection_criteria` after provisioning.\n"]
     pub fn source_selection_criteria(
         &self,
-    ) -> terrars::ListRef<S3BucketReplicationConfigurationElRulesElSourceSelectionCriteriaElRef> {
+    ) -> terrars::ListRef<S3Bucket_ReplicationConfiguration_Rules_SourceSelectionCriteriaRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.source_selection_criteria", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketReplicationConfigurationElDynamic {
-    rules: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationElRulesEl>>,
+struct S3Bucket_ReplicationConfigurationDynamic {
+    rules: std::option::Option<terrars::DynamicBlock<S3Bucket_ReplicationConfiguration_Rules>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketReplicationConfigurationEl {
+pub struct S3Bucket_ReplicationConfiguration {
     role: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rules: std::option::Option<std::vec::Vec<S3BucketReplicationConfigurationElRulesEl>>,
-    dynamic: S3BucketReplicationConfigurationElDynamic,
+    rules: std::option::Option<std::vec::Vec<S3Bucket_ReplicationConfiguration_Rules>>,
+    dynamic: S3Bucket_ReplicationConfigurationDynamic,
 }
 
-impl S3BucketReplicationConfigurationEl {
+impl S3Bucket_ReplicationConfiguration {
     #[doc = "Set the field `rules`.\n"]
     pub fn set_rules(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketReplicationConfigurationElRulesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_ReplicationConfiguration_Rules>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -2765,8 +2842,8 @@ impl S3BucketReplicationConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketReplicationConfigurationEl {
-    type O = terrars::BlockAssignable<S3BucketReplicationConfigurationEl>;
+impl terrars::ToListMappable for S3Bucket_ReplicationConfiguration {
+    type O = terrars::BlockAssignable<S3Bucket_ReplicationConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2777,14 +2854,14 @@ impl terrars::ToListMappable for S3BucketReplicationConfigurationEl {
     }
 }
 
-pub struct BuildS3BucketReplicationConfigurationEl {
+pub struct BuildS3Bucket_ReplicationConfiguration {
     #[doc = ""]
     pub role: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketReplicationConfigurationEl {
-    pub fn build(self) -> S3BucketReplicationConfigurationEl {
-        S3BucketReplicationConfigurationEl {
+impl BuildS3Bucket_ReplicationConfiguration {
+    pub fn build(self) -> S3Bucket_ReplicationConfiguration {
+        S3Bucket_ReplicationConfiguration {
             role: self.role,
             rules: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2792,21 +2869,23 @@ impl BuildS3BucketReplicationConfigurationEl {
     }
 }
 
-pub struct S3BucketReplicationConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ReplicationConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketReplicationConfigurationElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketReplicationConfigurationElRef {
-        S3BucketReplicationConfigurationElRef {
+impl terrars::Ref for S3Bucket_ReplicationConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_ReplicationConfigurationRef {
+        S3Bucket_ReplicationConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketReplicationConfigurationElRef {
+impl S3Bucket_ReplicationConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2818,13 +2897,13 @@ impl S3BucketReplicationConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl {
+pub struct S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     kms_master_key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     sse_algorithm: terrars::PrimField<std::string::String>,
 }
 
-impl S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl {
+impl S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault {
     #[doc = "Set the field `kms_master_key_id`.\n"]
     pub fn set_kms_master_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.kms_master_key_id = std::option::Option::Some(v.into());
@@ -2832,10 +2911,9 @@ impl S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionB
     }
 }
 
-impl terrars::ToListMappable for S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl {
+impl terrars::ToListMappable for S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault {
     type O =
-        terrars
-        ::BlockAssignable<S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl>;
+        terrars::BlockAssignable<S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2846,38 +2924,40 @@ impl terrars::ToListMappable for S3BucketServerSideEncryptionConfigurationElRule
     }
 }
 
-pub struct BuildS3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl {
+pub struct BuildS3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault {
     #[doc = ""]
     pub sse_algorithm: terrars::PrimField<std::string::String>,
 }
 
-impl BuildS3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl {
-    pub fn build(self) -> S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl {
-        S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl {
+impl BuildS3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault {
+    pub fn build(self) -> S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault {
+        S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault {
             kms_master_key_id: core::default::Default::default(),
             sse_algorithm: self.sse_algorithm,
         }
     }
 }
 
-pub struct S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefaultRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultElRef {
+impl terrars::Ref for S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefaultRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultElRef {
-        S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultElRef {
+    ) -> S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefaultRef {
+        S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefaultRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultElRef {
+impl S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefaultRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2894,26 +2974,26 @@ impl S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionB
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketServerSideEncryptionConfigurationElRuleElDynamic {
+struct S3Bucket_ServerSideEncryptionConfiguration_RuleDynamic {
     apply_server_side_encryption_by_default: std
     ::option
     ::Option<
-        terrars::DynamicBlock<S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl>,
+        terrars::DynamicBlock<S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketServerSideEncryptionConfigurationElRuleEl {
+pub struct S3Bucket_ServerSideEncryptionConfiguration_Rule {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bucket_key_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     apply_server_side_encryption_by_default: std
     ::option
-    ::Option<std::vec::Vec<S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl>>,
-    dynamic: S3BucketServerSideEncryptionConfigurationElRuleElDynamic,
+    ::Option<std::vec::Vec<S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault>>,
+    dynamic: S3Bucket_ServerSideEncryptionConfiguration_RuleDynamic,
 }
 
-impl S3BucketServerSideEncryptionConfigurationElRuleEl {
+impl S3Bucket_ServerSideEncryptionConfiguration_Rule {
     #[doc = "Set the field `bucket_key_enabled`.\n"]
     pub fn set_bucket_key_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.bucket_key_enabled = std::option::Option::Some(v.into());
@@ -2931,7 +3011,7 @@ impl S3BucketServerSideEncryptionConfigurationElRuleEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultEl,
+                            S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefault,
                         >,
                     >,
     ) -> Self {
@@ -2947,8 +3027,8 @@ impl S3BucketServerSideEncryptionConfigurationElRuleEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketServerSideEncryptionConfigurationElRuleEl {
-    type O = terrars::BlockAssignable<S3BucketServerSideEncryptionConfigurationElRuleEl>;
+impl terrars::ToListMappable for S3Bucket_ServerSideEncryptionConfiguration_Rule {
+    type O = terrars::BlockAssignable<S3Bucket_ServerSideEncryptionConfiguration_Rule>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2959,11 +3039,11 @@ impl terrars::ToListMappable for S3BucketServerSideEncryptionConfigurationElRule
     }
 }
 
-pub struct BuildS3BucketServerSideEncryptionConfigurationElRuleEl {}
+pub struct BuildS3Bucket_ServerSideEncryptionConfiguration_Rule {}
 
-impl BuildS3BucketServerSideEncryptionConfigurationElRuleEl {
-    pub fn build(self) -> S3BucketServerSideEncryptionConfigurationElRuleEl {
-        S3BucketServerSideEncryptionConfigurationElRuleEl {
+impl BuildS3Bucket_ServerSideEncryptionConfiguration_Rule {
+    pub fn build(self) -> S3Bucket_ServerSideEncryptionConfiguration_Rule {
+        S3Bucket_ServerSideEncryptionConfiguration_Rule {
             bucket_key_enabled: core::default::Default::default(),
             apply_server_side_encryption_by_default: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -2971,24 +3051,26 @@ impl BuildS3BucketServerSideEncryptionConfigurationElRuleEl {
     }
 }
 
-pub struct S3BucketServerSideEncryptionConfigurationElRuleElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ServerSideEncryptionConfiguration_RuleRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketServerSideEncryptionConfigurationElRuleElRef {
+impl terrars::Ref for S3Bucket_ServerSideEncryptionConfiguration_RuleRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> S3BucketServerSideEncryptionConfigurationElRuleElRef {
-        S3BucketServerSideEncryptionConfigurationElRuleElRef {
+    ) -> S3Bucket_ServerSideEncryptionConfiguration_RuleRef {
+        S3Bucket_ServerSideEncryptionConfiguration_RuleRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketServerSideEncryptionConfigurationElRuleElRef {
+impl S3Bucket_ServerSideEncryptionConfiguration_RuleRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3001,7 +3083,7 @@ impl S3BucketServerSideEncryptionConfigurationElRuleElRef {
     #[doc = "Get a reference to the value of field `apply_server_side_encryption_by_default` after provisioning.\n"]
     pub fn apply_server_side_encryption_by_default(
         &self,
-    ) -> terrars::ListRef<S3BucketServerSideEncryptionConfigurationElRuleElApplyServerSideEncryptionByDefaultElRef> {
+    ) -> terrars::ListRef<S3Bucket_ServerSideEncryptionConfiguration_Rule_ApplyServerSideEncryptionByDefaultRef> {
         terrars::ListRef::new(
             self.shared().clone(),
             format!("{}.apply_server_side_encryption_by_default", self.base),
@@ -3010,22 +3092,22 @@ impl S3BucketServerSideEncryptionConfigurationElRuleElRef {
 }
 
 #[derive(Serialize, Default)]
-struct S3BucketServerSideEncryptionConfigurationElDynamic {
-    rule: std::option::Option<terrars::DynamicBlock<S3BucketServerSideEncryptionConfigurationElRuleEl>>,
+struct S3Bucket_ServerSideEncryptionConfigurationDynamic {
+    rule: std::option::Option<terrars::DynamicBlock<S3Bucket_ServerSideEncryptionConfiguration_Rule>>,
 }
 
 #[derive(Serialize)]
-pub struct S3BucketServerSideEncryptionConfigurationEl {
+pub struct S3Bucket_ServerSideEncryptionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    rule: std::option::Option<std::vec::Vec<S3BucketServerSideEncryptionConfigurationElRuleEl>>,
-    dynamic: S3BucketServerSideEncryptionConfigurationElDynamic,
+    rule: std::option::Option<std::vec::Vec<S3Bucket_ServerSideEncryptionConfiguration_Rule>>,
+    dynamic: S3Bucket_ServerSideEncryptionConfigurationDynamic,
 }
 
-impl S3BucketServerSideEncryptionConfigurationEl {
+impl S3Bucket_ServerSideEncryptionConfiguration {
     #[doc = "Set the field `rule`.\n"]
     pub fn set_rule(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<S3BucketServerSideEncryptionConfigurationElRuleEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Bucket_ServerSideEncryptionConfiguration_Rule>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3039,8 +3121,8 @@ impl S3BucketServerSideEncryptionConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketServerSideEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<S3BucketServerSideEncryptionConfigurationEl>;
+impl terrars::ToListMappable for S3Bucket_ServerSideEncryptionConfiguration {
+    type O = terrars::BlockAssignable<S3Bucket_ServerSideEncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3051,47 +3133,46 @@ impl terrars::ToListMappable for S3BucketServerSideEncryptionConfigurationEl {
     }
 }
 
-pub struct BuildS3BucketServerSideEncryptionConfigurationEl {}
+pub struct BuildS3Bucket_ServerSideEncryptionConfiguration {}
 
-impl BuildS3BucketServerSideEncryptionConfigurationEl {
-    pub fn build(self) -> S3BucketServerSideEncryptionConfigurationEl {
-        S3BucketServerSideEncryptionConfigurationEl {
+impl BuildS3Bucket_ServerSideEncryptionConfiguration {
+    pub fn build(self) -> S3Bucket_ServerSideEncryptionConfiguration {
+        S3Bucket_ServerSideEncryptionConfiguration {
             rule: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketServerSideEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_ServerSideEncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketServerSideEncryptionConfigurationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> S3BucketServerSideEncryptionConfigurationElRef {
-        S3BucketServerSideEncryptionConfigurationElRef {
+impl terrars::Ref for S3Bucket_ServerSideEncryptionConfigurationRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_ServerSideEncryptionConfigurationRef {
+        S3Bucket_ServerSideEncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketServerSideEncryptionConfigurationElRef {
+impl S3Bucket_ServerSideEncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `rule` after provisioning.\n"]
-    pub fn rule(&self) -> terrars::ListRef<S3BucketServerSideEncryptionConfigurationElRuleElRef> {
+    pub fn rule(&self) -> terrars::ListRef<S3Bucket_ServerSideEncryptionConfiguration_RuleRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.rule", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct S3BucketTimeoutsEl {
+pub struct S3Bucket_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3102,7 +3183,7 @@ pub struct S3BucketTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketTimeoutsEl {
+impl S3Bucket_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -3128,8 +3209,8 @@ impl S3BucketTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketTimeoutsEl {
-    type O = terrars::BlockAssignable<S3BucketTimeoutsEl>;
+impl terrars::ToListMappable for S3Bucket_Timeouts {
+    type O = terrars::BlockAssignable<S3Bucket_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3140,11 +3221,11 @@ impl terrars::ToListMappable for S3BucketTimeoutsEl {
     }
 }
 
-pub struct BuildS3BucketTimeoutsEl {}
+pub struct BuildS3Bucket_Timeouts {}
 
-impl BuildS3BucketTimeoutsEl {
-    pub fn build(self) -> S3BucketTimeoutsEl {
-        S3BucketTimeoutsEl {
+impl BuildS3Bucket_Timeouts {
+    pub fn build(self) -> S3Bucket_Timeouts {
+        S3Bucket_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             read: core::default::Default::default(),
@@ -3153,21 +3234,23 @@ impl BuildS3BucketTimeoutsEl {
     }
 }
 
-pub struct S3BucketTimeoutsElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketTimeoutsElRef {
-        S3BucketTimeoutsElRef {
+impl terrars::Ref for S3Bucket_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_TimeoutsRef {
+        S3Bucket_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketTimeoutsElRef {
+impl S3Bucket_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3194,14 +3277,14 @@ impl S3BucketTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketVersioningEl {
+pub struct S3Bucket_Versioning {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     mfa_delete: std::option::Option<terrars::PrimField<bool>>,
 }
 
-impl S3BucketVersioningEl {
+impl S3Bucket_Versioning {
     #[doc = "Set the field `enabled`.\n"]
     pub fn set_enabled(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
         self.enabled = std::option::Option::Some(v.into());
@@ -3215,8 +3298,8 @@ impl S3BucketVersioningEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketVersioningEl {
-    type O = terrars::BlockAssignable<S3BucketVersioningEl>;
+impl terrars::ToListMappable for S3Bucket_Versioning {
+    type O = terrars::BlockAssignable<S3Bucket_Versioning>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3227,32 +3310,34 @@ impl terrars::ToListMappable for S3BucketVersioningEl {
     }
 }
 
-pub struct BuildS3BucketVersioningEl {}
+pub struct BuildS3Bucket_Versioning {}
 
-impl BuildS3BucketVersioningEl {
-    pub fn build(self) -> S3BucketVersioningEl {
-        S3BucketVersioningEl {
+impl BuildS3Bucket_Versioning {
+    pub fn build(self) -> S3Bucket_Versioning {
+        S3Bucket_Versioning {
             enabled: core::default::Default::default(),
             mfa_delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct S3BucketVersioningElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_VersioningRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketVersioningElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketVersioningElRef {
-        S3BucketVersioningElRef {
+impl terrars::Ref for S3Bucket_VersioningRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_VersioningRef {
+        S3Bucket_VersioningRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketVersioningElRef {
+impl S3Bucket_VersioningRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3269,7 +3354,7 @@ impl S3BucketVersioningElRef {
 }
 
 #[derive(Serialize)]
-pub struct S3BucketWebsiteEl {
+pub struct S3Bucket_Website {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     error_document: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3280,7 +3365,7 @@ pub struct S3BucketWebsiteEl {
     routing_rules: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl S3BucketWebsiteEl {
+impl S3Bucket_Website {
     #[doc = "Set the field `error_document`.\n"]
     pub fn set_error_document(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.error_document = std::option::Option::Some(v.into());
@@ -3309,8 +3394,8 @@ impl S3BucketWebsiteEl {
     }
 }
 
-impl terrars::ToListMappable for S3BucketWebsiteEl {
-    type O = terrars::BlockAssignable<S3BucketWebsiteEl>;
+impl terrars::ToListMappable for S3Bucket_Website {
+    type O = terrars::BlockAssignable<S3Bucket_Website>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3321,11 +3406,11 @@ impl terrars::ToListMappable for S3BucketWebsiteEl {
     }
 }
 
-pub struct BuildS3BucketWebsiteEl {}
+pub struct BuildS3Bucket_Website {}
 
-impl BuildS3BucketWebsiteEl {
-    pub fn build(self) -> S3BucketWebsiteEl {
-        S3BucketWebsiteEl {
+impl BuildS3Bucket_Website {
+    pub fn build(self) -> S3Bucket_Website {
+        S3Bucket_Website {
             error_document: core::default::Default::default(),
             index_document: core::default::Default::default(),
             redirect_all_requests_to: core::default::Default::default(),
@@ -3334,21 +3419,23 @@ impl BuildS3BucketWebsiteEl {
     }
 }
 
-pub struct S3BucketWebsiteElRef {
+#[allow(dead_code)]
+pub struct S3Bucket_WebsiteRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for S3BucketWebsiteElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> S3BucketWebsiteElRef {
-        S3BucketWebsiteElRef {
+impl terrars::Ref for S3Bucket_WebsiteRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Bucket_WebsiteRef {
+        S3Bucket_WebsiteRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl S3BucketWebsiteElRef {
+impl S3Bucket_WebsiteRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3372,19 +3459,4 @@ impl S3BucketWebsiteElRef {
     pub fn routing_rules(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.routing_rules", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct S3BucketDynamic {
-    cors_rule: std::option::Option<terrars::DynamicBlock<S3BucketCorsRuleEl>>,
-    grant: std::option::Option<terrars::DynamicBlock<S3BucketGrantEl>>,
-    lifecycle_rule: std::option::Option<terrars::DynamicBlock<S3BucketLifecycleRuleEl>>,
-    logging: std::option::Option<terrars::DynamicBlock<S3BucketLoggingEl>>,
-    object_lock_configuration: std::option::Option<terrars::DynamicBlock<S3BucketObjectLockConfigurationEl>>,
-    replication_configuration: std::option::Option<terrars::DynamicBlock<S3BucketReplicationConfigurationEl>>,
-    server_side_encryption_configuration: std
-    ::option
-    ::Option<terrars::DynamicBlock<S3BucketServerSideEncryptionConfigurationEl>>,
-    versioning: std::option::Option<terrars::DynamicBlock<S3BucketVersioningEl>>,
-    website: std::option::Option<terrars::DynamicBlock<S3BucketWebsiteEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct BudgetsBudgetActionData {
+struct BudgetsBudgetActionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -28,18 +30,24 @@ struct BudgetsBudgetActionData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     notification_type: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    action_threshold: std::option::Option<std::vec::Vec<BudgetsBudgetActionActionThresholdEl>>,
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    definition: std::option::Option<std::vec::Vec<BudgetsBudgetActionDefinitionEl>>,
+    tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    subscriber: std::option::Option<std::vec::Vec<BudgetsBudgetActionSubscriberEl>>,
+    action_threshold: std::option::Option<std::vec::Vec<BudgetsBudgetAction_ActionThreshold>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    definition: std::option::Option<std::vec::Vec<BudgetsBudgetAction_Definition>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    subscriber: std::option::Option<std::vec::Vec<BudgetsBudgetAction_Subscriber>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<BudgetsBudgetAction_Timeouts>,
     dynamic: BudgetsBudgetActionDynamic,
 }
 
 struct BudgetsBudgetAction_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<BudgetsBudgetActionData>,
+    data: std::cell::RefCell<BudgetsBudgetActionData_>,
 }
 
 #[derive(Clone)]
@@ -151,10 +159,28 @@ impl BudgetsBudgetAction {
         self
     }
 
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `tags_all`.\n"]
+    pub fn set_tags_all(
+        self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `action_threshold`.\n"]
     pub fn set_action_threshold(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetActionActionThresholdEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetAction_ActionThreshold>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -170,7 +196,7 @@ impl BudgetsBudgetAction {
     #[doc = "Set the field `definition`.\n"]
     pub fn set_definition(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetActionDefinitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetAction_Definition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -186,7 +212,7 @@ impl BudgetsBudgetAction {
     #[doc = "Set the field `subscriber`.\n"]
     pub fn set_subscriber(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetActionSubscriberEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetAction_Subscriber>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -196,6 +222,12 @@ impl BudgetsBudgetAction {
                 self.0.data.borrow_mut().dynamic.subscriber = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<BudgetsBudgetAction_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -249,14 +281,29 @@ impl BudgetsBudgetAction {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `action_threshold` after provisioning.\n"]
-    pub fn action_threshold(&self) -> terrars::ListRef<BudgetsBudgetActionActionThresholdElRef> {
+    pub fn action_threshold(&self) -> terrars::ListRef<BudgetsBudgetAction_ActionThresholdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action_threshold", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `definition` after provisioning.\n"]
-    pub fn definition(&self) -> terrars::ListRef<BudgetsBudgetActionDefinitionElRef> {
+    pub fn definition(&self) -> terrars::ListRef<BudgetsBudgetAction_DefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.definition", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> BudgetsBudgetAction_TimeoutsRef {
+        BudgetsBudgetAction_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -310,7 +357,7 @@ impl BuildBudgetsBudgetAction {
         let out = BudgetsBudgetAction(std::rc::Rc::new(BudgetsBudgetAction_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(BudgetsBudgetActionData {
+            data: std::cell::RefCell::new(BudgetsBudgetActionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -323,9 +370,12 @@ impl BuildBudgetsBudgetAction {
                 execution_role_arn: self.execution_role_arn,
                 id: core::default::Default::default(),
                 notification_type: self.notification_type,
+                tags: core::default::Default::default(),
+                tags_all: core::default::Default::default(),
                 action_threshold: core::default::Default::default(),
                 definition: core::default::Default::default(),
                 subscriber: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -407,27 +457,49 @@ impl BudgetsBudgetActionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `tags_all` after provisioning.\n"]
+    pub fn tags_all(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `action_threshold` after provisioning.\n"]
-    pub fn action_threshold(&self) -> terrars::ListRef<BudgetsBudgetActionActionThresholdElRef> {
+    pub fn action_threshold(&self) -> terrars::ListRef<BudgetsBudgetAction_ActionThresholdRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.action_threshold", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `definition` after provisioning.\n"]
-    pub fn definition(&self) -> terrars::ListRef<BudgetsBudgetActionDefinitionElRef> {
+    pub fn definition(&self) -> terrars::ListRef<BudgetsBudgetAction_DefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.definition", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> BudgetsBudgetAction_TimeoutsRef {
+        BudgetsBudgetAction_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct BudgetsBudgetActionDynamic {
+    action_threshold: std::option::Option<terrars::DynamicBlock<BudgetsBudgetAction_ActionThreshold>>,
+    definition: std::option::Option<terrars::DynamicBlock<BudgetsBudgetAction_Definition>>,
+    subscriber: std::option::Option<terrars::DynamicBlock<BudgetsBudgetAction_Subscriber>>,
+}
+
 #[derive(Serialize)]
-pub struct BudgetsBudgetActionActionThresholdEl {
+pub struct BudgetsBudgetAction_ActionThreshold {
     action_threshold_type: terrars::PrimField<std::string::String>,
     action_threshold_value: terrars::PrimField<f64>,
 }
 
-impl BudgetsBudgetActionActionThresholdEl { }
+impl BudgetsBudgetAction_ActionThreshold { }
 
-impl terrars::ToListMappable for BudgetsBudgetActionActionThresholdEl {
-    type O = terrars::BlockAssignable<BudgetsBudgetActionActionThresholdEl>;
+impl terrars::ToListMappable for BudgetsBudgetAction_ActionThreshold {
+    type O = terrars::BlockAssignable<BudgetsBudgetAction_ActionThreshold>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -438,37 +510,39 @@ impl terrars::ToListMappable for BudgetsBudgetActionActionThresholdEl {
     }
 }
 
-pub struct BuildBudgetsBudgetActionActionThresholdEl {
+pub struct BuildBudgetsBudgetAction_ActionThreshold {
     #[doc = ""]
     pub action_threshold_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub action_threshold_value: terrars::PrimField<f64>,
 }
 
-impl BuildBudgetsBudgetActionActionThresholdEl {
-    pub fn build(self) -> BudgetsBudgetActionActionThresholdEl {
-        BudgetsBudgetActionActionThresholdEl {
+impl BuildBudgetsBudgetAction_ActionThreshold {
+    pub fn build(self) -> BudgetsBudgetAction_ActionThreshold {
+        BudgetsBudgetAction_ActionThreshold {
             action_threshold_type: self.action_threshold_type,
             action_threshold_value: self.action_threshold_value,
         }
     }
 }
 
-pub struct BudgetsBudgetActionActionThresholdElRef {
+#[allow(dead_code)]
+pub struct BudgetsBudgetAction_ActionThresholdRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BudgetsBudgetActionActionThresholdElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BudgetsBudgetActionActionThresholdElRef {
-        BudgetsBudgetActionActionThresholdElRef {
+impl terrars::Ref for BudgetsBudgetAction_ActionThresholdRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BudgetsBudgetAction_ActionThresholdRef {
+        BudgetsBudgetAction_ActionThresholdRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BudgetsBudgetActionActionThresholdElRef {
+impl BudgetsBudgetAction_ActionThresholdRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -485,7 +559,7 @@ impl BudgetsBudgetActionActionThresholdElRef {
 }
 
 #[derive(Serialize)]
-pub struct BudgetsBudgetActionDefinitionElIamActionDefinitionEl {
+pub struct BudgetsBudgetAction_Definition_IamActionDefinition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     groups: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     policy_arn: terrars::PrimField<std::string::String>,
@@ -495,7 +569,7 @@ pub struct BudgetsBudgetActionDefinitionElIamActionDefinitionEl {
     users: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
 }
 
-impl BudgetsBudgetActionDefinitionElIamActionDefinitionEl {
+impl BudgetsBudgetAction_Definition_IamActionDefinition {
     #[doc = "Set the field `groups`.\n"]
     pub fn set_groups(
         mut self,
@@ -524,8 +598,8 @@ impl BudgetsBudgetActionDefinitionElIamActionDefinitionEl {
     }
 }
 
-impl terrars::ToListMappable for BudgetsBudgetActionDefinitionElIamActionDefinitionEl {
-    type O = terrars::BlockAssignable<BudgetsBudgetActionDefinitionElIamActionDefinitionEl>;
+impl terrars::ToListMappable for BudgetsBudgetAction_Definition_IamActionDefinition {
+    type O = terrars::BlockAssignable<BudgetsBudgetAction_Definition_IamActionDefinition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -536,14 +610,14 @@ impl terrars::ToListMappable for BudgetsBudgetActionDefinitionElIamActionDefinit
     }
 }
 
-pub struct BuildBudgetsBudgetActionDefinitionElIamActionDefinitionEl {
+pub struct BuildBudgetsBudgetAction_Definition_IamActionDefinition {
     #[doc = ""]
     pub policy_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBudgetsBudgetActionDefinitionElIamActionDefinitionEl {
-    pub fn build(self) -> BudgetsBudgetActionDefinitionElIamActionDefinitionEl {
-        BudgetsBudgetActionDefinitionElIamActionDefinitionEl {
+impl BuildBudgetsBudgetAction_Definition_IamActionDefinition {
+    pub fn build(self) -> BudgetsBudgetAction_Definition_IamActionDefinition {
+        BudgetsBudgetAction_Definition_IamActionDefinition {
             groups: core::default::Default::default(),
             policy_arn: self.policy_arn,
             roles: core::default::Default::default(),
@@ -552,24 +626,26 @@ impl BuildBudgetsBudgetActionDefinitionElIamActionDefinitionEl {
     }
 }
 
-pub struct BudgetsBudgetActionDefinitionElIamActionDefinitionElRef {
+#[allow(dead_code)]
+pub struct BudgetsBudgetAction_Definition_IamActionDefinitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BudgetsBudgetActionDefinitionElIamActionDefinitionElRef {
+impl terrars::Ref for BudgetsBudgetAction_Definition_IamActionDefinitionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BudgetsBudgetActionDefinitionElIamActionDefinitionElRef {
-        BudgetsBudgetActionDefinitionElIamActionDefinitionElRef {
+    ) -> BudgetsBudgetAction_Definition_IamActionDefinitionRef {
+        BudgetsBudgetAction_Definition_IamActionDefinitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BudgetsBudgetActionDefinitionElIamActionDefinitionElRef {
+impl BudgetsBudgetAction_Definition_IamActionDefinitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -596,15 +672,15 @@ impl BudgetsBudgetActionDefinitionElIamActionDefinitionElRef {
 }
 
 #[derive(Serialize)]
-pub struct BudgetsBudgetActionDefinitionElScpActionDefinitionEl {
+pub struct BudgetsBudgetAction_Definition_ScpActionDefinition {
     policy_id: terrars::PrimField<std::string::String>,
     target_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BudgetsBudgetActionDefinitionElScpActionDefinitionEl { }
+impl BudgetsBudgetAction_Definition_ScpActionDefinition { }
 
-impl terrars::ToListMappable for BudgetsBudgetActionDefinitionElScpActionDefinitionEl {
-    type O = terrars::BlockAssignable<BudgetsBudgetActionDefinitionElScpActionDefinitionEl>;
+impl terrars::ToListMappable for BudgetsBudgetAction_Definition_ScpActionDefinition {
+    type O = terrars::BlockAssignable<BudgetsBudgetAction_Definition_ScpActionDefinition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -615,40 +691,42 @@ impl terrars::ToListMappable for BudgetsBudgetActionDefinitionElScpActionDefinit
     }
 }
 
-pub struct BuildBudgetsBudgetActionDefinitionElScpActionDefinitionEl {
+pub struct BuildBudgetsBudgetAction_Definition_ScpActionDefinition {
     #[doc = ""]
     pub policy_id: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub target_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
 }
 
-impl BuildBudgetsBudgetActionDefinitionElScpActionDefinitionEl {
-    pub fn build(self) -> BudgetsBudgetActionDefinitionElScpActionDefinitionEl {
-        BudgetsBudgetActionDefinitionElScpActionDefinitionEl {
+impl BuildBudgetsBudgetAction_Definition_ScpActionDefinition {
+    pub fn build(self) -> BudgetsBudgetAction_Definition_ScpActionDefinition {
+        BudgetsBudgetAction_Definition_ScpActionDefinition {
             policy_id: self.policy_id,
             target_ids: self.target_ids,
         }
     }
 }
 
-pub struct BudgetsBudgetActionDefinitionElScpActionDefinitionElRef {
+#[allow(dead_code)]
+pub struct BudgetsBudgetAction_Definition_ScpActionDefinitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BudgetsBudgetActionDefinitionElScpActionDefinitionElRef {
+impl terrars::Ref for BudgetsBudgetAction_Definition_ScpActionDefinitionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BudgetsBudgetActionDefinitionElScpActionDefinitionElRef {
-        BudgetsBudgetActionDefinitionElScpActionDefinitionElRef {
+    ) -> BudgetsBudgetAction_Definition_ScpActionDefinitionRef {
+        BudgetsBudgetAction_Definition_ScpActionDefinitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BudgetsBudgetActionDefinitionElScpActionDefinitionElRef {
+impl BudgetsBudgetAction_Definition_ScpActionDefinitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -665,16 +743,16 @@ impl BudgetsBudgetActionDefinitionElScpActionDefinitionElRef {
 }
 
 #[derive(Serialize)]
-pub struct BudgetsBudgetActionDefinitionElSsmActionDefinitionEl {
+pub struct BudgetsBudgetAction_Definition_SsmActionDefinition {
     action_sub_type: terrars::PrimField<std::string::String>,
     instance_ids: terrars::SetField<terrars::PrimField<std::string::String>>,
     region: terrars::PrimField<std::string::String>,
 }
 
-impl BudgetsBudgetActionDefinitionElSsmActionDefinitionEl { }
+impl BudgetsBudgetAction_Definition_SsmActionDefinition { }
 
-impl terrars::ToListMappable for BudgetsBudgetActionDefinitionElSsmActionDefinitionEl {
-    type O = terrars::BlockAssignable<BudgetsBudgetActionDefinitionElSsmActionDefinitionEl>;
+impl terrars::ToListMappable for BudgetsBudgetAction_Definition_SsmActionDefinition {
+    type O = terrars::BlockAssignable<BudgetsBudgetAction_Definition_SsmActionDefinition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -685,7 +763,7 @@ impl terrars::ToListMappable for BudgetsBudgetActionDefinitionElSsmActionDefinit
     }
 }
 
-pub struct BuildBudgetsBudgetActionDefinitionElSsmActionDefinitionEl {
+pub struct BuildBudgetsBudgetAction_Definition_SsmActionDefinition {
     #[doc = ""]
     pub action_sub_type: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -694,9 +772,9 @@ pub struct BuildBudgetsBudgetActionDefinitionElSsmActionDefinitionEl {
     pub region: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBudgetsBudgetActionDefinitionElSsmActionDefinitionEl {
-    pub fn build(self) -> BudgetsBudgetActionDefinitionElSsmActionDefinitionEl {
-        BudgetsBudgetActionDefinitionElSsmActionDefinitionEl {
+impl BuildBudgetsBudgetAction_Definition_SsmActionDefinition {
+    pub fn build(self) -> BudgetsBudgetAction_Definition_SsmActionDefinition {
+        BudgetsBudgetAction_Definition_SsmActionDefinition {
             action_sub_type: self.action_sub_type,
             instance_ids: self.instance_ids,
             region: self.region,
@@ -704,24 +782,26 @@ impl BuildBudgetsBudgetActionDefinitionElSsmActionDefinitionEl {
     }
 }
 
-pub struct BudgetsBudgetActionDefinitionElSsmActionDefinitionElRef {
+#[allow(dead_code)]
+pub struct BudgetsBudgetAction_Definition_SsmActionDefinitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BudgetsBudgetActionDefinitionElSsmActionDefinitionElRef {
+impl terrars::Ref for BudgetsBudgetAction_Definition_SsmActionDefinitionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> BudgetsBudgetActionDefinitionElSsmActionDefinitionElRef {
-        BudgetsBudgetActionDefinitionElSsmActionDefinitionElRef {
+    ) -> BudgetsBudgetAction_Definition_SsmActionDefinitionRef {
+        BudgetsBudgetAction_Definition_SsmActionDefinitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BudgetsBudgetActionDefinitionElSsmActionDefinitionElRef {
+impl BudgetsBudgetAction_Definition_SsmActionDefinitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -743,34 +823,34 @@ impl BudgetsBudgetActionDefinitionElSsmActionDefinitionElRef {
 }
 
 #[derive(Serialize, Default)]
-struct BudgetsBudgetActionDefinitionElDynamic {
+struct BudgetsBudgetAction_DefinitionDynamic {
     iam_action_definition: std
     ::option
-    ::Option<terrars::DynamicBlock<BudgetsBudgetActionDefinitionElIamActionDefinitionEl>>,
+    ::Option<terrars::DynamicBlock<BudgetsBudgetAction_Definition_IamActionDefinition>>,
     scp_action_definition: std
     ::option
-    ::Option<terrars::DynamicBlock<BudgetsBudgetActionDefinitionElScpActionDefinitionEl>>,
+    ::Option<terrars::DynamicBlock<BudgetsBudgetAction_Definition_ScpActionDefinition>>,
     ssm_action_definition: std
     ::option
-    ::Option<terrars::DynamicBlock<BudgetsBudgetActionDefinitionElSsmActionDefinitionEl>>,
+    ::Option<terrars::DynamicBlock<BudgetsBudgetAction_Definition_SsmActionDefinition>>,
 }
 
 #[derive(Serialize)]
-pub struct BudgetsBudgetActionDefinitionEl {
+pub struct BudgetsBudgetAction_Definition {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    iam_action_definition: std::option::Option<std::vec::Vec<BudgetsBudgetActionDefinitionElIamActionDefinitionEl>>,
+    iam_action_definition: std::option::Option<std::vec::Vec<BudgetsBudgetAction_Definition_IamActionDefinition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    scp_action_definition: std::option::Option<std::vec::Vec<BudgetsBudgetActionDefinitionElScpActionDefinitionEl>>,
+    scp_action_definition: std::option::Option<std::vec::Vec<BudgetsBudgetAction_Definition_ScpActionDefinition>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    ssm_action_definition: std::option::Option<std::vec::Vec<BudgetsBudgetActionDefinitionElSsmActionDefinitionEl>>,
-    dynamic: BudgetsBudgetActionDefinitionElDynamic,
+    ssm_action_definition: std::option::Option<std::vec::Vec<BudgetsBudgetAction_Definition_SsmActionDefinition>>,
+    dynamic: BudgetsBudgetAction_DefinitionDynamic,
 }
 
-impl BudgetsBudgetActionDefinitionEl {
+impl BudgetsBudgetAction_Definition {
     #[doc = "Set the field `iam_action_definition`.\n"]
     pub fn set_iam_action_definition(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetActionDefinitionElIamActionDefinitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetAction_Definition_IamActionDefinition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -786,7 +866,7 @@ impl BudgetsBudgetActionDefinitionEl {
     #[doc = "Set the field `scp_action_definition`.\n"]
     pub fn set_scp_action_definition(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetActionDefinitionElScpActionDefinitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetAction_Definition_ScpActionDefinition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -802,7 +882,7 @@ impl BudgetsBudgetActionDefinitionEl {
     #[doc = "Set the field `ssm_action_definition`.\n"]
     pub fn set_ssm_action_definition(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetActionDefinitionElSsmActionDefinitionEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<BudgetsBudgetAction_Definition_SsmActionDefinition>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -816,8 +896,8 @@ impl BudgetsBudgetActionDefinitionEl {
     }
 }
 
-impl terrars::ToListMappable for BudgetsBudgetActionDefinitionEl {
-    type O = terrars::BlockAssignable<BudgetsBudgetActionDefinitionEl>;
+impl terrars::ToListMappable for BudgetsBudgetAction_Definition {
+    type O = terrars::BlockAssignable<BudgetsBudgetAction_Definition>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -828,11 +908,11 @@ impl terrars::ToListMappable for BudgetsBudgetActionDefinitionEl {
     }
 }
 
-pub struct BuildBudgetsBudgetActionDefinitionEl {}
+pub struct BuildBudgetsBudgetAction_Definition {}
 
-impl BuildBudgetsBudgetActionDefinitionEl {
-    pub fn build(self) -> BudgetsBudgetActionDefinitionEl {
-        BudgetsBudgetActionDefinitionEl {
+impl BuildBudgetsBudgetAction_Definition {
+    pub fn build(self) -> BudgetsBudgetAction_Definition {
+        BudgetsBudgetAction_Definition {
             iam_action_definition: core::default::Default::default(),
             scp_action_definition: core::default::Default::default(),
             ssm_action_definition: core::default::Default::default(),
@@ -841,51 +921,53 @@ impl BuildBudgetsBudgetActionDefinitionEl {
     }
 }
 
-pub struct BudgetsBudgetActionDefinitionElRef {
+#[allow(dead_code)]
+pub struct BudgetsBudgetAction_DefinitionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BudgetsBudgetActionDefinitionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BudgetsBudgetActionDefinitionElRef {
-        BudgetsBudgetActionDefinitionElRef {
+impl terrars::Ref for BudgetsBudgetAction_DefinitionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BudgetsBudgetAction_DefinitionRef {
+        BudgetsBudgetAction_DefinitionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BudgetsBudgetActionDefinitionElRef {
+impl BudgetsBudgetAction_DefinitionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `iam_action_definition` after provisioning.\n"]
-    pub fn iam_action_definition(&self) -> terrars::ListRef<BudgetsBudgetActionDefinitionElIamActionDefinitionElRef> {
+    pub fn iam_action_definition(&self) -> terrars::ListRef<BudgetsBudgetAction_Definition_IamActionDefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.iam_action_definition", self.base))
     }
 
     #[doc = "Get a reference to the value of field `scp_action_definition` after provisioning.\n"]
-    pub fn scp_action_definition(&self) -> terrars::ListRef<BudgetsBudgetActionDefinitionElScpActionDefinitionElRef> {
+    pub fn scp_action_definition(&self) -> terrars::ListRef<BudgetsBudgetAction_Definition_ScpActionDefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.scp_action_definition", self.base))
     }
 
     #[doc = "Get a reference to the value of field `ssm_action_definition` after provisioning.\n"]
-    pub fn ssm_action_definition(&self) -> terrars::ListRef<BudgetsBudgetActionDefinitionElSsmActionDefinitionElRef> {
+    pub fn ssm_action_definition(&self) -> terrars::ListRef<BudgetsBudgetAction_Definition_SsmActionDefinitionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.ssm_action_definition", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct BudgetsBudgetActionSubscriberEl {
+pub struct BudgetsBudgetAction_Subscriber {
     address: terrars::PrimField<std::string::String>,
     subscription_type: terrars::PrimField<std::string::String>,
 }
 
-impl BudgetsBudgetActionSubscriberEl { }
+impl BudgetsBudgetAction_Subscriber { }
 
-impl terrars::ToListMappable for BudgetsBudgetActionSubscriberEl {
-    type O = terrars::BlockAssignable<BudgetsBudgetActionSubscriberEl>;
+impl terrars::ToListMappable for BudgetsBudgetAction_Subscriber {
+    type O = terrars::BlockAssignable<BudgetsBudgetAction_Subscriber>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -896,37 +978,39 @@ impl terrars::ToListMappable for BudgetsBudgetActionSubscriberEl {
     }
 }
 
-pub struct BuildBudgetsBudgetActionSubscriberEl {
+pub struct BuildBudgetsBudgetAction_Subscriber {
     #[doc = ""]
     pub address: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub subscription_type: terrars::PrimField<std::string::String>,
 }
 
-impl BuildBudgetsBudgetActionSubscriberEl {
-    pub fn build(self) -> BudgetsBudgetActionSubscriberEl {
-        BudgetsBudgetActionSubscriberEl {
+impl BuildBudgetsBudgetAction_Subscriber {
+    pub fn build(self) -> BudgetsBudgetAction_Subscriber {
+        BudgetsBudgetAction_Subscriber {
             address: self.address,
             subscription_type: self.subscription_type,
         }
     }
 }
 
-pub struct BudgetsBudgetActionSubscriberElRef {
+#[allow(dead_code)]
+pub struct BudgetsBudgetAction_SubscriberRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for BudgetsBudgetActionSubscriberElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> BudgetsBudgetActionSubscriberElRef {
-        BudgetsBudgetActionSubscriberElRef {
+impl terrars::Ref for BudgetsBudgetAction_SubscriberRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BudgetsBudgetAction_SubscriberRef {
+        BudgetsBudgetAction_SubscriberRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl BudgetsBudgetActionSubscriberElRef {
+impl BudgetsBudgetAction_SubscriberRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -942,9 +1026,93 @@ impl BudgetsBudgetActionSubscriberElRef {
     }
 }
 
-#[derive(Serialize, Default)]
-struct BudgetsBudgetActionDynamic {
-    action_threshold: std::option::Option<terrars::DynamicBlock<BudgetsBudgetActionActionThresholdEl>>,
-    definition: std::option::Option<terrars::DynamicBlock<BudgetsBudgetActionDefinitionEl>>,
-    subscriber: std::option::Option<terrars::DynamicBlock<BudgetsBudgetActionSubscriberEl>>,
+#[derive(Serialize)]
+pub struct BudgetsBudgetAction_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl BudgetsBudgetAction_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for BudgetsBudgetAction_Timeouts {
+    type O = terrars::BlockAssignable<BudgetsBudgetAction_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildBudgetsBudgetAction_Timeouts {}
+
+impl BuildBudgetsBudgetAction_Timeouts {
+    pub fn build(self) -> BudgetsBudgetAction_Timeouts {
+        BudgetsBudgetAction_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct BudgetsBudgetAction_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for BudgetsBudgetAction_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> BudgetsBudgetAction_TimeoutsRef {
+        BudgetsBudgetAction_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl BudgetsBudgetAction_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
+    }
 }

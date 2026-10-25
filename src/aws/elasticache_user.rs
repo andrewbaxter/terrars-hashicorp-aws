@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct ElasticacheUserData {
+struct ElasticacheUserData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -19,8 +21,6 @@ struct ElasticacheUserData {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     provisioner: std::vec::Vec<terrars::Provisioner>,
     access_string: terrars::PrimField<std::string::String>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    arn: std::option::Option<terrars::PrimField<std::string::String>>,
     engine: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -29,17 +29,28 @@ struct ElasticacheUserData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     passwords: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    passwords_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    passwords_wo_version: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     user_id: terrars::PrimField<std::string::String>,
     user_name: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    authentication_mode: std::option::Option<std::vec::Vec<ElasticacheUser_AuthenticationMode>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<ElasticacheUser_Timeouts>,
+    dynamic: ElasticacheUserDynamic,
 }
 
 struct ElasticacheUser_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<ElasticacheUserData>,
+    data: std::cell::RefCell<ElasticacheUserData_>,
 }
 
 #[derive(Clone)]
@@ -139,12 +150,6 @@ impl ElasticacheUser {
         self
     }
 
-    #[doc = "Set the field `arn`.\n"]
-    pub fn set_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.0.data.borrow_mut().arn = std::option::Option::Some(v.into());
-        self
-    }
-
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
@@ -166,6 +171,25 @@ impl ElasticacheUser {
         self
     }
 
+    #[doc = "Set the field `passwords_wo`.\n"]
+    pub fn set_passwords_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().passwords_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `passwords_wo_version`.\n"]
+    pub fn set_passwords_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().passwords_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -181,6 +205,28 @@ impl ElasticacheUser {
         v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().tags_all = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `authentication_mode`.\n"]
+    pub fn set_authentication_mode(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<ElasticacheUser_AuthenticationMode>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().authentication_mode = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.authentication_mode = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<ElasticacheUser_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -214,6 +260,22 @@ impl ElasticacheUser {
         terrars::SetRef::new(self.shared().clone(), format!("{}.passwords", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `passwords_wo` after provisioning.\n"]
+    pub fn passwords_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.passwords_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `passwords_wo_version` after provisioning.\n"]
+    pub fn passwords_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.passwords_wo_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -232,6 +294,16 @@ impl ElasticacheUser {
     #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]
     pub fn user_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `authentication_mode` after provisioning.\n"]
+    pub fn authentication_mode(&self) -> terrars::ListRef<ElasticacheUser_AuthenticationModeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_mode", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ElasticacheUser_TimeoutsRef {
+        ElasticacheUser_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -283,22 +355,27 @@ impl BuildElasticacheUser {
         let out = ElasticacheUser(std::rc::Rc::new(ElasticacheUser_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(ElasticacheUserData {
+            data: std::cell::RefCell::new(ElasticacheUserData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 access_string: self.access_string,
-                arn: core::default::Default::default(),
                 engine: self.engine,
                 id: core::default::Default::default(),
                 no_password_required: core::default::Default::default(),
                 passwords: core::default::Default::default(),
+                passwords_wo: core::default::Default::default(),
+                passwords_wo_version: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 user_id: self.user_id,
                 user_name: self.user_name,
+                authentication_mode: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -359,6 +436,22 @@ impl ElasticacheUserRef {
         terrars::SetRef::new(self.shared().clone(), format!("{}.passwords", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `passwords_wo` after provisioning.\n"]
+    pub fn passwords_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.passwords_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `passwords_wo_version` after provisioning.\n"]
+    pub fn passwords_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.passwords_wo_version", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -377,5 +470,207 @@ impl ElasticacheUserRef {
     #[doc = "Get a reference to the value of field `user_name` after provisioning.\n"]
     pub fn user_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.user_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `authentication_mode` after provisioning.\n"]
+    pub fn authentication_mode(&self) -> terrars::ListRef<ElasticacheUser_AuthenticationModeRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.authentication_mode", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> ElasticacheUser_TimeoutsRef {
+        ElasticacheUser_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct ElasticacheUserDynamic {
+    authentication_mode: std::option::Option<terrars::DynamicBlock<ElasticacheUser_AuthenticationMode>>,
+}
+
+#[derive(Serialize)]
+pub struct ElasticacheUser_AuthenticationMode {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    passwords: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(rename = "type")]
+    type_: terrars::PrimField<std::string::String>,
+}
+
+impl ElasticacheUser_AuthenticationMode {
+    #[doc = "Set the field `passwords`.\n"]
+    pub fn set_passwords(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.passwords = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ElasticacheUser_AuthenticationMode {
+    type O = terrars::BlockAssignable<ElasticacheUser_AuthenticationMode>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildElasticacheUser_AuthenticationMode {
+    #[doc = ""]
+    pub type_: terrars::PrimField<std::string::String>,
+}
+
+impl BuildElasticacheUser_AuthenticationMode {
+    pub fn build(self) -> ElasticacheUser_AuthenticationMode {
+        ElasticacheUser_AuthenticationMode {
+            passwords: core::default::Default::default(),
+            type_: self.type_,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ElasticacheUser_AuthenticationModeRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ElasticacheUser_AuthenticationModeRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticacheUser_AuthenticationModeRef {
+        ElasticacheUser_AuthenticationModeRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ElasticacheUser_AuthenticationModeRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `password_count` after provisioning.\n"]
+    pub fn password_count(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.password_count", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `passwords` after provisioning.\n"]
+    pub fn passwords(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.passwords", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct ElasticacheUser_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    update: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl ElasticacheUser_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `read`.\n"]
+    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.read = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `update`.\n"]
+    pub fn set_update(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.update = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for ElasticacheUser_Timeouts {
+    type O = terrars::BlockAssignable<ElasticacheUser_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildElasticacheUser_Timeouts {}
+
+impl BuildElasticacheUser_Timeouts {
+    pub fn build(self) -> ElasticacheUser_Timeouts {
+        ElasticacheUser_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+            read: core::default::Default::default(),
+            update: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct ElasticacheUser_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for ElasticacheUser_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> ElasticacheUser_TimeoutsRef {
+        ElasticacheUser_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl ElasticacheUser_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
+    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `update` after provisioning.\n"]
+    pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
 }

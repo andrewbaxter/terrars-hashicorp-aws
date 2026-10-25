@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AutoscalingGroupData {
+struct AutoscalingGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -45,6 +47,8 @@ struct AutoscalingGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ignore_failed_scaling_activities: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_configuration: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     load_balancers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
@@ -65,11 +69,11 @@ struct AutoscalingGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     protect_from_scale_in: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     service_linked_role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     suspended_processes: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tags: std::option::Option<terrars::SetField<terrars::RecField<terrars::PrimField<std::string::String>>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     target_group_arns: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -81,26 +85,38 @@ struct AutoscalingGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     wait_for_elb_capacity: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    initial_lifecycle_hook: std::option::Option<std::vec::Vec<AutoscalingGroupInitialLifecycleHookEl>>,
+    availability_zone_distribution: std::option::Option<std::vec::Vec<AutoscalingGroup_AvailabilityZoneDistribution>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_refresh: std::option::Option<std::vec::Vec<AutoscalingGroupInstanceRefreshEl>>,
+    capacity_reservation_specification: std
+    ::option
+    ::Option<std::vec::Vec<AutoscalingGroup_CapacityReservationSpecification>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    launch_template: std::option::Option<std::vec::Vec<AutoscalingGroupLaunchTemplateEl>>,
+    initial_lifecycle_hook: std::option::Option<std::vec::Vec<AutoscalingGroup_InitialLifecycleHook>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    mixed_instances_policy: std::option::Option<std::vec::Vec<AutoscalingGroupMixedInstancesPolicyEl>>,
+    instance_lifecycle_policy: std::option::Option<std::vec::Vec<AutoscalingGroup_InstanceLifecyclePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    tag: std::option::Option<std::vec::Vec<AutoscalingGroupTagEl>>,
+    instance_maintenance_policy: std::option::Option<std::vec::Vec<AutoscalingGroup_InstanceMaintenancePolicy>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<AutoscalingGroupTimeoutsEl>,
+    instance_refresh: std::option::Option<std::vec::Vec<AutoscalingGroup_InstanceRefresh>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    warm_pool: std::option::Option<std::vec::Vec<AutoscalingGroupWarmPoolEl>>,
+    launch_template: std::option::Option<std::vec::Vec<AutoscalingGroup_LaunchTemplate>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    mixed_instances_policy: std::option::Option<std::vec::Vec<AutoscalingGroup_MixedInstancesPolicy>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tag: std::option::Option<std::vec::Vec<AutoscalingGroup_Tag>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<AutoscalingGroup_Timeouts>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    traffic_source: std::option::Option<std::vec::Vec<AutoscalingGroup_TrafficSource>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    warm_pool: std::option::Option<std::vec::Vec<AutoscalingGroup_WarmPool>>,
     dynamic: AutoscalingGroupDynamic,
 }
 
 struct AutoscalingGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AutoscalingGroupData>,
+    data: std::cell::RefCell<AutoscalingGroupData_>,
 }
 
 #[derive(Clone)]
@@ -284,6 +300,12 @@ impl AutoscalingGroup {
         self
     }
 
+    #[doc = "Set the field `ignore_failed_scaling_activities`.\n"]
+    pub fn set_ignore_failed_scaling_activities(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().ignore_failed_scaling_activities = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `launch_configuration`.\n"]
     pub fn set_launch_configuration(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().launch_configuration = std::option::Option::Some(v.into());
@@ -341,6 +363,13 @@ impl AutoscalingGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `service_linked_role_arn`.\n"]
     pub fn set_service_linked_role_arn(
         self,
@@ -356,15 +385,6 @@ impl AutoscalingGroup {
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.0.data.borrow_mut().suspended_processes = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `tags`.\n"]
-    pub fn set_tags(
-        self,
-        v: impl std::convert::Into<terrars::SetField<terrars::RecField<terrars::PrimField<std::string::String>>>>,
-    ) -> Self {
-        self.0.data.borrow_mut().tags = std::option::Option::Some(v.into());
         self
     }
 
@@ -410,10 +430,42 @@ impl AutoscalingGroup {
         self
     }
 
+    #[doc = "Set the field `availability_zone_distribution`.\n"]
+    pub fn set_availability_zone_distribution(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_AvailabilityZoneDistribution>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().availability_zone_distribution = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.availability_zone_distribution = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `capacity_reservation_specification`.\n"]
+    pub fn set_capacity_reservation_specification(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_CapacityReservationSpecification>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().capacity_reservation_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.capacity_reservation_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `initial_lifecycle_hook`.\n"]
     pub fn set_initial_lifecycle_hook(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupInitialLifecycleHookEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_InitialLifecycleHook>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -426,10 +478,42 @@ impl AutoscalingGroup {
         self
     }
 
+    #[doc = "Set the field `instance_lifecycle_policy`.\n"]
+    pub fn set_instance_lifecycle_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_InstanceLifecyclePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().instance_lifecycle_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.instance_lifecycle_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `instance_maintenance_policy`.\n"]
+    pub fn set_instance_maintenance_policy(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_InstanceMaintenancePolicy>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().instance_maintenance_policy = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.instance_maintenance_policy = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Set the field `instance_refresh`.\n"]
     pub fn set_instance_refresh(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupInstanceRefreshEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_InstanceRefresh>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -445,7 +529,7 @@ impl AutoscalingGroup {
     #[doc = "Set the field `launch_template`.\n"]
     pub fn set_launch_template(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupLaunchTemplateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_LaunchTemplate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -461,7 +545,7 @@ impl AutoscalingGroup {
     #[doc = "Set the field `mixed_instances_policy`.\n"]
     pub fn set_mixed_instances_policy(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupMixedInstancesPolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -475,7 +559,7 @@ impl AutoscalingGroup {
     }
 
     #[doc = "Set the field `tag`.\n"]
-    pub fn set_tag(self, v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupTagEl>>) -> Self {
+    pub fn set_tag(self, v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_Tag>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().tag = std::option::Option::Some(v);
@@ -488,16 +572,29 @@ impl AutoscalingGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<AutoscalingGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<AutoscalingGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
-    #[doc = "Set the field `warm_pool`.\n"]
-    pub fn set_warm_pool(
+    #[doc = "Set the field `traffic_source`.\n"]
+    pub fn set_traffic_source(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupWarmPoolEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_TrafficSource>>,
     ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().traffic_source = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.traffic_source = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `warm_pool`.\n"]
+    pub fn set_warm_pool(self, v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_WarmPool>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().warm_pool = std::option::Option::Some(v);
@@ -579,6 +676,14 @@ impl AutoscalingGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ignore_failed_scaling_activities` after provisioning.\n"]
+    pub fn ignore_failed_scaling_activities(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.ignore_failed_scaling_activities", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `launch_configuration` after provisioning.\n"]
     pub fn launch_configuration(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.launch_configuration", self.extract_ref()))
@@ -629,9 +734,20 @@ impl AutoscalingGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.placement_group", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `predicted_capacity` after provisioning.\n"]
+    pub fn predicted_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.predicted_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `protect_from_scale_in` after provisioning.\n"]
     pub fn protect_from_scale_in(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protect_from_scale_in", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_linked_role_arn` after provisioning.\n"]
@@ -642,11 +758,6 @@ impl AutoscalingGroup {
     #[doc = "Get a reference to the value of field `suspended_processes` after provisioning.\n"]
     pub fn suspended_processes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.suspended_processes", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::SetRef<terrars::RecRef<terrars::PrimExpr<std::string::String>>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_group_arns` after provisioning.\n"]
@@ -674,28 +785,61 @@ impl AutoscalingGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_elb_capacity", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `warm_pool_size` after provisioning.\n"]
+    pub fn warm_pool_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warm_pool_size", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone_distribution` after provisioning.\n"]
+    pub fn availability_zone_distribution(&self) -> terrars::ListRef<AutoscalingGroup_AvailabilityZoneDistributionRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.availability_zone_distribution", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `capacity_reservation_specification` after provisioning.\n"]
+    pub fn capacity_reservation_specification(
+        &self,
+    ) -> terrars::ListRef<AutoscalingGroup_CapacityReservationSpecificationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.capacity_reservation_specification", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `instance_lifecycle_policy` after provisioning.\n"]
+    pub fn instance_lifecycle_policy(&self) -> terrars::ListRef<AutoscalingGroup_InstanceLifecyclePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_lifecycle_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_maintenance_policy` after provisioning.\n"]
+    pub fn instance_maintenance_policy(&self) -> terrars::ListRef<AutoscalingGroup_InstanceMaintenancePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_maintenance_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `instance_refresh` after provisioning.\n"]
-    pub fn instance_refresh(&self) -> terrars::ListRef<AutoscalingGroupInstanceRefreshElRef> {
+    pub fn instance_refresh(&self) -> terrars::ListRef<AutoscalingGroup_InstanceRefreshRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_refresh", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `launch_template` after provisioning.\n"]
-    pub fn launch_template(&self) -> terrars::ListRef<AutoscalingGroupLaunchTemplateElRef> {
+    pub fn launch_template(&self) -> terrars::ListRef<AutoscalingGroup_LaunchTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `mixed_instances_policy` after provisioning.\n"]
-    pub fn mixed_instances_policy(&self) -> terrars::ListRef<AutoscalingGroupMixedInstancesPolicyElRef> {
+    pub fn mixed_instances_policy(&self) -> terrars::ListRef<AutoscalingGroup_MixedInstancesPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mixed_instances_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AutoscalingGroupTimeoutsElRef {
-        AutoscalingGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AutoscalingGroup_TimeoutsRef {
+        AutoscalingGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `warm_pool` after provisioning.\n"]
-    pub fn warm_pool(&self) -> terrars::ListRef<AutoscalingGroupWarmPoolElRef> {
+    pub fn warm_pool(&self) -> terrars::ListRef<AutoscalingGroup_WarmPoolRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.warm_pool", self.extract_ref()))
     }
 }
@@ -744,7 +888,7 @@ impl BuildAutoscalingGroup {
         let out = AutoscalingGroup(std::rc::Rc::new(AutoscalingGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AutoscalingGroupData {
+            data: std::cell::RefCell::new(AutoscalingGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -763,6 +907,7 @@ impl BuildAutoscalingGroup {
                 health_check_grace_period: core::default::Default::default(),
                 health_check_type: core::default::Default::default(),
                 id: core::default::Default::default(),
+                ignore_failed_scaling_activities: core::default::Default::default(),
                 launch_configuration: core::default::Default::default(),
                 load_balancers: core::default::Default::default(),
                 max_instance_lifetime: core::default::Default::default(),
@@ -774,20 +919,25 @@ impl BuildAutoscalingGroup {
                 name_prefix: core::default::Default::default(),
                 placement_group: core::default::Default::default(),
                 protect_from_scale_in: core::default::Default::default(),
+                region: core::default::Default::default(),
                 service_linked_role_arn: core::default::Default::default(),
                 suspended_processes: core::default::Default::default(),
-                tags: core::default::Default::default(),
                 target_group_arns: core::default::Default::default(),
                 termination_policies: core::default::Default::default(),
                 vpc_zone_identifier: core::default::Default::default(),
                 wait_for_capacity_timeout: core::default::Default::default(),
                 wait_for_elb_capacity: core::default::Default::default(),
+                availability_zone_distribution: core::default::Default::default(),
+                capacity_reservation_specification: core::default::Default::default(),
                 initial_lifecycle_hook: core::default::Default::default(),
+                instance_lifecycle_policy: core::default::Default::default(),
+                instance_maintenance_policy: core::default::Default::default(),
                 instance_refresh: core::default::Default::default(),
                 launch_template: core::default::Default::default(),
                 mixed_instances_policy: core::default::Default::default(),
                 tag: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
+                traffic_source: core::default::Default::default(),
                 warm_pool: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -890,6 +1040,14 @@ impl AutoscalingGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `ignore_failed_scaling_activities` after provisioning.\n"]
+    pub fn ignore_failed_scaling_activities(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.ignore_failed_scaling_activities", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `launch_configuration` after provisioning.\n"]
     pub fn launch_configuration(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.launch_configuration", self.extract_ref()))
@@ -940,9 +1098,20 @@ impl AutoscalingGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.placement_group", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `predicted_capacity` after provisioning.\n"]
+    pub fn predicted_capacity(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.predicted_capacity", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `protect_from_scale_in` after provisioning.\n"]
     pub fn protect_from_scale_in(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.protect_from_scale_in", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `service_linked_role_arn` after provisioning.\n"]
@@ -953,11 +1122,6 @@ impl AutoscalingGroupRef {
     #[doc = "Get a reference to the value of field `suspended_processes` after provisioning.\n"]
     pub fn suspended_processes(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.suspended_processes", self.extract_ref()))
-    }
-
-    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
-    pub fn tags(&self) -> terrars::SetRef<terrars::RecRef<terrars::PrimExpr<std::string::String>>> {
-        terrars::SetRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `target_group_arns` after provisioning.\n"]
@@ -985,34 +1149,362 @@ impl AutoscalingGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.wait_for_elb_capacity", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `warm_pool_size` after provisioning.\n"]
+    pub fn warm_pool_size(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.warm_pool_size", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone_distribution` after provisioning.\n"]
+    pub fn availability_zone_distribution(&self) -> terrars::ListRef<AutoscalingGroup_AvailabilityZoneDistributionRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.availability_zone_distribution", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `capacity_reservation_specification` after provisioning.\n"]
+    pub fn capacity_reservation_specification(
+        &self,
+    ) -> terrars::ListRef<AutoscalingGroup_CapacityReservationSpecificationRef> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.capacity_reservation_specification", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `instance_lifecycle_policy` after provisioning.\n"]
+    pub fn instance_lifecycle_policy(&self) -> terrars::ListRef<AutoscalingGroup_InstanceLifecyclePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_lifecycle_policy", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `instance_maintenance_policy` after provisioning.\n"]
+    pub fn instance_maintenance_policy(&self) -> terrars::ListRef<AutoscalingGroup_InstanceMaintenancePolicyRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.instance_maintenance_policy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `instance_refresh` after provisioning.\n"]
-    pub fn instance_refresh(&self) -> terrars::ListRef<AutoscalingGroupInstanceRefreshElRef> {
+    pub fn instance_refresh(&self) -> terrars::ListRef<AutoscalingGroup_InstanceRefreshRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_refresh", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `launch_template` after provisioning.\n"]
-    pub fn launch_template(&self) -> terrars::ListRef<AutoscalingGroupLaunchTemplateElRef> {
+    pub fn launch_template(&self) -> terrars::ListRef<AutoscalingGroup_LaunchTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `mixed_instances_policy` after provisioning.\n"]
-    pub fn mixed_instances_policy(&self) -> terrars::ListRef<AutoscalingGroupMixedInstancesPolicyElRef> {
+    pub fn mixed_instances_policy(&self) -> terrars::ListRef<AutoscalingGroup_MixedInstancesPolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.mixed_instances_policy", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> AutoscalingGroupTimeoutsElRef {
-        AutoscalingGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> AutoscalingGroup_TimeoutsRef {
+        AutoscalingGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `warm_pool` after provisioning.\n"]
-    pub fn warm_pool(&self) -> terrars::ListRef<AutoscalingGroupWarmPoolElRef> {
+    pub fn warm_pool(&self) -> terrars::ListRef<AutoscalingGroup_WarmPoolRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.warm_pool", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct AutoscalingGroupDynamic {
+    availability_zone_distribution: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_AvailabilityZoneDistribution>>,
+    capacity_reservation_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_CapacityReservationSpecification>>,
+    initial_lifecycle_hook: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_InitialLifecycleHook>>,
+    instance_lifecycle_policy: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_InstanceLifecyclePolicy>>,
+    instance_maintenance_policy: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_InstanceMaintenancePolicy>>,
+    instance_refresh: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_InstanceRefresh>>,
+    launch_template: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_LaunchTemplate>>,
+    mixed_instances_policy: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_MixedInstancesPolicy>>,
+    tag: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_Tag>>,
+    traffic_source: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_TrafficSource>>,
+    warm_pool: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_WarmPool>>,
+}
+
 #[derive(Serialize)]
-pub struct AutoscalingGroupInitialLifecycleHookEl {
+pub struct AutoscalingGroup_AvailabilityZoneDistribution {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capacity_distribution_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AutoscalingGroup_AvailabilityZoneDistribution {
+    #[doc = "Set the field `capacity_distribution_strategy`.\n"]
+    pub fn set_capacity_distribution_strategy(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.capacity_distribution_strategy = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AutoscalingGroup_AvailabilityZoneDistribution {
+    type O = terrars::BlockAssignable<AutoscalingGroup_AvailabilityZoneDistribution>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAutoscalingGroup_AvailabilityZoneDistribution {}
+
+impl BuildAutoscalingGroup_AvailabilityZoneDistribution {
+    pub fn build(self) -> AutoscalingGroup_AvailabilityZoneDistribution {
+        AutoscalingGroup_AvailabilityZoneDistribution {
+            capacity_distribution_strategy: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AutoscalingGroup_AvailabilityZoneDistributionRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AutoscalingGroup_AvailabilityZoneDistributionRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AutoscalingGroup_AvailabilityZoneDistributionRef {
+        AutoscalingGroup_AvailabilityZoneDistributionRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AutoscalingGroup_AvailabilityZoneDistributionRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `capacity_distribution_strategy` after provisioning.\n"]
+    pub fn capacity_distribution_strategy(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.capacity_distribution_strategy", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capacity_reservation_ids: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capacity_reservation_resource_group_arns: std
+    ::option
+    ::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget {
+    #[doc = "Set the field `capacity_reservation_ids`.\n"]
+    pub fn set_capacity_reservation_ids(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.capacity_reservation_ids = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `capacity_reservation_resource_group_arns`.\n"]
+    pub fn set_capacity_reservation_resource_group_arns(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.capacity_reservation_resource_group_arns = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget {
+    type O = terrars::BlockAssignable<AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget {}
+
+impl BuildAutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget {
+    pub fn build(self) -> AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget {
+        AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget {
+            capacity_reservation_ids: core::default::Default::default(),
+            capacity_reservation_resource_group_arns: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTargetRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTargetRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTargetRef {
+        AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTargetRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTargetRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `capacity_reservation_ids` after provisioning.\n"]
+    pub fn capacity_reservation_ids(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_reservation_ids", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `capacity_reservation_resource_group_arns` after provisioning.\n"]
+    pub fn capacity_reservation_resource_group_arns(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(
+            self.shared().clone(),
+            format!("{}.capacity_reservation_resource_group_arns", self.base),
+        )
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AutoscalingGroup_CapacityReservationSpecificationDynamic {
+    capacity_reservation_target: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget>>,
+}
+
+#[derive(Serialize)]
+pub struct AutoscalingGroup_CapacityReservationSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capacity_reservation_preference: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    capacity_reservation_target: std
+    ::option
+    ::Option<std::vec::Vec<AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget>>,
+    dynamic: AutoscalingGroup_CapacityReservationSpecificationDynamic,
+}
+
+impl AutoscalingGroup_CapacityReservationSpecification {
+    #[doc = "Set the field `capacity_reservation_preference`.\n"]
+    pub fn set_capacity_reservation_preference(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.capacity_reservation_preference = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `capacity_reservation_target`.\n"]
+    pub fn set_capacity_reservation_target(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTarget>,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.capacity_reservation_target = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.capacity_reservation_target = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AutoscalingGroup_CapacityReservationSpecification {
+    type O = terrars::BlockAssignable<AutoscalingGroup_CapacityReservationSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAutoscalingGroup_CapacityReservationSpecification {}
+
+impl BuildAutoscalingGroup_CapacityReservationSpecification {
+    pub fn build(self) -> AutoscalingGroup_CapacityReservationSpecification {
+        AutoscalingGroup_CapacityReservationSpecification {
+            capacity_reservation_preference: core::default::Default::default(),
+            capacity_reservation_target: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AutoscalingGroup_CapacityReservationSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AutoscalingGroup_CapacityReservationSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AutoscalingGroup_CapacityReservationSpecificationRef {
+        AutoscalingGroup_CapacityReservationSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AutoscalingGroup_CapacityReservationSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `capacity_reservation_preference` after provisioning.\n"]
+    pub fn capacity_reservation_preference(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.capacity_reservation_preference", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `capacity_reservation_target` after provisioning.\n"]
+    pub fn capacity_reservation_target(
+        &self,
+    ) -> terrars::ListRef<AutoscalingGroup_CapacityReservationSpecification_CapacityReservationTargetRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.capacity_reservation_target", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AutoscalingGroup_InitialLifecycleHook {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     default_result: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1027,7 +1519,7 @@ pub struct AutoscalingGroupInitialLifecycleHookEl {
     role_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingGroupInitialLifecycleHookEl {
+impl AutoscalingGroup_InitialLifecycleHook {
     #[doc = "Set the field `default_result`.\n"]
     pub fn set_default_result(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.default_result = std::option::Option::Some(v.into());
@@ -1065,8 +1557,8 @@ impl AutoscalingGroupInitialLifecycleHookEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupInitialLifecycleHookEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupInitialLifecycleHookEl>;
+impl terrars::ToListMappable for AutoscalingGroup_InitialLifecycleHook {
+    type O = terrars::BlockAssignable<AutoscalingGroup_InitialLifecycleHook>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1077,16 +1569,16 @@ impl terrars::ToListMappable for AutoscalingGroupInitialLifecycleHookEl {
     }
 }
 
-pub struct BuildAutoscalingGroupInitialLifecycleHookEl {
+pub struct BuildAutoscalingGroup_InitialLifecycleHook {
     #[doc = ""]
     pub lifecycle_transition: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingGroupInitialLifecycleHookEl {
-    pub fn build(self) -> AutoscalingGroupInitialLifecycleHookEl {
-        AutoscalingGroupInitialLifecycleHookEl {
+impl BuildAutoscalingGroup_InitialLifecycleHook {
+    pub fn build(self) -> AutoscalingGroup_InitialLifecycleHook {
+        AutoscalingGroup_InitialLifecycleHook {
             default_result: core::default::Default::default(),
             heartbeat_timeout: core::default::Default::default(),
             lifecycle_transition: self.lifecycle_transition,
@@ -1098,21 +1590,23 @@ impl BuildAutoscalingGroupInitialLifecycleHookEl {
     }
 }
 
-pub struct AutoscalingGroupInitialLifecycleHookElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_InitialLifecycleHookRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupInitialLifecycleHookElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroupInitialLifecycleHookElRef {
-        AutoscalingGroupInitialLifecycleHookElRef {
+impl terrars::Ref for AutoscalingGroup_InitialLifecycleHookRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_InitialLifecycleHookRef {
+        AutoscalingGroup_InitialLifecycleHookRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupInitialLifecycleHookElRef {
+impl AutoscalingGroup_InitialLifecycleHookRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1154,7 +1648,307 @@ impl AutoscalingGroupInitialLifecycleHookElRef {
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupInstanceRefreshElPreferencesEl {
+pub struct AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    terminate_hook_abandon: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers {
+    #[doc = "Set the field `terminate_hook_abandon`.\n"]
+    pub fn set_terminate_hook_abandon(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.terminate_hook_abandon = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers {
+    type O = terrars::BlockAssignable<AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers {}
+
+impl BuildAutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers {
+    pub fn build(self) -> AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers {
+        AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers {
+            terminate_hook_abandon: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggersRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggersRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggersRef {
+        AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggersRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggersRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `terminate_hook_abandon` after provisioning.\n"]
+    pub fn terminate_hook_abandon(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.terminate_hook_abandon", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AutoscalingGroup_InstanceLifecyclePolicyDynamic {
+    retention_triggers: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers>>,
+}
+
+#[derive(Serialize)]
+pub struct AutoscalingGroup_InstanceLifecyclePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    retention_triggers: std::option::Option<std::vec::Vec<AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers>>,
+    dynamic: AutoscalingGroup_InstanceLifecyclePolicyDynamic,
+}
+
+impl AutoscalingGroup_InstanceLifecyclePolicy {
+    #[doc = "Set the field `retention_triggers`.\n"]
+    pub fn set_retention_triggers(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggers>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.retention_triggers = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.retention_triggers = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for AutoscalingGroup_InstanceLifecyclePolicy {
+    type O = terrars::BlockAssignable<AutoscalingGroup_InstanceLifecyclePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAutoscalingGroup_InstanceLifecyclePolicy {}
+
+impl BuildAutoscalingGroup_InstanceLifecyclePolicy {
+    pub fn build(self) -> AutoscalingGroup_InstanceLifecyclePolicy {
+        AutoscalingGroup_InstanceLifecyclePolicy {
+            retention_triggers: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AutoscalingGroup_InstanceLifecyclePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AutoscalingGroup_InstanceLifecyclePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_InstanceLifecyclePolicyRef {
+        AutoscalingGroup_InstanceLifecyclePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AutoscalingGroup_InstanceLifecyclePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `retention_triggers` after provisioning.\n"]
+    pub fn retention_triggers(&self) -> terrars::ListRef<AutoscalingGroup_InstanceLifecyclePolicy_RetentionTriggersRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.retention_triggers", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AutoscalingGroup_InstanceMaintenancePolicy {
+    max_healthy_percentage: terrars::PrimField<f64>,
+    min_healthy_percentage: terrars::PrimField<f64>,
+}
+
+impl AutoscalingGroup_InstanceMaintenancePolicy { }
+
+impl terrars::ToListMappable for AutoscalingGroup_InstanceMaintenancePolicy {
+    type O = terrars::BlockAssignable<AutoscalingGroup_InstanceMaintenancePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAutoscalingGroup_InstanceMaintenancePolicy {
+    #[doc = ""]
+    pub max_healthy_percentage: terrars::PrimField<f64>,
+    #[doc = ""]
+    pub min_healthy_percentage: terrars::PrimField<f64>,
+}
+
+impl BuildAutoscalingGroup_InstanceMaintenancePolicy {
+    pub fn build(self) -> AutoscalingGroup_InstanceMaintenancePolicy {
+        AutoscalingGroup_InstanceMaintenancePolicy {
+            max_healthy_percentage: self.max_healthy_percentage,
+            min_healthy_percentage: self.min_healthy_percentage,
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AutoscalingGroup_InstanceMaintenancePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AutoscalingGroup_InstanceMaintenancePolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_InstanceMaintenancePolicyRef {
+        AutoscalingGroup_InstanceMaintenancePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AutoscalingGroup_InstanceMaintenancePolicyRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max_healthy_percentage` after provisioning.\n"]
+    pub fn max_healthy_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_healthy_percentage", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min_healthy_percentage` after provisioning.\n"]
+    pub fn min_healthy_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_healthy_percentage", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    alarms: std::option::Option<terrars::ListField<terrars::PrimField<std::string::String>>>,
+}
+
+impl AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification {
+    #[doc = "Set the field `alarms`.\n"]
+    pub fn set_alarms(
+        mut self,
+        v: impl std::convert::Into<terrars::ListField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.alarms = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification {
+    type O = terrars::BlockAssignable<AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification {}
+
+impl BuildAutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification {
+    pub fn build(self) -> AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification {
+        AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification { alarms: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecificationRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecificationRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecificationRef {
+        AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecificationRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecificationRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `alarms` after provisioning.\n"]
+    pub fn alarms(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.alarms", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct AutoscalingGroup_InstanceRefresh_PreferencesDynamic {
+    alarm_specification: std
+    ::option
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification>>,
+}
+
+#[derive(Serialize)]
+pub struct AutoscalingGroup_InstanceRefresh_Preferences {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    auto_rollback: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     checkpoint_delay: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1162,12 +1956,29 @@ pub struct AutoscalingGroupInstanceRefreshElPreferencesEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_warmup: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_healthy_percentage: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min_healthy_percentage: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    scale_in_protected_instances: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     skip_matching: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    standby_instances: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    alarm_specification: std
+    ::option
+    ::Option<std::vec::Vec<AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification>>,
+    dynamic: AutoscalingGroup_InstanceRefresh_PreferencesDynamic,
 }
 
-impl AutoscalingGroupInstanceRefreshElPreferencesEl {
+impl AutoscalingGroup_InstanceRefresh_Preferences {
+    #[doc = "Set the field `auto_rollback`.\n"]
+    pub fn set_auto_rollback(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.auto_rollback = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `checkpoint_delay`.\n"]
     pub fn set_checkpoint_delay(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.checkpoint_delay = std::option::Option::Some(v.into());
@@ -1189,9 +2000,24 @@ impl AutoscalingGroupInstanceRefreshElPreferencesEl {
         self
     }
 
+    #[doc = "Set the field `max_healthy_percentage`.\n"]
+    pub fn set_max_healthy_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_healthy_percentage = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `min_healthy_percentage`.\n"]
     pub fn set_min_healthy_percentage(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.min_healthy_percentage = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `scale_in_protected_instances`.\n"]
+    pub fn set_scale_in_protected_instances(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.scale_in_protected_instances = std::option::Option::Some(v.into());
         self
     }
 
@@ -1200,10 +2026,37 @@ impl AutoscalingGroupInstanceRefreshElPreferencesEl {
         self.skip_matching = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `standby_instances`.\n"]
+    pub fn set_standby_instances(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.standby_instances = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `alarm_specification`.\n"]
+    pub fn set_alarm_specification(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<terrars::BlockAssignable<AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecification>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.alarm_specification = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.alarm_specification = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupInstanceRefreshElPreferencesEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupInstanceRefreshElPreferencesEl>;
+impl terrars::ToListMappable for AutoscalingGroup_InstanceRefresh_Preferences {
+    type O = terrars::BlockAssignable<AutoscalingGroup_InstanceRefresh_Preferences>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1214,40 +2067,53 @@ impl terrars::ToListMappable for AutoscalingGroupInstanceRefreshElPreferencesEl 
     }
 }
 
-pub struct BuildAutoscalingGroupInstanceRefreshElPreferencesEl {}
+pub struct BuildAutoscalingGroup_InstanceRefresh_Preferences {}
 
-impl BuildAutoscalingGroupInstanceRefreshElPreferencesEl {
-    pub fn build(self) -> AutoscalingGroupInstanceRefreshElPreferencesEl {
-        AutoscalingGroupInstanceRefreshElPreferencesEl {
+impl BuildAutoscalingGroup_InstanceRefresh_Preferences {
+    pub fn build(self) -> AutoscalingGroup_InstanceRefresh_Preferences {
+        AutoscalingGroup_InstanceRefresh_Preferences {
+            auto_rollback: core::default::Default::default(),
             checkpoint_delay: core::default::Default::default(),
             checkpoint_percentages: core::default::Default::default(),
             instance_warmup: core::default::Default::default(),
+            max_healthy_percentage: core::default::Default::default(),
             min_healthy_percentage: core::default::Default::default(),
+            scale_in_protected_instances: core::default::Default::default(),
             skip_matching: core::default::Default::default(),
+            standby_instances: core::default::Default::default(),
+            alarm_specification: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupInstanceRefreshElPreferencesElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_InstanceRefresh_PreferencesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupInstanceRefreshElPreferencesElRef {
+impl terrars::Ref for AutoscalingGroup_InstanceRefresh_PreferencesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupInstanceRefreshElPreferencesElRef {
-        AutoscalingGroupInstanceRefreshElPreferencesElRef {
+    ) -> AutoscalingGroup_InstanceRefresh_PreferencesRef {
+        AutoscalingGroup_InstanceRefresh_PreferencesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupInstanceRefreshElPreferencesElRef {
+impl AutoscalingGroup_InstanceRefresh_PreferencesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `auto_rollback` after provisioning.\n"]
+    pub fn auto_rollback(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.auto_rollback", self.base))
     }
 
     #[doc = "Get a reference to the value of field `checkpoint_delay` after provisioning.\n"]
@@ -1265,33 +2131,55 @@ impl AutoscalingGroupInstanceRefreshElPreferencesElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.instance_warmup", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `max_healthy_percentage` after provisioning.\n"]
+    pub fn max_healthy_percentage(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_healthy_percentage", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `min_healthy_percentage` after provisioning.\n"]
     pub fn min_healthy_percentage(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.min_healthy_percentage", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `scale_in_protected_instances` after provisioning.\n"]
+    pub fn scale_in_protected_instances(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.scale_in_protected_instances", self.base))
     }
 
     #[doc = "Get a reference to the value of field `skip_matching` after provisioning.\n"]
     pub fn skip_matching(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_matching", self.base))
     }
+
+    #[doc = "Get a reference to the value of field `standby_instances` after provisioning.\n"]
+    pub fn standby_instances(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.standby_instances", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `alarm_specification` after provisioning.\n"]
+    pub fn alarm_specification(
+        &self,
+    ) -> terrars::ListRef<AutoscalingGroup_InstanceRefresh_Preferences_AlarmSpecificationRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.alarm_specification", self.base))
+    }
 }
 
 #[derive(Serialize, Default)]
-struct AutoscalingGroupInstanceRefreshElDynamic {
-    preferences: std::option::Option<terrars::DynamicBlock<AutoscalingGroupInstanceRefreshElPreferencesEl>>,
+struct AutoscalingGroup_InstanceRefreshDynamic {
+    preferences: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_InstanceRefresh_Preferences>>,
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupInstanceRefreshEl {
+pub struct AutoscalingGroup_InstanceRefresh {
     strategy: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     triggers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    preferences: std::option::Option<std::vec::Vec<AutoscalingGroupInstanceRefreshElPreferencesEl>>,
-    dynamic: AutoscalingGroupInstanceRefreshElDynamic,
+    preferences: std::option::Option<std::vec::Vec<AutoscalingGroup_InstanceRefresh_Preferences>>,
+    dynamic: AutoscalingGroup_InstanceRefreshDynamic,
 }
 
-impl AutoscalingGroupInstanceRefreshEl {
+impl AutoscalingGroup_InstanceRefresh {
     #[doc = "Set the field `triggers`.\n"]
     pub fn set_triggers(
         mut self,
@@ -1304,7 +2192,7 @@ impl AutoscalingGroupInstanceRefreshEl {
     #[doc = "Set the field `preferences`.\n"]
     pub fn set_preferences(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupInstanceRefreshElPreferencesEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_InstanceRefresh_Preferences>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -1318,8 +2206,8 @@ impl AutoscalingGroupInstanceRefreshEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupInstanceRefreshEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupInstanceRefreshEl>;
+impl terrars::ToListMappable for AutoscalingGroup_InstanceRefresh {
+    type O = terrars::BlockAssignable<AutoscalingGroup_InstanceRefresh>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1330,14 +2218,14 @@ impl terrars::ToListMappable for AutoscalingGroupInstanceRefreshEl {
     }
 }
 
-pub struct BuildAutoscalingGroupInstanceRefreshEl {
+pub struct BuildAutoscalingGroup_InstanceRefresh {
     #[doc = ""]
     pub strategy: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingGroupInstanceRefreshEl {
-    pub fn build(self) -> AutoscalingGroupInstanceRefreshEl {
-        AutoscalingGroupInstanceRefreshEl {
+impl BuildAutoscalingGroup_InstanceRefresh {
+    pub fn build(self) -> AutoscalingGroup_InstanceRefresh {
+        AutoscalingGroup_InstanceRefresh {
             strategy: self.strategy,
             triggers: core::default::Default::default(),
             preferences: core::default::Default::default(),
@@ -1346,21 +2234,23 @@ impl BuildAutoscalingGroupInstanceRefreshEl {
     }
 }
 
-pub struct AutoscalingGroupInstanceRefreshElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_InstanceRefreshRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupInstanceRefreshElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroupInstanceRefreshElRef {
-        AutoscalingGroupInstanceRefreshElRef {
+impl terrars::Ref for AutoscalingGroup_InstanceRefreshRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_InstanceRefreshRef {
+        AutoscalingGroup_InstanceRefreshRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupInstanceRefreshElRef {
+impl AutoscalingGroup_InstanceRefreshRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1376,13 +2266,13 @@ impl AutoscalingGroupInstanceRefreshElRef {
     }
 
     #[doc = "Get a reference to the value of field `preferences` after provisioning.\n"]
-    pub fn preferences(&self) -> terrars::ListRef<AutoscalingGroupInstanceRefreshElPreferencesElRef> {
+    pub fn preferences(&self) -> terrars::ListRef<AutoscalingGroup_InstanceRefresh_PreferencesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.preferences", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupLaunchTemplateEl {
+pub struct AutoscalingGroup_LaunchTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1391,7 +2281,7 @@ pub struct AutoscalingGroupLaunchTemplateEl {
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingGroupLaunchTemplateEl {
+impl AutoscalingGroup_LaunchTemplate {
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.id = std::option::Option::Some(v.into());
@@ -1411,8 +2301,8 @@ impl AutoscalingGroupLaunchTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupLaunchTemplateEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupLaunchTemplateEl>;
+impl terrars::ToListMappable for AutoscalingGroup_LaunchTemplate {
+    type O = terrars::BlockAssignable<AutoscalingGroup_LaunchTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1423,11 +2313,11 @@ impl terrars::ToListMappable for AutoscalingGroupLaunchTemplateEl {
     }
 }
 
-pub struct BuildAutoscalingGroupLaunchTemplateEl {}
+pub struct BuildAutoscalingGroup_LaunchTemplate {}
 
-impl BuildAutoscalingGroupLaunchTemplateEl {
-    pub fn build(self) -> AutoscalingGroupLaunchTemplateEl {
-        AutoscalingGroupLaunchTemplateEl {
+impl BuildAutoscalingGroup_LaunchTemplate {
+    pub fn build(self) -> AutoscalingGroup_LaunchTemplate {
+        AutoscalingGroup_LaunchTemplate {
             id: core::default::Default::default(),
             name: core::default::Default::default(),
             version: core::default::Default::default(),
@@ -1435,21 +2325,23 @@ impl BuildAutoscalingGroupLaunchTemplateEl {
     }
 }
 
-pub struct AutoscalingGroupLaunchTemplateElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_LaunchTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupLaunchTemplateElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroupLaunchTemplateElRef {
-        AutoscalingGroupLaunchTemplateElRef {
+impl terrars::Ref for AutoscalingGroup_LaunchTemplateRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_LaunchTemplateRef {
+        AutoscalingGroup_LaunchTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupLaunchTemplateElRef {
+impl AutoscalingGroup_LaunchTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1471,7 +2363,7 @@ impl AutoscalingGroupLaunchTemplateElRef {
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_InstancesDistribution {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     on_demand_allocation_strategy: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1486,7 +2378,7 @@ pub struct AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {
     spot_max_price: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {
+impl AutoscalingGroup_MixedInstancesPolicy_InstancesDistribution {
     #[doc = "Set the field `on_demand_allocation_strategy`.\n"]
     pub fn set_on_demand_allocation_strategy(
         mut self,
@@ -1533,8 +2425,8 @@ impl AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl>;
+impl terrars::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_InstancesDistribution {
+    type O = terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy_InstancesDistribution>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1545,11 +2437,11 @@ impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyElInstances
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_InstancesDistribution {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {
-    pub fn build(self) -> AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {
-        AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_InstancesDistribution {
+    pub fn build(self) -> AutoscalingGroup_MixedInstancesPolicy_InstancesDistribution {
+        AutoscalingGroup_MixedInstancesPolicy_InstancesDistribution {
             on_demand_allocation_strategy: core::default::Default::default(),
             on_demand_base_capacity: core::default::Default::default(),
             on_demand_percentage_above_base_capacity: core::default::Default::default(),
@@ -1560,24 +2452,26 @@ impl BuildAutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl {
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElInstancesDistributionElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_InstancesDistributionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupMixedInstancesPolicyElInstancesDistributionElRef {
+impl terrars::Ref for AutoscalingGroup_MixedInstancesPolicy_InstancesDistributionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElInstancesDistributionElRef {
-        AutoscalingGroupMixedInstancesPolicyElInstancesDistributionElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_InstancesDistributionRef {
+        AutoscalingGroup_MixedInstancesPolicy_InstancesDistributionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElInstancesDistributionElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_InstancesDistributionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1617,7 +2511,7 @@ impl AutoscalingGroupMixedInstancesPolicyElInstancesDistributionElRef {
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_template_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -1626,7 +2520,7 @@ pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateS
     version: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification {
     #[doc = "Set the field `launch_template_id`.\n"]
     pub fn set_launch_template_id(
         mut self,
@@ -1652,10 +2546,9 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecifi
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl {
+impl terrars::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification {
     type O =
-        terrars
-        ::BlockAssignable<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl>;
+        terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -1666,11 +2559,11 @@ impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTem
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl {
-    pub fn build(self) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification {
+    pub fn build(self) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification {
             launch_template_id: core::default::Default::default(),
             launch_template_name: core::default::Default::default(),
             version: core::default::Default::default(),
@@ -1678,24 +2571,26 @@ impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSp
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecificationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationElRef {
+impl terrars::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecificationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecificationRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecificationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecificationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1717,14 +2612,14 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecifi
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1739,11 +2634,11 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {
+::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1755,38 +2650,40 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount {
     pub fn build(
         self,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountElRef {
+::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCountRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1803,14 +2700,14 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1825,11 +2722,11 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1841,38 +2738,40 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
     pub fn build(
         self,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1889,14 +2788,14 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1911,11 +2810,11 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -1927,38 +2826,40 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
     pub fn build(
         self,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -1975,14 +2876,14 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -1997,11 +2898,11 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
+::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2013,38 +2914,40 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu {
     pub fn build(
         self,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpuRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
+::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpuRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpuRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpuRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpuRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2061,14 +2964,14 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2083,11 +2986,11 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl {
+::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2099,38 +3002,39 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib {
     pub fn build(
         self,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMibRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars
-::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibElRef {
+impl terrars::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMibRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMibRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMibRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMibRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2147,14 +3051,14 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2169,11 +3073,11 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
+::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2185,38 +3089,40 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps {
     pub fn build(
         self,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
+::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbpsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2233,14 +3139,14 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2255,11 +3161,11 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
+::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2271,38 +3177,40 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount {
     pub fn build(
         self,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCountRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
+::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCountRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCountRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCountRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2319,14 +3227,14 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     min: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb {
     #[doc = "Set the field `max`.\n"]
     pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max = std::option::Option::Some(v.into());
@@ -2341,11 +3249,11 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl {
+::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb {
     type O =
         terrars
         ::BlockAssignable<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb,
         >;
 
     fn do_map(self, base: std::string::String) -> Self::O {
@@ -2357,38 +3265,127 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb {
     pub fn build(
         self,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb {
             max: core::default::Default::default(),
             min: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGbRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
 impl terrars
-::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountElRef {
+::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGbRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGbRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGbRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGbRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `max` after provisioning.\n"]
+    pub fn max(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `min` after provisioning.\n"]
+    pub fn min(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.min", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    min: std::option::Option<terrars::PrimField<f64>>,
+}
+
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount {
+    #[doc = "Set the field `max`.\n"]
+    pub fn set_max(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `min`.\n"]
+    pub fn set_min(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.min = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars
+::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount {
+    type O =
+        terrars
+        ::BlockAssignable<
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount,
+        >;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount {}
+
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount {
+    pub fn build(
+        self,
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount {
+            max: core::default::Default::default(),
+            min: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCountRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCountRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCountRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCountRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCountRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2405,13 +3402,13 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
 }
 
 #[derive(Serialize, Default)]
-struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElDynamic {
+struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirementsDynamic {
     accelerator_count: std
     ::option
     ::Option<
         terrars
         ::DynamicBlock<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount,
         >,
     >,
     accelerator_total_memory_mib: std
@@ -2419,7 +3416,7 @@ struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceR
     ::Option<
         terrars
         ::DynamicBlock<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib,
         >,
     >,
     baseline_ebs_bandwidth_mbps: std
@@ -2427,7 +3424,7 @@ struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceR
     ::Option<
         terrars
         ::DynamicBlock<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps,
         >,
     >,
     memory_gib_per_vcpu: std
@@ -2435,15 +3432,21 @@ struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceR
     ::Option<
         terrars
         ::DynamicBlock<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu,
         >,
     >,
     memory_mib: std
     ::option
     ::Option<
         terrars
+        ::DynamicBlock<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib>,
+    >,
+    network_bandwidth_gbps: std
+    ::option
+    ::Option<
+        terrars
         ::DynamicBlock<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps,
         >,
     >,
     network_interface_count: std
@@ -2451,7 +3454,7 @@ struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceR
     ::Option<
         terrars
         ::DynamicBlock<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount,
         >,
     >,
     total_local_storage_gb: std
@@ -2459,27 +3462,27 @@ struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceR
     ::Option<
         terrars
         ::DynamicBlock<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb,
         >,
     >,
     vcpu_count: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl,
-        >,
+        ::DynamicBlock<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_manufacturers: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_names: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    allowed_instance_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     bare_metal: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2495,6 +3498,8 @@ pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInsta
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     local_storage_types: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_spot_price_as_percentage_of_optimal_on_demand_price: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     on_demand_max_price_percentage_over_lowest_price: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     require_hibernate_support: std::option::Option<terrars::PrimField<bool>>,
@@ -2506,9 +3511,7 @@ pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInsta
     ::Option<
         std
         ::vec
-        ::Vec<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl,
-        >,
+        ::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     accelerator_total_memory_mib: std
@@ -2517,7 +3520,7 @@ pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInsta
         std
         ::vec
         ::Vec<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2527,7 +3530,7 @@ pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInsta
         std
         ::vec
         ::Vec<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2536,17 +3539,21 @@ pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInsta
     ::Option<
         std
         ::vec
-        ::Vec<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl,
-        >,
+        ::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     memory_mib: std
     ::option
     ::Option<
+        std::vec::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib>,
+    >,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    network_bandwidth_gbps: std
+    ::option
+    ::Option<
         std
         ::vec
-        ::Vec<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl>,
+        ::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     network_interface_count: std
@@ -2555,7 +3562,7 @@ pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInsta
         std
         ::vec
         ::Vec<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl,
+            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount,
         >,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -2564,22 +3571,18 @@ pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInsta
     ::Option<
         std
         ::vec
-        ::Vec<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl,
-        >,
+        ::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vcpu_count: std
     ::option
     ::Option<
-        std
-        ::vec
-        ::Vec<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl>,
+        std::vec::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount>,
     >,
-    dynamic: AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElDynamic,
+    dynamic: AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirementsDynamic,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements {
     #[doc = "Set the field `accelerator_manufacturers`.\n"]
     pub fn set_accelerator_manufacturers(
         mut self,
@@ -2604,6 +3607,15 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
         v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
     ) -> Self {
         self.accelerator_types = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `allowed_instance_types`.\n"]
+    pub fn set_allowed_instance_types(
+        mut self,
+        v: impl std::convert::Into<terrars::SetField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.allowed_instance_types = std::option::Option::Some(v.into());
         self
     }
 
@@ -2664,6 +3676,15 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
         self
     }
 
+    #[doc = "Set the field `max_spot_price_as_percentage_of_optimal_on_demand_price`.\n"]
+    pub fn set_max_spot_price_as_percentage_of_optimal_on_demand_price(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<f64>>,
+    ) -> Self {
+        self.max_spot_price_as_percentage_of_optimal_on_demand_price = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `on_demand_max_price_percentage_over_lowest_price`.\n"]
     pub fn set_on_demand_max_price_percentage_over_lowest_price(
         mut self,
@@ -2699,7 +3720,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCount,
                         >,
                     >,
     ) -> Self {
@@ -2725,7 +3746,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMib,
                         >,
                     >,
     ) -> Self {
@@ -2751,7 +3772,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbps,
                         >,
                     >,
     ) -> Self {
@@ -2777,7 +3798,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpu,
                         >,
                     >,
     ) -> Self {
@@ -2803,7 +3824,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMib,
                         >,
                     >,
     ) -> Self {
@@ -2813,6 +3834,32 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
             },
             terrars::BlockAssignable::Dynamic(d) => {
                 self.dynamic.memory_mib = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
+    #[doc = "Set the field `network_bandwidth_gbps`.\n"]
+    pub fn set_network_bandwidth_gbps(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::BlockAssignable<
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbps,
+                        >,
+                    >,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.network_bandwidth_gbps = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.network_bandwidth_gbps = std::option::Option::Some(d);
             },
         }
         self
@@ -2829,7 +3876,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCount,
                         >,
                     >,
     ) -> Self {
@@ -2855,7 +3902,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGb,
                         >,
                     >,
     ) -> Self {
@@ -2881,7 +3928,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCount,
                         >,
                     >,
     ) -> Self {
@@ -2897,11 +3944,9 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
     }
 }
 
-impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl {
+impl terrars::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements {
     type O =
-        terrars
-        ::BlockAssignable<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl>;
+        terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -2912,14 +3957,15 @@ impl terrars
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl {
-    pub fn build(self) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements {
+    pub fn build(self) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements {
             accelerator_manufacturers: core::default::Default::default(),
             accelerator_names: core::default::Default::default(),
             accelerator_types: core::default::Default::default(),
+            allowed_instance_types: core::default::Default::default(),
             bare_metal: core::default::Default::default(),
             burstable_performance: core::default::Default::default(),
             cpu_manufacturers: core::default::Default::default(),
@@ -2927,6 +3973,7 @@ impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstan
             instance_generations: core::default::Default::default(),
             local_storage: core::default::Default::default(),
             local_storage_types: core::default::Default::default(),
+            max_spot_price_as_percentage_of_optimal_on_demand_price: core::default::Default::default(),
             on_demand_max_price_percentage_over_lowest_price: core::default::Default::default(),
             require_hibernate_support: core::default::Default::default(),
             spot_max_price_percentage_over_lowest_price: core::default::Default::default(),
@@ -2935,6 +3982,7 @@ impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstan
             baseline_ebs_bandwidth_mbps: core::default::Default::default(),
             memory_gib_per_vcpu: core::default::Default::default(),
             memory_mib: core::default::Default::default(),
+            network_bandwidth_gbps: core::default::Default::default(),
             network_interface_count: core::default::Default::default(),
             total_local_storage_gb: core::default::Default::default(),
             vcpu_count: core::default::Default::default(),
@@ -2943,24 +3991,26 @@ impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstan
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirementsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElRef {
+impl terrars::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirementsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirementsRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirementsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirementsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -2978,6 +4028,11 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
     #[doc = "Get a reference to the value of field `accelerator_types` after provisioning.\n"]
     pub fn accelerator_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.accelerator_types", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `allowed_instance_types` after provisioning.\n"]
+    pub fn allowed_instance_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.allowed_instance_types", self.base))
     }
 
     #[doc = "Get a reference to the value of field `bare_metal` after provisioning.\n"]
@@ -3016,6 +4071,15 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
     }
 
     #[doc =
+        "Get a reference to the value of field `max_spot_price_as_percentage_of_optimal_on_demand_price` after provisioning.\n"]
+    pub fn max_spot_price_as_percentage_of_optimal_on_demand_price(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.max_spot_price_as_percentage_of_optimal_on_demand_price", self.base),
+        )
+    }
+
+    #[doc =
         "Get a reference to the value of field `on_demand_max_price_percentage_over_lowest_price` after provisioning.\n"]
     pub fn on_demand_max_price_percentage_over_lowest_price(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(
@@ -3041,9 +4105,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
     pub fn accelerator_count(
         &self,
     ) -> terrars
-    ::ListRef<
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorCountElRef,
-    > {
+    ::ListRef<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerator_count", self.base))
     }
 
@@ -3052,7 +4114,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
         &self,
     ) -> terrars
     ::ListRef<
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElAcceleratorTotalMemoryMibElRef,
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_AcceleratorTotalMemoryMibRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.accelerator_total_memory_mib", self.base))
     }
@@ -3062,7 +4124,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
         &self,
     ) -> terrars
     ::ListRef<
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElBaselineEbsBandwidthMbpsElRef,
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_BaselineEbsBandwidthMbpsRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.baseline_ebs_bandwidth_mbps", self.base))
     }
@@ -3071,9 +4133,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
     pub fn memory_gib_per_vcpu(
         &self,
     ) -> terrars
-    ::ListRef<
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryGibPerVcpuElRef,
-    > {
+    ::ListRef<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryGibPerVcpuRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memory_gib_per_vcpu", self.base))
     }
 
@@ -3081,8 +4141,18 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
     pub fn memory_mib(
         &self,
     ) -> terrars
-    ::ListRef<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElMemoryMibElRef> {
+    ::ListRef<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_MemoryMibRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.memory_mib", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `network_bandwidth_gbps` after provisioning.\n"]
+    pub fn network_bandwidth_gbps(
+        &self,
+    ) -> terrars
+    ::ListRef<
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkBandwidthGbpsRef,
+    > {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.network_bandwidth_gbps", self.base))
     }
 
     #[doc = "Get a reference to the value of field `network_interface_count` after provisioning.\n"]
@@ -3090,7 +4160,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
         &self,
     ) -> terrars
     ::ListRef<
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElNetworkInterfaceCountElRef,
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_NetworkInterfaceCountRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.network_interface_count", self.base))
     }
@@ -3100,7 +4170,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
         &self,
     ) -> terrars
     ::ListRef<
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElTotalLocalStorageGbElRef,
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_TotalLocalStorageGbRef,
     > {
         terrars::ListRef::new(self.shared().clone(), format!("{}.total_local_storage_gb", self.base))
     }
@@ -3109,133 +4179,27 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceReq
     pub fn vcpu_count(
         &self,
     ) -> terrars
-    ::ListRef<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElVcpuCountElRef> {
+    ::ListRef<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements_VcpuCountRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.vcpu_count", self.base))
     }
 }
 
-#[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    launch_template_id: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    launch_template_name: std::option::Option<terrars::PrimField<std::string::String>>,
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    version: std::option::Option<terrars::PrimField<std::string::String>>,
-}
-
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl {
-    #[doc = "Set the field `launch_template_id`.\n"]
-    pub fn set_launch_template_id(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.launch_template_id = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `launch_template_name`.\n"]
-    pub fn set_launch_template_name(
-        mut self,
-        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
-    ) -> Self {
-        self.launch_template_name = std::option::Option::Some(v.into());
-        self
-    }
-
-    #[doc = "Set the field `version`.\n"]
-    pub fn set_version(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
-        self.version = std::option::Option::Some(v.into());
-        self
-    }
-}
-
-impl terrars
-::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl {
-    type O =
-        terrars
-        ::BlockAssignable<
-            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl,
-        >;
-
-    fn do_map(self, base: std::string::String) -> Self::O {
-        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
-            for_each: format!("${{{}}}", base),
-            iterator: "each".into(),
-            content: self,
-        })
-    }
-}
-
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl {}
-
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl {
-    pub fn build(
-        self,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl {
-            launch_template_id: core::default::Default::default(),
-            launch_template_name: core::default::Default::default(),
-            version: core::default::Default::default(),
-        }
-    }
-}
-
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationElRef {
-    shared: terrars::StackShared,
-    base: std::string::String,
-}
-
-impl terrars::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationElRef {
-            shared: shared,
-            base: base.to_string(),
-        }
-    }
-}
-
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationElRef {
-    fn shared(&self) -> &terrars::StackShared {
-        &self.shared
-    }
-
-    #[doc = "Get a reference to the value of field `launch_template_id` after provisioning.\n"]
-    pub fn launch_template_id(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.launch_template_id", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `launch_template_name` after provisioning.\n"]
-    pub fn launch_template_name(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.launch_template_name", self.base))
-    }
-
-    #[doc = "Get a reference to the value of field `version` after provisioning.\n"]
-    pub fn version(&self) -> terrars::PrimExpr<std::string::String> {
-        terrars::PrimExpr::new(self.shared().clone(), format!("{}.version", self.base))
-    }
-}
-
 #[derive(Serialize, Default)]
-struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElDynamic {
+struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_OverrideDynamic {
     instance_requirements: std
     ::option
     ::Option<
-        terrars::DynamicBlock<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl>,
+        terrars::DynamicBlock<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements>,
     >,
     launch_template_specification: std
     ::option
     ::Option<
-        terrars
-        ::DynamicBlock<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl>,
+        terrars::DynamicBlock<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_type: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3243,17 +4207,15 @@ pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instance_requirements: std
     ::option
-    ::Option<std::vec::Vec<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl>>,
+    ::Option<std::vec::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_template_specification: std
     ::option
-    ::Option<
-        std::vec::Vec<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl>,
-    >,
-    dynamic: AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElDynamic,
+    ::Option<std::vec::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification>>,
+    dynamic: AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_OverrideDynamic,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override {
     #[doc = "Set the field `instance_type`.\n"]
     pub fn set_instance_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.instance_type = std::option::Option::Some(v.into());
@@ -3277,7 +4239,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirements,
                         >,
                     >,
     ) -> Self {
@@ -3303,7 +4265,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification,
                         >,
                     >,
     ) -> Self {
@@ -3319,8 +4281,8 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl>;
+impl terrars::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override {
+    type O = terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3331,11 +4293,11 @@ impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTem
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
-    pub fn build(self) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override {
+    pub fn build(self) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override {
             instance_type: core::default::Default::default(),
             weighted_capacity: core::default::Default::default(),
             instance_requirements: core::default::Default::default(),
@@ -3345,24 +4307,26 @@ impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl {
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_OverrideRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElRef {
+impl terrars::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_OverrideRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_OverrideRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_OverrideRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_OverrideRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3380,43 +4344,40 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElRef {
     #[doc = "Get a reference to the value of field `instance_requirements` after provisioning.\n"]
     pub fn instance_requirements(
         &self,
-    ) -> terrars::ListRef<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElInstanceRequirementsElRef> {
+    ) -> terrars::ListRef<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override_InstanceRequirementsRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_requirements", self.base))
     }
 
     #[doc = "Get a reference to the value of field `launch_template_specification` after provisioning.\n"]
     pub fn launch_template_specification(
         &self,
-    ) -> terrars
-    ::ListRef<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElLaunchTemplateSpecificationElRef> {
+    ) -> terrars::ListRef<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template_specification", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElDynamic {
+struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplateDynamic {
     launch_template_specification: std
     ::option
-    ::Option<
-        terrars::DynamicBlock<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl>,
-    >,
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification>>,
     override_: std
     ::option
-    ::Option<terrars::DynamicBlock<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl>>,
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override>>,
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     launch_template_specification: std
     ::option
-    ::Option<std::vec::Vec<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl>>,
+    ::Option<std::vec::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification>>,
     #[serde(rename = "override", skip_serializing_if = "std::option::Option::is_none")]
-    override_: std::option::Option<std::vec::Vec<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl>>,
-    dynamic: AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElDynamic,
+    override_: std::option::Option<std::vec::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override>>,
+    dynamic: AutoscalingGroup_MixedInstancesPolicy_LaunchTemplateDynamic,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate {
     #[doc = "Set the field `launch_template_specification`.\n"]
     pub fn set_launch_template_specification(
         mut self,
@@ -3428,7 +4389,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationEl,
+                            AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecification,
                         >,
                     >,
     ) -> Self {
@@ -3451,9 +4412,7 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::BlockAssignable<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideEl>,
-                    >,
+                    ::Into<terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_Override>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3467,8 +4426,8 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl>;
+impl terrars::ToListMappable for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate {
+    type O = terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3479,11 +4438,11 @@ impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyElLaunchTem
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
-    pub fn build(self) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy_LaunchTemplate {
+    pub fn build(self) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate {
             launch_template_specification: core::default::Default::default(),
             override_: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3491,24 +4450,26 @@ impl BuildAutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl {
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicy_LaunchTemplateRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElRef {
+impl terrars::Ref for AutoscalingGroup_MixedInstancesPolicy_LaunchTemplateRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElRef {
-        AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElRef {
+    ) -> AutoscalingGroup_MixedInstancesPolicy_LaunchTemplateRef {
+        AutoscalingGroup_MixedInstancesPolicy_LaunchTemplateRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElRef {
+impl AutoscalingGroup_MixedInstancesPolicy_LaunchTemplateRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3516,38 +4477,38 @@ impl AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElRef {
     #[doc = "Get a reference to the value of field `launch_template_specification` after provisioning.\n"]
     pub fn launch_template_specification(
         &self,
-    ) -> terrars::ListRef<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElLaunchTemplateSpecificationElRef> {
+    ) -> terrars::ListRef<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_LaunchTemplateSpecificationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template_specification", self.base))
     }
 
     #[doc = "Get a reference to the value of field `override_` after provisioning.\n"]
-    pub fn override_(&self) -> terrars::ListRef<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElOverrideElRef> {
+    pub fn override_(&self) -> terrars::ListRef<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate_OverrideRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.override", self.base))
     }
 }
 
 #[derive(Serialize, Default)]
-struct AutoscalingGroupMixedInstancesPolicyElDynamic {
+struct AutoscalingGroup_MixedInstancesPolicyDynamic {
     instances_distribution: std
     ::option
-    ::Option<terrars::DynamicBlock<AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl>>,
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_MixedInstancesPolicy_InstancesDistribution>>,
     launch_template: std
     ::option
-    ::Option<terrars::DynamicBlock<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl>>,
+    ::Option<terrars::DynamicBlock<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate>>,
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupMixedInstancesPolicyEl {
+pub struct AutoscalingGroup_MixedInstancesPolicy {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     instances_distribution: std
     ::option
-    ::Option<std::vec::Vec<AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl>>,
+    ::Option<std::vec::Vec<AutoscalingGroup_MixedInstancesPolicy_InstancesDistribution>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    launch_template: std::option::Option<std::vec::Vec<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl>>,
-    dynamic: AutoscalingGroupMixedInstancesPolicyElDynamic,
+    launch_template: std::option::Option<std::vec::Vec<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate>>,
+    dynamic: AutoscalingGroup_MixedInstancesPolicyDynamic,
 }
 
-impl AutoscalingGroupMixedInstancesPolicyEl {
+impl AutoscalingGroup_MixedInstancesPolicy {
     #[doc = "Set the field `instances_distribution`.\n"]
     pub fn set_instances_distribution(
         mut self,
@@ -3556,7 +4517,7 @@ impl AutoscalingGroupMixedInstancesPolicyEl {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<AutoscalingGroupMixedInstancesPolicyElInstancesDistributionEl>>,
+                    ::Into<terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy_InstancesDistribution>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3572,7 +4533,7 @@ impl AutoscalingGroupMixedInstancesPolicyEl {
     #[doc = "Set the field `launch_template`.\n"]
     pub fn set_launch_template(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplate>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3586,8 +4547,8 @@ impl AutoscalingGroupMixedInstancesPolicyEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupMixedInstancesPolicyEl>;
+impl terrars::ToListMappable for AutoscalingGroup_MixedInstancesPolicy {
+    type O = terrars::BlockAssignable<AutoscalingGroup_MixedInstancesPolicy>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3598,11 +4559,11 @@ impl terrars::ToListMappable for AutoscalingGroupMixedInstancesPolicyEl {
     }
 }
 
-pub struct BuildAutoscalingGroupMixedInstancesPolicyEl {}
+pub struct BuildAutoscalingGroup_MixedInstancesPolicy {}
 
-impl BuildAutoscalingGroupMixedInstancesPolicyEl {
-    pub fn build(self) -> AutoscalingGroupMixedInstancesPolicyEl {
-        AutoscalingGroupMixedInstancesPolicyEl {
+impl BuildAutoscalingGroup_MixedInstancesPolicy {
+    pub fn build(self) -> AutoscalingGroup_MixedInstancesPolicy {
+        AutoscalingGroup_MixedInstancesPolicy {
             instances_distribution: core::default::Default::default(),
             launch_template: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -3610,21 +4571,23 @@ impl BuildAutoscalingGroupMixedInstancesPolicyEl {
     }
 }
 
-pub struct AutoscalingGroupMixedInstancesPolicyElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_MixedInstancesPolicyRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupMixedInstancesPolicyElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroupMixedInstancesPolicyElRef {
-        AutoscalingGroupMixedInstancesPolicyElRef {
+impl terrars::Ref for AutoscalingGroup_MixedInstancesPolicyRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_MixedInstancesPolicyRef {
+        AutoscalingGroup_MixedInstancesPolicyRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupMixedInstancesPolicyElRef {
+impl AutoscalingGroup_MixedInstancesPolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3632,27 +4595,27 @@ impl AutoscalingGroupMixedInstancesPolicyElRef {
     #[doc = "Get a reference to the value of field `instances_distribution` after provisioning.\n"]
     pub fn instances_distribution(
         &self,
-    ) -> terrars::ListRef<AutoscalingGroupMixedInstancesPolicyElInstancesDistributionElRef> {
+    ) -> terrars::ListRef<AutoscalingGroup_MixedInstancesPolicy_InstancesDistributionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instances_distribution", self.base))
     }
 
     #[doc = "Get a reference to the value of field `launch_template` after provisioning.\n"]
-    pub fn launch_template(&self) -> terrars::ListRef<AutoscalingGroupMixedInstancesPolicyElLaunchTemplateElRef> {
+    pub fn launch_template(&self) -> terrars::ListRef<AutoscalingGroup_MixedInstancesPolicy_LaunchTemplateRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.launch_template", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupTagEl {
+pub struct AutoscalingGroup_Tag {
     key: terrars::PrimField<std::string::String>,
     propagate_at_launch: terrars::PrimField<bool>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl AutoscalingGroupTagEl { }
+impl AutoscalingGroup_Tag { }
 
-impl terrars::ToListMappable for AutoscalingGroupTagEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupTagEl>;
+impl terrars::ToListMappable for AutoscalingGroup_Tag {
+    type O = terrars::BlockAssignable<AutoscalingGroup_Tag>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3663,7 +4626,7 @@ impl terrars::ToListMappable for AutoscalingGroupTagEl {
     }
 }
 
-pub struct BuildAutoscalingGroupTagEl {
+pub struct BuildAutoscalingGroup_Tag {
     #[doc = ""]
     pub key: terrars::PrimField<std::string::String>,
     #[doc = ""]
@@ -3672,9 +4635,9 @@ pub struct BuildAutoscalingGroupTagEl {
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAutoscalingGroupTagEl {
-    pub fn build(self) -> AutoscalingGroupTagEl {
-        AutoscalingGroupTagEl {
+impl BuildAutoscalingGroup_Tag {
+    pub fn build(self) -> AutoscalingGroup_Tag {
+        AutoscalingGroup_Tag {
             key: self.key,
             propagate_at_launch: self.propagate_at_launch,
             value: self.value,
@@ -3682,21 +4645,23 @@ impl BuildAutoscalingGroupTagEl {
     }
 }
 
-pub struct AutoscalingGroupTagElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_TagRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupTagElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroupTagElRef {
-        AutoscalingGroupTagElRef {
+impl terrars::Ref for AutoscalingGroup_TagRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_TagRef {
+        AutoscalingGroup_TagRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupTagElRef {
+impl AutoscalingGroup_TagRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3718,14 +4683,14 @@ impl AutoscalingGroupTagElRef {
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupTimeoutsEl {
+pub struct AutoscalingGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingGroupTimeoutsEl {
+impl AutoscalingGroup_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -3739,8 +4704,8 @@ impl AutoscalingGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupTimeoutsEl>;
+impl terrars::ToListMappable for AutoscalingGroup_Timeouts {
+    type O = terrars::BlockAssignable<AutoscalingGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3751,32 +4716,34 @@ impl terrars::ToListMappable for AutoscalingGroupTimeoutsEl {
     }
 }
 
-pub struct BuildAutoscalingGroupTimeoutsEl {}
+pub struct BuildAutoscalingGroup_Timeouts {}
 
-impl BuildAutoscalingGroupTimeoutsEl {
-    pub fn build(self) -> AutoscalingGroupTimeoutsEl {
-        AutoscalingGroupTimeoutsEl {
+impl BuildAutoscalingGroup_Timeouts {
+    pub fn build(self) -> AutoscalingGroup_Timeouts {
+        AutoscalingGroup_Timeouts {
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
         }
     }
 }
 
-pub struct AutoscalingGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroupTimeoutsElRef {
-        AutoscalingGroupTimeoutsElRef {
+impl terrars::Ref for AutoscalingGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_TimeoutsRef {
+        AutoscalingGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupTimeoutsElRef {
+impl AutoscalingGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3793,21 +4760,22 @@ impl AutoscalingGroupTimeoutsElRef {
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupWarmPoolElInstanceReusePolicyEl {
-    #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    reuse_on_scale_in: std::option::Option<terrars::PrimField<bool>>,
+pub struct AutoscalingGroup_TrafficSource {
+    identifier: terrars::PrimField<std::string::String>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl AutoscalingGroupWarmPoolElInstanceReusePolicyEl {
-    #[doc = "Set the field `reuse_on_scale_in`.\n"]
-    pub fn set_reuse_on_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
-        self.reuse_on_scale_in = std::option::Option::Some(v.into());
+impl AutoscalingGroup_TrafficSource {
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupWarmPoolElInstanceReusePolicyEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupWarmPoolElInstanceReusePolicyEl>;
+impl terrars::ToListMappable for AutoscalingGroup_TrafficSource {
+    type O = terrars::BlockAssignable<AutoscalingGroup_TrafficSource>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3818,32 +4786,106 @@ impl terrars::ToListMappable for AutoscalingGroupWarmPoolElInstanceReusePolicyEl
     }
 }
 
-pub struct BuildAutoscalingGroupWarmPoolElInstanceReusePolicyEl {}
+pub struct BuildAutoscalingGroup_TrafficSource {
+    #[doc = ""]
+    pub identifier: terrars::PrimField<std::string::String>,
+}
 
-impl BuildAutoscalingGroupWarmPoolElInstanceReusePolicyEl {
-    pub fn build(self) -> AutoscalingGroupWarmPoolElInstanceReusePolicyEl {
-        AutoscalingGroupWarmPoolElInstanceReusePolicyEl { reuse_on_scale_in: core::default::Default::default() }
+impl BuildAutoscalingGroup_TrafficSource {
+    pub fn build(self) -> AutoscalingGroup_TrafficSource {
+        AutoscalingGroup_TrafficSource {
+            identifier: self.identifier,
+            type_: core::default::Default::default(),
+        }
     }
 }
 
-pub struct AutoscalingGroupWarmPoolElInstanceReusePolicyElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_TrafficSourceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupWarmPoolElInstanceReusePolicyElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AutoscalingGroupWarmPoolElInstanceReusePolicyElRef {
-        AutoscalingGroupWarmPoolElInstanceReusePolicyElRef {
+impl terrars::Ref for AutoscalingGroup_TrafficSourceRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_TrafficSourceRef {
+        AutoscalingGroup_TrafficSourceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupWarmPoolElInstanceReusePolicyElRef {
+impl AutoscalingGroup_TrafficSourceRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `identifier` after provisioning.\n"]
+    pub fn identifier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.identifier", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct AutoscalingGroup_WarmPool_InstanceReusePolicy {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    reuse_on_scale_in: std::option::Option<terrars::PrimField<bool>>,
+}
+
+impl AutoscalingGroup_WarmPool_InstanceReusePolicy {
+    #[doc = "Set the field `reuse_on_scale_in`.\n"]
+    pub fn set_reuse_on_scale_in(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.reuse_on_scale_in = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for AutoscalingGroup_WarmPool_InstanceReusePolicy {
+    type O = terrars::BlockAssignable<AutoscalingGroup_WarmPool_InstanceReusePolicy>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildAutoscalingGroup_WarmPool_InstanceReusePolicy {}
+
+impl BuildAutoscalingGroup_WarmPool_InstanceReusePolicy {
+    pub fn build(self) -> AutoscalingGroup_WarmPool_InstanceReusePolicy {
+        AutoscalingGroup_WarmPool_InstanceReusePolicy { reuse_on_scale_in: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct AutoscalingGroup_WarmPool_InstanceReusePolicyRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for AutoscalingGroup_WarmPool_InstanceReusePolicyRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> AutoscalingGroup_WarmPool_InstanceReusePolicyRef {
+        AutoscalingGroup_WarmPool_InstanceReusePolicyRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl AutoscalingGroup_WarmPool_InstanceReusePolicyRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3855,14 +4897,12 @@ impl AutoscalingGroupWarmPoolElInstanceReusePolicyElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AutoscalingGroupWarmPoolElDynamic {
-    instance_reuse_policy: std
-    ::option
-    ::Option<terrars::DynamicBlock<AutoscalingGroupWarmPoolElInstanceReusePolicyEl>>,
+struct AutoscalingGroup_WarmPoolDynamic {
+    instance_reuse_policy: std::option::Option<terrars::DynamicBlock<AutoscalingGroup_WarmPool_InstanceReusePolicy>>,
 }
 
 #[derive(Serialize)]
-pub struct AutoscalingGroupWarmPoolEl {
+pub struct AutoscalingGroup_WarmPool {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     max_group_prepared_capacity: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -3870,11 +4910,11 @@ pub struct AutoscalingGroupWarmPoolEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     pool_state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    instance_reuse_policy: std::option::Option<std::vec::Vec<AutoscalingGroupWarmPoolElInstanceReusePolicyEl>>,
-    dynamic: AutoscalingGroupWarmPoolElDynamic,
+    instance_reuse_policy: std::option::Option<std::vec::Vec<AutoscalingGroup_WarmPool_InstanceReusePolicy>>,
+    dynamic: AutoscalingGroup_WarmPoolDynamic,
 }
 
-impl AutoscalingGroupWarmPoolEl {
+impl AutoscalingGroup_WarmPool {
     #[doc = "Set the field `max_group_prepared_capacity`.\n"]
     pub fn set_max_group_prepared_capacity(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.max_group_prepared_capacity = std::option::Option::Some(v.into());
@@ -3896,7 +4936,7 @@ impl AutoscalingGroupWarmPoolEl {
     #[doc = "Set the field `instance_reuse_policy`.\n"]
     pub fn set_instance_reuse_policy(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroupWarmPoolElInstanceReusePolicyEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AutoscalingGroup_WarmPool_InstanceReusePolicy>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -3910,8 +4950,8 @@ impl AutoscalingGroupWarmPoolEl {
     }
 }
 
-impl terrars::ToListMappable for AutoscalingGroupWarmPoolEl {
-    type O = terrars::BlockAssignable<AutoscalingGroupWarmPoolEl>;
+impl terrars::ToListMappable for AutoscalingGroup_WarmPool {
+    type O = terrars::BlockAssignable<AutoscalingGroup_WarmPool>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -3922,11 +4962,11 @@ impl terrars::ToListMappable for AutoscalingGroupWarmPoolEl {
     }
 }
 
-pub struct BuildAutoscalingGroupWarmPoolEl {}
+pub struct BuildAutoscalingGroup_WarmPool {}
 
-impl BuildAutoscalingGroupWarmPoolEl {
-    pub fn build(self) -> AutoscalingGroupWarmPoolEl {
-        AutoscalingGroupWarmPoolEl {
+impl BuildAutoscalingGroup_WarmPool {
+    pub fn build(self) -> AutoscalingGroup_WarmPool {
+        AutoscalingGroup_WarmPool {
             max_group_prepared_capacity: core::default::Default::default(),
             min_size: core::default::Default::default(),
             pool_state: core::default::Default::default(),
@@ -3936,21 +4976,23 @@ impl BuildAutoscalingGroupWarmPoolEl {
     }
 }
 
-pub struct AutoscalingGroupWarmPoolElRef {
+#[allow(dead_code)]
+pub struct AutoscalingGroup_WarmPoolRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AutoscalingGroupWarmPoolElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroupWarmPoolElRef {
-        AutoscalingGroupWarmPoolElRef {
+impl terrars::Ref for AutoscalingGroup_WarmPoolRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AutoscalingGroup_WarmPoolRef {
+        AutoscalingGroup_WarmPoolRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AutoscalingGroupWarmPoolElRef {
+impl AutoscalingGroup_WarmPoolRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -3971,17 +5013,7 @@ impl AutoscalingGroupWarmPoolElRef {
     }
 
     #[doc = "Get a reference to the value of field `instance_reuse_policy` after provisioning.\n"]
-    pub fn instance_reuse_policy(&self) -> terrars::ListRef<AutoscalingGroupWarmPoolElInstanceReusePolicyElRef> {
+    pub fn instance_reuse_policy(&self) -> terrars::ListRef<AutoscalingGroup_WarmPool_InstanceReusePolicyRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.instance_reuse_policy", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AutoscalingGroupDynamic {
-    initial_lifecycle_hook: std::option::Option<terrars::DynamicBlock<AutoscalingGroupInitialLifecycleHookEl>>,
-    instance_refresh: std::option::Option<terrars::DynamicBlock<AutoscalingGroupInstanceRefreshEl>>,
-    launch_template: std::option::Option<terrars::DynamicBlock<AutoscalingGroupLaunchTemplateEl>>,
-    mixed_instances_policy: std::option::Option<terrars::DynamicBlock<AutoscalingGroupMixedInstancesPolicyEl>>,
-    tag: std::option::Option<terrars::DynamicBlock<AutoscalingGroupTagEl>>,
-    warm_pool: std::option::Option<terrars::DynamicBlock<AutoscalingGroupWarmPoolEl>>,
 }

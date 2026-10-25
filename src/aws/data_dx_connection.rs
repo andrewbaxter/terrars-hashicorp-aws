@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataDxConnectionData {
+struct DataDxConnectionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -20,13 +22,15 @@ struct DataDxConnectionData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataDxConnection_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataDxConnectionData>,
+    data: std::cell::RefCell<DataDxConnectionData_>,
 }
 
 #[derive(Clone)]
@@ -77,6 +81,13 @@ impl DataDxConnection {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -121,9 +132,56 @@ impl DataDxConnection {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `partner_name` after provisioning.\n"]
+    pub fn partner_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.partner_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_pool_size_ipv4` after provisioning.\n"]
+    pub fn prefix_pool_size_ipv4(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_pool_size_ipv4", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_pool_size_ipv6` after provisioning.\n"]
+    pub fn prefix_pool_size_ipv6(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_pool_size_ipv6", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_pool_unallocated_count_ipv4` after provisioning.\n"]
+    pub fn prefix_pool_unallocated_count_ipv4(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.prefix_pool_unallocated_count_ipv4", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_pool_unallocated_count_ipv6` after provisioning.\n"]
+    pub fn prefix_pool_unallocated_count_ipv6(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.prefix_pool_unallocated_count_ipv6", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `provider_name` after provisioning.\n"]
     pub fn provider_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `rate_limiter_status` after provisioning.\n"]
+    pub fn rate_limiter_status(&self) -> terrars::ListRef<DataDxConnection_RateLimiterStatusRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rate_limiter_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -132,7 +190,7 @@ impl DataDxConnection {
     }
 
     #[doc = "Get a reference to the value of field `vlan_id` after provisioning.\n"]
-    pub fn vlan_id(&self) -> terrars::PrimExpr<std::string::String> {
+    pub fn vlan_id(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vlan_id", self.extract_ref()))
     }
 }
@@ -179,13 +237,14 @@ impl BuildDataDxConnection {
         let out = DataDxConnection(std::rc::Rc::new(DataDxConnection_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataDxConnectionData {
+            data: std::cell::RefCell::new(DataDxConnectionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -252,9 +311,56 @@ impl DataDxConnectionRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.owner_account_id", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `partner_name` after provisioning.\n"]
+    pub fn partner_name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.partner_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_pool_size_ipv4` after provisioning.\n"]
+    pub fn prefix_pool_size_ipv4(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_pool_size_ipv4", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_pool_size_ipv6` after provisioning.\n"]
+    pub fn prefix_pool_size_ipv6(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.prefix_pool_size_ipv6", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_pool_unallocated_count_ipv4` after provisioning.\n"]
+    pub fn prefix_pool_unallocated_count_ipv4(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.prefix_pool_unallocated_count_ipv4", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `prefix_pool_unallocated_count_ipv6` after provisioning.\n"]
+    pub fn prefix_pool_unallocated_count_ipv6(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.prefix_pool_unallocated_count_ipv6", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `provider_name` after provisioning.\n"]
     pub fn provider_name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.provider_name", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `rate_limiter_status` after provisioning.\n"]
+    pub fn rate_limiter_status(&self) -> terrars::ListRef<DataDxConnection_RateLimiterStatusRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.rate_limiter_status", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `state` after provisioning.\n"]
+    pub fn state(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.state", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -263,7 +369,112 @@ impl DataDxConnectionRef {
     }
 
     #[doc = "Get a reference to the value of field `vlan_id` after provisioning.\n"]
-    pub fn vlan_id(&self) -> terrars::PrimExpr<std::string::String> {
+    pub fn vlan_id(&self) -> terrars::PrimExpr<f64> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.vlan_id", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataDxConnection_RateLimiterStatus {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    in_use: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    max_allowed: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    remaining: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    total_bandwidth: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataDxConnection_RateLimiterStatus {
+    #[doc = "Set the field `in_use`.\n"]
+    pub fn set_in_use(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.in_use = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `max_allowed`.\n"]
+    pub fn set_max_allowed(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.max_allowed = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `remaining`.\n"]
+    pub fn set_remaining(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.remaining = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `total_bandwidth`.\n"]
+    pub fn set_total_bandwidth(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.total_bandwidth = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataDxConnection_RateLimiterStatus {
+    type O = terrars::BlockAssignable<DataDxConnection_RateLimiterStatus>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataDxConnection_RateLimiterStatus {}
+
+impl BuildDataDxConnection_RateLimiterStatus {
+    pub fn build(self) -> DataDxConnection_RateLimiterStatus {
+        DataDxConnection_RateLimiterStatus {
+            in_use: core::default::Default::default(),
+            max_allowed: core::default::Default::default(),
+            remaining: core::default::Default::default(),
+            total_bandwidth: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataDxConnection_RateLimiterStatusRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataDxConnection_RateLimiterStatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataDxConnection_RateLimiterStatusRef {
+        DataDxConnection_RateLimiterStatusRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataDxConnection_RateLimiterStatusRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `in_use` after provisioning.\n"]
+    pub fn in_use(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.in_use", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `max_allowed` after provisioning.\n"]
+    pub fn max_allowed(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.max_allowed", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `remaining` after provisioning.\n"]
+    pub fn remaining(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.remaining", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `total_bandwidth` after provisioning.\n"]
+    pub fn total_bandwidth(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.total_bandwidth", self.base))
     }
 }

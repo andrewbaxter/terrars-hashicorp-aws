@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DbOptionGroupData {
+struct DbOptionGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -29,20 +31,24 @@ struct DbOptionGroupData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     option_group_description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    skip_destroy: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    option: std::option::Option<std::vec::Vec<DbOptionGroupOptionEl>>,
+    option: std::option::Option<std::vec::Vec<DbOptionGroup_Option>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<DbOptionGroupTimeoutsEl>,
+    timeouts: std::option::Option<DbOptionGroup_Timeouts>,
     dynamic: DbOptionGroupDynamic,
 }
 
 struct DbOptionGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DbOptionGroupData>,
+    data: std::cell::RefCell<DbOptionGroupData_>,
 }
 
 #[derive(Clone)]
@@ -169,6 +175,19 @@ impl DbOptionGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `skip_destroy`.\n"]
+    pub fn set_skip_destroy(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().skip_destroy = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -188,7 +207,7 @@ impl DbOptionGroup {
     }
 
     #[doc = "Set the field `option`.\n"]
-    pub fn set_option(self, v: impl std::convert::Into<terrars::BlockAssignable<DbOptionGroupOptionEl>>) -> Self {
+    pub fn set_option(self, v: impl std::convert::Into<terrars::BlockAssignable<DbOptionGroup_Option>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().option = std::option::Option::Some(v);
@@ -201,7 +220,7 @@ impl DbOptionGroup {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<DbOptionGroupTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<DbOptionGroup_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -241,6 +260,17 @@ impl DbOptionGroup {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.option_group_description", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -252,8 +282,8 @@ impl DbOptionGroup {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbOptionGroupTimeoutsElRef {
-        DbOptionGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbOptionGroup_TimeoutsRef {
+        DbOptionGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -301,7 +331,7 @@ impl BuildDbOptionGroup {
         let out = DbOptionGroup(std::rc::Rc::new(DbOptionGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DbOptionGroupData {
+            data: std::cell::RefCell::new(DbOptionGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -313,6 +343,8 @@ impl BuildDbOptionGroup {
                 name: core::default::Default::default(),
                 name_prefix: core::default::Default::default(),
                 option_group_description: core::default::Default::default(),
+                region: core::default::Default::default(),
+                skip_destroy: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 option: core::default::Default::default(),
@@ -383,6 +415,17 @@ impl DbOptionGroupRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.option_group_description", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `skip_destroy` after provisioning.\n"]
+    pub fn skip_destroy(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.skip_destroy", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -394,21 +437,26 @@ impl DbOptionGroupRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> DbOptionGroupTimeoutsElRef {
-        DbOptionGroupTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> DbOptionGroup_TimeoutsRef {
+        DbOptionGroup_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct DbOptionGroupDynamic {
+    option: std::option::Option<terrars::DynamicBlock<DbOptionGroup_Option>>,
+}
+
 #[derive(Serialize)]
-pub struct DbOptionGroupOptionElOptionSettingsEl {
+pub struct DbOptionGroup_Option_OptionSettings {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl DbOptionGroupOptionElOptionSettingsEl { }
+impl DbOptionGroup_Option_OptionSettings { }
 
-impl terrars::ToListMappable for DbOptionGroupOptionElOptionSettingsEl {
-    type O = terrars::BlockAssignable<DbOptionGroupOptionElOptionSettingsEl>;
+impl terrars::ToListMappable for DbOptionGroup_Option_OptionSettings {
+    type O = terrars::BlockAssignable<DbOptionGroup_Option_OptionSettings>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -419,37 +467,39 @@ impl terrars::ToListMappable for DbOptionGroupOptionElOptionSettingsEl {
     }
 }
 
-pub struct BuildDbOptionGroupOptionElOptionSettingsEl {
+pub struct BuildDbOptionGroup_Option_OptionSettings {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDbOptionGroupOptionElOptionSettingsEl {
-    pub fn build(self) -> DbOptionGroupOptionElOptionSettingsEl {
-        DbOptionGroupOptionElOptionSettingsEl {
+impl BuildDbOptionGroup_Option_OptionSettings {
+    pub fn build(self) -> DbOptionGroup_Option_OptionSettings {
+        DbOptionGroup_Option_OptionSettings {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct DbOptionGroupOptionElOptionSettingsElRef {
+#[allow(dead_code)]
+pub struct DbOptionGroup_Option_OptionSettingsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbOptionGroupOptionElOptionSettingsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbOptionGroupOptionElOptionSettingsElRef {
-        DbOptionGroupOptionElOptionSettingsElRef {
+impl terrars::Ref for DbOptionGroup_Option_OptionSettingsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbOptionGroup_Option_OptionSettingsRef {
+        DbOptionGroup_Option_OptionSettingsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbOptionGroupOptionElOptionSettingsElRef {
+impl DbOptionGroup_Option_OptionSettingsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -466,12 +516,12 @@ impl DbOptionGroupOptionElOptionSettingsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct DbOptionGroupOptionElDynamic {
-    option_settings: std::option::Option<terrars::DynamicBlock<DbOptionGroupOptionElOptionSettingsEl>>,
+struct DbOptionGroup_OptionDynamic {
+    option_settings: std::option::Option<terrars::DynamicBlock<DbOptionGroup_Option_OptionSettings>>,
 }
 
 #[derive(Serialize)]
-pub struct DbOptionGroupOptionEl {
+pub struct DbOptionGroup_Option {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     db_security_group_memberships: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     option_name: terrars::PrimField<std::string::String>,
@@ -482,11 +532,11 @@ pub struct DbOptionGroupOptionEl {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     vpc_security_group_memberships: std::option::Option<terrars::SetField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    option_settings: std::option::Option<std::vec::Vec<DbOptionGroupOptionElOptionSettingsEl>>,
-    dynamic: DbOptionGroupOptionElDynamic,
+    option_settings: std::option::Option<std::vec::Vec<DbOptionGroup_Option_OptionSettings>>,
+    dynamic: DbOptionGroup_OptionDynamic,
 }
 
-impl DbOptionGroupOptionEl {
+impl DbOptionGroup_Option {
     #[doc = "Set the field `db_security_group_memberships`.\n"]
     pub fn set_db_security_group_memberships(
         mut self,
@@ -520,7 +570,7 @@ impl DbOptionGroupOptionEl {
     #[doc = "Set the field `option_settings`.\n"]
     pub fn set_option_settings(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DbOptionGroupOptionElOptionSettingsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DbOptionGroup_Option_OptionSettings>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -534,8 +584,8 @@ impl DbOptionGroupOptionEl {
     }
 }
 
-impl terrars::ToListMappable for DbOptionGroupOptionEl {
-    type O = terrars::BlockAssignable<DbOptionGroupOptionEl>;
+impl terrars::ToListMappable for DbOptionGroup_Option {
+    type O = terrars::BlockAssignable<DbOptionGroup_Option>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -546,14 +596,14 @@ impl terrars::ToListMappable for DbOptionGroupOptionEl {
     }
 }
 
-pub struct BuildDbOptionGroupOptionEl {
+pub struct BuildDbOptionGroup_Option {
     #[doc = ""]
     pub option_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDbOptionGroupOptionEl {
-    pub fn build(self) -> DbOptionGroupOptionEl {
-        DbOptionGroupOptionEl {
+impl BuildDbOptionGroup_Option {
+    pub fn build(self) -> DbOptionGroup_Option {
+        DbOptionGroup_Option {
             db_security_group_memberships: core::default::Default::default(),
             option_name: self.option_name,
             port: core::default::Default::default(),
@@ -565,21 +615,23 @@ impl BuildDbOptionGroupOptionEl {
     }
 }
 
-pub struct DbOptionGroupOptionElRef {
+#[allow(dead_code)]
+pub struct DbOptionGroup_OptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbOptionGroupOptionElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbOptionGroupOptionElRef {
-        DbOptionGroupOptionElRef {
+impl terrars::Ref for DbOptionGroup_OptionRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbOptionGroup_OptionRef {
+        DbOptionGroup_OptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbOptionGroupOptionElRef {
+impl DbOptionGroup_OptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -611,12 +663,12 @@ impl DbOptionGroupOptionElRef {
 }
 
 #[derive(Serialize)]
-pub struct DbOptionGroupTimeoutsEl {
+pub struct DbOptionGroup_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DbOptionGroupTimeoutsEl {
+impl DbOptionGroup_Timeouts {
     #[doc = "Set the field `delete`.\n"]
     pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.delete = std::option::Option::Some(v.into());
@@ -624,8 +676,8 @@ impl DbOptionGroupTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for DbOptionGroupTimeoutsEl {
-    type O = terrars::BlockAssignable<DbOptionGroupTimeoutsEl>;
+impl terrars::ToListMappable for DbOptionGroup_Timeouts {
+    type O = terrars::BlockAssignable<DbOptionGroup_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -636,29 +688,31 @@ impl terrars::ToListMappable for DbOptionGroupTimeoutsEl {
     }
 }
 
-pub struct BuildDbOptionGroupTimeoutsEl {}
+pub struct BuildDbOptionGroup_Timeouts {}
 
-impl BuildDbOptionGroupTimeoutsEl {
-    pub fn build(self) -> DbOptionGroupTimeoutsEl {
-        DbOptionGroupTimeoutsEl { delete: core::default::Default::default() }
+impl BuildDbOptionGroup_Timeouts {
+    pub fn build(self) -> DbOptionGroup_Timeouts {
+        DbOptionGroup_Timeouts { delete: core::default::Default::default() }
     }
 }
 
-pub struct DbOptionGroupTimeoutsElRef {
+#[allow(dead_code)]
+pub struct DbOptionGroup_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DbOptionGroupTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DbOptionGroupTimeoutsElRef {
-        DbOptionGroupTimeoutsElRef {
+impl terrars::Ref for DbOptionGroup_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DbOptionGroup_TimeoutsRef {
+        DbOptionGroup_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DbOptionGroupTimeoutsElRef {
+impl DbOptionGroup_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -667,9 +721,4 @@ impl DbOptionGroupTimeoutsElRef {
     pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DbOptionGroupDynamic {
-    option: std::option::Option<terrars::DynamicBlock<DbOptionGroupOptionEl>>,
 }

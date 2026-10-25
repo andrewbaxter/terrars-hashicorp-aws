@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RedshiftdataStatementData {
+struct RedshiftdataStatementData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -26,6 +28,8 @@ struct RedshiftdataStatementData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     sql: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -35,16 +39,16 @@ struct RedshiftdataStatementData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     workgroup_name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std::option::Option<std::vec::Vec<RedshiftdataStatementParametersEl>>,
+    parameters: std::option::Option<std::vec::Vec<RedshiftdataStatement_Parameters>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RedshiftdataStatementTimeoutsEl>,
+    timeouts: std::option::Option<RedshiftdataStatement_Timeouts>,
     dynamic: RedshiftdataStatementDynamic,
 }
 
 struct RedshiftdataStatement_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RedshiftdataStatementData>,
+    data: std::cell::RefCell<RedshiftdataStatementData_>,
 }
 
 #[derive(Clone)]
@@ -162,6 +166,13 @@ impl RedshiftdataStatement {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `secret_arn`.\n"]
     pub fn set_secret_arn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().secret_arn = std::option::Option::Some(v.into());
@@ -189,7 +200,7 @@ impl RedshiftdataStatement {
     #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftdataStatementParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<RedshiftdataStatement_Parameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -203,7 +214,7 @@ impl RedshiftdataStatement {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RedshiftdataStatementTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RedshiftdataStatement_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -226,6 +237,12 @@ impl RedshiftdataStatement {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
@@ -254,13 +271,13 @@ impl RedshiftdataStatement {
     }
 
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> terrars::ListRef<RedshiftdataStatementParametersElRef> {
+    pub fn parameters(&self) -> terrars::ListRef<RedshiftdataStatement_ParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RedshiftdataStatementTimeoutsElRef {
-        RedshiftdataStatementTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RedshiftdataStatement_TimeoutsRef {
+        RedshiftdataStatement_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -308,7 +325,7 @@ impl BuildRedshiftdataStatement {
         let out = RedshiftdataStatement(std::rc::Rc::new(RedshiftdataStatement_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RedshiftdataStatementData {
+            data: std::cell::RefCell::new(RedshiftdataStatementData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -318,6 +335,7 @@ impl BuildRedshiftdataStatement {
                 database: self.database,
                 db_user: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 secret_arn: core::default::Default::default(),
                 sql: self.sql,
                 statement_name: core::default::Default::default(),
@@ -376,6 +394,12 @@ impl RedshiftdataStatementRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
     pub fn secret_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.secret_arn", self.extract_ref()))
@@ -402,26 +426,31 @@ impl RedshiftdataStatementRef {
     }
 
     #[doc = "Get a reference to the value of field `parameters` after provisioning.\n"]
-    pub fn parameters(&self) -> terrars::ListRef<RedshiftdataStatementParametersElRef> {
+    pub fn parameters(&self) -> terrars::ListRef<RedshiftdataStatement_ParametersRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.parameters", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RedshiftdataStatementTimeoutsElRef {
-        RedshiftdataStatementTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RedshiftdataStatement_TimeoutsRef {
+        RedshiftdataStatement_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct RedshiftdataStatementDynamic {
+    parameters: std::option::Option<terrars::DynamicBlock<RedshiftdataStatement_Parameters>>,
+}
+
 #[derive(Serialize)]
-pub struct RedshiftdataStatementParametersEl {
+pub struct RedshiftdataStatement_Parameters {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl RedshiftdataStatementParametersEl { }
+impl RedshiftdataStatement_Parameters { }
 
-impl terrars::ToListMappable for RedshiftdataStatementParametersEl {
-    type O = terrars::BlockAssignable<RedshiftdataStatementParametersEl>;
+impl terrars::ToListMappable for RedshiftdataStatement_Parameters {
+    type O = terrars::BlockAssignable<RedshiftdataStatement_Parameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -432,37 +461,39 @@ impl terrars::ToListMappable for RedshiftdataStatementParametersEl {
     }
 }
 
-pub struct BuildRedshiftdataStatementParametersEl {
+pub struct BuildRedshiftdataStatement_Parameters {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildRedshiftdataStatementParametersEl {
-    pub fn build(self) -> RedshiftdataStatementParametersEl {
-        RedshiftdataStatementParametersEl {
+impl BuildRedshiftdataStatement_Parameters {
+    pub fn build(self) -> RedshiftdataStatement_Parameters {
+        RedshiftdataStatement_Parameters {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct RedshiftdataStatementParametersElRef {
+#[allow(dead_code)]
+pub struct RedshiftdataStatement_ParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftdataStatementParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftdataStatementParametersElRef {
-        RedshiftdataStatementParametersElRef {
+impl terrars::Ref for RedshiftdataStatement_ParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftdataStatement_ParametersRef {
+        RedshiftdataStatement_ParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftdataStatementParametersElRef {
+impl RedshiftdataStatement_ParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -479,12 +510,12 @@ impl RedshiftdataStatementParametersElRef {
 }
 
 #[derive(Serialize)]
-pub struct RedshiftdataStatementTimeoutsEl {
+pub struct RedshiftdataStatement_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RedshiftdataStatementTimeoutsEl {
+impl RedshiftdataStatement_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -492,8 +523,8 @@ impl RedshiftdataStatementTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RedshiftdataStatementTimeoutsEl {
-    type O = terrars::BlockAssignable<RedshiftdataStatementTimeoutsEl>;
+impl terrars::ToListMappable for RedshiftdataStatement_Timeouts {
+    type O = terrars::BlockAssignable<RedshiftdataStatement_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -504,29 +535,31 @@ impl terrars::ToListMappable for RedshiftdataStatementTimeoutsEl {
     }
 }
 
-pub struct BuildRedshiftdataStatementTimeoutsEl {}
+pub struct BuildRedshiftdataStatement_Timeouts {}
 
-impl BuildRedshiftdataStatementTimeoutsEl {
-    pub fn build(self) -> RedshiftdataStatementTimeoutsEl {
-        RedshiftdataStatementTimeoutsEl { create: core::default::Default::default() }
+impl BuildRedshiftdataStatement_Timeouts {
+    pub fn build(self) -> RedshiftdataStatement_Timeouts {
+        RedshiftdataStatement_Timeouts { create: core::default::Default::default() }
     }
 }
 
-pub struct RedshiftdataStatementTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RedshiftdataStatement_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RedshiftdataStatementTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftdataStatementTimeoutsElRef {
-        RedshiftdataStatementTimeoutsElRef {
+impl terrars::Ref for RedshiftdataStatement_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RedshiftdataStatement_TimeoutsRef {
+        RedshiftdataStatement_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RedshiftdataStatementTimeoutsElRef {
+impl RedshiftdataStatement_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -535,9 +568,4 @@ impl RedshiftdataStatementTimeoutsElRef {
     pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct RedshiftdataStatementDynamic {
-    parameters: std::option::Option<terrars::DynamicBlock<RedshiftdataStatementParametersEl>>,
 }

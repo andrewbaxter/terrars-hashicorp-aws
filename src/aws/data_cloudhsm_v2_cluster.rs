@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataCloudhsmV2ClusterData {
+struct DataCloudhsmV2ClusterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -21,12 +23,14 @@ struct DataCloudhsmV2ClusterData {
     cluster_state: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
 struct DataCloudhsmV2Cluster_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataCloudhsmV2ClusterData>,
+    data: std::cell::RefCell<DataCloudhsmV2ClusterData_>,
 }
 
 #[derive(Clone)]
@@ -83,8 +87,15 @@ impl DataCloudhsmV2Cluster {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Get a reference to the value of field `cluster_certificates` after provisioning.\n"]
-    pub fn cluster_certificates(&self) -> terrars::ListRef<DataCloudhsmV2ClusterClusterCertificatesElRef> {
+    pub fn cluster_certificates(&self) -> terrars::ListRef<DataCloudhsmV2Cluster_ClusterCertificatesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_certificates", self.extract_ref()))
     }
 
@@ -101,6 +112,12 @@ impl DataCloudhsmV2Cluster {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -161,7 +178,7 @@ impl BuildDataCloudhsmV2Cluster {
         let out = DataCloudhsmV2Cluster(std::rc::Rc::new(DataCloudhsmV2Cluster_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataCloudhsmV2ClusterData {
+            data: std::cell::RefCell::new(DataCloudhsmV2ClusterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -169,6 +186,7 @@ impl BuildDataCloudhsmV2Cluster {
                 cluster_id: self.cluster_id,
                 cluster_state: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
             }),
         }));
         stack.add_datasource(out.0.clone());
@@ -200,7 +218,7 @@ impl DataCloudhsmV2ClusterRef {
     }
 
     #[doc = "Get a reference to the value of field `cluster_certificates` after provisioning.\n"]
-    pub fn cluster_certificates(&self) -> terrars::ListRef<DataCloudhsmV2ClusterClusterCertificatesElRef> {
+    pub fn cluster_certificates(&self) -> terrars::ListRef<DataCloudhsmV2Cluster_ClusterCertificatesRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.cluster_certificates", self.extract_ref()))
     }
 
@@ -217,6 +235,12 @@ impl DataCloudhsmV2ClusterRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `security_group_id` after provisioning.\n"]
@@ -236,7 +260,7 @@ impl DataCloudhsmV2ClusterRef {
 }
 
 #[derive(Serialize)]
-pub struct DataCloudhsmV2ClusterClusterCertificatesEl {
+pub struct DataCloudhsmV2Cluster_ClusterCertificates {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     aws_hardware_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -249,7 +273,7 @@ pub struct DataCloudhsmV2ClusterClusterCertificatesEl {
     manufacturer_hardware_certificate: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataCloudhsmV2ClusterClusterCertificatesEl {
+impl DataCloudhsmV2Cluster_ClusterCertificates {
     #[doc = "Set the field `aws_hardware_certificate`.\n"]
     pub fn set_aws_hardware_certificate(
         mut self,
@@ -290,8 +314,8 @@ impl DataCloudhsmV2ClusterClusterCertificatesEl {
     }
 }
 
-impl terrars::ToListMappable for DataCloudhsmV2ClusterClusterCertificatesEl {
-    type O = terrars::BlockAssignable<DataCloudhsmV2ClusterClusterCertificatesEl>;
+impl terrars::ToListMappable for DataCloudhsmV2Cluster_ClusterCertificates {
+    type O = terrars::BlockAssignable<DataCloudhsmV2Cluster_ClusterCertificates>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -302,11 +326,11 @@ impl terrars::ToListMappable for DataCloudhsmV2ClusterClusterCertificatesEl {
     }
 }
 
-pub struct BuildDataCloudhsmV2ClusterClusterCertificatesEl {}
+pub struct BuildDataCloudhsmV2Cluster_ClusterCertificates {}
 
-impl BuildDataCloudhsmV2ClusterClusterCertificatesEl {
-    pub fn build(self) -> DataCloudhsmV2ClusterClusterCertificatesEl {
-        DataCloudhsmV2ClusterClusterCertificatesEl {
+impl BuildDataCloudhsmV2Cluster_ClusterCertificates {
+    pub fn build(self) -> DataCloudhsmV2Cluster_ClusterCertificates {
+        DataCloudhsmV2Cluster_ClusterCertificates {
             aws_hardware_certificate: core::default::Default::default(),
             cluster_certificate: core::default::Default::default(),
             cluster_csr: core::default::Default::default(),
@@ -316,21 +340,23 @@ impl BuildDataCloudhsmV2ClusterClusterCertificatesEl {
     }
 }
 
-pub struct DataCloudhsmV2ClusterClusterCertificatesElRef {
+#[allow(dead_code)]
+pub struct DataCloudhsmV2Cluster_ClusterCertificatesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataCloudhsmV2ClusterClusterCertificatesElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudhsmV2ClusterClusterCertificatesElRef {
-        DataCloudhsmV2ClusterClusterCertificatesElRef {
+impl terrars::Ref for DataCloudhsmV2Cluster_ClusterCertificatesRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataCloudhsmV2Cluster_ClusterCertificatesRef {
+        DataCloudhsmV2Cluster_ClusterCertificatesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataCloudhsmV2ClusterClusterCertificatesElRef {
+impl DataCloudhsmV2Cluster_ClusterCertificatesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataNetworkfirewallFirewallData {
+struct DataNetworkfirewallFirewallData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -23,13 +25,15 @@ struct DataNetworkfirewallFirewallData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     name: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
 }
 
 struct DataNetworkfirewallFirewall_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataNetworkfirewallFirewallData>,
+    data: std::cell::RefCell<DataNetworkfirewallFirewallData_>,
 }
 
 #[derive(Clone)]
@@ -92,6 +96,13 @@ impl DataNetworkfirewallFirewall {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -106,6 +117,19 @@ impl DataNetworkfirewallFirewall {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `availability_zone_change_protection` after provisioning.\n"]
+    pub fn availability_zone_change_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.availability_zone_change_protection", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone_mapping` after provisioning.\n"]
+    pub fn availability_zone_mapping(&self) -> terrars::SetRef<DataNetworkfirewallFirewall_AvailabilityZoneMappingRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.availability_zone_mapping", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `delete_protection` after provisioning.\n"]
     pub fn delete_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_protection", self.extract_ref()))
@@ -116,8 +140,13 @@ impl DataNetworkfirewallFirewall {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enabled_analysis_types` after provisioning.\n"]
+    pub fn enabled_analysis_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.enabled_analysis_types", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::SetRef<DataNetworkfirewallFirewallEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::SetRef<DataNetworkfirewallFirewall_EncryptionConfigurationRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
@@ -135,7 +164,7 @@ impl DataNetworkfirewallFirewall {
     }
 
     #[doc = "Get a reference to the value of field `firewall_status` after provisioning.\n"]
-    pub fn firewall_status(&self) -> terrars::ListRef<DataNetworkfirewallFirewallFirewallStatusElRef> {
+    pub fn firewall_status(&self) -> terrars::ListRef<DataNetworkfirewallFirewall_FirewallStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.firewall_status", self.extract_ref()))
     }
 
@@ -149,19 +178,38 @@ impl DataNetworkfirewallFirewall {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_change_protection` after provisioning.\n"]
     pub fn subnet_change_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_change_protection", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_mapping` after provisioning.\n"]
-    pub fn subnet_mapping(&self) -> terrars::SetRef<DataNetworkfirewallFirewallSubnetMappingElRef> {
+    pub fn subnet_mapping(&self) -> terrars::SetRef<DataNetworkfirewallFirewall_SubnetMappingRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_mapping", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
+    pub fn transit_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_owner_account_id` after provisioning.\n"]
+    pub fn transit_gateway_owner_account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.transit_gateway_owner_account_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `update_token` after provisioning.\n"]
@@ -215,7 +263,7 @@ impl BuildDataNetworkfirewallFirewall {
         let out = DataNetworkfirewallFirewall(std::rc::Rc::new(DataNetworkfirewallFirewall_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataNetworkfirewallFirewallData {
+            data: std::cell::RefCell::new(DataNetworkfirewallFirewallData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -223,6 +271,7 @@ impl BuildDataNetworkfirewallFirewall {
                 arn: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
             }),
         }));
@@ -259,6 +308,19 @@ impl DataNetworkfirewallFirewallRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `availability_zone_change_protection` after provisioning.\n"]
+    pub fn availability_zone_change_protection(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.availability_zone_change_protection", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone_mapping` after provisioning.\n"]
+    pub fn availability_zone_mapping(&self) -> terrars::SetRef<DataNetworkfirewallFirewall_AvailabilityZoneMappingRef> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.availability_zone_mapping", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `delete_protection` after provisioning.\n"]
     pub fn delete_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete_protection", self.extract_ref()))
@@ -269,8 +331,13 @@ impl DataNetworkfirewallFirewallRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enabled_analysis_types` after provisioning.\n"]
+    pub fn enabled_analysis_types(&self) -> terrars::SetRef<terrars::PrimExpr<std::string::String>> {
+        terrars::SetRef::new(self.shared().clone(), format!("{}.enabled_analysis_types", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `encryption_configuration` after provisioning.\n"]
-    pub fn encryption_configuration(&self) -> terrars::SetRef<DataNetworkfirewallFirewallEncryptionConfigurationElRef> {
+    pub fn encryption_configuration(&self) -> terrars::SetRef<DataNetworkfirewallFirewall_EncryptionConfigurationRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.encryption_configuration", self.extract_ref()))
     }
 
@@ -288,7 +355,7 @@ impl DataNetworkfirewallFirewallRef {
     }
 
     #[doc = "Get a reference to the value of field `firewall_status` after provisioning.\n"]
-    pub fn firewall_status(&self) -> terrars::ListRef<DataNetworkfirewallFirewallFirewallStatusElRef> {
+    pub fn firewall_status(&self) -> terrars::ListRef<DataNetworkfirewallFirewall_FirewallStatusRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.firewall_status", self.extract_ref()))
     }
 
@@ -302,19 +369,38 @@ impl DataNetworkfirewallFirewallRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_change_protection` after provisioning.\n"]
     pub fn subnet_change_protection(&self) -> terrars::PrimExpr<bool> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_change_protection", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `subnet_mapping` after provisioning.\n"]
-    pub fn subnet_mapping(&self) -> terrars::SetRef<DataNetworkfirewallFirewallSubnetMappingElRef> {
+    pub fn subnet_mapping(&self) -> terrars::SetRef<DataNetworkfirewallFirewall_SubnetMappingRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.subnet_mapping", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_id` after provisioning.\n"]
+    pub fn transit_gateway_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_owner_account_id` after provisioning.\n"]
+    pub fn transit_gateway_owner_account_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.transit_gateway_owner_account_id", self.extract_ref()),
+        )
     }
 
     #[doc = "Get a reference to the value of field `update_token` after provisioning.\n"]
@@ -329,14 +415,83 @@ impl DataNetworkfirewallFirewallRef {
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkfirewallFirewallEncryptionConfigurationEl {
+pub struct DataNetworkfirewallFirewall_AvailabilityZoneMapping {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    availability_zone_id: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataNetworkfirewallFirewall_AvailabilityZoneMapping {
+    #[doc = "Set the field `availability_zone_id`.\n"]
+    pub fn set_availability_zone_id(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.availability_zone_id = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataNetworkfirewallFirewall_AvailabilityZoneMapping {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewall_AvailabilityZoneMapping>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataNetworkfirewallFirewall_AvailabilityZoneMapping {}
+
+impl BuildDataNetworkfirewallFirewall_AvailabilityZoneMapping {
+    pub fn build(self) -> DataNetworkfirewallFirewall_AvailabilityZoneMapping {
+        DataNetworkfirewallFirewall_AvailabilityZoneMapping {
+            availability_zone_id: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_AvailabilityZoneMappingRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataNetworkfirewallFirewall_AvailabilityZoneMappingRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataNetworkfirewallFirewall_AvailabilityZoneMappingRef {
+        DataNetworkfirewallFirewall_AvailabilityZoneMappingRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataNetworkfirewallFirewall_AvailabilityZoneMappingRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `availability_zone_id` after provisioning.\n"]
+    pub fn availability_zone_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.availability_zone_id", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataNetworkfirewallFirewall_EncryptionConfiguration {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
     type_: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataNetworkfirewallFirewallEncryptionConfigurationEl {
+impl DataNetworkfirewallFirewall_EncryptionConfiguration {
     #[doc = "Set the field `key_id`.\n"]
     pub fn set_key_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key_id = std::option::Option::Some(v.into());
@@ -350,8 +505,8 @@ impl DataNetworkfirewallFirewallEncryptionConfigurationEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkfirewallFirewallEncryptionConfigurationEl {
-    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallEncryptionConfigurationEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewall_EncryptionConfiguration {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewall_EncryptionConfiguration>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -362,35 +517,37 @@ impl terrars::ToListMappable for DataNetworkfirewallFirewallEncryptionConfigurat
     }
 }
 
-pub struct BuildDataNetworkfirewallFirewallEncryptionConfigurationEl {}
+pub struct BuildDataNetworkfirewallFirewall_EncryptionConfiguration {}
 
-impl BuildDataNetworkfirewallFirewallEncryptionConfigurationEl {
-    pub fn build(self) -> DataNetworkfirewallFirewallEncryptionConfigurationEl {
-        DataNetworkfirewallFirewallEncryptionConfigurationEl {
+impl BuildDataNetworkfirewallFirewall_EncryptionConfiguration {
+    pub fn build(self) -> DataNetworkfirewallFirewall_EncryptionConfiguration {
+        DataNetworkfirewallFirewall_EncryptionConfiguration {
             key_id: core::default::Default::default(),
             type_: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataNetworkfirewallFirewallEncryptionConfigurationElRef {
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_EncryptionConfigurationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkfirewallFirewallEncryptionConfigurationElRef {
+impl terrars::Ref for DataNetworkfirewallFirewall_EncryptionConfigurationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataNetworkfirewallFirewallEncryptionConfigurationElRef {
-        DataNetworkfirewallFirewallEncryptionConfigurationElRef {
+    ) -> DataNetworkfirewallFirewall_EncryptionConfigurationRef {
+        DataNetworkfirewallFirewall_EncryptionConfigurationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkfirewallFirewallEncryptionConfigurationElRef {
+impl DataNetworkfirewallFirewall_EncryptionConfigurationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -407,12 +564,12 @@ impl DataNetworkfirewallFirewallEncryptionConfigurationElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl {
+pub struct DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     resolved_cidr_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl {
+impl DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences {
     #[doc = "Set the field `resolved_cidr_count`.\n"]
     pub fn set_resolved_cidr_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.resolved_cidr_count = std::option::Option::Some(v.into());
@@ -421,10 +578,10 @@ impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpS
 }
 
 impl terrars
-::ToListMappable for DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl {
+::ToListMappable for DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences {
     type O =
         terrars
-        ::BlockAssignable<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl>;
+        ::BlockAssignable<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -435,34 +592,36 @@ impl terrars
     }
 }
 
-pub struct BuildDataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl {}
+pub struct BuildDataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences {}
 
-impl BuildDataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl {
-    pub fn build(self) -> DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl {
-        DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl {
+impl BuildDataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences {
+    pub fn build(self) -> DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences {
+        DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences {
             resolved_cidr_count: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesElRef {
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferencesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesElRef {
+impl terrars::Ref for DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferencesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesElRef {
-        DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesElRef {
+    ) -> DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferencesRef {
+        DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferencesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesElRef {
+impl DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferencesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -474,20 +633,20 @@ impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpS
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl {
+pub struct DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     available_cidr_count: std::option::Option<terrars::PrimField<f64>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ip_set_references: std
     ::option
     ::Option<
-        terrars::SetField<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl>,
+        terrars::SetField<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences>,
     >,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     utilized_cidr_count: std::option::Option<terrars::PrimField<f64>>,
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl {
+impl DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs {
     #[doc = "Set the field `available_cidr_count`.\n"]
     pub fn set_available_cidr_count(mut self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
         self.available_cidr_count = std::option::Option::Some(v.into());
@@ -505,7 +664,7 @@ impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl {
                     ::Into<
                         terrars
                         ::SetField<
-                            DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesEl,
+                            DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferences,
                         >,
                     >,
     ) -> Self {
@@ -520,8 +679,8 @@ impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl {
-    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -532,11 +691,11 @@ impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusElCapa
     }
 }
 
-pub struct BuildDataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl {}
+pub struct BuildDataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs {}
 
-impl BuildDataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl {
-    pub fn build(self) -> DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl {
-        DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl {
+impl BuildDataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs {
+    pub fn build(self) -> DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs {
+        DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs {
             available_cidr_count: core::default::Default::default(),
             ip_set_references: core::default::Default::default(),
             utilized_cidr_count: core::default::Default::default(),
@@ -544,24 +703,26 @@ impl BuildDataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrs
     }
 }
 
-pub struct DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElRef {
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_CidrsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElRef {
+impl terrars::Ref for DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_CidrsRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElRef {
-        DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElRef {
+    ) -> DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_CidrsRef {
+        DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_CidrsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElRef {
+impl DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_CidrsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -574,8 +735,7 @@ impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElRef
     #[doc = "Get a reference to the value of field `ip_set_references` after provisioning.\n"]
     pub fn ip_set_references(
         &self,
-    ) -> terrars
-    ::SetRef<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElIpSetReferencesElRef> {
+    ) -> terrars::SetRef<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs_IpSetReferencesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.ip_set_references", self.base))
     }
 
@@ -586,14 +746,12 @@ impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElRef
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl {
+pub struct DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    cidrs: std
-    ::option
-    ::Option<terrars::SetField<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl>>,
+    cidrs: std::option::Option<terrars::SetField<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs>>,
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl {
+impl DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary {
     #[doc = "Set the field `cidrs`.\n"]
     pub fn set_cidrs(
         mut self,
@@ -602,17 +760,15 @@ impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl {
 
                     std
                     ::convert
-                    ::Into<
-                        terrars::SetField<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsEl>,
-                    >,
+                    ::Into<terrars::SetField<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_Cidrs>>,
     ) -> Self {
         self.cidrs = std::option::Option::Some(v.into());
         self
     }
 }
 
-impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl {
-    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -623,55 +779,57 @@ impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusElCapa
     }
 }
 
-pub struct BuildDataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl {}
+pub struct BuildDataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary {}
 
-impl BuildDataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl {
-    pub fn build(self) -> DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl {
-        DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl {
-            cidrs: core::default::Default::default(),
-        }
+impl BuildDataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary {
+    pub fn build(self) -> DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary {
+        DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary { cidrs: core::default::Default::default() }
     }
 }
 
-pub struct DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElRef {
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummaryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElRef {
+impl terrars::Ref for DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummaryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElRef {
-        DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElRef {
+    ) -> DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummaryRef {
+        DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummaryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElRef {
+impl DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummaryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `cidrs` after provisioning.\n"]
-    pub fn cidrs(&self) -> terrars::SetRef<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElCidrsElRef> {
+    pub fn cidrs(&self) -> terrars::SetRef<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary_CidrsRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.cidrs", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl {
+pub struct DataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     endpoint_id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status_message: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl {
+impl DataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment {
     #[doc = "Set the field `endpoint_id`.\n"]
     pub fn set_endpoint_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.endpoint_id = std::option::Option::Some(v.into());
@@ -684,6 +842,12 @@ impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl {
         self
     }
 
+    #[doc = "Set the field `status_message`.\n"]
+    pub fn set_status_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status_message = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `subnet_id`.\n"]
     pub fn set_subnet_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.subnet_id = std::option::Option::Some(v.into());
@@ -691,8 +855,8 @@ impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl {
-    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -703,36 +867,39 @@ impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusElSync
     }
 }
 
-pub struct BuildDataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl {}
+pub struct BuildDataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment {}
 
-impl BuildDataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl {
-    pub fn build(self) -> DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl {
-        DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl {
+impl BuildDataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment {
+    pub fn build(self) -> DataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment {
+        DataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment {
             endpoint_id: core::default::Default::default(),
             status: core::default::Default::default(),
+            status_message: core::default::Default::default(),
             subnet_id: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentElRef {
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_FirewallStatus_SyncStates_AttachmentRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentElRef {
+impl terrars::Ref for DataNetworkfirewallFirewall_FirewallStatus_SyncStates_AttachmentRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentElRef {
-        DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentElRef {
+    ) -> DataNetworkfirewallFirewall_FirewallStatus_SyncStates_AttachmentRef {
+        DataNetworkfirewallFirewall_FirewallStatus_SyncStates_AttachmentRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentElRef {
+impl DataNetworkfirewallFirewall_FirewallStatus_SyncStates_AttachmentRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -747,6 +914,11 @@ impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentElRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.status", self.base))
     }
 
+    #[doc = "Get a reference to the value of field `status_message` after provisioning.\n"]
+    pub fn status_message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status_message", self.base))
+    }
+
     #[doc = "Get a reference to the value of field `subnet_id` after provisioning.\n"]
     pub fn subnet_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.subnet_id", self.base))
@@ -754,16 +926,14 @@ impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl {
+pub struct DataNetworkfirewallFirewall_FirewallStatus_SyncStates {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    attachment: std
-    ::option
-    ::Option<terrars::ListField<DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl>>,
+    attachment: std::option::Option<terrars::ListField<DataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     availability_zone: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl {
+impl DataNetworkfirewallFirewall_FirewallStatus_SyncStates {
     #[doc = "Set the field `attachment`.\n"]
     pub fn set_attachment(
         mut self,
@@ -772,7 +942,7 @@ impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl {
 
                     std
                     ::convert
-                    ::Into<terrars::ListField<DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentEl>>,
+                    ::Into<terrars::ListField<DataNetworkfirewallFirewall_FirewallStatus_SyncStates_Attachment>>,
     ) -> Self {
         self.attachment = std::option::Option::Some(v.into());
         self
@@ -785,8 +955,8 @@ impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl {
-    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewall_FirewallStatus_SyncStates {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewall_FirewallStatus_SyncStates>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -797,41 +967,43 @@ impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusElSync
     }
 }
 
-pub struct BuildDataNetworkfirewallFirewallFirewallStatusElSyncStatesEl {}
+pub struct BuildDataNetworkfirewallFirewall_FirewallStatus_SyncStates {}
 
-impl BuildDataNetworkfirewallFirewallFirewallStatusElSyncStatesEl {
-    pub fn build(self) -> DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl {
-        DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl {
+impl BuildDataNetworkfirewallFirewall_FirewallStatus_SyncStates {
+    pub fn build(self) -> DataNetworkfirewallFirewall_FirewallStatus_SyncStates {
+        DataNetworkfirewallFirewall_FirewallStatus_SyncStates {
             attachment: core::default::Default::default(),
             availability_zone: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataNetworkfirewallFirewallFirewallStatusElSyncStatesElRef {
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_FirewallStatus_SyncStatesRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkfirewallFirewallFirewallStatusElSyncStatesElRef {
+impl terrars::Ref for DataNetworkfirewallFirewall_FirewallStatus_SyncStatesRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> DataNetworkfirewallFirewallFirewallStatusElSyncStatesElRef {
-        DataNetworkfirewallFirewallFirewallStatusElSyncStatesElRef {
+    ) -> DataNetworkfirewallFirewall_FirewallStatus_SyncStatesRef {
+        DataNetworkfirewallFirewall_FirewallStatus_SyncStatesRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesElRef {
+impl DataNetworkfirewallFirewall_FirewallStatus_SyncStatesRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
 
     #[doc = "Get a reference to the value of field `attachment` after provisioning.\n"]
-    pub fn attachment(&self) -> terrars::ListRef<DataNetworkfirewallFirewallFirewallStatusElSyncStatesElAttachmentElRef> {
+    pub fn attachment(&self) -> terrars::ListRef<DataNetworkfirewallFirewall_FirewallStatus_SyncStates_AttachmentRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.attachment", self.base))
     }
 
@@ -842,20 +1014,121 @@ impl DataNetworkfirewallFirewallFirewallStatusElSyncStatesElRef {
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkfirewallFirewallFirewallStatusEl {
+pub struct DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    attachment_id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    status_message: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transit_gateway_attachment_status: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates {
+    #[doc = "Set the field `attachment_id`.\n"]
+    pub fn set_attachment_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.attachment_id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `status_message`.\n"]
+    pub fn set_status_message(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.status_message = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `transit_gateway_attachment_status`.\n"]
+    pub fn set_transit_gateway_attachment_status(
+        mut self,
+        v: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.transit_gateway_attachment_status = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates {}
+
+impl BuildDataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates {
+    pub fn build(self) -> DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates {
+        DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates {
+            attachment_id: core::default::Default::default(),
+            status_message: core::default::Default::default(),
+            transit_gateway_attachment_status: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStatesRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStatesRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStatesRef {
+        DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStatesRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStatesRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `attachment_id` after provisioning.\n"]
+    pub fn attachment_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.attachment_id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `status_message` after provisioning.\n"]
+    pub fn status_message(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.status_message", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_attachment_status` after provisioning.\n"]
+    pub fn transit_gateway_attachment_status(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.transit_gateway_attachment_status", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataNetworkfirewallFirewall_FirewallStatus {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     capacity_usage_summary: std
     ::option
-    ::Option<terrars::SetField<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl>>,
+    ::Option<terrars::SetField<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     configuration_sync_state_summary: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     status: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    sync_states: std::option::Option<terrars::SetField<DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl>>,
+    sync_states: std::option::Option<terrars::SetField<DataNetworkfirewallFirewall_FirewallStatus_SyncStates>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    transit_gateway_attachment_sync_states: std
+    ::option
+    ::Option<terrars::ListField<DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates>>,
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusEl {
+impl DataNetworkfirewallFirewall_FirewallStatus {
     #[doc = "Set the field `capacity_usage_summary`.\n"]
     pub fn set_capacity_usage_summary(
         mut self,
@@ -864,7 +1137,7 @@ impl DataNetworkfirewallFirewallFirewallStatusEl {
 
                     std
                     ::convert
-                    ::Into<terrars::SetField<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryEl>>,
+                    ::Into<terrars::SetField<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummary>>,
     ) -> Self {
         self.capacity_usage_summary = std::option::Option::Some(v.into());
         self
@@ -888,15 +1161,32 @@ impl DataNetworkfirewallFirewallFirewallStatusEl {
     #[doc = "Set the field `sync_states`.\n"]
     pub fn set_sync_states(
         mut self,
-        v: impl std::convert::Into<terrars::SetField<DataNetworkfirewallFirewallFirewallStatusElSyncStatesEl>>,
+        v: impl std::convert::Into<terrars::SetField<DataNetworkfirewallFirewall_FirewallStatus_SyncStates>>,
     ) -> Self {
         self.sync_states = std::option::Option::Some(v.into());
         self
     }
+
+    #[doc = "Set the field `transit_gateway_attachment_sync_states`.\n"]
+    pub fn set_transit_gateway_attachment_sync_states(
+        mut self,
+        v:
+            impl
+
+                    std
+                    ::convert
+                    ::Into<
+                        terrars
+                        ::ListField<DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStates>,
+                    >,
+    ) -> Self {
+        self.transit_gateway_attachment_sync_states = std::option::Option::Some(v.into());
+        self
+    }
 }
 
-impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusEl {
-    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallFirewallStatusEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewall_FirewallStatus {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewall_FirewallStatus>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -907,37 +1197,37 @@ impl terrars::ToListMappable for DataNetworkfirewallFirewallFirewallStatusEl {
     }
 }
 
-pub struct BuildDataNetworkfirewallFirewallFirewallStatusEl {}
+pub struct BuildDataNetworkfirewallFirewall_FirewallStatus {}
 
-impl BuildDataNetworkfirewallFirewallFirewallStatusEl {
-    pub fn build(self) -> DataNetworkfirewallFirewallFirewallStatusEl {
-        DataNetworkfirewallFirewallFirewallStatusEl {
+impl BuildDataNetworkfirewallFirewall_FirewallStatus {
+    pub fn build(self) -> DataNetworkfirewallFirewall_FirewallStatus {
+        DataNetworkfirewallFirewall_FirewallStatus {
             capacity_usage_summary: core::default::Default::default(),
             configuration_sync_state_summary: core::default::Default::default(),
             status: core::default::Default::default(),
             sync_states: core::default::Default::default(),
+            transit_gateway_attachment_sync_states: core::default::Default::default(),
         }
     }
 }
 
-pub struct DataNetworkfirewallFirewallFirewallStatusElRef {
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_FirewallStatusRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkfirewallFirewallFirewallStatusElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> DataNetworkfirewallFirewallFirewallStatusElRef {
-        DataNetworkfirewallFirewallFirewallStatusElRef {
+impl terrars::Ref for DataNetworkfirewallFirewall_FirewallStatusRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkfirewallFirewall_FirewallStatusRef {
+        DataNetworkfirewallFirewall_FirewallStatusRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkfirewallFirewallFirewallStatusElRef {
+impl DataNetworkfirewallFirewall_FirewallStatusRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -945,7 +1235,7 @@ impl DataNetworkfirewallFirewallFirewallStatusElRef {
     #[doc = "Get a reference to the value of field `capacity_usage_summary` after provisioning.\n"]
     pub fn capacity_usage_summary(
         &self,
-    ) -> terrars::SetRef<DataNetworkfirewallFirewallFirewallStatusElCapacityUsageSummaryElRef> {
+    ) -> terrars::SetRef<DataNetworkfirewallFirewall_FirewallStatus_CapacityUsageSummaryRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.capacity_usage_summary", self.base))
     }
 
@@ -960,18 +1250,25 @@ impl DataNetworkfirewallFirewallFirewallStatusElRef {
     }
 
     #[doc = "Get a reference to the value of field `sync_states` after provisioning.\n"]
-    pub fn sync_states(&self) -> terrars::SetRef<DataNetworkfirewallFirewallFirewallStatusElSyncStatesElRef> {
+    pub fn sync_states(&self) -> terrars::SetRef<DataNetworkfirewallFirewall_FirewallStatus_SyncStatesRef> {
         terrars::SetRef::new(self.shared().clone(), format!("{}.sync_states", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `transit_gateway_attachment_sync_states` after provisioning.\n"]
+    pub fn transit_gateway_attachment_sync_states(
+        &self,
+    ) -> terrars::ListRef<DataNetworkfirewallFirewall_FirewallStatus_TransitGatewayAttachmentSyncStatesRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.transit_gateway_attachment_sync_states", self.base))
     }
 }
 
 #[derive(Serialize)]
-pub struct DataNetworkfirewallFirewallSubnetMappingEl {
+pub struct DataNetworkfirewallFirewall_SubnetMapping {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     subnet_id: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl DataNetworkfirewallFirewallSubnetMappingEl {
+impl DataNetworkfirewallFirewall_SubnetMapping {
     #[doc = "Set the field `subnet_id`.\n"]
     pub fn set_subnet_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.subnet_id = std::option::Option::Some(v.into());
@@ -979,8 +1276,8 @@ impl DataNetworkfirewallFirewallSubnetMappingEl {
     }
 }
 
-impl terrars::ToListMappable for DataNetworkfirewallFirewallSubnetMappingEl {
-    type O = terrars::BlockAssignable<DataNetworkfirewallFirewallSubnetMappingEl>;
+impl terrars::ToListMappable for DataNetworkfirewallFirewall_SubnetMapping {
+    type O = terrars::BlockAssignable<DataNetworkfirewallFirewall_SubnetMapping>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -991,29 +1288,31 @@ impl terrars::ToListMappable for DataNetworkfirewallFirewallSubnetMappingEl {
     }
 }
 
-pub struct BuildDataNetworkfirewallFirewallSubnetMappingEl {}
+pub struct BuildDataNetworkfirewallFirewall_SubnetMapping {}
 
-impl BuildDataNetworkfirewallFirewallSubnetMappingEl {
-    pub fn build(self) -> DataNetworkfirewallFirewallSubnetMappingEl {
-        DataNetworkfirewallFirewallSubnetMappingEl { subnet_id: core::default::Default::default() }
+impl BuildDataNetworkfirewallFirewall_SubnetMapping {
+    pub fn build(self) -> DataNetworkfirewallFirewall_SubnetMapping {
+        DataNetworkfirewallFirewall_SubnetMapping { subnet_id: core::default::Default::default() }
     }
 }
 
-pub struct DataNetworkfirewallFirewallSubnetMappingElRef {
+#[allow(dead_code)]
+pub struct DataNetworkfirewallFirewall_SubnetMappingRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataNetworkfirewallFirewallSubnetMappingElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkfirewallFirewallSubnetMappingElRef {
-        DataNetworkfirewallFirewallSubnetMappingElRef {
+impl terrars::Ref for DataNetworkfirewallFirewall_SubnetMappingRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataNetworkfirewallFirewall_SubnetMappingRef {
+        DataNetworkfirewallFirewall_SubnetMappingRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataNetworkfirewallFirewallSubnetMappingElRef {
+impl DataNetworkfirewallFirewall_SubnetMappingRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

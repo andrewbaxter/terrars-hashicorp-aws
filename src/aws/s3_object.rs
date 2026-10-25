@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct S3ObjectData {
+struct S3ObjectData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -25,6 +27,8 @@ struct S3ObjectData {
     bucket_key_enabled: std::option::Option<terrars::PrimField<bool>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cache_control: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    checksum_algorithm: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     content: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -55,6 +59,8 @@ struct S3ObjectData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     object_lock_retain_until_date: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     server_side_encryption: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     source: std::option::Option<terrars::PrimField<std::string::String>>,
@@ -68,12 +74,15 @@ struct S3ObjectData {
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     website_redirect: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    override_provider: std::option::Option<std::vec::Vec<S3Object_OverrideProvider>>,
+    dynamic: S3ObjectDynamic,
 }
 
 struct S3Object_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<S3ObjectData>,
+    data: std::cell::RefCell<S3ObjectData_>,
 }
 
 #[derive(Clone)]
@@ -191,6 +200,12 @@ impl S3Object {
         self
     }
 
+    #[doc = "Set the field `checksum_algorithm`.\n"]
+    pub fn set_checksum_algorithm(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().checksum_algorithm = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `content`.\n"]
     pub fn set_content(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().content = std::option::Option::Some(v.into());
@@ -284,6 +299,13 @@ impl S3Object {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `server_side_encryption`.\n"]
     pub fn set_server_side_encryption(
         self,
@@ -335,9 +357,30 @@ impl S3Object {
         self
     }
 
+    #[doc = "Set the field `override_provider`.\n"]
+    pub fn set_override_provider(
+        self,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Object_OverrideProvider>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.0.data.borrow_mut().override_provider = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.0.data.borrow_mut().dynamic.override_provider = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+
     #[doc = "Get a reference to the value of field `acl` after provisioning.\n"]
     pub fn acl(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.acl", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
@@ -353,6 +396,36 @@ impl S3Object {
     #[doc = "Get a reference to the value of field `cache_control` after provisioning.\n"]
     pub fn cache_control(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cache_control", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_algorithm` after provisioning.\n"]
+    pub fn checksum_algorithm(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_algorithm", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc32` after provisioning.\n"]
+    pub fn checksum_crc32(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc32", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc32c` after provisioning.\n"]
+    pub fn checksum_crc32c(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc32c", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc64nvme` after provisioning.\n"]
+    pub fn checksum_crc64nvme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc64nvme", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_sha1` after provisioning.\n"]
+    pub fn checksum_sha1(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_sha1", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_sha256` after provisioning.\n"]
+    pub fn checksum_sha256(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_sha256", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `content` after provisioning.\n"]
@@ -436,6 +509,12 @@ impl S3Object {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]
     pub fn server_side_encryption(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_side_encryption", self.extract_ref()))
@@ -474,6 +553,11 @@ impl S3Object {
     #[doc = "Get a reference to the value of field `website_redirect` after provisioning.\n"]
     pub fn website_redirect(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.website_redirect", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `override_provider` after provisioning.\n"]
+    pub fn override_provider(&self) -> terrars::ListRef<S3Object_OverrideProviderRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.override_provider", self.extract_ref()))
     }
 }
 
@@ -521,7 +605,7 @@ impl BuildS3Object {
         let out = S3Object(std::rc::Rc::new(S3Object_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(S3ObjectData {
+            data: std::cell::RefCell::new(S3ObjectData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -531,6 +615,7 @@ impl BuildS3Object {
                 bucket: self.bucket,
                 bucket_key_enabled: core::default::Default::default(),
                 cache_control: core::default::Default::default(),
+                checksum_algorithm: core::default::Default::default(),
                 content: core::default::Default::default(),
                 content_base64: core::default::Default::default(),
                 content_disposition: core::default::Default::default(),
@@ -546,6 +631,7 @@ impl BuildS3Object {
                 object_lock_legal_hold_status: core::default::Default::default(),
                 object_lock_mode: core::default::Default::default(),
                 object_lock_retain_until_date: core::default::Default::default(),
+                region: core::default::Default::default(),
                 server_side_encryption: core::default::Default::default(),
                 source: core::default::Default::default(),
                 source_hash: core::default::Default::default(),
@@ -553,6 +639,8 @@ impl BuildS3Object {
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
                 website_redirect: core::default::Default::default(),
+                override_provider: core::default::Default::default(),
+                dynamic: core::default::Default::default(),
             }),
         }));
         stack.add_resource(out.0.clone());
@@ -588,6 +676,11 @@ impl S3ObjectRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.acl", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `arn` after provisioning.\n"]
+    pub fn arn(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.arn", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `bucket` after provisioning.\n"]
     pub fn bucket(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.bucket", self.extract_ref()))
@@ -601,6 +694,36 @@ impl S3ObjectRef {
     #[doc = "Get a reference to the value of field `cache_control` after provisioning.\n"]
     pub fn cache_control(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cache_control", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_algorithm` after provisioning.\n"]
+    pub fn checksum_algorithm(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_algorithm", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc32` after provisioning.\n"]
+    pub fn checksum_crc32(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc32", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc32c` after provisioning.\n"]
+    pub fn checksum_crc32c(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc32c", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_crc64nvme` after provisioning.\n"]
+    pub fn checksum_crc64nvme(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_crc64nvme", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_sha1` after provisioning.\n"]
+    pub fn checksum_sha1(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_sha1", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `checksum_sha256` after provisioning.\n"]
+    pub fn checksum_sha256(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.checksum_sha256", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `content` after provisioning.\n"]
@@ -684,6 +807,12 @@ impl S3ObjectRef {
         )
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `server_side_encryption` after provisioning.\n"]
     pub fn server_side_encryption(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.server_side_encryption", self.extract_ref()))
@@ -722,5 +851,159 @@ impl S3ObjectRef {
     #[doc = "Get a reference to the value of field `website_redirect` after provisioning.\n"]
     pub fn website_redirect(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.website_redirect", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `override_provider` after provisioning.\n"]
+    pub fn override_provider(&self) -> terrars::ListRef<S3Object_OverrideProviderRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.override_provider", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct S3ObjectDynamic {
+    override_provider: std::option::Option<terrars::DynamicBlock<S3Object_OverrideProvider>>,
+}
+
+#[derive(Serialize)]
+pub struct S3Object_OverrideProvider_DefaultTags {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
+}
+
+impl S3Object_OverrideProvider_DefaultTags {
+    #[doc = "Set the field `tags`.\n"]
+    pub fn set_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::RecField<terrars::PrimField<std::string::String>>>,
+    ) -> Self {
+        self.tags = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for S3Object_OverrideProvider_DefaultTags {
+    type O = terrars::BlockAssignable<S3Object_OverrideProvider_DefaultTags>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildS3Object_OverrideProvider_DefaultTags {}
+
+impl BuildS3Object_OverrideProvider_DefaultTags {
+    pub fn build(self) -> S3Object_OverrideProvider_DefaultTags {
+        S3Object_OverrideProvider_DefaultTags { tags: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct S3Object_OverrideProvider_DefaultTagsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for S3Object_OverrideProvider_DefaultTagsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Object_OverrideProvider_DefaultTagsRef {
+        S3Object_OverrideProvider_DefaultTagsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl S3Object_OverrideProvider_DefaultTagsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
+    pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
+        terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.base))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct S3Object_OverrideProviderDynamic {
+    default_tags: std::option::Option<terrars::DynamicBlock<S3Object_OverrideProvider_DefaultTags>>,
+}
+
+#[derive(Serialize)]
+pub struct S3Object_OverrideProvider {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    default_tags: std::option::Option<std::vec::Vec<S3Object_OverrideProvider_DefaultTags>>,
+    dynamic: S3Object_OverrideProviderDynamic,
+}
+
+impl S3Object_OverrideProvider {
+    #[doc = "Set the field `default_tags`.\n"]
+    pub fn set_default_tags(
+        mut self,
+        v: impl std::convert::Into<terrars::BlockAssignable<S3Object_OverrideProvider_DefaultTags>>,
+    ) -> Self {
+        match v.into() {
+            terrars::BlockAssignable::Literal(v) => {
+                self.default_tags = std::option::Option::Some(v);
+            },
+            terrars::BlockAssignable::Dynamic(d) => {
+                self.dynamic.default_tags = std::option::Option::Some(d);
+            },
+        }
+        self
+    }
+}
+
+impl terrars::ToListMappable for S3Object_OverrideProvider {
+    type O = terrars::BlockAssignable<S3Object_OverrideProvider>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildS3Object_OverrideProvider {}
+
+impl BuildS3Object_OverrideProvider {
+    pub fn build(self) -> S3Object_OverrideProvider {
+        S3Object_OverrideProvider {
+            default_tags: core::default::Default::default(),
+            dynamic: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct S3Object_OverrideProviderRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for S3Object_OverrideProviderRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> S3Object_OverrideProviderRef {
+        S3Object_OverrideProviderRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl S3Object_OverrideProviderRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `default_tags` after provisioning.\n"]
+    pub fn default_tags(&self) -> terrars::ListRef<S3Object_OverrideProvider_DefaultTagsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.default_tags", self.base))
     }
 }

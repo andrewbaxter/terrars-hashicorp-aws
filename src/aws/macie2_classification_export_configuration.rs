@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct Macie2ClassificationExportConfigurationData {
+struct Macie2ClassificationExportConfigurationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,14 +23,16 @@ struct Macie2ClassificationExportConfigurationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    s3_destination: std::option::Option<std::vec::Vec<Macie2ClassificationExportConfigurationS3DestinationEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    s3_destination: std::option::Option<std::vec::Vec<Macie2ClassificationExportConfiguration_S3Destination>>,
     dynamic: Macie2ClassificationExportConfigurationDynamic,
 }
 
 struct Macie2ClassificationExportConfiguration_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<Macie2ClassificationExportConfigurationData>,
+    data: std::cell::RefCell<Macie2ClassificationExportConfigurationData_>,
 }
 
 #[derive(Clone)]
@@ -134,10 +138,17 @@ impl Macie2ClassificationExportConfiguration {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `s3_destination`.\n"]
     pub fn set_s3_destination(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<Macie2ClassificationExportConfigurationS3DestinationEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<Macie2ClassificationExportConfiguration_S3Destination>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -155,8 +166,14 @@ impl Macie2ClassificationExportConfiguration {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `s3_destination` after provisioning.\n"]
-    pub fn s3_destination(&self) -> terrars::ListRef<Macie2ClassificationExportConfigurationS3DestinationElRef> {
+    pub fn s3_destination(&self) -> terrars::ListRef<Macie2ClassificationExportConfiguration_S3DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_destination", self.extract_ref()))
     }
 }
@@ -201,13 +218,14 @@ impl BuildMacie2ClassificationExportConfiguration {
         let out = Macie2ClassificationExportConfiguration(std::rc::Rc::new(Macie2ClassificationExportConfiguration_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(Macie2ClassificationExportConfigurationData {
+            data: std::cell::RefCell::new(Macie2ClassificationExportConfigurationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 s3_destination: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -245,21 +263,34 @@ impl Macie2ClassificationExportConfigurationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `s3_destination` after provisioning.\n"]
-    pub fn s3_destination(&self) -> terrars::ListRef<Macie2ClassificationExportConfigurationS3DestinationElRef> {
+    pub fn s3_destination(&self) -> terrars::ListRef<Macie2ClassificationExportConfiguration_S3DestinationRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.s3_destination", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct Macie2ClassificationExportConfigurationDynamic {
+    s3_destination: std
+    ::option
+    ::Option<terrars::DynamicBlock<Macie2ClassificationExportConfiguration_S3Destination>>,
+}
+
 #[derive(Serialize)]
-pub struct Macie2ClassificationExportConfigurationS3DestinationEl {
+pub struct Macie2ClassificationExportConfiguration_S3Destination {
     bucket_name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     key_prefix: std::option::Option<terrars::PrimField<std::string::String>>,
     kms_key_arn: terrars::PrimField<std::string::String>,
 }
 
-impl Macie2ClassificationExportConfigurationS3DestinationEl {
+impl Macie2ClassificationExportConfiguration_S3Destination {
     #[doc = "Set the field `key_prefix`.\n"]
     pub fn set_key_prefix(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.key_prefix = std::option::Option::Some(v.into());
@@ -267,8 +298,8 @@ impl Macie2ClassificationExportConfigurationS3DestinationEl {
     }
 }
 
-impl terrars::ToListMappable for Macie2ClassificationExportConfigurationS3DestinationEl {
-    type O = terrars::BlockAssignable<Macie2ClassificationExportConfigurationS3DestinationEl>;
+impl terrars::ToListMappable for Macie2ClassificationExportConfiguration_S3Destination {
+    type O = terrars::BlockAssignable<Macie2ClassificationExportConfiguration_S3Destination>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -279,16 +310,16 @@ impl terrars::ToListMappable for Macie2ClassificationExportConfigurationS3Destin
     }
 }
 
-pub struct BuildMacie2ClassificationExportConfigurationS3DestinationEl {
+pub struct BuildMacie2ClassificationExportConfiguration_S3Destination {
     #[doc = ""]
     pub bucket_name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub kms_key_arn: terrars::PrimField<std::string::String>,
 }
 
-impl BuildMacie2ClassificationExportConfigurationS3DestinationEl {
-    pub fn build(self) -> Macie2ClassificationExportConfigurationS3DestinationEl {
-        Macie2ClassificationExportConfigurationS3DestinationEl {
+impl BuildMacie2ClassificationExportConfiguration_S3Destination {
+    pub fn build(self) -> Macie2ClassificationExportConfiguration_S3Destination {
+        Macie2ClassificationExportConfiguration_S3Destination {
             bucket_name: self.bucket_name,
             key_prefix: core::default::Default::default(),
             kms_key_arn: self.kms_key_arn,
@@ -296,24 +327,26 @@ impl BuildMacie2ClassificationExportConfigurationS3DestinationEl {
     }
 }
 
-pub struct Macie2ClassificationExportConfigurationS3DestinationElRef {
+#[allow(dead_code)]
+pub struct Macie2ClassificationExportConfiguration_S3DestinationRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for Macie2ClassificationExportConfigurationS3DestinationElRef {
+impl terrars::Ref for Macie2ClassificationExportConfiguration_S3DestinationRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> Macie2ClassificationExportConfigurationS3DestinationElRef {
-        Macie2ClassificationExportConfigurationS3DestinationElRef {
+    ) -> Macie2ClassificationExportConfiguration_S3DestinationRef {
+        Macie2ClassificationExportConfiguration_S3DestinationRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl Macie2ClassificationExportConfigurationS3DestinationElRef {
+impl Macie2ClassificationExportConfiguration_S3DestinationRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -332,11 +365,4 @@ impl Macie2ClassificationExportConfigurationS3DestinationElRef {
     pub fn kms_key_arn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.kms_key_arn", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct Macie2ClassificationExportConfigurationDynamic {
-    s3_destination: std
-    ::option
-    ::Option<terrars::DynamicBlock<Macie2ClassificationExportConfigurationS3DestinationEl>>,
 }

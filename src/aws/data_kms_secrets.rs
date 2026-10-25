@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DataKmsSecretsData {
+struct DataKmsSecretsData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
@@ -19,14 +21,16 @@ struct DataKmsSecretsData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    secret: std::option::Option<std::vec::Vec<DataKmsSecretsSecretEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    secret: std::option::Option<std::vec::Vec<DataKmsSecrets_Secret>>,
     dynamic: DataKmsSecretsDynamic,
 }
 
 struct DataKmsSecrets_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DataKmsSecretsData>,
+    data: std::cell::RefCell<DataKmsSecretsData_>,
 }
 
 #[derive(Clone)]
@@ -77,8 +81,15 @@ impl DataKmsSecrets {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `secret`.\n"]
-    pub fn set_secret(self, v: impl std::convert::Into<terrars::BlockAssignable<DataKmsSecretsSecretEl>>) -> Self {
+    pub fn set_secret(self, v: impl std::convert::Into<terrars::BlockAssignable<DataKmsSecrets_Secret>>) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
                 self.0.data.borrow_mut().secret = std::option::Option::Some(v);
@@ -98,6 +109,12 @@ impl DataKmsSecrets {
     #[doc = "Get a reference to the value of field `plaintext` after provisioning.\n"]
     pub fn plaintext(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.plaintext", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -141,12 +158,13 @@ impl BuildDataKmsSecrets {
         let out = DataKmsSecrets(std::rc::Rc::new(DataKmsSecrets_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DataKmsSecretsData {
+            data: std::cell::RefCell::new(DataKmsSecretsData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 secret: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -188,10 +206,21 @@ impl DataKmsSecretsRef {
     pub fn plaintext(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.plaintext", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DataKmsSecretsDynamic {
+    secret: std::option::Option<terrars::DynamicBlock<DataKmsSecrets_Secret>>,
 }
 
 #[derive(Serialize)]
-pub struct DataKmsSecretsSecretEl {
+pub struct DataKmsSecrets_Secret {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     context: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -204,7 +233,7 @@ pub struct DataKmsSecretsSecretEl {
     payload: terrars::PrimField<std::string::String>,
 }
 
-impl DataKmsSecretsSecretEl {
+impl DataKmsSecrets_Secret {
     #[doc = "Set the field `context`.\n"]
     pub fn set_context(
         mut self,
@@ -239,8 +268,8 @@ impl DataKmsSecretsSecretEl {
     }
 }
 
-impl terrars::ToListMappable for DataKmsSecretsSecretEl {
-    type O = terrars::BlockAssignable<DataKmsSecretsSecretEl>;
+impl terrars::ToListMappable for DataKmsSecrets_Secret {
+    type O = terrars::BlockAssignable<DataKmsSecrets_Secret>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -251,16 +280,16 @@ impl terrars::ToListMappable for DataKmsSecretsSecretEl {
     }
 }
 
-pub struct BuildDataKmsSecretsSecretEl {
+pub struct BuildDataKmsSecrets_Secret {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub payload: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDataKmsSecretsSecretEl {
-    pub fn build(self) -> DataKmsSecretsSecretEl {
-        DataKmsSecretsSecretEl {
+impl BuildDataKmsSecrets_Secret {
+    pub fn build(self) -> DataKmsSecrets_Secret {
+        DataKmsSecrets_Secret {
             context: core::default::Default::default(),
             encryption_algorithm: core::default::Default::default(),
             grant_tokens: core::default::Default::default(),
@@ -271,21 +300,23 @@ impl BuildDataKmsSecretsSecretEl {
     }
 }
 
-pub struct DataKmsSecretsSecretElRef {
+#[allow(dead_code)]
+pub struct DataKmsSecrets_SecretRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DataKmsSecretsSecretElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsSecretsSecretElRef {
-        DataKmsSecretsSecretElRef {
+impl terrars::Ref for DataKmsSecrets_SecretRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DataKmsSecrets_SecretRef {
+        DataKmsSecrets_SecretRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DataKmsSecretsSecretElRef {
+impl DataKmsSecrets_SecretRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -319,9 +350,4 @@ impl DataKmsSecretsSecretElRef {
     pub fn payload(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.payload", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DataKmsSecretsDynamic {
-    secret: std::option::Option<terrars::DynamicBlock<DataKmsSecretsSecretEl>>,
 }

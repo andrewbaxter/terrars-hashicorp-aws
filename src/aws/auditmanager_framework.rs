@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct AuditmanagerFrameworkData {
+struct AuditmanagerFrameworkData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,16 +26,18 @@ struct AuditmanagerFrameworkData {
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    control_sets: std::option::Option<std::vec::Vec<AuditmanagerFrameworkControlSetsEl>>,
+    control_sets: std::option::Option<std::vec::Vec<AuditmanagerFramework_ControlSets>>,
     dynamic: AuditmanagerFrameworkDynamic,
 }
 
 struct AuditmanagerFramework_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<AuditmanagerFrameworkData>,
+    data: std::cell::RefCell<AuditmanagerFrameworkData_>,
 }
 
 #[derive(Clone)]
@@ -145,6 +149,13 @@ impl AuditmanagerFramework {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `tags`.\n"]
     pub fn set_tags(
         self,
@@ -157,7 +168,7 @@ impl AuditmanagerFramework {
     #[doc = "Set the field `control_sets`.\n"]
     pub fn set_control_sets(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerFrameworkControlSetsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerFramework_ControlSets>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -198,6 +209,12 @@ impl AuditmanagerFramework {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
@@ -253,7 +270,7 @@ impl BuildAuditmanagerFramework {
         let out = AuditmanagerFramework(std::rc::Rc::new(AuditmanagerFramework_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(AuditmanagerFrameworkData {
+            data: std::cell::RefCell::new(AuditmanagerFrameworkData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -262,6 +279,7 @@ impl BuildAuditmanagerFramework {
                 compliance_type: core::default::Default::default(),
                 description: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 control_sets: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -325,6 +343,12 @@ impl AuditmanagerFrameworkRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `tags` after provisioning.\n"]
     pub fn tags(&self) -> terrars::RecRef<terrars::PrimExpr<std::string::String>> {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags", self.extract_ref()))
@@ -336,15 +360,20 @@ impl AuditmanagerFrameworkRef {
     }
 }
 
+#[derive(Serialize, Default)]
+struct AuditmanagerFrameworkDynamic {
+    control_sets: std::option::Option<terrars::DynamicBlock<AuditmanagerFramework_ControlSets>>,
+}
+
 #[derive(Serialize)]
-pub struct AuditmanagerFrameworkControlSetsElControlsEl {
+pub struct AuditmanagerFramework_ControlSets_Controls {
     id: terrars::PrimField<std::string::String>,
 }
 
-impl AuditmanagerFrameworkControlSetsElControlsEl { }
+impl AuditmanagerFramework_ControlSets_Controls { }
 
-impl terrars::ToListMappable for AuditmanagerFrameworkControlSetsElControlsEl {
-    type O = terrars::BlockAssignable<AuditmanagerFrameworkControlSetsElControlsEl>;
+impl terrars::ToListMappable for AuditmanagerFramework_ControlSets_Controls {
+    type O = terrars::BlockAssignable<AuditmanagerFramework_ControlSets_Controls>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -355,35 +384,34 @@ impl terrars::ToListMappable for AuditmanagerFrameworkControlSetsElControlsEl {
     }
 }
 
-pub struct BuildAuditmanagerFrameworkControlSetsElControlsEl {
+pub struct BuildAuditmanagerFramework_ControlSets_Controls {
     #[doc = ""]
     pub id: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAuditmanagerFrameworkControlSetsElControlsEl {
-    pub fn build(self) -> AuditmanagerFrameworkControlSetsElControlsEl {
-        AuditmanagerFrameworkControlSetsElControlsEl { id: self.id }
+impl BuildAuditmanagerFramework_ControlSets_Controls {
+    pub fn build(self) -> AuditmanagerFramework_ControlSets_Controls {
+        AuditmanagerFramework_ControlSets_Controls { id: self.id }
     }
 }
 
-pub struct AuditmanagerFrameworkControlSetsElControlsElRef {
+#[allow(dead_code)]
+pub struct AuditmanagerFramework_ControlSets_ControlsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AuditmanagerFrameworkControlSetsElControlsElRef {
-    fn new(
-        shared: terrars::StackShared,
-        base: std::string::String,
-    ) -> AuditmanagerFrameworkControlSetsElControlsElRef {
-        AuditmanagerFrameworkControlSetsElControlsElRef {
+impl terrars::Ref for AuditmanagerFramework_ControlSets_ControlsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerFramework_ControlSets_ControlsRef {
+        AuditmanagerFramework_ControlSets_ControlsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AuditmanagerFrameworkControlSetsElControlsElRef {
+impl AuditmanagerFramework_ControlSets_ControlsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -395,23 +423,23 @@ impl AuditmanagerFrameworkControlSetsElControlsElRef {
 }
 
 #[derive(Serialize, Default)]
-struct AuditmanagerFrameworkControlSetsElDynamic {
-    controls: std::option::Option<terrars::DynamicBlock<AuditmanagerFrameworkControlSetsElControlsEl>>,
+struct AuditmanagerFramework_ControlSetsDynamic {
+    controls: std::option::Option<terrars::DynamicBlock<AuditmanagerFramework_ControlSets_Controls>>,
 }
 
 #[derive(Serialize)]
-pub struct AuditmanagerFrameworkControlSetsEl {
+pub struct AuditmanagerFramework_ControlSets {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    controls: std::option::Option<std::vec::Vec<AuditmanagerFrameworkControlSetsElControlsEl>>,
-    dynamic: AuditmanagerFrameworkControlSetsElDynamic,
+    controls: std::option::Option<std::vec::Vec<AuditmanagerFramework_ControlSets_Controls>>,
+    dynamic: AuditmanagerFramework_ControlSetsDynamic,
 }
 
-impl AuditmanagerFrameworkControlSetsEl {
+impl AuditmanagerFramework_ControlSets {
     #[doc = "Set the field `controls`.\n"]
     pub fn set_controls(
         mut self,
-        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerFrameworkControlSetsElControlsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<AuditmanagerFramework_ControlSets_Controls>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -425,8 +453,8 @@ impl AuditmanagerFrameworkControlSetsEl {
     }
 }
 
-impl terrars::ToListMappable for AuditmanagerFrameworkControlSetsEl {
-    type O = terrars::BlockAssignable<AuditmanagerFrameworkControlSetsEl>;
+impl terrars::ToListMappable for AuditmanagerFramework_ControlSets {
+    type O = terrars::BlockAssignable<AuditmanagerFramework_ControlSets>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -437,14 +465,14 @@ impl terrars::ToListMappable for AuditmanagerFrameworkControlSetsEl {
     }
 }
 
-pub struct BuildAuditmanagerFrameworkControlSetsEl {
+pub struct BuildAuditmanagerFramework_ControlSets {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildAuditmanagerFrameworkControlSetsEl {
-    pub fn build(self) -> AuditmanagerFrameworkControlSetsEl {
-        AuditmanagerFrameworkControlSetsEl {
+impl BuildAuditmanagerFramework_ControlSets {
+    pub fn build(self) -> AuditmanagerFramework_ControlSets {
+        AuditmanagerFramework_ControlSets {
             name: self.name,
             controls: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -452,21 +480,23 @@ impl BuildAuditmanagerFrameworkControlSetsEl {
     }
 }
 
-pub struct AuditmanagerFrameworkControlSetsElRef {
+#[allow(dead_code)]
+pub struct AuditmanagerFramework_ControlSetsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for AuditmanagerFrameworkControlSetsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerFrameworkControlSetsElRef {
-        AuditmanagerFrameworkControlSetsElRef {
+impl terrars::Ref for AuditmanagerFramework_ControlSetsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> AuditmanagerFramework_ControlSetsRef {
+        AuditmanagerFramework_ControlSetsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl AuditmanagerFrameworkControlSetsElRef {
+impl AuditmanagerFramework_ControlSetsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -480,9 +510,4 @@ impl AuditmanagerFrameworkControlSetsElRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct AuditmanagerFrameworkDynamic {
-    control_sets: std::option::Option<terrars::DynamicBlock<AuditmanagerFrameworkControlSetsEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct SsoadminPermissionsBoundaryAttachmentData {
+struct SsoadminPermissionsBoundaryAttachmentData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,14 +25,18 @@ struct SsoadminPermissionsBoundaryAttachmentData {
     instance_arn: terrars::PrimField<std::string::String>,
     permission_set_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    permissions_boundary: std::option::Option<std::vec::Vec<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    permissions_boundary: std::option::Option<std::vec::Vec<SsoadminPermissionsBoundaryAttachment_PermissionsBoundary>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<SsoadminPermissionsBoundaryAttachment_Timeouts>,
     dynamic: SsoadminPermissionsBoundaryAttachmentDynamic,
 }
 
 struct SsoadminPermissionsBoundaryAttachment_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<SsoadminPermissionsBoundaryAttachmentData>,
+    data: std::cell::RefCell<SsoadminPermissionsBoundaryAttachmentData_>,
 }
 
 #[derive(Clone)]
@@ -136,6 +142,13 @@ impl SsoadminPermissionsBoundaryAttachment {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `permissions_boundary`.\n"]
     pub fn set_permissions_boundary(
         self,
@@ -144,7 +157,7 @@ impl SsoadminPermissionsBoundaryAttachment {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl>>,
+                    ::Into<terrars::BlockAssignable<SsoadminPermissionsBoundaryAttachment_PermissionsBoundary>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -154,6 +167,12 @@ impl SsoadminPermissionsBoundaryAttachment {
                 self.0.data.borrow_mut().dynamic.permissions_boundary = std::option::Option::Some(d);
             },
         }
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<SsoadminPermissionsBoundaryAttachment_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
 
@@ -172,11 +191,23 @@ impl SsoadminPermissionsBoundaryAttachment {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission_set_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `permissions_boundary` after provisioning.\n"]
-    pub fn permissions_boundary(
-        &self,
-    ) -> terrars::ListRef<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElRef> {
+    pub fn permissions_boundary(&self) -> terrars::ListRef<SsoadminPermissionsBoundaryAttachment_PermissionsBoundaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.permissions_boundary", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> SsoadminPermissionsBoundaryAttachment_TimeoutsRef {
+        SsoadminPermissionsBoundaryAttachment_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
@@ -224,7 +255,7 @@ impl BuildSsoadminPermissionsBoundaryAttachment {
         let out = SsoadminPermissionsBoundaryAttachment(std::rc::Rc::new(SsoadminPermissionsBoundaryAttachment_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(SsoadminPermissionsBoundaryAttachmentData {
+            data: std::cell::RefCell::new(SsoadminPermissionsBoundaryAttachmentData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -233,7 +264,9 @@ impl BuildSsoadminPermissionsBoundaryAttachment {
                 id: core::default::Default::default(),
                 instance_arn: self.instance_arn,
                 permission_set_arn: self.permission_set_arn,
+                region: core::default::Default::default(),
                 permissions_boundary: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
         }));
@@ -280,22 +313,41 @@ impl SsoadminPermissionsBoundaryAttachmentRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.permission_set_arn", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `permissions_boundary` after provisioning.\n"]
-    pub fn permissions_boundary(
-        &self,
-    ) -> terrars::ListRef<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElRef> {
+    pub fn permissions_boundary(&self) -> terrars::ListRef<SsoadminPermissionsBoundaryAttachment_PermissionsBoundaryRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.permissions_boundary", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> SsoadminPermissionsBoundaryAttachment_TimeoutsRef {
+        SsoadminPermissionsBoundaryAttachment_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
     }
 }
 
+#[derive(Serialize, Default)]
+struct SsoadminPermissionsBoundaryAttachmentDynamic {
+    permissions_boundary: std
+    ::option
+    ::Option<terrars::DynamicBlock<SsoadminPermissionsBoundaryAttachment_PermissionsBoundary>>,
+}
+
 #[derive(Serialize)]
-pub struct SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl {
+pub struct SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference {
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     path: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl {
+impl SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference {
     #[doc = "Set the field `path`.\n"]
     pub fn set_path(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.path = std::option::Option::Some(v.into());
@@ -304,10 +356,10 @@ impl SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPo
 }
 
 impl terrars
-::ToListMappable for SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl {
+::ToListMappable for SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference {
     type O =
         terrars
-        ::BlockAssignable<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl>;
+        ::BlockAssignable<SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -318,38 +370,40 @@ impl terrars
     }
 }
 
-pub struct BuildSsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl {
+pub struct BuildSsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildSsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl {
-    pub fn build(self) -> SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl {
-        SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl {
+impl BuildSsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference {
+    pub fn build(self) -> SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference {
+        SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference {
             name: self.name,
             path: core::default::Default::default(),
         }
     }
 }
 
-pub struct SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceElRef {
+#[allow(dead_code)]
+pub struct SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReferenceRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceElRef {
+impl terrars::Ref for SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReferenceRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceElRef {
-        SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceElRef {
+    ) -> SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReferenceRef {
+        SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReferenceRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceElRef {
+impl SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReferenceRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -366,29 +420,27 @@ impl SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPo
 }
 
 #[derive(Serialize, Default)]
-struct SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElDynamic {
+struct SsoadminPermissionsBoundaryAttachment_PermissionsBoundaryDynamic {
     customer_managed_policy_reference: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl>,
+        ::DynamicBlock<SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {
+pub struct SsoadminPermissionsBoundaryAttachment_PermissionsBoundary {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     managed_policy_arn: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     customer_managed_policy_reference: std
     ::option
-    ::Option<
-        std::vec::Vec<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl>,
-    >,
-    dynamic: SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElDynamic,
+    ::Option<std::vec::Vec<SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference>>,
+    dynamic: SsoadminPermissionsBoundaryAttachment_PermissionsBoundaryDynamic,
 }
 
-impl SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {
+impl SsoadminPermissionsBoundaryAttachment_PermissionsBoundary {
     #[doc = "Set the field `managed_policy_arn`.\n"]
     pub fn set_managed_policy_arn(
         mut self,
@@ -409,7 +461,7 @@ impl SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceEl,
+                            SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReference,
                         >,
                     >,
     ) -> Self {
@@ -425,8 +477,8 @@ impl SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {
     }
 }
 
-impl terrars::ToListMappable for SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {
-    type O = terrars::BlockAssignable<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl>;
+impl terrars::ToListMappable for SsoadminPermissionsBoundaryAttachment_PermissionsBoundary {
+    type O = terrars::BlockAssignable<SsoadminPermissionsBoundaryAttachment_PermissionsBoundary>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -437,11 +489,11 @@ impl terrars::ToListMappable for SsoadminPermissionsBoundaryAttachmentPermission
     }
 }
 
-pub struct BuildSsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {}
+pub struct BuildSsoadminPermissionsBoundaryAttachment_PermissionsBoundary {}
 
-impl BuildSsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {
-    pub fn build(self) -> SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {
-        SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {
+impl BuildSsoadminPermissionsBoundaryAttachment_PermissionsBoundary {
+    pub fn build(self) -> SsoadminPermissionsBoundaryAttachment_PermissionsBoundary {
+        SsoadminPermissionsBoundaryAttachment_PermissionsBoundary {
             managed_policy_arn: core::default::Default::default(),
             customer_managed_policy_reference: core::default::Default::default(),
             dynamic: core::default::Default::default(),
@@ -449,24 +501,26 @@ impl BuildSsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl {
     }
 }
 
-pub struct SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElRef {
+#[allow(dead_code)]
+pub struct SsoadminPermissionsBoundaryAttachment_PermissionsBoundaryRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElRef {
+impl terrars::Ref for SsoadminPermissionsBoundaryAttachment_PermissionsBoundaryRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElRef {
-        SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElRef {
+    ) -> SsoadminPermissionsBoundaryAttachment_PermissionsBoundaryRef {
+        SsoadminPermissionsBoundaryAttachment_PermissionsBoundaryRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElRef {
+impl SsoadminPermissionsBoundaryAttachment_PermissionsBoundaryRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -480,14 +534,87 @@ impl SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElRef {
     pub fn customer_managed_policy_reference(
         &self,
     ) -> terrars
-    ::ListRef<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryElCustomerManagedPolicyReferenceElRef> {
+    ::ListRef<SsoadminPermissionsBoundaryAttachment_PermissionsBoundary_CustomerManagedPolicyReferenceRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.customer_managed_policy_reference", self.base))
     }
 }
 
-#[derive(Serialize, Default)]
-struct SsoadminPermissionsBoundaryAttachmentDynamic {
-    permissions_boundary: std
-    ::option
-    ::Option<terrars::DynamicBlock<SsoadminPermissionsBoundaryAttachmentPermissionsBoundaryEl>>,
+#[derive(Serialize)]
+pub struct SsoadminPermissionsBoundaryAttachment_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    create: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    delete: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl SsoadminPermissionsBoundaryAttachment_Timeouts {
+    #[doc = "Set the field `create`.\n"]
+    pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.create = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `delete`.\n"]
+    pub fn set_delete(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.delete = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for SsoadminPermissionsBoundaryAttachment_Timeouts {
+    type O = terrars::BlockAssignable<SsoadminPermissionsBoundaryAttachment_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildSsoadminPermissionsBoundaryAttachment_Timeouts {}
+
+impl BuildSsoadminPermissionsBoundaryAttachment_Timeouts {
+    pub fn build(self) -> SsoadminPermissionsBoundaryAttachment_Timeouts {
+        SsoadminPermissionsBoundaryAttachment_Timeouts {
+            create: core::default::Default::default(),
+            delete: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct SsoadminPermissionsBoundaryAttachment_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for SsoadminPermissionsBoundaryAttachment_TimeoutsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> SsoadminPermissionsBoundaryAttachment_TimeoutsRef {
+        SsoadminPermissionsBoundaryAttachment_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl SsoadminPermissionsBoundaryAttachment_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `create` after provisioning.\n"]
+    pub fn create(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.create", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `delete` after provisioning.\n"]
+    pub fn delete(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.delete", self.base))
+    }
 }

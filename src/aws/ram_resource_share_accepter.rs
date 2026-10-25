@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct RamResourceShareAccepterData {
+struct RamResourceShareAccepterData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,15 +22,17 @@ struct RamResourceShareAccepterData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     share_arn: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<RamResourceShareAccepterTimeoutsEl>,
+    timeouts: std::option::Option<RamResourceShareAccepter_Timeouts>,
 }
 
 struct RamResourceShareAccepter_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<RamResourceShareAccepterData>,
+    data: std::cell::RefCell<RamResourceShareAccepterData_>,
 }
 
 #[derive(Clone)]
@@ -134,8 +138,15 @@ impl RamResourceShareAccepter {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<RamResourceShareAccepterTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<RamResourceShareAccepter_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -153,6 +164,12 @@ impl RamResourceShareAccepter {
     #[doc = "Get a reference to the value of field `receiver_account_id` after provisioning.\n"]
     pub fn receiver_account_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.receiver_account_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
@@ -186,8 +203,8 @@ impl RamResourceShareAccepter {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RamResourceShareAccepterTimeoutsElRef {
-        RamResourceShareAccepterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RamResourceShareAccepter_TimeoutsRef {
+        RamResourceShareAccepter_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -233,13 +250,14 @@ impl BuildRamResourceShareAccepter {
         let out = RamResourceShareAccepter(std::rc::Rc::new(RamResourceShareAccepter_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(RamResourceShareAccepterData {
+            data: std::cell::RefCell::new(RamResourceShareAccepterData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 share_arn: self.share_arn,
                 timeouts: core::default::Default::default(),
             }),
@@ -287,6 +305,12 @@ impl RamResourceShareAccepterRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.receiver_account_id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `resources` after provisioning.\n"]
     pub fn resources(&self) -> terrars::ListRef<terrars::PrimExpr<std::string::String>> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.resources", self.extract_ref()))
@@ -318,20 +342,20 @@ impl RamResourceShareAccepterRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> RamResourceShareAccepterTimeoutsElRef {
-        RamResourceShareAccepterTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> RamResourceShareAccepter_TimeoutsRef {
+        RamResourceShareAccepter_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
 #[derive(Serialize)]
-pub struct RamResourceShareAccepterTimeoutsEl {
+pub struct RamResourceShareAccepter_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl RamResourceShareAccepterTimeoutsEl {
+impl RamResourceShareAccepter_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -345,8 +369,8 @@ impl RamResourceShareAccepterTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for RamResourceShareAccepterTimeoutsEl {
-    type O = terrars::BlockAssignable<RamResourceShareAccepterTimeoutsEl>;
+impl terrars::ToListMappable for RamResourceShareAccepter_Timeouts {
+    type O = terrars::BlockAssignable<RamResourceShareAccepter_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -357,32 +381,34 @@ impl terrars::ToListMappable for RamResourceShareAccepterTimeoutsEl {
     }
 }
 
-pub struct BuildRamResourceShareAccepterTimeoutsEl {}
+pub struct BuildRamResourceShareAccepter_Timeouts {}
 
-impl BuildRamResourceShareAccepterTimeoutsEl {
-    pub fn build(self) -> RamResourceShareAccepterTimeoutsEl {
-        RamResourceShareAccepterTimeoutsEl {
+impl BuildRamResourceShareAccepter_Timeouts {
+    pub fn build(self) -> RamResourceShareAccepter_Timeouts {
+        RamResourceShareAccepter_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct RamResourceShareAccepterTimeoutsElRef {
+#[allow(dead_code)]
+pub struct RamResourceShareAccepter_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for RamResourceShareAccepterTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> RamResourceShareAccepterTimeoutsElRef {
-        RamResourceShareAccepterTimeoutsElRef {
+impl terrars::Ref for RamResourceShareAccepter_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> RamResourceShareAccepter_TimeoutsRef {
+        RamResourceShareAccepter_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl RamResourceShareAccepterTimeoutsElRef {
+impl RamResourceShareAccepter_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

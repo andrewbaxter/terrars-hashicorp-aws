@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct VpnGatewayRoutePropagationData {
+struct VpnGatewayRoutePropagationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -20,16 +22,18 @@ struct VpnGatewayRoutePropagationData {
     provisioner: std::vec::Vec<terrars::Provisioner>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     route_table_id: terrars::PrimField<std::string::String>,
     vpn_gateway_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VpnGatewayRoutePropagationTimeoutsEl>,
+    timeouts: std::option::Option<VpnGatewayRoutePropagation_Timeouts>,
 }
 
 struct VpnGatewayRoutePropagation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpnGatewayRoutePropagationData>,
+    data: std::cell::RefCell<VpnGatewayRoutePropagationData_>,
 }
 
 #[derive(Clone)]
@@ -135,8 +139,15 @@ impl VpnGatewayRoutePropagation {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VpnGatewayRoutePropagationTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VpnGatewayRoutePropagation_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -144,6 +155,12 @@ impl VpnGatewayRoutePropagation {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `route_table_id` after provisioning.\n"]
@@ -157,8 +174,8 @@ impl VpnGatewayRoutePropagation {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpnGatewayRoutePropagationTimeoutsElRef {
-        VpnGatewayRoutePropagationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VpnGatewayRoutePropagation_TimeoutsRef {
+        VpnGatewayRoutePropagation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -209,13 +226,14 @@ impl BuildVpnGatewayRoutePropagation {
         let out = VpnGatewayRoutePropagation(std::rc::Rc::new(VpnGatewayRoutePropagation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpnGatewayRoutePropagationData {
+            data: std::cell::RefCell::new(VpnGatewayRoutePropagationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 route_table_id: self.route_table_id,
                 vpn_gateway_id: self.vpn_gateway_id,
                 timeouts: core::default::Default::default(),
@@ -254,6 +272,12 @@ impl VpnGatewayRoutePropagationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
     }
 
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `route_table_id` after provisioning.\n"]
     pub fn route_table_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.route_table_id", self.extract_ref()))
@@ -265,8 +289,8 @@ impl VpnGatewayRoutePropagationRef {
     }
 
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpnGatewayRoutePropagationTimeoutsElRef {
-        VpnGatewayRoutePropagationTimeoutsElRef::new(
+    pub fn timeouts(&self) -> VpnGatewayRoutePropagation_TimeoutsRef {
+        VpnGatewayRoutePropagation_TimeoutsRef::new(
             self.shared().clone(),
             format!("{}.timeouts", self.extract_ref()),
         )
@@ -274,14 +298,14 @@ impl VpnGatewayRoutePropagationRef {
 }
 
 #[derive(Serialize)]
-pub struct VpnGatewayRoutePropagationTimeoutsEl {
+pub struct VpnGatewayRoutePropagation_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     delete: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpnGatewayRoutePropagationTimeoutsEl {
+impl VpnGatewayRoutePropagation_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -295,8 +319,8 @@ impl VpnGatewayRoutePropagationTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VpnGatewayRoutePropagationTimeoutsEl {
-    type O = terrars::BlockAssignable<VpnGatewayRoutePropagationTimeoutsEl>;
+impl terrars::ToListMappable for VpnGatewayRoutePropagation_Timeouts {
+    type O = terrars::BlockAssignable<VpnGatewayRoutePropagation_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -307,32 +331,34 @@ impl terrars::ToListMappable for VpnGatewayRoutePropagationTimeoutsEl {
     }
 }
 
-pub struct BuildVpnGatewayRoutePropagationTimeoutsEl {}
+pub struct BuildVpnGatewayRoutePropagation_Timeouts {}
 
-impl BuildVpnGatewayRoutePropagationTimeoutsEl {
-    pub fn build(self) -> VpnGatewayRoutePropagationTimeoutsEl {
-        VpnGatewayRoutePropagationTimeoutsEl {
+impl BuildVpnGatewayRoutePropagation_Timeouts {
+    pub fn build(self) -> VpnGatewayRoutePropagation_Timeouts {
+        VpnGatewayRoutePropagation_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
         }
     }
 }
 
-pub struct VpnGatewayRoutePropagationTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VpnGatewayRoutePropagation_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpnGatewayRoutePropagationTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnGatewayRoutePropagationTimeoutsElRef {
-        VpnGatewayRoutePropagationTimeoutsElRef {
+impl terrars::Ref for VpnGatewayRoutePropagation_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpnGatewayRoutePropagation_TimeoutsRef {
+        VpnGatewayRoutePropagation_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpnGatewayRoutePropagationTimeoutsElRef {
+impl VpnGatewayRoutePropagation_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }

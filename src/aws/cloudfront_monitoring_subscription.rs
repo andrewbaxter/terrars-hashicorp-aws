@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct CloudfrontMonitoringSubscriptionData {
+struct CloudfrontMonitoringSubscriptionData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -22,14 +24,14 @@ struct CloudfrontMonitoringSubscriptionData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    monitoring_subscription: std::option::Option<std::vec::Vec<CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl>>,
+    monitoring_subscription: std::option::Option<std::vec::Vec<CloudfrontMonitoringSubscription_MonitoringSubscription>>,
     dynamic: CloudfrontMonitoringSubscriptionDynamic,
 }
 
 struct CloudfrontMonitoringSubscription_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<CloudfrontMonitoringSubscriptionData>,
+    data: std::cell::RefCell<CloudfrontMonitoringSubscriptionData_>,
 }
 
 #[derive(Clone)]
@@ -143,7 +145,7 @@ impl CloudfrontMonitoringSubscription {
 
                     std
                     ::convert
-                    ::Into<terrars::BlockAssignable<CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl>>,
+                    ::Into<terrars::BlockAssignable<CloudfrontMonitoringSubscription_MonitoringSubscription>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -169,7 +171,7 @@ impl CloudfrontMonitoringSubscription {
     #[doc = "Get a reference to the value of field `monitoring_subscription` after provisioning.\n"]
     pub fn monitoring_subscription(
         &self,
-    ) -> terrars::ListRef<CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRef> {
+    ) -> terrars::ListRef<CloudfrontMonitoringSubscription_MonitoringSubscriptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring_subscription", self.extract_ref()))
     }
 }
@@ -216,7 +218,7 @@ impl BuildCloudfrontMonitoringSubscription {
         let out = CloudfrontMonitoringSubscription(std::rc::Rc::new(CloudfrontMonitoringSubscription_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(CloudfrontMonitoringSubscriptionData {
+            data: std::cell::RefCell::new(CloudfrontMonitoringSubscriptionData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -269,25 +271,30 @@ impl CloudfrontMonitoringSubscriptionRef {
     #[doc = "Get a reference to the value of field `monitoring_subscription` after provisioning.\n"]
     pub fn monitoring_subscription(
         &self,
-    ) -> terrars::ListRef<CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRef> {
+    ) -> terrars::ListRef<CloudfrontMonitoringSubscription_MonitoringSubscriptionRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.monitoring_subscription", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct CloudfrontMonitoringSubscriptionDynamic {
+    monitoring_subscription: std
+    ::option
+    ::Option<terrars::DynamicBlock<CloudfrontMonitoringSubscription_MonitoringSubscription>>,
+}
+
 #[derive(Serialize)]
-pub struct CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl {
+pub struct CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig {
     realtime_metrics_subscription_status: terrars::PrimField<std::string::String>,
 }
 
-impl CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl { }
+impl CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig { }
 
 impl terrars
-::ToListMappable for CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl {
+::ToListMappable for CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig {
     type O =
         terrars
-        ::BlockAssignable<
-            CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl,
-        >;
+        ::BlockAssignable<CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -298,39 +305,39 @@ impl terrars
     }
 }
 
-pub struct BuildCloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl {
+pub struct BuildCloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig {
     #[doc = ""]
     pub realtime_metrics_subscription_status: terrars::PrimField<std::string::String>,
 }
 
-impl BuildCloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl {
-    pub fn build(
-        self,
-    ) -> CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl {
-        CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl {
+impl BuildCloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig {
+    pub fn build(self) -> CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig {
+        CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig {
             realtime_metrics_subscription_status: self.realtime_metrics_subscription_status,
         }
     }
 }
 
-pub struct CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigElRef {
+#[allow(dead_code)]
+pub struct CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfigRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigElRef {
+impl terrars::Ref for CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfigRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigElRef {
-        CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigElRef {
+    ) -> CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfigRef {
+        CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfigRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigElRef {
+impl CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfigRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -342,27 +349,27 @@ impl CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubs
 }
 
 #[derive(Serialize, Default)]
-struct CloudfrontMonitoringSubscriptionMonitoringSubscriptionElDynamic {
+struct CloudfrontMonitoringSubscription_MonitoringSubscriptionDynamic {
     realtime_metrics_subscription_config: std
     ::option
     ::Option<
         terrars
-        ::DynamicBlock<CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl>,
+        ::DynamicBlock<CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig>,
     >,
 }
 
 #[derive(Serialize)]
-pub struct CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl {
+pub struct CloudfrontMonitoringSubscription_MonitoringSubscription {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     realtime_metrics_subscription_config: std
     ::option
     ::Option<
-        std::vec::Vec<CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl>,
+        std::vec::Vec<CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig>,
     >,
-    dynamic: CloudfrontMonitoringSubscriptionMonitoringSubscriptionElDynamic,
+    dynamic: CloudfrontMonitoringSubscription_MonitoringSubscriptionDynamic,
 }
 
-impl CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl {
+impl CloudfrontMonitoringSubscription_MonitoringSubscription {
     #[doc = "Set the field `realtime_metrics_subscription_config`.\n"]
     pub fn set_realtime_metrics_subscription_config(
         mut self,
@@ -374,7 +381,7 @@ impl CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl {
                     ::Into<
                         terrars
                         ::BlockAssignable<
-                            CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigEl,
+                            CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfig,
                         >,
                     >,
     ) -> Self {
@@ -390,8 +397,8 @@ impl CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl {
     }
 }
 
-impl terrars::ToListMappable for CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl {
-    type O = terrars::BlockAssignable<CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl>;
+impl terrars::ToListMappable for CloudfrontMonitoringSubscription_MonitoringSubscription {
+    type O = terrars::BlockAssignable<CloudfrontMonitoringSubscription_MonitoringSubscription>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -402,35 +409,37 @@ impl terrars::ToListMappable for CloudfrontMonitoringSubscriptionMonitoringSubsc
     }
 }
 
-pub struct BuildCloudfrontMonitoringSubscriptionMonitoringSubscriptionEl {}
+pub struct BuildCloudfrontMonitoringSubscription_MonitoringSubscription {}
 
-impl BuildCloudfrontMonitoringSubscriptionMonitoringSubscriptionEl {
-    pub fn build(self) -> CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl {
-        CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl {
+impl BuildCloudfrontMonitoringSubscription_MonitoringSubscription {
+    pub fn build(self) -> CloudfrontMonitoringSubscription_MonitoringSubscription {
+        CloudfrontMonitoringSubscription_MonitoringSubscription {
             realtime_metrics_subscription_config: core::default::Default::default(),
             dynamic: core::default::Default::default(),
         }
     }
 }
 
-pub struct CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRef {
+#[allow(dead_code)]
+pub struct CloudfrontMonitoringSubscription_MonitoringSubscriptionRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRef {
+impl terrars::Ref for CloudfrontMonitoringSubscription_MonitoringSubscriptionRef {
     fn new(
         shared: terrars::StackShared,
         base: std::string::String,
-    ) -> CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRef {
-        CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRef {
+    ) -> CloudfrontMonitoringSubscription_MonitoringSubscriptionRef {
+        CloudfrontMonitoringSubscription_MonitoringSubscriptionRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRef {
+impl CloudfrontMonitoringSubscription_MonitoringSubscriptionRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -439,14 +448,7 @@ impl CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRef {
     pub fn realtime_metrics_subscription_config(
         &self,
     ) -> terrars
-    ::ListRef<CloudfrontMonitoringSubscriptionMonitoringSubscriptionElRealtimeMetricsSubscriptionConfigElRef> {
+    ::ListRef<CloudfrontMonitoringSubscription_MonitoringSubscription_RealtimeMetricsSubscriptionConfigRef> {
         terrars::ListRef::new(self.shared().clone(), format!("{}.realtime_metrics_subscription_config", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct CloudfrontMonitoringSubscriptionDynamic {
-    monitoring_subscription: std
-    ::option
-    ::Option<terrars::DynamicBlock<CloudfrontMonitoringSubscriptionMonitoringSubscriptionEl>>,
 }

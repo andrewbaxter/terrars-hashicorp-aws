@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct VpcIpamData {
+struct VpcIpamData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -23,22 +25,30 @@ struct VpcIpamData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     description: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    enable_private_gua: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    metered_account: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     tags_all: std::option::Option<terrars::RecField<terrars::PrimField<std::string::String>>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    operating_regions: std::option::Option<std::vec::Vec<VpcIpamOperatingRegionsEl>>,
+    tier: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    timeouts: std::option::Option<VpcIpamTimeoutsEl>,
+    operating_regions: std::option::Option<std::vec::Vec<VpcIpam_OperatingRegions>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<VpcIpam_Timeouts>,
     dynamic: VpcIpamDynamic,
 }
 
 struct VpcIpam_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<VpcIpamData>,
+    data: std::cell::RefCell<VpcIpamData_>,
 }
 
 #[derive(Clone)]
@@ -150,9 +160,28 @@ impl VpcIpam {
         self
     }
 
+    #[doc = "Set the field `enable_private_gua`.\n"]
+    pub fn set_enable_private_gua(self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.0.data.borrow_mut().enable_private_gua = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `metered_account`.\n"]
+    pub fn set_metered_account(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().metered_account = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -174,10 +203,16 @@ impl VpcIpam {
         self
     }
 
+    #[doc = "Set the field `tier`.\n"]
+    pub fn set_tier(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().tier = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `operating_regions`.\n"]
     pub fn set_operating_regions(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<VpcIpamOperatingRegionsEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<VpcIpam_OperatingRegions>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -191,7 +226,7 @@ impl VpcIpam {
     }
 
     #[doc = "Set the field `timeouts`.\n"]
-    pub fn set_timeouts(self, v: impl std::convert::Into<VpcIpamTimeoutsEl>) -> Self {
+    pub fn set_timeouts(self, v: impl std::convert::Into<VpcIpam_Timeouts>) -> Self {
         self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
         self
     }
@@ -206,14 +241,40 @@ impl VpcIpam {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cascade", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_resource_discovery_association_id` after provisioning.\n"]
+    pub fn default_resource_discovery_association_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.default_resource_discovery_association_id", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `default_resource_discovery_id` after provisioning.\n"]
+    pub fn default_resource_discovery_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.default_resource_discovery_id", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_private_gua` after provisioning.\n"]
+    pub fn enable_private_gua(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_private_gua", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `metered_account` after provisioning.\n"]
+    pub fn metered_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metered_account", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `private_default_scope_id` after provisioning.\n"]
@@ -224,6 +285,12 @@ impl VpcIpam {
     #[doc = "Get a reference to the value of field `public_default_scope_id` after provisioning.\n"]
     pub fn public_default_scope_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_default_scope_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scope_count` after provisioning.\n"]
@@ -241,9 +308,14 @@ impl VpcIpam {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tier` after provisioning.\n"]
+    pub fn tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tier", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcIpamTimeoutsElRef {
-        VpcIpamTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VpcIpam_TimeoutsRef {
+        VpcIpam_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
@@ -287,7 +359,7 @@ impl BuildVpcIpam {
         let out = VpcIpam(std::rc::Rc::new(VpcIpam_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(VpcIpamData {
+            data: std::cell::RefCell::new(VpcIpamData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -295,9 +367,13 @@ impl BuildVpcIpam {
                 provisioner: core::default::Default::default(),
                 cascade: core::default::Default::default(),
                 description: core::default::Default::default(),
+                enable_private_gua: core::default::Default::default(),
                 id: core::default::Default::default(),
+                metered_account: core::default::Default::default(),
+                region: core::default::Default::default(),
                 tags: core::default::Default::default(),
                 tags_all: core::default::Default::default(),
+                tier: core::default::Default::default(),
                 operating_regions: core::default::Default::default(),
                 timeouts: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
@@ -341,14 +417,40 @@ impl VpcIpamRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cascade", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `default_resource_discovery_association_id` after provisioning.\n"]
+    pub fn default_resource_discovery_association_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.default_resource_discovery_association_id", self.extract_ref()),
+        )
+    }
+
+    #[doc = "Get a reference to the value of field `default_resource_discovery_id` after provisioning.\n"]
+    pub fn default_resource_discovery_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(
+            self.shared().clone(),
+            format!("{}.default_resource_discovery_id", self.extract_ref()),
+        )
+    }
+
     #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
     pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `enable_private_gua` after provisioning.\n"]
+    pub fn enable_private_gua(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.enable_private_gua", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `metered_account` after provisioning.\n"]
+    pub fn metered_account(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.metered_account", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `private_default_scope_id` after provisioning.\n"]
@@ -359,6 +461,12 @@ impl VpcIpamRef {
     #[doc = "Get a reference to the value of field `public_default_scope_id` after provisioning.\n"]
     pub fn public_default_scope_id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.public_default_scope_id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `scope_count` after provisioning.\n"]
@@ -376,21 +484,31 @@ impl VpcIpamRef {
         terrars::RecRef::new(self.shared().clone(), format!("{}.tags_all", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `tier` after provisioning.\n"]
+    pub fn tier(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.tier", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
-    pub fn timeouts(&self) -> VpcIpamTimeoutsElRef {
-        VpcIpamTimeoutsElRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
+    pub fn timeouts(&self) -> VpcIpam_TimeoutsRef {
+        VpcIpam_TimeoutsRef::new(self.shared().clone(), format!("{}.timeouts", self.extract_ref()))
     }
 }
 
+#[derive(Serialize, Default)]
+struct VpcIpamDynamic {
+    operating_regions: std::option::Option<terrars::DynamicBlock<VpcIpam_OperatingRegions>>,
+}
+
 #[derive(Serialize)]
-pub struct VpcIpamOperatingRegionsEl {
+pub struct VpcIpam_OperatingRegions {
     region_name: terrars::PrimField<std::string::String>,
 }
 
-impl VpcIpamOperatingRegionsEl { }
+impl VpcIpam_OperatingRegions { }
 
-impl terrars::ToListMappable for VpcIpamOperatingRegionsEl {
-    type O = terrars::BlockAssignable<VpcIpamOperatingRegionsEl>;
+impl terrars::ToListMappable for VpcIpam_OperatingRegions {
+    type O = terrars::BlockAssignable<VpcIpam_OperatingRegions>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -401,32 +519,34 @@ impl terrars::ToListMappable for VpcIpamOperatingRegionsEl {
     }
 }
 
-pub struct BuildVpcIpamOperatingRegionsEl {
+pub struct BuildVpcIpam_OperatingRegions {
     #[doc = ""]
     pub region_name: terrars::PrimField<std::string::String>,
 }
 
-impl BuildVpcIpamOperatingRegionsEl {
-    pub fn build(self) -> VpcIpamOperatingRegionsEl {
-        VpcIpamOperatingRegionsEl { region_name: self.region_name }
+impl BuildVpcIpam_OperatingRegions {
+    pub fn build(self) -> VpcIpam_OperatingRegions {
+        VpcIpam_OperatingRegions { region_name: self.region_name }
     }
 }
 
-pub struct VpcIpamOperatingRegionsElRef {
+#[allow(dead_code)]
+pub struct VpcIpam_OperatingRegionsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpcIpamOperatingRegionsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpamOperatingRegionsElRef {
-        VpcIpamOperatingRegionsElRef {
+impl terrars::Ref for VpcIpam_OperatingRegionsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpam_OperatingRegionsRef {
+        VpcIpam_OperatingRegionsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpcIpamOperatingRegionsElRef {
+impl VpcIpam_OperatingRegionsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -438,7 +558,7 @@ impl VpcIpamOperatingRegionsElRef {
 }
 
 #[derive(Serialize)]
-pub struct VpcIpamTimeoutsEl {
+pub struct VpcIpam_Timeouts {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     create: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -447,7 +567,7 @@ pub struct VpcIpamTimeoutsEl {
     update: std::option::Option<terrars::PrimField<std::string::String>>,
 }
 
-impl VpcIpamTimeoutsEl {
+impl VpcIpam_Timeouts {
     #[doc = "Set the field `create`.\n"]
     pub fn set_create(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.create = std::option::Option::Some(v.into());
@@ -467,8 +587,8 @@ impl VpcIpamTimeoutsEl {
     }
 }
 
-impl terrars::ToListMappable for VpcIpamTimeoutsEl {
-    type O = terrars::BlockAssignable<VpcIpamTimeoutsEl>;
+impl terrars::ToListMappable for VpcIpam_Timeouts {
+    type O = terrars::BlockAssignable<VpcIpam_Timeouts>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -479,11 +599,11 @@ impl terrars::ToListMappable for VpcIpamTimeoutsEl {
     }
 }
 
-pub struct BuildVpcIpamTimeoutsEl {}
+pub struct BuildVpcIpam_Timeouts {}
 
-impl BuildVpcIpamTimeoutsEl {
-    pub fn build(self) -> VpcIpamTimeoutsEl {
-        VpcIpamTimeoutsEl {
+impl BuildVpcIpam_Timeouts {
+    pub fn build(self) -> VpcIpam_Timeouts {
+        VpcIpam_Timeouts {
             create: core::default::Default::default(),
             delete: core::default::Default::default(),
             update: core::default::Default::default(),
@@ -491,21 +611,23 @@ impl BuildVpcIpamTimeoutsEl {
     }
 }
 
-pub struct VpcIpamTimeoutsElRef {
+#[allow(dead_code)]
+pub struct VpcIpam_TimeoutsRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for VpcIpamTimeoutsElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpamTimeoutsElRef {
-        VpcIpamTimeoutsElRef {
+impl terrars::Ref for VpcIpam_TimeoutsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> VpcIpam_TimeoutsRef {
+        VpcIpam_TimeoutsRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl VpcIpamTimeoutsElRef {
+impl VpcIpam_TimeoutsRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -524,9 +646,4 @@ impl VpcIpamTimeoutsElRef {
     pub fn update(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.update", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct VpcIpamDynamic {
-    operating_regions: std::option::Option<terrars::DynamicBlock<VpcIpamOperatingRegionsEl>>,
 }

@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DaxParameterGroupData {
+struct DaxParameterGroupData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -24,14 +26,16 @@ struct DaxParameterGroupData {
     id: std::option::Option<terrars::PrimField<std::string::String>>,
     name: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
-    parameters: std::option::Option<std::vec::Vec<DaxParameterGroupParametersEl>>,
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    parameters: std::option::Option<std::vec::Vec<DaxParameterGroup_Parameters>>,
     dynamic: DaxParameterGroupDynamic,
 }
 
 struct DaxParameterGroup_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DaxParameterGroupData>,
+    data: std::cell::RefCell<DaxParameterGroupData_>,
 }
 
 #[derive(Clone)]
@@ -143,10 +147,17 @@ impl DaxParameterGroup {
         self
     }
 
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `parameters`.\n"]
     pub fn set_parameters(
         self,
-        v: impl std::convert::Into<terrars::BlockAssignable<DaxParameterGroupParametersEl>>,
+        v: impl std::convert::Into<terrars::BlockAssignable<DaxParameterGroup_Parameters>>,
     ) -> Self {
         match v.into() {
             terrars::BlockAssignable::Literal(v) => {
@@ -172,6 +183,12 @@ impl DaxParameterGroup {
     #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 }
 
@@ -217,7 +234,7 @@ impl BuildDaxParameterGroup {
         let out = DaxParameterGroup(std::rc::Rc::new(DaxParameterGroup_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DaxParameterGroupData {
+            data: std::cell::RefCell::new(DaxParameterGroupData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
@@ -226,6 +243,7 @@ impl BuildDaxParameterGroup {
                 description: core::default::Default::default(),
                 id: core::default::Default::default(),
                 name: self.name,
+                region: core::default::Default::default(),
                 parameters: core::default::Default::default(),
                 dynamic: core::default::Default::default(),
             }),
@@ -272,18 +290,29 @@ impl DaxParameterGroupRef {
     pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.extract_ref()))
     }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+}
+
+#[derive(Serialize, Default)]
+struct DaxParameterGroupDynamic {
+    parameters: std::option::Option<terrars::DynamicBlock<DaxParameterGroup_Parameters>>,
 }
 
 #[derive(Serialize)]
-pub struct DaxParameterGroupParametersEl {
+pub struct DaxParameterGroup_Parameters {
     name: terrars::PrimField<std::string::String>,
     value: terrars::PrimField<std::string::String>,
 }
 
-impl DaxParameterGroupParametersEl { }
+impl DaxParameterGroup_Parameters { }
 
-impl terrars::ToListMappable for DaxParameterGroupParametersEl {
-    type O = terrars::BlockAssignable<DaxParameterGroupParametersEl>;
+impl terrars::ToListMappable for DaxParameterGroup_Parameters {
+    type O = terrars::BlockAssignable<DaxParameterGroup_Parameters>;
 
     fn do_map(self, base: std::string::String) -> Self::O {
         terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
@@ -294,37 +323,39 @@ impl terrars::ToListMappable for DaxParameterGroupParametersEl {
     }
 }
 
-pub struct BuildDaxParameterGroupParametersEl {
+pub struct BuildDaxParameterGroup_Parameters {
     #[doc = ""]
     pub name: terrars::PrimField<std::string::String>,
     #[doc = ""]
     pub value: terrars::PrimField<std::string::String>,
 }
 
-impl BuildDaxParameterGroupParametersEl {
-    pub fn build(self) -> DaxParameterGroupParametersEl {
-        DaxParameterGroupParametersEl {
+impl BuildDaxParameterGroup_Parameters {
+    pub fn build(self) -> DaxParameterGroup_Parameters {
+        DaxParameterGroup_Parameters {
             name: self.name,
             value: self.value,
         }
     }
 }
 
-pub struct DaxParameterGroupParametersElRef {
+#[allow(dead_code)]
+pub struct DaxParameterGroup_ParametersRef {
     shared: terrars::StackShared,
     base: std::string::String,
 }
 
-impl terrars::Ref for DaxParameterGroupParametersElRef {
-    fn new(shared: terrars::StackShared, base: std::string::String) -> DaxParameterGroupParametersElRef {
-        DaxParameterGroupParametersElRef {
+impl terrars::Ref for DaxParameterGroup_ParametersRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> DaxParameterGroup_ParametersRef {
+        DaxParameterGroup_ParametersRef {
             shared: shared,
             base: base.to_string(),
         }
     }
 }
 
-impl DaxParameterGroupParametersElRef {
+impl DaxParameterGroup_ParametersRef {
+    #[allow(dead_code)]
     fn shared(&self) -> &terrars::StackShared {
         &self.shared
     }
@@ -338,9 +369,4 @@ impl DaxParameterGroupParametersElRef {
     pub fn value(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.value", self.base))
     }
-}
-
-#[derive(Serialize, Default)]
-struct DaxParameterGroupDynamic {
-    parameters: std::option::Option<terrars::DynamicBlock<DaxParameterGroupParametersEl>>,
 }

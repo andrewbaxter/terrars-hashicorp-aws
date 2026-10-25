@@ -1,3 +1,5 @@
+#![allow(non_camel_case_types)]
+
 use serde::Serialize;
 use terrars::{
     Referable as _,
@@ -7,7 +9,7 @@ use terrars::{
 use super::provider::ProviderAws;
 
 #[derive(Serialize)]
-struct DxMacsecKeyAssociationData {
+struct DxMacsecKeyAssociationData_ {
     #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
     depends_on: std::vec::Vec<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
@@ -21,10 +23,20 @@ struct DxMacsecKeyAssociationData {
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     cak: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cak_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    cak_wo_version: std::option::Option<terrars::PrimField<f64>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
     ckn: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ckn_wo: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    ckn_wo_version: std::option::Option<terrars::PrimField<f64>>,
     connection_id: terrars::PrimField<std::string::String>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
     #[serde(skip_serializing_if = "std::option::Option::is_none")]
     secret_arn: std::option::Option<terrars::PrimField<std::string::String>>,
 }
@@ -32,7 +44,7 @@ struct DxMacsecKeyAssociationData {
 struct DxMacsecKeyAssociation_ {
     shared: terrars::StackShared,
     tf_id: std::string::String,
-    data: std::cell::RefCell<DxMacsecKeyAssociationData>,
+    data: std::cell::RefCell<DxMacsecKeyAssociationData_>,
 }
 
 #[derive(Clone)]
@@ -138,15 +150,46 @@ impl DxMacsecKeyAssociation {
         self
     }
 
+    #[doc = "Set the field `cak_wo`.\n"]
+    pub fn set_cak_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().cak_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `cak_wo_version`.\n"]
+    pub fn set_cak_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().cak_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `ckn`.\n"]
     pub fn set_ckn(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().ckn = std::option::Option::Some(v.into());
         self
     }
 
+    #[doc = "Set the field `ckn_wo`.\n"]
+    pub fn set_ckn_wo(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().ckn_wo = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `ckn_wo_version`.\n"]
+    pub fn set_ckn_wo_version(self, v: impl std::convert::Into<terrars::PrimField<f64>>) -> Self {
+        self.0.data.borrow_mut().ckn_wo_version = std::option::Option::Some(v.into());
+        self
+    }
+
     #[doc = "Set the field `id`.\n"]
     pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
         self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
         self
     }
 
@@ -161,9 +204,29 @@ impl DxMacsecKeyAssociation {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cak", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cak_wo` after provisioning.\n"]
+    pub fn cak_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cak_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `cak_wo_version` after provisioning.\n"]
+    pub fn cak_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cak_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ckn` after provisioning.\n"]
     pub fn ckn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ckn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ckn_wo` after provisioning.\n"]
+    pub fn ckn_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ckn_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ckn_wo_version` after provisioning.\n"]
+    pub fn ckn_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ckn_wo_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `connection_id` after provisioning.\n"]
@@ -174,6 +237,12 @@ impl DxMacsecKeyAssociation {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]
@@ -234,16 +303,21 @@ impl BuildDxMacsecKeyAssociation {
         let out = DxMacsecKeyAssociation(std::rc::Rc::new(DxMacsecKeyAssociation_ {
             shared: stack.shared.clone(),
             tf_id: self.tf_id,
-            data: std::cell::RefCell::new(DxMacsecKeyAssociationData {
+            data: std::cell::RefCell::new(DxMacsecKeyAssociationData_ {
                 depends_on: core::default::Default::default(),
                 provider: std::option::Option::None,
                 lifecycle: core::default::Default::default(),
                 for_each: std::option::Option::None,
                 provisioner: core::default::Default::default(),
                 cak: core::default::Default::default(),
+                cak_wo: core::default::Default::default(),
+                cak_wo_version: core::default::Default::default(),
                 ckn: core::default::Default::default(),
+                ckn_wo: core::default::Default::default(),
+                ckn_wo_version: core::default::Default::default(),
                 connection_id: self.connection_id,
                 id: core::default::Default::default(),
+                region: core::default::Default::default(),
                 secret_arn: core::default::Default::default(),
             }),
         }));
@@ -280,9 +354,29 @@ impl DxMacsecKeyAssociationRef {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.cak", self.extract_ref()))
     }
 
+    #[doc = "Get a reference to the value of field `cak_wo` after provisioning.\n"]
+    pub fn cak_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cak_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `cak_wo_version` after provisioning.\n"]
+    pub fn cak_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.cak_wo_version", self.extract_ref()))
+    }
+
     #[doc = "Get a reference to the value of field `ckn` after provisioning.\n"]
     pub fn ckn(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.ckn", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ckn_wo` after provisioning.\n"]
+    pub fn ckn_wo(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ckn_wo", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `ckn_wo_version` after provisioning.\n"]
+    pub fn ckn_wo_version(&self) -> terrars::PrimExpr<f64> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.ckn_wo_version", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `connection_id` after provisioning.\n"]
@@ -293,6 +387,12 @@ impl DxMacsecKeyAssociationRef {
     #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
     pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
         terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
     }
 
     #[doc = "Get a reference to the value of field `secret_arn` after provisioning.\n"]

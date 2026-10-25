@@ -1,0 +1,473 @@
+#![allow(non_camel_case_types)]
+
+use serde::Serialize;
+use terrars::{
+    Referable as _,
+    Datasource_ as _,
+    Ref as _,
+};
+use super::provider::ProviderAws;
+
+#[derive(Serialize)]
+struct DataServicecatalogProvisioningArtifactsData_ {
+    #[serde(skip_serializing_if = "std::vec::Vec::is_empty")]
+    depends_on: std::vec::Vec<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    provider: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "terrars::SerdeSkipDefault::is_default")]
+    lifecycle: terrars::DatasourceLifecycle,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    for_each: std::option::Option<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    accept_language: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    product_id: terrars::PrimField<std::string::String>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    region: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    timeouts: std::option::Option<DataServicecatalogProvisioningArtifacts_Timeouts>,
+}
+
+struct DataServicecatalogProvisioningArtifacts_ {
+    shared: terrars::StackShared,
+    tf_id: std::string::String,
+    data: std::cell::RefCell<DataServicecatalogProvisioningArtifactsData_>,
+}
+
+#[derive(Clone)]
+pub struct DataServicecatalogProvisioningArtifacts(std::rc::Rc<DataServicecatalogProvisioningArtifacts_>);
+
+impl DataServicecatalogProvisioningArtifacts {
+    fn shared(&self) -> &terrars::StackShared {
+        &self.0.shared
+    }
+
+    pub fn depends_on(self, dep: &impl terrars::Referable) -> Self {
+        self.0.data.borrow_mut().depends_on.push(dep.extract_ref());
+        self
+    }
+
+    pub fn set_provider(&self, provider: &ProviderAws) -> &Self {
+        self.0.data.borrow_mut().provider = std::option::Option::Some(provider.provider_ref());
+        self
+    }
+
+    pub fn add_lifecycle_precondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.precondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    pub fn add_lifecycle_postcondition(
+        self,
+        condition: impl std::convert::Into<terrars::PrimField<bool>>,
+        error_message: impl std::convert::Into<terrars::PrimField<std::string::String>>,
+    ) -> Self {
+        self.0.data.borrow_mut().lifecycle.postcondition.push(terrars::LifecycleCondition {
+            condition: condition.into(),
+            error_message: error_message.into(),
+        });
+        self
+    }
+
+    #[doc = "Set the field `accept_language`.\n"]
+    pub fn set_accept_language(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().accept_language = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc =
+        "Set the field `region`.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn set_region(self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.0.data.borrow_mut().region = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `timeouts`.\n"]
+    pub fn set_timeouts(self, v: impl std::convert::Into<DataServicecatalogProvisioningArtifacts_Timeouts>) -> Self {
+        self.0.data.borrow_mut().timeouts = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Get a reference to the value of field `accept_language` after provisioning.\n"]
+    pub fn accept_language(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accept_language", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `product_id` after provisioning.\n"]
+    pub fn product_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `provisioning_artifact_details` after provisioning.\n"]
+    pub fn provisioning_artifact_details(
+        &self,
+    ) -> terrars::ListRef<DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetailsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.provisioning_artifact_details", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> DataServicecatalogProvisioningArtifacts_TimeoutsRef {
+        DataServicecatalogProvisioningArtifacts_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
+    }
+}
+
+impl terrars::Referable for DataServicecatalogProvisioningArtifacts {
+    fn extract_ref(&self) -> std::string::String {
+        format!("data.{}.{}", self.0.extract_datasource_type(), self.0.extract_tf_id())
+    }
+}
+
+impl terrars::Datasource for DataServicecatalogProvisioningArtifacts { }
+
+impl terrars::ToListMappable for DataServicecatalogProvisioningArtifacts {
+    type O = terrars::ListRef<DataServicecatalogProvisioningArtifactsRef>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        self.0.data.borrow_mut().for_each = std::option::Option::Some(format!("${{{}}}", base));
+        terrars::ListRef::new(self.0.shared.clone(), self.extract_ref())
+    }
+}
+
+impl terrars::Datasource_ for DataServicecatalogProvisioningArtifacts_ {
+    fn extract_datasource_type(&self) -> std::string::String {
+        "aws_servicecatalog_provisioning_artifacts".into()
+    }
+
+    fn extract_tf_id(&self) -> std::string::String {
+        self.tf_id.clone()
+    }
+
+    fn extract_value(&self) -> serde_json::Value {
+        serde_json::to_value(&self.data).unwrap()
+    }
+}
+
+pub struct BuildDataServicecatalogProvisioningArtifacts {
+    pub tf_id: std::string::String,
+    #[doc = ""]
+    pub product_id: terrars::PrimField<std::string::String>,
+}
+
+impl BuildDataServicecatalogProvisioningArtifacts {
+    pub fn build(self, stack: &mut terrars::Stack) -> DataServicecatalogProvisioningArtifacts {
+        let out = DataServicecatalogProvisioningArtifacts(std::rc::Rc::new(DataServicecatalogProvisioningArtifacts_ {
+            shared: stack.shared.clone(),
+            tf_id: self.tf_id,
+            data: std::cell::RefCell::new(DataServicecatalogProvisioningArtifactsData_ {
+                depends_on: core::default::Default::default(),
+                provider: std::option::Option::None,
+                lifecycle: core::default::Default::default(),
+                for_each: std::option::Option::None,
+                accept_language: core::default::Default::default(),
+                id: core::default::Default::default(),
+                product_id: self.product_id,
+                region: core::default::Default::default(),
+                timeouts: core::default::Default::default(),
+            }),
+        }));
+        stack.add_datasource(out.0.clone());
+        out
+    }
+}
+
+pub struct DataServicecatalogProvisioningArtifactsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataServicecatalogProvisioningArtifactsRef {
+    fn new(shared: terrars::StackShared, base: std::string::String) -> Self {
+        Self {
+            shared: shared,
+            base: base,
+        }
+    }
+}
+
+impl DataServicecatalogProvisioningArtifactsRef {
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    fn extract_ref(&self) -> std::string::String {
+        self.base.clone()
+    }
+
+    #[doc = "Get a reference to the value of field `accept_language` after provisioning.\n"]
+    pub fn accept_language(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.accept_language", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `product_id` after provisioning.\n"]
+    pub fn product_id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.product_id", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `provisioning_artifact_details` after provisioning.\n"]
+    pub fn provisioning_artifact_details(
+        &self,
+    ) -> terrars::ListRef<DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetailsRef> {
+        terrars::ListRef::new(self.shared().clone(), format!("{}.provisioning_artifact_details", self.extract_ref()))
+    }
+
+    #[doc =
+        "Get a reference to the value of field `region` after provisioning.\nRegion where this resource will be [managed](https://docs.aws.amazon.com/general/latest/gr/rande.html#regional-endpoints). Defaults to the Region set in the [provider configuration](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#aws-configuration-reference)."]
+    pub fn region(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.region", self.extract_ref()))
+    }
+
+    #[doc = "Get a reference to the value of field `timeouts` after provisioning.\n"]
+    pub fn timeouts(&self) -> DataServicecatalogProvisioningArtifacts_TimeoutsRef {
+        DataServicecatalogProvisioningArtifacts_TimeoutsRef::new(
+            self.shared().clone(),
+            format!("{}.timeouts", self.extract_ref()),
+        )
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetails {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    active: std::option::Option<terrars::PrimField<bool>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    created_time: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    description: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    guidance: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    id: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    name: std::option::Option<terrars::PrimField<std::string::String>>,
+    #[serde(rename = "type", skip_serializing_if = "std::option::Option::is_none")]
+    type_: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetails {
+    #[doc = "Set the field `active`.\n"]
+    pub fn set_active(mut self, v: impl std::convert::Into<terrars::PrimField<bool>>) -> Self {
+        self.active = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `created_time`.\n"]
+    pub fn set_created_time(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.created_time = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `description`.\n"]
+    pub fn set_description(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.description = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `guidance`.\n"]
+    pub fn set_guidance(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.guidance = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `id`.\n"]
+    pub fn set_id(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.id = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `name`.\n"]
+    pub fn set_name(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.name = std::option::Option::Some(v.into());
+        self
+    }
+
+    #[doc = "Set the field `type_`.\n"]
+    pub fn set_type(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.type_ = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetails {
+    type O = terrars::BlockAssignable<DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetails>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetails {}
+
+impl BuildDataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetails {
+    pub fn build(self) -> DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetails {
+        DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetails {
+            active: core::default::Default::default(),
+            created_time: core::default::Default::default(),
+            description: core::default::Default::default(),
+            guidance: core::default::Default::default(),
+            id: core::default::Default::default(),
+            name: core::default::Default::default(),
+            type_: core::default::Default::default(),
+        }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetailsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetailsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetailsRef {
+        DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetailsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataServicecatalogProvisioningArtifacts_ProvisioningArtifactDetailsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `active` after provisioning.\n"]
+    pub fn active(&self) -> terrars::PrimExpr<bool> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.active", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `created_time` after provisioning.\n"]
+    pub fn created_time(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.created_time", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `description` after provisioning.\n"]
+    pub fn description(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.description", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `guidance` after provisioning.\n"]
+    pub fn guidance(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.guidance", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `id` after provisioning.\n"]
+    pub fn id(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.id", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `name` after provisioning.\n"]
+    pub fn name(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.name", self.base))
+    }
+
+    #[doc = "Get a reference to the value of field `type_` after provisioning.\n"]
+    pub fn type_(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.type", self.base))
+    }
+}
+
+#[derive(Serialize)]
+pub struct DataServicecatalogProvisioningArtifacts_Timeouts {
+    #[serde(skip_serializing_if = "std::option::Option::is_none")]
+    read: std::option::Option<terrars::PrimField<std::string::String>>,
+}
+
+impl DataServicecatalogProvisioningArtifacts_Timeouts {
+    #[doc = "Set the field `read`.\n"]
+    pub fn set_read(mut self, v: impl std::convert::Into<terrars::PrimField<std::string::String>>) -> Self {
+        self.read = std::option::Option::Some(v.into());
+        self
+    }
+}
+
+impl terrars::ToListMappable for DataServicecatalogProvisioningArtifacts_Timeouts {
+    type O = terrars::BlockAssignable<DataServicecatalogProvisioningArtifacts_Timeouts>;
+
+    fn do_map(self, base: std::string::String) -> Self::O {
+        terrars::BlockAssignable::Dynamic(terrars::DynamicBlock {
+            for_each: format!("${{{}}}", base),
+            iterator: "each".into(),
+            content: self,
+        })
+    }
+}
+
+pub struct BuildDataServicecatalogProvisioningArtifacts_Timeouts {}
+
+impl BuildDataServicecatalogProvisioningArtifacts_Timeouts {
+    pub fn build(self) -> DataServicecatalogProvisioningArtifacts_Timeouts {
+        DataServicecatalogProvisioningArtifacts_Timeouts { read: core::default::Default::default() }
+    }
+}
+
+#[allow(dead_code)]
+pub struct DataServicecatalogProvisioningArtifacts_TimeoutsRef {
+    shared: terrars::StackShared,
+    base: std::string::String,
+}
+
+impl terrars::Ref for DataServicecatalogProvisioningArtifacts_TimeoutsRef {
+    fn new(
+        shared: terrars::StackShared,
+        base: std::string::String,
+    ) -> DataServicecatalogProvisioningArtifacts_TimeoutsRef {
+        DataServicecatalogProvisioningArtifacts_TimeoutsRef {
+            shared: shared,
+            base: base.to_string(),
+        }
+    }
+}
+
+impl DataServicecatalogProvisioningArtifacts_TimeoutsRef {
+    #[allow(dead_code)]
+    fn shared(&self) -> &terrars::StackShared {
+        &self.shared
+    }
+
+    #[doc = "Get a reference to the value of field `read` after provisioning.\n"]
+    pub fn read(&self) -> terrars::PrimExpr<std::string::String> {
+        terrars::PrimExpr::new(self.shared().clone(), format!("{}.read", self.base))
+    }
+}
